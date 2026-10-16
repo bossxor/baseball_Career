@@ -47,3 +47,6 @@ GameInput:고정gameId/seed/rulesVersion/홈원정/명단/라인업/유효능력
 진행중게임과마감결과를구분. game.status COMPLETED인경기통계는다시합산하지않음. 마감시gameResult/누적기록/일정커서/피로/부상/승패순위/receipt를동일세이브트랜잭션. 경기이력의보존기간이끝나도확정시즌합계는삭제안함.
 
 REC01 만루BB. REC02 2아웃진루실패. REC03 1/2아웃병살. REC04 홈리드9말생략. REC05 끝내기HR/비HR. REC06 자동주자ER0. REC07 승계주자책임. REC08 4.2/5.0선발W경계. REC09 BS+W/HLD배타. REC10 경기청크중단복구. REC11 경기완료재시도기록1회. REC12 HBP/WHIP분리. REC13 전원부상/가용투수부족오류. REC14 고정seed플랫폼일치. REC15 시즌팀/개인합계. fixture실행은엔진구현후수행.
+
+
+경기최신수식: [41 여섯능력엔진](41-SIX-STAT-ENGINE.md). 위기관리대칭보정·체력/교체·역할평가를구체화하며구전술logit가산을폐기한다.
