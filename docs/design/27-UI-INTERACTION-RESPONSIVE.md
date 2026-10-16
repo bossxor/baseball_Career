@@ -1,3 +1,5 @@
+최신 변경: [34 유형·대학·진로확률](34-ARCHETYPES-COLLEGE-ODDS.md), [35 능력6개·육성4개·평균](35-SIX-ABILITIES-FOUR-FOCUS.md), [36 구단치트](36-CLUB-SECRET-CHEAT.md)가 해당 분야의 이전 제안을 대체한다. 미국오퍼0경로·집중1~2개·단순적용100%·대학후속범위는 폐기한다.
+
 # 상세설계 09 — 33화면 입력·반응형·디자인 검토
 
 서면 입력 계약 및 정적 시각초안. 실제 브라우저 자동화는 MXC sandbox의 permission path cannot be represented losslessly 오류로 실행되지 않았다. 픽셀/접근성/안드로이드 화면검수를 통과했다고 표시하지 않는다. 정적 목업에는 게임/로그인/저장 요청이 없다.

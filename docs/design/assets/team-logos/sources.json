@@ -1,0 +1,362 @@
+[
+  {
+    "league": "KBO",
+    "teamId": "LG",
+    "name": "LG 트윈스",
+    "file": "kbo/lg.png",
+    "sourceUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/KBOHome/resources/images/emblem/regular/2022/LG.png",
+    "sourcePage": "https://www.koreabaseball.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "KBO",
+    "teamId": "HH",
+    "name": "한화 이글스",
+    "file": "kbo/hh.png",
+    "sourceUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/KBOHome/resources/images/emblem/regular/2025/HH.png",
+    "sourcePage": "https://www.koreabaseball.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "KBO",
+    "teamId": "SK",
+    "name": "SSG 랜더스",
+    "file": "kbo/sk.png",
+    "sourceUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/KBOHome/resources/images/emblem/regular/2024/SK.png",
+    "sourcePage": "https://www.koreabaseball.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "KBO",
+    "teamId": "SS",
+    "name": "삼성 라이온즈",
+    "file": "kbo/ss.png",
+    "sourceUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/KBOHome/resources/images/emblem/regular/2022/SS.png",
+    "sourcePage": "https://www.koreabaseball.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "KBO",
+    "teamId": "NC",
+    "name": "NC 다이노스",
+    "file": "kbo/nc.png",
+    "sourceUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/KBOHome/resources/images/emblem/regular/2022/NC.png",
+    "sourcePage": "https://www.koreabaseball.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "KBO",
+    "teamId": "KT",
+    "name": "kt wiz",
+    "file": "kbo/kt.png",
+    "sourceUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/KBOHome/resources/images/emblem/regular/2022/KT.png",
+    "sourcePage": "https://www.koreabaseball.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "KBO",
+    "teamId": "LT",
+    "name": "롯데 자이언츠",
+    "file": "kbo/lt.png",
+    "sourceUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/KBOHome/resources/images/emblem/regular/2022/LT.png",
+    "sourcePage": "https://www.koreabaseball.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "KBO",
+    "teamId": "HT",
+    "name": "KIA 타이거즈",
+    "file": "kbo/ht.png",
+    "sourceUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/KBOHome/resources/images/emblem/regular/2022/HT.png",
+    "sourcePage": "https://www.koreabaseball.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "KBO",
+    "teamId": "OB",
+    "name": "두산 베어스",
+    "file": "kbo/ob.png",
+    "sourceUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/KBOHome/resources/images/emblem/regular/2025/OB.png",
+    "sourcePage": "https://www.koreabaseball.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "KBO",
+    "teamId": "WO",
+    "name": "키움 히어로즈",
+    "file": "kbo/wo.png",
+    "sourceUrl": "https://6ptotvmi5753.edge.naverncp.com/KBO_IMAGE/KBOHome/resources/images/emblem/regular/2022/WO.png",
+    "sourcePage": "https://www.koreabaseball.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "133",
+    "name": "Athletics",
+    "file": "mlb/133.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/133.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "134",
+    "name": "Pittsburgh Pirates",
+    "file": "mlb/134.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/134.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "135",
+    "name": "San Diego Padres",
+    "file": "mlb/135.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/135.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "136",
+    "name": "Seattle Mariners",
+    "file": "mlb/136.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/136.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "137",
+    "name": "San Francisco Giants",
+    "file": "mlb/137.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/137.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "138",
+    "name": "St. Louis Cardinals",
+    "file": "mlb/138.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/138.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "139",
+    "name": "Tampa Bay Rays",
+    "file": "mlb/139.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/139.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "140",
+    "name": "Texas Rangers",
+    "file": "mlb/140.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/140.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "141",
+    "name": "Toronto Blue Jays",
+    "file": "mlb/141.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/141.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "142",
+    "name": "Minnesota Twins",
+    "file": "mlb/142.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/142.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "143",
+    "name": "Philadelphia Phillies",
+    "file": "mlb/143.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/143.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "144",
+    "name": "Atlanta Braves",
+    "file": "mlb/144.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/144.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "145",
+    "name": "Chicago White Sox",
+    "file": "mlb/145.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/145.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "146",
+    "name": "Miami Marlins",
+    "file": "mlb/146.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/146.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "147",
+    "name": "New York Yankees",
+    "file": "mlb/147.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/147.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "158",
+    "name": "Milwaukee Brewers",
+    "file": "mlb/158.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/158.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "108",
+    "name": "Los Angeles Angels",
+    "file": "mlb/108.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/108.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "109",
+    "name": "Arizona Diamondbacks",
+    "file": "mlb/109.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/109.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "110",
+    "name": "Baltimore Orioles",
+    "file": "mlb/110.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/110.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "111",
+    "name": "Boston Red Sox",
+    "file": "mlb/111.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/111.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "112",
+    "name": "Chicago Cubs",
+    "file": "mlb/112.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/112.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "113",
+    "name": "Cincinnati Reds",
+    "file": "mlb/113.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/113.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "114",
+    "name": "Cleveland Guardians",
+    "file": "mlb/114.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/114.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "115",
+    "name": "Colorado Rockies",
+    "file": "mlb/115.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/115.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "116",
+    "name": "Detroit Tigers",
+    "file": "mlb/116.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/116.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "117",
+    "name": "Houston Astros",
+    "file": "mlb/117.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/117.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "118",
+    "name": "Kansas City Royals",
+    "file": "mlb/118.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/118.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "119",
+    "name": "Los Angeles Dodgers",
+    "file": "mlb/119.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/119.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "120",
+    "name": "Washington Nationals",
+    "file": "mlb/120.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/120.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  },
+  {
+    "league": "MLB",
+    "teamId": "121",
+    "name": "New York Mets",
+    "file": "mlb/121.svg",
+    "sourceUrl": "https://www.mlbstatic.com/team-logos/team-cap-on-light/121.svg",
+    "sourcePage": "https://www.mlb.com/",
+    "retrieved": "2026-10-16"
+  }
+]
