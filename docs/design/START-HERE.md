@@ -1,3 +1,7 @@
+# 최신 편집 위치 안내
+
+현재 원본은 https://github.com/bossxor/baseball_Career 의 docs/design 입니다. [DETAIL-PLAN.md](DETAIL-PLAN.md)에서 다음 상세설계를 확인합니다. 기존 v0.7 ZIP은 시점 보관본이며 이후 커밋을 포함하지 않습니다.
+
 # 여기서 시작하세요
 
 이 폴더는 야구 시뮬레이션 프로젝트의 이식 가능한 설계 패키지입니다. 이전 채팅을 읽을 수 없어도 이 문서부터 시작하면 됩니다.
