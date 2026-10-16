@@ -48,6 +48,7 @@
 | [DB/API/인증/테스트 fixture 계약](28-DATA-API-AUTH-TESTS.md) | 상세설계 10 |
 | [운영·백업·APK·배포·실환경 확인](29-OPERATIONS-RELEASE-RUNBOOK.md) | 상세설계 11 |
 | [통합 경로 재검토·설계 검토본](30-INTEGRATED-DESIGN-REVIEW.md) | 상세설계 12 |
+| [사용자 결정01](31-USER-PACING-TRAINING-DIFFICULTY.md) | 월별 진행·확정 강화·난이도2종 |
 | [14 통합 결정표](14-CANONICAL-DECISIONS.md) | 최신 규칙, 충돌 해소, 사건·연간 순서 |
 | [15 장기 운영·기록](15-LONG-TERM-RECORDS.md) | AI, 선수 공급, 보존, 명예의 전당 |
 | [16 계정·운영](16-AUTH-OPERATIONS.md) | 인증, 웹/APK 세션, 배포·백업 정책 |
