@@ -1,3 +1,5 @@
+최신 사용자 결정: [32](32-USER-IMPORT-REBIRTH.md)는 이전 능력 그대로/병역계승 규칙을 대체합니다.
+
 # 최신 편집 위치 안내
 
 현재 원본은 https://github.com/bossxor/baseball_Career 의 docs/design 입니다. [DETAIL-PLAN.md](DETAIL-PLAN.md)에서 다음 상세설계를 확인합니다. 기존 v0.7 ZIP은 시점 보관본이며 이후 커밋을 포함하지 않습니다.
@@ -10,7 +12,7 @@
 
 - 단계: 상세 설계 v0.7. 앱 코드 구현/DB 스키마 배포/APK 빌드 미착수.
 - 목적: 소수 친구용 웹앱+Android APK, 선수 커리어와 독립 구단 운영.
-- 필수: KBO 가상선수, 고교 미국직행, 포스팅, MiLB/MLB, 국가대표/병역, 스타일/강화, 은퇴보관, 능력유지 어린선수 선택투입, Neon 저장.
+- 필수: KBO 가상선수, 고교 미국직행, 포스팅, MiLB/MLB, 국가대표/병역, 스타일/강화, 은퇴보관, 능력별최고50%·새잠재력·병역재시작의 어린선수 선택투입, Neon 저장.
 - 작업명: Baseball Career. 목표 GitHub: https://github.com/bossxor/baseball_Career
 - 이 폴더의 HTML은 정적 목업입니다. 버튼이 실제 게임을 실행하지 않습니다.
 
