@@ -1,4 +1,4 @@
-# Baseball Career 통합 설계 v0.16
+# Baseball Career 통합 설계 v0.17
 개별MD가편집원본. 최신상태는DETAIL-PLAN과Git이력. 문서검토와실행검증을구분한다.
 
 ---
@@ -55,7 +55,7 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 
 # Baseball Career — 상세 설계 묶음
 
-2026-10-16 / v0.16 / 상세설계 진행 / 구현 착수 전
+2026-10-16 / v0.17 / 상세설계 진행 / 구현 착수 전
 
 새 환경에서는 [START-HERE.md](START-HERE.md)부터 읽으세요. 최신 완료/미검증 항목은 [STATUS.md](STATUS.md), 규칙 충돌 시 기준은 [14 통합 결정표](14-CANONICAL-DECISIONS.md)입니다. 다른 채팅에는 [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md)를 사용할 수 있습니다.
 
@@ -100,6 +100,7 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 | [구단 AI·경제·드래프트·장기 공급](25-CLUB-AI-ECONOMY.md) | 상세설계 07 |
 | [이벤트69종 조건표·실제 문안 검수](26-EVENT-CONTENT-CONTRACT.md) | 상세설계 08 |
 | [전체33화면 최종 입력·반응형 목업](27-UI-INTERACTION-RESPONSIVE.md) | 상세설계 09 |
+| [DB/API/인증/테스트 fixture 계약](28-DATA-API-AUTH-TESTS.md) | 상세설계 10 |
 | [14 통합 결정표](14-CANONICAL-DECISIONS.md) | 최신 규칙, 충돌 해소, 사건·연간 순서 |
 | [15 장기 운영·기록](15-LONG-TERM-RECORDS.md) | AI, 선수 공급, 보존, 명예의 전당 |
 | [16 계정·운영](16-AUTH-OPERATIONS.md) | 인증, 웹/APK 세션, 배포·백업 정책 |
@@ -135,8 +136,8 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 <!-- LATEST-BEGIN -->
 ## 최신 상세설계 상태
 
-완료 항목: 09 전체33화면 최종 입력·반응형 목업 (v0.16). [문서](27-UI-INTERACTION-RESPONSIVE.md). 서면 계약 작성·정적 검사 기준이며 제품 실행 증명이 아닙니다.
-다음: 10 DB/API/인증/테스트 fixture 계약; 시각 렌더링 검수는 도구 오류로 미완료
+완료 항목: 10 DB/API/인증/테스트 fixture 계약 (v0.17). [문서](28-DATA-API-AUTH-TESTS.md). 서면 계약 작성·정적 검사 기준이며 제품 실행 증명이 아닙니다.
+다음: 11 운영·백업·APK·배포·실환경 확인
 현재 기준은 DETAIL-PLAN의 상태표와 최신 Git 이력입니다. 아래 이전 버전 현황은 역사적 기록입니다.
 <!-- LATEST-END -->
 
@@ -217,7 +218,7 @@ Neon CLI8.7.2 설치/OAuth프로필확인은이전작업에서수행. Codex사�
 | 07 | 구단 AI·경제·드래프트·장기 공급 | 서면 설계 완료 | [25-CLUB-AI-ECONOMY.md](25-CLUB-AI-ECONOMY.md) |
 | 08 | 이벤트69종 조건표·실제 문안 검수 | 서면 설계 완료 | [26-EVENT-CONTENT-CONTRACT.md](26-EVENT-CONTENT-CONTRACT.md) |
 | 09 | 전체33화면 최종 입력·반응형 목업 | 서면 설계 완료 | [27-UI-INTERACTION-RESPONSIVE.md](27-UI-INTERACTION-RESPONSIVE.md) |
-| 10 | DB/API/인증/테스트 fixture 계약 | 예정 | 06/16을 상세화 |
+| 10 | DB/API/인증/테스트 fixture 계약 | 서면 설계 완료 | [28-DATA-API-AUTH-TESTS.md](28-DATA-API-AUTH-TESTS.md) |
 | 11 | 운영·백업·APK·배포·실환경 확인 | 예정 | 16을 상세화 |
 | 12 | 통합 경로 재검토·설계 승인본 | 예정 | 07/18/STATUS |
 
@@ -303,6 +304,8 @@ Neon CLI8.7.2 설치/OAuth프로필확인은이전작업에서수행. Codex사�
 상세설계 08 [이벤트69종 조건표·실제 문안 검수](26-EVENT-CONTENT-CONTRACT.md): 해당 분야의 이전 모호한 제안은 이 상세 계약으로 구체화한다. 사용자 확정 요구를 임의 변경하지 않으며 실제 실행 검증은 분리한다.
 
 상세설계 09 [전체33화면 최종 입력·반응형 목업](27-UI-INTERACTION-RESPONSIVE.md): 해당 분야의 이전 모호한 제안은 이 상세 계약으로 구체화한다. 사용자 확정 요구를 임의 변경하지 않으며 실제 실행 검증은 분리한다.
+
+상세설계 10 [DB/API/인증/테스트 fixture 계약](28-DATA-API-AUTH-TESTS.md): 해당 분야의 이전 모호한 제안은 이 상세 계약으로 구체화한다. 사용자 확정 요구를 임의 변경하지 않으며 실제 실행 검증은 분리한다.
 
 
 ---
@@ -2396,6 +2399,65 @@ TextField:고유label/id,설명/오류aria-describedby,입력원문보존후검�
 UX01 폼label연결. UX02 tab/shift-tab/enter/escape. UX03 200%확대. UX04 safe-area/키보드. UX05 긴표/고정열. UX06 서체/이미지실패. UX07 선택후효과미리보기. UX08 실수방지확인대상명. UX09 충돌의최신조회. UX10 백업실패와일반저장구분. UX11 dark OS설정이어도대비명시. UX12 APK뒤로가기. 실행검수전명세다.
 
 남은차단은렌더링도구/실기기실증이다. 입력/반응형설계완료와시각승인미완료를STATUS에서분리한다.
+
+
+---
+
+<!-- SOURCE: 28-DATA-API-AUTH-TESTS.md -->
+
+# 상세설계 10 — 저장 계약·API·인증·테스트 데이터
+
+앱 코드나DB migration미작성.06/16의스키마를구체화하고구현자가임의보안우회를하지않게계약을고정한다. 실제인증SDK/Android교환/DB동작은구현후증명한다.
+
+## 저장 구조 조정
+
+한세이브세계의행동은game_saves행하나를잠가순서를보장. state JSONB가너무커질것에대비해immutable game_results/season_records를관계테이블로분리한다. state에는현재세계의가용선수/일정커서/작업큐/권리참조만. 과거선수의모든연도성적을세계JSON에무한중복저장하지않음. 선수원본archived_players snapshot은완결상태를독립보존.
+
+추가테이블:
+- game_results(save_id,game_id PK,season_id,competition_id,summary,boxscore,created_at),소유권은save연결.
+- season_records(save_id,player_id,league_id,season_id,phase PK,raw_stats,awards,version).
+- career_ledger(save_id,entry_key PK,type,source_id,delta,evidence,applied_revision),성장/보상/예산멱등원장.
+- auth_allowed_subjects(subject PK,status,created_at),초대게임접근제어.
+- native_sessions(id,subject,refresh_hash,expires_at,revoked_at,rotation_family),선택한앱세션설계용.
+- login_exchanges(code_hash PK,subject,challenge,redirect_id,expires_at,consumed_at),일회용앱복귀.
+
+profiles/game_saves/archive/import/backups/command_receipts는06유지. delete cascade는경기/원장/receipt에만,독립보관원본은명시삭제흐름. 돈bigint원/달러각각,outs int≥0,타자기록원시수치int≥0,versions int≥1,revision bigint≥0. JSON수치NaN/Infinity거절,외부ID문자열최대128,본문UTF8크기검증.
+
+## 명령 처리 원자성
+
+인증→allowlist→payload schema→save소유권→트랜잭션/행잠금→receipt조회→동일IDrequest hash일치검사→expectedRevision→phase/source/evidence검증→순수엔진→불변조건→state/분리기록/원장/receipt커밋. 엔진응답에서현재시각을직접생성하지않고서버명령입력값사용.
+
+request_hash는type/payload/expectedRevision의canonical JSON으로계산,토큰/헤더/재시도시각불포함. receipt에결과revision/작은결과/이벤트ID만,5MiB state전체중복없음. 동일commandId다른내용409,동일내용은저장된원래결과반환. source검증실패명령은성공receipt가아니라재시도금지오류이며부수효과0.
+
+반복조회로완료결과를찾을수있게GET /api/saves/:id/commands/:commandId제공,없음404는다른사용자/미실행구분노출없음. 사용자가진행중새로고침하면이조회부터하고그다음save최신조회. 응답불명인명령과다른명령을동시에보내지않음.
+
+## API 계약
+
+공통요청헤더Authorization또는웹세션,Client-Version,Request-ID.명령POST에는commandId/expectedRevision/type/payload.성공{commandId,revision,phase,summary,eventIds,nextActions,result};오류{code,messageKey,requestId,fieldErrors?,currentRevision?,retryAfter?}.민감예외stack/SQL/접속문자열전달금지.
+
+목록cursor는updatedAt+id의 안정적인 조합,타사용자목록접근불가.상세기록API에는leagueId/seasonId/phase필터필수에서 代表/MLB/마이너통계를혼합하지않음.정렬열은정적allowlist,사용자문자열SQL직접연결금지.문자입력은문자열로렌더링.
+
+본문한도명령64KiB,서버state5MiB경고/분리마이그레이션,백업압축해제10MiB.타임아웃30초안에못끝나면청크축소/pending진행을사용.타임아웃을rollback보장으로알리지않음.
+
+## 인증·앱 연결
+
+관리형인증후API검증/allowlist를별도실시.웹쿠키는HttpOnly/Secure/SameSite와CSRF 검증,네이티브는16의시스템브라우저교환계약.원격SDK가정식지원하는세션검증흐름을사용し, secret없는공개클라이언트에서 署名를 偽装しない.
+
+login exchange는서버난수256bit/code hash보관/60초/단일사용/PKCEchallenge/등록redirect와 연결.URL에는code+state만,access/refresh/JWT없음.exchange/refresh token은URL로그와분석대상제외.앱secret는 OS보안저장소, localStorage를영구refresh보관소로쓰지않음.
+
+API access15분/refresh30일ゲーム기본설계.refresh회전은이전hash재사용시family철회.고아세션/동시정상refresh의경합은기존회전결과를같은requestId로짧게조회하도록설계하고재사용공격과구별.공급자지원확인전임의자체JWT구현확정하지않음.
+
+## fixture와 테스트 계층
+
+세트 F01 고교미지명/제안0,F02 타자주전/F03 투수콜업,F04 41세원본19세복사,F05 MLB계약/포스팅실패,F06 AG금/미출전/F07 상무탈락/복무복귀,F08 두기기revision충돌,F09 자동주자ER/F10 예산예약동시제안.모든seed/초기state/명령/예상delta를버전고정.
+
+순수엔진테스트: DB없이정확한상태/합계/난수재현.DB통합:개발Neon브랜치에서 실제트랜잭션/unique/rollback/소유권.스토리지통합:private버킷작은파일업로드/체크섬/다운로드/삭제, 테스트데이터만정리.API E2E:가입/로그인/보호접근/클라우드진행/재로그인/원본보관.Android:실기기AppLinks/중단복귀/업데이트.
+
+성공스냅샷을코드와 같은 식으로 재생성해 비교하는 테스트는 避ける.경계기록은사전에수작업으로기대값정의하고property검사로H합/outs/금액원장보존.시간/난수/외부계정은주입가능하게분리.테스트가운영게임세이브를 임의 수정하지않음.
+
+## 배포전 차단
+
+계정삭제/backup소유권/JWT검증/PKCE원회사용/receipt재시도/DBrollback중하나라도검증미완료면공개배포금지.로컬prototype와실제접근제어없는공개웹을동일완성으로보지않는다.서면설계완료가이통과를대체하지않음.
 
 
 ---
