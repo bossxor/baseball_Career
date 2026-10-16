@@ -1,8 +1,10 @@
-# 다시, 플레이볼 — 통합 상세설계 v0.9
+# 다시, 플레이볼 — 상세계약 v0.10 진행 중
 
 ---
 
 <!-- SOURCE: START-HERE.md -->
+
+현재진행:[65 사용자후속결정](65-USER-TRAITS-XP-STAFF.md)과[64 상세계약공통](64-EXPANSION-COMMON-CONTRACT.md)을우선읽으세요. 56/57/59/60/61/63작성,58목표·62중계는사용자선택답변대기(STATUS). 특성전체자동효과/치트구종3배가최신확정입니다.
 
 최신v0.9:[55 추가8기능통합](55-EXPANSION-INTEGRATION.md)을먼저확인. 47~54모두v1필수로추가,45화면/99이벤트. 세부수치는설계기본안,앱미구현.
 
@@ -59,6 +61,8 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 ---
 
 <!-- SOURCE: README.md -->
+
+현재진행:[65 사용자후속결정](65-USER-TRAITS-XP-STAFF.md)과[64 상세계약공통](64-EXPANSION-COMMON-CONTRACT.md)을우선읽으세요. 56/57/59/60/61/63작성,58목표·62중계는사용자선택답변대기(STATUS). 특성전체자동효과/치트구종3배가최신확정입니다.
 
 최신v0.9:[55 추가8기능통합](55-EXPANSION-INTEGRATION.md)을먼저확인. 47~54모두v1필수로추가,45화면/99이벤트. 세부수치는설계기본안,앱미구현.
 
@@ -154,25 +158,36 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 
 <!-- SOURCE: STATUS.md -->
 
-# 현재 상태 — 상세설계 v0.9
+# 상세설계 진행 현황 — v0.10 작업 중
 
-사용자요청으로추천8기능모두v1범위에추가했다. 47특성/48구종·성향/49목표/50에이전트/51라이벌·동료/52은퇴지도자/53문자중계/54연대기/55통합계약. 기존게임설계39~46유지. 전체화면45종,이벤트99종. 앱구현·DB배포·APK빌드미착수.
+사용자가실제구현에사용할수있는상세계약을요청했고,플레이선택은물어보며진행하도록요청했다. 앱구현은하지않는다. 45화면/99이벤트의기존설계는유지하되새사용자답변을반영중이다.
 
-## 이번 변경
+## 사용자 확정
 
-- 특성12종/장착2(시그니처1),구종7종/활성2~4/숙련0~5/연간XP20,타격성향4종.
-- 시즌목표10종/최대3,커리어도전12종,보상은기념외형. 에이전트3전문/개인협상확률/수수료2%.
-- 실제선수ID라이벌/동료연표,은퇴원본별도코치/스카우트,가상직원도가능.
-- 확정경기문자중계와영구중요로그,근거기반연대기·시즌책장·로컬카드내보내기설계.
-- 새S38~45보드,장착/목표상한·구종비율·협상확률·고정중계·핀입력시연. 게임효과나저장없음.
+65:특성은기록해금후보유효과전부자동적용(장착제한없음). 개인치트구종숙련성장3배/연간cap60. 같은구단세계같은원본은현역선수또는지도자1역할.
 
-사용자확정은기능추가와기존요구. 개별수치/비용/원본동시등장제약등은설계기본안D이며독립승인이나밸런스완료아님. 기본6능력/상한100/집중4/시즌강화1/미국조건/대학/병역/치트효과유지.
+## 완료한 서면 상세계약
 
-## 검증·남은실증
+| 분야 | 문서 | 작성 범위 |
+|---|---|---|
+| 공통 |64|자료형/API경로/preview·receipt/오류/화면상태 |
+| 특성 |56|12조건정확화/전체자동효과/cap/필드/조회API/근거 |
+| 구종 |57|비율경계/XP예약·분기정산/치트60/AI/복사/API |
+| 에이전트 |59|오퍼전이/예산예약/요청p/관계·수수료원장/API |
+| 관계 |60|후보/실제재회/기록집계/정정/요약보존/API |
+| 지도자 |61|역할claim/급여예약·지급/기간효과/중복방지/API |
+| 연대기 |63|outbox/메모CAS/PNG규격/exportjob/권한/복원 |
 
-정적검사는verify-design.mjs/VALIDATION참조. 경기100seed/10만타석/50시즌경제·스킬조합·직원·확률분포는구현후. 실제브라우저는기존MXC경로오류로미검수,스크린샷/모바일/키보드/PNG다운로드는통과아님. Neon/API/로그인/파일복원/호스팅/서명APK도미실행. 설계수정으로production변경없음.
+## 답변을 기다리는 두 결정
 
-다른환경은START-HERE→14→55→해당47~54→기존분야문서. 실제구현은별도착수지시후. 정상편집원본은GitHub docs/design,옛ZIP/네트워크복사본은시점보관. 매항목커밋/통합MD/카탈로그/보드/SHA목록갱신.
+- 목표·도전과제보상:기념만/능력성장추가/잠재력상승기회. 답변후58의정산·중복·수치·기회정책완성.
+- 중요경기중계:확정경기감상/경기전전략/타석별전략. 답변후62의게임진행checkpoint·로그·재생·복구계약완성.
+
+현재이2분야는기초안49/53만있으며상세완료라고표시하지않음. 별도58/62최종규칙을임의로확정하지않는다. 새질문을한꺼번에늘리지않고이답변부터반영한다.
+
+## 검증과 한계
+
+expansion-acceptance-fixtures.json에6분야56개정상/경계/오류/중복/복원기대값작성. 정적카탈로그검사와서면fixture의존재확인은실제엔진/DB/API테스트통과가아님. 브라우저도구기존MXC오류로실제렌더링미검수. Neon변경/build/APK/PNG실행미착수. 최신VALIDATION과Git커밋으로완료/미완료를구분한다.
 
 ---
 
@@ -213,6 +228,9 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 
 
 v0.9확장47~54:추천8기능모두서면계약작성.55의API/교차효과/45화면/99이벤트로연결. 구현미착수.
+
+
+추가8기능의기초설계와상세실행계약은구분한다.64공통및56/57/59/60/61/63작성,58/62는질문답변후작성. 세부필드·명령·오류·서면fixture를채우되실제코드테스트로보고하지않음.
 
 
 ---
@@ -344,6 +362,11 @@ v0.9확장47~54:추천8기능모두서면계약작성.55의API/교차효과/45�
 
 
 최신확장47~55가새8기능과교차계약의원본이다. 이전37화면/83이벤트집계는45/99로갱신한다. v0.8기존게임기능은유지,6능력/100상한/강화1회유지. 사용자개별수치승인이나앱실행검증으로해석하지않는다.
+
+
+## 사용자후속확정과상세계약진행
+
+U:특성기록해금/보유전체자동적용,개인치트구종숙련3배,동일세계원본현역또는지도자한역할(65). 구장착2/시그니처1/구종치트1배제안은폐기. 후속기술계약64및56/57/59/60/61/63작성. 목표보상과중계개입은질문답변전까지추가확정하지않음.
 
 
 ---
@@ -2811,6 +2834,9 @@ CH01 일반3+하드4해금. CH02 하드4먼저실패. CH03 중간잘못된입력
 최신 확률 표시 규칙: [38 공통 계약](38-PROBABILITY-DISPLAY.md)을 따른다. 확률 선택은 모두 표시하되 실제 100%의 숫자 배지는 숨긴다. 보장 효과와 내부 확률은 유지한다.
 
 
+65사용자추가확정:개인치트는구종양의XP도3배/연간구종cap60. 기존6능력자연성장3배와각별도원장,강화증가량·횟수는기존대로. [57](57-REPERTOIRE-DETAILED-CONTRACT.md).
+
+
 ---
 
 <!-- SOURCE: 34-ARCHETYPES-COLLEGE-ODDS.md -->
@@ -3293,6 +3319,9 @@ GR01 일반/하드동일초기A/P. GR02 10→15/10/30난이도예산. GR03 기�
 확장계약:[55](55-EXPANSION-INTEGRATION.md). 47특성/48구종성향/49목표/50개인협상/51관계/52지도자/53확정경기중계/54연대기를추가한다. 기본6능력·상한100·강화1회유지,구종XP/원본스킬복사/직원비용/로그보존예외는각최신문서적용.
 
 
+65사용자추가확정:개인치트는구종양의XP도3배/연간구종cap60. 기존6능력자연성장3배와각별도원장,강화증가량·횟수는기존대로. [57](57-REPERTOIRE-DETAILED-CONTRACT.md).
+
+
 ---
 
 <!-- SOURCE: 43-COLLEGE-CAREER.md -->
@@ -3513,7 +3542,7 @@ S17제안폼:희망/제안연봉·기간·역할→수락확률→라운드기�
 
 ## 획득과 장착
 
-달성조건을채우면특성도감에해금,프리시즌/정규절반에최대2개장착(시그니처는그중최대1개). 같은변경창은유형변경창과공유하지만유형변경횟수를추가소모하지않는다. 경기중교체불가,보유만으로효과없음. 해금은결정론조건이므로확률표시없음. 새로고침/이벤트재열람으로중복획득안함. 기본능력/출전·등록·병역조건을우회하지않는다.
+65사용자결정:기록조건달성시해금하고보유효과모두자동적용. 장착2/시그니처1/변경창없음. 조건활성·중첩·원본·API는56상세계약.
 
 | ID | 이름 | 종류 | 해금 기준 | 활성 조건·효과(logit) |
 |---|---|---|---|---|
@@ -3534,15 +3563,13 @@ S17제안폼:희망/제안연봉·기간·역할→수락확률→라운드기�
 
 ## 적용·보존
 
-장착2개의logit합은결과별[-.06,.06]로제한. 구종/성향48과합한신규효과전체는결과별[-.10,.10],마지막softmax정규화. 기본위기·클러치효과는41,피로와수비보정각한번. K/BB가실제얼마변하는지는상대에따라변하므로도감계수를‘성공률+3%’로바꾸지않는다. 타석결과를사용자가선택하는확률버튼없음. 진루전술선택을만들면최종p를38대로노출.
+양측조건충족보유특성전체logit합은결과별[-.06,.06]로제한. 구종/성향48과합한신규효과전체는결과별[-.10,.10],마지막softmax정규화. 기본위기·클러치효과는41,피로와수비보정각한번. K/BB가실제얼마변하는지는상대에따라변하므로도감계수를‘성공률+3%’로바꾸지않는다. 타석결과를사용자가선택하는확률버튼없음. 진루전술선택을만들면최종p를38대로노출.
 
-타팀/동료도가상기록에서같은조건을달성하고AI가현재역할기대효과상위2개선택,동률ID. 치트는특성자동해금없음. archive에는해금/장착/획득근거저장,19세복사본은해금·장착초기화하고원본도감은출처탭만. 지도자전환52도현역특성효과중복상속안함.
+타팀/동료도같은기록조건과자동적용. 치트자동해금없음. 원본보존/어린복사해금초기화는56.
 
 ## 데이터·화면·실패
 
-playerTraits(playerId,traitId,unlockedAt,evidenceId),traitLoadouts(windowId,traitIds,version),traitDefinitionVersion. 명령EQUIP_TRAITS는종류/최대2/시그니처1/변경창/revision검사,중복명령동일receipt. S38은장착슬롯→도감→해금진척→실제효과→미리보기→적용. 미해금은조건표시,장착불가는이유표시,조회실패에빈도감이라고쓰지않음.
-
-TR01 조건경계/장착상한/만루만활성/종합불변/경기중변경거절/중복해금/팀AI동일/복사초기화/층별효과cap검증. 특성이모든다른유형을압도하면수치조정,기본능력100초과로해결하지않는다.
+[56 상세계약](56-TRAITS-DETAILED-CONTRACT.md)의필드·조회API·S38·fixture가원본이다. 장착API는채택하지않는다.
 
 
 ---
@@ -3571,9 +3598,9 @@ TR01 조건경계/장착상한/만루만활성/종합불변/경기중변경거�
 
 ## 숙련 성장·새 구종
 
-등급누적XP기준[0,10,30,60,100,150]. 경기에서사용한대표구종마다아웃1개당.02XP,타석당상한.06. 연간전체구종획득XP상한20(등록레벨/대표/복무팀모두공유),일반현역복무0. 현재사용중비율과기회에따라성장,실제기록없이버튼반복으로성장안함. 상한초과XP는소멸기록,난이도/치트성장배수는42의6능력자연성장에만적용한다.
+등급누적XP기준[0,10,30,60,100,150]. 경기에서사용한대표구종마다아웃1개당.02XP,타석당상한.06. 연간전체구종획득XP기본상한20/개인치트60(등록레벨/대표/복무팀모두공유),일반현역복무0. 현재사용중비율과기회에따라성장,실제기록없이버튼반복으로성장안함. 상한초과XP는소멸기록,65사용자결정대로개인치트구종양의XP3배/연간cap60,일반·하드구종1배.
 
-새구종학습은프리시즌1종선택,숙련0/XP0에서기본훈련으로시즌매정규진행1/4마다2.5XP를배정(총10). 이10도연간20공유예산에포함,기존구종실전XP와우선예약해같은시즌20을넘기지않는다. 4체크포인트완료후등급1,다음변경창에활성가능. 복무/부상으로훈련불가기간은기간비례감소,실제예산과완료예상시점을미리표시. 한도4에도달하면학습시교체할구종을확인,기존구종은보관숙련으로남지만활성/학습4슬롯만사용. 재장착으로숙련복제없음.
+새구종학습은프리시즌1종선택,숙련0/XP0에서기본훈련으로시즌매정규진행1/4마다2.5XP를배정(총10). 이기본10도연간기본20공유예산에포함(치트실제30/60),기존구종실전XP와우선예약해같은시즌20을넘기지않는다. 4체크포인트완료후일반등급1/치트등급2,다음변경창에활성가능. 복무/부상으로훈련불가기간은기간비례감소,실제예산과완료예상시점을미리표시. 한도4에도달하면학습시교체할구종을확인,기존구종은보관숙련으로남지만활성/학습4슬롯만사용. 재장착으로숙련복제없음.
 
 특별강화1회에구종무료추가강화버튼을만들지않음. 새구종선택은학습계획,확률추첨아님. 성장형이필수루트가되지않도록AI/사용자모두동일숙련규칙.
 
@@ -3595,6 +3622,9 @@ pitchRepertoire(typeId,xp,mastery,active,usageWeight),pitchTrainingPlan/seasonXp
 S39은타자는성향카드,투수는구종카드·등급·XP·비율합계·학습계획. 합99/101이면확정불가,예상학습은확정성장가능기간기준이며무조건완료약속아님. 명령SET_REPERTOIRE/SET_PITCH_TRAINING/SET_BATTING_APPROACH는창/종류/XP원장/revision검사. 구종정보없으면호환필요안내,임의로숨은숙련5생성금지.
 
 PIT01 비율합/2~4슬롯/20XP공유/학습중활성금지/숙련cap/합산logitcap/대표구종스트림분리/복사별도/6능력평균불변검증. 결과분포와연간등급속도는구현후장기검증.
+
+[57 상세계약](57-REPERTOIRE-DETAILED-CONTRACT.md)이성장예약/분기정산/비율경계/API/AI/복사숙련의최종계약이다.
+
 
 ---
 
@@ -3675,6 +3705,9 @@ agentContracts/playerIncomeLedger/clubRelationships/relationshipEntries/negotiat
 
 AGT01 .60/.68예시/조건변경재preview/실패기본오퍼보존/한번한정/수수료부분지급/복무0/정상행동관계감점없음/기용보장없음/포스팅기준불변검증. 구단치트의FA수락보장36은이개인협상요청에적용하지않는다.
 
+실행처리순서/필드/명령입출력/예외/검수fixture는[상세계약](59-AGENTS-DETAILED-CONTRACT.md)을따른다. 공통[64](64-EXPANSION-COMMON-CONTRACT.md).
+
+
 ---
 
 <!-- SOURCE: 51-RIVALS-TEAMMATES.md -->
@@ -3706,6 +3739,9 @@ S42는상대초상·경력현재상태→관계연표→실제맞대결→동반
 playerRelationships(saveId,playerA,playerB,type,stage,startedAt,sourceEvent),rivalMatchupSummaries(gameScope,stats),relationMilestones(uniqueEvidenceId). 원본선수가로스터에서사라져도tombstone요약/영구선수기록실로참조유지,상대은퇴로기록삭제안함. 명령ACK_RELATION_EVENT/PIN_RELATION_MOMENT는읽음/핀만수정,실제이적/대진생성안함.
 
 REL01 동일ID중복없음/후보0/상대조기은퇴/타자끼리비교/미국실제재회/관계보너스0/원본관계불변/경기재시도중복0/국제범위분리검증.
+
+실행처리순서/필드/명령입출력/예외/검수fixture는[상세계약](60-RELATIONS-DETAILED-CONTRACT.md)을따른다. 공통[64](64-EXPANSION-COMMON-CONTRACT.md).
+
 
 ---
 
@@ -3741,6 +3777,9 @@ S43은빈슬롯→원본/가상직원목록→등급근거→담당선수→비�
 staffInstances(sourceArchiveId?,role,grade,worldAge,assignment),staffContracts,staffOperationEntries,staffEffectPeriods. HIRE_RETIRED_STAFF/HIRE_GENERIC_STAFF/ASSIGN_STAFF/DISMISS_STAFF명령에원본소유/정원/예산/중복원본/revision검사,서버에서등급계산. 원본archive행에는coachGrade를덮어쓰지않음.
 
 STAFF01 원본불변/가상직원대체/슬롯2개/동일원본현역중복거절/급여예약보존/효과기간가중/훈련cap1.2/치트돈원장/스카우트Lcap검증. 실제성장및50시즌경제검증에직원운영비와고용패턴을추가한다.
+
+실행처리순서/필드/명령입출력/예외/검수fixture는[상세계약](61-STAFF-DETAILED-CONTRACT.md)을따른다. 공통[64](64-EXPANSION-COMMON-CONTRACT.md).
+
 
 ---
 
@@ -3826,9 +3865,14 @@ careerMoments(saveId,playerId,type,gameDate,ageSnapshot,evidenceRef,presentation
 
 TIM01 사건멱등/미출장메달문구/리그분리/은퇴원본나이/복사본별연대기/긴한글/폰트실패/개인정보미포함/로컬다운로드실패/구기록상세없음/원본불변검증. PNG실제렌더·글꼴/Android다운로드는구현후필수검수다.
 
+실행처리순서/필드/명령입출력/예외/검수fixture는[상세계약](63-CHRONICLE-DETAILED-CONTRACT.md)을따른다. 공통[64](64-EXPANSION-COMMON-CONTRACT.md).
+
+
 ---
 
 <!-- SOURCE: 55-EXPANSION-INTEGRATION.md -->
+
+최신결정:[65](65-USER-TRAITS-XP-STAFF.md). 상세API공통[64](64-EXPANSION-COMMON-CONTRACT.md),기능별56/57/59/60/61/63작성. 목표보상/중계전략개입은사용자질문답변대기중이며58/62상세계약은아직완료아님.
 
 # 55. 추가8기능 통합·데이터·사건·화면 계약
 
@@ -3855,11 +3899,11 @@ E84/87/90/99는결과알림으로같은날요약가능,개별근거유지. E85/8
 
 41유효능력/클러치/위기→08base logit→48구종·성향과47특성합을결과별[-.10,.10]으로제한→softmax. 특성합자체는[-.06,.06]. 계수를성공률퍼센트포인트로오역하지않음. 수비/진루/교체특성은각단계한번만,평균종합/영구최고에포함안함.
 
-42성장훈련계수에코치효과합산후최대1.2,같은기간가중. 구종XP연간20/세계시즌강화1회유지. 커리어치트양의6능력성장3배/잠재력100/도전성공보장,구단치트돈/탐색/영입은기존대로. 특성자동해금/구종XP3배/개인재협상보장은추가하지않는다.
+42성장훈련계수에코치효과합산후최대1.2,같은기간가중. 구종XP일반20/개인치트60,세계시즌강화1회유지. 커리어치트양의6능력성장3배/잠재력100/도전성공보장,구단치트돈/탐색/영입은기존대로. 특성은기록으로자동해금·전체보유자동효과,개인치트구종XP3배는65사용자확정. 개인재협상보장은없음.
 
 ## API·데이터·복원
 
-28논리엔티티에playerTraits/traitLoadouts/pitchRepertoire/pitchTrainingPlans/seasonGoals/achievementUnlocks/cosmeticUnlocks/agentContracts/playerIncomeLedger/clubRelationships/playerRelationships/staffInstances/staffContracts/importantGameSnapshots/careerMoments/momentPreferences추가. 개인행owner/save검사,공용정의버전과진척분리. archive에스킬·관계·수입·연대기evidence추가,원본행불변.
+28논리엔티티에playerTraits/pitchRepertoire/pitchTrainingPlans/seasonGoals/achievementUnlocks/cosmeticUnlocks/agentContracts/playerIncomeLedger/clubRelationships/playerRelationships/staffInstances/staffContracts/importantGameSnapshots/careerMoments/momentPreferences추가. 개인행owner/save검사,공용정의버전과진척분리. archive에스킬·관계·수입·연대기evidence추가,원본행불변.
 
 쓰기명령은revision/idempotencyKey/receipt,중계·목표·카드조회는난수소비0. 구종대표선택pitchPlan/개인요청negotiation전용스트림. 표현·연대기에는PRNG없음. engineVersion증가,새버전끼리중계ON/OFF동일hash. 이미끝난구경기를새엔진으로재생성하지않는다. 구스킬없는세이브는고지된호환절차로새스트림만초기화,기존rngState리셋없음.
 
@@ -3868,6 +3912,347 @@ Neon객체저장소에중요로그/연대기첨부파일을비공개owner키로�
 ## 추가검증
 
 특성/구종조합100seed/10만타석효과방향,중계속도/스킵hash동일,직원급여포함50시즌경제,원본50%복사와스킬초기화,요청실패오퍼보존,PNG한글/Android다운로드. 정적카탈로그통과는이실행검증을대체하지않는다.
+
+---
+
+<!-- SOURCE: 56-TRAITS-DETAILED-CONTRACT.md -->
+
+# 56. 특성 상세 계약 — 판정·자동적용·중첩·S38
+
+47의12특성과계수를사용한다. API/자료형/오류는[64](64-EXPANSION-COMMON-CONTRACT.md). 아래는추가설계결정D이며실행검증전. 특성은로그잇효과·수비·진루·교체의4처리유형으로분리한다.
+
+## 해금 판정의 정확한 범위
+
+OFFICIAL은HS/COLLEGE/INDEPENDENT/FUTURES/KBO/ROOKIE/A/AA/AAA/MLB/국제의실제공식경기,연습/자체청백전제외. ‘한시즌’은worldSeasonId+competitionId+REGULAR한묶음이며다른레벨을합쳐문턱을넘기지않는다. ‘커리어’는OFFICIAL전체,PS는phase=POSTSEASON만. 능력조건은버프없는영구값,해금시점만검사하고나중에노쇠해도박탈없음.
+
+| 특성 | 정확한 evidence 조건 |
+|---|---|
+|T01|같은시즌정규PA≥150 AND (2B+3B+HR)≥20 |
+|T02|같은시즌정규BB≥30 |
+|T03|커리어추가홈진루성공≥20,단순기본진루미포함 |
+|T04|커리어실제수비출장100경기 AND DEFENSE≥70,DH단독출장제외 |
+|T05|타석시작만루의커리어H≥10 AND CLUTCH≥70 |
+|T06|커리어PS HR≥5 |
+|T07|같은시즌정규K≥100 |
+|T08|같은시즌정규투수outs≥300 AND COMMAND≥65,보직무관 |
+|T09|커리어SV≥20 AND COMPOSURE≥65 |
+|T10|같은시즌정규선발등판≥20 AND STAMINA≥70 |
+|T11|타석시작만루상대BF≥30 AND COMPOSURE≥70 |
+|T12|커리어SV≥100 |
+
+경기최종커밋→통계누적→미해금정의조건평가→해금행/근거/ E84동일transaction. 경기중문턱을넘겨도그경기의장착과확률은불변. 같은특성은playerId+traitId고유. 기록정정이있으면획득근거에정정표식,이미소비한경기결과소급변경없음.
+
+## 해금·효과 적용 순서
+
+[65 사용자결정](65-USER-TRAITS-XP-STAFF.md):기록해금후보유특성모두자동적용. 장착슬롯/시그니처수상한/변경창/AI조합선택폐기. 경기종료시해금은그경기를소급수정하지않고다음타석snapshot부터반영. 대학/프로/국제이동으로해금초기화안함. AI/동료/상대도같은해금/자동적용규칙.
+
+T01첫대면키=(gameId,batterId,pitcherId),타석시작전에방문0이면활성,BB/HBP도방문소모. T05/T11타석시작만루. T09는inning≥8 AND abs(scoreDiff)≤3,T12는inning≥9 AND 자기팀리드,동점비활성. 타자/현재투수전체보유중조건충족logit합을[-.06,.06]cap→구종/성향합→[-.10,.10]cap→softmax. 시그니처2개라도조건충족하면모두원벡터에포함.
+
+T04는피로/적합도처리전본인유효수비+2/clamp100→적합도→야수8명평균에한번. T03기본추가진루p+.02후[.40,.90]. T10은SP교체검토수+3후105상한,하드110/피로80검토유지. 이비logit효과는logitcap에섞지않음. 총보정이cap에닿으면상세도움말에원합/적용합구분,누락특성이라고표시하지않음.
+
+## AI와 원본
+
+AI는기록과영구능력으로동일조건을해금하고수동선택/순위최적화없음. 주인공만해금조건을완화하지않음. 치트는특성전부해금효과없음. archive의unlockedTraits/evidence/definitionVersion보존,어린복사본은해금0/기록0으로시작. 원본도감은출처탭. 지도자는현역특성을선수단에복사하지않음.
+
+## 데이터와 API
+
+| 엔티티 | 필드·제약 |
+|---|---|
+|trait_definitions|traitId/version복합PK,kind,signature,predicateKey,handlerType,effectVector;세이브고정버전 |
+|player_trait_unlocks|saveId/playerId/traitId UNIQUE,definitionVersion,evidenceKey,unlockedAt;append-only |
+|trait_effect_evidence|gameId/playCursor/traitId/side UNIQUE,conditionSnapshot,rawVector,combinedCappedVector;중요로그보존 |
+
+traitLoadouts테이블은채택하지않는다. GET expansion/traits?playerId=… →{playerId,autoApply:true,unlocks:[{traitId,progress,evidenceRef}],definitionVersion,currentConditionEffects}. 자동해금은경기/기록정산명령의transaction에포함,클라이언트UNLOCK_TRAIT명령없음. EQUIP_TRAITS요청은422 NOT_ELIGIBLE/automaticTraits로거절,효과없음. 핀한표시특성이필요하면개인UI선호값일뿐활성여부와무관.
+
+## S38 흐름·실패·검수
+
+보유/미해금탭→조건진척/영구능력→실제상황별효과→획득근거경기. 기본안의2슬롯/적용버튼을삭제,‘보유 특성은 조건이 맞으면 모두 적용됩니다’표시. 조회실패는도감0으로취급안함. 다른기기진행후새목록조회,이화면열람으로save revision/난수변경0.
+
+TR-D01 BB29→30단1해금/02같은경기receipt재처리중복0/03T05와T06둘다보유하면PS만루동시원합적용/04원벡터.08→cap.06/05무주자T05미활성/06첫대면BB소모/07원본보유12개복사0/08도감읽기난수0. 구현시경계·transaction·권한·응답유실을[64](64-EXPANSION-COMMON-CONTRACT.md)와fixture로실행검증한다.
+
+---
+
+<!-- SOURCE: 57-REPERTOIRE-DETAILED-CONTRACT.md -->
+
+# 57. 구종·숙련·성향 상세 계약
+
+48구종7종/성향4종과[65](65-USER-TRAITS-XP-STAFF.md)의개인치트구종3배적용. 공통API/단위/오류는[64](64-EXPANSION-COMMON-CONTRACT.md). XP는1e-4단위정수,표시등급은누적[0,10,30,60,100,150]이하최대index다.
+
+## 구성과 대표 구종
+
+pitchBook은배운이력최대7종,활성+학습slot은최대4. 시작P01등급2/XP30+사용자보조1종등급1/XP10. 활성2~4종/각weight정수10~90/합100,학습0등급은weight0/active=false. 미사용이력은숙련유지,복귀는구성창에서만. 비율은정렬pitchId순누적구간,PRNG u∈[0,1),경계u=.60은60%구간다음구종. 매실제타석대표구종1회pitchPlan스트림소비. 고의사구없는엔진이므로정상PA모두대상,취소/오류rollback은rng복원. 조회·중계·hover미소비.
+
+타자성향벡터는해당타자의타석마다동일,타구방향통계아님. 투수구종벡터×등급/5→타자성향→56보유특성합산cap→softmax. 등급은타석시작snapshot,타석결과로XP문턱넘어도다음타석부터새등급. 결과PA내구종별실제구수통계생성금지.
+
+## 성장 예산과 학습 정산
+
+baseSeasonCap=20,배수m=개인커리어SECRET_CHEAT주인공3/그외1,actualCap=20m. 연간원장은baseGranted/baseReserved/actualGranted,baseGranted+baseReserved≤20. 새구종선택시baseReserved10,기존실전은남은base10내획득,학습없으면실전base20까지. 세계시즌1원장이라고교→프로/상무/미국이동중복없음.
+
+실전candidateBase=min(.06,그타석투수기록outs×.02). 대표구종에min(candidateBase,20-baseGranted-baseReserved)×mXP. 주루아웃도해당투수outs라후속타석아웃과이중기록하지않음. 학습은등록리그정규일정진행률25/50/75/100%에각base2.5reserved해제,해당분기건강·훈련가능등록일/분기전체등록일비율을곱한값만grant. 일반현역0,상무는등록훈련가능일. 분모0이면grant0. 미지급예약잔여는그분기마감때해제,다음실전기회만재사용가능,과거실전소급지급없음.
+
+각entry.actualDelta=min(baseDelta×m,150-currentXp),상한으로버려진actualXP도base예산소비로기록,다른구종에부활안함. 실제cap60/20검사. 예치트건강학습4회각7.5XP→총30/등급2,실전최대30추가가능. 일반학습총10/등급1. 부상분기절반이면일반1.25/치트3.75. 소수반올림잔여는1e-4정밀도세계원장에보존,자연능력성장원장과혼합안함.
+
+## 변경·AI·가져오기
+
+프리시즌/정규절반각창1회구성변경,학습계획은PRE만1회. 성향변경은별도동일창1회,같은내용NO_CHANGE기회0. 새학습취소는확정전만,확정후기존진척은book에남고시즌재선택없음. 4슬롯가득이면미리선택한비활성화대상확인,활성2종미달구성거절. 복무로놓친MID는복귀시1회/시즌넘기면소멸.
+
+AI투수는등급높음→구종ID순상위최대4활성,2종보다적으면생성/호환오류이지무료능력생성안함. 2종60/40,3종50/30/20,4종40/30/20/10. 새학습은보유구종누적XP합이50이상이고slot여유있을때미보유최소ID1종,아니면기존숙련집중. AI타자성향은생성된preferenceApproach를유지,매타석상대에맞춰무료변경안함. 개인성향·AI모두같은효과.
+
+복사원본이력모든종류보존,등급≥1은max(1,floor(등급/2)),XP는그등급최소값;원본학습등급0은0. 활성구성은원본중숙련유효2~4와원래비율,학습0이활성에있었다면불일치로미리보기보류. 새세계성장예산0소비에서시작,개인치트출처를구단에승계하지않음.
+
+## 데이터·API
+
+| 엔티티 | 필드·제약 |
+|---|---|
+|pitch_books|saveId/playerId/pitchId UNIQUE,xpUnits0~1500000,mastery파생 |
+|pitch_loadouts|playerId PK,slotPitchIds≤4,activeWeights JSON,windowId,changesUsed0/1,rowRevision |
+|pitch_training_plans|playerId/seasonId UNIQUE,pitchId,quarterPaidMask0~15,baseReservedUnits |
+|pitch_xp_entries|playerId/sourceEvidenceKey UNIQUE,baseUnits,actualUnits,multiplier,capLossUnits |
+|batting_approaches|playerId PK,approachId enum,windowId,changesUsed,rowRevision |
+
+GET expansion/repertoire?playerId →{kind,book,loadout,training,seasonBudget:{baseCap:20,multiplier,actualCap,spent,reserved},allowedActions}. SET_REPERTOIRE={playerId,windowId,slots:[pitchId],weights:[{pitchId,percent}]};SET_PITCH_TRAINING={playerId,seasonId,pitchId,replaceSlotPitchId?};SET_BATTING_APPROACH={playerId,windowId,approachId}. preview는before/after/비율합/학습예상/예산. 합99는422 INVALID_ALLOCATION/weights,학습미허용은422 WINDOW_CLOSED,숙련0활성은422 NOT_ELIGIBLE. 성공receipt에는최종bookVersion/설정/기회사용만.
+
+S39는종류별화면분리,학습XP와활성비율을같은숫자로표시하지않음. XP가P상한100인것처럼표현금지. fixture PIT-D01~08:경계.60/합99/등급0활성/치트학습30등급2/연간60cap/부상3.75/다중리그동일원장/복사등급5→2 XP30. 예산·PRNG·호환·응답유실실행검증은구현후.
+
+---
+
+<!-- SOURCE: 59-AGENTS-DETAILED-CONTRACT.md -->
+
+# 59. 에이전트·관계·재협상 상세 계약
+
+50의3전문분야/2%수수료/확률식을구체화한다. 64공통처리,캐릭터주인공의개인협상과40구단FA선수수락을서로다른명령으로처리한다.
+
+## 오퍼와 역제안 상태
+
+유효기본오퍼ACTIVE에서preview→REQUEST_SALARY_COUNTER확정→ACCEPTED_COUNTER또는REJECTED_COUNTER. 검증실패는4xx로미사용,추첨실패는200/outcome=REJECTED로offerSet.requestUsed=true. 성공은기존오퍼와같은구단/기간/통화/마감의상향오퍼1개생성,기본오퍼는SUPERSEDED표시. 하나의offerSet은원오퍼/상향오퍼중단한계약만체결가능. 거절시기본ACTIVE유지,요청날짜가마감게임일종료를넘으면422 NOT_ELIGIBLE로추첨없음.
+
+금액은만원단위(KRW)/100USD단위에서반올림half-up,상향률.10/.20/.30. 원연봉/상향연봉을구단당해·미래예산으로검사한뒤p계산. 상향delta예약은요청transaction에서잡고성공시상향오퍼예약으로유지,거절시즉시해제. 기본오퍼예약을이중차감하지않음. 다른기기/상대구단예산변경이면409 PREVIEW_STALE,새p·조건확인후다시확정. 클라이언트가p=1/증액.99전송시schema거절.
+
+pSalary=clamp(.75-1.5x+.002(trust-50)+bonus,.10,.90),보너스국내AG01/미국AG03일때.08그외0. u<p이면성공,u=p는실패. 전용negotiation스트림1회만소비,명령재시도소비0. 성공은상향제안일뿐계약자동체결아님,계약수락은23의권리/등록/군복무검사유지.
+
+## 기용 요청
+
+bucket=floor(팀정규누적경기/20),playerId+worldSeasonId+bucket당요청1회. 시즌시작0경기구간도가능하나프로명단/건강/계약필수. 투타종류·해당포지션의현재정상출장경쟁자중roleScore최고1명,동률선수ID를comparisonPlayer로고정. pReview의두점수/관계/agent를preview에명시. 성공receipt에추가검토task생성,다음라인업검사전41경쟁식한번수행. 실패해도일반20경기검토는유지. 경쟁자0이면요청확정형검토로odds=[]/숫자확률없음,기회는검토처리로그에남김.
+
+부상/현역복무/은퇴는422 NOT_ELIGIBLE. 상무는상무실제소속내경쟁자로검토가능. 소속변경으로같은worldSeason/bucket이미쓴기회를초기화하지않음. ‘주전 요청성공’대신‘추가평가 수용’표시.
+
+## 관계 원장과 약속
+
+관계저장은seasonStartTrust와rawSeasonDelta,표시는clamp(seasonStartTrust+clamp(rawSeasonDelta,-10,10),0,100). 같은시즌+15후-10이면raw5/적용+5,순서대로포화시켜+10후-10=0으로왜곡하지않음. 이적한새구단은새관계50,구관계는읽기보존.
+
+v1약속enum PREPARE_CURRENT_ROLE:20팀경기검토기간현역할유지,사용자가자발적역할전환확정하면위반. 감독기용변경/부상/복무/국가대표/강등/소속변경은위반아님(취소또는충족가능성재검사). 약속수락은명시버튼으로만,시스템요청거절을약속위반으로처리안함. fulfilled+5/broken-10/정규등록시즌완료+2는각sourceEvidence키1회. 약속은선수·구간당최대1개,반복수락파밍없음.
+
+## 수수료 정산·데이터
+
+급여지급receipt별grossMinor와그날유효agentContract확인. 누적feeTarget=floor(계약유효누적gross×.02),이번fee=feeTarget-기지급fee,net=gross-fee. 지급단위마다따로반올림해수수료누락/초과하지않음. 유효하지않은기간gross는누적대상제외. 통화별원장,미지급급여/계약금/복무정지0수수료. agent교체는다음세계시즌시작효력/연1회,직접협상해지는같은교체기회사용. 첫프로가입은최초1회즉시가능,새offerSet요청횟수는agent교체와무관.
+
+| 테이블 | 필드·제약 |
+|---|---|
+|agent_contracts|playerId,agentId,startGameDay,endGameDay?,feeBps=200,status,version;동시ACTIVE1 |
+|club_relationships|playerId/teamId UNIQUE,seasonStartTrust,rawSeasonDelta,currentTrust,revision |
+|relationship_entries|playerId/sourceEvidenceKey UNIQUE,type,rawDelta,seasonId |
+|negotiation_requests|playerId/offerSetId UNIQUE또는roleBucket UNIQUE,type,pSnapshot,rngRef,outcome,counterOfferId? |
+|player_income_entries|salaryReceiptId UNIQUE,currency,gross,agentFee,net;gross=fee+net |
+
+GET expansion/agents →{currentAgent,availableAgents,feeProjection,relationships,requestsRemaining,baseOfferRefs}. HIRE_AGENT/CHANGE_AGENT={playerId,agentId|null,effectiveSeasonId};REQUEST_SALARY_COUNTER={playerId,offerSetId,baseOfferId,raiseBps:1000|2000|3000};REQUEST_ROLE_REVIEW={playerId,roleBucket}. preview는before/after/odds.target/costs/기한. 성공result={outcome,counterOfferId?,reviewTaskId?,requestUsed:true,baseOfferState}. 4xx오류는64를따른다.
+
+S41담당비교→순수입/관계근거→요청대상→p/실패후경로→확인→결과. AG-D01직접.60/02국내전문가.68/03u=.68실패/04실패후기본오퍼유효/05중복동일receipt/06예산변경재확인/07분할급여총합100000000/fee2000000/net98000000/08관계raw15-10=5/09부상약속위반없음/10기용검토성공에도출장미보장을fixture로정의.
+
+---
+
+<!-- SOURCE: 60-RELATIONS-DETAILED-CONTRACT.md -->
+
+# 60. 라이벌·동료 상세 계약
+
+51의서사를실제선수/소속/경기evidence로구동한다. 승격/이적/국적/경기를강제생성하지않는다. 64의소유·멱등계약,관계읽기는난수0.
+
+## 관계의 저장 축과 후보
+
+relationship.type=RIVAL또는TEAMMATE,stage=FORMED/SEPARATED/REUNITED_OPPONENT/REUNITED_TEAM/RETIRED. 현재stage는최근상태요약,이전단계는milestone행으로보존. 선수쌍은정렬ID로normalPairKey,주인공관점primaryPlayerId별화면을만든다. 같은쌍동일type중복없음,라이벌이동료가되어도과거type를덮지않고TEAMMATE관계추가/연결한다.
+
+고교라이벌후보는같은kind/나이차≤1/영구overall차≤5/현재HS/자기ID제외. 같은고교는가능하나고교동료와동일ID배정금지. 후보정렬ID뒤별도relationFormation seed로하나,후보0이면51의고교선수생성루틴한명,세계인원상한검사실패시라이벌없음정상상태와기록남김(커리어진행막지않음). 이선수는실제고교로스터/드래프트풀에포함해유령경력안만듦. 동료는실제팀정규명단다른선수중같은kind/나이차작음/ID순1명,없으면추가생성없이없음.
+
+## 상태 전이
+
+| 이벤트 | 전제 | 결과·근거 |
+|---|---|---|
+|관계형성|유효선수2명/중복없음|FORMED/E94,evidence=formationReceipt |
+|졸업후소속분리|같은팀아님/등록경로확정|SEPARATED,transferReceipt |
+|서로상대팀실제출장|SEPARATED/동일gameId실제출장양쪽참|REUNITED_OPPONENT/E95,gameReceipt |
+|실제같은팀등록|서로다른팀후현재같은teamId|REUNITED_TEAM/E96,registrationReceipt |
+|둘중한명은퇴|retirementReceipt존재|RETIRED,이전이정표보존 |
+
+벤치등록만한상대는‘대진예정’뉴스만,실제재회마일스톤아님. TEAMMATE공존20경기는양쪽같은팀정규명단게임일의교집합개수,같은게임일1회/우천·휴식0. 동반PS/우승은그대회명단교집합과팀결과근거. 입대/부상은관계삭제아님. 상대은퇴후재회는현역맞대결로분류안함.
+
+## 맞대결 집계와 기록 정정
+
+직접대결은gameId/playCursor에batterId와pitcherId가해당쌍일때만. BB/HBP는PA1/AB0,안타는AB1/H1,안타후주루아웃도H유지. RBI는타석합법득점만. 직접대결키=(pairKey,leagueId,competitionPhase,worldSeasonId),리그/PS/국제혼합없음. 다른포지션같은kind는comparison모드,각자gameStats와실제동시출장경기수만반환,직접대결AVG를만들지않음.
+
+summary는증거로그의읽기모형,집계키gameId/playCursor/aggregateVersion UNIQUE. 같은receipt재실행증분0. 기록정정시old contribution취소+new contribution원자교체,relation milestone근거가없어지면CORRECTED표시/과거확정게임결과불변. 과거로그제거전pair contribution와summary영구보존,선수은퇴해도선수요약tombstone가참조유지.
+
+## 데이터·API·S42
+
+player_relationships(saveId,normalPairKey,type,primaryPlayerId,stage,version),relation_milestones(relationshipId,type,evidenceKey UNIQUE,gameInstant),relation_game_contributions(pairKey,gameId,playCursor UNIQUE,scope,stats),relation_summaries(pairKey,scope UNIQUE,stats,version). owner는save에서파생,타세이브ID연결금지. 라이벌기록을원본archive에스냅샷,어린복사본은새세계새후보.
+
+GET expansion/relationships?playerId →{relationships:[{id,type,stage,otherPlayerSummary,upcomingMeetings}],cursor};GET /api/saves/{id}/relationships/{relationId}?scope=… →{mode:DIRECT|COMPARISON,rawStats,rates,milestones,sourceVersion}. 핀은63의개인moment preference,ACK_RELATION_EVENT={eventInstanceId}는읽음만저장/경기효과없음. client CREATE_RIVAL명령은없음.
+
+S42상대선택→고교/국내/미국연표→scope필터→실제전적→evidence경기/연대기. 예정없음/은퇴/로그없음은서로다른문구,다른kind가아닌경우‘직접상대전적미제공’표시. 캐시후상대소속변경은요약version갱신,과거이름·구단은당시snapshot사용.
+
+REL-D01 후보0정상처리/02본인제외/03같은ID중복역할방지/04벤치만재회미달/05BB면PA1AB0/06동일경기재처리합불변/07타자끼리DIRECT금지/08상대은퇴기록유지/09국제기록분리/10복사본원본라이벌자동복제0. 모든전이는입력evidence와기대행을fixture로명시한다.
+
+---
+
+<!-- SOURCE: 61-STAFF-DETAILED-CONTRACT.md -->
+
+# 61. 은퇴 지도자 상세 계약 — 역할 claim·급여·효과
+
+52와65확정:같은구단세계같은소유원본은현역복사또는지도자하나. 보관원본불변/가상직원제공. 가격·등급은기존D,연봉코치KRW150000000/스카우트100000000.
+
+## 역할 원장과 전이
+
+source_role_claims PK(saveId,sourceArchiveId),role=PLAYER|COACH|SCOUT,instanceId,active=true. 이claim은별도활성표이므로동시고유행1개,이력은claim_history append-only. 구단생성import도같은표를획득한다. 서버잠금순서는save→정렬sourceArchiveId→예산계정→슬롯,모든명령공유해교착을피한다.
+
+소유검사→은퇴snapshot버전→역할claim→직무공석→예산/미래보장검사→급여예약→staffInstance/contract/효과기간→claim/receipt커밋. 중간실패전부rollback. 동일원본다른역할활성이면422 SLOT_CONFLICT,원본숨김은새선택목록만숨기고기존claim삭제아님. 다른세계는별도claim허용. 가상직원은sourceArchiveId=null로claim없으나동일genericCandidateId중복활성불가.
+
+고용ACTIVE→해임DISMISSED/기한EXPIRED. 해임은효과기간종료/활성슬롯·claim해제,미지급보장급여는남김. 현역복사선수은퇴시PLAYERclaim해제,원본을다음허용직원선택창에지도자로쓸수있음. 원본source와구단복사본의새archive는서로다른고유ID,출처를타고동일선수를무한동시고용하는회피는rootSourceArchiveId기준claim으로막는다.
+
+## 급여·담당·효과
+
+계약시작은다음세계운영일,종료는해당세계시즌재정종료일exclusive. W=저장된seasonFinanceDays,남은D일비례보장총액=floor(annualSalary×D/W). 예W200/D100코치75000000원. 지급일별cumulativeTarget=floor(guaranteedTotal×elapsedContractDays/contractDays),이번paid=target-기지급. 지급만큼reservedOperations감소/paidOperations증가,가용액변화0. 해임시남은reserved를guaranteedStaffOperations로분류만변경,추가이중차감없음. 만료뒤보장잔액정산누락은운영오류.
+
+staffPaid/reserved/guaranteed는운영비의하위항목,선수salary원장과구분. 무제한예산도유한급여원장,실제청구없음. 계약중교체는후임보장액도검사,기존빚삭제없음. 직원1코치/1스카우트는선수정원에포함안함.
+
+코치는assignment=BATTERS|PITCHERS,고용확정때선택,당일변경최대1회/다음세계일부터효력. pendingGame있으면명령확정불가. effectiveTraining=clamp(baseTraining+eventTrainingBonus+coachBonus,0,1.2);코치등급1/2/3의+.02/.04/.05. 기존재활base.8~1.0를먼저계산하고합산. 각선수기간별담당일수에비례,같은날두담당집단에중복적용안함. 개인치트3배는그훈련계수적용한기준자연성장에한번.
+
+스카우트effectiveLevel=min(5,facilityLevel+I(grade≥2)),확률/전망범위미리보기에같이반영. 월탐색횟수2는증가안함,급여지급일을바꿔확률재추첨불가. 등급은소스snapshot의완료프로등록시즌0~2/3~7/8이상→1/2/3,실제등판수·나이와혼동안함. 고용뒤원본고유특성/잠재력연결보너스없음.
+
+## AI와 엔티티
+
+AI는오프시즌로스터·미래급여예약후가용≥해당직원보장액+10억원일때만빈슬롯고용,코치우선→스카우트,등급3가상후보선택. 유지비부족시새계약갱신하지않고기존보장금유지. 플레이어원본보유에의존안함. 현재구단상태로검증하되같은날사용자행동을보고AI후보재추첨없음.
+
+staff_instances(id,saveId,rootSourceArchiveId?,sourceSnapshotHash,role,grade,assignment,status,rowRevision),staff_contracts(id,annualMinor,guaranteedMinor,currency,startDay,endDay,paidMinor),staff_pay_entries(contractId,dayIndex UNIQUE,targetPaidMinor,deltaMinor),staff_effect_periods(staffId,assignment,startDay,endDay). source_role_claims에는actor ownership을복사하지않고save/archive소유관계검사.
+
+## API·S43·검수
+
+GET expansion/staff?clubId →{slots,candidates,costProjection,activeSourceClaims,allowedActions}. HIRE_RETIRED_STAFF={clubId,sourceArchiveId,snapshotVersion,role,assignment?};HIRE_GENERIC_STAFF={clubId,candidateId,role,assignment?};ASSIGN_STAFF={staffId,assignment};DISMISS_STAFF={staffId}. preview필수,보장총액/현재효과/효력일/해임후빚명시. result={outcome,staffId,contractId,claimRole?,effectsStartDay,budgetRevision}. 실행재시도는동일receipt/직원중복0.
+
+S43공석→후보필터(원본/가상)→역할claim상태→등급근거→급여/효과preview→확정→운영홈. 사용불가원본은현재역할과다른후보링크,자동방출/해임안함. STAFF-D01 현역claim때고용거절/02동시import와고용중1개/03원본hash불변/04반년75000000/05해임보장잔액/06코치훈련1.18+.05→1.2/07스카우트L5유지/08급여재처리중복0/09다른세계재사용/10후임예산검사.
+
+---
+
+<!-- SOURCE: 63-CHRONICLE-DETAILED-CONTRACT.md -->
+
+# 63. 연대기·카드 상세 계약 — 근거·메모·PNG·복원
+
+54의기록표현기능을구체화한다. 목표보상방법과무관하게이문서는실제근거기록을복제표현하고수치/보상을지급하지않는다. 64공통인증,원본은퇴snapshot불변.
+
+## 장면 생성과 보존
+
+주요게임/등록/계약/복무/학적명령이commit할때moment_event_outbox에(sourceReceiptId,momentType,playerId,evidenceRef)고유행저장. projection worker가정의버전별template와gameInstant/당시나이/팀/리그/rawStatSnapshot을채워career_moments생성. UNIQUE(sourceReceiptId,momentType,playerId). 같은경기여러성과는groupKey=gameId로대표카드1개/배지목록,각근거행유지. 표시지연은‘장면 정리 중’,worker실패가경기명령rollback/재추첨을유발하지않음.
+
+순서=(worldSeason ordinal,dayIndex,gameSequence,playCursor,momentId),최신순목록은역순cursor. season_book은해당시즌모든소속scope별기록과momentId참조,국내/미국합산없음. 은퇴완료조건은최종수치snapshot확정,연대기projection미완료라도보관상태PRESENTATION_PENDING표시후복구가능. 원본의sourceReceipt와momentRawSnapshot을독립보존해활성save삭제에도원본읽기가능. 선수나팀이름변경은과거당시값을덮지않음.
+
+본문필수placeholder가없으면TEMPLATE_INPUT_MISSING으로표현만pending,역산/가짜경기생성없음. 상세로그없어도장면raw숫자/날짜는표시,재생링크만비활성. 경기기록정정은evidenceVersion증가와카드CORRECTED표시,옛이미지대체시기록변경이력보존.
+
+## 사용자 선호 분리
+
+moment_preferences(ownerSubject,momentId UNIQUE,preferenceRevision,pinned,hidden,userTitle,userCaption,coverTheme). 공식제목/기록은immutable,사용자제목60/설명300글자소NFC/제어문자불허/HTML이스케이프. 핀/숨김은별개bool,숨긴핀은‘숨김포함’필터에서조회가능. 같은장면두기기메모는expectedPreferenceRevision CAS,409후자동병합/덮어쓰기없음. 선호변경은save revision/PRNG/수상/보상불변.
+
+## 카드 생성 규격
+
+PNG단일카드1080×1350,sRGB,배경불투명,상단브랜드/시점→초상→제목최대3줄→scope/기록표→사용자메모최대6줄→게임모드출처. 제목40px/본문28px/숫자64px기본,줄넘침은글자축소대신preview에서메모편집·다른레이아웃선택. 한국어폰트glyph사전검사,준비전렌더금지. 그림실패는단색/이니셜,폰트도모든한글표시불가면FAILED/사용자에게텍스트JSON대안. 공식로고미허가상태는팀명/색상대체,이미지에강제로다운로드한외부파일을섞지않음.
+
+JSON은{exportSchemaVersion,presentationVersion,playerDisplayName,scope,createdGameInstant,moments:[{momentRef,type,gameInstant,age,scope,rawStats,publicEvidenceRef,userTitle,userCaption}]}이며local내려받기전전체개수표시. 인증값/이메일/ownerSubject/스토리지비밀키/내부DB접속/내부행ID는제외,publicEvidenceRef는내려받은묶음내참조용익명ID. 가져오기지원은현재백업시스템과별개이므로이JSON을게임세이브복원파일이라표시하지않음.
+
+## export job과 파일 생명주기
+
+QUEUED→RENDERING→UPLOADING→READY/FAILED/CANCELLED. owner+exportRequestId+동일payloadHash멱등,다른내용같은ID409. snapshot은momentVersion/preferenceRevision/themeVersion에고정,대기중메모수정해도기존job수출내용은바뀌지않음. 네트워크재시도같은job조회,신규상태로다시만들기는새requestId명시.
+
+private object key=owner namespace/exports/jobId/output.png,업로드checksum/크기검사후READY. 파일24시간후정리,서명다운로드URL5분,만료는job조회로새URL. 영구장면/기념카드정의는남고임시이미지만정리. READY전고아파일은업로드TTL뒤청소,상태FAILED가장면삭제/재지급으로이어지지않음. 서버최대파일10MiB/유저동시job2/같은outputHash재사용가능,이한도는연대기보관개수하드삭제상한아님.
+
+## 엔티티·API·S45
+
+career_moments(momentId,scopeRef,playerId,momentType,gameInstant,ageSnapshot,rawSnapshot,evidenceKey,presentationVersion,status),moment_event_outbox(sourceReceiptId/type/playerId UNIQUE,status,retryCount),season_books(scopeRef/seasonId UNIQUE,scopeRecordRefs),moment_preferences는위정의,card_export_jobs(owner/requestId UNIQUE,status,inputHash,outputHash,objectKey,expiresAt,errorCode).
+
+GET /api/saves/{saveId}/players/{playerId}/moments?seasonId&leagueId&type&cursor,GET /api/archives/{archiveId}/moments,GET /api/moments/{momentId}는owner권한검사후{official,preferences,evidenceAvailability,canExport}. PATCH /api/moment-preferences/{momentId}={expectedPreferenceRevision,pinned?,hidden?,userTitle?,userCaption?,themeId?}→{preferenceRevision,preferences};POST /api/card-exports={exportRequestId,scopeRef,momentId,format:PNG|JSON,expectedMomentVersion,expectedPreferenceRevision,themeId};GET /api/card-exports/{jobId}→{status,preview?,downloadUrl?,expiresAt?,errorCode?}. 외부전송endpoint없음.
+
+S45필터→카드→공식/메모구분→미리보기→수출확인→job상태→기기저장. 422 TEXT_OVERFLOW이면대상필드편집,409 VERSION_CHANGED면현재모습재preview,503 EXPORT_FAILED면같은job상태확인/새job선택. PIN장면누르기는코스메틱선호만,화면나가기취소가공식카드를삭제하지않음.
+
+CHR-D01 같은outbox2회장면1/02국제0출장이면출장성과문장없음/03원본나이41유지/04메모CAS/05긴제목초과/06업로드실패공식기록불변/07서명URL만료파일존재/08export에ownerSubject없음/09게임세이브아닌JSON안내/10원본source-save삭제후카드읽기. 실제PNG픽셀/한글/Android저장은별도실행게이트.
+
+---
+
+<!-- SOURCE: 64-EXPANSION-COMMON-CONTRACT.md -->
+
+# 64. 확장 상세설계 공통 API·오류·검수 계약
+
+56~63은47~54를구현가능한행동계약으로구체화한다. 본문수치D는독자게임기본안,실행통과와구분. 앱코드/SQL배포는하지않는다. 28의인증/소유권/행잠금/멱등계약유지.
+
+## 자료형·시간
+
+ID는문자열1~128자,revision은10진정수문자열,일반count는0이상정수. moneyMinor는통화최소단위bigint의10진문자열/통화KRW또는USD,통화혼합합산없음. probability는[0,1]유한수,능력과XP는1e-4정수단위저장(예XP2.5→25000),표시등급은정수. GameInstant={worldSeasonId,dayIndex,gameId?,playCursor?};서버UTC는작업TTL/로그에만,성장·기한·조건은게임달력. 시즌바뀌었다고실제연월일로경력을추측하지않음.
+
+모든정의행은definitionVersion/engineVersion,소유행은saveId/ownerSubject/rowRevision를갖는다. 상태보존근거는sourceReceiptId/evidenceKey,목록cursor는안정정렬키+ID의불투명서버문자열,limit기본20/최대50. 없는데이터는null/빈목록,기록분모0비율null. 보유0과조회실패구분.
+
+## 공통 경로
+
+- GET /api/saves/{saveId}/expansion/{traits|repertoire|goals|agents|relationships|staff}:현재모형+allowedActions+reasonCodes.
+- POST /api/saves/{saveId}/previews: {type,payload,expectedRevision}. read-only계산,세계수정/난수/예산소모0. response={previewId,sourceRevision,rulesVersion,effects,costs,odds,reasonCodes,validUntilUtc}.
+- POST /api/saves/{saveId}/commands:28의{commandId,expectedRevision,type,payload,previewId?}. 응답{commandId,revision,phase,summary,eventIds,nextActions,result}. preview는행동관련스냅샷과payload hash에묶고UTC10분TTL,클라이언트값p/급여/등급은채택안함.
+- GET /api/saves/{saveId}/commands/{commandId}:같은receipt조회,타인/없는명령은모두404.
+- 읽기중계/연대기및개인핀/메모·내보내기는62/63의별도resourceRevision. 게임진행save revision을불필요하게늘리지않음.
+
+일반게임변경명령은유효preview필수. 단순ACK와정보조회에는preview없음. 성공receipt가있으면preview만료/현재revision보다먼저그성공응답반환. 같은ID다른request hash는409. 새명령만인증→소유→잠금→revision→preview fingerprint→상태/조건→필요한추첨→원장+상태+receipt원자커밋. 실패확정추첨도성공HTTP200/result.outcome=REJECTED로횟수원장소모,검증오류4xx는횟수·난수0.
+
+## 오류 코드
+
+| HTTP | code | UI 행동 |
+|---|---|---|
+|401|AUTH_REQUIRED|재로그인후원래조회복귀,명령재실행은receipt확인부터 |
+|403|ACCESS_REVOKED|접근정책안내,데이터상세노출없음 |
+|404|RESOURCE_NOT_FOUND|타인/삭제/없는ID구분노출없이목록으로 |
+|409|REVISION_CONFLICT|최신모형조회,초안유지후재preview |
+|409|COMMAND_ID_REUSED|새행동인지확인,기존ID내용교체금지 |
+|409|PREVIEW_STALE|조건·가격·p재표시후다시확인 |
+|422|WINDOW_CLOSED / NOT_ELIGIBLE / INVALID_ALLOCATION / SLOT_CONFLICT / INSUFFICIENT_BUDGET|해당입력옆사유와해결행동 |
+|422|LIMIT_REACHED / EVIDENCE_MISSING / IMMUTABLE_RECORD|남은횟수·근거·읽기전용안내 |
+|429|RATE_LIMITED|retryAfter따라재시도,게임비용추가없음 |
+|503|RESULT_UNKNOWN|실패라고재추첨하지않고같은commandId조회 |
+
+오류payload는28형식+fieldErrors/allowedActions,SQL/secret/타인자료없음. 구단치트예산검사면제와실제권리/정원검사는별개. 불가능상태는reasonCode,확률은38대로실제1숫자숨김/추정표시구별.
+
+## 화면 처리와 수용 기준
+
+CLEAN→DIRTY→PREVIEWING→CONFIRMING→SUBMITTING→APPLIED또는REJECTED. 조회/검증실패는DIRTY로입력유지,결과불명은RECONCILING에서receipt확인. SUBMITTING/RECONCILING확정버튼잠금,조회이동가능. 뒤로가기는확정전초안폐기확인,확정후되돌리기아님. 두기기동시같은revision명령은한개만성공.
+
+각완료된상세문서의fixture는입력/명령/기대결과/상태delta/금지delta/화면행동까지명시한다. 기계가독목록[expansion-acceptance-fixtures.json](expansion-acceptance-fixtures.json)은설계데이터,테스트실행완료가아니다. 구현자는이를기대값으로엔진·DB·API·웹/APK테스트를작성한다. 필수:정상·경계·조건불가·멱등·다른기기충돌·응답유실·원본불변·개인자료권한. 64의고정gate를충족하지않으면기능완료라고쓰지않음.
+
+현재fixture56개/6분야작성,목표·중계2분야는사용자핵심선택대기. 완료판정과pending구분은STATUS를따른다.
+
+
+---
+
+<!-- SOURCE: 65-USER-TRAITS-XP-STAFF.md -->
+
+# 65. 사용자 추가 결정 — 특성 자동 효과·치트 구종 성장·원본 단일 역할
+
+사용자답변확정U(2026-10-16):①기록으로특성해금,보유효과모두적용②개인치트의구종숙련성장3배③같은세계동일원본은현역선수또는지도자한역할. 이전장착2/시그니처1/개인치트구종성장1배는폐기한다.
+
+## 특성
+
+특성해금즉시보유상태,실제효과는조건이맞는다음타석snapshot부터자동적용. 장착/해제/변경창/AI선택없음. 두시그니처를모두해금하면둘다조건평가. ‘모두적용’은만루효과가무주자에도작동한다는뜻이아니며조건충족한보유특성전체를합산한다. logit기존합산cap±.06/구종·성향포함±.10은밸런스기본안D로명시. cap은보유특성을슬롯때문에배제하는규칙이아니라최종수치제한이다. 수비/주루/교체효과는각자처리단계의cap.
+
+## 구종
+
+기본연간구종성장예산20XP,개인치트주인공은양의구종XP를3배,연간상한도60XP. 기본학습10+실전최대10을배분한경우치트학습30+실전최대30. 연간cap20을유지해실제로3배가막히는계산금지. 등급최대5/누적XP150/활성비율/구종4슬롯은유지. 일반·하드구종배수1,기본능력일반1.5/하드1/치트3과분리. 구단복사본에원본개인치트배수자동승계없음.
+
+## 원본 역할
+
+같은saveId+sourceArchiveId에는현역복사또는활성지도자하나. 다른세계재사용가능,소유원본불변. 지도자해임해도보장급여는원장에남지만활성역할은해제,그뒤현역복사투입자체는구단생성/복사허용단계규칙을따름. 아무시점에나복사버튼을새로만들지는않는다. 동시요청은원본역할claim을transaction잠금/고유제약으로하나만확정.
+
+## 변경 반영 대상
+
+47/56특성,S38/E85,48/57구종,33치트설명,52/61지도자,55통합,14/STATUS/보드/카탈로그/fixture. 기능추가8종자체는유지한다. 진행중구세이브는아직없으므로구현첫버전에이요구를사용하고기존구현데이터를임의덮어쓰지않음.
 
 ---
 
@@ -4597,20 +4982,19 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 ## E84 · 나만의 무기를 얻다
 
-쌓아 온 기록이 새로운 특성의 조건을 채웠습니다. 장착 가능한 시점과 효과를 확인합니다.
+쌓아 온 기록이 새로운 특성의 조건을 채웠습니다. 보유 특성은 조건에 맞는 상황에서 모두 자동 적용됩니다.
 
 발생: 특성해금조건충족receipt
 
 - 특성도감확인 → 확정된결과와선택내역을확인합니다. (OPEN_TRAITS)
 
-## E85 · 두 가지 무기
+## E85 · 쌓아 온 나만의 무기
 
-이번 구간에 사용할 특성을 고릅니다. 두 자리 중 시그니처는 하나만 사용할 수 있습니다.
+장착을 고를 필요 없이 보유 특성을 모두 활용합니다. 각 효과의 활성 조건과 실제 합산 보정을 확인합니다.
 
-발생: 프리시즌또는정규절반특성변경창
+발생: 보유특성정보조회또는새특성해금요약
 
-- 장착미리보기 → 확정된결과와선택내역을확인합니다. (EQUIP_TRAITS)
-- 현재장착유지 → 확정된결과와선택내역을확인합니다. (ACK_EVENT)
+- 보유특성과조건확인 → 보유특성의활성조건을확인했습니다. (OPEN_TRAITS)
 
 ## E86 · 새로운 공의 연습
 
@@ -4738,6 +5122,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: HANDOFF-PROMPT.md -->
 
+현재진행:[65 사용자후속결정](65-USER-TRAITS-XP-STAFF.md)과[64 상세계약공통](64-EXPANSION-COMMON-CONTRACT.md)을우선읽으세요. 56/57/59/60/61/63작성,58목표·62중계는사용자선택답변대기(STATUS). 특성전체자동효과/치트구종3배가최신확정입니다.
+
 최신v0.9:[55 추가8기능통합](55-EXPANSION-INTEGRATION.md)을먼저확인. 47~54모두v1필수로추가,45화면/99이벤트. 세부수치는설계기본안,앱미구현.
 
 최신 v0.8: [39 정합](39-DESIGN-RECONCILIATION.md) · [40 확률](40-SCOUTING-RECRUITMENT-ODDS.md) · [41 경기](41-SIX-STAT-ENGINE.md) · [42 성장](42-GROWTH-DIFFICULTY-REBIRTH.md) · [43 대학](43-COLLEGE-CAREER.md) · [44 구단](44-CLUB-ECONOMY-AI.md) · [45 이벤트83종](45-EVENT-CATALOG-REVISION.md) · [46 화면37종](46-ALL-SCREENS-FLOWS.md). 새수치는설계기본안D,실행검증전. 앱미구현.
@@ -4767,9 +5153,9 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: VALIDATION.md -->
 
-# v0.9 설계 정적 검증 — 2026-10-16
+# 상세계약 v0.10 진행 중 검증 — 2026-10-16
 
-대상은문서·카탈로그·HTML설계시연이며실제게임/브라우저/Neon/APK검증이아니다.
+앱코드/SQL배포를작성하지않고추가8기능중독립진행가능한6분야의상세서면계약을작성했다. 목표보상/중계전략개입은사용자질문답변대기,58/62상세계약은미완료.
 
 명령: `node docs/design/verify-design.mjs`
 
@@ -4777,14 +5163,11 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 PASS: 99 event contracts, 45 screen contracts, unique IDs, local links/assets, JS syntax, embedded state catalog, no visible 100% badges.
 PASS: design arithmetic: search odds, offer distributions/monotonicity, 14 initial arrays, overall, advancement, draft, growth, import, budget, college schedule.
 PASS: expansion design arithmetic: negotiation .60/.68, income fee, staff budget, imported pitch mastery, skill modifier caps.
+PASS: 56 explicit design fixtures across 6 detailed modules; automatic traits and cheat pitch XP examples. Fixture execution is NOT implemented.
+PENDING USER CHOICES: goal rewards and commentary strategy intervention.
 NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.
 ```
 
-- E01~99연속/고유,제목·본문·조건·선택·결과안내필드누락없음. S01~45모두카탈로그/HTML에존재,로딩/빈상태/오류/저장중/충돌문구포함.
-- HTML ID중복/내부링크·자산누락없음,세스크립트구문파싱/임베드상태JSON일치. 실제DOM동작·키보드/모바일가독성통과아님.
-- 기존수식예시와추가역제안.60/.68/개인수수료2%/직원연봉후잔액/복사구종등급하한/새효과합산cap계산확인. 설계수식을검사한것이며실제엔진구현테스트아님.
-- 실제100확률숫자배지없음. 구종운용비율/능력100/잠재력100은서로다른표시다.
-- 브라우저는앞선검수에서MXC sandbox permission path cannot be represented losslessly오류로차단됐다. 이번확장화면은실제렌더링검수하지않았다.
-- 확장8기능과기존기능모두앱미구현. 100seed커리어/10만타석/50시즌경제·직원·스킬조합,실제Neon/API/인증/백업/PNG/Android다운로드/build/APK는구현후필수검증.
+신규서면fixture는입력given/action/expected/mustNotChange/UI실패처리/미구현표시포함. 56개기대값이존재하고고유하며필드가채워진것을검사했다. 게임엔진·DB·API에서이56개테스트를실행한것은아니다. 별도의산술검사는20×3=60/학습2.5×3×4=30/부상분기3.75예시확인.
 
-이번작업에서원격productionDB/버킷/인증설정변경없음. Git커밋과정적설계검사만수행했다. 통합MD/카탈로그/원래HTML미리보기복사본/SHA목록갱신.
+도감장착시연을삭제하고자동효과조회로교체,이벤트E85/화면S38/콘텐츠버전4반영. 브라우저실제렌더링은기존MXC경로오류로미검수,이번작업에서재생/파일/Neon/인증/build/APK실행없음. 원격DB변경없음. 사용자의미답변선택을임의확정하지않는다.

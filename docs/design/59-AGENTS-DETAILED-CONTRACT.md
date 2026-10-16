@@ -18,7 +18,7 @@ bucket=floor(팀정규누적경기/20),playerId+worldSeasonId+bucket당요청1�
 
 ## 관계 원장과 약속
 
-trust=clamp(50+clamp(시즌누적변화,-10,10)+이전시즌확정이월변화,0,100). 실제저장은seasonStartTrust와rawSeasonDelta,표시는clamp(seasonStartTrust+clamp(rawSeasonDelta,-10,10),0,100). 같은시즌+15후-10이면raw5/적용+5,순서대로포화시켜+10후-10=0으로왜곡하지않음. 이적한새구단은새관계50,구관계는읽기보존.
+관계저장은seasonStartTrust와rawSeasonDelta,표시는clamp(seasonStartTrust+clamp(rawSeasonDelta,-10,10),0,100). 같은시즌+15후-10이면raw5/적용+5,순서대로포화시켜+10후-10=0으로왜곡하지않음. 이적한새구단은새관계50,구관계는읽기보존.
 
 v1약속enum PREPARE_CURRENT_ROLE:20팀경기검토기간현역할유지,사용자가자발적역할전환확정하면위반. 감독기용변경/부상/복무/국가대표/강등/소속변경은위반아님(취소또는충족가능성재검사). 약속수락은명시버튼으로만,시스템요청거절을약속위반으로처리안함. fulfilled+5/broken-10/정규등록시즌완료+2는각sourceEvidence키1회. 약속은선수·구간당최대1개,반복수락파밍없음.
 
@@ -36,4 +36,4 @@ v1약속enum PREPARE_CURRENT_ROLE:20팀경기검토기간현역할유지,사용�
 
 GET expansion/agents →{currentAgent,availableAgents,feeProjection,relationships,requestsRemaining,baseOfferRefs}. HIRE_AGENT/CHANGE_AGENT={playerId,agentId|null,effectiveSeasonId};REQUEST_SALARY_COUNTER={playerId,offerSetId,baseOfferId,raiseBps:1000|2000|3000};REQUEST_ROLE_REVIEW={playerId,roleBucket}. preview는before/after/odds.target/costs/기한. 성공result={outcome,counterOfferId?,reviewTaskId?,requestUsed:true,baseOfferState}. 4xx오류는64를따른다.
 
-S41담당비교→순수입/관계근거→요청대상→p/실패후경로→확인→결과. D-AG01직접.60/02국내전문가.68/03u=.68실패/04실패후기본오퍼유효/05중복동일receipt/06예산변경재확인/07분할급여총합100000000・fee2000000・net98000000/08관계raw15-10=5/09부상약속위반없음/10기용검토성공에도출장미보장을fixture로정의.
+S41담당비교→순수입/관계근거→요청대상→p/실패후경로→확인→결과. AG-D01직접.60/02국내전문가.68/03u=.68실패/04실패후기본오퍼유효/05중복동일receipt/06예산변경재확인/07분할급여총합100000000/fee2000000/net98000000/08관계raw15-10=5/09부상약속위반없음/10기용검토성공에도출장미보장을fixture로정의.

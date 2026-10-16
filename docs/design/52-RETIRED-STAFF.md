@@ -28,3 +28,5 @@ S43은빈슬롯→원본/가상직원목록→등급근거→담당선수→비�
 staffInstances(sourceArchiveId?,role,grade,worldAge,assignment),staffContracts,staffOperationEntries,staffEffectPeriods. HIRE_RETIRED_STAFF/HIRE_GENERIC_STAFF/ASSIGN_STAFF/DISMISS_STAFF명령에원본소유/정원/예산/중복원본/revision검사,서버에서등급계산. 원본archive행에는coachGrade를덮어쓰지않음.
 
 STAFF01 원본불변/가상직원대체/슬롯2개/동일원본현역중복거절/급여예약보존/효과기간가중/훈련cap1.2/치트돈원장/스카우트Lcap검증. 실제성장및50시즌경제검증에직원운영비와고용패턴을추가한다.
+
+실행처리순서/필드/명령입출력/예외/검수fixture는[상세계약](61-STAFF-DETAILED-CONTRACT.md)을따른다. 공통[64](64-EXPANSION-COMMON-CONTRACT.md).

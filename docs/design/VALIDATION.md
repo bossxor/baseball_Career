@@ -1,6 +1,6 @@
-# v0.9 설계 정적 검증 — 2026-10-16
+# 상세계약 v0.10 진행 중 검증 — 2026-10-16
 
-대상은문서·카탈로그·HTML설계시연이며실제게임/브라우저/Neon/APK검증이아니다.
+앱코드/SQL배포를작성하지않고추가8기능중독립진행가능한6분야의상세서면계약을작성했다. 목표보상/중계전략개입은사용자질문답변대기,58/62상세계약은미완료.
 
 명령: `node docs/design/verify-design.mjs`
 
@@ -8,14 +8,11 @@
 PASS: 99 event contracts, 45 screen contracts, unique IDs, local links/assets, JS syntax, embedded state catalog, no visible 100% badges.
 PASS: design arithmetic: search odds, offer distributions/monotonicity, 14 initial arrays, overall, advancement, draft, growth, import, budget, college schedule.
 PASS: expansion design arithmetic: negotiation .60/.68, income fee, staff budget, imported pitch mastery, skill modifier caps.
+PASS: 56 explicit design fixtures across 6 detailed modules; automatic traits and cheat pitch XP examples. Fixture execution is NOT implemented.
+PENDING USER CHOICES: goal rewards and commentary strategy intervention.
 NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.
 ```
 
-- E01~99연속/고유,제목·본문·조건·선택·결과안내필드누락없음. S01~45모두카탈로그/HTML에존재,로딩/빈상태/오류/저장중/충돌문구포함.
-- HTML ID중복/내부링크·자산누락없음,세스크립트구문파싱/임베드상태JSON일치. 실제DOM동작·키보드/모바일가독성통과아님.
-- 기존수식예시와추가역제안.60/.68/개인수수료2%/직원연봉후잔액/복사구종등급하한/새효과합산cap계산확인. 설계수식을검사한것이며실제엔진구현테스트아님.
-- 실제100확률숫자배지없음. 구종운용비율/능력100/잠재력100은서로다른표시다.
-- 브라우저는앞선검수에서MXC sandbox permission path cannot be represented losslessly오류로차단됐다. 이번확장화면은실제렌더링검수하지않았다.
-- 확장8기능과기존기능모두앱미구현. 100seed커리어/10만타석/50시즌경제·직원·스킬조합,실제Neon/API/인증/백업/PNG/Android다운로드/build/APK는구현후필수검증.
+신규서면fixture는입력given/action/expected/mustNotChange/UI실패처리/미구현표시포함. 56개기대값이존재하고고유하며필드가채워진것을검사했다. 게임엔진·DB·API에서이56개테스트를실행한것은아니다. 별도의산술검사는20×3=60/학습2.5×3×4=30/부상분기3.75예시확인.
 
-이번작업에서원격productionDB/버킷/인증설정변경없음. Git커밋과정적설계검사만수행했다. 통합MD/카탈로그/원래HTML미리보기복사본/SHA목록갱신.
+도감장착시연을삭제하고자동효과조회로교체,이벤트E85/화면S38/콘텐츠버전4반영. 브라우저실제렌더링은기존MXC경로오류로미검수,이번작업에서재생/파일/Neon/인증/build/APK실행없음. 원격DB변경없음. 사용자의미답변선택을임의확정하지않는다.

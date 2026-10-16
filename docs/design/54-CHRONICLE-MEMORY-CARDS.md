@@ -34,3 +34,5 @@ S45탭‘연대기/시즌책장/핀한장면’,연도·리그·유형필터,카
 careerMoments(saveId,playerId,type,gameDate,ageSnapshot,evidenceRef,presentationVersion),momentPreferences(ownerId,momentId,pin,hidden,caption),seasonBooks/archiveChronicles. export는이읽기모형에서생성하고카드내보내기로수상·능력·보상지급없음. 버전별템플릿변경시원문/수치evidence보존,깨진참조는남은요약과‘상세기록없음’표시,근거없으면AI로채우지않는다.
 
 TIM01 사건멱등/미출장메달문구/리그분리/은퇴원본나이/복사본별연대기/긴한글/폰트실패/개인정보미포함/로컬다운로드실패/구기록상세없음/원본불변검증. PNG실제렌더·글꼴/Android다운로드는구현후필수검수다.
+
+실행처리순서/필드/명령입출력/예외/검수fixture는[상세계약](63-CHRONICLE-DETAILED-CONTRACT.md)을따른다. 공통[64](64-EXPANSION-COMMON-CONTRACT.md).

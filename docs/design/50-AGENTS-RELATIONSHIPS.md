@@ -31,3 +31,5 @@ S41은에이전트비교→수수료순수입→관계이력→유효요청→�
 agentContracts/playerIncomeLedger/clubRelationships/relationshipEntries/negotiationRequests에owner/save/player/offerSet/구간/version/receipt와pSnapshot저장. 명령HIRE_AGENT/CHANGE_AGENT/REQUEST_SALARY_COUNTER/REQUEST_ROLE_REVIEW. 서버가실제예산·권리·참가자·기한·수수료를검사하며관계숫자를클라이언트가전송해도신뢰하지않음. 원본은퇴수입/관계보존,어린복사본은에이전트없음/관계50/소득0/새요청원장.
 
 AGT01 .60/.68예시/조건변경재preview/실패기본오퍼보존/한번한정/수수료부분지급/복무0/정상행동관계감점없음/기용보장없음/포스팅기준불변검증. 구단치트의FA수락보장36은이개인협상요청에적용하지않는다.
+
+실행처리순서/필드/명령입출력/예외/검수fixture는[상세계약](59-AGENTS-DETAILED-CONTRACT.md)을따른다. 공통[64](64-EXPANSION-COMMON-CONTRACT.md).

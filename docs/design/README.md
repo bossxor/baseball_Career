@@ -1,3 +1,5 @@
+현재진행:[65 사용자후속결정](65-USER-TRAITS-XP-STAFF.md)과[64 상세계약공통](64-EXPANSION-COMMON-CONTRACT.md)을우선읽으세요. 56/57/59/60/61/63작성,58목표·62중계는사용자선택답변대기(STATUS). 특성전체자동효과/치트구종3배가최신확정입니다.
+
 최신v0.9:[55 추가8기능통합](55-EXPANSION-INTEGRATION.md)을먼저확인. 47~54모두v1필수로추가,45화면/99이벤트. 세부수치는설계기본안,앱미구현.
 
 최신 v0.8: [39 정합](39-DESIGN-RECONCILIATION.md) · [40 확률](40-SCOUTING-RECRUITMENT-ODDS.md) · [41 경기](41-SIX-STAT-ENGINE.md) · [42 성장](42-GROWTH-DIFFICULTY-REBIRTH.md) · [43 대학](43-COLLEGE-CAREER.md) · [44 구단](44-CLUB-ECONOMY-AI.md) · [45 이벤트83종](45-EVENT-CATALOG-REVISION.md) · [46 화면37종](46-ALL-SCREENS-FLOWS.md). 새수치는설계기본안D,실행검증전. 앱미구현.

@@ -1,0 +1,1187 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_EXPECTATIONS_ONLY",
+  "seed": "expansion-detail-v0.10",
+  "commonFactory": {
+    "rng": "explicitDrawsOnly",
+    "owner": "fixture-owner",
+    "saveId": "fixture-save",
+    "revision": "7",
+    "time": "gameCalendarInjected",
+    "allUnspecifiedPrerequisites": "validUnlessCaseOverrides"
+  },
+  "cases": [
+    {
+      "id": "TR-D01",
+      "module": "traits",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "bbBefore": 29,
+        "bbDelta": 1,
+        "unlocked": []
+      },
+      "action": "APPLY_FINAL_RECORD",
+      "expected": {
+        "unlock": [
+          "T02"
+        ],
+        "e84Count": 1,
+        "rngDraws": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "TR-D02",
+      "module": "traits",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "evidenceAlreadyApplied": true,
+        "traitId": "T02"
+      },
+      "action": "REPLAY_RECEIPT",
+      "expected": {
+        "newUnlocks": 0,
+        "newEvents": 0,
+        "rngDraws": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "TR-D03",
+      "module": "traits",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "unlocked": [
+          "T05",
+          "T06"
+        ],
+        "basesLoaded": true,
+        "postseason": true
+      },
+      "action": "EVALUATE_TRAITS",
+      "expected": {
+        "rawHR": 0.04,
+        "raw1B": 0.04,
+        "raw2B": 0.03,
+        "allHeldEvaluated": true
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "TR-D04",
+      "module": "traits",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "rawTraitDelta": 0.08,
+        "rawPitchApproachDelta": 0.07
+      },
+      "action": "COMPOSE_LOGITS",
+      "expected": {
+        "traitApplied": 0.06,
+        "newLayerApplied": 0.1
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "TR-D05",
+      "module": "traits",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "unlocked": [
+          "T05"
+        ],
+        "basesLoaded": false
+      },
+      "action": "EVALUATE_TRAITS",
+      "expected": {
+        "T05Active": false,
+        "traitDelta": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "TR-D06",
+      "module": "traits",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "pairVisitCount": 0,
+        "firstResult": "BB"
+      },
+      "action": "PROCESS_TWO_SAME_PAIR_PA",
+      "expected": {
+        "firstT01Active": true,
+        "secondT01Active": false,
+        "visitCount": 2
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "TR-D07",
+      "module": "traits",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "sourceUnlockedCount": 12
+      },
+      "action": "IMPORT_YOUNG_PLAYER",
+      "expected": {
+        "newUnlockedCount": 0,
+        "sourceUnlockedCount": 12
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "TR-D08",
+      "module": "traits",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "revision": "7",
+        "rngCursor": 4
+      },
+      "action": "READ_TRAIT_BOOK",
+      "expected": {
+        "revision": "7",
+        "rngCursor": 4
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "PIT-D01",
+      "module": "pitches",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "weights": [
+          60,
+          40
+        ],
+        "pitchIds": [
+          "P01",
+          "P03"
+        ],
+        "u": 0.6
+      },
+      "action": "SELECT_REPRESENTATIVE",
+      "expected": {
+        "pitchId": "P03",
+        "rngDraws": 1
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "PIT-D02",
+      "module": "pitches",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "weights": [
+          60,
+          39
+        ],
+        "revision": "7"
+      },
+      "action": "SET_REPERTOIRE",
+      "expected": {
+        "http": 422,
+        "code": "INVALID_ALLOCATION",
+        "revision": "7",
+        "rngDraws": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "PIT-D03",
+      "module": "pitches",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "mastery": 0,
+        "activeRequested": true
+      },
+      "action": "SET_REPERTOIRE",
+      "expected": {
+        "http": 422,
+        "code": "NOT_ELIGIBLE",
+        "mutations": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "PIT-D04",
+      "module": "pitches",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "baseLearningQuarter": 2.5,
+        "healthyFraction": 1,
+        "multiplier": 3,
+        "quarters": 4,
+        "startXp": 0
+      },
+      "action": "SETTLE_LEARNING",
+      "expected": {
+        "actualTotalXp": 30,
+        "mastery": 2
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "PIT-D05",
+      "module": "pitches",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "baseGranted": 20,
+        "multiplier": 3,
+        "newCandidateBase": 0.02
+      },
+      "action": "GRANT_PITCH_XP",
+      "expected": {
+        "actualCap": 60,
+        "newActualXp": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "PIT-D06",
+      "module": "pitches",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "baseLearningQuarter": 2.5,
+        "healthyFraction": 0.5,
+        "multiplier": 3
+      },
+      "action": "SETTLE_LEARNING_QUARTER",
+      "expected": {
+        "actualXp": 3.75
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "PIT-D07",
+      "module": "pitches",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "baseGranted": 19.98,
+        "multiplier": 3,
+        "newCandidateBase": 0.06,
+        "movedLeague": true
+      },
+      "action": "GRANT_PITCH_XP",
+      "expected": {
+        "actualXp": 0.06,
+        "baseGranted": 20
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "PIT-D08",
+      "module": "pitches",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "sourceMastery": 5,
+        "sourceXp": 150
+      },
+      "action": "IMPORT_YOUNG_PLAYER",
+      "expected": {
+        "mastery": 2,
+        "xp": 30,
+        "growthMultiplier": 1
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "AG-D01",
+      "module": "agents",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "raise": 0.1,
+        "trust": 50,
+        "bonus": 0
+      },
+      "action": "PREVIEW_SALARY_COUNTER",
+      "expected": {
+        "probability": 0.6,
+        "rngDraws": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "AG-D02",
+      "module": "agents",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "raise": 0.1,
+        "trust": 50,
+        "bonus": 0.08
+      },
+      "action": "PREVIEW_SALARY_COUNTER",
+      "expected": {
+        "probability": 0.68,
+        "rngDraws": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "AG-D03",
+      "module": "agents",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "probability": 0.68,
+        "u": 0.68,
+        "baseOfferState": "ACTIVE"
+      },
+      "action": "REQUEST_SALARY_COUNTER",
+      "expected": {
+        "outcome": "REJECTED",
+        "baseOfferState": "ACTIVE",
+        "requestUsed": true,
+        "rngDraws": 1
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "AG-D04",
+      "module": "agents",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "requestOutcome": "REJECTED",
+        "deadlinePassed": false
+      },
+      "action": "READ_BASE_OFFER",
+      "expected": {
+        "baseOfferAcceptable": true,
+        "newCounterAllowed": false
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "AG-D05",
+      "module": "agents",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "receiptExists": true,
+        "sameRequestHash": true
+      },
+      "action": "REPLAY_REQUEST",
+      "expected": {
+        "newCounterOffers": 0,
+        "rngDraws": 0,
+        "sameReceipt": true
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "AG-D06",
+      "module": "agents",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "previewBudgetRevision": "3",
+        "currentBudgetRevision": "4"
+      },
+      "action": "REQUEST_SALARY_COUNTER",
+      "expected": {
+        "http": 409,
+        "code": "PREVIEW_STALE",
+        "requestUsed": false,
+        "rngDraws": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "AG-D07",
+      "module": "agents",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "eligibleGrossMinor": "100000000",
+        "feeBps": 200,
+        "currency": "KRW"
+      },
+      "action": "SETTLE_SPLIT_SALARIES",
+      "expected": {
+        "feeMinor": "2000000",
+        "netMinor": "98000000"
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "AG-D08",
+      "module": "agents",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "seasonStartTrust": 50,
+        "rawDeltas": [
+          15,
+          -10
+        ]
+      },
+      "action": "PROJECT_TRUST",
+      "expected": {
+        "trust": 55,
+        "rawSeasonDelta": 5
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "AG-D09",
+      "module": "agents",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "promise": "PREPARE_CURRENT_ROLE",
+        "involuntaryChange": "INJURY"
+      },
+      "action": "EVALUATE_PROMISE",
+      "expected": {
+        "breachCount": 0,
+        "trustPenalty": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "AG-D10",
+      "module": "agents",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "requestAccepted": true,
+        "roleScoreBelowCompetitor": true
+      },
+      "action": "APPLY_ROLE_REVIEW",
+      "expected": {
+        "reviewTasks": 1,
+        "guaranteedStarts": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "REL-D01",
+      "module": "relations",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "eligibleRivals": 0,
+        "fallbackCreationBlocked": true
+      },
+      "action": "FORM_RELATIONS",
+      "expected": {
+        "rivalCount": 0,
+        "careerCanProgress": true
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "REL-D02",
+      "module": "relations",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "primaryId": "P1",
+        "candidates": [
+          "P1",
+          "P2"
+        ]
+      },
+      "action": "FILTER_RIVAL_CANDIDATES",
+      "expected": {
+        "eligibleIds": [
+          "P2"
+        ]
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "REL-D03",
+      "module": "relations",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "assignedRivalId": "P2",
+        "teammateCandidates": [
+          "P2",
+          "P3"
+        ]
+      },
+      "action": "SELECT_TEAMMATE",
+      "expected": {
+        "teammateId": "P3"
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "REL-D04",
+      "module": "relations",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "sameGameRoster": true,
+        "rivalActualAppearance": false
+      },
+      "action": "DETECT_REUNION",
+      "expected": {
+        "newReunionMilestones": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "REL-D05",
+      "module": "relations",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "directMatchup": true,
+        "result": "BB"
+      },
+      "action": "AGGREGATE_PA",
+      "expected": {
+        "PA": 1,
+        "AB": 0,
+        "BB": 1,
+        "H": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "REL-D06",
+      "module": "relations",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "sameContributionKeyApplied": true
+      },
+      "action": "AGGREGATE_PA",
+      "expected": {
+        "statDeltas": 0,
+        "newMilestones": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "REL-D07",
+      "module": "relations",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "kindA": "BATTER",
+        "kindB": "BATTER",
+        "sameGame": true
+      },
+      "action": "READ_MATCHUP",
+      "expected": {
+        "mode": "COMPARISON",
+        "directAVG": null
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "REL-D08",
+      "module": "relations",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "otherPlayerRetired": true,
+        "existingPA": 12
+      },
+      "action": "READ_RELATION",
+      "expected": {
+        "stage": "RETIRED",
+        "PA": 12
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "REL-D09",
+      "module": "relations",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "domesticH": 3,
+        "internationalH": 2,
+        "scope": "DOMESTIC"
+      },
+      "action": "READ_MATCHUP",
+      "expected": {
+        "H": 3
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "REL-D10",
+      "module": "relations",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "sourceRivalId": "OLD-RIVAL"
+      },
+      "action": "IMPORT_YOUNG_PLAYER",
+      "expected": {
+        "copiedOldRivalCount": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "STAFF-D01",
+      "module": "staff",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "sourceClaim": "PLAYER",
+        "targetRole": "COACH"
+      },
+      "action": "HIRE_RETIRED_STAFF",
+      "expected": {
+        "http": 422,
+        "code": "SLOT_CONFLICT",
+        "mutations": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "STAFF-D02",
+      "module": "staff",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "sourceClaim": null,
+        "parallelActions": [
+          "IMPORT",
+          "HIRE"
+        ]
+      },
+      "action": "RESOLVE_CONCURRENT_CLAIMS",
+      "expected": {
+        "successCount": 1,
+        "activeClaimCount": 1
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "STAFF-D03",
+      "module": "staff",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "sourceSnapshotHash": "source-hash"
+      },
+      "action": "HIRE_RETIRED_STAFF",
+      "expected": {
+        "sourceSnapshotHash": "source-hash",
+        "newStaffCount": 1
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "STAFF-D04",
+      "module": "staff",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "annualMinor": "150000000",
+        "financeDays": 200,
+        "contractDays": 100
+      },
+      "action": "PREVIEW_HIRE",
+      "expected": {
+        "guaranteedMinor": "75000000"
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "STAFF-D05",
+      "module": "staff",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "guaranteedMinor": "75000000",
+        "paidMinor": "25000000"
+      },
+      "action": "DISMISS_STAFF",
+      "expected": {
+        "remainingGuaranteeMinor": "50000000",
+        "activeClaimCount": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "STAFF-D06",
+      "module": "staff",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "basePlusEventTraining": 1.18,
+        "coachBonus": 0.05
+      },
+      "action": "CALCULATE_TRAINING",
+      "expected": {
+        "effectiveTraining": 1.2
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "STAFF-D07",
+      "module": "staff",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "facilityLevel": 5,
+        "scoutGrade": 3
+      },
+      "action": "CALCULATE_SCOUT_LEVEL",
+      "expected": {
+        "effectiveLevel": 5
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "STAFF-D08",
+      "module": "staff",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "salaryEntryAlreadyExists": true
+      },
+      "action": "PAY_STAFF_DAY",
+      "expected": {
+        "newPaidMinor": "0",
+        "newEntries": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "STAFF-D09",
+      "module": "staff",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "claimSaveId": "SAVE-A",
+        "targetSaveId": "SAVE-B",
+        "sameOwnedArchive": true
+      },
+      "action": "HIRE_RETIRED_STAFF",
+      "expected": {
+        "crossSaveConflict": false
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "STAFF-D10",
+      "module": "staff",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "guaranteedOutgoingMinor": "50000000",
+        "incomingMinor": "150000000",
+        "availableMinor": "100000000"
+      },
+      "action": "PREVIEW_REPLACEMENT",
+      "expected": {
+        "canHire": false,
+        "code": "INSUFFICIENT_BUDGET",
+        "oldGuaranteeMinor": "50000000"
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CHR-D01",
+      "module": "chronicle",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "sameOutboxEventDeliveries": 2
+      },
+      "action": "PROJECT_MOMENT",
+      "expected": {
+        "momentCount": 1
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CHR-D02",
+      "module": "chronicle",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "internationalRoster": true,
+        "actualAppearances": 0
+      },
+      "action": "BUILD_MOMENT",
+      "expected": {
+        "firstAppearanceCardCount": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CHR-D03",
+      "module": "chronicle",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "sourceRetirementAge": 41,
+        "youngCopyAge": 19
+      },
+      "action": "READ_SOURCE_CHRONICLE",
+      "expected": {
+        "sourceAge": 41
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CHR-D04",
+      "module": "chronicle",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "expectedPreferenceRevision": "2",
+        "currentPreferenceRevision": "3"
+      },
+      "action": "PATCH_MOMENT_PREFERENCE",
+      "expected": {
+        "http": 409,
+        "preferencesOverwritten": false
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CHR-D05",
+      "module": "chronicle",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "userTitleGraphemes": 61
+      },
+      "action": "PREVIEW_CARD",
+      "expected": {
+        "http": 422,
+        "code": "TEXT_OVERFLOW"
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CHR-D06",
+      "module": "chronicle",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "uploadFailed": true,
+        "officialMomentExists": true
+      },
+      "action": "EXPORT_CARD",
+      "expected": {
+        "jobStatus": "FAILED",
+        "officialMomentExists": true
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CHR-D07",
+      "module": "chronicle",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "downloadUrlExpired": true,
+        "jobStatus": "READY",
+        "objectExists": true
+      },
+      "action": "REFRESH_EXPORT_LINK",
+      "expected": {
+        "newLinkIssued": true,
+        "newRenderJobs": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CHR-D08",
+      "module": "chronicle",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "ownerSubject": "PRIVATE",
+        "email": "PRIVATE",
+        "token": "PRIVATE"
+      },
+      "action": "EXPORT_JSON",
+      "expected": {
+        "containsOwnerSubject": false,
+        "containsEmail": false,
+        "containsToken": false
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CHR-D09",
+      "module": "chronicle",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "format": "JSON",
+        "exportSchemaVersion": 1
+      },
+      "action": "READ_EXPORT_INFO",
+      "expected": {
+        "isGameSaveBackup": false
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CHR-D10",
+      "module": "chronicle",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "sourceSaveDeleted": true,
+        "archiveSnapshotAndMomentsPresent": true
+      },
+      "action": "READ_ARCHIVE_MOMENTS",
+      "expected": {
+        "readable": true
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    }
+  ],
+  "pendingModules": {
+    "commentary": "사용자전략개입선택답변후추가",
+    "goals": "사용자보상선택답변후추가"
+  }
+}

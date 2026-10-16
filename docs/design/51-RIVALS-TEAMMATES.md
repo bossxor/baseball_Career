@@ -25,3 +25,5 @@ S42는상대초상·경력현재상태→관계연표→실제맞대결→동반
 playerRelationships(saveId,playerA,playerB,type,stage,startedAt,sourceEvent),rivalMatchupSummaries(gameScope,stats),relationMilestones(uniqueEvidenceId). 원본선수가로스터에서사라져도tombstone요약/영구선수기록실로참조유지,상대은퇴로기록삭제안함. 명령ACK_RELATION_EVENT/PIN_RELATION_MOMENT는읽음/핀만수정,실제이적/대진생성안함.
 
 REL01 동일ID중복없음/후보0/상대조기은퇴/타자끼리비교/미국실제재회/관계보너스0/원본관계불변/경기재시도중복0/국제범위분리검증.
+
+실행처리순서/필드/명령입출력/예외/검수fixture는[상세계약](60-RELATIONS-DETAILED-CONTRACT.md)을따른다. 공통[64](64-EXPANSION-COMMON-CONTRACT.md).

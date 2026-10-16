@@ -1,3 +1,5 @@
+최신결정:[65](65-USER-TRAITS-XP-STAFF.md). 상세API공통[64](64-EXPANSION-COMMON-CONTRACT.md),기능별56/57/59/60/61/63작성. 목표보상/중계전략개입은사용자질문답변대기중이며58/62상세계약은아직완료아님.
+
 # 55. 추가8기능 통합·데이터·사건·화면 계약
 
 사용자확정U:47~54의8기능모두v1필수. 수치·장착수·보상·수수료·역할충돌정책은설계기본안D. 앱구현은계속미착수. 최신화면45종(S01~45),이벤트99종(E01~99). event-catalog-v2.json은구조schema2/콘텐츠버전3이다.
@@ -23,11 +25,11 @@ E84/87/90/99는결과알림으로같은날요약가능,개별근거유지. E85/8
 
 41유효능력/클러치/위기→08base logit→48구종·성향과47특성합을결과별[-.10,.10]으로제한→softmax. 특성합자체는[-.06,.06]. 계수를성공률퍼센트포인트로오역하지않음. 수비/진루/교체특성은각단계한번만,평균종합/영구최고에포함안함.
 
-42성장훈련계수에코치효과합산후최대1.2,같은기간가중. 구종XP연간20/세계시즌강화1회유지. 커리어치트양의6능력성장3배/잠재력100/도전성공보장,구단치트돈/탐색/영입은기존대로. 특성자동해금/구종XP3배/개인재협상보장은추가하지않는다.
+42성장훈련계수에코치효과합산후최대1.2,같은기간가중. 구종XP일반20/개인치트60,세계시즌강화1회유지. 커리어치트양의6능력성장3배/잠재력100/도전성공보장,구단치트돈/탐색/영입은기존대로. 특성은기록으로자동해금·전체보유자동효과,개인치트구종XP3배는65사용자확정. 개인재협상보장은없음.
 
 ## API·데이터·복원
 
-28논리엔티티에playerTraits/traitLoadouts/pitchRepertoire/pitchTrainingPlans/seasonGoals/achievementUnlocks/cosmeticUnlocks/agentContracts/playerIncomeLedger/clubRelationships/playerRelationships/staffInstances/staffContracts/importantGameSnapshots/careerMoments/momentPreferences추가. 개인행owner/save검사,공용정의버전과진척분리. archive에스킬·관계·수입·연대기evidence추가,원본행불변.
+28논리엔티티에playerTraits/pitchRepertoire/pitchTrainingPlans/seasonGoals/achievementUnlocks/cosmeticUnlocks/agentContracts/playerIncomeLedger/clubRelationships/playerRelationships/staffInstances/staffContracts/importantGameSnapshots/careerMoments/momentPreferences추가. 개인행owner/save검사,공용정의버전과진척분리. archive에스킬·관계·수입·연대기evidence추가,원본행불변.
 
 쓰기명령은revision/idempotencyKey/receipt,중계·목표·카드조회는난수소비0. 구종대표선택pitchPlan/개인요청negotiation전용스트림. 표현·연대기에는PRNG없음. engineVersion증가,새버전끼리중계ON/OFF동일hash. 이미끝난구경기를새엔진으로재생성하지않는다. 구스킬없는세이브는고지된호환절차로새스트림만초기화,기존rngState리셋없음.
 
