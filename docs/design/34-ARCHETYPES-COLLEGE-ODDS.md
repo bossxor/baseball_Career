@@ -47,3 +47,6 @@ collegeYear/yearsCompleted/schoolTeamId/enrollmentStatus/earlyDraftAttempted를�
 S28:KBO드래프트카드에예상라운드/지명확률,대학은성장/추가지명기회,미국은실제제안수. S05결과는실제라운드/미지명,예상과결과를혼용하지않음. scoutPreview{assessmentId,version,asOfRevision,probabilityKind,selectionProbability,roundProbabilities,conditionalLikelyRounds}. 실제판정과같은스냅샷/식사용,공개확률과실제기준불일치금지.
 
 AR01 유형키6개합계. COL01 고교대학진학/2학년미지명복학/4학년졸업. ROUTE01 능력미달미국카드없음. ROUTE02 노출시유효오퍼≥1. ODDS01 B45의확률합100. ODDS02 양끝점/동률라운드범위. ODDS03 조회seed불변. ODDS04 단순설정확률배지없음. ODDS05 치트훈련100%실제반영. 실행검증전계약이다.
+
+
+대학세부상태·학교9종·일정·조기지명/복학/졸업·휴학은[43 대학커리어](43-COLLEGE-CAREER.md)를따른다.
