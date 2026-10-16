@@ -1,0 +1,37 @@
+# 60. 라이벌·동료 상세 계약
+
+51의서사를실제선수/소속/경기evidence로구동한다. 승격/이적/국적/경기를강제생성하지않는다. 64의소유·멱등계약,관계읽기는난수0.
+
+## 관계의 저장 축과 후보
+
+relationship.type=RIVAL또는TEAMMATE,stage=FORMED/SEPARATED/REUNITED_OPPONENT/REUNITED_TEAM/RETIRED. 현재stage는최근상태요약,이전단계는milestone행으로보존. 선수쌍은정렬ID로normalPairKey,주인공관점primaryPlayerId별화면을만든다. 같은쌍동일type중복없음,라이벌이동료가되어도과거type를덮지않고TEAMMATE관계추가/연결한다.
+
+고교라이벌후보는같은kind/나이차≤1/영구overall차≤5/현재HS/자기ID제외. 같은고교는가능하나고교동료와동일ID배정금지. 후보정렬ID뒤별도relationFormation seed로하나,후보0이면51의고교선수생성루틴한명,세계인원상한검사실패시라이벌없음정상상태와기록남김(커리어진행막지않음). 이선수는실제고교로스터/드래프트풀에포함해유령경력안만듦. 동료는실제팀정규명단다른선수중같은kind/나이차작음/ID순1명,없으면추가생성없이없음.
+
+## 상태 전이
+
+| 이벤트 | 전제 | 결과·근거 |
+|---|---|---|
+|관계형성|유효선수2명/중복없음|FORMED/E94,evidence=formationReceipt |
+|졸업후소속분리|같은팀아님/등록경로확정|SEPARATED,transferReceipt |
+|서로상대팀실제출장|SEPARATED/동일gameId실제출장양쪽참|REUNITED_OPPONENT/E95,gameReceipt |
+|실제같은팀등록|서로다른팀후현재같은teamId|REUNITED_TEAM/E96,registrationReceipt |
+|둘중한명은퇴|retirementReceipt존재|RETIRED,이전이정표보존 |
+
+벤치등록만한상대는‘대진예정’뉴스만,실제재회마일스톤아님. TEAMMATE공존20경기는양쪽같은팀정규명단게임일의교집합개수,같은게임일1회/우천·휴식0. 동반PS/우승은그대회명단교집합과팀결과근거. 입대/부상은관계삭제아님. 상대은퇴후재회는현역맞대결로분류안함.
+
+## 맞대결 집계와 기록 정정
+
+직접대결은gameId/playCursor에batterId와pitcherId가해당쌍일때만. BB/HBP는PA1/AB0,안타는AB1/H1,안타후주루아웃도H유지. RBI는타석합법득점만. 직접대결키=(pairKey,leagueId,competitionPhase,worldSeasonId),리그/PS/국제혼합없음. 다른포지션같은kind는comparison모드,각자gameStats와실제동시출장경기수만반환,직접대결AVG를만들지않음.
+
+summary는증거로그의읽기모형,집계키gameId/playCursor/aggregateVersion UNIQUE. 같은receipt재실행증분0. 기록정정시old contribution취소+new contribution원자교체,relation milestone근거가없어지면CORRECTED표시/과거확정게임결과불변. 과거로그제거전pair contribution와summary영구보존,선수은퇴해도선수요약tombstone가참조유지.
+
+## 데이터·API·S42
+
+player_relationships(saveId,normalPairKey,type,primaryPlayerId,stage,version),relation_milestones(relationshipId,type,evidenceKey UNIQUE,gameInstant),relation_game_contributions(pairKey,gameId,playCursor UNIQUE,scope,stats),relation_summaries(pairKey,scope UNIQUE,stats,version). owner는save에서파생,타세이브ID연결금지. 라이벌기록을원본archive에스냅샷,어린복사본은새세계새후보.
+
+GET expansion/relationships?playerId →{relationships:[{id,type,stage,otherPlayerSummary,upcomingMeetings}],cursor};GET /api/saves/{id}/relationships/{relationId}?scope=… →{mode:DIRECT|COMPARISON,rawStats,rates,milestones,sourceVersion}. 핀은63의개인moment preference,ACK_RELATION_EVENT={eventInstanceId}는읽음만저장/경기효과없음. client CREATE_RIVAL명령은없음.
+
+S42상대선택→고교/국내/미국연표→scope필터→실제전적→evidence경기/연대기. 예정없음/은퇴/로그없음은서로다른문구,다른kind가아닌경우‘직접상대전적미제공’표시. 캐시후상대소속변경은요약version갱신,과거이름·구단은당시snapshot사용.
+
+REL-D01 후보0정상처리/02본인제외/03같은ID중복역할방지/04벤치만재회미달/05BB면PA1AB0/06동일경기재처리합불변/07타자끼리DIRECT금지/08상대은퇴기록유지/09국제기록분리/10복사본원본라이벌자동복제0. 모든전이는입력evidence와기대행을fixture로명시한다.
