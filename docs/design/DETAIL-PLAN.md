@@ -8,7 +8,7 @@
 | 02 | 국제대회 달력·선발·출전·결과 | 서면 설계 완료 | [20](20-INTERNATIONAL-COMPETITIONS.md) |
 | 03 | 병역·상무·계약 정지·해외 복귀 | 서면 설계 완료 | [21-MILITARY-CONTRACT-RETURN.md](21-MILITARY-CONTRACT-RETURN.md) |
 | 04 | 스타일·집중육성·강화·잠재력·노쇠 | 서면 설계 완료 | [22-DEVELOPMENT-STYLE-TRAINING.md](22-DEVELOPMENT-STYLE-TRAINING.md) |
-| 05 | 미국직행·마이너·포스팅·보유권 | 예정 | 13을 상세화 |
+| 05 | 미국직행·마이너·포스팅·보유권 | 서면 설계 완료 | [23-US-CONTRACTS-RIGHTS.md](23-US-CONTRACTS-RIGHTS.md) |
 | 06 | 경기 엔진·투수교체·기록 판정 | 예정 | 01/08/14를 상세화 |
 | 07 | 구단 AI·경제·드래프트·장기 공급 | 예정 | 05/15를 상세화 |
 | 08 | 이벤트69종 조건표·실제 문안 검수 | 예정 | 04/09/12/13을 대조 |
