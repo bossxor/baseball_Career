@@ -12,9 +12,9 @@
 | 06 | 경기 엔진·투수교체·기록 판정 | 서면 설계 완료 | [24-GAME-ENGINE-SCORING.md](24-GAME-ENGINE-SCORING.md) |
 | 07 | 구단 AI·경제·드래프트·장기 공급 | 서면 설계 완료 | [25-CLUB-AI-ECONOMY.md](25-CLUB-AI-ECONOMY.md) |
 | 08 | 이벤트69종 조건표·실제 문안 검수 | 서면 설계 완료 | [26-EVENT-CONTENT-CONTRACT.md](26-EVENT-CONTENT-CONTRACT.md) |
-| 09 | 전체33화면 최종 입력·반응형 목업 | 서면 설계 완료 | [27-UI-INTERACTION-RESPONSIVE.md](27-UI-INTERACTION-RESPONSIVE.md) |
+| 09 | 전체33화면 최종 입력·반응형 목업 | 입력 계약/정적 초안 작성, 시각검수 차단 | [27-UI-INTERACTION-RESPONSIVE.md](27-UI-INTERACTION-RESPONSIVE.md) |
 | 10 | DB/API/인증/테스트 fixture 계약 | 서면 설계 완료 | [28-DATA-API-AUTH-TESTS.md](28-DATA-API-AUTH-TESTS.md) |
 | 11 | 운영·백업·APK·배포·실환경 확인 | 서면 설계 완료 | [29-OPERATIONS-RELEASE-RUNBOOK.md](29-OPERATIONS-RELEASE-RUNBOOK.md) |
-| 12 | 통합 경로 재검토·설계 승인본 | 예정 | 07/18/STATUS |
+| 12 | 통합 경로 재검토·설계 검토본 | 서면 설계 완료 | [30-INTEGRATED-DESIGN-REVIEW.md](30-INTEGRATED-DESIGN-REVIEW.md) |
 
 앱 구현은 아직 착수하지 않는다. 실행으로만 입증 가능한 밸런스/인증/기기 검증은 문서완료와 분리한다. 다음 채팅은 이 표의 첫 '예정'부터 진행한다.
