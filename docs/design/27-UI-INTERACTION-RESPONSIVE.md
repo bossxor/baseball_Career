@@ -33,3 +33,6 @@ TextField:고유label/id,설명/오류aria-describedby,입력원문보존후검�
 UX01 폼label연결. UX02 tab/shift-tab/enter/escape. UX03 200%확대. UX04 safe-area/키보드. UX05 긴표/고정열. UX06 서체/이미지실패. UX07 선택후효과미리보기. UX08 실수방지확인대상명. UX09 충돌의최신조회. UX10 백업실패와일반저장구분. UX11 dark OS설정이어도대비명시. UX12 APK뒤로가기. 실행검수전명세다.
 
 남은차단은렌더링도구/실기기실증이다. 입력/반응형설계완료와시각승인미완료를STATUS에서분리한다.
+
+
+최신 확률 표시 규칙: [38 공통 계약](38-PROBABILITY-DISPLAY.md)을 따른다. 확률 선택은 모두 표시하되 실제 100%의 숫자 배지는 숨긴다. 보장 효과와 내부 확률은 유지한다.
