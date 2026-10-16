@@ -1,6 +1,6 @@
 # Baseball Career — 상세 설계 묶음
 
-2026-10-16 / v0.14 / 상세설계 진행 / 구현 착수 전
+2026-10-16 / v0.15 / 상세설계 진행 / 구현 착수 전
 
 새 환경에서는 [START-HERE.md](START-HERE.md)부터 읽으세요. 최신 완료/미검증 항목은 [STATUS.md](STATUS.md), 규칙 충돌 시 기준은 [14 통합 결정표](14-CANONICAL-DECISIONS.md)입니다. 다른 채팅에는 [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md)를 사용할 수 있습니다.
 
@@ -43,6 +43,7 @@
 | [미국직행·마이너·포스팅·보유권](23-US-CONTRACTS-RIGHTS.md) | 상세설계 05 |
 | [경기 엔진·투수교체·기록 판정](24-GAME-ENGINE-SCORING.md) | 상세설계 06 |
 | [구단 AI·경제·드래프트·장기 공급](25-CLUB-AI-ECONOMY.md) | 상세설계 07 |
+| [이벤트69종 조건표·실제 문안 검수](26-EVENT-CONTENT-CONTRACT.md) | 상세설계 08 |
 | [14 통합 결정표](14-CANONICAL-DECISIONS.md) | 최신 규칙, 충돌 해소, 사건·연간 순서 |
 | [15 장기 운영·기록](15-LONG-TERM-RECORDS.md) | AI, 선수 공급, 보존, 명예의 전당 |
 | [16 계정·운영](16-AUTH-OPERATIONS.md) | 인증, 웹/APK 세션, 배포·백업 정책 |
