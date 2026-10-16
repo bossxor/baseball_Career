@@ -1,4 +1,4 @@
-현재진행:[65 사용자후속결정](65-USER-TRAITS-XP-STAFF.md)과[64 상세계약공통](64-EXPANSION-COMMON-CONTRACT.md)을우선읽으세요. 56/57/59/60/61/63작성,58목표·62중계는사용자선택답변대기(STATUS). 특성전체자동효과/치트구종3배가최신확정입니다.
+최신v0.10:[65 사용자확정5항목](65-USER-TRAITS-XP-STAFF.md)과[64 공통계약](64-EXPANSION-COMMON-CONTRACT.md),56~63전체8기능상세계약/검수기대값80개작성. [STATUS](STATUS.md)에서서면완료와실행미검증을구분하세요. 앱미구현.
 
 최신v0.9:[55 추가8기능통합](55-EXPANSION-INTEGRATION.md)을먼저확인. 47~54모두v1필수로추가,45화면/99이벤트. 세부수치는설계기본안,앱미구현.
 

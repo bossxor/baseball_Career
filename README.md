@@ -14,3 +14,5 @@
 정적 검사: `node docs/design/verify-design.mjs` (게임·Neon·빌드 검증 제외).
 
 [추가8기능통합설계](docs/design/55-EXPANSION-INTEGRATION.md)에서각문서와신규화면/사건을확인할수있습니다. 앱구현은아직시작하지않았습니다.
+
+상세계약 v0.10: [공통API와수용기준](docs/design/64-EXPANSION-COMMON-CONTRACT.md), [사용자선택확정](docs/design/65-USER-TRAITS-XP-STAFF.md),56~63의8개기능계약과80개서면검수기대값을작성했습니다. 구현·실제테스트는별도입니다.

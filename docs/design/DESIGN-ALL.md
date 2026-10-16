@@ -1,10 +1,10 @@
-# 다시, 플레이볼 — 상세계약 v0.10 진행 중
+# 다시, 플레이볼 — 통합 상세설계 v0.10
 
 ---
 
 <!-- SOURCE: START-HERE.md -->
 
-현재진행:[65 사용자후속결정](65-USER-TRAITS-XP-STAFF.md)과[64 상세계약공통](64-EXPANSION-COMMON-CONTRACT.md)을우선읽으세요. 56/57/59/60/61/63작성,58목표·62중계는사용자선택답변대기(STATUS). 특성전체자동효과/치트구종3배가최신확정입니다.
+최신v0.10:[65 사용자확정5항목](65-USER-TRAITS-XP-STAFF.md)과[64 공통계약](64-EXPANSION-COMMON-CONTRACT.md),56~63전체8기능상세계약/검수기대값80개작성. [STATUS](STATUS.md)에서서면완료와실행미검증을구분하세요. 앱미구현.
 
 최신v0.9:[55 추가8기능통합](55-EXPANSION-INTEGRATION.md)을먼저확인. 47~54모두v1필수로추가,45화면/99이벤트. 세부수치는설계기본안,앱미구현.
 
@@ -62,7 +62,7 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 
 <!-- SOURCE: README.md -->
 
-현재진행:[65 사용자후속결정](65-USER-TRAITS-XP-STAFF.md)과[64 상세계약공통](64-EXPANSION-COMMON-CONTRACT.md)을우선읽으세요. 56/57/59/60/61/63작성,58목표·62중계는사용자선택답변대기(STATUS). 특성전체자동효과/치트구종3배가최신확정입니다.
+최신v0.10:[65 사용자확정5항목](65-USER-TRAITS-XP-STAFF.md)과[64 공통계약](64-EXPANSION-COMMON-CONTRACT.md),56~63전체8기능상세계약/검수기대값80개작성. [STATUS](STATUS.md)에서서면완료와실행미검증을구분하세요. 앱미구현.
 
 최신v0.9:[55 추가8기능통합](55-EXPANSION-INTEGRATION.md)을먼저확인. 47~54모두v1필수로추가,45화면/99이벤트. 세부수치는설계기본안,앱미구현.
 
@@ -158,36 +158,40 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 
 <!-- SOURCE: STATUS.md -->
 
-# 상세설계 진행 현황 — v0.10 작업 중
+# 상세설계 현황 — v0.10 서면 계약 작성
 
-사용자가실제구현에사용할수있는상세계약을요청했고,플레이선택은물어보며진행하도록요청했다. 앱구현은하지않는다. 45화면/99이벤트의기존설계는유지하되새사용자답변을반영중이다.
+추가8기능의상세처리순서·자료형·상태전이·API·실패복구·검수기대값을56~64에작성했다. 사람에게물었던5개선택은65에모두답변반영. 이번8분야내미답변핵심선택없음. 앱구현/SQL배포/실제Neon연동/build/APK검증은미착수.
 
 ## 사용자 확정
 
-65:특성은기록해금후보유효과전부자동적용(장착제한없음). 개인치트구종숙련성장3배/연간cap60. 같은구단세계같은원본은현역선수또는지도자1역할.
+- 특성은기록으로해금하고보유효과전부자동적용,장착슬롯제한없음.
+- 개인치트는구종숙련도3배,연간성장상한60(일반20).
+- 동일구단세계같은원본은현역선수또는지도자한역할만.
+- 목표·도전과제는기념외형보상만,능력/잠재력/재화/강화/구종성장보상없음.
+- 문자중계는확정경기감상·스킵·다시보기,중계전략개입없음.
 
-## 완료한 서면 상세계약
+## 8개 상세계약
 
-| 분야 | 문서 | 작성 범위 |
+| 분야 | 문서 | 서면 계약 |
 |---|---|---|
-| 공통 |64|자료형/API경로/preview·receipt/오류/화면상태 |
-| 특성 |56|12조건정확화/전체자동효과/cap/필드/조회API/근거 |
-| 구종 |57|비율경계/XP예약·분기정산/치트60/AI/복사/API |
-| 에이전트 |59|오퍼전이/예산예약/요청p/관계·수수료원장/API |
-| 관계 |60|후보/실제재회/기록집계/정정/요약보존/API |
-| 지도자 |61|역할claim/급여예약·지급/기간효과/중복방지/API |
-| 연대기 |63|outbox/메모CAS/PNG규격/exportjob/권한/복원 |
+| 특성 |56|12조건/자동효과/중첩상한/원본/도감·근거API |
+| 구종·성향 |57|구종비율/대표선택/XP예약·분기정산/치트cap/AI/복사 |
+| 목표·과제 |58|10목표·12과제/추천·교체/scope/자동기념보상·중복방지/API |
+| 에이전트 |59|오퍼전이/금액예약/요청확률/관계원장/분할급여수수료/API |
+| 라이벌·동료 |60|후보/실제재회/상태전이/대결집계·정정/기록보존/API |
+| 지도자 |61|원본role claim/급여보장·지급/효과기간/중복역할방지/API |
+| 문자중계 |62|서버경기·클라이언트읽기분리/logschema/chunk·hash/보존/복구/API |
+| 연대기 |63|outbox/근거snapshot/메모CAS/PNG규격/내보내기job·권한/API |
 
-## 답변을 기다리는 두 결정
+64는공통명령·preview·receipt·오류·수용기준,65는사용자선택의최우선원본. 기존기초47~55는상세문서링크를따른다. 화면45개/이벤트99개유지. 추가플레이취향결정이생기면다시질문하고기술구체화는독립진행한다.
 
-- 목표·도전과제보상:기념만/능력성장추가/잠재력상승기회. 답변후58의정산·중복·수치·기회정책완성.
-- 중요경기중계:확정경기감상/경기전전략/타석별전략. 답변후62의게임진행checkpoint·로그·재생·복구계약완성.
+## 검증 결과와 범위
 
-현재이2분야는기초안49/53만있으며상세완료라고표시하지않음. 별도58/62최종규칙을임의로확정하지않는다. 새질문을한꺼번에늘리지않고이답변부터반영한다.
+verify-design.mjs통과:카탈로그ID·필드·MD링크·이미지·HTML앵커·스크립트문법·상태JSON동기화·계산예시. expansion-acceptance-fixtures.json에8분야80개의given/action/expected/mustNotChange기대값작성,모두NOT_IMPLEMENTED. fixture구조검사와실제엔진테스트실행은다르다.
 
-## 검증과 한계
+미실증:100seed커리어/10만타석/50시즌경제/엔진PRNG·DB/APItransaction·파일복구·Neon권한·한글PNG/Android다운로드·실기기서명APK. 실브라우저는기존MXC경로오류로렌더링미검수. 문서작성완료를밸런스/실서비스통과라고쓰지않는다.
 
-expansion-acceptance-fixtures.json에6분야56개정상/경계/오류/중복/복원기대값작성. 정적카탈로그검사와서면fixture의존재확인은실제엔진/DB/API테스트통과가아님. 브라우저도구기존MXC오류로실제렌더링미검수. Neon변경/build/APK/PNG실행미착수. 최신VALIDATION과Git커밋으로완료/미완료를구분한다.
+최신원본GitHub docs/design. 다른환경은START-HERE→14→65→64→해당56~63순. 옛ZIP/네트워크복사본은시점보관,통합MD/보드미리보기/SHA는최신갱신. 구현은별도착수지시후진행한다.
 
 ---
 
@@ -233,13 +237,16 @@ v0.9확장47~54:추천8기능모두서면계약작성.55의API/교차효과/45�
 추가8기능의기초설계와상세실행계약은구분한다.64공통및56/57/59/60/61/63작성,58/62는질문답변후작성. 세부필드·명령·오류·서면fixture를채우되실제코드테스트로보고하지않음.
 
 
+v0.10후속완료:기념보상/감상형중계답변을반영해58/62작성. 56~63전8개서면상세계약+64공통+65사용자결정+80개검수기대값. 현재목록의선택대기는해소,실행검증은STATUS미완료항목.
+
+
 ---
 
 <!-- SOURCE: 14-CANONICAL-DECISIONS.md -->
 
 # 14. 통합 결정표와 세계 달력
 
-문서 버전 v0.9, 2026-10-16. 앞 문서의 제안이 충돌하면 이 문서가 우선한다. 사용자 확정 요구를 바꾸는 우선권은 없다. 아래 숫자는 구현 가능한 기준안을 정한 것이며 사용자가 개별 수치까지 승인했다는 뜻은 아니다.
+문서 버전 v0.10, 2026-10-16. 앞 문서의 제안이 충돌하면 이 문서가 우선한다. 사용자 확정 요구를 바꾸는 우선권은 없다. 아래 숫자는 구현 가능한 기준안을 정한 것이며 사용자가 개별 수치까지 승인했다는 뜻은 아니다.
 
 ## 결정 상태
 
@@ -366,7 +373,10 @@ v0.9확장47~54:추천8기능모두서면계약작성.55의API/교차효과/45�
 
 ## 사용자후속확정과상세계약진행
 
-U:특성기록해금/보유전체자동적용,개인치트구종숙련3배,동일세계원본현역또는지도자한역할(65). 구장착2/시그니처1/구종치트1배제안은폐기. 후속기술계약64및56/57/59/60/61/63작성. 목표보상과중계개입은질문답변전까지추가확정하지않음.
+U:특성기록해금/보유전체자동적용,개인치트구종숙련3배,동일세계원본현역또는지도자한역할(65). 구장착2/시그니처1/구종치트1배제안은폐기. 후속기술계약64및56/57/59/60/61/63작성. 목표는기념보상만/중계는확정경기감상형으로후속답변확정,58/62작성완료.
+
+
+U후속:기념보상만유지,확정경기감상·스킵·다시보기(65). 기술상세계약56~64와서면80fixture연결. 기존목표·중계답변대기표기는해소됐으며실제엔진/앱검증은별도다.
 
 
 ---
@@ -3667,6 +3677,9 @@ seasonGoals(saveId,seasonId,slot,definitionId,scope,status,sourceReceipt),achiev
 
 GOAL01 범위분리/최대3/교체1/미선택진행/미달페널티0/보상중복0/복사달성초기화/치트출처/복무목표조건검증. 목표완료뉴스는55의이벤트로연결하고연대기54에서보상을재지급하지않는다.
 
+65사용자답변으로기념보상만/감상형중계확정. 상세처리순서·스키마·API·상태·복구·검수는[상세계약](58-GOALS-DETAILED-CONTRACT.md).
+
+
 ---
 
 <!-- SOURCE: 50-AGENTS-RELATIONSHIPS.md -->
@@ -3824,6 +3837,9 @@ gameReceipts/playLogChunks/commentaryTemplateVersion/importantGameSnapshots,uniq
 
 LIVE01 중계/결과모드동일resultHash/속도난수불변/앱중단복구/부분경기표시/타구방향가짜0/점수합/중복핀0/대표구종표시/구로그버전검증. 접근성은자동로그전부를매문장aria-live로읽지않고현재타석요약과수동읽기영역을분리한다.
 
+65사용자답변으로기념보상만/감상형중계확정. 상세처리순서·스키마·API·상태·복구·검수는[상세계약](62-COMMENTARY-DETAILED-CONTRACT.md).
+
+
 ---
 
 <!-- SOURCE: 54-CHRONICLE-MEMORY-CARDS.md -->
@@ -3872,7 +3888,7 @@ TIM01 사건멱등/미출장메달문구/리그분리/은퇴원본나이/복사�
 
 <!-- SOURCE: 55-EXPANSION-INTEGRATION.md -->
 
-최신결정:[65](65-USER-TRAITS-XP-STAFF.md). 상세API공통[64](64-EXPANSION-COMMON-CONTRACT.md),기능별56/57/59/60/61/63작성. 목표보상/중계전략개입은사용자질문답변대기중이며58/62상세계약은아직완료아님.
+최신결정:[65](65-USER-TRAITS-XP-STAFF.md). 상세API공통[64](64-EXPANSION-COMMON-CONTRACT.md),기능별56~63전체작성. 기념보상만/감상형중계도사용자답변으로확정,미답변선택없음.
 
 # 55. 추가8기능 통합·데이터·사건·화면 계약
 
@@ -4016,6 +4032,69 @@ S39는종류별화면분리,학습XP와활성비율을같은숫자로표시하�
 
 ---
 
+<!-- SOURCE: 58-GOALS-DETAILED-CONTRACT.md -->
+
+# 58. 목표·도전 과제 상세 계약 — 선택·집계·기념 보상
+
+사용자확정U:보상은기념외형만유지. 능력/잠재력/돈/강화횟수/구종XP효과0. 49의목표10종/도전12종,64의API·멱등·오류를구체화한다. 아래교체/집계규칙은설계기본안D.
+
+## 상태와 선택 시점
+
+시즌슬롯0~3,PRE창에서동시선택/수정가능,정규첫경기명령이확정되면목록잠금. 선택0개도진행. 목표status=ACTIVE/COMPLETED/REPLACED/EXPIRED/CORRECTED,completionReceipt/evidence는완료뒤불변참조. 시즌중반소속리그정규절반올림에서교체창1회,미완료ACTIVE슬롯한개만교체,완료슬롯은보상후비우기/재사용불가. 리그이동으로교체창재생성없음,시즌종료때미사용기회소멸.
+
+MID신규목표는현재시즌수치가이미target이상이면선택불가(ALREADY_SATISFIED),현재수치가미달이면시즌시작이후같은scope의전체진척으로시작한다. 예BB22→G04교체면22/30,BB33이면선택불가. 목표를PRE에선택했으나정규0경기로끝나면EXPIRED,페널티없음. 원본선수의과거기록을복사본시즌에대입하지않음.
+
+## 목표별 집계·추천
+
+scope={worldSeasonId,leagueId,phase,teamId?},선택시leagueId고정. 국내/미국/대학/국제/PS전적합산없음. 미국마이너각leagueId도별도. 이적해도같은leagueId면이어집계,다른leagueId이동은원scope결과만유지,미완료목표에‘이전리그기록기준’표시/MID잔여교체가능. 기록율이아닌원시count사용.
+
+| ID | 자격·정확 predicate | rewardId/type |
+|---|---|---|
+|G01|타자,REGULAR PA≥50|R-G01/FRAME |
+|G02|타자,REGULAR startedGames≥50|R-G02/TITLE |
+|G03|타자,REGULAR HR≥20|R-G03/BACKGROUND |
+|G04|타자,REGULAR BB≥30|R-G04/STAMP |
+|G05|투수,REGULAR K≥100|R-G05/BACKGROUND |
+|G06|투수,REGULAR선발등판outs합≥300|R-G06/FRAME |
+|G07|투수,REGULAR SV≥20|R-G07/TITLE |
+|G08|선택시실제부상/재활중,회복후같은시즌실제출장≥1|R-G08/BACKGROUND |
+|G09|선택팀정규명단이력1경기일이상,그팀PS진출최종확정|R-G09/STAMP |
+|G10|대학등록,대학선수권실제PA>0또는투수BF>0|R-G10/FRAME |
+
+G06은구원아웃미포함. G09다른팀으로이적해도목표팀은선택때고정,목표팀결과와개인출장을혼동안함. G08수동가짜부상/복귀확인만으로완료불가. 졸업/병역으로남은기회없으면달성불가사유표시하되능력감소없음.
+
+추천은현재종류/레벨자격필터→전시즌같은scope실적r과target비율r/target이.5~1.2면우선→진척이큰항목→goalId순,최대3개. 전시즌분모0이면타자G01/G04/G09,투수G05/G06/G09중유효조건순. G08은현재부상중일때만추천,G10대학만. 추천은자동선택아니며‘달성률75%’같은근거없는p없음. 사용자는추천밖유효목표도선택가능.
+
+## 도전 과제와 보상 정산
+
+A01프로첫계약(KBO/MiLB/MLB)/A02KBO첫실제출장/A03MLB첫실제출장/A04국제첫실제출장/A05대학GRADUATED/A06포스팅후해외계약실제체결/A07병역COMPLETED(비대상제외)/A08동일leagueId커리어H≥1000/A09동일leagueIdW≥100/A10동일leagueIdSV≥200/A11고교라이벌과첫실제재회/A12KBO와MLB실제출장후은퇴. 각각R-A01~R-A12의도감스탬프, A12는책장표지. 최초자격판정후UNIQUE(playerId,achievementId)해금,여러선수달성출처는모두남김.
+
+경기/상태전이최종commit→기록집계→완료predicate→goalCompletion/achievementUnlock→cosmeticUnlock(owner,rewardId) ON CONFLICT보유유지→E90/outbox원자커밋. 보상수령버튼없이자동해금,열람/연대기생성/PNG다운로드로재지급없음. 같은보상계정보유면‘보유중’,대체재화0. 치트출처배지유지,치트라서보상박탈안함. 정정으로기준미달이면완료행CORRECTED/evidence이력남김,이미해금한기념외형은회수하지않음. 다른선수의동일보상근거삭제안함.
+
+## 데이터·API
+
+| 엔티티 | 필드·제약 |
+|---|---|
+|goal_definitions|goalId/version복합PK,kind,scopePolicy,predicateKey,target,rewardId |
+|season_goal_slots|saveId/playerId/seasonId/slot UNIQUE,definitionId,scope,status,progress,selectedRevision,completedEvidence? |
+|goal_replacement_usage|playerId/seasonId UNIQUE,used0/1,windowId |
+|achievement_unlocks|playerId/achievementId UNIQUE,evidenceRef,definitionVersion |
+|cosmetic_unlocks|ownerSubject/rewardId UNIQUE,firstEvidenceRef,unlockedGameInstant |
+|cosmetic_sources|owner/rewardId/playerId/evidence UNIQUE,추가달성출처 |
+|cosmetic_preferences|owner/playerOrProfile/slot UNIQUE,rewardId,preferenceRevision;게임능력필드없음 |
+
+GET expansion/goals?playerId→{seasonSlots,eligibleDefinitions,recommendedIds,replaceWindow,achievements,rewards,gameplayRewardDelta:0}. SET_GOALS={playerId,seasonId,goalIds:[G01,G03],scopeByGoal};REPLACE_GOAL={playerId,seasonId,slot,newGoalId,newScope};preview는현재진척/자격/보상보유/교체사용후상태. 성공result={slots,replacementUsed,rewardGrantCount}. 계정보상삽입은rewardId오름차순으로처리하고unique충돌시기존행을유지한다. 동일목표중복/4개는422 SLOT_CONFLICT,완료슬롯교체422 NOT_ELIGIBLE,MID기회0이면422 LIMIT_REACHED,기준기록변경409 PREVIEW_STALE.
+
+EQUIP_COSMETIC은PATCH /api/cosmetic-preferences/{scopeRef}={expectedPreferenceRevision,slot:TITLE|FRAME|BACKGROUND|STAMP,rewardId|null},소유보상/type일치검사. 이외형설정은save revision/난수불변,서버프로필선호revision CAS. 이름표시/카드theme만변경,미보유422 NOT_ELIGIBLE.
+
+## S40·실패·검수
+
+시즌/커리어/기념보상탭→정확scope/기한/진척→목표초안→preview→확정. 완료후보상은이미해금됐음을표시,애니메이션실패후재수령버튼없음. 409는최신진척재조회,기록없음과조회장애를구분,규정분모0도목표선택/시즌진행가능.
+
+GOAL-D01 HR19→20완료1/02같은receipt보상증가0/03KBO12+MLB8은G03미달/04완료슬롯교체거절/05BB22MID교체22/30/06BB33신규선택거절/07미선택시진행/08구원300아웃G06미달/09부상복귀명령만G08미달/10계정같은보상재화0/11정정기념유지/12전체gameplayDelta0. 보상수치가게임밸런스에영향없는것을엔진/DB/화면테스트각각검증한다.
+
+---
+
 <!-- SOURCE: 59-AGENTS-DETAILED-CONTRACT.md -->
 
 # 59. 에이전트·관계·재협상 상세 계약
@@ -4140,6 +4219,50 @@ S43공석→후보필터(원본/가상)→역할claim상태→등급근거→급
 
 ---
 
+<!-- SOURCE: 62-COMMENTARY-DETAILED-CONTRACT.md -->
+
+# 62. 감상형 문자 중계 상세 계약 — 로그·해시·읽기 복원
+
+사용자확정U:이미확정된경기감상/스킵/다시보기. 경기전전략·타석중전략명령은중계에추가하지않는다. 실제라인업/기용등기존필수행동은경기확정전에처리. 53기본안과64공통계약을구체화한다.
+
+## 진행과 재생 상태 분리
+
+서버경기상태=QUEUED/SIMULATING/PENDING/FINAL/ERROR. FINAL만공식종료결과/resultHash가존재. 클라이언트감상상태=READY/PLAYING/PAUSED/FINISHED/UNAVAILABLE. 감상선택이엔진seed/배열정렬/타석호출수를바꾸지않는다. ‘중계보기/결과보기’선택은동일게임진행command를호출하고presentationMode는클라이언트선호로만저장,엔진입력에서제외한다.
+
+중요경기후보는gameId+reasonKey고유:첫예상KBO/MLB/국제출장,결승,첫라이벌실제재회예정,사전은퇴선언후마지막예정출장,기록문턱직전. 후보정렬은필수사건뒤→gameDay→gameId. 같은경기이유여러개합침,같은후보상태version에서반복팝업없음. 설정OFF는후보읽기중단만생략. 실제출장0이면데뷔/재회/은퇴출장moment안만듦.
+
+일반진행청크내pending이면서버현재확정타석까지의프레임과‘경기 처리 중’만표시. 응답유실은원commandId조회,다른ID로경기재시작금지. FINAL도달후완전로그감상,현재UI일시정지는서버엔진중지명령이아님. 결과스킵은클라이언트cursor를마지막프레임으로옮기며game/save revision변경0.
+
+## 정규 로그 형식
+
+playRecord={logSchemaVersion:1,gameId,playCursor:int≥0,paSequence,kind,gameInstant,inning,half:TOP|BOTTOM,batterId?,pitcherId?,representativePitchId?,before:{outs,bases:[runnerId|null]×3,homeScore,awayScore},resultCode?,after:{…},legalRuns:[{runnerId,responsiblePitcherId,earnedFlag}],effectiveProbability?,evidenceRefs:[]}. kind는PA_START/REPRESENTATIVE_PITCH/PA_RESULT/ADVANCE_RESULT/PITCHER_CHANGE/INNING_END/GAME_END/MILESTONE. 같은(gameId,playCursor)고유,중계문장마다새경기효과를발생시키지않음.
+
+outs전후/점수전후는해당이벤트실제snapshot. 정규1B후주루아웃은PA_RESULT/ADVANCE_RESULT를각원기록으로표시,3아웃후불법득점문장없음. GAME_END는최종receipt후한개,로그RBI/outs는24박스스코어와일치. 대표구종은57이이미선택한ID,없으면문장생략. 타구방향/실제초구/좌우코스/실측구속/기상등없는필드는문장에추론하지않음.
+
+템플릿입력은로그snapshot만사용,현재선수나이·현재구단으로옛경기를바꾸지않는다. 홈런legalRuns개수로{runs}확정,국제타이브레이커자동주자ER은24원장그대로. 자동추가진루는실제판정의effectiveP와결과를회고표시,원p와특성후p를혼동안함. p=1숫자는38대로숨기고‘성공 보장’문구사용. p없는조회/스킵에확률배지없음.
+
+## chunk·해시·보존
+
+최대200playRecord/응답,chunk는최대256KiB비압축UTF8를기준으로정규JSON뒤gzip. 인덱스에시작/끝cursor,count,sha256OfUncompressed,previousChunkHash,compression,objectKey,logSchemaVersion. chain순서와checksums검사,FINAL manifest={gameId,engineVersion,logSchemaVersion,commentaryTemplateVersion,resultHash,chunkHashes,boxscoreRef,finalCursor}. resultHash는정렬canonical JSON(gameId,engineVersion,finalScore,boxscore,기록판정원시원장)SHA256이며UIcursor/速度/템플릿미포함. 구기록은당시hash유지,새버전으로경기를재시뮬레이션하지않음.
+
+데뷔/실제기록달성/결승/라이벌재회/은퇴경기/사용자핀은important_game_snapshots영구보존. 일반상세만15보존기간적용. 원본archive참조로그는save삭제전원본보존namespace에manifest+chunk참조이관확인. refcount0인일반chunk만만료청소,불변참조있는파일삭제금지. 사용자가핀할때이미로그없으면summary핀만가능/다시보기없음명시. 자동중요후보였으나실제이정표없는경기는일반정책.
+
+## API와 엔티티
+
+commentary_manifests(gameId UNIQUE,status,versions,resultHash,finalCursor,chunkRefs),play_log_chunks(gameId,startCursor UNIQUE,hash,objectKey,count),important_game_snapshots(owner,scopeRef,gameId UNIQUE,reasonKeys,manifestHash),commentary_preferences(owner,scopeRef,gameId UNIQUE,preferenceRevision,cursor,speed,spoilerRevealed,pinned). live플레이상태와읽기cursor분리,내부storage key를공개API에노출안함.
+
+GET /api/saves/{saveId}/games/{gameId}/commentary?afterCursor&limit→{status,resultHash|null,logVersion,records,nextCursor,finalCursor|null,canReplay,summary}. archive게임은GET /api/archives/{archiveId}/games/{gameId}/commentary. opaque cursor는gameId/logVersion/마지막순서와owner에결합,다른게임cursor는422 INVALID_CURSOR. chunk손상은503 LOG_INTEGRITY_ERROR,요약조회/재검증안내,임의새경기생성없음.
+
+PATCH /api/commentary-preferences/{scopeRef}/{gameId}={expectedPreferenceRevision,cursor,speed:1|2|4,spoilerRevealed,pinned?}→{preferenceRevision,preferences}. cursor≤현재최대확정값,미완료경기마지막을최종종료로간주안함. 두기기cursor경합409는자동큰값채택안함(다시보기되감기보존),기기내읽기위치는유지하고명시적저장선택. 화면속도/다음타석/되감기는로컬,위치저장은타석전환debounce/종료시,실패해도경기결과유지.
+
+## S44·접근성·검수
+
+입장→상태/manifest검사→저장cursor복원→1타석/재생1·2·4배/정지/되감기/결과스킵→박스스코어또는기록홈. 재방문FINAL은처음/이어서선택,기본스코어스포일러여부는기기선호. 자동음성OFF,aria-live는사용자가넘긴현재타석요약만,전체로그는스크롤리스트. reducedMotion은타석결과즉시표시,배경애니메이션없음. 그림실패대체텍스트,문장오류시해당원기록fallback.
+
+LIVE-D01 중계ON/OFF같은resultHash/02스킵rng0/03속도4도동일결과/04BB/HBP개별처리/05partial은FINAL아님/06로그재요청중복카운트0/07checksum불일치요약fallback/08archive원본로그보존/09없는방향문장0/10홈런legalRuns2면2점/11되감기cursorCAS충돌/12중계조회능력·보상delta0. 실제브라우저/Android중단·네트워크회복·키보드및박스스코어일치는구현후실행검수한다.
+
+---
+
 <!-- SOURCE: 63-CHRONICLE-DETAILED-CONTRACT.md -->
 
 # 63. 연대기·카드 상세 계약 — 근거·메모·PNG·복원
@@ -4227,14 +4350,14 @@ CLEAN→DIRTY→PREVIEWING→CONFIRMING→SUBMITTING→APPLIED또는REJECTED. �
 
 각완료된상세문서의fixture는입력/명령/기대결과/상태delta/금지delta/화면행동까지명시한다. 기계가독목록[expansion-acceptance-fixtures.json](expansion-acceptance-fixtures.json)은설계데이터,테스트실행완료가아니다. 구현자는이를기대값으로엔진·DB·API·웹/APK테스트를작성한다. 필수:정상·경계·조건불가·멱등·다른기기충돌·응답유실·원본불변·개인자료권한. 64의고정gate를충족하지않으면기능완료라고쓰지않음.
 
-현재fixture56개/6분야작성,목표·중계2분야는사용자핵심선택대기. 완료판정과pending구분은STATUS를따른다.
+현재fixture80개/8분야작성,목표·중계사용자핵심선택해소. 서면계약작성과실행검증은STATUS에서구분한다.
 
 
 ---
 
 <!-- SOURCE: 65-USER-TRAITS-XP-STAFF.md -->
 
-# 65. 사용자 추가 결정 — 특성 자동 효과·치트 구종 성장·원본 단일 역할
+# 65. 사용자 추가 확정 — 특성·구종·원본 역할·보상·감상형 중계
 
 사용자답변확정U(2026-10-16):①기록으로특성해금,보유효과모두적용②개인치트의구종숙련성장3배③같은세계동일원본은현역선수또는지도자한역할. 이전장착2/시그니처1/개인치트구종성장1배는폐기한다.
 
@@ -4253,6 +4376,11 @@ CLEAN→DIRTY→PREVIEWING→CONFIRMING→SUBMITTING→APPLIED또는REJECTED. �
 ## 변경 반영 대상
 
 47/56특성,S38/E85,48/57구종,33치트설명,52/61지도자,55통합,14/STATUS/보드/카탈로그/fixture. 기능추가8종자체는유지한다. 진행중구세이브는아직없으므로구현첫버전에이요구를사용하고기존구현데이터를임의덮어쓰지않음.
+
+## 사용자 후속 확정 — 목표와 중계
+
+U:시즌목표·도전과제보상은기념보상만유지(능력/잠재력/재화/강화/구종XP보상없음). U:중요경기문자중계는확정경기감상·스킵·다시보기,중계에서경기전/타석별전략개입없음. [58 목표상세](58-GOALS-DETAILED-CONTRACT.md)와[62 중계상세](62-COMMENTARY-DETAILED-CONTRACT.md)작성,대기결정해소. 확정된5선택이이전설계기본안보다우선한다.
+
 
 ---
 
@@ -5122,7 +5250,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: HANDOFF-PROMPT.md -->
 
-현재진행:[65 사용자후속결정](65-USER-TRAITS-XP-STAFF.md)과[64 상세계약공통](64-EXPANSION-COMMON-CONTRACT.md)을우선읽으세요. 56/57/59/60/61/63작성,58목표·62중계는사용자선택답변대기(STATUS). 특성전체자동효과/치트구종3배가최신확정입니다.
+최신v0.10:[65 사용자확정5항목](65-USER-TRAITS-XP-STAFF.md)과[64 공통계약](64-EXPANSION-COMMON-CONTRACT.md),56~63전체8기능상세계약/검수기대값80개작성. [STATUS](STATUS.md)에서서면완료와실행미검증을구분하세요. 앱미구현.
 
 최신v0.9:[55 추가8기능통합](55-EXPANSION-INTEGRATION.md)을먼저확인. 47~54모두v1필수로추가,45화면/99이벤트. 세부수치는설계기본안,앱미구현.
 
@@ -5153,9 +5281,9 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: VALIDATION.md -->
 
-# 상세계약 v0.10 진행 중 검증 — 2026-10-16
+# 상세설계 v0.10 정적검증 — 2026-10-16
 
-앱코드/SQL배포를작성하지않고추가8기능중독립진행가능한6분야의상세서면계약을작성했다. 목표보상/중계전략개입은사용자질문답변대기,58/62상세계약은미완료.
+56~63추가8기능상세계약,64공통,65사용자선택확정,45화면/99이벤트/80개서면검수기대값. 현재8분야질문대기없음.
 
 명령: `node docs/design/verify-design.mjs`
 
@@ -5163,11 +5291,11 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 PASS: 99 event contracts, 45 screen contracts, unique IDs, local links/assets, JS syntax, embedded state catalog, no visible 100% badges.
 PASS: design arithmetic: search odds, offer distributions/monotonicity, 14 initial arrays, overall, advancement, draft, growth, import, budget, college schedule.
 PASS: expansion design arithmetic: negotiation .60/.68, income fee, staff budget, imported pitch mastery, skill modifier caps.
-PASS: 56 explicit design fixtures across 6 detailed modules; automatic traits and cheat pitch XP examples. Fixture execution is NOT implemented.
-PENDING USER CHOICES: goal rewards and commentary strategy intervention.
+PASS: 80 explicit design fixtures across 8 detailed modules; automatic traits and cheat pitch XP examples. Fixture execution is NOT implemented.
+CONFIRMED: cosmetic-only rewards and read-only commentary; no pending choices in these eight detailed modules.
 NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.
 ```
 
-신규서면fixture는입력given/action/expected/mustNotChange/UI실패처리/미구현표시포함. 56개기대값이존재하고고유하며필드가채워진것을검사했다. 게임엔진·DB·API에서이56개테스트를실행한것은아니다. 별도의산술검사는20×3=60/학습2.5×3×4=30/부상분기3.75예시확인.
+80fixture는입력/동작/기대결과/금지delta/오류복구를명시한설계데이터. 구조·ID·필드존재를검사했으며실제엔진/DB/API에서80개시나리오를실행한것은아니다. 보상성장0/리그기록분리/목표교체/재생PRNG0/로그손상/되감기CAS/직원급여/원본불변등의기대값을구현자에게전달한다.
 
-도감장착시연을삭제하고자동효과조회로교체,이벤트E85/화면S38/콘텐츠버전4반영. 브라우저실제렌더링은기존MXC경로오류로미검수,이번작업에서재생/파일/Neon/인증/build/APK실행없음. 원격DB변경없음. 사용자의미답변선택을임의확정하지않는다.
+실브라우저는이전MXC경로오류로렌더링미검수,한글PNG/실기기다운로드/게임분포/Neon/API/인증/빌드/APK미실행. 이번작업은productionDB/파일서비스변경없이문서·보드갱신만했다. Git diff --check/통합MD/SHA/원래열린보드복사본을함께갱신한다.
