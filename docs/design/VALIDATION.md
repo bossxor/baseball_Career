@@ -1,20 +1,21 @@
-# v0.8 설계 정적 검증 — 2026-10-16
+# v0.9 설계 정적 검증 — 2026-10-16
 
-검증대상은문서·카탈로그·보드이며앱빌드/게임플레이가아니다.
+대상은문서·카탈로그·HTML설계시연이며실제게임/브라우저/Neon/APK검증이아니다.
 
-실행명령: `node docs/design/verify-design.mjs`
+명령: `node docs/design/verify-design.mjs`
 
 ```text
-PASS: 83 event contracts, 37 screen contracts, unique IDs, local links/assets, JS syntax, embedded state catalog, no visible 100% badges.
+PASS: 99 event contracts, 45 screen contracts, unique IDs, local links/assets, JS syntax, embedded state catalog, no visible 100% badges.
 PASS: design arithmetic: search odds, offer distributions/monotonicity, 14 initial arrays, overall, advancement, draft, growth, import, budget, college schedule.
+PASS: expansion design arithmetic: negotiation .60/.68, income fee, staff budget, imported pitch mastery, skill modifier caps.
 NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.
 ```
 
-- 이벤트ID E01~E83연속/고유,본문·조건·선택명령·결과안내누락없음. 문구조건이실제플레이에서도달한다는증명은아님.
-- 화면S01~S37이카탈로그와HTML에연결,로딩/빈상태/실패/저장중/충돌문구포함. HTML ID중복없음,내부앵커/이미지/MD상대링크누락없음.
-- 두스크립트구문파싱통과,HTML임베드상태JSON과원본일치. 초기유형14종각합300. 탐색예시63%,경쟁수락분포합1/제안금액단조성,종합70,추가진루.74/.665,드래프트B45=.5,성장분배/91→45.5/예산18.4억/대학216경기계산확인.
-- 보드본문의100%숫자배지없음. CSSwidth100%/잠재력100/내부확률1은별개.
-- 브라우저검수호출은`failed to prepare MXC sandbox: permission path cannot be represented losslessly`로실패했다. 실제스크린샷·모바일픽셀·키보드·터치·폰트검수는미실시.
-- package.json/앱구현이없어npm build/서버시작/Neon서비스E2E/APK빌드를실행하지않았다. 별도구현착수후필수.
+- E01~99연속/고유,제목·본문·조건·선택·결과안내필드누락없음. S01~45모두카탈로그/HTML에존재,로딩/빈상태/오류/저장중/충돌문구포함.
+- HTML ID중복/내부링크·자산누락없음,세스크립트구문파싱/임베드상태JSON일치. 실제DOM동작·키보드/모바일가독성통과아님.
+- 기존수식예시와추가역제안.60/.68/개인수수료2%/직원연봉후잔액/복사구종등급하한/새효과합산cap계산확인. 설계수식을검사한것이며실제엔진구현테스트아님.
+- 실제100확률숫자배지없음. 구종운용비율/능력100/잠재력100은서로다른표시다.
+- 브라우저는앞선검수에서MXC sandbox permission path cannot be represented losslessly오류로차단됐다. 이번확장화면은실제렌더링검수하지않았다.
+- 확장8기능과기존기능모두앱미구현. 100seed커리어/10만타석/50시즌경제·직원·스킬조합,실제Neon/API/인증/백업/PNG/Android다운로드/build/APK는구현후필수검증.
 
-반복검증은같은명령으로가능하다. JSON은설계데이터이며명령핸들러는아직구현되지않았다. 통합MD와MANIFEST는최종원본을기준으로재생성한다. 과거보고서의33화면/69종집계는현재37/83으로대체한다.
+이번작업에서원격productionDB/버킷/인증설정변경없음. Git커밋과정적설계검사만수행했다. 통합MD/카탈로그/원래HTML미리보기복사본/SHA목록갱신.
