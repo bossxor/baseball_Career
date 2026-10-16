@@ -50,6 +50,7 @@
 | [통합 경로 재검토·설계 검토본](30-INTEGRATED-DESIGN-REVIEW.md) | 상세설계 12 |
 | [사용자 결정01](31-USER-PACING-TRAINING-DIFFICULTY.md) | 월별 진행·확정 강화·난이도2종 |
 | [사용자 결정02](32-USER-IMPORT-REBIRTH.md) | 최고치50%·새 잠재력·병역 재시작 |
+| [사용자 결정03](33-SECRET-CHEAT-DIFFICULTY.md) | 숨겨진 치트 난이도·해금 순서·효과 범위 |
 | [14 통합 결정표](14-CANONICAL-DECISIONS.md) | 최신 규칙, 충돌 해소, 사건·연간 순서 |
 | [15 장기 운영·기록](15-LONG-TERM-RECORDS.md) | AI, 선수 공급, 보존, 명예의 전당 |
 | [16 계정·운영](16-AUTH-OPERATIONS.md) | 인증, 웹/APK 세션, 배포·백업 정책 |
