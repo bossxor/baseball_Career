@@ -12,7 +12,7 @@
 | 06 | 경기 엔진·투수교체·기록 판정 | 서면 설계 완료 | [24-GAME-ENGINE-SCORING.md](24-GAME-ENGINE-SCORING.md) |
 | 07 | 구단 AI·경제·드래프트·장기 공급 | 서면 설계 완료 | [25-CLUB-AI-ECONOMY.md](25-CLUB-AI-ECONOMY.md) |
 | 08 | 이벤트69종 조건표·실제 문안 검수 | 서면 설계 완료 | [26-EVENT-CONTENT-CONTRACT.md](26-EVENT-CONTENT-CONTRACT.md) |
-| 09 | 전체33화면 최종 입력·반응형 목업 | 예정 | 03/17과 보드 |
+| 09 | 전체33화면 최종 입력·반응형 목업 | 서면 설계 완료 | [27-UI-INTERACTION-RESPONSIVE.md](27-UI-INTERACTION-RESPONSIVE.md) |
 | 10 | DB/API/인증/테스트 fixture 계약 | 예정 | 06/16을 상세화 |
 | 11 | 운영·백업·APK·배포·실환경 확인 | 예정 | 16을 상세화 |
 | 12 | 통합 경로 재검토·설계 승인본 | 예정 | 07/18/STATUS |
