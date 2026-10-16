@@ -41,4 +41,4 @@ CLEAN→DIRTY→PREVIEWING→CONFIRMING→SUBMITTING→APPLIED또는REJECTED. �
 
 각완료된상세문서의fixture는입력/명령/기대결과/상태delta/금지delta/화면행동까지명시한다. 기계가독목록[expansion-acceptance-fixtures.json](expansion-acceptance-fixtures.json)은설계데이터,테스트실행완료가아니다. 구현자는이를기대값으로엔진·DB·API·웹/APK테스트를작성한다. 필수:정상·경계·조건불가·멱등·다른기기충돌·응답유실·원본불변·개인자료권한. 64의고정gate를충족하지않으면기능완료라고쓰지않음.
 
-현재fixture56개/6분야작성,목표·중계2분야는사용자핵심선택대기. 완료판정과pending구분은STATUS를따른다.
+현재fixture80개/8분야작성,목표·중계사용자핵심선택해소. 서면계약작성과실행검증은STATUS에서구분한다.

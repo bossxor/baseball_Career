@@ -137,9 +137,9 @@ for (const id of ['E84','E85','E86','E87','E88','E89','E90','E91','E92','E93','E
 console.log('PASS: expansion design arithmetic: negotiation .60/.68, income fee, staff budget, imported pitch mastery, skill modifier caps.');
 const detailedFixtures = JSON.parse(read('expansion-acceptance-fixtures.json'));
 assert.equal(detailedFixtures.status, 'DESIGN_EXPECTATIONS_ONLY');
-assert.equal(detailedFixtures.cases.length, 56);
+assert.equal(detailedFixtures.cases.length, 80);
 unique(detailedFixtures.cases.map(c => c.id));
-assert.equal(new Set(detailedFixtures.cases.map(c => c.module)).size, 6);
+assert.equal(new Set(detailedFixtures.cases.map(c => c.module)).size, 8);
 for (const fixture of detailedFixtures.cases) {
   assert.ok(fixture.given && Object.keys(fixture.given).length);
   assert.ok(fixture.expected && Object.keys(fixture.expected).length);
@@ -153,6 +153,7 @@ assert.ok(!html.includes("limitedChoices('trait-demo'"));
 assert.equal(catalog.contentVersion, 4);
 const s38 = screens.screens.find(s => s.id === 'S38');
 assert.ok(s38.data.includes('보유특성전체'));
-console.log('PASS: 56 explicit design fixtures across 6 detailed modules; automatic traits and cheat pitch XP examples. Fixture execution is NOT implemented.');
-console.log('PENDING USER CHOICES: goal rewards and commentary strategy intervention.');
+console.log('PASS: 80 explicit design fixtures across 8 detailed modules; automatic traits and cheat pitch XP examples. Fixture execution is NOT implemented.');
+assert.equal(Object.keys(detailedFixtures.pendingModules).length, 0);
+console.log('CONFIRMED: cosmetic-only rewards and read-only commentary; no pending choices in these eight detailed modules.');
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

@@ -47,7 +47,7 @@ A01프로첫계약(KBO/MiLB/MLB)/A02KBO첫실제출장/A03MLB첫실제출장/A04
 |cosmetic_sources|owner/rewardId/playerId/evidence UNIQUE,추가달성출처 |
 |cosmetic_preferences|owner/playerOrProfile/slot UNIQUE,rewardId,preferenceRevision;게임능력필드없음 |
 
-GET expansion/goals?playerId→{seasonSlots,eligibleDefinitions,recommendedIds,replaceWindow,achievements,rewards,gameplayRewardDelta:0}. SET_GOALS={playerId,seasonId,goalIds:[G01,G03],scopeByGoal};REPLACE_GOAL={playerId,seasonId,slot,newGoalId,newScope};preview는현재진척/자격/보상보유/교체사용후상태. 성공result={slots,replacementUsed,rewardGrantCount}. 동일목표중복/4개는422 SLOT_CONFLICT,완료슬롯교체422 NOT_ELIGIBLE,MID기회0이면422 LIMIT_REACHED,기준기록변경409 PREVIEW_STALE.
+GET expansion/goals?playerId→{seasonSlots,eligibleDefinitions,recommendedIds,replaceWindow,achievements,rewards,gameplayRewardDelta:0}. SET_GOALS={playerId,seasonId,goalIds:[G01,G03],scopeByGoal};REPLACE_GOAL={playerId,seasonId,slot,newGoalId,newScope};preview는현재진척/자격/보상보유/교체사용후상태. 성공result={slots,replacementUsed,rewardGrantCount}. 계정보상삽입은rewardId오름차순으로처리하고unique충돌시기존행을유지한다. 동일목표중복/4개는422 SLOT_CONFLICT,완료슬롯교체422 NOT_ELIGIBLE,MID기회0이면422 LIMIT_REACHED,기준기록변경409 PREVIEW_STALE.
 
 EQUIP_COSMETIC은PATCH /api/cosmetic-preferences/{scopeRef}={expectedPreferenceRevision,slot:TITLE|FRAME|BACKGROUND|STAMP,rewardId|null},소유보상/type일치검사. 이외형설정은save revision/난수불변,서버프로필선호revision CAS. 이름표시/카드theme만변경,미보유422 NOT_ELIGIBLE.
 

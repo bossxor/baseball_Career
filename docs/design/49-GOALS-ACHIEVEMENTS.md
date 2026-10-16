@@ -34,3 +34,5 @@ S40 탭‘이번시즌/커리어/보상’,카드에현재값/목표/집계범�
 seasonGoals(saveId,seasonId,slot,definitionId,scope,status,sourceReceipt),achievementUnlocks(ownerId,playerId,achievementId,evidence),cosmeticUnlocks(ownerId,rewardId). UNIQUE출처키로재처리불변,기록정정시달성취소는전체원장재검토절차로그하고다른선수보상삭제안함. 명령SET_GOALS/REPLACE_GOAL/EQUIP_COSMETIC,계정소유/revision/교체횟수검사.
 
 GOAL01 범위분리/최대3/교체1/미선택진행/미달페널티0/보상중복0/복사달성초기화/치트출처/복무목표조건검증. 목표완료뉴스는55의이벤트로연결하고연대기54에서보상을재지급하지않는다.
+
+65사용자답변으로기념보상만/감상형중계확정. 상세처리순서·스키마·API·상태·복구·검수는[상세계약](58-GOALS-DETAILED-CONTRACT.md).

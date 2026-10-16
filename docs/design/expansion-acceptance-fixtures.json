@@ -1178,10 +1178,533 @@
       ],
       "uiOnFailure": "상세계약64의오류별복구",
       "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "GOAL-D01",
+      "module": "goals",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "selectedGoal": "G03",
+        "scopeHR": 19,
+        "newHR": 1,
+        "sameScope": true
+      },
+      "action": "SETTLE_GOAL_PROGRESS",
+      "expected": {
+        "status": "COMPLETED",
+        "completionCount": 1,
+        "rewardId": "R-G03",
+        "gameplayDelta": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "GOAL-D02",
+      "module": "goals",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "sameCompletionReceiptApplied": true
+      },
+      "action": "SETTLE_GOAL_PROGRESS",
+      "expected": {
+        "newCompletionCount": 0,
+        "newRewardCount": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "GOAL-D03",
+      "module": "goals",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "selectedLeague": "KBO",
+        "kboHR": 12,
+        "mlbHR": 8,
+        "target": 20
+      },
+      "action": "PROJECT_GOAL_PROGRESS",
+      "expected": {
+        "progress": 12,
+        "status": "ACTIVE"
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "GOAL-D04",
+      "module": "goals",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "slotStatus": "COMPLETED",
+        "replacementUnused": true
+      },
+      "action": "REPLACE_GOAL",
+      "expected": {
+        "http": 422,
+        "code": "NOT_ELIGIBLE",
+        "replacementUsed": false
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "GOAL-D05",
+      "module": "goals",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "newGoal": "G04",
+        "currentBB": 22,
+        "target": 30,
+        "midWindow": true
+      },
+      "action": "REPLACE_GOAL",
+      "expected": {
+        "progress": 22,
+        "target": 30,
+        "replacementUsed": true
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "GOAL-D06",
+      "module": "goals",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "newGoal": "G04",
+        "currentBB": 33,
+        "target": 30
+      },
+      "action": "REPLACE_GOAL",
+      "expected": {
+        "http": 422,
+        "reason": "ALREADY_SATISFIED",
+        "mutations": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "GOAL-D07",
+      "module": "goals",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "selectedGoals": []
+      },
+      "action": "START_SEASON",
+      "expected": {
+        "canProgress": true,
+        "penalty": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "GOAL-D08",
+      "module": "goals",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "selectedGoal": "G06",
+        "starterOuts": 0,
+        "reliefOuts": 300
+      },
+      "action": "PROJECT_GOAL_PROGRESS",
+      "expected": {
+        "progress": 0,
+        "status": "ACTIVE"
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "GOAL-D09",
+      "module": "goals",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "selectedGoal": "G08",
+        "recoveryConfirmed": true,
+        "actualReturnAppearances": 0
+      },
+      "action": "PROJECT_GOAL_PROGRESS",
+      "expected": {
+        "status": "ACTIVE",
+        "newRewardCount": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "GOAL-D10",
+      "module": "goals",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "ownerAlreadyHasReward": true,
+        "anotherPlayerCompleted": true
+      },
+      "action": "GRANT_COSMETIC",
+      "expected": {
+        "newAccountRewardCount": 0,
+        "newEvidenceSourceCount": 1,
+        "compensationCurrency": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "GOAL-D11",
+      "module": "goals",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "goalWasCompleted": true,
+        "correctedProgressBelowTarget": true,
+        "cosmeticOwned": true
+      },
+      "action": "CORRECT_GOAL_EVIDENCE",
+      "expected": {
+        "status": "CORRECTED",
+        "cosmeticOwned": true
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "GOAL-D12",
+      "module": "goals",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "completionCount": 22,
+        "rewardPolicy": "COSMETIC_ONLY"
+      },
+      "action": "SETTLE_ALL_REWARDS",
+      "expected": {
+        "abilityDelta": 0,
+        "potentialDelta": 0,
+        "moneyDelta": 0,
+        "trainingUsesDelta": 0,
+        "pitchXpDelta": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LIVE-D01",
+      "module": "commentary",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "gameInputIdentical": true,
+        "presentationModes": [
+          "WATCH",
+          "SKIP"
+        ]
+      },
+      "action": "COMPARE_FINAL_RECEIPTS",
+      "expected": {
+        "resultHashesEqual": true,
+        "engineRngCursorsEqual": true
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LIVE-D02",
+      "module": "commentary",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "status": "FINAL",
+        "finalCursor": 200,
+        "cursor": 3,
+        "rngCursor": 9
+      },
+      "action": "SKIP_COMMENTARY",
+      "expected": {
+        "cursor": 200,
+        "rngCursor": 9,
+        "saveRevisionDelta": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LIVE-D03",
+      "module": "commentary",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "speeds": [
+          1,
+          2,
+          4
+        ],
+        "sameFinalManifest": true
+      },
+      "action": "READ_COMMENTARY",
+      "expected": {
+        "resultHashesEqual": true,
+        "rngDraws": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LIVE-D04",
+      "module": "commentary",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "records": [
+          {
+            "result": "BB"
+          },
+          {
+            "result": "HBP"
+          }
+        ]
+      },
+      "action": "RENDER_COMMENTARY",
+      "expected": {
+        "walkTextCount": 1,
+        "hitByPitchTextCount": 1,
+        "newPAInLedger": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LIVE-D05",
+      "module": "commentary",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "serverGameStatus": "PENDING",
+        "committedCursor": 150
+      },
+      "action": "READ_COMMENTARY",
+      "expected": {
+        "status": "PENDING",
+        "finalCursor": null,
+        "gameEndTextCount": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LIVE-D06",
+      "module": "commentary",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "sameChunkRetrievedTwice": true
+      },
+      "action": "READ_COMMENTARY",
+      "expected": {
+        "newStatEntries": 0,
+        "newRewardEntries": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LIVE-D07",
+      "module": "commentary",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "chunkHashMatches": false,
+        "summaryAvailable": true
+      },
+      "action": "READ_COMMENTARY",
+      "expected": {
+        "http": 503,
+        "code": "LOG_INTEGRITY_ERROR",
+        "summaryReadable": true,
+        "regeneratedGameCount": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LIVE-D08",
+      "module": "commentary",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "sourceSaveDeleted": true,
+        "archiveManifestRefExists": true
+      },
+      "action": "READ_ARCHIVE_COMMENTARY",
+      "expected": {
+        "canReplay": true,
+        "resultHashChanged": false
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LIVE-D09",
+      "module": "commentary",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "result": "1B",
+        "directionField": null
+      },
+      "action": "RENDER_COMMENTARY",
+      "expected": {
+        "inventedDirectionCount": 0,
+        "baseHitTextCount": 1
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LIVE-D10",
+      "module": "commentary",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "result": "HR",
+        "legalRuns": [
+          "R1",
+          "B1"
+        ]
+      },
+      "action": "RENDER_COMMENTARY",
+      "expected": {
+        "homeRunRunsText": 2
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LIVE-D11",
+      "module": "commentary",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "expectedPreferenceRevision": "4",
+        "currentPreferenceRevision": "5",
+        "requestedCursor": 20,
+        "currentCursor": 80
+      },
+      "action": "PATCH_COMMENTARY_PREFERENCE",
+      "expected": {
+        "http": 409,
+        "cursorOverwritten": false
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LIVE-D12",
+      "module": "commentary",
+      "layer": "DESIGN_DOMAIN_FIXTURE",
+      "given": {
+        "readOperations": [
+          "PLAY",
+          "PAUSE",
+          "REWIND",
+          "SKIP",
+          "REPLAY"
+        ]
+      },
+      "action": "READ_COMMENTARY",
+      "expected": {
+        "abilityDelta": 0,
+        "rewardDelta": 0,
+        "gameplayRngDraws": 0
+      },
+      "mustNotChange": [
+        "unrelatedPlayerState",
+        "sourceArchivePermanentStats"
+      ],
+      "uiOnFailure": "상세계약64의오류별복구",
+      "executionStatus": "NOT_IMPLEMENTED"
     }
   ],
-  "pendingModules": {
-    "commentary": "사용자전략개입선택답변후추가",
-    "goals": "사용자보상선택답변후추가"
-  }
+  "pendingModules": {}
 }

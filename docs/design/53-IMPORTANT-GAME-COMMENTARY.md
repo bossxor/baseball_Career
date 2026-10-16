@@ -36,3 +36,5 @@ S44상단이닝·점수·아웃·주자→현재타석→대표구종(투수보�
 gameReceipts/playLogChunks/commentaryTemplateVersion/importantGameSnapshots,unique(gameId,playCursor,eventType). READ_COMMENTARY/PIN_GAME는조회·핀만,경기resultHash보존. 원본보관후구규칙버전경기를재시뮬레이션해현규칙결과로교체하지않는다. 보존로그없는옛경기는요약기록만열람,‘다시보기없음’명시.
 
 LIVE01 중계/결과모드동일resultHash/속도난수불변/앱중단복구/부분경기표시/타구방향가짜0/점수합/중복핀0/대표구종표시/구로그버전검증. 접근성은자동로그전부를매문장aria-live로읽지않고현재타석요약과수동읽기영역을분리한다.
+
+65사용자답변으로기념보상만/감상형중계확정. 상세처리순서·스키마·API·상태·복구·검수는[상세계약](62-COMMENTARY-DETAILED-CONTRACT.md).

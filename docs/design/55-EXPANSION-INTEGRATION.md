@@ -1,4 +1,4 @@
-최신결정:[65](65-USER-TRAITS-XP-STAFF.md). 상세API공통[64](64-EXPANSION-COMMON-CONTRACT.md),기능별56/57/59/60/61/63작성. 목표보상/중계전략개입은사용자질문답변대기중이며58/62상세계약은아직완료아님.
+최신결정:[65](65-USER-TRAITS-XP-STAFF.md). 상세API공통[64](64-EXPANSION-COMMON-CONTRACT.md),기능별56~63전체작성. 기념보상만/감상형중계도사용자답변으로확정,미답변선택없음.
 
 # 55. 추가8기능 통합·데이터·사건·화면 계약
 
