@@ -4,3 +4,5 @@
 *.png binary
 *.ttf binary
 **/*-OFL.txt -text
+*.json text eol=lf
+*.mjs text eol=lf

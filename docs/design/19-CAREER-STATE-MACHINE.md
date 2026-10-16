@@ -13,8 +13,8 @@
 | 축 | 값 | 의미 |
 | --- | --- | --- |
 | phase | 아래 상태표 | 현재 사용자에게 요구하는 행동 |
-| careerRoute | UNDECIDED/KBO/US_DIRECT/KBO_TO_US/RETURN_TO_KBO | 경력 이동 출처 |
-| registration | NONE/HS/FUTURES/KBO/ROOKIE/A/AA/AAA/MLB/INDEPENDENT/SPORTS_UNIT | 실제 출장 소속 레벨 |
+| careerRoute | UNDECIDED/KBO/COLLEGE/US_DIRECT/COLLEGE_DIRECT/KBO_TO_US/RETURN_TO_KBO | 경력 이동 출처 |
+| registration | NONE/HS/COLLEGE/FUTURES/KBO/ROOKIE/A/AA/AAA/MLB/INDEPENDENT/SPORTS_UNIT | 실제 출장 소속 레벨 |
 | availability | HEALTHY/INJURED/REHAB/SERVING/RETIRED | 출장 가능 상태 |
 | contractState | UNSIGNED/ACTIVE/SUSPENDED/NEGOTIATING/ENDED | 계약 상태 |
 | military | 12의 상태 enum | 병역·대체복무 상태 |

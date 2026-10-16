@@ -1,21 +1,20 @@
-# 패키지 검증 보고서
+# v0.8 설계 정적 검증 — 2026-10-16
 
-기준2026-10-16 / v0.7. 문서·정적파일 검증이며 앱 실행 테스트가 아니다.
+검증대상은문서·카탈로그·보드이며앱빌드/게임플레이가아니다.
 
-- Markdown 내부 상대 링크: 누락0.
-- 이벤트 정의: E01~E69,69개/고유69개.
-- 화면: S01~S33,고유33개. 추가 공통 오류 보드1개.
-- HTML 이미지·폰트 참조: 누락0.
-- 화면 시각검토 수준: 상세시각초안12개+공통오류1개,구조와이어프레임21개. 실제브라우저렌더링검수미완료.
-- 기본/고교직행/포스팅/군복무/대표/구단/충돌복구: 서면경로검토. 실제플레이테스트아님.
-- 프로젝트경로 docs/design-v0.7 전체34파일복사: 성공. 원본manifest의33파일SHA256비교: 불일치0. manifest자체를제외한검증이다.
-- GitHub push: 수행하지 않음. 앱build/DB배포/Android빌드: 수행하지 않음.
-- 비밀파일(.env/credentials/서명키): 패키지대상에포함하지않음.
+실행명령: `node docs/design/verify-design.mjs`
 
-## 전달 파일
+```text
+PASS: 83 event contracts, 37 screen contracts, unique IDs, local links/assets, JS syntax, embedded state catalog, no visible 100% badges.
+PASS: design arithmetic: search odds, offer distributions/monotonicity, 14 initial arrays, overall, advancement, draft, growth, import, budget, college schedule.
+NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.
+```
 
-DESIGN-ALL.md는분야별문서를한파일로묶은읽기용복사본이다. 개별MD가편집원본이며수정뒤통합본재생성이필요하다. 패키지밖의ZIP은이미지·폰트·라이선스·HTML포함,ZIP의SHA256은별도파일로제공한다. 폴더내MANIFEST-SHA256.csv로복사무결성을비교할수있다.
+- 이벤트ID E01~E83연속/고유,본문·조건·선택명령·결과안내누락없음. 문구조건이실제플레이에서도달한다는증명은아님.
+- 화면S01~S37이카탈로그와HTML에연결,로딩/빈상태/실패/저장중/충돌문구포함. HTML ID중복없음,내부앵커/이미지/MD상대링크누락없음.
+- 두스크립트구문파싱통과,HTML임베드상태JSON과원본일치. 초기유형14종각합300. 탐색예시63%,경쟁수락분포합1/제안금액단조성,종합70,추가진루.74/.665,드래프트B45=.5,성장분배/91→45.5/예산18.4억/대학216경기계산확인.
+- 보드본문의100%숫자배지없음. CSSwidth100%/잠재력100/내부확률1은별개.
+- 브라우저검수호출은`failed to prepare MXC sandbox: permission path cannot be represented losslessly`로실패했다. 실제스크린샷·모바일픽셀·키보드·터치·폰트검수는미실시.
+- package.json/앱구현이없어npm build/서버시작/Neon서비스E2E/APK빌드를실행하지않았다. 별도구현착수후필수.
 
-## 남은 실증
-
-전체화면픽셀/접근성,경기분포,69이벤트fixture,인증과Android로그인,Neon실서비스,배포비용·도메인·서명키는별도단계에서확인한다. 이증거없이설계가완벽하다거나서비스가작동한다고표현하지않는다.
+반복검증은같은명령으로가능하다. JSON은설계데이터이며명령핸들러는아직구현되지않았다. 통합MD와MANIFEST는최종원본을기준으로재생성한다. 과거보고서의33화면/69종집계는현재37/83으로대체한다.

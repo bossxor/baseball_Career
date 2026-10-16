@@ -54,3 +54,24 @@ API access15분/refresh30일게임기본설계.refresh회전은이전hash재사�
 
 
 최신 확률 표시 규칙: [38 공통 계약](38-PROBABILITY-DISPLAY.md)을 따른다. 확률 선택은 모두 표시하되 실제 100%의 숫자 배지는 숨긴다. 보장 효과와 내부 확률은 유지한다.
+
+## v0.8 추가 데이터·API 계약
+
+40~46의설계구체화를따른다. 실제SQL/배포명령은아직없다. 새필드는처음구현할스키마에포함,이미존재하는게임세이브가있다고가정한데이터덮어쓰기없음.
+
+| 논리 엔티티 | 추가 필드/제약 |
+|---|---|
+| rules_versions | abilitySchemaVersion2,growth/odds/college/economy/event/UI버전;세이브별고정 |
+| players | kind별정확6abilities/potential/careerPeak;overall파생/roleScore분리 |
+| development_plans | worldSeasonId,focus4중복없음,style,periodHistory,growth원장 |
+| imported_players | sourcePeakVersion,importDraftId,19세startingAbilities,boost6개,resetMilitary,sourcePreset |
+| college_enrollments | schoolId,academicYear,completedYears,status,earlyDraftAttempted,휴학/복학원장 |
+| scouting_searches | ownerClubId,worldMonthId,조건,N/level/q,pSnapshot,cost,commandId/result선수ID;횟수원장 |
+| scouting_reports | discoveredPlayerId,level,평가일,potentialRange6개;같은선수P재생성없음 |
+| offer_rounds/offers | fixedAiOfferVersion,score/weight/outsideWeight/pSnapshot,예약슬롯/당해·미래예산,receipt |
+| club_accounts | paid/reservedOperations추가;시설level1~5;무제한은mode열,Infinity금액불허 |
+| event_instances | catalogVersion2,E01~83,sourceEntityId,occurrenceKey,choiceSnapshot,resumePhase,receipt |
+
+preview명령는READ연산,난수소비/비용/usage없음. 실제SCOUT/UPGRADE_SCOUT/SUBMIT_OFFER/RESOLVE_ROUND/ENROLL_COLLEGE/ADVANCE_ACADEMIC_YEAR/CONFIRM_IMPORT는revision+idempotencyKey검사. 계약확정은선수당활성계약1개/제안예약해제/계약원장하나의transaction. 구단치트의효과는서버세이브preset에서읽고클라이언트가p=1을전송해도무시한다.
+
+학교권리/원본소유/후보풀/시즌기회가바뀌면409후최신preview,유효조건없음422와reasonCode,결과불명은동일commandId조회. 앱이자기DB권한으로다른친구세이브/비공개파일을읽지못하는28의원칙유지. 입력진로가숨겨져도서버에서조건재검사한다.

@@ -6,8 +6,8 @@
 
 발생: HS_PRE, 고유
 
-- 육성4개선택 → 시즌집중계획을저장했습니다. ($(@{command=CHOOSE_FOCUS; label=육성4개선택; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=시즌집중계획을저장했습니다.}.command))
-- 현재계획유지 → 시즌집중계획을저장했습니다. ($(@{command=KEEP_FOCUS; label=현재계획유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=시즌집중계획을저장했습니다.}.command))
+- 육성4개선택 → 시즌집중계획을저장했습니다. (CHOOSE_FOCUS)
+- 현재계획유지 → 시즌집중계획을저장했습니다. (KEEP_FOCUS)
 
 ## E02 · 타격 자세의 갈림길
 
@@ -15,8 +15,8 @@
 
 발생: 고교 타자, 12경기
 
-- 컨택포함육성계획검토 → 4개육성계획을확인했습니다. ($(@{command=CHOOSE_FOCUS; label=컨택포함육성계획검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=4개육성계획을확인했습니다.}.command))
-- 유지 → 4개육성계획을확인했습니다. ($(@{command=KEEP_FOCUS; label=유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=4개육성계획을확인했습니다.}.command))
+- 컨택포함육성계획검토 → 4개육성계획을확인했습니다. (CHOOSE_FOCUS)
+- 유지 → 4개육성계획을확인했습니다. (KEEP_FOCUS)
 
 ## E03 · 마운드의 과제
 
@@ -24,8 +24,8 @@
 
 발생: 고교 투수, 12경기
 
-- 제구또는구속포함계획검토 → 4개육성계획을확인했습니다. ($(@{command=CHOOSE_FOCUS; label=제구또는구속포함계획검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=4개육성계획을확인했습니다.}.command))
-- 유지 → 4개육성계획을확인했습니다. ($(@{command=KEEP_FOCUS; label=유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=4개육성계획을확인했습니다.}.command))
+- 제구또는구속포함계획검토 → 4개육성계획을확인했습니다. (CHOOSE_FOCUS)
+- 유지 → 4개육성계획을확인했습니다. (KEEP_FOCUS)
 
 ## E04 · 스카우트의 질문
 
@@ -33,7 +33,7 @@
 
 발생: HS_RESULT
 
-- 졸업진로비교 → 희망구단은지명을보장하지않습니다. ($(@{command=OPEN_ROUTE; label=졸업진로비교; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=희망구단은지명을보장하지않습니다.}.command))
+- 졸업진로비교 → 희망구단은지명을보장하지않습니다. (OPEN_ROUTE)
 
 ## E05 · 지명을 기다리는 날
 
@@ -41,8 +41,8 @@
 
 발생: DRAFT_RESULT
 
-- 계약확인 → 계약확정전에는소속이바뀌지않습니다. ($(@{command=ACCEPT_CAREER_OFFER; label=계약확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=계약확정전에는소속이바뀌지않습니다.}.command))
-- 계약거절후진로확인 → 계약확정전에는소속이바뀌지않습니다. ($(@{command=DECLINE_DRAFT; label=계약거절후진로확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=계약확정전에는소속이바뀌지않습니다.}.command))
+- 계약확인 → 계약확정전에는소속이바뀌지않습니다. (ACCEPT_CAREER_OFFER)
+- 계약거절후진로확인 → 계약확정전에는소속이바뀌지않습니다. (DECLINE_DRAFT)
 
 ## E06 · 이름이 불리지 않았다
 
@@ -50,8 +50,8 @@
 
 발생: UNDRAFTED
 
-- 재학또는재도전검토 → 가능한진로와남은재도전횟수를확인합니다. ($(@{command=OPEN_UNDRAFTED_ROUTES; label=재학또는재도전검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=가능한진로와남은재도전횟수를확인합니다.}.command))
-- 선수생활종료검토 → 가능한진로와남은재도전횟수를확인합니다. ($(@{command=REQUEST_RETIRE; label=선수생활종료검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=가능한진로와남은재도전횟수를확인합니다.}.command))
+- 재학또는재도전검토 → 가능한진로와남은재도전횟수를확인합니다. (OPEN_UNDRAFTED_ROUTES)
+- 선수생활종료검토 → 가능한진로와남은재도전횟수를확인합니다. (REQUEST_RETIRE)
 
 ## E07 · 다시 받은 기회
 
@@ -59,8 +59,8 @@
 
 발생: RETRY_RESULT, 제안 존재
 
-- 계약확인 → 선택한진로를확정했습니다. ($(@{command=ACCEPT_CAREER_OFFER; label=계약확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=선택한진로를확정했습니다.}.command))
-- 종료검토 → 선택한진로를확정했습니다. ($(@{command=REQUEST_RETIRE; label=종료검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=선택한진로를확정했습니다.}.command))
+- 계약확인 → 선택한진로를확정했습니다. (ACCEPT_CAREER_OFFER)
+- 종료검토 → 선택한진로를확정했습니다. (REQUEST_RETIRE)
 
 ## E08 · 프로의 첫 캠프
 
@@ -68,8 +68,8 @@
 
 발생: 첫 PRO_PRE
 
-- 육성4개확인 → 프로첫시즌계획을저장했습니다. ($(@{command=CHOOSE_FOCUS; label=육성4개확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=프로첫시즌계획을저장했습니다.}.command))
-- 현재계획유지 → 프로첫시즌계획을저장했습니다. ($(@{command=KEEP_FOCUS; label=현재계획유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=프로첫시즌계획을저장했습니다.}.command))
+- 육성4개확인 → 프로첫시즌계획을저장했습니다. (CHOOSE_FOCUS)
+- 현재계획유지 → 프로첫시즌계획을저장했습니다. (KEEP_FOCUS)
 
 ## E09 · 첫 1군 호출
 
@@ -77,8 +77,8 @@
 
 발생: FUTURES, 자리 존재, 경쟁점수 충족
 
-- 1군합류 → 1군등록과실제출장은별개입니다. ($(@{command=ACCEPT_CALLUP; label=1군합류; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=1군등록과실제출장은별개입니다.}.command))
-- 다음평가대기 → 1군등록과실제출장은별개입니다. ($(@{command=DEFER_CALLUP; label=다음평가대기; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=1군등록과실제출장은별개입니다.}.command))
+- 1군합류 → 1군등록과실제출장은별개입니다. (ACCEPT_CALLUP)
+- 다음평가대기 → 1군등록과실제출장은별개입니다. (DEFER_CALLUP)
 
 ## E10 · 짧은 기회의 무게
 
@@ -86,8 +86,8 @@
 
 발생: 첫 콜업 후20경기
 
-- 역할평가요청 → 현재경쟁점수로역할을재평가합니다. ($(@{command=REQUEST_ROLE_REVIEW; label=역할평가요청; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=현재경쟁점수로역할을재평가합니다.}.command))
-- 현역할유지 → 현재경쟁점수로역할을재평가합니다. ($(@{command=ACK_EVENT; label=현역할유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=현재경쟁점수로역할을재평가합니다.}.command))
+- 역할평가요청 → 현재경쟁점수로역할을재평가합니다. (REQUEST_ROLE_REVIEW)
+- 현역할유지 → 현재경쟁점수로역할을재평가합니다. (ACK_EVENT)
 
 ## E11 · 두 번째 숙제
 
@@ -95,8 +95,8 @@
 
 발생: 2군 한 시즌 종료
 
-- 육성4개재검토 → 다음시즌의성장계획을준비했습니다. ($(@{command=CHOOSE_FOCUS; label=육성4개재검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=다음시즌의성장계획을준비했습니다.}.command))
-- 현재계획유지 → 다음시즌의성장계획을준비했습니다. ($(@{command=KEEP_FOCUS; label=현재계획유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=다음시즌의성장계획을준비했습니다.}.command))
+- 육성4개재검토 → 다음시즌의성장계획을준비했습니다. (CHOOSE_FOCUS)
+- 현재계획유지 → 다음시즌의성장계획을준비했습니다. (KEEP_FOCUS)
 
 ## E12 · 주전과 백업 사이
 
@@ -104,8 +104,8 @@
 
 발생: 1군 타자, 출장비율<40%
 
-- 전환자리선택 → 새자리는적응훈련과기용경쟁이필요합니다. ($(@{command=START_POSITION_PLAN; label=전환자리선택; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=새자리는적응훈련과기용경쟁이필요합니다.}.command))
-- 현재포지션유지 → 새자리는적응훈련과기용경쟁이필요합니다. ($(@{command=ACK_EVENT; label=현재포지션유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=새자리는적응훈련과기용경쟁이필요합니다.}.command))
+- 전환자리선택 → 새자리는적응훈련과기용경쟁이필요합니다. (START_POSITION_PLAN)
+- 현재포지션유지 → 새자리는적응훈련과기용경쟁이필요합니다. (ACK_EVENT)
 
 ## E13 · 낯선 수비 자리
 
@@ -113,8 +113,8 @@
 
 발생: E12 B 후24경기
 
-- 전환확정 → 이후경기부터등록포지션을적용합니다. ($(@{command=CONFIRM_POSITION; label=전환확정; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=이후경기부터등록포지션을적용합니다.}.command))
-- 기존자리복귀 → 이후경기부터등록포지션을적용합니다. ($(@{command=CANCEL_POSITION_PLAN; label=기존자리복귀; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=이후경기부터등록포지션을적용합니다.}.command))
+- 전환확정 → 이후경기부터등록포지션을적용합니다. (CONFIRM_POSITION)
+- 기존자리복귀 → 이후경기부터등록포지션을적용합니다. (CANCEL_POSITION_PLAN)
 
 ## E14 · 선발의 문
 
@@ -122,8 +122,8 @@
 
 발생: RP, 체력≥60, SP 공석
 
-- 선발경쟁지원 → 선발자격과공석을다시검사합니다. ($(@{command=REQUEST_SP_REVIEW; label=선발경쟁지원; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=선발자격과공석을다시검사합니다.}.command))
-- 불펜유지 → 선발자격과공석을다시검사합니다. ($(@{command=ACK_EVENT; label=불펜유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=선발자격과공석을다시검사합니다.}.command))
+- 선발경쟁지원 → 선발자격과공석을다시검사합니다. (REQUEST_SP_REVIEW)
+- 불펜유지 → 선발자격과공석을다시검사합니다. (ACK_EVENT)
 
 ## E15 · 마지막 아웃의 자리
 
@@ -131,8 +131,8 @@
 
 발생: RP, 위기≥60, CP 공석
 
-- 마무리경쟁지원 → 마무리자격과공석을다시검사합니다. ($(@{command=REQUEST_CP_REVIEW; label=마무리경쟁지원; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=마무리자격과공석을다시검사합니다.}.command))
-- 현보직유지 → 마무리자격과공석을다시검사합니다. ($(@{command=ACK_EVENT; label=현보직유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=마무리자격과공석을다시검사합니다.}.command))
+- 마무리경쟁지원 → 마무리자격과공석을다시검사합니다. (REQUEST_CP_REVIEW)
+- 현보직유지 → 마무리자격과공석을다시검사합니다. (ACK_EVENT)
 
 ## E16 · 구속보다 안정
 
@@ -140,8 +140,8 @@
 
 발생: 투수, BB9>4.5, 20이닝 이후
 
-- 제구포함육성검토 → 포함할능력4개를직접확인했습니다. ($(@{command=CHOOSE_FOCUS; label=제구포함육성검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=포함할능력4개를직접확인했습니다.}.command))
-- 현재계획유지 → 포함할능력4개를직접확인했습니다. ($(@{command=KEEP_FOCUS; label=현재계획유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=포함할능력4개를직접확인했습니다.}.command))
+- 제구포함육성검토 → 포함할능력4개를직접확인했습니다. (CHOOSE_FOCUS)
+- 현재계획유지 → 포함할능력4개를직접확인했습니다. (KEEP_FOCUS)
 
 ## E17 · 긴 무안타
 
@@ -149,8 +149,8 @@
 
 발생: 타자, 최근20AB H=0
 
-- 교타형계획검토 → 변경기회가있을때새유형을선택합니다. ($(@{command=OPEN_STYLE; label=교타형계획검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=변경기회가있을때새유형을선택합니다.}.command))
-- 현재유형유지 → 변경기회가있을때새유형을선택합니다. ($(@{command=ACK_EVENT; label=현재유형유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=변경기회가있을때새유형을선택합니다.}.command))
+- 교타형계획검토 → 변경기회가있을때새유형을선택합니다. (OPEN_STYLE)
+- 현재유형유지 → 변경기회가있을때새유형을선택합니다. (ACK_EVENT)
 
 ## E18 · 장타가 필요한 때
 
@@ -158,8 +158,8 @@
 
 발생: 타자, 100AB HR≤1
 
-- 거포형계획검토 → 능력은즉시바뀌지않고이후성장에반영됩니다. ($(@{command=OPEN_STYLE; label=거포형계획검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=능력은즉시바뀌지않고이후성장에반영됩니다.}.command))
-- 현재유형유지 → 능력은즉시바뀌지않고이후성장에반영됩니다. ($(@{command=ACK_EVENT; label=현재유형유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=능력은즉시바뀌지않고이후성장에반영됩니다.}.command))
+- 거포형계획검토 → 능력은즉시바뀌지않고이후성장에반영됩니다. (OPEN_STYLE)
+- 현재유형유지 → 능력은즉시바뀌지않고이후성장에반영됩니다. (ACK_EVENT)
 
 ## E19 · 흔들린 두 경기
 
@@ -167,17 +167,17 @@
 
 발생: SP, 최근2등판 ER≥10
 
-- 한차례등판휴식요청 → 부상여부와팀운용을검사해휴식계획을반영합니다. ($(@{command=REQUEST_REST; label=한차례등판휴식요청; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=부상여부와팀운용을검사해휴식계획을반영합니다.}.command))
-- 현재운용유지 → 부상여부와팀운용을검사해휴식계획을반영합니다. ($(@{command=ACK_EVENT; label=현재운용유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=부상여부와팀운용을검사해휴식계획을반영합니다.}.command))
+- 한차례등판휴식요청 → 부상여부와팀운용을검사해휴식계획을반영합니다. (REQUEST_REST)
+- 현재운용유지 → 부상여부와팀운용을검사해휴식계획을반영합니다. (ACK_EVENT)
 
 ## E20 · 코치의 조언
 
 기록을 보고도 무엇부터 바꿔야 할지 선뜻 답이 나오지 않습니다. 오늘은 혼자만 생각하지 않아도 됩니다.
 
-발생: 일반, morale≤40
+발생: 최근20경기성적지수≤40,일반조언쿨다운충족
 
-- 육성계획확인 → 조언만으로영구능력이오르지않습니다. ($(@{command=OPEN_DEVELOPMENT; label=육성계획확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=조언만으로영구능력이오르지않습니다.}.command))
-- 현재계획유지 → 조언만으로영구능력이오르지않습니다. ($(@{command=ACK_EVENT; label=현재계획유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=조언만으로영구능력이오르지않습니다.}.command))
+- 육성계획확인 → 조언만으로영구능력이오르지않습니다. (OPEN_DEVELOPMENT)
+- 현재계획유지 → 조언만으로영구능력이오르지않습니다. (ACK_EVENT)
 
 ## E21 · 작은 통증
 
@@ -185,7 +185,7 @@
 
 발생: 부상 판정 경미 시
 
-- 회복일정확인 → 부상기간에는경기에출장하지않습니다. ($(@{command=ACK_INJURY; label=회복일정확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=부상기간에는경기에출장하지않습니다.}.command))
+- 회복일정확인 → 부상기간에는경기에출장하지않습니다. (ACK_INJURY)
 
 ## E22 · 긴 재활
 
@@ -193,7 +193,7 @@
 
 발생: 부상 중간/중대 시
 
-- 재활일정확인 → 회복까지팀경기수를기준으로진행합니다. ($(@{command=ACK_INJURY; label=재활일정확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=회복까지팀경기수를기준으로진행합니다.}.command))
+- 재활일정확인 → 회복까지팀경기수를기준으로진행합니다. (ACK_INJURY)
 
 ## E23 · 돌아온 그라운드
 
@@ -201,7 +201,7 @@
 
 발생: 부상 회복 직후
 
-- 복귀확인 → 복귀후현재경쟁에서다시기회를얻습니다. ($(@{command=CONFIRM_RETURN; label=복귀확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=복귀후현재경쟁에서다시기회를얻습니다.}.command))
+- 복귀확인 → 복귀후현재경쟁에서다시기회를얻습니다. (CONFIRM_RETURN)
 
 ## E24 · 처음 받은 박수
 
@@ -209,7 +209,7 @@
 
 발생: 첫100H 또는 첫10승/20SV
 
-- 기록확인 → 첫이정표를커리어에남겼습니다. ($(@{command=ACK_EVENT; label=기록확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=첫이정표를커리어에남겼습니다.}.command))
+- 기록확인 → 첫이정표를커리어에남겼습니다. (ACK_EVENT)
 
 ## E25 · 올스타의 초대
 
@@ -217,7 +217,7 @@
 
 발생: 시즌중 성적 상위, 고유 시즌
 
-- 올스타선정확인 → 선정이력만남기며가상올스타경기기록은만들지않습니다. ($(@{command=ACK_EVENT; label=올스타선정확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=선정이력만남기며가상올스타경기기록은만들지않습니다.}.command))
+- 올스타선정확인 → 선정이력만남기며가상올스타경기기록은만들지않습니다. (ACK_EVENT)
 
 ## E26 · 라이벌의 등장
 
@@ -225,8 +225,8 @@
 
 발생: 동포지션 경쟁점수±5
 
-- 경쟁상황확인 → 경쟁은능력과최근기록으로판정합니다. ($(@{command=OPEN_COMPETITION; label=경쟁상황확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=경쟁은능력과최근기록으로판정합니다.}.command))
-- 계속진행 → 경쟁은능력과최근기록으로판정합니다. ($(@{command=ACK_EVENT; label=계속진행; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=경쟁은능력과최근기록으로판정합니다.}.command))
+- 경쟁상황확인 → 경쟁은능력과최근기록으로판정합니다. (OPEN_COMPETITION)
+- 계속진행 → 경쟁은능력과최근기록으로판정합니다. (ACK_EVENT)
 
 ## E27 · 포스트시즌의 긴장
 
@@ -234,7 +234,7 @@
 
 발생: 첫PS
 
-- 포스트시즌시작 → 포스트시즌기록은정규와분리합니다. ($(@{command=ACK_EVENT; label=포스트시즌시작; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=포스트시즌기록은정규와분리합니다.}.command))
+- 포스트시즌시작 → 포스트시즌기록은정규와분리합니다. (ACK_EVENT)
 
 ## E28 · 우승 뒤의 겨울
 
@@ -242,7 +242,7 @@
 
 발생: 팀 우승, OFFSEASON
 
-- 우승기록확인 → 우승이자연성장예산을추가하지않습니다. ($(@{command=ACK_EVENT; label=우승기록확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=우승이자연성장예산을추가하지않습니다.}.command))
+- 우승기록확인 → 우승이자연성장예산을추가하지않습니다. (ACK_EVENT)
 
 ## E29 · 첫 개인상
 
@@ -250,7 +250,7 @@
 
 발생: 첫 수상
 
-- 수상이력확인 → 수상이확정된뒤기록실에남깁니다. ($(@{command=ACK_EVENT; label=수상이력확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=수상이확정된뒤기록실에남깁니다.}.command))
+- 수상이력확인 → 수상이확정된뒤기록실에남깁니다. (ACK_EVENT)
 
 ## E30 · 재계약 제안
 
@@ -258,8 +258,8 @@
 
 발생: 비FA CONTRACT
 
-- 조건비교 → 계약서수락은확정행동입니다. ($(@{command=OPEN_CAREER_OFFERS; label=조건비교; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=계약서수락은확정행동입니다.}.command))
-- 은퇴검토 → 계약서수락은확정행동입니다. ($(@{command=REQUEST_RETIRE; label=은퇴검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=계약서수락은확정행동입니다.}.command))
+- 조건비교 → 계약서수락은확정행동입니다. (OPEN_CAREER_OFFERS)
+- 은퇴검토 → 계약서수락은확정행동입니다. (REQUEST_RETIRE)
 
 ## E31 · FA 시장의 문
 
@@ -267,8 +267,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 자격 충족 CONTRACT
 
-- FA제안비교 → 없는계약을가짜제안으로보이지않습니다. ($(@{command=OPEN_CAREER_OFFERS; label=FA제안비교; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=없는계약을가짜제안으로보이지않습니다.}.command))
-- 국내복귀가능검토 → 없는계약을가짜제안으로보이지않습니다. ($(@{command=OPEN_RETURN; label=국내복귀가능검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=없는계약을가짜제안으로보이지않습니다.}.command))
+- FA제안비교 → 없는계약을가짜제안으로보이지않습니다. (OPEN_CAREER_OFFERS)
+- 국내복귀가능검토 → 없는계약을가짜제안으로보이지않습니다. (OPEN_RETURN)
 
 ## E32 · 익숙한 유니폼
 
@@ -276,8 +276,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: FA 원구단/타구단 제안 존재
 
-- 선택제안계약확인 → 마지막확정전금액과기간을확인합니다. ($(@{command=ACCEPT_CAREER_OFFER; label=선택제안계약확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=마지막확정전금액과기간을확인합니다.}.command))
-- 다른제안비교 → 마지막확정전금액과기간을확인합니다. ($(@{command=BACK_TO_OFFERS; label=다른제안비교; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=마지막확정전금액과기간을확인합니다.}.command))
+- 선택제안계약확인 → 마지막확정전금액과기간을확인합니다. (ACCEPT_CAREER_OFFER)
+- 다른제안비교 → 마지막확정전금액과기간을확인합니다. (BACK_TO_OFFERS)
 
 ## E33 · 베테랑의 역할
 
@@ -285,8 +285,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 나이≥33, 백업 전환
 
-- 백업역할수락 → 제안이있을때만다른계약을선택할수있습니다. ($(@{command=ACCEPT_ROLE; label=백업역할수락; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=제안이있을때만다른계약을선택할수있습니다.}.command))
-- 다른제안검토 → 제안이있을때만다른계약을선택할수있습니다. ($(@{command=OPEN_CAREER_OFFERS; label=다른제안검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=제안이있을때만다른계약을선택할수있습니다.}.command))
+- 백업역할수락 → 제안이있을때만다른계약을선택할수있습니다. (ACCEPT_ROLE)
+- 다른제안검토 → 제안이있을때만다른계약을선택할수있습니다. (OPEN_CAREER_OFFERS)
 
 ## E34 · 전력 외 통보
 
@@ -294,8 +294,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 계약 미보유, 팀 후보 제외
 
-- 남은진로검토 → 권리와재도전자격을검사합니다. ($(@{command=OPEN_UNCONTRACTED_ROUTES; label=남은진로검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=권리와재도전자격을검사합니다.}.command))
-- 종료검토 → 권리와재도전자격을검사합니다. ($(@{command=REQUEST_RETIRE; label=종료검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=권리와재도전자격을검사합니다.}.command))
+- 남은진로검토 → 권리와재도전자격을검사합니다. (OPEN_UNCONTRACTED_ROUTES)
+- 종료검토 → 권리와재도전자격을검사합니다. (REQUEST_RETIRE)
 
 ## E35 · 마지막 테스트 결과
 
@@ -303,7 +303,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 재도전 후 제안없음
 
-- 은퇴및기록보관 → 남은합법진로가없을때마지막기록을보관합니다. ($(@{command=CONFIRM_RETIRE; label=은퇴및기록보관; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=남은합법진로가없을때마지막기록을보관합니다.}.command))
+- 은퇴및기록보관 → 남은합법진로가없을때마지막기록을보관합니다. (CONFIRM_RETIRE)
 
 ## E36 · 떠날 시기를 고르다
 
@@ -311,8 +311,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 수동 은퇴 가능 OFFSEASON
 
-- 은퇴확정 → 확정전에는은퇴하지않습니다. ($(@{command=CONFIRM_RETIRE; label=은퇴확정; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=확정전에는은퇴하지않습니다.}.command))
-- 계속플레이 → 확정전에는은퇴하지않습니다. ($(@{command=CANCEL_RETIRE; label=계속플레이; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=확정전에는은퇴하지않습니다.}.command))
+- 은퇴확정 → 확정전에는은퇴하지않습니다. (CONFIRM_RETIRE)
+- 계속플레이 → 확정전에는은퇴하지않습니다. (CANCEL_RETIRE)
 
 ## E37 · 마지막 인사
 
@@ -320,7 +320,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: RETIRED
 
-- 보관선수확인 → 국내커리어의기록을저장했습니다. ($(@{command=OPEN_ARCHIVE; label=보관선수확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=국내커리어의기록을저장했습니다.}.command))
+- 보관선수확인 → 국내커리어의기록을저장했습니다. (OPEN_ARCHIVE)
 
 ## E38 · 장기집권의 부담
 
@@ -328,8 +328,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 구단 3연패, CLB_REVIEW
 
-- 선수단과계약검토 → 연속우승만으로숨은능력하락은없습니다. ($(@{command=OPEN_CLUB_REVIEW; label=선수단과계약검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=연속우승만으로숨은능력하락은없습니다.}.command))
-- 현운영유지 → 연속우승만으로숨은능력하락은없습니다. ($(@{command=ACK_EVENT; label=현운영유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=연속우승만으로숨은능력하락은없습니다.}.command))
+- 선수단과계약검토 → 연속우승만으로숨은능력하락은없습니다. (OPEN_CLUB_REVIEW)
+- 현운영유지 → 연속우승만으로숨은능력하락은없습니다. (ACK_EVENT)
 
 ## E39 · 기회를 원하는 유망주
 
@@ -337,8 +337,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 구단2군,22세이하,경쟁점수상위
 
-- 기용검토 → 출전은등록과라인업확정뒤반영됩니다. ($(@{command=OPEN_LINEUP; label=기용검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=출전은등록과라인업확정뒤반영됩니다.}.command))
-- 현기용유지 → 출전은등록과라인업확정뒤반영됩니다. ($(@{command=ACK_EVENT; label=현기용유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=출전은등록과라인업확정뒤반영됩니다.}.command))
+- 기용검토 → 출전은등록과라인업확정뒤반영됩니다. (OPEN_LINEUP)
+- 현기용유지 → 출전은등록과라인업확정뒤반영됩니다. (ACK_EVENT)
 
 ## E40 · 한정된 겨울 예산
 
@@ -346,8 +346,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 구단 오프시즌, 예산<예정연봉
 
-- 예약과지급검토 → 기존보장지급의무는남아있습니다. ($(@{command=OPEN_BUDGET; label=예약과지급검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=기존보장지급의무는남아있습니다.}.command))
-- 재정재건검토 → 기존보장지급의무는남아있습니다. ($(@{command=OPEN_REBUILD; label=재정재건검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=기존보장지급의무는남아있습니다.}.command))
+- 예약과지급검토 → 기존보장지급의무는남아있습니다. (OPEN_BUDGET)
+- 재정재건검토 → 기존보장지급의무는남아있습니다. (OPEN_REBUILD)
 
 ## E41 · 새 시즌의 유형
 
@@ -355,8 +355,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 프리시즌 또는 정규일정 절반,유형변경기회남음
 
-- 유형변경 → 변경은이후성장배분에적용합니다. ($(@{command=OPEN_STYLE; label=유형변경; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=변경은이후성장배분에적용합니다.}.command))
-- 현재유형유지 → 변경은이후성장배분에적용합니다. ($(@{command=ACK_EVENT; label=현재유형유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=변경은이후성장배분에적용합니다.}.command))
+- 유형변경 → 변경은이후성장배분에적용합니다. (OPEN_STYLE)
+- 현재유형유지 → 변경은이후성장배분에적용합니다. (ACK_EVENT)
 
 ## E42 · 다른 이름의 선수
 
@@ -364,7 +364,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 결산별칭변화. '이번 시즌의 변화가 선수의 인상을 바꿨습니다.'
 
-- 유형이력확인 → 표시별칭이바뀌어도추가보너스는없습니다. ($(@{command=ACK_EVENT; label=유형이력확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=표시별칭이바뀌어도추가보너스는없습니다.}.command))
+- 유형이력확인 → 표시별칭이바뀌어도추가보너스는없습니다. (ACK_EVENT)
 
 ## E43 · 한 번의 특별훈련
 
@@ -372,9 +372,9 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 정규일정1/3경기해금,세계시즌usage=0
 
-- 강화선택 → 세계시즌강화기회는한번입니다. ($(@{command=OPEN_TRAINING; label=강화선택; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=세계시즌강화기회는한번입니다.}.command))
-- 나중에사용 → 세계시즌강화기회는한번입니다. ($(@{command=DEFER_TRAINING; label=나중에사용; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=세계시즌강화기회는한번입니다.}.command))
-- 시즌기회포기확인 → 세계시즌강화기회는한번입니다. ($(@{command=FORFEIT_TRAINING; label=시즌기회포기확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=세계시즌강화기회는한번입니다.}.command))
+- 강화선택 → 세계시즌강화기회는한번입니다. (OPEN_TRAINING)
+- 나중에사용 → 세계시즌강화기회는한번입니다. (DEFER_TRAINING)
+- 시즌기회포기확인 → 세계시즌강화기회는한번입니다. (FORFEIT_TRAINING)
 
 ## E44 · 국가의 부름
 
@@ -382,8 +382,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 최종후보. '대표팀이 합류 의사를 물었습니다.'
 
-- 참가 → 최종등록과실제출장은별도로확인합니다. ($(@{command=ACCEPT_NATIONAL; label=참가; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=최종등록과실제출장은별도로확인합니다.}.command))
-- 사양 → 최종등록과실제출장은별도로확인합니다. ($(@{command=DECLINE_NATIONAL; label=사양; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=최종등록과실제출장은별도로확인합니다.}.command))
+- 참가 → 최종등록과실제출장은별도로확인합니다. (ACCEPT_NATIONAL)
+- 사양 → 최종등록과실제출장은별도로확인합니다. (DECLINE_NATIONAL)
 
 ## E45 · 대표팀 밖에서
 
@@ -391,7 +391,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 선발탈락. '이번 명단에는 이름이 없었습니다.'
 
-- 결과확인 → 미선발이능력감소를뜻하지않습니다. ($(@{command=ACK_EVENT; label=결과확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=미선발이능력감소를뜻하지않습니다.}.command))
+- 결과확인 → 미선발이능력감소를뜻하지않습니다. (ACK_EVENT)
 
 ## E46 · 첫 국제무대
 
@@ -399,7 +399,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 대회첫실제출장. '유니폼 앞의 이름이 달라졌습니다.'
 
-- 첫출장확인 → 국제대회개인기록을남겼습니다. ($(@{command=ACK_EVENT; label=첫출장확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=국제대회개인기록을남겼습니다.}.command))
+- 첫출장확인 → 국제대회개인기록을남겼습니다. (ACK_EVENT)
 
 ## E47 · 메달과 다음 의무
 
@@ -407,7 +407,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 올림픽메달/AG금+게임자격충족
 
-- 자격과남은의무확인 → 게임상자격과복무완료는다릅니다. ($(@{command=OPEN_SERVICE_ELIGIBILITY; label=자격과남은의무확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=게임상자격과복무완료는다릅니다.}.command))
+- 자격과남은의무확인 → 게임상자격과복무완료는다릅니다. (OPEN_SERVICE_ELIGIBILITY)
 
 ## E48 · 돌아오는 비행기
 
@@ -415,7 +415,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 대회종료. '팀의 결과와 내 경기를 돌아봅니다.'
 
-- 원소속복귀 → 국제대회피로와부상은유지합니다. ($(@{command=CONFIRM_NATIONAL_RETURN; label=원소속복귀; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=국제대회피로와부상은유지합니다.}.command))
+- 원소속복귀 → 국제대회피로와부상은유지합니다. (CONFIRM_NATIONAL_RETURN)
 
 ## E49 · 겨울의 병역계획
 
@@ -423,9 +423,9 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 미해결오프시즌. '다가올 시즌과 복무 계획을 함께 생각합니다.'
 
-- 상무지원 → 유예불가시사유와가능한복무경로를표시합니다. ($(@{command=APPLY_MILITARY_TEAM; label=상무지원; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=유예불가시사유와가능한복무경로를표시합니다.}.command))
-- 현역입대검토 → 유예불가시사유와가능한복무경로를표시합니다. ($(@{command=START_SERVICE; label=현역입대검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=유예불가시사유와가능한복무경로를표시합니다.}.command))
-- 기한내유예 → 유예불가시사유와가능한복무경로를표시합니다. ($(@{command=DEFER_SERVICE; label=기한내유예; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=유예불가시사유와가능한복무경로를표시합니다.}.command))
+- 상무지원 → 유예불가시사유와가능한복무경로를표시합니다. (APPLY_MILITARY_TEAM)
+- 현역입대검토 → 유예불가시사유와가능한복무경로를표시합니다. (START_SERVICE)
+- 기한내유예 → 유예불가시사유와가능한복무경로를표시합니다. (DEFER_SERVICE)
 
 ## E50 · 상무 선발 발표
 
@@ -433,7 +433,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 지원1회확정. '지원 결과가 도착했습니다.'
 
-- 선발결과확인 → 탈락하면다음가능한복무선택을안내합니다. ($(@{command=CONFIRM_MILITARY_RESULT; label=선발결과확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=탈락하면다음가능한복무선택을안내합니다.}.command))
+- 선발결과확인 → 탈락하면다음가능한복무선택을안내합니다. (CONFIRM_MILITARY_RESULT)
 
 ## E51 · 잠시 내려놓는 배트
 
@@ -441,7 +441,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 현역복무시작. '원구단을 떠나 복무를 시작합니다.'
 
-- 다음복무구간 → 일반복무기간출장과자연성장은없습니다. ($(@{command=ADVANCE_SERVICE; label=다음복무구간; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=일반복무기간출장과자연성장은없습니다.}.command))
+- 다음복무구간 → 일반복무기간출장과자연성장은없습니다. (ADVANCE_SERVICE)
 
 ## E52 · 부대의 그라운드
 
@@ -449,8 +449,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 상무첫블록. '군 체육팀에서 야구와 복무를 이어갑니다.'
 
-- 육성4개확인 → 세계시즌성장과강화횟수는공유합니다. ($(@{command=CHOOSE_FOCUS; label=육성4개확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=세계시즌성장과강화횟수는공유합니다.}.command))
-- 상무일정진행 → 세계시즌성장과강화횟수는공유합니다. ($(@{command=ADVANCE_SERVICE; label=상무일정진행; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=세계시즌성장과강화횟수는공유합니다.}.command))
+- 육성4개확인 → 세계시즌성장과강화횟수는공유합니다. (CHOOSE_FOCUS)
+- 상무일정진행 → 세계시즌성장과강화횟수는공유합니다. (ADVANCE_SERVICE)
 
 ## E53 · 다시 받는 유니폼
 
@@ -458,7 +458,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 18개월완료. '복무를 마치고 원구단으로 돌아왔습니다.'
 
-- 복귀계획확인 → 소속권리와복귀가능명단을검사합니다. ($(@{command=CONFIRM_SERVICE_RETURN; label=복귀계획확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=소속권리와복귀가능명단을검사합니다.}.command))
+- 복귀계획확인 → 소속권리와복귀가능명단을검사합니다. (CONFIRM_SERVICE_RETURN)
 
 ## E54 · 남은 마지막 겨울
 
@@ -466,8 +466,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 27세미해결. '게임 규칙상 다음 시즌 전에는 복무 계획을 확정해야 합니다.'
 
-- 마지막지원 → 무기한유예는선택할수없습니다. ($(@{command=APPLY_MILITARY_TEAM; label=마지막지원; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=무기한유예는선택할수없습니다.}.command))
-- 현역입대검토 → 무기한유예는선택할수없습니다. ($(@{command=START_SERVICE; label=현역입대검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=무기한유예는선택할수없습니다.}.command))
+- 마지막지원 → 무기한유예는선택할수없습니다. (APPLY_MILITARY_TEAM)
+- 현역입대검토 → 무기한유예는선택할수없습니다. (START_SERVICE)
 
 ## E55 · 계속되는 활동의무
 
@@ -475,7 +475,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: ATHLETE_SERVICE오프시즌. '선수 활동과 함께 이행할 의무를 확인합니다.'
 
-- 잔여의무확인 → 완료조건을채운뒤복무완료로전환합니다. ($(@{command=ACK_SERVICE_OBLIGATION; label=잔여의무확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=완료조건을채운뒤복무완료로전환합니다.}.command))
+- 잔여의무확인 → 완료조건을채운뒤복무완료로전환합니다. (ACK_SERVICE_OBLIGATION)
 
 ## E56 · 졸업 뒤 다음 무대
 
@@ -483,7 +483,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 고교졸업진로상태,미국카드는능력과유효오퍼조건부
 
-- KBO대학미국진로비교 → 미국은능력과유효제안이있을때만보입니다. ($(@{command=OPEN_ROUTE; label=KBO대학미국진로비교; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=미국은능력과유효제안이있을때만보입니다.}.command))
+- KBO대학미국진로비교 → 미국은능력과유효제안이있을때만보입니다. (OPEN_ROUTE)
 
 ## E57 · 바다 건너의 계약서
 
@@ -491,8 +491,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: '첫 시작은 메이저 무대보다 작은 구장일 수 있습니다.'
 
-- 미국계약확인 → 오퍼조회만으로국내진로를포기하지않습니다. ($(@{command=ACCEPT_CAREER_OFFER; label=미국계약확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=오퍼조회만으로국내진로를포기하지않습니다.}.command))
-- 다른진로비교 → 오퍼조회만으로국내진로를포기하지않습니다. ($(@{command=BACK_TO_ROUTE; label=다른진로비교; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=오퍼조회만으로국내진로를포기하지않습니다.}.command))
+- 미국계약확인 → 오퍼조회만으로국내진로를포기하지않습니다. (ACCEPT_CAREER_OFFER)
+- 다른진로비교 → 오퍼조회만으로국내진로를포기하지않습니다. (BACK_TO_ROUTE)
 
 ## E58 · 낯선 클럽하우스
 
@@ -500,8 +500,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: '언어도 준비도 낯설지만 오늘의 훈련은 시작됩니다.'
 
-- 육성4개검토 → 새리그합류로성장예산이초기화되지않습니다. ($(@{command=CHOOSE_FOCUS; label=육성4개검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=새리그합류로성장예산이초기화되지않습니다.}.command))
-- 현재계획유지 → 새리그합류로성장예산이초기화되지않습니다. ($(@{command=ACK_EVENT; label=현재계획유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=새리그합류로성장예산이초기화되지않습니다.}.command))
+- 육성4개검토 → 새리그합류로성장예산이초기화되지않습니다. (CHOOSE_FOCUS)
+- 현재계획유지 → 새리그합류로성장예산이초기화되지않습니다. (ACK_EVENT)
 
 ## E59 · 다음 레벨의 문
 
@@ -509,8 +509,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 승격조건충족. '한 단계 높은 팀에서 기회를 받았습니다.'
 
-- 승격수락 → 합류후출장경쟁이이어집니다. ($(@{command=CONFIRM_PROMOTION; label=승격수락; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=합류후출장경쟁이이어집니다.}.command))
-- 다음평가대기 → 합류후출장경쟁이이어집니다. ($(@{command=DEFER_PROMOTION; label=다음평가대기; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=합류후출장경쟁이이어집니다.}.command))
+- 승격수락 → 합류후출장경쟁이이어집니다. (CONFIRM_PROMOTION)
+- 다음평가대기 → 합류후출장경쟁이이어집니다. (DEFER_PROMOTION)
 
 ## E60 · 메이저리그의 전화
 
@@ -518,7 +518,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: '구단이 메이저리그 합류를 알렸습니다.'
 
-- 메이저합류확인 → 명단등록만으로첫출장기록을만들지않습니다. ($(@{command=CONFIRM_CALLUP; label=메이저합류확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=명단등록만으로첫출장기록을만들지않습니다.}.command))
+- 메이저합류확인 → 명단등록만으로첫출장기록을만들지않습니다. (CONFIRM_CALLUP)
 
 ## E61 · 다시 내려가는 길
 
@@ -526,8 +526,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 강등확정조건. '상위 명단에 남지 못했습니다.'
 
-- 마이너재도전 → FA선택은실제권리가있을때만가능합니다. ($(@{command=CONFIRM_DEMOTION; label=마이너재도전; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=FA선택은실제권리가있을때만가능합니다.}.command))
-- 계약권리확인 → FA선택은실제권리가있을때만가능합니다. ($(@{command=OPEN_RIGHTS; label=계약권리확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=FA선택은실제권리가있을때만가능합니다.}.command))
+- 마이너재도전 → FA선택은실제권리가있을때만가능합니다. (CONFIRM_DEMOTION)
+- 계약권리확인 → FA선택은실제권리가있을때만가능합니다. (OPEN_RIGHTS)
 
 ## E62 · 포스팅을 요청하다
 
@@ -535,8 +535,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: '국내에서 쌓은 시간 뒤에 새로운 무대를 생각합니다.'
 
-- 승인요청 → 경력과병역조건을먼저확인합니다. ($(@{command=REQUEST_POSTING; label=승인요청; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=경력과병역조건을먼저확인합니다.}.command))
-- 원구단잔류 → 경력과병역조건을먼저확인합니다. ($(@{command=ACK_EVENT; label=원구단잔류; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=경력과병역조건을먼저확인합니다.}.command))
+- 승인요청 → 경력과병역조건을먼저확인합니다. (REQUEST_POSTING)
+- 원구단잔류 → 경력과병역조건을먼저확인합니다. (ACK_EVENT)
 
 ## E63 · 구단의 대답
 
@@ -544,8 +544,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: '원구단이 요청에 답했습니다.'
 
-- 승인후협상조회 → 승인만으로원계약은종료되지않습니다. ($(@{command=OPEN_POSTING_OFFERS; label=승인후협상조회; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=승인만으로원계약은종료되지않습니다.}.command))
-- 보류사유확인 → 승인만으로원계약은종료되지않습니다. ($(@{command=ACK_EVENT; label=보류사유확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=승인만으로원계약은종료되지않습니다.}.command))
+- 승인후협상조회 → 승인만으로원계약은종료되지않습니다. (OPEN_POSTING_OFFERS)
+- 보류사유확인 → 승인만으로원계약은종료되지않습니다. (ACK_EVENT)
 
 ## E64 · 협상의 끝
 
@@ -553,8 +553,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: '제안과 남은 시간을 함께 봅니다.'
 
-- 계약확정검토 → 마감내미체결이면원계약을유지합니다. ($(@{command=ACCEPT_CAREER_OFFER; label=계약확정검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=마감내미체결이면원계약을유지합니다.}.command))
-- 원구단잔류 → 마감내미체결이면원계약을유지합니다. ($(@{command=REMAIN_ORIGINAL; label=원구단잔류; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=마감내미체결이면원계약을유지합니다.}.command))
+- 계약확정검토 → 마감내미체결이면원계약을유지합니다. (ACCEPT_CAREER_OFFER)
+- 원구단잔류 → 마감내미체결이면원계약을유지합니다. (REMAIN_ORIGINAL)
 
 ## E65 · 처음 선 빅리그
 
@@ -562,7 +562,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 실제첫출장. '명단의 이름이 경기 기록의 이름이 됐습니다.'
 
-- 첫메이저출장확인 → 실제출장시점의기록을보관합니다. ($(@{command=ACK_EVENT; label=첫메이저출장확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=실제출장시점의기록을보관합니다.}.command))
+- 첫메이저출장확인 → 실제출장시점의기록을보관합니다. (ACK_EVENT)
 
 ## E66 · 미국에서 맞는 FA
 
@@ -570,8 +570,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: '새 팀과 새로운 역할을 고를 수 있게 됐습니다.'
 
-- 미국제안비교 → 복귀보유권과병역을함께검사합니다. ($(@{command=OPEN_CAREER_OFFERS; label=미국제안비교; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=복귀보유권과병역을함께검사합니다.}.command))
-- 국내복귀검토 → 복귀보유권과병역을함께검사합니다. ($(@{command=OPEN_RETURN; label=국내복귀검토; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=복귀보유권과병역을함께검사합니다.}.command))
+- 미국제안비교 → 복귀보유권과병역을함께검사합니다. (OPEN_CAREER_OFFERS)
+- 국내복귀검토 → 복귀보유권과병역을함께검사합니다. (OPEN_RETURN)
 
 ## E67 · 돌아갈 그라운드
 
@@ -579,8 +579,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: '다시 국내에서 뛰는 길을 확인합니다.'
 
-- 복귀경로확인 → 귀국이기존권리를자동삭제하지않습니다. ($(@{command=CONFIRM_DOMESTIC_RETURN; label=복귀경로확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=귀국이기존권리를자동삭제하지않습니다.}.command))
-- 현재경로유지 → 귀국이기존권리를자동삭제하지않습니다. ($(@{command=CANCEL_RETURN; label=현재경로유지; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=귀국이기존권리를자동삭제하지않습니다.}.command))
+- 복귀경로확인 → 귀국이기존권리를자동삭제하지않습니다. (CONFIRM_DOMESTIC_RETURN)
+- 현재경로유지 → 귀국이기존권리를자동삭제하지않습니다. (CANCEL_RETURN)
 
 ## E68 · 기다림도 커리어
 
@@ -588,7 +588,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: '복귀를 준비하는 시간이 지나갑니다.'
 
-- 준비구간진행 → 세계날짜와나이는계속진행합니다. ($(@{command=ADVANCE_RETURN_PROGRAM; label=준비구간진행; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=세계날짜와나이는계속진행합니다.}.command))
+- 준비구간진행 → 세계날짜와나이는계속진행합니다. (ADVANCE_RETURN_PROGRAM)
 
 ## E69 · 두 리그의 마지막 인사
 
@@ -596,7 +596,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: '어느 리그의 기록도 다른 기록을 지우지 않습니다.'
 
-- 두리그기록확인 → 국내와미국의기록을구분해보관했습니다. ($(@{command=OPEN_ARCHIVE; label=두리그기록확인; availability=서버상태별검사,불가사유표시; preview=38공통확률/실제효과미리보기; resultCopy=국내와미국의기록을구분해보관했습니다.}.command))
+- 두리그기록확인 → 국내와미국의기록을구분해보관했습니다. (OPEN_ARCHIVE)
 
 ## E70 · 졸업 뒤의 캠퍼스
 
@@ -604,8 +604,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 고교졸업/대학진학검토
 
-- 학교비교 → 선택결과를확인했습니다. ($(@{command=OPEN_COLLEGES; label=학교비교; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
-- 진로비교로 → 선택결과를확인했습니다. ($(@{command=BACK_TO_ROUTE; label=진로비교로; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
+- 학교비교 → 선택결과를확인했습니다. (OPEN_COLLEGES)
+- 진로비교로 → 선택결과를확인했습니다. (BACK_TO_ROUTE)
 
 ## E71 · 대학의 첫 유니폼
 
@@ -613,8 +613,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 대학입학확정후1회
 
-- 육성4개확인 → 선택결과를확인했습니다. ($(@{command=CHOOSE_FOCUS; label=육성4개확인; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
-- 일정확인 → 선택결과를확인했습니다. ($(@{command=ACK_EVENT; label=일정확인; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
+- 육성4개확인 → 선택결과를확인했습니다. (CHOOSE_FOCUS)
+- 일정확인 → 선택결과를확인했습니다. (ACK_EVENT)
 
 ## E72 · 대학선수권의 초대
 
@@ -622,7 +622,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 대학정규상위4확정
 
-- 대진확인 → 선택결과를확인했습니다. ($(@{command=ACK_EVENT; label=대진확인; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
+- 대진확인 → 선택결과를확인했습니다. (ACK_EVENT)
 
 ## E73 · 두 번째 봄 다음의 선택
 
@@ -630,9 +630,9 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 2학년시즌결산/조기지명미시도
 
-- 조기드래프트검토 → 선택결과를확인했습니다. ($(@{command=ENTER_EARLY_DRAFT; label=조기드래프트검토; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
-- 재학유지 → 선택결과를확인했습니다. ($(@{command=ADVANCE_ACADEMIC_YEAR; label=재학유지; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
-- 유효미국제안조회 → 선택결과를확인했습니다. ($(@{command=OPEN_US_IF_VALID; label=유효미국제안조회; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
+- 조기드래프트검토 → 선택결과를확인했습니다. (ENTER_EARLY_DRAFT)
+- 재학유지 → 선택결과를확인했습니다. (ADVANCE_ACADEMIC_YEAR)
+- 유효미국제안조회 → 선택결과를확인했습니다. (OPEN_US_IF_VALID)
 
 ## E74 · 다시 학교 그라운드로
 
@@ -640,8 +640,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 조기미지명/미계약복학가능
 
-- 3학년복귀 → 선택결과를확인했습니다. ($(@{command=ADVANCE_ACADEMIC_YEAR; label=3학년복귀; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
-- 종료검토 → 선택결과를확인했습니다. ($(@{command=REQUEST_RETIRE; label=종료검토; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
+- 3학년복귀 → 선택결과를확인했습니다. (ADVANCE_ACADEMIC_YEAR)
+- 종료검토 → 선택결과를확인했습니다. (REQUEST_RETIRE)
 
 ## E75 · 졸업과 다음 무대
 
@@ -649,7 +649,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 4학년결산
 
-- 졸업진로확인 → 선택결과를확인했습니다. ($(@{command=GRADUATE_COLLEGE; label=졸업진로확인; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
+- 졸업진로확인 → 선택결과를확인했습니다. (GRADUATE_COLLEGE)
 
 ## E76 · 미뤄 둔 학년
 
@@ -657,7 +657,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 휴학중복무완료
 
-- 복학확인 → 선택결과를확인했습니다. ($(@{command=RESUME_COLLEGE; label=복학확인; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
+- 복학확인 → 선택결과를확인했습니다. (RESUME_COLLEGE)
 
 ## E77 · 새로운 관찰 보고서
 
@@ -665,7 +665,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 탐색명령성공receipt
 
-- 발견선수확인 → 선택결과를확인했습니다. ($(@{command=OPEN_SCOUT_REPORT; label=발견선수확인; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
+- 발견선수확인 → 선택결과를확인했습니다. (OPEN_SCOUT_REPORT)
 
 ## E78 · 이번 탐색의 빈자리
 
@@ -673,8 +673,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 탐색명령실패receipt
 
-- 조건검토 → 선택결과를확인했습니다. ($(@{command=OPEN_SEARCH; label=조건검토; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
-- 공개FA목록 → 선택결과를확인했습니다. ($(@{command=OPEN_MARKET; label=공개FA목록; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
+- 조건검토 → 선택결과를확인했습니다. (OPEN_SEARCH)
+- 공개FA목록 → 선택결과를확인했습니다. (OPEN_MARKET)
 
 ## E79 · 제안서를 보내기 전에
 
@@ -682,8 +682,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 구단제안초안확인
 
-- 확률과예약확인후제출 → 선택결과를확인했습니다. ($(@{command=SUBMIT_OFFER; label=확률과예약확인후제출; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
-- 초안취소 → 선택결과를확인했습니다. ($(@{command=CANCEL_DRAFT_OFFER; label=초안취소; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
+- 확률과예약확인후제출 → 선택결과를확인했습니다. (SUBMIT_OFFER)
+- 초안취소 → 선택결과를확인했습니다. (CANCEL_DRAFT_OFFER)
 
 ## E80 · 협상 라운드의 마감
 
@@ -691,7 +691,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 제안라운드결과receipt
 
-- 결과확인 → 선택결과를확인했습니다. ($(@{command=OPEN_OFFER_RESULTS; label=결과확인; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
+- 결과확인 → 선택결과를확인했습니다. (OPEN_OFFER_RESULTS)
 
 ## E81 · 그라운드를 지키는 예산
 
@@ -699,8 +699,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 재정재건필요
 
-- 지원원장확인 → 선택결과를확인했습니다. ($(@{command=CONFIRM_REBUILD; label=지원원장확인; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
-- 예산검토 → 선택결과를확인했습니다. ($(@{command=BACK_TO_BUDGET; label=예산검토; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
+- 지원원장확인 → 선택결과를확인했습니다. (CONFIRM_REBUILD)
+- 예산검토 → 선택결과를확인했습니다. (BACK_TO_BUDGET)
 
 ## E82 · 다시 시작하는 선수
 
@@ -708,8 +708,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 보관복사생성미리보기
 
-- 미리보기확인 → 선택결과를확인했습니다. ($(@{command=CONFIRM_IMPORT; label=미리보기확인; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
-- 선택취소 → 선택결과를확인했습니다. ($(@{command=CANCEL_IMPORT; label=선택취소; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
+- 미리보기확인 → 선택결과를확인했습니다. (CONFIRM_IMPORT)
+- 선택취소 → 선택결과를확인했습니다. (CANCEL_IMPORT)
 
 ## E83 · 숨겨진 난이도의 약속
 
@@ -717,5 +717,5 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 발생: 해금후치트카드를직접선택한뒤
 
-- 선택확인 → 선택결과를확인했습니다. ($(@{command=CONFIRM_DIFFICULTY; label=선택확인; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
-- 난이도다시선택 → 선택결과를확인했습니다. ($(@{command=BACK_TO_DIFFICULTY; label=난이도다시선택; availability=분야별서버조건검사; preview=38공통계약; resultCopy=선택결과를확인했습니다.}.command))
+- 선택확인 → 선택결과를확인했습니다. (CONFIRM_DIFFICULTY)
+- 난이도다시선택 → 선택결과를확인했습니다. (BACK_TO_DIFFICULTY)
