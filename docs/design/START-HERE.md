@@ -1,3 +1,5 @@
+최신v0.9:[55 추가8기능통합](55-EXPANSION-INTEGRATION.md)을먼저확인. 47~54모두v1필수로추가,45화면/99이벤트. 세부수치는설계기본안,앱미구현.
+
 최신 v0.8: [39 정합](39-DESIGN-RECONCILIATION.md) · [40 확률](40-SCOUTING-RECRUITMENT-ODDS.md) · [41 경기](41-SIX-STAT-ENGINE.md) · [42 성장](42-GROWTH-DIFFICULTY-REBIRTH.md) · [43 대학](43-COLLEGE-CAREER.md) · [44 구단](44-CLUB-ECONOMY-AI.md) · [45 이벤트83종](45-EVENT-CATALOG-REVISION.md) · [46 화면37종](46-ALL-SCREENS-FLOWS.md). 새수치는설계기본안D,실행검증전. 앱미구현.
 
 최신 명칭은 **다시, 플레이볼**. 능력6개/육성4개/평균종합/대학/미국노출/확률/구단치트는 [34](34-ARCHETYPES-COLLEGE-ODDS.md)~[37](37-BRAND-TEAM-LOGOS.md)을 우선 읽으세요. 이전 대학후속범위와1~2집중선택은폐기됐습니다.
@@ -14,7 +16,7 @@
 
 ## 현재 상태
 
-- 단계: 상세 설계 v0.8. 앱 코드 구현/DB 스키마 배포/APK 빌드 미착수.
+- 단계: 상세 설계 v0.9. 앱 코드 구현/DB 스키마 배포/APK 빌드 미착수.
 - 목적: 소수 친구용 웹앱+Android APK, 선수 커리어와 독립 구단 운영.
 - 필수: KBO 가상선수, 고교 미국직행, 포스팅, MiLB/MLB, 국가대표/병역, 스타일/강화, 은퇴보관, 능력별최고50%·새잠재력·병역재시작의 어린선수 선택투입, Neon 저장.
 - 앱 이름: 다시, 플레이볼. 목표 GitHub: https://github.com/bossxor/baseball_Career

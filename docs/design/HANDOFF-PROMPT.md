@@ -1,3 +1,5 @@
+최신v0.9:[55 추가8기능통합](55-EXPANSION-INTEGRATION.md)을먼저확인. 47~54모두v1필수로추가,45화면/99이벤트. 세부수치는설계기본안,앱미구현.
+
 최신 v0.8: [39 정합](39-DESIGN-RECONCILIATION.md) · [40 확률](40-SCOUTING-RECRUITMENT-ODDS.md) · [41 경기](41-SIX-STAT-ENGINE.md) · [42 성장](42-GROWTH-DIFFICULTY-REBIRTH.md) · [43 대학](43-COLLEGE-CAREER.md) · [44 구단](44-CLUB-ECONOMY-AI.md) · [45 이벤트83종](45-EVENT-CATALOG-REVISION.md) · [46 화면37종](46-ALL-SCREENS-FLOWS.md). 새수치는설계기본안D,실행검증전. 앱미구현.
 
 최신 사용자 변경:앱 다시, 플레이볼/타자투수각6능력/집중4개/평균종합100/대학진학/능력과유효오퍼가있는미국카드/예상드래프트라운드와지명률/구단치트무제한예산·탐색영입100%. 34~37을함께읽고이전모순을구현하지마세요.

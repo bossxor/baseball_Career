@@ -75,3 +75,5 @@ API access15분/refresh30일게임기본설계.refresh회전은이전hash재사�
 preview명령는READ연산,난수소비/비용/usage없음. 실제SCOUT/UPGRADE_SCOUT/SUBMIT_OFFER/RESOLVE_ROUND/ENROLL_COLLEGE/ADVANCE_ACADEMIC_YEAR/CONFIRM_IMPORT는revision+idempotencyKey검사. 계약확정은선수당활성계약1개/제안예약해제/계약원장하나의transaction. 구단치트의효과는서버세이브preset에서읽고클라이언트가p=1을전송해도무시한다.
 
 학교권리/원본소유/후보풀/시즌기회가바뀌면409후최신preview,유효조건없음422와reasonCode,결과불명은동일commandId조회. 앱이자기DB권한으로다른친구세이브/비공개파일을읽지못하는28의원칙유지. 입력진로가숨겨져도서버에서조건재검사한다.
+
+확장계약:[55](55-EXPANSION-INTEGRATION.md). 47특성/48구종성향/49목표/50개인협상/51관계/52지도자/53확정경기중계/54연대기를추가한다. 기본6능력·상한100·강화1회유지,구종XP/원본스킬복사/직원비용/로그보존예외는각최신문서적용.

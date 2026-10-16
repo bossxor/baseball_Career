@@ -13,9 +13,9 @@ const html = read('design-board.html');
 const near = (a, b) => assert.ok(Math.abs(a - b) < 1e-9, `${a} != ${b}`);
 const unique = values => assert.equal(new Set(values).size, values.length);
 
-assert.equal(catalog.events.length, 83);
+assert.equal(catalog.events.length, 99);
 unique(catalog.events.map(e => e.id));
-for (let i = 1; i <= 83; i++) {
+for (let i = 1; i <= 99; i++) {
   const event = catalog.events.find(e => e.id === `E${String(i).padStart(2, '0')}`);
   assert.ok(event?.title && event.body && event.trigger);
   assert.ok(event.body.length <= 240);
@@ -25,7 +25,7 @@ for (let i = 1; i <= 83; i++) {
     assert.ok(choice.command && choice.label && choice.resultCopy && choice.preview);
   }
 }
-assert.equal(screens.screens.length, 37);
+assert.equal(screens.screens.length, 45);
 unique(screens.screens.map(s => s.id));
 const shown = new Set();
 for (const section of html.matchAll(/<section\b[^>]*>([\s\S]*?)<\/section>/g)) {
@@ -113,6 +113,26 @@ for (const line of read('35-SIX-ABILITIES-FOUR-FOCUS.md').split('\n')) {
   }
 }
 assert.equal(initialRows, 14);
-console.log('PASS: 83 event contracts, 37 screen contracts, unique IDs, local links/assets, JS syntax, embedded state catalog, no visible 100% badges.');
+console.log('PASS: 99 event contracts, 45 screen contracts, unique IDs, local links/assets, JS syntax, embedded state catalog, no visible 100% badges.');
 console.log('PASS: design arithmetic: search odds, offer distributions/monotonicity, 14 initial arrays, overall, advancement, draft, growth, import, budget, college schedule.');
+// Expansion design examples and bounded effect composition.
+near(clamp(.75 - 1.5 * .10, .10, .90), .60);
+near(clamp(.75 - 1.5 * .10 + .08, .10, .90), .68);
+near(100000000 - 100000000 * .02, 98000000);
+near(18.4 - 1.5 - 1, 15.9);
+assert.equal(Math.max(1, Math.floor(5 / 2)), 2);
+assert.equal(Math.max(1, Math.floor(1 / 2)), 1);
+for (const trust of [0, 50, 100]) for (const raise of [.10, .20, .30]) {
+  const p = clamp(.75 - 1.5 * raise + .002 * (trust - 50) + .08, .10, .90);
+  assert.ok(p >= .10 && p <= .90);
+}
+const skillDelta = clamp(clamp(.04 + .04, -.06, .06) + .04 + .03, -.10, .10);
+near(skillDelta, .10);
+for (const id of ['S38','S39','S40','S41','S42','S43','S44','S45']) {
+  assert.ok(screens.screens.some(s => s.id === id));
+}
+for (const id of ['E84','E85','E86','E87','E88','E89','E90','E91','E92','E93','E94','E95','E96','E97','E98','E99']) {
+  assert.ok(catalog.events.some(e => e.id === id));
+}
+console.log('PASS: expansion design arithmetic: negotiation .60/.68, income fee, staff budget, imported pitch mastery, skill modifier caps.');
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

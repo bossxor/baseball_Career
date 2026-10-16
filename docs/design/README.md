@@ -1,8 +1,10 @@
+최신v0.9:[55 추가8기능통합](55-EXPANSION-INTEGRATION.md)을먼저확인. 47~54모두v1필수로추가,45화면/99이벤트. 세부수치는설계기본안,앱미구현.
+
 최신 v0.8: [39 정합](39-DESIGN-RECONCILIATION.md) · [40 확률](40-SCOUTING-RECRUITMENT-ODDS.md) · [41 경기](41-SIX-STAT-ENGINE.md) · [42 성장](42-GROWTH-DIFFICULTY-REBIRTH.md) · [43 대학](43-COLLEGE-CAREER.md) · [44 구단](44-CLUB-ECONOMY-AI.md) · [45 이벤트83종](45-EVENT-CATALOG-REVISION.md) · [46 화면37종](46-ALL-SCREENS-FLOWS.md). 새수치는설계기본안D,실행검증전. 앱미구현.
 
 # 다시, 플레이볼 — 상세 설계 묶음
 
-2026-10-16 / v0.8 / 상세설계 진행 / 구현 착수 전
+2026-10-16 / v0.9 / 상세설계 진행 / 구현 착수 전
 
 새 환경에서는 [START-HERE.md](START-HERE.md)부터 읽으세요. 최신 완료/미검증 항목은 [STATUS.md](STATUS.md), 규칙 충돌 시 기준은 [14 통합 결정표](14-CANONICAL-DECISIONS.md)입니다. 다른 채팅에는 [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md)를 사용할 수 있습니다.
 

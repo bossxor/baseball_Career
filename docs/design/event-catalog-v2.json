@@ -2135,7 +2135,414 @@
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
       "resume": "resumePhase또는명시적후속상태"
+    },
+    {
+      "id": "E84",
+      "title": "나만의 무기를 얻다",
+      "trigger": "특성해금조건충족receipt",
+      "body": "쌓아 온 기록이 새로운 특성의 조건을 채웠습니다. 장착 가능한 시점과 효과를 확인합니다.",
+      "choices": [
+        {
+          "command": "OPEN_TRAITS",
+          "label": "특성도감확인",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "47",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E85",
+      "title": "두 가지 무기",
+      "trigger": "프리시즌또는정규절반특성변경창",
+      "body": "이번 구간에 사용할 특성을 고릅니다. 두 자리 중 시그니처는 하나만 사용할 수 있습니다.",
+      "choices": [
+        {
+          "command": "EQUIP_TRAITS",
+          "label": "장착미리보기",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        },
+        {
+          "command": "ACK_EVENT",
+          "label": "현재장착유지",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "47",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E86",
+      "title": "새로운 공의 연습",
+      "trigger": "프리시즌새구종학습가능",
+      "body": "새 구종을 배우려면 시간이 필요합니다. 활성 구성과 학습 계획을 비교합니다.",
+      "choices": [
+        {
+          "command": "SET_PITCH_TRAINING",
+          "label": "학습계획확인",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        },
+        {
+          "command": "ACK_EVENT",
+          "label": "현재구종집중",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "48",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E87",
+      "title": "손끝에 익은 구종",
+      "trigger": "구종XP등급기준통과receipt",
+      "body": "훈련과 실전이 쌓여 구종 숙련 단계가 올랐습니다. 능력 종합과는 별도 기록입니다.",
+      "choices": [
+        {
+          "command": "OPEN_REPERTOIRE",
+          "label": "구종숙련확인",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "48",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E88",
+      "title": "타구를 만드는 접근",
+      "trigger": "성향변경창/타자",
+      "body": "당겨치기와 밀어치기, 전방향과 균형 중 이번 구간의 접근을 고릅니다.",
+      "choices": [
+        {
+          "command": "SET_BATTING_APPROACH",
+          "label": "성향비교",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        },
+        {
+          "command": "ACK_EVENT",
+          "label": "현재성향유지",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "48",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E89",
+      "title": "이번 시즌의 약속",
+      "trigger": "프리시즌목표선택가능",
+      "body": "기록을 바라보는 작은 목표를 정합니다. 선택하지 않아도 시즌은 진행할 수 있습니다.",
+      "choices": [
+        {
+          "command": "SET_GOALS",
+          "label": "목표최대3개선택",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        },
+        {
+          "command": "ACK_EVENT",
+          "label": "목표없이진행",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "49",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E90",
+      "title": "숫자 너머의 한 걸음",
+      "trigger": "목표달성기록receipt",
+      "body": "선택한 목표를 달성했습니다. 기록의 범위와 새 기념 보상을 확인합니다.",
+      "choices": [
+        {
+          "command": "OPEN_ACHIEVEMENTS",
+          "label": "달성과보상확인",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "49",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E91",
+      "title": "함께 볼 계약서",
+      "trigger": "프로계약후에이전트선택가능",
+      "body": "수수료와 전문 분야를 비교합니다. 직접 협상을 이어갈 수도 있습니다.",
+      "choices": [
+        {
+          "command": "HIRE_AGENT",
+          "label": "에이전트조건확인",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        },
+        {
+          "command": "ACK_EVENT",
+          "label": "직접협상유지",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "50",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E92",
+      "title": "한 번의 역제안",
+      "trigger": "유효오퍼/미사용재협상횟수",
+      "body": "원하는 연봉과 요청 수용률을 확인합니다. 실패해도 기존 제안은 기한까지 유지됩니다.",
+      "choices": [
+        {
+          "command": "REQUEST_SALARY_COUNTER",
+          "label": "확률확인후역제안",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        },
+        {
+          "command": "ACK_EVENT",
+          "label": "기본오퍼유지",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "50",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E93",
+      "title": "내 역할을 묻다",
+      "trigger": "20팀경기검토창/출장가능",
+      "body": "다시 평가받을 기회를 요청할 수 있습니다. 요청이 수용되어도 주전은 경쟁으로 결정됩니다.",
+      "choices": [
+        {
+          "command": "REQUEST_ROLE_REVIEW",
+          "label": "수용확률확인",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        },
+        {
+          "command": "ACK_EVENT",
+          "label": "현역할유지",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "50",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E94",
+      "title": "같은 출발선의 이름",
+      "trigger": "고교관계선수고정생성",
+      "body": "비슷한 자리에서 시작한 선수의 이름이 기억에 남습니다. 각자의 길은 다르게 이어질 수 있습니다.",
+      "choices": [
+        {
+          "command": "OPEN_RELATIONS",
+          "label": "라이벌정보확인",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "51",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E95",
+      "title": "다시 마주한 유니폼",
+      "trigger": "라이벌관계단계변경후첫실제대진",
+      "body": "서로 다른 시간을 보낸 두 선수가 다시 같은 경기에 나섭니다. 실제 맞대결과 경력을 비교합니다.",
+      "choices": [
+        {
+          "command": "OPEN_RELATIONS",
+          "label": "관계와기록확인",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "51",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E96",
+      "title": "이번에는 같은 편",
+      "trigger": "라이벌또는동료실제같은팀등록",
+      "body": "이번에는 같은 유니폼입니다. 이전 맞대결과 앞으로의 동료 기록을 나누어 남깁니다.",
+      "choices": [
+        {
+          "command": "OPEN_RELATIONS",
+          "label": "동료연표확인",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "51",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E97",
+      "title": "그라운드 곁의 두 번째 삶",
+      "trigger": "은퇴원본지도자고용미리보기",
+      "body": "선수로 남긴 기록을 바탕으로 코치나 스카우트 역할을 살펴봅니다. 보관 원본은 유지됩니다.",
+      "choices": [
+        {
+          "command": "HIRE_RETIRED_STAFF",
+          "label": "효과와급여확인",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        },
+        {
+          "command": "ACK_EVENT",
+          "label": "보관만유지",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "52",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E98",
+      "title": "한 타석씩 남길 경기",
+      "trigger": "중요경기직전/중계알림ON",
+      "body": "이 경기의 장면을 한 타석씩 볼까요? 결과만 확인해도 같은 경기가 진행됩니다.",
+      "choices": [
+        {
+          "command": "WATCH_IMPORTANT_GAME",
+          "label": "중계보기",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        },
+        {
+          "command": "SKIP_COMMENTARY",
+          "label": "결과보기",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "53",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
+    },
+    {
+      "id": "E99",
+      "title": "한 장에 남긴 시간",
+      "trigger": "새연대기장면확정receipt",
+      "body": "기록과 선택이 한 장의 기억으로 남았습니다. 장면을 핀하거나 근거 경기를 돌아볼 수 있습니다.",
+      "choices": [
+        {
+          "command": "OPEN_CHRONICLE",
+          "label": "연대기확인",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        },
+        {
+          "command": "ACK_EVENT",
+          "label": "계속진행",
+          "availability": "분야별서버조건/변경창/원본소유검사",
+          "preview": "확률선택은38,확정동작은효과/비용표시",
+          "resultCopy": "확정된결과와선택내역을확인합니다."
+        }
+      ],
+      "ruleDocument": "54",
+      "occurrenceKey": "id:saveId:sourceEntityId:windowId",
+      "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
+      "fixturePositive": "해당해금/변경창/계약/관계조건충족",
+      "fixtureNegative": "미해금/기한만료/이미해결",
+      "resume": "원래resumePhase또는명시한화면"
     }
   ],
-  "status": "design-only"
+  "status": "design-only",
+  "contentVersion": 3
 }
