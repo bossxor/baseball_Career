@@ -1,0 +1,6 @@
+*.md text eol=lf
+*.html text eol=lf
+*.csv text eol=lf
+*.png binary
+*.ttf binary
+**/*-OFL.txt -text
