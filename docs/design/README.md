@@ -1,6 +1,6 @@
 # Baseball Career — 상세 설계 묶음
 
-2026-10-16 / v0.8 / 상세설계 진행 / 구현 착수 전
+2026-10-16 / v0.9 / 상세설계 진행 / 구현 착수 전
 
 새 환경에서는 [START-HERE.md](START-HERE.md)부터 읽으세요. 최신 완료/미검증 항목은 [STATUS.md](STATUS.md), 규칙 충돌 시 기준은 [14 통합 결정표](14-CANONICAL-DECISIONS.md)입니다. 다른 채팅에는 [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md)를 사용할 수 있습니다.
 
@@ -36,6 +36,7 @@
 | [12 스타일·국가대표·병역](12-STYLE-INTERNATIONAL-MILITARY.md) | 플레이 스타일, 특별강화, 국제대회, 상무/현역/복귀 |
 | [13 MLB 커리어](13-MLB-CAREER.md) | 고교 미국 직행, 포스팅, 마이너/메이저, 국내 복귀 |
 | [상세설계 순서](DETAIL-PLAN.md) | 항목별 진행·커밋 기준과 다음 작업 |
+| [20 국제대회 상세](20-INTERNATIONAL-COMPETITIONS.md) | 달력·선발·기용·기록·자격·동률·연장 계약 |
 | [19 상태 전이 상세](19-CAREER-STATE-MACHINE.md) | 커리어 단계·명령·복귀·저장 불변 조건 |
 | [14 통합 결정표](14-CANONICAL-DECISIONS.md) | 최신 규칙, 충돌 해소, 사건·연간 순서 |
 | [15 장기 운영·기록](15-LONG-TERM-RECORDS.md) | AI, 선수 공급, 보존, 명예의 전당 |
