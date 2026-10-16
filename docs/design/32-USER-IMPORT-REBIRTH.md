@@ -45,3 +45,6 @@ S11 원본:종료 나이/최종 능력/능력별 최고/이전 기록. S12 미�
 imported_players에peakSnapshotVersion,importPolicyVersion,importDraftId,startingAbilities,reinitializedPotential,militaryReset=true를 기록한다. 클라이언트의 임의 peak/boost를 신뢰하지 않고 서버가 소유 원본과 고정 seed에서 계산한다.
 
 IMP01 모든peak100→시작50/상한100. IMP02 능력별서로다른시점최고값수집. IMP03 임시버프최고값제외. IMP04 홀수최고의소수절반. IMP05 원잠재력95→상향100/100→100. IMP06 원본병역완료→복사본미해결. IMP07 새대회성적없이옛메달재혜택없음. IMP08 미리보기재시도잠재력동일. IMP09 원본없음/peak없는구버전호환. IMP10 원본불변과구단0명선택유지. 모두 실행 전 명세다.
+
+
+[42 성장기본안](42-GROWTH-DIFFICULTY-REBIRTH.md)에서난이도배율·강화시점·잠재력분포·19세/보정5~10·유형유지를설계기본값으로채웠다. 사용자개별수치승인과구분하며이전미정/고교절반/균형형초기화문장은대체한다.
