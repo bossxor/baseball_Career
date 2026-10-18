@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_EXPECTATIONS_ONLY",
+  "targets": [
+    {
+      "evidenceRequired": [
+        "osBrowserAndDeviceVersions",
+        "clientReleaseAndApiVersions",
+        "sourceCommit",
+        "commandOrJobReceipts",
+        "screenCaptures",
+        "downloadHashOrSupportedFallback",
+        "failureDetails"
+      ],
+      "update": "WEB_RELEASE",
+      "requiredFlows": [
+        "LOGIN_ALLOWLIST",
+        "CREATE_AND_PLAY",
+        "CLOSE_AND_RESUME",
+        "SAME_OWNER_CROSS_DEVICE",
+        "ACCOUNT_SWITCH_ISOLATION",
+        "UNKNOWN_COMMAND_RECONCILIATION",
+        "UPDATE_WITH_JOURNAL",
+        "PRIVATE_FILE_DOWNLOAD"
+      ],
+      "auth": "WEB_SESSION",
+      "environment": "Android Chrome web",
+      "offlineWorldWrites": false,
+      "fileTransfer": "BROWSER_DOWNLOAD_WITH_SHARE_DETECTION",
+      "optionalCapability": "FILE_SHARING_FEATURE_DETECTED",
+      "localJournal": "INDEXED_DB",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "CP01"
+    },
+    {
+      "evidenceRequired": [
+        "osBrowserAndDeviceVersions",
+        "clientReleaseAndApiVersions",
+        "sourceCommit",
+        "commandOrJobReceipts",
+        "screenCaptures",
+        "downloadHashOrSupportedFallback",
+        "failureDetails"
+      ],
+      "update": "WEB_RELEASE",
+      "requiredFlows": [
+        "LOGIN_ALLOWLIST",
+        "CREATE_AND_PLAY",
+        "CLOSE_AND_RESUME",
+        "SAME_OWNER_CROSS_DEVICE",
+        "ACCOUNT_SWITCH_ISOLATION",
+        "UNKNOWN_COMMAND_RECONCILIATION",
+        "UPDATE_WITH_JOURNAL",
+        "PRIVATE_FILE_DOWNLOAD"
+      ],
+      "auth": "WEB_SESSION",
+      "environment": "iPhone Safari web",
+      "offlineWorldWrites": false,
+      "fileTransfer": "BROWSER_DOWNLOAD_WITH_SHARE_DETECTION",
+      "optionalCapability": "FILE_SHARING_FEATURE_DETECTED",
+      "localJournal": "INDEXED_DB",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "CP02"
+    },
+    {
+      "evidenceRequired": [
+        "osBrowserAndDeviceVersions",
+        "clientReleaseAndApiVersions",
+        "sourceCommit",
+        "commandOrJobReceipts",
+        "screenCaptures",
+        "downloadHashOrSupportedFallback",
+        "failureDetails"
+      ],
+      "update": "PWA_RELEASE",
+      "requiredFlows": [
+        "LOGIN_ALLOWLIST",
+        "CREATE_AND_PLAY",
+        "CLOSE_AND_RESUME",
+        "SAME_OWNER_CROSS_DEVICE",
+        "ACCOUNT_SWITCH_ISOLATION",
+        "UNKNOWN_COMMAND_RECONCILIATION",
+        "UPDATE_WITH_JOURNAL",
+        "PRIVATE_FILE_DOWNLOAD"
+      ],
+      "auth": "INDEPENDENT_WEB_SESSION_CHECK",
+      "environment": "iPhone home-screen web app",
+      "offlineWorldWrites": false,
+      "fileTransfer": "BROWSER_DOWNLOAD_WITH_SHARE_DETECTION",
+      "optionalCapability": "FILE_SHARING_FEATURE_DETECTED",
+      "localJournal": "INDEXED_DB",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "CP03"
+    },
+    {
+      "evidenceRequired": [
+        "osBrowserAndDeviceVersions",
+        "clientReleaseAndApiVersions",
+        "sourceCommit",
+        "commandOrJobReceipts",
+        "screenCaptures",
+        "downloadHashOrSupportedFallback",
+        "failureDetails"
+      ],
+      "update": "WEB_RELEASE",
+      "requiredFlows": [
+        "LOGIN_ALLOWLIST",
+        "CREATE_AND_PLAY",
+        "CLOSE_AND_RESUME",
+        "SAME_OWNER_CROSS_DEVICE",
+        "ACCOUNT_SWITCH_ISOLATION",
+        "UNKNOWN_COMMAND_RECONCILIATION",
+        "UPDATE_WITH_JOURNAL",
+        "PRIVATE_FILE_DOWNLOAD"
+      ],
+      "auth": "WEB_SESSION",
+      "environment": "Windows Chrome and Edge web",
+      "offlineWorldWrites": false,
+      "fileTransfer": "BROWSER_DOWNLOAD_WITH_SHARE_DETECTION",
+      "optionalCapability": "FILE_SHARING_FEATURE_DETECTED",
+      "localJournal": "INDEXED_DB",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "CP04"
+    },
+    {
+      "evidenceRequired": [
+        "osBrowserAndDeviceVersions",
+        "clientReleaseAndApiVersions",
+        "sourceCommit",
+        "commandOrJobReceipts",
+        "screenCaptures",
+        "downloadHashOrSupportedFallback",
+        "failureDetails"
+      ],
+      "update": "WEB_RELEASE",
+      "requiredFlows": [
+        "LOGIN_ALLOWLIST",
+        "CREATE_AND_PLAY",
+        "CLOSE_AND_RESUME",
+        "SAME_OWNER_CROSS_DEVICE",
+        "ACCOUNT_SWITCH_ISOLATION",
+        "UNKNOWN_COMMAND_RECONCILIATION",
+        "UPDATE_WITH_JOURNAL",
+        "PRIVATE_FILE_DOWNLOAD"
+      ],
+      "auth": "WEB_SESSION",
+      "environment": "macOS Safari and Chrome web",
+      "offlineWorldWrites": false,
+      "fileTransfer": "BROWSER_DOWNLOAD_WITH_SHARE_DETECTION",
+      "optionalCapability": "FILE_SHARING_FEATURE_DETECTED",
+      "localJournal": "INDEXED_DB",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "CP05"
+    },
+    {
+      "evidenceRequired": [
+        "osBrowserAndDeviceVersions",
+        "clientReleaseAndApiVersions",
+        "sourceCommit",
+        "commandOrJobReceipts",
+        "screenCaptures",
+        "downloadHashOrSupportedFallback",
+        "failureDetails"
+      ],
+      "update": "SIGNED_APK",
+      "requiredFlows": [
+        "LOGIN_ALLOWLIST",
+        "CREATE_AND_PLAY",
+        "CLOSE_AND_RESUME",
+        "SAME_OWNER_CROSS_DEVICE",
+        "ACCOUNT_SWITCH_ISOLATION",
+        "UNKNOWN_COMMAND_RECONCILIATION",
+        "UPDATE_WITH_JOURNAL",
+        "PRIVATE_FILE_DOWNLOAD"
+      ],
+      "auth": "SYSTEM_BROWSER_PKCE_APP_LINK",
+      "environment": "Android signed release APK",
+      "offlineWorldWrites": false,
+      "fileTransfer": "OS_FILE_AND_SHARE_ADAPTER",
+      "optionalCapability": "FILE_SHARING_FEATURE_DETECTED",
+      "localJournal": "APP_SANDBOX",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "CP06"
+    }
+  ]
+}
