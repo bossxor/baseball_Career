@@ -1,8 +1,10 @@
-# 다시, 플레이볼 — 통합 상세설계 v0.11
+# 다시, 플레이볼 — 통합 상세설계 v0.12
 
 ---
 
 <!-- SOURCE: START-HERE.md -->
+
+최신v0.12:[74 명령복구](74-PREVIEW-COMMAND-RECONCILIATION.md) · [75 정확효과](75-EXACT-EFFECTS-PUBLIC-INFORMATION.md) · [76 웹·APK이어하기](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md). 사용자필수이어하기/정확증가량표시반영,총192서면검수기대값. 실제게임·저장·복구는구현전.
 
 최신v0.11:[66 재도전](66-RETRY-CAREER-OPPORTUNITIES.md) · [67 잠재력관측](67-POTENTIAL-ASSESSMENT-PROGRESSION.md) · [68 구단주기](68-FRANCHISE-CYCLES-LEAGUE-HISTORY.md) · 69~73 충돌/복원/불변조건/연도전환/장기실험설계. 서면기대값총162개,실제실험미실행. 앱미구현.
 
@@ -63,6 +65,8 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 ---
 
 <!-- SOURCE: README.md -->
+
+최신v0.12:[74 명령복구](74-PREVIEW-COMMAND-RECONCILIATION.md) · [75 정확효과](75-EXACT-EFFECTS-PUBLIC-INFORMATION.md) · [76 웹·APK이어하기](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md). 사용자필수이어하기/정확증가량표시반영,총192서면검수기대값. 실제게임·저장·복구는구현전.
 
 최신v0.11:[66 재도전](66-RETRY-CAREER-OPPORTUNITIES.md) · [67 잠재력관측](67-POTENTIAL-ASSESSMENT-PROGRESSION.md) · [68 구단주기](68-FRANCHISE-CYCLES-LEAGUE-HISTORY.md) · 69~73 충돌/복원/불변조건/연도전환/장기실험설계. 서면기대값총162개,실제실험미실행. 앱미구현.
 
@@ -162,36 +166,31 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 
 <!-- SOURCE: STATUS.md -->
 
-# 상세설계 현황 — v0.11 장기 플레이·복구 보완
+# 상세설계 현황 — v0.12 교차 계약·웹/APK 이어하기
 
-앱구현전설계단계. 기존45화면/99이벤트/56~65추가8기능상세계약은유지,이번66~73장기플레이분야8개를추가했다. 사용자에게물었던3선택은아래확정으로반영.
+2026-10-19:지난66~73장기설계통합·검증및기존로컬8커밋을GitHub반영했다. 이어서74~76추가상세계약과30검수기대값을작성. 앱구현·빌드·원격서비스구축미착수.
 
-## 이번 사용자 확정과 기본안
+## 새 사용자 확정
 
-U:재도전기회를여러해주되실제탈락·조기은퇴도허용. U:스카우팅으로잠재력범위점진축소. U:팀마다전성기·암흑기자연발생. D:선택형준비시즌평생3회/재도전후대학입학22세상한/관측20경기단계/전략·팀역사라벨수치. 개별수치까지사용자가승인했다고해석하지않는다.
+U:강화는정확증가량·비용우선,일부잠재력상한추론은허용(75). U:웹과APK중단후이어하기필수(76). 같은계정서버확정진행/미해결선택/진행중경기/작업/결과복구,정확효과미리보기는예산·확률·상한조건과함께재검사한다.
 
-## 새 상세설계
+## 이번 완성한 서면 계약
 
 | 문서 | 내용 |
 |---|---|
-|66|미지명·방출후재도전/대학·복무·귀국과의구분/기회·오퍼·은퇴 |
-|67|관측stage/잠재력범위교집합/현재·역사보고서/AI정보동등 |
-|68|자연구단주기/AI철학/실제계약·연령·유망주이력/숨은평준화없음 |
-|69|동일날짜사건충돌/복귀context/경기중provisional XP·원장 |
-|70|백업복원rowId·simulationKey/불변중계hash/버전·원본참조 |
-|71|세계불변조건24개/진단/원시자료자동수리금지/안전중단 |
-|72|전세계새해staging/단계checkpoint/동일generation원자활성화 |
-|73|100seed커리어·10만타석·50/100시즌·고장주입계획12개 |
+|74|preview순수조회/명령journal·receipt/응답유실·두기기동시성/비동기job중복방지 |
+|75|성공·실패정확증가/실제피로/상한절삭/치트P100/공개정보정책 |
+|76|최근게임이어하기/서버resumeDescriptor/웹·APK로컬저널/강제종료·오프라인·기기간복원 |
 
-보드에잠재력평가이력시연/재도전설명/구단과거3시즌리포트추가. 게임진행·진짜P재추첨·DB저장기능이아님. 원본최고50%/병역재시작/특성전체효과/개인치트구종3배/기념보상/감상형중계유지.
+앞선66~73의재도전·잠재력관측·자연구단주기·사건충돌·복원ID·불변조건·원자연도전환·장기실험설계도유지. 사용자선택방향과기본수치D(준비3회·입학22세·관측20경기등)는구분한다. 45화면/99이벤트유지,홈보드에이어하기상태안내시연추가.
 
-## 검증 결과와 다음 단계의 경계
+## 검증
 
-서면검수기대값:기존80+장기세계82=총162개,모두NOT_IMPLEMENTED. 정적도구는필드/고유ID/링크/HTML/계산예시/24불변조건·12실험계획존재를검사,실제세계시뮬레이션실행아님. 73의모든실험은PLANNED.
+기존80+세계82+교차계약30=총192개서면기대값. 새30은명령12/정확효과6/이어하기12. 전부NOT_IMPLEMENTED이며정적도구는구조·ID·문서/자산/앵커·스크립트·예시산술만검사한다. 24불변조건과장기실험12계획은존재,실제시뮬레이션은PLANNED.
 
-미검증:실제엔진/Neon·APItransaction/파일·복원/웹렌더링/한글PNG/Android다운로드/APK/build. 브라우저기존MXC경로오류로픽셀검수미실시. 원격서비스변경없음. 문서분량이증가했다고모든밸런스나실행가능성을증명했다고쓰지않는다. 실제구현은별도착수지시후.
+실제웹새로고침/브라우저강제종료/Android force-stop/재부팅/2기기·네트워크재접속/DB commit응답유실은구현후검수. 현재저장기능이동작한다고보고하지않는다. 브라우저픽셀검수는이전MXC오류이후재검증없음. Neon/인증/파일/build/PNG/APK도미실행,원격production변경없음.
 
-새환경은START-HERE→14→66~73→관련56~65→기초문서. 최신원본GitHub docs/design,옛ZIP/네트워크복사본은시점보관. 통합MD/보드복사본/SHA/검증보고서함께갱신.
+새환경은START-HERE→14→74~76→관련66~73/56~65. 구현은별도착수지시후,주요플레이취향결정은계속사용자에게질문. 최신Git원본docs/design,통합MD·SHA·기존열린보드복사본동기화.
 
 ---
 
@@ -243,13 +242,16 @@ v0.10후속완료:기념보상/감상형중계답변을반영해58/62작성. 56~
 v0.11:66~73서면8분야추가,사용자장기경험3선택반영. 80기능fixture+82세계fixture구조검사,24불변조건/12실험계획. 실제시뮬레이션은PLANNED,설계에서자동구현으로넘어가지않는다.
 
 
+v0.12:74미리보기·확정·응답유실교차계약,75사용자정확효과공개선택,76웹/APK중단이어하기필수작성. 교차기대값30추가(총192). 홈상태시연은실제저장기능아님.
+
+
 ---
 
 <!-- SOURCE: 14-CANONICAL-DECISIONS.md -->
 
 # 14. 통합 결정표와 세계 달력
 
-문서 버전 v0.11, 2026-10-16. 앞 문서의 제안이 충돌하면 이 문서가 우선한다. 사용자 확정 요구를 바꾸는 우선권은 없다. 아래 숫자는 구현 가능한 기준안을 정한 것이며 사용자가 개별 수치까지 승인했다는 뜻은 아니다.
+문서 버전 v0.12, 2026-10-16. 앞 문서의 제안이 충돌하면 이 문서가 우선한다. 사용자 확정 요구를 바꾸는 우선권은 없다. 아래 숫자는 구현 가능한 기준안을 정한 것이며 사용자가 개별 수치까지 승인했다는 뜻은 아니다.
 
 ## 결정 상태
 
@@ -385,6 +387,11 @@ U후속:기념보상만유지,확정경기감상·스킵·다시보기(65). 기�
 ## v0.11 장기 플레이 사용자 확정
 
 U:여러해재도전+현실탈락혼합(66),스카우팅으로잠재력범위점진축소(67),팀별전성기·암흑기자연발생(68). D:평생선택형준비3시즌/재도전후대학입학최대22세/관측20경기단계/AI전략·라벨수치. 69~73충돌·복원·불변조건·연도전환·장기실험은기술계약,실행미검증.
+
+
+## v0.12 사용자 확정과 교차 계약
+
+U:강화는정확한증가량·비용을우선표시(75),상한추론가능함허용. U:웹앱·APK모두중단후이어하기필수(76),최근게임/미해결선택/진행중경기/작업/결과receipt복원. 74는순수preview·단일명령·결과불명·비동기job재조회계약. 세부수치는D,실제강제종료/네트워크/실기기시험은미실행.
 
 
 ---
@@ -546,6 +553,9 @@ AB=PA-BB-HBP, AVG=H/AB, OBP=(H+BB+HBP)/PA, SLG=TB/AB, OPS=OBP+SLG. 이 단순 �
 | 파일 백업 실패 | 게임은 저장됐지만 백업 생성에 실패했어요 | 백업만 재시도 |
 
 로그아웃은 저장 중 명령 확인 후 처리하고 비밀 토큰/로컬 사용자 캐시를 정리한다. Android 뒤로 가기는 모달 닫기 → 상세 닫기 → 모드 홈 → 종료 순서. 종료 때문에 서버 커밋을 되돌리지 않는다.
+
+
+2026-10-19 사용자필수:웹·APK중단후이어하기. [76 이어하기계약](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)의홈최근게임/서버resumeDescriptor/송신전저널/receipt재조회/경기·선택·작업복원과12검수시나리오를적용한다. 서버확정진행은종료이벤트와무관히보존,미송신초안은별도기기선호다. 미리보기/확정의복구는[74](74-PREVIEW-COMMAND-RECONCILIATION.md).
 
 
 ---
@@ -1618,6 +1628,9 @@ MLB홈: `[조직/현재제휴팀/레벨] → [Rookie-A-AA-AAA-MLB 사다리] →
 S34 대학선택/S35 대학홈/S36 스카우트/S37 예산. 전체입출력과상태문구는[46](46-ALL-SCREENS-FLOWS.md),[화면카탈로그](screen-state-catalog.json). 기존33종과합37종이다.
 
 
+2026-10-19 사용자필수:웹·APK중단후이어하기. [76 이어하기계약](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)의홈최근게임/서버resumeDescriptor/송신전저널/receipt재조회/경기·선택·작업복원과12검수시나리오를적용한다. 서버확정진행은종료이벤트와무관히보존,미송신초안은별도기기선호다. 미리보기/확정의복구는[74](74-PREVIEW-COMMAND-RECONCILIATION.md).
+
+
 ---
 
 <!-- SOURCE: 18-PATH-WALKTHROUGHS.md -->
@@ -2551,6 +2564,9 @@ preview명령는READ연산,난수소비/비용/usage없음. 실제SCOUT/UPGRADE_
 확장계약:[55](55-EXPANSION-INTEGRATION.md). 47특성/48구종성향/49목표/50개인협상/51관계/52지도자/53확정경기중계/54연대기를추가한다. 기본6능력·상한100·강화1회유지,구종XP/원본스킬복사/직원비용/로그보존예외는각최신문서적용.
 
 
+2026-10-19 사용자필수:웹·APK중단후이어하기. [76 이어하기계약](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)의홈최근게임/서버resumeDescriptor/송신전저널/receipt재조회/경기·선택·작업복원과12검수시나리오를적용한다. 서버확정진행은종료이벤트와무관히보존,미송신초안은별도기기선호다. 미리보기/확정의복구는[74](74-PREVIEW-COMMAND-RECONCILIATION.md).
+
+
 ---
 
 <!-- SOURCE: 29-OPERATIONS-RELEASE-RUNBOOK.md -->
@@ -2617,6 +2633,9 @@ production 브랜치 br-nameless-dust-a10jtrs6:ready/primary/default 확인. 데
 
 
 장기세계후속66~73:재도전/평가범위/자연구단주기/사건충돌/provisional원장/복원simulationKey/불변조건/연도generation/실험계획. 해당분야의이전1회준비·복원물리ID난수해석은각최신문서로대체한다.
+
+
+2026-10-19 사용자필수:웹·APK중단후이어하기. [76 이어하기계약](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)의홈최근게임/서버resumeDescriptor/송신전저널/receipt재조회/경기·선택·작업복원과12검수시나리오를적용한다. 서버확정진행은종료이벤트와무관히보존,미송신초안은별도기기선호다. 미리보기/확정의복구는[74](74-PREVIEW-COMMAND-RECONCILIATION.md).
 
 
 ---
@@ -3359,6 +3378,9 @@ GR01 일반/하드동일초기A/P. GR02 10→15/10/30난이도예산. GR03 기�
 
 
 65사용자추가확정:개인치트는구종양의XP도3배/연간구종cap60. 기존6능력자연성장3배와각별도원장,강화증가량·횟수는기존대로. [57](57-REPERTOIRE-DETAILED-CONTRACT.md).
+
+
+2026-10-19 사용자추가확정:강화정확증가량·비용우선(75). 스카우팅범위는유지하되실제효과로상한추론가능함을허용,개별행동snapshot과원본P필드공개는분리한다.
 
 
 ---
@@ -4391,6 +4413,9 @@ CLEAN→DIRTY→PREVIEWING→CONFIRMING→SUBMITTING→APPLIED또는REJECTED. �
 장기전이오류확장:423 WORLD_TRANSITION_PENDING은동일job조회(72),503 ASSESSMENT_INCONSISTENT/INVARIANT_VIOLATION은진단과최근확정상태(67/71),422 UNSUPPORTED_BACKUP_VERSION은원본보존(70). 오류복구로추첨·비용재적용없음.
 
 
+2026-10-19 사용자필수:웹·APK중단후이어하기. [76 이어하기계약](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)의홈최근게임/서버resumeDescriptor/송신전저널/receipt재조회/경기·선택·작업복원과12검수시나리오를적용한다. 서버확정진행은종료이벤트와무관히보존,미송신초안은별도기기선호다. 미리보기/확정의복구는[74](74-PREVIEW-COMMAND-RECONCILIATION.md).
+
+
 ---
 
 <!-- SOURCE: 65-USER-TRAITS-XP-STAFF.md -->
@@ -4497,6 +4522,9 @@ assessment_progress(saveId,playerId UNIQUE,observedTeamGames,stage,lastSettledCu
 GET expansion/assessments?playerId→{mode:RANGE|FIXED_CHEAT,abilities:[{abilityKey,current,potentialRange?,fixedPotential?,outlook}],stage,nextObservationGames,reportHistoryCursor}. 읽기권한만,paid확률preview없음. 기록갱신명령은공통일진행내부hook,client SET_POTENTIAL/REFRESH_FOR_BETTER_ROLL명령없음. 보고서확정receipt재처리version증가0. 정보없음은평가대기,실제범위0~0으로표시안함.
 
 S16능력행잠재력셀/ S36스카우트보고서/ S39숙련과별도:‘잠재력 85~93 · 관측3단계 · 2031시즌평가’/‘다음갱신까지12팀경기’. 독자도움말에범위는성공확률아님을명시. ASSESS01 교집합단조축소/02이적저레벨확대0/03관측19→20stage1/04재조회rng소비0/05A100범위100/06일반rawP응답없음/07치트100표시/08복사보고서초기화/09보고서불일치안전오류/10AI범위중앙값사용.
+
+2026-10-19 사용자추가확정:강화정확증가량·비용우선(75). 스카우팅범위는유지하되실제효과로상한추론가능함을허용,개별행동snapshot과원본P필드공개는분리한다.
+
 
 ---
 
@@ -4766,6 +4794,132 @@ REVIEW:리그평균타율/OPS/ERA/HR율/K율/BB율/득점·9이닝,연령별성�
 artifacts/{runId}/manifest.json,metrics.csv,invariants.json,failed-cases.json,seed-fixtures.json,source-commit.txt. 로그에token/DBURL/서명URL/사용자실명자료없음. 보고서상태=PLANNED/RUNNING/PASSED/FAILED/INCONCLUSIVE,조건fixture존재만으로PASSED금지. 사용자PC사양/호스팅이정해지기전처리속도p95목표를추측해서통과기준으로쓰지않고목표와측정기준을먼저고정한다.
 
 현재모든L01~12는PLANNED. 설계용정적검사는카탈로그·예시수식·검수기대값의필드만검사한다. 앱구현/실험실행/DB작업을별도착수지시전시작하지않는다.
+
+---
+
+<!-- SOURCE: 74-PREVIEW-COMMAND-RECONCILIATION.md -->
+
+# 74. 미리보기·확정·응답 유실의 교차 계약
+
+2026-10-19 교차 점검. 28/64의공통처리를유지하며40계약·57구종·59개인협상·61직원·70복원·72연도전환이같은규약을사용하게정리한다. 구현코드는아직없다.
+
+## 명령과 미리보기의 책임
+
+preview는조회다. source save revision/규칙버전/관련entity revision/payloadHash에묶여10분유효,돈·횟수·PRNG·선수생성효과0. 후보·AI제안·새진로오퍼같은지속계획은세계진행/협상라운드시작명령에서먼저고정하며preview가새후보를굴리지않는다. 계획이없으면PLAN_NOT_READY와유효현재행동안내,빈목록을성공탐색인것처럼보여주지않음.
+
+previewId는서버소유row또는무결성검증가능토큰,ownerSubject/saveId/type/sourceRevision/payloadHash/rulesVersion/validUntil에결합. 클라이언트의effects/odds/costs를명령입력으로신뢰하지않음. 조건이달라지면PREVIEW_STALE,기존수락확률을유지하려경쟁자·예산·선수권리를동결해버리는계약아님. 일반명령은expectedRevision일치필수,해당모드에서제약없는순수핀/메모는별도resourceRevision.
+
+## 단일 요청과 receipt
+
+요청저널은commandId/type/payload/expectedRevision/previewId/requestHash를확정직전에보존,재시도때이내용을바꾸지않는다. 서버는소유save잠금→같은commandId receipt확인→있으면원응답(현재preview만료여부보다우선)→없으면revision/preview/권리검사→추첨과원장→상태·receipt한transaction. 같은ID다른본문은409 COMMAND_ID_REUSED. commandId는owner/save범위로고유,다른사용자receipt조회404.
+
+도전강화실패·탐색실패·역제안거절은실행된결과이므로HTTP200/outcome=REJECTED와비용/횟수원장이있다. 오류422와달리다시같은기회를새ID로자동실행하지않음. 검증실패는PRNG/원장효과0. NO_CHANGE는원래상태와동일한구성일때고유receipt저장하되세계revision/기회/비용/난수불변,preview가현재상태와맞지않으면NO_CHANGE로기만하지않고409.
+
+## 결과를 모르는 상태
+
+commit뒤연결끊김은클라이언트RECONCILING. 같은commandId를주DB에서조회,성공receipt확인후결과표시. 404하나만으로‘서버가실행하지않았다’고단정하지않음(원요청진행중가능). 같은원요청을동일ID로재전송해대기/멱등확인,새ID발급금지. 아직진행중이면202 COMMAND_PENDING/retryAfter,자동재확인최대대기후사용자에게나중에조회행동. 확정되지않은성공·실패연출없음.
+
+이프로토콜때문에command reservation을쓴다면PENDING과terminal receipt는구분,실패프로세스의lease회수뒤동일원요청/seed부터재개. reservation존재가비용지급이나추첨성공을의미하지않음. RNG상태는게임transaction과같이저장하므로서버가추첨직후죽어commit이없으면동일snapshot재실행,다른결과seed를만들지않음.
+
+## 비동기 job·동시성
+
+NEXT_SEASON/복원/카드내보내기수락의receipt는jobId와PENDING응답을불변보존한다. job완료를맞추려고원receipt본문을수정하지않음. 재시도는같은jobId,상태는전용GET jobendpoint로조회,최종revision은job결과에서제공. 복원과카드수출은save변경명령과개인resource job의구분을70/63대로유지.
+
+서로다른기기두명령이같은expectedRevision이면첫변경만성공,다른명령은409후새모형·새preview. 서로다른선수라고save lock을건너뛰지않음. 역할claim/선수활성계약고유제약은잠금에추가보호. 같은날여러명령중일부만성공했을때클라이언트가나머지를자동최신revision으로재작성하지않음.
+
+목록/도감조회나개인메모변경은세계revision을증가시키지않으므로현재게임preview를무효화하지않음. 다만예산/권리/정원/능력/오퍼같은근거가실제변하면source revision과payload hash를재검증. 검증코드는64/72오류목록,423연도전환잠금은일반명령재실행대신job조회.
+
+## 서버·클라이언트 금지 사항과 검수
+
+온라인우선게임이므로오프라인에세계명령을여러개쌓았다가나중에새revision으로일괄재생하지않는다. 미확정원요청하나만저널로보존,로그인복구후receipt부터조회. 비밀토큰은그저널에함께넣지않음. 서버시각TTL만료는게임세계날짜/기한이아니며진행없는데오퍼의게임기한을앞당기지않음.
+
+검수기대값CP01 preview반복효과0/CP02같은ID다른payload409/CP03commit응답유실receipt1/CP04실패추첨사용기회1/CP05TTL만료뒤성공receipt원응답/CP06동시두기기변경1/CP07NO_CHANGE원장0/CP08job중복0/CP09개인메모세계revision0/CP10진행중404뒤새ID생성0/CP11사전계획없음미리보기추첨0/CP12검증오류RNG0. 기계가독기대값은[cross-contract-fixtures.json](cross-contract-fixtures.json),실제네트워크·DB실행은미실시.
+
+## 잠재력과 효과 미리보기 — 사용자 확정
+
+U:일반·하드도정확한증가량·비용을우선표시. 공개전망범위를유지하기위해실제효과를모호하게만들지않는다. 예능력90/P91.25에서정상도전+2는성공+1.25/실패0/피로양쪽+10/성공률60%를표시. 치트는P100을적용한해당대상의정확증가량·비용/성공보장으로숫자확률숨김. 미리보기는원능력의잠재력과같다고보장하는정보가아니라현재대상의실제행동효과다.
+
+원본rawP필드는일반응답에서계속제외하지만상한으로잘린증가량으로일부P를추론할수있음은허용한사용자선택이다. 스카우팅범위를비밀유지장치나치트방지보장으로설명하지않음. 처리단위1e-4를정확상세표시,기본요약은소수1자리이고상한절삭배지/상세열기로오해방지. 구체응답·원본·선택해제조건은75를따른다.
+
+---
+
+<!-- SOURCE: 75-EXACT-EFFECTS-PUBLIC-INFORMATION.md -->
+
+# 75. 정확한 강화 미리보기와 공개 정보 계약
+
+2026-10-19 사용자확정U:잠재력범위공개보다행동의정확한증가량·비용표시를우선. 67의스카우트범위는유지하지만실행효과로상한을추론하는것은허용. 원본rawP를클라이언트에별도그대로보내는정책으로확대하지않음.
+
+## 강화 preview 필드
+
+preview.effects={abilityKey,beforeExact,onSuccess:{gainExact,afterExact,fatigueDelta},onFailure:{gainExact,afterExact,fatigueDelta}|null,capApplied,limitingFactors:[POTENTIAL_CAP|ABILITY_CAP],eligible,reasonCodes};costs={worldSeasonTrainingUses:1,moneyMinor:"0",currency:KRW};odds=[{target:ENHANCEMENT_SUCCESS,probability,kind:EXACT}]. 확정성장/컨디셔닝은odds=[]/onFailure=null,도전은실제p와두결과,치트는p=1/onFailure=null이나UI100%숫자숨김. eligible=false면costs의실제기회소모도0.
+
+도전nominalGain2,eligible는P-A≥1,성공gain=min(2,P-A,100-A). 확정nominal1동일경계. 컨디셔닝은gain0/fatigueDelta=-min(20,currentFatigue). 성공·실패피로는현재피로상한100을적용한실제차이,예피로95도전+10은실제+5. 불가대상은actual effects지급0/비용0/기회미소모,상한여유부족이유와다른대상/컨디셔닝선택을제공.
+
+예A90/P91.25/피로95:도전60%,성공+1.25→91.25/실패0→90,양쪽피로+5→100,기회1. 개인치트는P100고정이므로A90일때성공+2가정확하다. 치트에서상한절삭+1.25가되는별도예는A98.75/P100이며성공보장·실패분기없음. 1e-4미만반올림을위해행동효과를거짓+2로표시하지않음. 선택후실행은동일snapshot/규칙이며변경시409재preview,성공연출과원장수치일치.
+
+## 스카우팅·근거·프라이버시
+
+현재평가범위의이전공개정보는유지,강화실행·정확효과열람으로알게된확정성장한계는별도publicKnowledgeEvidence에기록가능. Pcap에의한절삭으로P가정확하게드러난경우,도움말에는‘강화 상한으로 확인한 정보’라고출처를구분한다. 이를관측20경기stage가올랐다고처리하지않음. 원본보관은그원본evidence유지,새복사본의새P를자동증명하는자료로복사하지않음.
+
+개인플레이게임에서읽기preview를돈/확률재추첨으로제한하지않음. API에rawP/seed/다른친구자료를추가노출하지않고도정확한본인행동효과만반환한다. scout AI는67의공개전망만사용하며강화preview를무한자동질의해비공개P를역산하는AI최적화루틴은없음.
+
+## S23와 검수
+
+대상→현재능력/세계시즌잔여→선택별정확성공·실패효과/실제피로/기회비용→상한절삭상세→확정. 선택·비용·확률변경시다시확인. 검수fixture EF01+1.25절삭/EF02피로95→100실제+5/EF03불가대상기회0/EF04컨디셔닝피로8→0실제-8/EF05치트p1숫자숨김/EF06preview재열람상태·난수0. 구현전서면계약이며현재보드예시는게임과연동되지않는다.
+
+---
+
+<!-- SOURCE: 76-CROSS-PLATFORM-INTERRUPTION-RESUME.md -->
+
+# 76. 웹·APK 중단 후 이어하기 — 필수 사용자 기능
+
+2026-10-19 사용자확정U:웹앱과앱모두중간에끊겨도이어하기가능. 기존28/64/69/70/72/74의서버저장·명령복구를홈진입부터끝까지연결한다. 현재는설계이며자동저장이나실기기중단테스트가구현된것은아니다.
+
+## 저장과 홈
+
+공식진행은서버commit된세이브가원본,게임종료버튼/브라우저종료이벤트를기다리지않는다. 경기청크/pendingGame/중요선택/강화·계약/일자마감/복무·진로/은퇴처리시점의transaction에즉시저장. 서버가성공응답을보냈다면웹·APK를강제종료해도그revision을이어받는다. 전송되기전초안/최종확정하지않은선택은공식효과가없으며가능하면이기기초안으로복원한다.
+
+S01맨위‘최근 게임 이어하기’카드={선수또는구단명,현재연도·날짜,모드,마지막확정진행요약,미해결선택/경기/작업유형,lastCommittedAt,저장상태}. 세이브선택목록도유지,서로다른커리어/구단을자동합치지않음. 서버profiles.lastPlayedSaveRef는가장최근명시적PLAY/CONTINUE선택으로갱신,다른기기의단순목록조회로바꾸지않음. 로컬최근게임과서버최근게임이다르면두카드를표시할수있고버튼대상saveId를명확히한다.
+
+## 진입 복원 순서
+
+1. 세션복원/필요시로그인,로그아웃된사용자의이전계정저널은새계정에재실행안함.
+2. 같은owner의로컬inflightCommand확인,있으면74의receipt조회. 원응답불명은동일ID재조회·재전송,새ID자동발급금지.
+3. 최신save summary/revision과server resumeDescriptor조회,기기캐시state로덮어쓰지않음.
+4. resumeDescriptor.kind에맞는화면복원. 이어받는주체는서버phase/allowedActions이며브라우저옛URL아님.
+5. 초안이있으면draft.sourceRevision/대상entityVersion/필드schema검사. 현재와같으면복원하되확정은다시버튼,다르면‘저장된 초안’읽기제공후최신모형으로재preview.
+6. 성공결과를확인하면저널ACK/CLEAR,이미확정된강화·계약은같은결과만보여줌. 결과확인화면에서뒤로가도당첨을다시뽑지않음.
+
+## 상태별 이어갈 위치
+
+| kind | 복원 위치·행동 |
+|---|---|
+|HOME|현재커리어/구단/대학/미국홈,다음합법일정 |
+|EVENT_DECISION|동일eventInstance/선택가능항목,초안있으면선택표시만 |
+|PENDING_GAME|같은gameId/provisional cursor/rngSnapshot,이어처리후최종경기결과 |
+|RESULT_RECEIPT|이미확정된강화/계약/탐색receipt,효과재적용0 |
+|YEAR_JOB|같은yearTransitionId단계조회,기존세계읽기가능/일반진행잠금 |
+|RESTORE_JOB|같은restoreJobId상태,대상새saveId를중복생성안함 |
+|SERVICE/ROUTE|복무program/학년/준비episode/권리/현재날짜,달력재시작없음 |
+|COMMENTARY|62의같은확정경기와이기기읽기cursor,읽기위치유실시경기처음보기가능/세계결과불변 |
+|ARCHIVED|완료보관원본과연대기. 은퇴transaction미완료면원게임최신phase/receipt부터확인 |
+|INTEGRITY_BLOCKED|최근정상진행·진단참조·허용복구행동,새게임으로자동대체안함 |
+
+## 웹·APK 로컬 보존
+
+웹은IndexedDB에ownerNamespace/saveRef/inflightCommand와허용UI초안,APK는앱sandbox영속저장소에동일저널. command는송신전에journal완료,받은receipt요약도결과연출전에저장. 토큰/DBURL/서명URL/원잠재력·전체세계snapshot을저널에넣지않음. refresh세션은16/28의보안저장정책,저널은인증대체가아님.
+
+visibilitychange/pagehide/앱background에서는초안·중계읽기위치저장best effort만,종료직전네트워크요청성공을저장보장으로삼지않음. OS강제종료후기기저장소가남으면저널복원,시크릿창/브라우저데이터삭제/앱재설치면로컬초안은사라질수있지만같은계정로그인으로서버공식진행은복원. 같은계정다른기기는그서버확정상태를이어가며다른기기의미전송초안까지복사한다고약속하지않음.
+
+오프라인에서는‘최근 확정 진행’의읽기요약과연결안내. 경기·강화·계약을로컬확정해나중에합치지않음. 서버에접수된요청은접속끊김뒤정해진청크또는필수선택앞까지마감될수있고,클라이언트가없는데시즌끝까지추가명령을발급하지않음. 재접속시진행범위/실제확정날짜를알린다.
+
+## API·화면·검수
+
+GET /api/saves/{saveId}/resume→{saveId,revision,phase,kind,targetRefs,allowedActions,lastCommittedAt,blockingReasons,commandStatus?,jobStatus?}. 요약화면읽기API이며새경기·비용·추첨없음. POST /api/profiles/last-played={saveId,expectedPreferenceRevision}는소유권확인/개인선호revision,세계revision불변. 로컬draftSchemaVersion과command requestHash는불변,unknown field초안은삭제전메시지/본문값복원만허용.
+
+S01이어하기버튼→‘저장된 진행 확인 중’→필요로그인→해당화면. S20은자동저장(공식진행)과수동백업(파일)을구분,백업실패가자동저장실패로보이지않게표시. 인계시각다른기기revision이면최신확정내용을보여주고오래된선택은재확인. 네트워크실패에처음부터하기를기본버튼으로제공하지않음.
+
+RESUME01 홈최근게임/02선택중강제종료/03강화commit응답유실/04진행중경기동일ID/05연도job중단/06복무중날짜/07웹→APK동일계정/08다른계정저널차단/09오프라인세계수정0/10로컬데이터삭제후서버진행/11은퇴중단보관중복0/12중계cursor만유실. 실제웹새로고침·브라우저강제종료·Androidforce-stop·재부팅·토큰만료·기기2대의E2E검증은구현후필수다.
 
 ---
 
@@ -5635,6 +5789,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: HANDOFF-PROMPT.md -->
 
+최신v0.12:[74 명령복구](74-PREVIEW-COMMAND-RECONCILIATION.md) · [75 정확효과](75-EXACT-EFFECTS-PUBLIC-INFORMATION.md) · [76 웹·APK이어하기](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md). 사용자필수이어하기/정확증가량표시반영,총192서면검수기대값. 실제게임·저장·복구는구현전.
+
 최신v0.11:[66 재도전](66-RETRY-CAREER-OPPORTUNITIES.md) · [67 잠재력관측](67-POTENTIAL-ASSESSMENT-PROGRESSION.md) · [68 구단주기](68-FRANCHISE-CYCLES-LEAGUE-HISTORY.md) · 69~73 충돌/복원/불변조건/연도전환/장기실험설계. 서면기대값총162개,실제실험미실행. 앱미구현.
 
 최신v0.10:[65 사용자확정5항목](65-USER-TRAITS-XP-STAFF.md)과[64 공통계약](64-EXPANSION-COMMON-CONTRACT.md),56~63전체8기능상세계약/검수기대값80개작성. [STATUS](STATUS.md)에서서면완료와실행미검증을구분하세요. 앱미구현.
@@ -5668,11 +5824,11 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: VALIDATION.md -->
 
-# v0.11 장기 설계 정적 검증 — 2026-10-19
+# v0.12 교차 계약·이어하기 정적 검증 — 2026-10-19
 
-대상은설계문서·카탈로그·HTML입력시연·검수기대값의구조와예시산술이다. 실제게임엔진/DB/API실험은실행하지않았다.
+검증대상은설계문서/카탈로그/HTML시연/기대값구조/예시산술. 실제웹·APK이어하기나엔진·DB실험을실행한것은아니다.
 
-실행: `node docs/design/verify-design.mjs`
+명령: `node docs/design/verify-design.mjs`
 
 ```text
 PASS: 99 event contracts, 45 screen contracts, unique IDs, local links/assets, JS syntax, embedded state catalog, no visible 100% badges.
@@ -5681,11 +5837,12 @@ PASS: expansion design arithmetic: negotiation .60/.68, income fee, staff budget
 PASS: 80 explicit design fixtures across 8 detailed modules; automatic traits and cheat pitch XP examples. Fixture execution is NOT implemented.
 CONFIRMED: cosmetic-only rewards and read-only commentary; no pending choices in these eight detailed modules.
 PASS: 82 world design expectations across 8 modules, 24 invariant contracts, 12 planned run scenarios, narrowing-range examples. World simulations are NOT executed.
+PASS: 30 cross-contract expectations (12 command, 6 exact-effect, 12 web/APK resume); 192 design expectations total. Actual interruption recovery is NOT tested.
 NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.
 ```
 
-기존기능80개와장기세계82개,총162개의서면given/action/expected를확인했다. 세계불변조건24종과장기실험12계획이있으나실행status는NOT_IMPLEMENTED/PLANNED다. 서로다른리그기록/복원ID·RNG/원본hash/연도generation등이실제코드에서지켜지는지는구현후시험한다.
+기대값총192=기능80+장기세계82+교차계약30. 교차30은명령복구12/정확효과6/웹·APK중단이어하기12. 각given/action/expected와NOT_IMPLEMENTED표시를검사했다. 예시A90/P91.25강화+1.25,개인치트A90/P100강화+2,A98.75/P100강화+1.25,피로95도전실제+5를확인했다.
 
-이번에66~73과기존문서의재도전1회/대학입학나이/잠재력평가/복원식별자관련규칙을정합화했다. 사용자확정3방향과설계기본수치(준비3회·입학22세·관측20경기등)를구분한다. 기존8기능상세계약과45화면/99이벤트유지.
+홈이어하기안내와서버resumeDescriptor계약을작성하고서로다른중단상태시연을추가했다. 단로컬시연에는실제서버명령/클라우드저장/로그인/복구기능없음. 실제브라우저force-close/Androidforce-stop/재부팅/오프라인/토큰만료/2기기전환/commit응답유실은구현후테스트필수.
 
-실제브라우저렌더링은이전MXC오류이후확인하지않았고이번에도픽셀검수미실행. 엔진·Neon·인증·파일복원·빌드·PNG·Android/APK미검증. 원격DB/서비스설정변경없음. 통합MD/SHA/기존열린HTML복사본은최신원본으로동기화한다.
+HTML ID/앵커/로컬자산/문서링크/스크립트구문/임베드화면JSON검사통과. 픽셀렌더링은이전MXC오류이후미검수. 실제Neon/API/인증/백업·파일/빌드/PNG/APK검증미실행,원격DB/서비스변경없음. 통합MD·SHA·원래열린HTML복사본을같은내용으로갱신했다.

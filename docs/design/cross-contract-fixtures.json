@@ -1,0 +1,437 @@
+{
+  "schemaVersion": 1,
+  "cases": [
+    {
+      "id": "CP01",
+      "module": "commands",
+      "given": {
+        "previewCalls": 5
+      },
+      "action": "READ_PREVIEWS",
+      "expected": {
+        "stateDelta": 0,
+        "rngDraws": 0,
+        "costDelta": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CP02",
+      "module": "commands",
+      "given": {
+        "sameCommandId": true,
+        "differentPayloadHash": true
+      },
+      "action": "SUBMIT_COMMAND",
+      "expected": {
+        "http": 409,
+        "code": "COMMAND_ID_REUSED",
+        "newEffects": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CP03",
+      "module": "commands",
+      "given": {
+        "commitSucceeded": true,
+        "responseLost": true
+      },
+      "action": "RECONCILE_COMMAND",
+      "expected": {
+        "receiptCount": 1,
+        "additionalEffects": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CP04",
+      "module": "commands",
+      "given": {
+        "enhancementDrawOutcome": "FAILURE"
+      },
+      "action": "RESOLVE_COMMAND",
+      "expected": {
+        "http": 200,
+        "outcome": "REJECTED",
+        "usedOpportunity": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CP05",
+      "module": "commands",
+      "given": {
+        "receiptExists": true,
+        "previewExpired": true
+      },
+      "action": "REPLAY_COMMAND",
+      "expected": {
+        "sameReceipt": true,
+        "newDraws": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CP06",
+      "module": "commands",
+      "given": {
+        "sameExpectedRevision": true,
+        "twoDifferentMutationCommands": true
+      },
+      "action": "COMMIT_CONCURRENT",
+      "expected": {
+        "successfulMutations": 1,
+        "conflicts": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CP07",
+      "module": "commands",
+      "given": {
+        "currentConfigurationEqualsRequested": true,
+        "validCurrentPreview": true
+      },
+      "action": "SUBMIT_NO_CHANGE",
+      "expected": {
+        "worldRevisionDelta": 0,
+        "opportunitiesUsed": 0,
+        "rngDraws": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CP08",
+      "module": "commands",
+      "given": {
+        "sameAcceptedRequestRetried": true,
+        "jobId": "J1"
+      },
+      "action": "SUBMIT_ASYNC_COMMAND",
+      "expected": {
+        "jobId": "J1",
+        "additionalJobs": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CP09",
+      "module": "commands",
+      "given": {
+        "onlyCaptionPreferenceChanged": true
+      },
+      "action": "READ_GAME_PREVIEW",
+      "expected": {
+        "worldRevisionChanged": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CP10",
+      "module": "commands",
+      "given": {
+        "receiptQuery404": true,
+        "originalRequestMayBePending": true
+      },
+      "action": "RECONCILE_COMMAND",
+      "expected": {
+        "newCommandIdGenerated": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CP11",
+      "module": "commands",
+      "given": {
+        "fixedPlanMissing": true
+      },
+      "action": "READ_PREVIEW",
+      "expected": {
+        "reason": "PLAN_NOT_READY",
+        "rngDraws": 0,
+        "generatedCandidates": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CP12",
+      "module": "commands",
+      "given": {
+        "payloadValidationFails": true
+      },
+      "action": "SUBMIT_COMMAND",
+      "expected": {
+        "rngDraws": 0,
+        "costDelta": 0,
+        "stateDelta": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "EF01",
+      "module": "effects",
+      "given": {
+        "A": 90,
+        "P": 91.25,
+        "nominalGain": 2,
+        "successProbability": 0.6,
+        "fatigue": 20
+      },
+      "action": "PREVIEW_TRAINING",
+      "expected": {
+        "successGain": 1.25,
+        "failureGain": 0,
+        "fatigueDelta": 10,
+        "opportunityCost": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "EF02",
+      "module": "effects",
+      "given": {
+        "A": 90,
+        "P": 91.25,
+        "fatigue": 95,
+        "nominalFatigueCost": 10
+      },
+      "action": "PREVIEW_TRAINING",
+      "expected": {
+        "actualFatigueDelta": 5,
+        "fatigueAfter": 100
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "EF03",
+      "module": "effects",
+      "given": {
+        "A": 90,
+        "P": 90.5,
+        "minimumHeadroom": 1
+      },
+      "action": "PREVIEW_TRAINING",
+      "expected": {
+        "eligible": false,
+        "opportunityCost": 0,
+        "costDelta": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "EF04",
+      "module": "effects",
+      "given": {
+        "fatigue": 8,
+        "nominalRecovery": 20
+      },
+      "action": "PREVIEW_CONDITIONING",
+      "expected": {
+        "fatigueDelta": -8,
+        "fatigueAfter": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "EF05",
+      "module": "effects",
+      "given": {
+        "difficulty": "SECRET_CHEAT",
+        "A": 98.75,
+        "P": 100
+      },
+      "action": "PREVIEW_TRAINING",
+      "expected": {
+        "successGain": 1.25,
+        "probability": 1,
+        "visiblePercentBadge": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "EF06",
+      "module": "effects",
+      "given": {
+        "samePreviewRepeated": true
+      },
+      "action": "PREVIEW_TRAINING",
+      "expected": {
+        "abilityDelta": 0,
+        "opportunityDelta": 0,
+        "rngDraws": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESUME01",
+      "module": "resume",
+      "given": {
+        "lastPlayedSaveId": "S1",
+        "ownedByCurrentSubject": true
+      },
+      "action": "READ_HOME",
+      "expected": {
+        "continueSaveId": "S1"
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESUME02",
+      "module": "resume",
+      "given": {
+        "phase": "EVENT_DECISION",
+        "eventId": "E1",
+        "validLocalDraft": true
+      },
+      "action": "RESUME_AFTER_FORCE_STOP",
+      "expected": {
+        "restoredEventId": "E1",
+        "draftSelectedOnly": true,
+        "eventEffectsApplied": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESUME03",
+      "module": "resume",
+      "given": {
+        "trainingCommitted": true,
+        "trainingResponseLost": true
+      },
+      "action": "RESUME_APP",
+      "expected": {
+        "resultReceiptShown": true,
+        "additionalTrainingUses": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESUME04",
+      "module": "resume",
+      "given": {
+        "pendingGameId": "G1",
+        "storedRngCursor": 42
+      },
+      "action": "RESUME_APP",
+      "expected": {
+        "continuedGameId": "G1",
+        "initialRngCursor": 42
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESUME05",
+      "module": "resume",
+      "given": {
+        "yearTransitionJobId": "J1",
+        "phase": "PREPARING"
+      },
+      "action": "RESUME_APP",
+      "expected": {
+        "jobId": "J1",
+        "newJobs": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESUME06",
+      "module": "resume",
+      "given": {
+        "serviceProgramId": "M1",
+        "currentDay": 180
+      },
+      "action": "RESUME_APP",
+      "expected": {
+        "programId": "M1",
+        "currentDay": 180,
+        "restartedService": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESUME07",
+      "module": "resume",
+      "given": {
+        "webRevision": "12",
+        "serverRevision": "15",
+        "sameAccountAPK": true
+      },
+      "action": "RESUME_APK",
+      "expected": {
+        "loadedRevision": "15"
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESUME08",
+      "module": "resume",
+      "given": {
+        "journalOwner": "A",
+        "currentOwner": "B"
+      },
+      "action": "RESUME_APP",
+      "expected": {
+        "replayedOwnerACommands": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESUME09",
+      "module": "resume",
+      "given": {
+        "networkAvailable": false
+      },
+      "action": "PRESS_CONTINUE",
+      "expected": {
+        "worldMutationAllowed": false,
+        "connectionMessageShown": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESUME10",
+      "module": "resume",
+      "given": {
+        "localStorageCleared": true,
+        "serverSaveExists": true,
+        "loggedIn": true
+      },
+      "action": "CONTINUE_GAME",
+      "expected": {
+        "serverProgressAvailable": true,
+        "unsentDraftGuaranteed": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESUME11",
+      "module": "resume",
+      "given": {
+        "retirementCommitSucceeded": true,
+        "responseLost": true
+      },
+      "action": "RESUME_APP",
+      "expected": {
+        "archiveCount": 1,
+        "additionalRetirementEffects": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESUME12",
+      "module": "resume",
+      "given": {
+        "commentaryCursorLost": true,
+        "finalGameExists": true
+      },
+      "action": "RESUME_COMMENTARY",
+      "expected": {
+        "canReplayFromStart": true,
+        "resultHashChanged": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    }
+  ],
+  "status": "DESIGN_EXPECTATIONS_ONLY"
+}

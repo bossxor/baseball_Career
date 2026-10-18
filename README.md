@@ -18,3 +18,5 @@
 상세계약 v0.10: [공통API와수용기준](docs/design/64-EXPANSION-COMMON-CONTRACT.md), [사용자선택확정](docs/design/65-USER-TRAITS-XP-STAFF.md),56~63의8개기능계약과80개서면검수기대값을작성했습니다. 구현·실제테스트는별도입니다.
 
 장기설계 v0.11: [재도전](docs/design/66-RETRY-CAREER-OPPORTUNITIES.md), [잠재력평가](docs/design/67-POTENTIAL-ASSESSMENT-PROGRESSION.md), [구단주기](docs/design/68-FRANCHISE-CYCLES-LEAGUE-HISTORY.md),69~73의충돌·복원·불변조건·연도전환·장기실험계획추가. 실제게임실험은미실행입니다.
+
+최신 v0.12: [웹·APK 이어하기 필수설계](docs/design/76-CROSS-PLATFORM-INTERRUPTION-RESUME.md), [정확한 강화효과](docs/design/75-EXACT-EFFECTS-PUBLIC-INFORMATION.md), [중복실행 방지](docs/design/74-PREVIEW-COMMAND-RECONCILIATION.md). 총192개 서면 검수 기대값, 앱 구현 전입니다.

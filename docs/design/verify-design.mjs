@@ -181,4 +181,23 @@ for (let id = 1; id <= 12; id++) {
   assert.ok(read('73-LONG-RUN-FAULT-BALANCE-VALIDATION.md').includes(`L${String(id).padStart(2,'0')}`));
 }
 console.log('PASS: 82 world design expectations across 8 modules, 24 invariant contracts, 12 planned run scenarios, narrowing-range examples. World simulations are NOT executed.');
+const crossFixtures = JSON.parse(read('cross-contract-fixtures.json'));
+assert.equal(crossFixtures.status, 'DESIGN_EXPECTATIONS_ONLY');
+assert.equal(crossFixtures.cases.length, 30);
+unique(crossFixtures.cases.map(c => c.id));
+for (const fixture of crossFixtures.cases) {
+  assert.ok(fixture.given && fixture.action && fixture.expected);
+  assert.equal(fixture.executionStatus, 'NOT_IMPLEMENTED');
+}
+assert.equal(crossFixtures.cases.filter(c => c.module === 'resume').length, 12);
+assert.equal(crossFixtures.cases.filter(c => c.module === 'commands').length, 12);
+assert.equal(crossFixtures.cases.filter(c => c.module === 'effects').length, 6);
+near(Math.min(2, 91.25 - 90, 100 - 90), 1.25);
+near(Math.min(2, 100 - 90), 2);
+near(Math.min(2, 100 - 98.75), 1.25);
+near(Math.min(10, 100 - 95), 5);
+near(-Math.min(20, 8), -8);
+assert.ok(ids.includes('resume-phase-demo'));
+assert.ok(ids.includes('resume-message-demo'));
+console.log('PASS: 30 cross-contract expectations (12 command, 6 exact-effect, 12 web/APK resume); 192 design expectations total. Actual interruption recovery is NOT tested.');
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

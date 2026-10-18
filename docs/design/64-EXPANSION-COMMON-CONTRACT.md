@@ -45,3 +45,6 @@ CLEAN→DIRTY→PREVIEWING→CONFIRMING→SUBMITTING→APPLIED또는REJECTED. �
 
 
 장기전이오류확장:423 WORLD_TRANSITION_PENDING은동일job조회(72),503 ASSESSMENT_INCONSISTENT/INVARIANT_VIOLATION은진단과최근확정상태(67/71),422 UNSUPPORTED_BACKUP_VERSION은원본보존(70). 오류복구로추첨·비용재적용없음.
+
+
+2026-10-19 사용자필수:웹·APK중단후이어하기. [76 이어하기계약](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)의홈최근게임/서버resumeDescriptor/송신전저널/receipt재조회/경기·선택·작업복원과12검수시나리오를적용한다. 서버확정진행은종료이벤트와무관히보존,미송신초안은별도기기선호다. 미리보기/확정의복구는[74](74-PREVIEW-COMMAND-RECONCILIATION.md).

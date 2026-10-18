@@ -68,3 +68,6 @@ MLB홈: `[조직/현재제휴팀/레벨] → [Rookie-A-AA-AAA-MLB 사다리] →
 ## 추가 화면 v0.8
 
 S34 대학선택/S35 대학홈/S36 스카우트/S37 예산. 전체입출력과상태문구는[46](46-ALL-SCREENS-FLOWS.md),[화면카탈로그](screen-state-catalog.json). 기존33종과합37종이다.
+
+
+2026-10-19 사용자필수:웹·APK중단후이어하기. [76 이어하기계약](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)의홈최근게임/서버resumeDescriptor/송신전저널/receipt재조회/경기·선택·작업복원과12검수시나리오를적용한다. 서버확정진행은종료이벤트와무관히보존,미송신초안은별도기기선호다. 미리보기/확정의복구는[74](74-PREVIEW-COMMAND-RECONCILIATION.md).

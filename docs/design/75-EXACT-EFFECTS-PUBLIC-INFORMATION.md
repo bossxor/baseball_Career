@@ -4,11 +4,11 @@
 
 ## 강화 preview 필드
 
-preview.effects={abilityKey,beforeExact,onSuccess:{gainExact,afterExact,fatigueDelta},onFailure:{gainExact,afterExact,fatigueDelta},capApplied,limitingFactors:[POTENTIAL_CAP|ABILITY_CAP],eligible,reasonCodes};costs={worldSeasonTrainingUses:1,moneyMinor:"0",currency:KRW};odds=[{target:ENHANCEMENT_SUCCESS,probability,kind:EXACT}]. 확정성장과컨디셔닝은확률없는확정행동,도전은실제p,치트도서버p=1이나UI100%숫자숨김.
+preview.effects={abilityKey,beforeExact,onSuccess:{gainExact,afterExact,fatigueDelta},onFailure:{gainExact,afterExact,fatigueDelta}|null,capApplied,limitingFactors:[POTENTIAL_CAP|ABILITY_CAP],eligible,reasonCodes};costs={worldSeasonTrainingUses:1,moneyMinor:"0",currency:KRW};odds=[{target:ENHANCEMENT_SUCCESS,probability,kind:EXACT}]. 확정성장/컨디셔닝은odds=[]/onFailure=null,도전은실제p와두결과,치트는p=1/onFailure=null이나UI100%숫자숨김. eligible=false면costs의실제기회소모도0.
 
 도전nominalGain2,eligible는P-A≥1,성공gain=min(2,P-A,100-A). 확정nominal1동일경계. 컨디셔닝은gain0/fatigueDelta=-min(20,currentFatigue). 성공·실패피로는현재피로상한100을적용한실제차이,예피로95도전+10은실제+5. 불가대상은actual effects지급0/비용0/기회미소모,상한여유부족이유와다른대상/컨디셔닝선택을제공.
 
-예A90/P91.25/피로95:도전60%,성공+1.25→91.25/실패0→90,양쪽피로+5→100,기회1. 같은대상치트는도전성공보장. 1e-4미만반올림을위해행동효과를거짓+2로표시하지않음. 선택후실행은동일snapshot/규칙이며변경시409재preview,성공연출과원장수치일치.
+예A90/P91.25/피로95:도전60%,성공+1.25→91.25/실패0→90,양쪽피로+5→100,기회1. 개인치트는P100고정이므로A90일때성공+2가정확하다. 치트에서상한절삭+1.25가되는별도예는A98.75/P100이며성공보장·실패분기없음. 1e-4미만반올림을위해행동효과를거짓+2로표시하지않음. 선택후실행은동일snapshot/규칙이며변경시409재preview,성공연출과원장수치일치.
 
 ## 스카우팅·근거·프라이버시
 
