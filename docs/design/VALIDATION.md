@@ -1,6 +1,6 @@
-# v0.13 화면 연결·생성 복구 정적 검증 — 2026-10-19
+# v0.14 최종 설계 검토 정적 검증 — 2026-10-19
 
-검증 대상은 설계 파일 구조·링크·목업 구문·예시 산술입니다. 실제 게임이나 저장 복구 실행 검증이 아닙니다.
+검증 대상은 문서·JSON 구조·링크·HTML 구문·예시 산술입니다. 실제 게임·UI·API·복구·AI·밸런스의 실행 검증이 아닙니다.
 
 명령: `node docs/design/verify-design.mjs`
 
@@ -12,10 +12,19 @@ PASS: 80 explicit design fixtures across 8 detailed modules; automatic traits an
 CONFIRMED: cosmetic-only rewards and read-only commentary; no pending choices in these eight detailed modules.
 PASS: 82 world design expectations across 8 modules, 24 invariant contracts, 12 planned run scenarios, narrowing-range examples. World simulations are NOT executed.
 PASS: 30 cross-contract expectations (12 command, 6 exact-effect, 12 web/APK resume); 192 expectations in these three fixture sets. Actual interruption recovery is NOT tested.
-PASS: 45 screen-action bindings and 10 creation recovery design expectations; 202 total design expectations. Runtime creation recovery is NOT tested.
+PASS: 45 screen-action bindings and 10 creation recovery design expectations; 202 expectations before the final audit set. Runtime creation recovery is NOT tested.
+PASS: 45 screen recovery rows, 99 event occurrence rows, 20 probability surfaces, 24 planned paths, 72 final fixtures; 274 unique design expectations total. Runtime/UI/AI checks are NOT executed.
 NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.
 ```
 
-기능80+세계82+교차30+생성10=202개 서면 기대값. 45화면 연결표의 화면 ID·행동 유무·명령 유형과 S02/S12의 OWNER_CREATE 분류를 검사했습니다. 이는 실제 버튼이 해당 API를 호출하거나 중단 복구가 성공한다는 증거가 아닙니다.
+총274개 서면 기대값=기능80+세계82+교차30+생성복구10+최종검토72. 최종72는 생성10/화면10/이벤트10/확률10/시각10/통합경로10/난이도12이며 모두 NOT_IMPLEMENTED입니다. 정적 도구가 기대값의 실제 행동을 실행한 것은 아닙니다.
 
-실제 Neon/API/인증·파일·브라우저/Android 종료·2기기 복구·작업자 종료·DB 경합·게임 엔진·밸런스 실험·빌드·APK 검증은 미실행입니다. 픽셀 검수는 이전 MXC 오류 이후 재검증하지 않았습니다. 원격 production 서비스 변경은 없습니다. 통합 MD와 SHA 목록을 갱신했으며 HTML은 변경하지 않았습니다.
+추가 검사: 화면복구45행,이벤트 근거99행,확률 표면20행,통합 경로24개,각 ID와 기존 카탈로그 참조,정책·빈 필드·실행 상태,전체 fixture 고유ID. 관계 생성 E94와 동일팀 등록 E96이 실제 대진을 요구하지 않도록 근거를 구분했습니다. 부상은 injuryId+stage,폼 안내는 세계 사건과 분리했습니다.
+
+산술 예시: 하드 NPC10×1.2=12,기본P95+5→100상한,반시즌 일반/반시즌 치트의 기준10→20,XP30사용 후 일반잔여0/치트재영입잔여30,원본 최고100/90/80/70/60/50의 반값 평균37.5. 이는 실제 성장 엔진 실행 결과가 아닙니다.
+
+HTML 숨김 치트 설명을 구단 전체 잠재력100·자연성장/구종숙련3배·향후 영입/보관 포함으로 갱신했습니다. 해금 전 노출 방지의 실제 브라우저 동작은 미검수이며 기존 JS 구문/ID/앵커/카탈로그/자산 경로 검사만 통과했습니다. 원래 열린 목업 복사본도 같은 파일로 동기화합니다.
+
+실제 렌더링·스크린리더·모바일 키보드/터치·웹/APK 강제종료·2기기·인증/owner격리·Neon/파일/백업복원·worker장애·장기 밸런스·AI/build/APK는 미실행입니다. 기존 MXC 오류 이후 픽셀 검수 재시도는 없었습니다. 장기 실험12개/불변조건24개/통합경로24개는 계획이며 production 변경은 없습니다.
+
+Git diff 공백 검사와 패키지 SHA 해시는 별도로 확인합니다. 통합MD와SHA목록을 갱신하며,서면 기준 완료와 구현 준비용 실행 게이트를 STATUS/84에서 분리했습니다.

@@ -23,3 +23,6 @@
 
 
 최신 v0.13: [45화면 조회·명령 연결](docs/design/77-SCREEN-QUERY-COMMAND-BINDINGS.md), [새 게임 생성 중단 복구](docs/design/78-NEW-GAME-CREATION-RECOVERY.md). 총202개 서면 검수 기대값이며 실제 앱은 미구현입니다.
+
+
+최신 v0.14: [남은6항목 설계·통합 경로](docs/design/84-DESIGN-GATES-END-TO-END-PATHS.md), [난이도·구단 전체 치트 잠재력100/성장3배](docs/design/85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md). 274개 서면 기대값,실제 앱 구현·실행 검증은 시작 전입니다.

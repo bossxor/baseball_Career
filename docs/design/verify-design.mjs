@@ -224,5 +224,75 @@ for (let i = 1; i <= 10; i++) {
   assert.ok(fixture?.given && fixture.action && fixture.expected);
   assert.equal(fixture.executionStatus, 'NOT_IMPLEMENTED');
 }
-console.log('PASS: 45 screen-action bindings and 10 creation recovery design expectations; 202 total design expectations. Runtime creation recovery is NOT tested.');
+console.log('PASS: 45 screen-action bindings and 10 creation recovery design expectations; 202 expectations before the final audit set. Runtime creation recovery is NOT tested.');
+const recovery = JSON.parse(read('screen-recovery-matrix.json'));
+assert.equal(recovery.status, 'DESIGN_EXPECTATIONS_ONLY');
+assert.equal(recovery.screens.length, 45);
+unique(recovery.screens.map(row => row.screenId));
+const navPolicies = new Set(['ROOT','HOME','READ','DRAFT','CHOICE','JOB','PREFERENCE','MIXED']);
+for (const row of recovery.screens) {
+  assert.ok(screens.screens.some(screen => screen.id === row.screenId));
+  assert.ok(row.emptyOrNotReady && row.blockingCase && row.recovery);
+  assert.ok(navPolicies.has(row.navigationPolicy));
+  for (const state of ['AUTH_REQUIRED','OFFLINE','RESULT_UNKNOWN','CONFLICT']) assert.ok(row.commonStates.includes(state));
+  assert.equal(row.executionStatus, 'NOT_IMPLEMENTED');
+}
+const occurrences = JSON.parse(read('event-occurrence-audit.json'));
+assert.equal(occurrences.status, 'DESIGN_EXPECTATIONS_ONLY');
+assert.equal(occurrences.events.length, 99);
+unique(occurrences.events.map(row => row.eventId));
+for (const row of occurrences.events) {
+  assert.ok(catalog.events.some(event => event.id === row.eventId));
+  assert.ok(row.evidenceKey && row.repeatPolicy && row.predicateSource && row.ruleSections);
+  assert.equal(row.ownerScopeRequired, true);
+  assert.equal(row.executionStatus, 'NOT_IMPLEMENTED');
+}
+assert.equal(occurrences.events.find(row => row.eventId === 'E83').queueClass, 'FORM');
+assert.equal(occurrences.events.find(row => row.eventId === 'E98').repeatPolicy, 'PRESENTATION_ONLY');
+assert.equal(occurrences.events.find(row => row.eventId === 'E94').evidenceKey, 'relationId:creationReceiptId');
+assert.equal(occurrences.events.find(row => row.eventId === 'E96').evidenceKey, 'relationId:sharedTeamRegistrationReceiptId');
+const surfaces = JSON.parse(read('probability-surface-register.json'));
+assert.equal(surfaces.status, 'DESIGN_EXPECTATIONS_ONLY');
+assert.equal(surfaces.surfaces.length, 20);
+unique(surfaces.surfaces.map(row => row.id));
+const oddsKinds = new Set(['EXACT','DETERMINISTIC','RANKED','CONDITIONAL','REPLAY_EXACT','SYSTEM_RANDOM','EVIDENCE','TECHNICAL']);
+for (const row of surfaces.surfaces) {
+  assert.ok(row.target && row.requiredContext && row.ruleSections.length);
+  assert.ok(oddsKinds.has(row.kind));
+  for (const id of row.screenIds) assert.ok(screens.screens.some(screen => screen.id === id));
+  assert.equal(row.hideNumericIfExactlyOne, true);
+  assert.equal(row.executionStatus, 'NOT_IMPLEMENTED');
+}
+const integrationPaths = JSON.parse(read('end-to-end-design-paths.json'));
+assert.equal(integrationPaths.status, 'DESIGN_EXPECTATIONS_ONLY');
+assert.equal(integrationPaths.paths.length, 24);
+unique(integrationPaths.paths.map(row => row.id));
+for (let i = 1; i <= 24; i++) {
+  const row = integrationPaths.paths.find(item => item.id === `P${String(i).padStart(2, '0')}`);
+  assert.ok(row?.flow && row.assertions.length && row.evidenceRequired.length);
+  for (const id of row.screenIds) assert.ok(screens.screens.some(screen => screen.id === id));
+  assert.equal(row.executionStatus, 'NOT_IMPLEMENTED');
+}
+const finalFixtures = JSON.parse(read('final-design-fixtures.json'));
+assert.equal(finalFixtures.status, 'DESIGN_EXPECTATIONS_ONLY');
+assert.equal(finalFixtures.cases.length, 72);
+unique(finalFixtures.cases.map(row => row.id));
+for (const [module, count] of Object.entries({creation:10,screens:10,events:10,probability:10,visual:10,paths:10,difficulty:12})) {
+  assert.equal(finalFixtures.cases.filter(row => row.module === module).length, count);
+}
+for (const row of finalFixtures.cases) {
+  assert.ok(row.given && Object.keys(row.given).length && row.action && row.expected && Object.keys(row.expected).length);
+  assert.equal(row.executionStatus, 'NOT_IMPLEMENTED');
+}
+unique([...detailedFixtures.cases,...worldFixtures.cases,...crossFixtures.cases,...creationFixtures.cases,...finalFixtures.cases].map(row => row.id));
+assert.equal(detailedFixtures.cases.length + worldFixtures.cases.length + crossFixtures.cases.length + creationFixtures.cases.length + finalFixtures.cases.length, 274);
+near(10 * .5 + 10 * .5 * 3, 20);
+near(10 * 1.2, 12);
+assert.equal(Math.min(100, 95 + 5), 100);
+assert.equal(Math.max(0, 20 - 30), 0);
+assert.equal(Math.max(0, 60 - 30), 30);
+near((50 + 45 + 40 + 35 + 30 + 25) / 6, 37.5);
+assert.ok(html.includes('내 구단 전체 잠재력100'));
+assert.ok(html.includes('이후 영입·보관 투입 선수 포함.'));
+console.log('PASS: 45 screen recovery rows, 99 event occurrence rows, 20 probability surfaces, 24 planned paths, 72 final fixtures; 274 unique design expectations total. Runtime/UI/AI checks are NOT executed.');
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

@@ -428,8 +428,8 @@
     {
       "screenIds": [
         "S11",
-        "S43",
-        "S12"
+        "S12",
+        "S43"
       ],
       "evidenceRequired": [
         "initialFixture",
@@ -438,7 +438,7 @@
         "finalStateHash",
         "invariantReport"
       ],
-      "flow": "원본 지도자 고용과 선수 복사 경합",
+      "flow": "원본 선수 투입으로 생성한 같은 구단에서 동일 원본 지도자 고용 시도",
       "mode": "CLUB",
       "assertions": [
         "같은 세계 역할claim1",
