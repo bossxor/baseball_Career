@@ -1,0 +1,574 @@
+{
+  "status": "DESIGN_EXPECTATIONS_ONLY",
+  "schemaVersion": 1,
+  "paths": [
+    {
+      "screenIds": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S28",
+        "S05"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "타자 생성→고교→KBO 지명·계약",
+      "mode": "CAREER",
+      "assertions": [
+        "6능력",
+        "집중4",
+        "평균종합",
+        "희망팀 비보장"
+      ],
+      "id": "P01",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S02",
+        "S03",
+        "S22",
+        "S39"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "투수 생성→보직 경쟁→구종 훈련",
+      "mode": "CAREER",
+      "assertions": [
+        "견제 포함6능력",
+        "구종 비율",
+        "XP 상한"
+      ],
+      "id": "P02",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S04",
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "고교→대학1학년→2학년",
+      "mode": "CAREER",
+      "assertions": [
+        "가상9학교",
+        "48경기",
+        "기간 성장 중복0"
+      ],
+      "id": "P03",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S35",
+        "S05",
+        "S35"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "대학2학년 조기 미지명·미계약→복학",
+      "mode": "CAREER",
+      "assertions": [
+        "합법 복학 보존",
+        "조기 시도 중복0"
+      ],
+      "id": "P04",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S35",
+        "S28",
+        "S05",
+        "S03"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "대학4학년 졸업→KBO",
+      "mode": "CAREER",
+      "assertions": [
+        "졸업 학적",
+        "대학 기록 분리"
+      ],
+      "id": "P05",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S28",
+        "S29",
+        "S30"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "적격 고졸→미국 유효 제안→마이너",
+      "mode": "CAREER",
+      "assertions": [
+        "노출시 유효 오퍼1이상",
+        "MLB 자동출장0"
+      ],
+      "id": "P06",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S28",
+        "S34"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "미국 능력 미달 또는 오퍼0→다른 진로",
+      "mode": "CAREER",
+      "assertions": [
+        "미국 카드 없음",
+        "빈 미국 선택 후 막힘0"
+      ],
+      "id": "P07",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S03",
+        "S31",
+        "S32",
+        "S30"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "국내 커리어→포스팅→해외 계약",
+      "mode": "CAREER",
+      "assertions": [
+        "연차·병역·권리 검사",
+        "단일 활성 계약"
+      ],
+      "id": "P08",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S31",
+        "S32",
+        "S03"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "포스팅 실패·무제안→잔류",
+      "mode": "CAREER",
+      "assertions": [
+        "원계약 유지",
+        "능력 벌점0"
+      ],
+      "id": "P09",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S30",
+        "S33",
+        "S27",
+        "S05"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "미국 계약종료→국내 준비+복무→드래프트",
+      "mode": "CAREER",
+      "assertions": [
+        "2시즌 준비와18개월 포함",
+        "기간 중복0"
+      ],
+      "id": "P10",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S03",
+        "S24",
+        "S25",
+        "S26"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "대표 차출→실제 출장→자격 확인",
+      "mode": "CAREER",
+      "assertions": [
+        "명단·출장·메달·자격·복무완료 분리"
+      ],
+      "id": "P11",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S35",
+        "S26",
+        "S27",
+        "S35"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "대학생 휴학→복무→복학",
+      "mode": "CAREER",
+      "assertions": [
+        "나이 진행",
+        "학년 동결",
+        "과거 일정 재실행0"
+      ],
+      "id": "P12",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S03",
+        "S06",
+        "S23",
+        "S03"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "부상→강화 연기→복귀 후 강화",
+      "mode": "CAREER",
+      "assertions": [
+        "시즌1회",
+        "정확 증가·실제 피로",
+        "재추첨0"
+      ],
+      "id": "P13",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S03",
+        "S06",
+        "S38",
+        "S40",
+        "S45"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "같은 경기 특성·목표·연대기",
+      "mode": "CAREER",
+      "assertions": [
+        "통계1회",
+        "특성 모두 적용",
+        "기념 보상만"
+      ],
+      "id": "P14",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S08",
+        "S41",
+        "S08"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "에이전트 고용→역제안→결과",
+      "mode": "CAREER",
+      "assertions": [
+        "유효 기한",
+        "수수료",
+        "실패 원오퍼 유지"
+      ],
+      "id": "P15",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S05",
+        "S33",
+        "S09",
+        "S10"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "미지명·방출→재도전 소진→은퇴",
+      "mode": "CAREER",
+      "assertions": [
+        "합법 진로0일때 종료",
+        "원본1개"
+      ],
+      "id": "P16",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S01",
+        "S12",
+        "S13",
+        "S14",
+        "S15",
+        "S19"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "보관0명→구단 생성→라인업→첫 경기",
+      "mode": "CLUB",
+      "assertions": [
+        "독립 시작",
+        "합법 수비·투수",
+        "가상 선수단"
+      ],
+      "id": "P17",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S10",
+        "S11",
+        "S12",
+        "S14"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "은퇴 원본→19세 복사→개막 선수단",
+      "mode": "CLUB",
+      "assertions": [
+        "능력별 최고50%",
+        "신규P",
+        "병역 재시작",
+        "원본 불변"
+      ],
+      "id": "P18",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S11",
+        "S43",
+        "S12"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "원본 지도자 고용과 선수 복사 경합",
+      "mode": "CLUB",
+      "assertions": [
+        "같은 세계 역할claim1",
+        "실패 비용0"
+      ],
+      "id": "P19",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S13",
+        "S36",
+        "S16",
+        "S17",
+        "S14"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "탐색→제안→라운드 마감→영입",
+      "mode": "CLUB",
+      "assertions": [
+        "발견과 수락 분리",
+        "확률·예산·정원",
+        "계약1개"
+      ],
+      "id": "P20",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S37",
+        "S17",
+        "S13",
+        "S18"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "재정 재건→연도 전환→장기 리그",
+      "mode": "CLUB",
+      "assertions": [
+        "유한 원장",
+        "세대 원자 교체",
+        "자연 왕조"
+      ],
+      "id": "P21",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S01",
+        "S02",
+        "S20",
+        "S03"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "생성 또는 명령 응답유실→앱 종료→다른 기기",
+      "mode": "CROSS_PLATFORM",
+      "assertions": [
+        "같은owner",
+        "creationId·commandId",
+        "단일 효과"
+      ],
+      "id": "P22",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S19",
+        "S44",
+        "S45",
+        "S20"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "확정 중계 감상·스킵·다시보기→카드·백업",
+      "mode": "READ_ONLY",
+      "assertions": [
+        "resultHash 불변",
+        "읽기 세계변경0",
+        "파일 실패 기록 유지"
+      ],
+      "id": "P23",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenIds": [
+        "S02",
+        "S12",
+        "S14",
+        "S17",
+        "S39"
+      ],
+      "evidenceRequired": [
+        "initialFixture",
+        "rulesAndEngineVersion",
+        "commandReceipts",
+        "finalStateHash",
+        "invariantReport"
+      ],
+      "flow": "하드 경쟁·구단 치트→이적→재영입",
+      "mode": "DIFFICULTY",
+      "assertions": [
+        "NPC 강화와 자기 보정 분리",
+        "P100",
+        "기간 성장3배",
+        "XP cap 공유"
+      ],
+      "id": "P24",
+      "executionStatus": "NOT_IMPLEMENTED"
+    }
+  ]
+}
