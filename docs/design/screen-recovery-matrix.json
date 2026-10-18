@@ -1,0 +1,906 @@
+{
+  "status": "DESIGN_EXPECTATIONS_ONLY",
+  "screens": [
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "홈",
+      "recovery": "생성 작업 확인 또는 저장 목록",
+      "navigationPolicy": "ROOT",
+      "screenId": "S01",
+      "blockingCase": "이어하기 대상 삭제·다른 계정",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "최근 게임 없음"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "선수 생성",
+      "recovery": "79 필드 오류,78 생성 조회",
+      "navigationPolicy": "DRAFT",
+      "screenId": "S02",
+      "blockingCase": "이름·좌투·집중4개 오류",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "입력 시작 전"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "커리어 홈",
+      "recovery": "서버 resume 대상으로 이동",
+      "navigationPolicy": "HOME",
+      "screenId": "S03",
+      "blockingCase": "미해결 사건·경기 존재",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "다음 합법 행동 조회 중"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "고교 결산",
+      "recovery": "확정 결과 조회",
+      "navigationPolicy": "HOME",
+      "screenId": "S04",
+      "blockingCase": "결산 아직 미확정",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "출장0, 비율은 대시"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "드래프트",
+      "recovery": "최신 진로 조회",
+      "navigationPolicy": "CHOICE",
+      "screenId": "S05",
+      "blockingCase": "기한 경과·이미 계약",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "미지명은 결과 상태"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "이벤트",
+      "recovery": "task receipt 후 현재 사건",
+      "navigationPolicy": "CHOICE",
+      "screenId": "S06",
+      "blockingCase": "해결됨·취소됨·기한 경과",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "빈 상태 없음, 잘못된 ID"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "시즌 결산",
+      "recovery": "job 확인,정산 재실행 금지",
+      "navigationPolicy": "HOME",
+      "screenId": "S07",
+      "blockingCase": "연도 작업 미완료",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "0경기 정상 결산"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "커리어 계약",
+      "recovery": "제안 최신화,자동 수락 금지",
+      "navigationPolicy": "CHOICE",
+      "screenId": "S08",
+      "blockingCase": "오퍼 만료·타계약 확정",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "오퍼0, 합법 재도전·은퇴 안내"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "은퇴 결과",
+      "recovery": "receipt 확인,보관 재생성 금지",
+      "navigationPolicy": "HOME",
+      "screenId": "S09",
+      "blockingCase": "은퇴 확정 응답 유실",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "완료 원본 조회 중"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "보관 목록",
+      "recovery": "조회 재시도",
+      "navigationPolicy": "HOME",
+      "screenId": "S10",
+      "blockingCase": "조회 실패와 빈 목록 구분",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "원본0, 커리어·구단 시작"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "보관 상세",
+      "recovery": "목록 복귀,복사 차단",
+      "navigationPolicy": "READ",
+      "screenId": "S11",
+      "blockingCase": "버전 미지원·owner 불일치",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "원본 숨김·삭제"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "구단 생성",
+      "recovery": "79 입력 검증,78 생성 조회",
+      "navigationPolicy": "DRAFT",
+      "screenId": "S12",
+      "blockingCase": "슬롯 불법·원본 중복",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "내 선수OFF 정상"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "구단 홈",
+      "recovery": "할 일 또는 S15로 이동",
+      "navigationPolicy": "HOME",
+      "screenId": "S13",
+      "blockingCase": "의무 작업·라인업 불법",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "개막 전 일정"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "선수단",
+      "recovery": "필터 초기화,합법 승강만",
+      "navigationPolicy": "DRAFT",
+      "screenId": "S14",
+      "blockingCase": "정원·포수·등록 제약",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "필터 결과0"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "라인업",
+      "recovery": "오류 슬롯 이동,자동편성 검토",
+      "navigationPolicy": "DRAFT",
+      "screenId": "S15",
+      "blockingCase": "중복·부상·필수 수비 누락",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "배치할 합법 후보0"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "선수 상세",
+      "recovery": "선수 최신화,제안 자격 재검사",
+      "navigationPolicy": "READ",
+      "screenId": "S16",
+      "blockingCase": "이적·방출로 상태 변경",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "출장0·무계약"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "시장",
+      "recovery": "현재 제안 보존,재미리보기",
+      "navigationPolicy": "DRAFT",
+      "screenId": "S17",
+      "blockingCase": "예약 예산·정원·라운드 변경",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "현재 적격 선수0"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "리그·기록",
+      "recovery": "요약 유지,다른 연도 선택",
+      "navigationPolicy": "READ",
+      "screenId": "S18",
+      "blockingCase": "상세 보존기간 종료",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "해당 연도 기록 없음"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "경기 결과",
+      "recovery": "진행중 안내,같은 경기 이어가기",
+      "navigationPolicy": "READ",
+      "screenId": "S19",
+      "blockingCase": "pending 경기·버전 변경",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "아직 공식 결과 없음"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "저장 관리",
+      "recovery": "자동저장과 백업 상태 분리",
+      "navigationPolicy": "JOB",
+      "screenId": "S20",
+      "blockingCase": "복원 파일 불일치·job 진행",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "백업0"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "설정",
+      "recovery": "선호 저장과 계정 작업 분리",
+      "navigationPolicy": "PREFERENCE",
+      "screenId": "S21",
+      "blockingCase": "재인증 필요·계정 만료",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "기본값 사용"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "유형·집중",
+      "recovery": "현재 계획 보존,허용 시점 안내",
+      "navigationPolicy": "DRAFT",
+      "screenId": "S22",
+      "blockingCase": "변경 창 닫힘·집중 개수 오류",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "육성 입력 전"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "특별강화",
+      "recovery": "정확 효과 재조회,receipt 확인",
+      "navigationPolicy": "CHOICE",
+      "screenId": "S23",
+      "blockingCase": "부상·상한·기회 사용됨",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "시즌 기회 없음"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "대표 차출",
+      "recovery": "사유와 원소속 복귀",
+      "navigationPolicy": "CHOICE",
+      "screenId": "S24",
+      "blockingCase": "부상·허가 불가·복무",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "명단 미선발"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "국제대회",
+      "recovery": "국내 경기 중복 진행 차단",
+      "navigationPolicy": "HOME",
+      "screenId": "S25",
+      "blockingCase": "대표 경기 진행중",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "명단 등록했으나 출장0"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "병역 계획",
+      "recovery": "기한과 합법 복무 경로 안내",
+      "navigationPolicy": "CHOICE",
+      "screenId": "S26",
+      "blockingCase": "기한·지원 횟수·조건 변경",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "비대상·이미 완료"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "복무·복귀",
+      "recovery": "달력 기준 조회,복귀 검증",
+      "navigationPolicy": "HOME",
+      "screenId": "S27",
+      "blockingCase": "복귀 미도래·등록 충돌",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "해당 기간 공식 경기0"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "졸업 진로",
+      "recovery": "현 진로 이동,다른 경로 자동실행 금지",
+      "navigationPolicy": "CHOICE",
+      "screenId": "S28",
+      "blockingCase": "진로 이미 확정",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "미국 카드 없음 정상"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "미국 제안",
+      "recovery": "확정 시 재검사,다른 합법 경로",
+      "navigationPolicy": "CHOICE",
+      "screenId": "S29",
+      "blockingCase": "오퍼 만료·타진로 확정",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "유효 제안 없음이면 진로 복귀"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "미국 커리어",
+      "recovery": "같은 선수 현재 등록 홈",
+      "navigationPolicy": "HOME",
+      "screenId": "S30",
+      "blockingCase": "콜업 명단과 실제 출장 구분",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "레벨별 미출장0"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "포스팅",
+      "recovery": "구체 미달 이유,신청 차단",
+      "navigationPolicy": "CHOICE",
+      "screenId": "S31",
+      "blockingCase": "연차·병역·요청 사용",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "신청 자격 아직 없음"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "해외 협상",
+      "recovery": "원계약 상태 조회",
+      "navigationPolicy": "CHOICE",
+      "screenId": "S32",
+      "blockingCase": "협상 기한 경과",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "유효 제안0,잔류"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "국내 복귀",
+      "recovery": "준비/복무 중첩 달력 확인",
+      "navigationPolicy": "CHOICE",
+      "screenId": "S33",
+      "blockingCase": "보유권·나이·계약 제약",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "준비 중 프로 기록0"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "대학 선택",
+      "recovery": "필터 해제,합법 입학 학교",
+      "navigationPolicy": "CHOICE",
+      "screenId": "S34",
+      "blockingCase": "학교 ID·입학 자격 변경",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "필터 결과0"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "대학 홈",
+      "recovery": "현재 학적과 합법 진로",
+      "navigationPolicy": "HOME",
+      "screenId": "S35",
+      "blockingCase": "휴학·복무·조기지명 상태",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "학기 초 기록0"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "탐색",
+      "recovery": "비용0 차단,공개 FA 대안",
+      "navigationPolicy": "DRAFT",
+      "screenId": "S36",
+      "blockingCase": "월 횟수·예산·조건 변경",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "미발견 적격 후보0"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "구단 재정",
+      "recovery": "원장 조회,합법 정리·재건",
+      "navigationPolicy": "DRAFT",
+      "screenId": "S37",
+      "blockingCase": "예약·미래 보장액 초과",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "지출 내역0"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "고유 특성",
+      "recovery": "해금 조건 표시,장착 CTA 없음",
+      "navigationPolicy": "READ",
+      "screenId": "S38",
+      "blockingCase": "조회 버전 변경",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "해금 특성0"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "구종·타격 성향",
+      "recovery": "입력 유지,합계와 창 검증",
+      "navigationPolicy": "DRAFT",
+      "screenId": "S39",
+      "blockingCase": "XP 상한·유효 구종·비율 오류",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "미학습 구종"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "목표·기념품",
+      "recovery": "세계명령과 꾸미기 선호 분리",
+      "navigationPolicy": "MIXED",
+      "screenId": "S40",
+      "blockingCase": "목표 교체 창·기념품 없음",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "달성·보상0"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "에이전트·역할",
+      "recovery": "원계약 유지,정확 비용·수락률",
+      "navigationPolicy": "CHOICE",
+      "screenId": "S41",
+      "blockingCase": "역제안 횟수·기한·검토 창",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "미고용 정상"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "동료·라이벌",
+      "recovery": "서사 기록 조회,강제 대진 없음",
+      "navigationPolicy": "READ",
+      "screenId": "S42",
+      "blockingCase": "다른 리그·실제 대진 없음",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "현재 관계 없음"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "코치·스카우트",
+      "recovery": "원본 중복 금지,고용 재검사",
+      "navigationPolicy": "DRAFT",
+      "screenId": "S43",
+      "blockingCase": "원본 claim·급여·슬롯 충돌",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "빈 직원 슬롯"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "문자 중계",
+      "recovery": "박스스코어 대안,결과 재추첨 없음",
+      "navigationPolicy": "MIXED",
+      "screenId": "S44",
+      "blockingCase": "경기 미확정·상세 정리됨",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "보존된 중계 없음"
+    },
+    {
+      "executionStatus": "NOT_IMPLEMENTED",
+      "title": "연대기·카드",
+      "recovery": "원기록 유지,같은 job 확인",
+      "navigationPolicy": "MIXED",
+      "screenId": "S45",
+      "blockingCase": "export 실패·URL 만료",
+      "commonStates": [
+        "LOADING",
+        "READY",
+        "EMPTY",
+        "AUTH_REQUIRED",
+        "OFFLINE",
+        "SUBMITTING",
+        "RESULT_UNKNOWN",
+        "CONFLICT",
+        "FORBIDDEN_OR_DELETED"
+      ],
+      "emptyOrNotReady": "기록 장면0"
+    }
+  ],
+  "schemaVersion": 1
+}
