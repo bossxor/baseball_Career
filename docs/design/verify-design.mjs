@@ -199,5 +199,30 @@ near(Math.min(10, 100 - 95), 5);
 near(-Math.min(20, 8), -8);
 assert.ok(ids.includes('resume-phase-demo'));
 assert.ok(ids.includes('resume-message-demo'));
-console.log('PASS: 30 cross-contract expectations (12 command, 6 exact-effect, 12 web/APK resume); 192 design expectations total. Actual interruption recovery is NOT tested.');
+console.log('PASS: 30 cross-contract expectations (12 command, 6 exact-effect, 12 web/APK resume); 192 expectations in these three fixture sets. Actual interruption recovery is NOT tested.');
+const bindings = JSON.parse(read('screen-action-bindings.json'));
+assert.equal(bindings.status, 'DESIGN_ONLY');
+assert.equal(bindings.screens.length, 45);
+unique(bindings.screens.map(row => row.screenId));
+const actionClasses = new Set(['QUERY','SAVE_COMMAND','OWNER_CREATE','JOB_REQUEST','PREFERENCE','MIXED']);
+for (const row of bindings.screens) {
+  assert.ok(screens.screens.some(screen => screen.id === row.screenId));
+  assert.ok(row.queryKey && row.actions.length > 0);
+  assert.ok(row.actions.every(action => typeof action === 'string' && action.length > 0));
+  unique(row.actions);
+  assert.ok(actionClasses.has(row.actionClass));
+  assert.equal(row.implementationStatus, 'NOT_IMPLEMENTED');
+  assert.equal(row.resultRouting, 'serverAllowedActionsAndResumeDescriptor');
+}
+assert.deepEqual(bindings.screens.filter(row => row.actionClass === 'OWNER_CREATE').map(row => row.screenId), ['S02','S12']);
+const creationFixtures = JSON.parse(read('creation-acceptance-fixtures.json'));
+assert.equal(creationFixtures.status, 'DESIGN_EXPECTATIONS_ONLY');
+assert.equal(creationFixtures.cases.length, 10);
+unique(creationFixtures.cases.map(fixture => fixture.id));
+for (let i = 1; i <= 10; i++) {
+  const fixture = creationFixtures.cases.find(row => row.id === `CR${String(i).padStart(2, '0')}`);
+  assert.ok(fixture?.given && fixture.action && fixture.expected);
+  assert.equal(fixture.executionStatus, 'NOT_IMPLEMENTED');
+}
+console.log('PASS: 45 screen-action bindings and 10 creation recovery design expectations; 202 total design expectations. Runtime creation recovery is NOT tested.');
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

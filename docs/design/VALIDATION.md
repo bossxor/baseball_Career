@@ -1,6 +1,6 @@
-# v0.12 교차 계약·이어하기 정적 검증 — 2026-10-19
+# v0.13 화면 연결·생성 복구 정적 검증 — 2026-10-19
 
-검증대상은설계문서/카탈로그/HTML시연/기대값구조/예시산술. 실제웹·APK이어하기나엔진·DB실험을실행한것은아니다.
+검증 대상은 설계 파일 구조·링크·목업 구문·예시 산술입니다. 실제 게임이나 저장 복구 실행 검증이 아닙니다.
 
 명령: `node docs/design/verify-design.mjs`
 
@@ -11,12 +11,11 @@ PASS: expansion design arithmetic: negotiation .60/.68, income fee, staff budget
 PASS: 80 explicit design fixtures across 8 detailed modules; automatic traits and cheat pitch XP examples. Fixture execution is NOT implemented.
 CONFIRMED: cosmetic-only rewards and read-only commentary; no pending choices in these eight detailed modules.
 PASS: 82 world design expectations across 8 modules, 24 invariant contracts, 12 planned run scenarios, narrowing-range examples. World simulations are NOT executed.
-PASS: 30 cross-contract expectations (12 command, 6 exact-effect, 12 web/APK resume); 192 design expectations total. Actual interruption recovery is NOT tested.
+PASS: 30 cross-contract expectations (12 command, 6 exact-effect, 12 web/APK resume); 192 expectations in these three fixture sets. Actual interruption recovery is NOT tested.
+PASS: 45 screen-action bindings and 10 creation recovery design expectations; 202 total design expectations. Runtime creation recovery is NOT tested.
 NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.
 ```
 
-기대값총192=기능80+장기세계82+교차계약30. 교차30은명령복구12/정확효과6/웹·APK중단이어하기12. 각given/action/expected와NOT_IMPLEMENTED표시를검사했다. 예시A90/P91.25강화+1.25,개인치트A90/P100강화+2,A98.75/P100강화+1.25,피로95도전실제+5를확인했다.
+기능80+세계82+교차30+생성10=202개 서면 기대값. 45화면 연결표의 화면 ID·행동 유무·명령 유형과 S02/S12의 OWNER_CREATE 분류를 검사했습니다. 이는 실제 버튼이 해당 API를 호출하거나 중단 복구가 성공한다는 증거가 아닙니다.
 
-홈이어하기안내와서버resumeDescriptor계약을작성하고서로다른중단상태시연을추가했다. 단로컬시연에는실제서버명령/클라우드저장/로그인/복구기능없음. 실제브라우저force-close/Androidforce-stop/재부팅/오프라인/토큰만료/2기기전환/commit응답유실은구현후테스트필수.
-
-HTML ID/앵커/로컬자산/문서링크/스크립트구문/임베드화면JSON검사통과. 픽셀렌더링은이전MXC오류이후미검수. 실제Neon/API/인증/백업·파일/빌드/PNG/APK검증미실행,원격DB/서비스변경없음. 통합MD·SHA·원래열린HTML복사본을같은내용으로갱신했다.
+실제 Neon/API/인증·파일·브라우저/Android 종료·2기기 복구·작업자 종료·DB 경합·게임 엔진·밸런스 실험·빌드·APK 검증은 미실행입니다. 픽셀 검수는 이전 MXC 오류 이후 재검증하지 않았습니다. 원격 production 서비스 변경은 없습니다. 통합 MD와 SHA 목록을 갱신했으며 HTML은 변경하지 않았습니다.

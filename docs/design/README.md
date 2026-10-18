@@ -1,3 +1,5 @@
+최신 v0.13: [77 전체 화면 조회·명령 연결](77-SCREEN-QUERY-COMMAND-BINDINGS.md) · [78 새 게임 생성·중단 복구](78-NEW-GAME-CREATION-RECOVERY.md). 45화면 연결표와 생성 복구 10개 기대값 추가, 총202개 서면 기대값. 앱 구현·실제 복구 시험 전입니다. 현재 현황은 [STATUS](STATUS.md)를 우선합니다.
+
 최신v0.12:[74 명령복구](74-PREVIEW-COMMAND-RECONCILIATION.md) · [75 정확효과](75-EXACT-EFFECTS-PUBLIC-INFORMATION.md) · [76 웹·APK이어하기](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md). 사용자필수이어하기/정확증가량표시반영,총192서면검수기대값. 실제게임·저장·복구는구현전.
 
 최신v0.11:[66 재도전](66-RETRY-CAREER-OPPORTUNITIES.md) · [67 잠재력관측](67-POTENTIAL-ASSESSMENT-PROGRESSION.md) · [68 구단주기](68-FRANCHISE-CYCLES-LEAGUE-HISTORY.md) · 69~73 충돌/복원/불변조건/연도전환/장기실험설계. 서면기대값총162개,실제실험미실행. 앱미구현.
@@ -10,7 +12,7 @@
 
 # 다시, 플레이볼 — 상세 설계 묶음
 
-2026-10-16 / v0.9 / 상세설계 진행 / 구현 착수 전
+2026-10-19 / v0.13 / 상세설계 진행 / 구현 착수 전
 
 새 환경에서는 [START-HERE.md](START-HERE.md)부터 읽으세요. 최신 완료/미검증 항목은 [STATUS.md](STATUS.md), 규칙 충돌 시 기준은 [14 통합 결정표](14-CANONICAL-DECISIONS.md)입니다. 다른 채팅에는 [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md)를 사용할 수 있습니다.
 

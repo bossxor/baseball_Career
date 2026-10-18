@@ -1,3 +1,5 @@
+최신 v0.13: [77 전체 화면 조회·명령 연결](77-SCREEN-QUERY-COMMAND-BINDINGS.md) · [78 새 게임 생성·중단 복구](78-NEW-GAME-CREATION-RECOVERY.md). 45화면 연결표와 생성 복구 10개 기대값 추가, 총202개 서면 기대값. 앱 구현·실제 복구 시험 전입니다. 현재 현황은 [STATUS](STATUS.md)를 우선합니다.
+
 최신v0.12:[74 명령복구](74-PREVIEW-COMMAND-RECONCILIATION.md) · [75 정확효과](75-EXACT-EFFECTS-PUBLIC-INFORMATION.md) · [76 웹·APK이어하기](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md). 사용자필수이어하기/정확증가량표시반영,총192서면검수기대값. 실제게임·저장·복구는구현전.
 
 최신v0.11:[66 재도전](66-RETRY-CAREER-OPPORTUNITIES.md) · [67 잠재력관측](67-POTENTIAL-ASSESSMENT-PROGRESSION.md) · [68 구단주기](68-FRANCHISE-CYCLES-LEAGUE-HISTORY.md) · 69~73 충돌/복원/불변조건/연도전환/장기실험설계. 서면기대값총162개,실제실험미실행. 앱미구현.
@@ -22,7 +24,7 @@
 
 ## 현재 상태
 
-- 단계: 상세 설계 v0.9. 앱 코드 구현/DB 스키마 배포/APK 빌드 미착수.
+- 단계: 상세 설계 v0.13. 앱 코드 구현/DB 스키마 배포/APK 빌드 미착수.
 - 목적: 소수 친구용 웹앱+Android APK, 선수 커리어와 독립 구단 운영.
 - 필수: KBO 가상선수, 고교 미국직행, 포스팅, MiLB/MLB, 국가대표/병역, 스타일/강화, 은퇴보관, 능력별최고50%·새잠재력·병역재시작의 어린선수 선택투입, Neon 저장.
 - 앱 이름: 다시, 플레이볼. 목표 GitHub: https://github.com/bossxor/baseball_Career

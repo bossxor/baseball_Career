@@ -47,3 +47,5 @@ GET /api/saves/{saveId}/resume→{saveId,revision,phase,kind,targetRefs,allowedA
 S01이어하기버튼→‘저장된 진행 확인 중’→필요로그인→해당화면. S20은자동저장(공식진행)과수동백업(파일)을구분,백업실패가자동저장실패로보이지않게표시. 인계시각다른기기revision이면최신확정내용을보여주고오래된선택은재확인. 네트워크실패에처음부터하기를기본버튼으로제공하지않음.
 
 RESUME01 홈최근게임/02선택중강제종료/03강화commit응답유실/04진행중경기동일ID/05연도job중단/06복무중날짜/07웹→APK동일계정/08다른계정저널차단/09오프라인세계수정0/10로컬데이터삭제후서버진행/11은퇴중단보관중복0/12중계cursor만유실. 실제웹새로고침·브라우저강제종료·Androidforce-stop·재부팅·토큰만료·기기2대의E2E검증은구현후필수다.
+
+생성 요청이 접수됐지만 saveId를 아직 모르는 상태는 [78 새 게임 생성 복구](78-NEW-GAME-CREATION-RECOVERY.md)를 적용합니다. 화면별 명령 유형은 [77](77-SCREEN-QUERY-COMMAND-BINDINGS.md)을 따릅니다.

@@ -48,3 +48,6 @@ CLEAN→DIRTY→PREVIEWING→CONFIRMING→SUBMITTING→APPLIED또는REJECTED. �
 
 
 2026-10-19 사용자필수:웹·APK중단후이어하기. [76 이어하기계약](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)의홈최근게임/서버resumeDescriptor/송신전저널/receipt재조회/경기·선택·작업복원과12검수시나리오를적용한다. 서버확정진행은종료이벤트와무관히보존,미송신초안은별도기기선호다. 미리보기/확정의복구는[74](74-PREVIEW-COMMAND-RECONCILIATION.md).
+
+
+추가 연결: [77 전체 화면 바인딩](77-SCREEN-QUERY-COMMAND-BINDINGS.md), [78 saveId 없는 생성 계약](78-NEW-GAME-CREATION-RECOVERY.md). OWNER_CREATE는 기존 save 명령 endpoint에 포함하지 않습니다.

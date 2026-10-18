@@ -20,3 +20,6 @@
 장기설계 v0.11: [재도전](docs/design/66-RETRY-CAREER-OPPORTUNITIES.md), [잠재력평가](docs/design/67-POTENTIAL-ASSESSMENT-PROGRESSION.md), [구단주기](docs/design/68-FRANCHISE-CYCLES-LEAGUE-HISTORY.md),69~73의충돌·복원·불변조건·연도전환·장기실험계획추가. 실제게임실험은미실행입니다.
 
 최신 v0.12: [웹·APK 이어하기 필수설계](docs/design/76-CROSS-PLATFORM-INTERRUPTION-RESUME.md), [정확한 강화효과](docs/design/75-EXACT-EFFECTS-PUBLIC-INFORMATION.md), [중복실행 방지](docs/design/74-PREVIEW-COMMAND-RECONCILIATION.md). 총192개 서면 검수 기대값, 앱 구현 전입니다.
+
+
+최신 v0.13: [45화면 조회·명령 연결](docs/design/77-SCREEN-QUERY-COMMAND-BINDINGS.md), [새 게임 생성 중단 복구](docs/design/78-NEW-GAME-CREATION-RECOVERY.md). 총202개 서면 검수 기대값이며 실제 앱은 미구현입니다.
