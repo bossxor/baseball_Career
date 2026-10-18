@@ -1,0 +1,131 @@
+{
+  "status": "DESIGN_EXPECTATIONS_ONLY",
+  "cases": [
+    {
+      "action": "RETRY_SAME_CREATION",
+      "expected": {
+        "sameReceipt": true,
+        "saveCount": 1
+      },
+      "id": "CR01",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "given": {
+        "responseLostAfterCommit": true
+      }
+    },
+    {
+      "action": "POST_CREATION",
+      "expected": {
+        "http": 409,
+        "extraSaveCount": 0
+      },
+      "id": "CR02",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "given": {
+        "sameId": true,
+        "differentPayload": true
+      }
+    },
+    {
+      "action": "RESUME_GENERATION",
+      "expected": {
+        "sameSeed": true,
+        "sameReservedSave": true
+      },
+      "id": "CR03",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "given": {
+        "workerLeaseExpired": true
+      }
+    },
+    {
+      "action": "GET_CREATION",
+      "expected": {
+        "privateDataExposed": false
+      },
+      "id": "CR04",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "given": {
+        "differentOwner": true
+      }
+    },
+    {
+      "action": "LIST_UNRESOLVED_CREATIONS",
+      "expected": {
+        "creationDiscoverable": true
+      },
+      "id": "CR05",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "given": {
+        "serverAccepted": true,
+        "newDevice": true,
+        "localJournal": false
+      }
+    },
+    {
+      "action": "LIST_SAVES",
+      "expected": {
+        "partialSaveVisible": false
+      },
+      "id": "CR06",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "given": {
+        "partialGeneration": true
+      }
+    },
+    {
+      "action": "CREATE_GAME",
+      "expected": {
+        "independentClubAllowed": true
+      },
+      "id": "CR07",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "given": {
+        "archiveSelected": false,
+        "mode": "CLUB"
+      }
+    },
+    {
+      "action": "RETRY_SAME_CREATION",
+      "expected": {
+        "saveRecreated": false,
+        "reason": "SAVE_DELETED"
+      },
+      "id": "CR08",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "given": {
+        "saveDeleted": true,
+        "creationSucceeded": true
+      }
+    },
+    {
+      "action": "CREATE_GAME",
+      "expected": {
+        "rejected": true,
+        "archiveModified": false
+      },
+      "id": "CR09",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "given": {
+        "sameArchive": true,
+        "roles": [
+          "PLAYER",
+          "STAFF"
+        ]
+      }
+    },
+    {
+      "action": "FINISH_CREATION",
+      "expected": {
+        "lastPlayed": "existing-save"
+      },
+      "id": "CR10",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "given": {
+        "lastPlayed": "existing-save",
+        "newGameOpened": false
+      }
+    }
+  ],
+  "schemaVersion": 1
+}
