@@ -1,3 +1,5 @@
+최신 생성 입력은 [79](79-CREATION-FIELDS-VALIDATION-COPY.md)를 따릅니다. 생성 전 실제 가상 로스터/개인 잠재력 추첨 미리보기 초안은 폐기하고 구성 기준을 표시합니다. 실제 선수단은78의 단일 생성 작업에서 확정합니다. 숨김 치트 해금은 클릭 증명을 요구하는 서버 권한이 아닌 발견용 UI입니다.
+
 # 78. 새 게임 생성과 생성 중단 복구
 
 2026-10-19 / 설계 기본안 D. 웹·APK 이어하기 요구 U를 S02 선수 생성과 S12 구단 생성까지 확장한다. [76 이어하기](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md), [77 화면 연결](77-SCREEN-QUERY-COMMAND-BINDINGS.md), [74 명령 복구](74-PREVIEW-COMMAND-RECONCILIATION.md)를 함께 적용한다. 실제 API·DB·작업자는 미구현이다.

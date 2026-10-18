@@ -1,0 +1,1001 @@
+{
+  "cases": [
+    {
+      "action": "VALIDATE_NAME",
+      "id": "FC01",
+      "given": {
+        "name": "   "
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "creation",
+      "expected": {
+        "valid": false,
+        "messageKey": "NAME_REQUIRED"
+      }
+    },
+    {
+      "action": "VALIDATE_NAME",
+      "id": "FC02",
+      "given": {
+        "graphemes": 13
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "creation",
+      "expected": {
+        "valid": false,
+        "maxGraphemes": 12
+      }
+    },
+    {
+      "action": "VALIDATE_POSITION",
+      "id": "FC03",
+      "given": {
+        "throwHand": "L",
+        "position": "SS"
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "creation",
+      "expected": {
+        "valid": false,
+        "autoChangePosition": false
+      }
+    },
+    {
+      "action": "CONFIRM_CREATION",
+      "id": "FC04",
+      "given": {
+        "focusCount": 3
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "creation",
+      "expected": {
+        "valid": false,
+        "requiredCount": 4
+      }
+    },
+    {
+      "action": "SELECT_FIFTH_FOCUS",
+      "id": "FC05",
+      "given": {
+        "focusCount": 4
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "creation",
+      "expected": {
+        "focusCount": 4,
+        "previousSelectionRemoved": false
+      }
+    },
+    {
+      "action": "CHANGE_KIND",
+      "id": "FC06",
+      "given": {
+        "kind": "HITTER",
+        "newKind": "PITCHER"
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "creation",
+      "expected": {
+        "hitterKeysSent": false,
+        "pitcherFieldsRequireValidation": true
+      }
+    },
+    {
+      "action": "CHANGE_FOCUS",
+      "id": "FC07",
+      "given": {
+        "style": "POWER",
+        "abilitySum": 300
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "creation",
+      "expected": {
+        "initialAbilitySum": 300,
+        "abilityReroll": false
+      }
+    },
+    {
+      "action": "FINISH_UNLOCK_SEQUENCE",
+      "id": "FC08",
+      "given": {
+        "secretUnlocked": true,
+        "selected": "GROWTH"
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "creation",
+      "expected": {
+        "selected": "GROWTH",
+        "automaticCheatSelection": false
+      }
+    },
+    {
+      "action": "CONFIRM_CREATION",
+      "id": "FC09",
+      "given": {
+        "mode": "CLUB",
+        "importEnabled": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "creation",
+      "expected": {
+        "archiveRequired": false,
+        "independentClubAllowed": true
+      }
+    },
+    {
+      "action": "READ_PREVIEW",
+      "id": "FC10",
+      "given": {
+        "creationNotSubmitted": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "creation",
+      "expected": {
+        "rngDraws": 0,
+        "actualNpcRosterAvailable": false,
+        "rawPotentialExposed": false
+      }
+    },
+    {
+      "action": "SHOW_ERROR",
+      "id": "FS01",
+      "given": {
+        "request": "MUTATION",
+        "timeout": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "screens",
+      "expected": {
+        "state": "RESULT_UNKNOWN",
+        "newCommandId": false
+      }
+    },
+    {
+      "action": "SHOW_ERROR",
+      "id": "FS02",
+      "given": {
+        "request": "QUERY",
+        "timeout": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "screens",
+      "expected": {
+        "retryQueryAllowed": true,
+        "shownAsEmpty": false
+      }
+    },
+    {
+      "action": "OPEN_SAVE",
+      "id": "FS03",
+      "given": {
+        "offline": true,
+        "cacheExists": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "screens",
+      "expected": {
+        "readCached": true,
+        "worldMutationAllowed": false
+      }
+    },
+    {
+      "action": "LOGIN",
+      "id": "FS04",
+      "given": {
+        "ownerChanged": true,
+        "oldJournalExists": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "screens",
+      "expected": {
+        "oldJournalExposed": false,
+        "oldCommandSubmitted": false
+      }
+    },
+    {
+      "action": "BACK_NAVIGATION",
+      "id": "FS05",
+      "given": {
+        "draftDirty": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "screens",
+      "expected": {
+        "offerKeepDiscardEdit": true,
+        "autoSubmit": false
+      }
+    },
+    {
+      "action": "CLOSE_EVENT",
+      "id": "FS06",
+      "given": {
+        "blockingEvent": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "screens",
+      "expected": {
+        "taskResolved": false,
+        "worldAdvanceAllowed": false,
+        "readRecordsAllowed": true
+      }
+    },
+    {
+      "action": "RECONCILE_DRAFT",
+      "id": "FS07",
+      "given": {
+        "revisionChanged": true,
+        "priceChanged": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "screens",
+      "expected": {
+        "autoCommit": false,
+        "requireNewPreview": true
+      }
+    },
+    {
+      "action": "OPEN_GAME_RESULT",
+      "id": "FS08",
+      "given": {
+        "gameStatus": "PENDING"
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "screens",
+      "expected": {
+        "shownAsFinal": false,
+        "sameGameResume": true
+      }
+    },
+    {
+      "action": "OPEN_TRAITS",
+      "id": "FS09",
+      "given": {
+        "traitCount": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "screens",
+      "expected": {
+        "normalEmpty": true,
+        "equipAction": false
+      }
+    },
+    {
+      "action": "SHOW_SAVE_STATUS",
+      "id": "FS10",
+      "given": {
+        "backupFailed": true,
+        "worldSaveSucceeded": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "screens",
+      "expected": {
+        "worldSaveShownFailed": false,
+        "backupFailureSeparate": true
+      }
+    },
+    {
+      "action": "CREATE_INJURY_NOTICES",
+      "id": "FE01",
+      "given": {
+        "sameSeason": true,
+        "injuryIds": [
+          "a",
+          "b"
+        ]
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "events",
+      "expected": {
+        "distinctEvidenceKeys": true
+      }
+    },
+    {
+      "action": "REPLAY_EVENT",
+      "id": "FE02",
+      "given": {
+        "sameInjuryId": true,
+        "sameStage": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "events",
+      "expected": {
+        "newEffectCount": 0
+      }
+    },
+    {
+      "action": "RESOLVE_DRAFT",
+      "id": "FE03",
+      "given": {
+        "collegeYear": 2,
+        "undrafted": true,
+        "canReturn": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "events",
+      "expected": {
+        "retireForced": false,
+        "returnCollegeAllowed": true
+      }
+    },
+    {
+      "action": "OPEN_ROUTES",
+      "id": "FE04",
+      "given": {
+        "usAbilityEligible": true,
+        "validOffers": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "events",
+      "expected": {
+        "usCardVisible": false
+      }
+    },
+    {
+      "action": "ASSESS_MILITARY_ELIGIBILITY",
+      "id": "FE05",
+      "given": {
+        "nationalRoster": true,
+        "actualAppearance": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "events",
+      "expected": {
+        "eligibilityFromRosterOnly": false
+      }
+    },
+    {
+      "action": "REPLAY_RETIREMENT_NOTICES",
+      "id": "FE06",
+      "given": {
+        "hasUsCareer": true,
+        "retirementReceipt": "r1"
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "events",
+      "expected": {
+        "archiveCount": 1,
+        "twoTemplatesDoNotDuplicate": true
+      }
+    },
+    {
+      "action": "SETTLE_GAME",
+      "id": "FE07",
+      "given": {
+        "sameGame": true,
+        "traitAndGoalAndMoment": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "events",
+      "expected": {
+        "statsApplyCount": 1,
+        "rewardGameplayEffects": 0
+      }
+    },
+    {
+      "action": "CONFIRM_IMPORT_FORM",
+      "id": "FE08",
+      "given": {
+        "importPreviewConfirmed": true,
+        "creationNotCommitted": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "events",
+      "expected": {
+        "playerCreated": false,
+        "worldEventRequired": false
+      }
+    },
+    {
+      "action": "OPEN_COMMENTARY",
+      "id": "FE09",
+      "given": {
+        "gameStatus": "PENDING",
+        "watchSelected": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "events",
+      "expected": {
+        "fullFinalReplayAvailable": false,
+        "rngChangedByWatch": false
+      }
+    },
+    {
+      "action": "ACCEPT_CAREER_OFFER",
+      "id": "FE10",
+      "given": {
+        "offerExpired": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "events",
+      "expected": {
+        "contractCreated": false,
+        "drawCount": 0,
+        "cost": 0
+      }
+    },
+    {
+      "action": "FORMAT_ODDS",
+      "id": "FP01",
+      "given": {
+        "p": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "probability",
+      "expected": {
+        "numericBadge": false
+      }
+    },
+    {
+      "action": "FORMAT_ODDS",
+      "id": "FP02",
+      "given": {
+        "p": 0.9996
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "probability",
+      "expected": {
+        "label": "99.96%",
+        "guaranteed": false
+      }
+    },
+    {
+      "action": "FORMAT_ODDS",
+      "id": "FP03",
+      "given": {
+        "p": 0.0004
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "probability",
+      "expected": {
+        "label": "0.04%",
+        "impossible": false
+      }
+    },
+    {
+      "action": "FORMAT_ODDS",
+      "id": "FP04",
+      "given": {
+        "kind": "RANKED",
+        "score": 75
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "probability",
+      "expected": {
+        "inventedProbability": false,
+        "showRankOrCriteria": true
+      }
+    },
+    {
+      "action": "PREVIEW_DRAFT",
+      "id": "FP05",
+      "given": {
+        "draftB": 45
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "probability",
+      "expected": {
+        "selectedP": 0.5,
+        "round10": 0.4,
+        "round9": 0.1,
+        "undrafted": 0.5
+      }
+    },
+    {
+      "action": "PREVIEW_ENHANCEMENT",
+      "id": "FP06",
+      "given": {
+        "ability": 90,
+        "potential": 91.25,
+        "fatigue": 95
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "probability",
+      "expected": {
+        "successGain": 1.25,
+        "failureGain": 0,
+        "actualFatigueDelta": 5
+      }
+    },
+    {
+      "action": "PREVIEW_SEARCH",
+      "id": "FP07",
+      "given": {
+        "cheat": true,
+        "eligibleCandidates": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "probability",
+      "expected": {
+        "eligible": false,
+        "cost": 0,
+        "fakeGuaranteedSearch": false
+      }
+    },
+    {
+      "action": "FORMAT_ODDS",
+      "id": "FP08",
+      "given": {
+        "chanceUnknown": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "probability",
+      "expected": {
+        "label": "평가 대기",
+        "coercedToZero": false
+      }
+    },
+    {
+      "action": "CONFIRM_RECEIVED_CAREER_OFFER",
+      "id": "FP09",
+      "given": {
+        "acceptedOfferExists": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "probability",
+      "expected": {
+        "odds": [],
+        "recruitmentDraw": false
+      }
+    },
+    {
+      "action": "VALIDATE_DISTRIBUTION",
+      "id": "FP10",
+      "given": {
+        "outcomesAreMarginal": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "probability",
+      "expected": {
+        "forceSumToOne": false
+      }
+    },
+    {
+      "action": "RENDER_PLAYER_HEADER",
+      "id": "FV01",
+      "given": {
+        "imageFailed": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "visual",
+      "expected": {
+        "fallbackInitials": true,
+        "primaryActionBlocked": false
+      }
+    },
+    {
+      "action": "RENDER_TEXT",
+      "id": "FV02",
+      "given": {
+        "fontFailed": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "visual",
+      "expected": {
+        "systemFallback": true,
+        "informationRemoved": false
+      }
+    },
+    {
+      "action": "LAYOUT_CONTENT",
+      "id": "FV03",
+      "given": {
+        "viewportWidth": 360,
+        "zoomPercent": 200
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "visual",
+      "expected": {
+        "textClipped": false,
+        "pageHorizontalScroll": false
+      }
+    },
+    {
+      "action": "RENDER_RADAR",
+      "id": "FV04",
+      "given": {
+        "abilityCount": 6
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "visual",
+      "expected": {
+        "numericListRequired": true,
+        "overallArithmeticMean": true
+      }
+    },
+    {
+      "action": "RENDER_DELTA",
+      "id": "FV05",
+      "given": {
+        "colorUnavailable": true,
+        "delta": 1.25
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "visual",
+      "expected": {
+        "signedTextRequired": true
+      }
+    },
+    {
+      "action": "RESTORE_FOCUS",
+      "id": "FV06",
+      "given": {
+        "modalClosed": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "visual",
+      "expected": {
+        "returnToTrigger": true
+      }
+    },
+    {
+      "action": "LAYOUT_FORM",
+      "id": "FV07",
+      "given": {
+        "keyboardVisible": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "visual",
+      "expected": {
+        "focusedFieldReachable": true,
+        "ctaReachable": true
+      }
+    },
+    {
+      "action": "SHOW_REWARD",
+      "id": "FV08",
+      "given": {
+        "reducedMotion": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "visual",
+      "expected": {
+        "animationSkippable": true,
+        "rewardLedgerChangedByMotion": false
+      }
+    },
+    {
+      "action": "RENDER_EXPORT_CARD",
+      "id": "FV09",
+      "given": {
+        "exportLogoRightsConfirmed": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "visual",
+      "expected": {
+        "useTeamNameAndColor": true,
+        "includePrivateOwnerId": false
+      }
+    },
+    {
+      "action": "SHOW_MESSAGE",
+      "id": "FV10",
+      "given": {
+        "criticalError": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "visual",
+      "expected": {
+        "toastOnly": false,
+        "inlineOrBannerRequired": true
+      }
+    },
+    {
+      "action": "FOLLOW_P17",
+      "id": "FT01",
+      "given": {
+        "mode": "CLUB",
+        "archives": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "paths",
+      "expected": {
+        "pathDefined": true,
+        "careerPrerequisite": false
+      }
+    },
+    {
+      "action": "FOLLOW_P18",
+      "id": "FT02",
+      "given": {
+        "sourcePeak": [
+          100,
+          90,
+          80,
+          70,
+          60,
+          50
+        ]
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "paths",
+      "expected": {
+        "newAbilities": [
+          50,
+          45,
+          40,
+          35,
+          30,
+          25
+        ],
+        "age": 19,
+        "militaryReset": true
+      }
+    },
+    {
+      "action": "FOLLOW_P09",
+      "id": "FT03",
+      "given": {
+        "postingHasNoOffers": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "paths",
+      "expected": {
+        "originalContractPreserved": true
+      }
+    },
+    {
+      "action": "FOLLOW_P12",
+      "id": "FT04",
+      "given": {
+        "collegeMilitaryLeave": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "paths",
+      "expected": {
+        "ageAdvances": true,
+        "academicYearFrozen": true
+      }
+    },
+    {
+      "action": "FOLLOW_P06",
+      "id": "FT05",
+      "given": {
+        "firstMlbRoster": true,
+        "actualAppearance": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "paths",
+      "expected": {
+        "firstAppearanceMoment": false
+      }
+    },
+    {
+      "action": "FOLLOW_P19",
+      "id": "FT06",
+      "given": {
+        "sameRootSource": true,
+        "staffAndPlayerConcurrent": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "paths",
+      "expected": {
+        "successfulClaims": 1
+      }
+    },
+    {
+      "action": "FOLLOW_P23_REPLAY_SKIP",
+      "id": "FT07",
+      "given": {
+        "finalGameHash": "h1"
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "paths",
+      "expected": {
+        "finalGameHash": "h1",
+        "worldRevisionDelta": 0
+      }
+    },
+    {
+      "action": "FOLLOW_P22",
+      "id": "FT08",
+      "given": {
+        "creationResponseLost": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "paths",
+      "expected": {
+        "sameCreationId": true,
+        "duplicateSave": false
+      }
+    },
+    {
+      "action": "FOLLOW_P16",
+      "id": "FT09",
+      "given": {
+        "allRoutesUnavailable": false,
+        "retryBudget": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "paths",
+      "expected": {
+        "autoRetireFromBudgetAlone": false
+      }
+    },
+    {
+      "action": "REPORT_DESIGN_STATUS",
+      "id": "FT10",
+      "given": {
+        "longRunPlanOnly": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "paths",
+      "expected": {
+        "actualSimulationPassed": false,
+        "executionStatus": "NOT_IMPLEMENTED"
+      }
+    },
+    {
+      "action": "GENERATE_NPC",
+      "id": "FD01",
+      "given": {
+        "careerHard": true,
+        "npcBaseP": 82
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "difficulty",
+      "expected": {
+        "potential": 87,
+        "currentAbilityChanged": false
+      }
+    },
+    {
+      "action": "GENERATE_NPC",
+      "id": "FD02",
+      "given": {
+        "careerHard": true,
+        "npcBaseP": 95
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "difficulty",
+      "expected": {
+        "potential": 100,
+        "absoluteCap": 100
+      }
+    },
+    {
+      "action": "GENERATE_PLAYER",
+      "id": "FD03",
+      "given": {
+        "careerHard": true,
+        "protagonist": true,
+        "baseP": 82
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "difficulty",
+      "expected": {
+        "potential": 82,
+        "npcBonusApplied": false
+      }
+    },
+    {
+      "action": "SETTLE_GROWTH",
+      "id": "FD04",
+      "given": {
+        "careerHard": true,
+        "npcBaseGrowth": 10
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "difficulty",
+      "expected": {
+        "positiveGrowthBeforeCap": 12
+      }
+    },
+    {
+      "action": "COMPARE_NORMAL_RULES",
+      "id": "FD05",
+      "given": {
+        "clubHard": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "difficulty",
+      "expected": {
+        "sameInitialBudget": true,
+        "sameGrowth": true,
+        "betterAiPlanning": true
+      }
+    },
+    {
+      "action": "INITIALIZE_ROSTER",
+      "id": "FD06",
+      "given": {
+        "clubCheat": true,
+        "initialOwnedPlayers": 50
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "difficulty",
+      "expected": {
+        "allOwnedPotential": 100,
+        "currentAbilitiesUnchanged": true
+      }
+    },
+    {
+      "action": "SUBMIT_OFFER",
+      "id": "FD07",
+      "given": {
+        "clubCheat": true,
+        "freeAgentOfferOnly": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "difficulty",
+      "expected": {
+        "potentialChangedBeforeOwnership": false
+      }
+    },
+    {
+      "action": "APPLY_OWNERSHIP",
+      "id": "FD08",
+      "given": {
+        "clubCheat": true,
+        "recruitmentCommitted": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "difficulty",
+      "expected": {
+        "sixPotentials": 100,
+        "positiveGrowthMultiplier": 3
+      }
+    },
+    {
+      "action": "IMPORT_ARCHIVED_PLAYER",
+      "id": "FD09",
+      "given": {
+        "clubCheat": true,
+        "sourcePeak": 90
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "difficulty",
+      "expected": {
+        "ability": 45,
+        "potential": 100,
+        "sourceModified": false
+      }
+    },
+    {
+      "action": "SETTLE_GROWTH",
+      "id": "FD10",
+      "given": {
+        "baseGrowth": 10,
+        "normalPeriodFraction": 0.5,
+        "cheatPeriodFraction": 0.5
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "difficulty",
+      "expected": {
+        "positiveGrowthBeforeCap": 20,
+        "wholeSeasonTriple": false
+      }
+    },
+    {
+      "action": "CHANGE_TEAM",
+      "id": "FD11",
+      "given": {
+        "leftCheatTeam": true,
+        "potential": 100
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "difficulty",
+      "expected": {
+        "potential": 100,
+        "growthMultiplier": 1,
+        "provenanceRetained": true
+      }
+    },
+    {
+      "action": "COMPUTE_XP_BUDGET",
+      "id": "FD12",
+      "given": {
+        "seasonXpSpent": 30,
+        "leftThenRejoinedCheatTeam": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED",
+      "module": "difficulty",
+      "expected": {
+        "normalRemaining": 0,
+        "cheatRemaining": 30,
+        "seasonCounterReset": false
+      }
+    }
+  ],
+  "status": "DESIGN_EXPECTATIONS_ONLY",
+  "schemaVersion": 1
+}

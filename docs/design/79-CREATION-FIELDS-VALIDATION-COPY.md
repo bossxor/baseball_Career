@@ -1,3 +1,5 @@
+최신 v0.14: [85 난이도·구단 치트](85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md)가 상충하는 이전 규칙을 대체합니다. 구단 치트는 내 구단 전체의 잠재력100·양의 자연성장/구종XP3배를 적용하며 이후 영입·보관 투입 포함입니다. 일반 구단과 원본 기록에는 소급하지 않습니다.
+
 # 79. 선수·구단 생성 입력과 검증 문구
 
 2026-10-19 / 서면 상세설계. U는 기존 사용자 확정, 나머지 UI·검증 선택은 D다. [01](01-GAME-RULES.md), [35](35-SIX-ABILITIES-FOUR-FOCUS.md), [42](42-GROWTH-DIFFICULTY-REBIRTH.md), [44](44-CLUB-ECONOMY-AI.md), [78](78-NEW-GAME-CREATION-RECOVERY.md)를 입력 필드 수준으로 연결한다.

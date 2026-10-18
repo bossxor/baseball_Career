@@ -11,7 +11,7 @@
 | L03 | 동일GameInput10만타석·원소하나변경대조군 |softmax/조건특성·구종/효과방향 |
 | L04 | KBO10팀50시즌×10seed,보관0명 | 계약/선수공급/자연왕조·침체/구단비용 |
 | L05 | 같은세계보관복사0/1/28명비교 | 원본hash/역할claim/리그왜곡을사용자설정효과로구분 |
-| L06 | 구단치트50시즌×5seed |유한원장/정원/타팀영향없음 |
+| L06 | 구단치트50시즌×5seed |유한원장/정원/퇴단P수혜출처/소속기간성장배율 |
 | L07 | 세계시즌99→100/종료경계 |읽기보관/통계·원본삭제0 |
 | L08 | 성장상한6개100/모두1/잠재력여유1e-4 |clip/분배/허위상승0 |
 | L09 | 연도전환각8단계worker종료/lease만료/응답유실 |효과1회/old generation보존 |
@@ -39,4 +39,4 @@ REVIEW:리그평균타율/OPS/ERA/HR율/K율/BB율/득점·9이닝,연령별성�
 
 artifacts/{runId}/manifest.json,metrics.csv,invariants.json,failed-cases.json,seed-fixtures.json,source-commit.txt. 로그에token/DBURL/서명URL/사용자실명자료없음. 보고서상태=PLANNED/RUNNING/PASSED/FAILED/INCONCLUSIVE,조건fixture존재만으로PASSED금지. 사용자PC사양/호스팅이정해지기전처리속도p95목표를추측해서통과기준으로쓰지않고목표와측정기준을먼저고정한다.
 
-현재모든L01~12는PLANNED. 설계용정적검사는카탈로그·예시수식·검수기대값의필드만검사한다. 앱구현/실험실행/DB작업을별도착수지시전시작하지않는다.
+85의 하드 경쟁자/구단 AI/치트 팀 전체 성장 정책을 대조군에 포함한다. 현재모든L01~12는PLANNED. 설계용정적검사는카탈로그·예시수식·검수기대값의필드만검사한다. 앱구현/실험실행/DB작업을별도착수지시전시작하지않는다.
