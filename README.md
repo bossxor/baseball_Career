@@ -16,3 +16,5 @@
 [추가8기능통합설계](docs/design/55-EXPANSION-INTEGRATION.md)에서각문서와신규화면/사건을확인할수있습니다. 앱구현은아직시작하지않았습니다.
 
 상세계약 v0.10: [공통API와수용기준](docs/design/64-EXPANSION-COMMON-CONTRACT.md), [사용자선택확정](docs/design/65-USER-TRAITS-XP-STAFF.md),56~63의8개기능계약과80개서면검수기대값을작성했습니다. 구현·실제테스트는별도입니다.
+
+장기설계 v0.11: [재도전](docs/design/66-RETRY-CAREER-OPPORTUNITIES.md), [잠재력평가](docs/design/67-POTENTIAL-ASSESSMENT-PROGRESSION.md), [구단주기](docs/design/68-FRANCHISE-CYCLES-LEAGUE-HISTORY.md),69~73의충돌·복원·불변조건·연도전환·장기실험계획추가. 실제게임실험은미실행입니다.

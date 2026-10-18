@@ -1,0 +1,1236 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_EXPECTATIONS_ONLY",
+  "cases": [
+    {
+      "id": "RETRY01",
+      "module": "retry",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "used": 0,
+        "completedPreparationSeason": true
+      },
+      "action": "SETTLE_PREPARATION",
+      "expected": {
+        "used": 1,
+        "remaining": 2
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RETRY02",
+      "module": "retry",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "used": 1,
+        "completionReceiptApplied": true
+      },
+      "action": "REPLAY_PREPARATION",
+      "expected": {
+        "used": 1,
+        "newCharges": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RETRY03",
+      "module": "retry",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "used": 1,
+        "ordinaryServiceMonths": 18
+      },
+      "action": "SETTLE_SERVICE",
+      "expected": {
+        "used": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RETRY04",
+      "module": "retry",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "priorProContract": true,
+        "age": 20
+      },
+      "action": "PREVIEW_COLLEGE_ENROLLMENT",
+      "expected": {
+        "eligible": false,
+        "code": "NOT_ELIGIBLE"
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RETRY05",
+      "module": "retry",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "priorProContract": false,
+        "age": 20,
+        "collegeOfferExists": true
+      },
+      "action": "ENROLL_COLLEGE",
+      "expected": {
+        "age": 20,
+        "academicYear": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RETRY06",
+      "module": "retry",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "used": 3,
+        "validOffers": 0,
+        "canReturnCollege": false
+      },
+      "action": "RESOLVE_UNCONTRACTED_ROUTE",
+      "expected": {
+        "retireAvailable": true,
+        "newPreparationAvailable": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RETRY07",
+      "module": "retry",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "used": 0,
+        "abilityEligibleUS": true,
+        "validUSOffers": 0
+      },
+      "action": "READ_ROUTES",
+      "expected": {
+        "usCardVisible": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RETRY08",
+      "module": "retry",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "worldSeasonTrainingUsed": 1,
+        "movedIntoPreparation": true
+      },
+      "action": "READ_TRAINING",
+      "expected": {
+        "remainingTraining": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RETRY09",
+      "module": "retry",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "used": 1,
+        "rejectedFinalOffer": true,
+        "otherObligationsClear": true
+      },
+      "action": "READ_ROUTES",
+      "expected": {
+        "preparationAvailable": true,
+        "remaining": 2
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RETRY10",
+      "module": "retry",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "mandatoryServiceDue": true,
+        "preparationRemaining": 3
+      },
+      "action": "READ_ROUTES",
+      "expected": {
+        "serviceTaskStillRequired": true,
+        "sourceArchiveChanged": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "ASSESS01",
+      "module": "assessment",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "previousRange": [
+          82,
+          94
+        ],
+        "rawRange": [
+          85,
+          93
+        ]
+      },
+      "action": "INTERSECT_REPORT",
+      "expected": {
+        "range": [
+          85,
+          93
+        ]
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "ASSESS02",
+      "module": "assessment",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "previousRange": [
+          85,
+          93
+        ],
+        "rawLowerLevelRange": [
+          84,
+          95
+        ]
+      },
+      "action": "INTERSECT_REPORT",
+      "expected": {
+        "range": [
+          85,
+          93
+        ]
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "ASSESS03",
+      "module": "assessment",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "observedGames": 19,
+        "newUniqueRegisteredGame": 1,
+        "stage": 0
+      },
+      "action": "SETTLE_OBSERVATION",
+      "expected": {
+        "observedGames": 20,
+        "stage": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "ASSESS04",
+      "module": "assessment",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "reportAlreadyExists": true,
+        "rngCursor": 8
+      },
+      "action": "READ_ASSESSMENT",
+      "expected": {
+        "rngCursor": 8,
+        "newReports": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "ASSESS05",
+      "module": "assessment",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "ability": 100,
+        "potential": 100
+      },
+      "action": "CALCULATE_PUBLIC_RANGE",
+      "expected": {
+        "range": [
+          100,
+          100
+        ]
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "ASSESS06",
+      "module": "assessment",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "mode": "REALISTIC",
+        "rawPotential": 91
+      },
+      "action": "READ_ASSESSMENT",
+      "expected": {
+        "rawPotentialFieldPresent": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "ASSESS07",
+      "module": "assessment",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "mode": "SECRET_CHEAT",
+        "protagonist": true
+      },
+      "action": "READ_ASSESSMENT",
+      "expected": {
+        "fixedPotential": 100
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "ASSESS08",
+      "module": "assessment",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "sourceStage": 4,
+        "newImportedPlayer": true
+      },
+      "action": "CREATE_IMPORT_ASSESSMENT",
+      "expected": {
+        "stage": 0,
+        "copiedSourceReports": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "ASSESS09",
+      "module": "assessment",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "previousRange": [
+          80,
+          84
+        ],
+        "rawRange": [
+          90,
+          94
+        ]
+      },
+      "action": "INTERSECT_REPORT",
+      "expected": {
+        "error": "ASSESSMENT_INCONSISTENT",
+        "newPotentialGenerated": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "ASSESS10",
+      "module": "assessment",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "publicRange": [
+          80,
+          90
+        ],
+        "rawPotential": 87
+      },
+      "action": "EVALUATE_AI_PROSPECT",
+      "expected": {
+        "potentialInput": 85
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "DYNASTY01",
+      "module": "dynasty",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "championLastSeason": true
+      },
+      "action": "ADVANCE_TEAM_ABILITY",
+      "expected": {
+        "hiddenChampionAbilityPenalty": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "DYNASTY02",
+      "module": "dynasty",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "lastPlace": true
+      },
+      "action": "PREVIEW_FA_ACCEPTANCE",
+      "expected": {
+        "hiddenLastPlaceProbabilityBonus": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "DYNASTY03",
+      "module": "dynasty",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "existingYoungPlayerId": "Y1",
+        "nextSeasonExists": true
+      },
+      "action": "ADVANCE_ROSTER",
+      "expected": {
+        "youngPlayerId": "Y1",
+        "fullRosterRegenerated": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "DYNASTY04",
+      "module": "dynasty",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "guaranteedFutureSalary": "500000000",
+        "teamUnderperformed": true
+      },
+      "action": "ADVANCE_BUDGET",
+      "expected": {
+        "guaranteedFutureSalary": "500000000"
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "DYNASTY05",
+      "module": "dynasty",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "strategyDecisionExists": true,
+        "newLosingStreak": 3
+      },
+      "action": "REVIEW_STRATEGY",
+      "expected": {
+        "newSeasonStrategyDecisions": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "DYNASTY06",
+      "module": "dynasty",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "threeSeasonRanks": [
+          9,
+          8,
+          10
+        ],
+        "leagueTeams": 10
+      },
+      "action": "LABEL_TEAM_HISTORY",
+      "expected": {
+        "label": "DARK_PERIOD",
+        "gameplayEffects": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "DYNASTY07",
+      "module": "dynasty",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "rookieBatchSeed": "K1",
+        "userNeededPositionChanged": true
+      },
+      "action": "BUILD_ROOKIE_BATCH",
+      "expected": {
+        "seed": "K1",
+        "userPositionInjectedStars": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "DYNASTY08",
+      "module": "dynasty",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "sameOfferScores": true,
+        "strategyIdsDifferent": true
+      },
+      "action": "CALCULATE_ACCEPTANCE",
+      "expected": {
+        "probabilitiesEqual": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "DYNASTY09",
+      "module": "dynasty",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "userClubCheat": true,
+        "otherClub": true
+      },
+      "action": "APPLY_PRESET",
+      "expected": {
+        "otherClubUnlimitedBudget": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "DYNASTY10",
+      "module": "dynasty",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "sameSeasonTransitionRetry": true,
+        "rookieBatchExists": true
+      },
+      "action": "GENERATE_ROOKIES",
+      "expected": {
+        "newDuplicateBatches": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "COLLISION01",
+      "module": "collision",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "provisionalPitchXpDelta": 0.06,
+        "gameFinalizationRetries": 2
+      },
+      "action": "FINALIZE_GAME",
+      "expected": {
+        "officialPitchXpDelta": 0.06,
+        "ledgerApplications": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "COLLISION02",
+      "module": "collision",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "traitThresholdReachedDuringGame": true
+      },
+      "action": "FINALIZE_GAME",
+      "expected": {
+        "retroactiveTraitPAEffects": 0,
+        "unlocksAfterFinalization": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "COLLISION03",
+      "module": "collision",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "collegeYearBeforeService": 2,
+        "serviceComplete": true
+      },
+      "action": "RESOLVE_RETURN",
+      "expected": {
+        "collegeYear": 2,
+        "ageContinues": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "COLLISION04",
+      "module": "collision",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "concurrentSourceRoleRequests": 2
+      },
+      "action": "CLAIM_SOURCE_ROLE",
+      "expected": {
+        "activeClaims": 1,
+        "successCount": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "COLLISION05",
+      "module": "collision",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "twoConcurrentContractAcceptances": true
+      },
+      "action": "ACCEPT_CONTRACT",
+      "expected": {
+        "activeContracts": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "COLLISION06",
+      "module": "collision",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "newAthleteEligibility": true,
+        "serviceNotStarted": true
+      },
+      "action": "RESOLVE_TASKS",
+      "expected": {
+        "obsoleteServiceTaskCancelledOrReplaced": true,
+        "backdatedCompletion": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "COLLISION07",
+      "module": "collision",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "resumeContextSeason": "OLD",
+        "currentSeason": "NEW"
+      },
+      "action": "RESOLVE_RESUME_PHASE",
+      "expected": {
+        "oldGameReplays": 0,
+        "currentLegalPhaseUsed": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "COLLISION08",
+      "module": "collision",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "samePlayerSameDayTwoObservationInputs": true
+      },
+      "action": "SETTLE_OBSERVATION",
+      "expected": {
+        "observationDayCount": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "COLLISION09",
+      "module": "collision",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "counterRequestAfterDeadline": true
+      },
+      "action": "REQUEST_SALARY_COUNTER",
+      "expected": {
+        "rngDraws": 0,
+        "requestUsed": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "COLLISION10",
+      "module": "collision",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "trainingUsed": 1,
+        "leagueChanged": true
+      },
+      "action": "OPEN_TRAINING_CHECKPOINT",
+      "expected": {
+        "trainingUsed": 1,
+        "newOpportunityCount": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESTORE01",
+      "module": "restore",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "sourcePlayerRowId": "P1",
+        "targetPlayerRowId": "P2",
+        "simulationKey": "SP1"
+      },
+      "action": "RESTORE_BACKUP",
+      "expected": {
+        "physicalIdChanged": true,
+        "simulationKey": "SP1",
+        "rngPreserved": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESTORE02",
+      "module": "restore",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "pendingInputAndLogicalIdsEqual": true,
+        "sameNextAction": true
+      },
+      "action": "COMPARE_RESUMED_PA",
+      "expected": {
+        "logicalResultsEqual": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESTORE03",
+      "module": "restore",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "sourceTrainingUsage": 1
+      },
+      "action": "RESTORE_BACKUP",
+      "expected": {
+        "trainingUsage": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESTORE04",
+      "module": "restore",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "sourcePreparationUsed": 2
+      },
+      "action": "RESTORE_BACKUP",
+      "expected": {
+        "preparationUsed": 2
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESTORE05",
+      "module": "restore",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "sourceLogHash": "H1",
+        "physicalIdsRemapped": true
+      },
+      "action": "RESTORE_REPLAY",
+      "expected": {
+        "originLogHash": "H1",
+        "logRewritten": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESTORE06",
+      "module": "restore",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "stagingFails": true,
+        "sourceRevision": "30"
+      },
+      "action": "ACTIVATE_RESTORE",
+      "expected": {
+        "sourceRevision": "30",
+        "newSaveVisible": false,
+        "readyBackupRemoved": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESTORE07",
+      "module": "restore",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "sourceArchiveMissing": true,
+        "importedPlayerSnapshotComplete": true
+      },
+      "action": "READ_RESTORED_PLAYER",
+      "expected": {
+        "canPlay": true,
+        "sourceDetailAvailable": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESTORE08",
+      "module": "restore",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "sourceArchiveOwnedByAnotherSubject": true
+      },
+      "action": "RESTORE_ORIGIN_LINK",
+      "expected": {
+        "privateSourceLinkPresent": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESTORE09",
+      "module": "restore",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "completionOriginActionKeyAlreadyPresent": true
+      },
+      "action": "REPLAY_OLD_ACTION",
+      "expected": {
+        "newEffects": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESTORE10",
+      "module": "restore",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "activeSaveCount": 10
+      },
+      "action": "PREVIEW_RESTORE",
+      "expected": {
+        "canActivateWithoutSlotCleanup": false,
+        "existingSavesAutoDeleted": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESTORE11",
+      "module": "restore",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "restoreJobRepeated": true,
+        "existingIdMap": true
+      },
+      "action": "RESTORE_BACKUP",
+      "expected": {
+        "sameTargetSaveId": true,
+        "sameIdMap": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RESTORE12",
+      "module": "restore",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "ownedArchiveSameIdDifferentHash": true
+      },
+      "action": "RESTORE_ORIGIN_LINK",
+      "expected": {
+        "error": "RESTORE_ARCHIVE_CONFLICT",
+        "archiveOverwritten": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "INV-D01",
+      "module": "invariant",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "automaticRunnerScores": 1
+      },
+      "action": "CHECK_EARNED_RUNS",
+      "expected": {
+        "R": 1,
+        "ER": 0,
+        "valid": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "INV-D02",
+      "module": "invariant",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "probabilitySum": 1.0001
+      },
+      "action": "VALIDATE_BEFORE_DRAW",
+      "expected": {
+        "valid": false,
+        "rngDraws": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "INV-D03",
+      "module": "invariant",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "permanentAbilities": [
+          50,
+          50,
+          50,
+          50,
+          50,
+          50
+        ],
+        "temporaryBuff": 10
+      },
+      "action": "CHECK_OVERALL",
+      "expected": {
+        "overall": 50
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "INV-D04",
+      "module": "invariant",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "sameDebtReservedAndGuaranteed": true
+      },
+      "action": "VALIDATE_BUDGET",
+      "expected": {
+        "valid": false,
+        "commitAllowed": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "INV-D05",
+      "module": "invariant",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "teamGenerationIds": [
+          "G1",
+          "G2"
+        ]
+      },
+      "action": "VALIDATE_WORLD_ACTIVATION",
+      "expected": {
+        "valid": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "INV-D06",
+      "module": "invariant",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "oldRange": [
+          85,
+          93
+        ],
+        "newRange": [
+          80,
+          95
+        ]
+      },
+      "action": "VALIDATE_PUBLIC_REPORT",
+      "expected": {
+        "valid": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "INV-D07",
+      "module": "invariant",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "eligibleHeldTraitCount": 4
+      },
+      "action": "EVALUATE_TRAITS",
+      "expected": {
+        "evaluatedEligibleTraitCount": 4,
+        "equipmentSlotsUsed": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "INV-D08",
+      "module": "invariant",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "beforeArchiveHash": "A",
+        "afterArchiveHash": "B"
+      },
+      "action": "VALIDATE_ARCHIVE",
+      "expected": {
+        "valid": false,
+        "commitAllowed": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "INV-D09",
+      "module": "invariant",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "availablePitchers": 0,
+        "emergencyRosterRepairPossible": true
+      },
+      "action": "VALIDATE_GAME_START",
+      "expected": {
+        "gameCanStart": false,
+        "rosterRepairActionPresent": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "INV-D10",
+      "module": "invariant",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "transactionFailedBeforeCommit": true
+      },
+      "action": "ROLLBACK_COMMAND",
+      "expected": {
+        "stateDelta": 0,
+        "ledgerDelta": 0,
+        "rngDelta": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "YEAR01",
+      "module": "year",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "stageCompletedAgeIncrement": true,
+        "workerRetry": true
+      },
+      "action": "RESUME_YEAR_TRANSITION",
+      "expected": {
+        "ageIncrementCount": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "YEAR02",
+      "module": "year",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "rookieBatchExists": true,
+        "workerRetry": true
+      },
+      "action": "RUN_ROOKIE_STAGE",
+      "expected": {
+        "newDuplicateBatches": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "YEAR03",
+      "module": "year",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "jobStatus": "PREPARING",
+        "oldGeneration": "G1",
+        "targetGeneration": "G2"
+      },
+      "action": "READ_WORLD",
+      "expected": {
+        "activeGeneration": "G1"
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "YEAR04",
+      "module": "year",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "targetValidationPassed": true,
+        "activationCommitted": true
+      },
+      "action": "READ_TEAMS",
+      "expected": {
+        "allTeamsSameGeneration": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "YEAR05",
+      "module": "year",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "priorGrowthSettled": true
+      },
+      "action": "RUN_YEAR_VALIDATION",
+      "expected": {
+        "newPriorGrowthDelta": 0
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "YEAR06",
+      "module": "year",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "unresolvedBlockingTasks": 1
+      },
+      "action": "NEXT_SEASON",
+      "expected": {
+        "jobCreated": false,
+        "sourceChanged": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "YEAR07",
+      "module": "year",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "cancelledBeforeActivation": true,
+        "restartedSameTargetSeason": true
+      },
+      "action": "PREPARE_YEAR",
+      "expected": {
+        "sameRookieSeed": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "YEAR08",
+      "module": "year",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "twoWorkersSameStep": true
+      },
+      "action": "COMMIT_STAGE_OUTPUT",
+      "expected": {
+        "stageOutputCount": 1
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "YEAR09",
+      "module": "year",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "reportSourceHash": "A",
+        "actualSourceHash": "B"
+      },
+      "action": "ACTIVATE_YEAR",
+      "expected": {
+        "activated": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "YEAR10",
+      "module": "year",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "collegeYear": 2,
+        "preparationUsed": 1,
+        "assessmentRange": [
+          85,
+          93
+        ]
+      },
+      "action": "ADVANCE_YEAR",
+      "expected": {
+        "collegeYearPreservedUntilAcademicAction": true,
+        "preparationUsed": 1,
+        "assessmentRange": [
+          85,
+          93
+        ]
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LONG-D01",
+      "module": "longrun",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "seedFailedInvariant": true
+      },
+      "action": "BUILD_RUN_REPORT",
+      "expected": {
+        "status": "FAILED",
+        "failedSeedRetained": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LONG-D02",
+      "module": "longrun",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "teamNeverWonChampionship": true,
+        "hardInvariantsPass": true
+      },
+      "action": "ASSESS_HARD_GATES",
+      "expected": {
+        "automaticFailureForTitleDistribution": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LONG-D03",
+      "module": "longrun",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "supportGrantTeamYearsRate": 0.06
+      },
+      "action": "ASSESS_REVIEW_SIGNALS",
+      "expected": {
+        "economyReviewRequired": true,
+        "automaticHiddenBalancing": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LONG-D04",
+      "module": "longrun",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "reviewCIContainsZero": true
+      },
+      "action": "ASSESS_EFFECT_EVIDENCE",
+      "expected": {
+        "result": "INCONCLUSIVE"
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LONG-D05",
+      "module": "longrun",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "cosmeticReadOperationsOnly": true
+      },
+      "action": "COMPARE_WORLD_HASH",
+      "expected": {
+        "worldHashesEqual": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LONG-D06",
+      "module": "longrun",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "fixtureFileExists": true,
+        "engineRunExecuted": false
+      },
+      "action": "BUILD_RUN_REPORT",
+      "expected": {
+        "canClaimSimulationPassed": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LONG-D07",
+      "module": "longrun",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "faultInjectionTarget": "PRODUCTION"
+      },
+      "action": "VALIDATE_EXPERIMENT_TARGET",
+      "expected": {
+        "allowed": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LONG-D08",
+      "module": "longrun",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "bootstrapEnabled": true
+      },
+      "action": "CONFIGURE_STATS_RNG",
+      "expected": {
+        "usesSeparateStatisticalStream": true
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LONG-D09",
+      "module": "longrun",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "all100Abilities": true,
+        "pitchCapsReached": true
+      },
+      "action": "CHECK_LIMIT_TERMINATION",
+      "expected": {
+        "finiteProgressionRequired": true,
+        "abilityAbove100Allowed": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "LONG-D10",
+      "module": "longrun",
+      "layer": "DESIGN_EXPECTATION",
+      "given": {
+        "worldSeasonCount": 100
+      },
+      "action": "READ_END_STATE",
+      "expected": {
+        "readOnlyArchiveRequired": true,
+        "recordsAutoDeleted": false
+      },
+      "executionStatus": "NOT_IMPLEMENTED"
+    }
+  ]
+}

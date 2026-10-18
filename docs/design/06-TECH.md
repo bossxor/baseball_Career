@@ -12,7 +12,7 @@ UI → API 인증/검증 → 세이브 행 잠금 → 중복검사/버전검사 
 
 SaveState: schemaVersion, rulesVersion, engineVersion, mode, gameDate, seedState, phase, league, playersById, teamsById, schedule, records, timeline, pendingEvent, modifiers, settings.
 
-CareerState 추가: protagonistId, highSchool, proRegistrationHistory, focusPlan, phaseProgress, retryCount, retirementReason, archiveId.
+CareerState 추가: protagonistId, highSchool, proRegistrationHistory, focusPlan, phaseProgress, careerPreparationUsed, preparationEpisodeId, retirementReason, archiveId.
 ClubState 추가: managedTeamId, lineup, pitchingPlan, budgetsBySeason, reservations, offers, draftState, importOrigins.
 
 Player: id, name, birthYear, ageAtSeasonStart, kind, throws, bats, position, role, abilities, growthFractions, potential, aptitude, fatigue, morale, injury, contractId, teamId, level, retired, originArchiveId?. 숫자는 유한값·범위 검증. 영구 능력치와 임시 modifier 분리. 타자 능력치를 투수 키로 해석하지 않는다.

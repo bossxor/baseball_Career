@@ -150,10 +150,35 @@ near((2.5 * 3) * 4, 30);
 near(20 * 3, 60);
 near(2.5 * .5 * 3, 3.75);
 assert.ok(!html.includes("limitedChoices('trait-demo'"));
-assert.equal(catalog.contentVersion, 4);
+assert.equal(catalog.contentVersion, 5);
 const s38 = screens.screens.find(s => s.id === 'S38');
 assert.ok(s38.data.includes('보유특성전체'));
 console.log('PASS: 80 explicit design fixtures across 8 detailed modules; automatic traits and cheat pitch XP examples. Fixture execution is NOT implemented.');
 assert.equal(Object.keys(detailedFixtures.pendingModules).length, 0);
 console.log('CONFIRMED: cosmetic-only rewards and read-only commentary; no pending choices in these eight detailed modules.');
+const worldFixtures = JSON.parse(read('world-acceptance-fixtures.json'));
+assert.equal(worldFixtures.status, 'DESIGN_EXPECTATIONS_ONLY');
+assert.equal(worldFixtures.cases.length, 82);
+unique(worldFixtures.cases.map(c => c.id));
+assert.equal(new Set(worldFixtures.cases.map(c => c.module)).size, 8);
+for (const fixture of worldFixtures.cases) {
+  assert.ok(fixture.given && Object.keys(fixture.given).length);
+  assert.ok(fixture.expected && Object.keys(fixture.expected).length);
+  assert.ok(fixture.action);
+  assert.equal(fixture.executionStatus, 'NOT_IMPLEMENTED');
+}
+const rangeHistory = [[82,94],[84,93],[85,93],[85,92],[86,90]];
+for (let i = 1; i < rangeHistory.length; i++) {
+  assert.ok(rangeHistory[i][0] >= rangeHistory[i-1][0]);
+  assert.ok(rangeHistory[i][1] <= rangeHistory[i-1][1]);
+}
+assert.deepEqual([Math.max(82,85),Math.min(94,93)], [85,93]);
+assert.equal(3 - 1, 2);
+for (let id = 1; id <= 24; id++) {
+  assert.ok(read('71-INVARIANTS-DIAGNOSTICS-SAFE-STOP.md').includes(`INV${String(id).padStart(2,'0')}`));
+}
+for (let id = 1; id <= 12; id++) {
+  assert.ok(read('73-LONG-RUN-FAULT-BALANCE-VALIDATION.md').includes(`L${String(id).padStart(2,'0')}`));
+}
+console.log('PASS: 82 world design expectations across 8 modules, 24 invariant contracts, 12 planned run scenarios, narrowing-range examples. World simulations are NOT executed.');
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

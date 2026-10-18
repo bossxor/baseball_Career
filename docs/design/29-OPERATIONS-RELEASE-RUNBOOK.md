@@ -57,3 +57,6 @@ npm run build실제출력,엔진/DB/API테스트요약,private스토리지E2E,�
 
 production 브랜치 br-nameless-dust-a10jtrs6:ready/primary/default 확인. 데이터베이스SQL이나파일서비스실행검증이아닌브랜치메타데이터다.
 로컬실행버전:Node v24.19.0,npm11.17.0,OpenJDK21.0.12.1,ADB1.0.41/37.0.1. Capacitor/Gradle호환이나APK빌드통과를뜻하지않는다.
+
+
+장기세계후속66~73:재도전/평가범위/자연구단주기/사건충돌/provisional원장/복원simulationKey/불변조건/연도generation/실험계획. 해당분야의이전1회준비·복원물리ID난수해석은각최신문서로대체한다.

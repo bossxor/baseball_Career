@@ -25,7 +25,7 @@
 | INV19 | 미해결task필수source/resume가현재세계에속함 | 날짜진행차단·복귀resolver |
 | INV20 | pending경기provisional delta와최종원장동시가산0 | 경기finalization차단 |
 | INV21 | 재도전used0~3/준비완료키고유/복무기간불소모 | 경로정산차단 |
-| INV22 | 관측범위A≤L≤P≤U≤100/이전공개범위보다확대0 | 평가모형중단·구보고서유지 |
+| INV22 | 현재공개요약범위A≤L≤P≤U≤100/이전공개범위보다확대0(역사보고서는당시A기준) | 평가모형중단·구보고서유지 |
 | INV23 | 모든활성팀/계약/등록/일정의activeGenerationId일치 | 연도활성화차단 |
 | INV24 | simulationKey save내유일/복원rng보존/중계immutablehash검사 | 복원활성화·재생차단 |
 

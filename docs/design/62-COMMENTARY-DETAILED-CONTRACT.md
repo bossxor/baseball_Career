@@ -20,7 +20,7 @@ outs전후/점수전후는해당이벤트실제snapshot. 정규1B후주루아웃
 
 ## chunk·해시·보존
 
-최대200playRecord/응답,chunk는최대256KiB비압축UTF8를기준으로정규JSON뒤gzip. 인덱스에시작/끝cursor,count,sha256OfUncompressed,previousChunkHash,compression,objectKey,logSchemaVersion. chain순서와checksums검사,FINAL manifest={gameId,engineVersion,logSchemaVersion,commentaryTemplateVersion,resultHash,chunkHashes,boxscoreRef,finalCursor}. resultHash는정렬canonical JSON(gameId,engineVersion,finalScore,boxscore,기록판정원시원장)SHA256이며UIcursor/速度/템플릿미포함. 구기록은당시hash유지,새버전으로경기를재시뮬레이션하지않음.
+최대200playRecord/응답,chunk는최대256KiB비압축UTF8를기준으로정규JSON뒤gzip. 인덱스에시작/끝cursor,count,sha256OfUncompressed,previousChunkHash,compression,objectKey,logSchemaVersion. chain순서와checksums검사,FINAL manifest={gameId,engineVersion,logSchemaVersion,commentaryTemplateVersion,resultHash,chunkHashes,boxscoreRef,finalCursor}. resultHash는정렬canonical JSON(gameSimulationKey,engineVersion,finalScore,simulationKey기준boxscore,기록판정원시원장)SHA256이며UIcursor/속도/템플릿미포함. 구기록은당시hash유지,새버전으로경기를재시뮬레이션하지않음.
 
 데뷔/실제기록달성/결승/라이벌재회/은퇴경기/사용자핀은important_game_snapshots영구보존. 일반상세만15보존기간적용. 원본archive참조로그는save삭제전원본보존namespace에manifest+chunk참조이관확인. refcount0인일반chunk만만료청소,불변참조있는파일삭제금지. 사용자가핀할때이미로그없으면summary핀만가능/다시보기없음명시. 자동중요후보였으나실제이정표없는경기는일반정책.
 
@@ -37,3 +37,5 @@ PATCH /api/commentary-preferences/{scopeRef}/{gameId}={expectedPreferenceRevisio
 입장→상태/manifest검사→저장cursor복원→1타석/재생1·2·4배/정지/되감기/결과스킵→박스스코어또는기록홈. 재방문FINAL은처음/이어서선택,기본스코어스포일러여부는기기선호. 자동음성OFF,aria-live는사용자가넘긴현재타석요약만,전체로그는스크롤리스트. reducedMotion은타석결과즉시표시,배경애니메이션없음. 그림실패대체텍스트,문장오류시해당원기록fallback.
 
 LIVE-D01 중계ON/OFF같은resultHash/02스킵rng0/03속도4도동일결과/04BB/HBP개별처리/05partial은FINAL아님/06로그재요청중복카운트0/07checksum불일치요약fallback/08archive원본로그보존/09없는방향문장0/10홈런legalRuns2면2점/11되감기cursorCAS충돌/12중계조회능력·보상delta0. 실제브라우저/Android중단·네트워크회복·키보드및박스스코어일치는구현후실행검수한다.
+
+장기세계후속66~73:재도전/평가범위/자연구단주기/사건충돌/provisional원장/복원simulationKey/불변조건/연도generation/실험계획. 해당분야의이전1회준비·복원물리ID난수해석은각최신문서로대체한다.
