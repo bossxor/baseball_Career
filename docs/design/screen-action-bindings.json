@@ -1,0 +1,528 @@
+{
+  "status": "DESIGN_ONLY",
+  "screens": [
+    {
+      "screenId": "S01",
+      "queryKey": "homeSummary",
+      "actions": [
+        "READ_RESUME"
+      ],
+      "actionClass": "QUERY",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S02",
+      "queryKey": "careerCreationDraft",
+      "actions": [
+        "CREATE_CAREER"
+      ],
+      "actionClass": "OWNER_CREATE",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S03",
+      "queryKey": "careerDashboard",
+      "actions": [
+        "ADVANCE_CAREER"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S04",
+      "queryKey": "highSchoolResult",
+      "actions": [
+        "READ_CAREER_ROUTES"
+      ],
+      "actionClass": "QUERY",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S05",
+      "queryKey": "draftResult",
+      "actions": [
+        "ACCEPT_CAREER_OFFER",
+        "DECLINE_DRAFT"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S06",
+      "queryKey": "eventInstance",
+      "actions": [
+        "RESOLVE_EVENT"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S07",
+      "queryKey": "seasonResult",
+      "actions": [
+        "ACK_SEASON_RESULT"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S08",
+      "queryKey": "careerOffers",
+      "actions": [
+        "ACCEPT_CAREER_OFFER",
+        "DECLINE_CAREER_OFFER"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S09",
+      "queryKey": "retirementReceipt",
+      "actions": [
+        "READ_ARCHIVE"
+      ],
+      "actionClass": "QUERY",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S10",
+      "queryKey": "archiveList",
+      "actions": [
+        "READ_ARCHIVES"
+      ],
+      "actionClass": "QUERY",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S11",
+      "queryKey": "archiveDetail",
+      "actions": [
+        "PREVIEW_IMPORT"
+      ],
+      "actionClass": "QUERY",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S12",
+      "queryKey": "clubCreationDraft",
+      "actions": [
+        "CREATE_CLUB"
+      ],
+      "actionClass": "OWNER_CREATE",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S13",
+      "queryKey": "clubDashboard",
+      "actions": [
+        "ADVANCE_CLUB_DAY"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S14",
+      "queryKey": "roster",
+      "actions": [
+        "CHANGE_REGISTRATION"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S15",
+      "queryKey": "lineup",
+      "actions": [
+        "SET_LINEUP"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S16",
+      "queryKey": "playerDetail",
+      "actions": [
+        "READ_PLAYER"
+      ],
+      "actionClass": "QUERY",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S17",
+      "queryKey": "marketOffers",
+      "actions": [
+        "SUBMIT_OFFER",
+        "WITHDRAW_OFFER"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S18",
+      "queryKey": "leagueRecords",
+      "actions": [
+        "READ_LEAGUE_RECORDS"
+      ],
+      "actionClass": "QUERY",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S19",
+      "queryKey": "gameResult",
+      "actions": [
+        "READ_GAME_RESULT"
+      ],
+      "actionClass": "QUERY",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S20",
+      "queryKey": "saveJobs",
+      "actions": [
+        "CREATE_BACKUP",
+        "REQUEST_RESTORE"
+      ],
+      "actionClass": "JOB_REQUEST",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S21",
+      "queryKey": "preferences",
+      "actions": [
+        "PATCH_LOCAL_PREFERENCES"
+      ],
+      "actionClass": "PREFERENCE",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S22",
+      "queryKey": "developmentPlan",
+      "actions": [
+        "SET_STYLE",
+        "SET_FOCUS"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S23",
+      "queryKey": "trainingPreview",
+      "actions": [
+        "START_SPECIAL_TRAINING"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S24",
+      "queryKey": "nationalInvitation",
+      "actions": [
+        "ACCEPT_NATIONAL",
+        "DECLINE_NATIONAL"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S25",
+      "queryKey": "internationalSchedule",
+      "actions": [
+        "ADVANCE_INTERNATIONAL"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S26",
+      "queryKey": "militaryOptions",
+      "actions": [
+        "APPLY_MILITARY_TEAM",
+        "START_SERVICE",
+        "DEFER_SERVICE"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S27",
+      "queryKey": "serviceProgress",
+      "actions": [
+        "ADVANCE_SERVICE",
+        "CONFIRM_SERVICE_RETURN"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S28",
+      "queryKey": "careerRouteOptions",
+      "actions": [
+        "READ_CAREER_ROUTES"
+      ],
+      "actionClass": "QUERY",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S29",
+      "queryKey": "directUSOffers",
+      "actions": [
+        "ACCEPT_CAREER_OFFER"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S30",
+      "queryKey": "usCareerDashboard",
+      "actions": [
+        "ADVANCE_CAREER"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S31",
+      "queryKey": "postingEligibility",
+      "actions": [
+        "REQUEST_POSTING"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S32",
+      "queryKey": "postingOffers",
+      "actions": [
+        "ACCEPT_CAREER_OFFER",
+        "REMAIN_ORIGINAL"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S33",
+      "queryKey": "domesticReturnOptions",
+      "actions": [
+        "CONFIRM_DOMESTIC_RETURN",
+        "ADVANCE_RETURN_PROGRAM"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S34",
+      "queryKey": "collegeAdmissionOffers",
+      "actions": [
+        "ENROLL_COLLEGE"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S35",
+      "queryKey": "collegeDashboard",
+      "actions": [
+        "ADVANCE_CAREER",
+        "ENTER_EARLY_DRAFT",
+        "ADVANCE_ACADEMIC_YEAR"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S36",
+      "queryKey": "scoutingSearch",
+      "actions": [
+        "SCOUT_SEARCH"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S37",
+      "queryKey": "clubBudget",
+      "actions": [
+        "UPGRADE_SCOUT",
+        "CONFIRM_REBUILD"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S38",
+      "queryKey": "traitBook",
+      "actions": [
+        "READ_TRAITS"
+      ],
+      "actionClass": "QUERY",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S39",
+      "queryKey": "repertoireAndApproach",
+      "actions": [
+        "SET_REPERTOIRE",
+        "SET_PITCH_TRAINING",
+        "SET_BATTING_APPROACH"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S40",
+      "queryKey": "goalsAndRewards",
+      "actions": [
+        "SET_GOALS",
+        "REPLACE_GOAL",
+        "EQUIP_COSMETIC"
+      ],
+      "actionClass": "MIXED",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S41",
+      "queryKey": "agentAndTrust",
+      "actions": [
+        "HIRE_AGENT",
+        "CHANGE_AGENT",
+        "REQUEST_SALARY_COUNTER",
+        "REQUEST_ROLE_REVIEW"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S42",
+      "queryKey": "relations",
+      "actions": [
+        "READ_RELATIONS"
+      ],
+      "actionClass": "QUERY",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S43",
+      "queryKey": "staffSlots",
+      "actions": [
+        "HIRE_RETIRED_STAFF",
+        "HIRE_GENERIC_STAFF",
+        "ASSIGN_STAFF",
+        "DISMISS_STAFF"
+      ],
+      "actionClass": "SAVE_COMMAND",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S44",
+      "queryKey": "commentary",
+      "actions": [
+        "READ_COMMENTARY",
+        "PATCH_COMMENTARY_PREFERENCE"
+      ],
+      "actionClass": "MIXED",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "screenId": "S45",
+      "queryKey": "chronicle",
+      "actions": [
+        "READ_MOMENTS",
+        "PATCH_MOMENT_PREFERENCE",
+        "CREATE_CARD_EXPORT"
+      ],
+      "actionClass": "MIXED",
+      "resultRouting": "serverAllowedActionsAndResumeDescriptor",
+      "draftValidation": "schemaVersionAndSourceRevision",
+      "implementationStatus": "NOT_IMPLEMENTED"
+    }
+  ],
+  "schemaVersion": 1
+}
