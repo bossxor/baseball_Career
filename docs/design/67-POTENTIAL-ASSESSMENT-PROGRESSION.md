@@ -29,3 +29,5 @@ assessment_progress(saveId,playerId UNIQUE,observedTeamGames,stage,lastSettledCu
 GET expansion/assessments?playerId→{mode:RANGE|FIXED_CHEAT,abilities:[{abilityKey,current,potentialRange?,fixedPotential?,outlook}],stage,nextObservationGames,reportHistoryCursor}. 읽기권한만,paid확률preview없음. 기록갱신명령은공통일진행내부hook,client SET_POTENTIAL/REFRESH_FOR_BETTER_ROLL명령없음. 보고서확정receipt재처리version증가0. 정보없음은평가대기,실제범위0~0으로표시안함.
 
 S16능력행잠재력셀/ S36스카우트보고서/ S39숙련과별도:‘잠재력 85~93 · 관측3단계 · 2031시즌평가’/‘다음갱신까지12팀경기’. 독자도움말에범위는성공확률아님을명시. ASSESS01 교집합단조축소/02이적저레벨확대0/03관측19→20stage1/04재조회rng소비0/05A100범위100/06일반rawP응답없음/07치트100표시/08복사보고서초기화/09보고서불일치안전오류/10AI범위중앙값사용.
+
+2026-10-19 사용자추가확정:강화정확증가량·비용우선(75). 스카우팅범위는유지하되실제효과로상한추론가능함을허용,개별행동snapshot과원본P필드공개는분리한다.
