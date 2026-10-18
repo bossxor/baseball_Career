@@ -1,3 +1,5 @@
+최신 플랫폼 범위: [86 네 환경 지원](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). Android/iPhone/Windows/macOS의 브라우저 웹과Android APK를 기본 목표로 합니다. iPhone 홈 화면 웹앱과 별도 iOS 네이티브 앱은 구분합니다. 현재 미구현이며CP01~06 실환경 검수는 계획입니다.
+
 최신 v0.14: [79 생성 입력](79-CREATION-FIELDS-VALIDATION-COPY.md) · [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md) · [81 이벤트 검토](81-EVENT-OCCURRENCE-COLLISION-AUDIT.md) · [82 확률·효과](82-PROBABILITY-EFFECTS-CONFIRMATION-AUDIT.md) · [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md) · [84 통합 경로·게이트](84-DESIGN-GATES-END-TO-END-PATHS.md) · [85 난이도 후속 확정](85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md). 남은6항목의 서면 검토와 구단 치트 전체 잠재력100·성장3배를 반영했습니다. 274개 서면 기대값이며 실제 앱/복구/화면/밸런스 검증은 구현 후입니다.
 
 최신 v0.13: [77 전체 화면 조회·명령 연결](77-SCREEN-QUERY-COMMAND-BINDINGS.md) · [78 새 게임 생성·중단 복구](78-NEW-GAME-CREATION-RECOVERY.md). 45화면 연결표와 생성 복구 10개 기대값 추가, 총202개 서면 기대값. 앱 구현·실제 복구 시험 전입니다. 현재 현황은 [STATUS](STATUS.md)를 우선합니다.

@@ -1,8 +1,10 @@
-# 다시, 플레이볼 — 통합 상세설계 v0.14
+# 다시, 플레이볼 — 통합 상세설계 v0.14 · 플랫폼 보완
 
 ---
 
 <!-- SOURCE: START-HERE.md -->
+
+최신 플랫폼 범위: [86 네 환경 지원](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). Android/iPhone/Windows/macOS의 브라우저 웹과Android APK를 기본 목표로 합니다. iPhone 홈 화면 웹앱과 별도 iOS 네이티브 앱은 구분합니다. 현재 미구현이며CP01~06 실환경 검수는 계획입니다.
 
 최신 v0.14: [79 생성 입력](79-CREATION-FIELDS-VALIDATION-COPY.md) · [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md) · [81 이벤트 검토](81-EVENT-OCCURRENCE-COLLISION-AUDIT.md) · [82 확률·효과](82-PROBABILITY-EFFECTS-CONFIRMATION-AUDIT.md) · [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md) · [84 통합 경로·게이트](84-DESIGN-GATES-END-TO-END-PATHS.md) · [85 난이도 후속 확정](85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md). 남은6항목의 서면 검토와 구단 치트 전체 잠재력100·성장3배를 반영했습니다. 274개 서면 기대값이며 실제 앱/복구/화면/밸런스 검증은 구현 후입니다.
 
@@ -69,6 +71,8 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 ---
 
 <!-- SOURCE: README.md -->
+
+최신 플랫폼 범위: [86 네 환경 지원](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). Android/iPhone/Windows/macOS의 브라우저 웹과Android APK를 기본 목표로 합니다. iPhone 홈 화면 웹앱과 별도 iOS 네이티브 앱은 구분합니다. 현재 미구현이며CP01~06 실환경 검수는 계획입니다.
 
 최신 v0.14: [79 생성 입력](79-CREATION-FIELDS-VALIDATION-COPY.md) · [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md) · [81 이벤트 검토](81-EVENT-OCCURRENCE-COLLISION-AUDIT.md) · [82 확률·효과](82-PROBABILITY-EFFECTS-CONFIRMATION-AUDIT.md) · [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md) · [84 통합 경로·게이트](84-DESIGN-GATES-END-TO-END-PATHS.md) · [85 난이도 후속 확정](85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md). 남은6항목의 서면 검토와 구단 치트 전체 잠재력100·성장3배를 반영했습니다. 274개 서면 기대값이며 실제 앱/복구/화면/밸런스 검증은 구현 후입니다.
 
@@ -174,6 +178,8 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 
 <!-- SOURCE: STATUS.md -->
 
+최신 플랫폼 범위: [86 네 환경 지원](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). Android/iPhone/Windows/macOS의 브라우저 웹과Android APK를 기본 목표로 합니다. iPhone 홈 화면 웹앱과 별도 iOS 네이티브 앱은 구분합니다. 현재 미구현이며CP01~06 실환경 검수는 계획입니다.
+
 # 상세설계 현황 — v0.14 남은6항목 검토·난이도 후속 확정
 
 2026-10-19. 사용자가 요청한 생성 입력/전체 화면 반응/이벤트 충돌/확률 표시/디자인 검수 기준/통합 경로의 서면 검토를79~84로 작성했습니다. 후속 구단 치트·하드 결정은85에 반영했습니다. 앱 구현·DB 배포·웹/APK 빌드·실환경 검증은 시작하지 않았습니다.
@@ -271,6 +277,9 @@ v0.13:77 전체45화면 조회·행동 연결과78 소유자 범위 새 게임 �
 
 
 v0.14:79~84로 요청된 남은6개 설계 검토를 작성,85로 구단 전체 치트P100·성장3배와하드경쟁/AI정책을 반영했습니다. 274개 서면 기대값·45복구행·99근거행·20확률표면·24경로. 실제 화면/엔진/Neon/이어하기/밸런스/build/APK 검수는 구현 후 게이트입니다. 별도 지시 전 구현을 시작하지 않습니다.
+
+
+2026-10-19 플랫폼 보완: [86](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). 네 환경의 웹 플레이+Android APK를 기본 목표로 정리합니다. iPhone은 Safari/홈 화면 웹앱,Windows/macOS는브라우저. 별도iOS·데스크톱 설치형은후속 선택 범위. 실제 호환 검수 미실행.
 
 
 ---
@@ -433,6 +442,9 @@ U:강화는정확한증가량·비용을우선표시(75),상한추론가능함�
 U: 구단 치트는 내 구단 모든 선수와 이후 영입/보관 투입의6잠재력100·양의 자연성장3배. 무제한 자금·적격 탐색/유효 수락 보장도 유지. D: 구종XP3배/cap60 및 소속기간 계산,퇴단P100보존·성장배율종료. 기존 구단1배/P미보장 문구를85로 대체. 원본은 수정하지 않음.
 
 구단 난도는 설계자 재량. D: 구단 하드 동일 예산/성장/P·AI 판단 강화. 커리어 하드 경쟁환경은 D NPC P+5상한100·성장/구종XP1.2배·cap24,주인공 기존P/성장1배. 수치D는 실제 장기 밸런스 검증 전. 상세는85,구현/배포 자동 착수 아님.
+
+2026-10-19 플랫폼 보완: [86](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). 네 환경의 웹 플레이+Android APK를 기본 목표로 정리합니다. iPhone은 Safari/홈 화면 웹앱,Windows/macOS는브라우저. 별도iOS·데스크톱 설치형은후속 선택 범위. 실제 호환 검수 미실행.
+
 
 ---
 
@@ -955,6 +967,9 @@ org-purple-shadow-03640418 / polished-truth-68571504. 초기 production 연결�
 DB migration은 Drizzle로 버전관리, direct 연결. schema 버전 N→N+1 변환은 dev에서 실제 유사세이브 검증, 변환 전 백업. 새 앱은 구버전 세이브를 읽고 변환할 수 있어야 하며 다운그레이드는 미지원. 기능 플래그로 쓰기를 잠시 막고 점검 화면 제공. 롤백은 이전 호환 앱으로 전환하거나 백업을 새 세이브로 복원, 운영 DB 일괄 덮어쓰기는 기본 대응이 아니다.
 
 관측 지표: 명령 성공률, 중복 재시도수,409수, 저장/조회 p95, 게임청크 계산시간, state크기, 백업 실패. 서버 콜드스타트가 있으므로 저장중 상태를 유지하고 시간초과가 곧 진행취소라는 문구를 쓰지 않는다. 비용 예산/알림 금액은 실제 Neon 요금제 확인 후 정하며 무료 운영을 보장하지 않는다.
+
+
+2026-10-19 플랫폼 보완: [86](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). 네 환경의 웹 플레이+Android APK를 기본 목표로 정리합니다. iPhone은 Safari/홈 화면 웹앱,Windows/macOS는브라우저. 별도iOS·데스크톱 설치형은후속 선택 범위. 실제 호환 검수 미실행.
 
 
 ---
@@ -2678,6 +2693,9 @@ production 브랜치 br-nameless-dust-a10jtrs6:ready/primary/default 확인. 데
 
 
 2026-10-19 사용자필수:웹·APK중단후이어하기. [76 이어하기계약](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)의홈최근게임/서버resumeDescriptor/송신전저널/receipt재조회/경기·선택·작업복원과12검수시나리오를적용한다. 서버확정진행은종료이벤트와무관히보존,미송신초안은별도기기선호다. 미리보기/확정의복구는[74](74-PREVIEW-COMMAND-RECONCILIATION.md).
+
+
+2026-10-19 플랫폼 보완: [86](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). 네 환경의 웹 플레이+Android APK를 기본 목표로 정리합니다. iPhone은 Safari/홈 화면 웹앱,Windows/macOS는브라우저. 별도iOS·데스크톱 설치형은후속 선택 범위. 실제 호환 검수 미실행.
 
 
 ---
@@ -5485,6 +5503,61 @@ P100 확정 사실은 해당 선수 화면에 고정 정책으로 공개할 수 
 
 ---
 
+<!-- SOURCE: 86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md -->
+
+# 86. 안드로이드·아이폰·윈도우·맥 지원 범위
+
+2026-10-19. U: 최초 요청은 웹앱+Android APK였으며 네 환경 모두 가능한지 확인했다. 기존06의 React/Vite 공통 UI·Hono API·Neon 저장 구조를 유지하고 브라우저 지원 대상을 명시한다. 아래는 지원 목표와 검수 계약이며 현재 실행 가능한 앱이 출시됐다는 의미가 아니다.
+
+## 배포 형태와 범위
+
+| 환경 | 기본 제공 목표 | 별도 설치형 |
+|---|---|---|
+| Android | 모바일 웹,홈 화면 웹앱 | 서명된 APK,기존 필수 범위 |
+| iPhone | Safari 모바일 웹,홈 화면에 추가한 웹앱 | iOS 네이티브 패키지는 후속 선택 범위 |
+| Windows | PC 브라우저 웹 | 전용 exe 설치형은 후속 선택 범위 |
+| macOS | Safari/Chrome 계열 PC 웹 | 전용 dmg/app 설치형은 후속 선택 범위 |
+
+APK는 안드로이드용이며 iPhone·Windows·macOS 설치 파일이 아니다. 네 환경의 브라우저 플레이는 하나의 반응형 웹을 배포해 지원한다. iPhone에서는 Safari의 홈 화면 추가로 앱처럼 실행하는 사용 경로를 제공한다. 이 경로를 App Store에서 설치하는 iOS 앱이라고 표현하지 않는다. 데스크톱 웹앱 설치 제공 여부는 브라우저 기능을 감지하고 설치 버튼이 없는 경우에도 일반 URL 플레이가 가능하게 한다.
+
+D: 첫 배포는 네 환경의 웹+Android APK. iOS 네이티브나 Windows/macOS 전용 설치형은 사용자가 원할 때 추가한다. 지금 질문을 별도3종 네이티브 배포 지시로 확대하지 않는다. 모든 필수 게임 모드는 브라우저와APK에서 같아야 하며 iPhone이라고 대학·병역·구단 운영을 빼지 않는다.
+
+## 공통 코드와 플랫폼 어댑터
+
+공유: 화면·6능력·확률/효과 컴포넌트·폼 검증·API 클라이언트·진행 상태/명령 저널 규약. 엔진·RNG·세계 revision·계약/금액 판정은 서버가 권한을 가진다. 브라우저마다 계산 차이로 공식 기록이 달라지지 않게 한다. Neon DB/스토리지 비밀키는 서버 환경에만 둔다.
+
+플랫폼 어댑터: 로컬 저널/초안,로그인 복귀,파일 다운로드·공유,앱 resume/visibility 이벤트,뒤로가기. 웹은 IndexedDB와 서버 인증 세션,Android는 앱 샌드박스 저널과28의 네이티브 인증 계약. UI가 Capacitor 전용 API를 직접 호출하지 않고 웹 fallback을 제공한다. 브라우저에 없는 공유·다운로드 기능 때문에 경기나 저장이 막히지 않는다.
+
+iPhone Safari와 홈 화면 웹앱은 로그인/로컬 저장을 공유한다고 가정하지 않는다. 각 실행 환경에서 필요하면 로그인하고 같은 계정의 서버 확정 진행을 조회한다. PC↔스마트폰 역시 동일 로그인 계정으로 이어간다. 로그인 세션·미송신 초안이 기기 간 자동 복사된다는 뜻이 아니다. 두 기기에서 동시에 확정하면74의 revision 충돌과 receipt 규칙으로 중복을 막는다.
+
+## PWA와 온라인 경계
+
+manifest는 앱명 '다시, 플레이볼',icons,start_url,scope,standalone 표현을 갖는다. HTTPS 운영에서 홈 화면 경로를 검수한다. 웹 manifest·서비스워커를 갖추는 것은 구현 작업이며 현재 이 설계만으로 설치 기능이 동작하는 것은 아니다.
+
+서비스워커를 사용할 경우 버전이 붙은 정적 UI 자산만 캐시한다. 인증·저장·개인 기록 API·짧은 서명 URL을 public cache에 넣지 않는다. 오프라인은 설치 셸·기기 설정·이전에 확인한 캐시 읽기까지,새 경기·계약·강화 등 세계 진행은 불가다. PWA 설치와 오프라인 게임 가능을 혼동하지 않는다.
+
+새 자산 다운로드 후 업데이트 안내를 제공하고 미확정 명령/저널을 유실시키는 강제 reload를 하지 않는다. API 최소 호환 버전보다 오래된 웹/APK는 갱신 안내 후 새 명령을 차단하며 오래된 코드로 새 schema를 쓰지 않는다. iOS 배경 전환 때 작업자가 계속 실행된다고 가정하지 않고76의 서버 상태 조회로 복귀한다.
+
+## iOS 네이티브를 추가한다면
+
+기존 웹 UI를 Capacitor iOS로 재사용할 수 있지만 iOS 프로젝트·플러그인·인증 복귀·보안 저장·서명·배포·실기기 검수가 추가된다. APK를 변환하거나 확장자만 바꾸는 작업이 아니다. Capacitor 공식 문서상 iOS 빌드에는 macOS와Xcode 환경이 필요하다. 로컬 Mac 또는 macOS 빌드 환경 확보를 실제 착수 때 확인하며 현재 접근 가능하다고 주장하지 않는다.
+
+배포 방식·Apple 계정·서명·테스트 배포/스토어 제공은 그 단계에서 별도로 정한다. 비용 결제·계정 등록·App Store 공개를 이번 설계 작업으로 실행하지 않는다. PC 전용 설치형도 동일하게 별도 래퍼·서명·업데이트 계약과 검수가 필요하다.
+
+## 검수 대상
+
+출시 시 안정 버전 및 직전 주요 버전을 D 브라우저 검수 정책으로 삼고 실제 OS/브라우저/기기 버전을 결과에 기록한다. Android APK 최소 OS는 채택할 Capacitor·플러그인 버전과 실기기 검수로 확정하며 임의 버전 숫자를 호환 보장처럼 적지 않는다.
+
+CP01 Android Chrome 웹,CP02 iPhone Safari 웹,CP03 iPhone 홈 화면 웹앱,CP04 Windows Chrome/Edge 웹,CP05 macOS Safari/Chrome 웹,CP06 Android release APK. 각 대상에서 생성→1경기→저장→종료→같은 환경 복귀→다른 환경 동일 계정 이어하기,로그아웃·계정 격리,긴 이름·6능력·종합·확률·파일 다운로드를 시험한다. CP01~06은 검수 계획이며 실제 통과 결과가 아니다.
+
+## 근거와 인계
+
+2026-10-19 공식 문서 확인: [Capacitor 환경 설정](https://capacitorjs.com/docs/getting-started/environment-setup)은 Web/Android/iOS 대상과 iOS의 macOS/Xcode 빌드 환경을 안내한다. [Apple iPhone 사용 설명서](https://support.apple.com/en-mide/guide/iphone/iphea86e5236/27/ios/27)는 Safari에서 홈 화면 웹앱으로 추가하는 방법을 안내한다. 배포 시 문서를 다시 확인한다.
+
+기존 웹/APK 표현은 이 문서의 네 환경 웹 지원을 포함하도록 읽는다. [76 이어하기](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md), [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md), [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md), [84 게이트](84-DESIGN-GATES-END-TO-END-PATHS.md)를 CP01~06에 적용한다. 서면 기대값274개 집계는 유지하며 플랫폼 검수6대상은 별도 계획으로 센다.
+
+---
+
 <!-- SOURCE: EVENT-CATALOG.md -->
 
 # 이벤트 전체 문안 — 99종 설계용
@@ -6351,6 +6424,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: HANDOFF-PROMPT.md -->
 
+최신 플랫폼 범위: [86 네 환경 지원](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). Android/iPhone/Windows/macOS의 브라우저 웹과Android APK를 기본 목표로 합니다. iPhone 홈 화면 웹앱과 별도 iOS 네이티브 앱은 구분합니다. 현재 미구현이며CP01~06 실환경 검수는 계획입니다.
+
 최신 v0.14: [79 생성 입력](79-CREATION-FIELDS-VALIDATION-COPY.md) · [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md) · [81 이벤트 검토](81-EVENT-OCCURRENCE-COLLISION-AUDIT.md) · [82 확률·효과](82-PROBABILITY-EFFECTS-CONFIRMATION-AUDIT.md) · [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md) · [84 통합 경로·게이트](84-DESIGN-GATES-END-TO-END-PATHS.md) · [85 난이도 후속 확정](85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md). 남은6항목의 서면 검토와 구단 치트 전체 잠재력100·성장3배를 반영했습니다. 274개 서면 기대값이며 실제 앱/복구/화면/밸런스 검증은 구현 후입니다.
 
 최신 v0.13: [77 전체 화면 조회·명령 연결](77-SCREEN-QUERY-COMMAND-BINDINGS.md) · [78 새 게임 생성·중단 복구](78-NEW-GAME-CREATION-RECOVERY.md). 45화면 연결표와 생성 복구 10개 기대값 추가, 총202개 서면 기대값. 앱 구현·실제 복구 시험 전입니다. 현재 현황은 [STATUS](STATUS.md)를 우선합니다.
@@ -6420,3 +6495,5 @@ HTML 숨김 치트 설명을 구단 전체 잠재력100·자연성장/구종숙�
 실제 렌더링·스크린리더·모바일 키보드/터치·웹/APK 강제종료·2기기·인증/owner격리·Neon/파일/백업복원·worker장애·장기 밸런스·AI/build/APK는 미실행입니다. 기존 MXC 오류 이후 픽셀 검수 재시도는 없었습니다. 장기 실험12개/불변조건24개/통합경로24개는 계획이며 production 변경은 없습니다.
 
 Git diff 공백 검사와 패키지 SHA 해시는 별도로 확인합니다. 통합MD와SHA목록을 갱신하며,서면 기준 완료와 구현 준비용 실행 게이트를 STATUS/84에서 분리했습니다.
+
+플랫폼86 보완 후 같은 정적 검사를 재실행해 통과했습니다. 공식 Capacitor/Apple 문서를 확인하고CP01~06의 네 환경 웹·홈 화면·release APK 검수 대상을 작성했습니다. 실제 플랫폼 실행 시험은 미실행이며274개 서면 기대값 집계는 유지합니다.

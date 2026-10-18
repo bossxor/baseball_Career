@@ -26,3 +26,6 @@
 
 
 최신 v0.14: [남은6항목 설계·통합 경로](docs/design/84-DESIGN-GATES-END-TO-END-PATHS.md), [난이도·구단 전체 치트 잠재력100/성장3배](docs/design/85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md). 274개 서면 기대값,실제 앱 구현·실행 검증은 시작 전입니다.
+
+
+[플랫폼 지원 범위](docs/design/86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md): Android·iPhone·Windows·macOS 웹 플레이와Android APK. iPhone 홈 화면 웹앱 제공 목표,별도iOS/PC 네이티브 설치형은선택 범위이며실제 동작 검증 전입니다.

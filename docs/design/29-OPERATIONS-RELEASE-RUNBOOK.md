@@ -63,3 +63,6 @@ production 브랜치 br-nameless-dust-a10jtrs6:ready/primary/default 확인. 데
 
 
 2026-10-19 사용자필수:웹·APK중단후이어하기. [76 이어하기계약](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)의홈최근게임/서버resumeDescriptor/송신전저널/receipt재조회/경기·선택·작업복원과12검수시나리오를적용한다. 서버확정진행은종료이벤트와무관히보존,미송신초안은별도기기선호다. 미리보기/확정의복구는[74](74-PREVIEW-COMMAND-RECONCILIATION.md).
+
+
+2026-10-19 플랫폼 보완: [86](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). 네 환경의 웹 플레이+Android APK를 기본 목표로 정리합니다. iPhone은 Safari/홈 화면 웹앱,Windows/macOS는브라우저. 별도iOS·데스크톱 설치형은후속 선택 범위. 실제 호환 검수 미실행.
