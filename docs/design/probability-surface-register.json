@@ -1,0 +1,337 @@
+{
+  "schemaVersion": 1,
+  "surfaces": [
+    {
+      "id": "OD01",
+      "screenIds": [
+        "S23"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "EXACT",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "도전 강화",
+      "target": "강화 성공",
+      "ruleSections": [
+        "75"
+      ],
+      "requiredContext": "성공·실패 실제 증가와 피로·기회"
+    },
+    {
+      "id": "OD02",
+      "screenIds": [
+        "S23"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "DETERMINISTIC",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "확정 성장·컨디셔닝",
+      "target": "확정 효과",
+      "ruleSections": [
+        "75"
+      ],
+      "requiredContext": "증가 또는 회복의 상한 절삭"
+    },
+    {
+      "id": "OD03",
+      "screenIds": [
+        "S36"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "EXACT",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "스카우트 탐색",
+      "target": "미발견 적격 선수 발견",
+      "ruleSections": [
+        "40"
+      ],
+      "requiredContext": "비용·월 잔여·후보 없음 구분"
+    },
+    {
+      "id": "OD04",
+      "screenIds": [
+        "S17"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "EXACT",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "구단 영입 제안",
+      "target": "이번 라운드 해당 선수 수락",
+      "ruleSections": [
+        "40"
+      ],
+      "requiredContext": "기준 라운드·제안 예약·경쟁 상태"
+    },
+    {
+      "id": "OD05",
+      "screenIds": [
+        "S28",
+        "S05"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "EXACT",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "드래프트 전망",
+      "target": "최종 지명 여부",
+      "ruleSections": [
+        "34"
+      ],
+      "requiredContext": "지명 조건부 예상 라운드·전체 분포"
+    },
+    {
+      "id": "OD06",
+      "screenIds": [
+        "S41"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "EXACT",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "연봉 역제안",
+      "target": "역제안 수락",
+      "ruleSections": [
+        "59"
+      ],
+      "requiredContext": "대리인 수수료·거절시 원제안 유지"
+    },
+    {
+      "id": "OD07",
+      "screenIds": [
+        "S24",
+        "S26"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "RANKED",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "국가대표·상무 선발",
+      "target": "현재 선발 평가",
+      "ruleSections": [
+        "20",
+        "21"
+      ],
+      "requiredContext": "평가점수·순위·기준선,가짜 확률 없음"
+    },
+    {
+      "id": "OD08",
+      "screenIds": [
+        "S29",
+        "S32",
+        "S08"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "DETERMINISTIC",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "받은 확정 오퍼 수락",
+      "target": "계약 체결 조건",
+      "ruleSections": [
+        "23"
+      ],
+      "requiredContext": "유효 오퍼 수·기간·병역·권리"
+    },
+    {
+      "id": "OD09",
+      "screenIds": [
+        "S31"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "DETERMINISTIC",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "포스팅 승인",
+      "target": "신청 자격과 승인 조건",
+      "ruleSections": [
+        "23"
+      ],
+      "requiredContext": "미달 이유,확률 추첨처럼 표시 금지"
+    },
+    {
+      "id": "OD10",
+      "screenIds": [
+        "S34"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "DETERMINISTIC",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "대학 입학",
+      "target": "현재 합법 입학 경로",
+      "ruleSections": [
+        "43"
+      ],
+      "requiredContext": "학교·경쟁·학년과 진로 효과"
+    },
+    {
+      "id": "OD11",
+      "screenIds": [
+        "S22",
+        "S39"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "DETERMINISTIC",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "유형·집중·구종 배분 변경",
+      "target": "설정 변경",
+      "ruleSections": [
+        "35",
+        "57"
+      ],
+      "requiredContext": "적용 시점·정확4개·비율합"
+    },
+    {
+      "id": "OD12",
+      "screenIds": [
+        "S03",
+        "S30",
+        "S35",
+        "S13"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "EXACT",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "다음 경기 부상 위험",
+      "target": "실제 출전시 부상 발생",
+      "ruleSections": [
+        "01"
+      ],
+      "requiredContext": "경기당,피로 스냅샷,결장 선수 제외"
+    },
+    {
+      "id": "OD13",
+      "screenIds": [
+        "S06"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "CONDITIONAL",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "부상 종류와 회복",
+      "target": "부상 발생시 중증도",
+      "ruleSections": [
+        "01"
+      ],
+      "requiredContext": "80/18/2 조건부 분포,팀 경기수 회복"
+    },
+    {
+      "id": "OD14",
+      "screenIds": [
+        "S19",
+        "S44"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "REPLAY_EXACT",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "타석·추가진루 결과",
+      "target": "해당 확정 플레이의 판정",
+      "ruleSections": [
+        "24",
+        "41",
+        "62"
+      ],
+      "requiredContext": "회고 확률,선택 확률과 분리"
+    },
+    {
+      "id": "OD15",
+      "screenIds": [
+        "S03",
+        "S30"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "RANKED",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "승강·보직 경쟁",
+      "target": "현재 기용 검토",
+      "ruleSections": [
+        "19",
+        "23",
+        "41"
+      ],
+      "requiredContext": "기용점수·슬롯·검토창,출장 보장 없음"
+    },
+    {
+      "id": "OD16",
+      "screenIds": [
+        "S06"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "SYSTEM_RANDOM",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "일반 서사 후보 발생",
+      "target": "해당 체크포인트 사건 발생",
+      "ruleSections": [
+        "26"
+      ],
+      "requiredContext": "실제 모형이 있을 때만,선택 성패로 오표시 금지"
+    },
+    {
+      "id": "OD17",
+      "screenIds": [
+        "S11",
+        "S12",
+        "S43"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "DETERMINISTIC",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "원본 복사·지도자 고용",
+      "target": "적격 슬롯·원본 claim",
+      "ruleSections": [
+        "42",
+        "61",
+        "79"
+      ],
+      "requiredContext": "19세 반값·새 잠재력 또는 지도자 급여"
+    },
+    {
+      "id": "OD18",
+      "screenIds": [
+        "S38",
+        "S40",
+        "S45"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "EVIDENCE",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "특성·목표·연대기",
+      "target": "실제 기록 조건 달성",
+      "ruleSections": [
+        "56",
+        "58",
+        "63"
+      ],
+      "requiredContext": "진척·실제 근거,해금 확률 없음"
+    },
+    {
+      "id": "OD19",
+      "screenIds": [
+        "S01",
+        "S20",
+        "S21"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "TECHNICAL",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "저장·복구·설정",
+      "target": "게임 외 작업 상태",
+      "ruleSections": [
+        "74",
+        "76",
+        "78"
+      ],
+      "requiredContext": "성공률 배지 없음,job·저널 상태"
+    },
+    {
+      "id": "OD20",
+      "screenIds": [
+        "S15",
+        "S14",
+        "S37"
+      ],
+      "hideNumericIfExactlyOne": true,
+      "kind": "DETERMINISTIC",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "surface": "기용·등록·재정 변경",
+      "target": "현재 합법 변경",
+      "ruleSections": [
+        "44",
+        "77"
+      ],
+      "requiredContext": "정원·예산·필수 포지션"
+    }
+  ],
+  "status": "DESIGN_EXPECTATIONS_ONLY"
+}
