@@ -31,6 +31,6 @@ node docs/design/verify-design.mjs 통과:20대표/48순수 HTML 문자열,초�
 
 ## 다음 상세화
 
-100~104로 고유특성·구종/타격성향·목표/도전·관계/지도자·연대기/중계의 상태별 UI를 초안D로 작성했다: [100 히든 특성](100-HIDDEN-TRAITS.md)(T13~T16 확정, 계수 미정), [101 구종·성향](101-REPERTOIRE-STATE-UI.md), [102 목표·도전](102-GOALS-STATE-UI.md), [103 에이전트·라이벌·지도자](103-AGENTS-RELATIONS-STAFF-STATE-UI.md), [104 중계·연대기](104-COMMENTARY-CHRONICLE-STATE-UI.md). 문구·배치는 초안이며 47~65와 보드/fixture는 아직 갱신하지 않았다.
+100~104로 고유특성·구종/타격성향·목표/도전·관계/지도자·연대기/중계의 상태별 UI를 초안D로 작성했다: [100 히든 특성](100-HIDDEN-TRAITS.md)(T13~T16 이름·조건·계수 확정), [101 구종·성향](101-REPERTOIRE-STATE-UI.md), [102 목표·도전](102-GOALS-STATE-UI.md), [103 에이전트·라이벌·지도자](103-AGENTS-RELATIONS-STAFF-STATE-UI.md), [104 중계·연대기](104-COMMENTARY-CHRONICLE-STATE-UI.md). T13~T16 효과계수와 101 슬라이더 보정 순서는 확정했고 문구·배치는 초안이며 47~65와 보드/fixture는 아직 갱신하지 않았다.
 
-남은 일: 101 슬라이더 자동보정 순서와 T13~T16 효과계수 확정, 100~104를 [91](91-CURRENT-CONTRACT-INDEX.md)·보드·fixture에 반영, 이후 구현 착수 전 실행 게이트 정의. 새 규칙을 만들기 전에 56~65 원문을 확인한다.
+남은 일: 100~104를 [91](91-CURRENT-CONTRACT-INDEX.md)·보드·fixture에 반영, 이후 구현 착수 전 실행 게이트 정의. 새 규칙을 만들기 전에 56~65 원문을 확인한다.
