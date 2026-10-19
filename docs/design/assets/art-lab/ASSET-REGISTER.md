@@ -21,3 +21,7 @@ No output pixel edits or recompression were performed outside image_gen. Atlas c
 
 Browser rendering was not verified: automated file: navigation was rejected by the browser's URL policy. No server,alternate browser surface,CDP or other workaround was used. Syntax/asset/data validation is recorded separately from browser behavior.
 Extension 1.2: ninth built-in call created a distinct fictional adult pitcher using the existing generated portrait as style reference. Output copied without pixel editing; reference and original preserved. Tool output visually inspected. PNG dimensions/alpha metadata verified by static checker. Fine silhouette fringes and small-screen compositing remain production QA; browser rendering remains unverified. Total project PNGs: eight.
+
+## 시각1.8 추가
+
+career-scenes-finish-v1.png —1536×1024/3×2패널6컷,대학/마이너원정/중립라이벌/복귀/은퇴/구장. 새원본생성2026-10-19,빈티지선택유지. FINISH-GENERATION.json에프롬프트/원본경로/사용처. 프로젝트사본과원본을보존하고finish-board.html에서중앙크롭. 총PNG9개이며실제브라우저크롭검수는미실행.

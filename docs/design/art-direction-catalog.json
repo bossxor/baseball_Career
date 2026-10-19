@@ -262,5 +262,32 @@
     }
   ],
   "previewVariants": 30,
-  "visualFlowCatalog": "visual-flow-catalog.json"
+  "visualFlowCatalog": "visual-flow-catalog.json",
+  "supplementalFinishBoard": {
+    "file": "finish-board.html",
+    "data": "finish-board-data.json",
+    "screenIds": [
+      "S01",
+      "S04",
+      "S10",
+      "S11",
+      "S15",
+      "S18",
+      "S20",
+      "S21",
+      "S22",
+      "S25",
+      "S26",
+      "S27",
+      "S29",
+      "S31",
+      "S32",
+      "S33",
+      "S34"
+    ],
+    "stateCount": 136,
+    "newIllustration": "assets/art-lab/career-scenes-finish-v1.png",
+    "sceneCount": 6,
+    "browserReview": "NOT_EXECUTED"
+  }
 }

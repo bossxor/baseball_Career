@@ -280,6 +280,8 @@
       "scope": "6능력목록·평균·로고·폰트·모바일검수",
       "topic": "시각·이미지·접근성",
       "currentSources": [
+        "109-FINISH-BOARD-ART-AUDIT.md",
+        "108-ALL-SCREEN-FINALIZATION.md",
         "99-CREATION-AMATEUR-US-JOURNEY.md",
         "98-CLUB-OPERATIONS-IMPORT-EXPERIENCE.md",
         "97-RESULTS-SEASON-DRAFT-EXPERIENCE.md",
@@ -347,7 +349,8 @@
         "91-CURRENT-CONTRACT-INDEX.md",
         "84-DESIGN-GATES-END-TO-END-PATHS.md",
         "73-LONG-RUN-FAULT-BALANCE-VALIDATION.md",
-        "71-INVARIANTS-DIAGNOSTICS-SAFE-STOP.md"
+        "71-INVARIANTS-DIAGNOSTICS-SAFE-STOP.md",
+        "109-FINISH-BOARD-ART-AUDIT.md"
       ],
       "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
     }

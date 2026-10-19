@@ -71,3 +71,5 @@ START-HERE/README/STATUS/14/91/92를 먼저 전달한다. 분야별 원문·카�
 ## 107 추가 경계 인계
 
 [107](107-RIVAL-HIDDEN-TRAIT-EDGE-RULES.md)은특성/관계 분야의상세 D 계약이다. 프로라이벌 형성·실제 결투 WIN,완봉·연속 시즌·정정 예외를 다루며사용자 확정 문턱·효과를 바꾸지 않는다. server-only/rival-trait-edge-expectations.json의36개 추가사례는전부NOT_IMPLEMENTED이며종전298개와별도다. 현재25분야 지도에서C10/C18에 연결한다.
+
+109 후속: [마감 보드](finish-board.html)에기존 대표28에포함되지 않던17개화면의배치·8종 상태를추가하고새6컷PNG를적용했다. 위 본문의미제작17/PNG8개는이전시점이다. 현재총9PNG·45화면ID 대표연결,최종픽셀/브라우저실행미검수는유지한다. 상세범위와후속은 [109](109-FINISH-BOARD-ART-AUDIT.md).

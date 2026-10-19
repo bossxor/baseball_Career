@@ -41,7 +41,12 @@
       "finalPixelStatus": "NOT_FINALIZED",
       "browserReview": "NOT_EXECUTED",
       "relatedLayoutFamilies": [],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S01",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S02",
@@ -78,7 +83,8 @@
       "relatedLayoutFamilies": [
         "creation"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S03",
@@ -115,7 +121,8 @@
       "relatedLayoutFamilies": [
         "career"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S04",
@@ -149,7 +156,12 @@
       "finalPixelStatus": "NOT_FINALIZED",
       "browserReview": "NOT_EXECUTED",
       "relatedLayoutFamilies": [],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S04",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S05",
@@ -185,7 +197,8 @@
       "relatedLayoutFamilies": [
         "draft"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S06",
@@ -222,7 +235,8 @@
         "event",
         "rehab"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S07",
@@ -259,7 +273,8 @@
       "relatedLayoutFamilies": [
         "season"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S08",
@@ -295,7 +310,8 @@
       "relatedLayoutFamilies": [
         "contract"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S09",
@@ -331,7 +347,8 @@
       "relatedLayoutFamilies": [
         "archive"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S10",
@@ -365,7 +382,12 @@
       "finalPixelStatus": "NOT_FINALIZED",
       "browserReview": "NOT_EXECUTED",
       "relatedLayoutFamilies": [],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S10",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S11",
@@ -402,7 +424,12 @@
       "relatedLayoutFamilies": [
         "rebirth"
       ],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S11",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S12",
@@ -439,7 +466,8 @@
       "relatedLayoutFamilies": [
         "rebirth"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S13",
@@ -475,7 +503,8 @@
       "relatedLayoutFamilies": [
         "club"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S14",
@@ -512,7 +541,8 @@
       "relatedLayoutFamilies": [
         "roster"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S15",
@@ -548,7 +578,12 @@
       "relatedLayoutFamilies": [
         "roster"
       ],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S15",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S16",
@@ -584,7 +619,8 @@
       "relatedLayoutFamilies": [
         "rehab"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S17",
@@ -621,7 +657,8 @@
       "relatedLayoutFamilies": [
         "recruit"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S18",
@@ -655,7 +692,12 @@
       "finalPixelStatus": "NOT_FINALIZED",
       "browserReview": "NOT_EXECUTED",
       "relatedLayoutFamilies": [],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S18",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S19",
@@ -691,7 +733,8 @@
       "relatedLayoutFamilies": [
         "match"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S20",
@@ -725,7 +768,12 @@
       "finalPixelStatus": "NOT_FINALIZED",
       "browserReview": "NOT_EXECUTED",
       "relatedLayoutFamilies": [],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S20",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S21",
@@ -759,7 +807,12 @@
       "finalPixelStatus": "NOT_FINALIZED",
       "browserReview": "NOT_EXECUTED",
       "relatedLayoutFamilies": [],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S21",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S22",
@@ -793,7 +846,12 @@
       "finalPixelStatus": "NOT_FINALIZED",
       "browserReview": "NOT_EXECUTED",
       "relatedLayoutFamilies": [],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S22",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S23",
@@ -829,7 +887,8 @@
       "relatedLayoutFamilies": [
         "growth"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S24",
@@ -865,7 +924,8 @@
       "relatedLayoutFamilies": [
         "national"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S25",
@@ -902,7 +962,12 @@
       "relatedLayoutFamilies": [
         "national"
       ],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S25",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S26",
@@ -938,7 +1003,12 @@
       "relatedLayoutFamilies": [
         "national"
       ],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S26",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S27",
@@ -973,7 +1043,12 @@
       "finalPixelStatus": "NOT_FINALIZED",
       "browserReview": "NOT_EXECUTED",
       "relatedLayoutFamilies": [],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S27",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S28",
@@ -1013,7 +1088,8 @@
         "draft",
         "route"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S29",
@@ -1050,7 +1126,12 @@
         "contract",
         "route"
       ],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S29",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S30",
@@ -1087,7 +1168,8 @@
       "relatedLayoutFamilies": [
         "america"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S31",
@@ -1121,7 +1203,12 @@
       "finalPixelStatus": "NOT_FINALIZED",
       "browserReview": "NOT_EXECUTED",
       "relatedLayoutFamilies": [],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S31",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S32",
@@ -1157,7 +1244,12 @@
       "relatedLayoutFamilies": [
         "contract"
       ],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S32",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S33",
@@ -1192,7 +1284,12 @@
       "finalPixelStatus": "NOT_FINALIZED",
       "browserReview": "NOT_EXECUTED",
       "relatedLayoutFamilies": [],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S33",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S34",
@@ -1228,7 +1325,12 @@
       "relatedLayoutFamilies": [
         "college"
       ],
-      "declaredRepresentative": false
+      "declaredRepresentative": false,
+      "supplementalPreview": {
+        "file": "finish-board.html",
+        "screenId": "S34",
+        "status": "TEMPLATE_AUTHORED_BROWSER_NOT_REVIEWED"
+      }
     },
     {
       "screenId": "S35",
@@ -1264,7 +1366,8 @@
       "relatedLayoutFamilies": [
         "college"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S36",
@@ -1300,7 +1403,8 @@
       "relatedLayoutFamilies": [
         "scout"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S37",
@@ -1336,7 +1440,8 @@
       "relatedLayoutFamilies": [
         "budget"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S38",
@@ -1372,7 +1477,8 @@
       "relatedLayoutFamilies": [
         "traits"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S39",
@@ -1409,7 +1515,8 @@
         "growth",
         "repertoire"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S40",
@@ -1447,7 +1554,8 @@
         "goals",
         "achievements"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S41",
@@ -1484,7 +1592,8 @@
       "relatedLayoutFamilies": [
         "agents"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S42",
@@ -1522,7 +1631,8 @@
       "relatedLayoutFamilies": [
         "relations"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S43",
@@ -1559,7 +1669,8 @@
       "relatedLayoutFamilies": [
         "staff"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S44",
@@ -1596,7 +1707,8 @@
         "match",
         "commentary"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     },
     {
       "screenId": "S45",
@@ -1636,8 +1748,10 @@
         "chronicle",
         "exportCard"
       ],
-      "declaredRepresentative": true
+      "declaredRepresentative": true,
+      "supplementalPreview": null
     }
   ],
-  "coverageMeaning": "Declared representative comes from art-direction-catalog; related flow families may reference adjacent screens and do not prove dedicated rendering."
+  "coverageMeaning": "Declared representative comes from art-direction-catalog; related flow families may reference adjacent screens and do not prove dedicated rendering.",
+  "supplementalSource": "109-FINISH-BOARD-ART-AUDIT.md"
 }

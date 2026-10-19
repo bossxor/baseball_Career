@@ -136,3 +136,15 @@ Git/V문서205파일 일치 후기준을 저장했고동기화 전외부 변경�
 108의45개마감 행은원본 화면ID·제목·그림슬롯·대표28개집합과일치하고,8상태와4뷰포트 계획을검사한다. 전행NOT_FINALIZED/NOT_EXECUTED다. 관련 흐름 참조가있어도 별도대표화면 완료로 올리지 않는다.
 
 실행 결과: `node docs/design/verify-design.mjs` PASS, `git diff --check` PASS. 추가 출력은 `PASS: 36 server-only edge expectations indexed; duel, exact OPS, shutout and consecutive-season example arithmetic consistent. All 36 remain NOT_IMPLEMENTED.` 및 `PASS: 45 screen finish specifications, 28 declared representatives / 17 pending, 8 states and 4 viewports; final pixels and browser review remain unfinished.` 이다.
+
+## 시각1.8 — 마감 보드·새6컷 (2026-10-19)
+
+node docs/design/verify-design.mjs PASS. 추가결과:
+
+PASS: supplemental 17 screens x 8 = 136 pure render examples; original 28 + 17 = 45 IDs, resume-only home, local lineup example, escaping and six-panel PNG metadata.
+
+17화면×8상태문자열,기존28과합집합45/교집합0,JS/JSON자료일치,노출하면안되는히든정의0,이어하기문구유지,3타순중복예시,이스케이프,보관19세45.8,학교조건,새1536×1024PNG메타데이터를검사했다. 생성출력은도구이미지로직접확인했고원본+프로젝트사본을유지한다. 최초연결검사에서기본HTML에마감보드링크가빠진것을발견해헤더에연결하고재검사를통과했다.
+
+실제DOM이벤트/입력·focus/픽셀/이미지크롭/4뷰포트렌더/키보드/200%확대/스크린리더는미검수다. file: 정책차단을우회하지않았고이번에앱/Neon/API/DB/build/APK를실행하지않았다. 298기존게임/61UI/36새경계기대값은기존미실행상태를유지한다.
+
+V사본은작업전212파일해시일치를확인했으며동기화전외부변경을다시검사한다. 원래baseball-design미리보기에는HTML/공개JS/JSON/신규PNG만복사하며서버용히든정의/경계fixture는복사하지않는다.
