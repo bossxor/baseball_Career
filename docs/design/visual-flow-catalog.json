@@ -640,6 +640,85 @@
           "expected": "MLB등록과 실제 첫 출전 구분"
         }
       ]
+    },
+    {
+      "id": "traits",
+      "screenIds": [
+        "S38"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "도감",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedTraitDTO",
+            "definitionVersion"
+          ],
+          "expected": "일반 진척/히든 이름·암시/공개된 해금 상세 분리"
+        },
+        {
+          "phase": "detail",
+          "label": "히든 미해금",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedTraitDTO",
+            "definitionVersion"
+          ],
+          "expected": "일반 진척/히든 이름·암시/공개된 해금 상세 분리"
+        },
+        {
+          "phase": "receipt",
+          "label": "해금 후 상세",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedTraitDTO",
+            "definitionVersion"
+          ],
+          "expected": "일반 진척/히든 이름·암시/공개된 해금 상세 분리"
+        }
+      ]
+    },
+    {
+      "id": "repertoire",
+      "screenIds": [
+        "S39"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "구종 편집",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "confirmedPitchPlan",
+            "changeWindow",
+            "masteryBook"
+          ],
+          "expected": "슬라이더 합100/읽기전용/타자4성향 분리"
+        },
+        {
+          "phase": "detail",
+          "label": "변경 기회 소진",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "confirmedPitchPlan",
+            "changeWindow",
+            "masteryBook"
+          ],
+          "expected": "슬라이더 합100/읽기전용/타자4성향 분리"
+        },
+        {
+          "phase": "receipt",
+          "label": "타자 성향",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "confirmedPitchPlan",
+            "changeWindow",
+            "masteryBook"
+          ],
+          "expected": "슬라이더 합100/읽기전용/타자4성향 분리"
+        }
+      ]
     }
   ]
 }

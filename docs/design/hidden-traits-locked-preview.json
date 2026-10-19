@@ -1,0 +1,29 @@
+{
+  "status": "DESIGN_PREVIEW_ONLY",
+  "items": [
+    {
+      "traitId": "T13",
+      "hidden": true,
+      "name": "끝내기 본능",
+      "hint": "마지막 순간에 배트가 먼저 안다."
+    },
+    {
+      "traitId": "T14",
+      "hidden": true,
+      "name": "숙적 킬러",
+      "hint": "누군가에게만은 지고 싶지 않다."
+    },
+    {
+      "traitId": "T15",
+      "hidden": true,
+      "name": "완봉의 맛",
+      "hint": "마지막 아웃까지 마운드를 내주지 않는다."
+    },
+    {
+      "traitId": "T16",
+      "hidden": true,
+      "name": "꾸준한 에이스",
+      "hint": "해마다 같은 자리에 서 있다."
+    }
+  ]
+}

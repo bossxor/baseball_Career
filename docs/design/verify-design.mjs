@@ -394,4 +394,5 @@ assert.ok(Math.abs(importedUnits(912501)/10000 - 91.2501/2) <= .0000500001);
 for (const id of ['R41','R42','R43','R44','R45','R46','R47','R48','R49']) assert.ok(read('14-CANONICAL-DECISIONS.md').includes(`| ${id} |`));
 console.log('PASS: baseline 1.0 has 25 source topics, 10 specified closures and 12 NOT_EXECUTED gates; XP double-budget/cap-loss/remainder and import rounding examples. These are static/document arithmetic checks only.');
 await import('./verify-art-direction.mjs');
+await import('./verify-state-ui.mjs');
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

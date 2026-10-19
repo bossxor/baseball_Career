@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_RULES_NOT_IMPLEMENTED",
+  "distribution": "SERVER_ONLY_DO_NOT_BUNDLE",
+  "extends": [
+    "47-TRAITS-SIGNATURES.md",
+    "56-TRAITS-DETAILED-CONTRACT.md"
+  ],
+  "unlockedOnlyFullDisclosure": true,
+  "caps": {
+    "traitLogit": 0.06,
+    "combinedLogit": 0.1
+  },
+  "definitions": [
+    {
+      "id": "T13",
+      "name": "끝내기 본능",
+      "hint": "마지막 순간에 배트가 먼저 안다.",
+      "predicate": {
+        "kind": "CAREER_WALKOFF_HITS",
+        "minimum": 3
+      },
+      "activation": "inning>=9 AND half=BOTTOM AND homeMinusAway IN [-1,0]",
+      "effects": {
+        "1B": 0.05,
+        "2B": 0.04,
+        "K": -0.03
+      }
+    },
+    {
+      "id": "T14",
+      "name": "숙적 킬러",
+      "hint": "누군가에게만은 지고 싶지 않다.",
+      "predicate": {
+        "kind": "RIVAL_SEASON_SPLIT_AND_EVENT",
+        "minPA": 20,
+        "minOPS": {
+          "numerator": 9,
+          "denominator": 10
+        },
+        "requiresRelationshipWin": true,
+        "sameRivalPitcher": true,
+        "scope": "worldSeasonId+competitionId+REGULAR"
+      },
+      "activation": "opposingPitcherId==qualifiedRivalPitcherId",
+      "effects": {
+        "HR": 0.05,
+        "2B": 0.03,
+        "K": -0.03
+      }
+    },
+    {
+      "id": "T15",
+      "name": "완봉의 맛",
+      "hint": "마지막 아웃까지 마운드를 내주지 않는다.",
+      "predicate": {
+        "kind": "CAREER_COMPLETE_GAME_SHUTOUTS",
+        "minimum": 3
+      },
+      "activation": "starter AND inning>=7 AND pitcherRunsAllowed==0",
+      "effects": {
+        "OUT": 0.05,
+        "BB": -0.03,
+        "HR": -0.02
+      }
+    },
+    {
+      "id": "T16",
+      "name": "꾸준한 에이스",
+      "hint": "해마다 같은 자리에 서 있다.",
+      "predicate": {
+        "kind": "CONSECUTIVE_STARTER_QUALIFIED_REGULAR_SEASONS",
+        "minimum": 5,
+        "scope": "oneCompetitionPerWorldSeason"
+      },
+      "activation": "starter",
+      "effects": {
+        "OUT": 0.04,
+        "BB": -0.03
+      }
+    }
+  ]
+}

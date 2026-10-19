@@ -154,13 +154,14 @@
     "browserStatus": "BLOCKED_FILE_PROTOCOL",
     "screenImageSlots": 45,
     "selectedStyle": "almanac",
-    "version": "1.5",
+    "version": "1.6",
     "pngFiles": 8,
-    "previewScreens": 20,
+    "previewScreens": 22,
     "gameRulesChanged": false,
     "sceneCount": 12,
     "portraitCount": 2,
-    "visualStateExamples": 48,
-    "resumeEntry": "BUTTON_ONLY"
+    "visualStateExamples": 54,
+    "resumeEntry": "BUTTON_ONLY",
+    "traitDefinitionCount": 16
   }
 }

@@ -1,4 +1,4 @@
-시각 확장1.5: [99 생성·대학·미국 진로](99-CREATION-AMATEUR-US-JOURNEY.md)를 추가했습니다. [비교 보드](art-direction-lab.html)는 빈티지 대표20화면/48상태이며 PNG8개를 재사용합니다.96~98 상세 흐름과 함께 확인하세요. 이어하기는 버튼만 표시하는 R50/76 최신 계약을 유지합니다. 최신본은 V:\docs\design에도 반영합니다.
+외부 작업 인수/시각1.6: [100 히든](100-HIDDEN-TRAITS.md)~[104 상태 UI](104-COMMENTARY-CHRONICLE-STATE-UI.md)를 보존했고 [105 통합 기록](105-EXTERNAL-HANDOFF-INTEGRATION.md)에100/101 연결 범위를 정리했습니다. [보드](art-direction-lab.html)는22대표/54상태. T14는 라이벌 투수 상대 시즌20PA·OPS .900·관계 승리로 확정됐습니다. 최신 파일은V:\docs\design,이어하기는 버튼만 표시합니다.
 
 # 다시, 플레이볼 — 상세설계 기준본1.0
 

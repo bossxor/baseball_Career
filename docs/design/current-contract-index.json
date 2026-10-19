@@ -339,6 +339,7 @@
       "scope": "서면완료와실행미검증분리·적용문서지도",
       "topic": "검수·최종 인계",
       "currentSources": [
+        "105-EXTERNAL-HANDOFF-INTEGRATION.md",
         "92-DESIGN-CLOSURE-HANDOFF.md",
         "91-CURRENT-CONTRACT-INDEX.md",
         "84-DESIGN-GATES-END-TO-END-PATHS.md",
