@@ -1,0 +1,338 @@
+{
+  "baselineVersion": "1.0",
+  "schemaVersion": 1,
+  "status": "DESIGN_BASELINE",
+  "topics": [
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C01",
+      "scope": "커리어·독립 구단·네 환경 웹과Android APK",
+      "topic": "제품 범위·사용자 결정",
+      "currentSources": [
+        "14-CANONICAL-DECISIONS.md",
+        "84-DESIGN-GATES-END-TO-END-PATHS.md",
+        "86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C02",
+      "scope": "18세 고교 생성·고정 배열·집중4개·owner 생성 복구",
+      "topic": "생성·초기 입력",
+      "currentSources": [
+        "79-CREATION-FIELDS-VALIDATION-COPY.md",
+        "78-NEW-GAME-CREATION-RECOVERY.md",
+        "35-SIX-ABILITIES-FOUR-FOCUS.md",
+        "42-GROWTH-DIFFICULTY-REBIRTH.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C03",
+      "scope": "표시 평균·정수 단위·능력/XP 축 구분",
+      "topic": "6능력·종합·수치 정밀도",
+      "currentSources": [
+        "90-NUMERIC-LEDGER-CONSISTENCY.md",
+        "35-SIX-ABILITIES-FOUR-FOCUS.md",
+        "41-SIX-STAT-ENGINE.md",
+        "64-EXPANSION-COMMON-CONTRACT.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C04",
+      "scope": "합법 진로·탈락·복학·준비 예산",
+      "topic": "커리어 상태·재도전",
+      "currentSources": [
+        "66-RETRY-CAREER-OPPORTUNITIES.md",
+        "19-CAREER-STATE-MACHINE.md",
+        "43-COLLEGE-CAREER.md",
+        "23-US-CONTRACTS-RIGHTS.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C05",
+      "scope": "9학교·조기지명·라운드/확률·미국 카드",
+      "topic": "고교·대학·드래프트",
+      "currentSources": [
+        "43-COLLEGE-CAREER.md",
+        "34-ARCHETYPES-COLLEGE-ODDS.md",
+        "66-RETRY-CAREER-OPPORTUNITIES.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C06",
+      "scope": "직행·MiLB/MLB·원계약·국내 복귀",
+      "topic": "미국·포스팅·보유권",
+      "currentSources": [
+        "23-US-CONTRACTS-RIGHTS.md",
+        "34-ARCHETYPES-COLLEGE-ODDS.md",
+        "66-RETRY-CAREER-OPPORTUNITIES.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C07",
+      "scope": "명단/실제출장/개인자격/복무 분리",
+      "topic": "국제대회·병역·세계 달력",
+      "currentSources": [
+        "20-INTERNATIONAL-COMPETITIONS.md",
+        "21-MILITARY-CONTRACT-RETURN.md",
+        "14-CANONICAL-DECISIONS.md",
+        "69-EVENT-COLLISIONS-PROVISIONAL-STATE.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C08",
+      "scope": "기간·정확효과·관측범위·상한",
+      "topic": "자연성장·강화·잠재력",
+      "currentSources": [
+        "90-NUMERIC-LEDGER-CONSISTENCY.md",
+        "85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md",
+        "75-EXACT-EFFECTS-PUBLIC-INFORMATION.md",
+        "67-POTENTIAL-ASSESSMENT-PROGRESSION.md",
+        "42-GROWTH-DIFFICULTY-REBIRTH.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C09",
+      "scope": "기본예산/실제소비/실제지급·구성창·치트XP",
+      "topic": "구종·숙련·타격 성향",
+      "currentSources": [
+        "90-NUMERIC-LEDGER-CONSISTENCY.md",
+        "85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md",
+        "57-REPERTOIRE-DETAILED-CONTRACT.md",
+        "65-USER-TRAITS-XP-STAFF.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C10",
+      "scope": "보유전체 자동효과·기록해금·코스메틱 보상",
+      "topic": "특성·목표·기념 보상",
+      "currentSources": [
+        "65-USER-TRAITS-XP-STAFF.md",
+        "56-TRAITS-DETAILED-CONTRACT.md",
+        "58-GOALS-DETAILED-CONTRACT.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C11",
+      "scope": "아웃/득점/자동주자·유효능력·softmax",
+      "topic": "경기·기록 판정",
+      "currentSources": [
+        "24-GAME-ENGINE-SCORING.md",
+        "41-SIX-STAT-ENGINE.md",
+        "08-FORMULAS.md",
+        "56-TRAITS-DETAILED-CONTRACT.md",
+        "57-REPERTOIRE-DETAILED-CONTRACT.md",
+        "90-NUMERIC-LEDGER-CONSISTENCY.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C12",
+      "scope": "합법 로스터·예산예약·확률영입·자연 왕조",
+      "topic": "구단·경제·시장·AI",
+      "currentSources": [
+        "85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md",
+        "44-CLUB-ECONOMY-AI.md",
+        "40-SCOUTING-RECRUITMENT-ODDS.md",
+        "61-STAFF-DETAILED-CONTRACT.md",
+        "68-FRANCHISE-CYCLES-LEAGUE-HISTORY.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C13",
+      "scope": "능력별최고50%·19세·원본불변·같은세계역할claim",
+      "topic": "은퇴·보관·지도자",
+      "currentSources": [
+        "90-NUMERIC-LEDGER-CONSISTENCY.md",
+        "85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md",
+        "42-GROWTH-DIFFICULTY-REBIRTH.md",
+        "32-USER-IMPORT-REBIRTH.md",
+        "61-STAFF-DETAILED-CONTRACT.md",
+        "70-BACKUP-RESTORE-IDENTITY-COMPATIBILITY.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C14",
+      "scope": "99이벤트 근거·큐·provisional 최종1회",
+      "topic": "사건·경기중 상태",
+      "currentSources": [
+        "81-EVENT-OCCURRENCE-COLLISION-AUDIT.md",
+        "69-EVENT-COLLISIONS-PROVISIONAL-STATE.md",
+        "45-EVENT-CATALOG-REVISION.md",
+        "26-EVENT-CONTENT-CONTRACT.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C15",
+      "scope": "같은ID/요청해시·revision·receipt·소유자생성",
+      "topic": "미리보기·명령·동시성",
+      "currentSources": [
+        "74-PREVIEW-COMMAND-RECONCILIATION.md",
+        "75-EXACT-EFFECTS-PUBLIC-INFORMATION.md",
+        "64-EXPANSION-COMMON-CONTRACT.md",
+        "77-SCREEN-QUERY-COMMAND-BINDINGS.md",
+        "28-DATA-API-AUTH-TESTS.md",
+        "78-NEW-GAME-CREATION-RECOVERY.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C16",
+      "scope": "새save복원·simulationKey·세대원자교체·안전중단",
+      "topic": "저장·복원·연도 전환",
+      "currentSources": [
+        "70-BACKUP-RESTORE-IDENTITY-COMPATIBILITY.md",
+        "72-WORLD-YEAR-TRANSITION.md",
+        "71-INVARIANTS-DIAGNOSTICS-SAFE-STOP.md",
+        "29-OPERATIONS-RELEASE-RUNBOOK.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C17",
+      "scope": "같은owner journal·서버resume·오프라인읽기",
+      "topic": "이어하기·초안·화면 복귀",
+      "currentSources": [
+        "87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md",
+        "80-SCREEN-STATES-NAVIGATION-RECOVERY.md",
+        "76-CROSS-PLATFORM-INTERRUPTION-RESUME.md",
+        "78-NEW-GAME-CREATION-RECOVERY.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C18",
+      "scope": "오퍼별역제안·급여/수수료·실제대진근거",
+      "topic": "에이전트·관계",
+      "currentSources": [
+        "59-AGENTS-DETAILED-CONTRACT.md",
+        "60-RELATIONS-DETAILED-CONTRACT.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C19",
+      "scope": "감상/스킵/다시보기·resultHash·기념파일",
+      "topic": "확정 중계·연대기",
+      "currentSources": [
+        "89-PLATFORM-FILES-DOWNLOAD-SHARING.md",
+        "62-COMMENTARY-DETAILED-CONTRACT.md",
+        "63-CHRONICLE-DETAILED-CONTRACT.md",
+        "65-USER-TRAITS-XP-STAFF.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C20",
+      "scope": "대상/분모/기준시점·정확1숫자숨김",
+      "topic": "확률·선택 효과 표시",
+      "currentSources": [
+        "82-PROBABILITY-EFFECTS-CONFIRMATION-AUDIT.md",
+        "75-EXACT-EFFECTS-PUBLIC-INFORMATION.md",
+        "38-PROBABILITY-DISPLAY.md",
+        "40-SCOUTING-RECRUITMENT-ODDS.md",
+        "34-ARCHETYPES-COLLEGE-ODDS.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C21",
+      "scope": "6능력목록·평균·로고·폰트·모바일검수",
+      "topic": "시각·이미지·접근성",
+      "currentSources": [
+        "83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md",
+        "46-ALL-SCREENS-FLOWS.md",
+        "27-UI-INTERACTION-RESPONSIVE.md",
+        "37-BRAND-TEAM-LOGOS.md",
+        "03-UX-DESIGN.md",
+        "11-ART-DIRECTION.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C22",
+      "scope": "관리형인증후허용목록·AppLink·계정격리",
+      "topic": "인증·초대·기기 전환",
+      "currentSources": [
+        "87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md",
+        "28-DATA-API-AUTH-TESTS.md",
+        "16-AUTH-OPERATIONS.md",
+        "86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C23",
+      "scope": "최소receipt조회·구저널·서명APK·호환롤백",
+      "topic": "업데이트·호환·배포",
+      "currentSources": [
+        "88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md",
+        "29-OPERATIONS-RELEASE-RUNBOOK.md",
+        "16-AUTH-OPERATIONS.md",
+        "86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C24",
+      "scope": "권한확인·짧은URL·전달상태·취소·대안",
+      "topic": "파일·백업·OS 공유",
+      "currentSources": [
+        "89-PLATFORM-FILES-DOWNLOAD-SHARING.md",
+        "63-CHRONICLE-DETAILED-CONTRACT.md",
+        "70-BACKUP-RESTORE-IDENTITY-COMPATIBILITY.md",
+        "29-OPERATIONS-RELEASE-RUNBOOK.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    },
+    {
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "id": "C25",
+      "scope": "서면완료와실행미검증분리·적용문서지도",
+      "topic": "검수·최종 인계",
+      "currentSources": [
+        "92-DESIGN-CLOSURE-HANDOFF.md",
+        "91-CURRENT-CONTRACT-INDEX.md",
+        "84-DESIGN-GATES-END-TO-END-PATHS.md",
+        "73-LONG-RUN-FAULT-BALANCE-VALIDATION.md",
+        "71-INVARIANTS-DIAGNOSTICS-SAFE-STOP.md"
+      ],
+      "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
+    }
+  ]
+}
