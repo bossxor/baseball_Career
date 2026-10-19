@@ -73,3 +73,5 @@ v0.15:87~89플랫폼로그인·기기전환·업데이트·파일전달상세계
 시각 확장1.4: [98 구단 경험](98-CLUB-OPERATIONS-IMPORT-EXPERIENCE.md)에서 선수단·탐색·영입·예산·보관 투입15상태를 추가했다. 현재 대표16종/36상태,PNG8개. 기존45게임 화면·99이벤트·사용자 확정 규칙은 유지한다.
 
 시각 확장1.5: [99 생성·진로](99-CREATION-AMATEUR-US-JOURNEY.md)를 추가해 대표20화면/48상태,기존PNG8개를 유지한다. 이어하기 진입은 버튼만 표시한다.
+
+상태별 UI 2026-10-19: [100](100-HIDDEN-TRAITS.md)~[104](104-COMMENTARY-CHRONICLE-STATE-UI.md)를 작성하고 91 지도·검수 항목에 연결했다(STATUS 참조). 남은 일은 보드/MANIFEST/DESIGN-ALL 재생성과 실행 게이트 정의다.
