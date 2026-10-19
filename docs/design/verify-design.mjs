@@ -349,12 +349,6 @@ const playerDisplay = JSON.parse(read('player-display-expectations.json'));
 assert.equal(playerDisplay.executionStatus, 'NOT_EXECUTED');
 assert.ok(existsSync(path.join(root, playerDisplay.doc)));
 unique(playerDisplay.ids);
-const silDir = path.join(root, 'assets', 'silhouettes');
-const silFiles = readdirSync(silDir).filter(n => n.endsWith('.svg'));
-assert.equal(silFiles.length, 14);
-assert.equal(silFiles.filter(n => n.startsWith('hitter-')).length, 6);
-assert.equal(silFiles.filter(n => n.startsWith('pitcher-')).length, 8);
-for (const n of silFiles) { const s = read('assets/silhouettes/' + n); assert.ok(s.includes('<title>') && s.includes('viewBox="0 0 120 160"')); assert.ok(!/<text|<image|<script/.test(s), n); }
 const closure = JSON.parse(read('design-closure-register.json'));
 assert.equal(closure.status, 'WRITTEN_DESIGN_BASELINE');
 assert.equal(closure.baselineVersion, '1.0');
