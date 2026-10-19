@@ -126,3 +126,13 @@ E94는실제 프로 대결 근거의관계 형성도 허용하도록발생 조�
 61개 상태 UI 기대값은원문/대표 진입점 지도를 추가했을 뿐NOT_EXECUTED,기존298게임 기대값도NOT_IMPLEMENTED다. 실제 DOM 이벤트·타이머·키보드/포커스·음성·레이아웃·CAS·보상·권한·내보내기파일·DB·강제종료 복구·엔진/API·APK/build는미시험이다. file: 자동 브라우저 정책 차단을우회하지 않았다.
 
 Git/V문서205파일 일치 후기준을 저장했고동기화 전외부 변경을 다시 검사한다. 원래 미리보기HTML과공개 helper를갱신하며서버용 히든 정의는공개 미리보기 폴더에 복사하지 않는다. 최종MANIFEST SHA와Git main을 확인한다.
+
+## 107 라이벌·히든 경계 문서 검증 (2026-10-19)
+
+추가한 서버용 서면 사례36개의고유ID/원문 참조/NOT_IMPLEMENTED 상태,결투 WIN/LOSS/NO_DECISION·정확 OPS .900과반올림 경계·개인 완봉·선발 규정 outs·연속시즌 예시산술을 정적 검사한다. 이는문서 예시 내부일관성 검사이며실제 경기 엔진 구현/원자성/정정/응답 은닉 테스트가 아니다. 형성 후보 전세계처리 순서·다중기기/시즌 정산은실환경 검증 대상으로 남긴다.
+
+공개 시안에는서버용 경계 JSON/문턱을 배포하지 않는다. 45화면/99이벤트/298기존 게임 기대값/61UI 기대값 수는유지한다. 새36사례는별도 상세 경계 계획이다. 앱 build/Neon/브라우저/APK 테스트는실행하지 않는다.
+
+108의45개마감 행은원본 화면ID·제목·그림슬롯·대표28개집합과일치하고,8상태와4뷰포트 계획을검사한다. 전행NOT_FINALIZED/NOT_EXECUTED다. 관련 흐름 참조가있어도 별도대표화면 완료로 올리지 않는다.
+
+실행 결과: `node docs/design/verify-design.mjs` PASS, `git diff --check` PASS. 추가 출력은 `PASS: 36 server-only edge expectations indexed; duel, exact OPS, shutout and consecutive-season example arithmetic consistent. All 36 remain NOT_IMPLEMENTED.` 및 `PASS: 45 screen finish specifications, 28 declared representatives / 17 pending, 8 states and 4 viewports; final pixels and browser review remain unfinished.` 이다.

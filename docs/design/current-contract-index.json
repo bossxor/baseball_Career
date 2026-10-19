@@ -125,6 +125,7 @@
       "scope": "보유전체 자동효과·기록해금·코스메틱 보상",
       "topic": "특성·목표·기념 보상",
       "currentSources": [
+        "107-RIVAL-HIDDEN-TRAIT-EDGE-RULES.md",
         "65-USER-TRAITS-XP-STAFF.md",
         "56-TRAITS-DETAILED-CONTRACT.md",
         "58-GOALS-DETAILED-CONTRACT.md",
@@ -238,6 +239,7 @@
       "scope": "오퍼별역제안·급여/수수료·실제대진근거",
       "topic": "에이전트·관계",
       "currentSources": [
+        "107-RIVAL-HIDDEN-TRAIT-EDGE-RULES.md",
         "59-AGENTS-DETAILED-CONTRACT.md",
         "60-RELATIONS-DETAILED-CONTRACT.md",
         "103-AGENTS-RELATIONS-STAFF-STATE-UI.md"

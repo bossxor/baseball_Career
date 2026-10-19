@@ -42,12 +42,13 @@
         "sameRivalPitcher": true,
         "scope": "worldSeasonId+competitionId+REGULAR"
       },
-      "activation": "opposingPitcherId==qualifiedRivalPitcherId",
+      "activation": "opposingPitcherId IN qualifiedRivalPitcherIds",
       "effects": {
         "HR": 0.05,
         "2B": 0.03,
         "K": -0.03
-      }
+      },
+      "qualifiedTargetsPolicy": "ACCUMULATE_CONFIRMED_PAIRS_KEEP_AFTER_CORRECTION"
     },
     {
       "id": "T15",
@@ -79,5 +80,6 @@
         "BB": -0.03
       }
     }
-  ]
+  ],
+  "edgeContract": "107-RIVAL-HIDDEN-TRAIT-EDGE-RULES.md"
 }

@@ -28,3 +28,22 @@ console.log('PASS: expansion arithmetic, read-only commentary reducer and immuta
 
 console.log('PASS: locked hidden-trait DTO allowlist, approved T14 OPS/PA boundaries and unchanged caps; deterministic slider lower bounds / largest remainders / stable ties / sum100; '+ids.length+' UI expectations remain NOT_EXECUTED.');
 console.log('NOT TESTED: browser slider events/focus/layout, real API confidentiality, trait unlock transactions, game outcomes and database writes.');
+
+// 107: independent arithmetic checks of written design examples, not runtime predicates.
+const edges=json('server-only/rival-trait-edge-expectations.json');
+assert.equal(edges.distribution,'SERVER_ONLY_DO_NOT_BUNDLE');assert.equal(edges.cases.length,36);
+assert.ok(fs.existsSync(path.join(root,edges.source)));assert.equal(new Set(edges.cases.map(c=>c.id)).size,36);
+for(const c of edges.cases){assert.equal(c.executionStatus,'NOT_IMPLEMENTED');assert.ok(c.reason.length>0);}
+for(const c of edges.cases.filter(c=>c.kind==='T14')){const x=c.input;assert.equal(qualifies(x),c.expected==='QUALIFIED',c.id);}
+for(const c of edges.cases.filter(c=>c.kind==='T15')){const x=c.input;const eligible=x.final&&x.won&&x.teamRunsAllowed===0&&x.starter&&x.pitchersUsed===1&&x.outs>=3*x.plannedInnings;assert.equal(Boolean(eligible),c.expected==='COUNT_ONE',c.id);}
+for(const c of edges.cases.filter(c=>c.kind==='T16_YEAR')){const x=c.input;assert.equal(x.closed?(x.starterOuts>=3*x.G?'PASS':'FAIL'):'PENDING',c.expected,c.id);}
+for(const c of edges.cases.filter(c=>c.kind==='T16_STREAK')){let streak=0;for(const passed of c.input.years)streak=passed?streak+1:0;assert.equal(streak>=5?'UNLOCK':'STREAK_'+streak,c.expected,c.id);}
+for(const c of edges.cases.filter(c=>c.kind==='DUEL')){const x=c.input;const outcome=!x.formedBeforeGame?'NOT_CREATED':x.PA>=3&&x.H>=1&&x.TB>=2?'WIN':x.PA>=3&&x.H===0?'LOSS':'NO_DECISION';assert.equal(outcome,c.expected,c.id);}
+assert.equal(rules.edgeContract,edges.source);assert.equal(rules.definitions.find(d=>d.id==='T14').activation,'opposingPitcherId IN qualifiedRivalPitcherIds');
+console.log('PASS: 36 server-only edge expectations indexed; duel, exact OPS, shutout and consecutive-season example arithmetic consistent. All 36 remain NOT_IMPLEMENTED.');
+
+const finish=json('screen-finish-register.json'),sourceScreens=json('screen-state-catalog.json').screens,artScreens=json('art-direction-catalog.json').previewScreens;
+assert.equal(finish.rows.length,45);assert.deepEqual(finish.rows.map(r=>r.screenId),sourceScreens.map(s=>s.id));assert.deepEqual(finish.viewports,[360,390,768,1280]);
+for(const row of finish.rows){assert.equal(row.title,sourceScreens.find(s=>s.id===row.screenId).title);assert.deepEqual(row.imageSlot,json('screen-image-slots.json').screens.find(s=>s.screenId===row.screenId));assert.equal(row.states.length,8);assert.equal(new Set(row.states).size,8);assert.equal(row.declaredRepresentative,artScreens.includes(row.screenId));assert.equal(row.finalPixelStatus,'NOT_FINALIZED');assert.equal(row.browserReview,'NOT_EXECUTED');}
+assert.equal(finish.rows.filter(r=>!r.declaredRepresentative).length,17);
+console.log('PASS: 45 screen finish specifications, 28 declared representatives / 17 pending, 8 states and 4 viewports; final pixels and browser review remain unfinished.');

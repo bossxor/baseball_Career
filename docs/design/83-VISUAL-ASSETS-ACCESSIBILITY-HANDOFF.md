@@ -53,3 +53,4 @@ V01 제목 계층과 랜드마크, V02 모든 폼 label·설명·오류 연결, 
 각 대표 시각 유형마다 정상/로딩/오류/긴 데이터/200% 샘플을 캡처하고 {screenId,viewport,deviceOrBrowser,fontState,assetState,gameFixture,sourceCommit,result,issueRefs}를 기록한다. 기본 유형 검수 뒤45화면을 한 번씩 확인하고 새 문제가 있는 조합만 확대한다. 브라우저 rendering,실기기 터치,키보드와 OS 뒤로가기는 별도 증거다.
 
 현재 상태: 서면 기준 작성,기존 정적 목업·로컬 이미지/로고 존재. HTML 구문·경로 검사는 가능하지만 렌더링/터치/스크린리더 검수는 미실행이다. 이 상태를 시각 승인 완료로 기록하지 않는다. 최종 구현 착수 전 패키지는 [84](84-DESIGN-GATES-END-TO-END-PATHS.md)를 따른다.
+후속 제작 명세: [108 전체45화면 마감](108-ALL-SCREEN-FINALIZATION.md)과 [화면별 등록부](screen-finish-register.json)의 읽기 순서·크기·8상태·우선 그림 목록을 함께 적용한다. 기존 이미지의 보유와 새 최종 시안 제작/실제 렌더 검수는 구분한다.

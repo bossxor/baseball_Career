@@ -1,0 +1,518 @@
+{
+  "schemaVersion": 1,
+  "distribution": "SERVER_ONLY_DO_NOT_BUNDLE",
+  "source": "107-RIVAL-HIDDEN-TRAIT-EDGE-RULES.md",
+  "status": "DESIGN_EXPECTATIONS_NOT_IMPLEMENTED",
+  "cases": [
+    {
+      "id": "RT01",
+      "kind": "FORMATION",
+      "input": {
+        "PA": 11,
+        "games": 3
+      },
+      "expected": "NONE",
+      "reason": "12PA 미달",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT02",
+      "kind": "FORMATION",
+      "input": {
+        "PA": 12,
+        "games": 2
+      },
+      "expected": "NONE",
+      "reason": "서로 다른 3경기 미달",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT03",
+      "kind": "FORMATION",
+      "input": {
+        "PA": 12,
+        "games": 3,
+        "phase": "REGULAR",
+        "league": "KBO",
+        "bothActive": true,
+        "existing": false,
+        "slotFree": true
+      },
+      "expected": "FORMED",
+      "reason": "모든 실제 후보 조건 충족",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT04",
+      "kind": "FORMATION",
+      "input": {
+        "PA": 20,
+        "games": 5,
+        "phase": "POSTSEASON"
+      },
+      "expected": "NONE",
+      "reason": "PS 형성 제외",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT05",
+      "kind": "FORMATION",
+      "input": {
+        "PA": 20,
+        "games": 5,
+        "existing": true
+      },
+      "expected": "NONE",
+      "reason": "기존 pair 재생성 금지",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT06",
+      "kind": "FORMATION",
+      "input": {
+        "PA": 20,
+        "games": 5,
+        "slotFree": false
+      },
+      "expected": "NONE",
+      "reason": "시즌 슬롯 사용 완료",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT07",
+      "kind": "DUEL",
+      "input": {
+        "PA": 3,
+        "H": 1,
+        "TB": 2,
+        "formedBeforeGame": true
+      },
+      "expected": "WIN",
+      "reason": "팀 패배와 독립",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT08",
+      "kind": "DUEL",
+      "input": {
+        "PA": 3,
+        "H": 2,
+        "TB": 2,
+        "formedBeforeGame": true
+      },
+      "expected": "WIN",
+      "reason": "단타 2개",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT09",
+      "kind": "DUEL",
+      "input": {
+        "PA": 3,
+        "H": 0,
+        "TB": 0,
+        "formedBeforeGame": true
+      },
+      "expected": "LOSS",
+      "reason": "직접대결 무안타",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT10",
+      "kind": "DUEL",
+      "input": {
+        "PA": 2,
+        "H": 1,
+        "TB": 4,
+        "formedBeforeGame": true
+      },
+      "expected": "NO_DECISION",
+      "reason": "2PA 홈런만으로 WIN 아님",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT11",
+      "kind": "DUEL",
+      "input": {
+        "PA": 3,
+        "H": 1,
+        "TB": 1,
+        "formedBeforeGame": true
+      },
+      "expected": "NO_DECISION",
+      "reason": "단타 1개",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT12",
+      "kind": "DUEL",
+      "input": {
+        "PA": 3,
+        "H": 1,
+        "TB": 2,
+        "formedBeforeGame": false
+      },
+      "expected": "NOT_CREATED",
+      "reason": "관계 형성 근거 경기에서는 결투 미생성",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT13",
+      "kind": "T14",
+      "input": {
+        "AB": 20,
+        "H": 6,
+        "TB": 12,
+        "BB": 0,
+        "HBP": 0,
+        "won": true
+      },
+      "expected": "QUALIFIED",
+      "reason": "OPS 정확히 .900",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT14",
+      "kind": "T14",
+      "input": {
+        "AB": 25000,
+        "H": 7500,
+        "TB": 14999,
+        "BB": 0,
+        "HBP": 0,
+        "won": true
+      },
+      "expected": "NOT_QUALIFIED",
+      "reason": "표시 .900이어도 원값 .89996",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT15",
+      "kind": "T14",
+      "input": {
+        "AB": 19,
+        "H": 6,
+        "TB": 12,
+        "BB": 0,
+        "HBP": 0,
+        "won": true
+      },
+      "expected": "NOT_QUALIFIED",
+      "reason": "20PA 미달",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT16",
+      "kind": "T14",
+      "input": {
+        "AB": 0,
+        "H": 0,
+        "TB": 0,
+        "BB": 20,
+        "HBP": 0,
+        "won": true
+      },
+      "expected": "NOT_QUALIFIED",
+      "reason": "AB0",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT17",
+      "kind": "T14",
+      "input": {
+        "AB": 20,
+        "H": 6,
+        "TB": 12,
+        "BB": 0,
+        "HBP": 0,
+        "won": false
+      },
+      "expected": "NOT_QUALIFIED",
+      "reason": "관계 WIN 없음",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT18",
+      "kind": "T14_SCOPE",
+      "input": {
+        "statsSeason": "2032",
+        "winSeason": "2031"
+      },
+      "expected": "NOT_QUALIFIED",
+      "reason": "다른 시즌 WIN 재사용 불가",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT19",
+      "kind": "T14_TARGETS",
+      "input": {
+        "qualified": [
+          "P01"
+        ],
+        "newlyQualified": "P02"
+      },
+      "expected": "ADD_TARGET_ONCE",
+      "reason": "보유 특성 1개/활성 대상 2명",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT20",
+      "kind": "T13",
+      "input": {
+        "final": true,
+        "lastPlay": "HR",
+        "walkoff": true
+      },
+      "expected": "COUNT_ONE",
+      "reason": "끝내기 홈런",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT21",
+      "kind": "T13",
+      "input": {
+        "final": true,
+        "lastPlay": "BB",
+        "walkoff": true
+      },
+      "expected": "COUNT_ZERO",
+      "reason": "끝내기 볼넷 제외",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT22",
+      "kind": "T15",
+      "input": {
+        "final": true,
+        "won": true,
+        "teamRunsAllowed": 0,
+        "starter": true,
+        "pitchersUsed": 1,
+        "plannedInnings": 9,
+        "outs": 27
+      },
+      "expected": "COUNT_ONE",
+      "reason": "정상 완봉",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT23",
+      "kind": "T15",
+      "input": {
+        "final": true,
+        "won": false,
+        "teamRunsAllowed": 0,
+        "starter": true,
+        "pitchersUsed": 1,
+        "plannedInnings": 9,
+        "outs": 36
+      },
+      "expected": "COUNT_ZERO",
+      "reason": "0:0 무승부",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT24",
+      "kind": "T15",
+      "input": {
+        "final": true,
+        "won": true,
+        "teamRunsAllowed": 0,
+        "starter": true,
+        "pitchersUsed": 1,
+        "plannedInnings": 9,
+        "outs": 15
+      },
+      "expected": "COUNT_ZERO",
+      "reason": "우천 단축",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT25",
+      "kind": "T15",
+      "input": {
+        "final": true,
+        "won": true,
+        "teamRunsAllowed": 0,
+        "starter": true,
+        "pitchersUsed": 1,
+        "plannedInnings": 7,
+        "outs": 21
+      },
+      "expected": "COUNT_ONE",
+      "reason": "사전 편성 7회",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT26",
+      "kind": "T15",
+      "input": {
+        "final": true,
+        "won": true,
+        "teamRunsAllowed": 0,
+        "starter": true,
+        "pitchersUsed": 2,
+        "plannedInnings": 9,
+        "outs": 27
+      },
+      "expected": "COUNT_ZERO",
+      "reason": "합작 무실점",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT27",
+      "kind": "T15",
+      "input": {
+        "final": true,
+        "won": true,
+        "teamRunsAllowed": 1,
+        "ER": 0,
+        "starter": true,
+        "pitchersUsed": 1,
+        "plannedInnings": 9,
+        "outs": 30
+      },
+      "expected": "COUNT_ZERO",
+      "reason": "자동주자 비자책 실점",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT28",
+      "kind": "T16_YEAR",
+      "input": {
+        "G": 144,
+        "starterOuts": 431,
+        "reliefOuts": 10,
+        "closed": true
+      },
+      "expected": "FAIL",
+      "reason": "143.2이닝,구원 합산 불가",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT29",
+      "kind": "T16_YEAR",
+      "input": {
+        "G": 144,
+        "starterOuts": 432,
+        "reliefOuts": 0,
+        "closed": true
+      },
+      "expected": "PASS",
+      "reason": "144이닝 경계",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT30",
+      "kind": "T16_YEAR",
+      "input": {
+        "G": 162,
+        "starterOuts": 486,
+        "reliefOuts": 0,
+        "closed": false
+      },
+      "expected": "PENDING",
+      "reason": "정규 마감 전 해금 금지",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT31",
+      "kind": "T16_STREAK",
+      "input": {
+        "years": [
+          true,
+          true,
+          false,
+          true,
+          true
+        ],
+        "gapReason": "MILITARY"
+      },
+      "expected": "STREAK_2",
+      "reason": "미달 복무 연도는 연속 중단",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT32",
+      "kind": "T16_STREAK",
+      "input": {
+        "years": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ],
+        "leagues": [
+          "KBO",
+          "KBO",
+          "MLB",
+          "MLB",
+          "MLB"
+        ]
+      },
+      "expected": "UNLOCK",
+      "reason": "연도별 독립 충족/리그 이동 허용",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT33",
+      "kind": "T16_SCOPE",
+      "input": {
+        "sameYear": [
+          {
+            "league": "KBO",
+            "starterOuts": 240,
+            "G": 144
+          },
+          {
+            "league": "MLB",
+            "starterOuts": 270,
+            "G": 162
+          }
+        ]
+      },
+      "expected": "FAIL",
+      "reason": "서로 다른 대회 이닝 합산 불가",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT34",
+      "kind": "CORRECTION",
+      "input": {
+        "alreadyUnlocked": true,
+        "correctedBelowThreshold": true
+      },
+      "expected": "KEEP_AND_MARK_CORRECTED",
+      "reason": "보유 특성/기확보 대상 유지",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT35",
+      "kind": "COPY",
+      "input": {
+        "sourceUnlocked": [
+          "T13",
+          "T14"
+        ],
+        "sourceTargets": [
+          "P01"
+        ],
+        "sourceStreak": 4
+      },
+      "expected": "RESET_COPY_KEEP_SOURCE",
+      "reason": "19세 복사본 기록/특성 초기화",
+      "executionStatus": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RT36",
+      "kind": "REPLAY",
+      "input": {
+        "sameGameReceipt": true
+      },
+      "expected": "ZERO_DUPLICATE_ROWS",
+      "reason": "형성/결투/해금 중복 0",
+      "executionStatus": "NOT_IMPLEMENTED"
+    }
+  ]
+}
