@@ -1,3 +1,5 @@
+시각 확장1.2: [96 상세 흐름](96-VISUAL-DETAIL-FLOWS.md)에서 성장·재활·계약·대표팀의 12상태와 예외·중단/재개를 확인하세요. [비교 보드](art-direction-lab.html)는 대표8화면/타자·투수 초상2종을 제공합니다. 이미지8PNG는 assets/art-lab에 보관합니다. 기존1.1 항목은 이전 단계의 이력입니다.
+
 시각 확장1.1:사용자최신선택은 **빈티지 기록실**입니다. [이미지 비교 보드](art-direction-lab.html)와 [93](93-ART-DIRECTION-CHOICE-LAB.md)·[94](94-SCREEN-IMAGE-STORYBOARD.md)·[95](95-CHARACTER-EVENT-ART-PRODUCTION.md)를참고하세요.12사건장면/투명초상/45화면이미지슬롯을추가했고게임규칙기준본1.0은유지합니다. 브라우저file프로토콜차단으로자동렌더링검수는미실행입니다.
 
 # 다시, 플레이볼 — 여기서 시작하세요

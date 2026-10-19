@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_PREVIEW_ONLY",
+  "gameRulesChanged": false,
+  "phases": [
+    "base",
+    "detail",
+    "receipt"
+  ],
+  "expectationStatus": "NOT_IMPLEMENTED",
+  "browserStatus": "BLOCKED_FILE_PROTOCOL",
+  "flows": [
+    {
+      "id": "growth",
+      "screenIds": [
+        "S23",
+        "S39"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "계획·선택",
+          "allowedScene": "enhancement",
+          "requiredEvidence": [
+            "seasonOpportunity",
+            "currentAbilities",
+            "fatigue",
+            "previewVersion"
+          ],
+          "expected": "6능력·집중4; 성공60%, +2/0; 피로+10·기회1"
+        },
+        {
+          "phase": "detail",
+          "label": "최종 확인",
+          "allowedScene": "enhancement",
+          "requiredEvidence": [
+            "latestPreview",
+            "worldVersion"
+          ],
+          "expected": "증가량·비용 최신 확인; 취소 소비 없음"
+        },
+        {
+          "phase": "receipt",
+          "label": "확정 결과",
+          "allowedScene": "enhancement",
+          "requiredEvidence": [
+            "commandReceipt",
+            "actualAppliedDelta"
+          ],
+          "expected": "성공 예시+2; 이어하기 재적용 없음"
+        }
+      ]
+    },
+    {
+      "id": "rehab",
+      "screenIds": [
+        "S16",
+        "S06"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "회복 중",
+          "allowedScene": "rehab",
+          "requiredEvidence": [
+            "injuryId",
+            "remainingTeamGames:12"
+          ],
+          "expected": "잔여12 소속팀 경기; 출전 불가"
+        },
+        {
+          "phase": "detail",
+          "label": "중간 확인",
+          "allowedScene": "rehab",
+          "requiredEvidence": [
+            "sameInjuryId",
+            "remainingTeamGames:6"
+          ],
+          "expected": "잔여6 경기; 달력 기반 회복 아님"
+        },
+        {
+          "phase": "receipt",
+          "label": "복귀 가능",
+          "allowedScene": "rehab",
+          "requiredEvidence": [
+            "remainingTeamGames:0",
+            "clearanceRecord"
+          ],
+          "expected": "잔여0·판정 확인; 선발 보장 없음"
+        }
+      ]
+    },
+    {
+      "id": "contract",
+      "screenIds": [
+        "S08",
+        "S29",
+        "S32"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "유효 제안",
+          "allowedScene": "posting",
+          "requiredEvidence": [
+            "offerId",
+            "expiresAt",
+            "eligibility"
+          ],
+          "expected": "유효 제안만; 오퍼 없으면 미국 진로 숨김"
+        },
+        {
+          "phase": "detail",
+          "label": "서명 확인",
+          "allowedScene": "posting",
+          "requiredEvidence": [
+            "offerVersion",
+            "rights",
+            "currentClub"
+          ],
+          "expected": "최신 권리·기한 재검사; 수락에 추첨 배지 없음"
+        },
+        {
+          "phase": "receipt",
+          "label": "계약 확정",
+          "allowedScene": "posting",
+          "requiredEvidence": [
+            "contractReceipt"
+          ],
+          "expected": "한번만 반영; 입국·등록·출전 별개"
+        }
+      ]
+    },
+    {
+      "id": "national",
+      "screenIds": [
+        "S24",
+        "S25",
+        "S26"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "선발 후보",
+          "allowedScene": "training",
+          "requiredEvidence": [
+            "candidateRecord"
+          ],
+          "expected": "메달 장면·최종선발 확정 표현 금지"
+        },
+        {
+          "phase": "detail",
+          "label": "최종 명단",
+          "allowedScene": "training",
+          "requiredEvidence": [
+            "finalRosterRecord"
+          ],
+          "expected": "명단과 출전·성과·병역 분리"
+        },
+        {
+          "phase": "receipt",
+          "label": "대회 결산",
+          "allowedScene": "international",
+          "requiredEvidence": [
+            "goldMedalResult",
+            "actualAppearanceRecord"
+          ],
+          "expected": "메달 근거 확인; 개인 병역 자격 미확정"
+        }
+      ]
+    }
+  ]
+}

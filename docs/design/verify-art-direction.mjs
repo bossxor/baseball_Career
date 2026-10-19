@@ -21,7 +21,8 @@ assert.equal(art.styles.length,3);unique(art.styles.map(s=>s.id));
 assert.equal(art.styles.filter(s=>s.status==='USER_SELECTED').length,1);
 assert.equal(art.styles.find(s=>s.status==='USER_SELECTED').id,'almanac');
 assert.equal(art.scenes.length,12);unique(art.scenes.map(s=>s.id));
-const assets=new Set([art.portrait,...art.styles.map(s=>s.hero),...art.scenes.map(s=>s.asset)]);
+assert.equal(art.portraits.length,2);unique(art.portraits.map(p=>p.id));
+const assets=new Set([...art.portraits.map(p=>p.asset),art.portrait,...art.styles.map(s=>s.hero),...art.scenes.map(s=>s.asset)]);
 for(const asset of assets){
   const buffer=fs.readFileSync(path.join(root,asset));
   assert.equal(buffer.subarray(0,8).toString('hex'),'89504e470d0a1a0a');
@@ -31,6 +32,7 @@ for(const asset of assets){
   if(asset.includes('events-almanac'))assert.deepEqual([width,height],[1536,1024]);
   if(asset===art.portrait){assert.deepEqual([width,height],[1130,1392]);assert.ok([4,6].includes(buffer[25]),'Portrait must include alpha channel');}
 }
+for(const portrait of art.portraits){const b=fs.readFileSync(path.join(root,portrait.asset));assert.deepEqual([b.readUInt32BE(16),b.readUInt32BE(20)],[portrait.width,portrait.height]);assert.ok([4,6].includes(b[25]));}
 for(const scene of art.scenes){
   assert.ok(scene.column>=0&&scene.column<=2&&scene.row>=0&&scene.row<=1);
   assert.ok(scene.cropFocusPercent>=0&&scene.cropFocusPercent<=100);
@@ -65,5 +67,21 @@ for(const row of slots.screens){assert.ok(screens.some(s=>s.id===row.screenId));
 const values=[72,80,64,68,66,76];assert.equal(values.reduce((a,b)=>a+b,0)/6,71);
 assert.ok(fs.existsSync(path.join(root,art.prompts)));
 assert.equal(json(art.prompts).selectedStyle,'almanac');
+
+// Evaluate only isolated pure string-template functions, without a DOM/browser/network.
+const playersLiteral=scripts.match(/const players=([\s\S]*?);\s*const ability=/)?.[1];assert.ok(playersLiteral);
+const playerData=decode(playersLiteral);
+for(const [id,mean] of [['hitter',71],['pitcher',72]]){const p=playerData[id];assert.equal(p.stats.length,6);assert.equal(p.focus.length,4);unique(p.focus);for(const name of p.focus)assert.ok(p.stats.some(row=>row[0]===name));assert.equal(p.stats.reduce((a,row)=>a+row[1],0)/6,mean);assert.ok(fs.existsSync(path.join(root,p.asset)));}
+const flow=json(art.visualFlowCatalog);assert.equal(flow.status,'DESIGN_PREVIEW_ONLY');assert.equal(flow.gameRulesChanged,false);assert.equal(flow.expectationStatus,'NOT_IMPLEMENTED');assert.equal(flow.flows.length,4);unique(flow.flows.map(f=>f.id));assert.equal(art.previewVariants,8);assert.equal(art.previewScreens.length,8);
+const pure=scripts.slice(scripts.indexOf('const phases='),scripts.indexOf('function persist(){'));
+assert.ok(pure.startsWith('const phases='));
+const abilitySource=scripts.slice(scripts.indexOf('const ability='),scripts.indexOf('function career(){'));
+const context={state:{player:'hitter',phase:'base'},players:playerData,scenes:previewScenes,bar:()=>'<header>example</header>',nav:()=>'<footer>example</footer>',sprite:scene=>'<figure data-scene="'+scene.id+'"></figure>'};
+runInNewContext(abilitySource+pure+';this.draw={growth,rehab,contract,national};',context,{timeout:1000});
+for(const f of flow.flows){assert.equal(f.states.length,3);assert.deepEqual(f.states.map(s=>s.phase),flow.phases);for(const id of f.screenIds)assert.ok(screens.some(s=>s.id===id));assert.ok(scripts.includes('data-screen="'+f.id+'"')||html.includes('data-screen="'+f.id+'"'));for(const st of f.states){assert.ok(st.requiredEvidence.length&&st.expected&&st.label);assert.ok(art.scenes.some(s=>s.id===st.allowedScene));context.state.phase=st.phase;const markup=context.draw[f.id]();assert.ok(markup.includes('data-scene="'+st.allowedScene+'"'));assert.ok(!markup.includes('undefined'));assert.ok(!/>[^<]*100%/.test(markup));if(f.id==='national'&&st.phase!=='receipt')assert.ok(!markup.includes('data-scene="international"'));if(f.id==='growth'&&st.phase==='receipt')assert.ok(markup.includes('82 <small>'));if(f.id==='rehab')assert.ok(markup.includes(({base:'12',detail:'6',receipt:'0'})[st.phase]+' <small>'));}}
+context.state.player='pitcher';context.state.phase='base';const pitcherMarkup=context.draw.growth();assert.ok(pitcherMarkup.includes('72.0 <small>'));assert.ok(pitcherMarkup.includes('구위 76 → 78'));assert.ok(pitcherMarkup.includes('누적 XP 30'));assert.ok(pitcherMarkup.includes('누적 XP 10'));context.state.phase='receipt';assert.ok(context.draw.growth().includes('78 <small>'));
+for(const id of ['player-options','phase-control','phase-options'])assert.ok(ids.includes(id));
+console.log('PASS: 2 alpha portrait assets, 8 preview variants, 4 detail flows / 12 state templates, evidence guards, hitter overall 71.0 and pitcher 72.0 / focus 4; pure HTML-string checks only.');
+
 console.log('PASS: chosen vintage direction, 3 hero alternatives, 12 scene data/crops, alpha PNG metadata, 45 image-slot contracts, lab script/IDs/assets and example overall 71.0.');
 console.log('NOT TESTED: art-lab browser rendering, interactive clicks, viewport layout, clipboard and localStorage; file: browser navigation was policy-blocked.');

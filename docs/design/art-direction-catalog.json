@@ -221,6 +221,26 @@
     "S03",
     "S06",
     "S13",
-    "S09"
-  ]
+    "S09",
+    "S23",
+    "S16",
+    "S08",
+    "S24"
+  ],
+  "portraits": [
+    {
+      "id": "hitter",
+      "asset": "assets/art-lab/player-almanac-v1.png",
+      "width": 1130,
+      "height": 1392
+    },
+    {
+      "id": "pitcher",
+      "asset": "assets/art-lab/player-pitcher-almanac-v1.png",
+      "width": 1130,
+      "height": 1392
+    }
+  ],
+  "previewVariants": 8,
+  "visualFlowCatalog": "visual-flow-catalog.json"
 }

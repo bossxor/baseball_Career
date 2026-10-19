@@ -11,6 +11,7 @@ Built-in image_gen only; no CLI fallback/API key. Latest human choice: **빈티�
 | career-events-almanac-v1.png |1536×1024| Selected scenes1~6,3×2 square panels |
 | career-events-almanac-extra-v1.png |1536×1024| Selected scenes7~12,3×2 square panels |
 | player-almanac-v1.png |1130×1392| Selected fictional adult portrait,alpha cutout |
+| player-pitcher-almanac-v1.png |1130×1392| Added fictional adult pitcher,alpha cutout |
 
 Prompts: [GENERATION-PROMPTS.json](GENERATION-PROMPTS.json). Eight calls include the initial atlas plus a targeted cap-letter cleanup and a vintage style-transfer; the discarded uncorrected atlas is not a project deliverable. Reference inputs were previously generated artwork,not real player photos.
 
@@ -19,3 +20,4 @@ All outputs were visually inspected in image tool results. The latest vintage ma
 No output pixel edits or recompression were performed outside image_gen. Atlas crops and portrait presentation use HTML/CSS. Original images remain available; deployment sizing/compression is a later quality/performance task.
 
 Browser rendering was not verified: automated file: navigation was rejected by the browser's URL policy. No server,alternate browser surface,CDP or other workaround was used. Syntax/asset/data validation is recorded separately from browser behavior.
+Extension 1.2: ninth built-in call created a distinct fictional adult pitcher using the existing generated portrait as style reference. Output copied without pixel editing; reference and original preserved. Tool output visually inspected. PNG dimensions/alpha metadata verified by static checker. Fine silhouette fringes and small-screen compositing remain production QA; browser rendering remains unverified. Total project PNGs: eight.
