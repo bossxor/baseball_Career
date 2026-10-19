@@ -396,4 +396,5 @@ console.log('PASS: baseline 1.0 has 25 source topics, 10 specified closures and 
 await import('./verify-art-direction.mjs');
 await import('./verify-state-ui.mjs');
 await import('./verify-finish-board.mjs');
+await import('./verify-performance-examples.mjs');
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

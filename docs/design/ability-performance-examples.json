@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "source": "112-ABILITY-CEILING-PERFORMANCE-BALANCE.md",
+  "rulesSources": [
+    "08-FORMULAS.md",
+    "41-SIX-STAT-ENGINE.md"
+  ],
+  "status": "UNCALIBRATED_DESIGN_ARITHMETIC",
+  "context": {
+    "bases": "EMPTY",
+    "fatigue": 0,
+    "moraleMultiplier": 1,
+    "temporaryModifiers": 0,
+    "traitModifiers": 0,
+    "pitchApproachModifiers": 0,
+    "parkModifiers": 0
+  },
+  "cases": [
+    {
+      "id": "BP1",
+      "batterSix": 50,
+      "pitcherSix": 50,
+      "defense": 50,
+      "probabilities": {
+        "BB": 0.085,
+        "HBP": 0.010000000000000007,
+        "K": 0.2,
+        "1B": 0.16,
+        "2B": 0.04500000000000001,
+        "3B": 0.005000000000000003,
+        "HR": 0.030000000000000002,
+        "OUT": 0.465
+      },
+      "metrics": {
+        "AVG": 0.26519337016574585,
+        "OBP": 0.335,
+        "SLG": 0.425414364640884,
+        "HRperPA": 0.030000000000000002,
+        "hitPerPA": 0.24000000000000002,
+        "KplusOUTperPA": 0.665
+      },
+      "scope": "FIXED_INPUT_LONG_RUN_RATIOS_NOT_SIMULATED",
+      "seasonExecutionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "BP2",
+      "batterSix": 100,
+      "pitcherSix": 50,
+      "defense": 50,
+      "probabilities": {
+        "BB": 0.1554612833800021,
+        "HBP": 0.010037524856594834,
+        "K": 0.08161906131167128,
+        "1B": 0.2279028126750705,
+        "2B": 0.07447086331312115,
+        "3B": 0.00914478137529425,
+        "HR": 0.07786237493196041,
+        "OUT": 0.3635012981562855
+      },
+      "metrics": {
+        "AVG": 0.46660308713596554,
+        "OBP": 0.5548796405320432,
+        "SLG": 0.8576720922861902,
+        "HRperPA": 0.07786237493196041,
+        "hitPerPA": 0.3893808322954463,
+        "KplusOUTperPA": 0.4451203594679568
+      },
+      "scope": "FIXED_INPUT_LONG_RUN_RATIOS_NOT_SIMULATED",
+      "seasonExecutionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "BP3",
+      "batterSix": 100,
+      "pitcherSix": 100,
+      "defense": 100,
+      "probabilities": {
+        "BB": 0.07904051555960442,
+        "HBP": 0.008003623788576521,
+        "K": 0.1859776836696575,
+        "1B": 0.12181251920524586,
+        "2B": 0.04184497882567294,
+        "3B": 0.007291776688208999,
+        "HR": 0.027896652550448618,
+        "OUT": 0.5281322497125852
+      },
+      "metrics": {
+        "AVG": 0.2178045356186303,
+        "OBP": 0.28589006661775734,
+        "SLG": 0.37128237161542976,
+        "HRperPA": 0.027896652550448618,
+        "hitPerPA": 0.1988459272695764,
+        "KplusOUTperPA": 0.7141099333822427
+      },
+      "scope": "FIXED_INPUT_LONG_RUN_RATIOS_NOT_SIMULATED",
+      "seasonExecutionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "BP4",
+      "batterSix": 100,
+      "pitcherSix": 1,
+      "defense": 1,
+      "probabilities": {
+        "BB": 0.15763062938768257,
+        "HBP": 0.011789252884317017,
+        "K": 0.08275799430487388,
+        "1B": 0.2811187185881908,
+        "2B": 0.07551004854628268,
+        "3B": 0.009272389963981335,
+        "HR": 0.07894888617472619,
+        "OUT": 0.3029720801499455
+      },
+      "metrics": {
+        "AVG": 0.5355895641832124,
+        "OBP": 0.6142699255451806,
+        "SLG": 0.9339875994065742,
+        "HRperPA": 0.07894888617472619,
+        "hitPerPA": 0.444850043273181,
+        "KplusOUTperPA": 0.3857300744548193
+      },
+      "scope": "FIXED_INPUT_LONG_RUN_RATIOS_NOT_SIMULATED",
+      "seasonExecutionStatus": "NOT_EXECUTED"
+    }
+  ],
+  "plannedRuns": [
+    {
+      "id": "B100-01",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B100-02",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B100-03",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B100-04",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B100-05",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B100-06",
+      "executionStatus": "NOT_EXECUTED"
+    }
+  ]
+}

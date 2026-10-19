@@ -34,6 +34,7 @@
       "scope": "표시 평균·정수 단위·능력/XP 축 구분",
       "topic": "6능력·종합·수치 정밀도",
       "currentSources": [
+        "112-ABILITY-CEILING-PERFORMANCE-BALANCE.md",
         "90-NUMERIC-LEDGER-CONSISTENCY.md",
         "35-SIX-ABILITIES-FOUR-FOCUS.md",
         "41-SIX-STAT-ENGINE.md",
@@ -140,6 +141,7 @@
       "scope": "아웃/득점/자동주자·유효능력·softmax",
       "topic": "경기·기록 판정",
       "currentSources": [
+        "112-ABILITY-CEILING-PERFORMANCE-BALANCE.md",
         "24-GAME-ENGINE-SCORING.md",
         "41-SIX-STAT-ENGINE.md",
         "08-FORMULAS.md",

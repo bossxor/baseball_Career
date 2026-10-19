@@ -158,3 +158,11 @@ node docs/design/verify-design.mjs PASS. 추가출력: PASS: confirmed anime def
 가로img자연비율·185px/중앙translate제거·두스타일8상태·S04정상3이미지/실패0이미지·자료파일/선택기준·활성12사건/초상을정적으로확인했다. 생성원본7개를도구출력으로직접보고프로젝트사본/프롬프트를보존했다. 기존빈티지는삭제하지않았다. 생성작은모자문양/장비세부와실제HTML레이아웃·200%확대·입력/접근성은최종검수대상이다. 실제브라우저/file정책은우회하지않았고앱/엔진/Neon/build/APK는미실행이다.
 
 작업시작시Git/V220파일일치를확인해기준해시를보존했고,동기화전에외부변경을다시확인한다. 원래미리보기에도공개HTML/JS/JSON/관련PNG/현재변경문서를복사하며서버용정의는배포하지않는다.
+
+## 112 능력상한·성적 예시 (2026-10-19)
+
+node docs/design/verify-design.mjs PASS, git diff --check PASS. 추가출력: PASS: four fixed ability-ceiling distributions, displayed AVG/SLG, positive out probabilities and correct PA/AB denominators; six balance runs remain NOT_EXECUTED.
+
+08의가중치산식과softmax를독립적인고정예시로비교해8결과합1/양수,AVG/OBP/SLG분모와표시값,100타수25홈런의AVG.250/SLG1.000을확인했다. 4예시의무주자/피로0/특성0조건과장기비율범위를명시했다. 이는난수타석/실제시즌/게임엔진구현검증이아니다. 새6균형계획은NOT_EXECUTED,기존게임/UI/경계항목은기존미실행상태를유지한다. 앱/Neon/DB/브라우저/build/APK는미실행이다.
+
+작업전231파일의Git/V일치를확인하고Windows Thumbs.db는보존했다. 동기화전외부변경을다시검사하며통합MD/MANIFEST를갱신한다.
