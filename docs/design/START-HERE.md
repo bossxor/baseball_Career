@@ -1,3 +1,5 @@
+최신 v0.15: [87 로그인·기기 전환](87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md) · [88 웹/PWA/APK 업데이트](88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md) · [89 파일 저장·공유](89-PLATFORM-FILES-DOWNLOAD-SHARING.md). 네 환경의6개 실행 대상×8필수 흐름과24개 서면 기대값을 추가했습니다. 최신 총298개,실제 인증·기기·업데이트·파일 시험은 미실행입니다.
+
 최신 플랫폼 범위: [86 네 환경 지원](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). Android/iPhone/Windows/macOS의 브라우저 웹과Android APK를 기본 목표로 합니다. iPhone 홈 화면 웹앱과 별도 iOS 네이티브 앱은 구분합니다. 현재 미구현이며CP01~06 실환경 검수는 계획입니다.
 
 최신 v0.14: [79 생성 입력](79-CREATION-FIELDS-VALIDATION-COPY.md) · [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md) · [81 이벤트 검토](81-EVENT-OCCURRENCE-COLLISION-AUDIT.md) · [82 확률·효과](82-PROBABILITY-EFFECTS-CONFIRMATION-AUDIT.md) · [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md) · [84 통합 경로·게이트](84-DESIGN-GATES-END-TO-END-PATHS.md) · [85 난이도 후속 확정](85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md). 남은6항목의 서면 검토와 구단 치트 전체 잠재력100·성장3배를 반영했습니다. 274개 서면 기대값이며 실제 앱/복구/화면/밸런스 검증은 구현 후입니다.
@@ -28,7 +30,7 @@
 
 ## 현재 상태
 
-- 단계: 상세 설계 v0.14. 앱 코드 구현/DB 스키마 배포/APK 빌드 미착수.
+- 단계: 상세 설계 v0.15. 앱 코드 구현/DB 스키마 배포/APK 빌드 미착수.
 - 목적: 소수 친구용 웹앱+Android APK, 선수 커리어와 독립 구단 운영.
 - 필수: KBO 가상선수, 고교 미국직행, 포스팅, MiLB/MLB, 국가대표/병역, 스타일/강화, 은퇴보관, 능력별최고50%·새잠재력·병역재시작의 어린선수 선택투입, Neon 저장.
 - 앱 이름: 다시, 플레이볼. 목표 GitHub: https://github.com/bossxor/baseball_Career

@@ -29,3 +29,6 @@
 
 
 [플랫폼 지원 범위](docs/design/86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md): Android·iPhone·Windows·macOS 웹 플레이와Android APK. iPhone 홈 화면 웹앱 제공 목표,별도iOS/PC 네이티브 설치형은선택 범위이며실제 동작 검증 전입니다.
+
+
+최신v0.15: [플랫폼로그인·기기전환](docs/design/87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md), [업데이트·호환](docs/design/88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md), [파일저장·공유](docs/design/89-PLATFORM-FILES-DOWNLOAD-SHARING.md). 298개서면기대값,실제앱/기기시험전입니다.

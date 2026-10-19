@@ -294,5 +294,35 @@ assert.equal(Math.max(0, 60 - 30), 30);
 near((50 + 45 + 40 + 35 + 30 + 25) / 6, 37.5);
 assert.ok(html.includes('내 구단 전체 잠재력100'));
 assert.ok(html.includes('이후 영입·보관 투입 선수 포함.'));
-console.log('PASS: 45 screen recovery rows, 99 event occurrence rows, 20 probability surfaces, 24 planned paths, 72 final fixtures; 274 unique design expectations total. Runtime/UI/AI checks are NOT executed.');
+console.log('PASS: 45 screen recovery rows, 99 event occurrence rows, 20 probability surfaces, 24 planned paths, 72 final fixtures; 274 expectations before the platform set. Runtime/UI/AI checks are NOT executed.');
+const platformContracts = JSON.parse(read('platform-experience-contracts.json'));
+assert.equal(platformContracts.status, 'DESIGN_EXPECTATIONS_ONLY');
+assert.equal(platformContracts.targets.length, 6);
+unique(platformContracts.targets.map(row => row.id));
+const platformFlows = ['LOGIN_ALLOWLIST','CREATE_AND_PLAY','CLOSE_AND_RESUME','SAME_OWNER_CROSS_DEVICE','ACCOUNT_SWITCH_ISOLATION','UNKNOWN_COMMAND_RECONCILIATION','UPDATE_WITH_JOURNAL','PRIVATE_FILE_DOWNLOAD'];
+for (let i = 1; i <= 6; i++) {
+  const row = platformContracts.targets.find(item => item.id === `CP${String(i).padStart(2, '0')}`);
+  assert.ok(row?.environment && row.auth && row.localJournal && row.update && row.fileTransfer);
+  assert.deepEqual(row.requiredFlows, platformFlows);
+  assert.equal(row.offlineWorldWrites, false);
+  assert.equal(row.optionalCapability, 'FILE_SHARING_FEATURE_DETECTED');
+  assert.ok(row.evidenceRequired.length >= 6);
+  assert.equal(row.executionStatus, 'NOT_IMPLEMENTED');
+}
+assert.equal(platformContracts.targets.find(row => row.id === 'CP03').auth, 'INDEPENDENT_WEB_SESSION_CHECK');
+assert.equal(platformContracts.targets.find(row => row.id === 'CP06').auth, 'SYSTEM_BROWSER_PKCE_APP_LINK');
+const platformFixtures = JSON.parse(read('platform-experience-fixtures.json'));
+assert.equal(platformFixtures.status, 'DESIGN_EXPECTATIONS_ONLY');
+assert.equal(platformFixtures.cases.length, 24);
+for (const module of ['auth','update','files']) assert.equal(platformFixtures.cases.filter(row => row.module === module).length, 8);
+for (const row of platformFixtures.cases) {
+  assert.ok(row.given && Object.keys(row.given).length && row.action && row.expected && Object.keys(row.expected).length);
+  assert.equal(row.executionStatus, 'NOT_IMPLEMENTED');
+  if (row.given.target) assert.ok(platformContracts.targets.some(target => target.id === row.given.target));
+  for (const id of row.given.targets || []) assert.ok(platformContracts.targets.some(target => target.id === id));
+}
+const allExpectations = [...detailedFixtures.cases,...worldFixtures.cases,...crossFixtures.cases,...creationFixtures.cases,...finalFixtures.cases,...platformFixtures.cases];
+unique(allExpectations.map(row => row.id));
+assert.equal(allExpectations.length, 298);
+console.log('PASS: six platform contracts with eight required flows each, and 24 platform expectations (8 auth, 8 update, 8 files); 298 unique design expectations total. Browser/device/auth/update/file behavior is NOT executed.');
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

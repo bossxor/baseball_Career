@@ -1,3 +1,5 @@
+플랫폼 후속 계약: [87 로그인·계정 전환](87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md), [88 업데이트·호환](88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md), [89 파일 저장·공유](89-PLATFORM-FILES-DOWNLOAD-SHARING.md)를 적용합니다. 로그아웃은 결과 확인을 무한히 기다리지 않으며 이전 owner의 미확정 요청은 다른 계정에 노출·재실행하지 않습니다.
+
 # 16. 계정·배포·운영 설계
 
 ## 기본 배치 결정

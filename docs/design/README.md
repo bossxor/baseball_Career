@@ -1,3 +1,5 @@
+최신 v0.15: [87 로그인·기기 전환](87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md) · [88 웹/PWA/APK 업데이트](88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md) · [89 파일 저장·공유](89-PLATFORM-FILES-DOWNLOAD-SHARING.md). 네 환경의6개 실행 대상×8필수 흐름과24개 서면 기대값을 추가했습니다. 최신 총298개,실제 인증·기기·업데이트·파일 시험은 미실행입니다.
+
 최신 플랫폼 범위: [86 네 환경 지원](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). Android/iPhone/Windows/macOS의 브라우저 웹과Android APK를 기본 목표로 합니다. iPhone 홈 화면 웹앱과 별도 iOS 네이티브 앱은 구분합니다. 현재 미구현이며CP01~06 실환경 검수는 계획입니다.
 
 최신 v0.14: [79 생성 입력](79-CREATION-FIELDS-VALIDATION-COPY.md) · [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md) · [81 이벤트 검토](81-EVENT-OCCURRENCE-COLLISION-AUDIT.md) · [82 확률·효과](82-PROBABILITY-EFFECTS-CONFIRMATION-AUDIT.md) · [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md) · [84 통합 경로·게이트](84-DESIGN-GATES-END-TO-END-PATHS.md) · [85 난이도 후속 확정](85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md). 남은6항목의 서면 검토와 구단 치트 전체 잠재력100·성장3배를 반영했습니다. 274개 서면 기대값이며 실제 앱/복구/화면/밸런스 검증은 구현 후입니다.
@@ -16,7 +18,7 @@
 
 # 다시, 플레이볼 — 상세 설계 묶음
 
-2026-10-19 / v0.14 / 상세설계 진행 / 구현 착수 전
+2026-10-19 / v0.15 / 상세설계 진행 / 구현 착수 전
 
 새 환경에서는 [START-HERE.md](START-HERE.md)부터 읽으세요. 최신 완료/미검증 항목은 [STATUS.md](STATUS.md), 규칙 충돌 시 기준은 [14 통합 결정표](14-CANONICAL-DECISIONS.md)입니다. 다른 채팅에는 [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md)를 사용할 수 있습니다.
 

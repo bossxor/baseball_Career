@@ -1,0 +1,356 @@
+{
+  "cases": [
+    {
+      "given": {
+        "targets": [
+          "CP02",
+          "CP03"
+        ],
+        "safariSessionExists": true
+      },
+      "action": "OPEN_HOME_SCREEN_WEB_APP",
+      "module": "auth",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-A01",
+      "expected": {
+        "sessionRechecked": true,
+        "safariLocalDraftAssumedShared": false
+      }
+    },
+    {
+      "given": {
+        "oldOwner": "A",
+        "newOwner": "B",
+        "unknownCommandOwner": "A"
+      },
+      "action": "SWITCH_ACCOUNT",
+      "module": "auth",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-A02",
+      "expected": {
+        "oldDataVisible": false,
+        "oldCommandSentAsB": false,
+        "sameOwnerRecoveryOnly": true
+      }
+    },
+    {
+      "given": {
+        "authenticationValid": true,
+        "gameAllowlisted": false
+      },
+      "action": "OPEN_GAME_API",
+      "module": "auth",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-A03",
+      "expected": {
+        "gameAccessAllowed": false,
+        "signupDoesNotGrantAccess": true
+      }
+    },
+    {
+      "given": {
+        "offline": true,
+        "unknownCommand": true
+      },
+      "action": "REQUEST_LOGOUT",
+      "module": "auth",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-A04",
+      "expected": {
+        "logoutBlockedIndefinitely": false,
+        "localPrivacyFence": true,
+        "serverRevocationShownConfirmed": false
+      }
+    },
+    {
+      "given": {
+        "target": "CP06",
+        "exchangeCodeExpired": true
+      },
+      "action": "HANDLE_APP_LOGIN_RETURN",
+      "module": "auth",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-A05",
+      "expected": {
+        "authenticated": false,
+        "restartLoginOffered": true,
+        "worldMutationCount": 0
+      }
+    },
+    {
+      "given": {
+        "target": "CP06",
+        "stateMismatch": true
+      },
+      "action": "HANDLE_APP_LOGIN_RETURN",
+      "module": "auth",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-A06",
+      "expected": {
+        "sessionAccepted": false,
+        "tokensPutInUrl": false
+      }
+    },
+    {
+      "given": {
+        "sameSave": true,
+        "twoDevicesSameRevision": true
+      },
+      "action": "COMMIT_DIFFERENT_COMMANDS",
+      "module": "auth",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-A07",
+      "expected": {
+        "acceptedWorldTransitions": 1,
+        "otherRequiresRefresh": true,
+        "autoMerge": false
+      }
+    },
+    {
+      "given": {
+        "newDevice": true,
+        "localJournal": false,
+        "creationAcceptedOnServer": true
+      },
+      "action": "LIST_OWNER_PENDING_WORK",
+      "module": "auth",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-A08",
+      "expected": {
+        "creationDiscoverable": true,
+        "unsentDraftRecovered": false
+      }
+    },
+    {
+      "given": {
+        "commandResponseUnknown": true,
+        "newClientAvailable": true
+      },
+      "action": "APPLY_UPDATE",
+      "module": "update",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-U01",
+      "expected": {
+        "originalJournalRetained": true,
+        "autoNewCommandId": false
+      }
+    },
+    {
+      "given": {
+        "clientBelowMinWrite": true,
+        "receiptExists": true
+      },
+      "action": "CHECK_COMPATIBILITY",
+      "module": "update",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-U02",
+      "expected": {
+        "newMutationAllowed": false,
+        "minimalReceiptLookupAllowed": true
+      }
+    },
+    {
+      "given": {
+        "oldJournalSchema": true,
+        "migrationFails": true
+      },
+      "action": "MIGRATE_LOCAL_JOURNAL",
+      "module": "update",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-U03",
+      "expected": {
+        "originalRetained": true,
+        "payloadRewrittenForResend": false
+      }
+    },
+    {
+      "given": {
+        "twoTabs": true,
+        "otherTabNotReady": true
+      },
+      "action": "ACTIVATE_WAITING_WORKER",
+      "module": "update",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-U04",
+      "expected": {
+        "forcedMixedVersionActivation": false,
+        "updateDeferred": true
+      }
+    },
+    {
+      "given": {
+        "newAssetsIncomplete": true
+      },
+      "action": "PREPARE_WEB_RELEASE",
+      "module": "update",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-U05",
+      "expected": {
+        "deleteCurrentWorkingCache": false,
+        "showUpdateReady": false
+      }
+    },
+    {
+      "given": {
+        "target": "CP06",
+        "apkSignatureDifferent": true
+      },
+      "action": "INSTALL_UPDATE",
+      "module": "update",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-U06",
+      "expected": {
+        "existingAppDataDeletedByApp": false,
+        "reinstallSuggestedAsDefault": false
+      }
+    },
+    {
+      "given": {
+        "newUiVersion": true,
+        "saveRulesVersion": 2
+      },
+      "action": "RESUME_SAVE",
+      "module": "update",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-U07",
+      "expected": {
+        "rulesVersion": 2,
+        "rngRerolled": false,
+        "difficultyReset": false
+      }
+    },
+    {
+      "given": {
+        "requestStatus404": true,
+        "oldCommandContractUnsupported": true
+      },
+      "action": "RECONCILE_AFTER_UPDATE",
+      "module": "update",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-U08",
+      "expected": {
+        "assumeNeverExecuted": false,
+        "autoReplayAsNewCommand": false
+      }
+    },
+    {
+      "given": {
+        "webShareSupported": false,
+        "pngJobReady": true
+      },
+      "action": "SAVE_CARD",
+      "module": "files",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-F01",
+      "expected": {
+        "downloadFallback": true,
+        "gameplayBlocked": false
+      }
+    },
+    {
+      "given": {
+        "fileSharePossible": true,
+        "renderNeedsAsyncWork": true
+      },
+      "action": "PREPARE_AND_SHARE",
+      "module": "files",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-F02",
+      "expected": {
+        "secondExplicitShareClick": true,
+        "activationAssumedAfterRender": false
+      }
+    },
+    {
+      "given": {
+        "shareSheetCancelled": true,
+        "exportJob": "READY"
+      },
+      "action": "HANDLE_SHARE_RESULT",
+      "module": "files",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-F03",
+      "expected": {
+        "transferState": "CANCELLED",
+        "exportJob": "READY",
+        "worldRevisionDelta": 0
+      }
+    },
+    {
+      "given": {
+        "signedUrlExpired": true,
+        "ownerStillValid": true,
+        "objectExists": true
+      },
+      "action": "REFRESH_DOWNLOAD_AUTHORIZATION",
+      "module": "files",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-F04",
+      "expected": {
+        "sameJob": true,
+        "newGameEffect": false,
+        "newUrlAfterOwnerCheck": true
+      }
+    },
+    {
+      "given": {
+        "temporaryPngExpired": true,
+        "momentExists": true
+      },
+      "action": "OPEN_CARD_DOWNLOAD",
+      "module": "files",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-F05",
+      "expected": {
+        "explicitRegenerationOffered": true,
+        "momentDeleted": false,
+        "automaticNewJob": false
+      }
+    },
+    {
+      "given": {
+        "browserTransferStarted": true,
+        "diskSaveNotObservable": true
+      },
+      "action": "SHOW_DOWNLOAD_STATUS",
+      "module": "files",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-F06",
+      "expected": {
+        "claimsSavedToPhotos": false,
+        "claimsTransferStartedOnly": true
+      }
+    },
+    {
+      "given": {
+        "target": "CP06",
+        "filePermissionDenied": true
+      },
+      "action": "RETURN_TO_GAME",
+      "module": "files",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-F07",
+      "expected": {
+        "serverSaveAllowed": true,
+        "recordsReadable": true,
+        "allStoragePermissionRequiredForLogin": false
+      }
+    },
+    {
+      "given": {
+        "readyFileHashMismatch": true
+      },
+      "action": "VERIFY_FILE",
+      "module": "files",
+      "executionStatus": "NOT_IMPLEMENTED",
+      "id": "PLAT-F08",
+      "expected": {
+        "handoffAllowed": false,
+        "gameStateModifiedToFixFile": false,
+        "sameJobInspectionAllowed": true
+      }
+    }
+  ],
+  "status": "DESIGN_EXPECTATIONS_ONLY",
+  "schemaVersion": 1
+}

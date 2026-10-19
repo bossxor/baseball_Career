@@ -1,6 +1,6 @@
-# v0.14 최종 설계 검토 정적 검증 — 2026-10-19
+# v0.15 플랫폼 경험 상세설계 정적 검증 — 2026-10-19
 
-검증 대상은 문서·JSON 구조·링크·HTML 구문·예시 산술입니다. 실제 게임·UI·API·복구·AI·밸런스의 실행 검증이 아닙니다.
+검증 대상은 설계 문서·등록부·기대값 구조·링크·HTML 구문·예시 산술입니다. 실제 로그인·업데이트·다운로드·공유 실행 시험이 아닙니다.
 
 명령: `node docs/design/verify-design.mjs`
 
@@ -13,20 +13,19 @@ CONFIRMED: cosmetic-only rewards and read-only commentary; no pending choices in
 PASS: 82 world design expectations across 8 modules, 24 invariant contracts, 12 planned run scenarios, narrowing-range examples. World simulations are NOT executed.
 PASS: 30 cross-contract expectations (12 command, 6 exact-effect, 12 web/APK resume); 192 expectations in these three fixture sets. Actual interruption recovery is NOT tested.
 PASS: 45 screen-action bindings and 10 creation recovery design expectations; 202 expectations before the final audit set. Runtime creation recovery is NOT tested.
-PASS: 45 screen recovery rows, 99 event occurrence rows, 20 probability surfaces, 24 planned paths, 72 final fixtures; 274 unique design expectations total. Runtime/UI/AI checks are NOT executed.
+PASS: 45 screen recovery rows, 99 event occurrence rows, 20 probability surfaces, 24 planned paths, 72 final fixtures; 274 expectations before the platform set. Runtime/UI/AI checks are NOT executed.
+PASS: six platform contracts with eight required flows each, and 24 platform expectations (8 auth, 8 update, 8 files); 298 unique design expectations total. Browser/device/auth/update/file behavior is NOT executed.
 NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.
 ```
 
-총274개 서면 기대값=기능80+세계82+교차30+생성복구10+최종검토72. 최종72는 생성10/화면10/이벤트10/확률10/시각10/통합경로10/난이도12이며 모두 NOT_IMPLEMENTED입니다. 정적 도구가 기대값의 실제 행동을 실행한 것은 아닙니다.
+총298개 서면 기대값=기능80+세계82+교차30+생성복구10+최종검토72+플랫폼24. 플랫폼24는 auth8/update8/files8,전부 NOT_IMPLEMENTED. 주어진 입력으로 실제 SDK·서버·브라우저·기기를 실행한 결과가 아닙니다.
 
-추가 검사: 화면복구45행,이벤트 근거99행,확률 표면20행,통합 경로24개,각 ID와 기존 카탈로그 참조,정책·빈 필드·실행 상태,전체 fixture 고유ID. 관계 생성 E94와 동일팀 등록 E96이 실제 대진을 요구하지 않도록 근거를 구분했습니다. 부상은 injuryId+stage,폼 안내는 세계 사건과 분리했습니다.
+플랫폼6대상(CP01~06)의 고유ID·인증/저널/업데이트/파일 경로·필수 흐름8개·오프라인 쓰기 금지·공유 기능감지·증거 필드를 검사했습니다. iPhone 홈 화면 별도 세션 확인과 Android 시스템 브라우저/PKCE/App Link 경로를 구조로 구분했습니다. 6×8=48은 계획된 흐름 조합이며 실제48시험 통과가 아닙니다.
 
-산술 예시: 하드 NPC10×1.2=12,기본P95+5→100상한,반시즌 일반/반시즌 치트의 기준10→20,XP30사용 후 일반잔여0/치트재영입잔여30,원본 최고100/90/80/70/60/50의 반값 평균37.5. 이는 실제 성장 엔진 실행 결과가 아닙니다.
+기존 45화면/99이벤트/20확률표면/24통합경로·24불변조건·장기실험12계획은 유지합니다. 실제 사례가 아닌 문서 산술 예시와 서면 구조를 검증한 것입니다. MD 링크·HTML ID/앵커/자산·스크립트 구문·임베드화면카탈로그 일치·확률1 숫자 배지 부재 검사도 통과했습니다.
 
-HTML 숨김 치트 설명을 구단 전체 잠재력100·자연성장/구종숙련3배·향후 영입/보관 포함으로 갱신했습니다. 해금 전 노출 방지의 실제 브라우저 동작은 미검수이며 기존 JS 구문/ID/앵커/카탈로그/자산 경로 검사만 통과했습니다. 원래 열린 목업 복사본도 같은 파일로 동기화합니다.
+실제 미검증: 로그인/허용목록·관리형 인증 SDK·App Link 도메인/서명·두 계정/기기·강제종료·PWA worker/두 탭 전환·APK 서명 업데이트·PNG/한글·OS 다운로드/공유·브라우저 픽셀/접근성·Neon DB/파일/백업복원·게임/AI/밸런스·build/APK. 기존MXC 오류 이후 화면 렌더링 재검수는 하지 않았습니다. 이번에 실제 원격 서비스 변경·계정 이메일 전송·외부 공유는 없습니다.
 
-실제 렌더링·스크린리더·모바일 키보드/터치·웹/APK 강제종료·2기기·인증/owner격리·Neon/파일/백업복원·worker장애·장기 밸런스·AI/build/APK는 미실행입니다. 기존 MXC 오류 이후 픽셀 검수 재시도는 없었습니다. 장기 실험12개/불변조건24개/통합경로24개는 계획이며 production 변경은 없습니다.
+Capacitor/Android/MDN/web.dev 공식 문서를 읽어 외부 동작 조건을 확인했으며 각87~89에 링크를 기록했습니다. 이 확인은 앱의 실환경 연결 증거가 아닙니다. SDK 선택·최소OS·플러그인·배포 서명은 구현 시 다시 확인합니다.
 
-Git diff 공백 검사와 패키지 SHA 해시는 별도로 확인합니다. 통합MD와SHA목록을 갱신하며,서면 기준 완료와 구현 준비용 실행 게이트를 STATUS/84에서 분리했습니다.
-
-플랫폼86 보완 후 같은 정적 검사를 재실행해 통과했습니다. 공식 Capacitor/Apple 문서를 확인하고CP01~06의 네 환경 웹·홈 화면·release APK 검수 대상을 작성했습니다. 실제 플랫폼 실행 시험은 미실행이며274개 서면 기대값 집계는 유지합니다.
+통합MD·SHA목록 갱신,git diff 공백 검사를 수행합니다. 실제 실행 게이트는84/STATUS에 남기며 설계 완료를 앱 완성으로 표시하지 않습니다. HTML은이번변경없음.

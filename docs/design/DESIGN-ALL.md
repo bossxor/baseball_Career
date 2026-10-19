@@ -1,8 +1,10 @@
-# 다시, 플레이볼 — 통합 상세설계 v0.14 · 플랫폼 보완
+# 다시, 플레이볼 — 통합 상세설계 v0.15
 
 ---
 
 <!-- SOURCE: START-HERE.md -->
+
+최신 v0.15: [87 로그인·기기 전환](87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md) · [88 웹/PWA/APK 업데이트](88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md) · [89 파일 저장·공유](89-PLATFORM-FILES-DOWNLOAD-SHARING.md). 네 환경의6개 실행 대상×8필수 흐름과24개 서면 기대값을 추가했습니다. 최신 총298개,실제 인증·기기·업데이트·파일 시험은 미실행입니다.
 
 최신 플랫폼 범위: [86 네 환경 지원](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). Android/iPhone/Windows/macOS의 브라우저 웹과Android APK를 기본 목표로 합니다. iPhone 홈 화면 웹앱과 별도 iOS 네이티브 앱은 구분합니다. 현재 미구현이며CP01~06 실환경 검수는 계획입니다.
 
@@ -34,7 +36,7 @@
 
 ## 현재 상태
 
-- 단계: 상세 설계 v0.14. 앱 코드 구현/DB 스키마 배포/APK 빌드 미착수.
+- 단계: 상세 설계 v0.15. 앱 코드 구현/DB 스키마 배포/APK 빌드 미착수.
 - 목적: 소수 친구용 웹앱+Android APK, 선수 커리어와 독립 구단 운영.
 - 필수: KBO 가상선수, 고교 미국직행, 포스팅, MiLB/MLB, 국가대표/병역, 스타일/강화, 은퇴보관, 능력별최고50%·새잠재력·병역재시작의 어린선수 선택투입, Neon 저장.
 - 앱 이름: 다시, 플레이볼. 목표 GitHub: https://github.com/bossxor/baseball_Career
@@ -72,6 +74,8 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 
 <!-- SOURCE: README.md -->
 
+최신 v0.15: [87 로그인·기기 전환](87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md) · [88 웹/PWA/APK 업데이트](88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md) · [89 파일 저장·공유](89-PLATFORM-FILES-DOWNLOAD-SHARING.md). 네 환경의6개 실행 대상×8필수 흐름과24개 서면 기대값을 추가했습니다. 최신 총298개,실제 인증·기기·업데이트·파일 시험은 미실행입니다.
+
 최신 플랫폼 범위: [86 네 환경 지원](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). Android/iPhone/Windows/macOS의 브라우저 웹과Android APK를 기본 목표로 합니다. iPhone 홈 화면 웹앱과 별도 iOS 네이티브 앱은 구분합니다. 현재 미구현이며CP01~06 실환경 검수는 계획입니다.
 
 최신 v0.14: [79 생성 입력](79-CREATION-FIELDS-VALIDATION-COPY.md) · [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md) · [81 이벤트 검토](81-EVENT-OCCURRENCE-COLLISION-AUDIT.md) · [82 확률·효과](82-PROBABILITY-EFFECTS-CONFIRMATION-AUDIT.md) · [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md) · [84 통합 경로·게이트](84-DESIGN-GATES-END-TO-END-PATHS.md) · [85 난이도 후속 확정](85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md). 남은6항목의 서면 검토와 구단 치트 전체 잠재력100·성장3배를 반영했습니다. 274개 서면 기대값이며 실제 앱/복구/화면/밸런스 검증은 구현 후입니다.
@@ -90,7 +94,7 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 
 # 다시, 플레이볼 — 상세 설계 묶음
 
-2026-10-19 / v0.14 / 상세설계 진행 / 구현 착수 전
+2026-10-19 / v0.15 / 상세설계 진행 / 구현 착수 전
 
 새 환경에서는 [START-HERE.md](START-HERE.md)부터 읽으세요. 최신 완료/미검증 항목은 [STATUS.md](STATUS.md), 규칙 충돌 시 기준은 [14 통합 결정표](14-CANONICAL-DECISIONS.md)입니다. 다른 채팅에는 [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md)를 사용할 수 있습니다.
 
@@ -178,47 +182,43 @@ MD만 읽는 AI에는 `DESIGN-ALL.md` 또는 본 폴더의MD파일들을 전달�
 
 <!-- SOURCE: STATUS.md -->
 
-최신 플랫폼 범위: [86 네 환경 지원](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). Android/iPhone/Windows/macOS의 브라우저 웹과Android APK를 기본 목표로 합니다. iPhone 홈 화면 웹앱과 별도 iOS 네이티브 앱은 구분합니다. 현재 미구현이며CP01~06 실환경 검수는 계획입니다.
+# 상세설계 현황 — v0.15 플랫폼 로그인·업데이트·파일 경험
 
-# 상세설계 현황 — v0.14 남은6항목 검토·난이도 후속 확정
+2026-10-19. 네 환경의 웹과Android APK 지원 목표86에 이어87~89의 플랫폼 공통 상세 흐름을 작성했습니다. 앱 구현·서비스 배포·웹/APK 빌드·실환경 시험은 미착수입니다.
 
-2026-10-19. 사용자가 요청한 생성 입력/전체 화면 반응/이벤트 충돌/확률 표시/디자인 검수 기준/통합 경로의 서면 검토를79~84로 작성했습니다. 후속 구단 치트·하드 결정은85에 반영했습니다. 앱 구현·DB 배포·웹/APK 빌드·실환경 검증은 시작하지 않았습니다.
+## 이번 서면 계약
 
-## 이번 산출물
-
-| 문서 | 서면 내용 |
+| 문서 | 내용 |
 |---|---|
-| [79 생성 입력](79-CREATION-FIELDS-VALIDATION-COPY.md) | 선수·구단 필드·초기 배열·이름/좌투/집중 검증·오류 문구·미리보기 순서 정합 |
-| [80 화면 복구](80-SCREEN-STATES-NAVIGATION-RECOVERY.md) |45화면 빈 상태·차단·복구·초안·계정 만료·오프라인·뒤로가기 |
-| [81 이벤트](81-EVENT-OCCURRENCE-COLLISION-AUDIT.md) |99이벤트 typed evidence·중복·큐·학적/병역/해외/은퇴 충돌 |
-| [82 확률·효과](82-PROBABILITY-EFFECTS-CONFIRMATION-AUDIT.md) |20표면의 확률 대상·분모·끝점·정확 효과·최종 확인 |
-| [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md) |이미지/로고/서체/6능력·종합/반응형·접근성·실제 캡처 기준 |
-| [84 통합 경로](84-DESIGN-GATES-END-TO-END-PATHS.md) |요구 추적·24개 경로·설계/구현/실행 검수 게이트 |
-| [85 난이도](85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md) |커리어 하드 경쟁환경D·구단 하드 AI D·구단 치트P100/성장3배U |
+| [87 로그인·전환](87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md) |세션·허용 목록·Android App Link 교환·홈 화면 별도 로그인·기기 간 이어하기·로그아웃 결과 불명 |
+| [88 업데이트](88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md) |선택/필수 업데이트·구 저널 adapter·최소 receipt 조회·서비스워커/두 탭·서명 APK·호환 롤백 |
+| [89 파일 전달](89-PLATFORM-FILES-DOWNLOAD-SHARING.md) |PNG/연대기 JSON/게임 백업 구분·다운로드/공유 상태·URL 만료·권한 거절·파일명/검증 |
 
-## 최신 사용자 확정 U
+[플랫폼 표](platform-experience-contracts.json)는 CP01 Android Chrome,CP02 iPhone Safari,CP03 iPhone 홈 화면 웹앱,CP04 Windows Chrome/Edge,CP05 macOS Safari/Chrome,CP06 Android release APK의6대상을 정의합니다. 각8개 필수 흐름과 필요한 증거를 기록했으며48개 실환경 시험을 실행했다는 뜻이 아닙니다. 파일 공유는 기능 감지와 내려받기 대안,세계 변경은 온라인 서버 확정을 유지합니다.
 
-구단 치트는 내 구단의 모든 선수와 이후 영입·보관 투입 선수의6잠재력100,양의 자연성장3배. 구종XP3배는 커리어 규칙과 연결한 D. 무제한 예산·적격 탐색/유효 영입 수락 보장 유지. 실제 능력 즉시100,노쇠·피로·강화 증가량3배 효과는 없습니다. 커리어 치트 주인공 잠재력100/성장·구종XP3배/강화 성공 보장도 유지합니다.
+## 기존 사용자 결정 유지
 
-하드 관련 성장·잠재력 요청은 커리어와 혼동한 구단 질문에서 나왔고 구단 상세 난도는 설계자에게 맡겼습니다. D: 커리어 하드 NPC P+5/상한100,양의 성장·구종XP1.2배/cap24;주인공은 기존 하드1배/P기본. D: 구단 하드는 동일 예산·동일 성장/P에서 상대 AI의 구성·스카우트·영입 판단만 강화. 기존 save가 없는 설계 단계이며 실제 밸런스는 미검증입니다.
+타자/투수6능력·집중4개·평균 종합100,고교 KBO/대학/유효 미국 제안,병역/국제대회,은퇴 원본 불변·19세 능력별 최고50% 복사·병역 재시작,독립 구단/보관0명,실제1 확률 숫자 숨김,정확 강화 효과 표시를 유지합니다. 구단 치트는 내 구단 전체 잠재력100·양의 자연성장3배와 무제한 예산/적격 탐색·유효 제안 수락 보장입니다. 이후 영입·보관 투입 포함,구종XP3배·퇴단/소속기간 정책D는85를 따릅니다.
 
-D: 치트 구단 퇴단 후 한 번 높아진P100은 보존,성장 배율은 현 소속 기간에 따라 종료합니다. 재영입으로 세계시즌 성장·XP를 초기화하지 않습니다. 원본 보관 선수는 불변입니다. 이 D는 출처·이적 예시와 함께85에 기록했습니다.
+커리어 하드 경쟁자 보정과 구단 하드 AI는85의D이며 실험 전 수치입니다. 이번87~89는 게임 난이도·기회·보상을 변경하지 않고 플랫폼별 계정/배포/파일 경계만 구체화합니다. 별도 iOS 네이티브/Windows·macOS 설치형은86의 후속 선택 범위입니다.
 
-## 기존 계약 정합
+## 정합 보완
 
-79는05의 생성 전 실제 랜덤 로스터/잠재력 미리보기 초안을 대체합니다. 생성 전은 구성 기준·공개 고정 배열,실제 생성은78의 단일 작업입니다. 숨김 해금은 발견용UI이며 서버 비밀 권한 증명이 아닙니다. 85는 이전 구단 성장1배/P상향만 규칙을 대체합니다. 카탈로그 45화면/99이벤트는 유지하고 복구표45/이벤트 근거표99/확률 등록20/경로24를 추가했습니다.
+16의 '결과 확인 후 로그아웃'은 네트워크 장애에서 무한 대기하지 않게87로 보완했습니다. 이전 owner 데이터는 가리고 미확정 journal은 다른 계정에 재실행하지 않습니다. 업데이트는 미확정 원 요청 ID/hash를 새 내용으로 변환하지 않으며 구버전도 최소 결과 조회를 제공하도록 계약을 정했습니다. 파일 전달 취소·공유 미지원·권한 거절은 공식 게임 저장 실패와 분리합니다.
 
-## 검증과 남은 실행 게이트
+기존79~84의 생성 입력·45화면 복구·99이벤트 근거·20확률 표면·시각 기준·24통합 경로,74~78의명령/생성/이어하기 계약도 유지합니다. 새로운 게임 기능을 더한 것이 아니라 플랫폼 범위를 사용 흐름까지 연결한 문서입니다.
 
-기존202+최종72=274개의 서면 기대값. 전부 NOT_IMPLEMENTED. 정적 검사는 ID·행 개수·링크·필드·HTML 자산/앵커·구문·카탈로그 일치·예시 산술·SHA만 확인합니다. 실제72가지 동작을 실행한 결과가 아닙니다. [VALIDATION](VALIDATION.md)에 실제 출력 기록.
+## 검증
 
-미실행: 브라우저 픽셀·폰트·키보드·터치·접근성,웹/APK 강제종료·2기기 이어하기,인증/owner격리,Neon DB·파일·백업복원,게임 엔진·AI·난이도·장기 균형,빌드·APK 설치. 기존 시각 도구 MXC 오류 이후 실제 렌더링 재검증은 하지 않았습니다. 로고 보유와 외부 배포 권리 확인은 구분합니다. 장기 실험12개·불변조건24개·통합24경로는 계획입니다.
+기존274+플랫폼24=298개 서면 기대값. 플랫폼24는 auth8/update8/files8. 전부 NOT_IMPLEMENTED. 정적 검사는 구조·ID·참조·링크·상태·예시 산술·HTML 구문/자산과패키지 SHA만 확인합니다. [VALIDATION](VALIDATION.md)에 출력과 한계를 기록합니다.
+
+실제 인증·관리형SDK 연결·허용 목록·두 계정/두 기기·App Links·PWA worker 전환·서명 APK 업데이트·OS 다운로드/공유·PNG·브라우저 픽셀/접근성·Neon/파일·엔진/AI/밸런스·빌드는 미검증입니다. 기존MXC 오류 이후 픽셀 재검수는 하지 않았고 이번에는 설계 문서와 정적 검사만 진행했습니다. 공식 Capacitor/Android/MDN/web.dev 문서를 읽어 플랫폼 동작을 확인했으며 앱 연결 실증은 아닙니다.
 
 ## 인계와 다음 단계
 
-남은6항목의 서면 기준은 작성됐으며 현재 대기 중인 사용자 질문은 없습니다. 추가 취향 변경이 없다면 문서 개수를 늘리기보다84의 실행 게이트를 구현 과정에서 검증할 단계입니다. 구현 착수는 별도 사람 지시를 받은 뒤 진행하며 지금은 자동 전환하지 않습니다.
+새 환경은 START-HERE →14→86~89→74~85 및 관련 분야를 읽습니다. 274는이전 v0.14집계,298이최신입니다. 플랫폼6대상은 서면 사례 수와 별도로 셉니다. 통합MD/SHA/원격Git을 갱신하며 실제 구현·배포는 별도 착수 지시 후 진행합니다.
 
-새 환경: START-HERE → 14 → 79~85 → 분야별 최신 문서/등록부. U와D,서면 검토와 실제 실행을 분리합니다. DESIGN-ALL과SHA·원래 열린 보드 복사본을 갱신합니다. 원격 GitHub docs/design이 원본이며 작업 완료 시 commit/push합니다.
+기능·플랫폼의 서면 경계는 작성됐습니다. 다음 작업은 새 사용자 요구가 있으면 해당 계약을 보완하고,구현을 시작할 때는84의 단위별 실행 게이트로 검증하는 것입니다. 작성된 계획을 실제 동작 완료로 취급하지 않습니다.
 
 ---
 
@@ -280,6 +280,9 @@ v0.14:79~84로 요청된 남은6개 설계 검토를 작성,85로 구단 전체 
 
 
 2026-10-19 플랫폼 보완: [86](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). 네 환경의 웹 플레이+Android APK를 기본 목표로 정리합니다. iPhone은 Safari/홈 화면 웹앱,Windows/macOS는브라우저. 별도iOS·데스크톱 설치형은후속 선택 범위. 실제 호환 검수 미실행.
+
+
+v0.15:87~89플랫폼로그인·기기전환·업데이트·파일전달상세계약작성.6개대상×8필수흐름/24서면기대값을추가했고총298개. 실제호환·인증·APK·다운로드·공유시험은구현후계획. 구현자동착수없음.
 
 
 ---
@@ -444,6 +447,11 @@ U: 구단 치트는 내 구단 모든 선수와 이후 영입/보관 투입의6�
 구단 난도는 설계자 재량. D: 구단 하드 동일 예산/성장/P·AI 판단 강화. 커리어 하드 경쟁환경은 D NPC P+5상한100·성장/구종XP1.2배·cap24,주인공 기존P/성장1배. 수치D는 실제 장기 밸런스 검증 전. 상세는85,구현/배포 자동 착수 아님.
 
 2026-10-19 플랫폼 보완: [86](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). 네 환경의 웹 플레이+Android APK를 기본 목표로 정리합니다. iPhone은 Safari/홈 화면 웹앱,Windows/macOS는브라우저. 별도iOS·데스크톱 설치형은후속 선택 범위. 실제 호환 검수 미실행.
+
+
+## v0.15 플랫폼 공통 흐름
+
+87로그인/계정전환·기기간이어하기,88웹/PWA/APK업데이트·구저널·호환조회,89기념품/백업다운로드·OS공유. 모두기술D이며현재게임규칙변경없음.16의결과확인후로그아웃은87의비차단·owner분리보완을따름. 플랫폼6대상×8필수흐름은실행계획,서면기대값24추가로총298개. 실제기기·SDK·파일·업데이트미검증.
 
 
 ---
@@ -1559,6 +1567,8 @@ KBO 예산120억은기본동일. 시즌수익·시설·물가상승미구현이�
 ---
 
 <!-- SOURCE: 16-AUTH-OPERATIONS.md -->
+
+플랫폼 후속 계약: [87 로그인·계정 전환](87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md), [88 업데이트·호환](88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md), [89 파일 저장·공유](89-PLATFORM-FILES-DOWNLOAD-SHARING.md)를 적용합니다. 로그아웃은 결과 확인을 무한히 기다리지 않으며 이전 owner의 미확정 요청은 다른 계정에 노출·재실행하지 않습니다.
 
 # 16. 계정·배포·운영 설계
 
@@ -5428,6 +5438,9 @@ G01의 문서 추적과 카탈로그 구조는 정적으로 검사할 수 있다
 
 현재 남은 것은 이 문서에서 약속한 실환경 검증과 밸런스 확인이다. 새로운 취향 요구가 없다면 기능을 끝없이 늘리는 설계 단계보다 이 계약을 구현하며 검증할 준비가 된 서면 기준으로 삼는다. 다만 시각 최종 승인·실행 안정성·밸런스가 완료됐다는 의미로 '완벽'이라고 주장하지 않는다.
 
+플랫폼후속인계:86지원범위및87~89의로그인·업데이트·파일계약을포함합니다. 최신서면기대값은298개이며CP01~06의8필수흐름을실제구현후검수합니다. 위274개표기는v0.14시점집계입니다.
+
+
 ---
 
 <!-- SOURCE: 85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md -->
@@ -5505,6 +5518,8 @@ P100 확정 사실은 해당 선수 화면에 고정 정책으로 공개할 수 
 
 <!-- SOURCE: 86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md -->
 
+플랫폼 후속 계약: [87 로그인·계정 전환](87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md), [88 업데이트·호환](88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md), [89 파일 저장·공유](89-PLATFORM-FILES-DOWNLOAD-SHARING.md)를 적용합니다. 로그아웃은 결과 확인을 무한히 기다리지 않으며 이전 owner의 미확정 요청은 다른 계정에 노출·재실행하지 않습니다.
+
 # 86. 안드로이드·아이폰·윈도우·맥 지원 범위
 
 2026-10-19. U: 최초 요청은 웹앱+Android APK였으며 네 환경 모두 가능한지 확인했다. 기존06의 React/Vite 공통 UI·Hono API·Neon 저장 구조를 유지하고 브라우저 지원 대상을 명시한다. 아래는 지원 목표와 검수 계약이며 현재 실행 가능한 앱이 출시됐다는 의미가 아니다.
@@ -5554,7 +5569,208 @@ CP01 Android Chrome 웹,CP02 iPhone Safari 웹,CP03 iPhone 홈 화면 웹앱,CP0
 
 2026-10-19 공식 문서 확인: [Capacitor 환경 설정](https://capacitorjs.com/docs/getting-started/environment-setup)은 Web/Android/iOS 대상과 iOS의 macOS/Xcode 빌드 환경을 안내한다. [Apple iPhone 사용 설명서](https://support.apple.com/en-mide/guide/iphone/iphea86e5236/27/ios/27)는 Safari에서 홈 화면 웹앱으로 추가하는 방법을 안내한다. 배포 시 문서를 다시 확인한다.
 
-기존 웹/APK 표현은 이 문서의 네 환경 웹 지원을 포함하도록 읽는다. [76 이어하기](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md), [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md), [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md), [84 게이트](84-DESIGN-GATES-END-TO-END-PATHS.md)를 CP01~06에 적용한다. 서면 기대값274개 집계는 유지하며 플랫폼 검수6대상은 별도 계획으로 센다.
+기존 웹/APK 표현은 이 문서의 네 환경 웹 지원을 포함하도록 읽는다. [76 이어하기](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md), [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md), [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md), [84 게이트](84-DESIGN-GATES-END-TO-END-PATHS.md)를 CP01~06에 적용한다. 최신 서면 기대값 수는 STATUS를 따르며 플랫폼6대상은 별도 계획으로 센다.
+
+---
+
+<!-- SOURCE: 87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md -->
+
+# 87. 플랫폼별 로그인·계정 전환·기기 간 이어하기
+
+2026-10-19 / 서면 기술 기본안 D. [16](16-AUTH-OPERATIONS.md)·[28](28-DATA-API-AUTH-TESTS.md)의 인증 후보·허용 목록·앱 세션 계약은 유지한다. 실제 인증 SDK/관리형 서비스 지원을 확인하거나 배포한 문서가 아니다. [86](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md)의 네 환경 웹+Android APK를 연결한다.
+
+## 공통 진입 상태
+
+BOOT → CHECK_SESSION → SIGNED_OUT / VERIFY_EMAIL / ACCESS_PENDING / AUTHENTICATED → RECONCILE → HOME_OR_RESUME. CHECK_SESSION 중 저장 목록·이전 계정 이름을 먼저 렌더링하지 않는다. RECONCILE은 같은 owner의 creation/command 저널 확인→서버 최신 저장→resumeDescriptor→초안 검증 순서다. 로그인 성공을 새 게임 생성이나 자동 다음 경기 명령으로 연결하지 않는다.
+
+| 상태 | 문구와 행동 |
+|---|---|
+| 세션 없음 | '로그인하면 저장된 게임을 이어갈 수 있어요.' 로그인/가입 |
+| 이메일 확인 전 | '이메일 확인 후 다시 로그인해 주세요.' 제공자 지원 확인·재발송 흐름 |
+| 인증됨·게임 미허용 | '현재 초대한 사용자만 이용할 수 있어요.' 다시 확인/로그아웃 |
+| 세션 유효·목록0 | 정상 신규 계정. 선수 커리어/독립 구단 시작 |
+| 세션 만료·미확정 명령 있음 | '다시 로그인한 뒤 처리 결과를 확인할게요.' 같은 ID 보존 |
+| 인증 서버/네트워크 장애 | '로그인 상태를 확인하지 못했어요.' 재시도. 로그아웃 확정·새 계정 생성으로 오인하지 않음 |
+| 계정 변경 | 이전 데이터 가림→현재 owner namespace 선택→서버 조회 |
+| 서버 계정 철회·삭제 진행 | 쓰기 차단,계정 작업 상태·로그아웃·지원용 진단 ID |
+
+허용 목록은 서버 인증 subject 기준이다. 자기 이메일을 입력해 게임 접근 권한을 추가하는 공개 버튼·공유 초대 코드를 도입하지 않는다. 가입 가능한 것과 게임 이용 가능한 것은 별개이며 인증 오류로 이메일 존재 여부를 노출하지 않는다. 구현 단계의 운영자 등록 방법은 서버 관리 경로로 정한다.
+
+## 환경별 인증 경로
+
+CP01/02/04/05의 브라우저 웹은 같은 origin 서비스와 관리형 인증 SDK를 우선한다. HttpOnly/Secure 쿠키·CSRF·세션 검증은28을 따른다. 프런트가 임의 JWT를 만들거나 앱 DB에 비밀번호를 저장하지 않는다. API가 확인한 owner 식별자는 UI의 임의 이메일/요청 ownerId와 구분한다.
+
+CP03 iPhone 홈 화면 웹앱은 별도 실행 환경으로 취급한다. Safari에서 로그인했으니 홈 화면 실행도 인증됐다고 가정하지 않고 세션을 다시 확인한다. 필요한 경우 그 환경에서 제공자 로그인 흐름을 수행하고 서버 저장 목록을 조회한다. Safari의 미송신 초안·선택 상태까지 자동 이동시키지 않는다.
+
+CP06 Android APK는 시스템 브라우저 로그인→검증된 HTTPS App Link 복귀→일회용 code+state와 PKCE verifier 교환→앱 세션 저장이다. access/refresh token을 URL·명령 저널에 넣지 않는다. code60초/단일사용/등록redirect와 client challenge 바인딩은 기존16/28 유지. 앱 종료·콜백 재수신은 exchange 처리의 멱등/소모 상태를 확인하며 새 게임 명령을 실행하지 않는다.
+
+복귀 링크를 받은 것만으로 로그인 성공으로 처리하지 않는다. 앱이 시작한 state와 origin/host/path,유효 세션 교환 결과를 확인한다. 링크 검증 실패·만료·다른 기기 열기는 '앱에서 로그인을 다시 시작해 주세요.'를 안내한다. 외부 인증 SDK가 이 흐름을 지원하는지는 구현 시 검수하고,지원 불가라면 토큰 URL 전달 같은 임의 우회를 사용하지 않는다. 도메인·서명·App Links 연결은 실환경 검수 항목이다.
+
+## 같은 계정으로 다른 기기에서 계속하기
+
+1. 새 환경에서 로그인·게임 허용 여부 확인.
+2. 계정의 미확인 생성 작업과 최근 저장 목록 조회. 생성 접수 후 응답 유실은78의 owner-scoped creationId로 발견한다.
+3. 사용자가 저장을 열면 서버 resumeDescriptor와 현재 revision을 받는다. 이전 환경의 화면 URL이나 캐시 state를 서버에 덮어쓰지 않는다.
+4. 미해결 사건·pending 경기·복무·연도/복원 job은 동일 대상에 연결한다. 다른 기기의 명령이 아직 진행 중이면 현재 작업을 보여주고 충돌하는 새 명령을 차단한다.
+5. lastPlayedSaveRef는 명시적 열기/이어하기에서 개인 preference CAS로만 갱신한다. 단순 로그인·목록 조회·생성 완료로 바꾸지 않는다.
+
+양쪽 기기의 조회는 동시에 가능하다. 쓰기는 서버 revision/단일 명령 원자성으로 조정하고 '새 기기가 이전 기기를 강제로 인수'하는 잠금은 추가하지 않는다. 뒤늦은 기기는409 후 초안 유지·최신 상태·새 미리보기·재확인 순서를 따른다. 성공한 효과를 취소하거나 두 기기의 경기를 병합하지 않는다.
+
+다른 기기에 송신 저널이 없더라도 이미 서버가 접수한 작업·blocking task·resume 대상은 소유자 조회로 발견돼야 한다. 서버 접수 전 초안이나 전송되지 않은 클릭을 원격에서 복구한다고 약속하지 않는다. 홈은 '서버 저장됨/처리 중/이 기기의 초안'을 서로 다른 상태로 표시한다.
+
+## 로그아웃과 계정 전환 정합
+
+기존16의 '결과 조회 후 로그아웃'은 가능한 경우 먼저 결과를 확인한다는 순서다. 네트워크가 끊겼다고 로그아웃을 무기한 막지 않는다. owner가 바뀌기 전에 UI의 이름·저장 목록·캐시를 가리고 개인 구독/폴링을 중지한다. 토큰·세션 참조를 정리하며 사용자 게임을 삭제하지 않는다.
+
+미확정 명령 ID는 인증값이 없는 최소 owner-scoped journal로 분리 보존할 수 있다. 다른 계정은 접근/표시/재송신할 수 없고 원래 계정으로 재로그인했을 때만 결과를 조회한다. 웹 저장소 자체를 사용자가 지웠다면 서버 접수 결과만 복구 가능하다. 로그아웃 과정에서 저널을 지우는 클라이언트는 그 전에 서버 owner-scoped 결과 복구 경로를 보장해야 한다.
+
+온라인 로그아웃은 제공자 세션 종료와 앱 세션 철회를 요청한다. 오프라인이면 '이 기기에서 로그아웃했습니다. 서버 세션 종료는 연결 후 확인이 필요합니다.'처럼 범위를 명확히 한다. 공유 브라우저에서 남아 있는 제공자 세션을 곧바로 게임 자동 로그인으로 사용해 이전 계정을 노출하지 않도록 명시적 재진입을 요구한다. 전체 기기 로그아웃은 실제 제공자/앱 서버의 철회 완료가 확인될 때만 완료로 표시한다.
+
+이미 인증·접수된 명령은 로그아웃이 취소 명령이 아니다. 서버 트랜잭션이 완료될 수 있고 재로그인 후 동일 receipt를 보여준다. 계정 삭제는 별도 재인증·삭제 job이며 로그아웃과 결합하지 않는다. subject를 삭제했는데 기존 서버 작업이 데이터를 되살리는 경합은 삭제 상태/쓰기 잠금으로 차단하는 기존 운영 검수를 적용한다.
+
+## 진단과 수용 조건
+
+로그에 requestId/clientPlatform/clientRelease/authState/errorCode 정도만 남기고 이메일·token·교환code·verifier·쿠키는 제외한다. 인증 성공과 게임 접근 거부를 서로 다른 진단 코드로 구분하되 화면에서 타인 정보를 드러내지 않는다.
+
+[플랫폼 검수 계획](platform-experience-contracts.json)의 CP01~06 및 [기대값](platform-experience-fixtures.json)의 auth8개를 구현 후 실행한다. 계정A 미확정 명령→로그아웃→B 로그인→A 재로그인,두 기기 같은 save 확정 경합,Android 콜백 만료/중복,홈 화면 별도 로그인·PC 이어하기를 포함한다.
+
+외부 동작 근거: [Capacitor deep links](https://capacitorjs.com/docs/guides/deep-links), [Android App Links](https://developer.android.com/training/app-links/about). 2026-10-19 확인. 서비스별 인증 SDK·도메인 연결은 구현 시 다시 확인한다.
+
+---
+
+<!-- SOURCE: 88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md -->
+
+# 88. 웹·PWA·APK 업데이트와 버전 호환
+
+2026-10-19 / 기술 기본안 D. [29](29-OPERATIONS-RELEASE-RUNBOOK.md)·[74](74-PREVIEW-COMMAND-RECONCILIATION.md)·[76](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)·[86](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md)의 갱신/복구 원칙을 UI·API·캐시 계약으로 구체화한다. 실제 서비스워커·APK·릴리스 파이프라인은 미구현이다.
+
+## 버전의 의미와 조회
+
+clientReleaseId는 배포 식별자,clientContractVersion은 단조 증가 정수,apiContractVersion은 응답/명령 계약,saveSchemaVersion은 데이터 구조,rulesVersion/engineVersion은 게임 판정 규칙이다. 이들을 앱 표시 버전 문자열 하나로 비교하지 않는다. UI를 업데이트했다고 진행 중 세이브의 난이도·잠재력·RNG 규칙을 자동 변경하지 않는다.
+
+GET /api/client-policy의 논리 응답: {policyVersion,apiContractVersion,minWriteClientContractVersion,minReadClientContractVersion,reconciliationContractVersion,latestClientReleaseId,maintenance:{readAllowed,writeAllowed,messageKey},webReleaseManifest?,androidReleaseManifest?}. 운영 HTTPS origin에서 조회하며 URL은 서버가 지정한 배포 allowlist 범위만 허용한다. 공개 응답에는 save·계정·DB주소·서명키가 없다. 실제 호스트/API 경로는 구현 시 버전 정책에 맞춰 확정한다.
+
+인증 전 정책 조회는 가능하지만 개인 결과 조회는 항상 인증/owner 검사를 거친다. 세션 복원 뒤·앱 resume·최초 쓰기 전에 정책 상태를 확인하고 서버도 각 요청의 clientContractVersion을 검사한다. 오래된 정책 캐시만으로 쓰기를 허용하지 않는다. 정책 조회 실패는 점검 중 확정이 아니라 연결 확인 상태이며 오프라인 새 명령은 금지한다.
+
+## 상태와 사용자 행동
+
+| 상태 | 화면 | 허용 범위 |
+|---|---|---|
+| CURRENT | 일반 저장 상태 | 현재 계약의 합법 행동 |
+| OPTIONAL_UPDATE | '새 버전이 있어요.' 지금 업데이트/나중에 | 현재 버전이 호환되면 플레이 계속 |
+| UPDATE_PREPARING | 다운로드·검증 중 | 기존 화면/초안 보존,혼합 자산 전환 없음 |
+| UPDATE_READY | '업데이트를 적용할 수 있어요.' | 안전 지점에서 명시적 적용 |
+| REQUIRED_FOR_WRITE | '계속 진행하려면 업데이트가 필요해요.' | 지원되는 조회·receipt/job 확인·업데이트 |
+| REQUIRED_FOR_READ | 새 형식 화면 읽기 차단 | 최소 결과 확인 계약과 업데이트 안내,오래된 스키마로 임의 파싱 금지 |
+| MAINTENANCE | 점검 안내·다시 확인 | 서버 readAllowed/writeAllowed에 맞춤 |
+| UPDATE_FAILED | '업데이트를 준비하지 못했어요.' | 기존 호환 버전 유지·재시도,새 게임 유도 없음 |
+
+사용자가 강화를 확정한 직후 새 버전이 나왔다고 결과를 실패로 바꾸지 않는다. 이미 접수된 요청은 원래 rules/engine/command contract로 끝내고 receipt를 남긴다. 차단은 새 게임 변경 명령에 적용하며 기존 job을 새 작업으로 대체하지 않는다.
+
+## 미확정 요청과 업데이트 경계
+
+1. 입력 중 초안을 owner/entity/schemaVersion 기준으로 로컬 저장.
+2. 송신 중 요청은 원래 ID·payloadHash·expectedRevision·원 요청 본문을 안전 저널에 확정. 원본에 인증값을 포함하지 않는다.
+3. 가능한 경우 receipt 조회를 마친 뒤 전환. 작업이 길거나 네트워크가 끊겨도 앱을 무기한 가두지 않고 저널 보존을 확인한 후 '업데이트 후 결과 확인' 경로를 제공한다.
+4. 새 클라이언트는 먼저 구 저널 버전을 읽는 migration adapter로 결과를 확인한다. 새 필드·새 ID로 미확정 요청을 재작성하지 않는다.
+5. 지원되는 원 요청을 재전송해야 한다면 동일 ID/본문을 유지한다. 서버가 오래된 command contract를 더 이상 접수하지 않으면 결과 조회만 수행하고 명시적 호환 오류를 보여준다. 404만으로 미실행을 단정하거나 새 요청으로 자동 실행하지 않는다.
+
+오래된 클라이언트에도 최소 reconciliation contract v1을 유지한다. 인증 후 {id,status:UNKNOWN|PENDING|COMMITTED|REJECTED,saveId?,resultRevision?,jobId?,requiresClientUpdate} 같은 안정된 외피로 처리 여부를 조회할 수 있게 한다. 상세 결과가 현재 앱에서 읽히지 않으면 새 버전으로 이동하며 '성공했음/실패했음'을 추정하지 않는다. UNKNOWN은 서버 미접수 증명이 아니다. 원래 명령/생성/복원 endpoint의 조회를 바탕으로 제공하며 새로운 범용 임의 실행 endpoint를 만들지 않는다.
+
+저널 스키마 업그레이드는 복사→검증→새 활성 포인터 교체 순서로 수행한다. 실패시 원본 저널을 유지한다. 사용자가 브라우저 데이터 삭제나 앱 재설치를 했다면 로컬 미송신 초안은 복구 불가일 수 있으나 서버 접수 작업은 owner 조회로 확인한다.
+
+## 웹/PWA 자산 전환
+
+릴리스 manifest는 immutable releaseId와 자산 경로/hash/크기를 갖는다. 새 파일 전체 준비·검증 전 기존 캐시를 삭제하지 않는다. 오프라인이면 현재 설치 셸만 제공하며 정책/공식 진행을 최신처럼 표시하지 않는다. HTML·JS·CSS가 서로 다른 release로 섞이지 않게 원자 배포하고 이전 호환 release의 해시 자산을 일정 기간 유지한다. 유지기간은 실제 저장 비용·클라이언트 관측 후 운영값으로 고정한다.
+
+서비스워커가 있다면 waiting worker를 감지해 업데이트를 안내한다. 자동 skipWaiting/clients.claim과 강제 reload를 새 게임 명령 처리 중에 무조건 실행하지 않는다. 사용자가 적용을 선택하면 각 열린 탭에 쓰기 중지·저널 보존을 요청하고 준비 여부를 확인한다. 준비 안 된 탭이 있으면 안내하고 기존 버전을 유지한다. BroadcastChannel 등 통신 지원이 없으면 탭 종료 후 재열기 경로를 사용하며 조용히 모든 탭을 전환하지 않는다.
+
+강제종료 등으로 협의 없이 worker가 바뀌어도 서버의 버전 검사·저널·receipt가 중복 효과를 차단해야 한다. 탭 간 메시지는 보조 UX이며 권한 경계가 아니다. 캐시 정리는 정적 앱 자산 범위에서만 수행하고 IndexedDB 저널·초안·개인 설정을 '캐시 비우기'로 일괄 삭제하지 않는다. 인증/API/서명 URL 응답은 서비스워커 공개 캐시 대상이 아니다.
+
+새 버전 청크 로드 실패는 '화면 파일을 불러오지 못했어요'와 업데이트/재접속 안내,재로드 전 초안/저널 보존을 제공한다. 기존 상태가 없다고 세이브를 생성하거나 DB 구조를 클라이언트에서 수리하지 않는다.
+
+## Android APK 전환
+
+기존 packageId·서명키·단조 증가 versionCode를 유지한다. 업데이트 manifest의 배포 URL·앱 ID·versionCode·sha256을 검증 가능한 배포 메타데이터로 제공하고,실제 설치 호환은 Android 서명/패키지 규칙과 릴리스 검수로 확인한다. 다운로드 파일 hash만으로 앱 서명 확인을 대체하지 않는다.
+
+앱 내부에서 보안 설정을 자동 변경하거나 알 수 없는 출처 설치를 대신 승인하지 않는다. 사용자가 설치 경로를 선택하고 OS 설치 절차를 수행한다. 일반 앱 업데이트는 사용자 데이터/저널 보존을 목표로 하며 '삭제 후 재설치'를 기본 해결책으로 제시하지 않는다. 잘못된 서명/설치 실패면 기존 앱과 서버 진행을 유지한다.
+
+업데이트 후 세션 확인→구 저널 reconciliation→최신 save resume 순서를 따른다. APK에 포함된 웹 자산과 원격 API의 호환을 검사하고 임의 원격 URL을 앱 UI로 실행하지 않는다. 앱 최소 지원OS·WebView·플러그인·업데이트 서명 검수는 실제 도구 버전을 선택한 뒤 수행한다.
+
+## 서버 배포·롤백
+
+호환 DB 확장→이전/새 클라이언트가 읽을 수 있는 API 배포→웹/APK 배포→관측→필요시 최소 버전 상향 순서를 기본으로 한다. 파괴적 구조 변경은 별도 migration/복원 계획을 세운 뒤 실행한다. 운영 쓰기를 끊어야 하면 명시 점검 상태와 진행 중 작업의 안정 종료 지점을 먼저 정한다.
+
+서버 롤백 대상은 현재 save schema와 호환되는 버전만. 새 형식 데이터를 읽지 못하는 옛 바이너리를 강제로 켜거나 기존 세계를 과거 스냅샷으로 자동 덮어쓰지 않는다. 게임 규칙·확률·난이도 변경은 save policyVersion 고정을 존중한다. 장기 작업은 version이 고정된 worker/계획으로 이어가며 재배포로 RNG를 재추첨하지 않는다.
+
+## 수용 조건과 근거
+
+[플랫폼 기대값](platform-experience-fixtures.json)의 update8개: 미확정 요청·강제 업데이트·구 저널·두 탭·다운로드 실패·서명 오류·API 호환·저널 보존. 실제 worker 전환·WebView·서명 업데이트·rollout 시험은 미실행이다.
+
+외부 근거: [Service worker lifecycle](https://web.dev/articles/service-worker-lifecycle)은 waiting/activation/skipWaiting과 혼합 버전 위험을 설명한다. 2026-10-19 확인. 위 안전 지점·최소 조회 계약·저널 adapter는 이 앱의 설계 선택이며 브라우저가 자동 보장하는 기능이 아니다.
+
+---
+
+<!-- SOURCE: 89-PLATFORM-FILES-DOWNLOAD-SHARING.md -->
+
+# 89. 기념 카드·백업 파일 저장과 공유의 플랫폼 계약
+
+2026-10-19 / 기술 기본안 D. [63 연대기](63-CHRONICLE-DETAILED-CONTRACT.md), [70 백업/복원](70-BACKUP-RESTORE-IDENTITY-COMPATIBILITY.md), [86 플랫폼](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md)에 연결한다. PNG 생성·다운로드·OS 공유·APK 권한을 실제로 실행한 보고서가 아니다.
+
+## 파일 종류와 화면 문구
+
+| 종류 | 화면 | 용도·표시 |
+|---|---|---|
+| 기념 카드 PNG | S45 | '이미지 저장'/'공유'. 선수·시즌의 기념 이미지,게임 진행 복원용 아님 |
+| 연대기 JSON | S45 | '연대기 기록 내려받기'. 공개 기록·사용자 메모,게임 백업과 구분 |
+| 게임 백업 | S20 | '게임 백업 내려받기'. 버전·게임 시점·원본 revision·크기·검증상태 |
+| 복원 대상 | S20 | 서버의 소유 READY 백업 선택→미리보기→새 저장 슬롯 복원 |
+
+백업 성공은 서버 파일 READY/체크섬 검증 상태,다운로드 성공은 별도 기기 전달 상태다. 브라우저가 파일 전달을 시작한 사실만 확인 가능하면 '다운로드를 시작했어요. 기기의 다운로드 목록을 확인해 주세요.'라고 말한다. OS 저장 위치까지 확인하지 못한 채 '사진 앱에 저장됨'이라고 표시하지 않는다. 파일 미리보기를 열어 본 것과 다운로드를 구분한다.
+
+기념 PNG/연대기 JSON에는63의 허용 정보만 포함한다. 게임 백업은 실제 세계·난수·계약·원장을 담는 소유자용 자료이고 공유 카드와 같은 공개 자료로 취급하지 않는다. 백업 목록의 저장 시점은 파일 생성 서버 시각과 게임 시점을 함께 보여주며 가장 최근 파일이 현재 진행과 같다고 단정하지 않는다.
+
+## 생성·전달 상태 분리
+
+export job QUEUED/RENDERING/UPLOADING/READY/FAILED와 기기 전달 IDLE/PREPARING/TRANSFER_REQUESTED/HANDED_OFF/CANCELLED/FAILED를 별도로 유지한다. READY 파일을 여러 번 내려받는 것은 새 세계 행동이나 새 기념 보상 지급이 아니다. 다운로드 중 앱을 닫아도 공식 경기·연대기·백업 정의는 유지한다.
+
+1. 사용자가 파일 생성/백업을 확인하면 원 requestId로 서버 작업을 시작한다.
+2. 같은 job의 READY와 hash·mime·크기를 조회한다. 대기중이면 상태만 보여준다.
+3. 저장 또는 공유를 누를 때 owner 권한 확인 후 짧은 다운로드 권한을 받는다.63의 export URL5분/파일24시간 정책 유지.
+4. 플랫폼 전달 기능을 선택한다. 지원이 없거나 실패하면 파일 다시 받기/미리보기/텍스트 대안을 제공한다.
+5. 임시 URL 만료는 같은 job을 재조회해 파일 존재와 소유권을 확인한 후 새 권한을 받는다. 403만으로 만료라고 가정해 무한 갱신하지 않는다.
+
+이미 임시 PNG가 정리됐다면 '이미지 파일의 보관 기간이 지났어요. 같은 기록으로 다시 만들 수 있어요.'와 명시적 재생성을 제공한다. 기존 job이 실패한 상태를 성공으로 바꾸지 않고 새 requestId를 사용한다. 영구 연대기 기록을 다시 추첨하거나 보상 조건을 재실행하지 않는다. READY 백업 파일의 유지·삭제는29 정책을 따르며 PNG의24시간 TTL을 적용하지 않는다.
+
+## 브라우저·홈 화면 웹앱
+
+기본 동작은 인증된 파일 전달 endpoint 또는 소유자 조회로 발급된 private 다운로드 권한이다. same-origin 응답의 Content-Type/Content-Disposition을 정확히 설정하고 공개 응답 캐시를 막는다. 외부 객체 저장소 전달 경로를 쓰면 필요한 CORS/헤더 노출·한시 권한을 개발 환경에서 검수한다. 인증 쿠키를 임의 외부 URL에 붙이지 않는다.
+
+Web Share는 HTTPS·사용자 동작·지원 여부를 검사하고,파일 공유가 가능하면 파일을 준비한 다음 '준비된 파일 공유' 버튼을 다시 눌러 OS 공유창을 연다. 긴 비동기 렌더 작업 뒤 최초 클릭의 사용자 활성화가 남아 있다고 가정하지 않는다. navigator.share 존재만으로 파일 공유 가능이라 판정하지 않고 canShare({files}) 등의 실제 기능 검사를 사용한다.
+
+미지원이면 '파일 내려받기'를 기본 대안으로 제공한다. iPhone에서 다운로드·미리보기·OS 메뉴의 동작은 실기기에서 검수하고,사용자가 선택한 파일 저장/공유 대상은 앱이 대신 결정하지 않는다. 공유창 닫기는 CANCELLED이며 파일 생성 실패나 게임 저장 실패가 아니다. 공유 API 성공도 상대방이 실제로 받았다는 증거로 표시하지 않는다.
+
+공유 대상에 임시 서명 URL·계정용 API URL을 넘기지 않는다. 준비된 PNG 파일이나 안전한 허용 텍스트를 전달한다. 현재 게임은 비공개 소수 사용자용이며 다운로드 링크를 공개 링크로 바꾸는 기능을 넣지 않는다. 이메일·메신저 자동 전송 endpoint는 이 파일 저장 흐름에 필요하지 않다.
+
+## Android APK
+
+샌드박스의 임시 파일→선택한 OS 저장/공유 어댑터 순서로 전달한다. 앱 내부 경로를 외부에 노출하는 file:// 대신 채택 플러그인과 OS의 안전한 content URI 전달 계약을 사용한다. 실제 플러그인 버전·Provider 설정·MIME·읽기 권한 수명을 구현 시 확인한다. 파일명이나 URL 문자열을 경로로 그대로 연결하지 않는다.
+
+가능하면 OS 파일 선택/공유 UI를 사용하며 게임 시작 전에 사진·전체 저장소 접근 권한을 요구하지 않는다. 선택한 기능이 권한을 필요로 할 때만 기능과 이유를 설명한다. 거절해도 경기·서버 저장·연대기 조회는 계속 가능하고 기념 파일은 다른 기기의 웹에서 다시 받을 수 있다. 저장 권한을 앱 로그인 권한처럼 취급하지 않는다.
+
+OS에 전달한 임시 파일은 공유가 읽을 시간을 확보한 후 성공/취소/만료 기준으로 청소한다. 앱 복귀 즉시 삭제해 공유 대상이 빈 파일을 받게 하지 않는다. 청소 대상은 job 소유 샌드박스 파일에 한정하며 사용자가 별도 저장한 파일을 삭제하지 않는다. 구체 유지 시간은 플러그인·실기기 동작 검수 뒤 운영값으로 고정한다.
+
+## 이름·형식·검증
+
+이름 예: 다시플레이볼_선수명_2030시즌_기념카드.png. 파일명에는 실제 계정 이메일·owner ID·토큰·DB object key를 넣지 않는다. NFC 정규화,제어문자·경로 구분자 제거,예약 이름 처리,확장자 서버 고정,최대80글자소 D를 적용한다. Content-Disposition의 UTF-8 이름과 단순 fallback을 함께 제공한다. Windows/macOS/iPhone에서 이름이 잘리는 경우에도 파일 내용·mime는 같아야 한다.
+
+PNG는63의1080×1350·sRGB·10MiB 한도와 한글 폰트 검사,JSON은 UTF-8/exportSchemaVersion,백업은70의 manifest/hash/압축해제 크기/버전 검사를 따른다. 저장소 object key는 사용자가 입력한 파일명이 아니라 서버 job namespace로 생성한다. 파일 hash 불일치·지원하지 않는 mime는 전달을 중단하고 같은 정상 object를 다시 조회한다. 게임 state나 원본 archive를 수정해 파일 오류를 우회하지 않는다.
+
+## 플랫폼 검수·근거
+
+[플랫폼 표](platform-experience-contracts.json)의 CP01~06에서 다운로드 지원·파일 공유 지원을 별도로 관찰한다. 각 실제 산출물 hash·파일명·MIME·한글·미리보기·취소·오프라인·URL 만료·권한 거절을 검수한다. [플랫폼 기대값](platform-experience-fixtures.json)의 files8개는 서면 기대값이다.
+
+공식 근거: [MDN Web Share API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API), [navigator.share](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share). 2026-10-19 확인. 지원은 브라우저·OS·파일 종류별로 기능 감지하고 실기기에서 검증하며,문서 존재만으로 모든 플랫폼의 공유 기능을 보장하지 않는다.
 
 ---
 
@@ -6424,6 +6640,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: HANDOFF-PROMPT.md -->
 
+최신 v0.15: [87 로그인·기기 전환](87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md) · [88 웹/PWA/APK 업데이트](88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md) · [89 파일 저장·공유](89-PLATFORM-FILES-DOWNLOAD-SHARING.md). 네 환경의6개 실행 대상×8필수 흐름과24개 서면 기대값을 추가했습니다. 최신 총298개,실제 인증·기기·업데이트·파일 시험은 미실행입니다.
+
 최신 플랫폼 범위: [86 네 환경 지원](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). Android/iPhone/Windows/macOS의 브라우저 웹과Android APK를 기본 목표로 합니다. iPhone 홈 화면 웹앱과 별도 iOS 네이티브 앱은 구분합니다. 현재 미구현이며CP01~06 실환경 검수는 계획입니다.
 
 최신 v0.14: [79 생성 입력](79-CREATION-FIELDS-VALIDATION-COPY.md) · [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md) · [81 이벤트 검토](81-EVENT-OCCURRENCE-COLLISION-AUDIT.md) · [82 확률·효과](82-PROBABILITY-EFFECTS-CONFIRMATION-AUDIT.md) · [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md) · [84 통합 경로·게이트](84-DESIGN-GATES-END-TO-END-PATHS.md) · [85 난이도 후속 확정](85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md). 남은6항목의 서면 검토와 구단 치트 전체 잠재력100·성장3배를 반영했습니다. 274개 서면 기대값이며 실제 앱/복구/화면/밸런스 검증은 구현 후입니다.
@@ -6465,9 +6683,9 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: VALIDATION.md -->
 
-# v0.14 최종 설계 검토 정적 검증 — 2026-10-19
+# v0.15 플랫폼 경험 상세설계 정적 검증 — 2026-10-19
 
-검증 대상은 문서·JSON 구조·링크·HTML 구문·예시 산술입니다. 실제 게임·UI·API·복구·AI·밸런스의 실행 검증이 아닙니다.
+검증 대상은 설계 문서·등록부·기대값 구조·링크·HTML 구문·예시 산술입니다. 실제 로그인·업데이트·다운로드·공유 실행 시험이 아닙니다.
 
 명령: `node docs/design/verify-design.mjs`
 
@@ -6480,20 +6698,19 @@ CONFIRMED: cosmetic-only rewards and read-only commentary; no pending choices in
 PASS: 82 world design expectations across 8 modules, 24 invariant contracts, 12 planned run scenarios, narrowing-range examples. World simulations are NOT executed.
 PASS: 30 cross-contract expectations (12 command, 6 exact-effect, 12 web/APK resume); 192 expectations in these three fixture sets. Actual interruption recovery is NOT tested.
 PASS: 45 screen-action bindings and 10 creation recovery design expectations; 202 expectations before the final audit set. Runtime creation recovery is NOT tested.
-PASS: 45 screen recovery rows, 99 event occurrence rows, 20 probability surfaces, 24 planned paths, 72 final fixtures; 274 unique design expectations total. Runtime/UI/AI checks are NOT executed.
+PASS: 45 screen recovery rows, 99 event occurrence rows, 20 probability surfaces, 24 planned paths, 72 final fixtures; 274 expectations before the platform set. Runtime/UI/AI checks are NOT executed.
+PASS: six platform contracts with eight required flows each, and 24 platform expectations (8 auth, 8 update, 8 files); 298 unique design expectations total. Browser/device/auth/update/file behavior is NOT executed.
 NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.
 ```
 
-총274개 서면 기대값=기능80+세계82+교차30+생성복구10+최종검토72. 최종72는 생성10/화면10/이벤트10/확률10/시각10/통합경로10/난이도12이며 모두 NOT_IMPLEMENTED입니다. 정적 도구가 기대값의 실제 행동을 실행한 것은 아닙니다.
+총298개 서면 기대값=기능80+세계82+교차30+생성복구10+최종검토72+플랫폼24. 플랫폼24는 auth8/update8/files8,전부 NOT_IMPLEMENTED. 주어진 입력으로 실제 SDK·서버·브라우저·기기를 실행한 결과가 아닙니다.
 
-추가 검사: 화면복구45행,이벤트 근거99행,확률 표면20행,통합 경로24개,각 ID와 기존 카탈로그 참조,정책·빈 필드·실행 상태,전체 fixture 고유ID. 관계 생성 E94와 동일팀 등록 E96이 실제 대진을 요구하지 않도록 근거를 구분했습니다. 부상은 injuryId+stage,폼 안내는 세계 사건과 분리했습니다.
+플랫폼6대상(CP01~06)의 고유ID·인증/저널/업데이트/파일 경로·필수 흐름8개·오프라인 쓰기 금지·공유 기능감지·증거 필드를 검사했습니다. iPhone 홈 화면 별도 세션 확인과 Android 시스템 브라우저/PKCE/App Link 경로를 구조로 구분했습니다. 6×8=48은 계획된 흐름 조합이며 실제48시험 통과가 아닙니다.
 
-산술 예시: 하드 NPC10×1.2=12,기본P95+5→100상한,반시즌 일반/반시즌 치트의 기준10→20,XP30사용 후 일반잔여0/치트재영입잔여30,원본 최고100/90/80/70/60/50의 반값 평균37.5. 이는 실제 성장 엔진 실행 결과가 아닙니다.
+기존 45화면/99이벤트/20확률표면/24통합경로·24불변조건·장기실험12계획은 유지합니다. 실제 사례가 아닌 문서 산술 예시와 서면 구조를 검증한 것입니다. MD 링크·HTML ID/앵커/자산·스크립트 구문·임베드화면카탈로그 일치·확률1 숫자 배지 부재 검사도 통과했습니다.
 
-HTML 숨김 치트 설명을 구단 전체 잠재력100·자연성장/구종숙련3배·향후 영입/보관 포함으로 갱신했습니다. 해금 전 노출 방지의 실제 브라우저 동작은 미검수이며 기존 JS 구문/ID/앵커/카탈로그/자산 경로 검사만 통과했습니다. 원래 열린 목업 복사본도 같은 파일로 동기화합니다.
+실제 미검증: 로그인/허용목록·관리형 인증 SDK·App Link 도메인/서명·두 계정/기기·강제종료·PWA worker/두 탭 전환·APK 서명 업데이트·PNG/한글·OS 다운로드/공유·브라우저 픽셀/접근성·Neon DB/파일/백업복원·게임/AI/밸런스·build/APK. 기존MXC 오류 이후 화면 렌더링 재검수는 하지 않았습니다. 이번에 실제 원격 서비스 변경·계정 이메일 전송·외부 공유는 없습니다.
 
-실제 렌더링·스크린리더·모바일 키보드/터치·웹/APK 강제종료·2기기·인증/owner격리·Neon/파일/백업복원·worker장애·장기 밸런스·AI/build/APK는 미실행입니다. 기존 MXC 오류 이후 픽셀 검수 재시도는 없었습니다. 장기 실험12개/불변조건24개/통합경로24개는 계획이며 production 변경은 없습니다.
+Capacitor/Android/MDN/web.dev 공식 문서를 읽어 외부 동작 조건을 확인했으며 각87~89에 링크를 기록했습니다. 이 확인은 앱의 실환경 연결 증거가 아닙니다. SDK 선택·최소OS·플러그인·배포 서명은 구현 시 다시 확인합니다.
 
-Git diff 공백 검사와 패키지 SHA 해시는 별도로 확인합니다. 통합MD와SHA목록을 갱신하며,서면 기준 완료와 구현 준비용 실행 게이트를 STATUS/84에서 분리했습니다.
-
-플랫폼86 보완 후 같은 정적 검사를 재실행해 통과했습니다. 공식 Capacitor/Apple 문서를 확인하고CP01~06의 네 환경 웹·홈 화면·release APK 검수 대상을 작성했습니다. 실제 플랫폼 실행 시험은 미실행이며274개 서면 기대값 집계는 유지합니다.
+통합MD·SHA목록 갱신,git diff 공백 검사를 수행합니다. 실제 실행 게이트는84/STATUS에 남기며 설계 완료를 앱 완성으로 표시하지 않습니다. HTML은이번변경없음.

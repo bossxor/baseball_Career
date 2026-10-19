@@ -1,3 +1,5 @@
+플랫폼 후속 계약: [87 로그인·계정 전환](87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md), [88 업데이트·호환](88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md), [89 파일 저장·공유](89-PLATFORM-FILES-DOWNLOAD-SHARING.md)를 적용합니다. 로그아웃은 결과 확인을 무한히 기다리지 않으며 이전 owner의 미확정 요청은 다른 계정에 노출·재실행하지 않습니다.
+
 # 86. 안드로이드·아이폰·윈도우·맥 지원 범위
 
 2026-10-19. U: 최초 요청은 웹앱+Android APK였으며 네 환경 모두 가능한지 확인했다. 기존06의 React/Vite 공통 UI·Hono API·Neon 저장 구조를 유지하고 브라우저 지원 대상을 명시한다. 아래는 지원 목표와 검수 계약이며 현재 실행 가능한 앱이 출시됐다는 의미가 아니다.
@@ -47,4 +49,4 @@ CP01 Android Chrome 웹,CP02 iPhone Safari 웹,CP03 iPhone 홈 화면 웹앱,CP0
 
 2026-10-19 공식 문서 확인: [Capacitor 환경 설정](https://capacitorjs.com/docs/getting-started/environment-setup)은 Web/Android/iOS 대상과 iOS의 macOS/Xcode 빌드 환경을 안내한다. [Apple iPhone 사용 설명서](https://support.apple.com/en-mide/guide/iphone/iphea86e5236/27/ios/27)는 Safari에서 홈 화면 웹앱으로 추가하는 방법을 안내한다. 배포 시 문서를 다시 확인한다.
 
-기존 웹/APK 표현은 이 문서의 네 환경 웹 지원을 포함하도록 읽는다. [76 이어하기](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md), [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md), [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md), [84 게이트](84-DESIGN-GATES-END-TO-END-PATHS.md)를 CP01~06에 적용한다. 서면 기대값274개 집계는 유지하며 플랫폼 검수6대상은 별도 계획으로 센다.
+기존 웹/APK 표현은 이 문서의 네 환경 웹 지원을 포함하도록 읽는다. [76 이어하기](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md), [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md), [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md), [84 게이트](84-DESIGN-GATES-END-TO-END-PATHS.md)를 CP01~06에 적용한다. 최신 서면 기대값 수는 STATUS를 따르며 플랫폼6대상은 별도 계획으로 센다.
