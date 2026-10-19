@@ -4,7 +4,7 @@
 
 - 구현 착수 대비: [120](120-IMPLEMENTATION-ROADMAP.md) 모듈 경계·마일스톤 M0~M9·게이트 V01~V12 매핑. 구현 착수 지시 전에는 시작하지 않는다.
 
-- 최신 사용자 확정: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수는 사람 외형 없이 이름+던지는 손/타석+투구폼4종, 초상은 실루엣+이름 카드. 투구폼×구종 친화와 반대손 좌우 상성이 소폭 추가(초안D). 41/08/79/48/57/보드/fixture 본문 반영은 후속.
+- 최신 사용자 확정: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수는 사람 외형 없이 이름+던지는 손/타석+투구폼4종, 초상은 실루엣+이름 카드. 투구폼×구종 친화와 반대손 좌우 상성이 소폭 추가(초안D). 41/08/79/48/57 본문에 반영했고 실루엣 SVG 14종과 [보드](silhouette-board.html)를 제작했다(렌더 눈 확인만, 접근성·사용자 승인 전).
 
 - 최신 상세설계: [118 은퇴·보관·구단연속성](118-LATECAREER-ARCHIVE-CLUB-CONTINUITY.md).9장면·12검수계획·19세반값과계보claim을연결했습니다.
 - 직전 작업: [114 구단 첫시즌](114-FIRST-CLUB-SEASON-OPERATIONS.md), [113 첫커리어](113-FIRST-CAREER-SEASON-EXPERIENCE.md), [112 능력100과성적](112-ABILITY-CEILING-PERFORMANCE-BALANCE.md), [111 아트U](111-ANIMATION-MAIN-ART-DIRECTION.md).

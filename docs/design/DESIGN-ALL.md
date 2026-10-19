@@ -148,7 +148,7 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 
 - 구현 착수 대비: [120](120-IMPLEMENTATION-ROADMAP.md) 모듈 경계·마일스톤 M0~M9·게이트 V01~V12 매핑. 구현 착수 지시 전에는 시작하지 않는다.
 
-- 최신 사용자 확정: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수는 사람 외형 없이 이름+던지는 손/타석+투구폼4종, 초상은 실루엣+이름 카드. 투구폼×구종 친화와 반대손 좌우 상성이 소폭 추가(초안D). 41/08/79/48/57/보드/fixture 본문 반영은 후속.
+- 최신 사용자 확정: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수는 사람 외형 없이 이름+던지는 손/타석+투구폼4종, 초상은 실루엣+이름 카드. 투구폼×구종 친화와 반대손 좌우 상성이 소폭 추가(초안D). 41/08/79/48/57 본문에 반영했고 실루엣 SVG 14종과 [보드](silhouette-board.html)를 제작했다(렌더 눈 확인만, 접근성·사용자 승인 전).
 
 - 최신 상세설계: [118 은퇴·보관·구단연속성](118-LATECAREER-ARCHIVE-CLUB-CONTINUITY.md).9장면·12검수계획·19세반값과계보claim을연결했습니다.
 - 직전 작업: [114 구단 첫시즌](114-FIRST-CLUB-SEASON-OPERATIONS.md), [113 첫커리어](113-FIRST-CAREER-SEASON-EXPERIENCE.md), [112 능력100과성적](112-ABILITY-CEILING-PERFORMANCE-BALANCE.md), [111 아트U](111-ANIMATION-MAIN-ART-DIRECTION.md).
@@ -8132,7 +8132,7 @@ PF-D01 오버핸드+포심 K+.01 / 02 오버핸드+슬라이더 보정 0 / 03 �
 
 ## 남은 확인
 
-AI 투구폼 분포·친화 표는 초안이다. 확정 전에는 41/08/79/48/57/95/111·보드·fixture를 갱신하지 않았다. 실루엣 SVG는 아직 제작하지 않았고 실제 렌더·접근성·좌우 반전 검수는 하지 않았다.
+AI 투구폼 분포·친화 표는 초안이다. 확정 전에는 41/08/79/48/57/95/111·보드·fixture를 갱신하지 않았다. 실루엣 SVG 14종은 assets/silhouettes에 제작했고([silhouette-board.html](silhouette-board.html), 생성기 build-silhouettes.mjs) 로컬 서버에서 보드 렌더를 눈으로 확인했다. 접근성(스크린리더·대비)·모바일·좌우/글러브 위치의 최종 검수와 사용자 승인은 아직이다. 단순 실루엣이며 최종 디자인 확정이 아니다.
 
 ---
 
