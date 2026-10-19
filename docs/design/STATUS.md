@@ -2,6 +2,8 @@
 
 ## 현재 요약 (2026-10-19)
 
+- 최신 사용자 확정: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수는 사람 외형 없이 이름+던지는 손/타석+투구폼4종, 초상은 실루엣+이름 카드. 투구폼×구종 친화와 반대손 좌우 상성이 소폭 추가(초안D). 41/08/79/48/57/보드/fixture 본문 반영은 후속.
+
 - 최신 상세설계: [118 은퇴·보관·구단연속성](118-LATECAREER-ARCHIVE-CLUB-CONTINUITY.md).9장면·12검수계획·19세반값과계보claim을연결했습니다.
 - 직전 작업: [114 구단 첫시즌](114-FIRST-CLUB-SEASON-OPERATIONS.md), [113 첫커리어](113-FIRST-CAREER-SEASON-EXPERIENCE.md), [112 능력100과성적](112-ABILITY-CEILING-PERFORMANCE-BALANCE.md), [111 아트U](111-ANIMATION-MAIN-ART-DIRECTION.md).
 - 고정 범위:45화면/99이벤트,6능력·집중4,웹4환경+Android APK,단독구단·선택보관투입·이어하기버튼만.
