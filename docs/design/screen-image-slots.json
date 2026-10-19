@@ -13,7 +13,7 @@
     },
     {
       "assetRefs": [
-        "almanacPortrait",
+        "silhouetteCard",
         "NONE"
       ],
       "screenId": "S02",
@@ -21,12 +21,12 @@
       "purpose": "생성캐릭터표현",
       "guard": "폼·6능력·집중4개우선,외형은능력무관",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
-      "imageRole": "PORTRAIT"
+      "imageRole": "SILHOUETTE_CARD"
     },
     {
       "assetRefs": [
         "almanacHero",
-        "almanacPortrait"
+        "silhouetteCard"
       ],
       "screenId": "S03",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -104,7 +104,7 @@
     },
     {
       "assetRefs": [
-        "almanacPortrait"
+        "silhouetteCard"
       ],
       "screenId": "S10",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -115,7 +115,7 @@
     },
     {
       "assetRefs": [
-        "almanacPortrait",
+        "silhouetteCard",
         "retirement"
       ],
       "screenId": "S11",
@@ -123,7 +123,7 @@
       "purpose": "원본상세",
       "guard": "불변snapshot시점표시,현재외형소급금지; 보관 투입 상세의 회상은 원본 출처로 명시",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
-      "imageRole": "PORTRAIT"
+      "imageRole": "SILHOUETTE_CARD"
     },
     {
       "assetRefs": [
@@ -150,7 +150,7 @@
     },
     {
       "assetRefs": [
-        "almanacPortrait",
+        "silhouetteCard",
         "NONE"
       ],
       "screenId": "S14",
@@ -173,18 +173,18 @@
     },
     {
       "assetRefs": [
-        "almanacPortrait"
+        "silhouetteCard"
       ],
       "screenId": "S16",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
       "purpose": "현재선수식별",
       "guard": "현재소속과과거기록snapshot구분",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
-      "imageRole": "PORTRAIT"
+      "imageRole": "SILHOUETTE_CARD"
     },
     {
       "assetRefs": [
-        "almanacPortrait",
+        "silhouetteCard",
         "frontoffice"
       ],
       "screenId": "S17",
@@ -240,14 +240,14 @@
     },
     {
       "assetRefs": [
-        "almanacPortrait"
+        "silhouetteCard"
       ],
       "screenId": "S22",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
       "purpose": "유형·육성",
       "guard": "6능력/집중4개와효과우선,외형차등보너스없음",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
-      "imageRole": "PORTRAIT"
+      "imageRole": "SILHOUETTE_CARD"
     },
     {
       "assetRefs": [
@@ -446,7 +446,7 @@
     {
       "assetRefs": [
         "NONE",
-        "almanacPortrait"
+        "silhouetteCard"
       ],
       "screenId": "S40",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -470,7 +470,7 @@
     {
       "assetRefs": [
         "rival",
-        "almanacPortrait",
+        "silhouetteCard",
         "NONE"
       ],
       "screenId": "S42",
@@ -482,7 +482,7 @@
     },
     {
       "assetRefs": [
-        "almanacPortrait",
+        "silhouetteCard",
         "NONE"
       ],
       "screenId": "S43",
@@ -490,7 +490,7 @@
       "purpose": "지도자후일담",
       "guard": "원본은퇴나이/직무표시,현역19세복사와구분",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
-      "imageRole": "PORTRAIT"
+      "imageRole": "SILHOUETTE_CARD"
     },
     {
       "assetRefs": [

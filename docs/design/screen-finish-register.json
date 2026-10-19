@@ -57,7 +57,7 @@
       "edgeRequirement": "집중3/5개·좌투 불가 포지션·빈 이름은 해당 필드 옆 오류",
       "imageSlot": {
         "assetRefs": [
-          "almanacPortrait",
+          "silhouetteCard",
           "NONE"
         ],
         "screenId": "S02",
@@ -65,7 +65,7 @@
         "purpose": "생성캐릭터표현",
         "guard": "폼·6능력·집중4개우선,외형은능력무관",
         "implementationStatus": "DESIGN_PREVIEW_ONLY",
-        "imageRole": "PORTRAIT"
+        "imageRole": "SILHOUETTE_CARD"
       },
       "states": [
         "NORMAL",
@@ -96,7 +96,7 @@
       "imageSlot": {
         "assetRefs": [
           "almanacHero",
-          "almanacPortrait"
+          "silhouetteCard"
         ],
         "screenId": "S03",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -359,7 +359,7 @@
       "edgeRequirement": "보관0명도 정상; 회색 빈 카드가 영입/삭제처럼 동작하지 않음",
       "imageSlot": {
         "assetRefs": [
-          "almanacPortrait"
+          "silhouetteCard"
         ],
         "screenId": "S10",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -398,7 +398,7 @@
       "edgeRequirement": "원본과 복사 예상 수치를 나란히 구별; 원본 기록 수정 없음",
       "imageSlot": {
         "assetRefs": [
-          "almanacPortrait",
+          "silhouetteCard",
           "retirement"
         ],
         "screenId": "S11",
@@ -406,7 +406,7 @@
         "purpose": "원본상세",
         "guard": "불변snapshot시점표시,현재외형소급금지; 보관 투입 상세의 회상은 원본 출처로 명시",
         "implementationStatus": "DESIGN_PREVIEW_ONLY",
-        "imageRole": "PORTRAIT"
+        "imageRole": "SILHOUETTE_CARD"
       },
       "states": [
         "NORMAL",
@@ -515,7 +515,7 @@
       "edgeRequirement": "승강 불가 사유와 인원 제한은 해당 선수 옆; 빈 검색은 필터 초기화",
       "imageSlot": {
         "assetRefs": [
-          "almanacPortrait",
+          "silhouetteCard",
           "NONE"
         ],
         "screenId": "S14",
@@ -594,14 +594,14 @@
       "edgeRequirement": "원본 출처는 새 선수의 현재 기록과 분리; 타구단 선수에 기용 명령 없음",
       "imageSlot": {
         "assetRefs": [
-          "almanacPortrait"
+          "silhouetteCard"
         ],
         "screenId": "S16",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
         "purpose": "현재선수식별",
         "guard": "현재소속과과거기록snapshot구분",
         "implementationStatus": "DESIGN_PREVIEW_ONLY",
-        "imageRole": "PORTRAIT"
+        "imageRole": "SILHOUETTE_CARD"
       },
       "states": [
         "NORMAL",
@@ -631,7 +631,7 @@
       "edgeRequirement": "스카우트 발견과 영입 성공을 혼동하지 않음; 만료/권리/예산 최신 확인",
       "imageSlot": {
         "assetRefs": [
-          "almanacPortrait",
+          "silhouetteCard",
           "frontoffice"
         ],
         "screenId": "S17",
@@ -823,14 +823,14 @@
       "edgeRequirement": "확률 없는 변경에 적용100% 없음; 거포형·거포수비형 등 게임 명칭 사용",
       "imageSlot": {
         "assetRefs": [
-          "almanacPortrait"
+          "silhouetteCard"
         ],
         "screenId": "S22",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
         "purpose": "유형·육성",
         "guard": "6능력/집중4개와효과우선,외형차등보너스없음",
         "implementationStatus": "DESIGN_PREVIEW_ONLY",
-        "imageRole": "PORTRAIT"
+        "imageRole": "SILHOUETTE_CARD"
       },
       "states": [
         "NORMAL",
@@ -1528,7 +1528,7 @@
       "imageSlot": {
         "assetRefs": [
           "NONE",
-          "almanacPortrait"
+          "silhouetteCard"
         ],
         "screenId": "S40",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -1605,7 +1605,7 @@
       "imageSlot": {
         "assetRefs": [
           "rival",
-          "almanacPortrait",
+          "silhouetteCard",
           "NONE"
         ],
         "screenId": "S42",
@@ -1643,7 +1643,7 @@
       "edgeRequirement": "같은 원본 PLAYER/STAFF 동시 불가; 해임 미지급 보장·다음날 효력 확인",
       "imageSlot": {
         "assetRefs": [
-          "almanacPortrait",
+          "silhouetteCard",
           "NONE"
         ],
         "screenId": "S43",
@@ -1651,7 +1651,7 @@
         "purpose": "지도자후일담",
         "guard": "원본은퇴나이/직무표시,현역19세복사와구분",
         "implementationStatus": "DESIGN_PREVIEW_ONLY",
-        "imageRole": "PORTRAIT"
+        "imageRole": "SILHOUETTE_CARD"
       },
       "states": [
         "NORMAL",

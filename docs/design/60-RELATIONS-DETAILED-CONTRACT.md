@@ -1,3 +1,5 @@
+최신 확정(2026-10-19): [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 좌우 분리 기록(vs 좌/우투수·vs 좌/우타)은 60의 직접대결 집계 규칙(PA/AB 판정)을 그대로 쓰는 별도 읽기 모형이다.
+
 표시·상태 최신 계약: [103](103-AGENTS-RELATIONS-STAFF-STATE-UI.md)와 [106 연결](106-EXPANSION-UI-CLOSURE.md)을 따른다. 기존 수식·권리·기념보상·읽기전용 계약은 유지하며,상태 UI/로컬 시안/실행 미검증을 구분한다.
 
 # 60. 라이벌·동료 상세 계약

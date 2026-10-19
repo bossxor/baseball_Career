@@ -64,6 +64,10 @@
 
 격차가 크면 새 사용자 결정으로 계수나 양타 규칙을 조정한다.
 
+## 그림 슬롯 전환 (반영)
+
+screen-image-slots.json에서 S02/S11/S16/S22/S43의 imageRole PORTRAIT를 SILHOUETTE_CARD로, 슬롯 참조 almanacPortrait를 silhouetteCard로 바꿨다(S03/S10/S14/S17/S40/S42도 참조 갱신). screen-finish-register.json도 같다. **silhouetteCard의 실제 이미지는 없으며 별도 제작이 필요하다**(이 저장소에서는 제작하지 않는다). 그 전까지 시안은 기존 예시 초상 PNG를 쓰고, 실제 앱은 이니셜 카드로 대체한다.
+
 ## 영향 범위 (후속 반영 대상)
 
 | 문서/자료 | 변경 |

@@ -19,7 +19,26 @@
     "PF-D12",
     "PF-D13",
     "PF-D14",
-    "PF-D15"
+    "PF-D15",
+    "GN-D01",
+    "GN-D02",
+    "GN-D03",
+    "GN-D04",
+    "GN-D05",
+    "GN-D06",
+    "GN-D07",
+    "SP-D01",
+    "SP-D02",
+    "SP-D03",
+    "SP-D04",
+    "SP-D05",
+    "SP-D06",
+    "SP-D07",
+    "SP-D08"
   ],
-  "executionStatus": "NOT_EXECUTED"
+  "executionStatus": "NOT_EXECUTED",
+  "docs": [
+    "119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md",
+    "121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md"
+  ]
 }

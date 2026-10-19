@@ -62,7 +62,7 @@ assert.ok(!/\b(fetch|XMLHttpRequest|WebSocket)\s*\(/.test(scripts));
 const visible=html.replace(/<style>[\s\S]*?<\/style>/g,'').replace(/<script>[\s\S]*?<\/script>/g,'').replace(/<[^>]+>/g,'');
 assert.ok(!visible.includes('100%'));
 assert.equal(slots.screens.length,45);unique(slots.screens.map(s=>s.screenId));
-const refs=new Set(['NONE','EVENT_RESOLVER','almanacHero','almanacPortrait',...art.scenes.map(s=>s.id)]);
+const refs=new Set(['NONE','EVENT_RESOLVER','almanacHero','almanacPortrait','silhouetteCard',...art.scenes.map(s=>s.id)]);
 for(const row of slots.screens){assert.ok(screens.some(s=>s.id===row.screenId));for(const ref of row.assetRefs)assert.ok(refs.has(ref),ref);assert.ok(row.guard&&row.purpose);assert.equal(row.gameStateAuthority,'SERVER_TEXT_AND_RECEIPTS');}
 const values=[72,80,64,68,66,76];assert.equal(values.reduce((a,b)=>a+b,0)/6,71);
 assert.ok(fs.existsSync(path.join(root,art.prompts)));
