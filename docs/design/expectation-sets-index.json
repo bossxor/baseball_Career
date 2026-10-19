@@ -1,0 +1,188 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_EXPECTATION_INDEX",
+  "note": "구현 시 테스트로 옮길 기대값 묶음 전체 목록. 298 핵심 기대값과 나머지 묶음은 서로 합산하지 않는다. 모든 실행 상태는 NOT_EXECUTED.",
+  "core298": 298,
+  "sets": [
+    {
+      "id": "expansion-acceptance-fixtures",
+      "file": "expansion-acceptance-fixtures.json",
+      "doc": "92",
+      "count": 80,
+      "kind": "CORE_298",
+      "status": "NOT_EXECUTED",
+      "note": "298 핵심 서면 기대값의 일부"
+    },
+    {
+      "id": "world-acceptance-fixtures",
+      "file": "world-acceptance-fixtures.json",
+      "doc": "92",
+      "count": 82,
+      "kind": "CORE_298",
+      "status": "NOT_EXECUTED",
+      "note": "298 핵심 서면 기대값의 일부"
+    },
+    {
+      "id": "cross-contract-fixtures",
+      "file": "cross-contract-fixtures.json",
+      "doc": "92",
+      "count": 30,
+      "kind": "CORE_298",
+      "status": "NOT_EXECUTED",
+      "note": "298 핵심 서면 기대값의 일부"
+    },
+    {
+      "id": "creation-acceptance-fixtures",
+      "file": "creation-acceptance-fixtures.json",
+      "doc": "92",
+      "count": 10,
+      "kind": "CORE_298",
+      "status": "NOT_EXECUTED",
+      "note": "298 핵심 서면 기대값의 일부"
+    },
+    {
+      "id": "final-design-fixtures",
+      "file": "final-design-fixtures.json",
+      "doc": "92",
+      "count": 72,
+      "kind": "CORE_298",
+      "status": "NOT_EXECUTED",
+      "note": "298 핵심 서면 기대값의 일부"
+    },
+    {
+      "id": "platform-experience-fixtures",
+      "file": "platform-experience-fixtures.json",
+      "doc": "92",
+      "count": 24,
+      "kind": "CORE_298",
+      "status": "NOT_EXECUTED",
+      "note": "298 핵심 서면 기대값의 일부"
+    },
+    {
+      "id": "state-ui-expectations",
+      "file": "state-ui-expectations.json",
+      "doc": "100~104",
+      "count": 61,
+      "kind": "STATE_UI",
+      "status": "NOT_EXECUTED",
+      "note": "100~104 상태별 UI(61)"
+    },
+    {
+      "id": "player-display-expectations",
+      "file": "player-display-expectations.json",
+      "doc": "119/121",
+      "count": 30,
+      "kind": "PLAYER_DISPLAY",
+      "status": "NOT_EXECUTED",
+      "note": "119 PF-D 15 + 121 GN/SP 15"
+    },
+    {
+      "id": "effect-sum-examples",
+      "file": "effect-sum-examples.json",
+      "doc": "123",
+      "count": 7,
+      "kind": "ARITHMETIC",
+      "status": "NOT_EXECUTED",
+      "note": "합산 산술 예제(verify 재계산)"
+    },
+    {
+      "id": "server-only/rival-trait-edge-expectations",
+      "file": "server-only/rival-trait-edge-expectations.json",
+      "doc": "107",
+      "count": 36,
+      "kind": "SERVER_EDGE",
+      "status": "NOT_EXECUTED",
+      "note": "라이벌·히든 경계 사례(공개 보드 비노출)"
+    },
+    {
+      "id": "result-experience-examples",
+      "file": "result-experience-examples.json",
+      "doc": "97",
+      "count": 14,
+      "kind": "EDGE",
+      "status": "NOT_EXECUTED",
+      "note": "결과·시즌·드래프트 예외"
+    },
+    {
+      "id": "club-experience-examples",
+      "file": "club-experience-examples.json",
+      "doc": "98",
+      "count": 20,
+      "kind": "EDGE",
+      "status": "NOT_EXECUTED",
+      "note": "구단 운영 예외"
+    },
+    {
+      "id": "journey-experience-examples",
+      "file": "journey-experience-examples.json",
+      "doc": "99",
+      "count": 16,
+      "kind": "EDGE",
+      "status": "NOT_EXECUTED",
+      "note": "생성·진로 예외"
+    },
+    {
+      "id": "ability-performance-examples",
+      "file": "ability-performance-examples.json",
+      "doc": "112",
+      "count": 4,
+      "kind": "ARITHMETIC",
+      "status": "NOT_EXECUTED",
+      "note": "능력·성적 고정 비율 예시"
+    },
+    {
+      "id": "midcareer-experience-cases",
+      "file": "midcareer-experience-cases.json",
+      "doc": "116",
+      "count": 12,
+      "kind": "EXPERIENCE",
+      "status": "NOT_EXECUTED",
+      "note": "중반 커리어 경험"
+    },
+    {
+      "id": "latecareer-continuity-cases",
+      "file": "latecareer-continuity-cases.json",
+      "doc": "118",
+      "count": 12,
+      "kind": "EXPERIENCE",
+      "status": "NOT_EXECUTED",
+      "note": "은퇴·보관 검수 계획"
+    },
+    {
+      "id": "API-D",
+      "file": null,
+      "doc": "122-API-SCHEMA-LOG-ALIGNMENT.md",
+      "count": 10,
+      "kind": "DOC_ONLY",
+      "status": "NOT_EXECUTED",
+      "note": "문서 본문의 검수 항목 목록(별도 JSON 없음)"
+    },
+    {
+      "id": "ES-D",
+      "file": null,
+      "doc": "123-EFFECT-SUM-EXAMPLES.md",
+      "count": 8,
+      "kind": "DOC_ONLY",
+      "status": "NOT_EXECUTED",
+      "note": "문서 본문의 검수 항목 목록(별도 JSON 없음)"
+    },
+    {
+      "id": "IM-D",
+      "file": null,
+      "doc": "124-IMAGE-PRODUCTION-BRIEF.md",
+      "count": 8,
+      "kind": "DOC_ONLY",
+      "status": "NOT_EXECUTED",
+      "note": "문서 본문의 검수 항목 목록(별도 JSON 없음)"
+    },
+    {
+      "id": "EV-D",
+      "file": null,
+      "doc": "125-EVENT-CHOICE-DISPATCH.md",
+      "count": 10,
+      "kind": "DOC_ONLY",
+      "status": "NOT_EXECUTED",
+      "note": "문서 본문의 검수 항목 목록(별도 JSON 없음)"
+    }
+  ]
+}

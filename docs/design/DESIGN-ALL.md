@@ -4,31 +4,7 @@
 
 <!-- SOURCE: START-HERE.md -->
 
-이미지 제작 인계: [124 이미지 제작 명세](124-IMAGE-PRODUCTION-BRIEF.md). API·스키마 정합 [122](122-API-SCHEMA-LOG-ALIGNMENT.md), 새 효과 합산 예제 [123](123-EFFECT-SUM-EXAMPLES.md).
-
-최신: [119 선수 표시·투구폼·좌우 상성](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) · [120 구현 착수 대비 로드맵](120-IMPLEMENTATION-ROADMAP.md). 사람 외형 없이 이름·던지는 손/타석·투구폼만 사용하며 실루엣 이미지는 별도 제작합니다. 진행/재개위치는 STATUS·CONTINUATION-CHECKPOINT를 확인합니다.
-
-최신: [118 은퇴·보관·구단연속성](118-LATECAREER-ARCHIVE-CLUB-CONTINUITY.md). 연속작업의마지막사용량·재개위치는 [CONTINUATION-CHECKPOINT](CONTINUATION-CHECKPOINT.md)에기록합니다.
-
-최신: [116 중반커리어](116-MIDCAREER-DECISIONS-AND-SETBACKS.md) · [117 기본빠른진행U](117-CAREER-NEXT-MAJOR-EVENT-PROGRESSION.md). 진행/재개위치는STATUS·DETAIL-PLAN을확인합니다.
-
-최신상세설계: [115 구단오프시즌](115-CLUB-OFFSEASON-DEADLINES-AND-DEPENDENCIES.md). 최신진행/다음작업은STATUS·DETAIL-PLAN맨위에서확인합니다.
-
-최신 구단 설계: [114 첫시즌 운영](114-FIRST-CLUB-SEASON-OPERATIONS.md). 최신진행과다음작업은 [STATUS](STATUS.md)·[DETAIL-PLAN](DETAIL-PLAN.md)의맨위에기록합니다.
-
-최신동선: [첫커리어 보드](first-career-board.html) · [113 상세설계](113-FIRST-CAREER-SEASON-EXPERIENCE.md). 공통7/분기19장면으로KBO·대학·미국·미지명경로를검토합니다. 실제게임진행은없습니다.
-
-현재 추가설계: [112 능력100과성적](112-ABILITY-CEILING-PERFORMANCE-BALANCE.md). 100은능력상한이지안타확률이아니며SLG최대는4.000입니다. 고정산식예시와실제시즌검증을구분합니다.
-
-최신 아트 U(2026-10-19): 메인 그림체는 **2번 청춘 야구 애니**로 변경했습니다. [111 현재 기준](111-ANIMATION-MAIN-ART-DIRECTION.md)을 우선합니다. 본문의 빈티지 선택은 이전 이력이며 원본은 보존합니다.
-
-현재 후속 시안: [17화면 마감 보드](finish-board.html) · [109 제작/점검 범위](109-FINISH-BOARD-ART-AUDIT.md). 기존 대표28화면과합쳐45ID의대표 배치를 연결했습니다. 최종 렌더 승인/실앱 검증은아직이며PNG는9개입니다.
-
-화면 마감 명세: [108 전체45화면](108-ALL-SCREEN-FINALIZATION.md)에 읽기 순서·주행동·8종 상태·크기별 배치를 정리했습니다. 대표 시안 미명시17화면은 후속 제작 대상으로 구분합니다.
-
-상세 경계 추가: [107 라이벌·히든 특성](107-RIVAL-HIDDEN-TRAIT-EDGE-RULES.md)에서 발생·결투 WIN·완봉 예외·연속 시즌·정정을 구체화했습니다. 새 기본안 D와 사용자 확정 U를 구분하며 실제 구현은 시작하지 않았습니다.
-
-시각1.7: [106 확장 UI 연결](106-EXPANSION-UI-CLOSURE.md)에서102~104의 남은 대표 배치를 연결했습니다. [시안](art-direction-lab.html)은30대표/78상태,핵심45화면/99이벤트는유지합니다. [61항목 진입점](state-ui-preview-coverage.json)은NOT_EXECUTED이며실제 앱/브라우저 검수와구분합니다. 최신파일은V:\docs\design,이어하기는버튼만 표시합니다.
+최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
 # 다시, 플레이볼 — 여기서 시작하세요
 
@@ -64,9 +40,9 @@ GitHub https://github.com/bossxor/baseball_Career 의 docs/design이 원본. 다
 
 토큰/DBURL/서명키/비밀번호를문서·Git에넣지않는다. 실제인증·도메인·빌드도구·서비스지원·배포자산·기기·밸런스는92의실행게이트다. 다른 환경용 요청문은 [HANDOFF-PROMPT](HANDOFF-PROMPT.md).
 
----
+## 이전 최신 안내 이력
 
-<!-- SOURCE: README.md -->
+위 ‘최신 안내’가 우선합니다. 아래는 당시 최신이었던 안내를 순서대로 보존한 것입니다.
 
 이미지 제작 인계: [124 이미지 제작 명세](124-IMAGE-PRODUCTION-BRIEF.md). API·스키마 정합 [122](122-API-SCHEMA-LOG-ALIGNMENT.md), 새 효과 합산 예제 [123](123-EFFECT-SUM-EXAMPLES.md).
 
@@ -86,13 +62,19 @@ GitHub https://github.com/bossxor/baseball_Career 의 docs/design이 원본. 다
 
 최신 아트 U(2026-10-19): 메인 그림체는 **2번 청춘 야구 애니**로 변경했습니다. [111 현재 기준](111-ANIMATION-MAIN-ART-DIRECTION.md)을 우선합니다. 본문의 빈티지 선택은 이전 이력이며 원본은 보존합니다.
 
-최신 시각1.8: [마감 보드](finish-board.html)에추가17배치/136상태·새빈티지6장면을작성했습니다. 기존28대표+추가17=45화면ID 연결이며최종브라우저검수와구분합니다. [109 범위](109-FINISH-BOARD-ART-AUDIT.md).
+현재 후속 시안: [17화면 마감 보드](finish-board.html) · [109 제작/점검 범위](109-FINISH-BOARD-ART-AUDIT.md). 기존 대표28화면과합쳐45ID의대표 배치를 연결했습니다. 최종 렌더 승인/실앱 검증은아직이며PNG는9개입니다.
 
 화면 마감 명세: [108 전체45화면](108-ALL-SCREEN-FINALIZATION.md)에 읽기 순서·주행동·8종 상태·크기별 배치를 정리했습니다. 대표 시안 미명시17화면은 후속 제작 대상으로 구분합니다.
 
 상세 경계 추가: [107 라이벌·히든 특성](107-RIVAL-HIDDEN-TRAIT-EDGE-RULES.md)에서 발생·결투 WIN·완봉 예외·연속 시즌·정정을 구체화했습니다. 새 기본안 D와 사용자 확정 U를 구분하며 실제 구현은 시작하지 않았습니다.
 
 시각1.7: [106 확장 UI 연결](106-EXPANSION-UI-CLOSURE.md)에서102~104의 남은 대표 배치를 연결했습니다. [시안](art-direction-lab.html)은30대표/78상태,핵심45화면/99이벤트는유지합니다. [61항목 진입점](state-ui-preview-coverage.json)은NOT_EXECUTED이며실제 앱/브라우저 검수와구분합니다. 최신파일은V:\docs\design,이어하기는버튼만 표시합니다.
+
+---
+
+<!-- SOURCE: README.md -->
+
+최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
 # 다시, 플레이볼 — 상세설계 기준본1.0
 
@@ -146,6 +128,36 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 
 현재추가사용자질문은없습니다. 서면기준이작성됐으며다음실행작업은구현후92의게이트에서증명합니다. 사용자의구현착수지시전에는앱/DB/배포를자동시작하지않습니다.
 
+## 이전 최신 안내 이력
+
+위 ‘최신 안내’가 우선합니다. 아래는 당시 최신이었던 안내를 순서대로 보존한 것입니다.
+
+이미지 제작 인계: [124 이미지 제작 명세](124-IMAGE-PRODUCTION-BRIEF.md). API·스키마 정합 [122](122-API-SCHEMA-LOG-ALIGNMENT.md), 새 효과 합산 예제 [123](123-EFFECT-SUM-EXAMPLES.md).
+
+최신: [119 선수 표시·투구폼·좌우 상성](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) · [120 구현 착수 대비 로드맵](120-IMPLEMENTATION-ROADMAP.md). 사람 외형 없이 이름·던지는 손/타석·투구폼만 사용하며 실루엣 이미지는 별도 제작합니다. 진행/재개위치는 STATUS·CONTINUATION-CHECKPOINT를 확인합니다.
+
+최신: [118 은퇴·보관·구단연속성](118-LATECAREER-ARCHIVE-CLUB-CONTINUITY.md). 연속작업의마지막사용량·재개위치는 [CONTINUATION-CHECKPOINT](CONTINUATION-CHECKPOINT.md)에기록합니다.
+
+최신: [116 중반커리어](116-MIDCAREER-DECISIONS-AND-SETBACKS.md) · [117 기본빠른진행U](117-CAREER-NEXT-MAJOR-EVENT-PROGRESSION.md). 진행/재개위치는STATUS·DETAIL-PLAN을확인합니다.
+
+최신상세설계: [115 구단오프시즌](115-CLUB-OFFSEASON-DEADLINES-AND-DEPENDENCIES.md). 최신진행/다음작업은STATUS·DETAIL-PLAN맨위에서확인합니다.
+
+최신 구단 설계: [114 첫시즌 운영](114-FIRST-CLUB-SEASON-OPERATIONS.md). 최신진행과다음작업은 [STATUS](STATUS.md)·[DETAIL-PLAN](DETAIL-PLAN.md)의맨위에기록합니다.
+
+최신동선: [첫커리어 보드](first-career-board.html) · [113 상세설계](113-FIRST-CAREER-SEASON-EXPERIENCE.md). 공통7/분기19장면으로KBO·대학·미국·미지명경로를검토합니다. 실제게임진행은없습니다.
+
+현재 추가설계: [112 능력100과성적](112-ABILITY-CEILING-PERFORMANCE-BALANCE.md). 100은능력상한이지안타확률이아니며SLG최대는4.000입니다. 고정산식예시와실제시즌검증을구분합니다.
+
+최신 아트 U(2026-10-19): 메인 그림체는 **2번 청춘 야구 애니**로 변경했습니다. [111 현재 기준](111-ANIMATION-MAIN-ART-DIRECTION.md)을 우선합니다. 본문의 빈티지 선택은 이전 이력이며 원본은 보존합니다.
+
+최신 시각1.8: [마감 보드](finish-board.html)에추가17배치/136상태·새빈티지6장면을작성했습니다. 기존28대표+추가17=45화면ID 연결이며최종브라우저검수와구분합니다. [109 범위](109-FINISH-BOARD-ART-AUDIT.md).
+
+화면 마감 명세: [108 전체45화면](108-ALL-SCREEN-FINALIZATION.md)에 읽기 순서·주행동·8종 상태·크기별 배치를 정리했습니다. 대표 시안 미명시17화면은 후속 제작 대상으로 구분합니다.
+
+상세 경계 추가: [107 라이벌·히든 특성](107-RIVAL-HIDDEN-TRAIT-EDGE-RULES.md)에서 발생·결투 WIN·완봉 예외·연속 시즌·정정을 구체화했습니다. 새 기본안 D와 사용자 확정 U를 구분하며 실제 구현은 시작하지 않았습니다.
+
+시각1.7: [106 확장 UI 연결](106-EXPANSION-UI-CLOSURE.md)에서102~104의 남은 대표 배치를 연결했습니다. [시안](art-direction-lab.html)은30대표/78상태,핵심45화면/99이벤트는유지합니다. [61항목 진입점](state-ui-preview-coverage.json)은NOT_EXECUTED이며실제 앱/브라우저 검수와구분합니다. 최신파일은V:\docs\design,이어하기는버튼만 표시합니다.
+
 ---
 
 <!-- SOURCE: STATUS.md -->
@@ -153,6 +165,8 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 # 설계 현황 — 119 선수 표시·투구폼 / 120 구현 로드맵
 
 ## 현재 요약 (2026-10-19)
+
+- 점검 정리: 14에 119/121/122/124/125 사용자 결정을 기록, START-HERE·README·HANDOFF의 겹친 ‘최신’ 배너를 한 줄로 합치고 이력으로 이동, S16 카탈로그에 좌우 분리 기록 반영, 기대값 묶음 20개 색인 [expectation-sets-index.json](expectation-sets-index.json) 추가.
 
 - 심층 점검(경제·이벤트): 경제 수치(예산120억·총연봉80~95억·미래보장108억·직원 급여)는 충돌 없음. 이벤트 선택지 68종 처리 방식이 비어 있어 [125](125-EVENT-CHOICE-DISPATCH.md)로 DOMAIN/NAVIGATE/ACK 분류·BLOCKING 해결 시점을 확정했다. 보드 S02에 손·타석·투구폼 입력, S16에 좌우 분리 기록 표 시안을 추가했다(렌더 미확인).
 
@@ -577,6 +591,19 @@ U:93의세번째빈티지기록실을메인그림체로선택. 앞선시네마�
 U:100~104의 확정 UI 요구와 히든4개/슬라이더 규칙을 유지한다. T14 숙적 킬러는 같은 라이벌 투수 상대 시즌20타석 이상·OPS .900 이상+관계 이벤트 승리로 후속 확정했다. 원기록·동일 라이벌/정규시즌 범위를 사용한다. 기존cap/보유전체자동효과·기념보상만·감상중계·이어하기버튼만 요구는 유지한다. 연결 범위와 미실행 상태는105.
 
 2026-10-19 최신 사용자확정U: 메인그림체를2번청춘야구애니로변경.111의새12사건/초상/낮·실내·야간구도와110의잘림수정을적용한다. 빈티지는이전비교안으로보존하며기존게임규칙은불변.
+
+## 선수 표시·투구폼·사건 처리 확정 — 2026-10-19
+
+| 결정 | 내용 | 근거 |
+|---|---|---|
+| U | 사건 선택지마다 결과 문구를 분리(E13 취소 문구 등 62개 사건·90개 선택지), 같은 사건 안 문구 중복 금지 | 이벤트 카탈로그 정정 |
+| U | 선수에게 사람 외형 없음. 이름·던지는 손/타석·투구폼만 사용, 선수 표현은 실루엣+이름 카드 | [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) |
+| U | 투구폼 4종(오버·쓰리쿼터·사이드·언더), 폼당 2구종 소폭 친화(±.01), 좌우 상성 반대손 1B+.01/같은 손 K+.01, 양타는 일반 타자와 동일(+.01) | 119 |
+| U | 생성 선수 손 우투85/좌투15, 타석은 우투 선수 우타80·좌타12·양타8, 좌투 선수 좌타70·우타25·양타5, S16 좌우 분리 기록 | [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) |
+| U | 투구폼 없는 구버전 투수 생성 요청은 거절·업데이트 안내 | [122](122-API-SCHEMA-LOG-ALIGNMENT.md) |
+| U | 필수 사건의 ‘화면 이동’ 선택은 이동한 화면에서 결정 확정 시 해결, 비필수는 선택 즉시 해결 | [125](125-EVENT-CHOICE-DISPATCH.md) |
+| U | 이미지(실루엣 포함)는 이 저장소가 아닌 다른 곳에서 제작. 제작 목록은 124 | [124](124-IMAGE-PRODUCTION-BRIEF.md) |
+| D | AI 투구폼 분포 45/35/15/5, 좌투 보정식, 카드 테마 3종, 메달·엠블럼 수 | 119/121/124, 실행 실험 후 확정 |
 
 ---
 
@@ -8236,7 +8263,7 @@ AI 투구폼 분포·친화 표는 초안이다. 확정 전에는 41/08/79/48/57
 |web|React/Vite 화면 45개, 화면 상태 카탈로그, 로컬 저널|api 클라이언트 타입|
 |android|Capacitor 셸, 로그인 복귀, 파일 공유|web|
 
-규칙: 엔진은 시간·네트워크·Math.random에 접근하지 않는다(06). 화면은 규칙 수치를 복제하지 않고 rules에서 가져온다. 문서 기대값(298, 61, 15, 16, 36 등)은 엔진 단위 테스트 입력 fixture의 원천이다.
+규칙: 엔진은 시간·네트워크·Math.random에 접근하지 않는다(06). 화면은 규칙 수치를 복제하지 않고 rules에서 가져온다. 문서 기대값은 엔진 단위 테스트 입력 fixture의 원천이며 전체 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json)이다(298 핵심과 나머지 묶음은 합산하지 않음).
 
 ## 마일스톤 (수직 슬라이스 순서)
 
@@ -9567,11 +9594,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: HANDOFF-PROMPT.md -->
 
-이미지 제작 인계: [124 이미지 제작 명세](124-IMAGE-PRODUCTION-BRIEF.md). API·스키마 정합 [122](122-API-SCHEMA-LOG-ALIGNMENT.md), 새 효과 합산 예제 [123](123-EFFECT-SUM-EXAMPLES.md).
-
-최신: [119 선수 표시·투구폼·좌우 상성](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) · [120 구현 착수 대비 로드맵](120-IMPLEMENTATION-ROADMAP.md). 사람 외형 없이 이름·던지는 손/타석·투구폼만 사용하며 실루엣 이미지는 별도 제작합니다. 진행/재개위치는 STATUS·CONTINUATION-CHECKPOINT를 확인합니다.
-
-시각1.7: [106 확장 UI 연결](106-EXPANSION-UI-CLOSURE.md)에서102~104의 남은 대표 배치를 연결했습니다. [시안](art-direction-lab.html)은30대표/78상태,핵심45화면/99이벤트는유지합니다. [61항목 진입점](state-ui-preview-coverage.json)은NOT_EXECUTED이며실제 앱/브라우저 검수와구분합니다. 최신파일은V:\docs\design,이어하기는버튼만 표시합니다.
+최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
 # 다른 채팅·개발 환경용 인계 요청문
 
@@ -9606,6 +9629,16 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 오프시즌운영후속: [115](115-CLUB-OFFSEASON-DEADLINES-AND-DEPENDENCIES.md)의추천순서/실제기한구분·드래프트같은차례복구·FA예약/마감·병역/만료·미래보장108억원예시를함께읽는다. 기존도메인순서·권리·단일연도전환은유지한다.
 
 118 후속:[118](118-LATECAREER-ARCHIVE-CLUB-CONTINUITY.md)은후반커리어→은퇴원본→19세복사/지도자역할의경험과계보claim경계를연결한다. 기존원본불변·반값·병역리셋·같은세계역할하나규칙은유지한다.
+
+## 이전 최신 안내 이력
+
+위 ‘최신 안내’가 우선합니다. 아래는 당시 최신이었던 안내를 순서대로 보존한 것입니다.
+
+이미지 제작 인계: [124 이미지 제작 명세](124-IMAGE-PRODUCTION-BRIEF.md). API·스키마 정합 [122](122-API-SCHEMA-LOG-ALIGNMENT.md), 새 효과 합산 예제 [123](123-EFFECT-SUM-EXAMPLES.md).
+
+최신: [119 선수 표시·투구폼·좌우 상성](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) · [120 구현 착수 대비 로드맵](120-IMPLEMENTATION-ROADMAP.md). 사람 외형 없이 이름·던지는 손/타석·투구폼만 사용하며 실루엣 이미지는 별도 제작합니다. 진행/재개위치는 STATUS·CONTINUATION-CHECKPOINT를 확인합니다.
+
+시각1.7: [106 확장 UI 연결](106-EXPANSION-UI-CLOSURE.md)에서102~104의 남은 대표 배치를 연결했습니다. [시안](art-direction-lab.html)은30대표/78상태,핵심45화면/99이벤트는유지합니다. [61항목 진입점](state-ui-preview-coverage.json)은NOT_EXECUTED이며실제 앱/브라우저 검수와구분합니다. 최신파일은V:\docs\design,이어하기는버튼만 표시합니다.
 
 ---
 

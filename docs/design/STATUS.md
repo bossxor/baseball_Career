@@ -2,6 +2,8 @@
 
 ## 현재 요약 (2026-10-19)
 
+- 점검 정리: 14에 119/121/122/124/125 사용자 결정을 기록, START-HERE·README·HANDOFF의 겹친 ‘최신’ 배너를 한 줄로 합치고 이력으로 이동, S16 카탈로그에 좌우 분리 기록 반영, 기대값 묶음 20개 색인 [expectation-sets-index.json](expectation-sets-index.json) 추가.
+
 - 심층 점검(경제·이벤트): 경제 수치(예산120억·총연봉80~95억·미래보장108억·직원 급여)는 충돌 없음. 이벤트 선택지 68종 처리 방식이 비어 있어 [125](125-EVENT-CHOICE-DISPATCH.md)로 DOMAIN/NAVIGATE/ACK 분류·BLOCKING 해결 시점을 확정했다. 보드 S02에 손·타석·투구폼 입력, S16에 좌우 분리 기록 표 시안을 추가했다(렌더 미확인).
 
 - 이미지 제작 인계: [124](124-IMAGE-PRODUCTION-BRIEF.md)+image-production-register.json(92항목: 제작 필요 64·있음 16·코드 제작 11·보존 1). 이미지는 다른 곳에서 제작한다. API·스키마·로그 정합은 [122](122-API-SCHEMA-LOG-ALIGNMENT.md), 새 효과 합산 예제는 [123](123-EFFECT-SUM-EXAMPLES.md).

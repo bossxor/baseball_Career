@@ -393,6 +393,17 @@ const imgReg = JSON.parse(read('image-production-register.json'));
     if (e.resolutionPolicy === 'BLOCKING_UNTIL_DOMAIN_COMMIT') assert.ok(e.choices.some(c => c.dispatchClass !== 'ACK'), e.id);
   }
 }
+{
+  const idx = JSON.parse(read('expectation-sets-index.json'));
+  assert.equal(idx.core298, 298);
+  unique(idx.sets.map(s => s.id));
+  for (const s of idx.sets) {
+    assert.ok(existsSync(path.join(root, s.file || s.doc)), s.id);
+    if (!s.file) assert.ok(read(s.doc).includes(s.id + '01'), s.id);
+    assert.equal(s.status, 'NOT_EXECUTED');
+  }
+  assert.equal(idx.sets.filter(s => s.kind === 'CORE_298').reduce((a, s) => a + s.count, 0), 298);
+}
 const closure = JSON.parse(read('design-closure-register.json'));
 assert.equal(closure.status, 'WRITTEN_DESIGN_BASELINE');
 assert.equal(closure.baselineVersion, '1.0');

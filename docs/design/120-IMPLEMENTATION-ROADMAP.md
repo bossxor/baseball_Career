@@ -13,7 +13,7 @@
 |web|React/Vite 화면 45개, 화면 상태 카탈로그, 로컬 저널|api 클라이언트 타입|
 |android|Capacitor 셸, 로그인 복귀, 파일 공유|web|
 
-규칙: 엔진은 시간·네트워크·Math.random에 접근하지 않는다(06). 화면은 규칙 수치를 복제하지 않고 rules에서 가져온다. 문서 기대값(298, 61, 15, 16, 36 등)은 엔진 단위 테스트 입력 fixture의 원천이다.
+규칙: 엔진은 시간·네트워크·Math.random에 접근하지 않는다(06). 화면은 규칙 수치를 복제하지 않고 rules에서 가져온다. 문서 기대값은 엔진 단위 테스트 입력 fixture의 원천이며 전체 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json)이다(298 핵심과 나머지 묶음은 합산하지 않음).
 
 ## 마일스톤 (수직 슬라이스 순서)
 
