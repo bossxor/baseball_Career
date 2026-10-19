@@ -62,7 +62,7 @@ POST /api/saves/{id}/commands
 
 ## 인증 설계 경계
 
-초대 사용자 소수만 허용, 계정별 세이브 완전 분리. 서비스 provider는 결정 기록에서 미결정. 후보는 웹/APK 지원 관리형 인증이며 선택 전에 refresh/logout/deep-link 복귀/동일계정 재로그인 검증이 필요하다. 이 부분은 구현 착수 전 해결할 blocker다. 앱 공통 고정 API키를 APK에 넣어 인증을 대체하지 않는다.
+초대 사용자 소수만 허용, 계정별 세이브 완전 분리. 인증 우선 후보는16의Neon Managed Better Auth이며87의웹/APK흐름을따른다. 실제프로젝트지원·refresh/logout/deep-link/동일계정재로그인은92의V02에서먼저실증한다. 후보를확정운영연결로표시하지않는다. 앱 공통 고정 API키를 APK에 넣어 인증을 대체하지 않는다.
 
 웹 쿠키는 HttpOnly/Secure/SameSite와 CSRF 검증. Android는 시스템 브라우저 로그인+검증된 리디렉션, PKCE 지원 여부 확인 후 결정하며 토큰은 OS 보안 저장소. 로그에는 requestId/commandId/코드/지연만, 토큰·DB URL·선수 전체 state·다운로드 서명 URL 출력 금지.
 

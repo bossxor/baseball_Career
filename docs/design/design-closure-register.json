@@ -1,0 +1,153 @@
+{
+  "executionGates": [
+    {
+      "runtimePassed": false,
+      "id": "V01",
+      "status": "NOT_EXECUTED",
+      "evidenceRequired": "Actual artifacts required by gate in 92"
+    },
+    {
+      "runtimePassed": false,
+      "id": "V02",
+      "status": "NOT_EXECUTED",
+      "evidenceRequired": "Actual artifacts required by gate in 92"
+    },
+    {
+      "runtimePassed": false,
+      "id": "V03",
+      "status": "NOT_EXECUTED",
+      "evidenceRequired": "Actual artifacts required by gate in 92"
+    },
+    {
+      "runtimePassed": false,
+      "id": "V04",
+      "status": "NOT_EXECUTED",
+      "evidenceRequired": "Actual artifacts required by gate in 92"
+    },
+    {
+      "runtimePassed": false,
+      "id": "V05",
+      "status": "NOT_EXECUTED",
+      "evidenceRequired": "Actual artifacts required by gate in 92"
+    },
+    {
+      "runtimePassed": false,
+      "id": "V06",
+      "status": "NOT_EXECUTED",
+      "evidenceRequired": "Actual artifacts required by gate in 92"
+    },
+    {
+      "runtimePassed": false,
+      "id": "V07",
+      "status": "NOT_EXECUTED",
+      "evidenceRequired": "Actual artifacts required by gate in 92"
+    },
+    {
+      "runtimePassed": false,
+      "id": "V08",
+      "status": "NOT_EXECUTED",
+      "evidenceRequired": "Actual artifacts required by gate in 92"
+    },
+    {
+      "runtimePassed": false,
+      "id": "V09",
+      "status": "NOT_EXECUTED",
+      "evidenceRequired": "Actual artifacts required by gate in 92"
+    },
+    {
+      "runtimePassed": false,
+      "id": "V10",
+      "status": "NOT_EXECUTED",
+      "evidenceRequired": "Actual artifacts required by gate in 92"
+    },
+    {
+      "runtimePassed": false,
+      "id": "V11",
+      "status": "NOT_EXECUTED",
+      "evidenceRequired": "Actual artifacts required by gate in 92"
+    },
+    {
+      "runtimePassed": false,
+      "id": "V12",
+      "status": "NOT_EXECUTED",
+      "evidenceRequired": "Actual artifacts required by gate in 92"
+    }
+  ],
+  "counts": {
+    "longRunPlans": 12,
+    "integrationPaths": 24,
+    "expectations": 298,
+    "flowsPerPlatform": 8,
+    "screens": 45,
+    "platformTargets": 6,
+    "events": 99,
+    "contractTopics": 25
+  },
+  "status": "WRITTEN_DESIGN_BASELINE",
+  "baselineVersion": "1.0",
+  "designClosures": [
+    {
+      "evidence": "92-DESIGN-CLOSURE-HANDOFF.md",
+      "id": "CL01",
+      "status": "SPECIFIED",
+      "runtimePassed": false
+    },
+    {
+      "evidence": "92-DESIGN-CLOSURE-HANDOFF.md",
+      "id": "CL02",
+      "status": "SPECIFIED",
+      "runtimePassed": false
+    },
+    {
+      "evidence": "92-DESIGN-CLOSURE-HANDOFF.md",
+      "id": "CL03",
+      "status": "SPECIFIED",
+      "runtimePassed": false
+    },
+    {
+      "evidence": "92-DESIGN-CLOSURE-HANDOFF.md",
+      "id": "CL04",
+      "status": "SPECIFIED",
+      "runtimePassed": false
+    },
+    {
+      "evidence": "92-DESIGN-CLOSURE-HANDOFF.md",
+      "id": "CL05",
+      "status": "SPECIFIED",
+      "runtimePassed": false
+    },
+    {
+      "evidence": "92-DESIGN-CLOSURE-HANDOFF.md",
+      "id": "CL06",
+      "status": "SPECIFIED",
+      "runtimePassed": false
+    },
+    {
+      "evidence": "92-DESIGN-CLOSURE-HANDOFF.md",
+      "id": "CL07",
+      "status": "SPECIFIED",
+      "runtimePassed": false
+    },
+    {
+      "evidence": "92-DESIGN-CLOSURE-HANDOFF.md",
+      "id": "CL08",
+      "status": "SPECIFIED",
+      "runtimePassed": false
+    },
+    {
+      "evidence": "92-DESIGN-CLOSURE-HANDOFF.md",
+      "id": "CL09",
+      "status": "SPECIFIED",
+      "runtimePassed": false
+    },
+    {
+      "evidence": "92-DESIGN-CLOSURE-HANDOFF.md",
+      "id": "CL10",
+      "status": "SPECIFIED",
+      "runtimePassed": false
+    }
+  ],
+  "pendingUserQuestions": [],
+  "implementationStarted": false,
+  "schemaVersion": 1
+}
