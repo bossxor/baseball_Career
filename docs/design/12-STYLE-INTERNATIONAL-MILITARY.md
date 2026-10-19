@@ -73,7 +73,7 @@ MilitaryState: NOT_APPLICABLE / UNRESOLVED / APPLICATION_PENDING / SERVING_SPORT
 
 구단모드도동일대표명단·대회·병역엔진을사용. 감독은대표차출결과를확인하고선수본인의참가의사를설정하되단순국내경기이점때문에모든대표를강제사양시키는AI는없음. 대표휴식창으로국내진행은같이멈춤. 복무입대/복귀알림에대체로스터추천. 가상선수만으로운영해도병역사건발생.
 
-보관선수19세투입 시병역처리:원본NOT_APPLICABLE→비대상유지;원본COMPLETED/ATHLETE_ELIGIBLE/ATHLETE_SERVICE→구단복사본COMPLETED(원본의경력혜택보존);원본UNRESOLVED→복사본UNRESOLVED. 복무중은원칙적으로은퇴/보관대상이아니며불완전snapshot은투입거절. 과거국제성적은출처탭에만,새구단국제기록0, 동일메달보상재적용없음. 이정책은사용자확정요구가아닌19세리셋에따른설계기본안으로검토대상.
+보관선수19세투입 시병역처리(사용자확정U, 14 R05·R21, [32](32-USER-IMPORT-REBIRTH.md)): 병역대상 복사본은 원본 상태와 무관하게 UNRESOLVED로 다시 시작하며 원본의 COMPLETED/ATHLETE_ELIGIBLE/ATHLETE_SERVICE·메달 혜택을 승계하지 않는다. 타깃 구단 세계의 병역대상 설정이 비대상이면 NOT_APPLICABLE이다. 원본의 완료 이력을 이유로 비대상으로 바꾸지 않는다. 복무중은원칙적으로은퇴/보관대상이아니며불완전snapshot은투입거절. 과거국제성적은출처탭에만,새구단국제기록0, 동일메달보상재적용없음. 이전의 ‘원본 완료→복사본 완료’ 기본안은 폐기했다.
 
 ## 9. 추가 상태·화면·데이터
 
