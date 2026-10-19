@@ -4,7 +4,7 @@
 
 <!-- SOURCE: START-HERE.md -->
 
-현재 작업(2026-10-20): 실루엣14/14종과 로고2 승인 반영 완료. [전체 승인본](approved-art-board.html), [현황](STATUS.md). 다음은 앱 아이콘의 별도 시안·승인.
+현재 작업(2026-10-20): P0 이미지17항목 파일 제작·승인 완료. [승인본](approved-art-board.html), [현황](STATUS.md). 실제 앱·OS 검수는 미실행, P1은 별도 시안 승인.
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -76,7 +76,7 @@ GitHub https://github.com/bossxor/baseball_Career 의 docs/design이 원본. 다
 
 <!-- SOURCE: README.md -->
 
-현재 작업(2026-10-20): 실루엣14/14종과 로고2 승인 반영 완료. [전체 승인본](approved-art-board.html), [현황](STATUS.md). 다음은 앱 아이콘의 별도 시안·승인.
+현재 작업(2026-10-20): P0 이미지17항목 파일 제작·승인 완료. [승인본](approved-art-board.html), [현황](STATUS.md). 실제 앱·OS 검수는 미실행, P1은 별도 시안 승인.
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -165,6 +165,20 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 ---
 
 <!-- SOURCE: STATUS.md -->
+
+# 설계 현황 — P0 이미지 파일 승인 반영 완료
+
+## 현재 요약 (2026-10-20)
+
+- 사용자가 앱 아이콘1(네이비 배경)을 승인했다. Android 전경/배경/단색 SVG3개와 PWA192/512/maskable512·apple180 PNG4개·favicon SVG를 반영했다. P0의17항목(실루엣14·브랜드3묶음) 파일 제작은 모두 완료다. 전체92항목은 TODO47/EXISTS33/CODE_ONLY11/LEGACY_REFERENCE1이며 앱 연결·OS 설치 검수는 미실행이다.
+- [승인본 보드](approved-art-board.html), [이미지 레지스터](image-production-register.json).
+- 검증3개 모두 종료코드0/PASS. PNG 규격·불투명도와 전경 안전영역 검사 포함.
+- 실루엣14종·로고2·아이콘1, 기본 배색 네이비/블루.
+- 45화면·99이벤트·핵심298 기대값·23기대값 묶음은 유지한다. 실제 앱/DB/브라우저/APK는 미구현/미검수다.
+- 다음은 P1 이미지의 별도 시안·사용자 승인이다. 미승인 이미지는 저장소에 넣지 않는다.
+- 파일은 V:\docs\design, 승인 변경만 정상 Git 체크아웃으로 커밋·푸시한다.
+
+## 이전 진행 이력 — 아이콘 승인 전
 
 # 설계 현황 — 실루엣14종 승인 반영 완료
 
@@ -333,6 +347,12 @@ AVG상한1.000과SLG상한4.000/OPS5.000·짧은표본·AB0·P100과현재A를�
 ---
 
 <!-- SOURCE: DETAIL-PLAN.md -->
+
+# 현재 작업 — P0 이미지 파일 승인 반영 완료
+
+사용자가 앱 아이콘1(네이비 배경)을 승인했다. Android 전경/배경/단색 SVG3개와 PWA192/512/maskable512·apple180 PNG4개·favicon SVG를 반영했다. P0의17항목(실루엣14·브랜드3묶음) 파일 제작은 모두 완료다. 전체92항목은 TODO47/EXISTS33/CODE_ONLY11/LEGACY_REFERENCE1이며 앱 연결·OS 설치 검수는 미실행이다.
+
+---
 
 # 현재 작업 — 실루엣14종 승인 완료
 
@@ -707,6 +727,12 @@ U:100~104의 확정 UI 요구와 히든4개/슬라이더 규칙을 유지한다.
 사용자가 남은8종 전체를 승인해 A 스타일·네이비/블루 SVG로 반영했다. 타자6투타조합·투수4폼×2손, 실루엣14/14와 로고2가 모두 승인됐다. 전체 이미지92항목 중 TODO49/EXISTS31/CODE_ONLY11/LEGACY_REFERENCE1. Android/PWA 아이콘2묶음과 P1/P2 이미지는 별도 미완료다.
 
 [현재 누적 승인 기록](assets/brand/APPROVED-ART-v3.json)과 [전체 승인 보드](approved-art-board.html). 선수 본인 얼굴·능력·확률 등 게임 규칙은 변경하지 않았다.
+
+## 2026-10-20 앱 아이콘1 승인 U
+
+사용자가 앱 아이콘1(네이비 배경)을 승인했다. Android 전경/배경/단색 SVG3개와 PWA192/512/maskable512·apple180 PNG4개·favicon SVG를 반영했다. P0의17항목(실루엣14·브랜드3묶음) 파일 제작은 모두 완료다. 전체92항목은 TODO47/EXISTS33/CODE_ONLY11/LEGACY_REFERENCE1이며 앱 연결·OS 설치 검수는 미실행이다.
+
+[아이콘 승인·규격 기록](assets/brand/APPROVED-ICONS-v1.json). 앱 아이콘 배경은 네이비이며 승인 로고2의 형태는 유지한다.
 
 ---
 
@@ -8570,8 +8596,8 @@ ES-D01 X01~X07 적용합 재계산 일치/02 확률합 1/03 X04 K 원합 .12→.
 
 ## 한눈에 보기
 
-- 레지스터 항목 92개: 제작 필요(TODO) 49개, 이미 있음 31개, 코드로 만들면 되는 것(이미지 불필요) 11개, 보존 1개.
-- 우선순위: P0 미제작 2개(Android/PWA 아이콘 묶음), 승인 반영 15개(실루엣 14 + 로고 마크 1), P1 43개, P2 4개. P0는 앱을 처음 띄울 때 필요한 것이고 P1은 해당 기능 화면, P2는 선택이다.
+- 레지스터 항목 92개: 제작 필요(TODO) 47개, 이미 있음 33개, 코드로 만들면 되는 것(이미지 불필요) 11개, 보존 1개.
+- 우선순위: P0 미제작 0개, 승인 반영 17개(실루엣 14 + 로고 마크 1 + 아이콘 2묶음), P1 43개, P2 4개. P0는 앱을 처음 띄울 때 필요한 것이고 P1은 해당 기능 화면, P2는 선택이다.
 - 코드로 만드는 것(CODE_ONLY: 마이너·고교·국가 배지, 특성·구종·성향·폼·투타·목표 아이콘, 수비 다이어그램, 칭호)은 이미지 생성이 필요 없다.
 
 ## 공통 제작 규칙
@@ -8722,8 +8748,8 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
 |IMG-BRAND-MARK|로고 마크 ‘다시, 플레이볼’|assets/brand/logo-mark.svg|정사각 viewBox, 글자 최소(마크 중심)|승인 반영|S01, S21|타이틀 로고타입은 현재 검은고딕 텍스트(37). 실제 구단 로고와 무관|
-|IMG-BRAND-ANDROID|Android 적응형 아이콘|assets/brand/android-adaptive-{fg,bg,mono}.svg|foreground/background/monochrome 각 432×432 안전영역 288|제작 필요 P0|-|APK 런처 아이콘(86/29). 배경은 단색 가능|
-|IMG-BRAND-PWA|PWA/웹 아이콘|assets/brand/icon-{192,512,maskable-512}.png, favicon.svg, apple-touch-180.png|192/512/maskable512, favicon(SVG), 180|제작 필요 P0|-|manifest(86). 홈 화면 추가 경로 검수|
+|IMG-BRAND-ANDROID|Android 적응형 아이콘|assets/brand/android-adaptive-{fg,bg,mono}.svg|foreground/background/monochrome 각 432×432 안전영역 288|승인 반영|-|APK 런처 아이콘(86/29). 배경은 단색 가능|
+|IMG-BRAND-PWA|PWA/웹 아이콘|assets/brand/icon-{192,512,maskable-512}.png, favicon.svg, apple-touch-180.png|192/512/maskable512, favicon(SVG), 180|승인 반영|-|manifest(86). 홈 화면 추가 경로 검수|
 |IMG-BRAND-SPLASH|스플래시 아이콘|assets/brand/splash-icon.svg|Android 12 스플래시 아이콘 288, 단색 배경|제작 필요 P1|-|큰 일러스트 불필요|
 
 ### G11 코드로 만드는 아이콘·다이어그램
@@ -8830,6 +8856,12 @@ IM-D01 TODO 항목마다 파일 경로·규격·화면이 있음/02 실루엣 14
 사용자가 남은8종 전체를 승인해 A 스타일·네이비/블루 SVG로 반영했다. 타자6투타조합·투수4폼×2손, 실루엣14/14와 로고2가 모두 승인됐다. 전체 이미지92항목 중 TODO49/EXISTS31/CODE_ONLY11/LEGACY_REFERENCE1. Android/PWA 아이콘2묶음과 P1/P2 이미지는 별도 미완료다.
 
 [전체14종 보드](approved-art-board.html), [출처·승인 기록 v3](assets/brand/APPROVED-ART-v3.json). 비교 시안·미승인 다른 자산은 반영하지 않았다. 이전 묶음별 남은 개수는 당시 이력이다.
+
+## 아이콘1 승인 반영 — 2026-10-20
+
+사용자가 앱 아이콘1(네이비 배경)을 승인했다. Android 전경/배경/단색 SVG3개와 PWA192/512/maskable512·apple180 PNG4개·favicon SVG를 반영했다. P0의17항목(실루엣14·브랜드3묶음) 파일 제작은 모두 완료다. 전체92항목은 TODO47/EXISTS33/CODE_ONLY11/LEGACY_REFERENCE1이며 앱 연결·OS 설치 검수는 미실행이다.
+
+네 PNG는 완전 불투명이고 각 규격을 확인했다. Android 전경의 실제 alpha 픽셀 전체가 432캔버스 중앙 반경144 안전영역에 든다. 동일 전경은 maskable 중앙 반경40% 안에 든다. 앱 manifest·Android 리소스 연결과 실제 설치·테마 검수는 별도다.
 
 ---
 
@@ -9754,7 +9786,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: HANDOFF-PROMPT.md -->
 
-현재 작업(2026-10-20): 실루엣14/14종과 로고2 승인 반영 완료. [전체 승인본](approved-art-board.html), [현황](STATUS.md). 다음은 앱 아이콘의 별도 시안·승인.
+현재 작업(2026-10-20): P0 이미지17항목 파일 제작·승인 완료. [승인본](approved-art-board.html), [현황](STATUS.md). 실제 앱·OS 검수는 미실행, P1은 별도 시안 승인.
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -10105,3 +10137,15 @@ PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints
 ```
 
 SVG title/viewBox·CSS변수색·금지요소 부재·단순 반전 부재·실제 파일 및 슬롯 참조·전체 조합을 정적으로 검사했다. 승인된 PNG 8종의 곡선은 유지하고 title만 승인 상태로 정정했다. 실제 브라우저/기기·DOM·접근성·앱/게임/Neon/DB/build/APK는 미실행이며 45화면/99이벤트/핵심298은 유지한다.
+
+## 2026-10-20 네이비 아이콘1 승인 검증
+
+사용자가 아이콘1을 선택해 Android 전경/배경/단색 SVG3개와 웹 아이콘 PNG4개(192/512/maskable512/apple180)·favicon SVG를 반영했다. 제작 레지스터·화면 자산 연결·보드 favicon/apple-touch 참조·승인 보드를 갱신했다. P0 17항목은 모두 파일 EXISTS이며 전체 TODO47/EXISTS33이다.
+
+V: 루트에서 verify-design.mjs·verify-state-ui.mjs·verify-art-direction.mjs 모두 종료코드0/PASS. 추가 출력:
+
+```text
+PASS: approved navy icon1; Android 3 SVGs / web 5 assets, PNG dimensions and safe-area evidence, registry/slot bindings; P0 files complete. App/device integration remains NOT_EXECUTED.
+```
+
+sharp로 PNG4개 실제 크기와 전체 alpha255를 확인했다. Android 전경432의 모든 alpha 픽셀을 검사했고 경계 [128,136,303,313], 중심으로부터 최대거리118.23 미만으로 반경144 안전영역을 만족했다. maskable 전경 반경 비율은 .274 미만으로 .4 안에 든다. SVG 금지요소·title/viewBox·실제파일/레지스터/슬롯 연결도 정적 검증했다. PNG512를 육안 확인했다. 이는 OS 설치 화면 검증이 아니며 Android 리소스·실제 PWA manifest 연결·기기 설치·APK/build는 미실행이다.

@@ -175,7 +175,38 @@ console.log('NOT TESTED: art-lab browser rendering, interactive clicks, viewport
   const approvedBoard=read('approved-art-board.html');
   assert.equal((approvedBoard.match(/<svg\b/g)||[]).length,15);
   assert.ok(!/player-youth-animation-v1|player-pitcher-animation-v1/.test(approvedBoard));
-  assert.equal(registry.items.filter(i=>i.status==='TODO').length,49);
-  assert.equal(registry.items.filter(i=>i.status==='EXISTS').length,31);
-  console.log('PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 14/14 silhouettes ready, 49 image TODOs remain.');
+  assert.equal(registry.items.filter(i=>i.status==='TODO').length,47);
+  assert.equal(registry.items.filter(i=>i.status==='EXISTS').length,33);
+  console.log('PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 14/14 silhouettes ready, 47 image TODOs remain.');
+}
+
+{
+  const icons=json('assets/brand/APPROVED-ICONS-v1.json');
+  assert.equal(icons.approval,'USER_SELECTED');assert.equal(icons.option,1);
+  assert.equal(icons.background,'#172c50');assert.equal(icons.files.length,8);
+  const bound=[...slots.assetLibrary.appIcons.android,...slots.assetLibrary.appIcons.web].sort();
+  assert.deepEqual(bound,icons.files.map(f=>f.file).sort());
+  assert.equal(slots.assetLibrary.appIcons.approval,'assets/brand/APPROVED-ICONS-v1.json');
+  for(const f of icons.files){
+    const buffer=fs.readFileSync(path.join(root,f.file));
+    if(f.type==='PNG'){
+      assert.equal(buffer.subarray(0,8).toString('hex'),'89504e470d0a1a0a');
+      assert.deepEqual([buffer.readUInt32BE(16),buffer.readUInt32BE(20)],[f.width,f.height]);
+      assert.equal(f.opaque,true);
+    }else{
+      const svg=buffer.toString('utf8');
+      assert.ok(svg.includes('viewBox="0 0 432 432"')&&/<title>[^<]+<\/title>/.test(svg),f.file);
+      assert.ok(!/<(?:script|foreignObject|image|text)\b/i.test(svg),f.file);
+    }
+  }
+  assert.ok(icons.androidSafeArea.actualMaxRadius<=icons.androidSafeArea.radius);
+  assert.ok(icons.maskableSafeArea.foregroundRadiusRatio<=icons.maskableSafeArea.radiusRatio);
+  assert.equal(icons.browserReview,'NOT_EXECUTED');assert.equal(icons.deviceInstallReview,'NOT_EXECUTED');
+  const registry=json('image-production-register.json');
+  for(const [id,kind]of [['IMG-BRAND-ANDROID','android'],['IMG-BRAND-PWA','web']]){
+    const row=registry.items.find(i=>i.id===id);assert.equal(row.status,'EXISTS');
+    assert.deepEqual([...row.files].sort(),[...slots.assetLibrary.appIcons[kind]].sort());
+  }
+  assert.ok(registry.items.filter(i=>i.priority==='P0').every(i=>i.status==='EXISTS'));
+  console.log('PASS: approved navy icon1; Android 3 SVGs / web 5 assets, PNG dimensions and safe-area evidence, registry/slot bindings; P0 files complete. App/device integration remains NOT_EXECUTED.');
 }

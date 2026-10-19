@@ -4,8 +4,8 @@
 
 ## 한눈에 보기
 
-- 레지스터 항목 92개: 제작 필요(TODO) 49개, 이미 있음 31개, 코드로 만들면 되는 것(이미지 불필요) 11개, 보존 1개.
-- 우선순위: P0 미제작 2개(Android/PWA 아이콘 묶음), 승인 반영 15개(실루엣 14 + 로고 마크 1), P1 43개, P2 4개. P0는 앱을 처음 띄울 때 필요한 것이고 P1은 해당 기능 화면, P2는 선택이다.
+- 레지스터 항목 92개: 제작 필요(TODO) 47개, 이미 있음 33개, 코드로 만들면 되는 것(이미지 불필요) 11개, 보존 1개.
+- 우선순위: P0 미제작 0개, 승인 반영 17개(실루엣 14 + 로고 마크 1 + 아이콘 2묶음), P1 43개, P2 4개. P0는 앱을 처음 띄울 때 필요한 것이고 P1은 해당 기능 화면, P2는 선택이다.
 - 코드로 만드는 것(CODE_ONLY: 마이너·고교·국가 배지, 특성·구종·성향·폼·투타·목표 아이콘, 수비 다이어그램, 칭호)은 이미지 생성이 필요 없다.
 
 ## 공통 제작 규칙
@@ -156,8 +156,8 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
 |IMG-BRAND-MARK|로고 마크 ‘다시, 플레이볼’|assets/brand/logo-mark.svg|정사각 viewBox, 글자 최소(마크 중심)|승인 반영|S01, S21|타이틀 로고타입은 현재 검은고딕 텍스트(37). 실제 구단 로고와 무관|
-|IMG-BRAND-ANDROID|Android 적응형 아이콘|assets/brand/android-adaptive-{fg,bg,mono}.svg|foreground/background/monochrome 각 432×432 안전영역 288|제작 필요 P0|-|APK 런처 아이콘(86/29). 배경은 단색 가능|
-|IMG-BRAND-PWA|PWA/웹 아이콘|assets/brand/icon-{192,512,maskable-512}.png, favicon.svg, apple-touch-180.png|192/512/maskable512, favicon(SVG), 180|제작 필요 P0|-|manifest(86). 홈 화면 추가 경로 검수|
+|IMG-BRAND-ANDROID|Android 적응형 아이콘|assets/brand/android-adaptive-{fg,bg,mono}.svg|foreground/background/monochrome 각 432×432 안전영역 288|승인 반영|-|APK 런처 아이콘(86/29). 배경은 단색 가능|
+|IMG-BRAND-PWA|PWA/웹 아이콘|assets/brand/icon-{192,512,maskable-512}.png, favicon.svg, apple-touch-180.png|192/512/maskable512, favicon(SVG), 180|승인 반영|-|manifest(86). 홈 화면 추가 경로 검수|
 |IMG-BRAND-SPLASH|스플래시 아이콘|assets/brand/splash-icon.svg|Android 12 스플래시 아이콘 288, 단색 배경|제작 필요 P1|-|큰 일러스트 불필요|
 
 ### G11 코드로 만드는 아이콘·다이어그램
@@ -264,3 +264,9 @@ IM-D01 TODO 항목마다 파일 경로·규격·화면이 있음/02 실루엣 14
 사용자가 남은8종 전체를 승인해 A 스타일·네이비/블루 SVG로 반영했다. 타자6투타조합·투수4폼×2손, 실루엣14/14와 로고2가 모두 승인됐다. 전체 이미지92항목 중 TODO49/EXISTS31/CODE_ONLY11/LEGACY_REFERENCE1. Android/PWA 아이콘2묶음과 P1/P2 이미지는 별도 미완료다.
 
 [전체14종 보드](approved-art-board.html), [출처·승인 기록 v3](assets/brand/APPROVED-ART-v3.json). 비교 시안·미승인 다른 자산은 반영하지 않았다. 이전 묶음별 남은 개수는 당시 이력이다.
+
+## 아이콘1 승인 반영 — 2026-10-20
+
+사용자가 앱 아이콘1(네이비 배경)을 승인했다. Android 전경/배경/단색 SVG3개와 PWA192/512/maskable512·apple180 PNG4개·favicon SVG를 반영했다. P0의17항목(실루엣14·브랜드3묶음) 파일 제작은 모두 완료다. 전체92항목은 TODO47/EXISTS33/CODE_ONLY11/LEGACY_REFERENCE1이며 앱 연결·OS 설치 검수는 미실행이다.
+
+네 PNG는 완전 불투명이고 각 규격을 확인했다. Android 전경의 실제 alpha 픽셀 전체가 432캔버스 중앙 반경144 안전영역에 든다. 동일 전경은 maskable 중앙 반경40% 안에 든다. 앱 manifest·Android 리소스 연결과 실제 설치·테마 검수는 별도다.

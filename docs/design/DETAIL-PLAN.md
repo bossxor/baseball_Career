@@ -1,3 +1,9 @@
+# 현재 작업 — P0 이미지 파일 승인 반영 완료
+
+사용자가 앱 아이콘1(네이비 배경)을 승인했다. Android 전경/배경/단색 SVG3개와 PWA192/512/maskable512·apple180 PNG4개·favicon SVG를 반영했다. P0의17항목(실루엣14·브랜드3묶음) 파일 제작은 모두 완료다. 전체92항목은 TODO47/EXISTS33/CODE_ONLY11/LEGACY_REFERENCE1이며 앱 연결·OS 설치 검수는 미실행이다.
+
+---
+
 # 현재 작업 — 실루엣14종 승인 완료
 
 사용자가 남은8종 전체를 승인해 A 스타일·네이비/블루 SVG로 반영했다. 타자6투타조합·투수4폼×2손, 실루엣14/14와 로고2가 모두 승인됐다. 전체 이미지92항목 중 TODO49/EXISTS31/CODE_ONLY11/LEGACY_REFERENCE1. Android/PWA 아이콘2묶음과 P1/P2 이미지는 별도 미완료다.

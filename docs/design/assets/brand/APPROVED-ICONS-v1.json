@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-20",
+  "approval": "USER_SELECTED",
+  "option": 1,
+  "logo": "2",
+  "palette": "NAVY_BLUE_V1",
+  "background": "#172c50",
+  "files": [
+    {
+      "file": "assets/brand/android-adaptive-fg.svg",
+      "type": "SVG",
+      "width": 432,
+      "height": 432,
+      "role": "ANDROID_FG",
+      "sha256": "1a55bfe97be1660cb962e8e56819c0d92cb4bbb12a1073b64db158d3cf91e617"
+    },
+    {
+      "file": "assets/brand/android-adaptive-bg.svg",
+      "type": "SVG",
+      "width": 432,
+      "height": 432,
+      "role": "ANDROID_BG",
+      "sha256": "d4c6239cd43dfdbd0d0c03a0b4c04717fdc5b171f10c81ff7b967949af060fe3"
+    },
+    {
+      "file": "assets/brand/android-adaptive-mono.svg",
+      "type": "SVG",
+      "width": 432,
+      "height": 432,
+      "role": "ANDROID_MONO",
+      "sha256": "e89f91be9d05f8a25685e80abcb3090a205d1c59d67d85404fcedc55338706f9"
+    },
+    {
+      "file": "assets/brand/icon-192.png",
+      "type": "PNG",
+      "width": 192,
+      "height": 192,
+      "role": "PWA_ANY",
+      "opaque": true,
+      "sha256": "70506a11c0f2be3dc088ed19c15d56e44cfda4969be04d370c9085d66835be55"
+    },
+    {
+      "file": "assets/brand/icon-512.png",
+      "type": "PNG",
+      "width": 512,
+      "height": 512,
+      "role": "PWA_ANY",
+      "opaque": true,
+      "sha256": "1a094bb349c0d41983b29d899525d6306601b26a9d39d7aebc036c29ce5f057a"
+    },
+    {
+      "file": "assets/brand/icon-maskable-512.png",
+      "type": "PNG",
+      "width": 512,
+      "height": 512,
+      "role": "PWA_MASKABLE",
+      "opaque": true,
+      "sha256": "1a094bb349c0d41983b29d899525d6306601b26a9d39d7aebc036c29ce5f057a"
+    },
+    {
+      "file": "assets/brand/apple-touch-180.png",
+      "type": "PNG",
+      "width": 180,
+      "height": 180,
+      "role": "APPLE_TOUCH",
+      "opaque": true,
+      "sha256": "70ad41da96693dc6d5c6f9f8e31ed9dbd4fd3deb38d8910947ff63d2d5e8f23f"
+    },
+    {
+      "file": "assets/brand/favicon.svg",
+      "type": "SVG",
+      "width": 432,
+      "height": 432,
+      "role": "FAVICON",
+      "sha256": "f1564ea6b10266eec08e041bab4cd1a7f0620a9ba251e91c497a858a64ac6d2d"
+    }
+  ],
+  "androidSafeArea": {
+    "canvas": 432,
+    "center": [
+      216,
+      216
+    ],
+    "radius": 144,
+    "bounds": [
+      128,
+      136,
+      303,
+      313
+    ],
+    "actualMaxRadius": 118.22224832915333,
+    "alphaPixelsChecked": true
+  },
+  "maskableSafeArea": {
+    "radiusRatio": 0.4,
+    "foregroundRadiusRatio": 0.27366261187304014
+  },
+  "method": "Approved option1 vector master, deterministic PNG export with sharp. No external imagery; no bitmap editing.",
+  "manifestIcons": [
+    {
+      "src": "assets/brand/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/brand/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/brand/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "browserReview": "NOT_EXECUTED",
+  "deviceInstallReview": "NOT_EXECUTED",
+  "note": "Asset package only. The future app must wire manifest, apple-touch and Android foreground/background/monochrome resources during implementation."
+}

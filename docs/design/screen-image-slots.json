@@ -621,6 +621,22 @@
     "appBrandMark": {
       "file": "assets/brand/logo-mark.svg",
       "palette": "NAVY_BLUE_V1"
+    },
+    "appIcons": {
+      "approval": "assets/brand/APPROVED-ICONS-v1.json",
+      "android": [
+        "assets/brand/android-adaptive-fg.svg",
+        "assets/brand/android-adaptive-bg.svg",
+        "assets/brand/android-adaptive-mono.svg"
+      ],
+      "web": [
+        "assets/brand/icon-192.png",
+        "assets/brand/icon-512.png",
+        "assets/brand/icon-maskable-512.png",
+        "assets/brand/apple-touch-180.png",
+        "assets/brand/favicon.svg"
+      ],
+      "implementationStatus": "ASSETS_READY_APP_INTEGRATION_NOT_IMPLEMENTED"
     }
   }
 }

@@ -297,3 +297,15 @@ PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints
 ```
 
 SVG title/viewBox·CSS변수색·금지요소 부재·단순 반전 부재·실제 파일 및 슬롯 참조·전체 조합을 정적으로 검사했다. 승인된 PNG 8종의 곡선은 유지하고 title만 승인 상태로 정정했다. 실제 브라우저/기기·DOM·접근성·앱/게임/Neon/DB/build/APK는 미실행이며 45화면/99이벤트/핵심298은 유지한다.
+
+## 2026-10-20 네이비 아이콘1 승인 검증
+
+사용자가 아이콘1을 선택해 Android 전경/배경/단색 SVG3개와 웹 아이콘 PNG4개(192/512/maskable512/apple180)·favicon SVG를 반영했다. 제작 레지스터·화면 자산 연결·보드 favicon/apple-touch 참조·승인 보드를 갱신했다. P0 17항목은 모두 파일 EXISTS이며 전체 TODO47/EXISTS33이다.
+
+V: 루트에서 verify-design.mjs·verify-state-ui.mjs·verify-art-direction.mjs 모두 종료코드0/PASS. 추가 출력:
+
+```text
+PASS: approved navy icon1; Android 3 SVGs / web 5 assets, PNG dimensions and safe-area evidence, registry/slot bindings; P0 files complete. App/device integration remains NOT_EXECUTED.
+```
+
+sharp로 PNG4개 실제 크기와 전체 alpha255를 확인했다. Android 전경432의 모든 alpha 픽셀을 검사했고 경계 [128,136,303,313], 중심으로부터 최대거리118.23 미만으로 반경144 안전영역을 만족했다. maskable 전경 반경 비율은 .274 미만으로 .4 안에 든다. SVG 금지요소·title/viewBox·실제파일/레지스터/슬롯 연결도 정적 검증했다. PNG512를 육안 확인했다. 이는 OS 설치 화면 검증이 아니며 Android 리소스·실제 PWA manifest 연결·기기 설치·APK/build는 미실행이다.
