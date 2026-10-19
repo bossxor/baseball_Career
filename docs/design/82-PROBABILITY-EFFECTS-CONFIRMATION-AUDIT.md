@@ -1,3 +1,5 @@
+최신 확정(2026-10-19): [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 투구폼·좌우 상성은 새 확률 표면이 아니라 기존 타석 logit 합산의 구성요소이며 ±.10 cap 안에서 원합·적용합 구분 표시를 따른다.
+
 # 82. 확률·정확 효과·최종 확인 표시 최종 계약
 
 2026-10-19. U: 의미 있는 확률 결과는 모두 표시, 실제 확률1의 숫자 배지는 숨김, 단순 변경에 '적용100%' 없음. U: 정확한 강화 증가량·비용을 잠재력 비공개보다 우선. [38](38-PROBABILITY-DISPLAY.md), [75](75-EXACT-EFFECTS-PUBLIC-INFORMATION.md)의 표시 원칙을 [20개 표면 등록부](probability-surface-register.json)로 연결한다.
