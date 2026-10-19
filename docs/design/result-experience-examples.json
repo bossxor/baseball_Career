@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_PREVIEW_ONLY",
+  "expectationStatus": "NOT_IMPLEMENTED",
+  "gameRulesChanged": false,
+  "examples": {
+    "game": {
+      "away": [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2
+      ],
+      "home": [
+        0,
+        2,
+        0,
+        0,
+        0,
+        1,
+        0,
+        1,
+        "X"
+      ],
+      "awayR": 3,
+      "homeR": 4,
+      "awayH": 7,
+      "homeH": 8
+    },
+    "batter": {
+      "AB": 500,
+      "H": 150,
+      "TB": 250,
+      "BB": 50,
+      "HBP": 5,
+      "display": {
+        "AVG": ".300",
+        "OBP": ".369",
+        "SLG": ".500",
+        "OPS": ".869"
+      }
+    },
+    "pitcher": {
+      "outs": 450,
+      "ER": 50,
+      "H": 140,
+      "BB": 45,
+      "K": 150,
+      "display": {
+        "IP": "150.0",
+        "ERA": "3.00",
+        "WHIP": "1.23"
+      }
+    },
+    "draft": {
+      "baseScore": 45,
+      "overallDraftProbability": 0.5,
+      "mostLikelyRoundIfDrafted": 10,
+      "distribution": [
+        {
+          "round": 9,
+          "p": 0.1
+        },
+        {
+          "round": 10,
+          "p": 0.4
+        },
+        {
+          "round": null,
+          "p": 0.5
+        }
+      ]
+    }
+  },
+  "edgeCases": [
+    {
+      "id": "RX01",
+      "scenario": "PENDING_GAME",
+      "expected": "최종 승패/공식 박스스코어를 만들지 않는다",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RX02",
+      "scenario": "GAME_RESPONSE_LOST",
+      "expected": "같은 commandId 처리 확인; 재추첨 금지",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RX03",
+      "scenario": "PLAYER_DID_NOT_PLAY",
+      "expected": "미출전 표기; 데뷔·허위 비율 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RX04",
+      "scenario": "NO_COMMENTARY_LOG",
+      "expected": "확정 요약 유지; 상세 다시보기 불가",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RX05",
+      "scenario": "CORRUPT_LOG",
+      "expected": "무결성 오류; 만료/새 경기로 대체하지 않음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RX06",
+      "scenario": "REPLAY_CURSOR_CONFLICT",
+      "expected": "경기 결과 불변; 큰 cursor 자동 채택 금지",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RX07",
+      "scenario": "ZERO_DENOMINATOR",
+      "expected": "— 표기; 실제 0과 구별",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RX08",
+      "scenario": "SETTLEMENT_PENDING",
+      "expected": "현재 시즌 최종값·성장 미확정",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RX09",
+      "scenario": "SETTLEMENT_REOPEN",
+      "expected": "같은 영수증 조회; 성장·보상 중복 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RX10",
+      "scenario": "NEW_SEASON_RESPONSE_LOST",
+      "expected": "기존 작업 조회; 중복 새 시즌 금지",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RX11",
+      "scenario": "DRAFT_PREVIEW_STALE",
+      "expected": "최신 전망 조회; 확정 결과 변경 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RX12",
+      "scenario": "DRAFT_PROBABILITY_ONE",
+      "expected": "숫자 배지 숨김; 예상 라운드 유지",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RX13",
+      "scenario": "DRAFT_PROBABILITY_ZERO",
+      "expected": "0%·합법 대안; 미국 오퍼 생성 금지",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "RX14",
+      "scenario": "UNDRAFTED_NO_ROUTE",
+      "expected": "불가 진로 숨김; 은퇴 별도 확인",
+      "status": "NOT_IMPLEMENTED"
+    }
+  ]
+}

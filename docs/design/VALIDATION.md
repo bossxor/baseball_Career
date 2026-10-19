@@ -45,3 +45,20 @@ PASS: 2 alpha portrait assets, 8 preview variants, 4 detail flows / 12 state tem
 추가 검사는 고립된 순수 템플릿 함수에서 문자열만 생성한다. DOM·브라우저·게임 엔진·저장·네트워크를 실행하지 않는다. 대표팀 후보/명단은 중립 그림, 금메달 근거 상태만 메달 그림인지 검사한다. 재활12/6/0, 강화 타자80→82/투수76→78 예시, 투수 구종 누적XP30/10 표기와 평균72.0을 확인했다. 상태 카탈로그12건은 기존298 게임 기대값과 별도인 디자인 예시이며 runtime PASS를 뜻하지 않는다.
 
 브라우저 file: 정책 차단은 계속 유지한다. 새로운 자동 브라우저 시도나 우회는 하지 않았다. 실제 픽셀·버튼·모바일·클립보드·localStorage와 앱/Neon/build/APK는 미시험이다. 93~95 및 위1.1 검수는 이전 단계의 이력이며 최신 파일 수와 대표 화면 수는1.2를 따른다.
+
+## 2026-10-19 시각 확장1.3 검수
+
+97에 경기·시즌·드래프트의9상태와 예외/표시 산술을 추가했다. 대표11화면, 상세7흐름×3상태=21, PNG는8개 그대로. 원래45화면/99이벤트/298게임 기대값은 그대로다. result-experience-examples.json의14개 NOT_IMPLEMENTED 예외는 별도 디자인 기대값이다.
+
+명령: node docs/design/verify-design.mjs. 기존 검사 PASS와 추가 출력:
+
+```text
+PASS: result/season/draft examples: inning totals 3:4 and X, batting .300/.369/.500/.869, pitching 150.0/3.00/1.23, B45 draft distribution; 14 NOT_IMPLEMENTED edge expectations.
+PASS: 2 alpha portrait assets, 11 preview variants, 7 detail flows / 21 state templates, evidence guards, hitter overall 71.0 and pitcher 72.0 / focus 4; pure HTML-string checks only.
+```
+
+순수 문자열 검사에서 처리 중 경기에는 FINAL/점수표가 없고, 확정 상태에서는3:4와X·선수별 성적·결산 수치·같은 resultHash 안내가 존재하는지 확인했다. 드래프트 전망50%/10라운드 유력과9라운드 결과/미지명 대안을 구분했다. 원정/홈 점수합, 타자 원분모, 투구 아웃→야구 이닝/ERA/WHIP, B45 전체 분포 합1·지명률·최빈 라운드의 산술을 검사했다.
+
+실제 엔진 박스스코어 보존·중계 hash·중복 정산·확률 추첨·세이브 복구를 실행한 것이 아니다. 표 스크롤·접근성·긴 이름·모바일 렌더·클릭도 미시험이다. file: URL 정책 차단을 우회하지 않았고 새로운 자동 브라우저 접근을 시도하지 않았다. 저장할 이미지 신규 생성/편집은 없으며 기존8개를 재사용했다.
+
+통합MD/MANIFEST를 갱신하고 최신 네트워크 설계 폴더의 기존 파일이 변경되지 않았는지 확인한 뒤 동기화한다. 동기화본은 manifest의 SHA256와 대조한다. 구버전 design-v0.7은 다시 만들지 않는다.

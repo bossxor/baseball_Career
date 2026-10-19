@@ -168,6 +168,124 @@
           "expected": "메달 근거 확인; 개인 병역 자격 미확정"
         }
       ]
+    },
+    {
+      "id": "match",
+      "screenIds": [
+        "S19",
+        "S44"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "처리 중",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "pendingGameId",
+            "lastCommittedCursor"
+          ],
+          "expected": "최종 점수/승패 숨김; 같은 경기 이어 확인"
+        },
+        {
+          "phase": "detail",
+          "label": "최종 결과",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "finalGameReceipt",
+            "boxscore"
+          ],
+          "expected": "원정3 홈4; 홈9회말X; 확정 개인 기록"
+        },
+        {
+          "phase": "receipt",
+          "label": "다시 보기",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "finalManifest",
+            "resultHash",
+            "logAvailability"
+          ],
+          "expected": "같은 결과 감상; 로그 없으면 요약; 재추첨 없음"
+        }
+      ]
+    },
+    {
+      "id": "season",
+      "screenIds": [
+        "S07"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "정산 중",
+          "allowedScene": "training",
+          "requiredEvidence": [
+            "seasonId",
+            "settlementStatus"
+          ],
+          "expected": "정산 중 성장/수상 미확정"
+        },
+        {
+          "phase": "detail",
+          "label": "확정 결산",
+          "allowedScene": "training",
+          "requiredEvidence": [
+            "seasonReceipt",
+            "rawStatDenominators"
+          ],
+          "expected": "원분모에서 비율 계산; 영수증 재적용 없음"
+        },
+        {
+          "phase": "receipt",
+          "label": "다음 할 일",
+          "allowedScene": "training",
+          "requiredEvidence": [
+            "requiredTasks",
+            "deadlineSnapshot"
+          ],
+          "expected": "필수 사건 해결 전 다음 시즌 차단; 기록 조회 가능"
+        }
+      ]
+    },
+    {
+      "id": "draft",
+      "screenIds": [
+        "S05",
+        "S28"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "지명 전망",
+          "allowedScene": "draft",
+          "requiredEvidence": [
+            "projectionSnapshot",
+            "baseDraftScore"
+          ],
+          "expected": "B45: 전체지명50%, 10R40%/9R10%/미지명50%"
+        },
+        {
+          "phase": "detail",
+          "label": "지명 결과",
+          "allowedScene": "draft",
+          "requiredEvidence": [
+            "draftReceipt",
+            "round",
+            "teamId"
+          ],
+          "expected": "실제9라운드 지명; 별도 계약 확인"
+        },
+        {
+          "phase": "receipt",
+          "label": "미지명 결과",
+          "allowedScene": "draft",
+          "requiredEvidence": [
+            "draftReceipt",
+            "eligibilitySnapshot"
+          ],
+          "expected": "지명과 대안 결과; 적격 진로만; 자동은퇴/미국오퍼 없음"
+        }
+      ]
     }
   ]
 }
