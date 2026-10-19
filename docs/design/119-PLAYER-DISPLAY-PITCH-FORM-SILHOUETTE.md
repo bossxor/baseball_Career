@@ -63,7 +63,7 @@
 |DB|players.pitchForm enum(투수 NOT NULL, 타자 NULL), appearance 스키마 교체, archive·복사 승계|
 |fixture|아래 검수 항목 추가(NOT_IMPLEMENTED)|
 
-## 검수 항목 (초안, NOT_EXECUTED)
+## 검수 항목 (초안, NOT_EXECUTED; [player-display-expectations.json](player-display-expectations.json))
 
 PF-D01 오버핸드+포심 K+.01 / 02 오버핸드+슬라이더 보정 0 / 03 사이드+투심 OUT+.01 / 04 우투 vs 좌타 타자 1B+.01 / 05 우투 vs 우타 투수 K+.01 / 06 양타는 항상 반대손 / 07 같은 PA에 좌우 보정은 하나만 / 08 폼+좌우+특성+구종 합이 ±.10 cap에서 원합·적용합 구분 / 09 타자 pitchForm null, 투수 NOT NULL / 10 복사 19세가 손·타석·폼 승계 / 11 좌투 포수 생성 거절 유지 / 12 실루엣 14종 존재와 좌우 반전 금지 / 13 능력 종합에 폼·타석 영향 0 / 14 지도자 카드에 은퇴 나이 텍스트 / 15 NPC가 같은 실루엣+팔레트만 변경.
 

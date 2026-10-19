@@ -345,6 +345,10 @@ for (const row of currentIndex.topics) {
 const stateUi = JSON.parse(read('state-ui-expectations.json'));
 assert.equal(stateUi.expectationStatus, 'NOT_IMPLEMENTED');
 for (const g of stateUi.groups) { assert.equal(g.status, 'NOT_EXECUTED'); assert.ok(existsSync(path.join(root, g.doc))); unique(g.ids); }
+const playerDisplay = JSON.parse(read('player-display-expectations.json'));
+assert.equal(playerDisplay.executionStatus, 'NOT_EXECUTED');
+assert.ok(existsSync(path.join(root, playerDisplay.doc)));
+unique(playerDisplay.ids);
 const closure = JSON.parse(read('design-closure-register.json'));
 assert.equal(closure.status, 'WRITTEN_DESIGN_BASELINE');
 assert.equal(closure.baselineVersion, '1.0');

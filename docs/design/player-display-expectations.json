@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_PREVIEW_ONLY",
+  "expectationStatus": "NOT_IMPLEMENTED",
+  "doc": "119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md",
+  "note": "119 투구폼·좌우 상성·실루엣 검수 항목. 298/61 기대값과 합치지 않는다.",
+  "ids": [
+    "PF-D01",
+    "PF-D02",
+    "PF-D03",
+    "PF-D04",
+    "PF-D05",
+    "PF-D06",
+    "PF-D07",
+    "PF-D08",
+    "PF-D09",
+    "PF-D10",
+    "PF-D11",
+    "PF-D12",
+    "PF-D13",
+    "PF-D14",
+    "PF-D15"
+  ],
+  "executionStatus": "NOT_EXECUTED"
+}
