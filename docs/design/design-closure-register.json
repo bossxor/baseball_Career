@@ -160,6 +160,7 @@
     "gameRulesChanged": false,
     "sceneCount": 12,
     "portraitCount": 2,
-    "visualStateExamples": 36
+    "visualStateExamples": 36,
+    "resumeEntry": "BUTTON_ONLY"
   }
 }

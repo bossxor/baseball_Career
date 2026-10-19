@@ -79,3 +79,6 @@ PASS: 2 alpha portrait assets, 16 preview variants, 12 detail flows / 36 state t
 브라우저 file: 정책 차단은 유지하고 우회하지 않았다. 실제 렌더/클릭/표·글자 확대/키보드/스크린리더/네트워크/클립보드/localStorage는 미시험이다. 정적 문자열 PASS를 화면 동작 PASS로 바꾸지 않는다. 기존 PNG 생성 기록과 원본은 그대로 보존한다.
 
 최신 네트워크 설계 폴더의 기존 manifest 파일을 먼저 대조한 후 수정본을 동기화하고 새 manifest SHA256로 확인한다. 원래 미리보기HTML도 같은 해시로 갱신한다. design-v0.7을 재생성하지 않으며 최신 docs/design만 업데이트한다.
+
+
+2026-10-19 이어하기 표시 수정: node docs/design/verify-design.mjs 통과. 홈의 중단 상태 드롭다운/안내 문구/관련 스크립트를 제거하고 이어하기 링크 버튼으로 교체했다. 이전 예시 요소 ID가 없고 #career 링크가 있으며45화면 카탈로그와 HTML 내 데이터가 일치함을 정적으로 확인했다. 실제 복구·클릭/브라우저 검수는 미실행이며 서버 원장·명령 멱등성 설계는 유지한다.
