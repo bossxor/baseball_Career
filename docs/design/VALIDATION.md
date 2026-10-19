@@ -201,4 +201,20 @@ node docs/design/verify-design.mjs PASS, git diff --check PASS. 9장면/12미실
 
 ## 연속작업 임계치 저장
 
-5시간사용99%/남음1%,주간47%/남음53%의내장도구값을확인해요청대로새설계를멈췄다. 이후는진행·인계문서와통합MD/MANIFEST만갱신한다. 118까지마지막전체정적검사는PASS. E13취소결과문구문제는검토발견으로만기록했으며고쳤다거나실행검증했다고표시하지않는다. 최종V해시·git diff --check·원격main일치를확인한다.
+5시간사용99%/남음1%,주간47%/남음53%의내장도구값을확인해요청대로새설계를멈췄다. 이후는진행·인계문서와통합MD/MANIFEST만갱신한다. 118까지마지막전체정적검사는PASS. E13취소결과문구문제는당시검토발견으로만기록했다(이후 아래 후속 검증에서 정정). 최종V해시·git diff --check·원격main일치를확인한다.
+
+## 2026-10-19 후속 검증 (E13 정정 이후)
+
+E13 CANCEL_POSITION_PLAN 결과 문구를 ‘기존 등록 포지션 유지·전환 계획 종료’로 정정했고, 같은 문제가 있던 62개 사건·90개 선택지의 결과 문구도 선택지별로 분리했다. 이후 verify-design.mjs에 추가한 정적 검사는 다음과 같다.
+
+| 검사 | 내용 |
+|---|---|
+| 결과 문구 중복 | 같은 사건 안에서 선택지 resultCopy가 서로 달라야 한다 |
+| 사건 선택지 처리(125) | 모든 선택지에 dispatchClass, NAVIGATE는 45화면 중 targetScreen, BLOCKING 사건은 ACK만으로 해결 불가 |
+| 합산 산술 예제(123) | effect-sum-examples.json 7개를 특성 cap .06·최종 cap .10·softmax로 재계산해 대조, 확률합 1 |
+| 선수 표시 기대값(119/121) | player-display-expectations.json 30개 ID 고유, 근거 문서 존재 |
+| 이미지 제작 레지스터(124) | 92항목 ID 고유, status·그룹·화면 ID 유효, 실루엣 14종, TODO는 우선순위 보유 |
+| 기대값 묶음 색인 | expectation-sets-index.json 20묶음 파일/문서 존재, 핵심 6파일 합 298 |
+
+함께 실행한 verify-state-ui.mjs와 verify-art-direction.mjs도 PASS다(그림 슬롯 silhouetteCard 참조 포함). 모두 문서·데이터·산술 정적 검사이며 게임 엔진·DB·API·브라우저 렌더·APK 실행 검증이 아니다. 실루엣 등 이미지는 이 저장소에서 제작하지 않았고(124), 보드 HTML의 S02·S16 시안은 태그 구조만 확인했으며 렌더는 미확인이다.
+
