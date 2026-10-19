@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "source": "114-FIRST-CLUB-SEASON-OPERATIONS.md",
+  "status": "DESIGN_ONLY",
+  "steps": [
+    {
+      "id": "B01",
+      "title": "모드·구단",
+      "screenIds": [
+        "S12"
+      ],
+      "read": "실제KBO팀명·로고·가상로스터설명·난이도",
+      "actionAndGuard": "구단선택. 희망선수커리어생성은필수아님",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B02",
+      "title": "보관 선택",
+      "screenIds": [
+        "S12"
+      ],
+      "read": "사용안함/사용,원본·대체선수",
+      "actionAndGuard": "원본선택/취소만으로세계나새P를생성하지않음",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B03",
+      "title": "생성 확인",
+      "screenIds": [
+        "S12"
+      ],
+      "read": "팀·난이도·보관사용수·대체결과·시작정원",
+      "actionAndGuard": "78의동일creationId원자생성. 이미지를못불러와도기본표현으로진행",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B04",
+      "title": "첫 홈",
+      "screenIds": [
+        "S13"
+      ],
+      "read": "현재날짜·다음경기·순위미정·가용액·필수할일",
+      "actionAndGuard": "첫경기전순위/성적을우승전망처럼확정하지않음",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B05",
+      "title": "선수단 확인",
+      "screenIds": [
+        "S14"
+      ],
+      "read": "계약50/1군28/투수13·야수15/포수2",
+      "actionAndGuard": "선수상세·2군후보확인. 종합최고28명자동선택으로포수요건을깨지않음",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B06",
+      "title": "라인업",
+      "screenIds": [
+        "S15"
+      ],
+      "read": "타순9·실제수비8자리·선발/불펜·불가사유",
+      "actionAndGuard": "자동추천은초안,미리보기/적용을구분. 같은선수중복/부상/등록검사",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B07",
+      "title": "첫 경기",
+      "screenIds": [
+        "S13",
+        "S19"
+      ],
+      "read": "출전가능·명단·진행구간",
+      "actionAndGuard": "1경기/1주일의기존진행. 감상선택이결과를재추첨하지않음",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B08",
+      "title": "필요 포지션",
+      "screenIds": [
+        "S14",
+        "S36"
+      ],
+      "read": "현재공백·대체깊이·나이·경쟁·당해비용",
+      "actionAndGuard": "스카우트가필수입장료가아님. 공개FA목록도계속열림",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B09",
+      "title": "탐색 미리보기",
+      "screenIds": [
+        "S36"
+      ],
+      "read": "조건·적격미발견수·발견확률·500만원·월잔여",
+      "actionAndGuard": "조건초안은무료. N0/월0은실행불가·비용0",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B10",
+      "title": "탐색 결과",
+      "screenIds": [
+        "S36"
+      ],
+      "read": "실제신규후보수·원장·잔여횟수",
+      "actionAndGuard": "성공과실패모두정상소모. 통신오류는동일receipt확인",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B11",
+      "title": "후보 보고서",
+      "screenIds": [
+        "S16",
+        "S36"
+      ],
+      "read": "정확현재6능력·종합·잠재력전망범위·평가일",
+      "actionAndGuard": "발견과영입가능·선수소유·잠재력확정을구분",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B12",
+      "title": "영입 제안",
+      "screenIds": [
+        "S17"
+      ],
+      "read": "연봉·기간·역할·라운드p·예약금/자리·마감",
+      "actionAndGuard": "아직계약아님. 여러제안이전부성공해도성립하도록예약",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B13",
+      "title": "라운드 결과",
+      "screenIds": [
+        "S17"
+      ],
+      "read": "우리팀수락/타팀수락/대기·예약변동",
+      "actionAndGuard": "계약소유확정과1군등록은별도. 치트도유효조건검사",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B14",
+      "title": "시즌 운영",
+      "screenIds": [
+        "S13",
+        "S14",
+        "S37"
+      ],
+      "read": "부상·포지션·계약만료·일정·원장",
+      "actionAndGuard": "필수결정에서자동진행정지. 안내열람/현실시간으로경기를넘기지않음",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B15",
+      "title": "정규·PS 회고",
+      "screenIds": [
+        "S18",
+        "S19",
+        "S37"
+      ],
+      "read": "확정순위/실제PS자격·기록·지급/채무",
+      "actionAndGuard": "정규끝을리그전체완료·차년도활성화로앞당기지않음",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "B16",
+      "title": "오프시즌 준비",
+      "screenIds": [
+        "S17",
+        "S37",
+        "S43"
+      ],
+      "read": "만료/은퇴/공석·드래프트·협상·직원/시설",
+      "actionAndGuard": "의무계약/최소정원등을해결한후72의단일연도전환",
+      "executionStatus": "NOT_EXECUTED"
+    }
+  ],
+  "starts": [
+    {
+      "id": "NO_IMPORT",
+      "requiresCareer": false,
+      "importCount": 0,
+      "contractedPlayers": 50,
+      "firstTeam": 28,
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "WITH_IMPORT",
+      "sourceAge": 41,
+      "copyAge": 19,
+      "peaks": [
+        92,
+        100,
+        88,
+        86,
+        90,
+        94
+      ],
+      "abilities": [
+        46,
+        50,
+        44,
+        43,
+        45,
+        47
+      ],
+      "displayOverall": "45.8",
+      "originalUnchanged": true,
+      "militaryReset": true,
+      "recordCount": 0,
+      "contractedPlayers": 50,
+      "firstTeam": 28,
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "CLUB_CHEAT",
+      "allOwnedPotential": 100,
+      "positiveGrowthMultiplier": 3,
+      "pitchXpMultiplier": 3,
+      "initialAbilityBoost": 0,
+      "unlimitedBudget": true,
+      "monthlySearchLimit": 2,
+      "illegalAcquisitionAllowed": false,
+      "executionStatus": "NOT_EXECUTED"
+    }
+  ],
+  "recoveryCases": [
+    {
+      "id": "RC01",
+      "screenId": "S14",
+      "reason": "CATCHER_SHORTAGE",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RC02",
+      "screenId": "S15",
+      "reason": "INJURED_LINEUP",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RC03",
+      "screenId": "S36",
+      "reason": "NO_ELIGIBLE_CANDIDATE",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RC04",
+      "screenId": "S36",
+      "reason": "MONTHLY_LIMIT",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RC05",
+      "screenId": "S37",
+      "reason": "BUDGET_OR_FUTURE_GUARANTEE",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RC06",
+      "screenId": "S14",
+      "reason": "FIRST_TEAM_FULL",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RC07",
+      "screenId": "S17",
+      "reason": "EMERGENCY_REPLACEMENT",
+      "executionStatus": "NOT_EXECUTED"
+    }
+  ],
+  "chain": {
+    "sourceSnapshot": {
+      "budget": 12000000000,
+      "paidSalary": 4000000000,
+      "reservedSalary": 5000000000,
+      "guaranteedReleaseCost": 300000000,
+      "reservedOffers": 500000000,
+      "protectedMinimum": 200000000,
+      "paidOperations": 160000000,
+      "reservedOperations": 0,
+      "postingIncome": 0,
+      "supportGrant": 0,
+      "expectedAvailable": 1840000000,
+      "searchCost": 5000000,
+      "afterSearchAvailable": 1835000000,
+      "offerAnnual": 100000000,
+      "afterNewOfferAvailable": 1740000000
+    },
+    "searchCost": 5000000,
+    "newOfferReserve": 100000000,
+    "stages": [
+      {
+        "id": "A",
+        "available": 1840000000
+      },
+      {
+        "id": "B",
+        "available": 1835000000
+      },
+      {
+        "id": "C",
+        "available": 1735000000
+      }
+    ],
+    "successAvailable": 1735000000,
+    "rejectAvailable": 1835000000,
+    "successMeansFirstTeamRegistration": false,
+    "branchesExclusive": true
+  },
+  "search": {
+    "L": 2,
+    "N": 20,
+    "q": 1,
+    "p": 0.63,
+    "monthBefore": 2,
+    "monthAfter": 1,
+    "successNewCandidates": 3,
+    "failureNewCandidates": 0,
+    "unavailableCost": 0
+  },
+  "offer": {
+    "score": 0.6,
+    "outsideWeight": 1,
+    "roundAcceptanceProbability": 0.5,
+    "discoveryGuaranteesAcquisition": false
+  },
+  "executionStatus": "NOT_EXECUTED"
+}

@@ -174,3 +174,11 @@ node docs/design/verify-design.mjs PASS, git diff --check PASS. 추가출력: PA
 26단계의고유ID/기존화면·사건참조/이미지존재/19세분기/공통7장면·자료JS/JSON일치·55/50/오퍼1경계·권리차단·카드숨김·위변조US선택의공통경로회귀·순수렌더입력불변을확인했다. 실제DOM클릭·화면픽셀·첫세이브·기용/경기·계약원자성·이어하기/DB·브라우저·APK/build는미실행이다. 가이드의E02/E03배열은종류별관련원문참조이며동시사건생성을뜻하지않는다. 기존45/99카탈로그및실행상태는불변이다.
 
 작업전Git/V234파일해시일치를확인하고Windows Thumbs.db는보존한다. 동기화전외부변경을다시확인하고원래미리보기에는공개동선HTML/JS/JSON/문서와연결HTML만반영한다.
+
+## 114 구단 첫 시즌 운영 (2026-10-19)
+
+node docs/design/verify-design.mjs PASS, git diff --check PASS. 추가출력: PASS: club first-season 16 stages / 7 recovery cases / 3 starts, source screen links, half-peak import and finite chained search-offer ledger. Runtime remains NOT_EXECUTED.
+
+16단계고유ID/45화면참조,7복구사례,가상선수독립시작·보관반값19세/원본불변·치트현재능력추가0/P100/성장3/월2를정적으로확인했다. 같은원장에서18.4억→18.35억→17.35억→성공17.35억/실패18.35억의예약전환/해제를검사하고발견63%와영입50%예시를분리했다. 실제생성/영입/기용/동시성/연도전환·엔진/DB·브라우저·APK/build는미실행이다.
+
+STATUS.md의최신요약과DETAIL-PLAN.md의최신계획을맨위로갱신하고이전이력은보존했다. 작업전Git/V240파일일치를확인했으며동기화전외부변경을검사한다. Windows Thumbs.db는보존한다.

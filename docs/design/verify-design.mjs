@@ -398,4 +398,5 @@ await import('./verify-state-ui.mjs');
 await import('./verify-finish-board.mjs');
 await import('./verify-performance-examples.mjs');
 await import('./verify-first-career.mjs');
+await import('./verify-club-first-season.mjs');
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');
