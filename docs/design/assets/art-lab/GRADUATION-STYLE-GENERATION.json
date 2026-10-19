@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-19",
+  "mode": "built-in image_gen",
+  "scope": "S04 style comparison; global art direction not changed",
+  "records": [
+    {
+      "asset": "graduation-almanac-wide-v1.png",
+      "original": "exec-7b99f2e1-f96e-4e2e-8f33-2e24334a9b6a.png",
+      "prompt": "Original wide landscape 16:9 editorial illustration for a Korean baseball career game, vintage baseball almanac art, fine hand-inked outlines, warm ivory paper grain, forest green, muted navy, ochre evening light. Scene: fictional Korean male high-school graduating baseball player age 18, wearing plain ivory and dark green baseball uniform, sitting on the dugout bench after his final school season. His entire head, hair, face and shoulders fully visible, head well below top edge, natural anatomy, holding glove at waist. Show a youthful thoughtful face, not a real person. Main player on right third, open empty school baseball diamond and softly lit stadium on left. Baseball kit bag beside bench. Bittersweet hope, meaningful new chapter, no trophy or medal, no implication of college enrollment, draft success or contract. Frame as a complete landscape composition intended to be displayed uncropped at full image width on a phone: all main subjects inside the central 80% with generous breathing room around the head. No text, no numbers, no letters, no logos, no watermark, no UI, one scene only, no panels. Detailed charming sports illustration, restrained colors, not a photograph, not glossy 3D.",
+      "role": "existing-style comparison, composed whole landscape"
+    },
+    {
+      "asset": "player-youth-almanac-v1.png",
+      "original": "exec-a78b6956-25d7-45bb-bcbe-223c7d98054d.png",
+      "prompt": "Original transparent-background character cutout for a Korean baseball career game. Fictional Korean male graduating high-school baseball player age 18, youthful face and short tousled black hair, calm hopeful expression, plain ivory uniform with dark forest-green undershirt and simple forest-green cap held at waist, no lettering, no numbers, no logos. Vintage sports almanac editorial illustration with hand-inked outlines, warm subdued colors, fine paper-like shading restricted to the character, natural anatomy. Three-quarter upper-body portrait from full head to below waist, BOTH complete shoulders and hands visible, generous transparent padding around top of hair and both elbows, all body parts inside canvas; no background scene, no floor, no frame, no props except the cap. Face clear and memorable at small card sizes. This is a unique fictional character, not a real athlete, not a photorealistic photograph, not a chibi. Transparent alpha background required.",
+      "role": "existing-style youth portrait"
+    },
+    {
+      "asset": "graduation-animation-day-v1.png",
+      "original": "exec-d8a541c1-e662-4174-ad68-8cbede2d7621.png",
+      "prompt": "Create an original landscape 16:9 illustration for a Korean baseball coming-of-age game, polished clean contemporary anime sports illustration, expressive fine linework, smooth cel shading, bright fresh greens and blues, no vintage paper texture, no sepia, NO sunset, NO orange light, NO dusk. Clear sunny early-summer afternoon under a vivid blue sky and white clouds, natural neutral daylight. Fictional Korean male high-school graduating baseball player age 18 on the right third, plain white and forest green baseball uniform, youthful clean face, short black hair, entire head and hair fully visible with generous top margin, seated at the entrance of a school dugout holding a glove at waist, kit bag beside him, looking toward the empty school baseball diamond on the left. Hopeful next chapter after his school baseball season, calm, no trophy/medal/draft ceremony/contract signing. Wide landscape with face and shoulders within central safe area, intended to display whole image at natural aspect ratio in a mobile game header. Believable athletic anatomy and school ballpark. Single scene, no text, no lettering, no numbers, no logo, no watermark, no UI, no panels. Use crisp pleasant youth baseball anime art suitable for a warm readable game interface, not photorealism or 3D.",
+      "role": "style 2 bright daylight proposal"
+    },
+    {
+      "asset": "player-youth-animation-v1.png",
+      "original": "exec-66820f12-47d7-45fc-b934-34667ad889b2.png",
+      "prompt": "A single original character portrait for a Korean youth baseball game, bright clean sports-anime illustration, crisp fine linework, smooth soft cel shading, cheerful natural neutral daylight, fresh forest green and white colors, NO vintage texture, NO sepia, NO orange dusk. Fictional Korean male baseball player age18, youthful handsome but ordinary face, short slightly messy black hair, wearing plain white baseball jersey with forest green undershirt, smiling gently while holding a plain green baseball cap against his chest with both hands. Upper-body from complete head to waist, full shoulders and elbows inside canvas, generous breathing room over hair. Background a very pale soft blue and white simple sky gradient, no scene clutter, no text, no logos, no numbers, no watermark, no borders, no interface. Portrait aspect ratio. Natural anatomy. Consistent with a wholesome coming-of-age baseball anime game, not photorealism or 3D. Do not crop the hair or hands.",
+      "role": "style 2 daylight portrait"
+    }
+  ],
+  "inspection": "Generated outputs visually inspected. Main faces and hair contained in full images. Browser layout and crops not verified. Preserve originals and project copies."
+}

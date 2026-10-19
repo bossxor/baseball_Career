@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-19",
+  "mode": "built-in image_gen",
+  "selection": "animation",
+  "authority": "USER_CONFIRMED",
+  "records": [
+    {
+      "asset": "career-events-animation-v1.png",
+      "original": "exec-cdc4a10e-7e75-46db-9afa-62bc9190c624.png",
+      "prompt": "Original game illustration atlas, exactly 3 columns x 2 rows six equal square panels, landscape sheet, edge-to-edge panels no gutters. Korean youth baseball game clean contemporary sports anime style, crisp lineart, gentle cel shading, fresh white/forest green uniforms, bright natural colors, no vintage paper grain, no sepia. ALL PEOPLE FICTIONAL Korean males, no lettering, logos, numbers, text, watermarks or UI. Panel top left training: player warming up and stretching beside a sunny morning baseball field, 8AM light and blue sky. Top middle college: university player carrying kit bag on leafy campus by baseball ground at clear noon, green summer trees not autumn sunset. Top right overseas: hopeful player at an airport window looking toward an airplane in clear daylight, no contract signing/guaranteed victory. Bottom left international: neatly folded generic national-team navy and white uniform with a plain gold medal resting on it in neutral indoor daylight, no flags or logos, no person, specific post-medal story illustration. Bottom middle retirement: mature fictional 41-year-old player sitting thoughtfully in clean clubhouse with folded uniform, calm neutral morning window light, subtle age lines, no trophy. Bottom right front office: baseball club manager and scout looking at blank scouting sheets and baseball on a desk, bright professional office in daytime, no legible writing. Keep faces, hands and props within safe central area of each square so entire panel is readable at small size. Distinct environments, varied daylight and neutral interior light. High quality consistent anime aesthetic. No orange sunset cast anywhere.",
+      "panels": [
+        "morning training",
+        "noon college",
+        "day airport",
+        "neutral indoor medal",
+        "morning retirement",
+        "day office"
+      ]
+    },
+    {
+      "asset": "career-events-animation-extra-v1.png",
+      "original": "exec-79acb7f7-0ba0-4fb3-84c1-d97cbf487c3d.png",
+      "prompt": "Original landscape sheet of exactly six equal square anime baseball story panels, 3columns x2rows, no gutters, no borders, no text, no numbers, no logo, no watermark, no UI. Consistent polished contemporary Korean youth baseball sports anime illustration, expressive clean linework, gentle cel shading, vivid natural colors, white and forest-green uniform, no paper texture/sepia/orange sunset. Top-left draft: fictional 18yearold male player waiting with smartphone and glove at a classroom desk overlooking green ballfield, bright neutral daytime, no success or failure implied. Top-middle special training: player swinging bat inside batting cage, bright daylight, all hands/bat visible safely. Top-right rehab: young adult athlete in plain training clothes with physiotherapist gently assessing knee in bright modern clinic, neutral daylight, not an injury horror image. Bottom-left return from service: male athlete carrying duffel and glove walking back through stadium gate in crisp blue morning, civilian clothes no medals/military insignia. Bottom-middle posting/contract: young player and agent reviewing blank contract pages at a bright indoor desk, unsigned, no guaranteed agreement. Bottom-right rival: two fictional adult baseball players in different plain uniforms facing each other at a NIGHT game, cool blue stadium sky and WHITE floodlights, respectful neutral expressions, no trophy or victory. Ensure entire heads and hands inside each panel, readable small-size composition. Five daytime/neutral scenes and one distinctly cool night scene. Do not render any lettering.",
+      "panels": [
+        "day draft",
+        "day batting cage",
+        "neutral clinic",
+        "morning return",
+        "day posting",
+        "blue night rivals"
+      ]
+    },
+    {
+      "asset": "player-pitcher-animation-v1.png",
+      "original": "exec-50e78d27-5312-42e7-a7fa-aeec4b40f719.png",
+      "prompt": "Original character portrait for a Korean baseball simulation game, bright clean sports anime illustration with crisp linework and smooth gentle cel shading, fresh white/forest green uniform. A fictional Korean male pitcher age26, distinct from the young batter: short neatly cropped dark hair, calm focused face, slightly broader athletic shoulders, standing three-quarter view holding a plain brown pitcher's glove with both hands near chest. Plain white baseball jersey and forest green undershirt, no cap, no lettering/no numbers/no logos/no watermark. Whole head and hair with generous top margin, both shoulders, elbows, hands and upper waist inside the canvas; portrait aspect. Pale light blue-white simple sky gradient background, neutral bright DAYLIGHT, no sunset/no orange cast/no vintage paper. Natural anatomy, not a real athlete, not a photograph or3D. Use consistent polished contemporary Korean youth sports anime game style."
+    }
+  ],
+  "inspection": "Generated images visually inspected. Existing vintage originals retained. Full mobile/browser render review remains pending; generated tiny uniform/cap details require final art review."
+}

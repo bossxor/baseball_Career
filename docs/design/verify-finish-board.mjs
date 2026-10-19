@@ -40,3 +40,13 @@ for(const src of ['finish-board.js','finish-board-data.js'])assert.ok(!/\bfetch\
 for(const source of ['design-board.html','art-direction-lab.html'])assert.ok(read(source).includes('href="finish-board.html"'));
 console.log('PASS: supplemental 17 screens x 8 = 136 pure render examples; original 28 + 17 = 45 IDs, resume-only home, local lineup example, escaping and six-panel PNG metadata.');
 console.log('NOT TESTED: finish-board DOM/input/focus/rendering, image crops, responsive layout, real service integration, saves or application build.');
+
+const grad=data.screens.find(s=>s.id==='S04');
+assert.equal(data.styleComparison.globalSelection,'animation');assert.equal(data.styleComparison.status,'USER_CONFIRMED');
+for(const style of ['animation','almanac'])for(const mode of data.states){const out=ctx.PBFinish.render(grad,mode,style);if(['NORMAL','LONG_CONTENT'].includes(mode)){assert.equal((out.match(/<img /g)||[]).length,3);assert.ok(out.includes(grad.visualVariants[style].hero));assert.ok(out.includes(grad.visualVariants[style].portrait));}if(mode==='ASSET_FAILURE')assert.equal((out.match(/<img /g)||[]).length,0);}
+for(const s of data.screens){if(s.sceneAsset)assert.ok(fs.existsSync(path.join(root,s.sceneAsset)));if(s.hero)assert.ok(fs.existsSync(path.join(root,s.hero)));}
+for(const variant of Object.values(grad.visualVariants))for(const file of [variant.hero,variant.portrait,variant.memory])assert.ok(fs.existsSync(path.join(root,file)));
+assert.ok(!html.includes('height:185px'));assert.ok(!html.includes('translateY(-50%)'));assert.ok(html.includes('.scene-full{display:block;width:100%;height:auto;object-fit:contain}'));assert.ok(html.includes('id="view-art"'));
+assert.equal(art.selectedStyle,'animation');assert.equal(art.activePortraits.length,2);for(const p of art.activePortraits)assert.ok(fs.existsSync(path.join(root,p.asset)));
+assert.ok(read('art-direction-lab.html').includes("const state={style:'animation'"));assert.ok(read('art-direction-lab.html').includes("playball-art-lab-v3"));
+console.log('PASS: confirmed anime default, 12 new time-varied scenes, active portraits, uncropped square/full-width layouts, S04 two styles x eight states, three-image normal view and image-failure fallback.');

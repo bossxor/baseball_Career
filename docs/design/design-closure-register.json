@@ -153,9 +153,9 @@
   "visualExtension": {
     "browserStatus": "BLOCKED_FILE_PROTOCOL",
     "screenImageSlots": 45,
-    "selectedStyle": "almanac",
-    "version": "1.8",
-    "pngFiles": 9,
+    "selectedStyle": "animation",
+    "version": "1.9",
+    "pngFiles": 16,
     "previewScreens": 30,
     "gameRulesChanged": false,
     "sceneCount": 12,

@@ -25,3 +25,7 @@ Extension 1.2: ninth built-in call created a distinct fictional adult pitcher us
 ## 시각1.8 추가
 
 career-scenes-finish-v1.png —1536×1024/3×2패널6컷,대학/마이너원정/중립라이벌/복귀/은퇴/구장. 새원본생성2026-10-19,빈티지선택유지. FINISH-GENERATION.json에프롬프트/원본경로/사용처. 프로젝트사본과원본을보존하고finish-board.html에서중앙크롭. 총PNG9개이며실제브라우저크롭검수는미실행.
+
+## 시각1.9 사용자확정: 청춘 야구 애니
+
+111을현재기준으로사용. graduation-almanac-wide-v1/player-youth-almanac-v1은비교보존,graduation-animation-day-v1/player-youth-animation-v1은고교활성,career-events-animation-v1/extra-v1은12사건활성,player-pitcher-animation-v1은투수활성. 모두별도PNG로추가했고원본유지. 총일러스트PNG16개. GRADUATION-STYLE-GENERATION/ANIMATION-MAIN-GENERATION에프롬프트/원본파일을기록. 작은문양과실제화면크롭은최종검수전.

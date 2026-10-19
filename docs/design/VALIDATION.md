@@ -148,3 +148,13 @@ PASS: supplemental 17 screens x 8 = 136 pure render examples; original 28 + 17 =
 실제DOM이벤트/입력·focus/픽셀/이미지크롭/4뷰포트렌더/키보드/200%확대/스크린리더는미검수다. file: 정책차단을우회하지않았고이번에앱/Neon/API/DB/build/APK를실행하지않았다. 298기존게임/61UI/36새경계기대값은기존미실행상태를유지한다.
 
 V사본은작업전212파일해시일치를확인했으며동기화전외부변경을다시검사한다. 원래baseball-design미리보기에는HTML/공개JS/JSON/신규PNG만복사하며서버용히든정의/경계fixture는복사하지않는다.
+
+## 시각1.9 — 사용자스크린샷 잘림 수정·청춘애니 U (2026-10-19)
+
+스크린샷과CSS의185px고정높이/중앙이동으로얼굴잘림을추적했다. 고교는자연비율가로img/초상/회고3이미지,정사각아틀라스는전체패널흐름으로수정. 사용자가2번메인변경을확정한뒤111을현재U로추가하고3개보드의기본·활성사건·초상을연결했다. v3로컬선호는설계도구값이며게임세이브를변경하지않는다.
+
+node docs/design/verify-design.mjs PASS. 추가출력: PASS: confirmed anime default, 12 new time-varied scenes, active portraits, uncropped square/full-width layouts, S04 two styles x eight states, three-image normal view and image-failure fallback.
+
+가로img자연비율·185px/중앙translate제거·두스타일8상태·S04정상3이미지/실패0이미지·자료파일/선택기준·활성12사건/초상을정적으로확인했다. 생성원본7개를도구출력으로직접보고프로젝트사본/프롬프트를보존했다. 기존빈티지는삭제하지않았다. 생성작은모자문양/장비세부와실제HTML레이아웃·200%확대·입력/접근성은최종검수대상이다. 실제브라우저/file정책은우회하지않았고앱/엔진/Neon/build/APK는미실행이다.
+
+작업시작시Git/V220파일일치를확인해기준해시를보존했고,동기화전에외부변경을다시확인한다. 원래미리보기에도공개HTML/JS/JSON/관련PNG/현재변경문서를복사하며서버용정의는배포하지않는다.

@@ -1,3 +1,5 @@
+최신 아트 U(2026-10-19): 메인 그림체는 **2번 청춘 야구 애니**로 변경했습니다. [111 현재 기준](111-ANIMATION-MAIN-ART-DIRECTION.md)을 우선합니다. 본문의 빈티지 선택은 이전 이력이며 원본은 보존합니다.
+
 최신아트선택U: [93](93-ART-DIRECTION-CHOICE-LAB.md)의빈티지기록실을메인으로합니다.45화면슬롯은 [94](94-SCREEN-IMAGE-STORYBOARD.md),캐릭터/사건제작은 [95](95-CHARACTER-EVENT-ART-PRODUCTION.md). 기존서체/기능규칙은유지합니다.
 
 # 83. 시각 디자인·이미지·접근성 인계 기준

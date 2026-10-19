@@ -1,7 +1,7 @@
 {
   "mode": "built-in image_gen",
   "date": "2026-10-19",
-  "selectedStyle": "almanac",
+  "selectedStyle": "animation",
   "prompts": {
     "cinematic": "Use case: stylized-concept. Asset type: original wide landscape hero art for a Korean baseball career simulation called 다시, 플레이볼, art-direction option A '시네마틱 구장'. Primary request: a premium cinematic painterly 3D baseball illustration for a game UI, not a screenshot and no text. Scene: a modern Korean-style baseball stadium at blue-hour twilight, emerald diamond, warm floodlights, textured grass and subtle amber clouds. Subject: one fictional adult Korean male baseball player age 23, seen from behind in a plain ivory and forest green uniform, cap, glove in his left hand, standing near the dugout railing on the right third looking toward the diamond. Composition: very wide landscape, ideally 16:9; left half is an atmospheric, uncluttered dark navy sky and softly fading stadium space for legible HTML title overlays; athlete and detail on the right, full cap visible, keep important subject within safe central 70% for mobile crops. Mood: hopeful, beginning a second career, tactile and polished sports-game art, believable anatomy, restrained cinematic depth, no exaggerated fantasy. Palette: deep navy, forest green, ivory, warm gold. Constraints: no lettering, no numbers, no logos, no brands, no real athletes, no watermark, no interface, no border, no panels. Make the baseball field accurate and recognizable.",
     "animation": "Use case: stylized-concept. Asset type: original wide landscape hero illustration for a Korean baseball career simulation, art-direction option B '청춘 야구 애니메이션'. Primary request: polished original 2D sports-animation background art with expressive clean ink contours, subtle cel shading, luminous hand-painted sky, friendly adult proportions, an inviting narrative-game feeling. Scene: an immaculate Korean-style baseball ground on a bright late-spring afternoon, rich green outfield, ivory dugout and distant blue mountains, a few soft clouds. Subject: one entirely fictional Korean male adult ballplayer age 23 on the right third, waist-up three-quarter rear view with a relaxed hopeful profile, wearing a plain ivory jersey with forest-green trim and cap, holding a well-worn brown baseball glove at his side. Composition: wide landscape, ideally 16:9, generous simple blue sky and softly detailed field on the left half for an HTML title overlay; keep the head and glove comfortably inside frame. Mood: youthful optimism and a new season, elegant contemporary sports anime aesthetics without imitating any identifiable artist, studio, franchise, or character. Palette: sky blue, emerald, mint and warm cream, modest golden light. Constraints: no lettering, no numbers, no logos, no brands, no real athletes, no watermark, no interface, no border, no collage. Accurate baseball diamond and natural anatomy.",
@@ -22,5 +22,7 @@
       "transparentBackground": true,
       "visualInspection": "Tool output inspected: adult fictional pitcher, navy uniform piping, right bare hand holding baseball, left glove, alpha background. Fine silhouette color fringes remain subject to later production QA."
     }
-  ]
+  ],
+  "previousSelectedStyle": "almanac",
+  "selectionUpdated": "2026-10-19 USER_CONFIRMED"
 }

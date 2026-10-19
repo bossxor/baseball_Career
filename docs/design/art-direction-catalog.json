@@ -5,7 +5,7 @@
       "row": 0,
       "name": "새로운 시즌",
       "id": "training",
-      "asset": "assets/art-lab/career-events-almanac-v1.png",
+      "asset": "assets/art-lab/career-events-animation-v1.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 18,
       "eligibilityNote": "훈련·시즌 준비",
@@ -13,14 +13,16 @@
         "E01",
         "E08",
         "E41"
-      ]
+      ],
+      "legacyAlmanacAsset": "assets/art-lab/career-events-almanac-v1.png",
+      "timeOfDay": "MORNING_OR_DAY"
     },
     {
       "column": 1,
       "row": 0,
       "name": "대학 진학",
       "id": "college",
-      "asset": "assets/art-lab/career-events-almanac-v1.png",
+      "asset": "assets/art-lab/career-events-animation-v1.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 35,
       "eligibilityNote": "학교와 학적 확인",
@@ -29,42 +31,48 @@
         "E71",
         "E73",
         "E75"
-      ]
+      ],
+      "legacyAlmanacAsset": "assets/art-lab/career-events-almanac-v1.png",
+      "timeOfDay": "MORNING_OR_DAY"
     },
     {
       "column": 2,
       "row": 0,
       "name": "미국으로",
       "id": "overseas",
-      "asset": "assets/art-lab/career-events-almanac-v1.png",
+      "asset": "assets/art-lab/career-events-animation-v1.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 15,
       "eligibilityNote": "유효 미국 제안 또는 확정 해외 이동",
       "eventIds": [
         "E57",
         "E58"
-      ]
+      ],
+      "legacyAlmanacAsset": "assets/art-lab/career-events-almanac-v1.png",
+      "timeOfDay": "MORNING_OR_DAY"
     },
     {
       "column": 0,
       "row": 1,
       "name": "국제무대",
       "id": "international",
-      "asset": "assets/art-lab/career-events-almanac-v1.png",
+      "asset": "assets/art-lab/career-events-animation-v1.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 0,
       "eligibilityNote": "실제 메달 성과 확정,개인병역완료와 별개",
       "eventIds": [
         "E47",
         "E48"
-      ]
+      ],
+      "legacyAlmanacAsset": "assets/art-lab/career-events-almanac-v1.png",
+      "timeOfDay": "NEUTRAL_INTERIOR_DAY"
     },
     {
       "column": 1,
       "row": 1,
       "name": "마지막 유니폼",
       "id": "retirement",
-      "asset": "assets/art-lab/career-events-almanac-v1.png",
+      "asset": "assets/art-lab/career-events-animation-v1.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 30,
       "eligibilityNote": "은퇴/연대기 확정 근거",
@@ -72,14 +80,16 @@
         "E37",
         "E69",
         "E99"
-      ]
+      ],
+      "legacyAlmanacAsset": "assets/art-lab/career-events-almanac-v1.png",
+      "timeOfDay": "NEUTRAL_INTERIOR_DAY"
     },
     {
       "column": 2,
       "row": 1,
       "name": "구단의 내일",
       "id": "frontoffice",
-      "asset": "assets/art-lab/career-events-almanac-v1.png",
+      "asset": "assets/art-lab/career-events-animation-v1.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 65,
       "eligibilityNote": "구단 운영 검토",
@@ -90,14 +100,16 @@
         "E77",
         "E79",
         "E81"
-      ]
+      ],
+      "legacyAlmanacAsset": "assets/art-lab/career-events-almanac-v1.png",
+      "timeOfDay": "NEUTRAL_INTERIOR_DAY"
     },
     {
       "column": 0,
       "row": 0,
       "name": "지명을 기다리며",
       "id": "draft",
-      "asset": "assets/art-lab/career-events-almanac-extra-v1.png",
+      "asset": "assets/art-lab/career-events-animation-extra-v1.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 20,
       "eligibilityNote": "판정 전 대기와 결과별 문구 구분",
@@ -105,27 +117,31 @@
         "E04",
         "E05",
         "E06"
-      ]
+      ],
+      "legacyAlmanacAsset": "assets/art-lab/career-events-almanac-extra-v1.png",
+      "timeOfDay": "MORNING_OR_DAY"
     },
     {
       "column": 1,
       "row": 0,
       "name": "한 번의 특별훈련",
       "id": "enhancement",
-      "asset": "assets/art-lab/career-events-almanac-extra-v1.png",
+      "asset": "assets/art-lab/career-events-animation-extra-v1.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 15,
       "eligibilityNote": "현재 기회와 정확효과",
       "eventIds": [
         "E43"
-      ]
+      ],
+      "legacyAlmanacAsset": "assets/art-lab/career-events-almanac-extra-v1.png",
+      "timeOfDay": "MORNING_OR_DAY"
     },
     {
       "column": 2,
       "row": 0,
       "name": "다시 뛰는 준비",
       "id": "rehab",
-      "asset": "assets/art-lab/career-events-almanac-extra-v1.png",
+      "asset": "assets/art-lab/career-events-animation-extra-v1.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 25,
       "eligibilityNote": "실제 injuryId와 회복 단계",
@@ -133,28 +149,32 @@
         "E21",
         "E22",
         "E23"
-      ]
+      ],
+      "legacyAlmanacAsset": "assets/art-lab/career-events-almanac-extra-v1.png",
+      "timeOfDay": "NEUTRAL_INTERIOR_DAY"
     },
     {
       "column": 0,
       "row": 1,
       "name": "돌아오는 길",
       "id": "service",
-      "asset": "assets/art-lab/career-events-almanac-extra-v1.png",
+      "asset": "assets/art-lab/career-events-animation-extra-v1.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 20,
       "eligibilityNote": "복무 완료/현재 복귀,면제나 계약보장 의미 아님",
       "eventIds": [
         "E53",
         "E76"
-      ]
+      ],
+      "legacyAlmanacAsset": "assets/art-lab/career-events-almanac-extra-v1.png",
+      "timeOfDay": "MORNING_OR_DAY"
     },
     {
       "column": 1,
       "row": 1,
       "name": "다음 리그의 제안",
       "id": "posting",
-      "asset": "assets/art-lab/career-events-almanac-extra-v1.png",
+      "asset": "assets/art-lab/career-events-animation-extra-v1.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 25,
       "eligibilityNote": "협상 중립 장면,수락결과별 문구",
@@ -162,14 +182,16 @@
         "E62",
         "E63",
         "E64"
-      ]
+      ],
+      "legacyAlmanacAsset": "assets/art-lab/career-events-almanac-extra-v1.png",
+      "timeOfDay": "NEUTRAL_INTERIOR_DAY"
     },
     {
       "column": 2,
       "row": 1,
       "name": "같은 출발선",
       "id": "rival",
-      "asset": "assets/art-lab/career-events-almanac-extra-v1.png",
+      "asset": "assets/art-lab/career-events-animation-extra-v1.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 20,
       "eligibilityNote": "관계/실제대진/같은팀등록 근거 구분",
@@ -178,10 +200,12 @@
         "E94",
         "E95",
         "E96"
-      ]
+      ],
+      "legacyAlmanacAsset": "assets/art-lab/career-events-almanac-extra-v1.png",
+      "timeOfDay": "NIGHT_WHITE_FLOODLIGHTS"
     }
   ],
-  "selectedStyle": "almanac",
+  "selectedStyle": "animation",
   "status": "DESIGN_PREVIEW_ONLY",
   "browserVerification": "BLOCKED_FILE_PROTOCOL",
   "schemaVersion": 1,
@@ -200,13 +224,13 @@
       "name": "청춘 야구 애니",
       "hero": "assets/art-lab/hero-animation-v1.png",
       "id": "animation",
-      "status": "COMPARISON_ONLY"
+      "status": "USER_SELECTED"
     },
     {
       "name": "빈티지 기록실",
       "hero": "assets/art-lab/hero-almanac-v1.png",
       "id": "almanac",
-      "status": "USER_SELECTED"
+      "status": "COMPARISON_ONLY"
     }
   ],
   "gameRulesChanged": false,
@@ -289,5 +313,20 @@
     "newIllustration": "assets/art-lab/career-scenes-finish-v1.png",
     "sceneCount": 6,
     "browserReview": "NOT_EXECUTED"
+  },
+  "activePortraits": [
+    {
+      "id": "hitter",
+      "asset": "assets/art-lab/player-youth-animation-v1.png"
+    },
+    {
+      "id": "pitcher",
+      "asset": "assets/art-lab/player-pitcher-animation-v1.png"
+    }
+  ],
+  "selectionUpdated": "2026-10-19 USER_CONFIRMED",
+  "legacySlotAliases": {
+    "almanacHero": "assets/art-lab/hero-animation-v1.png",
+    "almanacPortrait": "assets/art-lab/player-youth-animation-v1.png"
   }
 }

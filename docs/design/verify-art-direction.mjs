@@ -14,12 +14,12 @@ const events=json('event-catalog-v2.json').events;
 const html=read('art-direction-lab.html');
 const unique=a=>assert.equal(new Set(a).size,a.length);
 assert.equal(art.status,'DESIGN_PREVIEW_ONLY');
-assert.equal(art.selectedStyle,'almanac');
+assert.equal(art.selectedStyle,'animation');
 assert.equal(art.gameRulesChanged,false);
 assert.equal(art.browserVerification,'BLOCKED_FILE_PROTOCOL');
 assert.equal(art.styles.length,3);unique(art.styles.map(s=>s.id));
 assert.equal(art.styles.filter(s=>s.status==='USER_SELECTED').length,1);
-assert.equal(art.styles.find(s=>s.status==='USER_SELECTED').id,'almanac');
+assert.equal(art.styles.find(s=>s.status==='USER_SELECTED').id,'animation');
 assert.equal(art.scenes.length,12);unique(art.scenes.map(s=>s.id));
 assert.equal(art.portraits.length,2);unique(art.portraits.map(p=>p.id));
 const assets=new Set([...art.portraits.map(p=>p.asset),art.portrait,...art.styles.map(s=>s.hero),...art.scenes.map(s=>s.asset)]);
@@ -49,10 +49,10 @@ for(const scene of art.scenes){
   const preview=previewScenes.find(s=>s.id===scene.id);assert.ok(preview);
   assert.equal(preview.x,[0,50,100][scene.column]+'%');assert.equal(preview.y,[0,100][scene.row]+'%');
   assert.equal(preview.focus,scene.cropFocusPercent+'%');
-  const file=preview.pack==='extra'?'assets/art-lab/career-events-almanac-extra-v1.png':'assets/art-lab/career-events-almanac-v1.png';assert.equal(file,scene.asset);
+  const file=preview.pack==='extra'?'assets/art-lab/career-events-animation-extra-v1.png':'assets/art-lab/career-events-animation-v1.png';assert.equal(file,scene.asset);
 }
-assert.ok(scripts.includes("const state={style:'almanac'"));
-assert.ok(scripts.includes("const key='playball-art-lab-v2'"));
+assert.ok(scripts.includes("const state={style:'animation'"));
+assert.ok(scripts.includes("const key='playball-art-lab-v3'"));
 const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);unique(ids);
 for(const id of ['style-options','screen-options','device-options','density-options','event-options','product','selection-summary','selection-text','shared-art-note'])assert.ok(ids.includes(id));
 for(const src of [...html.matchAll(/\bsrc="([^"]+)"/g),...html.matchAll(/\bhref="([^"]+)"/g)]){
@@ -66,7 +66,7 @@ const refs=new Set(['NONE','EVENT_RESOLVER','almanacHero','almanacPortrait',...a
 for(const row of slots.screens){assert.ok(screens.some(s=>s.id===row.screenId));for(const ref of row.assetRefs)assert.ok(refs.has(ref),ref);assert.ok(row.guard&&row.purpose);assert.equal(row.gameStateAuthority,'SERVER_TEXT_AND_RECEIPTS');}
 const values=[72,80,64,68,66,76];assert.equal(values.reduce((a,b)=>a+b,0)/6,71);
 assert.ok(fs.existsSync(path.join(root,art.prompts)));
-assert.equal(json(art.prompts).selectedStyle,'almanac');
+assert.equal(json(art.prompts).selectedStyle,'animation');
 
 // Evaluate only isolated pure string-template functions, without a DOM/browser/network.
 const playersLiteral=scripts.match(/const players=([\s\S]*?);\s*const ability=/)?.[1];assert.ok(playersLiteral);
@@ -131,5 +131,5 @@ console.log('PASS: expansion templates: 12 public challenges, PRE/MID/reward sep
 
 console.log('PASS: 2 alpha portrait assets, 30 preview variants, 26 detail flows / 78 state templates, evidence guards, hitter overall 71.0 and pitcher 72.0 / focus 4; pure HTML-string checks only.');
 
-console.log('PASS: chosen vintage direction, 3 hero alternatives, 12 scene data/crops, alpha PNG metadata, 45 image-slot contracts, lab script/IDs/assets and example overall 71.0.');
+console.log('PASS: chosen animation direction, 3 hero alternatives, 12 scene data/crops, alpha PNG metadata, 45 image-slot contracts, lab script/IDs/assets and example overall 71.0.');
 console.log('NOT TESTED: art-lab browser rendering, interactive clicks, viewport layout, clipboard and localStorage; file: browser navigation was policy-blocked.');
