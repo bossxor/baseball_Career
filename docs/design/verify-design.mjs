@@ -341,6 +341,9 @@ for (const row of currentIndex.topics) {
   for (const file of row.currentSources) assert.ok(existsSync(path.join(root, file)), `Missing current contract ${file}`);
   assert.equal(row.implementationStatus, 'NOT_IMPLEMENTED');
 }
+const stateUi = JSON.parse(read('state-ui-expectations.json'));
+assert.equal(stateUi.expectationStatus, 'NOT_IMPLEMENTED');
+for (const g of stateUi.groups) { assert.equal(g.status, 'NOT_EXECUTED'); assert.ok(existsSync(path.join(root, g.doc))); unique(g.ids); }
 const closure = JSON.parse(read('design-closure-register.json'));
 assert.equal(closure.status, 'WRITTEN_DESIGN_BASELINE');
 assert.equal(closure.baselineVersion, '1.0');

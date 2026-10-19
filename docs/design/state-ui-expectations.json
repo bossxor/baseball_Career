@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_PREVIEW_ONLY",
+  "expectationStatus": "NOT_IMPLEMENTED",
+  "gameRulesChanged": false,
+  "note": "100~104 상태별 UI 검수 항목. 기존 298게임 fixture 수에 합치지 않는다.",
+  "groups": [
+    {
+      "doc": "100-HIDDEN-TRAITS.md",
+      "ids": [
+        "HT-D01",
+        "HT-D02",
+        "HT-D03",
+        "HT-D04",
+        "HT-D05",
+        "HT-D06",
+        "HT-D07",
+        "HT-D08"
+      ],
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "doc": "101-REPERTOIRE-STATE-UI.md",
+      "ids": [
+        "RS-D01",
+        "RS-D02",
+        "RS-D03",
+        "RS-D04",
+        "RS-D05",
+        "RS-D06",
+        "RS-D07",
+        "RS-D08",
+        "RS-D09",
+        "PA-D01",
+        "PA-D02",
+        "PA-D03",
+        "PA-D04",
+        "PA-D05",
+        "PA-D06"
+      ],
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "doc": "102-GOALS-STATE-UI.md",
+      "ids": [
+        "GU-D01",
+        "GU-D02",
+        "GU-D03",
+        "GU-D04",
+        "GU-D05",
+        "GU-D06",
+        "GU-D07",
+        "GU-D08",
+        "GU-D09",
+        "GU-D10",
+        "GU-D11"
+      ],
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "doc": "103-AGENTS-RELATIONS-STAFF-STATE-UI.md",
+      "ids": [
+        "AG-U01",
+        "AG-U02",
+        "AG-U03",
+        "AG-U04",
+        "RL-U01",
+        "RL-U02",
+        "RL-U03",
+        "RL-U04",
+        "ST-U01",
+        "ST-U02",
+        "ST-U03",
+        "ST-U04",
+        "ST-U05"
+      ],
+      "status": "NOT_EXECUTED"
+    },
+    {
+      "doc": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "ids": [
+        "LV-U01",
+        "LV-U02",
+        "LV-U03",
+        "LV-U04",
+        "LV-U05",
+        "LV-U06",
+        "LV-U07",
+        "CH-U01",
+        "CH-U02",
+        "CH-U03",
+        "CH-U04",
+        "CH-U05",
+        "CH-U06",
+        "CH-U07"
+      ],
+      "status": "NOT_EXECUTED"
+    }
+  ]
+}
