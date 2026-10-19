@@ -183,6 +183,36 @@
       "kind": "DOC_ONLY",
       "status": "NOT_EXECUTED",
       "note": "문서 본문의 검수 항목 목록(별도 JSON 없음)"
+    },
+    {
+      "id": "career-fast-progression-policy",
+      "file": "career-fast-progression-policy.json",
+      "doc": "117-CAREER-NEXT-MAJOR-EVENT-PROGRESSION.md",
+      "count": 12,
+      "selector": "checks",
+      "kind": "EXPERIENCE",
+      "status": "NOT_EXECUTED",
+      "note": "빠른 진행 FP01~FP12"
+    },
+    {
+      "id": "club-first-season-recovery",
+      "file": "club-first-season-flow.json",
+      "doc": "114-FIRST-CLUB-SEASON-OPERATIONS.md",
+      "count": 7,
+      "selector": "recoveryCases",
+      "kind": "EXPERIENCE",
+      "status": "NOT_EXECUTED",
+      "note": "첫 구단 복구 RC01~RC07; 동선 16개·시작 3개는 별도 설명 자료"
+    },
+    {
+      "id": "club-offseason-collisions",
+      "file": "club-offseason-dependencies.json",
+      "doc": "115-CLUB-OFFSEASON-DEADLINES-AND-DEPENDENCIES.md",
+      "count": 12,
+      "selector": "scenarios",
+      "kind": "EXPERIENCE",
+      "status": "NOT_EXECUTED",
+      "note": "오프시즌 충돌 OS01~OS12"
     }
   ]
 }

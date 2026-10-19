@@ -384,15 +384,55 @@ const imgReg = JSON.parse(read('image-production-register.json'));
 }
 {
   const screenSet = new Set(screens.screens.map(s => s.id));
-  for (const e of catalog.events) {
-    assert.ok(['BLOCKING_UNTIL_DOMAIN_COMMIT', 'RESOLVE_ON_SELECT'].includes(e.resolutionPolicy), e.id);
+  const validateBranch = (event, branch, choices) => {
+    assert.ok(['BLOCKING_UNTIL_DOMAIN_COMMIT', 'RESOLVE_ON_SELECT'].includes(branch.resolutionPolicy), event.id);
+    assert.ok(choices.length > 0, event.id + ' empty branch');
+    if (branch.resolutionPolicy === 'BLOCKING_UNTIL_DOMAIN_COMMIT') {
+      assert.ok(choices.every(c => c.dispatchClass !== 'ACK'), event.id + ' ACK cannot close blocking branch');
+    }
+  };
+  const validateEvent = e => {
     for (const c of e.choices) {
       assert.ok(['DOMAIN', 'NAVIGATE', 'ACK'].includes(c.dispatchClass), e.id + c.command);
       if (c.dispatchClass === 'NAVIGATE') assert.ok(screenSet.has(c.targetScreen), e.id + c.command);
     }
-    if (e.resolutionPolicy === 'BLOCKING_UNTIL_DOMAIN_COMMIT') assert.ok(e.choices.some(c => c.dispatchClass !== 'ACK'), e.id);
-  }
+    if (e.resolutionPolicy === 'BY_POSTING_DECISION') {
+      assert.equal(e.id, 'E63');
+      assert.deepEqual(Object.keys(e.resolutionBranches).sort(), ['APPROVED', 'DEFERRED']);
+      const used = [];
+      for (const [decision, branch] of Object.entries(e.resolutionBranches)) {
+        assert.deepEqual(branch.choiceCommands, decision === 'APPROVED' ? ['OPEN_POSTING_OFFERS'] : ['ACK_EVENT']);
+        assert.equal(branch.resolutionPolicy, decision === 'APPROVED' ? 'BLOCKING_UNTIL_DOMAIN_COMMIT' : 'RESOLVE_ON_SELECT');
+        const choices = branch.choiceCommands.map(command => {
+          const choice = e.choices.find(c => c.command === command);
+          assert.ok(choice, e.id + ' unknown branch command ' + command);
+          return choice;
+        });
+        used.push(...branch.choiceCommands);
+        validateBranch(e, branch, choices);
+      }
+      unique(used);
+      assert.deepEqual([...used].sort(), e.choices.map(c => c.command).sort());
+    } else validateBranch(e, e, e.choices);
+  };
+  for (const event of catalog.events) validateEvent(event);
+  const e63 = catalog.events.find(e => e.id === 'E63');
+  assert.equal(e63.resolutionPolicy, 'BY_POSTING_DECISION');
+  assert.equal(catalog.events.filter(e => e.resolutionPolicy === 'BLOCKING_UNTIL_DOMAIN_COMMIT').length, 35);
+  assert.equal(catalog.events.filter(e => e.resolutionPolicy === 'RESOLVE_ON_SELECT').length, 63);
+  // Negative checks reject the previously passing ACK/blocking combination.
+  const blockingAck = structuredClone(e63);
+  blockingAck.resolutionPolicy = 'BLOCKING_UNTIL_DOMAIN_COMMIT';
+  assert.throws(() => validateEvent(blockingAck), /ACK cannot close blocking/);
+  const swapped = structuredClone(e63);
+  swapped.resolutionBranches.DEFERRED.resolutionPolicy = 'BLOCKING_UNTIL_DOMAIN_COMMIT';
+  assert.throws(() => validateEvent(swapped));
+  const wrongCommand = structuredClone(e63);
+  wrongCommand.resolutionBranches.APPROVED.choiceCommands = ['ACK_EVENT'];
+  assert.throws(() => validateEvent(wrongCommand));
+  console.log('PASS: E63 approved branch waits for domain commit; deferred branch allows ACK; invalid blocking ACK, swapped policy and wrong branch command are rejected (static design checks).');
 }
+
 {
   const idx = JSON.parse(read('expectation-sets-index.json'));
   assert.equal(idx.core298, 298);
@@ -400,9 +440,19 @@ const imgReg = JSON.parse(read('image-production-register.json'));
   for (const s of idx.sets) {
     assert.ok(existsSync(path.join(root, s.file || s.doc)), s.id);
     if (!s.file) assert.ok(read(s.doc).includes(s.id + '01'), s.id);
+    if (s.selector) {
+      const source = JSON.parse(read(s.file));
+      assert.ok(Array.isArray(source[s.selector]), s.id);
+      assert.equal(source[s.selector].length, s.count, s.id + ' source count');
+      unique(source[s.selector].map(row => row.id));
+      assert.ok(source[s.selector].every(row => row.executionStatus === 'NOT_EXECUTED'), s.id);
+    }
     assert.equal(s.status, 'NOT_EXECUTED');
   }
   assert.equal(idx.sets.filter(s => s.kind === 'CORE_298').reduce((a, s) => a + s.count, 0), 298);
+  assert.equal(idx.sets.length, 23);
+  for (const id of ['career-fast-progression-policy', 'club-first-season-recovery', 'club-offseason-collisions']) assert.ok(idx.sets.some(s => s.id === id), id);
+  console.log('PASS: 23 expectation sets indexed; FP12, first-club recovery7 and offseason12 match source counts and remain NOT_EXECUTED; core total remains 298.');
 }
 const closure = JSON.parse(read('design-closure-register.json'));
 assert.equal(closure.status, 'WRITTEN_DESIGN_BASELINE');

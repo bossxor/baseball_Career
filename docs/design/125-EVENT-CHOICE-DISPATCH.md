@@ -17,10 +17,11 @@
 
 | 정책 | 사건 수 | 규칙 |
 |---|---|---|
-|BLOCKING_UNTIL_DOMAIN_COMMIT|36|진로·계약·병역·대표·등록·포지션 확정 등 실제 결정이 필요한 사건. NAVIGATE를 골라도 사건은 열린 상태로 남고, 이동한 화면에서 eventInstanceId를 참조한 도메인 명령이 커밋될 때 해결된다. 결정 없이 돌아오면 같은 선택지를 다시 보여준다|
+|BLOCKING_UNTIL_DOMAIN_COMMIT|35|진로·계약·병역·대표·등록·포지션 확정 등 실제 결정이 필요한 사건. NAVIGATE를 골라도 사건은 열린 상태로 남고, 이동한 화면에서 eventInstanceId를 참조한 도메인 명령이 커밋될 때 해결된다. 결정 없이 돌아오면 같은 선택지를 다시 보여준다|
+|BY_POSTING_DECISION|1|E63만 사용. 승인(APPROVED)은 후속 도메인 결정까지 대기, 보류(DEFERRED)는 사유 확인 ACK로 해결|
 |RESOLVE_ON_SELECT|63|읽기·조언·열람 사건. 어떤 선택지든 고르는 즉시 해결되며, NAVIGATE는 해결 후 화면만 이동한다|
 
-BLOCKING 사건: E04, E05, E06, E07, E09, E13, E23, E30, E31, E32, E33, E34, E35, E36, E44, E47, E48, E49, E50, E54, E56, E57, E59, E60, E61, E63, E64, E66, E67, E70, E73, E74, E75, E76, E82, E83.
+항상 BLOCKING 사건(35개): E04, E05, E06, E07, E09, E13, E23, E30, E31, E32, E33, E34, E35, E36, E44, E47, E48, E49, E50, E54, E56, E57, E59, E60, E61, E64, E66, E67, E70, E73, E74, E75, E76, E82, E83.
 
 ## 세부 규칙
 
@@ -39,3 +40,12 @@ EV-D01 모든 선택지에 dispatchClass 존재/02 NAVIGATE는 45화면 중 targ
 ## 남은 확인
 
 BLOCKING 판정은 선택지 명령 기준의 자동 분류(초안)다. 실제 기한·blocking task와의 1:1 연결은 구현 시 69의 task 생성과 함께 검증한다. 구현·실행은 하지 않았다.
+
+## E63 승인·보류 분기 (2026-10-20 사용자 확정 A안)
+
+- 저장된 원구단 답변을 postingDecision(APPROVED/DEFERRED)으로 읽어 분기를 정한다. 조회·재개 시 재추첨하지 않는다.
+- APPROVED: OPEN_POSTING_OFFERS만 제공. 화면 이동만으로 사건이 해결되지 않는다. 후속 계약 수락·거절·협상 마감 등 기존 도메인 결정이 같은 트랜잭션에서 사건을 닫는다. 결정 없이 복귀하면 OPEN 유지.
+- DEFERRED: ACK_EVENT(보류 사유 확인)만 제공하고 확인 시 RESOLVED. 협상 오퍼가 없는 승인 화면으로 이동시키지 않는다.
+- 다른 분기의 choiceCommand 전송은 422 INVALID_CHOICE, 사건 해결·계약 변경 없음. 분기 데이터가 없거나 알 수 없는 값이면 실패 상태로 표시하고 재조회한다. 승인·보류 중 어느 쪽으로도 추정하지 않는다.
+- 카탈로그는 resolutionPolicy=BY_POSTING_DECISION 및 resolutionBranches에 분기별 허용 명령·정책을 기록한다. 항상 BLOCKING 35 + 조건부 E63 1 + 즉시 해결 63 = 99다. 선택지 164·명령 91·DOMAIN70/NAVIGATE50/ACK44는 그대로다.
+- EV-D03은 각 실제 분기의 정책으로 검사한다. BLOCKING 분기에 ACK를 허용하면 실패하며, E63의 보류 ACK는 RESOLVE_ON_SELECT 분기이므로 합법이다.

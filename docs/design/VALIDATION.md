@@ -218,3 +218,24 @@ E13 CANCEL_POSITION_PLAN 결과 문구를 ‘기존 등록 포지션 유지·전
 
 함께 실행한 verify-state-ui.mjs와 verify-art-direction.mjs도 PASS다(그림 슬롯 silhouetteCard 참조 포함). 모두 문서·데이터·산술 정적 검사이며 게임 엔진·DB·API·브라우저 렌더·APK 실행 검증이 아니다. 실루엣 등 이미지는 이 저장소에서 제작하지 않았고(124), 보드 HTML의 S02·S16 시안은 태그 구조만 확인했으며 렌더는 미확인이다.
 
+
+## 2026-10-20 1단계 승인 수정 검증
+
+사용자가 점검 항목 1~6 전체 및 E63 A안을 승인했다. 현재 결정표는 청춘 애니·기본 NEXT_MAJOR_EVENT를 가리키며, 기능 U와 계수/분포 D를 구분했다. STATUS/119/121/체크포인트의 낡은 미반영 안내를 정정했다. 기대값 색인은 별도 3묶음을 추가해 23묶음이며 핵심은 6파일 298개를 유지한다. 이미지 시안은 1단계 결과 승인 후 저장소 밖에서 제작하고 선택·승인본만 반영한다.
+
+V: 루트에서 실행한 결과(모두 종료코드 0):
+
+| 명령 | 결과 |
+|---|---|
+| node docs/design/verify-design.mjs | PASS |
+| node docs/design/verify-state-ui.mjs | PASS |
+| node docs/design/verify-art-direction.mjs | PASS |
+
+추가 출력:
+
+```text
+PASS: E63 approved branch waits for domain commit; deferred branch allows ACK; invalid blocking ACK, swapped policy and wrong branch command are rejected (static design checks).
+PASS: 23 expectation sets indexed; FP12, first-club recovery7 and offseason12 match source counts and remain NOT_EXECUTED; core total remains 298.
+```
+
+E63의 항상 필수 35개·분기별 1개·즉시 해결 63개는 총 99개다. 승인 분기는 NAVIGATE만으로 OPEN을 닫지 않으며 보류 분기는 사유 확인 ACK로 끝난다. 검증기는 잘못된 BLOCKING ACK·뒤바뀐 정책·승인 분기의 잘못된 명령을 정적 음성 사례로 검사한다. 실제 서버/API의 해결 트랜잭션·동시성·재개는 구현 후 검증 대상이다. 이미지 파일과 개별 이미지 status·화면 슬롯은 변경하지 않았다. 실제 렌더·게임·DB·APK/build는 실행하지 않았다.

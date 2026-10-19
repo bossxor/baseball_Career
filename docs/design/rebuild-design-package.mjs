@@ -13,7 +13,7 @@ const leading=['START-HERE.md','README.md','STATUS.md','DETAIL-PLAN.md','14-CANO
 const numbered=fs.readdirSync(root).filter(n=>/^\d+-.*\.md$/.test(n)&&!leading.includes(n)).sort((a,b)=>parseInt(a,10)-parseInt(b,10)||(a<b?-1:a>b?1:0));
 const ordered=[...leading,...numbered,'EVENT-CATALOG.md','HANDOFF-PROMPT.md','VALIDATION.md'];
 const index=JSON.parse(read('current-contract-index.json')),closure=JSON.parse(read('design-closure-register.json'));
-write('DESIGN-ALL.md','# 다시, 플레이볼 — 게임 설계 기준본'+index.baselineVersion+' · 빈티지 시각 확장'+closure.visualExtension.version+'\n'+ordered.map(n=>'\n---\n\n<!-- SOURCE: '+n+' -->\n\n'+read(n).trimEnd()+'\n').join(''));
+write('DESIGN-ALL.md','# 다시, 플레이볼 — 게임 설계 기준본'+index.baselineVersion+' · 청춘 야구 애니 시각 확장'+closure.visualExtension.version+'\n'+ordered.map(n=>'\n---\n\n<!-- SOURCE: '+n+' -->\n\n'+read(n).trimEnd()+'\n').join(''));
 const quote=value=>'"'+String(value).replaceAll('"','""')+'"';
 const entries=walk(root).filter(p=>path.basename(p)!=='MANIFEST-SHA256.csv').map(p=>({file:p,name:path.relative(root,p).replaceAll('\\','/')})).sort((a,b)=>a.name<b.name?-1:a.name>b.name?1:0);
 const rows=entries.map(({file,name})=>{const data=fs.readFileSync(file);return [name,data.length,crypto.createHash('sha256').update(data).digest('hex').toUpperCase()].map(quote).join(',');});

@@ -1826,7 +1826,21 @@
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
       "resume": "사건발생전저장한resumePhase,필수후속분기우선",
-      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
+      "resolutionPolicy": "BY_POSTING_DECISION",
+      "resolutionBranches": {
+        "APPROVED": {
+          "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT",
+          "choiceCommands": [
+            "OPEN_POSTING_OFFERS"
+          ]
+        },
+        "DEFERRED": {
+          "resolutionPolicy": "RESOLVE_ON_SELECT",
+          "choiceCommands": [
+            "ACK_EVENT"
+          ]
+        }
+      }
     },
     {
       "id": "E64",
