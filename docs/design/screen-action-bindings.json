@@ -182,7 +182,8 @@
       "screenId": "S16",
       "queryKey": "playerDetail",
       "actions": [
-        "READ_PLAYER"
+        "READ_PLAYER",
+        "READ_PLAYER_SPLIT_RECORDS"
       ],
       "actionClass": "QUERY",
       "resultRouting": "serverAllowedActionsAndResumeDescriptor",

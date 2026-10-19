@@ -349,6 +349,39 @@ const playerDisplay = JSON.parse(read('player-display-expectations.json'));
 assert.equal(playerDisplay.executionStatus, 'NOT_EXECUTED');
 for (const d of playerDisplay.docs) assert.ok(existsSync(path.join(root, d)));
 unique(playerDisplay.ids);
+const effectSum = JSON.parse(read('effect-sum-examples.json'));
+{
+  const clamp = (x, c) => Math.max(-c, Math.min(c, x));
+  const keys = Object.keys(effectSum.baseProbs);
+  for (const ex of effectSum.examples) {
+    const applied = {}; const lg = {};
+    for (const k of keys) {
+      const trait = clamp(ex.traits.reduce((a, t) => a + (t[k] || 0), 0), effectSum.caps.trait);
+      const raw = trait + (ex.pitch[k] || 0) + (ex.approach[k] || 0) + (ex.form[k] || 0) + (ex.platoon[k] || 0);
+      applied[k] = clamp(raw, effectSum.caps.total);
+      lg[k] = Math.log(effectSum.baseProbs[k]) + applied[k];
+      if (Math.abs(applied[k]) > 1e-12) assert.ok(Math.abs((ex.appliedSum[k] ?? 0) - applied[k]) < 1e-9, ex.id + k);
+    }
+    const mx = Math.max(...Object.values(lg)); const e = {}; let s = 0;
+    for (const k of keys) { e[k] = Math.exp(lg[k] - mx); s += e[k]; }
+    let total = 0;
+    for (const k of keys) { assert.ok(Math.abs(e[k] / s - ex.probs[k]) < 6e-5, ex.id + ' prob ' + k); total += ex.probs[k]; }
+    assert.ok(Math.abs(total - 1) < 5e-4, ex.id + ' sum');
+  }
+}
+const imgReg = JSON.parse(read('image-production-register.json'));
+{
+  const statuses = new Set(['TODO', 'EXISTS', 'CODE_ONLY', 'LEGACY_REFERENCE']);
+  unique(imgReg.items.map(i => i.id));
+  const screenIds = new Set(screens.screens.map(s => s.id));
+  for (const i of imgReg.items) {
+    assert.ok(statuses.has(i.status) && imgReg.groups[i.group] && i.name && i.file && i.spec, i.id);
+    for (const s of i.screens) assert.ok(screenIds.has(s), i.id + ' ' + s);
+    if (i.status === 'TODO') assert.ok(['P0', 'P1', 'P2'].includes(i.priority), i.id);
+  }
+  assert.equal(imgReg.items.filter(i => i.group === 'G1').length, 14);
+  assert.ok(imgReg.items.filter(i => i.status === 'TODO').length > 0);
+}
 const closure = JSON.parse(read('design-closure-register.json'));
 assert.equal(closure.status, 'WRITTEN_DESIGN_BASELINE');
 assert.equal(closure.baselineVersion, '1.0');

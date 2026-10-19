@@ -1,3 +1,5 @@
+최신 확정(2026-10-19): [122](122-API-SCHEMA-LOG-ALIGNMENT.md) playRecord logSchemaVersion 2에 batterBatsAtTime/effectiveBatSide/pitcherThrowsAtTime/pitcherFormAtTime snapshot이 추가된다.
+
 표시·상태 최신 계약: [104](104-COMMENTARY-CHRONICLE-STATE-UI.md)와 [106 연결](106-EXPANSION-UI-CLOSURE.md)을 따른다. 기존 수식·권리·기념보상·읽기전용 계약은 유지하며,상태 UI/로컬 시안/실행 미검증을 구분한다.
 
 # 62. 감상형 문자 중계 상세 계약 — 로그·해시·읽기 복원

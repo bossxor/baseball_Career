@@ -1,3 +1,5 @@
+최신 확정(2026-10-19): [122](122-API-SCHEMA-LOG-ALIGNMENT.md) 투구폼 필드 추가로 minWriteClientContractVersion을 올린다. 구버전은 쓰기 전에 REQUIRED_FOR_WRITE로 안내된다.
+
 # 88. 웹·PWA·APK 업데이트와 버전 호환
 
 2026-10-19 / 기술 기본안 D. [29](29-OPERATIONS-RELEASE-RUNBOOK.md)·[74](74-PREVIEW-COMMAND-RECONCILIATION.md)·[76](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)·[86](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md)의 갱신/복구 원칙을 UI·API·캐시 계약으로 구체화한다. 실제 서비스워커·APK·릴리스 파이프라인은 미구현이다.

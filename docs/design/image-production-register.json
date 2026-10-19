@@ -1,0 +1,1645 @@
+{
+  "schemaVersion": 1,
+  "status": "PRODUCTION_BRIEF",
+  "gameRulesChanged": false,
+  "note": "이미지 제작 레지스터. status: TODO=제작 필요, EXISTS=이미 있음, CODE_ONLY=코드로 제작(이미지 불필요), LEGACY_REFERENCE=보존. 제작 후 이 파일의 status와 해당 문서를 갱신한다.",
+  "groups": {
+    "G1": "선수 실루엣(SVG)",
+    "G2": "사건 장면 12(청춘 애니)",
+    "G3": "마감 장면 6컷",
+    "G4": "Hero·졸업 장면",
+    "G5": "실제 구단 로고",
+    "G6": "가상 팀 배지",
+    "G7": "기념 보상 외형",
+    "G8": "메달·대회 엠블럼",
+    "G9": "연대기 카드 테마",
+    "G10": "브랜드·앱 아이콘",
+    "G11": "코드로 만드는 아이콘·다이어그램",
+    "G12": "레거시"
+  },
+  "items": [
+    {
+      "id": "IMG-SIL-H-RR",
+      "group": "G1",
+      "name": "타자 우투우타 실루엣",
+      "kind": "SVG",
+      "file": "assets/silhouettes/hitter-RR.svg",
+      "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S02",
+        "S03",
+        "S10",
+        "S11",
+        "S14",
+        "S16",
+        "S17",
+        "S22",
+        "S40",
+        "S42",
+        "S43"
+      ],
+      "notes": "우투 선수의 우타석. 배트는 정면 기준 왼쪽 어깨 위, 글러브는 정면 기준 오른쪽 허리"
+    },
+    {
+      "id": "IMG-SIL-H-RL",
+      "group": "G1",
+      "name": "타자 우투좌타 실루엣",
+      "kind": "SVG",
+      "file": "assets/silhouettes/hitter-RL.svg",
+      "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S02",
+        "S03",
+        "S10",
+        "S11",
+        "S14",
+        "S16",
+        "S17",
+        "S22",
+        "S40",
+        "S42",
+        "S43"
+      ],
+      "notes": "좌타석. 배트는 정면 기준 오른쪽 어깨 위, 글러브는 정면 기준 오른쪽 허리"
+    },
+    {
+      "id": "IMG-SIL-H-RS",
+      "group": "G1",
+      "name": "타자 우투양타 실루엣",
+      "kind": "SVG",
+      "file": "assets/silhouettes/hitter-RS.svg",
+      "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S02",
+        "S03",
+        "S10",
+        "S11",
+        "S14",
+        "S16",
+        "S17",
+        "S22",
+        "S40",
+        "S42",
+        "S43"
+      ],
+      "notes": "양타. 두 배트 포즈를 겹쳐 한쪽은 옅게, 글러브는 정면 기준 오른쪽 허리"
+    },
+    {
+      "id": "IMG-SIL-H-LR",
+      "group": "G1",
+      "name": "타자 좌투우타 실루엣",
+      "kind": "SVG",
+      "file": "assets/silhouettes/hitter-LR.svg",
+      "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S02",
+        "S03",
+        "S10",
+        "S11",
+        "S14",
+        "S16",
+        "S17",
+        "S22",
+        "S40",
+        "S42",
+        "S43"
+      ],
+      "notes": "우타석, 글러브는 정면 기준 왼쪽 허리"
+    },
+    {
+      "id": "IMG-SIL-H-LL",
+      "group": "G1",
+      "name": "타자 좌투좌타 실루엣",
+      "kind": "SVG",
+      "file": "assets/silhouettes/hitter-LL.svg",
+      "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S02",
+        "S03",
+        "S10",
+        "S11",
+        "S14",
+        "S16",
+        "S17",
+        "S22",
+        "S40",
+        "S42",
+        "S43"
+      ],
+      "notes": "좌타석, 글러브는 정면 기준 왼쪽 허리"
+    },
+    {
+      "id": "IMG-SIL-H-LS",
+      "group": "G1",
+      "name": "타자 좌투양타 실루엣",
+      "kind": "SVG",
+      "file": "assets/silhouettes/hitter-LS.svg",
+      "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S02",
+        "S03",
+        "S10",
+        "S11",
+        "S14",
+        "S16",
+        "S17",
+        "S22",
+        "S40",
+        "S42",
+        "S43"
+      ],
+      "notes": "양타, 글러브는 정면 기준 왼쪽 허리"
+    },
+    {
+      "id": "IMG-SIL-P-R-OVERHAND",
+      "group": "G1",
+      "name": "투수 우투 오버핸드 실루엣",
+      "kind": "SVG",
+      "file": "assets/silhouettes/pitcher-R-overhand.svg",
+      "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S02",
+        "S03",
+        "S10",
+        "S11",
+        "S14",
+        "S16",
+        "S17",
+        "S22",
+        "S42",
+        "S43"
+      ],
+      "notes": "던지는 팔이 머리 위로 수직. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)"
+    },
+    {
+      "id": "IMG-SIL-P-R-THREEQUARTER",
+      "group": "G1",
+      "name": "투수 우투 쓰리쿼터 실루엣",
+      "kind": "SVG",
+      "file": "assets/silhouettes/pitcher-R-threequarter.svg",
+      "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S02",
+        "S03",
+        "S10",
+        "S11",
+        "S14",
+        "S16",
+        "S17",
+        "S22",
+        "S42",
+        "S43"
+      ],
+      "notes": "던지는 팔 45도 위. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)"
+    },
+    {
+      "id": "IMG-SIL-P-R-SIDEARM",
+      "group": "G1",
+      "name": "투수 우투 사이드암 실루엣",
+      "kind": "SVG",
+      "file": "assets/silhouettes/pitcher-R-sidearm.svg",
+      "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S02",
+        "S03",
+        "S10",
+        "S11",
+        "S14",
+        "S16",
+        "S17",
+        "S22",
+        "S42",
+        "S43"
+      ],
+      "notes": "던지는 팔 수평. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)"
+    },
+    {
+      "id": "IMG-SIL-P-R-UNDERHAND",
+      "group": "G1",
+      "name": "투수 우투 언더핸드 실루엣",
+      "kind": "SVG",
+      "file": "assets/silhouettes/pitcher-R-underhand.svg",
+      "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S02",
+        "S03",
+        "S10",
+        "S11",
+        "S14",
+        "S16",
+        "S17",
+        "S22",
+        "S42",
+        "S43"
+      ],
+      "notes": "던지는 팔 낮게 아래로. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)"
+    },
+    {
+      "id": "IMG-SIL-P-L-OVERHAND",
+      "group": "G1",
+      "name": "투수 좌투 오버핸드 실루엣",
+      "kind": "SVG",
+      "file": "assets/silhouettes/pitcher-L-overhand.svg",
+      "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S02",
+        "S03",
+        "S10",
+        "S11",
+        "S14",
+        "S16",
+        "S17",
+        "S22",
+        "S42",
+        "S43"
+      ],
+      "notes": "던지는 팔이 머리 위로 수직. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)"
+    },
+    {
+      "id": "IMG-SIL-P-L-THREEQUARTER",
+      "group": "G1",
+      "name": "투수 좌투 쓰리쿼터 실루엣",
+      "kind": "SVG",
+      "file": "assets/silhouettes/pitcher-L-threequarter.svg",
+      "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S02",
+        "S03",
+        "S10",
+        "S11",
+        "S14",
+        "S16",
+        "S17",
+        "S22",
+        "S42",
+        "S43"
+      ],
+      "notes": "던지는 팔 45도 위. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)"
+    },
+    {
+      "id": "IMG-SIL-P-L-SIDEARM",
+      "group": "G1",
+      "name": "투수 좌투 사이드암 실루엣",
+      "kind": "SVG",
+      "file": "assets/silhouettes/pitcher-L-sidearm.svg",
+      "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S02",
+        "S03",
+        "S10",
+        "S11",
+        "S14",
+        "S16",
+        "S17",
+        "S22",
+        "S42",
+        "S43"
+      ],
+      "notes": "던지는 팔 수평. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)"
+    },
+    {
+      "id": "IMG-SIL-P-L-UNDERHAND",
+      "group": "G1",
+      "name": "투수 좌투 언더핸드 실루엣",
+      "kind": "SVG",
+      "file": "assets/silhouettes/pitcher-L-underhand.svg",
+      "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S02",
+        "S03",
+        "S10",
+        "S11",
+        "S14",
+        "S16",
+        "S17",
+        "S22",
+        "S42",
+        "S43"
+      ],
+      "notes": "던지는 팔 낮게 아래로. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)"
+    },
+    {
+      "id": "IMG-SCN-TRAINING",
+      "group": "G2",
+      "name": "사건 장면 새로운 시즌",
+      "kind": "PNG(아틀라스 패널)",
+      "file": "assets/art-lab/career-events-animation-v1.png",
+      "spec": "정사각 패널, 열0/행0, 3×2 아틀라스 1536×1024",
+      "count": 1,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S04",
+        "S07",
+        "S24",
+        "S25",
+        "S27",
+        "S28"
+      ],
+      "notes": "청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E01/E08/E41"
+    },
+    {
+      "id": "IMG-SCN-COLLEGE",
+      "group": "G2",
+      "name": "사건 장면 대학 진학",
+      "kind": "PNG(아틀라스 패널)",
+      "file": "assets/art-lab/career-events-animation-v1.png",
+      "spec": "정사각 패널, 열1/행0, 3×2 아틀라스 1536×1024",
+      "count": 1,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "notes": "청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E70/E71/E73/E75"
+    },
+    {
+      "id": "IMG-SCN-OVERSEAS",
+      "group": "G2",
+      "name": "사건 장면 미국으로",
+      "kind": "PNG(아틀라스 패널)",
+      "file": "assets/art-lab/career-events-animation-v1.png",
+      "spec": "정사각 패널, 열2/행0, 3×2 아틀라스 1536×1024",
+      "count": 1,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S28",
+        "S29",
+        "S30",
+        "S33"
+      ],
+      "notes": "청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E57/E58"
+    },
+    {
+      "id": "IMG-SCN-INTERNATIONAL",
+      "group": "G2",
+      "name": "사건 장면 국제무대",
+      "kind": "PNG(아틀라스 패널)",
+      "file": "assets/art-lab/career-events-animation-v1.png",
+      "spec": "정사각 패널, 열0/행1, 3×2 아틀라스 1536×1024",
+      "count": 1,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S07",
+        "S25",
+        "S45"
+      ],
+      "notes": "청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E47/E48"
+    },
+    {
+      "id": "IMG-SCN-RETIREMENT",
+      "group": "G2",
+      "name": "사건 장면 마지막 유니폼",
+      "kind": "PNG(아틀라스 패널)",
+      "file": "assets/art-lab/career-events-animation-v1.png",
+      "spec": "정사각 패널, 열1/행1, 3×2 아틀라스 1536×1024",
+      "count": 1,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S09",
+        "S11",
+        "S12",
+        "S45"
+      ],
+      "notes": "청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E37/E69/E99"
+    },
+    {
+      "id": "IMG-SCN-FRONTOFFICE",
+      "group": "G2",
+      "name": "사건 장면 구단의 내일",
+      "kind": "PNG(아틀라스 패널)",
+      "file": "assets/art-lab/career-events-animation-v1.png",
+      "spec": "정사각 패널, 열2/행1, 3×2 아틀라스 1536×1024",
+      "count": 1,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S12",
+        "S13",
+        "S17",
+        "S36"
+      ],
+      "notes": "청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E38/E39/E40/E77/E79/E81"
+    },
+    {
+      "id": "IMG-SCN-DRAFT",
+      "group": "G2",
+      "name": "사건 장면 지명을 기다리며",
+      "kind": "PNG(아틀라스 패널)",
+      "file": "assets/art-lab/career-events-animation-extra-v1.png",
+      "spec": "정사각 패널, 열0/행0, 3×2 아틀라스 1536×1024",
+      "count": 1,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S05",
+        "S28"
+      ],
+      "notes": "청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E04/E05/E06"
+    },
+    {
+      "id": "IMG-SCN-ENHANCEMENT",
+      "group": "G2",
+      "name": "사건 장면 한 번의 특별훈련",
+      "kind": "PNG(아틀라스 패널)",
+      "file": "assets/art-lab/career-events-animation-extra-v1.png",
+      "spec": "정사각 패널, 열1/행0, 3×2 아틀라스 1536×1024",
+      "count": 1,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S23"
+      ],
+      "notes": "청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E43"
+    },
+    {
+      "id": "IMG-SCN-REHAB",
+      "group": "G2",
+      "name": "사건 장면 다시 뛰는 준비",
+      "kind": "PNG(아틀라스 패널)",
+      "file": "assets/art-lab/career-events-animation-extra-v1.png",
+      "spec": "정사각 패널, 열2/행0, 3×2 아틀라스 1536×1024",
+      "count": 1,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [],
+      "notes": "청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E21/E22/E23"
+    },
+    {
+      "id": "IMG-SCN-SERVICE",
+      "group": "G2",
+      "name": "사건 장면 돌아오는 길",
+      "kind": "PNG(아틀라스 패널)",
+      "file": "assets/art-lab/career-events-animation-extra-v1.png",
+      "spec": "정사각 패널, 열0/행1, 3×2 아틀라스 1536×1024",
+      "count": 1,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S27",
+        "S33"
+      ],
+      "notes": "청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E53/E76"
+    },
+    {
+      "id": "IMG-SCN-POSTING",
+      "group": "G2",
+      "name": "사건 장면 다음 리그의 제안",
+      "kind": "PNG(아틀라스 패널)",
+      "file": "assets/art-lab/career-events-animation-extra-v1.png",
+      "spec": "정사각 패널, 열1/행1, 3×2 아틀라스 1536×1024",
+      "count": 1,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S08",
+        "S31",
+        "S32",
+        "S41"
+      ],
+      "notes": "청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E62/E63/E64"
+    },
+    {
+      "id": "IMG-SCN-RIVAL",
+      "group": "G2",
+      "name": "사건 장면 같은 출발선",
+      "kind": "PNG(아틀라스 패널)",
+      "file": "assets/art-lab/career-events-animation-extra-v1.png",
+      "spec": "정사각 패널, 열2/행1, 3×2 아틀라스 1536×1024",
+      "count": 1,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S42",
+        "S45"
+      ],
+      "notes": "청춘 애니, 시간대 NIGHT_WHITE_FLOODLIGHTS, 이벤트 E26/E94/E95/E96"
+    },
+    {
+      "id": "IMG-FIN-COLLEGE",
+      "group": "G3",
+      "name": "마감 장면 대학(청춘 애니)",
+      "kind": "PNG(패널)",
+      "file": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "spec": "3×2 정사각 패널 아틀라스 1536×1024 중 한 컷",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S04",
+        "S09",
+        "S27",
+        "S28",
+        "S33",
+        "S34",
+        "S35"
+      ],
+      "notes": "현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 대학 캠퍼스 그라운드. 시간대 규칙 준수"
+    },
+    {
+      "id": "IMG-FIN-MINOR-AWAY",
+      "group": "G3",
+      "name": "마감 장면 마이너 원정(청춘 애니)",
+      "kind": "PNG(패널)",
+      "file": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "spec": "3×2 정사각 패널 아틀라스 1536×1024 중 한 컷",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S04",
+        "S09",
+        "S27",
+        "S28",
+        "S33",
+        "S34",
+        "S35"
+      ],
+      "notes": "현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 마이너 원정 이동/구장. 시간대 규칙 준수"
+    },
+    {
+      "id": "IMG-FIN-RIVAL-NEUTRAL",
+      "group": "G3",
+      "name": "마감 장면 중립 라이벌(청춘 애니)",
+      "kind": "PNG(패널)",
+      "file": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "spec": "3×2 정사각 패널 아틀라스 1536×1024 중 한 컷",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S04",
+        "S09",
+        "S27",
+        "S28",
+        "S33",
+        "S34",
+        "S35"
+      ],
+      "notes": "현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 중립 구장에서 마주 선 두 선수. 시간대 규칙 준수"
+    },
+    {
+      "id": "IMG-FIN-RETURN",
+      "group": "G3",
+      "name": "마감 장면 복귀(청춘 애니)",
+      "kind": "PNG(패널)",
+      "file": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "spec": "3×2 정사각 패널 아틀라스 1536×1024 중 한 컷",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S04",
+        "S09",
+        "S27",
+        "S28",
+        "S33",
+        "S34",
+        "S35"
+      ],
+      "notes": "현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 귀국/복귀 장면. 시간대 규칙 준수"
+    },
+    {
+      "id": "IMG-FIN-RETIRE",
+      "group": "G3",
+      "name": "마감 장면 은퇴(청춘 애니)",
+      "kind": "PNG(패널)",
+      "file": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "spec": "3×2 정사각 패널 아틀라스 1536×1024 중 한 컷",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S04",
+        "S09",
+        "S27",
+        "S28",
+        "S33",
+        "S34",
+        "S35"
+      ],
+      "notes": "현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 은퇴 기념 장면. 시간대 규칙 준수"
+    },
+    {
+      "id": "IMG-FIN-STADIUM",
+      "group": "G3",
+      "name": "마감 장면 구장(청춘 애니)",
+      "kind": "PNG(패널)",
+      "file": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "spec": "3×2 정사각 패널 아틀라스 1536×1024 중 한 컷",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S04",
+        "S09",
+        "S27",
+        "S28",
+        "S33",
+        "S34",
+        "S35"
+      ],
+      "notes": "현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 구장 전경. 시간대 규칙 준수"
+    },
+    {
+      "id": "IMG-HERO-MAIN",
+      "group": "G4",
+      "name": "메인 hero 배경",
+      "kind": "PNG",
+      "file": "assets/art-lab/hero-animation-v1.png",
+      "spec": "1672×941",
+      "count": 1,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S01",
+        "S03",
+        "S19",
+        "S30"
+      ],
+      "notes": "청춘 애니 활성. 시간대 변형은 선택(P2)"
+    },
+    {
+      "id": "IMG-HERO-GRAD",
+      "group": "G4",
+      "name": "고교 졸업 가로 장면",
+      "kind": "PNG",
+      "file": "assets/art-lab/graduation-animation-day-v1.png",
+      "spec": "가로 hero",
+      "count": 1,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S04"
+      ],
+      "notes": "S04 전용"
+    },
+    {
+      "id": "IMG-LOGO-KBO",
+      "group": "G5",
+      "name": "KBO 구단 로고",
+      "kind": "PNG",
+      "file": "assets/team-logos/kbo/*.png",
+      "spec": "공식 출처, 10개",
+      "count": 10,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S14",
+        "S18"
+      ],
+      "notes": "사용 허가는 92의 V12에서 확인. 수정·재색칠 금지"
+    },
+    {
+      "id": "IMG-LOGO-MLB",
+      "group": "G5",
+      "name": "MLB 구단 로고",
+      "kind": "SVG",
+      "file": "assets/team-logos/mlb/*.svg",
+      "spec": "공식 team-cap-on-light 엠블럼, 30개",
+      "count": 30,
+      "status": "EXISTS",
+      "priority": "-",
+      "screens": [
+        "S18",
+        "S29",
+        "S30"
+      ],
+      "notes": "사용 허가는 V12. 마이너 하위팀에 혼용 금지"
+    },
+    {
+      "id": "IMG-BADGE-U01",
+      "group": "G6",
+      "name": "가상 대학 배지 한빛대",
+      "kind": "SVG",
+      "file": "assets/badges/college-u01.svg",
+      "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+    },
+    {
+      "id": "IMG-BADGE-U02",
+      "group": "G6",
+      "name": "가상 대학 배지 청해대",
+      "kind": "SVG",
+      "file": "assets/badges/college-u02.svg",
+      "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+    },
+    {
+      "id": "IMG-BADGE-U03",
+      "group": "G6",
+      "name": "가상 대학 배지 백림대",
+      "kind": "SVG",
+      "file": "assets/badges/college-u03.svg",
+      "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+    },
+    {
+      "id": "IMG-BADGE-U04",
+      "group": "G6",
+      "name": "가상 대학 배지 동운대",
+      "kind": "SVG",
+      "file": "assets/badges/college-u04.svg",
+      "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+    },
+    {
+      "id": "IMG-BADGE-U05",
+      "group": "G6",
+      "name": "가상 대학 배지 서강산대",
+      "kind": "SVG",
+      "file": "assets/badges/college-u05.svg",
+      "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+    },
+    {
+      "id": "IMG-BADGE-U06",
+      "group": "G6",
+      "name": "가상 대학 배지 남해솔대",
+      "kind": "SVG",
+      "file": "assets/badges/college-u06.svg",
+      "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+    },
+    {
+      "id": "IMG-BADGE-U07",
+      "group": "G6",
+      "name": "가상 대학 배지 해오름대",
+      "kind": "SVG",
+      "file": "assets/badges/college-u07.svg",
+      "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+    },
+    {
+      "id": "IMG-BADGE-U08",
+      "group": "G6",
+      "name": "가상 대학 배지 온누리대",
+      "kind": "SVG",
+      "file": "assets/badges/college-u08.svg",
+      "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+    },
+    {
+      "id": "IMG-BADGE-U09",
+      "group": "G6",
+      "name": "가상 대학 배지 새길대",
+      "kind": "SVG",
+      "file": "assets/badges/college-u09.svg",
+      "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+    },
+    {
+      "id": "IMG-BADGE-ARMY",
+      "group": "G6",
+      "name": "군 체육팀(상무) 배지",
+      "kind": "SVG",
+      "file": "assets/badges/military-team.svg",
+      "spec": "64×64 viewBox",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S26",
+        "S27"
+      ],
+      "notes": "독자 디자인. 실제 부대 마크 사용 금지"
+    },
+    {
+      "id": "IMG-BADGE-MINOR",
+      "group": "G6",
+      "name": "가상 마이너(Rookie/A/AA/AAA) 팀 배지",
+      "kind": "CODE",
+      "file": "(코드 생성)",
+      "spec": "MLB 30구단×4 = 120팀. 약칭 2~3글자+팔레트로 코드 생성",
+      "count": 120,
+      "status": "CODE_ONLY",
+      "priority": "-",
+      "screens": [
+        "S18",
+        "S29"
+      ],
+      "notes": "이미지 제작 불필요. 모회사 로고와 혼용 금지(37)"
+    },
+    {
+      "id": "IMG-BADGE-HS",
+      "group": "G6",
+      "name": "가상 고교 배지",
+      "kind": "CODE",
+      "file": "(코드 생성)",
+      "spec": "가상 학교 목록(schoolId)별 약칭+팔레트",
+      "count": 0,
+      "status": "CODE_ONLY",
+      "priority": "-",
+      "screens": [
+        "S02",
+        "S04"
+      ],
+      "notes": "수는 고교 목록 크기. 이미지 제작 불필요"
+    },
+    {
+      "id": "IMG-BADGE-NAT",
+      "group": "G6",
+      "name": "국가대표 참가국 배지",
+      "kind": "CODE",
+      "file": "(코드 생성)",
+      "spec": "국가 코드 약칭+팔레트",
+      "count": 0,
+      "status": "CODE_ONLY",
+      "priority": "-",
+      "screens": [
+        "S24",
+        "S25"
+      ],
+      "notes": "실제 국기·협회 엠블럼 사용은 V12 권리 확인 전 금지"
+    },
+    {
+      "id": "IMG-RWD-R-G01",
+      "group": "G7",
+      "name": "기념 프레임 R-G01",
+      "kind": "SVG/PNG",
+      "file": "assets/rewards/r-g01.svg",
+      "spec": "선수 카드 테두리, 9-slice 가능, 가운데 투명",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "목표 G01 달성 기념. 능력 효과 없음(58)"
+    },
+    {
+      "id": "IMG-RWD-R-G06",
+      "group": "G7",
+      "name": "기념 프레임 R-G06",
+      "kind": "SVG/PNG",
+      "file": "assets/rewards/r-g06.svg",
+      "spec": "선수 카드 테두리, 9-slice 가능, 가운데 투명",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "목표 G06 달성 기념. 능력 효과 없음(58)"
+    },
+    {
+      "id": "IMG-RWD-R-G10",
+      "group": "G7",
+      "name": "기념 프레임 R-G10",
+      "kind": "SVG/PNG",
+      "file": "assets/rewards/r-g10.svg",
+      "spec": "선수 카드 테두리, 9-slice 가능, 가운데 투명",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "목표 G10 달성 기념. 능력 효과 없음(58)"
+    },
+    {
+      "id": "IMG-RWD-R-G03",
+      "group": "G7",
+      "name": "기념 배경 R-G03",
+      "kind": "PNG",
+      "file": "assets/rewards/r-g03.png",
+      "spec": "카드 배경 1080×1350, 글자 없음, 중앙 여백",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "카드 텍스트 가독성 우선"
+    },
+    {
+      "id": "IMG-RWD-R-G05",
+      "group": "G7",
+      "name": "기념 배경 R-G05",
+      "kind": "PNG",
+      "file": "assets/rewards/r-g05.png",
+      "spec": "카드 배경 1080×1350, 글자 없음, 중앙 여백",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "카드 텍스트 가독성 우선"
+    },
+    {
+      "id": "IMG-RWD-R-G08",
+      "group": "G7",
+      "name": "기념 배경 R-G08",
+      "kind": "PNG",
+      "file": "assets/rewards/r-g08.png",
+      "spec": "카드 배경 1080×1350, 글자 없음, 중앙 여백",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "카드 텍스트 가독성 우선"
+    },
+    {
+      "id": "IMG-RWD-R-G04",
+      "group": "G7",
+      "name": "도감 스탬프 R-G04",
+      "kind": "SVG",
+      "file": "assets/rewards/r-g04.svg",
+      "spec": "256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시"
+    },
+    {
+      "id": "IMG-RWD-R-G09",
+      "group": "G7",
+      "name": "도감 스탬프 R-G09",
+      "kind": "SVG",
+      "file": "assets/rewards/r-g09.svg",
+      "spec": "256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시"
+    },
+    {
+      "id": "IMG-RWD-R-A01",
+      "group": "G7",
+      "name": "도감 스탬프 R-A01",
+      "kind": "SVG",
+      "file": "assets/rewards/r-a01.svg",
+      "spec": "256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시"
+    },
+    {
+      "id": "IMG-RWD-R-A02",
+      "group": "G7",
+      "name": "도감 스탬프 R-A02",
+      "kind": "SVG",
+      "file": "assets/rewards/r-a02.svg",
+      "spec": "256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시"
+    },
+    {
+      "id": "IMG-RWD-R-A03",
+      "group": "G7",
+      "name": "도감 스탬프 R-A03",
+      "kind": "SVG",
+      "file": "assets/rewards/r-a03.svg",
+      "spec": "256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시"
+    },
+    {
+      "id": "IMG-RWD-R-A04",
+      "group": "G7",
+      "name": "도감 스탬프 R-A04",
+      "kind": "SVG",
+      "file": "assets/rewards/r-a04.svg",
+      "spec": "256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시"
+    },
+    {
+      "id": "IMG-RWD-R-A05",
+      "group": "G7",
+      "name": "도감 스탬프 R-A05",
+      "kind": "SVG",
+      "file": "assets/rewards/r-a05.svg",
+      "spec": "256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시"
+    },
+    {
+      "id": "IMG-RWD-R-A06",
+      "group": "G7",
+      "name": "도감 스탬프 R-A06",
+      "kind": "SVG",
+      "file": "assets/rewards/r-a06.svg",
+      "spec": "256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시"
+    },
+    {
+      "id": "IMG-RWD-R-A07",
+      "group": "G7",
+      "name": "도감 스탬프 R-A07",
+      "kind": "SVG",
+      "file": "assets/rewards/r-a07.svg",
+      "spec": "256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시"
+    },
+    {
+      "id": "IMG-RWD-R-A08",
+      "group": "G7",
+      "name": "도감 스탬프 R-A08",
+      "kind": "SVG",
+      "file": "assets/rewards/r-a08.svg",
+      "spec": "256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시"
+    },
+    {
+      "id": "IMG-RWD-R-A09",
+      "group": "G7",
+      "name": "도감 스탬프 R-A09",
+      "kind": "SVG",
+      "file": "assets/rewards/r-a09.svg",
+      "spec": "256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시"
+    },
+    {
+      "id": "IMG-RWD-R-A10",
+      "group": "G7",
+      "name": "도감 스탬프 R-A10",
+      "kind": "SVG",
+      "file": "assets/rewards/r-a10.svg",
+      "spec": "256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시"
+    },
+    {
+      "id": "IMG-RWD-R-A11",
+      "group": "G7",
+      "name": "도감 스탬프 R-A11",
+      "kind": "SVG",
+      "file": "assets/rewards/r-a11.svg",
+      "spec": "256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "notes": "도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시"
+    },
+    {
+      "id": "IMG-RWD-R-A12",
+      "group": "G7",
+      "name": "책장 표지 R-A12",
+      "kind": "PNG",
+      "file": "assets/rewards/r-a12.png",
+      "spec": "표지 이미지 1080×1350",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S45"
+      ],
+      "notes": "KBO·MLB 실제 출장 후 은퇴 기념"
+    },
+    {
+      "id": "IMG-RWD-TITLES",
+      "group": "G7",
+      "name": "칭호 R-G02/R-G07",
+      "kind": "CODE",
+      "file": "(텍스트)",
+      "spec": "이미지 없음",
+      "count": 2,
+      "status": "CODE_ONLY",
+      "priority": "-",
+      "screens": [
+        "S40"
+      ],
+      "notes": "텍스트 칭호"
+    },
+    {
+      "id": "IMG-MEDAL-GOLD",
+      "group": "G8",
+      "name": "메달 금",
+      "kind": "SVG",
+      "file": "assets/medals/gold.svg",
+      "spec": "128×128 viewBox, 글자 없음",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S25",
+        "S45"
+      ],
+      "notes": "메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지"
+    },
+    {
+      "id": "IMG-MEDAL-SILVER",
+      "group": "G8",
+      "name": "메달 은",
+      "kind": "SVG",
+      "file": "assets/medals/silver.svg",
+      "spec": "128×128 viewBox, 글자 없음",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S25",
+        "S45"
+      ],
+      "notes": "메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지"
+    },
+    {
+      "id": "IMG-MEDAL-BRONZE",
+      "group": "G8",
+      "name": "메달 동",
+      "kind": "SVG",
+      "file": "assets/medals/bronze.svg",
+      "spec": "128×128 viewBox, 글자 없음",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S25",
+        "S45"
+      ],
+      "notes": "메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지"
+    },
+    {
+      "id": "IMG-COMP-WBC",
+      "group": "G8",
+      "name": "대회 엠블럼 WBC",
+      "kind": "SVG",
+      "file": "assets/medals/comp-wbc.svg",
+      "spec": "96×96 viewBox, 독자 디자인",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P2",
+      "screens": [
+        "S24",
+        "S25",
+        "S45"
+      ],
+      "notes": "실제 대회 로고 사용 금지. 대회 명칭은 텍스트"
+    },
+    {
+      "id": "IMG-COMP-OLY",
+      "group": "G8",
+      "name": "대회 엠블럼 OLY",
+      "kind": "SVG",
+      "file": "assets/medals/comp-oly.svg",
+      "spec": "96×96 viewBox, 독자 디자인",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P2",
+      "screens": [
+        "S24",
+        "S25",
+        "S45"
+      ],
+      "notes": "실제 대회 로고 사용 금지. 대회 명칭은 텍스트"
+    },
+    {
+      "id": "IMG-COMP-AG",
+      "group": "G8",
+      "name": "대회 엠블럼 AG",
+      "kind": "SVG",
+      "file": "assets/medals/comp-ag.svg",
+      "spec": "96×96 viewBox, 독자 디자인",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P2",
+      "screens": [
+        "S24",
+        "S25",
+        "S45"
+      ],
+      "notes": "실제 대회 로고 사용 금지. 대회 명칭은 텍스트"
+    },
+    {
+      "id": "IMG-COMP-P12",
+      "group": "G8",
+      "name": "대회 엠블럼 P12",
+      "kind": "SVG",
+      "file": "assets/medals/comp-p12.svg",
+      "spec": "96×96 viewBox, 독자 디자인",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P2",
+      "screens": [
+        "S24",
+        "S25",
+        "S45"
+      ],
+      "notes": "실제 대회 로고 사용 금지. 대회 명칭은 텍스트"
+    },
+    {
+      "id": "IMG-CARD-DEFAULT",
+      "group": "G9",
+      "name": "연대기 카드 테마 DEFAULT",
+      "kind": "PNG",
+      "file": "assets/cards/theme-default.png",
+      "spec": "1080×1350 배경, 글자·로고 없음, 사용자 메모 6줄 여백",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S45"
+      ],
+      "notes": "테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더"
+    },
+    {
+      "id": "IMG-CARD-OFFSEASON",
+      "group": "G9",
+      "name": "연대기 카드 테마 OFFSEASON",
+      "kind": "PNG",
+      "file": "assets/cards/theme-offseason.png",
+      "spec": "1080×1350 배경, 글자·로고 없음, 사용자 메모 6줄 여백",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S45"
+      ],
+      "notes": "테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더"
+    },
+    {
+      "id": "IMG-CARD-RETIRE",
+      "group": "G9",
+      "name": "연대기 카드 테마 RETIRE",
+      "kind": "PNG",
+      "file": "assets/cards/theme-retire.png",
+      "spec": "1080×1350 배경, 글자·로고 없음, 사용자 메모 6줄 여백",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [
+        "S45"
+      ],
+      "notes": "테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더"
+    },
+    {
+      "id": "IMG-BRAND-MARK",
+      "group": "G10",
+      "name": "로고 마크 ‘다시, 플레이볼’",
+      "kind": "SVG",
+      "file": "assets/brand/logo-mark.svg",
+      "spec": "정사각 viewBox, 글자 최소(마크 중심)",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [
+        "S01",
+        "S21"
+      ],
+      "notes": "타이틀 로고타입은 현재 검은고딕 텍스트(37). 실제 구단 로고와 무관"
+    },
+    {
+      "id": "IMG-BRAND-ANDROID",
+      "group": "G10",
+      "name": "Android 적응형 아이콘",
+      "kind": "SVG/PNG",
+      "file": "assets/brand/android-adaptive-{fg,bg,mono}.svg",
+      "spec": "foreground/background/monochrome 각 432×432 안전영역 288",
+      "count": 3,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [],
+      "notes": "APK 런처 아이콘(86/29). 배경은 단색 가능"
+    },
+    {
+      "id": "IMG-BRAND-PWA",
+      "group": "G10",
+      "name": "PWA/웹 아이콘",
+      "kind": "PNG/SVG",
+      "file": "assets/brand/icon-{192,512,maskable-512}.png, favicon.svg, apple-touch-180.png",
+      "spec": "192/512/maskable512, favicon(SVG), 180",
+      "count": 5,
+      "status": "TODO",
+      "priority": "P0",
+      "screens": [],
+      "notes": "manifest(86). 홈 화면 추가 경로 검수"
+    },
+    {
+      "id": "IMG-BRAND-SPLASH",
+      "group": "G10",
+      "name": "스플래시 아이콘",
+      "kind": "PNG/SVG",
+      "file": "assets/brand/splash-icon.svg",
+      "spec": "Android 12 스플래시 아이콘 288, 단색 배경",
+      "count": 1,
+      "status": "TODO",
+      "priority": "P1",
+      "screens": [],
+      "notes": "큰 일러스트 불필요"
+    },
+    {
+      "id": "IMG-ICON-TRAIT",
+      "group": "G11",
+      "name": "특성 배지 T01~T16",
+      "kind": "CODE",
+      "file": "(CSS/SVG 코드)",
+      "spec": "단색 벡터, 24/32px, currentColor",
+      "count": 16,
+      "status": "CODE_ONLY",
+      "priority": "-",
+      "screens": [
+        "S38"
+      ],
+      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요"
+    },
+    {
+      "id": "IMG-ICON-PITCH",
+      "group": "G11",
+      "name": "구종 아이콘 P01~P07",
+      "kind": "CODE",
+      "file": "(CSS/SVG 코드)",
+      "spec": "단색 벡터, 24/32px, currentColor",
+      "count": 7,
+      "status": "CODE_ONLY",
+      "priority": "-",
+      "screens": [
+        "S39"
+      ],
+      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요"
+    },
+    {
+      "id": "IMG-ICON-APPROACH",
+      "group": "G11",
+      "name": "타격 성향 카드 아이콘 4종",
+      "kind": "CODE",
+      "file": "(CSS/SVG 코드)",
+      "spec": "단색 벡터, 24/32px, currentColor",
+      "count": 4,
+      "status": "CODE_ONLY",
+      "priority": "-",
+      "screens": [
+        "S39"
+      ],
+      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요"
+    },
+    {
+      "id": "IMG-ICON-FORM",
+      "group": "G11",
+      "name": "투구폼 아이콘 4종",
+      "kind": "CODE",
+      "file": "(CSS/SVG 코드)",
+      "spec": "단색 벡터, 24/32px, currentColor",
+      "count": 4,
+      "status": "CODE_ONLY",
+      "priority": "-",
+      "screens": [
+        "S02",
+        "S39"
+      ],
+      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요"
+    },
+    {
+      "id": "IMG-ICON-HAND",
+      "group": "G11",
+      "name": "투타 아이콘(우/좌/양)",
+      "kind": "CODE",
+      "file": "(CSS/SVG 코드)",
+      "spec": "단색 벡터, 24/32px, currentColor",
+      "count": 5,
+      "status": "CODE_ONLY",
+      "priority": "-",
+      "screens": [
+        "S02",
+        "S16"
+      ],
+      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요"
+    },
+    {
+      "id": "IMG-ICON-GOAL",
+      "group": "G11",
+      "name": "목표 G01~G10·도전 A01~A12 아이콘",
+      "kind": "CODE",
+      "file": "(CSS/SVG 코드)",
+      "spec": "단색 벡터, 24/32px, currentColor",
+      "count": 22,
+      "status": "CODE_ONLY",
+      "priority": "-",
+      "screens": [
+        "S40"
+      ],
+      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요"
+    },
+    {
+      "id": "IMG-FIELD",
+      "group": "G11",
+      "name": "수비 배치 다이어그램",
+      "kind": "CODE",
+      "file": "(SVG 코드)",
+      "spec": "야구장 벡터",
+      "count": 1,
+      "status": "CODE_ONLY",
+      "priority": "-",
+      "screens": [
+        "S15"
+      ],
+      "notes": "FIELD_DIAGRAM. 이미지 생성 불필요"
+    },
+    {
+      "id": "IMG-LEGACY",
+      "group": "G12",
+      "name": "비교용 빈티지/시네마틱/선수 초상 PNG",
+      "kind": "PNG",
+      "file": "assets/art-lab/*(almanac|cinematic|player-*).png",
+      "spec": "기존 PNG",
+      "count": 0,
+      "status": "LEGACY_REFERENCE",
+      "priority": "-",
+      "screens": [],
+      "notes": "삭제하지 않음. 선수 초상 PNG는 시안 예시일 뿐 선수 외형 확정이 아님(119)"
+    }
+  ]
+}

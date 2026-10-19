@@ -4,6 +4,8 @@
 
 <!-- SOURCE: START-HERE.md -->
 
+이미지 제작 인계: [124 이미지 제작 명세](124-IMAGE-PRODUCTION-BRIEF.md). API·스키마 정합 [122](122-API-SCHEMA-LOG-ALIGNMENT.md), 새 효과 합산 예제 [123](123-EFFECT-SUM-EXAMPLES.md).
+
 최신: [119 선수 표시·투구폼·좌우 상성](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) · [120 구현 착수 대비 로드맵](120-IMPLEMENTATION-ROADMAP.md). 사람 외형 없이 이름·던지는 손/타석·투구폼만 사용하며 실루엣 이미지는 별도 제작합니다. 진행/재개위치는 STATUS·CONTINUATION-CHECKPOINT를 확인합니다.
 
 최신: [118 은퇴·보관·구단연속성](118-LATECAREER-ARCHIVE-CLUB-CONTINUITY.md). 연속작업의마지막사용량·재개위치는 [CONTINUATION-CHECKPOINT](CONTINUATION-CHECKPOINT.md)에기록합니다.
@@ -65,6 +67,8 @@ GitHub https://github.com/bossxor/baseball_Career 의 docs/design이 원본. 다
 ---
 
 <!-- SOURCE: README.md -->
+
+이미지 제작 인계: [124 이미지 제작 명세](124-IMAGE-PRODUCTION-BRIEF.md). API·스키마 정합 [122](122-API-SCHEMA-LOG-ALIGNMENT.md), 새 효과 합산 예제 [123](123-EFFECT-SUM-EXAMPLES.md).
 
 최신: [119 선수 표시·투구폼·좌우 상성](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) · [120 구현 착수 대비 로드맵](120-IMPLEMENTATION-ROADMAP.md). 사람 외형 없이 이름·던지는 손/타석·투구폼만 사용하며 실루엣 이미지는 별도 제작합니다. 진행/재개위치는 STATUS·CONTINUATION-CHECKPOINT를 확인합니다.
 
@@ -149,6 +153,8 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 # 설계 현황 — 119 선수 표시·투구폼 / 120 구현 로드맵
 
 ## 현재 요약 (2026-10-19)
+
+- 이미지 제작 인계: [124](124-IMAGE-PRODUCTION-BRIEF.md)+image-production-register.json(92항목: 제작 필요 64·있음 16·코드 제작 11·보존 1). 이미지는 다른 곳에서 제작한다. API·스키마·로그 정합은 [122](122-API-SCHEMA-LOG-ALIGNMENT.md), 새 효과 합산 예제는 [123](123-EFFECT-SUM-EXAMPLES.md).
 
 - 최신 사용자 확정: [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 생성 선수 손 우투85/좌투15·타석 분포, S16 좌우 분리 기록. PORTRAIT 슬롯은 SILHOUETTE_CARD로 전환했고 **실루엣 이미지는 별도 제작 필요**(119).
 
@@ -1026,6 +1032,7 @@ ScheduleGame: id, season, dayIndex, homeTeamId, awayTeamId, status, rngSeed, res
 | game_saves | id, owner_id FK, mode enum, revision bigint≥0, versions, phase, summary JSONB, state JSONB, created/updated_at, deleted_at. index(owner_id,updated_at desc) |
 | command_receipts | save_id FK, command_id, request_hash, result JSONB, resulting_revision, created_at. PK(save_id,command_id) |
 | archived_players | id, owner_id, source_save_id UNIQUE(출처값), snapshot JSONB, version, checksum, created_at, hidden_at. 원본 수정 API 없음 |
+| split_stat_summaries | player_id FK, scope_key, vs_hand(L/R), stats JSONB, aggregate_version. UNIQUE(player_id,scope_key,vs_hand) (121/122) |
 | imported_players | club_save_id FK, archive_id, instance_player_id, source_version, imported_at_age=19. PK(club_save_id,archive_id) |
 | save_backups | id, owner_id, save_id, revision, object_key UNIQUE, sha256, size, status, created_at. 준비완료에만 다운로드 허용 |
 | operation_jobs | id, owner_id, save_id, type, status, source_revision, attempts, next_attempt_at, error_code. 백업 재시도용 |
@@ -1739,7 +1746,7 @@ Neon 지역/권한/기존 서비스, Auth 사용가능 여부, 운영 사용자 
 | ID | 읽는 데이터 | 입력/버튼 | 다음 화면 | 필수 예외 |
 | --- | --- | --- | --- | --- |
 | S01 홈 | 최근 saves.summary, archiveCount | 이어하기/커리어/구단/설정 | 저장 phase에 맞는 화면 | 세이브0개도 새 모드 사용 |
-| S02 생성 | 유형/포지션/초기능력 정의 | 이름/투타/유형/집중, 생성 | S03 고교 | 이름·좌투검증, 초안취소 |
+| S02 생성 | 유형/포지션/초기능력 정의 | 이름/투타·투구폼(투수)/유형/집중, 생성 | S03 고교 | 이름·좌투·투구폼검증, 초안취소 |
 | S03 커리어 | protagonist,phase,progress,nextActions | 다음이야기/기록/현재계획 | S06/07/22~27 | 명령결과유실/사건대기 |
 | S04 고교결산 | 고교기록/평가 | 진로선택 | S28 | 성적0도 진행가능 |
 | S05 드래프트 | 지명/계약/미지명 | 수락/재도전/종료 | S03/09 | 중복수락 금지 |
@@ -1753,7 +1760,7 @@ Neon 지역/권한/기존 서비스, Auth 사용가능 여부, 운영 사용자 
 | S13 구단홈 | 순위/예산/다음경기/할일 | 1경기/1주일/설정 | S19/S06 | 의무할일에서중단 |
 | S14 선수단 | roster/injury/contracts | 필터/선수상세/승강 | S16/13 | 정원/필수포지션 |
 | S15 라인업 | 타순/수비/투수계획 | 슬롯→선수/자동/적용 | S13 | 중복/부상/미적용초안 |
-| S16 선수상세 | 능력/적합도/계약/출처 | 기용/계약/보관탭 | 해당상세 | 원본읽기전용 |
+| S16 선수상세 | 능력/적합도/계약/출처/좌우 분리 기록 | 기용/계약/보관탭 | 해당상세 | 원본읽기전용 |
 | S17 시장 | FA/내제안/예약예산 | 제안금액·기간/철회 | S13/08 | 동시계약/예산예약 |
 | S18 리그 | 순위/일정/개인기록/PS | 탭/연도/필터 | S19/16 | 규정미달/보존지난상세 |
 | S19 경기 | 점수/이닝/박스/사건 | 이전/다음/복귀 | S18/13 | 진행중경기는종료로표시금지 |
@@ -4507,6 +4514,8 @@ S43공석→후보필터(원본/가상)→역할claim상태→등급근거→급
 
 <!-- SOURCE: 62-COMMENTARY-DETAILED-CONTRACT.md -->
 
+최신 확정(2026-10-19): [122](122-API-SCHEMA-LOG-ALIGNMENT.md) playRecord logSchemaVersion 2에 batterBatsAtTime/effectiveBatSide/pitcherThrowsAtTime/pitcherFormAtTime snapshot이 추가된다.
+
 표시·상태 최신 계약: [104](104-COMMENTARY-CHRONICLE-STATE-UI.md)와 [106 연결](106-EXPANSION-UI-CLOSURE.md)을 따른다. 기존 수식·권리·기념보상·읽기전용 계약은 유지하며,상태 UI/로컬 시안/실행 미검증을 구분한다.
 
 # 62. 감상형 문자 중계 상세 계약 — 로그·해시·읽기 복원
@@ -5217,6 +5226,8 @@ S18의원래리그/기록탭은읽기전용이고커리어S05의지명결과수�
 
 <!-- SOURCE: 78-NEW-GAME-CREATION-RECOVERY.md -->
 
+최신 확정(2026-10-19): [122](122-API-SCHEMA-LOG-ALIGNMENT.md) 생성 payload에 투수 pitchForm이 추가되고 creationSchemaVersion이 오른다. 투구폼 없는 구버전 요청은 거절·업데이트 안내.
+
 최신 생성 입력은 [79](79-CREATION-FIELDS-VALIDATION-COPY.md)를 따릅니다. 생성 전 실제 가상 로스터/개인 잠재력 추첨 미리보기 초안은 폐기하고 구성 기준을 표시합니다. 실제 선수단은78의 단일 생성 작업에서 확정합니다. 숨김 치트 해금은 클릭 증명을 요구하는 서버 권한이 아닌 발견용 UI입니다.
 
 # 78. 새 게임 생성과 생성 중단 복구
@@ -5840,6 +5851,8 @@ CP06 Android APK는 시스템 브라우저 로그인→검증된 HTTPS App Link 
 
 <!-- SOURCE: 88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md -->
 
+최신 확정(2026-10-19): [122](122-API-SCHEMA-LOG-ALIGNMENT.md) 투구폼 필드 추가로 minWriteClientContractVersion을 올린다. 구버전은 쓰기 전에 REQUIRED_FOR_WRITE로 안내된다.
+
 # 88. 웹·PWA·APK 업데이트와 버전 호환
 
 2026-10-19 / 기술 기본안 D. [29](29-OPERATIONS-RELEASE-RUNBOOK.md)·[74](74-PREVIEW-COMMAND-RECONCILIATION.md)·[76](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)·[86](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md)의 갱신/복구 원칙을 UI·API·캐시 계약으로 구체화한다. 실제 서비스워커·APK·릴리스 파이프라인은 미구현이다.
@@ -6062,7 +6075,7 @@ START-HERE → STATUS →14의 U/D/V → 이 지도에서 담당 분야 → 해�
 | 분야 | 우선 확인 |
 |---|---|
 | 제품/플랫폼 |14/84/86|
-| 생성·6능력·집중4개 |79/78/35/90/119/121|
+| 생성·6능력·집중4개 |79/78/35/90/119/121/122|
 | 커리어·재도전·대학·드래프트 |66/19/43/34|
 | 미국·포스팅·국내 복귀 |23/34/66|
 | 국제대회·병역·시간 |20/21/14/69|
@@ -6073,13 +6086,13 @@ START-HERE → STATUS →14의 U/D/V → 이 지도에서 담당 분야 → 해�
 | 구단·시장·자연 주기 |85/44/40/61/68|
 | 은퇴·보관·지도자 |90/85/42/32/61/70/103|
 | 이벤트·일자 처리 |81/69/45/26|
-| API·미리보기·명령 |74/75/64/77/28/78|
+| API·미리보기·명령 |74/75/64/77/28/78/122|
 | 저장·복원·연도 |70/72/71/29|
 | 이어하기·계정·화면 |87/80/76/78|
 | 에이전트·관계 |59/60/103|
-| 중계·연대기·파일 |89/62/63/65/104|
-| 확률·효과 표시 |82/75/38/40/34|
-| 디자인·로고·접근성 |93/94/95/83/46/27/37/03/11|
+| 중계·연대기·파일 |89/62/63/65/104/122|
+| 확률·효과 표시 |82/75/38/40/34/123|
+| 디자인·로고·접근성 |93/94/95/83/46/27/37/03/11/124|
 | 인증·플랫폼·업데이트 |87/88/89/86/28/16/29|
 | 실행 검수 |92/84/73/71/120|
 
@@ -6262,6 +6275,8 @@ hero는텍스트공간과선수머리를보존하는focalpoint,사건패널은�
 ---
 
 <!-- SOURCE: 94-SCREEN-IMAGE-STORYBOARD.md -->
+
+이미지 제작 인계(2026-10-19): 화면별 이미지 제작 인계표는 [124](124-IMAGE-PRODUCTION-BRIEF.md)다.
 
 실루엣 이미지 표기(2026-10-19): 선수 초상 자리는 사람 외형 초상이 아니라 [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md)의 실루엣+이름 카드를 쓴다. **실루엣 이미지는 아직 제작되지 않았고 별도로 만들어야 한다.** screen-image-slots.json의 SILHOUETTE_CARD/silhouetteCard 슬롯이 그 자리이며, 시안·보드의 기존 초상 PNG는 예시 자산일 뿐 선수 외형 확정이 아니다.
 
@@ -7564,6 +7579,8 @@ S01 홈, S04 고교결산, S10 보관목록, S11 보관상세, S15 라인업, S1
 
 <!-- SOURCE: 112-ABILITY-CEILING-PERFORMANCE-BALANCE.md -->
 
+최신 확정(2026-10-19): 이 문서의 극단 비율은 투구폼·좌우 보정 0 기준이다. 새 보정의 합산 예제는 [123](123-EFFECT-SUM-EXAMPLES.md)이며 장기 영향은 119의 FX 실험에서 확인한다.
+
 # 112. 능력치100과 실제 성적·극단 능력 밸런스
 
 2026-10-19. 사용자 질문: “능력치가 모두100이면 타율1/장타율1인가?” 기존 [08 산식](08-FORMULAS.md)/[41 여섯 능력](41-SIX-STAT-ENGINE.md)을 확인하고 수치 예시와 설명·검수 기준을 추가한다. 신규 경기 엔진 구현이나 성공률 상향이 아니다. 아래 숫자는 캘리브레이션 전 현재 D 산식의 해석이며 실제 시즌 실험 결과가 아니다.
@@ -8099,6 +8116,8 @@ LC-D01 은퇴응답유실archive1개/02 연대기표현실패에도snapshot보�
 
 <!-- SOURCE: 119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md -->
 
+이미지 제작 인계(2026-10-19): 실루엣 14종을 포함한 전체 이미지 제작 목록은 [124](124-IMAGE-PRODUCTION-BRIEF.md)와 image-production-register.json에 있다.
+
 # 119. 선수 표시 정보·투구폼·좌우 상성·실루엣 아트 라이브러리
 
 사용자확정U(2026-10-19):①선수에게 사람 외형은 필요 없다. 필요한 것은 이름, 던지는 손/타석(좌투좌타 등), 투수면 투구 스타일 ②투구폼은 4종(오버핸드·쓰리쿼터·사이드암·언더핸드) ③투구폼과 좌우는 표시 전용이 아니라 특정 구종·상성에 소폭 영향 ④폼당 2구종 소폭 친화 ⑤좌우 상성은 반대손 소폭 ⑥초상은 실루엣 포즈+이름 카드 ⑦NPC는 같은 라이브러리 재사용+팔레트 변형. 이 문서는 [95](95-CHARACTER-EVENT-ART-PRODUCTION.md)의 얼굴·identityFamily·나이대 얼굴 재사용 규칙, [79](79-CREATION-FIELDS-VALIDATION-COPY.md)의 ‘타석은 추가 능력 없음’, [48](48-PITCHES-BATTING-APPROACH.md)·[57](57-REPERTOIRE-DETAILED-CONTRACT.md)의 구종 벡터를 이 범위에서 대체·보강한다. 수치와 분포는 초안D이며 밸런스 실증 전이다.
@@ -8307,6 +8326,325 @@ GN-D01 손 비율 대량 생성 우투85±허용오차/02 우투 타석 80/12/8,
 ## 남은 확인
 
 허용오차·소표본 분포 검증 방식은 구현 후 FX 실험(119)에서 정한다. 확정 전에는 41/60/62/79/보드/fixture를 갱신하지 않았다. 구현·화면 렌더는 하지 않았다.
+
+---
+
+<!-- SOURCE: 122-API-SCHEMA-LOG-ALIGNMENT.md -->
+
+# 122. 투구폼·좌우 분리 기록의 API·스키마·로그 정합
+
+사용자확정U(2026-10-19): 구버전 클라이언트가 투구폼 없이 투수를 생성하면 **거절하고 업데이트를 안내**한다(추천안). 이 문서는 [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md)·[121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md)이 만든 새 필드·조회가 기존 API·로그·DB·화면 바인딩과 어긋나지 않게 맞춘다. 구현·실행은 하지 않았다.
+
+## 1. 생성 요청 (78/79/88)
+
+- 생성 payload에 `pitchForm`(OVERHAND|THREE_QUARTER|SIDEARM|UNDERHAND)을 추가하고 `creationSchemaVersion`을 한 단계 올린다. 타자 payload에는 `pitchForm`을 보내지 않으며 보내면 422 INVALID_FIELD.
+- 투수 payload에 `pitchForm`이 없으면 서버는 임의 값을 채우지 않고 422 `CLIENT_UPDATE_REQUIRED`(요청의 clientContractVersion이 새 필수 버전 미만일 때) 또는 422 `INVALID_PITCH_FORM`(버전은 맞지만 값이 없거나 잘못됨)으로 거절한다. 거절은 생성 job·saveId 예약·난수를 소비하지 않는다.
+- 클라이언트 정책(88): 이 변경과 함께 `minWriteClientContractVersion`을 올려 구버전은 쓰기 전에 REQUIRED_FOR_WRITE로 안내된다. 조회·receipt/job 확인은 허용한다. 이미 접수된 같은 creationId 재전송은 접수 당시 payload 해시로 처리하며(78) 새 필드 때문에 기존 job을 무효화하지 않는다.
+- 입력 초안: 로컬 초안은 schemaVersion을 포함하며(88) 구버전 초안에 pitchForm이 없으면 투수 유형 선택 후 ‘투구 폼을 선택해 주세요’ 오류로 입력을 보존한다.
+
+## 2. 경기 로그 (62)
+
+playRecord의 logSchemaVersion을 1→2로 올리고 PA 판정에 필요한 손 snapshot을 추가한다.
+
+| 필드 | 의미 |
+|---|---|
+|batterBatsAtTime|경기 시점 타자 타석 R/L/S|
+|effectiveBatSide|투수 손 기준 실제 판정 타석 R/L(양타는 반대)|
+|pitcherThrowsAtTime|경기 시점 투수 던지는 손 R/L|
+|pitcherFormAtTime|경기 시점 투구폼|
+
+- 손·타석·폼은 생성 후 변하지 않지만(119) 정정·복사·원본 보관과 무관하게 로그가 자기완결되도록 snapshot으로 저장한다. v1 로그는 읽기 호환만 유지하며 split 집계에는 선수 행의 손 정보로 보강하지 않는다(해당 PA는 ‘분류 불가’로 집계 제외, 총합 불일치 경고).
+- resultHash 입력(62)에는 위 필드가 포함되므로 logSchemaVersion 2 이후 경기는 해시 규칙이 달라진다. 이전 경기 hash는 불변이다.
+
+## 3. DB (06)
+
+| 변경 | 내용 |
+|---|---|
+|players|`pitch_form` enum NULL 허용(투수 NOT NULL 제약은 kind=PITCHER CHECK), `throws`·`bats`는 기존|
+|split_stat_summaries|playerId, scopeKey, vsHand(L/R), stats JSONB, aggregateVersion. UNIQUE(playerId,scopeKey,vsHand)|
+|archive 요소|throws/bats/pitch_form과 최종 split 요약 보존(70)|
+
+## 4. 화면·바인딩 (77/17/screen-state-catalog)
+
+- S16 선수상세의 쿼리 바인딩에 `READ_PLAYER_SPLIT_RECORDS`를 추가했다(screen-action-bindings.json, 화면 45행 유지). 조회 API는 121의 GET split-records.
+- S02 생성 행(17/catalog)의 입력에 ‘투구폼(투수)’ 필드를 반영했다.
+- 읽기 전용 조회이며 난수·save revision을 바꾸지 않는다.
+
+## 검수 항목 (초안, NOT_EXECUTED)
+
+API-D01 투수 payload에 pitchForm 없음 → 422, job·saveId 0/02 타자 payload에 pitchForm → 422/03 구버전 클라이언트 쓰기 전 업데이트 안내/04 같은 creationId 재전송은 접수 payload 해시로 처리/05 logSchemaVersion 2 playRecord에 손·폼 snapshot/06 v1 로그 PA는 split 분류 불가로 제외/07 resultHash는 새 필드 포함/08 players CHECK(투수 pitch_form NOT NULL)/09 archive가 손·폼 보존/10 split-records 조회 난수 0.
+
+---
+
+<!-- SOURCE: 123-EFFECT-SUM-EXAMPLES.md -->
+
+# 123. 투구폼·좌우 보정 합산 정적 산술 예제
+
+[119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md)의 투구폼×구종 친화(±.01)와 좌우 상성(±.01)이 특성·구종·성향과 합쳐지는 순서를 숫자로 고정한다. 순서: ①특성 logit 합을 outcome별로 [-.06,.06] cap ②구종(×숙련/5)·성향·폼 친화·좌우 보정을 더함 ③최종 [-.10,.10] cap ④08의 base logit(모두 50·무주자 base 확률)에 더해 softmax. 값은 [effect-sum-examples.json](effect-sum-examples.json)에 있고 verify-design.mjs가 재계산해 대조한다. 실제 경기·시즌 결과가 아니라 산식 확인용이다.
+
+기준 확률(08): BB .085 / HBP .010 / K .200 / 1B .160 / 2B .045 / 3B .005 / HR .030 / OUT .465.
+
+|ID|시나리오|원합(상한 전)|적용합|결과 확률(4자리)|비고|
+|---|---|---|---|---|---|
+|X01|우투 오버핸드 포심(숙련5) vs 좌타|K +0.04 / 1B +0.01 / HR +0.02|K +0.04 / 1B +0.01 / HR +0.02|K 0.206 / 1B 0.1599 / HR 0.0303 / OUT 0.4602|-|
+|X02|우투 오버핸드 포심(숙련5) vs 우타(같은 손)|K +0.05 / HR +0.02|K +0.05 / HR +0.02|K 0.208 / 1B 0.1583 / HR 0.0303 / OUT 0.46|-|
+|X03|우투 쓰리쿼터 슬라이더(숙련3) vs 양타(반대 처리)|BB +0.012 / K +0.034 / 1B +0.004|BB +0.012 / K +0.034 / 1B +0.004|K 0.2052 / 1B 0.1593 / HR 0.0297 / OUT 0.461|-|
+|X04|만루 9회 리드, T11+T12 상한 도달(우투 쓰리쿼터 슬라이더 숙련5, 같은 손)|BB -0.01 / K +0.12 / 1B -0.01 / HR -0.02 / OUT +0.03|BB -0.01 / K +0.1 / 1B -0.01 / HR -0.02 / OUT +0.03|K 0.2141 / 1B 0.1535 / HR 0.0285 / OUT 0.4642|상한 도달: K|
+|X05|히든 T13 좌타 vs 우투(반대 손)|K -0.03 / 1B +0.06 / 2B +0.04|K -0.03 / 1B +0.06 / 2B +0.04|K 0.193 / 1B 0.1689 / HR 0.0298 / OUT 0.4623|-|
+|X06|우투 사이드암 투심(숙련4) vs 우타(같은 손)|K +0.002 / HR -0.016 / OUT +0.034|K +0.002 / HR -0.016 / OUT +0.034|K 0.1972 / 1B 0.1575 / HR 0.0291 / OUT 0.4735|-|
+|X07|우투 오버핸드 슬라이더(숙련5, 친화 아님) vs 좌타|BB +0.02 / K +0.04|BB +0.02 / K +0.04|K 0.2061 / 1B 0.1584 / HR 0.0297 / OUT 0.4605|-|
+
+## 읽는 법
+
+- 원합과 적용합이 다르면 상세 도움말에 둘을 모두 보여 준다(56/75). 예제 X04는 K의 원합 .12가 최종 상한 .10으로 줄어든다.
+- X07은 슬라이더가 오버핸드 친화 목록(포심·커브)에 없어 폼 보정이 0이다. 좌우 1B +.01과 구종의 1B -.01이 상쇄되어 1B 보정은 0이다.
+- X03은 양타가 우투 상대에서 반대 타석(좌)으로 취급되어 1B +.01을 받는다.
+- 이 예제는 밸런스 실증이 아니다. 격차·상한 조정은 119의 FX01~FX04 실행 후 새 결정으로 한다. 기존 [112](112-ABILITY-CEILING-PERFORMANCE-BALANCE.md)의 극단 비율(AVG .265 등)은 폼·좌우 보정 0 기준이며 새 보정이 반영되지 않았다.
+
+## 검수 항목 (초안, NOT_EXECUTED)
+
+ES-D01 X01~X07 적용합 재계산 일치/02 확률합 1/03 X04 K 원합 .12→.10/04 특성합 .08→.06 선행 cap/05 양타 반대손 처리(X03)/06 친화 밖 구종은 폼 0(X07)/07 같은 손 투수 K+.01(X02, X06)/08 보정 0이어도 확률합 1.
+
+---
+
+<!-- SOURCE: 124-IMAGE-PRODUCTION-BRIEF.md -->
+
+# 124. 이미지 제작 명세 — 다른 곳에서 바로 만들 수 있는 목록
+
+2026-10-19. 이 문서와 [image-production-register.json](image-production-register.json)은 앱에 필요한 **모든 이미지**를 한 곳에 모은 제작 인계표다. 이 저장소에서는 이미지를 만들지 않는다(사용자 결정: 이미지는 다른 곳에서 제작). 제작한 파일을 넣고 레지스터의 status를 바꾸는 절차는 아래 ‘제작 후 반영’을 따른다. 실제 렌더·접근성 검수와 사용자 승인은 제작 후 별도다.
+
+## 한눈에 보기
+
+- 레지스터 항목 92개: 제작 필요(TODO) 64개, 이미 있음 16개, 코드로 만들면 되는 것(이미지 불필요) 11개, 보존 1개.
+- 우선순위: P0 17개(실루엣 14 + 앱 아이콘·로고 3), P1 43개, P2 4개. P0는 앱을 처음 띄울 때 필요한 것이고 P1은 해당 기능 화면, P2는 선택이다.
+- 코드로 만드는 것(CODE_ONLY: 마이너·고교·국가 배지, 특성·구종·성향·폼·투타·목표 아이콘, 수비 다이어그램, 칭호)은 이미지 생성이 필요 없다.
+
+## 공통 제작 규칙
+
+1. **그림체**: 일러스트(PNG)는 [111](111-ANIMATION-MAIN-ART-DIRECTION.md)의 청춘 야구 애니. 기존 활성 파일(hero-animation-v1, career-events-animation-v1/extra-v1, graduation-animation-day-v1)과 같은 선·색감으로 맞춘다. 프롬프트·원본 경로 기록은 assets/art-lab의 *-GENERATION.json 형식을 따라 새 JSON으로 남긴다.
+2. **시간대**: 훈련은 맑은 아침, 학교·이동은 낮, 협상·운영·재활·은퇴는 중성 창빛, 라이벌 야간 경기는 푸른 하늘+흰 조명. 자동 석양·전체 오렌지 광은 쓰지 않는다.
+3. **글자·로고 금지**: 이미지 안에 글자, 숫자, 실제 구단·대회·국가 로고를 그리지 않는다(모자 문양 포함). 모든 텍스트는 코드가 렌더한다. 실제 선수 얼굴·사진 금지.
+4. **선수 표현**: 선수 카드의 사람 표현은 사람 외형이 아니라 실루엣+이름 카드([119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md)). 사건 장면 속 인물은 선수 본인의 외형 확정이 아니다.
+5. **결과 누설 금지**: 이미지로 계약·메달·선발 결과를 미리 알리지 않는다. 메달·승리 그림은 확정 근거가 있을 때만 표시되며 평소엔 중립 그림을 쓴다([95](95-CHARACTER-EVENT-ART-PRODUCTION.md)).
+6. **실루엣**: 좌우 단순 반전 금지(글러브·배트·공 위치가 틀어진다). 색은 CSS 변수로만 받는다.
+7. **형식**: 일러스트 PNG는 원본을 보존하고 -v1, -v2 식으로 새 파일로 추가한다. 아이콘·배지·실루엣은 SVG(script·foreignObject·image·text 금지, title 포함). 1536×1024 아틀라스는 정사각 패널 3×2, 세로형 카드는 1080×1350.
+8. **접근성**: 모든 이미지는 장식이거나 대체 텍스트를 가진다. 이미지만으로 정보를 전달하지 않는다.
+9. **저작권·출처**: 만든 방법·도구·프롬프트·생성일을 기록하고, 외부 소재는 쓰지 않는다. 공개 배포 권리 확인은 [92](92-DESIGN-CLOSURE-HANDOFF.md)의 V12.
+
+## 폴더 계획
+
+assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/rewards/(프레임 3·배경 3·스탬프 13·표지 1), assets/medals/(메달 3·대회 엠블럼 4), assets/cards/(카드 테마 3), assets/brand/(로고·앱 아이콘), assets/art-lab/(청춘 애니 일러스트 PNG).
+
+## 이미지 목록
+
+### G1 선수 실루엣(SVG)
+
+|ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
+|---|---|---|---|---|---|---|
+|IMG-SIL-H-RR|타자 우투우타 실루엣|assets/silhouettes/hitter-RR.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|우투 선수의 우타석. 배트는 정면 기준 왼쪽 어깨 위, 글러브는 정면 기준 오른쪽 허리|
+|IMG-SIL-H-RL|타자 우투좌타 실루엣|assets/silhouettes/hitter-RL.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|좌타석. 배트는 정면 기준 오른쪽 어깨 위, 글러브는 정면 기준 오른쪽 허리|
+|IMG-SIL-H-RS|타자 우투양타 실루엣|assets/silhouettes/hitter-RS.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|양타. 두 배트 포즈를 겹쳐 한쪽은 옅게, 글러브는 정면 기준 오른쪽 허리|
+|IMG-SIL-H-LR|타자 좌투우타 실루엣|assets/silhouettes/hitter-LR.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|우타석, 글러브는 정면 기준 왼쪽 허리|
+|IMG-SIL-H-LL|타자 좌투좌타 실루엣|assets/silhouettes/hitter-LL.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|좌타석, 글러브는 정면 기준 왼쪽 허리|
+|IMG-SIL-H-LS|타자 좌투양타 실루엣|assets/silhouettes/hitter-LS.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|양타, 글러브는 정면 기준 왼쪽 허리|
+|IMG-SIL-P-R-OVERHAND|투수 우투 오버핸드 실루엣|assets/silhouettes/pitcher-R-overhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔이 머리 위로 수직. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-R-THREEQUARTER|투수 우투 쓰리쿼터 실루엣|assets/silhouettes/pitcher-R-threequarter.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 45도 위. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-R-SIDEARM|투수 우투 사이드암 실루엣|assets/silhouettes/pitcher-R-sidearm.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 수평. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-R-UNDERHAND|투수 우투 언더핸드 실루엣|assets/silhouettes/pitcher-R-underhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 낮게 아래로. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-L-OVERHAND|투수 좌투 오버핸드 실루엣|assets/silhouettes/pitcher-L-overhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔이 머리 위로 수직. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-L-THREEQUARTER|투수 좌투 쓰리쿼터 실루엣|assets/silhouettes/pitcher-L-threequarter.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 45도 위. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-L-SIDEARM|투수 좌투 사이드암 실루엣|assets/silhouettes/pitcher-L-sidearm.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 수평. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-L-UNDERHAND|투수 좌투 언더핸드 실루엣|assets/silhouettes/pitcher-L-underhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 낮게 아래로. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+
+### G2 사건 장면 12(청춘 애니)
+
+|ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
+|---|---|---|---|---|---|---|
+|IMG-SCN-TRAINING|사건 장면 새로운 시즌|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열0/행0, 3×2 아틀라스 1536×1024|있음|S04, S07, S24, S25, S27, S28|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E01/E08/E41|
+|IMG-SCN-COLLEGE|사건 장면 대학 진학|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열1/행0, 3×2 아틀라스 1536×1024|있음|S28, S34, S35|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E70/E71/E73/E75|
+|IMG-SCN-OVERSEAS|사건 장면 미국으로|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열2/행0, 3×2 아틀라스 1536×1024|있음|S28, S29, S30, S33|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E57/E58|
+|IMG-SCN-INTERNATIONAL|사건 장면 국제무대|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열0/행1, 3×2 아틀라스 1536×1024|있음|S07, S25, S45|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E47/E48|
+|IMG-SCN-RETIREMENT|사건 장면 마지막 유니폼|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열1/행1, 3×2 아틀라스 1536×1024|있음|S09, S11, S12, S45|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E37/E69/E99|
+|IMG-SCN-FRONTOFFICE|사건 장면 구단의 내일|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열2/행1, 3×2 아틀라스 1536×1024|있음|S12, S13, S17, S36|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E38/E39/E40/E77/E79/E81|
+|IMG-SCN-DRAFT|사건 장면 지명을 기다리며|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열0/행0, 3×2 아틀라스 1536×1024|있음|S05, S28|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E04/E05/E06|
+|IMG-SCN-ENHANCEMENT|사건 장면 한 번의 특별훈련|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열1/행0, 3×2 아틀라스 1536×1024|있음|S23|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E43|
+|IMG-SCN-REHAB|사건 장면 다시 뛰는 준비|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열2/행0, 3×2 아틀라스 1536×1024|있음|-|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E21/E22/E23|
+|IMG-SCN-SERVICE|사건 장면 돌아오는 길|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열0/행1, 3×2 아틀라스 1536×1024|있음|S27, S33|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E53/E76|
+|IMG-SCN-POSTING|사건 장면 다음 리그의 제안|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열1/행1, 3×2 아틀라스 1536×1024|있음|S08, S31, S32, S41|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E62/E63/E64|
+|IMG-SCN-RIVAL|사건 장면 같은 출발선|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열2/행1, 3×2 아틀라스 1536×1024|있음|S42, S45|청춘 애니, 시간대 NIGHT_WHITE_FLOODLIGHTS, 이벤트 E26/E94/E95/E96|
+
+### G3 마감 장면 6컷
+
+|ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
+|---|---|---|---|---|---|---|
+|IMG-FIN-COLLEGE|마감 장면 대학(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 대학 캠퍼스 그라운드. 시간대 규칙 준수|
+|IMG-FIN-MINOR-AWAY|마감 장면 마이너 원정(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 마이너 원정 이동/구장. 시간대 규칙 준수|
+|IMG-FIN-RIVAL-NEUTRAL|마감 장면 중립 라이벌(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 중립 구장에서 마주 선 두 선수. 시간대 규칙 준수|
+|IMG-FIN-RETURN|마감 장면 복귀(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 귀국/복귀 장면. 시간대 규칙 준수|
+|IMG-FIN-RETIRE|마감 장면 은퇴(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 은퇴 기념 장면. 시간대 규칙 준수|
+|IMG-FIN-STADIUM|마감 장면 구장(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 구장 전경. 시간대 규칙 준수|
+
+### G4 Hero·졸업 장면
+
+|ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
+|---|---|---|---|---|---|---|
+|IMG-HERO-MAIN|메인 hero 배경|assets/art-lab/hero-animation-v1.png|1672×941|있음|S01, S03, S19, S30|청춘 애니 활성. 시간대 변형은 선택(P2)|
+|IMG-HERO-GRAD|고교 졸업 가로 장면|assets/art-lab/graduation-animation-day-v1.png|가로 hero|있음|S04|S04 전용|
+
+### G5 실제 구단 로고
+
+|ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
+|---|---|---|---|---|---|---|
+|IMG-LOGO-KBO|KBO 구단 로고|assets/team-logos/kbo/*.png|공식 출처, 10개|있음|S14, S18|사용 허가는 92의 V12에서 확인. 수정·재색칠 금지|
+|IMG-LOGO-MLB|MLB 구단 로고|assets/team-logos/mlb/*.svg|공식 team-cap-on-light 엠블럼, 30개|있음|S18, S29, S30|사용 허가는 V12. 마이너 하위팀에 혼용 금지|
+
+### G6 가상 팀 배지
+
+|ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
+|---|---|---|---|---|---|---|
+|IMG-BADGE-U01|가상 대학 배지 한빛대|assets/badges/college-u01.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U02|가상 대학 배지 청해대|assets/badges/college-u02.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U03|가상 대학 배지 백림대|assets/badges/college-u03.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U04|가상 대학 배지 동운대|assets/badges/college-u04.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U05|가상 대학 배지 서강산대|assets/badges/college-u05.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U06|가상 대학 배지 남해솔대|assets/badges/college-u06.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U07|가상 대학 배지 해오름대|assets/badges/college-u07.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U08|가상 대학 배지 온누리대|assets/badges/college-u08.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U09|가상 대학 배지 새길대|assets/badges/college-u09.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-ARMY|군 체육팀(상무) 배지|assets/badges/military-team.svg|64×64 viewBox|제작 필요 P1|S26, S27|독자 디자인. 실제 부대 마크 사용 금지|
+|IMG-BADGE-MINOR|가상 마이너(Rookie/A/AA/AAA) 팀 배지|(코드 생성)|MLB 30구단×4 = 120팀. 약칭 2~3글자+팔레트로 코드 생성|코드 제작|S18, S29|이미지 제작 불필요. 모회사 로고와 혼용 금지(37)|
+|IMG-BADGE-HS|가상 고교 배지|(코드 생성)|가상 학교 목록(schoolId)별 약칭+팔레트|코드 제작|S02, S04|수는 고교 목록 크기. 이미지 제작 불필요|
+|IMG-BADGE-NAT|국가대표 참가국 배지|(코드 생성)|국가 코드 약칭+팔레트|코드 제작|S24, S25|실제 국기·협회 엠블럼 사용은 V12 권리 확인 전 금지|
+
+### G7 기념 보상 외형
+
+|ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
+|---|---|---|---|---|---|---|
+|IMG-RWD-R-G01|기념 프레임 R-G01|assets/rewards/r-g01.svg|선수 카드 테두리, 9-slice 가능, 가운데 투명|제작 필요 P1|S40, S45|목표 G01 달성 기념. 능력 효과 없음(58)|
+|IMG-RWD-R-G06|기념 프레임 R-G06|assets/rewards/r-g06.svg|선수 카드 테두리, 9-slice 가능, 가운데 투명|제작 필요 P1|S40, S45|목표 G06 달성 기념. 능력 효과 없음(58)|
+|IMG-RWD-R-G10|기념 프레임 R-G10|assets/rewards/r-g10.svg|선수 카드 테두리, 9-slice 가능, 가운데 투명|제작 필요 P1|S40, S45|목표 G10 달성 기념. 능력 효과 없음(58)|
+|IMG-RWD-R-G03|기념 배경 R-G03|assets/rewards/r-g03.png|카드 배경 1080×1350, 글자 없음, 중앙 여백|제작 필요 P1|S40, S45|카드 텍스트 가독성 우선|
+|IMG-RWD-R-G05|기념 배경 R-G05|assets/rewards/r-g05.png|카드 배경 1080×1350, 글자 없음, 중앙 여백|제작 필요 P1|S40, S45|카드 텍스트 가독성 우선|
+|IMG-RWD-R-G08|기념 배경 R-G08|assets/rewards/r-g08.png|카드 배경 1080×1350, 글자 없음, 중앙 여백|제작 필요 P1|S40, S45|카드 텍스트 가독성 우선|
+|IMG-RWD-R-G04|도감 스탬프 R-G04|assets/rewards/r-g04.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-G09|도감 스탬프 R-G09|assets/rewards/r-g09.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A01|도감 스탬프 R-A01|assets/rewards/r-a01.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A02|도감 스탬프 R-A02|assets/rewards/r-a02.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A03|도감 스탬프 R-A03|assets/rewards/r-a03.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A04|도감 스탬프 R-A04|assets/rewards/r-a04.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A05|도감 스탬프 R-A05|assets/rewards/r-a05.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A06|도감 스탬프 R-A06|assets/rewards/r-a06.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A07|도감 스탬프 R-A07|assets/rewards/r-a07.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A08|도감 스탬프 R-A08|assets/rewards/r-a08.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A09|도감 스탬프 R-A09|assets/rewards/r-a09.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A10|도감 스탬프 R-A10|assets/rewards/r-a10.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A11|도감 스탬프 R-A11|assets/rewards/r-a11.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A12|책장 표지 R-A12|assets/rewards/r-a12.png|표지 이미지 1080×1350|제작 필요 P1|S45|KBO·MLB 실제 출장 후 은퇴 기념|
+|IMG-RWD-TITLES|칭호 R-G02/R-G07|(텍스트)|이미지 없음|코드 제작|S40|텍스트 칭호|
+
+### G8 메달·대회 엠블럼
+
+|ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
+|---|---|---|---|---|---|---|
+|IMG-MEDAL-GOLD|메달 금|assets/medals/gold.svg|128×128 viewBox, 글자 없음|제작 필요 P1|S25, S45|메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지|
+|IMG-MEDAL-SILVER|메달 은|assets/medals/silver.svg|128×128 viewBox, 글자 없음|제작 필요 P1|S25, S45|메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지|
+|IMG-MEDAL-BRONZE|메달 동|assets/medals/bronze.svg|128×128 viewBox, 글자 없음|제작 필요 P1|S25, S45|메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지|
+|IMG-COMP-WBC|대회 엠블럼 WBC|assets/medals/comp-wbc.svg|96×96 viewBox, 독자 디자인|제작 필요 P2|S24, S25, S45|실제 대회 로고 사용 금지. 대회 명칭은 텍스트|
+|IMG-COMP-OLY|대회 엠블럼 OLY|assets/medals/comp-oly.svg|96×96 viewBox, 독자 디자인|제작 필요 P2|S24, S25, S45|실제 대회 로고 사용 금지. 대회 명칭은 텍스트|
+|IMG-COMP-AG|대회 엠블럼 AG|assets/medals/comp-ag.svg|96×96 viewBox, 독자 디자인|제작 필요 P2|S24, S25, S45|실제 대회 로고 사용 금지. 대회 명칭은 텍스트|
+|IMG-COMP-P12|대회 엠블럼 P12|assets/medals/comp-p12.svg|96×96 viewBox, 독자 디자인|제작 필요 P2|S24, S25, S45|실제 대회 로고 사용 금지. 대회 명칭은 텍스트|
+
+### G9 연대기 카드 테마
+
+|ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
+|---|---|---|---|---|---|---|
+|IMG-CARD-DEFAULT|연대기 카드 테마 DEFAULT|assets/cards/theme-default.png|1080×1350 배경, 글자·로고 없음, 사용자 메모 6줄 여백|제작 필요 P1|S45|테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더|
+|IMG-CARD-OFFSEASON|연대기 카드 테마 OFFSEASON|assets/cards/theme-offseason.png|1080×1350 배경, 글자·로고 없음, 사용자 메모 6줄 여백|제작 필요 P1|S45|테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더|
+|IMG-CARD-RETIRE|연대기 카드 테마 RETIRE|assets/cards/theme-retire.png|1080×1350 배경, 글자·로고 없음, 사용자 메모 6줄 여백|제작 필요 P1|S45|테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더|
+
+### G10 브랜드·앱 아이콘
+
+|ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
+|---|---|---|---|---|---|---|
+|IMG-BRAND-MARK|로고 마크 ‘다시, 플레이볼’|assets/brand/logo-mark.svg|정사각 viewBox, 글자 최소(마크 중심)|제작 필요 P0|S01, S21|타이틀 로고타입은 현재 검은고딕 텍스트(37). 실제 구단 로고와 무관|
+|IMG-BRAND-ANDROID|Android 적응형 아이콘|assets/brand/android-adaptive-{fg,bg,mono}.svg|foreground/background/monochrome 각 432×432 안전영역 288|제작 필요 P0|-|APK 런처 아이콘(86/29). 배경은 단색 가능|
+|IMG-BRAND-PWA|PWA/웹 아이콘|assets/brand/icon-{192,512,maskable-512}.png, favicon.svg, apple-touch-180.png|192/512/maskable512, favicon(SVG), 180|제작 필요 P0|-|manifest(86). 홈 화면 추가 경로 검수|
+|IMG-BRAND-SPLASH|스플래시 아이콘|assets/brand/splash-icon.svg|Android 12 스플래시 아이콘 288, 단색 배경|제작 필요 P1|-|큰 일러스트 불필요|
+
+### G11 코드로 만드는 아이콘·다이어그램
+
+|ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
+|---|---|---|---|---|---|---|
+|IMG-ICON-TRAIT|특성 배지 T01~T16|(CSS/SVG 코드)|단색 벡터, 24/32px, currentColor|코드 제작|S38|screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요|
+|IMG-ICON-PITCH|구종 아이콘 P01~P07|(CSS/SVG 코드)|단색 벡터, 24/32px, currentColor|코드 제작|S39|screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요|
+|IMG-ICON-APPROACH|타격 성향 카드 아이콘 4종|(CSS/SVG 코드)|단색 벡터, 24/32px, currentColor|코드 제작|S39|screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요|
+|IMG-ICON-FORM|투구폼 아이콘 4종|(CSS/SVG 코드)|단색 벡터, 24/32px, currentColor|코드 제작|S02, S39|screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요|
+|IMG-ICON-HAND|투타 아이콘(우/좌/양)|(CSS/SVG 코드)|단색 벡터, 24/32px, currentColor|코드 제작|S02, S16|screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요|
+|IMG-ICON-GOAL|목표 G01~G10·도전 A01~A12 아이콘|(CSS/SVG 코드)|단색 벡터, 24/32px, currentColor|코드 제작|S40|screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요|
+|IMG-FIELD|수비 배치 다이어그램|(SVG 코드)|야구장 벡터|코드 제작|S15|FIELD_DIAGRAM. 이미지 생성 불필요|
+
+### G12 레거시
+
+|ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
+|---|---|---|---|---|---|---|
+|IMG-LEGACY|비교용 빈티지/시네마틱/선수 초상 PNG|assets/art-lab/*(almanac|cinematic|player-*).png|기존 PNG|보존|-|삭제하지 않음. 선수 초상 PNG는 시안 예시일 뿐 선수 외형 확정이 아님(119)|
+
+## 화면별 필요(제작 필요 항목만)
+
+|화면|수|항목 ID|
+|---|---|---|
+|S01|1|IMG-BRAND-MARK|
+|S02|14|IMG-SIL-H-RR, IMG-SIL-H-RL, IMG-SIL-H-RS, IMG-SIL-H-LR, IMG-SIL-H-LL, IMG-SIL-H-LS, IMG-SIL-P-R-OVERHAND, IMG-SIL-P-R-THREEQUARTER, IMG-SIL-P-R-SIDEARM, IMG-SIL-P-R-UNDERHAND, IMG-SIL-P-L-OVERHAND, IMG-SIL-P-L-THREEQUARTER, IMG-SIL-P-L-SIDEARM, IMG-SIL-P-L-UNDERHAND|
+|S03|14|IMG-SIL-H-RR, IMG-SIL-H-RL, IMG-SIL-H-RS, IMG-SIL-H-LR, IMG-SIL-H-LL, IMG-SIL-H-LS, IMG-SIL-P-R-OVERHAND, IMG-SIL-P-R-THREEQUARTER, IMG-SIL-P-R-SIDEARM, IMG-SIL-P-R-UNDERHAND, IMG-SIL-P-L-OVERHAND, IMG-SIL-P-L-THREEQUARTER, IMG-SIL-P-L-SIDEARM, IMG-SIL-P-L-UNDERHAND|
+|S04|6|IMG-FIN-COLLEGE, IMG-FIN-MINOR-AWAY, IMG-FIN-RIVAL-NEUTRAL, IMG-FIN-RETURN, IMG-FIN-RETIRE, IMG-FIN-STADIUM|
+|S09|6|IMG-FIN-COLLEGE, IMG-FIN-MINOR-AWAY, IMG-FIN-RIVAL-NEUTRAL, IMG-FIN-RETURN, IMG-FIN-RETIRE, IMG-FIN-STADIUM|
+|S10|14|IMG-SIL-H-RR, IMG-SIL-H-RL, IMG-SIL-H-RS, IMG-SIL-H-LR, IMG-SIL-H-LL, IMG-SIL-H-LS, IMG-SIL-P-R-OVERHAND, IMG-SIL-P-R-THREEQUARTER, IMG-SIL-P-R-SIDEARM, IMG-SIL-P-R-UNDERHAND, IMG-SIL-P-L-OVERHAND, IMG-SIL-P-L-THREEQUARTER, IMG-SIL-P-L-SIDEARM, IMG-SIL-P-L-UNDERHAND|
+|S11|14|IMG-SIL-H-RR, IMG-SIL-H-RL, IMG-SIL-H-RS, IMG-SIL-H-LR, IMG-SIL-H-LL, IMG-SIL-H-LS, IMG-SIL-P-R-OVERHAND, IMG-SIL-P-R-THREEQUARTER, IMG-SIL-P-R-SIDEARM, IMG-SIL-P-R-UNDERHAND, IMG-SIL-P-L-OVERHAND, IMG-SIL-P-L-THREEQUARTER, IMG-SIL-P-L-SIDEARM, IMG-SIL-P-L-UNDERHAND|
+|S14|14|IMG-SIL-H-RR, IMG-SIL-H-RL, IMG-SIL-H-RS, IMG-SIL-H-LR, IMG-SIL-H-LL, IMG-SIL-H-LS, IMG-SIL-P-R-OVERHAND, IMG-SIL-P-R-THREEQUARTER, IMG-SIL-P-R-SIDEARM, IMG-SIL-P-R-UNDERHAND, IMG-SIL-P-L-OVERHAND, IMG-SIL-P-L-THREEQUARTER, IMG-SIL-P-L-SIDEARM, IMG-SIL-P-L-UNDERHAND|
+|S16|14|IMG-SIL-H-RR, IMG-SIL-H-RL, IMG-SIL-H-RS, IMG-SIL-H-LR, IMG-SIL-H-LL, IMG-SIL-H-LS, IMG-SIL-P-R-OVERHAND, IMG-SIL-P-R-THREEQUARTER, IMG-SIL-P-R-SIDEARM, IMG-SIL-P-R-UNDERHAND, IMG-SIL-P-L-OVERHAND, IMG-SIL-P-L-THREEQUARTER, IMG-SIL-P-L-SIDEARM, IMG-SIL-P-L-UNDERHAND|
+|S17|14|IMG-SIL-H-RR, IMG-SIL-H-RL, IMG-SIL-H-RS, IMG-SIL-H-LR, IMG-SIL-H-LL, IMG-SIL-H-LS, IMG-SIL-P-R-OVERHAND, IMG-SIL-P-R-THREEQUARTER, IMG-SIL-P-R-SIDEARM, IMG-SIL-P-R-UNDERHAND, IMG-SIL-P-L-OVERHAND, IMG-SIL-P-L-THREEQUARTER, IMG-SIL-P-L-SIDEARM, IMG-SIL-P-L-UNDERHAND|
+|S21|1|IMG-BRAND-MARK|
+|S22|14|IMG-SIL-H-RR, IMG-SIL-H-RL, IMG-SIL-H-RS, IMG-SIL-H-LR, IMG-SIL-H-LL, IMG-SIL-H-LS, IMG-SIL-P-R-OVERHAND, IMG-SIL-P-R-THREEQUARTER, IMG-SIL-P-R-SIDEARM, IMG-SIL-P-R-UNDERHAND, IMG-SIL-P-L-OVERHAND, IMG-SIL-P-L-THREEQUARTER, IMG-SIL-P-L-SIDEARM, IMG-SIL-P-L-UNDERHAND|
+|S24|4|IMG-COMP-WBC, IMG-COMP-OLY, IMG-COMP-AG, IMG-COMP-P12|
+|S25|7|IMG-MEDAL-GOLD, IMG-MEDAL-SILVER, IMG-MEDAL-BRONZE, IMG-COMP-WBC, IMG-COMP-OLY, IMG-COMP-AG, IMG-COMP-P12|
+|S26|1|IMG-BADGE-ARMY|
+|S27|7|IMG-FIN-COLLEGE, IMG-FIN-MINOR-AWAY, IMG-FIN-RIVAL-NEUTRAL, IMG-FIN-RETURN, IMG-FIN-RETIRE, IMG-FIN-STADIUM, IMG-BADGE-ARMY|
+|S28|15|IMG-FIN-COLLEGE, IMG-FIN-MINOR-AWAY, IMG-FIN-RIVAL-NEUTRAL, IMG-FIN-RETURN, IMG-FIN-RETIRE, IMG-FIN-STADIUM, IMG-BADGE-U01, IMG-BADGE-U02, IMG-BADGE-U03, IMG-BADGE-U04, IMG-BADGE-U05, IMG-BADGE-U06, IMG-BADGE-U07, IMG-BADGE-U08, IMG-BADGE-U09|
+|S33|6|IMG-FIN-COLLEGE, IMG-FIN-MINOR-AWAY, IMG-FIN-RIVAL-NEUTRAL, IMG-FIN-RETURN, IMG-FIN-RETIRE, IMG-FIN-STADIUM|
+|S34|15|IMG-FIN-COLLEGE, IMG-FIN-MINOR-AWAY, IMG-FIN-RIVAL-NEUTRAL, IMG-FIN-RETURN, IMG-FIN-RETIRE, IMG-FIN-STADIUM, IMG-BADGE-U01, IMG-BADGE-U02, IMG-BADGE-U03, IMG-BADGE-U04, IMG-BADGE-U05, IMG-BADGE-U06, IMG-BADGE-U07, IMG-BADGE-U08, IMG-BADGE-U09|
+|S35|15|IMG-FIN-COLLEGE, IMG-FIN-MINOR-AWAY, IMG-FIN-RIVAL-NEUTRAL, IMG-FIN-RETURN, IMG-FIN-RETIRE, IMG-FIN-STADIUM, IMG-BADGE-U01, IMG-BADGE-U02, IMG-BADGE-U03, IMG-BADGE-U04, IMG-BADGE-U05, IMG-BADGE-U06, IMG-BADGE-U07, IMG-BADGE-U08, IMG-BADGE-U09|
+|S40|25|IMG-SIL-H-RR, IMG-SIL-H-RL, IMG-SIL-H-RS, IMG-SIL-H-LR, IMG-SIL-H-LL, IMG-SIL-H-LS, IMG-RWD-R-G01, IMG-RWD-R-G06, IMG-RWD-R-G10, IMG-RWD-R-G03, IMG-RWD-R-G05, IMG-RWD-R-G08, IMG-RWD-R-G04, IMG-RWD-R-G09, IMG-RWD-R-A01, IMG-RWD-R-A02, IMG-RWD-R-A03, IMG-RWD-R-A04, IMG-RWD-R-A05, IMG-RWD-R-A06, IMG-RWD-R-A07, IMG-RWD-R-A08, IMG-RWD-R-A09, IMG-RWD-R-A10, IMG-RWD-R-A11|
+|S42|14|IMG-SIL-H-RR, IMG-SIL-H-RL, IMG-SIL-H-RS, IMG-SIL-H-LR, IMG-SIL-H-LL, IMG-SIL-H-LS, IMG-SIL-P-R-OVERHAND, IMG-SIL-P-R-THREEQUARTER, IMG-SIL-P-R-SIDEARM, IMG-SIL-P-R-UNDERHAND, IMG-SIL-P-L-OVERHAND, IMG-SIL-P-L-THREEQUARTER, IMG-SIL-P-L-SIDEARM, IMG-SIL-P-L-UNDERHAND|
+|S43|14|IMG-SIL-H-RR, IMG-SIL-H-RL, IMG-SIL-H-RS, IMG-SIL-H-LR, IMG-SIL-H-LL, IMG-SIL-H-LS, IMG-SIL-P-R-OVERHAND, IMG-SIL-P-R-THREEQUARTER, IMG-SIL-P-R-SIDEARM, IMG-SIL-P-R-UNDERHAND, IMG-SIL-P-L-OVERHAND, IMG-SIL-P-L-THREEQUARTER, IMG-SIL-P-L-SIDEARM, IMG-SIL-P-L-UNDERHAND|
+|S45|30|IMG-RWD-R-G01, IMG-RWD-R-G06, IMG-RWD-R-G10, IMG-RWD-R-G03, IMG-RWD-R-G05, IMG-RWD-R-G08, IMG-RWD-R-G04, IMG-RWD-R-G09, IMG-RWD-R-A01, IMG-RWD-R-A02, IMG-RWD-R-A03, IMG-RWD-R-A04, IMG-RWD-R-A05, IMG-RWD-R-A06, IMG-RWD-R-A07, IMG-RWD-R-A08, IMG-RWD-R-A09, IMG-RWD-R-A10, IMG-RWD-R-A11, IMG-RWD-R-A12, IMG-MEDAL-GOLD, IMG-MEDAL-SILVER, IMG-MEDAL-BRONZE, IMG-COMP-WBC, IMG-COMP-OLY, IMG-COMP-AG, IMG-COMP-P12, IMG-CARD-DEFAULT, IMG-CARD-OFFSEASON, IMG-CARD-RETIRE|
+
+앱 아이콘·로고 마크는 화면이 아닌 앱 패키지용이며 위 표에 화면 없이 별도 P0로 둔다.
+
+## 제작 브리프 요약
+
+- **실루엣(P0)**: 얼굴 없는 유니폼 인물 실루엣. 투수 8(우·좌×오버핸드/쓰리쿼터/사이드암/언더핸드), 타자 6(투타 6조합). 화면 정면 기준으로 던지는 팔·배트·글러브 위치를 목록 메모대로 맞춘다. 양타는 두 배트 포즈를 겹쳐 한쪽을 옅게. 팔레트는 CSS 변수.
+- **마감 장면(P1)**: 111의 활성 일러스트와 같은 그림체로 3×2 아틀라스 1장(대학·마이너 원정·중립 라이벌·복귀·은퇴·구장). 현재는 빈티지 1장뿐이라 청춘 애니 버전이 없다.
+- **기념 보상(P1)**: 프레임 3, 배경 3, 스탬프 13, 표지 1. 스탬프는 단색 도장, 글자 없음. 카드 위 텍스트 가독성을 우선하고 중앙 여백을 남긴다.
+- **가상 대학·상무 배지(P1)**: 실제 마크와 무관한 단순 문양. 대학 이름은 43의 U01~U09.
+- **메달·대회 엠블럼**: 메달 3(P1), 엠블럼 4(P2). 실제 대회 로고 금지.
+- **카드 테마(P1)**: 연대기 카드 1080×1350 배경 3종(기본·오프시즌·은퇴).
+- **브랜드·앱 아이콘(P0/P1)**: 로고 마크, Android 적응형 아이콘, PWA·favicon, 스플래시. 구단 로고와 무관.
+
+## 제작 후 반영 절차
+
+1. 파일을 폴더 계획대로 넣고 규칙을 지켰는지 확인한다(SVG는 script·foreignObject·image·text 없음).
+2. image-production-register.json에서 해당 항목 status를 EXISTS로 바꾸고 file/크기를 실제 값으로 갱신한다.
+3. screen-image-slots.json의 silhouetteCard 등 슬롯 참조와 시안 보드가 새 파일을 가리키게 하고, assets/art-lab 일러스트는 생성 기록 JSON을 추가한다.
+4. verify-design.mjs와 verify-art-direction.mjs를 실행하고 STATUS·119·이 문서를 갱신한다.
+5. 브라우저 렌더·접근성·모바일 확인은 별도로 수행하고 결과를 구분해 기록한다.
+
+## 검수 항목 (초안, NOT_EXECUTED)
+
+IM-D01 TODO 항목마다 파일 경로·규격·화면이 있음/02 실루엣 14종 파일명 일치/03 SVG에 script·image·text 없음/04 일러스트에 글자·로고 없음/05 메달 근거 없는 화면에 메달 이미지 없음/06 실제 구단 로고 파일 수정 없음/07 레지스터 상태와 파일 존재 일치/08 화면별 필요 수와 슬롯 JSON 일치.
+
+## 남은 확인
+
+이미지는 이 저장소에서 제작하지 않았다. 고교 학교 수·국가 참가국 수·카드 테마 개수(D 3종)는 확정 전이다. 사용 권리 확인(V12)과 실제 렌더 검수는 제작 후 진행한다.
 
 ---
 
@@ -9174,6 +9512,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 ---
 
 <!-- SOURCE: HANDOFF-PROMPT.md -->
+
+이미지 제작 인계: [124 이미지 제작 명세](124-IMAGE-PRODUCTION-BRIEF.md). API·스키마 정합 [122](122-API-SCHEMA-LOG-ALIGNMENT.md), 새 효과 합산 예제 [123](123-EFFECT-SUM-EXAMPLES.md).
 
 최신: [119 선수 표시·투구폼·좌우 상성](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) · [120 구현 착수 대비 로드맵](120-IMPLEMENTATION-ROADMAP.md). 사람 외형 없이 이름·던지는 손/타석·투구폼만 사용하며 실루엣 이미지는 별도 제작합니다. 진행/재개위치는 STATUS·CONTINUATION-CHECKPOINT를 확인합니다.
 

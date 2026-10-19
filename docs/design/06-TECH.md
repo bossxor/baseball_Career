@@ -29,6 +29,7 @@ ScheduleGame: id, season, dayIndex, homeTeamId, awayTeamId, status, rngSeed, res
 | game_saves | id, owner_id FK, mode enum, revision bigint≥0, versions, phase, summary JSONB, state JSONB, created/updated_at, deleted_at. index(owner_id,updated_at desc) |
 | command_receipts | save_id FK, command_id, request_hash, result JSONB, resulting_revision, created_at. PK(save_id,command_id) |
 | archived_players | id, owner_id, source_save_id UNIQUE(출처값), snapshot JSONB, version, checksum, created_at, hidden_at. 원본 수정 API 없음 |
+| split_stat_summaries | player_id FK, scope_key, vs_hand(L/R), stats JSONB, aggregate_version. UNIQUE(player_id,scope_key,vs_hand) (121/122) |
 | imported_players | club_save_id FK, archive_id, instance_player_id, source_version, imported_at_age=19. PK(club_save_id,archive_id) |
 | save_backups | id, owner_id, save_id, revision, object_key UNIQUE, sha256, size, status, created_at. 준비완료에만 다운로드 허용 |
 | operation_jobs | id, owner_id, save_id, type, status, source_revision, attempts, next_attempt_at, error_code. 백업 재시도용 |

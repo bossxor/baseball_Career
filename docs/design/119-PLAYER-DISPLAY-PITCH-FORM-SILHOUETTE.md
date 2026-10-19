@@ -1,3 +1,5 @@
+이미지 제작 인계(2026-10-19): 실루엣 14종을 포함한 전체 이미지 제작 목록은 [124](124-IMAGE-PRODUCTION-BRIEF.md)와 image-production-register.json에 있다.
+
 # 119. 선수 표시 정보·투구폼·좌우 상성·실루엣 아트 라이브러리
 
 사용자확정U(2026-10-19):①선수에게 사람 외형은 필요 없다. 필요한 것은 이름, 던지는 손/타석(좌투좌타 등), 투수면 투구 스타일 ②투구폼은 4종(오버핸드·쓰리쿼터·사이드암·언더핸드) ③투구폼과 좌우는 표시 전용이 아니라 특정 구종·상성에 소폭 영향 ④폼당 2구종 소폭 친화 ⑤좌우 상성은 반대손 소폭 ⑥초상은 실루엣 포즈+이름 카드 ⑦NPC는 같은 라이브러리 재사용+팔레트 변형. 이 문서는 [95](95-CHARACTER-EVENT-ART-PRODUCTION.md)의 얼굴·identityFamily·나이대 얼굴 재사용 규칙, [79](79-CREATION-FIELDS-VALIDATION-COPY.md)의 ‘타석은 추가 능력 없음’, [48](48-PITCHES-BATTING-APPROACH.md)·[57](57-REPERTOIRE-DETAILED-CONTRACT.md)의 구종 벡터를 이 범위에서 대체·보강한다. 수치와 분포는 초안D이며 밸런스 실증 전이다.

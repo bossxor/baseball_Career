@@ -2,6 +2,8 @@
 
 ## 현재 요약 (2026-10-19)
 
+- 이미지 제작 인계: [124](124-IMAGE-PRODUCTION-BRIEF.md)+image-production-register.json(92항목: 제작 필요 64·있음 16·코드 제작 11·보존 1). 이미지는 다른 곳에서 제작한다. API·스키마·로그 정합은 [122](122-API-SCHEMA-LOG-ALIGNMENT.md), 새 효과 합산 예제는 [123](123-EFFECT-SUM-EXAMPLES.md).
+
 - 최신 사용자 확정: [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 생성 선수 손 우투85/좌투15·타석 분포, S16 좌우 분리 기록. PORTRAIT 슬롯은 SILHOUETTE_CARD로 전환했고 **실루엣 이미지는 별도 제작 필요**(119).
 
 - 구현 착수 대비: [120](120-IMPLEMENTATION-ROADMAP.md) 모듈 경계·마일스톤 M0~M9·게이트 V01~V12 매핑. 구현 착수 지시 전에는 시작하지 않는다.
