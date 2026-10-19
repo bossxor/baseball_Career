@@ -401,4 +401,5 @@ await import('./verify-first-career.mjs');
 await import('./verify-club-first-season.mjs');
 await import('./verify-club-offseason.mjs');
 await import('./verify-midcareer-progression.mjs');
+await import('./verify-latecareer-continuity.mjs');
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

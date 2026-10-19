@@ -37,3 +37,4 @@ GET /api/saves/{saveId}/players/{playerId}/moments?seasonId&leagueId&type&cursor
 S45필터→카드→공식/메모구분→미리보기→수출확인→job상태→기기저장. 422 TEXT_OVERFLOW이면대상필드편집,409 VERSION_CHANGED면현재모습재preview,503 EXPORT_FAILED면같은job상태확인/새job선택. PIN장면누르기는코스메틱선호만,화면나가기취소가공식카드를삭제하지않음.
 
 CHR-D01 같은outbox2회장면1/02국제0출장이면출장성과문장없음/03원본나이41유지/04메모CAS/05긴제목초과/06업로드실패공식기록불변/07서명URL만료파일존재/08export에ownerSubject없음/09게임세이브아닌JSON안내/10원본source-save삭제후카드읽기. 실제PNG픽셀/한글/Android저장은별도실행게이트.
+118 후속:[118](118-LATECAREER-ARCHIVE-CLUB-CONTINUITY.md)은후반커리어→은퇴원본→19세복사/지도자역할의경험과계보claim경계를연결한다. 기존원본불변·반값·병역리셋·같은세계역할하나규칙은유지한다.

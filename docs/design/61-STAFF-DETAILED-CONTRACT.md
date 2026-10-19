@@ -33,3 +33,4 @@ staff_instances(id,saveId,rootSourceArchiveId?,sourceSnapshotHash,role,grade,ass
 GET expansion/staff?clubId →{slots,candidates,costProjection,activeSourceClaims,allowedActions}. HIRE_RETIRED_STAFF={clubId,sourceArchiveId,snapshotVersion,role,assignment?};HIRE_GENERIC_STAFF={clubId,candidateId,role,assignment?};ASSIGN_STAFF={staffId,assignment};DISMISS_STAFF={staffId}. preview필수,보장총액/현재효과/효력일/해임후빚명시. result={outcome,staffId,contractId,claimRole?,effectsStartDay,budgetRevision}. 실행재시도는동일receipt/직원중복0.
 
 S43공석→후보필터(원본/가상)→역할claim상태→등급근거→급여/효과preview→확정→운영홈. 사용불가원본은현재역할과다른후보링크,자동방출/해임안함. STAFF-D01 현역claim때고용거절/02동시import와고용중1개/03원본hash불변/04반년75000000/05해임보장잔액/06코치훈련1.18+.05→1.2/07스카우트L5유지/08급여재처리중복0/09다른세계재사용/10후임예산검사.
+118 후속:[118](118-LATECAREER-ARCHIVE-CLUB-CONTINUITY.md)은후반커리어→은퇴원본→19세복사/지도자역할의경험과계보claim경계를연결한다. 기존원본불변·반값·병역리셋·같은세계역할하나규칙은유지한다.

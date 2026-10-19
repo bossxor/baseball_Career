@@ -194,3 +194,7 @@ node docs/design/verify-design.mjs PASS, git diff --check PASS. 추가출력: PA
 ## 116~117 중반 경험·빠른진행U (2026-10-19)
 
 node docs/design/verify-design.mjs PASS. 12경험/참조·E13의명령receipt/24적격팀경기경계·유지선택은계획생성0·기본NEXT_MAJOR_EVENT/속도대안·S03/S30/S35연결·12FP 미실행상태를정적으로확인했다. 옛E12 B조건은현재원문/카탈로그에서정정했으며99사건을유지한다. 실제적응/기용/빠른진행청크/복원·브라우저·DB/API/build/APK는미실행이다. 사용량93%확인후중간저장하며계속작업한다.
+
+## 118 은퇴·보관·새구단 연속성 (2026-10-19)
+
+node docs/design/verify-design.mjs PASS, git diff --check PASS. 9장면/12미실행계획·원본41/복사19·peak100→50/종합50.0·기록/병역/히든초기화·계보claim정책·다른세계역할·0프로출장보관·전체구단NPC자동보관0·연대기표현실패와snapshot분리를정적으로확인했다. 실제은퇴/고용원자성/보관권한/DB·브라우저·APK/build는미실행이다. 사용량98%/남음2%확인후중간저장한다.

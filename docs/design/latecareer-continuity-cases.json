@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "source": "118-LATECAREER-ARCHIVE-CLUB-CONTINUITY.md",
+  "status": "DESIGN_ONLY",
+  "scenes": [
+    {
+      "id": "LC01",
+      "screenId": "S03",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC02",
+      "screenId": "S08",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC03",
+      "screenId": "S06",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC04",
+      "screenId": "S09",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC05",
+      "screenId": "S10",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC06",
+      "screenId": "S12",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC07",
+      "screenId": "S12",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC08",
+      "screenId": "S43",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC09",
+      "screenId": "S13",
+      "executionStatus": "NOT_EXECUTED"
+    }
+  ],
+  "checks": [
+    {
+      "id": "LC-D01",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC-D02",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC-D03",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC-D04",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC-D05",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC-D06",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC-D07",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC-D08",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC-D09",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC-D10",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC-D11",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LC-D12",
+      "executionStatus": "NOT_EXECUTED"
+    }
+  ],
+  "examples": [
+    {
+      "sourceAge": 41,
+      "copyAge": 19,
+      "peaks": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "copyAbilities": [
+        50,
+        50,
+        50,
+        50,
+        50,
+        50
+      ],
+      "displayOverall": "50.0"
+    },
+    {
+      "sourceAge": 41,
+      "copyAge": 19,
+      "peaks": [
+        92,
+        100,
+        88,
+        86,
+        90,
+        94
+      ],
+      "copyAbilities": [
+        46,
+        50,
+        44,
+        43,
+        45,
+        47
+      ],
+      "displayOverall": "45.8"
+    }
+  ],
+  "claims": {
+    "canonicalKey": "saveId+rootSourceArchiveId",
+    "sameWorldPlayerAndStaffAllowed": false,
+    "retiredPlayerReleasesClaim": true,
+    "differentWorldReuseAllowed": true,
+    "hideSourceReleasesClaim": false,
+    "cloneDescendantBypassesRoot": false
+  },
+  "archive": {
+    "onePerRetirementReceipt": true,
+    "projectionFailureBlocksSnapshot": false,
+    "zeroProfessionalAppearancesAllowed": true,
+    "allClubNpcAutoArchive": false,
+    "sourceSnapshotMutable": false
+  },
+  "copy": {
+    "records": 0,
+    "militaryReset": true,
+    "hiddenUnlocked": 0,
+    "sourceUnchanged": true
+  },
+  "executionStatus": "NOT_EXECUTED"
+}
