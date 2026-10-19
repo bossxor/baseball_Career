@@ -56,3 +56,4 @@ DEADLINE/REGISTRATION/HEALTH/CONTRACT/ROUTE/SEASON은 분류이지 무조건적�
 ## 수용 조건
 
 99개 ID가 감사표에 정확1회. 각 typedEvidence source가 없으면 이벤트를 발행하지 않고 진단하며 임의 sourceEntityId로 보충하지 않는다. 발생 근거 확인과 최종 선택 시 조건 검사를 모두 수행한다. 같은 근거 replay는 신규 효과0,다른 부상/계약/대회 근거는 적절한 새 사건. 감사표 검사는 구조 검사이며 실제99개 핸들러 실행 시험이 아니다.
+첫플레이 동선 후속: [113](113-FIRST-CAREER-SEASON-EXPERIENCE.md)에서생성→고교→졸업→진로별첫시즌의안내·주행동·정산/등록/출장경계를연결한다. 새도메인사건/보상/지명보장은없고 [동선보드](first-career-board.html)는읽기시안이다.

@@ -128,3 +128,5 @@ ST08: 미지의 phase/누락 resumeToken은 안전 오류와 복구 경로.
 
 
 장기세계후속66~73:재도전/평가범위/자연구단주기/사건충돌/provisional원장/복원simulationKey/불변조건/연도generation/실험계획. 해당분야의이전1회준비·복원물리ID난수해석은각최신문서로대체한다.
+
+첫플레이 동선 후속: [113](113-FIRST-CAREER-SEASON-EXPERIENCE.md)에서생성→고교→졸업→진로별첫시즌의안내·주행동·정산/등록/출장경계를연결한다. 새도메인사건/보상/지명보장은없고 [동선보드](first-career-board.html)는읽기시안이다.

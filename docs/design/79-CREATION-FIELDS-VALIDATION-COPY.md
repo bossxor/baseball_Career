@@ -62,3 +62,4 @@
 ## 검수 기준
 
 한글 조합 입력·공백 이름·13글자소·좌투 전환·타자↔투수·집중3/4/5·유형 변경·치트 해금 후 수동 선택·보관OFF·동일 원본 중복·생성 실패 입력 보존을 확인한다. [final-design-fixtures.json](final-design-fixtures.json)의 creation 모듈은 서면 기대값이며 실제 입력기나 서버 검증 시험이 아니다.
+첫플레이 동선 후속: [113](113-FIRST-CAREER-SEASON-EXPERIENCE.md)에서생성→고교→졸업→진로별첫시즌의안내·주행동·정산/등록/출장경계를연결한다. 새도메인사건/보상/지명보장은없고 [동선보드](first-career-board.html)는읽기시안이다.

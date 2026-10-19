@@ -1,3 +1,5 @@
+최신동선: [첫커리어 보드](first-career-board.html) · [113 상세설계](113-FIRST-CAREER-SEASON-EXPERIENCE.md). 공통7/분기19장면으로KBO·대학·미국·미지명경로를검토합니다. 실제게임진행은없습니다.
+
 현재 추가설계: [112 능력100과성적](112-ABILITY-CEILING-PERFORMANCE-BALANCE.md). 100은능력상한이지안타확률이아니며SLG최대는4.000입니다. 고정산식예시와실제시즌검증을구분합니다.
 
 최신 아트 U(2026-10-19): 메인 그림체는 **2번 청춘 야구 애니**로 변경했습니다. [111 현재 기준](111-ANIMATION-MAIN-ART-DIRECTION.md)을 우선합니다. 본문의 빈티지 선택은 이전 이력이며 원본은 보존합니다.

@@ -166,3 +166,11 @@ node docs/design/verify-design.mjs PASS, git diff --check PASS. 추가출력: PA
 08의가중치산식과softmax를독립적인고정예시로비교해8결과합1/양수,AVG/OBP/SLG분모와표시값,100타수25홈런의AVG.250/SLG1.000을확인했다. 4예시의무주자/피로0/특성0조건과장기비율범위를명시했다. 이는난수타석/실제시즌/게임엔진구현검증이아니다. 새6균형계획은NOT_EXECUTED,기존게임/UI/경계항목은기존미실행상태를유지한다. 앱/Neon/DB/브라우저/build/APK는미실행이다.
 
 작업전231파일의Git/V일치를확인하고Windows Thumbs.db는보존했다. 동기화전외부변경을다시검사하며통합MD/MANIFEST를갱신한다.
+
+## 113 첫커리어 동선 (2026-10-19)
+
+node docs/design/verify-design.mjs PASS, git diff --check PASS. 추가출력: PASS: first-career storyboard 7 common + 19 branch stages, 45/99 source references, US eligibility boundaries/card hiding, immutable read-only templates. Real onboarding remains NOT_EXECUTED.
+
+26단계의고유ID/기존화면·사건참조/이미지존재/19세분기/공통7장면·자료JS/JSON일치·55/50/오퍼1경계·권리차단·카드숨김·위변조US선택의공통경로회귀·순수렌더입력불변을확인했다. 실제DOM클릭·화면픽셀·첫세이브·기용/경기·계약원자성·이어하기/DB·브라우저·APK/build는미실행이다. 가이드의E02/E03배열은종류별관련원문참조이며동시사건생성을뜻하지않는다. 기존45/99카탈로그및실행상태는불변이다.
+
+작업전Git/V234파일해시일치를확인하고Windows Thumbs.db는보존한다. 동기화전외부변경을다시확인하고원래미리보기에는공개동선HTML/JS/JSON/문서와연결HTML만반영한다.

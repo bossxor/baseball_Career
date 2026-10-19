@@ -1,0 +1,16 @@
+/* Read-only design storyboard. No game simulation or persistent storage. */
+(function(g){'use strict';
+const escape=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const canUS=c=>c.overall>=55&&c.amateurEvaluation>=50&&c.validOffers>=1&&c.rightsOpen===true;
+const routes=c=>['KBO','COLLEGE',...(canUS(c)?['US']:[])];
+function path(data,route,ctx){if(route==='US'&&!canUS(ctx))return [...data.common];return [...data.common,...(data.routes[route]||[])];}
+function render(stage,ctx){const image=stage.image;const art=typeof image.x==='number'?'<div class="scene" role="img" aria-label="청춘 야구 애니 · '+escape(stage.title)+'" style="background-image:url('+escape(image.asset)+');--x:'+image.x+'%;--y:'+image.y+'%"></div>':'<img class="wide" src="'+escape(image.asset)+'" alt="마지막 고교 시즌의 가상 선수">';const choices=stage.id==='C07'?'<div class="routes">'+routes(ctx).map(r=>'<button type="button" data-route="'+r+'">'+({KBO:'국내 드래프트 비교',COLLEGE:'대학 학교 비교',US:'미국 제안 비교'})[r]+'</button>').join('')+'</div>':'';return '<div class="top"><b>다시, 플레이볼</b><span>'+stage.age+'세 · '+(stage.age===18?'고교 마지막 시즌':'다음 무대의 첫 시즌')+'</span></div>'+art+'<div class="body"><span class="eyebrow">나의 커리어 이야기</span><h2>'+escape(stage.title)+'</h2><p>'+escape(stage.body)+'</p>'+choices+'<div class="cue"><strong>다음에 확인할 것</strong>'+escape(stage.action)+'</div></div><div class="footer">선수의 기록과 선택은 실제 확정 결과를 따릅니다.</div>';}
+g.PBFirstCareer=Object.freeze({canUS,routes,path,render});if(typeof document==='undefined')return;
+const data=g.PBFirstCareerData,route=document.getElementById('route'),elig=document.getElementById('eligibility'),list=document.getElementById('steps');let cursor=0;
+const context=()=>data.usExamples[elig.value];const currentPath=()=>path(data,route.value,context());
+function paint(){const seq=currentPath();cursor=Math.max(0,Math.min(cursor,seq.length-1));const s=seq[cursor];document.getElementById('scene').innerHTML=render(s,context());list.innerHTML=seq.map((s,i)=>'<button type="button" data-index="'+i+'"'+(cursor===i?' aria-current="step"':'')+'>'+escape(s.id+' '+s.title)+'</button>').join('');document.getElementById('counter').textContent=(cursor+1)+' / '+seq.length+' · '+data.routeTitles[route.value]+' · 읽기 시안';document.getElementById('guard').textContent=s.guard;document.getElementById('back').disabled=cursor===0;document.getElementById('next').disabled=cursor===seq.length-1;}
+list.addEventListener('click',e=>{const b=e.target.closest('[data-index]');if(b){cursor=Number(b.dataset.index);paint();}});
+document.getElementById('scene').addEventListener('click',e=>{const b=e.target.closest('[data-route]');if(!b||!routes(context()).includes(b.dataset.route))return;route.value=b.dataset.route;cursor=data.common.length;paint();});
+route.addEventListener('change',()=>{cursor=0;paint();});elig.addEventListener('change',()=>{const ok=canUS(context());route.querySelector('option[value=US]').hidden=!ok;if(!ok&&route.value==='US')route.value='KBO';cursor=Math.min(cursor,data.common.length-1);paint();});
+document.getElementById('back').addEventListener('click',()=>{cursor--;paint();});document.getElementById('next').addEventListener('click',()=>{cursor++;paint();});document.getElementById('reset').addEventListener('click',()=>{cursor=0;paint();});paint();
+})(globalThis);
