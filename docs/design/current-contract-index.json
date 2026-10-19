@@ -49,6 +49,7 @@
       "scope": "합법 진로·탈락·복학·준비 예산",
       "topic": "커리어 상태·재도전",
       "currentSources": [
+        "116-MIDCAREER-DECISIONS-AND-SETBACKS.md",
         "66-RETRY-CAREER-OPPORTUNITIES.md",
         "19-CAREER-STATE-MACHINE.md",
         "43-COLLEGE-CAREER.md",
@@ -192,6 +193,7 @@
       "scope": "99이벤트 근거·큐·provisional 최종1회",
       "topic": "사건·경기중 상태",
       "currentSources": [
+        "116-MIDCAREER-DECISIONS-AND-SETBACKS.md",
         "81-EVENT-OCCURRENCE-COLLISION-AUDIT.md",
         "69-EVENT-COLLISIONS-PROVISIONAL-STATE.md",
         "45-EVENT-CATALOG-REVISION.md",
@@ -234,6 +236,7 @@
       "scope": "같은owner journal·서버resume·오프라인읽기",
       "topic": "이어하기·초안·화면 복귀",
       "currentSources": [
+        "117-CAREER-NEXT-MAJOR-EVENT-PROGRESSION.md",
         "87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md",
         "80-SCREEN-STATES-NAVIGATION-RECOVERY.md",
         "76-CROSS-PLATFORM-INTERRUPTION-RESUME.md",

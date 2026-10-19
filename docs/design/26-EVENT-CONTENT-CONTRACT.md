@@ -63,7 +63,7 @@ choiceId는안정코드,버튼순서를효과ID로쓰지않음. label/body/previ
 | E10 | 짧은 기회의 무게 | 첫 콜업 후20경기 | [04-EVENTS.md](04-EVENTS.md) |
 | E11 | 두 번째 숙제 | 2군 한 시즌 종료 | [04-EVENTS.md](04-EVENTS.md) |
 | E12 | 주전과 백업 사이 | 1군 타자, 출장비율<40% | [04-EVENTS.md](04-EVENTS.md) |
-| E13 | 낯선 수비 자리 | E12 B 후24경기 | [04-EVENTS.md](04-EVENTS.md) |
+| E13 | 낯선 수비 자리 | E12 START_POSITION_PLAN 확정 후 계획24경기 완료 | [04-EVENTS.md](04-EVENTS.md) |
 | E14 | 선발의 문 | RP, 체력≥60, SP 공석 | [04-EVENTS.md](04-EVENTS.md) |
 | E15 | 마지막 아웃의 자리 | RP, 위기≥60, CP 공석 | [04-EVENTS.md](04-EVENTS.md) |
 | E16 | 구속보다 안정 | 투수, BB9>4.5, 20이닝 이후 | [04-EVENTS.md](04-EVENTS.md) |

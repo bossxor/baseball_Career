@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_ONLY",
+  "source": "116-MIDCAREER-DECISIONS-AND-SETBACKS.md",
+  "experiences": [
+    {
+      "id": "MC01",
+      "screenIds": [
+        "S03"
+      ],
+      "eventIds": [
+        "E09"
+      ],
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "MC02",
+      "screenIds": [
+        "S06"
+      ],
+      "eventIds": [
+        "E10"
+      ],
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "MC03",
+      "screenIds": [
+        "S06"
+      ],
+      "eventIds": [
+        "E12"
+      ],
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "MC04",
+      "screenIds": [
+        "S06"
+      ],
+      "eventIds": [
+        "E13"
+      ],
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "MC05",
+      "screenIds": [
+        "S06"
+      ],
+      "eventIds": [
+        "E14",
+        "E15"
+      ],
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "MC06",
+      "screenIds": [
+        "S22",
+        "S23"
+      ],
+      "eventIds": [
+        "E16",
+        "E17",
+        "E18",
+        "E19",
+        "E20"
+      ],
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "MC07",
+      "screenIds": [
+        "S16"
+      ],
+      "eventIds": [
+        "E21",
+        "E22",
+        "E23"
+      ],
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "MC08",
+      "screenIds": [
+        "S08"
+      ],
+      "eventIds": [],
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "MC09",
+      "screenIds": [
+        "S24"
+      ],
+      "eventIds": [
+        "E44",
+        "E45"
+      ],
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "MC10",
+      "screenIds": [
+        "S25"
+      ],
+      "eventIds": [
+        "E46",
+        "E47",
+        "E48"
+      ],
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "MC11",
+      "screenIds": [
+        "S26",
+        "S27"
+      ],
+      "eventIds": [],
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "MC12",
+      "screenIds": [
+        "S31",
+        "S32",
+        "S33"
+      ],
+      "eventIds": [],
+      "executionStatus": "NOT_EXECUTED"
+    }
+  ],
+  "positionPlan": {
+    "sourceCommand": "START_POSITION_PLAN",
+    "maintainCommand": "ACK_EVENT",
+    "requiredGames": 24,
+    "counterKey": "positionPlanId+worldGameId",
+    "sameGameDoubleCount": false,
+    "benchCanProgress": true,
+    "injuredCanProgress": false,
+    "activeServiceCanProgress": false,
+    "sameSourceGameRetroCount": false,
+    "readyMeansRegistered": false,
+    "illegalHandednessAllowed": false,
+    "currentRoleChoiceCreatesPlan": false,
+    "examples": [
+      {
+        "eligibleGames": 23,
+        "planValid": true,
+        "ready": false
+      },
+      {
+        "eligibleGames": 24,
+        "planValid": true,
+        "ready": true
+      },
+      {
+        "eligibleGames": 24,
+        "planValid": false,
+        "ready": false
+      }
+    ]
+  }
+}

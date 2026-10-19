@@ -30,3 +30,5 @@ S01~45모두연결행1개,알수없는actionClass/빈actions없음. QUERY만으�
 기존45화면의S18안에구단DRAFT하위화면을연결한다. READ_LEAGUE_RECORDS는QUERY,CLUB_DRAFT_PICK/CLUB_DRAFT_AUTO_PICK은구단모드·현재차례에서만허용하는SAVE_COMMAND다. query는clubDraftState로현재draftId/targetSeason/round/pick/team/잔여후보와version을읽는다. payload={draftId,round,pickNumber,playerId,expectedDraftVersion};자동선택은playerId대신추천snapshot참조를보내서버가유효후보를재검사한다. 외부모드/차례아님/중복후보/정원/예산/preview불일치는거절하며한지명receipt키는saveId+draftId+round+pickNumber다. 기존commandId·expectedRevision·preview계약을같이쓴다. 응답유실은같은receipt확인,오래된차례를새차례로자동승인하지않는다. 후보를열람한것만으로선택/계약/1군등록이변하지않는다.
 
 S18의원래리그/기록탭은읽기전용이고커리어S05의지명결과수락과혼용하지않는다. 46번째게임화면을만들지않았다. 기본목업과마감보드에는읽기용설명배치를추가했지만실제지명버튼/서버는미구현이다.
+
+117 사용자확정: 커리어홈의기본진행은‘다음주요사건까지’. 1경기/1주일은대안이며필수선택/시즌경계에서정지한다. 116의중반경험·E13명령기반후속도함께적용한다.

@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "source": "117-CAREER-NEXT-MAJOR-EVENT-PROGRESSION.md",
+  "defaultMode": "NEXT_MAJOR_EVENT",
+  "authority": "USER_CONFIRMED",
+  "alternatives": [
+    "ONE_GAME",
+    "ONE_WEEK"
+  ],
+  "appliesTo": [
+    "S03",
+    "S30",
+    "S35"
+  ],
+  "doesNotChangeClubDefault": true,
+  "stopPolicyVersion": 1,
+  "stops": [
+    {
+      "kind": "REQUIRED_CHOICE",
+      "authority": "DOMAIN"
+    },
+    {
+      "kind": "CAREER_HEALTH_REGISTRATION_CHANGE",
+      "authority": "RECEIPT"
+    },
+    {
+      "kind": "FIRST_ELIGIBLE_TRAINING_STYLE_WINDOW",
+      "authority": "PRESENTATION"
+    },
+    {
+      "kind": "PHASE_SEASON_ACADEMIC_REVIEW",
+      "authority": "DOMAIN"
+    },
+    {
+      "kind": "FIRST_RARE_MILESTONE_HIDDEN_UNLOCK",
+      "authority": "PRESENTATION"
+    },
+    {
+      "kind": "ELIGIBLE_OPTIONAL_STORY_CHOICE",
+      "authority": "DOMAIN"
+    }
+  ],
+  "ordinaryNewsStops": false,
+  "skipTrainingConsumesUse": false,
+  "showLockedHiddenProximity": false,
+  "closedClientSchedulesUnboundedChunks": false,
+  "goesAcrossUnconfirmedSeason": false,
+  "checks": [
+    {
+      "id": "FP01",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "FP02",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "FP03",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "FP04",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "FP05",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "FP06",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "FP07",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "FP08",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "FP09",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "FP10",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "FP11",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "FP12",
+      "executionStatus": "NOT_EXECUTED"
+    }
+  ]
+}

@@ -32,7 +32,17 @@
       "actionClass": "SAVE_COMMAND",
       "resultRouting": "serverAllowedActionsAndResumeDescriptor",
       "draftValidation": "schemaVersionAndSourceRevision",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "progressionPolicy": {
+        "defaultMode": "NEXT_MAJOR_EVENT",
+        "supportedModes": [
+          "NEXT_MAJOR_EVENT",
+          "ONE_GAME",
+          "ONE_WEEK"
+        ],
+        "source": "117-CAREER-NEXT-MAJOR-EVENT-PROGRESSION.md",
+        "stopPolicyVersion": 1
+      }
     },
     {
       "screenId": "S04",
@@ -354,7 +364,17 @@
       "actionClass": "SAVE_COMMAND",
       "resultRouting": "serverAllowedActionsAndResumeDescriptor",
       "draftValidation": "schemaVersionAndSourceRevision",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "progressionPolicy": {
+        "defaultMode": "NEXT_MAJOR_EVENT",
+        "supportedModes": [
+          "NEXT_MAJOR_EVENT",
+          "ONE_GAME",
+          "ONE_WEEK"
+        ],
+        "source": "117-CAREER-NEXT-MAJOR-EVENT-PROGRESSION.md",
+        "stopPolicyVersion": 1
+      }
     },
     {
       "screenId": "S31",
@@ -413,7 +433,17 @@
       "actionClass": "SAVE_COMMAND",
       "resultRouting": "serverAllowedActionsAndResumeDescriptor",
       "draftValidation": "schemaVersionAndSourceRevision",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "progressionPolicy": {
+        "defaultMode": "NEXT_MAJOR_EVENT",
+        "supportedModes": [
+          "NEXT_MAJOR_EVENT",
+          "ONE_GAME",
+          "ONE_WEEK"
+        ],
+        "source": "117-CAREER-NEXT-MAJOR-EVENT-PROGRESSION.md",
+        "stopPolicyVersion": 1
+      }
     },
     {
       "screenId": "S36",

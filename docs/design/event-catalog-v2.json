@@ -333,7 +333,7 @@
     {
       "id": "E13",
       "title": "낯선 수비 자리",
-      "trigger": "E12 B 후24경기",
+      "trigger": "E12 START_POSITION_PLAN 확정 후 같은 positionPlanId의 적격 팀경기24개 완료",
       "body": "새 자리에서의 훈련 기간이 지났습니다. 코치는 이제 등록 포지션을 바꿀지 묻습니다.",
       "choices": [
         {
@@ -356,7 +356,13 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "triggerEvidence": {
+        "sourceCommand": "START_POSITION_PLAN",
+        "samePositionPlan": true,
+        "eligibleTeamGames": 24,
+        "requiresValidPlan": true
+      }
     },
     {
       "id": "E14",
