@@ -1,0 +1,512 @@
+{
+  "screens": [
+    {
+      "assetRefs": [
+        "almanacHero"
+      ],
+      "screenId": "S01",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "시작·이어하기의분위기",
+      "guard": "큰그림1개,최근저장카드는그림아래",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "HERO"
+    },
+    {
+      "assetRefs": [
+        "almanacPortrait"
+      ],
+      "screenId": "S02",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "생성캐릭터표현",
+      "guard": "폼·6능력·집중4개우선,외형은능력무관",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "PORTRAIT"
+    },
+    {
+      "assetRefs": [
+        "almanacHero",
+        "almanacPortrait"
+      ],
+      "screenId": "S03",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "커리어주요홈",
+      "guard": "종합/6능력/다음행동이같은흐름에보이게",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "HERO_PORTRAIT"
+    },
+    {
+      "assetRefs": [
+        "training"
+      ],
+      "screenId": "S04",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "고교시즌회고",
+      "guard": "실제출장0은0,그림으로성적추정금지",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE"
+    },
+    {
+      "assetRefs": [
+        "draft"
+      ],
+      "screenId": "S05",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "지명발표",
+      "guard": "이미지중립,실제라운드/미지명텍스트가결과",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE"
+    },
+    {
+      "assetRefs": [
+        "EVENT_RESOLVER"
+      ],
+      "screenId": "S06",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "사건별맥락",
+      "guard": "12장면조건매핑,상태없는성과그림금지",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "CONTEXT_SCENE"
+    },
+    {
+      "assetRefs": [
+        "training",
+        "international"
+      ],
+      "screenId": "S07",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "시즌정산",
+      "guard": "메달/우승이미지는해당확정근거있을때만",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "CONTEXT_SCENE"
+    },
+    {
+      "assetRefs": [
+        "posting"
+      ],
+      "screenId": "S08",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "오퍼비교",
+      "guard": "서명그림으로계약완료처럼표현하지않음",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE"
+    },
+    {
+      "assetRefs": [
+        "retirement"
+      ],
+      "screenId": "S09",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "은퇴기념",
+      "guard": "원본나이/기록보존,새19세와구분",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE"
+    },
+    {
+      "assetRefs": [
+        "almanacPortrait"
+      ],
+      "screenId": "S10",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "보관선수식별",
+      "guard": "같은초상일때이름·나이·시즌명확",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "PORTRAIT_GRID"
+    },
+    {
+      "assetRefs": [
+        "almanacPortrait"
+      ],
+      "screenId": "S11",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "원본상세",
+      "guard": "불변snapshot시점표시,현재외형소급금지",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "PORTRAIT"
+    },
+    {
+      "assetRefs": [
+        "frontoffice"
+      ],
+      "screenId": "S12",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "구단시작분위기",
+      "guard": "보관OFF/0명정상,선수단구성기준노출",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE"
+    },
+    {
+      "assetRefs": [
+        "frontoffice"
+      ],
+      "screenId": "S13",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "구단운영홈",
+      "guard": "예산/정원/일정우선,그림은균형비중",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE"
+    },
+    {
+      "assetRefs": [
+        "almanacPortrait"
+      ],
+      "screenId": "S14",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "선수단식별",
+      "guard": "큰배경없음,기본테이블/정렬보존",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "PORTRAIT_THUMBS"
+    },
+    {
+      "assetRefs": [
+        "NONE"
+      ],
+      "screenId": "S15",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "수비배치",
+      "guard": "코드기반구장/슬롯목록,장식이미지로기능대체금지",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "FIELD_DIAGRAM"
+    },
+    {
+      "assetRefs": [
+        "almanacPortrait"
+      ],
+      "screenId": "S16",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "현재선수식별",
+      "guard": "현재소속과과거기록snapshot구분",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "PORTRAIT"
+    },
+    {
+      "assetRefs": [
+        "almanacPortrait"
+      ],
+      "screenId": "S17",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "영입대상구분",
+      "guard": "비용/예약/수락확률이가려지지않음",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "PORTRAIT_THUMBS"
+    },
+    {
+      "assetRefs": [
+        "NONE"
+      ],
+      "screenId": "S18",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "리그기록",
+      "guard": "로고/작은팀색표식만,표앞대형장식없음",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "DATA_FIRST"
+    },
+    {
+      "assetRefs": [
+        "almanacHero"
+      ],
+      "screenId": "S19",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "경기결과배경보조",
+      "guard": "점수·FINAL/pending이주정보,승패그림추정금지",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "RESULT_ACCENT"
+    },
+    {
+      "assetRefs": [
+        "NONE"
+      ],
+      "screenId": "S20",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "저장·복원",
+      "guard": "상태/작업ID/검증안내우선,장식으로오류가림금지",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "DATA_FIRST"
+    },
+    {
+      "assetRefs": [
+        "NONE"
+      ],
+      "screenId": "S21",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "설정·계정",
+      "guard": "권한/계정작업의확인문구우선",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "DATA_FIRST"
+    },
+    {
+      "assetRefs": [
+        "almanacPortrait"
+      ],
+      "screenId": "S22",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "유형·육성",
+      "guard": "6능력/집중4개와효과우선,외형차등보너스없음",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "PORTRAIT"
+    },
+    {
+      "assetRefs": [
+        "enhancement"
+      ],
+      "screenId": "S23",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "특별강화",
+      "guard": "성공/실패실제효과와비용이그림보다우선",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE"
+    },
+    {
+      "assetRefs": [
+        "training"
+      ],
+      "screenId": "S24",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "대표차출대기",
+      "guard": "선발/합류단계에메달그림사용금지",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE"
+    },
+    {
+      "assetRefs": [
+        "training",
+        "international"
+      ],
+      "screenId": "S25",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "국제진행·결과",
+      "guard": "실제메달성과확정일때만메달장면",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "CONTEXT_SCENE"
+    },
+    {
+      "assetRefs": [
+        "NONE"
+      ],
+      "screenId": "S26",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "병역선택",
+      "guard": "지원/복무/개인자격을장식아이콘으로뭉개지않음",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "DATA_FIRST"
+    },
+    {
+      "assetRefs": [
+        "training",
+        "service"
+      ],
+      "screenId": "S27",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "복무중·복귀",
+      "guard": "완료source때만돌아오는길,진행중은중립",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "CONTEXT_SCENE"
+    },
+    {
+      "assetRefs": [
+        "college",
+        "overseas",
+        "draft"
+      ],
+      "screenId": "S28",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "진로카드비교",
+      "guard": "미국자격/유효오퍼없으면카드와이미지모두없음",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE_CHOICES"
+    },
+    {
+      "assetRefs": [
+        "overseas"
+      ],
+      "screenId": "S29",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "미국유효제안",
+      "guard": "비행그림은MLB즉시데뷔가아님",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE"
+    },
+    {
+      "assetRefs": [
+        "almanacHero"
+      ],
+      "screenId": "S30",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "미국커리어홈",
+      "guard": "레벨/실제출장/계약우선,팀변경과구분",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "HERO"
+    },
+    {
+      "assetRefs": [
+        "posting"
+      ],
+      "screenId": "S31",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "포스팅검토",
+      "guard": "승인조건/연차/병역먼저,장면은중립",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE"
+    },
+    {
+      "assetRefs": [
+        "posting"
+      ],
+      "screenId": "S32",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "해외협상",
+      "guard": "오퍼0·실패는원계약유지텍스트",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE"
+    },
+    {
+      "assetRefs": [
+        "overseas",
+        "service"
+      ],
+      "screenId": "S33",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "귀국준비/복귀",
+      "guard": "2시즌준비/복무중첩수치를그림과분리",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "CONTEXT_SCENE"
+    },
+    {
+      "assetRefs": [
+        "college"
+      ],
+      "screenId": "S34",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "가상대학비교",
+      "guard": "학교별같은장면이어도학교명/학적/경쟁명확",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE_CHOICES"
+    },
+    {
+      "assetRefs": [
+        "college"
+      ],
+      "screenId": "S35",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "대학홈",
+      "guard": "학년/휴학/성장/조기드래프트가주정보",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE"
+    },
+    {
+      "assetRefs": [
+        "frontoffice"
+      ],
+      "screenId": "S36",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "스카우트탐색",
+      "guard": "성공률·비용·실패비용·후보0이주정보",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE_ACCENT"
+    },
+    {
+      "assetRefs": [
+        "NONE"
+      ],
+      "screenId": "S37",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "재정원장",
+      "guard": "무제한도실제지출숫자유지,장식돈더미금지",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "DATA_FIRST"
+    },
+    {
+      "assetRefs": [
+        "NONE"
+      ],
+      "screenId": "S38",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "특성도감",
+      "guard": "기록조건/전부자동효과,장착칸이미지없음",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "CODE_BADGES"
+    },
+    {
+      "assetRefs": [
+        "NONE"
+      ],
+      "screenId": "S39",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "구종·성향",
+      "guard": "구종도식은코드벡터,실제구수/궤적을발명하지않음",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "CODE_DIAGRAM"
+    },
+    {
+      "assetRefs": [
+        "NONE"
+      ],
+      "screenId": "S40",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "목표·기념품",
+      "guard": "코스메틱아이콘/조건,능력보상오해없게",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "CODE_BADGES"
+    },
+    {
+      "assetRefs": [
+        "posting"
+      ],
+      "screenId": "S41",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "에이전트협상",
+      "guard": "수수료/원오퍼/역제안확률/기한우선",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE_ACCENT"
+    },
+    {
+      "assetRefs": [
+        "rival",
+        "almanacPortrait"
+      ],
+      "screenId": "S42",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "동료·라이벌",
+      "guard": "실제만남/같은팀근거,초상닮았다고관계생성금지",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCENE_PORTRAITS"
+    },
+    {
+      "assetRefs": [
+        "almanacPortrait"
+      ],
+      "screenId": "S43",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "지도자후일담",
+      "guard": "원본은퇴나이/직무표시,현역19세복사와구분",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "PORTRAIT"
+    },
+    {
+      "assetRefs": [
+        "NONE"
+      ],
+      "screenId": "S44",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "확정중계",
+      "guard": "점수/주자/텍스트/스킵우선,이미지가경기판정추가금지",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "SCOREBOARD"
+    },
+    {
+      "assetRefs": [
+        "retirement",
+        "international",
+        "rival"
+      ],
+      "screenId": "S45",
+      "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
+      "purpose": "연대기·기념카드",
+      "guard": "실제evidence장면만,공개카드정보/로고규칙유지",
+      "implementationStatus": "DESIGN_PREVIEW_ONLY",
+      "imageRole": "MEMORY_SCENES"
+    }
+  ],
+  "schemaVersion": 1,
+  "status": "DESIGN_PREVIEW_ONLY",
+  "selectedStyle": "almanac"
+}
