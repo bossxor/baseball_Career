@@ -664,9 +664,9 @@
       "screenId": "S18",
       "title": "리그",
       "layout": "RECORD",
-      "informationOrder": "리그·시즌·정규/PS 필터 → 순위/일정/개인기록 → 상세",
+      "informationOrder": "리그·시즌·정규/PS 필터 → 순위/일정/개인기록 → 상세 → 구단모드 현재 드래프트 차례·잔여 후보",
       "primaryAction": "선택 기록 보기",
-      "edgeRequirement": "분모0은 대시; 무경기 시즌·동률 수상·다른 리그 기록 분리",
+      "edgeRequirement": "분모0은 대시; 무경기 시즌·동률 수상·다른 리그 기록 분리; 기록 조회는 QUERY, 구단 실제 지명만 version검사 SAVE_COMMAND",
       "imageSlot": {
         "assetRefs": [
           "NONE"

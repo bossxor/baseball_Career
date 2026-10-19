@@ -182,3 +182,11 @@ node docs/design/verify-design.mjs PASS, git diff --check PASS. 추가출력: PA
 16단계고유ID/45화면참조,7복구사례,가상선수독립시작·보관반값19세/원본불변·치트현재능력추가0/P100/성장3/월2를정적으로확인했다. 같은원장에서18.4억→18.35억→17.35억→성공17.35억/실패18.35억의예약전환/해제를검사하고발견63%와영입50%예시를분리했다. 실제생성/영입/기용/동시성/연도전환·엔진/DB·브라우저·APK/build는미실행이다.
 
 STATUS.md의최신요약과DETAIL-PLAN.md의최신계획을맨위로갱신하고이전이력은보존했다. 작업전Git/V240파일일치를확인했으며동기화전외부변경을검사한다. Windows Thumbs.db는보존한다.
+
+## 115 구단오프시즌 마감·의존성·드래프트 연결 (2026-10-19)
+
+node docs/design/verify-design.mjs PASS, git diff --check PASS. 추가출력: PASS: offseason 8 groups / 12 collision cases, deadline ordering and future-budget edges; S18 draft query/commands separated. Real draft/market/year transition remains NOT_EXECUTED.
+
+8작업묶음/12충돌고유ID·기존화면참조·권위순서·추천순서비강제,가상게임일110FA/111드래프트의기한순서,미래120억×90%=108억과107+2실패/107+1통과/108억1만원실패를검사했다. S18을MIXED로보완해기록QUERY와구단현재차례지명SAVE_COMMAND2종·draftVersion검사를연결했고45화면/99이벤트/기존실행상태는유지했다. 기본목업의embedded catalog도동일하게갱신했다.
+
+실제지명/FA추첨/권리잠금/병역/동시성/원장/연도전환·브라우저·Neon/DB·build/APK는미실행이다. 이번UI추가는드래프트하위화면의읽기설명이지실행버튼/서버구현이아니다. STATUS·DETAIL-PLAN의최신요약/다음단계를갱신했다. 작업전Git/V243파일해시일치를확인했고동기화전외부변경을재검사한다. Thumbs.db는보존한다.

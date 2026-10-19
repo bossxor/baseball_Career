@@ -25,3 +25,8 @@ JOB_REQUEST인S20백업·복원은jobId조회,기존save를현재파일내용으
 ## 수용 기준
 
 S01~45모두연결행1개,알수없는actionClass/빈actions없음. QUERY만으로save revision/PRNG/원장이변하지않음. MIXED행의개인설정을세계명령으로묶지않음. SAVE_COMMAND는receipt조회/충돌복구단계를갖고OWNER_CREATE는생성후saveId모를때복구할수있어야한다. 정적검사는매핑존재만증명,실제버튼이동·권한·폼·모바일뒤로가기는구현후화면통합테스트다.
+## S18 구단 드래프트 하위 화면 연결 D(115)
+
+기존45화면의S18안에구단DRAFT하위화면을연결한다. READ_LEAGUE_RECORDS는QUERY,CLUB_DRAFT_PICK/CLUB_DRAFT_AUTO_PICK은구단모드·현재차례에서만허용하는SAVE_COMMAND다. query는clubDraftState로현재draftId/targetSeason/round/pick/team/잔여후보와version을읽는다. payload={draftId,round,pickNumber,playerId,expectedDraftVersion};자동선택은playerId대신추천snapshot참조를보내서버가유효후보를재검사한다. 외부모드/차례아님/중복후보/정원/예산/preview불일치는거절하며한지명receipt키는saveId+draftId+round+pickNumber다. 기존commandId·expectedRevision·preview계약을같이쓴다. 응답유실은같은receipt확인,오래된차례를새차례로자동승인하지않는다. 후보를열람한것만으로선택/계약/1군등록이변하지않는다.
+
+S18의원래리그/기록탭은읽기전용이고커리어S05의지명결과수락과혼용하지않는다. 46번째게임화면을만들지않았다. 기본목업과마감보드에는읽기용설명배치를추가했지만실제지명버튼/서버는미구현이다.

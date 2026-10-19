@@ -344,10 +344,10 @@
     {
       "executionStatus": "NOT_IMPLEMENTED",
       "title": "리그·기록",
-      "recovery": "요약 유지,다른 연도 선택",
-      "navigationPolicy": "READ",
+      "recovery": "요약 유지,다른 연도 선택; 지명 receipt 확인 후 현재차례 재조회,필요정리 후 같은차례",
+      "navigationPolicy": "MIXED",
       "screenId": "S18",
-      "blockingCase": "상세 보존기간 종료",
+      "blockingCase": "상세 보존기간 종료; 구단드래프트 차례/권리/정원 변경",
       "commonStates": [
         "LOADING",
         "READY",

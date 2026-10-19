@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_ONLY",
+  "source": "115-CLUB-OFFSEASON-DEADLINES-AND-DEPENDENCIES.md",
+  "workGroups": [
+    {
+      "id": "O01",
+      "screenIds": [
+        "S18",
+        "S19"
+      ],
+      "suggestedReviewOrder": 1,
+      "requiredIfApplicable": true,
+      "gate": "FINAL_RESULTS",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "O02",
+      "screenIds": [
+        "S14",
+        "S26",
+        "S27"
+      ],
+      "suggestedReviewOrder": 2,
+      "requiredIfApplicable": true,
+      "gate": "EFFECTIVE_RIGHTS_AND_CONTRACTS",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "O03",
+      "screenIds": [
+        "S14",
+        "S37"
+      ],
+      "suggestedReviewOrder": 3,
+      "requiredIfApplicable": true,
+      "gate": "VALID_CAPACITY_AND_BUDGET",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "O04",
+      "screenIds": [
+        "S18",
+        "S14"
+      ],
+      "suggestedReviewOrder": 4,
+      "requiredIfApplicable": true,
+      "gate": "CURRENT_DRAFT_TURN",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "O05",
+      "screenIds": [
+        "S17",
+        "S37"
+      ],
+      "suggestedReviewOrder": 5,
+      "requiredIfApplicable": true,
+      "gate": "CURRENT_NEGOTIATION_ROUND",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "O06",
+      "screenIds": [
+        "S37",
+        "S43"
+      ],
+      "suggestedReviewOrder": 6,
+      "requiredIfApplicable": false,
+      "gate": "OPTIONAL_OPERATIONS",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "O07",
+      "screenIds": [
+        "S14",
+        "S37"
+      ],
+      "suggestedReviewOrder": 7,
+      "requiredIfApplicable": true,
+      "gate": "ALL_APPLICABLE_MANDATORY_TASKS_COMPLETE",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "O08",
+      "screenIds": [
+        "S13"
+      ],
+      "suggestedReviewOrder": 8,
+      "requiredIfApplicable": true,
+      "gate": "YEAR_TRANSITION_GATE",
+      "executionStatus": "NOT_EXECUTED"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "OS01",
+      "trigger": "PENDING_GAME_BEFORE_SETTLEMENT",
+      "expected": "FINAL_SAME_GAME_THEN_SETTLE_ONCE",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "OS02",
+      "trigger": "FA_DEADLINE_BEFORE_DRAFT",
+      "expected": "HANDLE_CURRENT_DEADLINE_FIRST",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "OS03",
+      "trigger": "DRAFT_TURN_AT_60_PLAYERS",
+      "expected": "KEEP_TURN_AND_OPEN_ROSTER_REPAIR",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "OS04",
+      "trigger": "RENEWAL_VS_POSTING_SAME_PLAYER",
+      "expected": "ONE_VALID_COMMIT_INVALIDATE_OTHER",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "OS05",
+      "trigger": "ALL_OFFERS_ACCEPTED",
+      "expected": "HONOR_PRE_RESERVED_CAPACITY_AND_MONEY",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "OS06",
+      "trigger": "ROUND_REPLY_LOST",
+      "expected": "READ_SAME_RECEIPT_NO_NEW_DRAW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "OS07",
+      "trigger": "ELIGIBILITY_VS_UNSTARTED_SERVICE",
+      "expected": "CHECK_PERSONAL_EVIDENCE_AND_REPLACE_PENDING_TASK",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "OS08",
+      "trigger": "EXPIRY_BEFORE_SERVICE_SUSPENSION",
+      "expected": "DO_NOT_REVIVE_EXPIRED_CONTRACT",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "OS09",
+      "trigger": "RETURNING_PLAYER_FIRST_TEAM_FULL",
+      "expected": "LEGAL_SECOND_TEAM_OR_REGISTRATION_CHANGE",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "OS10",
+      "trigger": "STAFF_TERMINATION_VS_YEAR_CHANGE",
+      "expected": "KEEP_UNPAID_GUARANTEE",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "OS11",
+      "trigger": "MANDATORY_TASK_PENDING",
+      "expected": "DO_NOT_CREATE_YEAR_TRANSITION_JOB",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "OS12",
+      "trigger": "TWO_DEVICES_NEXT_SEASON",
+      "expected": "ONE_TARGET_SEASON_JOB",
+      "executionStatus": "NOT_EXECUTED"
+    }
+  ],
+  "ordering": {
+    "authority": "GAME_DEADLINE_THEN_WORLD_DAY_PHASE_THEN_SOURCE_SEQUENCE_THEN_EVENT_ID",
+    "suggestedReviewOrderIsMandatorySchedule": false,
+    "singleActiveBlockingTask": true,
+    "optionalOperationsBlockYear": false
+  },
+  "draft": {
+    "baseRookies": 100,
+    "teams": 10,
+    "rounds": 10,
+    "capacityCap": 60,
+    "atCapacity": "PAUSE_AND_REPAIR_SAME_PICK",
+    "careerNominationProbabilityApplied": false,
+    "cheatReclaimsOtherTeamPick": false
+  },
+  "rounds": {
+    "count": 3,
+    "replyRetry": "SAME_RECEIPT",
+    "unconditionalThreeRoundProbabilityAvailable": false,
+    "allOfferSuccessMustBeReserved": true
+  },
+  "deadlineExample": {
+    "meaning": "ABSTRACT_GAME_INSTANTS_NOT_REAL_CALENDAR",
+    "tasks": [
+      {
+        "id": "DRAFT_TASK",
+        "deadlineDay": 111,
+        "phaseOrder": 50,
+        "sourceSequence": 1
+      },
+      {
+        "id": "FA_TASK",
+        "deadlineDay": 110,
+        "phaseOrder": 60,
+        "sourceSequence": 2
+      }
+    ],
+    "expectedFirst": "FA_TASK"
+  },
+  "futureBudget": {
+    "annualBase": 12000000000,
+    "capNumerator": 9,
+    "capDenominator": 10,
+    "cap": 10800000000,
+    "currentGuaranteed": 10700000000,
+    "examples": [
+      {
+        "added": 200000000,
+        "passesFutureCap": false
+      },
+      {
+        "added": 100000000,
+        "passesFutureCap": true
+      },
+      {
+        "total": 10800010000,
+        "passesFutureCap": false
+      }
+    ],
+    "passesOtherGatesAutomatically": false,
+    "cheatBudgetExemption": true,
+    "finiteLedgerStillRequired": true
+  },
+  "year": {
+    "previousAvailable": 1835000000,
+    "newBase": 12000000000,
+    "carryUnspentBudget": false,
+    "pendingMandatoryTasks": 1,
+    "expectedTransitionJobs": 0,
+    "sourceUnchangedUntilActivation": true,
+    "duplicateTargetSeasonJobs": false
+  },
+  "executionStatus": "NOT_EXECUTED"
+}

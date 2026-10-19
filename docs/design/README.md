@@ -1,3 +1,5 @@
+최신상세설계: [115 구단오프시즌](115-CLUB-OFFSEASON-DEADLINES-AND-DEPENDENCIES.md). 최신진행/다음작업은STATUS·DETAIL-PLAN맨위에서확인합니다.
+
 최신 구단 설계: [114 첫시즌 운영](114-FIRST-CLUB-SEASON-OPERATIONS.md). 최신진행과다음작업은 [STATUS](STATUS.md)·[DETAIL-PLAN](DETAIL-PLAN.md)의맨위에기록합니다.
 
 최신동선: [첫커리어 보드](first-career-board.html) · [113 상세설계](113-FIRST-CAREER-SEASON-EXPERIENCE.md). 공통7/분기19장면으로KBO·대학·미국·미지명경로를검토합니다. 실제게임진행은없습니다.

@@ -40,3 +40,4 @@ year_transition_jobs(saveId,targetSeasonId UNIQUE,sourceRevision,sourceGeneratio
 POST /api/saves/{id}/commands type=NEXT_SEASON,payload={targetSeasonId},previewId필수→{outcome:PENDING,jobId};GET /api/saves/{id}/year-transitions/{jobId}→{status,step,unitProgress,retryable,activeGenerationId};RETRY_YEAR_TRANSITION/CANCEL_YEAR_TRANSITION={jobId,expectedJobVersion}. pending성공receipt가있는NEXT_SEASON은같은job반환,job완료조회에서최종revision제공.
 
 YEAR01 중간worker중단뒤age증가1/02신인batch1/03원세대최종까지읽기가능/04활성세대전팀동시/05전년도성장중복0/06미해결필수선택시job0/07취소재시작seed동일/08lease동시두worker효과1/09이전reportHash로새source활성화거절/10대학·준비·관측·원본참조이월. 100시즌경계와강제장애각단계실험은구현후73의게이트.
+오프시즌운영후속: [115](115-CLUB-OFFSEASON-DEADLINES-AND-DEPENDENCIES.md)의추천순서/실제기한구분·드래프트같은차례복구·FA예약/마감·병역/만료·미래보장108억원예시를함께읽는다. 기존도메인순서·권리·단일연도전환은유지한다.

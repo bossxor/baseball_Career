@@ -195,12 +195,28 @@
       "screenId": "S18",
       "queryKey": "leagueRecords",
       "actions": [
-        "READ_LEAGUE_RECORDS"
+        "READ_LEAGUE_RECORDS",
+        "CLUB_DRAFT_PICK",
+        "CLUB_DRAFT_AUTO_PICK"
       ],
-      "actionClass": "QUERY",
+      "actionClass": "MIXED",
       "resultRouting": "serverAllowedActionsAndResumeDescriptor",
       "draftValidation": "schemaVersionAndSourceRevision",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "actionClasses": {
+        "READ_LEAGUE_RECORDS": "QUERY",
+        "CLUB_DRAFT_PICK": "SAVE_COMMAND",
+        "CLUB_DRAFT_AUTO_PICK": "SAVE_COMMAND"
+      },
+      "conditionalQueries": {
+        "CLUB_DRAFT": "clubDraftState"
+      },
+      "commandContext": {
+        "mode": "CLUB",
+        "subview": "DRAFT",
+        "requiresCurrentTurn": true,
+        "requiresDraftVersion": true
+      }
     },
     {
       "screenId": "S19",

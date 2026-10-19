@@ -39,3 +39,4 @@ GameState의provisionalStats/XP/기록evidence는청크커밋안전저장되지�
 blocking_tasks(saveId/taskId UNIQUE,sourceKey,type,priority,deadlineGameInstant,resumeContext,status),day_settlements(saveId/dayIndex/settlementType UNIQUE,receiptId),game_provisional_ledgers(gameId/deltaType/entityId UNIQUE,delta,stateVersion,appliedAtFinalReceipt?). pending경기이어가기는기존진행명령/receipt조회,새CONTINUE는현재pendingContextVersion확인필수. error=409 RESUME_CONTEXT_CHANGED/422 BLOCKING_TASK_PENDING/503 INVARIANT_VIOLATION,허용다음행동만반환.
 
 COLLISION01 구종XP중간등급업최종1회/02특성같은경기소급0/03복무후학년복귀/04지도자·복사동시성/05두계약1개/06당일입대·차출정리/07오래된resume과거경기실행0/08등록관측중복0/09에이전트마감추첨0/10강화세계시즌1회. 구현후일정경계에동일사건을인위주입해table-driven검증한다.
+오프시즌운영후속: [115](115-CLUB-OFFSEASON-DEADLINES-AND-DEPENDENCIES.md)의추천순서/실제기한구분·드래프트같은차례복구·FA예약/마감·병역/만료·미래보장108억원예시를함께읽는다. 기존도메인순서·권리·단일연도전환은유지한다.
