@@ -21,6 +21,7 @@ for (let i = 1; i <= 99; i++) {
   assert.ok(event.body.length <= 240);
   assert.ok(event.choices.length > 0);
   unique(event.choices.map(c => c.command));
+  unique(event.choices.map(c => c.resultCopy)); // 선택지마다 결과 문구가 달라야 한다
   for (const choice of event.choices) {
     assert.ok(choice.command && choice.label && choice.resultCopy && choice.preview);
   }

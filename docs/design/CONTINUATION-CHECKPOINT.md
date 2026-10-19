@@ -9,8 +9,8 @@
 ## 완료·다음
 
 - 완료:116중반커리어12경험/E13근거정정,117기본NEXT_MAJOR_EVENT U·12검수계획,118은퇴/보관/새선수·지도자9장면·12검수계획.
-- 다음 첫 작업: event-catalog-v2.json의E13 CANCEL_POSITION_PLAN resultCopy가CONFIRM_POSITION과같아취소후에도변경적용처럼읽힌다. EVENT-CATALOG.md의같은선택결과와함께‘기존등록유지·전환계획종료’로분리하고회귀검사한다. 이번임계치도달후에는코드를변경하지않고미완료로기록했다.
-- 그다음: 나머지유지/취소/읽음결과문구의의미감사,연령별아트라이브러리제작범위,구현전인계.
+- 완료(후속): E13 CANCEL_POSITION_PLAN 문구 정정과 62개 이벤트 90개 선택지의 resultCopy 의미 감사. 이벤트 내 중복 문구는 verify가 실패시킨다.
+- 다음: 연령별 아트 라이브러리 제작 범위, 구현 전 인계.
 - 118단계정적검사PASS. 원본41/복사19·peak100→50·계보claim1개·다른세계허용·연대기표현실패와snapshot분리를검사했다.
 - 구현/브라우저/엔진/Neon/API/DB/build/APK는미실행. 정적PASS를실제게임PASS로올리지않는다.
 - 최신작업V:\docs\design. Git은정상로컬baseball-career-repo를쓰며V의.git는복구/변경하지않는다.
