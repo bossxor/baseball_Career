@@ -1,3 +1,5 @@
+최종 수치 정합: [90](90-NUMERIC-LEDGER-CONSISTENCY.md)의기본XP20/예약/배율후소비/실제숙련증가분리와정수잔여규칙을함께적용합니다. 실제cap잔여만으로지급하지않으며팀이동으로기본예산을초기화하지않습니다. 반값가져오기의1e-4단위반올림도90을따릅니다.
+
 # 85. 커리어 하드 경쟁 환경·구단 하드·구단 치트 확정
 
 2026-10-19. 이 대화의 사용자 후속 결정이 [36](36-CLUB-SECRET-CHEAT.md), [42](42-GROWTH-DIFFICULTY-REBIRTH.md), [57](57-REPERTOIRE-DETAILED-CONTRACT.md), [79](79-CREATION-FIELDS-VALIDATION-COPY.md)의 상충 부분을 대체한다. 사용자 방향 U와 아래 제안 수치 D를 구분한다.
