@@ -4,6 +4,8 @@
 
 <!-- SOURCE: START-HERE.md -->
 
+최신: [119 선수 표시·투구폼·좌우 상성](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) · [120 구현 착수 대비 로드맵](120-IMPLEMENTATION-ROADMAP.md). 사람 외형 없이 이름·던지는 손/타석·투구폼만 사용하며 실루엣 이미지는 별도 제작합니다. 진행/재개위치는 STATUS·CONTINUATION-CHECKPOINT를 확인합니다.
+
 최신: [118 은퇴·보관·구단연속성](118-LATECAREER-ARCHIVE-CLUB-CONTINUITY.md). 연속작업의마지막사용량·재개위치는 [CONTINUATION-CHECKPOINT](CONTINUATION-CHECKPOINT.md)에기록합니다.
 
 최신: [116 중반커리어](116-MIDCAREER-DECISIONS-AND-SETBACKS.md) · [117 기본빠른진행U](117-CAREER-NEXT-MAJOR-EVENT-PROGRESSION.md). 진행/재개위치는STATUS·DETAIL-PLAN을확인합니다.
@@ -63,6 +65,8 @@ GitHub https://github.com/bossxor/baseball_Career 의 docs/design이 원본. 다
 ---
 
 <!-- SOURCE: README.md -->
+
+최신: [119 선수 표시·투구폼·좌우 상성](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) · [120 구현 착수 대비 로드맵](120-IMPLEMENTATION-ROADMAP.md). 사람 외형 없이 이름·던지는 손/타석·투구폼만 사용하며 실루엣 이미지는 별도 제작합니다. 진행/재개위치는 STATUS·CONTINUATION-CHECKPOINT를 확인합니다.
 
 최신: [118 은퇴·보관·구단연속성](118-LATECAREER-ARCHIVE-CLUB-CONTINUITY.md). 연속작업의마지막사용량·재개위치는 [CONTINUATION-CHECKPOINT](CONTINUATION-CHECKPOINT.md)에기록합니다.
 
@@ -142,7 +146,7 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 
 <!-- SOURCE: STATUS.md -->
 
-# 설계 현황 — 118 은퇴·보관·구단 연속성 / 117 빠른진행 U
+# 설계 현황 — 119 선수 표시·투구폼 / 120 구현 로드맵
 
 ## 현재 요약 (2026-10-19)
 
@@ -371,6 +375,8 @@ v0.15:87~89플랫폼로그인·기기전환·업데이트·파일전달상세계
 ## 사용량 임계치 재개 항목
 
 2026-10-19 남음1%확인으로이번연속작업종료. 다음첫항목은E13 CANCEL_POSITION_PLAN결과문구정정과테스트다. 116~118서면/정적검사는완료했지만E13취소문구는발견만했고미수정이다. CONTINUATION-CHECKPOINT.md의정확한상태를우선한다.
+
+2026-10-19 후속: E13/62개 이벤트 결과 문구 분리, [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼·좌우 상성, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵을 작성했다. 실루엣 이미지는 다른 곳에서 제작한다.
 
 ---
 
@@ -1004,7 +1010,7 @@ SaveState: schemaVersion, rulesVersion, engineVersion, mode, gameDate, seedState
 CareerState 추가: protagonistId, highSchool, proRegistrationHistory, focusPlan, phaseProgress, careerPreparationUsed, preparationEpisodeId, retirementReason, archiveId.
 ClubState 추가: managedTeamId, lineup, pitchingPlan, budgetsBySeason, reservations, offers, draftState, importOrigins.
 
-Player: id, name, birthYear, ageAtSeasonStart, kind, throws, bats, position, role, abilities, growthFractions, potential, aptitude, fatigue, morale, injury, contractId, teamId, level, retired, originArchiveId?. 숫자는 유한값·범위 검증. 영구 능력치와 임시 modifier 분리. 타자 능력치를 투수 키로 해석하지 않는다.
+Player: id, name, birthYear, ageAtSeasonStart, kind, throws, bats, pitchForm(투수만, 119), position, role, abilities, growthFractions, potential, aptitude, fatigue, morale, injury, contractId, teamId, level, retired, originArchiveId?. 숫자는 유한값·범위 검증. 영구 능력치와 임시 modifier 분리. 타자 능력치를 투수 키로 해석하지 않는다.
 
 ScheduleGame: id, season, dayIndex, homeTeamId, awayTeamId, status, rngSeed, resultId?. GameResult: scoreByInning, battingLines, pitchingLines, decisions, playSummary, outsRecorded. 같은 gameId를 다시 완료할 수 없다. 리그가 날짜를 진행하면 그 날 모든 경기를 완료하고 다음 날짜로 넘어간다.
 
@@ -9061,6 +9067,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 ---
 
 <!-- SOURCE: HANDOFF-PROMPT.md -->
+
+최신: [119 선수 표시·투구폼·좌우 상성](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) · [120 구현 착수 대비 로드맵](120-IMPLEMENTATION-ROADMAP.md). 사람 외형 없이 이름·던지는 손/타석·투구폼만 사용하며 실루엣 이미지는 별도 제작합니다. 진행/재개위치는 STATUS·CONTINUATION-CHECKPOINT를 확인합니다.
 
 시각1.7: [106 확장 UI 연결](106-EXPANSION-UI-CLOSURE.md)에서102~104의 남은 대표 배치를 연결했습니다. [시안](art-direction-lab.html)은30대표/78상태,핵심45화면/99이벤트는유지합니다. [61항목 진입점](state-ui-preview-coverage.json)은NOT_EXECUTED이며실제 앱/브라우저 검수와구분합니다. 최신파일은V:\docs\design,이어하기는버튼만 표시합니다.
 

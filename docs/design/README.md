@@ -1,3 +1,5 @@
+최신: [119 선수 표시·투구폼·좌우 상성](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) · [120 구현 착수 대비 로드맵](120-IMPLEMENTATION-ROADMAP.md). 사람 외형 없이 이름·던지는 손/타석·투구폼만 사용하며 실루엣 이미지는 별도 제작합니다. 진행/재개위치는 STATUS·CONTINUATION-CHECKPOINT를 확인합니다.
+
 최신: [118 은퇴·보관·구단연속성](118-LATECAREER-ARCHIVE-CLUB-CONTINUITY.md). 연속작업의마지막사용량·재개위치는 [CONTINUATION-CHECKPOINT](CONTINUATION-CHECKPOINT.md)에기록합니다.
 
 최신: [116 중반커리어](116-MIDCAREER-DECISIONS-AND-SETBACKS.md) · [117 기본빠른진행U](117-CAREER-NEXT-MAJOR-EVENT-PROGRESSION.md). 진행/재개위치는STATUS·DETAIL-PLAN을확인합니다.

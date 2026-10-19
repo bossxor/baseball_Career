@@ -1,3 +1,5 @@
+최신: [119 선수 표시·투구폼·좌우 상성](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) · [120 구현 착수 대비 로드맵](120-IMPLEMENTATION-ROADMAP.md). 사람 외형 없이 이름·던지는 손/타석·투구폼만 사용하며 실루엣 이미지는 별도 제작합니다. 진행/재개위치는 STATUS·CONTINUATION-CHECKPOINT를 확인합니다.
+
 시각1.7: [106 확장 UI 연결](106-EXPANSION-UI-CLOSURE.md)에서102~104의 남은 대표 배치를 연결했습니다. [시안](art-direction-lab.html)은30대표/78상태,핵심45화면/99이벤트는유지합니다. [61항목 진입점](state-ui-preview-coverage.json)은NOT_EXECUTED이며실제 앱/브라우저 검수와구분합니다. 최신파일은V:\docs\design,이어하기는버튼만 표시합니다.
 
 # 다른 채팅·개발 환경용 인계 요청문

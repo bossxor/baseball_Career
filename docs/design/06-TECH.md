@@ -15,7 +15,7 @@ SaveState: schemaVersion, rulesVersion, engineVersion, mode, gameDate, seedState
 CareerState 추가: protagonistId, highSchool, proRegistrationHistory, focusPlan, phaseProgress, careerPreparationUsed, preparationEpisodeId, retirementReason, archiveId.
 ClubState 추가: managedTeamId, lineup, pitchingPlan, budgetsBySeason, reservations, offers, draftState, importOrigins.
 
-Player: id, name, birthYear, ageAtSeasonStart, kind, throws, bats, position, role, abilities, growthFractions, potential, aptitude, fatigue, morale, injury, contractId, teamId, level, retired, originArchiveId?. 숫자는 유한값·범위 검증. 영구 능력치와 임시 modifier 분리. 타자 능력치를 투수 키로 해석하지 않는다.
+Player: id, name, birthYear, ageAtSeasonStart, kind, throws, bats, pitchForm(투수만, 119), position, role, abilities, growthFractions, potential, aptitude, fatigue, morale, injury, contractId, teamId, level, retired, originArchiveId?. 숫자는 유한값·범위 검증. 영구 능력치와 임시 modifier 분리. 타자 능력치를 투수 키로 해석하지 않는다.
 
 ScheduleGame: id, season, dayIndex, homeTeamId, awayTeamId, status, rngSeed, resultId?. GameResult: scoreByInning, battingLines, pitchingLines, decisions, playSummary, outsRecorded. 같은 gameId를 다시 완료할 수 없다. 리그가 날짜를 진행하면 그 날 모든 경기를 완료하고 다음 날짜로 넘어간다.
 
