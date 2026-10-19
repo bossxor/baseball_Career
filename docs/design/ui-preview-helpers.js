@@ -6,5 +6,12 @@ while(free.length){const total=free.reduce((a,p)=>a+p.weight,0);const locked=fre
 const shares=free.map(p=>({p,base:Math.floor(remaining*p.weight/total),remainder:remaining*p.weight%total}));let left=remaining-shares.reduce((a,p)=>a+p.base,0);shares.sort((a,b)=>b.remainder-a.remainder||(a.p.id<b.p.id?-1:a.p.id>b.p.id?1:0));for(const s of shares){s.p.weight=s.base+(left-->0?1:0);}break;}
 return result;
 }
-root.PBPreview=Object.freeze({rebalancePitchWeights});
+
+function advanceCommentaryPreview(state,action,count){
+if(!Number.isInteger(count)||count<1||!Number.isInteger(state.cursor)||state.cursor<0||state.cursor>=count||![1,2,4].includes(state.speed))throw new Error('INVALID_VIEWER_STATE');
+const next={...state};switch(action){case 'step':next.cursor=Math.min(count-1,state.cursor+1);next.playing=false;break;case 'back':next.cursor=Math.max(0,state.cursor-1);next.playing=false;break;case 'skip':next.cursor=count-1;next.playing=false;break;case 'reset':next.cursor=0;next.playing=false;break;case 'play':next.playing=!state.playing&&state.cursor<count-1;break;case 'tick':if(state.playing)next.cursor=Math.min(count-1,state.cursor+1);if(next.cursor===count-1)next.playing=false;break;case 'speed':next.speed=state.speed===1?2:state.speed===2?4:1;break;default:throw new Error('INVALID_VIEWER_ACTION');}return next;
+}
+function escapePreviewText(value){return String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'",'&#39;');}
+
+root.PBPreview=Object.freeze({rebalancePitchWeights,advanceCommentaryPreview,escapePreviewText});
 })(globalThis);

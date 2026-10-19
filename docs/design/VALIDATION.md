@@ -107,3 +107,22 @@ node docs/design/verify-design.mjs 통과. 추가 검사는 공개 locked DTO의
 최초 보드 검사는확장 전의16흐름 상수 때문에 실패했고18흐름/22화면/54상태로 검수 등록을 갱신한 뒤 통과했다. 실제 API 직렬화·캐시·클라이언트 번들 보안 시험,특성 해금/원장 transaction·슬라이더 input/포커스/기기 시험은 미실행이다.61개 상태 UI 기대값의 NOT_EXECUTED와298게임 fixture의 NOT_IMPLEMENTED를 유지한다.
 
 DESIGN-ALL은100~105를 포함해 숫자순으로 재생성한다. 이전MANIFEST가 미갱신이어서 인수 시 실제199파일 해시를 보존한 기준으로 V폴더 덮어쓰기 충돌을 검사한 뒤 새SHA를 대조한다. 전체 문서가 Git에 공개될 수 있으나 server-only 정의를 실제 게임 공개assets로 배포해서는 안 된다는 경계를105에 명시했다.
+
+## 102~104 남은 대표 UI 연결 — 2026-10-19
+
+106에8개 배치/24상태를 추가해총30대표/26흐름78상태다. 기존45게임 화면/99이벤트와8PNG를 유지한다. S40 도전·S45 내보내기 하위 배치를별도로 세어대표 배치30개/고유 화면ID28개다.
+
+node docs/design/verify-design.mjs 통과. 추가 출력:
+
+```text
+PASS: expansion templates: 12 public challenges, PRE/MID/reward separation, salary previews 70/55/40, staff debt, DIRECT/COMPARISON, hidden-score viewer controls, chapter filters, escaped notes and export states.
+PASS: expansion arithmetic, read-only commentary reducer and immutable log, note escaping, 61 source-to-preview mappings; runtime tests remain NOT_EXECUTED.
+```
+
+순수 문자열 검사는12개 공개 도전조건/목표0선택/MID22·33 사례/협상 금액11000·12000·13000만원과 p70/55/40/직원 보장액/같은kind 비교·실제 투타 분리/점수 숨김·현재 장면aria-live/시즌책 필터/HTML문자를 포함한 메모 escape/내보내기 상태를 확인했다. 순수 함수는중계 step/back/skip/reset/play/tick/speed 경계·입력 불변·동일 로그 보존,보장7500만−지급1500만=6000만,훈련1.18+.05 cap1.2와1.04+.05=1.09,OPS.724를 검사했다.
+
+E94는실제 프로 대결 근거의관계 형성도 허용하도록발생 조건·공통 문안만51/60/106과 연결했다. 관계 형성·실제 대결·관계WIN은 별도 evidence이며임의 승리/선수 생성은 없다. 직원 보장채무는운영 예약 총 구속액에 포함해해임으로 가용액이부풀지 않는 의미를44에 보완했다. 앱의실제 이벤트 판정/예산 transaction은실행하지 않았다.
+
+61개 상태 UI 기대값은원문/대표 진입점 지도를 추가했을 뿐NOT_EXECUTED,기존298게임 기대값도NOT_IMPLEMENTED다. 실제 DOM 이벤트·타이머·키보드/포커스·음성·레이아웃·CAS·보상·권한·내보내기파일·DB·강제종료 복구·엔진/API·APK/build는미시험이다. file: 자동 브라우저 정책 차단을우회하지 않았다.
+
+Git/V문서205파일 일치 후기준을 저장했고동기화 전외부 변경을 다시 검사한다. 원래 미리보기HTML과공개 helper를갱신하며서버용 히든 정의는공개 미리보기 폴더에 복사하지 않는다. 최종MANIFEST SHA와Git main을 확인한다.

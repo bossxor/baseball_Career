@@ -1,3 +1,5 @@
+표시·상태 최신 계약: [103](103-AGENTS-RELATIONS-STAFF-STATE-UI.md)와 [106 연결](106-EXPANSION-UI-CLOSURE.md)을 따른다. 기존 수식·권리·기념보상·읽기전용 계약은 유지하며,상태 UI/로컬 시안/실행 미검증을 구분한다.
+
 # 51. 라이벌·동료·재회 서사
 
 기존E26의일시경쟁뉴스를지속되는선수관계로확장한다. 관계상대는실제세이브선수ID이며이벤트마다가짜신규선수를생성하지않는다. 관계로타격/주전/계약을몰래보장하지않음.
@@ -27,3 +29,6 @@ playerRelationships(saveId,playerA,playerB,type,stage,startedAt,sourceEvent),riv
 REL01 동일ID중복없음/후보0/상대조기은퇴/타자끼리비교/미국실제재회/관계보너스0/원본관계불변/경기재시도중복0/국제범위분리검증.
 
 실행처리순서/필드/명령입출력/예외/검수fixture는[상세계약](60-RELATIONS-DETAILED-CONTRACT.md)을따른다. 공통[64](64-EXPANSION-COMMON-CONTRACT.md).
+
+
+T14 연결 D(106): 고교 기본 라이벌same-kind는 유지한다. 프로의 실제 타자-투수 기록을 근거로E94 관계 형성 영수증이 확정된 쌍은cross-kind RIVAL도 허용한다. 고교 관계 삭제·모든 상대 자동 라이벌·강제 선수 생성은 없다. 관계 형성,실제 대결,WIN 관계 이벤트는 별도 근거이며타석 조회/선택 문구로 승리를 추정하지 않는다.

@@ -45,4 +45,6 @@ LV-U01 후보 카드 같은 version 1회/02 설정 OFF 후보 읽기 생략/03 �
 
 ## 남은 확인
 
-문구·카드 레이아웃은 초안. 확정 전에는 53/54/62/63/STATUS/보드/fixture를 갱신하지 않았다.
+문구·배치는 초안D이며106에서 원문·대표 시안·순수 로컬 조작·정적 검수에 연결했다. 실제 앱/API/DB/기기 검증은 미실행이다.
+
+최신 연결 범위는 [106](106-EXPANSION-UI-CLOSURE.md),실행 전61항목의 원문/시안 진입점은state-ui-preview-coverage.json이다. NOT_EXECUTED를 유지한다.

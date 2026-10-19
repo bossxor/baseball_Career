@@ -1,4 +1,4 @@
-외부 작업 인수/시각1.6: [100 히든](100-HIDDEN-TRAITS.md)~[104 상태 UI](104-COMMENTARY-CHRONICLE-STATE-UI.md)를 보존했고 [105 통합 기록](105-EXTERNAL-HANDOFF-INTEGRATION.md)에100/101 연결 범위를 정리했습니다. [보드](art-direction-lab.html)는22대표/54상태. T14는 라이벌 투수 상대 시즌20PA·OPS .900·관계 승리로 확정됐습니다. 최신 파일은V:\docs\design,이어하기는 버튼만 표시합니다.
+시각1.7: [106 확장 UI 연결](106-EXPANSION-UI-CLOSURE.md)에서102~104의 남은 대표 배치를 연결했습니다. [시안](art-direction-lab.html)은30대표/78상태,핵심45화면/99이벤트는유지합니다. [61항목 진입점](state-ui-preview-coverage.json)은NOT_EXECUTED이며실제 앱/브라우저 검수와구분합니다. 최신파일은V:\docs\design,이어하기는버튼만 표시합니다.
 
 # 다시, 플레이볼 — 여기서 시작하세요
 

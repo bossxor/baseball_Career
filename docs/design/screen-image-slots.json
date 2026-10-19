@@ -445,18 +445,20 @@
     },
     {
       "assetRefs": [
-        "NONE"
+        "NONE",
+        "almanacPortrait"
       ],
       "screenId": "S40",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
       "purpose": "목표·기념품",
-      "guard": "코스메틱아이콘/조건,능력보상오해없게",
+      "guard": "코스메틱아이콘/조건,능력보상오해없게; 외형 프레임은 미리보기/프로필 선호,능력 변경 없음",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "imageRole": "CODE_BADGES"
     },
     {
       "assetRefs": [
-        "posting"
+        "posting",
+        "NONE"
       ],
       "screenId": "S41",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -468,7 +470,8 @@
     {
       "assetRefs": [
         "rival",
-        "almanacPortrait"
+        "almanacPortrait",
+        "NONE"
       ],
       "screenId": "S42",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -479,7 +482,8 @@
     },
     {
       "assetRefs": [
-        "almanacPortrait"
+        "almanacPortrait",
+        "NONE"
       ],
       "screenId": "S43",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -503,7 +507,8 @@
       "assetRefs": [
         "retirement",
         "international",
-        "rival"
+        "rival",
+        "NONE"
       ],
       "screenId": "S45",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",

@@ -1,0 +1,622 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_HANDOFF_ONLY",
+  "runtimeStatus": "NOT_EXECUTED",
+  "note": "각61항목의 원문·대표 시안 진입점. 개별 E2E통과나 모든 예외의 픽셀 렌더를 뜻하지 않음.",
+  "rows": [
+    {
+      "id": "HT-D01",
+      "source": "100-HIDDEN-TRAITS.md",
+      "previewFamilies": [
+        "traits"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "HT-D02",
+      "source": "100-HIDDEN-TRAITS.md",
+      "previewFamilies": [
+        "traits"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "HT-D03",
+      "source": "100-HIDDEN-TRAITS.md",
+      "previewFamilies": [
+        "traits"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "HT-D04",
+      "source": "100-HIDDEN-TRAITS.md",
+      "previewFamilies": [
+        "traits"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "HT-D05",
+      "source": "100-HIDDEN-TRAITS.md",
+      "previewFamilies": [
+        "traits"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "HT-D06",
+      "source": "100-HIDDEN-TRAITS.md",
+      "previewFamilies": [
+        "traits"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "HT-D07",
+      "source": "100-HIDDEN-TRAITS.md",
+      "previewFamilies": [
+        "traits"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "HT-D08",
+      "source": "100-HIDDEN-TRAITS.md",
+      "previewFamilies": [
+        "traits"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RS-D01",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RS-D02",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RS-D03",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RS-D04",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RS-D05",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RS-D06",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RS-D07",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RS-D08",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RS-D09",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "PA-D01",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "PA-D02",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "PA-D03",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "PA-D04",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "PA-D05",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "PA-D06",
+      "source": "101-REPERTOIRE-STATE-UI.md",
+      "previewFamilies": [
+        "repertoire"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "GU-D01",
+      "source": "102-GOALS-STATE-UI.md",
+      "previewFamilies": [
+        "goals",
+        "achievements"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "GU-D02",
+      "source": "102-GOALS-STATE-UI.md",
+      "previewFamilies": [
+        "goals",
+        "achievements"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "GU-D03",
+      "source": "102-GOALS-STATE-UI.md",
+      "previewFamilies": [
+        "goals",
+        "achievements"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "GU-D04",
+      "source": "102-GOALS-STATE-UI.md",
+      "previewFamilies": [
+        "goals",
+        "achievements"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "GU-D05",
+      "source": "102-GOALS-STATE-UI.md",
+      "previewFamilies": [
+        "goals",
+        "achievements"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "GU-D06",
+      "source": "102-GOALS-STATE-UI.md",
+      "previewFamilies": [
+        "goals",
+        "achievements"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "GU-D07",
+      "source": "102-GOALS-STATE-UI.md",
+      "previewFamilies": [
+        "goals",
+        "achievements"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "GU-D08",
+      "source": "102-GOALS-STATE-UI.md",
+      "previewFamilies": [
+        "goals",
+        "achievements"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "GU-D09",
+      "source": "102-GOALS-STATE-UI.md",
+      "previewFamilies": [
+        "goals",
+        "achievements"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "GU-D10",
+      "source": "102-GOALS-STATE-UI.md",
+      "previewFamilies": [
+        "goals",
+        "achievements"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "GU-D11",
+      "source": "102-GOALS-STATE-UI.md",
+      "previewFamilies": [
+        "goals",
+        "achievements"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "AG-U01",
+      "source": "103-AGENTS-RELATIONS-STAFF-STATE-UI.md",
+      "previewFamilies": [
+        "agents",
+        "relations",
+        "staff"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "AG-U02",
+      "source": "103-AGENTS-RELATIONS-STAFF-STATE-UI.md",
+      "previewFamilies": [
+        "agents",
+        "relations",
+        "staff"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "AG-U03",
+      "source": "103-AGENTS-RELATIONS-STAFF-STATE-UI.md",
+      "previewFamilies": [
+        "agents",
+        "relations",
+        "staff"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "AG-U04",
+      "source": "103-AGENTS-RELATIONS-STAFF-STATE-UI.md",
+      "previewFamilies": [
+        "agents",
+        "relations",
+        "staff"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RL-U01",
+      "source": "103-AGENTS-RELATIONS-STAFF-STATE-UI.md",
+      "previewFamilies": [
+        "agents",
+        "relations",
+        "staff"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RL-U02",
+      "source": "103-AGENTS-RELATIONS-STAFF-STATE-UI.md",
+      "previewFamilies": [
+        "agents",
+        "relations",
+        "staff"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RL-U03",
+      "source": "103-AGENTS-RELATIONS-STAFF-STATE-UI.md",
+      "previewFamilies": [
+        "agents",
+        "relations",
+        "staff"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "RL-U04",
+      "source": "103-AGENTS-RELATIONS-STAFF-STATE-UI.md",
+      "previewFamilies": [
+        "agents",
+        "relations",
+        "staff"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "ST-U01",
+      "source": "103-AGENTS-RELATIONS-STAFF-STATE-UI.md",
+      "previewFamilies": [
+        "agents",
+        "relations",
+        "staff"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "ST-U02",
+      "source": "103-AGENTS-RELATIONS-STAFF-STATE-UI.md",
+      "previewFamilies": [
+        "agents",
+        "relations",
+        "staff"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "ST-U03",
+      "source": "103-AGENTS-RELATIONS-STAFF-STATE-UI.md",
+      "previewFamilies": [
+        "agents",
+        "relations",
+        "staff"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "ST-U04",
+      "source": "103-AGENTS-RELATIONS-STAFF-STATE-UI.md",
+      "previewFamilies": [
+        "agents",
+        "relations",
+        "staff"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "ST-U05",
+      "source": "103-AGENTS-RELATIONS-STAFF-STATE-UI.md",
+      "previewFamilies": [
+        "agents",
+        "relations",
+        "staff"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LV-U01",
+      "source": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "previewFamilies": [
+        "commentary",
+        "chronicle",
+        "exportCard"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LV-U02",
+      "source": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "previewFamilies": [
+        "commentary",
+        "chronicle",
+        "exportCard"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LV-U03",
+      "source": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "previewFamilies": [
+        "commentary",
+        "chronicle",
+        "exportCard"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LV-U04",
+      "source": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "previewFamilies": [
+        "commentary",
+        "chronicle",
+        "exportCard"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LV-U05",
+      "source": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "previewFamilies": [
+        "commentary",
+        "chronicle",
+        "exportCard"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LV-U06",
+      "source": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "previewFamilies": [
+        "commentary",
+        "chronicle",
+        "exportCard"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "LV-U07",
+      "source": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "previewFamilies": [
+        "commentary",
+        "chronicle",
+        "exportCard"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "CH-U01",
+      "source": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "previewFamilies": [
+        "commentary",
+        "chronicle",
+        "exportCard"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "CH-U02",
+      "source": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "previewFamilies": [
+        "commentary",
+        "chronicle",
+        "exportCard"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "CH-U03",
+      "source": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "previewFamilies": [
+        "commentary",
+        "chronicle",
+        "exportCard"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "CH-U04",
+      "source": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "previewFamilies": [
+        "commentary",
+        "chronicle",
+        "exportCard"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "CH-U05",
+      "source": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "previewFamilies": [
+        "commentary",
+        "chronicle",
+        "exportCard"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "CH-U06",
+      "source": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "previewFamilies": [
+        "commentary",
+        "chronicle",
+        "exportCard"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    },
+    {
+      "id": "CH-U07",
+      "source": "104-COMMENTARY-CHRONICLE-STATE-UI.md",
+      "previewFamilies": [
+        "commentary",
+        "chronicle",
+        "exportCard"
+      ],
+      "coverage": "CONTRACT_AND_REPRESENTATIVE_PREVIEW",
+      "executionStatus": "NOT_EXECUTED"
+    }
+  ]
+}

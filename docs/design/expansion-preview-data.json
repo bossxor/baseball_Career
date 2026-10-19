@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_PREVIEW_ONLY",
+  "gameplayRewardDelta": 0,
+  "goals": [
+    {
+      "id": "G01",
+      "name": "첫50타석",
+      "target": 50,
+      "previous": 40,
+      "unit": "정규 타석"
+    },
+    {
+      "id": "G02",
+      "name": "50경기 선발",
+      "target": 50,
+      "previous": 35,
+      "unit": "정규 선발 출장"
+    },
+    {
+      "id": "G03",
+      "name": "20홈런",
+      "target": 20,
+      "previous": 8,
+      "unit": "정규 홈런"
+    },
+    {
+      "id": "G04",
+      "name": "끈질긴30볼넷",
+      "target": 30,
+      "previous": 24,
+      "unit": "정규 볼넷"
+    },
+    {
+      "id": "G09",
+      "name": "팀의 가을야구",
+      "target": 1,
+      "previous": 0,
+      "unit": "선택 팀 PS진출"
+    }
+  ],
+  "recommendedIds": [
+    "G01",
+    "G02",
+    "G04"
+  ],
+  "achievements": [
+    {
+      "id": "A01",
+      "name": "첫 프로 계약",
+      "condition": "KBO·MiLB·MLB 중 실제 프로 계약"
+    },
+    {
+      "id": "A02",
+      "name": "첫 KBO 출장",
+      "condition": "KBO 실제 첫 출전"
+    },
+    {
+      "id": "A03",
+      "name": "첫 MLB 출장",
+      "condition": "MLB 실제 첫 출전"
+    },
+    {
+      "id": "A04",
+      "name": "첫 국제무대",
+      "condition": "국제대회 실제 첫 출전"
+    },
+    {
+      "id": "A05",
+      "name": "대학 졸업",
+      "condition": "대학 졸업 확정"
+    },
+    {
+      "id": "A06",
+      "name": "바다 건너 계약",
+      "condition": "포스팅 후 해외 계약 실제 체결"
+    },
+    {
+      "id": "A07",
+      "name": "병역 완료",
+      "condition": "병역 완료 · 비대상 제외"
+    },
+    {
+      "id": "A08",
+      "name": "천 개의 안타",
+      "condition": "같은 리그 통산1000안타"
+    },
+    {
+      "id": "A09",
+      "name": "백 번의 승리",
+      "condition": "같은 리그 통산100승"
+    },
+    {
+      "id": "A10",
+      "name": "마지막을 지킨200번",
+      "condition": "같은 리그 통산200세이브"
+    },
+    {
+      "id": "A11",
+      "name": "라이벌과 다시",
+      "condition": "고교 라이벌과 첫 실제 재회"
+    },
+    {
+      "id": "A12",
+      "name": "두 무대의 마지막",
+      "condition": "KBO·MLB 실제 출장 후 은퇴"
+    }
+  ],
+  "negotiation": {
+    "baseSalary": 100000000,
+    "trust": 60,
+    "bonus": 0.08,
+    "feeRate": 0.02,
+    "requests": [
+      {
+        "increase": 0.1,
+        "expectedP": 0.7,
+        "salary": 110000000
+      },
+      {
+        "increase": 0.2,
+        "expectedP": 0.55,
+        "salary": 120000000
+      },
+      {
+        "increase": 0.3,
+        "expectedP": 0.4,
+        "salary": 130000000
+      }
+    ]
+  },
+  "relation": {
+    "direct": {
+      "PA": 26,
+      "AB": 24,
+      "H": 6,
+      "TB": 10,
+      "BB": 2,
+      "HBP": 0,
+      "displayAVG": ".250",
+      "displayOPS": ".724"
+    },
+    "comparison": {
+      "sameKind": true,
+      "sharedGames": 12
+    },
+    "emptyMessages": [
+      [
+        "예정 없음",
+        "아직 예정된 맞대결이 없습니다"
+      ],
+      [
+        "은퇴",
+        "상대가 은퇴했습니다. 기록은 그대로 보존됩니다"
+      ],
+      [
+        "로그 없음",
+        "이 범위에는 경기 기록이 없습니다"
+      ],
+      [
+        "직접전적 미제공",
+        "같은 종류 선수끼리는 직접 상대 전적을 제공하지 않습니다"
+      ],
+      [
+        "조회 실패",
+        "불러오지 못했습니다"
+      ]
+    ]
+  },
+  "staff": {
+    "annual": 150000000,
+    "financeDays": 200,
+    "remainingDays": 100,
+    "guaranteed": 75000000,
+    "paid": 15000000,
+    "outstanding": 60000000,
+    "baseBatterTraining": 1.18,
+    "basePitcherTraining": 1.04,
+    "coachBonus": 0.05,
+    "cap": 1.2
+  },
+  "commentary": {
+    "fixtureId": "FIXED_FINAL_DEMO",
+    "finalHome": 4,
+    "finalAway": 3,
+    "frames": [
+      {
+        "cursor": 0,
+        "text": "9회초 무사 · 안타로 주자가1루에 나갔습니다.",
+        "home": 4,
+        "away": 1
+      },
+      {
+        "cursor": 1,
+        "text": "9회초 무사 · 2점홈런입니다.",
+        "home": 4,
+        "away": 3
+      },
+      {
+        "cursor": 2,
+        "text": "9회초1사 · 삼진으로 아웃을 잡았습니다.",
+        "home": 4,
+        "away": 3
+      },
+      {
+        "cursor": 3,
+        "text": "9회초2사 · 내야 땅볼로 아웃을 잡았습니다.",
+        "home": 4,
+        "away": 3
+      },
+      {
+        "cursor": 4,
+        "text": "삼진으로 마지막 아웃. 경기가 종료됐습니다.",
+        "home": 4,
+        "away": 3
+      }
+    ]
+  },
+  "chronicle": [
+    {
+      "id": "M01",
+      "year": 2032,
+      "scope": "KBO",
+      "title": "첫 홈런의 기억",
+      "official": "2032.04.03 · 정규 경기 확정 기록",
+      "pinned": true
+    },
+    {
+      "id": "M02",
+      "year": 2032,
+      "scope": "KBO",
+      "title": "다시 만난 라이벌",
+      "official": "실제 양쪽 출장 확인 · 경기 근거 보존",
+      "pinned": false
+    },
+    {
+      "id": "M03",
+      "year": 2031,
+      "scope": "국제",
+      "title": "국제무대의 첫 타석",
+      "official": "해당 대회 실제 출전 기록",
+      "pinned": false
+    }
+  ],
+  "export": {
+    "width": 1080,
+    "height": 1350,
+    "objectHours": 24,
+    "signedUrlMinutes": 5,
+    "states": [
+      "QUEUED",
+      "RENDERING",
+      "UPLOADING",
+      "READY"
+    ]
+  }
+}

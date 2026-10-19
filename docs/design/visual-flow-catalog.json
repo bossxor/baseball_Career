@@ -719,6 +719,334 @@
           "expected": "슬라이더 합100/읽기전용/타자4성향 분리"
         }
       ]
+    },
+    {
+      "id": "goals",
+      "screenIds": [
+        "S40"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "PRE 선택",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "detail",
+          "label": "MID 교체",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "receipt",
+          "label": "기념 보상",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        }
+      ]
+    },
+    {
+      "id": "achievements",
+      "screenIds": [
+        "S40"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "전체12종",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "detail",
+          "label": "달성 근거",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "receipt",
+          "label": "기록 정정",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        }
+      ]
+    },
+    {
+      "id": "agents",
+      "screenIds": [
+        "S41"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "상향 미리보기",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "detail",
+          "label": "상향 성공",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "receipt",
+          "label": "요청 실패",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        }
+      ]
+    },
+    {
+      "id": "relations",
+      "screenIds": [
+        "S42"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "상대 목록",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "detail",
+          "label": "같은 종류 비교",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "receipt",
+          "label": "직접 대결",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        }
+      ]
+    },
+    {
+      "id": "staff",
+      "screenIds": [
+        "S43"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "후보 비교",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "detail",
+          "label": "고용 확인",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "receipt",
+          "label": "담당 변경",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        }
+      ]
+    },
+    {
+      "id": "commentary",
+      "screenIds": [
+        "S44"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "후보·재방문",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "detail",
+          "label": "확정 경기 감상",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "receipt",
+          "label": "요약 대체",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        }
+      ]
+    },
+    {
+      "id": "chronicle",
+      "screenIds": [
+        "S45"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "피드·시즌 책",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "detail",
+          "label": "공식 카드·내 메모",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "receipt",
+          "label": "정정·장면 보류",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        }
+      ]
+    },
+    {
+      "id": "exportCard",
+      "screenIds": [
+        "S45"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "미리보기",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "detail",
+          "label": "처리 단계",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        },
+        {
+          "phase": "receipt",
+          "label": "실패·다시 확인",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "ownerScopedReadModel",
+            "currentScope",
+            "receiptOrPreferenceVersion"
+          ],
+          "expected": "102~104 확정 계약의 대표 배치; 게임 확정/보상 재지급 없음"
+        }
+      ]
     }
   ]
 }
