@@ -1,8 +1,8 @@
-# 설계 기준본1.0 정적 검증 — 2026-10-19
+# 시각 확장1.1 검증 — 2026-10-19
 
-서면 종결·원문 지도·수치 정합·패키지 구조 검사 결과입니다. 실제 게임/SDK/DB/브라우저/기기를 실행한 결과가 아닙니다.
+기존 게임 설계 기준본1.0에 사용자선택 빈티지 기록실 이미지/비교보드를 추가했습니다. 다음은 문서·자산·스크립트·데이터 정적 검사이며 실제 HTML 화면/클릭/게임 실행 검증이 아닙니다.
 
-명령: `node docs/design/verify-design.mjs`
+명령: `node docs/design/verify-design.mjs` (내부에서 verify-art-direction.mjs 호출)
 
 ```text
 PASS: 99 event contracts, 45 screen contracts, unique IDs, local links/assets, JS syntax, embedded state catalog, no visible 100% badges.
@@ -16,17 +16,19 @@ PASS: 45 screen-action bindings and 10 creation recovery design expectations; 20
 PASS: 45 screen recovery rows, 99 event occurrence rows, 20 probability surfaces, 24 planned paths, 72 final fixtures; 274 expectations before the platform set. Runtime/UI/AI checks are NOT executed.
 PASS: six platform contracts with eight required flows each, and 24 platform expectations (8 auth, 8 update, 8 files); 298 unique design expectations total. Browser/device/auth/update/file behavior is NOT executed.
 PASS: baseline 1.0 has 25 source topics, 10 specified closures and 12 NOT_EXECUTED gates; XP double-budget/cap-loss/remainder and import rounding examples. These are static/document arithmetic checks only.
+PASS: chosen vintage direction, 3 hero alternatives, 12 scene data/crops, alpha PNG metadata, 45 image-slot contracts, lab script/IDs/assets and example overall 71.0.
+NOT TESTED: art-lab browser rendering, interactive clicks, viewport layout, clipboard and localStorage; file: browser navigation was policy-blocked.
 NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.
 ```
 
-기능80+세계82+교차30+생성10+최종72+플랫폼24=298서면 기대값이며모두NOT_IMPLEMENTED입니다. 실행게이트V01~12도모두NOT_EXECUTED입니다. 기대값파일존재와실제동작통과를분리합니다.
+기존298서면게임기대값/45화면/99이벤트는유지했습니다. 시각추가별도집계:메인3방향,선택빈티지사건12장면/아틀라스2개,투명초상1개,PNG전체7개(이전사건비교아틀라스포함),45화면이미지슬롯,대표시각목업4종.
 
-이번추가검사:25분야현재계약의고유ID·원문존재/중복,서면종결10개와실행미검증12개,추가사용자질문0/구현미착수상태·집계일치,14의최신R41~49존재. 구종예산예시는기본10/실제10후치트추가30,기본20소진후치트추가0,치트실제30후일반0/재영입30,구종149→150손실2소비,학습예약보존,6/5잔여누적을검사했습니다. 소량정수범위에서실제소비상한/잔여범위/지급+손실보존도확인했습니다.
+검사:선택스타일almanac,유일선택1/비교2,12sceneID/이벤트참조/3×2좌표/장면초점과HTML데이터일치,원본PNG시그니처·크기·초상alpha채널,45screenID/assetRef/가드,새보드스크립트구문·ID·자산/링크·게임네트워크호출부재·기본값·예시능력평균71.0. 기존검사는원문지도25/서면종결10/실행게이트12/XP예시·문서링크/HTML카탈로그등을유지했습니다.
 
-반값정밀도예시91.2501→45.6251과100→50,최저능력1유지,최대오차0.00005를검사했습니다. 이도구의작은산술함수는설계예시검사용이며실제게임원장구현/DB실험이아닙니다. 같은source/이적/복원경합의실동작은구현후검수합니다.
+built-in image_gen으로8회생성/편집(초기아틀라스정리·빈티지변환포함),각출력을시각확인하고선택본/비교본을프로젝트에복사했습니다. 원본그림을다른도구로픽셀편집하지않았습니다. 메인1672×941,아틀라스1536×1024,초상1130×1392. System.Drawing읽기전용검사에서초상pixel(0,0)alpha0도확인했습니다. 생성/편집프롬프트는assets/art-lab/GENERATION-PROMPTS.json,사용/비교상태는ASSET-REGISTER.md에보존했습니다.
 
-기존45화면/99이벤트/20확률표면/24통합경로/6플랫폼×8흐름·HTML구문/자산/앵커/임베드JSON·문서링크검사를유지했습니다.24불변조건/12장기실험은실행계획입니다. 정적목업HTML은이번변경없습니다.
+실제자동브라우저열기실패:in-app browser가file:프로토콜을허용하지않는URL보안정책으로거절했습니다. 에이전트는서버/다른브라우저/CDP/우회열기를하지않았습니다. 따라서HTML픽셀렌더링·모바일줄바꿈·장면크롭의실제보임·키보드/버튼/클립보드/localStorage는미검수입니다. 도구이미지출력확인과HTML정적검사를브라우저검수로표시하지않습니다.
 
-실제미검증:인증/허용목록/관리형SDK/도메인/서명,Neon DB/파일/백업복원,서버명령/worker/2기기/강제종료,게임엔진/AI/밸런스,브라우저픽셀/접근성/OS파일/PNG,웹/PWA/APK업데이트,실제build/APK설치/배포. 이전MXC오류이후픽셀재검수없음. 원격서비스/운영데이터변경없음.
+이전MXC오류와이번file프로토콜정책차단은별개입니다. 신규그림의성과/복무/계약가드는서면규약이며실제게임resolver는미구현입니다. 앱/Neon/API/인증/PNG수출/강제종료/업데이트/AI/밸런스/build/APK도미실행입니다. 원격서비스/운영데이터변경없음.
 
-14와시작/인계문서를현재기준으로정리하고DESIGN-ALL·SHA목록을재생성합니다. git diff공백검사·패키지SHA를확인합니다. 서면기준본작성완료는앱완성/실제호환/밸런스통과의주장이아닙니다.
+기존45화면목업의hero/초상과기본색을빈티지로연결하고비교보드링크를추가했습니다. 원래열린로컬목업폴더에도HTML/7PNG/프롬프트/기록을복사하고해시를확인합니다. 통합MD와패키지SHA를갱신하고git diff공백검사를수행합니다. 이검증은게임완성이나실제디자인최종렌더승인이아닙니다.

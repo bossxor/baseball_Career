@@ -1,3 +1,5 @@
+시각 확장1.1:사용자최신선택은 **빈티지 기록실**입니다. [이미지 비교 보드](art-direction-lab.html)와 [93](93-ART-DIRECTION-CHOICE-LAB.md)·[94](94-SCREEN-IMAGE-STORYBOARD.md)·[95](95-CHARACTER-EVENT-ART-PRODUCTION.md)를참고하세요.12사건장면/투명초상/45화면이미지슬롯을추가했고게임규칙기준본1.0은유지합니다. 브라우저file프로토콜차단으로자동렌더링검수는미실행입니다.
+
 # 다른 채팅·개발 환경용 인계 요청문
 
 이 폴더는 '다시, 플레이볼' 야구 시뮬레이션의 서면 설계 기준본1.0입니다. 먼저 START-HERE.md,STATUS.md,14-CANONICAL-DECISIONS.md,91-CURRENT-CONTRACT-INDEX.md,92-DESIGN-CLOSURE-HANDOFF.md를 읽고 실제 파일을 확인하세요. 이전 대화를 안다고 가정하지 마세요.

@@ -149,5 +149,15 @@
   ],
   "pendingUserQuestions": [],
   "implementationStarted": false,
-  "schemaVersion": 1
+  "schemaVersion": 1,
+  "visualExtension": {
+    "browserStatus": "BLOCKED_FILE_PROTOCOL",
+    "screenImageSlots": 45,
+    "selectedStyle": "almanac",
+    "version": "1.1",
+    "pngFiles": 7,
+    "previewScreens": 4,
+    "gameRulesChanged": false,
+    "sceneCount": 12
+  }
 }

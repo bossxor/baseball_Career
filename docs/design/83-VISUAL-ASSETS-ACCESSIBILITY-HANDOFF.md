@@ -1,3 +1,5 @@
+최신아트선택U: [93](93-ART-DIRECTION-CHOICE-LAB.md)의빈티지기록실을메인으로합니다.45화면슬롯은 [94](94-SCREEN-IMAGE-STORYBOARD.md),캐릭터/사건제작은 [95](95-CHARACTER-EVENT-ART-PRODUCTION.md). 기존서체/기능규칙은유지합니다.
+
 # 83. 시각 디자인·이미지·접근성 인계 기준
 
 2026-10-19. [03](03-UX-DESIGN.md), [27](27-UI-INTERACTION-RESPONSIVE.md), [37](37-BRAND-TEAM-LOGOS.md), [46](46-ALL-SCREENS-FLOWS.md)의 시각 방향을 구현자가 재현할 수 있게 정리한다. 이 문서는 서면 검수 기준이며 기존 HTML의 픽셀 검수 통과나 사용자 디자인 최종 승인을 뜻하지 않는다.
