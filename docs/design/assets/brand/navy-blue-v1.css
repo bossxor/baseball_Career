@@ -1,0 +1,2 @@
+/* Approved navy-blue defaults. Inline SVG inherits palette overrides; external img uses SVG fallbacks. */
+:root{--sil-ink:#172c50;--sil-uniform:#f1f5fb;--sil-accent:#386ee0;--sil-skin:#929baa;--sil-trim:#ffffff}

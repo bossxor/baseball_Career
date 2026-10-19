@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "created": "2026-10-20",
+  "approval": "USER_SELECTED",
+  "selection": {
+    "pitcher": "A",
+    "hitter": "A",
+    "logo": "2",
+    "palette": "NAVY_BLUE_V1"
+  },
+  "palette": {
+    "ink": "#172c50",
+    "uniform": "#f1f5fb",
+    "accent": "#386ee0",
+    "skin": "#929baa",
+    "trim": "#ffffff"
+  },
+  "files": [
+    {
+      "id": "IMG-SIL-P-R-OVERHAND",
+      "file": "assets/silhouettes/pitcher-R-overhand.svg",
+      "style": "A",
+      "sha256": "153649d4904fbe4e3489f7237045c2106d9db59a896effff7b9b84647e716d5c"
+    },
+    {
+      "id": "IMG-SIL-H-RR",
+      "file": "assets/silhouettes/hitter-RR.svg",
+      "style": "A",
+      "sha256": "c885d6c487a2fd19ad67e588371c613a19b217d3697445aaa9f816b5c5392ed3"
+    },
+    {
+      "id": "IMG-BRAND-MARK",
+      "file": "assets/brand/logo-mark.svg",
+      "style": "2",
+      "sha256": "aaa6c73043f50afdf8af7d547968336291edcd481322d1851ce20e8b7638f8d3"
+    }
+  ],
+  "method": "Original hand-authored SVG Bezier artwork; no external visual materials. SVG is the editable master; raster previews are vector renders.",
+  "constraints": {
+    "faces": false,
+    "textInsideSvg": false,
+    "simpleMirror": false,
+    "colors": "CSS_VARIABLES_WITH_NAVY_BLUE_FALLBACKS"
+  },
+  "usage": "Inline trusted SVG for team CSS overrides; standalone img uses approved default palette. Remaining 12 silhouette combinations use initials until separately approved.",
+  "browserReview": "NOT_EXECUTED"
+}

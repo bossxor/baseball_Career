@@ -4,7 +4,7 @@
 
 <!-- SOURCE: START-HERE.md -->
 
-현재 작업(2026-10-20): 1단계 점검 수정 결과 승인 대기. 사용자 승인 전 이미지 제작을 시작하지 않는다. 시안은 저장소 밖에서 비교하고 선택본만 반영한다. 절차는 [124](124-IMAGE-PRODUCTION-BRIEF.md), 재개 위치는 [체크포인트](CONTINUATION-CHECKPOINT.md).
+현재 작업(2026-10-20): 첫 이미지 묶음 승인 반영. 투수 A·타자 A·로고2, 네이비·블루. [승인본](approved-art-board.html), [현재 현황](STATUS.md). 다음 묶음은 다시 사용자 승인.
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -76,7 +76,7 @@ GitHub https://github.com/bossxor/baseball_Career 의 docs/design이 원본. 다
 
 <!-- SOURCE: README.md -->
 
-현재 작업(2026-10-20): 1단계 점검 수정 결과 승인 대기. 사용자 승인 전 이미지 제작을 시작하지 않는다. 시안은 저장소 밖에서 비교하고 선택본만 반영한다. 절차는 [124](124-IMAGE-PRODUCTION-BRIEF.md), 재개 위치는 [체크포인트](CONTINUATION-CHECKPOINT.md).
+현재 작업(2026-10-20): 첫 이미지 묶음 승인 반영. 투수 A·타자 A·로고2, 네이비·블루. [승인본](approved-art-board.html), [현재 현황](STATUS.md). 다음 묶음은 다시 사용자 승인.
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -166,31 +166,31 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 
 <!-- SOURCE: STATUS.md -->
 
-# 설계 현황 — 125까지 점검 정정 / 1단계 결과 승인 대기
+# 설계 현황 — 첫 이미지 묶음 승인 반영
 
 ## 현재 요약 (2026-10-20)
 
-- 사용자 선택 1~6 수정: 결정표·후속 문서 반영 여부·기대값 색인·E63 승인/보류 해결 규칙·이미지 승인 절차를 정리했다. 1단계 결과를 제시한 뒤 승인받기 전에는 2단계를 시작하지 않는다.
+- 사용자 선택 1~6 수정: 결정표·후속 문서 반영 여부·기대값 색인·E63 승인/보류 해결 규칙·이미지 승인 절차를 정리했다. 1단계 결과 승인 후 2단계를 시작했고 첫 묶음 선택을 반영했다.
 - 기대값 색인은 23묶음이며 핵심 298개는 기존 6파일만 집계한다. 빠른 진행 12·첫 구단 복구 7·오프시즌 충돌 12는 별도다.
 
 - 점검 정리: 14에 119/121/122/124/125 사용자 결정을 기록, START-HERE·README·HANDOFF의 겹친 ‘최신’ 배너를 한 줄로 합치고 이력으로 이동, S16 카탈로그에 좌우 분리 기록 반영, 기대값 묶음 23개 색인 [expectation-sets-index.json](expectation-sets-index.json) 추가.
 
 - 심층 점검(경제·이벤트): 경제 수치(예산120억·총연봉80~95억·미래보장108억·직원 급여)는 충돌 없음. 이벤트 선택지 68종 처리 방식이 비어 있어 [125](125-EVENT-CHOICE-DISPATCH.md)로 DOMAIN/NAVIGATE/ACK 분류·BLOCKING 해결 시점을 확정했다. 보드 S02에 손·타석·투구폼 입력, S16에 좌우 분리 기록 표 시안을 추가했다(렌더 미확인).
 
-- 이미지 제작 인계: [124](124-IMAGE-PRODUCTION-BRIEF.md)+image-production-register.json(92항목: 제작 필요 64·있음 16·코드 제작 11·보존 1). 이미지는 다른 곳에서 제작한다. API·스키마·로그 정합은 [122](122-API-SCHEMA-LOG-ALIGNMENT.md), 새 효과 합산 예제는 [123](123-EFFECT-SUM-EXAMPLES.md).
+- 이미지 제작 인계: [124](124-IMAGE-PRODUCTION-BRIEF.md)+image-production-register.json(92항목: 제작 필요 61·있음 19·코드 제작 11·보존 1). 이미지는 다른 곳에서 제작한다. API·스키마·로그 정합은 [122](122-API-SCHEMA-LOG-ALIGNMENT.md), 새 효과 합산 예제는 [123](123-EFFECT-SUM-EXAMPLES.md).
 
-- 최신 사용자 확정: [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 생성 선수 손 우투85/좌투15·타석 분포, S16 좌우 분리 기록. PORTRAIT 슬롯은 SILHOUETTE_CARD로 전환했고 **실루엣 이미지는 별도 제작 필요**(119).
+- 최신 사용자 확정: [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 생성 선수 손 우투85/좌투15·타석 분포, S16 좌우 분리 기록. PORTRAIT 슬롯은 SILHOUETTE_CARD로 전환했고 **실루엣 2종 승인 반영·12종 제작 대기**(119).
 
 - 구현 착수 대비: [120](120-IMPLEMENTATION-ROADMAP.md) 모듈 경계·마일스톤 M0~M9·게이트 V01~V12 매핑. 구현 착수 지시 전에는 시작하지 않는다.
 
-- 최신 사용자 확정: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수는 사람 외형 없이 이름+던지는 손/타석+투구폼4종, 초상은 실루엣+이름 카드. 투구폼×구종 친화와 반대손 좌우 상성 기능은 U이며 계수·친화표는 D다. 41/08/79/48/57 본문에 반영했고 실루엣 SVG는 시안을 만들었으나 사용자 판단으로 삭제했고 다른 곳에서 제작한다.
+- 최신 사용자 확정: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수는 사람 외형 없이 이름+던지는 손/타석+투구폼4종, 초상은 실루엣+이름 카드. 투구폼×구종 친화와 반대손 좌우 상성 기능은 U이며 계수·친화표는 D다. 41/08/79/48/57 본문에 반영했고 이전 SVG 시안은 삭제 이력으로 남기고 현재는 투수 A·타자 A 승인본 2종을 반영했다.
 
 - 이전 상세설계: [118 은퇴·보관·구단연속성](118-LATECAREER-ARCHIVE-CLUB-CONTINUITY.md).9장면·12검수계획·19세반값과계보claim을연결했습니다.
 - 직전 작업: [114 구단 첫시즌](114-FIRST-CLUB-SEASON-OPERATIONS.md), [113 첫커리어](113-FIRST-CAREER-SEASON-EXPERIENCE.md), [112 능력100과성적](112-ABILITY-CEILING-PERFORMANCE-BALANCE.md), [111 아트U](111-ANIMATION-MAIN-ART-DIRECTION.md).
 - 고정 범위:45화면/99이벤트,6능력·집중4,웹4환경+Android APK,단독구단·선택보관투입·이어하기버튼만.
 - 상태: 문서/시안/정적검사 단계. 실제 앱·Neon·DB·경기엔진·브라우저/실기기·build/APK는미구현/미검수입니다.
 - 작업 파일:V:\docs\design. 매작업마다최신요약·아래이력·통합MD/MANIFEST를갱신하고커밋·푸시합니다.
-- 현재: E13 취소 문구 정정과 유지/취소/읽음 결과 문구 의미 감사를 마쳤습니다. 62개 이벤트·90개 선택지의 중복 결과 문구를 선택지별로 분리했고 verify에 이벤트 내 resultCopy 중복 검사를 추가했습니다. 다음은 1단계 결과 승인 후 124 기준 이미지 시안 비교입니다. 연령별 얼굴 라이브러리는 119의 실루엣 카드로 대체됐습니다.
+- 현재: E13 취소 문구 정정과 유지/취소/읽음 결과 문구 의미 감사를 마쳤습니다. 62개 이벤트·90개 선택지의 중복 결과 문구를 선택지별로 분리했고 verify에 이벤트 내 resultCopy 중복 검사를 추가했습니다. 다음은 미제작 실루엣의 별도 묶음 시안·승인입니다. 연령별 얼굴 라이브러리는 119의 실루엣 카드로 대체됐습니다.
 
 ## 이전 작업 이력
 
@@ -294,9 +294,23 @@ AVG상한1.000과SLG상한4.000/OPS5.000·짧은표본·AB0·P100과현재A를�
 
 사용자 승인 1~6 전체와 E63 A안을 반영했다. 14의 현재 그림체·기본 진행을 정정하고 U/D를 구분했다. 최신/미반영 안내와 재개 위치를 정리하고 별도 기대값 3묶음을 색인에 추가했다. E63 승인 후 이동은 실제 결정까지 OPEN, 보류는 사유 확인으로 종료한다. 분기별 검증은 BLOCKING ACK·뒤바뀐 정책·잘못된 명령을 거부하는 음성 사례를 포함한다. 이미지 단계별 승인 절차를 14/124/제작 레지스터/체크포인트에 기록했다. 이미지 파일·status·화면 슬롯 참조는 그대로다.
 
+## 2026-10-20 첫 이미지 묶음 승인 반영
+
+2026-10-20 사용자 확정: 투수 A·타자 A·로고 2, 배색은 1번 네이비·블루. 승인 SVG 3개와 팔레트 CSS·출처 기록만 반영했다. 실루엣 2/14 완료, 나머지 12개와 앱 아이콘은 별도 묶음 승인 대기. 이미지 레지스터는 92항목 중 TODO61/EXISTS19/CODE_ONLY11/LEGACY_REFERENCE1이다. 게임 규칙·45화면·99이벤트·핵심298 기대값은 불변.
+
+[승인본 보기](approved-art-board.html). 검증 후 승인 범위만 커밋·푸시한다. 다음 묶음은 다시 보여주고 확인받는다.
+
+검증 결과: verify-design / verify-state-ui / verify-art-direction 모두 PASS(종료코드0). 최초 슬롯 사본 불일치는 수정 후 통과했다. 실제 브라우저·앱 검증은 미실행이다.
+
 ---
 
 <!-- SOURCE: DETAIL-PLAN.md -->
+
+# 현재 작업 — 첫 이미지 묶음 승인 반영
+
+2026-10-20 사용자 확정: 투수 A·타자 A·로고 2, 배색은 1번 네이비·블루. 승인 SVG 3개와 팔레트 CSS·출처 기록만 반영했다. 실루엣 2/14 완료, 나머지 12개와 앱 아이콘은 별도 묶음 승인 대기. 이미지 레지스터는 92항목 중 TODO61/EXISTS19/CODE_ONLY11/LEGACY_REFERENCE1이다. 게임 규칙·45화면·99이벤트·핵심298 기대값은 불변.
+
+---
 
 # 현재 승인 작업 — 2026-10-20
 
@@ -450,7 +464,7 @@ v0.15:87~89플랫폼로그인·기기전환·업데이트·파일전달상세계
 | R11 | 앱 이름 다시, 플레이볼 | U |
 | R12 | 계정당 활성 세이브10개, 보관 선수 수 하드상한 없음, 보관 목록50개 페이지네이션 | D |
 | R13 | Neon PostgreSQL/객체 저장소, 서버만 비밀값 보유 | U/D |
-| R14 | 메인그림체는2번청춘야구애니(111),선수카드는얼굴없는실루엣(119),기존검은고딕/Noto Sans KR유지 | U(그림체)/D(세부토큰) |
+| R14 | 메인그림체는2번청춘야구애니(111),선수카드는얼굴없는실루엣(119),기존검은고딕/Noto Sans KR유지 | U(그림체·네이비/블루)/D(기타세부토큰) |
 | R15 | 설계 문서 우선, 앱 구현은 다음 명시적 착수 단계 | U |
 | R16 | 커리어 기본은 다음 주요 사건까지 빠르게 진행(117),1경기/1주일 대안·필수 선택 정지 | U |
 | R17 | 시즌당1회 강화에 확정 성장 선택지 포함 | U |
@@ -631,6 +645,12 @@ U:100~104의 확정 UI 요구와 히든4개/슬라이더 규칙을 유지한다.
 - U/D 구분: 폼·좌우 소폭 영향 기능은 U. 친화 구종표·±.01 계수·AI 폼 분포는 기존 D 기본안이며 수치 승인으로 격상하지 않는다. 양타가 항상 반대손 효과를 받는 방식은 U다. 수치 변경 없이 이 구분만 정리한다.
 - U: E63은 승인 시 후속 도메인 결정까지 대기하고, 보류 시 사유 확인(ACK)으로 종료한다(125).
 - 2026-10-20 사용자 확정: 1단계 설계 점검·선택 수정·검증·커밋·푸시 결과를 제시하고 승인받은 뒤 2단계를 시작한다. 이미지 시안은 저장소 밖 임시 폴더에만 두고, 우투 오버핸드 투수·우투우타 타자·로고 마크를 각 2~3안 제시한다. 사용자가 고른 안만 저장소에 반영한다. 미선택·거절 시 반영하지 않으며, 후속 제작도 묶음마다 승인받는다. 승인본 반영 후 레지스터 status·화면 슬롯 참조·STATUS를 갱신하고 세 검증 스크립트를 재실행한다. 승인한 변경만 기존 정상 Git 체크아웃으로 커밋·푸시하며 V:의 .git는 변경하지 않는다.
+
+## 2026-10-20 첫 이미지 묶음 승인 U
+
+2026-10-20 사용자 확정: 투수 A·타자 A·로고 2, 배색은 1번 네이비·블루. 승인 SVG 3개와 팔레트 CSS·출처 기록만 반영했다. 실루엣 2/14 완료, 나머지 12개와 앱 아이콘은 별도 묶음 승인 대기. 이미지 레지스터는 92항목 중 TODO61/EXISTS19/CODE_ONLY11/LEGACY_REFERENCE1이다. 게임 규칙·45화면·99이벤트·핵심298 기대값은 불변.
+
+청춘 야구 애니의 사건 그림체와 기존 글자체는 유지한다. 선수 SVG 기본 배색과 브랜드 마크 배색은 NAVY_BLUE_V1이며 팀 팔레트 변경을 지원한다. [승인본 보드](approved-art-board.html), [출처·선택 기록](assets/brand/APPROVED-ART-v1.json).
 
 ---
 
@@ -8232,7 +8252,7 @@ LC-D01 은퇴응답유실archive1개/02 연대기표현실패에도snapshot보�
 - 사람 얼굴 없이 유니폼 실루엣 SVG를 CSS 변수로 색을 입힌다. 팀/리그 팔레트 변형은 이미지 파일을 늘리지 않고 팔레트 값만 바꾼다(NPC·라이벌·동료·감독도 동일 라이브러리).
 - 타자: 투타 6조합 포즈(우투우타·우투좌타·우투양타·좌투우타·좌투좌타·좌투양타)를 배트 포즈 실루엣으로 제작.
 - 투수: 투구폼 4 × 던지는 손 2 = 8 실루엣. 사용자가 고른 ‘6+6’은 타자 6조합으로 만족하고 투수는 폼 4종 결정으로 8로 확대(요청 변경 사유).
-- 총 1차 14개 실루엣(제작 대기). 좌우 단순 반전 금지: 글러브·배트·공 위치를 포즈별로 검수(95 규칙 유지).
+- 총 1차 14개 실루엣(2개 승인·반영, 12개 제작 대기). 좌우 단순 반전 금지: 글러브·배트·공 위치를 포즈별로 검수(95 규칙 유지).
 - 이름 카드: 이름 · 던지는 손/타석 아이콘 · 투수면 투구폼 라벨 · 나이 텍스트 · 소속 팔레트. 부상/은퇴 상태는 라벨로 구분.
 - 기존 청춘 애니 PNG(초상·사건 아틀라스)는 사건 장면·hero용으로 유지하고 ‘선수 초상’ 자리에는 실루엣 카드를 쓴다. 사건 장면의 사람 모습은 선수 본인 외형을 의미하지 않는다는 표시 규칙을 둔다.
 - 실제 사진·개인 업로드 없음(95 유지). 실루엣 SVG는 공개 번들 자산이며 개인 업로드와 private 권한이 섞이지 않는다.
@@ -8252,7 +8272,7 @@ LC-D01 은퇴응답유실archive1개/02 연대기표현실패에도snapshot보�
 
 ## 그림 슬롯 전환 (반영)
 
-screen-image-slots.json에서 S02/S11/S16/S22/S43의 imageRole PORTRAIT를 SILHOUETTE_CARD로, 슬롯 참조 almanacPortrait를 silhouetteCard로 바꿨다(S03/S10/S14/S17/S40/S42도 참조 갱신). screen-finish-register.json도 같다. **silhouetteCard의 실제 이미지는 없으며 별도 제작이 필요하다**(저장소 밖 시안 비교 후 사용자 승인본만 반영). 그 전까지 시안은 기존 예시 초상 PNG를 쓰고, 실제 앱은 이니셜 카드로 대체한다.
+screen-image-slots.json에서 S02/S11/S16/S22/S43의 imageRole PORTRAIT를 SILHOUETTE_CARD로, 슬롯 참조 almanacPortrait를 silhouetteCard로 바꿨다(S03/S10/S14/S17/S40/S42도 참조 갱신). screen-finish-register.json도 같다. **silhouetteCard는 우투 오버핸드·우투우타 2개 승인 SVG를 참조한다**. 나머지 조합은 별도 승인 전 이니셜 카드로 대체한다. 기존 얼굴 PNG는 과거 비교 자산으로 보존하며 승인된 조합의 선수 카드에 사용하지 않는다.
 
 ## 영향 범위 (후속 반영 대상)
 
@@ -8274,6 +8294,9 @@ PF-D01 오버핸드+포심 K+.01 / 02 오버핸드+슬라이더 보정 0 / 03 �
 ## 남은 확인
 
 AI 투구폼 분포・친화 표・효과 계수는 D 기본안이며 실제 밸런스 실험은 미실행이다. 관련 41/08/79/48/57/95/111·보드·기대값에는 설계가 반영돼 있다. 기존 1차 SVG 시안은 사용자 판단으로 삭제했다. 2026-10-20부터 시안은 저장소 밖 임시 폴더에서 비교하고 사용자 승인본만 반영한다(124). 14종 구성·좌우 반전 금지·팔레트 변형 규칙은 유지한다.
+## 첫 묶음 승인 반영
+
+2026-10-20 사용자 확정: 투수 A·타자 A·로고 2, 배색은 1번 네이비·블루. 승인 SVG 3개와 팔레트 CSS·출처 기록만 반영했다. 실루엣 2/14 완료, 나머지 12개와 앱 아이콘은 별도 묶음 승인 대기. 이미지 레지스터는 92항목 중 TODO61/EXISTS19/CODE_ONLY11/LEGACY_REFERENCE1이다. 게임 규칙·45화면·99이벤트·핵심298 기대값은 불변.
 
 ---
 
@@ -8481,8 +8504,8 @@ ES-D01 X01~X07 적용합 재계산 일치/02 확률합 1/03 X04 K 원합 .12→.
 
 ## 한눈에 보기
 
-- 레지스터 항목 92개: 제작 필요(TODO) 64개, 이미 있음 16개, 코드로 만들면 되는 것(이미지 불필요) 11개, 보존 1개.
-- 우선순위: P0 17개(실루엣 14 + 앱 아이콘·로고 3), P1 43개, P2 4개. P0는 앱을 처음 띄울 때 필요한 것이고 P1은 해당 기능 화면, P2는 선택이다.
+- 레지스터 항목 92개: 제작 필요(TODO) 61개, 이미 있음 19개, 코드로 만들면 되는 것(이미지 불필요) 11개, 보존 1개.
+- 우선순위: P0 미제작 14개(실루엣 12 + 앱 아이콘 2), 승인 반영 3개(실루엣 2 + 로고 마크 1), P1 43개, P2 4개. P0는 앱을 처음 띄울 때 필요한 것이고 P1은 해당 기능 화면, P2는 선택이다.
 - 코드로 만드는 것(CODE_ONLY: 마이너·고교·국가 배지, 특성·구종·성향·폼·투타·목표 아이콘, 수비 다이어그램, 칭호)은 이미지 생성이 필요 없다.
 
 ## 공통 제작 규칙
@@ -8507,13 +8530,13 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-SIL-H-RR|타자 우투우타 실루엣|assets/silhouettes/hitter-RR.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|우투 선수의 우타석. 배트는 정면 기준 왼쪽 어깨 위, 글러브는 정면 기준 오른쪽 허리|
+|IMG-SIL-H-RR|타자 우투우타 실루엣|assets/silhouettes/hitter-RR.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|우투 선수의 우타석. 배트는 정면 기준 왼쪽 어깨 위, 글러브는 정면 기준 오른쪽 허리|
 |IMG-SIL-H-RL|타자 우투좌타 실루엣|assets/silhouettes/hitter-RL.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|좌타석. 배트는 정면 기준 오른쪽 어깨 위, 글러브는 정면 기준 오른쪽 허리|
 |IMG-SIL-H-RS|타자 우투양타 실루엣|assets/silhouettes/hitter-RS.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|양타. 두 배트 포즈를 겹쳐 한쪽은 옅게, 글러브는 정면 기준 오른쪽 허리|
 |IMG-SIL-H-LR|타자 좌투우타 실루엣|assets/silhouettes/hitter-LR.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|우타석, 글러브는 정면 기준 왼쪽 허리|
 |IMG-SIL-H-LL|타자 좌투좌타 실루엣|assets/silhouettes/hitter-LL.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|좌타석, 글러브는 정면 기준 왼쪽 허리|
 |IMG-SIL-H-LS|타자 좌투양타 실루엣|assets/silhouettes/hitter-LS.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|양타, 글러브는 정면 기준 왼쪽 허리|
-|IMG-SIL-P-R-OVERHAND|투수 우투 오버핸드 실루엣|assets/silhouettes/pitcher-R-overhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔이 머리 위로 수직. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-R-OVERHAND|투수 우투 오버핸드 실루엣|assets/silhouettes/pitcher-R-overhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔이 머리 위로 수직. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
 |IMG-SIL-P-R-THREEQUARTER|투수 우투 쓰리쿼터 실루엣|assets/silhouettes/pitcher-R-threequarter.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 45도 위. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
 |IMG-SIL-P-R-SIDEARM|투수 우투 사이드암 실루엣|assets/silhouettes/pitcher-R-sidearm.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 수평. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
 |IMG-SIL-P-R-UNDERHAND|투수 우투 언더핸드 실루엣|assets/silhouettes/pitcher-R-underhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|제작 필요 P0|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 낮게 아래로. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
@@ -8632,7 +8655,7 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-BRAND-MARK|로고 마크 ‘다시, 플레이볼’|assets/brand/logo-mark.svg|정사각 viewBox, 글자 최소(마크 중심)|제작 필요 P0|S01, S21|타이틀 로고타입은 현재 검은고딕 텍스트(37). 실제 구단 로고와 무관|
+|IMG-BRAND-MARK|로고 마크 ‘다시, 플레이볼’|assets/brand/logo-mark.svg|정사각 viewBox, 글자 최소(마크 중심)|승인 반영|S01, S21|타이틀 로고타입은 현재 검은고딕 텍스트(37). 실제 구단 로고와 무관|
 |IMG-BRAND-ANDROID|Android 적응형 아이콘|assets/brand/android-adaptive-{fg,bg,mono}.svg|foreground/background/monochrome 각 432×432 안전영역 288|제작 필요 P0|-|APK 런처 아이콘(86/29). 배경은 단색 가능|
 |IMG-BRAND-PWA|PWA/웹 아이콘|assets/brand/icon-{192,512,maskable-512}.png, favicon.svg, apple-touch-180.png|192/512/maskable512, favicon(SVG), 180|제작 필요 P0|-|manifest(86). 홈 화면 추가 경로 검수|
 |IMG-BRAND-SPLASH|스플래시 아이콘|assets/brand/splash-icon.svg|Android 12 스플래시 아이콘 288, 단색 배경|제작 필요 P1|-|큰 일러스트 불필요|
@@ -8710,7 +8733,7 @@ IM-D01 TODO 항목마다 파일 경로·규격·화면이 있음/02 실루엣 14
 
 ## 남은 확인
 
-이미지는 이 저장소에서 제작하지 않았다. 고교 학교 수·국가 참가국 수·카드 테마 개수(D 3종)는 확정 전이다. 사용 권리 확인(V12)과 실제 렌더 검수는 제작 후 진행한다.
+첫 승인본 3항목은 반영했다. 미선택 시안은 저장소에 넣지 않았다. 고교 학교 수·국가 참가국 수·카드 테마 개수(D 3종)는 확정 전이다. 사용 권리 확인(V12)과 실제 렌더 검수는 제작 후 진행한다.
 
 ## 2026-10-20 단계별 제작·승인 절차 (현재 기준 U)
 
@@ -8723,6 +8746,12 @@ IM-D01 TODO 항목마다 파일 경로·규격·화면이 있음/02 실루엣 14
 5. 승인본만 추가하고 레지스터 status·screen-image-slots.json 참조·STATUS 및 제작 출처를 갱신한다. 검증 3개와 통합MD·무결성 목록을 갱신하고 승인한 변경만 기존 체크아웃으로 커밋·푸시한다.
 
 이번 1단계에서는 이미지 status와 화면 슬롯 참조를 변경하지 않는다.
+
+## 첫 묶음 반영 — 2026-10-20
+
+2026-10-20 사용자 확정: 투수 A·타자 A·로고 2, 배색은 1번 네이비·블루. 승인 SVG 3개와 팔레트 CSS·출처 기록만 반영했다. 실루엣 2/14 완료, 나머지 12개와 앱 아이콘은 별도 묶음 승인 대기. 이미지 레지스터는 92항목 중 TODO61/EXISTS19/CODE_ONLY11/LEGACY_REFERENCE1이다. 게임 규칙·45화면·99이벤트·핵심298 기대값은 불변.
+
+[승인본 보드](approved-art-board.html). SVG의 색은 CSS 변수이며 외부 img에서도 승인 배색이 보이도록 동일한 네이비·블루 기본값을 둔다. 팀 팔레트 변경은 신뢰된 inline SVG의 CSS 변수로 적용한다. 시안 비교안·거절안은 반영하지 않았다. Android/PWA 아이콘은 로고 선택만으로 완성 처리하지 않는다.
 
 ---
 
@@ -9647,7 +9676,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: HANDOFF-PROMPT.md -->
 
-현재 작업(2026-10-20): 1단계 점검 수정 결과 승인 대기. 사용자 승인 전 이미지 제작을 시작하지 않는다. 시안은 저장소 밖에서 비교하고 선택본만 반영한다. 절차는 [124](124-IMAGE-PRODUCTION-BRIEF.md), 재개 위치는 [체크포인트](CONTINUATION-CHECKPOINT.md).
+현재 작업(2026-10-20): 첫 이미지 묶음 승인 반영. 투수 A·타자 A·로고2, 네이비·블루. [승인본](approved-art-board.html), [현재 현황](STATUS.md). 다음 묶음은 다시 사용자 승인.
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -9940,3 +9969,23 @@ PASS: 23 expectation sets indexed; FP12, first-club recovery7 and offseason12 ma
 ```
 
 E63의 항상 필수 35개·분기별 1개·즉시 해결 63개는 총 99개다. 승인 분기는 NAVIGATE만으로 OPEN을 닫지 않으며 보류 분기는 사유 확인 ACK로 끝난다. 검증기는 잘못된 BLOCKING ACK·뒤바뀐 정책·승인 분기의 잘못된 명령을 정적 음성 사례로 검사한다. 실제 서버/API의 해결 트랜잭션·동시성·재개는 구현 후 검증 대상이다. 이미지 파일과 개별 이미지 status·화면 슬롯은 변경하지 않았다. 실제 렌더·게임·DB·APK/build는 실행하지 않았다.
+
+## 2026-10-20 승인 아트 첫 묶음 검증
+
+사용자가 배색 1(네이비·블루), 투수 A·타자 A·로고2를 선택했다. 승인 SVG 3개·CSS 팔레트·출처/선택 JSON·승인본 전용 보드를 추가하고, screen-image-slots와 screen-finish-register의 S01/S21 브랜드 참조를 맞췄다. 디자인 보드·아트 비교 보드의 선수 예시 참조도 승인 SVG로 교체했다. 나머지 12실루엣은 이니셜 fallback이며 임의로 완성 처리하지 않았다. 미선택 SVG·초록 비교안·색상 비교안은 저장소 밖에만 있다.
+
+최초 검증에서 화면 마감 등록부의 S01/S21 슬롯 사본이 브랜드 참조를 빠뜨린 불일치를 발견했다. 원본 슬롯과 동기화한 뒤 V:에서 세 명령을 다시 실행해 모두 종료코드0/PASS를 확인했다.
+
+| 명령 | 결과 |
+|---|---|
+| node docs/design/verify-design.mjs | PASS |
+| node docs/design/verify-state-ui.mjs | PASS |
+| node docs/design/verify-art-direction.mjs | PASS |
+
+추가 출력:
+
+```text
+PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 2/14 silhouettes ready, 61 image TODOs remain.
+```
+
+SVG title/viewBox·CSS변수 색·script/foreignObject/image/text 부재·음수 반전 부재·실제 파일/선택/화면 연결·레지스터 61TODO/19EXISTS를 정적으로 확인했다. PNG 미리보기로 선택된 세 형태와 배색을 육안 확인한다. 실제 브라우저 DOM·4뷰포트·키보드·접근성·앱/Neon/API/DB/build/APK는 미검증이다. 45화면/99이벤트/핵심298은 유지한다.

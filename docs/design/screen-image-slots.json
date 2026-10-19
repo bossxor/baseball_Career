@@ -2,7 +2,8 @@
   "screens": [
     {
       "assetRefs": [
-        "almanacHero"
+        "almanacHero",
+        "appBrandMark"
       ],
       "screenId": "S01",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -229,7 +230,8 @@
     },
     {
       "assetRefs": [
-        "NONE"
+        "NONE",
+        "appBrandMark"
       ],
       "screenId": "S21",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -520,5 +522,33 @@
   ],
   "schemaVersion": 1,
   "status": "DESIGN_PREVIEW_ONLY",
-  "selectedStyle": "almanac"
+  "selectedStyle": "animation",
+  "selectedPalette": "NAVY_BLUE_V1",
+  "assetLibrary": {
+    "silhouetteCard": {
+      "status": "PARTIALLY_APPROVED",
+      "paletteCss": "assets/brand/navy-blue-v1.css",
+      "variants": [
+        {
+          "kind": "HITTER",
+          "throws": "R",
+          "bats": "R",
+          "file": "assets/silhouettes/hitter-RR.svg"
+        },
+        {
+          "kind": "PITCHER",
+          "throws": "R",
+          "pitchForm": "OVERHAND",
+          "file": "assets/silhouettes/pitcher-R-overhand.svg"
+        }
+      ],
+      "fallback": "INITIALS_FOR_UNAPPROVED_COMBINATIONS",
+      "approvedCount": 2,
+      "plannedCount": 14
+    },
+    "appBrandMark": {
+      "file": "assets/brand/logo-mark.svg",
+      "palette": "NAVY_BLUE_V1"
+    }
+  }
 }

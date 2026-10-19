@@ -62,7 +62,7 @@ assert.ok(!/\b(fetch|XMLHttpRequest|WebSocket)\s*\(/.test(scripts));
 const visible=html.replace(/<style>[\s\S]*?<\/style>/g,'').replace(/<script>[\s\S]*?<\/script>/g,'').replace(/<[^>]+>/g,'');
 assert.ok(!visible.includes('100%'));
 assert.equal(slots.screens.length,45);unique(slots.screens.map(s=>s.screenId));
-const refs=new Set(['NONE','EVENT_RESOLVER','almanacHero','almanacPortrait','silhouetteCard',...art.scenes.map(s=>s.id)]);
+const refs=new Set(['NONE','EVENT_RESOLVER','almanacHero','almanacPortrait','silhouetteCard','appBrandMark',...art.scenes.map(s=>s.id)]);
 for(const row of slots.screens){assert.ok(screens.some(s=>s.id===row.screenId));for(const ref of row.assetRefs)assert.ok(refs.has(ref),ref);assert.ok(row.guard&&row.purpose);assert.equal(row.gameStateAuthority,'SERVER_TEXT_AND_RECEIPTS');}
 const values=[72,80,64,68,66,76];assert.equal(values.reduce((a,b)=>a+b,0)/6,71);
 assert.ok(fs.existsSync(path.join(root,art.prompts)));
@@ -133,3 +133,40 @@ console.log('PASS: 2 alpha portrait assets, 30 preview variants, 26 detail flows
 
 console.log('PASS: chosen animation direction, 3 hero alternatives, 12 scene data/crops, alpha PNG metadata, 45 image-slot contracts, lab script/IDs/assets and example overall 71.0.');
 console.log('NOT TESTED: art-lab browser rendering, interactive clicks, viewport layout, clipboard and localStorage; file: browser navigation was policy-blocked.');
+// User-approved first SVG batch: verify the real files and slot bindings, not just labels.
+{
+  const approval=json('assets/brand/APPROVED-ART-v1.json');
+  assert.deepEqual(approval.selection,{pitcher:'A',hitter:'A',logo:'2',palette:'NAVY_BLUE_V1'});
+  const registry=json('image-production-register.json');
+  assert.equal(approval.files.length,3);
+  for(const asset of approval.files){
+    const row=registry.items.find(i=>i.id===asset.id);
+    assert.equal(row.status,'EXISTS');assert.equal(row.file,asset.file);
+    assert.equal(row.approval.status,'USER_SELECTED');
+    const svg=read(asset.file);
+    assert.ok(/<title>[^<]+<\/title>/.test(svg),asset.file);
+    assert.ok(!/<(?:script|foreignObject|image|text)\b/i.test(svg),asset.file);
+    assert.ok(!/scale\(\s*-1|matrix\(\s*-1/.test(svg),asset.file);
+    for(const [,paint]of svg.matchAll(/(?:fill|stroke)="([^"]+)"/g)){
+      assert.ok(paint==='none'||/^var\(--sil-[a-z]+,#[a-fA-F0-9]{6}\)$/.test(paint),asset.file+' paint '+paint);
+    }
+    assert.ok(svg.includes('viewBox="0 0 120 '+(asset.id==='IMG-BRAND-MARK'?'120':'160')+'"'));
+  }
+  assert.equal(slots.selectedPalette,'NAVY_BLUE_V1');
+  assert.equal(slots.assetLibrary.silhouetteCard.approvedCount,2);
+  assert.equal(slots.assetLibrary.silhouetteCard.plannedCount,14);
+  assert.equal(slots.assetLibrary.silhouetteCard.fallback,'INITIALS_FOR_UNAPPROVED_COMBINATIONS');
+  assert.equal(slots.assetLibrary.silhouetteCard.variants.length,2);
+  for(const variant of slots.assetLibrary.silhouetteCard.variants)assert.ok(approval.files.some(a=>a.file===variant.file));
+  assert.ok(approval.files.some(a=>a.file===slots.assetLibrary.appBrandMark.file));
+  for(const id of ['S01','S21'])assert.ok(slots.screens.find(s=>s.screenId===id).assetRefs.includes('appBrandMark'));
+  for(const player of art.activePortraits)assert.ok(approval.files.some(a=>a.file===player.asset));
+  assert.equal(playerData.hitter.asset,'assets/silhouettes/hitter-RR.svg');
+  assert.equal(playerData.pitcher.asset,'assets/silhouettes/pitcher-R-overhand.svg');
+  const approvedBoard=read('approved-art-board.html');
+  assert.equal((approvedBoard.match(/<svg\b/g)||[]).length,3);
+  assert.ok(!/player-youth-animation-v1|player-pitcher-animation-v1/.test(approvedBoard));
+  assert.equal(registry.items.filter(i=>i.status==='TODO').length,61);
+  assert.equal(registry.items.filter(i=>i.status==='EXISTS').length,19);
+  console.log('PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 2/14 silhouettes ready, 61 image TODOs remain.');
+}

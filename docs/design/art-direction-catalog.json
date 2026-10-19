@@ -317,16 +317,24 @@
   "activePortraits": [
     {
       "id": "hitter",
-      "asset": "assets/art-lab/player-youth-animation-v1.png"
+      "asset": "assets/silhouettes/hitter-RR.svg",
+      "kind": "SILHOUETTE_CARD",
+      "bats": "R",
+      "throws": "R"
     },
     {
       "id": "pitcher",
-      "asset": "assets/art-lab/player-pitcher-animation-v1.png"
+      "asset": "assets/silhouettes/pitcher-R-overhand.svg",
+      "kind": "SILHOUETTE_CARD",
+      "throws": "R",
+      "pitchForm": "OVERHAND"
     }
   ],
   "selectionUpdated": "2026-10-19 USER_CONFIRMED",
   "legacySlotAliases": {
     "almanacHero": "assets/art-lab/hero-animation-v1.png",
-    "almanacPortrait": "assets/art-lab/player-youth-animation-v1.png"
-  }
+    "almanacPortrait": "assets/silhouettes/hitter-RR.svg"
+  },
+  "selectedPalette": "NAVY_BLUE_V1",
+  "approvedArt": "assets/brand/APPROVED-ART-v1.json"
 }

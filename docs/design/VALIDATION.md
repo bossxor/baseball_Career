@@ -239,3 +239,23 @@ PASS: 23 expectation sets indexed; FP12, first-club recovery7 and offseason12 ma
 ```
 
 E63의 항상 필수 35개·분기별 1개·즉시 해결 63개는 총 99개다. 승인 분기는 NAVIGATE만으로 OPEN을 닫지 않으며 보류 분기는 사유 확인 ACK로 끝난다. 검증기는 잘못된 BLOCKING ACK·뒤바뀐 정책·승인 분기의 잘못된 명령을 정적 음성 사례로 검사한다. 실제 서버/API의 해결 트랜잭션·동시성·재개는 구현 후 검증 대상이다. 이미지 파일과 개별 이미지 status·화면 슬롯은 변경하지 않았다. 실제 렌더·게임·DB·APK/build는 실행하지 않았다.
+
+## 2026-10-20 승인 아트 첫 묶음 검증
+
+사용자가 배색 1(네이비·블루), 투수 A·타자 A·로고2를 선택했다. 승인 SVG 3개·CSS 팔레트·출처/선택 JSON·승인본 전용 보드를 추가하고, screen-image-slots와 screen-finish-register의 S01/S21 브랜드 참조를 맞췄다. 디자인 보드·아트 비교 보드의 선수 예시 참조도 승인 SVG로 교체했다. 나머지 12실루엣은 이니셜 fallback이며 임의로 완성 처리하지 않았다. 미선택 SVG·초록 비교안·색상 비교안은 저장소 밖에만 있다.
+
+최초 검증에서 화면 마감 등록부의 S01/S21 슬롯 사본이 브랜드 참조를 빠뜨린 불일치를 발견했다. 원본 슬롯과 동기화한 뒤 V:에서 세 명령을 다시 실행해 모두 종료코드0/PASS를 확인했다.
+
+| 명령 | 결과 |
+|---|---|
+| node docs/design/verify-design.mjs | PASS |
+| node docs/design/verify-state-ui.mjs | PASS |
+| node docs/design/verify-art-direction.mjs | PASS |
+
+추가 출력:
+
+```text
+PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 2/14 silhouettes ready, 61 image TODOs remain.
+```
+
+SVG title/viewBox·CSS변수 색·script/foreignObject/image/text 부재·음수 반전 부재·실제 파일/선택/화면 연결·레지스터 61TODO/19EXISTS를 정적으로 확인했다. PNG 미리보기로 선택된 세 형태와 배색을 육안 확인한다. 실제 브라우저 DOM·4뷰포트·키보드·접근성·앱/Neon/API/DB/build/APK는 미검증이다. 45화면/99이벤트/핵심298은 유지한다.

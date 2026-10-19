@@ -18,7 +18,8 @@
       "edgeRequirement": "최근 저장 없음은 새 게임 두 경로만; 중단 상태·복구 안내 카드는 없음",
       "imageSlot": {
         "assetRefs": [
-          "almanacHero"
+          "almanacHero",
+          "appBrandMark"
         ],
         "screenId": "S01",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -784,7 +785,8 @@
       "edgeRequirement": "즉시 선호와 서버 계정 작업 구별; 계정 삭제는 일반 설정 적용과 합치지 않음",
       "imageSlot": {
         "assetRefs": [
-          "NONE"
+          "NONE",
+          "appBrandMark"
         ],
         "screenId": "S21",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
