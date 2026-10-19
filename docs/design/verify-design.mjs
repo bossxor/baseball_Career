@@ -382,6 +382,17 @@ const imgReg = JSON.parse(read('image-production-register.json'));
   assert.equal(imgReg.items.filter(i => i.group === 'G1').length, 14);
   assert.ok(imgReg.items.filter(i => i.status === 'TODO').length > 0);
 }
+{
+  const screenSet = new Set(screens.screens.map(s => s.id));
+  for (const e of catalog.events) {
+    assert.ok(['BLOCKING_UNTIL_DOMAIN_COMMIT', 'RESOLVE_ON_SELECT'].includes(e.resolutionPolicy), e.id);
+    for (const c of e.choices) {
+      assert.ok(['DOMAIN', 'NAVIGATE', 'ACK'].includes(c.dispatchClass), e.id + c.command);
+      if (c.dispatchClass === 'NAVIGATE') assert.ok(screenSet.has(c.targetScreen), e.id + c.command);
+    }
+    if (e.resolutionPolicy === 'BLOCKING_UNTIL_DOMAIN_COMMIT') assert.ok(e.choices.some(c => c.dispatchClass !== 'ACK'), e.id);
+  }
+}
 const closure = JSON.parse(read('design-closure-register.json'));
 assert.equal(closure.status, 'WRITTEN_DESIGN_BASELINE');
 assert.equal(closure.baselineVersion, '1.0');

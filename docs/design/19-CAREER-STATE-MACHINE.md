@@ -1,3 +1,5 @@
+최신 확정(2026-10-19): [125](125-EVENT-CHOICE-DISPATCH.md) RESOLVE_EVENT는 선택지를 DOMAIN/NAVIGATE/ACK로 처리하고, BLOCKING 사건은 이동한 화면의 도메인 결정이 커밋될 때 해결된다.
+
 최신 변경: [34 유형·대학·진로확률](34-ARCHETYPES-COLLEGE-ODDS.md), [35 능력6개·육성4개·평균](35-SIX-ABILITIES-FOUR-FOCUS.md), [36 구단치트](36-CLUB-SECRET-CHEAT.md)가 해당 분야의 이전 제안을 대체한다. 미국오퍼0경로·집중1~2개·단순적용100%·대학후속범위는 폐기한다.
 
 # 상세설계 01 — 커리어 상태 전이와 사건 처리

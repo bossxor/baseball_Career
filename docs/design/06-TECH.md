@@ -1,3 +1,5 @@
+최신 확정(2026-10-19): [125](125-EVENT-CHOICE-DISPATCH.md) 아래 ‘허용 type’ 목록은 초기 목록이다. 사건 선택지 명령은 RESOLVE_EVENT 안에서 125의 분류로 처리하고 화면 명령은 77/screen-action-bindings.json을 따른다.
+
 # 06. 데이터·서버·운영 계약
 
 ## 아키텍처 결정

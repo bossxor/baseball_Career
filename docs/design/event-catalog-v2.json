@@ -12,14 +12,16 @@
           "label": "육성4개선택",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "시즌집중계획을저장했습니다."
+          "resultCopy": "시즌집중계획을저장했습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "KEEP_FOCUS",
           "label": "현재계획유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 계획을 그대로 유지합니다. 새로 저장되는 계획은 없습니다."
+          "resultCopy": "현재 계획을 그대로 유지합니다. 새로 저장되는 계획은 없습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "42",
@@ -27,7 +29,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E02",
@@ -40,14 +43,16 @@
           "label": "컨택포함육성계획검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "4개육성계획을확인했습니다."
+          "resultCopy": "4개육성계획을확인했습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "KEEP_FOCUS",
           "label": "유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 계획을 그대로 유지합니다. 새로 저장되는 계획은 없습니다."
+          "resultCopy": "현재 계획을 그대로 유지합니다. 새로 저장되는 계획은 없습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "42",
@@ -55,7 +60,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E03",
@@ -68,14 +74,16 @@
           "label": "제구또는구속포함계획검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "4개육성계획을확인했습니다."
+          "resultCopy": "4개육성계획을확인했습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "KEEP_FOCUS",
           "label": "유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 계획을 그대로 유지합니다. 새로 저장되는 계획은 없습니다."
+          "resultCopy": "현재 계획을 그대로 유지합니다. 새로 저장되는 계획은 없습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "42",
@@ -83,7 +91,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E04",
@@ -96,7 +105,9 @@
           "label": "졸업진로비교",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "희망구단은지명을보장하지않습니다."
+          "resultCopy": "희망구단은지명을보장하지않습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S28"
         }
       ],
       "ruleDocument": "34",
@@ -104,7 +115,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E05",
@@ -117,14 +129,16 @@
           "label": "계약확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "계약확정전에는소속이바뀌지않습니다."
+          "resultCopy": "계약확정전에는소속이바뀌지않습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "DECLINE_DRAFT",
           "label": "계약거절후진로확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "계약을 거절했습니다. 소속은 바뀌지 않고 가능한 진로를 다시 확인합니다."
+          "resultCopy": "계약을 거절했습니다. 소속은 바뀌지 않고 가능한 진로를 다시 확인합니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "23",
@@ -132,7 +146,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E06",
@@ -145,14 +160,18 @@
           "label": "재학또는재도전검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "가능한진로와남은재도전횟수를확인합니다."
+          "resultCopy": "가능한진로와남은재도전횟수를확인합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S28"
         },
         {
           "command": "REQUEST_RETIRE",
           "label": "선수생활종료검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "선수 생활 종료를 검토합니다. 확정 전에는 은퇴하지 않습니다."
+          "resultCopy": "선수 생활 종료를 검토합니다. 확정 전에는 은퇴하지 않습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S09"
         }
       ],
       "ruleDocument": "43",
@@ -160,7 +179,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E07",
@@ -173,14 +193,17 @@
           "label": "계약확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "선택한진로를확정했습니다."
+          "resultCopy": "선택한진로를확정했습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "REQUEST_RETIRE",
           "label": "종료검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "선수 생활 종료를 검토합니다. 확정 전에는 은퇴하지 않습니다."
+          "resultCopy": "선수 생활 종료를 검토합니다. 확정 전에는 은퇴하지 않습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S09"
         }
       ],
       "ruleDocument": "19",
@@ -188,7 +211,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E08",
@@ -201,14 +225,16 @@
           "label": "육성4개확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "프로첫시즌계획을저장했습니다."
+          "resultCopy": "프로첫시즌계획을저장했습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "KEEP_FOCUS",
           "label": "현재계획유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 계획을 그대로 유지합니다. 새로 저장되는 계획은 없습니다."
+          "resultCopy": "현재 계획을 그대로 유지합니다. 새로 저장되는 계획은 없습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "42",
@@ -216,7 +242,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E09",
@@ -229,14 +256,16 @@
           "label": "1군합류",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "1군등록과실제출장은별개입니다."
+          "resultCopy": "1군등록과실제출장은별개입니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "DEFER_CALLUP",
           "label": "다음평가대기",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "이번 호출은 보류합니다. 다음 평가에서 다시 검토될 수 있으며 1군 등록은 되지 않습니다."
+          "resultCopy": "이번 호출은 보류합니다. 다음 평가에서 다시 검토될 수 있으며 1군 등록은 되지 않습니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "19",
@@ -244,7 +273,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E10",
@@ -257,14 +287,16 @@
           "label": "역할평가요청",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재경쟁점수로역할을재평가합니다."
+          "resultCopy": "현재경쟁점수로역할을재평가합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "현역할유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 역할을 유지합니다. 역할 재평가는 요청하지 않았습니다."
+          "resultCopy": "현재 역할을 유지합니다. 역할 재평가는 요청하지 않았습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "41",
@@ -272,7 +304,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E11",
@@ -285,14 +318,16 @@
           "label": "육성4개재검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "다음시즌의성장계획을준비했습니다."
+          "resultCopy": "다음시즌의성장계획을준비했습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "KEEP_FOCUS",
           "label": "현재계획유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 계획을 그대로 유지합니다. 새로 저장되는 계획은 없습니다."
+          "resultCopy": "현재 계획을 그대로 유지합니다. 새로 저장되는 계획은 없습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "42",
@@ -300,7 +335,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E12",
@@ -313,14 +349,16 @@
           "label": "전환자리선택",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "새자리는적응훈련과기용경쟁이필요합니다."
+          "resultCopy": "새자리는적응훈련과기용경쟁이필요합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "현재포지션유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 포지션을 유지합니다. 전환 계획은 시작되지 않습니다."
+          "resultCopy": "현재 포지션을 유지합니다. 전환 계획은 시작되지 않습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "22",
@@ -328,7 +366,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E13",
@@ -341,14 +380,16 @@
           "label": "전환확정",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "이후 경기부터 새 자리로 등록 포지션을 바꿉니다."
+          "resultCopy": "이후 경기부터 새 자리로 등록 포지션을 바꿉니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "CANCEL_POSITION_PLAN",
           "label": "기존자리복귀",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "기존 등록 포지션을 유지하고 전환 계획을 종료합니다."
+          "resultCopy": "기존 등록 포지션을 유지하고 전환 계획을 종료합니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "22",
@@ -362,7 +403,8 @@
         "samePositionPlan": true,
         "eligibleTeamGames": 24,
         "requiresValidPlan": true
-      }
+      },
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E14",
@@ -375,14 +417,16 @@
           "label": "선발경쟁지원",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "선발자격과공석을다시검사합니다."
+          "resultCopy": "선발자격과공석을다시검사합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "불펜유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "불펜 보직을 유지합니다. 선발 경쟁 검토는 요청하지 않았습니다."
+          "resultCopy": "불펜 보직을 유지합니다. 선발 경쟁 검토는 요청하지 않았습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "41",
@@ -390,7 +434,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E15",
@@ -403,14 +448,16 @@
           "label": "마무리경쟁지원",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "마무리자격과공석을다시검사합니다."
+          "resultCopy": "마무리자격과공석을다시검사합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "현보직유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 보직을 유지합니다. 마무리 경쟁 검토는 요청하지 않았습니다."
+          "resultCopy": "현재 보직을 유지합니다. 마무리 경쟁 검토는 요청하지 않았습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "41",
@@ -418,7 +465,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E16",
@@ -431,14 +479,16 @@
           "label": "제구포함육성검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "포함할능력4개를직접확인했습니다."
+          "resultCopy": "포함할능력4개를직접확인했습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "KEEP_FOCUS",
           "label": "현재계획유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 계획을 그대로 유지합니다. 새로 저장되는 계획은 없습니다."
+          "resultCopy": "현재 계획을 그대로 유지합니다. 새로 저장되는 계획은 없습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "42",
@@ -446,7 +496,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E17",
@@ -459,14 +510,17 @@
           "label": "교타형계획검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "변경기회가있을때새유형을선택합니다."
+          "resultCopy": "변경기회가있을때새유형을선택합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S22"
         },
         {
           "command": "ACK_EVENT",
           "label": "현재유형유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 유형을 유지합니다. 유형 변경은 하지 않았습니다."
+          "resultCopy": "현재 유형을 유지합니다. 유형 변경은 하지 않았습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "35",
@@ -474,7 +528,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E18",
@@ -487,14 +542,17 @@
           "label": "거포형계획검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "능력은즉시바뀌지않고이후성장에반영됩니다."
+          "resultCopy": "능력은즉시바뀌지않고이후성장에반영됩니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S22"
         },
         {
           "command": "ACK_EVENT",
           "label": "현재유형유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 유형을 유지합니다. 유형 변경은 하지 않았습니다."
+          "resultCopy": "현재 유형을 유지합니다. 유형 변경은 하지 않았습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "35",
@@ -502,7 +560,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E19",
@@ -515,14 +574,16 @@
           "label": "한차례등판휴식요청",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "부상여부와팀운용을검사해휴식계획을반영합니다."
+          "resultCopy": "부상여부와팀운용을검사해휴식계획을반영합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "현재운용유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 운용을 유지합니다. 휴식 계획은 만들지 않았습니다."
+          "resultCopy": "현재 운용을 유지합니다. 휴식 계획은 만들지 않았습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "24",
@@ -530,7 +591,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E20",
@@ -543,14 +605,17 @@
           "label": "육성계획확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "조언만으로영구능력이오르지않습니다."
+          "resultCopy": "조언만으로영구능력이오르지않습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S22"
         },
         {
           "command": "ACK_EVENT",
           "label": "현재계획유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 계획을 유지합니다. 조언만으로 영구 능력이 오르지 않습니다."
+          "resultCopy": "현재 계획을 유지합니다. 조언만으로 영구 능력이 오르지 않습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "42",
@@ -558,7 +623,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E21",
@@ -571,7 +637,8 @@
           "label": "회복일정확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "부상기간에는경기에출장하지않습니다."
+          "resultCopy": "부상기간에는경기에출장하지않습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "24",
@@ -579,7 +646,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E22",
@@ -592,7 +660,8 @@
           "label": "재활일정확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "회복까지팀경기수를기준으로진행합니다."
+          "resultCopy": "회복까지팀경기수를기준으로진행합니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "24",
@@ -600,7 +669,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E23",
@@ -613,7 +683,8 @@
           "label": "복귀확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "복귀후현재경쟁에서다시기회를얻습니다."
+          "resultCopy": "복귀후현재경쟁에서다시기회를얻습니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "19",
@@ -621,7 +692,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E24",
@@ -634,7 +706,8 @@
           "label": "기록확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "첫이정표를커리어에남겼습니다."
+          "resultCopy": "첫이정표를커리어에남겼습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "15",
@@ -642,7 +715,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E25",
@@ -655,7 +729,8 @@
           "label": "올스타선정확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "선정이력만남기며가상올스타경기기록은만들지않습니다."
+          "resultCopy": "선정이력만남기며가상올스타경기기록은만들지않습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "15",
@@ -663,7 +738,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E26",
@@ -676,14 +752,17 @@
           "label": "경쟁상황확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "경쟁은능력과최근기록으로판정합니다."
+          "resultCopy": "경쟁은능력과최근기록으로판정합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S16"
         },
         {
           "command": "ACK_EVENT",
           "label": "계속진행",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "계속 진행합니다. 경쟁 상황 확인은 하지 않았습니다."
+          "resultCopy": "계속 진행합니다. 경쟁 상황 확인은 하지 않았습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "41",
@@ -691,7 +770,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E27",
@@ -704,7 +784,8 @@
           "label": "포스트시즌시작",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "포스트시즌기록은정규와분리합니다."
+          "resultCopy": "포스트시즌기록은정규와분리합니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "24",
@@ -712,7 +793,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E28",
@@ -725,7 +807,8 @@
           "label": "우승기록확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "우승이자연성장예산을추가하지않습니다."
+          "resultCopy": "우승이자연성장예산을추가하지않습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "42",
@@ -733,7 +816,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E29",
@@ -746,7 +830,8 @@
           "label": "수상이력확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "수상이확정된뒤기록실에남깁니다."
+          "resultCopy": "수상이확정된뒤기록실에남깁니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "08",
@@ -754,7 +839,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E30",
@@ -767,14 +853,18 @@
           "label": "조건비교",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "계약서수락은확정행동입니다."
+          "resultCopy": "계약서수락은확정행동입니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S08"
         },
         {
           "command": "REQUEST_RETIRE",
           "label": "은퇴검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "선수 생활 종료를 검토합니다. 확정 전에는 은퇴하지 않습니다."
+          "resultCopy": "선수 생활 종료를 검토합니다. 확정 전에는 은퇴하지 않습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S09"
         }
       ],
       "ruleDocument": "23",
@@ -782,7 +872,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E31",
@@ -795,14 +886,18 @@
           "label": "FA제안비교",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "없는계약을가짜제안으로보이지않습니다."
+          "resultCopy": "없는계약을가짜제안으로보이지않습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S08"
         },
         {
           "command": "OPEN_RETURN",
           "label": "국내복귀가능검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "국내 복귀 가능 여부를 보유권과 병역까지 함께 확인합니다."
+          "resultCopy": "국내 복귀 가능 여부를 보유권과 병역까지 함께 확인합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S33"
         }
       ],
       "ruleDocument": "23",
@@ -810,7 +905,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E32",
@@ -823,14 +919,17 @@
           "label": "선택제안계약확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "마지막확정전금액과기간을확인합니다."
+          "resultCopy": "마지막확정전금액과기간을확인합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "BACK_TO_OFFERS",
           "label": "다른제안비교",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "다른 제안과 비교합니다. 계약은 확정되지 않았습니다."
+          "resultCopy": "다른 제안과 비교합니다. 계약은 확정되지 않았습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S08"
         }
       ],
       "ruleDocument": "23",
@@ -838,7 +937,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E33",
@@ -851,14 +951,17 @@
           "label": "백업역할수락",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "제안이있을때만다른계약을선택할수있습니다."
+          "resultCopy": "제안이있을때만다른계약을선택할수있습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "OPEN_CAREER_OFFERS",
           "label": "다른제안검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "다른 계약 제안을 확인합니다. 백업 역할은 수락하지 않았습니다."
+          "resultCopy": "다른 계약 제안을 확인합니다. 백업 역할은 수락하지 않았습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S08"
         }
       ],
       "ruleDocument": "19",
@@ -866,7 +969,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E34",
@@ -879,14 +983,18 @@
           "label": "남은진로검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "권리와재도전자격을검사합니다."
+          "resultCopy": "권리와재도전자격을검사합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S28"
         },
         {
           "command": "REQUEST_RETIRE",
           "label": "종료검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "선수 생활 종료를 검토합니다. 확정 전에는 은퇴하지 않습니다."
+          "resultCopy": "선수 생활 종료를 검토합니다. 확정 전에는 은퇴하지 않습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S09"
         }
       ],
       "ruleDocument": "23",
@@ -894,7 +1002,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E35",
@@ -907,7 +1016,8 @@
           "label": "은퇴및기록보관",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "남은합법진로가없을때마지막기록을보관합니다."
+          "resultCopy": "남은합법진로가없을때마지막기록을보관합니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "19",
@@ -915,7 +1025,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E36",
@@ -928,14 +1039,16 @@
           "label": "은퇴확정",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "은퇴를 확정합니다. 이후 은퇴 정산과 연대기 정리로 이어집니다."
+          "resultCopy": "은퇴를 확정합니다. 이후 은퇴 정산과 연대기 정리로 이어집니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "CANCEL_RETIRE",
           "label": "계속플레이",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "은퇴하지 않고 계속 플레이합니다."
+          "resultCopy": "은퇴하지 않고 계속 플레이합니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "19",
@@ -943,7 +1056,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E37",
@@ -956,7 +1070,9 @@
           "label": "보관선수확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "국내커리어의기록을저장했습니다."
+          "resultCopy": "국내커리어의기록을저장했습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S10"
         }
       ],
       "ruleDocument": "32",
@@ -964,7 +1080,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E38",
@@ -977,14 +1094,17 @@
           "label": "선수단과계약검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "연속우승만으로숨은능력하락은없습니다."
+          "resultCopy": "연속우승만으로숨은능력하락은없습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S14"
         },
         {
           "command": "ACK_EVENT",
           "label": "현운영유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 운영을 유지합니다. 검토 화면은 열지 않았습니다."
+          "resultCopy": "현재 운영을 유지합니다. 검토 화면은 열지 않았습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "44",
@@ -992,7 +1112,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E39",
@@ -1005,14 +1126,17 @@
           "label": "기용검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "출전은등록과라인업확정뒤반영됩니다."
+          "resultCopy": "출전은등록과라인업확정뒤반영됩니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S15"
         },
         {
           "command": "ACK_EVENT",
           "label": "현기용유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 기용을 유지합니다. 기용 검토는 열지 않았습니다."
+          "resultCopy": "현재 기용을 유지합니다. 기용 검토는 열지 않았습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "44",
@@ -1020,7 +1144,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E40",
@@ -1033,14 +1158,18 @@
           "label": "예약과지급검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "예약과 지급 내역을 확인합니다. 기존 보장 지급 의무는 남아 있습니다."
+          "resultCopy": "예약과 지급 내역을 확인합니다. 기존 보장 지급 의무는 남아 있습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S37"
         },
         {
           "command": "OPEN_REBUILD",
           "label": "재정재건검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "재정 재건 검토를 엽니다. 기존 보장 지급 의무는 그대로 남습니다."
+          "resultCopy": "재정 재건 검토를 엽니다. 기존 보장 지급 의무는 그대로 남습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S37"
         }
       ],
       "ruleDocument": "44",
@@ -1048,7 +1177,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E41",
@@ -1061,14 +1191,17 @@
           "label": "유형변경",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "변경은이후성장배분에적용합니다."
+          "resultCopy": "변경은이후성장배분에적용합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S22"
         },
         {
           "command": "ACK_EVENT",
           "label": "현재유형유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 유형을 유지합니다. 유형 변경은 하지 않았습니다."
+          "resultCopy": "현재 유형을 유지합니다. 유형 변경은 하지 않았습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "35",
@@ -1076,7 +1209,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E42",
@@ -1089,7 +1223,8 @@
           "label": "유형이력확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "표시별칭이바뀌어도추가보너스는없습니다."
+          "resultCopy": "표시별칭이바뀌어도추가보너스는없습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "35",
@@ -1097,7 +1232,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E43",
@@ -1110,21 +1246,25 @@
           "label": "강화선택",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "세계시즌강화기회는한번입니다."
+          "resultCopy": "세계시즌강화기회는한번입니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S23"
         },
         {
           "command": "DEFER_TRAINING",
           "label": "나중에사용",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "특별훈련을 나중에 사용합니다. 이번 세계 시즌의 강화 기회는 한 번이며 아직 소비되지 않았습니다."
+          "resultCopy": "특별훈련을 나중에 사용합니다. 이번 세계 시즌의 강화 기회는 한 번이며 아직 소비되지 않았습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "FORFEIT_TRAINING",
           "label": "시즌기회포기확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "포기를 확인하면 이번 세계 시즌의 강화 기회가 사라집니다."
+          "resultCopy": "포기를 확인하면 이번 세계 시즌의 강화 기회가 사라집니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "42",
@@ -1132,7 +1272,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E44",
@@ -1145,14 +1286,16 @@
           "label": "참가",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "최종등록과실제출장은별도로확인합니다."
+          "resultCopy": "최종등록과실제출장은별도로확인합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "DECLINE_NATIONAL",
           "label": "사양",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "대표팀 참가를 사양했습니다. 최종 등록과 실제 출장은 이루어지지 않습니다."
+          "resultCopy": "대표팀 참가를 사양했습니다. 최종 등록과 실제 출장은 이루어지지 않습니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "20",
@@ -1160,7 +1303,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E45",
@@ -1173,7 +1317,8 @@
           "label": "결과확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "미선발이능력감소를뜻하지않습니다."
+          "resultCopy": "미선발이능력감소를뜻하지않습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "20",
@@ -1181,7 +1326,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E46",
@@ -1194,7 +1340,8 @@
           "label": "첫출장확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "국제대회개인기록을남겼습니다."
+          "resultCopy": "국제대회개인기록을남겼습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "20",
@@ -1202,7 +1349,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E47",
@@ -1215,7 +1363,9 @@
           "label": "자격과남은의무확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "게임상자격과복무완료는다릅니다."
+          "resultCopy": "게임상자격과복무완료는다릅니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S26"
         }
       ],
       "ruleDocument": "21",
@@ -1223,7 +1373,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E48",
@@ -1236,7 +1387,8 @@
           "label": "원소속복귀",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "국제대회피로와부상은유지합니다."
+          "resultCopy": "국제대회피로와부상은유지합니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "20",
@@ -1244,7 +1396,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E49",
@@ -1257,21 +1410,24 @@
           "label": "상무지원",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "유예불가시사유와가능한복무경로를표시합니다."
+          "resultCopy": "유예불가시사유와가능한복무경로를표시합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "START_SERVICE",
           "label": "현역입대검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현역 입대를 검토합니다. 확정 전에는 입대하지 않습니다."
+          "resultCopy": "현역 입대를 검토합니다. 확정 전에는 입대하지 않습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "DEFER_SERVICE",
           "label": "기한내유예",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "기한 안에서 유예를 요청합니다. 유예 가능 여부와 남은 기한은 서버가 검사합니다."
+          "resultCopy": "기한 안에서 유예를 요청합니다. 유예 가능 여부와 남은 기한은 서버가 검사합니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "21",
@@ -1279,7 +1435,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E50",
@@ -1292,7 +1449,8 @@
           "label": "선발결과확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "탈락하면다음가능한복무선택을안내합니다."
+          "resultCopy": "탈락하면다음가능한복무선택을안내합니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "21",
@@ -1300,7 +1458,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E51",
@@ -1313,7 +1472,8 @@
           "label": "다음복무구간",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "일반복무기간출장과자연성장은없습니다."
+          "resultCopy": "일반복무기간출장과자연성장은없습니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "21",
@@ -1321,7 +1481,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E52",
@@ -1334,14 +1495,16 @@
           "label": "육성4개확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "세계시즌성장과강화횟수는공유합니다."
+          "resultCopy": "세계시즌성장과강화횟수는공유합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ADVANCE_SERVICE",
           "label": "상무일정진행",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "상무 일정을 진행합니다. 세계 시즌 성장과 강화 횟수는 공유됩니다."
+          "resultCopy": "상무 일정을 진행합니다. 세계 시즌 성장과 강화 횟수는 공유됩니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "42",
@@ -1349,7 +1512,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E53",
@@ -1362,7 +1526,8 @@
           "label": "복귀계획확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "소속권리와복귀가능명단을검사합니다."
+          "resultCopy": "소속권리와복귀가능명단을검사합니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "21",
@@ -1370,7 +1535,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E54",
@@ -1383,14 +1549,16 @@
           "label": "마지막지원",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "무기한유예는선택할수없습니다."
+          "resultCopy": "무기한유예는선택할수없습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "START_SERVICE",
           "label": "현역입대검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현역 입대를 검토합니다. 확정 전에는 입대하지 않으며 무기한 유예는 선택할 수 없습니다."
+          "resultCopy": "현역 입대를 검토합니다. 확정 전에는 입대하지 않으며 무기한 유예는 선택할 수 없습니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "21",
@@ -1398,7 +1566,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E55",
@@ -1411,7 +1580,8 @@
           "label": "잔여의무확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "완료조건을채운뒤복무완료로전환합니다."
+          "resultCopy": "완료조건을채운뒤복무완료로전환합니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "21",
@@ -1419,7 +1589,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E56",
@@ -1432,7 +1603,9 @@
           "label": "KBO대학미국진로비교",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "미국은능력과유효제안이있을때만보입니다."
+          "resultCopy": "미국은능력과유효제안이있을때만보입니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S28"
         }
       ],
       "ruleDocument": "43",
@@ -1440,7 +1613,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E57",
@@ -1453,14 +1627,17 @@
           "label": "미국계약확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "오퍼조회만으로국내진로를포기하지않습니다."
+          "resultCopy": "오퍼조회만으로국내진로를포기하지않습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "BACK_TO_ROUTE",
           "label": "다른진로비교",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "다른 진로와 비교합니다. 미국 계약은 확정되지 않았습니다."
+          "resultCopy": "다른 진로와 비교합니다. 미국 계약은 확정되지 않았습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S28"
         }
       ],
       "ruleDocument": "23",
@@ -1468,7 +1645,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E58",
@@ -1481,14 +1659,16 @@
           "label": "육성4개검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "새리그합류로성장예산이초기화되지않습니다."
+          "resultCopy": "새리그합류로성장예산이초기화되지않습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "현재계획유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 계획을 유지합니다. 새 리그 합류로 성장 예산이 초기화되지 않습니다."
+          "resultCopy": "현재 계획을 유지합니다. 새 리그 합류로 성장 예산이 초기화되지 않습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "42",
@@ -1496,7 +1676,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E59",
@@ -1509,14 +1690,16 @@
           "label": "승격수락",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "승격을 수락합니다. 합류 후 출장 경쟁이 이어집니다."
+          "resultCopy": "승격을 수락합니다. 합류 후 출장 경쟁이 이어집니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "DEFER_PROMOTION",
           "label": "다음평가대기",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "승격을 미룹니다. 다음 평가에서 다시 검토될 수 있습니다."
+          "resultCopy": "승격을 미룹니다. 다음 평가에서 다시 검토될 수 있습니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "23",
@@ -1524,7 +1707,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E60",
@@ -1537,7 +1721,8 @@
           "label": "메이저합류확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "명단등록만으로첫출장기록을만들지않습니다."
+          "resultCopy": "명단등록만으로첫출장기록을만들지않습니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "23",
@@ -1545,7 +1730,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E61",
@@ -1558,14 +1744,17 @@
           "label": "마이너재도전",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "마이너 재도전을 확정합니다."
+          "resultCopy": "마이너 재도전을 확정합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "OPEN_RIGHTS",
           "label": "계약권리확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "계약 권리를 확인합니다. FA 선택은 실제 권리가 있을 때만 가능합니다."
+          "resultCopy": "계약 권리를 확인합니다. FA 선택은 실제 권리가 있을 때만 가능합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S08"
         }
       ],
       "ruleDocument": "23",
@@ -1573,7 +1762,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E62",
@@ -1586,14 +1776,16 @@
           "label": "승인요청",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "경력과병역조건을먼저확인합니다."
+          "resultCopy": "경력과병역조건을먼저확인합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "원구단잔류",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "원 구단에 남습니다. 포스팅은 요청하지 않았습니다."
+          "resultCopy": "원 구단에 남습니다. 포스팅은 요청하지 않았습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "23",
@@ -1601,7 +1793,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E63",
@@ -1614,14 +1807,17 @@
           "label": "승인후협상조회",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "승인 후 협상 조회를 엽니다. 승인만으로 원 계약은 종료되지 않습니다."
+          "resultCopy": "승인 후 협상 조회를 엽니다. 승인만으로 원 계약은 종료되지 않습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S32"
         },
         {
           "command": "ACK_EVENT",
           "label": "보류사유확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "보류 사유를 확인합니다. 협상은 시작되지 않았습니다."
+          "resultCopy": "보류 사유를 확인합니다. 협상은 시작되지 않았습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "23",
@@ -1629,7 +1825,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E64",
@@ -1642,14 +1839,16 @@
           "label": "계약확정검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "계약 확정 전 검토를 엽니다. 마감 내 미체결이면 원 계약을 유지합니다."
+          "resultCopy": "계약 확정 전 검토를 엽니다. 마감 내 미체결이면 원 계약을 유지합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "REMAIN_ORIGINAL",
           "label": "원구단잔류",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "원 구단 계약을 유지합니다."
+          "resultCopy": "원 구단 계약을 유지합니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "23",
@@ -1657,7 +1856,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E65",
@@ -1670,7 +1870,8 @@
           "label": "첫메이저출장확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "실제출장시점의기록을보관합니다."
+          "resultCopy": "실제출장시점의기록을보관합니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "23",
@@ -1678,7 +1879,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E66",
@@ -1691,14 +1893,18 @@
           "label": "미국제안비교",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "미국 FA 제안을 비교합니다."
+          "resultCopy": "미국 FA 제안을 비교합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S08"
         },
         {
           "command": "OPEN_RETURN",
           "label": "국내복귀검토",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "국내 복귀를 검토합니다. 보유권과 병역을 함께 검사합니다."
+          "resultCopy": "국내 복귀를 검토합니다. 보유권과 병역을 함께 검사합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S33"
         }
       ],
       "ruleDocument": "23",
@@ -1706,7 +1912,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E67",
@@ -1719,14 +1926,16 @@
           "label": "복귀경로확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "귀국이기존권리를자동삭제하지않습니다."
+          "resultCopy": "귀국이기존권리를자동삭제하지않습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "CANCEL_RETURN",
           "label": "현재경로유지",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "현재 경로를 유지합니다. 복귀는 확정되지 않았습니다."
+          "resultCopy": "현재 경로를 유지합니다. 복귀는 확정되지 않았습니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "23",
@@ -1734,7 +1943,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E68",
@@ -1747,7 +1957,8 @@
           "label": "준비구간진행",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "세계날짜와나이는계속진행합니다."
+          "resultCopy": "세계날짜와나이는계속진행합니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "23",
@@ -1755,7 +1966,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E69",
@@ -1768,7 +1980,9 @@
           "label": "두리그기록확인",
           "availability": "서버상태별검사,불가사유표시",
           "preview": "38공통확률/실제효과미리보기",
-          "resultCopy": "국내와미국의기록을구분해보관했습니다."
+          "resultCopy": "국내와미국의기록을구분해보관했습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S10"
         }
       ],
       "ruleDocument": "32",
@@ -1776,7 +1990,8 @@
       "effectPolicy": "명령핸들러로만적용;서사직접능력가산없음",
       "fixturePositive": "발생조건충족+유효상태버전+미해결인스턴스",
       "fixtureNegative": "해결완료또는발생조건불충족",
-      "resume": "사건발생전저장한resumePhase,필수후속분기우선"
+      "resume": "사건발생전저장한resumePhase,필수후속분기우선",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E70",
@@ -1789,14 +2004,18 @@
           "label": "학교비교",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "학교를 비교합니다."
+          "resultCopy": "학교를 비교합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S34"
         },
         {
           "command": "BACK_TO_ROUTE",
           "label": "진로비교로",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "진로 비교로 돌아갑니다. 학교는 선택되지 않았습니다."
+          "resultCopy": "진로 비교로 돌아갑니다. 학교는 선택되지 않았습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S28"
         }
       ],
       "ruleDocument": "43",
@@ -1804,7 +2023,8 @@
       "effectPolicy": "명령핸들러단일실행",
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
-      "resume": "resumePhase또는명시적후속상태"
+      "resume": "resumePhase또는명시적후속상태",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E71",
@@ -1817,14 +2037,16 @@
           "label": "육성4개확인",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "선택결과를확인했습니다."
+          "resultCopy": "선택결과를확인했습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "일정확인",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "일정만 확인했습니다. 계획은 바뀌지 않습니다."
+          "resultCopy": "일정만 확인했습니다. 계획은 바뀌지 않습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "43",
@@ -1832,7 +2054,8 @@
       "effectPolicy": "명령핸들러단일실행",
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
-      "resume": "resumePhase또는명시적후속상태"
+      "resume": "resumePhase또는명시적후속상태",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E72",
@@ -1845,7 +2068,8 @@
           "label": "대진확인",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "선택결과를확인했습니다."
+          "resultCopy": "선택결과를확인했습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "43",
@@ -1853,7 +2077,8 @@
       "effectPolicy": "명령핸들러단일실행",
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
-      "resume": "resumePhase또는명시적후속상태"
+      "resume": "resumePhase또는명시적후속상태",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E73",
@@ -1866,21 +2091,25 @@
           "label": "조기드래프트검토",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "조기 드래프트 참가를 검토합니다. 확정 전에는 소속이 바뀌지 않습니다."
+          "resultCopy": "조기 드래프트 참가를 검토합니다. 확정 전에는 소속이 바뀌지 않습니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ADVANCE_ACADEMIC_YEAR",
           "label": "재학유지",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "재학을 유지하고 학년을 진행합니다."
+          "resultCopy": "재학을 유지하고 학년을 진행합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "OPEN_US_IF_VALID",
           "label": "유효미국제안조회",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "유효한 미국 제안이 있을 때만 조회합니다."
+          "resultCopy": "유효한 미국 제안이 있을 때만 조회합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S29"
         }
       ],
       "ruleDocument": "43",
@@ -1888,7 +2117,8 @@
       "effectPolicy": "명령핸들러단일실행",
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
-      "resume": "resumePhase또는명시적후속상태"
+      "resume": "resumePhase또는명시적후속상태",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E74",
@@ -1901,14 +2131,17 @@
           "label": "3학년복귀",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "3학년으로 복귀해 학년을 진행합니다."
+          "resultCopy": "3학년으로 복귀해 학년을 진행합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "REQUEST_RETIRE",
           "label": "종료검토",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "선수 생활 종료를 검토합니다. 확정 전에는 은퇴하지 않습니다."
+          "resultCopy": "선수 생활 종료를 검토합니다. 확정 전에는 은퇴하지 않습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S09"
         }
       ],
       "ruleDocument": "43",
@@ -1916,7 +2149,8 @@
       "effectPolicy": "명령핸들러단일실행",
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
-      "resume": "resumePhase또는명시적후속상태"
+      "resume": "resumePhase또는명시적후속상태",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E75",
@@ -1929,7 +2163,8 @@
           "label": "졸업진로확인",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "선택결과를확인했습니다."
+          "resultCopy": "선택결과를확인했습니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "43",
@@ -1937,7 +2172,8 @@
       "effectPolicy": "명령핸들러단일실행",
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
-      "resume": "resumePhase또는명시적후속상태"
+      "resume": "resumePhase또는명시적후속상태",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E76",
@@ -1950,7 +2186,8 @@
           "label": "복학확인",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "선택결과를확인했습니다."
+          "resultCopy": "선택결과를확인했습니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "43",
@@ -1958,7 +2195,8 @@
       "effectPolicy": "명령핸들러단일실행",
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
-      "resume": "resumePhase또는명시적후속상태"
+      "resume": "resumePhase또는명시적후속상태",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E77",
@@ -1971,7 +2209,9 @@
           "label": "발견선수확인",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "선택결과를확인했습니다."
+          "resultCopy": "선택결과를확인했습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S36"
         }
       ],
       "ruleDocument": "40",
@@ -1979,7 +2219,8 @@
       "effectPolicy": "명령핸들러단일실행",
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
-      "resume": "resumePhase또는명시적후속상태"
+      "resume": "resumePhase또는명시적후속상태",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E78",
@@ -1992,14 +2233,18 @@
           "label": "조건검토",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "탐색 조건을 검토합니다."
+          "resultCopy": "탐색 조건을 검토합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S36"
         },
         {
           "command": "OPEN_MARKET",
           "label": "공개FA목록",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "공개 FA 목록을 엽니다."
+          "resultCopy": "공개 FA 목록을 엽니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S17"
         }
       ],
       "ruleDocument": "40",
@@ -2007,7 +2252,8 @@
       "effectPolicy": "명령핸들러단일실행",
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
-      "resume": "resumePhase또는명시적후속상태"
+      "resume": "resumePhase또는명시적후속상태",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E79",
@@ -2020,14 +2266,16 @@
           "label": "확률과예약확인후제출",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "확률과 예약을 확인한 뒤 제안서를 제출합니다."
+          "resultCopy": "확률과 예약을 확인한 뒤 제안서를 제출합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "CANCEL_DRAFT_OFFER",
           "label": "초안취소",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "제안서 초안을 취소합니다. 제안은 전송되지 않습니다."
+          "resultCopy": "제안서 초안을 취소합니다. 제안은 전송되지 않습니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "40",
@@ -2035,7 +2283,8 @@
       "effectPolicy": "명령핸들러단일실행",
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
-      "resume": "resumePhase또는명시적후속상태"
+      "resume": "resumePhase또는명시적후속상태",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E80",
@@ -2048,7 +2297,9 @@
           "label": "결과확인",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "선택결과를확인했습니다."
+          "resultCopy": "선택결과를확인했습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S17"
         }
       ],
       "ruleDocument": "40",
@@ -2056,7 +2307,8 @@
       "effectPolicy": "명령핸들러단일실행",
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
-      "resume": "resumePhase또는명시적후속상태"
+      "resume": "resumePhase또는명시적후속상태",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E81",
@@ -2069,14 +2321,17 @@
           "label": "지원원장확인",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "지원 원장을 확인합니다."
+          "resultCopy": "지원 원장을 확인합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "BACK_TO_BUDGET",
           "label": "예산검토",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "예산 검토로 돌아갑니다."
+          "resultCopy": "예산 검토로 돌아갑니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S37"
         }
       ],
       "ruleDocument": "44",
@@ -2084,7 +2339,8 @@
       "effectPolicy": "명령핸들러단일실행",
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
-      "resume": "resumePhase또는명시적후속상태"
+      "resume": "resumePhase또는명시적후속상태",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E82",
@@ -2097,14 +2353,16 @@
           "label": "미리보기확인",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "미리보기를 확인합니다."
+          "resultCopy": "미리보기를 확인합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "CANCEL_IMPORT",
           "label": "선택취소",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "선택을 취소합니다. 원본과 현재 세계는 바뀌지 않습니다."
+          "resultCopy": "선택을 취소합니다. 원본과 현재 세계는 바뀌지 않습니다.",
+          "dispatchClass": "DOMAIN"
         }
       ],
       "ruleDocument": "42",
@@ -2112,7 +2370,8 @@
       "effectPolicy": "명령핸들러단일실행",
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
-      "resume": "resumePhase또는명시적후속상태"
+      "resume": "resumePhase또는명시적후속상태",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E83",
@@ -2125,14 +2384,17 @@
           "label": "선택확인",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "선택 내용을 확인합니다."
+          "resultCopy": "선택 내용을 확인합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "BACK_TO_DIFFICULTY",
           "label": "난이도다시선택",
           "availability": "분야별서버조건검사",
           "preview": "38공통계약",
-          "resultCopy": "난이도를 다시 고릅니다. 확정 전에는 저장되지 않습니다."
+          "resultCopy": "난이도를 다시 고릅니다. 확정 전에는 저장되지 않습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S12"
         }
       ],
       "ruleDocument": "36",
@@ -2140,7 +2402,8 @@
       "effectPolicy": "명령핸들러단일실행",
       "fixturePositive": "유효sourceEntity/조건충족/미해결",
       "fixtureNegative": "sourceEntity없음또는이미해결",
-      "resume": "resumePhase또는명시적후속상태"
+      "resume": "resumePhase또는명시적후속상태",
+      "resolutionPolicy": "BLOCKING_UNTIL_DOMAIN_COMMIT"
     },
     {
       "id": "E84",
@@ -2153,7 +2416,9 @@
           "label": "특성도감확인",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "확정된결과와선택내역을확인합니다."
+          "resultCopy": "확정된결과와선택내역을확인합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S38"
         }
       ],
       "ruleDocument": "47",
@@ -2161,7 +2426,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E85",
@@ -2174,7 +2440,9 @@
           "label": "보유특성과조건확인",
           "availability": "읽기권한검사",
           "preview": "자동효과조회,확률추첨없음",
-          "resultCopy": "보유특성의활성조건을확인했습니다."
+          "resultCopy": "보유특성의활성조건을확인했습니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S38"
         }
       ],
       "ruleDocument": "47",
@@ -2182,7 +2450,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E86",
@@ -2195,14 +2464,16 @@
           "label": "학습계획확인",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "학습 계획을 확인합니다."
+          "resultCopy": "학습 계획을 확인합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "현재구종집중",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "현재 구종 집중을 유지합니다."
+          "resultCopy": "현재 구종 집중을 유지합니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "48",
@@ -2210,7 +2481,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E87",
@@ -2223,7 +2495,9 @@
           "label": "구종숙련확인",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "확정된결과와선택내역을확인합니다."
+          "resultCopy": "확정된결과와선택내역을확인합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S39"
         }
       ],
       "ruleDocument": "48",
@@ -2231,7 +2505,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E88",
@@ -2244,14 +2519,16 @@
           "label": "성향비교",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "성향을 비교합니다."
+          "resultCopy": "성향을 비교합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "현재성향유지",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "현재 성향을 유지합니다."
+          "resultCopy": "현재 성향을 유지합니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "48",
@@ -2259,7 +2536,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E89",
@@ -2272,14 +2550,16 @@
           "label": "목표최대3개선택",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "목표를 최대 3개까지 고릅니다."
+          "resultCopy": "목표를 최대 3개까지 고릅니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "목표없이진행",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "목표 없이 진행합니다. 불이익은 없습니다."
+          "resultCopy": "목표 없이 진행합니다. 불이익은 없습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "49",
@@ -2287,7 +2567,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E90",
@@ -2300,7 +2581,9 @@
           "label": "달성과보상확인",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "확정된결과와선택내역을확인합니다."
+          "resultCopy": "확정된결과와선택내역을확인합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S40"
         }
       ],
       "ruleDocument": "49",
@@ -2308,7 +2591,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E91",
@@ -2321,14 +2605,16 @@
           "label": "에이전트조건확인",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "에이전트 조건을 확인합니다."
+          "resultCopy": "에이전트 조건을 확인합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "직접협상유지",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "직접 협상을 유지합니다."
+          "resultCopy": "직접 협상을 유지합니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "50",
@@ -2336,7 +2622,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E92",
@@ -2349,14 +2636,16 @@
           "label": "확률확인후역제안",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "확률을 확인한 뒤 역제안을 요청합니다."
+          "resultCopy": "확률을 확인한 뒤 역제안을 요청합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "기본오퍼유지",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "기본 오퍼를 유지합니다."
+          "resultCopy": "기본 오퍼를 유지합니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "50",
@@ -2364,7 +2653,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E93",
@@ -2377,14 +2667,16 @@
           "label": "수용확률확인",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "수용 확률을 확인합니다."
+          "resultCopy": "수용 확률을 확인합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "현역할유지",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "현재 역할을 유지합니다."
+          "resultCopy": "현재 역할을 유지합니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "50",
@@ -2392,7 +2684,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E94",
@@ -2405,7 +2698,9 @@
           "label": "라이벌정보확인",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "확정된결과와선택내역을확인합니다."
+          "resultCopy": "확정된결과와선택내역을확인합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S42"
         }
       ],
       "ruleDocument": "51",
@@ -2413,7 +2708,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E95",
@@ -2426,7 +2722,9 @@
           "label": "관계와기록확인",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "확정된결과와선택내역을확인합니다."
+          "resultCopy": "확정된결과와선택내역을확인합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S42"
         }
       ],
       "ruleDocument": "51",
@@ -2434,7 +2732,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E96",
@@ -2447,7 +2746,9 @@
           "label": "동료연표확인",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "확정된결과와선택내역을확인합니다."
+          "resultCopy": "확정된결과와선택내역을확인합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S42"
         }
       ],
       "ruleDocument": "51",
@@ -2455,7 +2756,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E97",
@@ -2468,14 +2770,16 @@
           "label": "효과와급여확인",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "효과와 급여를 확인합니다."
+          "resultCopy": "효과와 급여를 확인합니다.",
+          "dispatchClass": "DOMAIN"
         },
         {
           "command": "ACK_EVENT",
           "label": "보관만유지",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "보관만 유지합니다. 고용하지 않습니다."
+          "resultCopy": "보관만 유지합니다. 고용하지 않습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "52",
@@ -2483,7 +2787,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E98",
@@ -2496,14 +2801,17 @@
           "label": "중계보기",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "확정된 로그로 중계를 봅니다."
+          "resultCopy": "확정된 로그로 중계를 봅니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S44"
         },
         {
           "command": "SKIP_COMMENTARY",
           "label": "결과보기",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "결과만 봅니다. 결과는 중계 여부와 같습니다."
+          "resultCopy": "결과만 봅니다. 결과는 중계 여부와 같습니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "53",
@@ -2511,7 +2819,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     },
     {
       "id": "E99",
@@ -2524,14 +2833,17 @@
           "label": "연대기확인",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "연대기를 확인합니다."
+          "resultCopy": "연대기를 확인합니다.",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S45"
         },
         {
           "command": "ACK_EVENT",
           "label": "계속진행",
           "availability": "분야별서버조건/변경창/원본소유검사",
           "preview": "확률선택은38,확정동작은효과/비용표시",
-          "resultCopy": "계속 진행합니다."
+          "resultCopy": "계속 진행합니다.",
+          "dispatchClass": "ACK"
         }
       ],
       "ruleDocument": "54",
@@ -2539,7 +2851,8 @@
       "effectPolicy": "분야명령receipt단일적용,조회보상중복없음",
       "fixturePositive": "해당해금/변경창/계약/관계조건충족",
       "fixtureNegative": "미해금/기한만료/이미해결",
-      "resume": "원래resumePhase또는명시한화면"
+      "resume": "원래resumePhase또는명시한화면",
+      "resolutionPolicy": "RESOLVE_ON_SELECT"
     }
   ],
   "status": "design-only",

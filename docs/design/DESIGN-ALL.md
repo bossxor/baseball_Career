@@ -154,6 +154,8 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 
 ## 현재 요약 (2026-10-19)
 
+- 심층 점검(경제·이벤트): 경제 수치(예산120억·총연봉80~95억·미래보장108억·직원 급여)는 충돌 없음. 이벤트 선택지 68종 처리 방식이 비어 있어 [125](125-EVENT-CHOICE-DISPATCH.md)로 DOMAIN/NAVIGATE/ACK 분류·BLOCKING 해결 시점을 확정했다. 보드 S02에 손·타석·투구폼 입력, S16에 좌우 분리 기록 표 시안을 추가했다(렌더 미확인).
+
 - 이미지 제작 인계: [124](124-IMAGE-PRODUCTION-BRIEF.md)+image-production-register.json(92항목: 제작 필요 64·있음 16·코드 제작 11·보존 1). 이미지는 다른 곳에서 제작한다. API·스키마·로그 정합은 [122](122-API-SCHEMA-LOG-ALIGNMENT.md), 새 효과 합산 예제는 [123](123-EFFECT-SUM-EXAMPLES.md).
 
 - 최신 사용자 확정: [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 생성 선수 손 우투85/좌투15·타석 분포, S16 좌우 분리 기록. PORTRAIT 슬롯은 SILHOUETTE_CARD로 전환했고 **실루엣 이미지는 별도 제작 필요**(119).
@@ -1000,6 +1002,8 @@ AI는 역할공백 보완→재계약→FA→드래프트 순으로 운영. 사�
 ---
 
 <!-- SOURCE: 06-TECH.md -->
+
+최신 확정(2026-10-19): [125](125-EVENT-CHOICE-DISPATCH.md) 아래 ‘허용 type’ 목록은 초기 목록이다. 사건 선택지 명령은 RESOLVE_EVENT 안에서 125의 분류로 처리하고 화면 명령은 77/screen-action-bindings.json을 따른다.
 
 # 06. 데이터·서버·운영 계약
 
@@ -1871,6 +1875,8 @@ S34 대학선택/S35 대학홈/S36 스카우트/S37 예산. 전체입출력과�
 ---
 
 <!-- SOURCE: 19-CAREER-STATE-MACHINE.md -->
+
+최신 확정(2026-10-19): [125](125-EVENT-CHOICE-DISPATCH.md) RESOLVE_EVENT는 선택지를 DOMAIN/NAVIGATE/ACK로 처리하고, BLOCKING 사건은 이동한 화면의 도메인 결정이 커밋될 때 해결된다.
 
 최신 변경: [34 유형·대학·진로확률](34-ARCHETYPES-COLLEGE-ODDS.md), [35 능력6개·육성4개·평균](35-SIX-ABILITIES-FOUR-FOCUS.md), [36 구단치트](36-CLUB-SECRET-CHEAT.md)가 해당 분야의 이전 제안을 대체한다. 미국오퍼0경로·집중1~2개·단순적용100%·대학후속범위는 폐기한다.
 
@@ -5187,6 +5193,8 @@ RESUME01 홈최근게임/02선택중강제종료/03강화commit응답유실/04�
 
 <!-- SOURCE: 77-SCREEN-QUERY-COMMAND-BINDINGS.md -->
 
+최신 확정(2026-10-19): [125](125-EVENT-CHOICE-DISPATCH.md) S06 RESOLVE_EVENT의 선택지 명령 분류와 NAVIGATE targetScreen은 event-catalog-v2.json의 dispatchClass/targetScreen이 기준이다.
+
 # 77. 전체 화면의 조회·명령·결과 연결 계약
 
 2026-10-19. [screen-action-bindings.json](screen-action-bindings.json)은S01~45의기본queryKey/행동/actionClass를지정한다. 기존화면카탈로그의데이터·빈상태·오류문구와함께읽는다. 논리키를정한것이며실제API/라우터구현이나이름자동검색이아니다. 아래가대표행동의정규화이름이며기초문서의동의어는같은핸들러에명시매핑한다.
@@ -6085,7 +6093,7 @@ START-HERE → STATUS →14의 U/D/V → 이 지도에서 담당 분야 → 해�
 | 경기·기록 |24/41/08|
 | 구단·시장·자연 주기 |85/44/40/61/68|
 | 은퇴·보관·지도자 |90/85/42/32/61/70/103|
-| 이벤트·일자 처리 |81/69/45/26|
+| 이벤트·일자 처리 |81/69/45/26/125|
 | API·미리보기·명령 |74/75/64/77/28/78/122|
 | 저장·복원·연도 |70/72/71/29|
 | 이어하기·계정·화면 |87/80/76/78|
@@ -8645,6 +8653,52 @@ IM-D01 TODO 항목마다 파일 경로·규격·화면이 있음/02 실루엣 14
 ## 남은 확인
 
 이미지는 이 저장소에서 제작하지 않았다. 고교 학교 수·국가 참가국 수·카드 테마 개수(D 3종)는 확정 전이다. 사용 권리 확인(V12)과 실제 렌더 검수는 제작 후 진행한다.
+
+---
+
+<!-- SOURCE: 125-EVENT-CHOICE-DISPATCH.md -->
+
+# 125. 사건 선택지 처리 분류 — RESOLVE_EVENT 디스패치와 해결 시점
+
+사용자확정U(2026-10-19): ‘화면 열기’ 선택지는 **필수(blocking) 사건이면 이동한 화면에서 실제 결정이 확정될 때 해결**하고, 비필수 사건은 이동하면 바로 해결한다. 이 문서는 S06의 `RESOLVE_EVENT`([19](19-CAREER-STATE-MACHINE.md))가 선택지 91종 명령을 어떻게 처리하는지 정한다. 기존에는 S06 바인딩이 `RESOLVE_EVENT` 하나만 있고 선택지 명령 68종의 처리 방식이 정의되지 않았다. 분류 규칙은 초안D이며 [event-catalog-v2.json](event-catalog-v2.json)의 각 선택지에 `dispatchClass`와 `targetScreen`, 각 사건에 `resolutionPolicy`로 기록했다.
+
+## 선택지 분류 (164개 선택지, 91종 명령)
+
+| 분류 | 수 | 처리 | 예 |
+|---|---|---|---|
+|DOMAIN|70|`RESOLVE_EVENT{eventInstanceId, choiceCommand, payload}` 안에서 해당 도메인 명령을 같은 트랜잭션으로 실행하고 사건을 해결한다|CHOOSE_FOCUS, ACCEPT_CAREER_OFFER, CONFIRM_POSITION, CANCEL_POSITION_PLAN, DEFER_CALLUP, APPLY_MILITARY_TEAM|
+|NAVIGATE|50|`targetScreen`으로 이동한다. 사건 해결 시점은 아래 resolutionPolicy를 따른다|OPEN_CAREER_OFFERS→S08, OPEN_ROUTE→S28, REQUEST_RETIRE→S09, WATCH_IMPORTANT_GAME→S44|
+|ACK|44|상태를 바꾸지 않고 사건을 해결한다(확인·유지)|ACK_EVENT, KEEP_FOCUS, ACK_INJURY, SKIP_COMMENTARY|
+
+- CANCEL_*, DEFER_*, DECLINE_*, REMAIN_ORIGINAL은 ‘하지 않음’이어도 기록이 남는 도메인 결정이므로 DOMAIN이다(예: 승격 보류는 다음 평가 대기 상태를 기록).
+- KEEP_FOCUS는 기존 계획을 그대로 두는 확인이라 ACK다. 결과 문구는 이미 선택지별로 분리됐다(62개 사건 문구 정리).
+
+## 사건 해결 시점 (resolutionPolicy)
+
+| 정책 | 사건 수 | 규칙 |
+|---|---|---|
+|BLOCKING_UNTIL_DOMAIN_COMMIT|36|진로·계약·병역·대표·등록·포지션 확정 등 실제 결정이 필요한 사건. NAVIGATE를 골라도 사건은 열린 상태로 남고, 이동한 화면에서 eventInstanceId를 참조한 도메인 명령이 커밋될 때 해결된다. 결정 없이 돌아오면 같은 선택지를 다시 보여준다|
+|RESOLVE_ON_SELECT|63|읽기·조언·열람 사건. 어떤 선택지든 고르는 즉시 해결되며, NAVIGATE는 해결 후 화면만 이동한다|
+
+BLOCKING 사건: E04, E05, E06, E07, E09, E13, E23, E30, E31, E32, E33, E34, E35, E36, E44, E47, E48, E49, E50, E54, E56, E57, E59, E60, E61, E63, E64, E66, E67, E70, E73, E74, E75, E76, E82, E83.
+
+## 세부 규칙
+
+- **진행과의 관계**: BLOCKING 사건은 [69](69-EVENT-COLLISIONS-PROVISIONAL-STATE.md)의 blocking task와 연결되어 [117](117-CAREER-NEXT-MAJOR-EVENT-PROGRESSION.md)의 ‘다음 주요 사건까지’ 진행을 그 지점에서 멈춘다. RESOLVE_ON_SELECT 사건은 표현 정지일 뿐 진행을 막지 않는다.
+- **이동 후 해결**: 이동한 화면의 도메인 명령은 `sourceEventInstanceId`를 함께 보내고, 서버는 같은 트랜잭션에서 사건을 RESOLVED로 바꾼다. 같은 화면에서 다른 경로로 결정해도(예: 오퍼 비교 후 은퇴 확인) 그 결정이 사건을 해결한다.
+- **기한**: BLOCKING 사건에 기한이 있으면 기한 도달 시 69/81의 기한 처리 결과(예: 재계약 마감→FA 전환)를 도메인 결정으로 보고 사건을 EXPIRED_BY_DEADLINE으로 닫는다. 기본 선택을 사용자 몰래 고르지 않는다.
+- **무효화**: 이동 중 부상·병역 등으로 선택지가 무효가 되면 서버가 선택 세트를 다시 검증한다(19). 이미 해결된 사건은 결과 조회만 가능하다.
+- **중복·재시도**: RESOLVE_EVENT와 이동 화면의 도메인 명령 모두 같은 commandId 재전송은 같은 receipt를 돌려준다(74). 사건 해결은 eventInstance당 한 번이다.
+- **화면 복귀**: 이동한 화면의 ‘이전’은 S06의 같은 사건으로 돌아오며, BLOCKING 사건은 홈 이어하기에서도 이 사건으로 재개한다(이어하기 버튼만, 중단 설명 카드 없음).
+- **API**: RESOLVE_EVENT payload = {eventInstanceId, expectedEventVersion, choiceCommand, choicePayload?}. NAVIGATE 응답 = {navigation:{targetScreen, sourceEventInstanceId}, eventStatus: OPEN|RESOLVED}. 잘못된 분류의 명령은 422 INVALID_CHOICE.
+
+## 검수 항목 (초안, NOT_EXECUTED)
+
+EV-D01 모든 선택지에 dispatchClass 존재/02 NAVIGATE는 45화면 중 targetScreen 보유/03 BLOCKING 사건은 ACK만으로 해결 불가/04 E30에서 OPEN_CAREER_OFFERS 후 결정 없이 복귀하면 사건 OPEN/05 같은 사건에서 이동 화면의 계약 확정이 사건 RESOLVED/06 기한 도달 시 EXPIRED_BY_DEADLINE과 기한 처리 결과 기록/07 RESOLVE_ON_SELECT 사건은 이동 즉시 RESOLVED/08 같은 commandId 재전송 receipt 동일/09 사건 해결은 1회/10 무효화 후 선택 세트 재검증.
+
+## 남은 확인
+
+BLOCKING 판정은 선택지 명령 기준의 자동 분류(초안)다. 실제 기한·blocking task와의 1:1 연결은 구현 시 69의 task 생성과 함께 검증한다. 구현·실행은 하지 않았다.
 
 ---
 

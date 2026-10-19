@@ -1,3 +1,5 @@
+최신 확정(2026-10-19): [125](125-EVENT-CHOICE-DISPATCH.md) S06 RESOLVE_EVENT의 선택지 명령 분류와 NAVIGATE targetScreen은 event-catalog-v2.json의 dispatchClass/targetScreen이 기준이다.
+
 # 77. 전체 화면의 조회·명령·결과 연결 계약
 
 2026-10-19. [screen-action-bindings.json](screen-action-bindings.json)은S01~45의기본queryKey/행동/actionClass를지정한다. 기존화면카탈로그의데이터·빈상태·오류문구와함께읽는다. 논리키를정한것이며실제API/라우터구현이나이름자동검색이아니다. 아래가대표행동의정규화이름이며기초문서의동의어는같은핸들러에명시매핑한다.
