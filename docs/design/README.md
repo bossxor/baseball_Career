@@ -1,102 +1,51 @@
-최신 v0.15: [87 로그인·기기 전환](87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md) · [88 웹/PWA/APK 업데이트](88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md) · [89 파일 저장·공유](89-PLATFORM-FILES-DOWNLOAD-SHARING.md). 네 환경의6개 실행 대상×8필수 흐름과24개 서면 기대값을 추가했습니다. 최신 총298개,실제 인증·기기·업데이트·파일 시험은 미실행입니다.
+# 다시, 플레이볼 — 상세설계 기준본1.0
 
-최신 플랫폼 범위: [86 네 환경 지원](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). Android/iPhone/Windows/macOS의 브라우저 웹과Android APK를 기본 목표로 합니다. iPhone 홈 화면 웹앱과 별도 iOS 네이티브 앱은 구분합니다. 현재 미구현이며CP01~06 실환경 검수는 계획입니다.
+2026-10-19. 소수 친구용 야구 선수 커리어·독립 구단 시뮬레이션의 서면 설계 패키지입니다. 실제 앱·Neon 서비스 연결·웹/APK 빌드는 아직 구현하지 않았습니다.
 
-최신 v0.14: [79 생성 입력](79-CREATION-FIELDS-VALIDATION-COPY.md) · [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md) · [81 이벤트 검토](81-EVENT-OCCURRENCE-COLLISION-AUDIT.md) · [82 확률·효과](82-PROBABILITY-EFFECTS-CONFIRMATION-AUDIT.md) · [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md) · [84 통합 경로·게이트](84-DESIGN-GATES-END-TO-END-PATHS.md) · [85 난이도 후속 확정](85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md). 남은6항목의 서면 검토와 구단 치트 전체 잠재력100·성장3배를 반영했습니다. 274개 서면 기대값이며 실제 앱/복구/화면/밸런스 검증은 구현 후입니다.
+## 처음 읽을 파일
 
-최신 v0.13: [77 전체 화면 조회·명령 연결](77-SCREEN-QUERY-COMMAND-BINDINGS.md) · [78 새 게임 생성·중단 복구](78-NEW-GAME-CREATION-RECOVERY.md). 45화면 연결표와 생성 복구 10개 기대값 추가, 총202개 서면 기대값. 앱 구현·실제 복구 시험 전입니다. 현재 현황은 [STATUS](STATUS.md)를 우선합니다.
+[START-HERE](START-HERE.md) → [현재 현황](STATUS.md) → [14 통합 결정](14-CANONICAL-DECISIONS.md) → [91 분야별 현재 계약](91-CURRENT-CONTRACT-INDEX.md) → [92 종결·구현 인계](92-DESIGN-CLOSURE-HANDOFF.md).
 
-최신v0.12:[74 명령복구](74-PREVIEW-COMMAND-RECONCILIATION.md) · [75 정확효과](75-EXACT-EFFECTS-PUBLIC-INFORMATION.md) · [76 웹·APK이어하기](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md). 사용자필수이어하기/정확증가량표시반영,총192서면검수기대값. 실제게임·저장·복구는구현전.
+[DESIGN-ALL](DESIGN-ALL.md)은 모든 원문을 모은 전달용 복사본,[HANDOFF-PROMPT](HANDOFF-PROMPT.md)는 다른 채팅용 요청문입니다. 원문을 수정한 후 통합본·SHA·검수기록을 갱신합니다.
 
-최신v0.11:[66 재도전](66-RETRY-CAREER-OPPORTUNITIES.md) · [67 잠재력관측](67-POTENTIAL-ASSESSMENT-PROGRESSION.md) · [68 구단주기](68-FRANCHISE-CYCLES-LEAGUE-HISTORY.md) · 69~73 충돌/복원/불변조건/연도전환/장기실험설계. 서면기대값총162개,실제실험미실행. 앱미구현.
+## 유지할 제품 범위
 
-최신v0.10:[65 사용자확정5항목](65-USER-TRAITS-XP-STAFF.md)과[64 공통계약](64-EXPANSION-COMMON-CONTRACT.md),56~63전체8기능상세계약/검수기대값80개작성. [STATUS](STATUS.md)에서서면완료와실행미검증을구분하세요. 앱미구현.
+- 한 선수의 고교 시작→KBO/대학/조건부 미국→프로·국제/병역→은퇴·보관.
+- 실제 KBO/MLB 구단 배경과 가상 선수,가상 대학9학교. 미국 직행·포스팅·MiLB/MLB 커리어 필수.
+- 커리어와 별개로 시작할 수 있는 독립 구단 운영. 보관 선수 사용0명 가능.
+- 보관 복사본은19세/능력별커리어최고50%/새상향P·상한100/병역재시작/기록초기화,원본불변.
+- 타자:컨택·파워·선구안·수비·주루·클러치. 투수:구속·구위·제구·위기관리·체력·견제.
+- 집중육성정확4개,종합은영구6능력산술평균·최대100.0. 기용점수는별도.
+- 스타일·시즌1회강화/확정성장·국제대회·대표실제출장·병역/복무/복귀.
+- 기록해금된특성전체자동효과,구종/타격성향,기념품목표,에이전트·관계,은퇴지도자,확정문자중계,연대기/카드.
+- 확률있는선택의대상·기준시점·실제효과표시,실제1숫자배지숨김,단순변경확률없음. 강화정확효과·비용우선.
+- 커리어치트:주인공P100·양의자연성장/구종XP3배·강화성공보장. 구단치트:내구단전체P100·양의성장/구종XP3배·무제한자금·적격탐색/유효영입보장. 이후영입/보관포함.
+- Android/iPhone/Windows/macOS 온라인웹+Android APK. 같은계정서버확정진행이어하기,응답유실·중단복구.
+- Neon PostgreSQL과private 객체파일,소유자격리·비밀값서버보관.
 
-최신v0.9:[55 추가8기능통합](55-EXPANSION-INTEGRATION.md)을먼저확인. 47~54모두v1필수로추가,45화면/99이벤트. 세부수치는설계기본안,앱미구현.
+U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D를사용자가개별승인했다거나게임균형이실증됐다고해석하지않습니다. 새로운사용자지시가없으면원본필수범위를줄이지않습니다.
 
-최신 v0.8: [39 정합](39-DESIGN-RECONCILIATION.md) · [40 확률](40-SCOUTING-RECRUITMENT-ODDS.md) · [41 경기](41-SIX-STAT-ENGINE.md) · [42 성장](42-GROWTH-DIFFICULTY-REBIRTH.md) · [43 대학](43-COLLEGE-CAREER.md) · [44 구단](44-CLUB-ECONOMY-AI.md) · [45 이벤트83종](45-EVENT-CATALOG-REVISION.md) · [46 화면37종](46-ALL-SCREENS-FLOWS.md). 새수치는설계기본안D,실행검증전. 앱미구현.
+## 빠른 문서 지도
 
-# 다시, 플레이볼 — 상세 설계 묶음
+| 분야 | 현재 진입점 |
+|---|---|
+| 생성·능력·정밀도 | [79](79-CREATION-FIELDS-VALIDATION-COPY.md)/[35](35-SIX-ABILITIES-FOUR-FOCUS.md)/[90](90-NUMERIC-LEDGER-CONSISTENCY.md) |
+| 커리어·재도전·대학·미국 | [19](19-CAREER-STATE-MACHINE.md)/[66](66-RETRY-CAREER-OPPORTUNITIES.md)/[43](43-COLLEGE-CAREER.md)/[23](23-US-CONTRACTS-RIGHTS.md) |
+| 국제·병역 | [20](20-INTERNATIONAL-COMPETITIONS.md)/[21](21-MILITARY-CONTRACT-RETURN.md) |
+| 경기·성장·난이도 | [24](24-GAME-ENGINE-SCORING.md)/[41](41-SIX-STAT-ENGINE.md)/[42](42-GROWTH-DIFFICULTY-REBIRTH.md)/[85](85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md)/[90](90-NUMERIC-LEDGER-CONSISTENCY.md) |
+| 구단·시장·지도자·왕조 | [44](44-CLUB-ECONOMY-AI.md)/[40](40-SCOUTING-RECRUITMENT-ODDS.md)/[61](61-STAFF-DETAILED-CONTRACT.md)/[68](68-FRANCHISE-CYCLES-LEAGUE-HISTORY.md) |
+| 확장8기능 | [55](55-EXPANSION-INTEGRATION.md)/56~65,분야별최신정정포함 |
+| 화면·사건·확률·시각 | [77](77-SCREEN-QUERY-COMMAND-BINDINGS.md)/[80](80-SCREEN-STATES-NAVIGATION-RECOVERY.md)/[81](81-EVENT-OCCURRENCE-COLLISION-AUDIT.md)/[82](82-PROBABILITY-EFFECTS-CONFIRMATION-AUDIT.md)/[83](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md) |
+| 명령·저장·복원·연도 | [74](74-PREVIEW-COMMAND-RECONCILIATION.md)/[76](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)/[78](78-NEW-GAME-CREATION-RECOVERY.md)/[70](70-BACKUP-RESTORE-IDENTITY-COMPATIBILITY.md)/[72](72-WORLD-YEAR-TRANSITION.md) |
+| 플랫폼·인증·업데이트·파일 | [86](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md)/[87](87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md)/[88](88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md)/[89](89-PLATFORM-FILES-DOWNLOAD-SHARING.md) |
+| 최종검수·인계 | [84](84-DESIGN-GATES-END-TO-END-PATHS.md)/[91](91-CURRENT-CONTRACT-INDEX.md)/[92](92-DESIGN-CLOSURE-HANDOFF.md) |
 
-2026-10-19 / v0.15 / 상세설계 진행 / 구현 착수 전
+정확한25분야 원문목록은 [current-contract-index.json](current-contract-index.json),종결상태는 [design-closure-register.json](design-closure-register.json)입니다. 초기01~18과이후문서는삭제하지않고이력을보존하되91의명시정정·폐기안을적용합니다.
 
-새 환경에서는 [START-HERE.md](START-HERE.md)부터 읽으세요. 최신 완료/미검증 항목은 [STATUS.md](STATUS.md), 규칙 충돌 시 기준은 [14 통합 결정표](14-CANONICAL-DECISIONS.md)입니다. 다른 채팅에는 [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md)를 사용할 수 있습니다.
+## 현재 검증 상태
 
-이 문서 묶음은 기존 BASEBALL_DESIGN.md의 초안을 통합·구체화한다. 충돌 시 본 묶음의 명시적 규칙이 우선한다. 사용자 확정 요구 외 세부 수치는 설계 기본값이며 플레이 검증 전 확정 밸런스가 아니다. 앱 코드·클라우드 배포·APK를 제작하지 않는다.
+45화면/99이벤트/298서면기대값/24통합경로/6플랫폼×8필수흐름/12장기실험계획. 기대값은모두NOT_IMPLEMENTED,실행게이트는NOT_EXECUTED입니다.
 
-## 확정 요구
+`node docs/design/verify-design.mjs`는문서구조·ID·링크·HTML구문/자산·예시산술·기준본지도를검사합니다. 게임/DB/API/브라우저/Android시험이아닙니다. [VALIDATION](VALIDATION.md)과[STATUS](STATUS.md)에실제수행범위를기록합니다.
 
-1. 본인과 소수 친구가 즐기는 웹앱과 APK.
-2. 실제 KBO 구단을 배경으로 가상 선수들로 구성.
-3. SLBcareer처럼 고교부터 드래프트·프로 시즌·은퇴까지 한 선수의 일대기를 진행.
-4. 커리어 종료 선수를 보관함에 영구 보존.
-5. 구단 운영은 독립 모드. 커리어를 할 필요가 없으며 가상 선수만으로도 플레이 가능.
-6. 내 선수 투입은 선택. 능력별 커리어 최고값의50%·새 상향 잠재력·병역 재시작으로 어린 선수를 다시 육성하며 원본은 유지.
-7. Neon에 데이터 저장.
-8. 화면·흐름·이벤트·규칙까지 설계한 후 구현. 설계 단계에서 앱 구현으로 넘어가지 않는다.
-9. 고교 졸업 직후 미국 진출과 KBO 포스팅을 통한 MLB 도전, 마이너리그부터의 선수 커리어.
-
-## 문서 지도
-
-| 문서 | 담당 범위 |
-| --- | --- |
-| [01 게임 규칙](01-GAME-RULES.md) | 선수 생성, 능력치, 성장, 경기, 리그, 돈, 계약 |
-| [02 상세 흐름](02-FLOWS.md) | 상태 전이, 버튼, 분기, 저장/복구, 선수 가져오기 |
-| [03 화면·디자인](03-UX-DESIGN.md) | 색/서체/컴포넌트, 화면별 정보, 모바일/PC |
-| [04 이벤트](04-EVENTS.md) | 이벤트 스키마, 우선순위, 선택·효과·추적, 목록 |
-| [05 구단 운영](05-CLUB.md) | 로스터, 기용, 계약, FA, 드래프트, 시즌 운영 |
-| [06 데이터·서버](06-TECH.md) | 저장 계약, API, 인증, Neon, 마이그레이션 |
-| [07 검증·결정](07-ACCEPTANCE.md) | 검증 시나리오, 밸런스 목표, 미결정, 착수 조건 |
-| [08 수식·판정](08-FORMULAS.md) | 타석 확률, 성장, 기용, 기록, 계약, 수상 산식 |
-| [09 이벤트 문안](09-EVENT-COPY.md) | 83종 최신본문·선택·결과안내 |
-| [10 교차 검토](10-REVIEW-DECISIONS.md) | 문서 간 모호함 해결, 추가 입력 검증과 남은 검증 |
-| [11 이미지·아트](11-ART-DIRECTION.md) | 야구장·선수·이벤트 이미지 배치와 자산 계획 |
-| [12 스타일·국가대표·병역](12-STYLE-INTERNATIONAL-MILITARY.md) | 플레이 스타일, 특별강화, 국제대회, 상무/현역/복귀 |
-| [13 MLB 커리어](13-MLB-CAREER.md) | 고교 미국 직행, 포스팅, 마이너/메이저, 국내 복귀 |
-| [상세설계 순서](DETAIL-PLAN.md) | 항목별 진행·커밋 기준과 다음 작업 |
-| [20 국제대회 상세](20-INTERNATIONAL-COMPETITIONS.md) | 달력·선발·기용·기록·자격·동률·연장 계약 |
-| [19 상태 전이 상세](19-CAREER-STATE-MACHINE.md) | 커리어 단계·명령·복귀·저장 불변 조건 |
-| [병역·상무·계약 정지·해외 복귀](21-MILITARY-CONTRACT-RETURN.md) | 상세설계 03 |
-| [스타일·집중육성·강화·잠재력·노쇠](22-DEVELOPMENT-STYLE-TRAINING.md) | 상세설계 04 |
-| [미국직행·마이너·포스팅·보유권](23-US-CONTRACTS-RIGHTS.md) | 상세설계 05 |
-| [경기 엔진·투수교체·기록 판정](24-GAME-ENGINE-SCORING.md) | 상세설계 06 |
-| [구단 AI·경제·드래프트·장기 공급](25-CLUB-AI-ECONOMY.md) | 상세설계 07 |
-| [이벤트69종 조건표·실제 문안 검수](26-EVENT-CONTENT-CONTRACT.md) | 상세설계 08 |
-| [전체33화면 최종 입력·반응형 목업](27-UI-INTERACTION-RESPONSIVE.md) | 상세설계 09 |
-| [DB/API/인증/테스트 fixture 계약](28-DATA-API-AUTH-TESTS.md) | 상세설계 10 |
-| [운영·백업·APK·배포·실환경 확인](29-OPERATIONS-RELEASE-RUNBOOK.md) | 상세설계 11 |
-| [통합 경로 재검토·설계 검토본](30-INTEGRATED-DESIGN-REVIEW.md) | 상세설계 12 |
-| [사용자 결정01](31-USER-PACING-TRAINING-DIFFICULTY.md) | 월별 진행·확정 강화·난이도2종 |
-| [사용자 결정02](32-USER-IMPORT-REBIRTH.md) | 최고치50%·새 잠재력·병역 재시작 |
-| [사용자 결정03](33-SECRET-CHEAT-DIFFICULTY.md) | 숨겨진 치트 난이도·해금 순서·효과 범위 |
-| [유형·대학·확률](34-ARCHETYPES-COLLEGE-ODDS.md) | 진로 조건·예상 지명 라운드·의미 있는 확률 |
-| [능력6개·집중4개](35-SIX-ABILITIES-FOUR-FOCUS.md) | 스탯·평균·초기 배열·성장 분배 |
-| [구단 치트](36-CLUB-SECRET-CHEAT.md) | 무제한 자금·탐색/영입100% |
-| [명칭·공식 로고](37-BRAND-TEAM-LOGOS.md) | 다시, 플레이볼과 출처 관리 |
-| [14 통합 결정표](14-CANONICAL-DECISIONS.md) | 최신 규칙, 충돌 해소, 사건·연간 순서 |
-| [15 장기 운영·기록](15-LONG-TERM-RECORDS.md) | AI, 선수 공급, 보존, 명예의 전당 |
-| [16 계정·운영](16-AUTH-OPERATIONS.md) | 인증, 웹/APK 세션, 배포·백업 정책 |
-| [17 전체 화면 계약](17-SCREEN-CONTRACTS.md) | S01~S33 입력·출력·다음 화면·예외 |
-| [18 경로 점검](18-PATH-WALKTHROUGHS.md) | 국내·미국·군복무·대표·구단·저장 서면 시나리오 |
-| [화면 설계 보드](design-board.html) | 시각 초안 12화면+공통 오류 1개, 구조 와이어프레임21개 |
-
-## 제품 원칙
-
-세션당 5~15분, 한 커리어 30~60분을 목표로 한다. 이는 검증할 사용성 목표다. 중요한 결정을 고른 뒤 성적·성장·이야기로 결과를 읽는다. 매일 같은 훈련을 수백 번 누르는 흐름, 현실 시간 대기, 광고/결제는 넣지 않는다. 좋은 선택이 항상 좋은 성적을 보장하지 않지만 위험과 보상은 선택 전에 알려준다.
-
-커리어는 시즌 단위, 구단은 경기·주간 단위로 조작한다. 같은 엔진이 내부 경기와 리그 결과를 계산한다. 커리어 사건은 특정 결과를 약속하지 않으며 구단 모드에서는 감독/단장 관점의 운영 결정을 제공한다.
-
-## 버전 범위
-
-완성 목표 v1: 타자/투수 커리어, 고교·드래프트·1/2군·시즌·계약/FA·은퇴·보관함, 스타일·특별강화·대표팀·병역, 고교 미국 직행·포스팅·마이너/MLB·국내 복귀, 독립 구단 모드, 선택적 신인 투입, 웹/APK 클라우드 저장·백업.
-
-추가 설계 후보 v1.1+: 육성선수 우회 경로, 트레이드 협상, 스카우트직원고용·도루/견제엔진, 훈련 미니게임, 이도류, 친구 대전. MLB 단장 모드는 별도 요청 범위다. v1에 들어오지 않는 항목도 연결 지점은 남기되 미구현 기능을 메뉴에 작동하는 것처럼 표시하지 않는다.
-
-## 현재 상태와 정직한 한계
-
-참고 게임은 공개 HTML과 배포 클라이언트의 안내 문구를 조사했다. 직접 플레이는 브라우저 도구의 MXC 경로 오류로 확인하지 못했다. 모든 규칙·숫자·이벤트·시각 디자인은 우리 게임의 독자 제안이며 원본 게임과 동일하다고 주장하지 않는다.
-
-프로젝트 네트워크 경로는 쓰기 실패 이력이 있어 이 묶음은 로컬 작업 폴더에도 보관한다. 최신 복사/업로드 결과는 STATUS와검증보고서를확인한다. 실제 KBO의 해당 연도 세부 규정 재현을 목표로 하지 않으며 아래는 별도의 게임 규칙이다.
-
-
-최신 확률 표시 규칙: [38 공통 계약](38-PROBABILITY-DISPLAY.md)을 따른다. 확률 선택은 모두 표시하되 실제 100%의 숫자 배지는 숨긴다. 보장 효과와 내부 확률은 유지한다.
+현재추가사용자질문은없습니다. 서면기준이작성됐으며다음실행작업은구현후92의게이트에서증명합니다. 사용자의구현착수지시전에는앱/DB/배포를자동시작하지않습니다.

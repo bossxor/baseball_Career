@@ -325,4 +325,65 @@ const allExpectations = [...detailedFixtures.cases,...worldFixtures.cases,...cro
 unique(allExpectations.map(row => row.id));
 assert.equal(allExpectations.length, 298);
 console.log('PASS: six platform contracts with eight required flows each, and 24 platform expectations (8 auth, 8 update, 8 files); 298 unique design expectations total. Browser/device/auth/update/file behavior is NOT executed.');
+// Final baseline structure and arithmetic examples only, not a production XP ledger.
+const currentIndex = JSON.parse(read('current-contract-index.json'));
+assert.equal(currentIndex.status, 'DESIGN_BASELINE');
+assert.equal(currentIndex.baselineVersion, '1.0');
+assert.equal(currentIndex.topics.length, 25);
+unique(currentIndex.topics.map(row => row.id));
+for (const row of currentIndex.topics) {
+  assert.ok(row.topic && row.scope && row.currentSources.length);
+  unique(row.currentSources);
+  for (const file of row.currentSources) assert.ok(existsSync(path.join(root, file)), `Missing current contract ${file}`);
+  assert.equal(row.implementationStatus, 'NOT_IMPLEMENTED');
+}
+const closure = JSON.parse(read('design-closure-register.json'));
+assert.equal(closure.status, 'WRITTEN_DESIGN_BASELINE');
+assert.equal(closure.baselineVersion, '1.0');
+assert.equal(closure.designClosures.length, 10);
+assert.equal(closure.executionGates.length, 12);
+assert.deepEqual(closure.pendingUserQuestions, []);
+assert.equal(closure.implementationStarted, false);
+for (const row of closure.designClosures) {
+  assert.equal(row.status, 'SPECIFIED');
+  assert.equal(row.runtimePassed, false);
+  assert.ok(existsSync(path.join(root, row.evidence)));
+}
+for (const row of closure.executionGates) {
+  assert.equal(row.status, 'NOT_EXECUTED');
+  assert.equal(row.runtimePassed, false);
+}
+unique([...closure.designClosures,...closure.executionGates].map(row => row.id));
+assert.deepEqual(closure.counts, {screens:45,events:99,expectations:298,integrationPaths:24,platformTargets:6,flowsPerPlatform:8,longRunPlans:12,contractTopics:25});
+function xpExample({baseSpent=0,reserved=0,actualSpent=0,carry=0,n=5,cap=200000,candidate=200000,pitchXp=0}) {
+  const B = 200000 - baseSpent - reserved;
+  const R = Math.max(0, cap - actualSpent);
+  if (B <= 0 || R <= 0) return {base:0,debit:0,gain:0,loss:0,carry};
+  const base = Math.max(0, Math.min(candidate,B,Math.floor((5*R+4-carry)/n)));
+  if (base === 0) return {base:0,debit:0,gain:0,loss:0,carry};
+  const debit = Math.floor((n*base+carry)/5);
+  const gain = Math.min(debit,1500000-pitchXp);
+  return {base,debit,gain,loss:debit-gain,carry:(n*base+carry)%5};
+}
+assert.deepEqual(xpExample({baseSpent:100000,actualSpent:100000,n:15,cap:600000}),{base:100000,debit:300000,gain:300000,loss:0,carry:0});
+assert.equal(xpExample({baseSpent:200000,actualSpent:200000,n:15,cap:600000}).debit,0);
+assert.equal(xpExample({baseSpent:100000,actualSpent:300000}).debit,0);
+assert.equal(xpExample({baseSpent:100000,actualSpent:300000,n:15,cap:600000}).debit,300000);
+assert.deepEqual(xpExample({candidate:10000,n:15,cap:600000,pitchXp:1490000}),{base:10000,debit:30000,gain:10000,loss:20000,carry:0});
+assert.equal(xpExample({reserved:100000}).base,100000);
+let carried=0,totalActual=0;
+for (let i=0;i<5;i++) {const e=xpExample({candidate:1,n:6,cap:240000,carry:carried});carried=e.carry;totalActual+=e.debit;}
+assert.equal(totalActual,6);assert.equal(carried,0);
+for (const n of [5,6,15]) for(let c=0;c<5;c++) for(let room=1;room<=20;room++) {
+  const e=xpExample({candidate:24,n,carry:c,cap:room});
+  assert.ok(e.debit<=room && e.base<=24 && e.carry>=0 && e.carry<5);
+  assert.equal(e.gain+e.loss,e.debit);
+}
+const importedUnits = sourceUnits => Math.max(10000,Math.floor((sourceUnits+1)/2));
+assert.equal(importedUnits(912501),456251);
+assert.equal(importedUnits(1000000),500000);
+assert.equal(importedUnits(10000),10000);
+assert.ok(Math.abs(importedUnits(912501)/10000 - 91.2501/2) <= .0000500001);
+for (const id of ['R41','R42','R43','R44','R45','R46','R47','R48','R49']) assert.ok(read('14-CANONICAL-DECISIONS.md').includes(`| ${id} |`));
+console.log('PASS: baseline 1.0 has 25 source topics, 10 specified closures and 12 NOT_EXECUTED gates; XP double-budget/cap-loss/remainder and import rounding examples. These are static/document arithmetic checks only.');
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

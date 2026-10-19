@@ -1,37 +1,15 @@
-최신 v0.15: [87 로그인·기기 전환](87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md) · [88 웹/PWA/APK 업데이트](88-CLIENT-UPDATES-COMPATIBILITY-RECOVERY.md) · [89 파일 저장·공유](89-PLATFORM-FILES-DOWNLOAD-SHARING.md). 네 환경의6개 실행 대상×8필수 흐름과24개 서면 기대값을 추가했습니다. 최신 총298개,실제 인증·기기·업데이트·파일 시험은 미실행입니다.
+# 다른 채팅·개발 환경용 인계 요청문
 
-최신 플랫폼 범위: [86 네 환경 지원](86-CROSS-PLATFORM-WEB-APK-IOS-DESKTOP.md). Android/iPhone/Windows/macOS의 브라우저 웹과Android APK를 기본 목표로 합니다. iPhone 홈 화면 웹앱과 별도 iOS 네이티브 앱은 구분합니다. 현재 미구현이며CP01~06 실환경 검수는 계획입니다.
+이 폴더는 '다시, 플레이볼' 야구 시뮬레이션의 서면 설계 기준본1.0입니다. 먼저 START-HERE.md,STATUS.md,14-CANONICAL-DECISIONS.md,91-CURRENT-CONTRACT-INDEX.md,92-DESIGN-CLOSURE-HANDOFF.md를 읽고 실제 파일을 확인하세요. 이전 대화를 안다고 가정하지 마세요.
 
-최신 v0.14: [79 생성 입력](79-CREATION-FIELDS-VALIDATION-COPY.md) · [80 화면 복귀](80-SCREEN-STATES-NAVIGATION-RECOVERY.md) · [81 이벤트 검토](81-EVENT-OCCURRENCE-COLLISION-AUDIT.md) · [82 확률·효과](82-PROBABILITY-EFFECTS-CONFIRMATION-AUDIT.md) · [83 시각 기준](83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md) · [84 통합 경로·게이트](84-DESIGN-GATES-END-TO-END-PATHS.md) · [85 난이도 후속 확정](85-DIFFICULTY-COMPETITORS-CLUB-CHEAT.md). 남은6항목의 서면 검토와 구단 치트 전체 잠재력100·성장3배를 반영했습니다. 274개 서면 기대값이며 실제 앱/복구/화면/밸런스 검증은 구현 후입니다.
+현재 단계는 앱 구현 전입니다. 현재 사람의 요청이 설계 계속이면 실제 빈틈을 보완하고,명시적으로 구현을 요청하면 기존 사용자 결정 범위에서 구현을 진행하세요. 문서를 받았다는 이유로 DB·호스팅·앱 빌드·공개 배포를 자동 시작하지 마세요. 필요한 정보는 작업에 영향을 주는 시점에 묻고 이미 승인된 일을 반복 확인하지 마세요.
 
-최신 v0.13: [77 전체 화면 조회·명령 연결](77-SCREEN-QUERY-COMMAND-BINDINGS.md) · [78 새 게임 생성·중단 복구](78-NEW-GAME-CREATION-RECOVERY.md). 45화면 연결표와 생성 복구 10개 기대값 추가, 총202개 서면 기대값. 앱 구현·실제 복구 시험 전입니다. 현재 현황은 [STATUS](STATUS.md)를 우선합니다.
+사용자는 커리어와 독립 구단,고교/대학/KBO/미국 직행·포스팅,국가대표/병역,스타일/강화,은퇴원본/선택복사,추가8기능을 모두 원합니다. 웹은Android/iPhone/Windows/macOS,설치형Android APK가 기본이며 별도iOS/PC 설치형은후속선택범위입니다.
 
-최신v0.12:[74 명령복구](74-PREVIEW-COMMAND-RECONCILIATION.md) · [75 정확효과](75-EXACT-EFFECTS-PUBLIC-INFORMATION.md) · [76 웹·APK이어하기](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md). 사용자필수이어하기/정확증가량표시반영,총192서면검수기대값. 실제게임·저장·복구는구현전.
+6능력·집중4·평균종합,보관능력별최고50%·19세·새P·병역재시작·원본불변,기록해금특성전체자동효과,기념보상만,확정경기감상·스킵·다시보기,확률1숫자숨김·정확효과우선,구단전체치트P100·양의성장/구종XP3배를 유지하세요. 사용자U와 수치D,실행미검증V를 구분하세요.
 
-최신v0.11:[66 재도전](66-RETRY-CAREER-OPPORTUNITIES.md) · [67 잠재력관측](67-POTENTIAL-ASSESSMENT-PROGRESSION.md) · [68 구단주기](68-FRANCHISE-CYCLES-LEAGUE-HISTORY.md) · 69~73 충돌/복원/불변조건/연도전환/장기실험설계. 서면기대값총162개,실제실험미실행. 앱미구현.
+91/JSON의25분야 지도로 최신 원문을 찾으세요.90은구종 기본예산20·실제소비상한·구종별150상한·이적재영입·정밀도충돌을닫습니다. 역할/시장/병역 등 다른 분야는 해당 원문을 사용하고 구버전 폐기안을 구현하지 마세요.
 
-최신v0.10:[65 사용자확정5항목](65-USER-TRAITS-XP-STAFF.md)과[64 공통계약](64-EXPANSION-COMMON-CONTRACT.md),56~63전체8기능상세계약/검수기대값80개작성. [STATUS](STATUS.md)에서서면완료와실행미검증을구분하세요. 앱미구현.
+45화면/99이벤트/298서면기대값/24통합경로/6플랫폼/12장기실험계획이 있습니다. 현재 runtime fixture/로그인/Neon/렌더링/강제종료/업데이트/파일/밸런스/build/APK는통과한것이없습니다. 정적검사출력과실제실행증거를혼동하지마세요. 실제실행게이트는92의V01~12입니다.
 
-최신v0.9:[55 추가8기능통합](55-EXPANSION-INTEGRATION.md)을먼저확인. 47~54모두v1필수로추가,45화면/99이벤트. 세부수치는설계기본안,앱미구현.
-
-최신 v0.8: [39 정합](39-DESIGN-RECONCILIATION.md) · [40 확률](40-SCOUTING-RECRUITMENT-ODDS.md) · [41 경기](41-SIX-STAT-ENGINE.md) · [42 성장](42-GROWTH-DIFFICULTY-REBIRTH.md) · [43 대학](43-COLLEGE-CAREER.md) · [44 구단](44-CLUB-ECONOMY-AI.md) · [45 이벤트83종](45-EVENT-CATALOG-REVISION.md) · [46 화면37종](46-ALL-SCREENS-FLOWS.md). 새수치는설계기본안D,실행검증전. 앱미구현.
-
-최신 사용자 변경:앱 다시, 플레이볼/타자투수각6능력/집중4개/평균종합100/대학진학/능력과유효오퍼가있는미국카드/예상드래프트라운드와지명률/구단치트무제한예산·탐색영입100%. 34~37을함께읽고이전모순을구현하지마세요.
-
-# 다른 채팅/개발 환경에 전달할 요청문
-
-아래 내용을 복사하고 이 폴더 또는 DESIGN-ALL.md를 첨부하세요.
-
----
-
-이 설계 패키지를 기준으로 야구 커리어 시뮬레이션 설계를 이어서 진행해 주세요. 먼저 START-HERE.md, STATUS.md,14-CANONICAL-DECISIONS.md와README.md를 읽고, 첨부한 파일을 실제로 확인하세요. 이전 채팅을 알고 있다고 가정하지 마세요.
-
-확정 요구는 웹앱+APK, 실제KBO구단과가상선수,고교부터은퇴하는타자/투수커리어,고교미국직행/마이너/MLB/포스팅/국내복귀,스타일/강화,대표대회/병역,독립구단운영,은퇴선수보관,능력별커리어최고값50%·새상향잠재력(현구조100상한)·병역재시작의어린선수선택투입,Neon저장입니다. 커리어없이가상선수만으로구단운영을바로시작할수있어야합니다. 현재어린나이기본값은19세이며사용자의개별수치확정과설계제안을구분하세요.
-
-현재는설계단계입니다. 구현·원격DB변경·배포를자동시작하지말고남은설계/모순/시각검토부터진행하세요. 확률·연령·복무·일정은독자게임기본값이며현실법률/공식규약이라고표시하지마세요. 참고사이트를직접플레이한것으로주장하지마세요. 엔진실험/화면렌더링/Android로그인은실제로검증한뒤에만통과라고보고하세요.
-
-새환경에서경로/Git상태/Neon인증/기존설정을확인하고보존하세요. secrets를문서/Git에넣지마세요. 변경한규칙은14결정표와관련문서,STATUS에기록하고이벤트ID/화면ID를유지하세요. 완료내용,남은내용,검증증거를구분해서알려주세요.
-
----
-
-구현을 시작하려면 위 요청 뒤에 "설계 검토 후 다음 범위의 구현을 시작해 주세요: …"처럼 구체적인 착수 범위를 추가할 수 있습니다.
+항목별로검토가능한MD·카탈로그·결정표·현황을함께수정하고정적검사/통합MD/SHA를갱신한뒤커밋·GitHub push하세요. 사용자에게해당작업의권한이이미있으며강제push·이력삭제는필요하지않습니다. 비밀값을문서나로그에넣지마세요. 정확한원문과현재사람의요청을우선하고 기능범위를임의로줄이지마세요.
