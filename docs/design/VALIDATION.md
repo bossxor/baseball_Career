@@ -82,3 +82,18 @@ PASS: 2 alpha portrait assets, 16 preview variants, 12 detail flows / 36 state t
 
 
 2026-10-19 이어하기 표시 수정: node docs/design/verify-design.mjs 통과. 홈의 중단 상태 드롭다운/안내 문구/관련 스크립트를 제거하고 이어하기 링크 버튼으로 교체했다. 이전 예시 요소 ID가 없고 #career 링크가 있으며45화면 카탈로그와 HTML 내 데이터가 일치함을 정적으로 확인했다. 실제 복구·클릭/브라우저 검수는 미실행이며 서버 원장·명령 멱등성 설계는 유지한다.
+
+## 2026-10-19 시각 확장1.5 검수
+
+99에 생성·졸업 진로·대학·미국4흐름12상태를 추가했다. 대표20종/상세16흐름48상태,기존PNG8개 재사용. journey-experience-examples.json의16예외는 NOT_IMPLEMENTED이며 기존298게임 기대값과 별도다. 사용자R50의 이어하기 버튼 표시도 유지했다.
+
+실행 명령: node docs/design/verify-design.mjs. 기존 검사 PASS와 추가 출력:
+
+```text
+PASS: journey examples: 2 initial arrays total 300, US visibility boundaries, 9 colleges / 48 team and 216 league games, B53.5 round distribution, MLB registration with zero appearances; 16 NOT_IMPLEMENTED edge expectations.
+PASS: 2 alpha portrait assets, 20 preview variants, 16 detail flows / 48 state templates, evidence guards, hitter overall 71.0 and pitcher 72.0 / focus 4; pure HTML-string checks only.
+```
+
+처음 검사는S30 해외 회상 장면이 화면 슬롯에 등록되지 않아 실패했다. 해당 허용 자산과 ‘당시 진출 회상/현재 등록은 실제 텍스트’ 가드를 추가하고 재검사해 통과했다. 생성 유형 합300/집중4,학교9개/종합50의 입학 가능5개,미국55/50 경계와오퍼0/종료 진로,B53.5 분포10R.05/9R.4/8R.4/7R.15,MLB등록·실제출장0 문자열을 확인했다.
+
+이는 UI에서 서버 자격 검사를 실제로 수행했다는 증거가 아니다. 실제 폼 입력·새 세계 생성·계약 원자성·학년·일정·승격·저장/복구·버튼/렌더링·브라우저·기기 시험은 미실행이다. 정상 이어하기에 중단/복구 상태 설명을 다시 노출하지 않았고 새 이미지 생성은 없다.

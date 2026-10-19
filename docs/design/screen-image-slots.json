@@ -13,7 +13,8 @@
     },
     {
       "assetRefs": [
-        "almanacPortrait"
+        "almanacPortrait",
+        "NONE"
       ],
       "screenId": "S02",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -309,7 +310,8 @@
       "assetRefs": [
         "college",
         "overseas",
-        "draft"
+        "draft",
+        "training"
       ],
       "screenId": "S28",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -331,12 +333,13 @@
     },
     {
       "assetRefs": [
-        "almanacHero"
+        "almanacHero",
+        "overseas"
       ],
       "screenId": "S30",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
       "purpose": "미국커리어홈",
-      "guard": "레벨/실제출장/계약우선,팀변경과구분",
+      "guard": "레벨/실제출장/계약우선,팀변경과구분; 해외 장면은 진출 회상,현재 레벨·등록·출장은 텍스트 근거",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "imageRole": "HERO"
     },

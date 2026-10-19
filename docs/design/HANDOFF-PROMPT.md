@@ -1,4 +1,4 @@
-시각 확장1.4: [98 구단 운영·투입](98-CLUB-OPERATIONS-IMPORT-EXPERIENCE.md), [97 경기·시즌·드래프트](97-RESULTS-SEASON-DRAFT-EXPERIENCE.md), [96 성장·재활·계약·대표팀](96-VISUAL-DETAIL-FLOWS.md)을 함께 확인하세요. [비교 보드](art-direction-lab.html)는 빈티지 대표16화면/36상태입니다. PNG8개는 assets/art-lab에 보관하고 V:\docs\design에도 최신본을 반영합니다. 실제 앱·브라우저 동작 시험은 미실행입니다.
+시각 확장1.5: [99 생성·대학·미국 진로](99-CREATION-AMATEUR-US-JOURNEY.md)를 추가했습니다. [비교 보드](art-direction-lab.html)는 빈티지 대표20화면/48상태이며 PNG8개를 재사용합니다.96~98 상세 흐름과 함께 확인하세요. 이어하기는 버튼만 표시하는 R50/76 최신 계약을 유지합니다. 최신본은 V:\docs\design에도 반영합니다.
 
 # 다른 채팅·개발 환경용 인계 요청문
 

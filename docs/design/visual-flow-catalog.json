@@ -485,6 +485,161 @@
           "expected": "새 구단 치트 소유P100; A그대로; 원본불변"
         }
       ]
+    },
+    {
+      "id": "creation",
+      "screenIds": [
+        "S02"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "프로필",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "profileDraft"
+          ],
+          "expected": "18세/가상고교/입력 검증"
+        },
+        {
+          "phase": "detail",
+          "label": "능력·육성",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "archetypeVersion",
+            "fourFocusKeys"
+          ],
+          "expected": "6능력 합300/평균50/집중4"
+        },
+        {
+          "phase": "receipt",
+          "label": "최종 확인",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "validatedDraft",
+            "creationRequestId"
+          ],
+          "expected": "일반/하드 P 미리 공개 없음; 생성 별도 확정"
+        }
+      ]
+    },
+    {
+      "id": "route",
+      "screenIds": [
+        "S28",
+        "S29"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "국내·대학",
+          "allowedScene": "training",
+          "requiredEvidence": [
+            "graduationReceipt",
+            "projection:B45",
+            "validUSOffers:0"
+          ],
+          "expected": "미국 선택 자체 없음; KBO50%/대학"
+        },
+        {
+          "phase": "detail",
+          "label": "미국 제안 있음",
+          "allowedScene": "training",
+          "requiredEvidence": [
+            "overall:55",
+            "amateurEvaluation:50",
+            "validUSOffers:1"
+          ],
+          "expected": "미국 제안 카드; 열람은 진로 포기 아님"
+        },
+        {
+          "phase": "receipt",
+          "label": "국내 계약 확정",
+          "allowedScene": "training",
+          "requiredEvidence": [
+            "domesticContractReceipt"
+          ],
+          "expected": "같은 졸업 시점 진로 닫힘; 중복 계약 없음"
+        }
+      ]
+    },
+    {
+      "id": "college",
+      "screenIds": [
+        "S34",
+        "S35"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "학교 비교",
+          "allowedScene": "college",
+          "requiredEvidence": [
+            "schoolCatalog",
+            "currentOverall:50"
+          ],
+          "expected": "9개 가상대학/최소종합/경쟁 기준 분리"
+        },
+        {
+          "phase": "detail",
+          "label": "2학년 결산",
+          "allowedScene": "college",
+          "requiredEvidence": [
+            "completedYear:2",
+            "regularSchedule:48"
+          ],
+          "expected": "2학년1회 조기 도전 또는 재학"
+        },
+        {
+          "phase": "receipt",
+          "label": "조기 미지명 후 복학",
+          "allowedScene": "college",
+          "requiredEvidence": [
+            "earlyDraftReceipt",
+            "noProContract"
+          ],
+          "expected": "3학년 복귀; 독립 준비 예산 소비 없음"
+        }
+      ]
+    },
+    {
+      "id": "america",
+      "screenIds": [
+        "S30"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "마이너 소속",
+          "allowedScene": "overseas",
+          "requiredEvidence": [
+            "validUSContract",
+            "currentLevel:A"
+          ],
+          "expected": "리그 이동으로 능력 축소 없음"
+        },
+        {
+          "phase": "detail",
+          "label": "콜업 검토",
+          "allowedScene": "overseas",
+          "requiredEvidence": [
+            "currentLevel:AAA",
+            "reviewEligibility",
+            "rosterCapacityCheck"
+          ],
+          "expected": "콜업 조건/정원/권리 확인; 승격 보장 아님"
+        },
+        {
+          "phase": "receipt",
+          "label": "MLB 등록",
+          "allowedScene": "overseas",
+          "requiredEvidence": [
+            "mlbRegistrationReceipt",
+            "actualAppearances:0"
+          ],
+          "expected": "MLB등록과 실제 첫 출전 구분"
+        }
+      ]
     }
   ]
 }

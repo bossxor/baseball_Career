@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_PREVIEW_ONLY",
+  "expectationStatus": "NOT_IMPLEMENTED",
+  "gameRulesChanged": false,
+  "examples": {
+    "initial": {
+      "hitter": [
+        40,
+        70,
+        45,
+        40,
+        40,
+        65
+      ],
+      "pitcher": [
+        70,
+        65,
+        35,
+        40,
+        50,
+        40
+      ]
+    },
+    "usGate": [
+      {
+        "overall": 55,
+        "amateur": 50,
+        "validOffers": 1,
+        "routeOpen": true,
+        "visible": true
+      },
+      {
+        "overall": 54.9999,
+        "amateur": 50,
+        "validOffers": 1,
+        "routeOpen": true,
+        "visible": false
+      },
+      {
+        "overall": 55,
+        "amateur": 49.9999,
+        "validOffers": 1,
+        "routeOpen": true,
+        "visible": false
+      },
+      {
+        "overall": 80,
+        "amateur": 80,
+        "validOffers": 0,
+        "routeOpen": true,
+        "visible": false
+      },
+      {
+        "overall": 80,
+        "amateur": 80,
+        "validOffers": 1,
+        "routeOpen": false,
+        "visible": false
+      }
+    ],
+    "college": {
+      "teamCount": 9,
+      "gamesPerOpponent": 6,
+      "expectedTeamGames": 48,
+      "expectedLeagueGames": 216,
+      "exampleOverall": 50,
+      "eligibleSchools": [
+        "U05",
+        "U06",
+        "U07",
+        "U08",
+        "U09"
+      ]
+    },
+    "draft": {
+      "overall": 55,
+      "performance": 50,
+      "B": 53.5,
+      "distribution": [
+        {
+          "round": 10,
+          "p": 0.05
+        },
+        {
+          "round": 9,
+          "p": 0.4
+        },
+        {
+          "round": 8,
+          "p": 0.4
+        },
+        {
+          "round": 7,
+          "p": 0.15
+        }
+      ],
+      "topRounds": [
+        8,
+        9
+      ]
+    }
+  },
+  "edgeCases": [
+    {
+      "id": "JX01",
+      "scenario": "NAME_INVALID",
+      "expected": "입력 보존/필드 오류; HTML 실행 금지",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX02",
+      "scenario": "LEFT_THROW_INELIGIBLE_POSITION",
+      "expected": "포지션 오류; 자동 교체 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX03",
+      "scenario": "FOCUS_NOT_FOUR",
+      "expected": "확정 불가; 선택 유지",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX04",
+      "scenario": "PLAYER_TYPE_CHANGED",
+      "expected": "종류별 초안 분리; 다른 종류 키 전송 금지",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX05",
+      "scenario": "CREATION_RESPONSE_LOST",
+      "expected": "이어하기로 동일 요청 확인; 중복 생성 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX06",
+      "scenario": "US_ABILITY_BELOW_GATE",
+      "expected": "미국 선택 미표시",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX07",
+      "scenario": "US_NO_VALID_OFFER",
+      "expected": "능력 충분해도 미국 카드 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX08",
+      "scenario": "US_OFFER_EXPIRED",
+      "expected": "최신 합법 진로; 자동 계약 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX09",
+      "scenario": "OFFER_VIEW_ONLY",
+      "expected": "다른 진로 종료 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX10",
+      "scenario": "ROUTE_CONCURRENT_CONFIRM",
+      "expected": "한 진로만 확정; 다른 계약 생성 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX11",
+      "scenario": "COLLEGE_EARLY_UNDRAFTED",
+      "expected": "3학년 복귀; 독립 준비 예산 비소비",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX12",
+      "scenario": "COLLEGE_PRO_SIGNED",
+      "expected": "프로 계약 후 복학 불가",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX13",
+      "scenario": "MILITARY_LEAVE",
+      "expected": "학년/나이 분리; 당시 기록 보존",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX14",
+      "scenario": "PROMOTION_NO_SLOT",
+      "expected": "현재 레벨 유지; 무료 검토 재추첨 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX15",
+      "scenario": "MLB_REGISTERED_NO_APPEARANCE",
+      "expected": "데뷔/첫 타석/보상 생성 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "JX16",
+      "scenario": "US_ROUTE_CLOSED",
+      "expected": "같은 졸업시점 진로 중복 재개 금지",
+      "status": "NOT_IMPLEMENTED"
+    }
+  ]
+}
