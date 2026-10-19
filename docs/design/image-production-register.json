@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "PRODUCTION_BRIEF",
   "gameRulesChanged": false,
-  "note": "이미지 제작 레지스터. status: TODO=제작 필요, EXISTS=이미 있음, CODE_ONLY=코드로 제작(이미지 불필요), LEGACY_REFERENCE=보존. 제작 후 이 파일의 status와 해당 문서를 갱신한다. 2026-10-20: 1단계 결과 승인 후에만 2단계 제작 시작. 시안은 저장소 밖 임시 폴더에 두고 사용자 선택본만 반영; 후속 묶음마다 재승인. 미선택·거절 시 자산과 status·화면 슬롯을 변경하지 않음. 2026-10-20 승인 반영: 투수 A·타자 A·로고2, 네이비·블루. 첫 3항목만 EXISTS; 나머지 제작은 묶음별 승인 대기.",
+  "note": "이미지 제작 레지스터. status: TODO=제작 필요, EXISTS=이미 있음, CODE_ONLY=코드로 제작(이미지 불필요), LEGACY_REFERENCE=보존. 제작 후 이 파일의 status와 해당 문서를 갱신한다. 2026-10-20: 1단계 결과 승인 후에만 2단계 제작 시작. 시안은 저장소 밖 임시 폴더에 두고 사용자 선택본만 반영; 후속 묶음마다 재승인. 미선택·거절 시 자산과 status·화면 슬롯을 변경하지 않음. 2026-10-20 승인 반영: 투수 A·타자 A·로고2, 네이비·블루. 첫 3항목만 EXISTS; 나머지 제작은 묶음별 승인 대기. 2차 사용자 승인 반영: 우투좌타·좌투좌타·좌투 오버핸드·우투 쓰리쿼터 4종. 실루엣 6/14, TODO57/EXISTS23.",
   "groups": {
     "G1": "선수 실루엣(SVG)",
     "G2": "사건 장면 12(청춘 애니)",
@@ -58,7 +58,7 @@
       "file": "assets/silhouettes/hitter-RL.svg",
       "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P0",
       "screens": [
         "S02",
@@ -73,7 +73,15 @@
         "S42",
         "S43"
       ],
-      "notes": "좌타석. 배트는 정면 기준 오른쪽 어깨 위, 글러브는 정면 기준 오른쪽 허리"
+      "notes": "좌타석. 배트는 정면 기준 오른쪽 어깨 위, 글러브는 정면 기준 오른쪽 허리",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "style": "A",
+        "palette": "NAVY_BLUE_V1",
+        "batch": 2
+      },
+      "provenance": "assets/brand/APPROVED-ART-v2.json"
     },
     {
       "id": "IMG-SIL-H-RS",
@@ -133,7 +141,7 @@
       "file": "assets/silhouettes/hitter-LL.svg",
       "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P0",
       "screens": [
         "S02",
@@ -148,7 +156,15 @@
         "S42",
         "S43"
       ],
-      "notes": "좌타석, 글러브는 정면 기준 왼쪽 허리"
+      "notes": "좌타석, 글러브는 정면 기준 왼쪽 허리",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "style": "A",
+        "palette": "NAVY_BLUE_V1",
+        "batch": 2
+      },
+      "provenance": "assets/brand/APPROVED-ART-v2.json"
     },
     {
       "id": "IMG-SIL-H-LS",
@@ -214,7 +230,7 @@
       "file": "assets/silhouettes/pitcher-R-threequarter.svg",
       "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P0",
       "screens": [
         "S02",
@@ -228,7 +244,15 @@
         "S42",
         "S43"
       ],
-      "notes": "던지는 팔 45도 위. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)"
+      "notes": "던지는 팔 45도 위. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "style": "A",
+        "palette": "NAVY_BLUE_V1",
+        "batch": 2
+      },
+      "provenance": "assets/brand/APPROVED-ART-v2.json"
     },
     {
       "id": "IMG-SIL-P-R-SIDEARM",
@@ -286,7 +310,7 @@
       "file": "assets/silhouettes/pitcher-L-overhand.svg",
       "spec": "viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P0",
       "screens": [
         "S02",
@@ -300,7 +324,15 @@
         "S42",
         "S43"
       ],
-      "notes": "던지는 팔이 머리 위로 수직. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)"
+      "notes": "던지는 팔이 머리 위로 수직. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "style": "A",
+        "palette": "NAVY_BLUE_V1",
+        "batch": 2
+      },
+      "provenance": "assets/brand/APPROVED-ART-v2.json"
     },
     {
       "id": "IMG-SIL-P-L-THREEQUARTER",

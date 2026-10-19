@@ -259,3 +259,23 @@ PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints
 ```
 
 SVG title/viewBox·CSS변수 색·script/foreignObject/image/text 부재·음수 반전 부재·실제 파일/선택/화면 연결·레지스터 61TODO/19EXISTS를 정적으로 확인했다. PNG 미리보기로 선택된 세 형태와 배색을 육안 확인한다. 실제 브라우저 DOM·4뷰포트·키보드·접근성·앱/Neon/API/DB/build/APK는 미검증이다. 45화면/99이벤트/핵심298은 유지한다.
+
+## 2026-10-20 두 번째 승인 실루엣 묶음 검증
+
+사용자가 시안 1~4(우투좌타·좌투좌타·좌투 오버핸드·우투 쓰리쿼터)를 모두 승인했다. 네 SVG와 누적 승인 기록 v2를 추가하고 레지스터·정확한 투타/폼별 슬롯·승인 보드를 갱신했다. 첫 승인 SVG 3개와 미승인 시안은 변경하지 않았다. 누적 실루엣6/14, 레지스터 TODO57/EXISTS23이며 나머지8실루엣은 이니셜 fallback이다.
+
+V:에서 아래 명령을 실행해 모두 종료코드0/PASS를 확인했다.
+
+| 명령 | 결과 |
+|---|---|
+| node docs/design/verify-design.mjs | PASS |
+| node docs/design/verify-state-ui.mjs | PASS |
+| node docs/design/verify-art-direction.mjs | PASS |
+
+추가 출력:
+
+```text
+PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 6/14 silhouettes ready, 57 image TODOs remain.
+```
+
+7개 누적 승인 SVG의 title/viewBox·CSS변수색·금지요소 부재·반전변환 부재와 슬롯6개/승인보드7개/실제파일 연결을 검사했다. 이전에 제시한 PNG 4종과 동일한 곡선·배치이며 title만 승인 상태로 정정했다. 정적 PASS이며 실제 DOM/브라우저 렌더·기기 접근성·게임/DB/Neon/build/APK는 미실행이다. 45화면·99이벤트·핵심298 기대값은 유지한다.

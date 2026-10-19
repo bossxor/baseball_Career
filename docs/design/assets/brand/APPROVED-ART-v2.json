@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "created": "2026-10-20",
+  "approval": "USER_SELECTED",
+  "selection": {
+    "pitcher": "A",
+    "hitter": "A",
+    "logo": "2",
+    "palette": "NAVY_BLUE_V1"
+  },
+  "palette": {
+    "ink": "#172c50",
+    "uniform": "#f1f5fb",
+    "accent": "#386ee0",
+    "skin": "#929baa",
+    "trim": "#ffffff"
+  },
+  "files": [
+    {
+      "id": "IMG-SIL-P-R-OVERHAND",
+      "file": "assets/silhouettes/pitcher-R-overhand.svg",
+      "style": "A",
+      "sha256": "153649d4904fbe4e3489f7237045c2106d9db59a896effff7b9b84647e716d5c"
+    },
+    {
+      "id": "IMG-SIL-H-RR",
+      "file": "assets/silhouettes/hitter-RR.svg",
+      "style": "A",
+      "sha256": "c885d6c487a2fd19ad67e588371c613a19b217d3697445aaa9f816b5c5392ed3"
+    },
+    {
+      "id": "IMG-BRAND-MARK",
+      "file": "assets/brand/logo-mark.svg",
+      "style": "2",
+      "sha256": "aaa6c73043f50afdf8af7d547968336291edcd481322d1851ce20e8b7638f8d3"
+    },
+    {
+      "id": "IMG-SIL-H-RL",
+      "file": "assets/silhouettes/hitter-RL.svg",
+      "style": "A",
+      "sha256": "f13f1081c8e45665cbb2eefc8325598f82e83313b7528134d13e7c553ccc7aa8"
+    },
+    {
+      "id": "IMG-SIL-H-LL",
+      "file": "assets/silhouettes/hitter-LL.svg",
+      "style": "A",
+      "sha256": "e6541f478f8c5241efa2d1ccb3a512a2d135eec1f848d65ce021f043f11889db"
+    },
+    {
+      "id": "IMG-SIL-P-L-OVERHAND",
+      "file": "assets/silhouettes/pitcher-L-overhand.svg",
+      "style": "A",
+      "sha256": "31e5ef61df85c2c40e1f27a37aff8572a296293221a5502eb73a91a3535a4b07"
+    },
+    {
+      "id": "IMG-SIL-P-R-THREEQUARTER",
+      "file": "assets/silhouettes/pitcher-R-threequarter.svg",
+      "style": "A",
+      "sha256": "23e75ec1183d66a479440458a09d4f443a59523a699df8e4e80d38f0b07a5824"
+    }
+  ],
+  "method": "Original hand-authored SVG Bezier artwork. Batch 2 preserves approved style A and palette; arm, bat and glove paths were redrawn without reflection.",
+  "constraints": {
+    "faces": false,
+    "textInsideSvg": false,
+    "simpleMirror": false,
+    "colors": "CSS_VARIABLES_WITH_NAVY_BLUE_FALLBACKS"
+  },
+  "usage": "Six approved silhouette variants are available. Use inline SVG for CSS team-palette overrides; external img uses navy-blue fallbacks. Eight unapproved variants use initials.",
+  "browserReview": "NOT_EXECUTED",
+  "version": 2,
+  "previousBatch": "assets/brand/APPROVED-ART-v1.json",
+  "batch2": {
+    "approval": "USER_SELECTED",
+    "date": "2026-10-20",
+    "ids": [
+      "IMG-SIL-H-RL",
+      "IMG-SIL-H-LL",
+      "IMG-SIL-P-L-OVERHAND",
+      "IMG-SIL-P-R-THREEQUARTER"
+    ]
+  }
+}

@@ -540,10 +540,34 @@
           "throws": "R",
           "pitchForm": "OVERHAND",
           "file": "assets/silhouettes/pitcher-R-overhand.svg"
+        },
+        {
+          "kind": "HITTER",
+          "throws": "R",
+          "bats": "L",
+          "file": "assets/silhouettes/hitter-RL.svg"
+        },
+        {
+          "kind": "HITTER",
+          "throws": "L",
+          "bats": "L",
+          "file": "assets/silhouettes/hitter-LL.svg"
+        },
+        {
+          "kind": "PITCHER",
+          "throws": "L",
+          "pitchForm": "OVERHAND",
+          "file": "assets/silhouettes/pitcher-L-overhand.svg"
+        },
+        {
+          "kind": "PITCHER",
+          "throws": "R",
+          "pitchForm": "THREE_QUARTER",
+          "file": "assets/silhouettes/pitcher-R-threequarter.svg"
         }
       ],
       "fallback": "INITIALS_FOR_UNAPPROVED_COMBINATIONS",
-      "approvedCount": 2,
+      "approvedCount": 6,
       "plannedCount": 14
     },
     "appBrandMark": {
