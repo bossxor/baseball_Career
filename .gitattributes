@@ -6,3 +6,4 @@
 **/*-OFL.txt -text
 *.json text eol=lf
 *.mjs text eol=lf
+*.js text eol=lf
