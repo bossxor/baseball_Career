@@ -114,23 +114,25 @@
     },
     {
       "assetRefs": [
-        "almanacPortrait"
+        "almanacPortrait",
+        "retirement"
       ],
       "screenId": "S11",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
       "purpose": "원본상세",
-      "guard": "불변snapshot시점표시,현재외형소급금지",
+      "guard": "불변snapshot시점표시,현재외형소급금지; 보관 투입 상세의 회상은 원본 출처로 명시",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "imageRole": "PORTRAIT"
     },
     {
       "assetRefs": [
-        "frontoffice"
+        "frontoffice",
+        "retirement"
       ],
       "screenId": "S12",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
       "purpose": "구단시작분위기",
-      "guard": "보관OFF/0명정상,선수단구성기준노출",
+      "guard": "보관OFF/0명정상,선수단구성기준노출; 보관 투입 상세의 회상은 원본 출처로 명시",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "imageRole": "SCENE"
     },
@@ -147,7 +149,8 @@
     },
     {
       "assetRefs": [
-        "almanacPortrait"
+        "almanacPortrait",
+        "NONE"
       ],
       "screenId": "S14",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -180,14 +183,15 @@
     },
     {
       "assetRefs": [
-        "almanacPortrait"
+        "almanacPortrait",
+        "frontoffice"
       ],
       "screenId": "S17",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
       "purpose": "영입대상구분",
-      "guard": "비용/예약/수락확률이가려지지않음",
+      "guard": "비용/예약/수락확률이가려지지않음; 제안 상세의 단장 장면은 중립,계약 확정 근거와 별개",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
-      "imageRole": "PORTRAIT_THUMBS"
+      "imageRole": "PORTRAIT_OR_CONTEXT_SCENE"
     },
     {
       "assetRefs": [

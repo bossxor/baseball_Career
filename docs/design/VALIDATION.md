@@ -62,3 +62,20 @@ PASS: 2 alpha portrait assets, 11 preview variants, 7 detail flows / 21 state te
 실제 엔진 박스스코어 보존·중계 hash·중복 정산·확률 추첨·세이브 복구를 실행한 것이 아니다. 표 스크롤·접근성·긴 이름·모바일 렌더·클릭도 미시험이다. file: URL 정책 차단을 우회하지 않았고 새로운 자동 브라우저 접근을 시도하지 않았다. 저장할 이미지 신규 생성/편집은 없으며 기존8개를 재사용했다.
 
 통합MD/MANIFEST를 갱신하고 최신 네트워크 설계 폴더의 기존 파일이 변경되지 않았는지 확인한 뒤 동기화한다. 동기화본은 manifest의 SHA256와 대조한다. 구버전 design-v0.7은 다시 만들지 않는다.
+
+## 2026-10-19 시각 확장1.4 검수
+
+98 구단5흐름/15상태를 추가해 대표16종/상세12흐름36상태가 됐다. 신규PNG는 없고 기존8개를 재사용한다. club-experience-examples.json의20예외는 NOT_IMPLEMENTED이며 기존298게임 기대값과 별도다. 이전 결과 경험14예외도 그대로 유지한다.
+
+실행 명령: node docs/design/verify-design.mjs. 기존 검사 PASS와 추가 출력:
+
+```text
+PASS: club examples: search .63 / offer .50, finite ledger 1,840,000,000 -> 1,835,000,000, reservation transfer conserved, report 80~96, rebirth overall 45.8 and capped potentials; 20 NOT_IMPLEMENTED edge expectations.
+PASS: 2 alpha portrait assets, 16 preview variants, 12 detail flows / 36 state templates, evidence guards, hitter overall 71.0 and pitcher 72.0 / focus 4; pure HTML-string checks only.
+```
+
+새 검사는 L2/N20/q1 탐색.63,단독score.60/1R 수락.50,월 기회2→1,예산 원장 가용18.4억→탐색 후18.35억,별도 제안 예약 후17.4억/예약 분류 이동 보존,전망80~96,19세 반값 능력/종합45.8/새P 상한,보드 문구·36상태 데이터를 검사한다. 실제 시장 추첨·예산 예약·DB 잠금·등록 검증·소유권·생성 롤백·치트 효과·저장 복구를 실행한 것은 아니다.
+
+브라우저 file: 정책 차단은 유지하고 우회하지 않았다. 실제 렌더/클릭/표·글자 확대/키보드/스크린리더/네트워크/클립보드/localStorage는 미시험이다. 정적 문자열 PASS를 화면 동작 PASS로 바꾸지 않는다. 기존 PNG 생성 기록과 원본은 그대로 보존한다.
+
+최신 네트워크 설계 폴더의 기존 manifest 파일을 먼저 대조한 후 수정본을 동기화하고 새 manifest SHA256로 확인한다. 원래 미리보기HTML도 같은 해시로 갱신한다. design-v0.7을 재생성하지 않으며 최신 docs/design만 업데이트한다.

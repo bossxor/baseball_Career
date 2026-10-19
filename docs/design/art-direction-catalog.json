@@ -228,7 +228,12 @@
     "S24",
     "S19",
     "S07",
-    "S05"
+    "S05",
+    "S14",
+    "S36",
+    "S17",
+    "S37",
+    "S12"
   ],
   "portraits": [
     {
@@ -244,6 +249,6 @@
       "height": 1392
     }
   ],
-  "previewVariants": 11,
+  "previewVariants": 16,
   "visualFlowCatalog": "visual-flow-catalog.json"
 }

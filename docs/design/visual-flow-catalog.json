@@ -286,6 +286,205 @@
           "expected": "지명과 대안 결과; 적격 진로만; 자동은퇴/미국오퍼 없음"
         }
       ]
+    },
+    {
+      "id": "roster",
+      "screenIds": [
+        "S14",
+        "S15"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "정상 등록",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "rosterRevision",
+            "registrationCounts",
+            "lineupValidity"
+          ],
+          "expected": "전체50/1군28/투수13/야수15/포수2"
+        },
+        {
+          "phase": "detail",
+          "label": "포수 부족",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "registeredCatchers:1",
+            "requiredCatchers:2"
+          ],
+          "expected": "1군28/포수1 부족; 교체 직접 선택"
+        },
+        {
+          "phase": "receipt",
+          "label": "부상 대체",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "injuryRecord",
+            "validBattingSlots:8"
+          ],
+          "expected": "별도 부상 사례; 타순8; 대체 확인 전 진행 차단"
+        }
+      ]
+    },
+    {
+      "id": "scout",
+      "screenIds": [
+        "S36"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "탐색 조건",
+          "allowedScene": "frontoffice",
+          "requiredEvidence": [
+            "eligibleUndiscovered:20",
+            "facilityLevel:2",
+            "narrowCount:1"
+          ],
+          "expected": "발견63%; 비용500만원; 잔여월2"
+        },
+        {
+          "phase": "detail",
+          "label": "발견 성공",
+          "allowedScene": "frontoffice",
+          "requiredEvidence": [
+            "searchReceipt",
+            "discoveredIds:3"
+          ],
+          "expected": "후보3; 비용500만원; 월잔여1; 계약 별개"
+        },
+        {
+          "phase": "receipt",
+          "label": "발견 실패",
+          "allowedScene": "frontoffice",
+          "requiredEvidence": [
+            "searchReceipt",
+            "outcome:failure"
+          ],
+          "expected": "비용·기회 소비; 기존 후보 유지; 새 탐색 별개"
+        }
+      ]
+    },
+    {
+      "id": "recruit",
+      "screenIds": [
+        "S17"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "제안 조건",
+          "allowedScene": "frontoffice",
+          "requiredEvidence": [
+            "validOffer",
+            "fixedRoundCompetition",
+            "budgetAndSlotReservation"
+          ],
+          "expected": "단독score.60/1R수락50%; 1억/1년 예약"
+        },
+        {
+          "phase": "detail",
+          "label": "최종 확인",
+          "allowedScene": "frontoffice",
+          "requiredEvidence": [
+            "latestOfferVersion",
+            "rights",
+            "currentCapacity"
+          ],
+          "expected": "최신 검사; 변경 확률 재확인"
+        },
+        {
+          "phase": "receipt",
+          "label": "영입 확정",
+          "allowedScene": "frontoffice",
+          "requiredEvidence": [
+            "contractReceipt",
+            "ownershipReceipt",
+            "reservationTransfer"
+          ],
+          "expected": "제안예약→연봉예약; 가용 유지; 등록 별개"
+        }
+      ]
+    },
+    {
+      "id": "budget",
+      "screenIds": [
+        "S37"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "일반 원장",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "seasonLedger",
+            "ledgerRevision"
+          ],
+          "expected": "120억 원장; 가용18.4억"
+        },
+        {
+          "phase": "detail",
+          "label": "탐색 비용 반영",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "operationReceipt",
+            "paidOperationsDelta:5000000"
+          ],
+          "expected": "실제 운영지출+500만; 가용18.35억"
+        },
+        {
+          "phase": "receipt",
+          "label": "치트 저장 조회",
+          "allowedScene": "NONE",
+          "requiredEvidence": [
+            "savedCheatPolicy",
+            "finiteLedger"
+          ],
+          "expected": "가용 무제한; 유한 원장/월횟수/권리 유지"
+        }
+      ]
+    },
+    {
+      "id": "rebirth",
+      "screenIds": [
+        "S11",
+        "S12"
+      ],
+      "states": [
+        {
+          "phase": "base",
+          "label": "보관 원본",
+          "allowedScene": "retirement",
+          "requiredEvidence": [
+            "ownedArchive",
+            "careerPeakEvidence"
+          ],
+          "expected": "41세 원본 최고; 선택0명 가능"
+        },
+        {
+          "phase": "detail",
+          "label": "새 선수 미리보기",
+          "allowedScene": "retirement",
+          "requiredEvidence": [
+            "importDraftId",
+            "newAbilityPreview",
+            "newAssessment"
+          ],
+          "expected": "19세/능력별최고50%/종합45.8/병역재시작"
+        },
+        {
+          "phase": "receipt",
+          "label": "치트 구단 생성 결과",
+          "allowedScene": "retirement",
+          "requiredEvidence": [
+            "newWorldReceipt",
+            "ownershipPolicy",
+            "unchangedArchive"
+          ],
+          "expected": "새 구단 치트 소유P100; A그대로; 원본불변"
+        }
+      ]
     }
   ]
 }

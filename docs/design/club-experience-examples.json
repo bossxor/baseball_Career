@@ -1,0 +1,221 @@
+{
+  "schemaVersion": 1,
+  "status": "DESIGN_PREVIEW_ONLY",
+  "expectationStatus": "NOT_IMPLEMENTED",
+  "gameRulesChanged": false,
+  "examples": {
+    "ledger": {
+      "budget": 12000000000,
+      "paidSalary": 4000000000,
+      "reservedSalary": 5000000000,
+      "guaranteedReleaseCost": 300000000,
+      "reservedOffers": 500000000,
+      "protectedMinimum": 200000000,
+      "paidOperations": 160000000,
+      "reservedOperations": 0,
+      "postingIncome": 0,
+      "supportGrant": 0,
+      "expectedAvailable": 1840000000,
+      "searchCost": 5000000,
+      "afterSearchAvailable": 1835000000,
+      "offerAnnual": 100000000,
+      "afterNewOfferAvailable": 1740000000
+    },
+    "search": {
+      "L": 2,
+      "N": 20,
+      "q": 1,
+      "p": 0.63,
+      "monthRemainingBefore": 2,
+      "monthRemainingAfter": 1,
+      "discoveredOnSuccess": 3,
+      "discoveredOnFailure": 0
+    },
+    "offer": {
+      "score": 0.6,
+      "outsideWeight": 1,
+      "otherWeights": [],
+      "acceptProbability": 0.5,
+      "declaredAnnual": 100000000,
+      "years": 1
+    },
+    "report": {
+      "A": 72,
+      "P": 88,
+      "level": 2,
+      "stage": 0,
+      "z": 0.5,
+      "expectedLow": 80,
+      "expectedHigh": 96
+    },
+    "rebirth": {
+      "sourceAge": 41,
+      "newAge": 19,
+      "peaks": [
+        92,
+        100,
+        88,
+        86,
+        90,
+        94
+      ],
+      "sourcePotential": [
+        95,
+        100,
+        94,
+        92,
+        96,
+        98
+      ],
+      "boosts": [
+        5,
+        6,
+        5,
+        7,
+        5,
+        5
+      ],
+      "expectedAbilities": [
+        46,
+        50,
+        44,
+        43,
+        45,
+        47
+      ],
+      "expectedInternalPotential": [
+        100,
+        100,
+        99,
+        99,
+        100,
+        100
+      ],
+      "expectedOverall": "45.8",
+      "newMilitary": "UNRESOLVED",
+      "newCareerRecords": 0
+    }
+  },
+  "edgeCases": [
+    {
+      "id": "CX01",
+      "scenario": "EMPTY_UNDISCOVERED_POOL",
+      "expected": "실행 불가/비용0/기존 후보 유지",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX02",
+      "scenario": "MONTHLY_ATTEMPTS_EXHAUSTED",
+      "expected": "치트도 월 기회를 추가하지 않음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX03",
+      "scenario": "SEARCH_FAILURE",
+      "expected": "500만원/기회1회 소비; 기존 보고서 유지",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX04",
+      "scenario": "SEARCH_RESPONSE_LOST",
+      "expected": "같은 영수증 조회; 재청구 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX05",
+      "scenario": "RANGE_IS_NOT_PROBABILITY",
+      "expected": "잠재력 범위에 성공률 배지 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX06",
+      "scenario": "CATCHER_SHORTAGE",
+      "expected": "직접 콜업/교체 확인; 임의방출 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX07",
+      "scenario": "LINEUP_INJURED",
+      "expected": "건강한 적격 대체; 부상 자동종료 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX08",
+      "scenario": "CAPACITY_FULL",
+      "expected": "정원 예약 초과 영입 차단; 치트 동일",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX09",
+      "scenario": "RIGHTS_INVALID",
+      "expected": "확률로 불가 권리를 우회하지 않음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX10",
+      "scenario": "COMPETITION_CHANGED",
+      "expected": "새 확률 재확인; 자동 확정 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX11",
+      "scenario": "ALL_OFFERS_WIN",
+      "expected": "모든 제안 성공에도 예산/정원 유효",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX12",
+      "scenario": "OFFER_SUCCESS",
+      "expected": "제안→연봉 예약 이전; 이중 차감 없음",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX13",
+      "scenario": "OFFER_FAILURE_OR_WITHDRAWAL",
+      "expected": "해당 제안 예약만 해제",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX14",
+      "scenario": "CHEAT_LEDGER",
+      "expected": "무제한 표기/유한 원장/월 기회 유지",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX15",
+      "scenario": "IMPORT_ZERO_SELECTED",
+      "expected": "가상 선수만으로 새 구단 생성 가능",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX16",
+      "scenario": "MISSING_PEAK_EVIDENCE",
+      "expected": "투입 보류; 은퇴 능력으로 대체 금지",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX17",
+      "scenario": "DUPLICATE_ROOT",
+      "expected": "같은 세계에서 선수/지도자 중복 금지",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX18",
+      "scenario": "IMPORT_PREVIEW_REOPEN",
+      "expected": "새 P 재추첨 없음; 원본 불변",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX19",
+      "scenario": "IMPORT_CHEAT_OWNERSHIP",
+      "expected": "반값 A 유지; 소유확정 P100/양의성장·XP3",
+      "status": "NOT_IMPLEMENTED"
+    },
+    {
+      "id": "CX20",
+      "scenario": "CREATION_RESPONSE_LOST",
+      "expected": "같은 생성 작업 조회; 부분 선수/예약 생성 없음",
+      "status": "NOT_IMPLEMENTED"
+    }
+  ]
+}

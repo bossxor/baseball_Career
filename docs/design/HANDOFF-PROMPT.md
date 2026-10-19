@@ -1,8 +1,4 @@
-시각 확장1.3: [97 경기·시즌·드래프트](97-RESULTS-SEASON-DRAFT-EXPERIENCE.md)에 처리 중/확정/재열람·기록 비율·지명 전망/결과·예외를 상세화했습니다. [비교 보드](art-direction-lab.html)는 대표11화면·상세21상태이며 PNG8개를 재사용합니다. V:\docs\design에도 최신본을 동기화합니다. 아래1.1/1.2 집계는 이전 단계의 이력입니다.
-
-시각 확장1.2: [96 상세 흐름](96-VISUAL-DETAIL-FLOWS.md)에서 성장·재활·계약·대표팀의 12상태와 예외·중단/재개를 확인하세요. [비교 보드](art-direction-lab.html)는 대표8화면/타자·투수 초상2종을 제공합니다. 이미지8PNG는 assets/art-lab에 보관합니다. 기존1.1 항목은 이전 단계의 이력입니다.
-
-시각 확장1.1:사용자최신선택은 **빈티지 기록실**입니다. [이미지 비교 보드](art-direction-lab.html)와 [93](93-ART-DIRECTION-CHOICE-LAB.md)·[94](94-SCREEN-IMAGE-STORYBOARD.md)·[95](95-CHARACTER-EVENT-ART-PRODUCTION.md)를참고하세요.12사건장면/투명초상/45화면이미지슬롯을추가했고게임규칙기준본1.0은유지합니다. 브라우저file프로토콜차단으로자동렌더링검수는미실행입니다.
+시각 확장1.4: [98 구단 운영·투입](98-CLUB-OPERATIONS-IMPORT-EXPERIENCE.md), [97 경기·시즌·드래프트](97-RESULTS-SEASON-DRAFT-EXPERIENCE.md), [96 성장·재활·계약·대표팀](96-VISUAL-DETAIL-FLOWS.md)을 함께 확인하세요. [비교 보드](art-direction-lab.html)는 빈티지 대표16화면/36상태입니다. PNG8개는 assets/art-lab에 보관하고 V:\docs\design에도 최신본을 반영합니다. 실제 앱·브라우저 동작 시험은 미실행입니다.
 
 # 다른 채팅·개발 환경용 인계 요청문
 
