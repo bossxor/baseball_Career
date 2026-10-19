@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "created": "2026-10-20",
+  "approval": "USER_SELECTED",
+  "selection": {
+    "pitcher": "A",
+    "hitter": "A",
+    "logo": "2",
+    "palette": "NAVY_BLUE_V1"
+  },
+  "palette": {
+    "ink": "#172c50",
+    "uniform": "#f1f5fb",
+    "accent": "#386ee0",
+    "skin": "#929baa",
+    "trim": "#ffffff"
+  },
+  "files": [
+    {
+      "id": "IMG-SIL-P-R-OVERHAND",
+      "file": "assets/silhouettes/pitcher-R-overhand.svg",
+      "style": "A",
+      "sha256": "153649d4904fbe4e3489f7237045c2106d9db59a896effff7b9b84647e716d5c"
+    },
+    {
+      "id": "IMG-SIL-H-RR",
+      "file": "assets/silhouettes/hitter-RR.svg",
+      "style": "A",
+      "sha256": "c885d6c487a2fd19ad67e588371c613a19b217d3697445aaa9f816b5c5392ed3"
+    },
+    {
+      "id": "IMG-BRAND-MARK",
+      "file": "assets/brand/logo-mark.svg",
+      "style": "2",
+      "sha256": "aaa6c73043f50afdf8af7d547968336291edcd481322d1851ce20e8b7638f8d3"
+    },
+    {
+      "id": "IMG-SIL-H-RL",
+      "file": "assets/silhouettes/hitter-RL.svg",
+      "style": "A",
+      "sha256": "f13f1081c8e45665cbb2eefc8325598f82e83313b7528134d13e7c553ccc7aa8"
+    },
+    {
+      "id": "IMG-SIL-H-LL",
+      "file": "assets/silhouettes/hitter-LL.svg",
+      "style": "A",
+      "sha256": "e6541f478f8c5241efa2d1ccb3a512a2d135eec1f848d65ce021f043f11889db"
+    },
+    {
+      "id": "IMG-SIL-P-L-OVERHAND",
+      "file": "assets/silhouettes/pitcher-L-overhand.svg",
+      "style": "A",
+      "sha256": "31e5ef61df85c2c40e1f27a37aff8572a296293221a5502eb73a91a3535a4b07"
+    },
+    {
+      "id": "IMG-SIL-P-R-THREEQUARTER",
+      "file": "assets/silhouettes/pitcher-R-threequarter.svg",
+      "style": "A",
+      "sha256": "23e75ec1183d66a479440458a09d4f443a59523a699df8e4e80d38f0b07a5824"
+    },
+    {
+      "id": "IMG-SIL-H-RS",
+      "file": "assets/silhouettes/hitter-RS.svg",
+      "style": "A",
+      "sha256": "a41f2b2e520e3f0c0732950996964af491a0657c6e48292963f23577e315b206"
+    },
+    {
+      "id": "IMG-SIL-H-LR",
+      "file": "assets/silhouettes/hitter-LR.svg",
+      "style": "A",
+      "sha256": "24043c3658273d34515ca046d1fb2ea2d30f86860b787dbcc7d4eff94ab1ebe5"
+    },
+    {
+      "id": "IMG-SIL-H-LS",
+      "file": "assets/silhouettes/hitter-LS.svg",
+      "style": "A",
+      "sha256": "0e990fa12e3e8f39f1ba8b3715144d6e37f648fd2fd2ed73a527a87a71193bfb"
+    },
+    {
+      "id": "IMG-SIL-P-L-THREEQUARTER",
+      "file": "assets/silhouettes/pitcher-L-threequarter.svg",
+      "style": "A",
+      "sha256": "ddede23dc230f57975324cfb828d3d3eb089bdaf711dce873f5129a37b998999"
+    },
+    {
+      "id": "IMG-SIL-P-R-SIDEARM",
+      "file": "assets/silhouettes/pitcher-R-sidearm.svg",
+      "style": "A",
+      "sha256": "102de7937a3f09aa4ab326da3b4ba814decd79228818ce6f92b266a767f3ced8"
+    },
+    {
+      "id": "IMG-SIL-P-L-SIDEARM",
+      "file": "assets/silhouettes/pitcher-L-sidearm.svg",
+      "style": "A",
+      "sha256": "5ee492e000f5b5d54b91ad8d09b91ebc73920db21681d668cf893c8801d70a7c"
+    },
+    {
+      "id": "IMG-SIL-P-R-UNDERHAND",
+      "file": "assets/silhouettes/pitcher-R-underhand.svg",
+      "style": "A",
+      "sha256": "67484e11aed633f44dde0778924a31f35717d902698fd4e90a9e3fbf09f82b0e"
+    },
+    {
+      "id": "IMG-SIL-P-L-UNDERHAND",
+      "file": "assets/silhouettes/pitcher-L-underhand.svg",
+      "style": "A",
+      "sha256": "f633ba9295049766eab47987a7bd08c15c22df239c6e735c1134382f188efc51"
+    }
+  ],
+  "method": "Original hand-authored SVG Bezier artwork. All 14 player silhouettes and logo2 are user approved. Arms, bat and glove placements were drawn per pose without left-right reflection.",
+  "constraints": {
+    "faces": false,
+    "textInsideSvg": false,
+    "simpleMirror": false,
+    "colors": "CSS_VARIABLES_WITH_NAVY_BLUE_FALLBACKS"
+  },
+  "usage": "All 6 hitter and 8 pitcher variants are available. Inline SVG supports team CSS overrides; external img uses navy-blue fallbacks. Initials are only an image-load failure fallback. Android/PWA icon packages remain separate TODOs.",
+  "browserReview": "NOT_EXECUTED",
+  "version": 3,
+  "previousBatch": "assets/brand/APPROVED-ART-v2.json",
+  "batch2": {
+    "approval": "USER_SELECTED",
+    "date": "2026-10-20",
+    "ids": [
+      "IMG-SIL-H-RL",
+      "IMG-SIL-H-LL",
+      "IMG-SIL-P-L-OVERHAND",
+      "IMG-SIL-P-R-THREEQUARTER"
+    ]
+  },
+  "batch3": {
+    "approval": "USER_SELECTED",
+    "date": "2026-10-20",
+    "ids": [
+      "IMG-SIL-H-RS",
+      "IMG-SIL-H-LR",
+      "IMG-SIL-H-LS",
+      "IMG-SIL-P-L-THREEQUARTER",
+      "IMG-SIL-P-R-SIDEARM",
+      "IMG-SIL-P-L-SIDEARM",
+      "IMG-SIL-P-R-UNDERHAND",
+      "IMG-SIL-P-L-UNDERHAND"
+    ]
+  }
+}

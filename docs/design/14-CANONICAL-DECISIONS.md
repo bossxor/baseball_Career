@@ -216,3 +216,9 @@ U:100~104의 확정 UI 요구와 히든4개/슬라이더 규칙을 유지한다.
 사용자가 2차 시안 1~4번(우투좌타·좌투좌타 타자, 좌투 오버핸드·우투 쓰리쿼터 투수)을 모두 승인했다. A 스타일·네이비/블루 배색으로 SVG 4종을 추가했다. 실루엣 6/14 완료, 남은 실루엣 8종은 별도 승인 대기다. 전체 이미지 레지스터 92항목은 TODO57/EXISTS23/CODE_ONLY11/LEGACY_REFERENCE1이다.
 
 게임 규칙·색상·기존 승인 형태는 변경하지 않았다. [누적 승인 기록](assets/brand/APPROVED-ART-v2.json)과 [승인 보드](approved-art-board.html)를 따른다.
+
+## 2026-10-20 남은 실루엣 전체 승인 U
+
+사용자가 남은8종 전체를 승인해 A 스타일·네이비/블루 SVG로 반영했다. 타자6투타조합·투수4폼×2손, 실루엣14/14와 로고2가 모두 승인됐다. 전체 이미지92항목 중 TODO49/EXISTS31/CODE_ONLY11/LEGACY_REFERENCE1. Android/PWA 아이콘2묶음과 P1/P2 이미지는 별도 미완료다.
+
+[현재 누적 승인 기록](assets/brand/APPROVED-ART-v3.json)과 [전체 승인 보드](approved-art-board.html). 선수 본인 얼굴·능력·확률 등 게임 규칙은 변경하지 않았다.

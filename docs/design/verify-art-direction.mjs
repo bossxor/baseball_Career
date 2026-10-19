@@ -138,7 +138,7 @@ console.log('NOT TESTED: art-lab browser rendering, interactive clicks, viewport
   const approval=json(art.approvedArt);
   assert.deepEqual(approval.selection,{pitcher:'A',hitter:'A',logo:'2',palette:'NAVY_BLUE_V1'});
   const registry=json('image-production-register.json');
-  assert.equal(approval.files.length,7);
+  assert.equal(approval.files.length,15);
   for(const asset of approval.files){
     const row=registry.items.find(i=>i.id===asset.id);
     assert.equal(row.status,'EXISTS');assert.equal(row.file,asset.file);
@@ -153,20 +153,29 @@ console.log('NOT TESTED: art-lab browser rendering, interactive clicks, viewport
     assert.ok(svg.includes('viewBox="0 0 120 '+(asset.id==='IMG-BRAND-MARK'?'120':'160')+'"'));
   }
   assert.equal(slots.selectedPalette,'NAVY_BLUE_V1');
-  assert.equal(slots.assetLibrary.silhouetteCard.approvedCount,6);
+  assert.equal(slots.assetLibrary.silhouetteCard.approvedCount,14);
   assert.equal(slots.assetLibrary.silhouetteCard.plannedCount,14);
-  assert.equal(slots.assetLibrary.silhouetteCard.fallback,'INITIALS_FOR_UNAPPROVED_COMBINATIONS');
-  assert.equal(slots.assetLibrary.silhouetteCard.variants.length,6);
+  assert.equal(slots.assetLibrary.silhouetteCard.fallback,'INITIALS_ON_ASSET_LOAD_FAILURE');
+  assert.equal(slots.assetLibrary.silhouetteCard.variants.length,14);
   for(const variant of slots.assetLibrary.silhouetteCard.variants)assert.ok(approval.files.some(a=>a.file===variant.file));
+  const variants=slots.assetLibrary.silhouetteCard.variants;
+  unique(variants.map(v=>[v.kind,v.throws,v.bats||v.pitchForm].join(':')));
+  assert.equal(slots.assetLibrary.silhouetteCard.status,'APPROVED');
+  for(const hand of ['R','L']){
+    for(const bats of ['R','L','S'])assert.ok(variants.some(v=>v.kind==='HITTER'&&v.throws===hand&&v.bats===bats),'Missing hitter '+hand+bats);
+    for(const form of ['OVERHAND','THREE_QUARTER','SIDEARM','UNDERHAND'])assert.ok(variants.some(v=>v.kind==='PITCHER'&&v.throws===hand&&v.pitchForm===form),'Missing pitcher '+hand+form);
+  }
+  assert.ok(registry.items.filter(i=>i.group==='G1').every(i=>i.status==='EXISTS'));
+
   assert.ok(approval.files.some(a=>a.file===slots.assetLibrary.appBrandMark.file));
   for(const id of ['S01','S21'])assert.ok(slots.screens.find(s=>s.screenId===id).assetRefs.includes('appBrandMark'));
   for(const player of art.activePortraits)assert.ok(approval.files.some(a=>a.file===player.asset));
   assert.equal(playerData.hitter.asset,'assets/silhouettes/hitter-RR.svg');
   assert.equal(playerData.pitcher.asset,'assets/silhouettes/pitcher-R-overhand.svg');
   const approvedBoard=read('approved-art-board.html');
-  assert.equal((approvedBoard.match(/<svg\b/g)||[]).length,7);
+  assert.equal((approvedBoard.match(/<svg\b/g)||[]).length,15);
   assert.ok(!/player-youth-animation-v1|player-pitcher-animation-v1/.test(approvedBoard));
-  assert.equal(registry.items.filter(i=>i.status==='TODO').length,57);
-  assert.equal(registry.items.filter(i=>i.status==='EXISTS').length,23);
-  console.log('PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 6/14 silhouettes ready, 57 image TODOs remain.');
+  assert.equal(registry.items.filter(i=>i.status==='TODO').length,49);
+  assert.equal(registry.items.filter(i=>i.status==='EXISTS').length,31);
+  console.log('PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 14/14 silhouettes ready, 49 image TODOs remain.');
 }

@@ -279,3 +279,21 @@ PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints
 ```
 
 7개 누적 승인 SVG의 title/viewBox·CSS변수색·금지요소 부재·반전변환 부재와 슬롯6개/승인보드7개/실제파일 연결을 검사했다. 이전에 제시한 PNG 4종과 동일한 곡선·배치이며 title만 승인 상태로 정정했다. 정적 PASS이며 실제 DOM/브라우저 렌더·기기 접근성·게임/DB/Neon/build/APK는 미실행이다. 45화면·99이벤트·핵심298 기대값은 유지한다.
+
+## 2026-10-20 실루엣14종 전체 승인 검증
+
+남은8종 사용자 승인 후 SVG8개와 누적 승인 기록 v3를 반영했다. 레지스터와 슬롯은 14/14, 승인 보드는 로고 포함15개 SVG를 담는다. 기존7개 승인 SVG는 변경하지 않았다. TODO49/EXISTS31이며 아이콘2묶음은 별도 미완료다.
+
+검증에 타자 R/L×R/L/S 6조합·투수 R/L×4폼 8조합의 정확한 전체 연결과 중복 방지 검사를 추가했다. 최초 검사에서 새 타자3개 슬롯의 투타 코드가 손/타석으로 분리되지 않은 것을 발견해 정정했다. 이후 아래 명령은 모두 종료코드0/PASS다.
+
+| 명령 | 결과 |
+|---|---|
+| node docs/design/verify-design.mjs | PASS |
+| node docs/design/verify-state-ui.mjs | PASS |
+| node docs/design/verify-art-direction.mjs | PASS |
+
+```text
+PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 14/14 silhouettes ready, 49 image TODOs remain.
+```
+
+SVG title/viewBox·CSS변수색·금지요소 부재·단순 반전 부재·실제 파일 및 슬롯 참조·전체 조합을 정적으로 검사했다. 승인된 PNG 8종의 곡선은 유지하고 title만 승인 상태로 정정했다. 실제 브라우저/기기·DOM·접근성·앱/게임/Neon/DB/build/APK는 미실행이며 45화면/99이벤트/핵심298은 유지한다.

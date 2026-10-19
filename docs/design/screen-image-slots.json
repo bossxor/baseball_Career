@@ -526,7 +526,7 @@
   "selectedPalette": "NAVY_BLUE_V1",
   "assetLibrary": {
     "silhouetteCard": {
-      "status": "PARTIALLY_APPROVED",
+      "status": "APPROVED",
       "paletteCss": "assets/brand/navy-blue-v1.css",
       "variants": [
         {
@@ -564,10 +564,58 @@
           "throws": "R",
           "pitchForm": "THREE_QUARTER",
           "file": "assets/silhouettes/pitcher-R-threequarter.svg"
+        },
+        {
+          "kind": "HITTER",
+          "throws": "R",
+          "file": "assets/silhouettes/hitter-RS.svg",
+          "bats": "S"
+        },
+        {
+          "kind": "HITTER",
+          "throws": "L",
+          "file": "assets/silhouettes/hitter-LR.svg",
+          "bats": "R"
+        },
+        {
+          "kind": "HITTER",
+          "throws": "L",
+          "file": "assets/silhouettes/hitter-LS.svg",
+          "bats": "S"
+        },
+        {
+          "kind": "PITCHER",
+          "throws": "L",
+          "pitchForm": "THREE_QUARTER",
+          "file": "assets/silhouettes/pitcher-L-threequarter.svg"
+        },
+        {
+          "kind": "PITCHER",
+          "throws": "R",
+          "pitchForm": "SIDEARM",
+          "file": "assets/silhouettes/pitcher-R-sidearm.svg"
+        },
+        {
+          "kind": "PITCHER",
+          "throws": "L",
+          "pitchForm": "SIDEARM",
+          "file": "assets/silhouettes/pitcher-L-sidearm.svg"
+        },
+        {
+          "kind": "PITCHER",
+          "throws": "R",
+          "pitchForm": "UNDERHAND",
+          "file": "assets/silhouettes/pitcher-R-underhand.svg"
+        },
+        {
+          "kind": "PITCHER",
+          "throws": "L",
+          "pitchForm": "UNDERHAND",
+          "file": "assets/silhouettes/pitcher-L-underhand.svg"
         }
       ],
-      "fallback": "INITIALS_FOR_UNAPPROVED_COMBINATIONS",
-      "approvedCount": 6,
+      "fallback": "INITIALS_ON_ASSET_LOAD_FAILURE",
+      "approvedCount": 14,
       "plannedCount": 14
     },
     "appBrandMark": {
