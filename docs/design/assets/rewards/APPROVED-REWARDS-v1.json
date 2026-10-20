@@ -3,7 +3,7 @@
   "status": "USER_APPROVED",
   "scope": "FRAMES_3_BACKGROUNDS_3_COVER_1",
   "method": "Native SVG frames; built-in image_gen for PNG illustrations. Generated originals preserved without resizing.",
-  "pending": "13 color stamp revisions remain outside repository pending approval",
+  "pending": null,
   "files": [
     {
       "id": "IMG-RWD-R-G01",
@@ -82,5 +82,6 @@
       "prompt": "Premium finished 2D youth baseball anime collectible career archive book cover, portrait 4:5. Original quiet illustrated still life commemorating retired career in both Korean and American professional baseball, NO official logos or flags or text. Elegant navy hardbound scorebook lying slightly diagonal at bottom right beside worn brown baseball glove and one baseball; an unmarked cream ticket and two subtle differently shaped stadium silhouettes appear near bottom left. Bright neutral afternoon window light, sophisticated navy, ivory, soft gold palette. Upper and central 65% is uncluttered warm off-white paper texture for UI title and career stats overlay. Detailed clean anime illustration with polished edges, calm celebratory nostalgic mood, no sunset tint, no trophy or medal. Single background with no inner border no collage. No people, letters, numbers, writing, branding, or watermark.",
       "source": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-c6d52490-7b02-4580-8a0e-5bd25efc325f.png"
     }
-  ]
+  ],
+  "stampApproval": "assets/rewards/APPROVED-STAMPS-v1.json"
 }

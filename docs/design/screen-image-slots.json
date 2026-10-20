@@ -881,7 +881,7 @@
       ]
     },
     "commemorativeRewards": {
-      "status": "PARTIALLY_APPROVED",
+      "status": "APPROVED",
       "approval": "assets/rewards/APPROVED-REWARDS-v1.json",
       "files": [
         {
@@ -941,7 +941,179 @@
         }
       ],
       "fallback": "REWARD_NAME_TEXT",
-      "guard": "COSMETIC_ONLY; show acquired rewards only; never imply unlock from imagery"
+      "guard": "COSMETIC_ONLY; show acquired rewards only; never imply unlock from imagery",
+      "stampApproval": "assets/rewards/APPROVED-STAMPS-v1.json",
+      "stamps": [
+        {
+          "id": "IMG-RWD-R-G04",
+          "file": "assets/rewards/r-g04.svg",
+          "palette": {
+            "ink": "#226958",
+            "accent": "#53a58b",
+            "name": "제이드"
+          },
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-RWD-R-G09",
+          "file": "assets/rewards/r-g09.svg",
+          "palette": {
+            "ink": "#855c19",
+            "accent": "#c89c36",
+            "name": "샴페인 골드"
+          },
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-RWD-R-A01",
+          "file": "assets/rewards/r-a01.svg",
+          "palette": {
+            "ink": "#31558a",
+            "accent": "#6e99cb",
+            "name": "로열 블루"
+          },
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-RWD-R-A02",
+          "file": "assets/rewards/r-a02.svg",
+          "palette": {
+            "ink": "#9b3b42",
+            "accent": "#d77579",
+            "name": "크림슨"
+          },
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-RWD-R-A03",
+          "file": "assets/rewards/r-a03.svg",
+          "palette": {
+            "ink": "#315d83",
+            "accent": "#58a7bf",
+            "name": "오션 블루"
+          },
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-RWD-R-A04",
+          "file": "assets/rewards/r-a04.svg",
+          "palette": {
+            "ink": "#60448c",
+            "accent": "#9c80c7",
+            "name": "아메시스트"
+          },
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-RWD-R-A05",
+          "file": "assets/rewards/r-a05.svg",
+          "palette": {
+            "ink": "#7b4b8d",
+            "accent": "#b482be",
+            "name": "라일락"
+          },
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-RWD-R-A06",
+          "file": "assets/rewards/r-a06.svg",
+          "palette": {
+            "ink": "#286e78",
+            "accent": "#5db6bf",
+            "name": "틸"
+          },
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-RWD-R-A07",
+          "file": "assets/rewards/r-a07.svg",
+          "palette": {
+            "ink": "#536739",
+            "accent": "#93a966",
+            "name": "올리브"
+          },
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-RWD-R-A08",
+          "file": "assets/rewards/r-a08.svg",
+          "palette": {
+            "ink": "#a65d27",
+            "accent": "#dd9850",
+            "name": "앰버"
+          },
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-RWD-R-A09",
+          "file": "assets/rewards/r-a09.svg",
+          "palette": {
+            "ink": "#9c6b1c",
+            "accent": "#dab34f",
+            "name": "허니 골드"
+          },
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-RWD-R-A10",
+          "file": "assets/rewards/r-a10.svg",
+          "palette": {
+            "ink": "#376b76",
+            "accent": "#73adb7",
+            "name": "스틸 틸"
+          },
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-RWD-R-A11",
+          "file": "assets/rewards/r-a11.svg",
+          "palette": {
+            "ink": "#944e6c",
+            "accent": "#cf8eab",
+            "name": "로즈"
+          },
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        }
+      ]
     }
   }
 }

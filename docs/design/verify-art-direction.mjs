@@ -175,9 +175,9 @@ console.log('NOT TESTED: art-lab browser rendering, interactive clicks, viewport
   const approvedBoard=read('approved-art-board.html');
   assert.equal((approvedBoard.match(/<svg\b/g)||[]).length,15);
   assert.ok(!/player-youth-animation-v1|player-pitcher-animation-v1/.test(approvedBoard));
-  assert.equal(registry.items.filter(i=>i.status==='TODO').length,24);
-  assert.equal(registry.items.filter(i=>i.status==='EXISTS').length,56);
-  console.log('PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 14/14 silhouettes ready, 24 image TODOs remain.');
+  assert.equal(registry.items.filter(i=>i.status==='TODO').length,11);
+  assert.equal(registry.items.filter(i=>i.status==='EXISTS').length,69);
+  console.log('PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 14/14 silhouettes ready, 11 image TODOs remain.');
 }
 
 {
@@ -236,5 +236,11 @@ console.log('NOT TESTED: art-lab browser rendering, interactive clicks, viewport
 {
 const rewards=JSON.parse(read('assets/rewards/APPROVED-REWARDS-v1.json'));assert.equal(rewards.files.length,7);assert.equal(slots.assetLibrary.commemorativeRewards.files.length,7);
 for(const f of rewards.files){assert.ok(fs.existsSync(path.join(root,f.file)));for(const id of f.screens)assert.ok(slots.screens.find(s=>s.screenId===id).assetRefs.includes('commemorativeRewards'));if(f.file.endsWith('.svg')){const svg=read(f.file);assert.ok(svg.includes('<title>'));assert.ok(!/<(?:script|foreignObject|image|text)\b/i.test(svg));}else{const data=fs.readFileSync(path.join(root,f.file));assert.equal(data.readUInt32BE(16),1122);assert.equal(data.readUInt32BE(20),1402);}}
-console.log('PASS: 7 approved cosmetic reward assets and screen references; 13 stamp revisions pending approval.');
+console.log('PASS: 7 approved cosmetic reward assets and screen references; 13 colored stamps also approved.');
+}
+
+{
+const stamps=JSON.parse(read('assets/rewards/APPROVED-STAMPS-v1.json'));assert.equal(stamps.files.length,13);assert.equal(slots.assetLibrary.commemorativeRewards.stamps.length,13);assert.equal(slots.assetLibrary.commemorativeRewards.status,'APPROVED');
+for(const f of stamps.files){const svg=read(f.file);assert.ok(svg.includes('viewBox="0 0 256 256"'));assert.ok(svg.includes('<title>'));assert.ok(!/<(?:script|foreignObject|image|text)\b/i.test(svg));assert.ok(svg.includes(f.palette.ink)&&svg.includes(f.palette.accent));for(const id of f.screens)assert.ok(slots.screens.find(s=>s.screenId===id).assetRefs.includes('commemorativeRewards'));}
+console.log('PASS: 13 approved colored record stamps, safe SVGs and acquired-only cosmetic references; 11 image TODOs remain.');
 }

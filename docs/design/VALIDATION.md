@@ -347,3 +347,7 @@ PASS: all four approved navy story-art versions bound; night rival white/navy vs
 ## 2026-10-20 기념 보상7종 승인 반영
 
 verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료코드0/PASS. 승인 프레임3 SVG와 배경3·표지1 PNG의 파일 존재·실제 PNG1122×1402 규격·화면 참조를 확인했다. 생성 원본은 수정하지 않고 보존했다. 레지스터 EXISTS56/TODO24. 컬러 도장13종은 저장소 밖 사용자 승인 대기이며 실제 앱·브라우저·DB·APK 검수는 미실행이다.
+
+## 2026-10-20 컬러 도장13종 승인 반영
+
+verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료코드0/PASS. 도장13종의 256×256 viewBox·title·금지 요소 부재·색상·화면 참조를 확인했다. EXISTS69/TODO11. 기념 보상20항목 파일 완료. 다음11항목은 저장소 밖 시안으로 사용자 승인 전 미반영. 실제 브라우저·기기·게임·DB·APK 검수는 미실행이며 구현 미착수.

@@ -1,0 +1,204 @@
+{
+  "date": "2026-10-20",
+  "status": "USER_APPROVED",
+  "method": "Original SVG stamp geometry; colored ink, accent rim and soft translucent background. No external imagery.",
+  "scope": "DESIGN_ASSETS_ONLY",
+  "gameRulesChanged": false,
+  "files": [
+    {
+      "id": "IMG-RWD-R-G04",
+      "name": "볼넷 · 선구의 기록",
+      "file": "assets/rewards/r-g04.svg",
+      "palette": {
+        "ink": "#226958",
+        "accent": "#53a58b",
+        "name": "제이드"
+      },
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "2a8d35d41ad1b6aa168f53bed550df21be1c41106735213bac56c3c782fff581"
+    },
+    {
+      "id": "IMG-RWD-R-G09",
+      "name": "포스트시즌 진출",
+      "file": "assets/rewards/r-g09.svg",
+      "palette": {
+        "ink": "#855c19",
+        "accent": "#c89c36",
+        "name": "샴페인 골드"
+      },
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "e20b97ad2c422affb90ee0483defac0cb82310565a7fa0a8a8ab26908b1c0a06"
+    },
+    {
+      "id": "IMG-RWD-R-A01",
+      "name": "프로 첫 계약",
+      "file": "assets/rewards/r-a01.svg",
+      "palette": {
+        "ink": "#31558a",
+        "accent": "#6e99cb",
+        "name": "로열 블루"
+      },
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "58de55d0e311340a35c0c9e3ce2cb7b64c73652535d1b951d86cb1422f2bffaa"
+    },
+    {
+      "id": "IMG-RWD-R-A02",
+      "name": "KBO 첫 출장",
+      "file": "assets/rewards/r-a02.svg",
+      "palette": {
+        "ink": "#9b3b42",
+        "accent": "#d77579",
+        "name": "크림슨"
+      },
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "cf91eedb1226bd994951907a0dc94e64e09afa25f54df5811aa4d75e7762df60"
+    },
+    {
+      "id": "IMG-RWD-R-A03",
+      "name": "MLB 첫 출장",
+      "file": "assets/rewards/r-a03.svg",
+      "palette": {
+        "ink": "#315d83",
+        "accent": "#58a7bf",
+        "name": "오션 블루"
+      },
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "2bcdb555cc803f44d8342e19762cd33e27e05e98c4d214e2856faed533f47828"
+    },
+    {
+      "id": "IMG-RWD-R-A04",
+      "name": "국제대회 첫 출장",
+      "file": "assets/rewards/r-a04.svg",
+      "palette": {
+        "ink": "#60448c",
+        "accent": "#9c80c7",
+        "name": "아메시스트"
+      },
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "89f4953fbeafc3e67270c52cacc6be8f7cb6168db87326aacca11d647090a5d8"
+    },
+    {
+      "id": "IMG-RWD-R-A05",
+      "name": "대학 졸업",
+      "file": "assets/rewards/r-a05.svg",
+      "palette": {
+        "ink": "#7b4b8d",
+        "accent": "#b482be",
+        "name": "라일락"
+      },
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "aa45fb173b4cf723cd70fc808fd3635fc828f75a93e7de5e92c6023dc9f5be25"
+    },
+    {
+      "id": "IMG-RWD-R-A06",
+      "name": "포스팅 해외 계약",
+      "file": "assets/rewards/r-a06.svg",
+      "palette": {
+        "ink": "#286e78",
+        "accent": "#5db6bf",
+        "name": "틸"
+      },
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "994324299a21d22d7bea4199d5ff81d2b9898b16c1b68c5c77575f418531ac77"
+    },
+    {
+      "id": "IMG-RWD-R-A07",
+      "name": "병역 완료",
+      "file": "assets/rewards/r-a07.svg",
+      "palette": {
+        "ink": "#536739",
+        "accent": "#93a966",
+        "name": "올리브"
+      },
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "ed3215ddd0c80ed5174326fd82a313b3d3f29ad3664d22d1817dc1b9b7ba8441"
+    },
+    {
+      "id": "IMG-RWD-R-A08",
+      "name": "통산 1000안타",
+      "file": "assets/rewards/r-a08.svg",
+      "palette": {
+        "ink": "#a65d27",
+        "accent": "#dd9850",
+        "name": "앰버"
+      },
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "5260652e1691b5c0e19e8b579c0ced594de868461384f3c5f0a4148673a19c70"
+    },
+    {
+      "id": "IMG-RWD-R-A09",
+      "name": "통산 100승",
+      "file": "assets/rewards/r-a09.svg",
+      "palette": {
+        "ink": "#9c6b1c",
+        "accent": "#dab34f",
+        "name": "허니 골드"
+      },
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "5f9261acc90be7899abb5aec0e75849cf4a3c7f07e373e09bafbe5f30d47f71d"
+    },
+    {
+      "id": "IMG-RWD-R-A10",
+      "name": "통산 200세이브",
+      "file": "assets/rewards/r-a10.svg",
+      "palette": {
+        "ink": "#376b76",
+        "accent": "#73adb7",
+        "name": "스틸 틸"
+      },
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "e5a9a1d5272e5dbc97ac44cf1c086720aa417bb94c3718b1e8e48176a6180c8f"
+    },
+    {
+      "id": "IMG-RWD-R-A11",
+      "name": "고교 라이벌 재회",
+      "file": "assets/rewards/r-a11.svg",
+      "palette": {
+        "ink": "#944e6c",
+        "accent": "#cf8eab",
+        "name": "로즈"
+      },
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "93c73dfbed999709b37acf0f9d42fd57172c8d7dcd275e1f8e6dbfa67c153ac3"
+    }
+  ]
+}
