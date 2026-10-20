@@ -1,0 +1,11 @@
+✔ all same-day games required before fatigue/injury; first-day close changes each player only once, bye rests (735.5408ms)
+✔ day ordering, world identity, altered official contribution and partial health publication reject (537.348ms)
+✔ six actual league dates then rest day: rest once, no injury RNG or healing tick on calendar rest (4253.7886ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6099.4905
