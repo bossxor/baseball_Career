@@ -104,3 +104,4 @@ export function roleScore(kind: PlayerKind, abilities: AbilityUnits, role: strin
 }
 
 export * from './baseball.js';
+export * from './player.js';

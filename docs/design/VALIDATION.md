@@ -387,3 +387,7 @@ verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료
 ## 2026-10-20 M1 경기 엔진 코어 실제 검증
 
 M1 순수 경기 코어를 추가했고 단위67/67·린트·타입·rules/engine/API/web 빌드·설계 정적10종·웹/API HTTP smoke가 통과했다. BP4조건/X7예제·4조건각10만PA·타자8/투수6유형각100시드 및 기본100경기(97승부/3무승부)를 실행했다. 단발/PA단위 JSON재개/별도 Node 빌드 엔진의 골든SHA256이 일치한다. 사용자 선택 병살 수비/주루10점당±2%p를14/41에 기록했다. 실제 리그 시즌 균형/커리어/DB receipt/인증/브라우저·OS교차/APK는 미실행이다. 상세 [M1 인계](../implementation/M1-ENGINE.md)·[현재 진행](../implementation/PROGRESS.md)을 따른다.
+
+## 2026-10-20 M2-A 육성 기반 실제 검증
+
+생성/잠재력·성장/노쇠·시즌강화·구종XP 기본 계산의 신규16검사와 기존67검사를 합해83/83 통과. npm ci132 audit/취약점0, lint/typecheck/build/빌드엔진 골든/설계정적10종/웹API HTTP smoke 통과. M1 결과 해시 불변. M2 전체/고교·대학·드래프트·이벤트99·DB/인증·기기 이어하기/APK 완료가 아니다. 상세 [M2-A 인계](../implementation/M2-A-DEVELOPMENT.md)·[진행](../implementation/PROGRESS.md)을 따른다.

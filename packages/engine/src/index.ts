@@ -5,3 +5,7 @@ export * from './bases.js';
 export * from './types.js';
 export * from './stats.js';
 export * from './game.js';
+export * from './player.js';
+export * from './development.js';
+export * from './training.js';
+export * from './pitch-xp.js';
