@@ -6,6 +6,7 @@ export default tseslint.config(
   { ignores: ['**/dist/**', '**/node_modules/**'] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
+  { files:['apps/web/src/**/*.ts','apps/web/src/**/*.tsx'], rules:{'no-restricted-imports':['error',{patterns:['@playball/engine','@playball/engine/*','@playball/api','@playball/db']}]} },
   { languageOptions: { globals: { ...globals.node, ...globals.browser } } },
   {
     files: ['packages/rules/src/**/*.ts', 'packages/engine/src/**/*.ts'],

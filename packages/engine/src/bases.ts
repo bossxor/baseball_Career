@@ -3,7 +3,7 @@ import { doublePlayProbability, extraHomeProbability, ranged } from './probabili
 import { nextFloat } from './rng.js';
 import type { RngState } from './rng.js';
 
-export interface Runner { simulationKey: string; responsiblePitcherKey: string; automatic: boolean; running: number }
+export interface Runner { simulationKey: string; responsiblePitcherKey: string; automatic: boolean; running: number; extraHomeBonus?: number }
 export type Bases = [Runner | null, Runner | null, Runner | null];
 export interface BasePlayInput {
   outcome: Outcome; outs: number; bases: Bases; batter: Runner; defense: number; pickoff: number;
@@ -18,7 +18,7 @@ export function advanceBases(input: BasePlayInput, rng: RngState) {
   if (winningRunsNeeded !== null && (!Number.isInteger(winningRunsNeeded) || winningRunsNeeded < 1)) throw new RangeError('Invalid walkoff target');
   const keys = [batter, ...bases.filter(r => r !== null)].map(r => r.simulationKey);
   if (new Set(keys).size !== keys.length) throw new RangeError('Duplicate runner/batter');
-  for (const runner of [batter, ...bases.filter(r => r !== null)]) ranged(runner.running, 1, 100);
+  for (const runner of [batter, ...bases.filter(r => r !== null)]) {ranged(runner.running, 1, 100);if(runner.extraHomeBonus!==undefined) ranged(runner.extraHomeBonus,0,.02);}
   let state = rng, outsAdded = 0;
   const next: Bases = [null, null, null], scored: Runner[] = [], attempts: RunningAttempt[] = [];
   const walkoff = () => outcome !== 'HR' && winningRunsNeeded !== null && scored.length >= winningRunsNeeded;
@@ -46,7 +46,7 @@ export function advanceBases(input: BasePlayInput, rng: RngState) {
       const target = index + distance;
       if (target >= 3) { score(runner); continue; }
       if (target === 2 && input.outs === 2 && runner.running >= 60) {
-        const probability = extraHomeProbability(runner.running, input.pickoff);
+        const probability = extraHomeProbability(runner.running,input.pickoff,runner.extraHomeBonus??0);
         const draw = nextFloat(state); state = draw.state;
         const success = draw.value < probability;
         attempts.push({ runnerKey: runner.simulationKey, probability, success, kind: 'EXTRA_HOME' });

@@ -95,8 +95,8 @@ export function sampleOutcome(distribution: Distribution, rng: RngState) {
   return { outcome: 'OUT' as const, state: draw.state }; // Final cumulative interval ends at exactly 1.
 }
 
-export function extraHomeProbability(running: number, pickoff: number): number {
-  return clamp(.70 + .002 * (ranged(running, 1, 100) - 50) - .0015 * (ranged(pickoff, 1, 100) - 50), .40, .90);
+export function extraHomeProbability(running: number, pickoff: number, traitBonus = 0): number {
+  return clamp(.70 + .002 * (ranged(running, 1, 100) - 50) - .0015 * (ranged(pickoff, 1, 100) - 50) + ranged(traitBonus,0,.02), .40, .90);
 }
 export function doublePlayProbability(defense: number, running: number): number {
   return clamp(.20 + .002 * (ranged(defense, .5, 100) - 50) - .002 * (ranged(running, 1, 100) - 50), .05, .35);

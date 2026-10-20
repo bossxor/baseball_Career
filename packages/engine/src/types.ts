@@ -1,3 +1,4 @@
+import type {TraitOwnership} from './traits.js';
 import type { AbilityUnits, Approach, LogitVector, PitchId, Outcome } from '@playball/rules';
 import type { Bases, Runner, RunningAttempt } from './bases.js';
 import type { PitchForm, BatSide, Hand, Distribution } from './probabilities.js';
@@ -8,6 +9,8 @@ export interface PlayerSnapshot {
   temporary: Readonly<Record<string, number>>;
   /** Condition-resolved at the PA boundary; M2 owns trait eligibility/expiry. */
   traitLogits: readonly LogitVector[];
+  /** 56 owned snapshots are resolved at every PA. Never combine with precomputed traitLogits. */
+  traits?: TraitOwnership;
 }
 export interface HitterSnapshot extends PlayerSnapshot { bats: BatSide; approach: Approach; available: boolean }
 export interface PitchEntry { pitchId: PitchId; mastery: number; weight: number }
@@ -21,6 +24,7 @@ export interface TeamSnapshot {
   pitchers: readonly PitcherSnapshot[];
 }
 export interface GameInput {
+  traitRulesVersion?: 1;
   simulationKey: string; seed: string; rulesVersion: string; competition: 'REGULAR' | 'POSTSEASON' | 'INTERNATIONAL';
   /** Away then home. IDs are immutable simulation keys, never database row IDs. */
   teams: readonly [TeamSnapshot, TeamSnapshot];

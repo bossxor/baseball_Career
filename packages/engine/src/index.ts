@@ -1,4 +1,5 @@
-export const ENGINE_VERSION = '1.0.0';
+export const ENGINE_VERSION = '1.1.0';
+export const LEGACY_ENGINE_VERSION = '1.0.0';
 export * from './rng.js';
 export * from './probabilities.js';
 export * from './bases.js';
@@ -15,3 +16,4 @@ export * from './schedule.js';
 export * from './high-school-world.js';
 export * from './assessment.js';
 export * from './draft.js';
+export * from './traits.js';

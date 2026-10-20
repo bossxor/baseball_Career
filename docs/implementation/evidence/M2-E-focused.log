@@ -1,0 +1,17 @@
+✔ 56: first meeting, bases loaded, postseason and exact owned targets evaluated each PA (0.9634ms)
+✔ 100: walkoff exact bottom9+/tied or down1, pitcher late lead/start/run boundaries (0.2811ms)
+✔ 56/123: owned effects all apply then shared cap; nonlogit effects separate (0.3472ms)
+✔ 56: finalized evidence unlocks once and never removes owned traits after decline/correction (1.0652ms)
+✔ 107: exact OPS .900/PA20/WIN and AB0 guards, no rounded-OPS unlock (0.1804ms)
+✔ 56: runner retains own T03 bonus across future batters, without bonus for unrelated runners (0.5992ms)
+✔ game1.1: actual owned traits affect probabilities; JSON PA-chunk resume exactly matches full run (79.2737ms)
+✔ game1.1 empty ownership leaves every probability/RNG/result unchanged relative to game1.0 (8.498ms)
+✔ 100: locked hidden trait card strictly excludes supplied secret details; unlock reveals them (0.3826ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 437.5018
