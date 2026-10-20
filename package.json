@@ -17,10 +17,11 @@
     "lint": "eslint packages apps scripts",
     "test": "npm run build --workspace @playball/rules && tsx --test packages/rules/test/*.test.ts packages/engine/test/*.test.ts apps/api/test/*.test.ts",
     "verify:design": "node scripts/verify-design.mjs",
-    "check": "npm run lint && npm run typecheck && npm test && npm run build && npm run verify:engine && npm run verify:design",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build && npm run verify:engine && npm run verify:events && npm run verify:design",
     "start": "node apps/api/dist/server.js",
     "smoke": "node scripts/smoke.mjs",
-    "verify:engine": "node --import tsx scripts/verify-engine.mjs"
+    "verify:engine": "node --import tsx scripts/verify-engine.mjs",
+    "verify:events": "node scripts/generate-event-definitions.mjs --check"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

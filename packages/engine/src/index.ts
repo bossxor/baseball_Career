@@ -20,3 +20,4 @@ export * from './traits.js';
 export * from './records.js';
 export * from './lineup.js';
 export * from './growth-ledger.js';
+export * from './events.js';

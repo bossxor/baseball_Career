@@ -1,0 +1,16 @@
+✔ 125: generated99/164 metadata, all dispatch/branch counts; domain implementations not implied (3.7133ms)
+✔ 81: exact typed evidence key, duplicates including already-resolved source never resurrect (1.4163ms)
+✔ 125: blocking navigation remains OPEN, no ACK bypass; actual domain source commits resolution (0.4677ms)
+✔ 125: DOMAIN is only a plan until actual reducer succeeds; invalid focus leaves event unchanged (0.7434ms)
+✔ 125: nonblocking navigation and ACK resolve once; current availability/context/version rechecked (0.4468ms)
+✔ E63 approved/deferred branch must come from saved posting decision, no fallback/re-roll (0.4313ms)
+✔ 69/81: one active task deadline→source sequence order, no FORM/PRESENTATION world tasks (0.4712ms)
+✔ 125: deadline expiry only after committed day-closing domain outcome; invalidation reason preserved (0.3318ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 372.0931
