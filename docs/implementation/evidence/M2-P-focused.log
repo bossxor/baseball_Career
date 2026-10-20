@@ -1,0 +1,17 @@
+✔ ONE_GAME plan persists across safe chunks, serializes exactly and closes whole game date (2735.3527ms)
+✔ pause keeps pending RNG/cursor; active plan cannot be silently changed; invalid phase/revision rejected (722.1413ms)
+✔ ONE_WEEK includes calendar rest, stops within7 dates with same-day games complete (2822.357ms)
+▶ actual full HS league path: focus12, training16, style24, all216 games and48 per team without auto route
+  ✔ default NEXT_MAJOR_EVENT stops at actual12 team games and typed E02 (10471.2291ms)
+  ✔ training first valid window16; DEFER preserves opportunity and never applies ability growth (4158.2859ms)
+  ✔ style first valid window24; navigation is read/open only and does not repeat same event (16907.5064ms)
+  ✔ league completion stops SEASON_REVIEW, no US offer/route or automatic growth invented (91059.1987ms)
+✔ actual full HS league path: focus12, training16, style24, all216 games and48 per team without auto route (122634.3158ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 130171.7002

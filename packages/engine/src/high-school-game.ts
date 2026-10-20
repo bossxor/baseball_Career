@@ -60,9 +60,9 @@ export function prepareHighSchoolGame(world:HighSchoolWorld,records:RecordLedger
   const game=createGame({simulationKey:scheduled.simulationKey,seed:world.seed,rulesVersion:RULES_VERSION,competition:'REGULAR',traitRulesVersion:1,pitchDevelopment:development,teams});
   return {schemaVersion:1,worldKey:world.worldKey,seasonKey:world.seasonKey,worldDay:scheduled.worldDay,basisWorld:canonicalJson(world),basisRecordRevision:records.revision,game,stopReason:'READY'};
 }
-export function advanceHighSchoolGame(job:HighSchoolGameJob,maxPlateAppearances=1000):HighSchoolGameJob {
+export function advanceHighSchoolGame(job:HighSchoolGameJob,maxPlateAppearances=1000,maxCompletedInnings=20):HighSchoolGameJob {
   if(job.schemaVersion!==1)throw new RangeError('INVALID_SCHOOL_GAME_JOB');
-  const result=runGameChunk(job.game,{plateAppearances:maxPlateAppearances});
+  const result=runGameChunk(job.game,{plateAppearances:maxPlateAppearances,completedInnings:maxCompletedInnings});
   return {...job,game:result.state,stopReason:result.stopReason};
 }
 /** Publish books and official contribution as one pure result. M3 must persist both atomically. */

@@ -16,11 +16,14 @@ import {createStreams} from './rng.js';
 import {createWorldEvent,resolveEventChoice,completeEventDomain} from './events.js';
 import type {EventInstance} from './events.js';
 
+export interface HighSchoolAdvancePlan {mode:'NEXT_MAJOR_EVENT'|'ONE_GAME'|'ONE_WEEK';startWorldDay:number;startTeamGames:number}
+export type HighSchoolProgressPhase={phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:HighSchoolGameJob|null;advancePlan?:HighSchoolAdvancePlan|null};
 export type HighSchoolCareerPhase =
  | {phase:'CREATED'}
  | {phase:'PRESEASON_SETUP'}
- | {phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:HighSchoolGameJob|null}
- | {phase:'EVENT_DECISION';eventKey:string;resume:{phase:'PRESEASON_SETUP'}};
+ | HighSchoolProgressPhase
+ | {phase:'SEASON_REVIEW'}
+ | {phase:'EVENT_DECISION';eventKey:string;resume:{phase:'PRESEASON_SETUP'}|HighSchoolProgressPhase};
 export interface HighSchoolCareer {
  schemaVersion:1;revision:number;world:HighSchoolWorld;difficulty:Difficulty;
  phaseContext:HighSchoolCareerPhase;events:readonly EventInstance[];
@@ -35,52 +38,54 @@ export function createHighSchoolCareer(world:HighSchoolWorld,difficulty:Difficul
  const player=world.players[world.protagonistKey]!;
  return {schemaVersion:1,revision:0,world:structuredClone(world),difficulty,phaseContext:{phase:'CREATED'},events:[],records:emptyRecordLedger(),health:createHealthLedger(createStreams(world.seed,JSON.stringify(['hs-health',world.worldKey])).injury),days:createSchoolDayLedger(world),emergency:createSchoolEmergencyRegistry(world),styleUsedWindows:[],planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
 }
-function checkRevision(source:HighSchoolCareer,expectedRevision:number):void {
+export function assertHighSchoolCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
  if(source.schemaVersion!==1 || !Number.isSafeInteger(source.revision) || source.revision<0 || !Number.isSafeInteger(expectedRevision) || source.revision!==expectedRevision)throw new RangeError('CAREER_REVISION_CHANGED');
  if(source.revision===Number.MAX_SAFE_INTEGER)throw new RangeError('CAREER_REVISION_LIMIT');
 }
-function updateInitialPlan(source:HighSchoolCareer,focus:readonly string[],archetype:string):HighSchoolCareer {
+function updateCareerPlan(source:HighSchoolCareer,focus:readonly string[],archetype:string):HighSchoolCareer {
  const updated=structuredClone(source),key=updated.world.protagonistKey;
  updated.world.players[key]={...updated.world.players[key]!,focus:[...focus],archetype};
- updated.planHistory=[{completedTeamGames:0,focus:[...focus],archetype}];return updated;
+ const completedTeamGames=Object.values(source.records.games).filter(g=>g.scope.seasonKey===source.world.seasonKey && g.scope.leagueKey==='HS' && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,source.world.protagonistSchoolId)).length;
+ updated.planHistory=[...source.planHistory.filter(p=>p.completedTeamGames!==completedTeamGames),{completedTeamGames,focus:[...focus],archetype}];return updated;
 }
 export function confirmCareerPlayer(source:HighSchoolCareer,expectedRevision:number):HighSchoolCareer {
- checkRevision(source,expectedRevision);if(source.phaseContext.phase!=='CREATED')throw new RangeError('INVALID_CAREER_PHASE');
+ assertHighSchoolCareerRevision(source,expectedRevision);if(source.phaseContext.phase!=='CREATED')throw new RangeError('INVALID_CAREER_PHASE');
  const updated=structuredClone(source),world=updated.world;
  const event=createWorldEvent({definitionId:'E01',worldKey:world.worldKey,seasonKey:world.seasonKey,evidence:{version:1,type:'CAREER_START',fields:{careerSimulationKey:world.protagonistKey}},resume:{worldKey:world.worldKey,seasonKey:world.seasonKey,phase:'PRESEASON_SETUP',competitionKey:'HS',registrationKey:world.protagonistSchoolId,sourceRevision:source.revision+1},sourceSequence:1,worldDay:Math.max(0,Math.min(...world.schedule.map(g=>g.worldDay))-1)});
  updated.events=[event];updated.phaseContext={phase:'EVENT_DECISION',eventKey:event.eventKey,resume:{phase:'PRESEASON_SETUP'}};updated.revision++;return updated;
 }
-/** First-career E01 only. Later event domain handlers must be added explicitly, not auto-ACKed. */
-export function resolveInitialCareerEvent(source:HighSchoolCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number;command:'KEEP_FOCUS'|'CHOOSE_FOCUS';focus?:readonly string[]}):HighSchoolCareer {
- checkRevision(source,expectedRevision);
+/** Focus domain handlers only; other events are never automatically confirmed here. */
+export function resolveCareerFocusEvent(source:HighSchoolCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number;command:'KEEP_FOCUS'|'CHOOSE_FOCUS';focus?:readonly string[]}):HighSchoolCareer {
+ assertHighSchoolCareerRevision(source,expectedRevision);
  const phase=source.phaseContext;if(phase.phase!=='EVENT_DECISION' || phase.eventKey!==input.eventKey)throw new RangeError('INVALID_CAREER_PHASE');
- const event=source.events.find(e=>e.eventKey===input.eventKey);if(!event || event.definitionId!=='E01' || event.resume.phase!=='PRESEASON_SETUP' || event.resume.worldKey!==source.world.worldKey || event.resume.seasonKey!==source.world.seasonKey || event.resume.registrationKey!==source.world.protagonistSchoolId)throw new RangeError('INVALID_CAREER_EVENT_SOURCE');
+ const event=source.events.find(e=>e.eventKey===input.eventKey);if(!event || !['E01','E02','E03'].includes(event.definitionId) || event.resume.phase!==phase.resume.phase || event.resume.worldKey!==source.world.worldKey || event.resume.seasonKey!==source.world.seasonKey || event.resume.registrationKey!==source.world.protagonistSchoolId)throw new RangeError('INVALID_CAREER_EVENT_SOURCE');
  const context={worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['KEEP_FOCUS','CHOOSE_FOCUS']};
  const prepared=resolveEventChoice(event,input.eventVersion,input.command,input.focus?{focus:[...input.focus]}:null,context);
  let updated=structuredClone(source),resolved=prepared.event;
  if(prepared.domain){
   const player=source.world.players[source.world.protagonistKey]!;
   if(!input.focus)throw new RangeError('FOCUS_REQUIRED');assertFocus(player.kind,input.focus);
-  updated=updateInitialPlan(source,input.focus,player.archetype);
+  updated=updateCareerPlan(source,input.focus,player.archetype);
   resolved=completeEventDomain(event,prepared.domain,JSON.stringify(['career-domain',source.world.worldKey,source.revision+1,event.eventKey,input.command]),context);
  }
- updated.events=updated.events.map(e=>e.eventKey===event.eventKey?resolved:e);updated.phaseContext={phase:'PRESEASON_SETUP'};updated.revision++;return updated;
+ updated.events=updated.events.map(e=>e.eventKey===event.eventKey?resolved:e);updated.phaseContext=structuredClone(phase.resume);updated.revision++;return updated;
 }
+export const resolveInitialCareerEvent=resolveCareerFocusEvent;
 export function setPreseasonCareerFocus(source:HighSchoolCareer,expectedRevision:number,focus:readonly string[]):HighSchoolCareer {
- checkRevision(source,expectedRevision);if(source.phaseContext.phase!=='PRESEASON_SETUP')throw new RangeError('INVALID_CAREER_PHASE');
+ assertHighSchoolCareerRevision(source,expectedRevision);if(source.phaseContext.phase!=='PRESEASON_SETUP')throw new RangeError('INVALID_CAREER_PHASE');
  const player=source.world.players[source.world.protagonistKey]!;assertFocus(player.kind,focus);
- const updated=updateInitialPlan(source,focus,player.archetype);updated.revision++;return updated;
+ const updated=updateCareerPlan(source,focus,player.archetype);updated.revision++;return updated;
 }
 export function setPreseasonCareerArchetype(source:HighSchoolCareer,expectedRevision:number,archetype:string):HighSchoolCareer {
- checkRevision(source,expectedRevision);if(source.phaseContext.phase!=='PRESEASON_SETUP')throw new RangeError('INVALID_CAREER_PHASE');
+ assertHighSchoolCareerRevision(source,expectedRevision);if(source.phaseContext.phase!=='PRESEASON_SETUP')throw new RangeError('INVALID_CAREER_PHASE');
  const player=source.world.players[source.world.protagonistKey]!;archetypeFor(player.kind,archetype);
  const window=JSON.stringify([source.world.seasonKey,'PRE']);
  if(player.archetype!==archetype && source.styleUsedWindows.includes(window))throw new RangeError('STYLE_WINDOW_USED');
- const updated=updateInitialPlan(source,player.focus,archetype);
+ const updated=updateCareerPlan(source,player.focus,archetype);
  if(player.archetype!==archetype)updated.styleUsedWindows=[...source.styleUsedWindows,window];
  updated.revision++;return updated;
 }
 export function confirmCareerPreseason(source:HighSchoolCareer,expectedRevision:number):HighSchoolCareer {
- checkRevision(source,expectedRevision);if(source.phaseContext.phase!=='PRESEASON_SETUP' || source.events.some(e=>e.status==='OPEN'))throw new RangeError('INVALID_CAREER_PHASE');
+ assertHighSchoolCareerRevision(source,expectedRevision);if(source.phaseContext.phase!=='PRESEASON_SETUP' || source.events.some(e=>e.status==='OPEN'))throw new RangeError('INVALID_CAREER_PHASE');
  const updated=structuredClone(source);updated.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:Math.min(...source.world.schedule.map(g=>g.worldDay)),pendingGame:null};updated.revision++;return updated;
 }

@@ -1,0 +1,35 @@
+
+> again-playball@0.1.0 typecheck
+> npm run build --workspace @playball/rules && npm run typecheck --workspaces --if-present && tsc -p tsconfig.tests.json
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+src/high-school-progress.ts(63,33): error TS2379: Argument of type '{ definitionId: string; worldKey: string; seasonKey: string; evidence: { version: 1; type: string; fields: { careerSimulationKey: string; } | { playerOrTeamSimulationKey: string; worldSeasonId: string; windowType: string; }; }; resume: { ...; }; sourceSequence: number; worldDay: number; offeredChoices: string[] | un...' is not assignable to parameter of type '{ definitionId: string; worldKey: string; seasonKey: string; evidence: EventEvidence; resume: EventResume; sourceSequence: number; worldDay: number; deadlineWorldDay?: number; postingDecision?: "APPROVED" | "DEFERRED"; offeredChoices?: readonly string[]; }' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'offeredChoices' are incompatible.
+    Type 'string[] | undefined' is not assignable to type 'readonly string[]'.
+      Type 'undefined' is not assignable to type 'readonly string[]'.
+npm error Lifecycle script `typecheck` failed with error:
+npm error code 2
+npm error path C:\Users\N-052\.codex\visualizations\2026\10\16\***\baseball-career-repo\packages\engine
+npm error workspace @playball/engine@0.1.0
+npm error location C:\Users\N-052\.codex\visualizations\2026\10\16\***\baseball-career-repo\packages\engine
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c tsc -p tsconfig.json --noEmit
+
+
+> @playball/rules@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/api@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/web@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
