@@ -1,0 +1,16 @@
+✔ 67: range narrows monotonically across observations; lower facility does not widen (11.4075ms)
+✔ 67: A99/100 bounds, outward display rounding and impossible prior fail safely (1.5658ms)
+✔ 67: registered game19→20, duplicate no-op, transfer preserves progress, maxstage4 (2.6272ms)
+✔ 67: public allowlist and AI midpoint use ranges, not raw hidden potential (1.2585ms)
+✔ 34: B45 means50% selection, round10 40%+round9 10%, no draw for preview (0.8203ms)
+✔ 34: all boundary probabilities sum1, no fake round when no slot; tied likely rounds preserved (6.3409ms)
+✔ 34: fixed-seed draft empirical distribution matches preview and consumes exactly one draw (89.2093ms)
+✔ 34: US direct only with ability AND assessment AND actual valid offer AND eligibility (1.1672ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 948.7194

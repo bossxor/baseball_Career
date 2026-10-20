@@ -13,3 +13,5 @@ export * from './repertoire.js';
 export * from './npc.js';
 export * from './schedule.js';
 export * from './high-school-world.js';
+export * from './assessment.js';
+export * from './draft.js';
