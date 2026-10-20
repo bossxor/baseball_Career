@@ -25,13 +25,22 @@ export function collectHighSchoolGrowthEvidence(source:HighSchoolCareer):HighSch
 /** The caller supplies the active competitions and the verified injury carried at registration. */
 export function collectSchoolGrowthEvidence(source:HighSchoolCareer,schedule:readonly ScheduledGame[],openingRehabilitation:boolean):HighSchoolGrowthEvidence {
  if(source.phaseContext.phase!=='SEASON_REVIEW')throw new RangeError('INVALID_CAREER_PHASE');
+ validateSchoolGrowthDays(source,schedule);
+ return collectRegisteredSchoolGrowthEvidence(source,schedule,openingRehabilitation);
+}
+export function validateSchoolGrowthDays(source:HighSchoolCareer,schedule:readonly ScheduledGame[]):void {
+ const first=Math.min(...schedule.map(g=>g.worldDay)),last=Math.max(...schedule.map(g=>g.worldDay));
+ if(!Number.isSafeInteger(first) || !Number.isSafeInteger(last) || source.days.days.length!==last-first+1 || source.days.days.some((d,i)=>d.day!==first+i))throw new RangeError('INCOMPLETE_GROWTH_DAYS');
+ for(const d of source.days.days)closeSchoolCompetitionDay(source.world,source.records,source.health,source.days,d.day,schedule);
+}
+/** Internal player audit after validateSchoolGrowthDays has certified the shared date receipts. */
+export function collectRegisteredSchoolGrowthEvidence(source:HighSchoolCareer,schedule:readonly ScheduledGame[],openingRehabilitation:boolean):HighSchoolGrowthEvidence {
  const {world}=source,key=world.protagonistKey,start=source.development?.seasonStartPlayer;
  // Old saves without a pre-training snapshot cannot reconstruct one from the enhanced player.
  if(!start)throw new RangeError('MISSING_SEASON_START_PLAYER');
  validateDevelopmentPlayer(start);
  if(start.simulationKey!==key || start.kind!==world.players[key]?.kind || start.age!==world.players[key]?.age)throw new RangeError('GROWTH_PLAYER_MISMATCH');
- const first=Math.min(...schedule.map(g=>g.worldDay)),last=Math.max(...schedule.map(g=>g.worldDay));
- if(!Number.isSafeInteger(first) || !Number.isSafeInteger(last) || source.days.days.length!==last-first+1 || source.days.days.some((d,i)=>d.day!==first+i))throw new RangeError('INCOMPLETE_GROWTH_DAYS');
+ const first=Math.min(...schedule.map(g=>g.worldDay));
  const teamGames=world.schedule.filter(g=>g.awayTeamKey===world.protagonistSchoolId || g.homeTeamKey===world.protagonistSchoolId).sort((a,b)=>a.worldDay-b.worldDay);
  const registeredGames=schedule.filter(g=>g.awayTeamKey===world.protagonistSchoolId || g.homeTeamKey===world.protagonistSchoolId);
  const history=source.planHistory;
@@ -44,8 +53,6 @@ export function collectSchoolGrowthEvidence(source:HighSchoolCareer,schedule:rea
  const days:HighSchoolGrowthDay[]=[];let planIndex=0,rehabilitating=openingRehabilitation;
  for(const closed of source.days.days){
   const day=closed.day;
-  // Reuse the day-close receipt check so missing or corrected FINAL records cannot pay old evidence.
-  closeSchoolCompetitionDay(world,source.records,source.health,source.days,day,schedule);
   while(planIndex+1<history.length && boundaries[planIndex+1]!<=day)planIndex++;
   const plan=history[planIndex]!,scheduled=registeredGames.filter(g=>g.worldDay===day);
   if(scheduled.length>1)throw new RangeError('DOUBLE_BOOKED_GROWTH_DAY');

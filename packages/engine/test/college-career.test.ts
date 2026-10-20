@@ -17,6 +17,7 @@ import {canonicalJson} from '../src/game.js';
 import {validatePitchXpLedger} from '../src/pitch-xp.js';
 import {startCollegeCup,advanceCollegeCup,collegeCupSchedule} from '../src/college-cup.js';
 import {settleCollegeCareerGrowth,acknowledgeCollegeSeasonReview} from '../src/college-result.js';
+import {closeCollegeSeasonForNextYear,startNextCollegeSeason} from '../src/college-year.js';
 
 function advance(input:HighSchoolCareer){
  let state=input;
@@ -122,6 +123,11 @@ test('actual college216-game season: resume, annual windows, scoped records, obs
   assert.equal(Object.values(paid.career.world.players.own!.abilities).reduce((a,b)=>a+b,0),Object.values(abilities).reduce((a,b)=>a+b,0)+paid.gainedUnits);
   const result=acknowledgeCollegeSeasonReview(JSON.parse(JSON.stringify(paid.career)),paid.career.revision);assert.equal(result.phaseContext.phase,'OFFSEASON_REVIEW');assert.equal(result.collegeAdmission!.yearsCompleted,1);assert.equal(result.world.players.own!.age,19);assert.equal(result.ownAssessment!.progress.observed.length,96);assert.deepEqual(result.world.players,paid.career.world.players);assert.deepEqual(result.records,state.records);assert.deepEqual(result.development!.trainingResults,state.development!.trainingResults);
   assert.equal(canonicalJson(state),before);state=result;
+ });
+ await t.test('actual played college year seals NPC growth and activates academic year2 without changing official records',()=>{
+  const records=canonicalJson(state.records),abilities=state.world.players.own!.abilities,ready=closeCollegeSeasonForNextYear(state,state.revision),next=startNextCollegeSeason(ready,ready.revision);
+  assert.equal(Object.keys(ready.collegeNpcGrowth!.results).length,224);assert.equal(ready.seasonGrowth!.finalized,true);assert.equal(next.phaseContext.phase,'PRESEASON_SETUP');assert.equal(next.world.seasonKey,'2031');assert.equal(next.world.players.own!.age,20);assert.equal(next.collegeAdmission!.academicYear,2);assert.equal(next.collegeAdmission!.yearsCompleted,1);assert.deepEqual(next.world.players.own!.abilities,abilities);
+  assert.equal(canonicalJson(next.records),records);assert.equal(next.previousSeasons!.length,2);assert.equal(next.previousSeasons!.at(-1)!.collegeCup!.status,'COMPLETE');assert.equal(next.previousSeasons!.at(-1)!.collegeResult!.academicYear,1);assert.equal(next.ownAssessment!.progress.observed.length,96);assert.equal(next.seasonGrowth!.totalBudgetUnits,0);state=next;
  });
 });
 

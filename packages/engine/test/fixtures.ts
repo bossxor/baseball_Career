@@ -27,6 +27,8 @@ import {refreshOwnCareerAssessment} from '../src/high-school-assessment.js';
 import {acknowledgeHighSchoolSeasonReview,openHighSchoolCareerRoute,highSchoolCareerRouteView,enrollHighSchoolCollege} from '../src/high-school-route.js';
 import {closeHighSchoolSeasonForCollege,startAdmittedCollegeSeason} from '../src/college-entry.js';
 import {closeHighSchoolDay} from '../src/high-school-day.js';
+import {startCollegeCup,advanceCollegeCup} from '../src/college-cup.js';
+import {acknowledgeCollegeSeasonReview} from '../src/college-result.js';
 
 // Controlled no-appearance receipts isolate transitions. The progress test covers real216-game play.
 export function completedHighSchoolCareer(capAt?:number,kind:'HITTER'|'PITCHER'='HITTER'){
@@ -79,4 +81,10 @@ export function completedCollegeRegularSeason(source=enrolledCollegeCareer(),pro
   const closed=closeHighSchoolDay(state.world,records,state.health,state.days,day);state.world=closed.world;state.health=closed.health;state.days=closed.days;
  }
  state.ownAssessment=refreshOwnCareerAssessment(state);return state;
+}
+
+export function completedCollegeAcademicYear(source=enrolledCollegeCareer()){
+ let state=completedCollegeRegularSeason(source);state=startCollegeCup(state,state.revision);
+ for(let i=0;i<40;i++){const result=advanceCollegeCup(state,state.revision);state=result.career;if(result.stopReason==='CUP_COMPLETE')return acknowledgeCollegeSeasonReview(state,state.revision);}
+ throw new Error('ACADEMIC_YEAR_TEST_LIMIT');
 }

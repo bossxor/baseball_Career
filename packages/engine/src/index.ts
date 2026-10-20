@@ -40,3 +40,4 @@ export * from './college-career.js';
 export * from './standings.js';
 export * from './college-cup.js';
 export * from './college-result.js';
+export * from './college-year.js';
