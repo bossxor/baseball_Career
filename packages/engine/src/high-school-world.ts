@@ -34,7 +34,7 @@ export function createHighSchoolWorld(input:{worldKey:string;seasonKey:string;se
   if(!replaced) throw new RangeError('INVALID_STARTING_POSITION');
   const npcTemplates=templates.filter(p=>p!==replaced),identity=generateNpcIdentities(npcTemplates,createHandednessStream(input.seed,input.worldKey));
   const creation=createCareerPlayer(input.player,createWorldStream(input.seed,input.worldKey,'protagonist'));
-  const players:Record<string,DevelopmentPlayer>={},repertoires:Record<string,Repertoire>={};
+  const players:Record<string,DevelopmentPlayer>=Object.create(null),repertoires:Record<string,Repertoire>=Object.create(null);
   let rosterRng=createWorldStream(input.seed,input.worldKey,'roster'),potentialRng=createWorldStream(input.seed,input.worldKey,'potential');
   for(const [index,npc] of identity.players.entries()) {
     const types=Object.keys(npc.kind==='HITTER'?HITTER_TYPES:PITCHER_TYPES),typeDraw=nextInteger(rosterRng,types.length);rosterRng=typeDraw.state;

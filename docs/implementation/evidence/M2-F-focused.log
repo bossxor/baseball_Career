@@ -1,0 +1,21 @@
+✔ HS world: 9 schools/225 players, real protagonist replacement, all positions and216 games (18.5965ms)
+✔ HS world: same seed and serialized snapshot exact, new seed changes generated roster (56.3817ms)
+✔ HS world: all player archetypes/positions and pitcher forms accepted without illegal rosters (113.7442ms)
+✔ HS world: hard does not secretly raise current abilities; NPC P+5, protagonist normal/hard unchanged (32.6326ms)
+✔ HS world rejects invalid school/pitch choice/key collision and corrupted persisted rosters (10.9169ms)
+✔ 122: v2 identity snapshots self-contained from immutable game input and switch hitter opposite side (16.2553ms)
+✔ 60/121: contribution splits/matchups conserve all PA,AB,H,TB,K,outs and team records (151.6973ms)
+✔ 60: duplicate contribution no-op and changed evidence rejects; original ledger immutable (21.2913ms)
+✔ 60: official correction atomically replaces old stats, never appends twice or changes scope/score (20.6378ms)
+✔ 121: league/phase separate, career same-league years only, zero AB rates remain null (12.5479ms)
+✔ 107: direct duel is based on PA/H/TB and independent of team result (0.1761ms)
+✔ 71 INV03: same player cannot contribute twice in one world-season day across different leagues (5.6505ms)
+✔ record keys remain data after JSON restore, including prototype-like logical names (8.627ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 629.4689
