@@ -48,11 +48,12 @@ export function applyGrowthBudget(source: DevelopmentPlayer, budgetUnits: number
   const careerPeaks = Object.fromEntries(keys.map(key => [key, Math.max(source.careerPeaks[key]!, abilities[key]!)]));
   return { player: { ...structuredClone(source), abilities, careerPeaks }, gains: result.gains, discarded: result.discarded };
 }
-export function applyAging(source: DevelopmentPlayer) {
+export function applyAging(source: DevelopmentPlayer, elapsedFraction = 1) {
+  if(!Number.isFinite(elapsedFraction) || elapsedFraction<0 || elapsedFraction>1)throw new RangeError('INVALID_AGING_PERIOD');
   validateDevelopmentPlayer(source);
   const age = source.age, amount = age < 32 ? 0 : age <= 34 ? 2 : age <= 37 ? 5 : age <= 40 ? 9 : age <= 44 ? 12 : 15;
   const keys = abilityKeys(source.kind), weights = source.kind === 'HITTER' ? [8,8,8,8,60,8] : [30,10,10,10,30,10];
-  const result = allocateCapped(amount * 10_000, weights, keys.map(key => source.abilities[key]! - 10_000));
+  const result = allocateCapped(Math.round(amount * 10_000 * elapsedFraction), weights, keys.map(key => source.abilities[key]! - 10_000));
   return { player: { ...structuredClone(source), abilities: Object.fromEntries(keys.map((key, i) => [key, source.abilities[key]! - result.gains[i]!])) }, discarded: result.discarded };
 }
 

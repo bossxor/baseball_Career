@@ -1,0 +1,14 @@
+✔ 22/42: HS partial then same-year next period shares one cumulative budget; duplicate gives0 (4.8164ms)
+✔ 22: period-specific focus/type allocations preserved; old history does not overwrite current plan (0.5322ms)
+✔ 90: cumulative integer rounding conserved across tiny periods; capped loss never refunds (1.0131ms)
+✔ 71: altered evidence, overlap, damaged totals and post-final new period rejected atomically (1.5244ms)
+✔ 22: aging settles once on elapsed calendar fraction, unmultiplied; peak preserved (0.5708ms)
+✔ approved US52: full HS period hard starter plus guaranteed+1 can reach gate without cheat growth (0.5914ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 390.4522
