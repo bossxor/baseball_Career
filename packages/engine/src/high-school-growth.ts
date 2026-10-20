@@ -1,15 +1,16 @@
 import {assertFocus} from '@playball/rules';
 import type {HighSchoolCareer} from './high-school-career.js';
-import {closeHighSchoolDay} from './high-school-day.js';
+import {closeSchoolCompetitionDay} from './high-school-day.js';
 import {archetypeFor,validateDevelopmentPlayer} from './player.js';
 import type {DevelopmentPlayer} from './player.js';
-import {assertHighSchoolCareerRevision} from './high-school-career.js';
+import {assertHighSchoolCareerRevision,assertSchoolCareerRevision} from './high-school-career.js';
 import {assertSeasonCalendar,scheduleHighSchoolCalendar} from './season-calendar.js';
 import {createSeasonGrowthLedger,settleClosedGrowthPeriods} from './growth-ledger.js';
 import type {ClosedGrowthPeriod} from './growth-ledger.js';
 import {canonicalJson} from './game.js';
 import {refreshOwnCareerAssessment} from './high-school-assessment.js';
 import {assertSchedule} from './schedule.js';
+import type {ScheduledGame} from './schedule.js';
 
 export interface HighSchoolGrowthDay {
  worldDay:number;appearances:number;rehabilitating:boolean;focus:readonly string[];archetype:string;
@@ -19,15 +20,20 @@ export interface HighSchoolGrowthEvidence {
 }
 /** Server-only evidence. Absolute world days are not the growth ledger's [0,W] indices. */
 export function collectHighSchoolGrowthEvidence(source:HighSchoolCareer):HighSchoolGrowthEvidence {
+ return collectSchoolGrowthEvidence(source,source.world.schedule,false);
+}
+/** The caller supplies the active competitions and the verified injury carried at registration. */
+export function collectSchoolGrowthEvidence(source:HighSchoolCareer,schedule:readonly ScheduledGame[],openingRehabilitation:boolean):HighSchoolGrowthEvidence {
  if(source.phaseContext.phase!=='SEASON_REVIEW')throw new RangeError('INVALID_CAREER_PHASE');
  const {world}=source,key=world.protagonistKey,start=source.development?.seasonStartPlayer;
  // Old saves without a pre-training snapshot cannot reconstruct one from the enhanced player.
  if(!start)throw new RangeError('MISSING_SEASON_START_PLAYER');
  validateDevelopmentPlayer(start);
  if(start.simulationKey!==key || start.kind!==world.players[key]?.kind || start.age!==world.players[key]?.age)throw new RangeError('GROWTH_PLAYER_MISMATCH');
- const first=Math.min(...world.schedule.map(g=>g.worldDay)),last=Math.max(...world.schedule.map(g=>g.worldDay));
+ const first=Math.min(...schedule.map(g=>g.worldDay)),last=Math.max(...schedule.map(g=>g.worldDay));
  if(!Number.isSafeInteger(first) || !Number.isSafeInteger(last) || source.days.days.length!==last-first+1 || source.days.days.some((d,i)=>d.day!==first+i))throw new RangeError('INCOMPLETE_GROWTH_DAYS');
  const teamGames=world.schedule.filter(g=>g.awayTeamKey===world.protagonistSchoolId || g.homeTeamKey===world.protagonistSchoolId).sort((a,b)=>a.worldDay-b.worldDay);
+ const registeredGames=schedule.filter(g=>g.awayTeamKey===world.protagonistSchoolId || g.homeTeamKey===world.protagonistSchoolId);
  const history=source.planHistory;
  if(!history.length || history[0]!.completedTeamGames!==0)throw new RangeError('INVALID_GROWTH_PLAN_HISTORY');
  for(const [i,plan] of history.entries()){
@@ -35,13 +41,13 @@ export function collectHighSchoolGrowthEvidence(source:HighSchoolCareer):HighSch
   assertFocus(start.kind,plan.focus);archetypeFor(start.kind,plan.archetype);
  }
  const boundaries=history.map(p=>p.completedTeamGames===0?first:teamGames[p.completedTeamGames-1]!.worldDay+1);
- const days:HighSchoolGrowthDay[]=[];let planIndex=0,rehabilitating=false;
+ const days:HighSchoolGrowthDay[]=[];let planIndex=0,rehabilitating=openingRehabilitation;
  for(const closed of source.days.days){
   const day=closed.day;
   // Reuse the day-close receipt check so missing or corrected FINAL records cannot pay old evidence.
-  closeHighSchoolDay(world,source.records,source.health,source.days,day);
+  closeSchoolCompetitionDay(world,source.records,source.health,source.days,day,schedule);
   while(planIndex+1<history.length && boundaries[planIndex+1]!<=day)planIndex++;
-  const plan=history[planIndex]!,scheduled=teamGames.filter(g=>g.worldDay===day);
+  const plan=history[planIndex]!,scheduled=registeredGames.filter(g=>g.worldDay===day);
   if(scheduled.length>1)throw new RangeError('DOUBLE_BOOKED_GROWTH_DAY');
   let appearances=0;
   for(const game of scheduled){
@@ -67,19 +73,25 @@ export function collectHighSchoolGrowthEvidence(source:HighSchoolCareer):HighSch
 /** Graduate growth is a partial world-season payment, never a fresh annual budget. */
 export function settleHighSchoolCareerGrowth(source:HighSchoolCareer,expectedRevision:number){
  assertHighSchoolCareerRevision(source,expectedRevision);
+ return settleSchoolCareerGrowth(source,expectedRevision,source.world.schedule,false);
+}
+export function settleSchoolCareerGrowth(source:HighSchoolCareer,expectedRevision:number,schedule:readonly ScheduledGame[],openingRehabilitation:boolean){
+ assertSchoolCareerRevision(source,expectedRevision);
  const calendar=source.world.calendar;if(!calendar)throw new RangeError('MISSING_SEASON_CALENDAR');assertSeasonCalendar(calendar);
  assertSchedule(source.world.schedule,source.world.schools.map(s=>s.id),48,24);
  if(canonicalJson(scheduleHighSchoolCalendar(source.world.schedule,calendar))!==canonicalJson(source.world.schedule))throw new RangeError('CHANGED_SCHOOL_CALENDAR');
- const evidence=collectHighSchoolGrowthEvidence(source),growthIndex=new Map(calendar.growthDays.map((d,i)=>[d,i])),schoolDays=new Set(calendar.highSchoolDays);
+ const evidence=collectSchoolGrowthEvidence(source,schedule,openingRehabilitation),growthIndex=new Map(calendar.growthDays.map((d,i)=>[d,i])),schoolDays=new Set(calendar.highSchoolDays),college=source.world.leagueKey==='COLLEGE';
  const eligible=evidence.days.filter(d=>schoolDays.has(d.worldDay)),periods:ClosedGrowthPeriod[]=[];
  if(eligible.length!==calendar.highSchoolDays.length)throw new RangeError('INCOMPLETE_GROWTH_DAYS');
  for(let i=0;i<eligible.length;){
   const start=i,plan=eligible[i]!;
   while(i<eligible.length && eligible[i]!.archetype===plan.archetype && canonicalJson(eligible[i]!.focus)===canonicalJson(plan.focus))i++;
   const days=eligible.slice(start,i),startDay=growthIndex.get(plan.worldDay)!,endDay=growthIndex.get(days.at(-1)!.worldDay)!+1;
-  periods.push({periodKey:JSON.stringify(['hs-growth',source.world.worldKey,source.world.seasonKey,startDay,endDay]),focus:[...plan.focus],archetype:plan.archetype,period:{startDay,endDay,levelSeasonDays:calendar.highSchoolDays.length,level:'HIGH_SCHOOL',appearances:days.reduce((n,d)=>n+d.appearances,0),pitcherRole:evidence.seasonStartPlayer.position==='RP'?'RP':evidence.seasonStartPlayer.position==='CP'?'CP':'SP',rehabRatio:days.filter(d=>d.rehabilitating).length/days.length,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER',difficulty:source.difficulty,beneficiary:true}}});
+  periods.push({periodKey:JSON.stringify([college?'college-growth':'hs-growth',source.world.worldKey,source.world.seasonKey,startDay,endDay]),focus:[...plan.focus],archetype:plan.archetype,period:{startDay,endDay,levelSeasonDays:calendar.highSchoolDays.length,level:college?'COLLEGE':'HIGH_SCHOOL',appearances:days.reduce((n,d)=>n+d.appearances,0),pitcherRole:evidence.seasonStartPlayer.position==='RP'?'RP':evidence.seasonStartPlayer.position==='CP'?'CP':'SP',rehabRatio:days.filter(d=>d.rehabilitating).length/days.length,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER',difficulty:source.difficulty,beneficiary:true}}});
  }
- const ledger=source.seasonGrowth??createSeasonGrowthLedger(evidence.seasonStartPlayer,source.world.seasonKey,calendar.growthDays.length);
+ let ledger=source.seasonGrowth??createSeasonGrowthLedger(evidence.seasonStartPlayer,source.world.seasonKey,calendar.growthDays.length);
+ // M2-V/W college saves opened an empty ledger before PRE focus/style choices were confirmed.
+ if(college && !ledger.finalized && ledger.entries.length===0 && canonicalJson({...ledger.seasonStart,focus:evidence.seasonStartPlayer.focus,archetype:evidence.seasonStartPlayer.archetype})===canonicalJson(evidence.seasonStartPlayer))ledger={...ledger,seasonStart:structuredClone(evidence.seasonStartPlayer)};
  if(ledger.seasonKey!==source.world.seasonKey || ledger.worldGrowthDays!==calendar.growthDays.length || canonicalJson(ledger.seasonStart)!==canonicalJson(evidence.seasonStartPlayer))throw new RangeError('CHANGED_GROWTH_SEASON');
  const settled=settleClosedGrowthPeriods(source.world.players[evidence.playerKey]!,ledger,periods),career=structuredClone(source);
  career.world.players[evidence.playerKey]=settled.player;career.seasonGrowth=settled.ledger;career.ownAssessment=refreshOwnCareerAssessment(career);career.revision++;

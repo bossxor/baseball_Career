@@ -16,7 +16,7 @@ export interface HighSchoolGraduation {
 }
 export interface CollegeAdmission {
  admissionKey:string;collegeId:string;status:'ADMITTED'|'ENROLLED';entryYear:number;
- academicYear:1;yearsCompleted:0;playerKey:string;position:string;
+ academicYear:1|2|3|4;yearsCompleted:0|1|2|3|4;playerKey:string;position:string;
 }
 function evaluation(source:HighSchoolCareer){
  const player=source.world.players[source.world.protagonistKey]!;validateDevelopmentPlayer(player);

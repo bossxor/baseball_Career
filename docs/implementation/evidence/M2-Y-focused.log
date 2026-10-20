@@ -1,0 +1,15 @@
+✔ college PRE plan anchors growth, regular days pay once, cup adds no entitlement and academic result increments only completion (1687.9855ms)
+✔ carried HS mild injury starts college rehabilitation and recovery reduces only subsequent dates (1394.0298ms)
+✔ cup-only recovery is audited while growth remains restricted to regular dates (1347.2135ms)
+✔ legacy empty college ledger rebases only PRE plan fields and still rejects changed abilities, incomplete cup and stale revision (1373.5381ms)
+✔ growth evidence maps plans to the following date, preserves rest/rehab days and pre-training snapshot (26.1773ms)
+✔ pitcher evidence uses actual outs, not BF or displayed innings; end-of-season plan pays no previous date (8.9078ms)
+✔ incomplete dates, changed FINAL evidence, missing registration and invalid plan history reject without mutation (62.9232ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6010.6133

@@ -16,6 +16,7 @@ import {reconcileSchoolEmergency} from '../src/high-school-emergency.js';
 import {canonicalJson} from '../src/game.js';
 import {validatePitchXpLedger} from '../src/pitch-xp.js';
 import {startCollegeCup,advanceCollegeCup,collegeCupSchedule} from '../src/college-cup.js';
+import {settleCollegeCareerGrowth,acknowledgeCollegeSeasonReview} from '../src/college-result.js';
 
 function advance(input:HighSchoolCareer){
  let state=input;
@@ -114,6 +115,13 @@ test('actual college216-game season: resume, annual windows, scoped records, obs
   assert.equal(state.collegeCup!.status,'COMPLETE');assert.ok(state.collegeCup!.championKey);const count=collegeCupSchedule(state).length;assert.ok(count===4 || count===5);assert.equal(state.records.revision,432+count);
   assert.deepEqual({...recordTotals(state.records,{seasonKey:'2030',leagueKey:'COLLEGE',phase:'REGULAR'}),revision:totals.revision},totals);
   assert.equal(state.ownAssessment!.progress.observed.length,96);assert.equal(canonicalJson(state.seasonGrowth),growth);assert.equal(canonicalJson(state.previousSeasons),archive);
+ });
+ await t.test('actual college year growth uses regular outs/plans and acknowledges one academic year without repeating training',()=>{
+  const before=canonicalJson(state),abilities=state.world.players.own!.abilities,regular=recordTotals(state.records,{seasonKey:'2030',leagueKey:'COLLEGE',phase:'REGULAR'});
+  const paid=settleCollegeCareerGrowth(state,state.revision),ledger=paid.career.seasonGrowth!;assert.ok(paid.budgetUnits>0);assert.equal(ledger.entries.reduce((n,e)=>n+e.period.appearances,0),regular.pitching.own?.outs??0);assert.equal(ledger.entries.reduce((n,e)=>n+e.period.endDay-e.period.startDay,0),129);assert.ok(ledger.entries.every(e=>e.period.level==='COLLEGE'));assert.equal(ledger.entries.at(-1)!.archetype,'VELOCITY');
+  assert.equal(Object.values(paid.career.world.players.own!.abilities).reduce((a,b)=>a+b,0),Object.values(abilities).reduce((a,b)=>a+b,0)+paid.gainedUnits);
+  const result=acknowledgeCollegeSeasonReview(JSON.parse(JSON.stringify(paid.career)),paid.career.revision);assert.equal(result.phaseContext.phase,'OFFSEASON_REVIEW');assert.equal(result.collegeAdmission!.yearsCompleted,1);assert.equal(result.world.players.own!.age,19);assert.equal(result.ownAssessment!.progress.observed.length,96);assert.deepEqual(result.world.players,paid.career.world.players);assert.deepEqual(result.records,state.records);assert.deepEqual(result.development!.trainingResults,state.development!.trainingResults);
+  assert.equal(canonicalJson(state),before);state=result;
  });
 });
 

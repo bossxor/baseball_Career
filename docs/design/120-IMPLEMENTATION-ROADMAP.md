@@ -1,6 +1,7 @@
 # 구현 진행 안내 — 2026-10-20
 
-M0/M1 완료, M2 진행 중입니다. M2-X에서 대학 순위·상위4 선수권 실제 경기/우승과 정규/PS 기록 분리를 연결했습니다. 전체236/236·check/HTTP smoke 통과. 대학 성장/학년 결과·진급과 KBO 모집, 미국52 충돌·세계 전체 작업자는 남아 있습니다. 최신 결과는 [구현 진행](../implementation/PROGRESS.md)·[M2-X 인계](../implementation/M2-X-COLLEGE-CUP.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 이전 이력이며 전체 완료를 뜻하지 않습니다.
+M0/M1 완료, M2 진행 중입니다. M2-Y에서 대학 성장/재활 감사와 학년 완료 결과를 연결했습니다. 전체241/241·check/HTTP smoke 통과. 다음은 대학 연말 마감/진급·NPC 지속성장과 KBO 모집입니다. 미국52 충돌·세계 전체 작업자는 남아 있습니다. 최신 결과는 [구현 진행](../implementation/PROGRESS.md)·[M2-Y 인계](../implementation/M2-Y-COLLEGE-YEAR-RESULT.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 이전 이력이며 전체 완료를 뜻하지 않습니다.
+
 
 
 ---

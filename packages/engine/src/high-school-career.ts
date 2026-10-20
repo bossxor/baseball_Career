@@ -24,6 +24,8 @@ import type {SeasonGrowthLedger} from './growth-ledger.js';
 import type {HighSchoolGraduation,CollegeAdmission} from './high-school-route.js';
 import type {SchoolSeasonArchive,CollegeYearEnd} from './college-entry.js';
 import type {CollegeCup} from './college-cup.js';
+import type {CollegeSeasonResult} from './college-result.js';
+import {validateSeasonGrowthLedger} from './growth-ledger.js';
 
 export interface HighSchoolAdvancePlan {mode:'NEXT_MAJOR_EVENT'|'ONE_GAME'|'ONE_WEEK';startWorldDay:number;startTeamGames:number}
 export type HighSchoolProgressPhase={phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:HighSchoolGameJob|null;advancePlan?:HighSchoolAdvancePlan|null};
@@ -33,6 +35,7 @@ export type HighSchoolCareerPhase =
  | HighSchoolProgressPhase
  | {phase:'POSTSEASON_PROGRESS';nextWorldDay:number;pendingGame:HighSchoolGameJob|null}
  | {phase:'SEASON_REVIEW'}
+ | {phase:'OFFSEASON_REVIEW'}
  | {phase:'CAREER_ROUTE'}
  | {phase:'NEXT_SEASON_READY';route:'COLLEGE';admissionKey:string}
  | {phase:'EVENT_DECISION';eventKey:string;resume:{phase:'PRESEASON_SETUP'}|HighSchoolProgressPhase|{phase:'CAREER_ROUTE'}};
@@ -50,6 +53,7 @@ export interface HighSchoolCareer {
  previousSeasons?:readonly SchoolSeasonArchive[];
  collegeYearEnd?:CollegeYearEnd;
  collegeCup?:CollegeCup;
+ collegeResult?:CollegeSeasonResult;
  planHistory:readonly {completedTeamGames:number;focus:readonly string[];archetype:string}[];
 }
 /** Difficulty is immutable save metadata. Never accept a replacement policy on later commands. */
@@ -70,7 +74,7 @@ export function assertHighSchoolCareerRevision(source:HighSchoolCareer,expectedR
 export function assertCollegeCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
  assertCareerRevision(source,expectedRevision);
  const admission=source.collegeAdmission,world=source.world,player=world.players[world.protagonistKey];
- if(world.leagueKey!=='COLLEGE' || !admission || admission.status!=='ENROLLED' || admission.collegeId!==world.protagonistSchoolId || admission.playerKey!==world.protagonistKey || admission.position!==player?.position || admission.entryYear+admission.yearsCompleted!==world.calendar?.year || world.seasonKey!==String(world.calendar?.year))throw new RangeError('INVALID_CAREER_REGISTRATION');
+ if(world.leagueKey!=='COLLEGE' || !admission || admission.status!=='ENROLLED' || ![1,2,3,4].includes(admission.academicYear) || ![admission.academicYear-1,admission.academicYear].includes(admission.yearsCompleted) || admission.collegeId!==world.protagonistSchoolId || admission.playerKey!==world.protagonistKey || admission.position!==player?.position || admission.entryYear+admission.academicYear-1!==world.calendar?.year || world.seasonKey!==String(world.calendar?.year))throw new RangeError('INVALID_CAREER_REGISTRATION');
 }
 export function assertSchoolCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
  if(source.world.leagueKey==='COLLEGE')assertCollegeCareerRevision(source,expectedRevision);
@@ -130,5 +134,12 @@ export function confirmCareerPreseason(source:HighSchoolCareer,expectedRevision:
 }
 export function confirmSchoolPreseason(source:HighSchoolCareer,expectedRevision:number):HighSchoolCareer {
  assertSchoolCareerRevision(source,expectedRevision);if(source.phaseContext.phase!=='PRESEASON_SETUP' || source.events.some(e=>e.status==='OPEN'))throw new RangeError('INVALID_CAREER_PHASE');
- const updated=structuredClone(source);if(updated.development)updated.development.seasonStartPlayer=structuredClone(updated.world.players[updated.world.protagonistKey]!);updated.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:Math.min(...source.world.schedule.map(g=>g.worldDay)),pendingGame:null};updated.revision++;return updated;
+ const updated=structuredClone(source),player=updated.world.players[updated.world.protagonistKey]!;
+ if(updated.world.leagueKey==='COLLEGE' && updated.seasonGrowth){
+  validateSeasonGrowthLedger(updated.seasonGrowth);
+  if(updated.seasonGrowth.finalized || updated.seasonGrowth.entries.length || updated.seasonGrowth.seasonKey!==updated.world.seasonKey)throw new RangeError('GROWTH_SEASON_ALREADY_STARTED');
+  // Entry opens the ledger before PRE choices; only the plan fields change at confirmation.
+  updated.seasonGrowth.seasonStart={...updated.seasonGrowth.seasonStart,focus:[...player.focus],archetype:player.archetype};
+ }
+ if(updated.development)updated.development.seasonStartPlayer=structuredClone(player);updated.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:Math.min(...source.world.schedule.map(g=>g.worldDay)),pendingGame:null};updated.revision++;return updated;
 }

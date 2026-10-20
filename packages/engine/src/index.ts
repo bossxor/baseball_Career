@@ -39,3 +39,4 @@ export * from './college-entry.js';
 export * from './college-career.js';
 export * from './standings.js';
 export * from './college-cup.js';
+export * from './college-result.js';

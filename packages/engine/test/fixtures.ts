@@ -52,18 +52,23 @@ export function completedHighSchoolCareer(capAt?:number,kind:'HITTER'|'PITCHER'=
  return state;
 }
 
-export function enrolledCollegeCareer(kind:'HITTER'|'PITCHER'='HITTER'){
+export function enrolledCollegeCareer(kind:'HITTER'|'PITCHER'='HITTER',openingInjury=false){
  const source=completedHighSchoolCareer(undefined,kind);source.ownAssessment=refreshOwnCareerAssessment(source);
+ if(openingInjury){
+  const receipt=source.health.games.filter(g=>g.evidence.roster.includes('own')).at(-1)!;
+  receipt.result.injured.push('own');source.days.days.find(d=>d.day===receipt.evidence.day)!.result.injured.push('own');
+  source.health.injuries.own={severity:'MILD',remainingTeamGames:3,diagnosedGameKey:receipt.evidence.gameKey,seasonKey:source.world.seasonKey};
+ }
  const reviewed=acknowledgeHighSchoolSeasonReview(source,source.revision),opened=openHighSchoolCareerRoute(reviewed,reviewed.revision,1).career,view=highSchoolCareerRouteView(opened);
  const admitted=enrollHighSchoolCollege(opened,opened.revision,{eventVersion:1,offerSetKey:view.offerSetKey,offerSetVersion:1,collegeId:'U07'}),closed=closeHighSchoolSeasonForCollege(admitted,admitted.revision,true);
  return startAdmittedCollegeSeason(closed,closed.revision);
 }
 
 // Team-only controlled scores isolate cup seeding; real college216-game play is tested separately.
-export function completedCollegeRegularSeason(){
- const state=enrolledCollegeCareer();state.phaseContext={phase:'SEASON_REVIEW'};
+export function completedCollegeRegularSeason(source=enrolledCollegeCareer(),protagonistWins=false){
+ const state=structuredClone(source);state.phaseContext={phase:'SEASON_REVIEW'};
  for(const game of state.world.schedule){
-  const away=game.awayTeamKey<game.homeTeamKey;
+  const away=protagonistWins && game.awayTeamKey==='U07'?true:protagonistWins && game.homeTeamKey==='U07'?false:game.awayTeamKey<game.homeTeamKey;
   state.records.games[game.simulationKey]={gameKey:game.simulationKey,worldDay:game.worldDay,scope:{seasonKey:state.world.seasonKey,leagueKey:'COLLEGE',phase:'REGULAR'},teams:{[game.awayTeamKey]:{games:1,W:Number(away),L:Number(!away),T:0,R:Number(away),RA:Number(!away)},[game.homeTeamKey]:{games:1,W:Number(!away),L:Number(away),T:0,R:Number(!away),RA:Number(away)}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}};
   state.records.revision++;
  }
