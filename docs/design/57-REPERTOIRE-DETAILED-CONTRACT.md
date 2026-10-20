@@ -43,3 +43,4 @@ AI투수는등급높음→구종ID순상위최대4활성,2종보다적으면생�
 GET expansion/repertoire?playerId →{kind,book,loadout,training,seasonBudget:{baseCap:20,multiplier,actualCap,spent,reserved},allowedActions}. SET_REPERTOIRE={playerId,windowId,slots:[pitchId],weights:[{pitchId,percent}]};SET_PITCH_TRAINING={playerId,seasonId,pitchId,replaceSlotPitchId?};SET_BATTING_APPROACH={playerId,windowId,approachId}. preview는before/after/비율합/학습예상/예산. 합99는422 INVALID_ALLOCATION/weights,학습미허용은422 WINDOW_CLOSED,숙련0활성은422 NOT_ELIGIBLE. 성공receipt에는최종bookVersion/설정/기회사용만.
 
 S39는종류별화면분리,학습XP와활성비율을같은숫자로표시하지않음. XP가P상한100인것처럼표현금지. fixture PIT-D01~08:경계.60/합99/등급0활성/치트학습30등급2/연간60cap/부상3.75/다중리그동일원장/복사등급5→2 XP30. 예산·PRNG·호환·응답유실실행검증은구현후.
+최신 사용자확정U(2026-10-20): 활성4종에서 새 학습을 위해1종을 비활성화하면 PRE 구성 변경1회를 함께 사용한다. 슬롯 교체·학습 계획·예약을 원자 확정한다. 기회 소진 시 교체 불가. 빈 슬롯 학습은 별도 구성 변경을 소모하지 않는다.

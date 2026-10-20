@@ -180,7 +180,7 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 
 # 구현 진행 안내 — 2026-10-20
 
-M0/M1 완료 후 M2 커리어 구현 중이며 M2-A 선수 육성 기반을 검증했습니다. 다음은 구종 학습/NPC·세계 생성·고교 시즌 연결입니다. 최신 실행 증거·미완료 범위는 [구현 진행 문서](../implementation/PROGRESS.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 구현 전 이력이며 커리어·DB·인증·APK 전체 완료를 뜻하지 않습니다.
+M0/M1 완료 후 M2 커리어 구현 중이며 M2-A 선수 육성·M2-B 구종 학습/NPC 생성 기반을 검증했습니다. 다음은 세계 생성·고교 시즌 연결입니다. 최신 실행 증거·미완료 범위는 [구현 진행 문서](../implementation/PROGRESS.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 구현 전 이력이며 커리어·DB·인증·APK 전체 완료를 뜻하지 않습니다.
 
 ---
 
@@ -1012,6 +1012,10 @@ U: 우리팀으로 표현된 선수의 모자·유니폼 장식·속옷은 네�
 ## 2026-10-20 병살 보정 U
 
 사용자가 M1 구현 중 미정 계수에 대해 수비10점당 +2%p·타자 주루10점당 -2%p를 선택했다. 1루 주자·2아웃 미만·인플레이 OUT에서만 병살 추첨: p=clamp(.20+.002*(D-50)-.002*(RUNNING-50),.05,.35). D는41의 수비8명 적합도 반영 평균, RUNNING은 해당 타자의 현재 유효 주루다. 성공이면 타자와1루주자2아웃, 득점0. 기존2아웃 타석에는 적용하지 않는다.
+
+## 2026-10-20 구종 학습 슬롯 교체 U
+
+사용자는 활성 구종4개에서 새 구종 학습을 위해 하나를 비활성화할 경우 프리시즌 구성 변경1회를 함께 사용하는 안을 선택했다. 비활성화·학습 계획·기본XP10 예약을 하나의 명령으로 확정하며 구성 변경 기회가 이미 소진됐으면 해당 교체는 거절한다. 빈 슬롯에서의 학습 확정은 구성 변경 기회를 추가로 소모하지 않는다.
 
 ---
 
@@ -4752,6 +4756,7 @@ AI투수는등급높음→구종ID순상위최대4활성,2종보다적으면생�
 GET expansion/repertoire?playerId →{kind,book,loadout,training,seasonBudget:{baseCap:20,multiplier,actualCap,spent,reserved},allowedActions}. SET_REPERTOIRE={playerId,windowId,slots:[pitchId],weights:[{pitchId,percent}]};SET_PITCH_TRAINING={playerId,seasonId,pitchId,replaceSlotPitchId?};SET_BATTING_APPROACH={playerId,windowId,approachId}. preview는before/after/비율합/학습예상/예산. 합99는422 INVALID_ALLOCATION/weights,학습미허용은422 WINDOW_CLOSED,숙련0활성은422 NOT_ELIGIBLE. 성공receipt에는최종bookVersion/설정/기회사용만.
 
 S39는종류별화면분리,학습XP와활성비율을같은숫자로표시하지않음. XP가P상한100인것처럼표현금지. fixture PIT-D01~08:경계.60/합99/등급0활성/치트학습30등급2/연간60cap/부상3.75/다중리그동일원장/복사등급5→2 XP30. 예산·PRNG·호환·응답유실실행검증은구현후.
+최신 사용자확정U(2026-10-20): 활성4종에서 새 학습을 위해1종을 비활성화하면 PRE 구성 변경1회를 함께 사용한다. 슬롯 교체·학습 계획·예약을 원자 확정한다. 기회 소진 시 교체 불가. 빈 슬롯 학습은 별도 구성 변경을 소모하지 않는다.
 
 ---
 
@@ -8687,7 +8692,7 @@ AI 투구폼 분포・친화 표・효과 계수는 D 기본안이며 실제 밸
 
 # 구현 진행 안내 — 2026-10-20
 
-M0/M1 완료 후 M2 커리어 구현 중이며 M2-A 선수 육성 기반을 검증했습니다. 다음은 구종 학습/NPC·세계 생성·고교 시즌 연결입니다. 최신 실행 증거·미완료 범위는 [구현 진행 문서](../implementation/PROGRESS.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 구현 전 이력이며 커리어·DB·인증·APK 전체 완료를 뜻하지 않습니다.
+M0/M1 완료 후 M2 커리어 구현 중이며 M2-A 선수 육성·M2-B 구종 학습/NPC 생성 기반을 검증했습니다. 다음은 세계 생성·고교 시즌 연결입니다. 최신 실행 증거·미완료 범위는 [구현 진행 문서](../implementation/PROGRESS.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 구현 전 이력이며 커리어·DB·인증·APK 전체 완료를 뜻하지 않습니다.
 
 ---
 

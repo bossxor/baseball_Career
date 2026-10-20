@@ -26,7 +26,7 @@ export function validateDevelopmentPlayer(player: DevelopmentPlayer): void {
   if (!Number.isFinite(player.fatigue) || player.fatigue < 0 || player.fatigue > 100 || !Number.isSafeInteger(player.age) || player.age < 18 || !player.simulationKey || player.simulationKey.length > 128) throw new RangeError('INVALID_PLAYER_STATE');
 }
 /** Box-Muller, reject outside[-2,2], no hidden cached normal. Fixed order by six canonical keys. */
-function truncatedNormal(rng: RngState) {
+export function truncatedNormal(rng: RngState) {
   let state = rng;
   for (let i = 0; i < 10_000; i++) {
     const a = nextFloat(state), b = nextFloat(a.state); state = b.state;

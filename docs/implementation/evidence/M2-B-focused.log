@@ -1,0 +1,19 @@
+✔ 57: initial book, exact grade thresholds, invalid loadouts and source preservation (5.1892ms)
+✔ 101: every slider target respects sum100/lower10, deterministic ties, immutable input (17.1862ms)
+✔ 57: four healthy learning quarters normal10/cheat30, 0 XP stays inactive, no cancel/reselect (3.1793ms)
+✔ 57/90: half-healthy cheat3.75, fraction carry, zero denominator and duplicate quarters (4.031ms)
+✔ 57/90: reservation protects learning, released missed learning is future practice only (963.1319ms)
+✔ 57: full-slot learning consumes PRE once atomically; unchanged loadout costs zero (1.4698ms)
+✔ 57: AI ranking/thresholds and archive grade reduction preserve history without RNG (11.649ms)
+✔ 121: identity sorted generation, JSON resume and restricted positions (4.4027ms)
+✔ 121: fixed large sample hand/bat/form probabilities and corrected hitter population (1059.8725ms)
+✔ 42/85: NPC hard potential+5, club cheat owned-only, unchanged A/RNG and old player floor (18.2406ms)
+✔ 57: newly learned pitch can enter four-pitch loadout without counting the same slot twice (1528.5409ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4330.9286

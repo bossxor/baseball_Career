@@ -9,3 +9,5 @@ export * from './player.js';
 export * from './development.js';
 export * from './training.js';
 export * from './pitch-xp.js';
+export * from './repertoire.js';
+export * from './npc.js';
