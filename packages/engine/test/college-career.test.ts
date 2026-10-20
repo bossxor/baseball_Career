@@ -15,6 +15,7 @@ import {emptyBatting} from '../src/stats.js';
 import {reconcileSchoolEmergency} from '../src/high-school-emergency.js';
 import {canonicalJson} from '../src/game.js';
 import {validatePitchXpLedger} from '../src/pitch-xp.js';
+import {startCollegeCup,advanceCollegeCup,collegeCupSchedule} from '../src/college-cup.js';
 
 function advance(input:HighSchoolCareer){
  let state=input;
@@ -105,6 +106,14 @@ test('actual college216-game season: resume, annual windows, scoped records, obs
   const repertoire=state.world.repertoires.own!;validatePitchXpLedger(repertoire.ledger);assert.ok(repertoire.ledger.actualBookGrantedUnits>0);assert.equal(repertoire.seasonId,'2030');
   assert.equal(state.events.filter(e=>e.definitionId==='E43').length,2);assert.equal(state.events.filter(e=>e.definitionId==='E41').length,2);
   assert.equal(state.collegeAdmission!.yearsCompleted,0);assert.equal(state.seasonGrowth!.totalBudgetUnits,0);assert.throws(()=>advanceCollegeCareer(state,state.revision),/PHASE/);
+ });
+ await t.test('actual college regular216→cup4/5 games preserves regular totals and observation denominator',()=>{
+  const totals=recordTotals(state.records,{seasonKey:'2030',leagueKey:'COLLEGE',phase:'REGULAR'}),growth=canonicalJson(state.seasonGrowth);
+  state=startCollegeCup(state,state.revision);
+  for(let i=0;i<40;i++){const r=advanceCollegeCup(state,state.revision);assert.ok(r.plateAppearances<=1000);assert.ok(r.completedInnings<=20);assert.notEqual(r.stopReason,'ENGINE_LIMIT');state=r.career;if(r.stopReason==='CUP_COMPLETE')break;}
+  assert.equal(state.collegeCup!.status,'COMPLETE');assert.ok(state.collegeCup!.championKey);const count=collegeCupSchedule(state).length;assert.ok(count===4 || count===5);assert.equal(state.records.revision,432+count);
+  assert.deepEqual({...recordTotals(state.records,{seasonKey:'2030',leagueKey:'COLLEGE',phase:'REGULAR'}),revision:totals.revision},totals);
+  assert.equal(state.ownAssessment!.progress.observed.length,96);assert.equal(canonicalJson(state.seasonGrowth),growth);assert.equal(canonicalJson(state.previousSeasons),archive);
  });
 });
 

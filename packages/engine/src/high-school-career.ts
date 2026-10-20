@@ -23,6 +23,7 @@ import type {CareerTraitLedger} from './high-school-traits.js';
 import type {SeasonGrowthLedger} from './growth-ledger.js';
 import type {HighSchoolGraduation,CollegeAdmission} from './high-school-route.js';
 import type {SchoolSeasonArchive,CollegeYearEnd} from './college-entry.js';
+import type {CollegeCup} from './college-cup.js';
 
 export interface HighSchoolAdvancePlan {mode:'NEXT_MAJOR_EVENT'|'ONE_GAME'|'ONE_WEEK';startWorldDay:number;startTeamGames:number}
 export type HighSchoolProgressPhase={phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:HighSchoolGameJob|null;advancePlan?:HighSchoolAdvancePlan|null};
@@ -30,6 +31,7 @@ export type HighSchoolCareerPhase =
  | {phase:'CREATED'}
  | {phase:'PRESEASON_SETUP'}
  | HighSchoolProgressPhase
+ | {phase:'POSTSEASON_PROGRESS';nextWorldDay:number;pendingGame:HighSchoolGameJob|null}
  | {phase:'SEASON_REVIEW'}
  | {phase:'CAREER_ROUTE'}
  | {phase:'NEXT_SEASON_READY';route:'COLLEGE';admissionKey:string}
@@ -47,6 +49,7 @@ export interface HighSchoolCareer {
  collegeAdmission?:CollegeAdmission;
  previousSeasons?:readonly SchoolSeasonArchive[];
  collegeYearEnd?:CollegeYearEnd;
+ collegeCup?:CollegeCup;
  planHistory:readonly {completedTeamGames:number;focus:readonly string[];archetype:string}[];
 }
 /** Difficulty is immutable save metadata. Never accept a replacement policy on later commands. */

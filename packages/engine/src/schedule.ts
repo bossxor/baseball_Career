@@ -1,5 +1,5 @@
 export interface ScheduledGame {
-  simulationKey:string; leagueKey:string; seasonKey:string; round:number; worldDay:number; awayTeamKey:string; homeTeamKey:string;
+  simulationKey:string; leagueKey:string; seasonKey:string; round:number; worldDay:number; awayTeamKey:string; homeTeamKey:string; phase?:'POSTSEASON';
 }
 export interface ScheduleInput { teamKeys:readonly string[]; leagueKey:string; seasonKey:string; startDay:number }
 function teams(input:ScheduleInput):string[] {

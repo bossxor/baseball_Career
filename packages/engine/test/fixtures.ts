@@ -26,6 +26,7 @@ import {createOwnCareerAssessment} from '../src/high-school-assessment.js';
 import {refreshOwnCareerAssessment} from '../src/high-school-assessment.js';
 import {acknowledgeHighSchoolSeasonReview,openHighSchoolCareerRoute,highSchoolCareerRouteView,enrollHighSchoolCollege} from '../src/high-school-route.js';
 import {closeHighSchoolSeasonForCollege,startAdmittedCollegeSeason} from '../src/college-entry.js';
+import {closeHighSchoolDay} from '../src/high-school-day.js';
 
 // Controlled no-appearance receipts isolate transitions. The progress test covers real216-game play.
 export function completedHighSchoolCareer(capAt?:number,kind:'HITTER'|'PITCHER'='HITTER'){
@@ -56,4 +57,21 @@ export function enrolledCollegeCareer(kind:'HITTER'|'PITCHER'='HITTER'){
  const reviewed=acknowledgeHighSchoolSeasonReview(source,source.revision),opened=openHighSchoolCareerRoute(reviewed,reviewed.revision,1).career,view=highSchoolCareerRouteView(opened);
  const admitted=enrollHighSchoolCollege(opened,opened.revision,{eventVersion:1,offerSetKey:view.offerSetKey,offerSetVersion:1,collegeId:'U07'}),closed=closeHighSchoolSeasonForCollege(admitted,admitted.revision,true);
  return startAdmittedCollegeSeason(closed,closed.revision);
+}
+
+// Team-only controlled scores isolate cup seeding; real college216-game play is tested separately.
+export function completedCollegeRegularSeason(){
+ const state=enrolledCollegeCareer();state.phaseContext={phase:'SEASON_REVIEW'};
+ for(const game of state.world.schedule){
+  const away=game.awayTeamKey<game.homeTeamKey;
+  state.records.games[game.simulationKey]={gameKey:game.simulationKey,worldDay:game.worldDay,scope:{seasonKey:state.world.seasonKey,leagueKey:'COLLEGE',phase:'REGULAR'},teams:{[game.awayTeamKey]:{games:1,W:Number(away),L:Number(!away),T:0,R:Number(away),RA:Number(!away)},[game.homeTeamKey]:{games:1,W:Number(!away),L:Number(away),T:0,R:Number(!away),RA:Number(away)}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}};
+  state.records.revision++;
+ }
+ const first=Math.min(...state.world.schedule.map(g=>g.worldDay)),last=Math.max(...state.world.schedule.map(g=>g.worldDay));
+ for(let day=first;day<=last;day++){
+  // Receipts are real reducer results, with only future games hidden until their date is closed.
+  const records={...state.records,games:Object.fromEntries(Object.entries(state.records.games).filter(([,g])=>g.scope.seasonKey!==state.world.seasonKey || g.worldDay<=day))};
+  const closed=closeHighSchoolDay(state.world,records,state.health,state.days,day);state.world=closed.world;state.health=closed.health;state.days=closed.days;
+ }
+ state.ownAssessment=refreshOwnCareerAssessment(state);return state;
 }

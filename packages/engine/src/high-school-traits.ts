@@ -41,7 +41,7 @@ export function refreshCareerTraits(source:HighSchoolCareer,closedDay:number):Ca
  if(sameSeason && ledger.lastClosedDay!==null && closedDay<=ledger.lastClosedDay)return ledger;
  const leagueKey=source.world.leagueKey??'HS';
  const played=new Set<string>();
- for(const g of Object.values(source.records.games))if(g.scope.seasonKey===source.world.seasonKey && g.scope.leagueKey===leagueKey && g.scope.phase==='REGULAR' && g.worldDay<=closedDay){for(const k of Object.keys(g.batting))played.add(k);for(const k of Object.keys(g.pitching))played.add(k);}
+ for(const g of Object.values(source.records.games))if(g.scope.seasonKey===source.world.seasonKey && g.scope.leagueKey===leagueKey && (g.scope.phase==='REGULAR' || g.scope.phase==='POSTSEASON') && g.worldDay<=closedDay){for(const k of Object.keys(g.batting))played.add(k);for(const k of Object.keys(g.pitching))played.add(k);}
  for(const key of [...played].sort()) {
   const player=source.world.players[key];if(!player)continue;
   const before=Object.hasOwn(ledger.owned,key)?ledger.owned[key]!:empty();

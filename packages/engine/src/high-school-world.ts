@@ -51,7 +51,7 @@ export function createHighSchoolWorld(input:{worldKey:string;seasonKey:string;se
   assertHighSchoolWorld(world);return world;
 }
 export function assertHighSchoolWorld(world:HighSchoolWorld):void {
-  if(world.leagueKey!==undefined)throw new RangeError('INVALID_HIGH_SCHOOL_LEAGUE');
+  if(world.leagueKey!==undefined || world.schedule.some(g=>g.phase!==undefined))throw new RangeError('INVALID_HIGH_SCHOOL_LEAGUE');
   if(world.calendar){
     assertSeasonCalendar(world.calendar);
     assertSchedule(world.schedule,world.schools.map(s=>s.id),48,24);

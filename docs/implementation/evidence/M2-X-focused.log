@@ -1,0 +1,22 @@
+✔ cup freezes top4 and regular basis, admits only a complete closed season and rejects duplicate/stale start (1276.5363ms)
+✔ semifinal upsets seed final venues high/low/high; two wins cancel third final, split requires it (990.928ms)
+✔ actual AI cup for a nonqualifying protagonist: bounded JSON replay, whole-date health, separate records/no extra growth (1999.6613ms)
+✔ postseason-only appearance can unlock T06 from career cup HR without increasing regular PA (1911.2987ms)
+✔ all same-day games required before fatigue/injury; first-day close changes each player only once, bye rests (220.5083ms)
+✔ day ordering, world identity, altered official contribution and partial health publication reject (162.956ms)
+✔ six actual league dates then rest day: rest once, no injury RNG or healing tick on calendar rest (949.1187ms)
+✔ generated HS roster becomes actual1.2 game; selected starter, nine distinct legal hitters and owned-only cheatXP (52.6991ms)
+✔ HS game serialized PA resume equals continuous final; records and XP publish once after FINAL (74.7853ms)
+✔ stale world/revision and tampered scheduled date rejected without partial record/book changes (48.1838ms)
+✔ unavailable hitters excluded, insufficient roster rejects; bad starter, missing book and allocation reject (59.3507ms)
+✔ all four first-day scheduled games commit sequentially, eight teams once; independent9th team bye (153.9242ms)
+✔ standings use exact winning percentage then tied-group head-to-head, before run difference (2.7528ms)
+✔ multi-team mini-league ties use overall run difference and deterministic independent seeded lots (1.6994ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6417.5597

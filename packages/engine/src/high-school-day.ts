@@ -4,6 +4,7 @@ import type { RecordLedger } from './records.js';
 import type { HealthLedger } from './health.js';
 import { settleTeamGameHealth } from './health.js';
 import { appearanceFatigue } from './lineup.js';
+import type { ScheduledGame } from './schedule.js';
 
 export interface SchoolDayResult {injured:string[];recovered:string[]}
 export interface SchoolDayLedger {
@@ -13,12 +14,15 @@ export interface SchoolDayLedger {
 export const createSchoolDayLedger=(world:HighSchoolWorld):SchoolDayLedger=>({schemaVersion:1,worldKey:world.worldKey,seasonKey:world.seasonKey,days:[]});
 /** Internal postgame reducer. Persist world, health and day ledger together after all date games. */
 export function closeHighSchoolDay(world:HighSchoolWorld,records:RecordLedger,health:HealthLedger,source:SchoolDayLedger,day:number):{world:HighSchoolWorld;health:HealthLedger;days:SchoolDayLedger;result:SchoolDayResult;duplicate:boolean} {
-  const calendar=world.schedule.map(g=>g.worldDay),first=Math.min(...calendar),last=Math.max(...calendar);
+  return closeSchoolCompetitionDay(world,records,health,source,day,world.schedule);
+}
+export function closeSchoolCompetitionDay(world:HighSchoolWorld,records:RecordLedger,health:HealthLedger,source:SchoolDayLedger,day:number,schedule:readonly ScheduledGame[]):{world:HighSchoolWorld;health:HealthLedger;days:SchoolDayLedger;result:SchoolDayResult;duplicate:boolean} {
+  const calendar=schedule.map(g=>g.worldDay),first=Math.min(...calendar),last=Math.max(...calendar);
   if(source.schemaVersion!==1 || source.worldKey!==world.worldKey || source.seasonKey!==world.seasonKey || !Number.isSafeInteger(day) || day<first || day>last)throw new RangeError('INVALID_SCHOOL_DAY');
-  const scheduled=world.schedule.filter(g=>g.worldDay===day).sort((a,b)=>a.simulationKey<b.simulationKey?-1:1);
+  const scheduled=schedule.filter(g=>g.worldDay===day).sort((a,b)=>a.simulationKey<b.simulationKey?-1:1);
   const contributions=scheduled.map(game=>{
     const c=Object.hasOwn(records.games,game.simulationKey)?records.games[game.simulationKey]:undefined;
-    if(!c || c.worldDay!==day || c.scope.leagueKey!==(world.leagueKey??'HS') || c.scope.seasonKey!==world.seasonKey || c.scope.phase!=='REGULAR' || Object.keys(c.teams).length!==2 || !Object.hasOwn(c.teams,game.awayTeamKey) || !Object.hasOwn(c.teams,game.homeTeamKey))throw new RangeError('DAY_GAMES_NOT_FINAL');
+    if(!c || c.worldDay!==day || c.scope.leagueKey!==(world.leagueKey??'HS') || c.scope.seasonKey!==world.seasonKey || c.scope.phase!==(game.phase??'REGULAR') || Object.keys(c.teams).length!==2 || !Object.hasOwn(c.teams,game.awayTeamKey) || !Object.hasOwn(c.teams,game.homeTeamKey))throw new RangeError('DAY_GAMES_NOT_FINAL');
     return c;
   });
   const evidence=canonicalJson({worldKey:world.worldKey,seasonKey:world.seasonKey,day,contributions});

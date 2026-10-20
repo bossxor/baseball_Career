@@ -11,6 +11,7 @@ import { buildGameContribution, putGameContribution } from './records.js';
 import type { RecordLedger } from './records.js';
 import type { GameState, GameInput, TeamSnapshot, PlayerSnapshot, BattingLine } from './types.js';
 import type { TraitOwnership } from './traits.js';
+import type { ScheduledGame } from './schedule.js';
 
 export interface HighSchoolGameContext {
   difficulty:Difficulty;
@@ -32,7 +33,12 @@ const lookup=<T>(values:Readonly<Record<string,T>>,key:string):T|undefined=>Obje
 /** Internal server adapter only. The career command must authorize phase, queue and date first. */
 export function prepareHighSchoolGame(world:HighSchoolWorld,records:RecordLedger,gameKey:string,context:HighSchoolGameContext):HighSchoolGameJob {
   const scheduled=world.schedule.find(g=>g.simulationKey===gameKey);
-  if(!scheduled || scheduled.leagueKey!==(world.leagueKey??'HS') || scheduled.seasonKey!==world.seasonKey || Object.hasOwn(records.games,gameKey))throw new RangeError('INVALID_SCHEDULED_GAME');
+  if(!scheduled || scheduled.phase)throw new RangeError('INVALID_SCHEDULED_GAME');
+  return prepareSchoolCompetitionGame(world,records,scheduled,context);
+}
+/** The career worker supplies a validated scheduled game from its active competition. */
+export function prepareSchoolCompetitionGame(world:HighSchoolWorld,records:RecordLedger,scheduled:ScheduledGame,context:HighSchoolGameContext):HighSchoolGameJob {
+  if(scheduled.leagueKey!==(world.leagueKey??'HS') || scheduled.seasonKey!==world.seasonKey || scheduled.phase!==undefined && scheduled.phase!=='POSTSEASON' || Object.hasOwn(records.games,scheduled.simulationKey))throw new RangeError('INVALID_SCHEDULED_GAME');
   if(!['GROWTH','REALISTIC','SECRET_CHEAT'].includes(context.difficulty) || new Set(context.unavailableKeys).size!==context.unavailableKeys.length || context.unavailableKeys.some(k=>!Object.hasOwn(world.players,k)))throw new RangeError('INVALID_GAME_CONTEXT');
   const development:NonNullable<GameInput['pitchDevelopment']>={seasonKey:world.seasonKey,players:Object.create(null) as NonNullable<GameInput['pitchDevelopment']>['players']};
   const snapshot=(player:DevelopmentPlayer):PlayerSnapshot=>({simulationKey:player.simulationKey,abilities:{...player.abilities},fatigue:player.fatigue,morale:1,temporary:{},traitLogits:[],traits:structuredClone(lookup(context.traits,player.simulationKey)??{unlocked:[],qualifiedRivalPitcherKeys:[]})});
@@ -57,7 +63,7 @@ export function prepareHighSchoolGame(world:HighSchoolWorld,records:RecordLedger
     })};
   };
   const teams:[TeamSnapshot,TeamSnapshot]=[team(scheduled.awayTeamKey),team(scheduled.homeTeamKey)];
-  const game=createGame({simulationKey:scheduled.simulationKey,seed:world.seed,rulesVersion:RULES_VERSION,competition:'REGULAR',traitRulesVersion:1,pitchDevelopment:development,teams});
+  const game=createGame({simulationKey:scheduled.simulationKey,seed:world.seed,rulesVersion:RULES_VERSION,competition:scheduled.phase??'REGULAR',traitRulesVersion:1,pitchDevelopment:development,teams});
   return {schemaVersion:1,worldKey:world.worldKey,seasonKey:world.seasonKey,worldDay:scheduled.worldDay,basisWorld:canonicalJson(world),basisRecordRevision:records.revision,game,stopReason:'READY'};
 }
 export function advanceHighSchoolGame(job:HighSchoolGameJob,maxPlateAppearances=1000,maxCompletedInnings=20):HighSchoolGameJob {
@@ -67,10 +73,14 @@ export function advanceHighSchoolGame(job:HighSchoolGameJob,maxPlateAppearances=
 }
 /** Publish books and official contribution as one pure result. M3 must persist both atomically. */
 export function commitHighSchoolGame(world:HighSchoolWorld,records:RecordLedger,job:HighSchoolGameJob):{world:HighSchoolWorld;records:RecordLedger;duplicate:boolean} {
-  if(job.schemaVersion!==1 || job.worldKey!==world.worldKey || job.seasonKey!==world.seasonKey || job.game.status!=='FINAL' || !job.game.pitchDevelopment)throw new RangeError('SCHOOL_GAME_NOT_COMMITTABLE');
   const scheduled=world.schedule.find(g=>g.simulationKey===job.game.input.simulationKey);
-  if(!scheduled || scheduled.worldDay!==job.worldDay || scheduled.seasonKey!==world.seasonKey || scheduled.leagueKey!==(world.leagueKey??'HS') || job.game.input.teams[0].simulationKey!==scheduled.awayTeamKey || job.game.input.teams[1].simulationKey!==scheduled.homeTeamKey)throw new RangeError('SCHOOL_SCHEDULE_MISMATCH');
-  const contribution=buildGameContribution(job.game,{seasonKey:world.seasonKey,leagueKey:world.leagueKey??'HS',phase:'REGULAR'},scheduled.worldDay);
+  if(!scheduled || scheduled.phase)throw new RangeError('SCHOOL_SCHEDULE_MISMATCH');
+  return commitSchoolCompetitionGame(world,records,job,scheduled);
+}
+export function commitSchoolCompetitionGame(world:HighSchoolWorld,records:RecordLedger,job:HighSchoolGameJob,scheduled:ScheduledGame):{world:HighSchoolWorld;records:RecordLedger;duplicate:boolean} {
+  if(job.schemaVersion!==1 || job.worldKey!==world.worldKey || job.seasonKey!==world.seasonKey || job.game.status!=='FINAL' || !job.game.pitchDevelopment)throw new RangeError('SCHOOL_GAME_NOT_COMMITTABLE');
+  if(scheduled.simulationKey!==job.game.input.simulationKey || scheduled.worldDay!==job.worldDay || scheduled.seasonKey!==world.seasonKey || scheduled.leagueKey!==(world.leagueKey??'HS') || scheduled.phase!==undefined && scheduled.phase!=='POSTSEASON' || job.game.input.competition!==(scheduled.phase??'REGULAR') || job.game.input.teams[0].simulationKey!==scheduled.awayTeamKey || job.game.input.teams[1].simulationKey!==scheduled.homeTeamKey)throw new RangeError('SCHOOL_SCHEDULE_MISMATCH');
+  const contribution=buildGameContribution(job.game,{seasonKey:world.seasonKey,leagueKey:world.leagueKey??'HS',phase:scheduled.phase??'REGULAR'},scheduled.worldDay);
   const result=putGameContribution(records,contribution);
   if(result.duplicate)return {world,records,duplicate:true};
   if(records.revision!==job.basisRecordRevision || canonicalJson(world)!==job.basisWorld)throw new RangeError('STALE_SCHOOL_GAME');

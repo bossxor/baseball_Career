@@ -10,23 +10,24 @@ import type {BattingLine} from './types.js';
 import {forfeitCareerTrainingEvent} from './high-school-training.js';
 import {refreshOwnCareerAssessment} from './high-school-assessment.js';
 import {refreshCareerTraits} from './high-school-traits.js';
-export type SchoolProgressStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'ONE_GAME'|'ONE_WEEK'|'MAJOR_EVENT'|'HEALTH_CHANGE'|'SEASON_REVIEW';
+export type SchoolProgressStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'ONE_GAME'|'ONE_WEEK'|'MAJOR_EVENT'|'HEALTH_CHANGE'|'SEASON_REVIEW'|'CUP_COMPLETE';
 export interface SchoolProgressResult {career:HighSchoolCareer;stopReason:SchoolProgressStop;plateAppearances:number;completedInnings:number;healthChanges:{injured:boolean;recovered:boolean}|null}
 function teamGames(state:HighSchoolCareer):number {return Object.values(state.records.games).filter(g=>g.scope.seasonKey===state.world.seasonKey && g.scope.leagueKey===(state.world.leagueKey??'HS') && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,state.world.protagonistSchoolId)).length;}
 /** Server-internal world AI context; never returned to clients. */
-export function highSchoolGameContext(state:HighSchoolCareer):HighSchoolGameContext {
+export function highSchoolGameContext(state:HighSchoolCareer,competition:'REGULAR'|'POSTSEASON'='REGULAR'):HighSchoolGameContext {
  const total=recordTotals(state.records,{leagueKey:state.world.leagueKey??'HS',phase:'REGULAR',seasonKey:state.world.seasonKey});
+ const postseason=competition==='POSTSEASON'?recordTotals(state.records,{leagueKey:state.world.leagueKey??'HS',phase:'POSTSEASON',seasonKey:state.world.seasonKey}):null;
  const starters:Record<string,string>=Object.create(null) as Record<string,string>,recentBatting:Record<string,BattingLine>=Object.create(null) as Record<string,BattingLine>;
  for(const school of state.world.schools){
   const available=school.roster.filter(k=>state.world.players[k]!.kind==='PITCHER' && !Object.hasOwn(state.health.injuries,k)).sort();
   const rotation=available.filter(k=>state.world.players[k]!.position==='SP'),pool=rotation.length?rotation:available;
-  if(pool.length===0)throw new RangeError('NO_HEALTHY_SCHOOL_PITCHER');starters[school.id]=pool[(total.teams[school.id]?.games??0)%pool.length]!;
+  if(pool.length===0)throw new RangeError('NO_HEALTHY_SCHOOL_PITCHER');starters[school.id]=pool[((total.teams[school.id]?.games??0)+(postseason?.teams[school.id]?.games??0))%pool.length]!;
   const games=Object.values(state.records.games).filter(g=>g.scope.seasonKey===state.world.seasonKey && g.scope.leagueKey===(state.world.leagueKey??'HS') && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,school.id)).sort((a,b)=>a.worldDay-b.worldDay);
   const review=Math.floor(games.length/20)*20,reviewGames=new Set(games.slice(Math.max(0,review-20),review).map(g=>g.gameKey));
   const reviewed=recordTotals({...state.records,games:Object.fromEntries(Object.entries(state.records.games).filter(([key])=>reviewGames.has(key)))},{leagueKey:state.world.leagueKey??'HS',phase:'REGULAR',seasonKey:state.world.seasonKey});
   for(const key of school.roster)if(Object.hasOwn(reviewed.batting,key))recentBatting[key]=reviewed.batting[key]!;
  }
- return {difficulty:state.difficulty,unavailableKeys:Object.keys(state.health.injuries),starters,recentBatting,recentPitchingOuts:Object.fromEntries(Object.entries(total.pitching).map(([key,p])=>[key,p.outs])),traits:state.traits?.owned??{},approaches:{}};
+ return {difficulty:state.difficulty,unavailableKeys:Object.keys(state.health.injuries),starters,recentBatting,recentPitchingOuts:Object.fromEntries([...new Set([...Object.keys(total.pitching),...Object.keys(postseason?.pitching??{})])].map(key=>[key,(total.pitching[key]?.outs??0)+(postseason?.pitching[key]?.outs??0)])),traits:state.traits?.owned??{},approaches:{}};
 }
 /** Bounded server worker. A plan survives safe chunks; a fresh click never redraws a pending game. */
 export function advanceHighSchoolCareer(source:HighSchoolCareer,expectedRevision:number,mode?:HighSchoolAdvancePlan['mode']):SchoolProgressResult {

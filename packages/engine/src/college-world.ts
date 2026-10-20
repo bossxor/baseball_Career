@@ -42,6 +42,6 @@ export function assertCollegeWorld(world:CollegeWorld):void {
  if(world.leagueKey!=='COLLEGE' || world.seasonKey!==String(world.calendar.year) || world.schools.some((s,i)=>s.id!==COLLEGES[i]?.id || s.name!==COLLEGES[i]?.name))throw new RangeError('INVALID_COLLEGE_WORLD');
  assertSeasonCalendar(world.calendar);assertSchoolWorldRoster(world);assertSchedule(world.schedule,world.schools.map(s=>s.id),48,24);
  const expected=scheduleHighSchoolCalendar(world.schedule,world.calendar);
- if(world.schedule.some((g,i)=>g.worldDay!==expected[i]!.worldDay || g.leagueKey!=='COLLEGE' || g.seasonKey!==world.seasonKey))throw new RangeError('INVALID_COLLEGE_SCHEDULE');
+ if(world.schedule.some((g,i)=>g.worldDay!==expected[i]!.worldDay || g.leagueKey!=='COLLEGE' || g.seasonKey!==world.seasonKey || g.phase!==undefined))throw new RangeError('INVALID_COLLEGE_SCHEDULE');
  for(const player of Object.values(world.players))if(player.age<19 || player.age>22)throw new RangeError('INVALID_COLLEGE_PLAYER_AGE');
 }

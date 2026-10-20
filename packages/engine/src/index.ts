@@ -37,3 +37,5 @@ export * from './high-school-route.js';
 export * from './college-world.js';
 export * from './college-entry.js';
 export * from './college-career.js';
+export * from './standings.js';
+export * from './college-cup.js';
