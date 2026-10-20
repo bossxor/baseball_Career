@@ -1,10 +1,12 @@
+import {pitchMastery,validatePitchWeights,grantPracticePitchXp} from './repertoire.js';
+import {validatePitchXpLedger} from './pitch-xp.js';
 import {validateTraits,traitLogitEffects,defenseTraitTemporary,traitRunningBonus,traitPitchThreshold} from './traits.js';
 import { RULES_VERSION, PITCH_IDS, OUTCOMES, assertAbilities } from '@playball/rules';
 import { advanceBases } from './bases.js';
 import { baseLogits, effectiveAbilities, finite, matchupEffects, pitcherReviewThreshold, ranged, sampleOutcome, softmax } from './probabilities.js';
 import { createStreams, nextFloat, nextInteger } from './rng.js';
 import { emptyBatting, emptyPitching } from './stats.js';
-import type { Appearance, GameInput, GameState, PitchEntry, PitcherDecisions, PitcherSnapshot } from './types.js';
+import type { Appearance, GameInput, GameState, GamePitchDevelopment, PitchEntry, PitcherDecisions, PitcherSnapshot } from './types.js';
 
 export function selectRepresentativePitch(entries: readonly PitchEntry[], uniform: number): PitchEntry {
   ranged(uniform, 0, 1);
@@ -22,8 +24,20 @@ export function selectRepresentativePitch(entries: readonly PitchEntry[], unifor
   return sorted[sorted.length - 1]!;
 }
 
+function gameVersion(input:GameInput):string {return input.pitchDevelopment?'1.2.0':input.traitRulesVersion===1?'1.1.0':'1.0.0';}
+function validateGamePitchDevelopment(input:GameInput,development:GamePitchDevelopment,initial:boolean):void {
+  const pitchers=input.teams.flatMap(t=>t.pitchers);
+  if(!development.seasonKey || Object.keys(development.players).length!==pitchers.length)throw new RangeError('INVALID_PITCH_DEVELOPMENT');
+  for(const pitcher of pitchers) {
+    const entry=Object.hasOwn(development.players,pitcher.simulationKey)?development.players[pitcher.simulationKey]:undefined;
+    if(!entry || ![5,6,15].includes(entry.numerator) || entry.repertoire.seasonId!==development.seasonKey)throw new RangeError('INVALID_PITCH_DEVELOPMENT');
+    validatePitchWeights(entry.repertoire.book,entry.repertoire.weights);validatePitchXpLedger(entry.repertoire.ledger);
+    if(Object.keys(entry.repertoire.weights).length!==pitcher.repertoire.length || pitcher.repertoire.some(p=>entry.repertoire.weights[p.pitchId]!==p.weight || initial && pitchMastery(entry.repertoire.book[p.pitchId]!)!==p.mastery))throw new RangeError('PITCH_SNAPSHOT_MISMATCH');
+  }
+}
 function validateInput(input: GameInput): void {
   if (!input.simulationKey || !input.seed || input.rulesVersion !== RULES_VERSION || !['REGULAR', 'POSTSEASON', 'INTERNATIONAL'].includes(input.competition) || input.teams.length !== 2) throw new RangeError('Invalid/unsupported game input');
+  if(input.pitchDevelopment) {if(input.traitRulesVersion!==1)throw new RangeError('PITCH_DEVELOPMENT_REQUIRES_CURRENT_RULES');validateGamePitchDevelopment(input,input.pitchDevelopment,true);}
   if(input.traitRulesVersion!==undefined && input.traitRulesVersion!==1) throw new RangeError('UNSUPPORTED_TRAIT_RULES');
   for(const team of input.teams) for(const [kind,players] of [['HITTER',team.lineup],['PITCHER',team.pitchers]] as const) for(const player of players) {
     if(input.traitRulesVersion===1 && player.traitLogits.length || player.traits && input.traitRulesVersion!==1) throw new RangeError('INVALID_TRAIT_INPUT');
@@ -61,7 +75,8 @@ export function createGame(input: GameInput): GameState {
     return starter >= 0 ? starter : team.pitchers.findIndex(p => p.available);
   }) as [number, number];
   return {
-    engineVersion: input.traitRulesVersion===1?'1.1.0':'1.0.0', input: structuredClone(input), status: 'LIVE', inning: 1, half: 0, outs: 0, halfPlateAppearances: 0, playCursor: 0,
+    ...(input.pitchDevelopment?{pitchDevelopment:structuredClone(input.pitchDevelopment)}:{}),
+    engineVersion: gameVersion(input), input: structuredClone(input), status: 'LIVE', inning: 1, half: 0, outs: 0, halfPlateAppearances: 0, playCursor: 0,
     scores: [0, 0], scoreByInning: [[0], []], bases: [null, null, null], nextBattingIndex: [0, 0], activePitcherIndex: active,
     rng: createStreams(input.seed, input.simulationKey),
     batting: Object.fromEntries(input.teams.flatMap(t => t.lineup.map(p => [p.simulationKey, emptyBatting()]))),
@@ -148,7 +163,7 @@ function processPlateAppearance(state: GameState): void {
     return sum + effectiveAbilities('HITTER', player.abilities, player.fatigue, player.morale, defenseTraitTemporary(player.abilities.DEFENSE!,player.temporary,player.traits)).DEFENSE! * (.5 + .5 * f.fit / 100);
   }, 0) / 8;
   const pitchDraw = nextFloat(state.rng.pitchPlan); state.rng.pitchPlan = pitchDraw.state;
-  const pitch = selectRepresentativePitch(pitcher.repertoire, pitchDraw.value);
+  const pitch = selectRepresentativePitch(pitcher.repertoire.map(entry=>state.pitchDevelopment?{...entry,mastery:pitchMastery(state.pitchDevelopment.players[pitcher.simulationKey]!.repertoire.book[entry.pitchId]!)}:entry), pitchDraw.value);
   const context={inning:state.inning,half:state.half===0?'TOP' as const:'BOTTOM' as const,ownerLead:state.scores[offense]-state.scores[defense],loaded:state.bases.every(Boolean),firstMeeting:!state.plays.some(p=>p.batterKey===batter.simulationKey && p.pitcherKey===pitcher.simulationKey),postseason:state.input.competition==='POSTSEASON',pitcherKey:pitcher.simulationKey,starter:appearanceOf(state,pitcher.simulationKey).starter,pitcherRuns:state.pitching[pitcher.simulationKey]!.R};
   const effects=[...batter.traitLogits,...pitcher.traitLogits,...traitLogitEffects('HITTER',batter.traits,context),...traitLogitEffects('PITCHER',pitcher.traits,{...context,ownerLead:-context.ownerLead})];
   const effect = matchupEffects(pitcher.pitchForm, pitch.pitchId, pitch.mastery, pitcher.throws, batter.bats, batter.approach, effects);
@@ -189,6 +204,10 @@ function processPlateAppearance(state: GameState): void {
       if (appearance.saveSituation) appearance.blownSave = true;
     }
   }
+  if(state.pitchDevelopment) {
+    const development=state.pitchDevelopment.players[pitcher.simulationKey]!;
+    development.repertoire=grantPracticePitchXp(development.repertoire,JSON.stringify([state.pitchDevelopment.seasonKey,state.input.simulationKey,pitcher.simulationKey,state.playCursor]),pitch.pitchId,play.outsAdded,development.numerator);
+  }
   state.plays.push({ ...before, cursor: state.playCursor, inning: state.inning, half: offense === 0 ? 'TOP' : 'BOTTOM', batterKey: batter.simulationKey, pitcherKey: pitcher.simulationKey, outcome: result.outcome, representativePitch: pitch.pitchId, probabilities, pitches, scored: play.scored, outsAdded: play.outsAdded, attempts: play.attempts });
   state.playCursor++; state.halfPlateAppearances++; state.nextBattingIndex[offense] = (state.nextBattingIndex[offense] + 1) % 9;
   state.bases = play.bases; state.outs += play.outsAdded;
@@ -205,7 +224,7 @@ function processPlateAppearance(state: GameState): void {
 }
 
 export function runGameChunk(source: GameState, limits: { plateAppearances?: number; completedInnings?: number } = {}) {
-  if (source.engineVersion !== (source.input.traitRulesVersion===1?'1.1.0':'1.0.0')) throw new RangeError('Unsupported engine version');
+  if (source.engineVersion !== gameVersion(source.input)) throw new RangeError('Unsupported engine version');
   validateInput(source.input);
   assertGameInvariants(source);
   const maximum = limits.plateAppearances ?? 1000, inningLimit = limits.completedInnings ?? 20;
@@ -222,6 +241,8 @@ export function runGameChunk(source: GameState, limits: { plateAppearances?: num
 }
 
 export function assertGameInvariants(state: GameState): void {
+  if(Boolean(state.pitchDevelopment)!==Boolean(state.input.pitchDevelopment))throw new RangeError('MISSING_PITCH_DEVELOPMENT_STATE');
+  if(state.pitchDevelopment)validateGamePitchDevelopment(state.input,state.pitchDevelopment,false);
   if (!Number.isInteger(state.outs) || state.outs < 0 || state.outs > 2 || state.playCursor !== state.plays.length) throw new Error('INVARIANT_VIOLATION: game cursor/outs');
   for (const team of [0, 1] as const) {
     const batting = state.input.teams[team].lineup.map(p => state.batting[p.simulationKey]!);

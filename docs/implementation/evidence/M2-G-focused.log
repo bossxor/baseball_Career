@@ -1,0 +1,12 @@
+✔ 57/90 game1.2: every PA supplies outs-based source exactly once, no phantom BF, JSON resume stable (103.0184ms)
+✔ 57: mastery crossing uses pre-PA grade now and the new grade starting next PA (70.7466ms)
+✔ 85: normal/hardNPC/cheat XP policies apply once and leave below-threshold game outcomes identical (25.9762ms)
+✔ 90: learning reservation survives actual game, ledger corruption or initial mastery mismatch rejects (9.71ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 602.0048

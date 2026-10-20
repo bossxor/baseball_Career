@@ -1,3 +1,4 @@
+import type {Repertoire} from './repertoire.js';
 import type {TraitOwnership} from './traits.js';
 import type { AbilityUnits, Approach, LogitVector, PitchId, Outcome } from '@playball/rules';
 import type { Bases, Runner, RunningAttempt } from './bases.js';
@@ -23,7 +24,9 @@ export interface TeamSnapshot {
   fielders: readonly { simulationKey: string; fit: number }[];
   pitchers: readonly PitcherSnapshot[];
 }
+export interface GamePitchDevelopment {seasonKey:string;players:Record<string,{repertoire:Repertoire;numerator:5|6|15}>}
 export interface GameInput {
+  pitchDevelopment?: GamePitchDevelopment;
   traitRulesVersion?: 1;
   simulationKey: string; seed: string; rulesVersion: string; competition: 'REGULAR' | 'POSTSEASON' | 'INTERNATIONAL';
   /** Away then home. IDs are immutable simulation keys, never database row IDs. */
@@ -45,6 +48,7 @@ export interface PlayLog {
 export interface DecisiveLead { team: 0 | 1; losingPitcherKey: string; winningCandidateKey: string; cursor: number }
 export interface PitcherDecisions { W: string | null; L: string | null; SV: string | null; HLD: string[]; BS: string[] }
 export interface GameState {
+  pitchDevelopment?: GamePitchDevelopment;
   engineVersion: string; input: GameInput; status: 'LIVE' | 'FINAL';
   inning: number; half: 0 | 1; outs: number; halfPlateAppearances: number; playCursor: number;
   scores: [number, number]; scoreByInning: [number[], number[]]; bases: Bases;

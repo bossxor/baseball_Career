@@ -28,3 +28,19 @@ export function grantPitchXp(source: PitchXpLedger, input: { evidenceKey: string
   ledger.entries.push({ evidenceKey: input.evidenceKey, pitchId: input.pitchId, candidateBaseUnits: input.candidateBaseUnits, policyNumerator: input.numerator, baseUnits: base, budgetDebit, bookGain, capLoss: budgetDebit - bookGain });
   return { ledger, xpUnits: input.currentPitchXpUnits + bookGain, duplicate: false };
 }
+
+/** Strict persisted ledger validation at game load; all historical policies share the same base budget. */
+export function validatePitchXpLedger(ledger:PitchXpLedger):void {
+  for(const n of [ledger.baseSpentUnits,ledger.baseReservedUnits,ledger.actualBudgetSpentUnits,ledger.actualBookGrantedUnits,ledger.scalingRemainder])if(!Number.isSafeInteger(n) || n<0)throw new RangeError('INVALID_XP_LEDGER');
+  if(ledger.baseSpentUnits+ledger.baseReservedUnits>200_000 || ledger.actualBudgetSpentUnits>600_000 || ledger.actualBookGrantedUnits>ledger.actualBudgetSpentUnits || ledger.scalingRemainder>4)throw new RangeError('INVALID_XP_LEDGER');
+  let base=0,spent=0,granted=0,remainder=0;const seen=new Set<string>();
+  for(const entry of ledger.entries) {
+    if(!entry.evidenceKey || seen.has(entry.evidenceKey) || !PITCH_IDS.includes(entry.pitchId as PitchId) || ![5,6,15].includes(entry.policyNumerator))throw new RangeError('INVALID_XP_ENTRY');
+    seen.add(entry.evidenceKey);
+    for(const n of [entry.candidateBaseUnits,entry.baseUnits,entry.budgetDebit,entry.bookGain,entry.capLoss])if(!Number.isSafeInteger(n) || n<0)throw new RangeError('INVALID_XP_ENTRY');
+    const scaled=entry.policyNumerator*entry.baseUnits+remainder,cap=entry.policyNumerator===15?600_000:entry.policyNumerator===6?240_000:200_000;
+    if(entry.baseUnits>entry.candidateBaseUnits || entry.bookGain+entry.capLoss!==entry.budgetDebit || entry.budgetDebit!==(entry.baseUnits===0?0:Math.floor(scaled/5)) || entry.budgetDebit>Math.max(0,cap-spent))throw new RangeError('INVALID_XP_ENTRY');
+    base+=entry.baseUnits;spent+=entry.budgetDebit;granted+=entry.bookGain;if(entry.baseUnits>0)remainder=scaled%5;
+  }
+  if(base!==ledger.baseSpentUnits || spent!==ledger.actualBudgetSpentUnits || granted!==ledger.actualBookGrantedUnits || remainder!==ledger.scalingRemainder)throw new RangeError('XP_LEDGER_TOTAL_MISMATCH');
+}

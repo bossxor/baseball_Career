@@ -1,4 +1,4 @@
-export const ENGINE_VERSION = '1.1.0';
+export const ENGINE_VERSION = '1.2.0';
 export const LEGACY_ENGINE_VERSION = '1.0.0';
 export * from './rng.js';
 export * from './probabilities.js';
