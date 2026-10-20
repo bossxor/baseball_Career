@@ -26,3 +26,4 @@ export * from './emergency-roster.js';
 export * from './high-school-game.js';
 export * from './high-school-day.js';
 export * from './high-school-emergency.js';
+export * from './high-school-career.js';

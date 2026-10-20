@@ -1,0 +1,13 @@
+✔ career creation/confirmation uses canonical phases and persisted E01, no game auto-play (136.7788ms)
+✔ E01 domain focus validates4 before commit; failed choice leaves event and world untouched (97.5402ms)
+✔ KEEP_FOCUS resolves E01; initial plan changes preserve current ability, potential and stream state (55.3309ms)
+✔ PRE archetype change once; keeping current archetype uses no new opportunity or ability reset (63.293ms)
+✔ preseason confirmation enters progress at first schedule day, revision protected; unresolved source mismatch rejected (85.1099ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1228.7039
