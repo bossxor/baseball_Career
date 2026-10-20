@@ -50,7 +50,7 @@ test('34: fixed-seed draft empirical distribution matches preview and consumes e
   assert.deepEqual(drawDraft({baseScore:90,hasEligibleClubSlot:false},rng),{score:null,round:null,state:rng});
 });
 test('34: US direct only with ability AND assessment AND actual valid offer AND eligibility',()=>{
-  const valid={overall:55,amateurScore:50,validOfferCount:1,eligible:true};assert.equal(canShowUsDirect(valid),true);
-  for(const change of [{overall:54.9999},{amateurScore:49.9999},{validOfferCount:0},{eligible:false}]) assert.equal(canShowUsDirect({...valid,...change}),false);
+  const valid={overall:52,amateurScore:50,validOfferCount:1,eligible:true};assert.equal(canShowUsDirect(valid),true);
+  for(const change of [{overall:51.9999},{amateurScore:49.9999},{validOfferCount:0},{eligible:false}]) assert.equal(canShowUsDirect({...valid,...change}),false);
   assert.throws(()=>canShowUsDirect({...valid,validOfferCount:-1}));
 });

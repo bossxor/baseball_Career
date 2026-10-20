@@ -20,10 +20,15 @@ export function archetypeFor(kind: PlayerKind, id: string): Readonly<Archetype> 
   return table[id]!;
 }
 export function validateDevelopmentPlayer(player: DevelopmentPlayer): void {
+  if(!['HITTER','PITCHER'].includes(player.kind) || !['R','L'].includes(player.throws) || !['R','L','S'].includes(player.bats))throw new RangeError('INVALID_PLAYER_IDENTITY');
+  const positions=player.kind==='HITTER'?['C','1B','2B','3B','SS','LF','CF','RF','DH']:['SP','RP','CP'];
+  if(!positions.includes(player.position) || player.throws==='L' && ['C','2B','3B','SS'].includes(player.position))throw new RangeError('INVALID_POSITION');
+  if(player.kind==='HITTER'?player.pitchForm!==null:!PITCH_FORMS.includes(player.pitchForm!))throw new RangeError('INVALID_PITCH_FORM');
+  if(normalizePlayerName(player.name)!==player.name)throw new RangeError('INVALID_CANONICAL_NAME');
   assertAbilities(player.kind, player.abilities); assertAbilities(player.kind, player.potential); assertAbilities(player.kind, player.careerPeaks);
   assertFocus(player.kind, player.focus); archetypeFor(player.kind, player.archetype);
   for (const key of abilityKeys(player.kind)) if (player.abilities[key]! > player.potential[key]! || player.careerPeaks[key]! < player.abilities[key]!) throw new RangeError('INVALID_PLAYER_CAP');
-  if (!Number.isFinite(player.fatigue) || player.fatigue < 0 || player.fatigue > 100 || !Number.isSafeInteger(player.age) || player.age < 18 || !player.simulationKey || player.simulationKey.length > 128) throw new RangeError('INVALID_PLAYER_STATE');
+  if (!Number.isFinite(player.fatigue) || player.fatigue < 0 || player.fatigue > 100 || !Number.isSafeInteger(player.age) || player.age < 18 || typeof player.simulationKey!=='string' || !player.simulationKey || player.simulationKey.length > 128) throw new RangeError('INVALID_PLAYER_STATE');
 }
 /** Box-Muller, reject outside[-2,2], no hidden cached normal. Fixed order by six canonical keys. */
 export function truncatedNormal(rng: RngState) {

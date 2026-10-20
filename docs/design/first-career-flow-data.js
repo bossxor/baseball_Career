@@ -448,7 +448,7 @@ globalThis.PBFirstCareerData = {
       "rightsOpen": true
     },
     "LOW_ABILITY": {
-      "overall": 54,
+      "overall": 51.9999,
       "amateurEvaluation": 50,
       "validOffers": 1,
       "rightsOpen": true

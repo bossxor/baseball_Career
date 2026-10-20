@@ -56,7 +56,7 @@ SP교체검토투구수=round(90+.30×(STAMINA-50)),75~105,하드상한110. RP/C
 | SP |15|25|25|10|20|5|
 | RP/CP |15|30|25|20|5|5|
 
-기용 경쟁=.8roleScore+.2최근성적,적합도/등록가능조건우선. 드래프트능력과미국문턱은overall을사용하며roleScore와혼용하지않음. 미국노출의이전roleScore≥55문장은overall≥55로교체한다. 구단평가개선량은해당자리roleScore차,연봉가치는overall.
+기용 경쟁=.8roleScore+.2최근성적,적합도/등록가능조건우선. 드래프트능력과미국문턱은overall을사용하며roleScore와혼용하지않음. 미국노출의이전roleScore≥55문장은overall≥52로교체한다. 구단평가개선량은해당자리roleScore차,연봉가치는overall.
 
 ## 설계 검증과 구현후 분포 게이트
 

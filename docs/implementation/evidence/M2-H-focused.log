@@ -1,0 +1,22 @@
+✔ 67: range narrows monotonically across observations; lower facility does not widen (5.2432ms)
+✔ 67: A99/100 bounds, outward display rounding and impossible prior fail safely (0.8583ms)
+✔ 67: registered game19→20, duplicate no-op, transfer preserves progress, maxstage4 (1.5637ms)
+✔ 67: public allowlist and AI midpoint use ranges, not raw hidden potential (0.7237ms)
+✔ 34: B45 means50% selection, round10 40%+round9 10%, no draw for preview (0.4961ms)
+✔ 34: all boundary probabilities sum1, no fake round when no slot; tied likely rounds preserved (2.0502ms)
+✔ 34: fixed-seed draft empirical distribution matches preview and consumes exactly one draw (34.5106ms)
+✔ 34: US direct only with ability AND assessment AND actual valid offer AND eligibility (2.6184ms)
+✔ 05/41: automatic field assignment legal, distinct, exact primary fit, stable input ordering (15.24ms)
+✔ AI global assignment preserves scarce SS utility instead of greedy C theft (6.0722ms)
+✔ 01/05: unavailable players, left-handed restrictions, low-fit fallback and insufficient roster errors (62.8409ms)
+✔ 08: role/performance competition uses minimum PA50/outs30 then exact index (0.5368ms)
+✔ 05: batting order chooses discipline leaders then power core without changing field assignment (11.5804ms)
+✔ 01/41: appearance and rest fatigue use existing 5/-8 and stamina40/15/-10 once, source immutable (0.8138ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 558.0006

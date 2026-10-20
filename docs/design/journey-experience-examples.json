@@ -31,7 +31,7 @@
         "visible": true
       },
       {
-        "overall": 54.9999,
+        "overall": 51.9999,
         "amateur": 50,
         "validOffers": 1,
         "routeOpen": true,
@@ -57,6 +57,13 @@
         "validOffers": 1,
         "routeOpen": false,
         "visible": false
+      },
+      {
+        "overall": 52,
+        "amateur": 50,
+        "validOffers": 1,
+        "routeOpen": true,
+        "visible": true
       }
     ],
     "college": {

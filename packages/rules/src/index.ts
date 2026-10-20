@@ -105,3 +105,6 @@ export function roleScore(kind: PlayerKind, abilities: AbilityUnits, role: strin
 
 export * from './baseball.js';
 export * from './player.js';
+
+/** User-confirmed amateur US-direct overall gate (2026-10-20); evaluator/actual-offer checks remain separate. */
+export const US_DIRECT_MIN_OVERALL = 52;

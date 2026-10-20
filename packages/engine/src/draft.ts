@@ -1,3 +1,4 @@
+import {US_DIRECT_MIN_OVERALL} from '@playball/rules';
 import { nextFloat } from './rng.js';
 import type { RngState } from './rng.js';
 const LOW=[81,77,73,69,65,61,57,53,49,45];
@@ -27,5 +28,5 @@ export function draftBaseScore(overall:number,adjustedPerformance:number):number
 }
 export function canShowUsDirect(input:{overall:number;amateurScore:number;validOfferCount:number;eligible:boolean}):boolean {
   if([input.overall,input.amateurScore].some(n=>!Number.isFinite(n) || n<0 || n>100) || !Number.isSafeInteger(input.validOfferCount) || input.validOfferCount<0) throw new RangeError('INVALID_US_ELIGIBILITY');
-  return input.eligible && input.overall>=55 && input.amateurScore>=50 && input.validOfferCount>0;
+  return input.eligible && input.overall>=US_DIRECT_MIN_OVERALL && input.amateurScore>=50 && input.validOfferCount>0;
 }

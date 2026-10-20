@@ -18,3 +18,4 @@ export * from './assessment.js';
 export * from './draft.js';
 export * from './traits.js';
 export * from './records.js';
+export * from './lineup.js';
