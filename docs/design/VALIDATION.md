@@ -321,3 +321,9 @@ PASS: approved six anime finish scenes, square atlas positions and per-screen se
 ```
 
 6개 정사각 패널 좌표·원문/슬롯·화면별 패널 ID와 위치·데이터 JSON/JS 일치를 정적으로 검사했다. 45화면/99이벤트/핵심298은 유지한다. 실제 브라우저 렌더/기기/DB/API/build/APK는 미실행이다. 우리팀 네이비 통일은 사용자 확정 원칙으로 기록했고 기존 활성4PNG의 네이비 수정본은 별도 승인 대기로 저장소 밖에 보관한다. 수정본 원래 크기는 hero/고교1672×941, 사건2장1536×1024이며 아직 활성 파일을 교체하지 않았다.
+
+## 2026-10-20 승인 네이비 수정3PNG 반영
+
+사용자가4개 네이비 수정본을 승인하면서 추가사건의 야간 라이벌 구분 문제를 제기했다. 다른3개(메인·기본사건·고교)의 승인은 유지해 v2 PNG로 반영했다. 기존 파일을 덮어쓰지 않고 활성 HTML/JS/JSON 참조만 신규 파일로 바꿨다. 생성 프롬프트·출처·해시는 NAVY-UNIFORM-GENERATION.json에 기록했다. 야간 라이벌은 상대 모자/상의를 버건디로 추가 수정했으며 이 최종 수정본만 임시 폴더에서 사용자 확인 대기다.
+
+V:에서 verify-design.mjs·verify-state-ui.mjs·verify-art-direction.mjs 모두 종료코드0/PASS. 활성 PNG 존재/크기·장면 참조 일치·first-career와finish 데이터 JSON/JS 일치·순수 HTML 템플릿 검사 통과. 메인/고교1672×941, 기본사건1536×1024 유지. 실제 픽셀/브라우저·기기/DB/API/build/APK는 미검증이다. 제작 레지스터41TODO/39EXISTS 및45화면/99이벤트/핵심298은 그대로다.

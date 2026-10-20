@@ -49,7 +49,7 @@ for(const scene of art.scenes){
   const preview=previewScenes.find(s=>s.id===scene.id);assert.ok(preview);
   assert.equal(preview.x,[0,50,100][scene.column]+'%');assert.equal(preview.y,[0,100][scene.row]+'%');
   assert.equal(preview.focus,scene.cropFocusPercent+'%');
-  const file=preview.pack==='extra'?'assets/art-lab/career-events-animation-extra-v1.png':'assets/art-lab/career-events-animation-v1.png';assert.equal(file,scene.asset);
+  const file=preview.pack==='extra'?'assets/art-lab/career-events-animation-extra-v1.png':'assets/art-lab/career-events-animation-navy-v2.png';assert.equal(file,scene.asset);
 }
 assert.ok(scripts.includes("const state={style:'animation'"));
 assert.ok(scripts.includes("const key='playball-art-lab-v3'"));

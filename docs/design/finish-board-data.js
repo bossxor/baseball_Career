@@ -56,7 +56,7 @@ globalThis.PBFinishData = {
       "conflict": "최신 게임으로 연결합니다.",
       "guard": "최근 저장 없음은 새 게임 두 경로만; 중단 상태·복구 안내 카드는 없음",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "hero": "assets/art-lab/hero-animation-v1.png",
+      "hero": "assets/art-lab/hero-animation-navy-v2.png",
       "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
       "scenePanelId": "IMG-FIN-STADIUM"
     },
@@ -126,9 +126,9 @@ globalThis.PBFinishData = {
           "label": "빈티지 기록실"
         },
         "animation": {
-          "hero": "assets/art-lab/graduation-animation-day-v1.png",
+          "hero": "assets/art-lab/graduation-animation-day-navy-v2.png",
           "portrait": "assets/silhouettes/hitter-RR.svg",
-          "memory": "assets/art-lab/hero-animation-v1.png",
+          "memory": "assets/art-lab/hero-animation-navy-v2.png",
           "label": "청춘 야구 애니 · 맑은 낮"
         }
       },
@@ -311,7 +311,7 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "같은 선수 중복·빈 수비·부상 등 필수 오류 먼저; 다이아몬드만으로 입력하지 않음",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "hero": "assets/art-lab/hero-animation-v1.png",
+      "hero": "assets/art-lab/hero-animation-navy-v2.png",
       "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
       "scenePanelId": "IMG-FIN-STADIUM"
     },
@@ -389,7 +389,7 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "분모0은 대시; 무경기 시즌·동률 수상·다른 리그 기록 분리",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "hero": "assets/art-lab/hero-animation-v1.png",
+      "hero": "assets/art-lab/hero-animation-navy-v2.png",
       "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
       "scenePanelId": "IMG-FIN-STADIUM"
     },
@@ -438,7 +438,7 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "삭제·복원은 대상명과 영향 확인; 오류를 세이브0으로 오인하지 않음",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "hero": "assets/art-lab/hero-animation-v1.png",
+      "hero": "assets/art-lab/hero-animation-navy-v2.png",
       "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
       "scenePanelId": "IMG-FIN-STADIUM"
     },
@@ -481,7 +481,7 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "즉시 선호와 서버 계정 작업 구별; 계정 삭제는 일반 설정 적용과 합치지 않음",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "hero": "assets/art-lab/hero-animation-v1.png",
+      "hero": "assets/art-lab/hero-animation-navy-v2.png",
       "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
       "scenePanelId": "IMG-FIN-STADIUM"
     },

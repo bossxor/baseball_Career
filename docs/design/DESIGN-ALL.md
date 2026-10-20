@@ -4,7 +4,7 @@
 
 <!-- SOURCE: START-HERE.md -->
 
-현재 작업(2026-10-20): 청춘 애니6컷 승인 반영. 우리팀 네이비 통일 원칙 확정, 기존 활성4PNG 수정 시안은 별도 승인 대기. [현황](STATUS.md), [승인본](approved-art-board.html).
+현재 작업(2026-10-20): 메인·기본사건·고교 네이비3PNG 승인 반영. 추가사건 야간 라이벌 버건디 수정본만 최종 확인 대기. [현황](STATUS.md).
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -76,7 +76,7 @@ GitHub https://github.com/bossxor/baseball_Career 의 docs/design이 원본. 다
 
 <!-- SOURCE: README.md -->
 
-현재 작업(2026-10-20): 청춘 애니6컷 승인 반영. 우리팀 네이비 통일 원칙 확정, 기존 활성4PNG 수정 시안은 별도 승인 대기. [현황](STATUS.md), [승인본](approved-art-board.html).
+현재 작업(2026-10-20): 메인·기본사건·고교 네이비3PNG 승인 반영. 추가사건 야간 라이벌 버건디 수정본만 최종 확인 대기. [현황](STATUS.md).
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -165,6 +165,17 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 ---
 
 <!-- SOURCE: STATUS.md -->
+
+# 설계 현황 — 네이비 수정3PNG 반영 / 야간 라이벌 최종 확인 대기
+
+## 현재 요약 (2026-10-20)
+
+- 우리팀 네이비 수정본 중 메인·기본사건·고교3PNG는 사용자 승인에 따라 새 v2 파일로 연결했다. 원본3PNG는 보존했다. 추가사건 atlas의 야간 라이벌은 우리팀 흰색/네이비 vs 상대 버건디로 추가 수정했고 이 최종본만 사용자 확인 대기다. 이미지 레지스터 TODO41/EXISTS39와 게임 규칙은 그대로다.
+- 신규 청춘6컷은 이미 승인·푸시 완료. 이번 네이비3PNG 검증3개도 종료코드0/PASS.
+- [승인본 보드](approved-art-board.html), [수정 기록](assets/art-lab/NAVY-UNIFORM-GENERATION.json).
+- 실제 앱/브라우저/DB/APK 검수는 미실행이다.
+
+## 이전 진행 이력
 
 # 설계 현황 — 청춘 장면6컷 반영 / 네이비 통일 시안 승인 대기
 
@@ -359,6 +370,12 @@ AVG상한1.000과SLG상한4.000/OPS5.000·짧은표본·AB0·P100과현재A를�
 ---
 
 <!-- SOURCE: DETAIL-PLAN.md -->
+
+# 현재 작업 — 네이비3PNG 반영
+
+우리팀 네이비 수정본 중 메인·기본사건·고교3PNG는 사용자 승인에 따라 새 v2 파일로 연결했다. 원본3PNG는 보존했다. 추가사건 atlas의 야간 라이벌은 우리팀 흰색/네이비 vs 상대 버건디로 추가 수정했고 이 최종본만 사용자 확인 대기다. 이미지 레지스터 TODO41/EXISTS39와 게임 규칙은 그대로다.
+
+---
 
 # 현재 작업 — 승인6컷 반영·네이비 팀복장 통일
 
@@ -759,6 +776,12 @@ U:100~104의 확정 UI 요구와 히든4개/슬라이더 규칙을 유지한다.
 P1 청춘 애니6컷을 사용자 승인 후 반영했다. 라이벌은 흰색/네이비 팀과 버건디 팀으로 구분한다. finish 보드의 대학·마이너·기록·계약 화면은 의미에 맞는 패널로 연결했다. 전체92항목 중 TODO41/EXISTS39/CODE_ONLY11/LEGACY_REFERENCE1이다.
 
 U: 우리팀으로 표현된 선수의 모자·유니폼 장식·속옷은 네이비로 통일한다. 잔디/나무 같은 배경 초록과 상대팀 고유색·사복은 팀 유니폼으로 간주하지 않는다. 기존 활성4PNG 수정 시안은 저장소 밖에서 제시하고 별도 승인 후 교체한다. 원본과 과거 비교 자산은 보존한다.
+
+## 2026-10-20 네이비 수정본 승인·야간 라이벌 구분
+
+우리팀 네이비 수정본 중 메인·기본사건·고교3PNG는 사용자 승인에 따라 새 v2 파일로 연결했다. 원본3PNG는 보존했다. 추가사건 atlas의 야간 라이벌은 우리팀 흰색/네이비 vs 상대 버건디로 추가 수정했고 이 최종본만 사용자 확인 대기다. 이미지 레지스터 TODO41/EXISTS39와 게임 규칙은 그대로다.
+
+낮·야간의 해당 라이벌 장면은 같은 팀이 아니라 상대팀 선수다. 우리팀과 구분 가능한 버건디 상대 복장으로 표시한다. 추가 수정한 야간 파일은 확인 후 별도 반영한다.
 
 ---
 
@@ -8667,12 +8690,12 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-SCN-TRAINING|사건 장면 새로운 시즌|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열0/행0, 3×2 아틀라스 1536×1024|있음|S04, S07, S24, S25, S27, S28|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E01/E08/E41|
-|IMG-SCN-COLLEGE|사건 장면 대학 진학|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열1/행0, 3×2 아틀라스 1536×1024|있음|S28, S34, S35|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E70/E71/E73/E75|
-|IMG-SCN-OVERSEAS|사건 장면 미국으로|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열2/행0, 3×2 아틀라스 1536×1024|있음|S28, S29, S30, S33|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E57/E58|
-|IMG-SCN-INTERNATIONAL|사건 장면 국제무대|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열0/행1, 3×2 아틀라스 1536×1024|있음|S07, S25, S45|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E47/E48|
-|IMG-SCN-RETIREMENT|사건 장면 마지막 유니폼|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열1/행1, 3×2 아틀라스 1536×1024|있음|S09, S11, S12, S45|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E37/E69/E99|
-|IMG-SCN-FRONTOFFICE|사건 장면 구단의 내일|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열2/행1, 3×2 아틀라스 1536×1024|있음|S12, S13, S17, S36|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E38/E39/E40/E77/E79/E81|
+|IMG-SCN-TRAINING|사건 장면 새로운 시즌|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열0/행0, 3×2 아틀라스 1536×1024|있음|S04, S07, S24, S25, S27, S28|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E01/E08/E41|
+|IMG-SCN-COLLEGE|사건 장면 대학 진학|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열1/행0, 3×2 아틀라스 1536×1024|있음|S28, S34, S35|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E70/E71/E73/E75|
+|IMG-SCN-OVERSEAS|사건 장면 미국으로|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열2/행0, 3×2 아틀라스 1536×1024|있음|S28, S29, S30, S33|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E57/E58|
+|IMG-SCN-INTERNATIONAL|사건 장면 국제무대|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열0/행1, 3×2 아틀라스 1536×1024|있음|S07, S25, S45|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E47/E48|
+|IMG-SCN-RETIREMENT|사건 장면 마지막 유니폼|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열1/행1, 3×2 아틀라스 1536×1024|있음|S09, S11, S12, S45|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E37/E69/E99|
+|IMG-SCN-FRONTOFFICE|사건 장면 구단의 내일|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열2/행1, 3×2 아틀라스 1536×1024|있음|S12, S13, S17, S36|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E38/E39/E40/E77/E79/E81|
 |IMG-SCN-DRAFT|사건 장면 지명을 기다리며|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열0/행0, 3×2 아틀라스 1536×1024|있음|S05, S28|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E04/E05/E06|
 |IMG-SCN-ENHANCEMENT|사건 장면 한 번의 특별훈련|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열1/행0, 3×2 아틀라스 1536×1024|있음|S23|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E43|
 |IMG-SCN-REHAB|사건 장면 다시 뛰는 준비|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열2/행0, 3×2 아틀라스 1536×1024|있음|-|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E21/E22/E23|
@@ -8695,8 +8718,8 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-HERO-MAIN|메인 hero 배경|assets/art-lab/hero-animation-v1.png|1672×941|있음|S01, S03, S19, S30|청춘 애니 활성. 시간대 변형은 선택(P2)|
-|IMG-HERO-GRAD|고교 졸업 가로 장면|assets/art-lab/graduation-animation-day-v1.png|가로 hero|있음|S04|S04 전용|
+|IMG-HERO-MAIN|메인 hero 배경|assets/art-lab/hero-animation-navy-v2.png|1672×941|있음|S01, S03, S19, S30|청춘 애니 활성. 시간대 변형은 선택(P2)|
+|IMG-HERO-GRAD|고교 졸업 가로 장면|assets/art-lab/graduation-animation-day-navy-v2.png|가로 hero|있음|S04|S04 전용|
 
 ### G5 실제 구단 로고
 
@@ -8894,6 +8917,12 @@ IM-D01 TODO 항목마다 파일 경로·규격·화면이 있음/02 실루엣 14
 P1 청춘 애니6컷을 사용자 승인 후 반영했다. 라이벌은 흰색/네이비 팀과 버건디 팀으로 구분한다. finish 보드의 대학·마이너·기록·계약 화면은 의미에 맞는 패널로 연결했다. 전체92항목 중 TODO41/EXISTS39/CODE_ONLY11/LEGACY_REFERENCE1이다.
 
 우리팀 복장은 네이비로 통일한다. 기존 활성 hero/사건2장/고교 hero의 초록 팀 복장 정정은 시안 승인 후 새 버전으로 연결한다. 미승인 수정본과 원본을 덮어쓰지 않는다.
+
+## 우리팀 네이비 수정본 — 2026-10-20
+
+우리팀 네이비 수정본 중 메인·기본사건·고교3PNG는 사용자 승인에 따라 새 v2 파일로 연결했다. 원본3PNG는 보존했다. 추가사건 atlas의 야간 라이벌은 우리팀 흰색/네이비 vs 상대 버건디로 추가 수정했고 이 최종본만 사용자 확인 대기다. 이미지 레지스터 TODO41/EXISTS39와 게임 규칙은 그대로다.
+
+[NAVY-UNIFORM-GENERATION](assets/art-lab/NAVY-UNIFORM-GENERATION.json)에 수정 프롬프트·원본·신규 파일과 해시를 기록했다. 상대팀 라이벌은 동일 구단 소속으로 표현하지 않는다.
 
 ---
 
@@ -9818,7 +9847,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: HANDOFF-PROMPT.md -->
 
-현재 작업(2026-10-20): 청춘 애니6컷 승인 반영. 우리팀 네이비 통일 원칙 확정, 기존 활성4PNG 수정 시안은 별도 승인 대기. [현황](STATUS.md), [승인본](approved-art-board.html).
+현재 작업(2026-10-20): 메인·기본사건·고교 네이비3PNG 승인 반영. 추가사건 야간 라이벌 버건디 수정본만 최종 확인 대기. [현황](STATUS.md).
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -10193,3 +10222,9 @@ PASS: approved six anime finish scenes, square atlas positions and per-screen se
 ```
 
 6개 정사각 패널 좌표·원문/슬롯·화면별 패널 ID와 위치·데이터 JSON/JS 일치를 정적으로 검사했다. 45화면/99이벤트/핵심298은 유지한다. 실제 브라우저 렌더/기기/DB/API/build/APK는 미실행이다. 우리팀 네이비 통일은 사용자 확정 원칙으로 기록했고 기존 활성4PNG의 네이비 수정본은 별도 승인 대기로 저장소 밖에 보관한다. 수정본 원래 크기는 hero/고교1672×941, 사건2장1536×1024이며 아직 활성 파일을 교체하지 않았다.
+
+## 2026-10-20 승인 네이비 수정3PNG 반영
+
+사용자가4개 네이비 수정본을 승인하면서 추가사건의 야간 라이벌 구분 문제를 제기했다. 다른3개(메인·기본사건·고교)의 승인은 유지해 v2 PNG로 반영했다. 기존 파일을 덮어쓰지 않고 활성 HTML/JS/JSON 참조만 신규 파일로 바꿨다. 생성 프롬프트·출처·해시는 NAVY-UNIFORM-GENERATION.json에 기록했다. 야간 라이벌은 상대 모자/상의를 버건디로 추가 수정했으며 이 최종 수정본만 임시 폴더에서 사용자 확인 대기다.
+
+V:에서 verify-design.mjs·verify-state-ui.mjs·verify-art-direction.mjs 모두 종료코드0/PASS. 활성 PNG 존재/크기·장면 참조 일치·first-career와finish 데이터 JSON/JS 일치·순수 HTML 템플릿 검사 통과. 메인/고교1672×941, 기본사건1536×1024 유지. 실제 픽셀/브라우저·기기/DB/API/build/APK는 미검증이다. 제작 레지스터41TODO/39EXISTS 및45화면/99이벤트/핵심298은 그대로다.

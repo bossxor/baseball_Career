@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "PRODUCTION_BRIEF",
   "gameRulesChanged": false,
-  "note": "이미지 제작 레지스터. status: TODO=제작 필요, EXISTS=이미 있음, CODE_ONLY=코드로 제작(이미지 불필요), LEGACY_REFERENCE=보존. 제작 후 이 파일의 status와 해당 문서를 갱신한다. 2026-10-20: 1단계 결과 승인 후에만 2단계 제작 시작. 시안은 저장소 밖 임시 폴더에 두고 사용자 선택본만 반영; 후속 묶음마다 재승인. 미선택·거절 시 자산과 status·화면 슬롯을 변경하지 않음. 2026-10-20 승인 반영: 투수 A·타자 A·로고2, 네이비·블루. 첫 3항목만 EXISTS; 나머지 제작은 묶음별 승인 대기. 2차 사용자 승인 반영: 우투좌타·좌투좌타·좌투 오버핸드·우투 쓰리쿼터 4종. 실루엣 6/14, TODO57/EXISTS23. 3차 사용자 승인: 남은 실루엣8종 반영, 14/14 완료. 전체 TODO49/EXISTS31. Android/PWA 아이콘2묶음은 여전히 미완료. 2026-10-20 아이콘1 네이비 배경 승인 반영. P0 모두 파일 제작 완료; 실제 설치 검수는 미실행. 2026-10-20 P1 장면6컷 승인 반영(라이벌 상대 버건디). TODO41/EXISTS39. 기존 우리팀 유니폼은 네이비 통일 원칙 확정, 수정 시안은 별도 승인 대기.",
+  "note": "이미지 제작 레지스터. status: TODO=제작 필요, EXISTS=이미 있음, CODE_ONLY=코드로 제작(이미지 불필요), LEGACY_REFERENCE=보존. 제작 후 이 파일의 status와 해당 문서를 갱신한다. 2026-10-20: 1단계 결과 승인 후에만 2단계 제작 시작. 시안은 저장소 밖 임시 폴더에 두고 사용자 선택본만 반영; 후속 묶음마다 재승인. 미선택·거절 시 자산과 status·화면 슬롯을 변경하지 않음. 2026-10-20 승인 반영: 투수 A·타자 A·로고2, 네이비·블루. 첫 3항목만 EXISTS; 나머지 제작은 묶음별 승인 대기. 2차 사용자 승인 반영: 우투좌타·좌투좌타·좌투 오버핸드·우투 쓰리쿼터 4종. 실루엣 6/14, TODO57/EXISTS23. 3차 사용자 승인: 남은 실루엣8종 반영, 14/14 완료. 전체 TODO49/EXISTS31. Android/PWA 아이콘2묶음은 여전히 미완료. 2026-10-20 아이콘1 네이비 배경 승인 반영. P0 모두 파일 제작 완료; 실제 설치 검수는 미실행. 2026-10-20 P1 장면6컷 승인 반영(라이벌 상대 버건디). TODO41/EXISTS39. 기존 우리팀 유니폼은 네이비 통일 원칙 확정, 수정 시안은 별도 승인 대기. 2026-10-20 메인·기본사건·고교3PNG 우리팀 네이비 수정 승인 반영, 이전 원본 보존. 추가사건 야간 라이벌 버건디 수정본은 최종 확인 대기.",
   "groups": {
     "G1": "선수 실루엣(SVG)",
     "G2": "사건 장면 12(청춘 애니)",
@@ -475,7 +475,7 @@
       "group": "G2",
       "name": "사건 장면 새로운 시즌",
       "kind": "PNG(아틀라스 패널)",
-      "file": "assets/art-lab/career-events-animation-v1.png",
+      "file": "assets/art-lab/career-events-animation-navy-v2.png",
       "spec": "정사각 패널, 열0/행0, 3×2 아틀라스 1536×1024",
       "count": 1,
       "status": "EXISTS",
@@ -488,14 +488,20 @@
         "S27",
         "S28"
       ],
-      "notes": "청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E01/E08/E41"
+      "notes": "청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E01/E08/E41",
+      "uniformApproval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": "WHITE_NAVY"
+      },
+      "uniformProvenance": "assets/art-lab/NAVY-UNIFORM-GENERATION.json"
     },
     {
       "id": "IMG-SCN-COLLEGE",
       "group": "G2",
       "name": "사건 장면 대학 진학",
       "kind": "PNG(아틀라스 패널)",
-      "file": "assets/art-lab/career-events-animation-v1.png",
+      "file": "assets/art-lab/career-events-animation-navy-v2.png",
       "spec": "정사각 패널, 열1/행0, 3×2 아틀라스 1536×1024",
       "count": 1,
       "status": "EXISTS",
@@ -505,14 +511,20 @@
         "S34",
         "S35"
       ],
-      "notes": "청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E70/E71/E73/E75"
+      "notes": "청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E70/E71/E73/E75",
+      "uniformApproval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": "WHITE_NAVY"
+      },
+      "uniformProvenance": "assets/art-lab/NAVY-UNIFORM-GENERATION.json"
     },
     {
       "id": "IMG-SCN-OVERSEAS",
       "group": "G2",
       "name": "사건 장면 미국으로",
       "kind": "PNG(아틀라스 패널)",
-      "file": "assets/art-lab/career-events-animation-v1.png",
+      "file": "assets/art-lab/career-events-animation-navy-v2.png",
       "spec": "정사각 패널, 열2/행0, 3×2 아틀라스 1536×1024",
       "count": 1,
       "status": "EXISTS",
@@ -523,14 +535,20 @@
         "S30",
         "S33"
       ],
-      "notes": "청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E57/E58"
+      "notes": "청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E57/E58",
+      "uniformApproval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": "WHITE_NAVY"
+      },
+      "uniformProvenance": "assets/art-lab/NAVY-UNIFORM-GENERATION.json"
     },
     {
       "id": "IMG-SCN-INTERNATIONAL",
       "group": "G2",
       "name": "사건 장면 국제무대",
       "kind": "PNG(아틀라스 패널)",
-      "file": "assets/art-lab/career-events-animation-v1.png",
+      "file": "assets/art-lab/career-events-animation-navy-v2.png",
       "spec": "정사각 패널, 열0/행1, 3×2 아틀라스 1536×1024",
       "count": 1,
       "status": "EXISTS",
@@ -540,14 +558,20 @@
         "S25",
         "S45"
       ],
-      "notes": "청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E47/E48"
+      "notes": "청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E47/E48",
+      "uniformApproval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": "WHITE_NAVY"
+      },
+      "uniformProvenance": "assets/art-lab/NAVY-UNIFORM-GENERATION.json"
     },
     {
       "id": "IMG-SCN-RETIREMENT",
       "group": "G2",
       "name": "사건 장면 마지막 유니폼",
       "kind": "PNG(아틀라스 패널)",
-      "file": "assets/art-lab/career-events-animation-v1.png",
+      "file": "assets/art-lab/career-events-animation-navy-v2.png",
       "spec": "정사각 패널, 열1/행1, 3×2 아틀라스 1536×1024",
       "count": 1,
       "status": "EXISTS",
@@ -558,14 +582,20 @@
         "S12",
         "S45"
       ],
-      "notes": "청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E37/E69/E99"
+      "notes": "청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E37/E69/E99",
+      "uniformApproval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": "WHITE_NAVY"
+      },
+      "uniformProvenance": "assets/art-lab/NAVY-UNIFORM-GENERATION.json"
     },
     {
       "id": "IMG-SCN-FRONTOFFICE",
       "group": "G2",
       "name": "사건 장면 구단의 내일",
       "kind": "PNG(아틀라스 패널)",
-      "file": "assets/art-lab/career-events-animation-v1.png",
+      "file": "assets/art-lab/career-events-animation-navy-v2.png",
       "spec": "정사각 패널, 열2/행1, 3×2 아틀라스 1536×1024",
       "count": 1,
       "status": "EXISTS",
@@ -576,7 +606,13 @@
         "S17",
         "S36"
       ],
-      "notes": "청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E38/E39/E40/E77/E79/E81"
+      "notes": "청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E38/E39/E40/E77/E79/E81",
+      "uniformApproval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": "WHITE_NAVY"
+      },
+      "uniformProvenance": "assets/art-lab/NAVY-UNIFORM-GENERATION.json"
     },
     {
       "id": "IMG-SCN-DRAFT",
@@ -903,7 +939,7 @@
       "group": "G4",
       "name": "메인 hero 배경",
       "kind": "PNG",
-      "file": "assets/art-lab/hero-animation-v1.png",
+      "file": "assets/art-lab/hero-animation-navy-v2.png",
       "spec": "1672×941",
       "count": 1,
       "status": "EXISTS",
@@ -914,14 +950,20 @@
         "S19",
         "S30"
       ],
-      "notes": "청춘 애니 활성. 시간대 변형은 선택(P2)"
+      "notes": "청춘 애니 활성. 시간대 변형은 선택(P2)",
+      "uniformApproval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": "WHITE_NAVY"
+      },
+      "uniformProvenance": "assets/art-lab/NAVY-UNIFORM-GENERATION.json"
     },
     {
       "id": "IMG-HERO-GRAD",
       "group": "G4",
       "name": "고교 졸업 가로 장면",
       "kind": "PNG",
-      "file": "assets/art-lab/graduation-animation-day-v1.png",
+      "file": "assets/art-lab/graduation-animation-day-navy-v2.png",
       "spec": "가로 hero",
       "count": 1,
       "status": "EXISTS",
@@ -929,7 +971,13 @@
       "screens": [
         "S04"
       ],
-      "notes": "S04 전용"
+      "notes": "S04 전용",
+      "uniformApproval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": "WHITE_NAVY"
+      },
+      "uniformProvenance": "assets/art-lab/NAVY-UNIFORM-GENERATION.json"
     },
     {
       "id": "IMG-LOGO-KBO",

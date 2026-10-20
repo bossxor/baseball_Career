@@ -20,7 +20,7 @@
 <div class="notice">디자인 선택용 목업입니다. 아래 수치·사건은 예시이며, 선택 내용은 이 브라우저에만 기억합니다. 실제 게임 진행이나 클라우드 저장을 실행하지 않습니다.</div>
 <section aria-label="아트 스타일 선택"><div class="style-grid" id="style-options">
 <button class="style-card" data-style="cinematic" type="button" aria-pressed="false"><img src="assets/art-lab/hero-cinematic-v1.png" alt="노을과 조명 아래 야구장을 바라보는 가상 선수의 시네마틱 일러스트"><span class="style-copy"><span class="style-top"><span class="style-name">시네마틱 구장</span><span class="style-tag">비교하기</span></span><small>묵직한 조명과 현장감.<br>한 선수의 커리어에 몰입.</small></span></button>
-<button class="style-card" data-style="animation" type="button" aria-pressed="false"><img src="assets/art-lab/hero-animation-v1.png" alt="밝은 하늘 아래 야구장과 성인 가상 선수의 애니메이션 일러스트"><span class="style-copy"><span class="style-top"><span class="style-name">청춘 야구 애니</span><span class="style-tag">비교하기</span></span><small>밝은 색감과 선명한 캐릭터.<br>육성과 성장 이야기 강조.</small></span></button>
+<button class="style-card" data-style="animation" type="button" aria-pressed="false"><img src="assets/art-lab/hero-animation-navy-v2.png" alt="밝은 하늘 아래 야구장과 성인 가상 선수의 애니메이션 일러스트"><span class="style-copy"><span class="style-top"><span class="style-name">청춘 야구 애니</span><span class="style-tag">비교하기</span></span><small>밝은 색감과 선명한 캐릭터.<br>육성과 성장 이야기 강조.</small></span></button>
 <button class="style-card" data-style="almanac" type="button" aria-pressed="true"><img src="assets/art-lab/hero-almanac-v1.png" alt="크림색 종이 질감과 녹색 음영으로 표현한 빈티지 야구장 일러스트"><span class="style-copy"><span class="style-top"><span class="style-name">빈티지 기록실</span><span class="style-tag">선택됨</span></span><small>종이 질감과 절제된 색.<br>기록과 은퇴 카드에 잘 어울림.</small></span></button>
 </div></section>
 <section class="workspace" aria-label="선택한 스타일의 화면 미리보기">
@@ -36,7 +36,7 @@
 <script src="ui-preview-helpers.js"></script>
 <script>
 'use strict';
-const styles={cinematic:{name:'시네마틱 구장',asset:'assets/art-lab/hero-cinematic-v1.png'},animation:{name:'청춘 야구 애니',asset:'assets/art-lab/hero-animation-v1.png'},almanac:{name:'빈티지 기록실',asset:'assets/art-lab/hero-almanac-v1.png'}};
+const styles={cinematic:{name:'시네마틱 구장',asset:'assets/art-lab/hero-cinematic-v1.png'},animation:{name:'청춘 야구 애니',asset:'assets/art-lab/hero-animation-navy-v2.png'},almanac:{name:'빈티지 기록실',asset:'assets/art-lab/hero-almanac-v1.png'}};
 const screens={career:'선수 홈',event:'이벤트',club:'구단 홈',archive:'은퇴 카드',growth:'성장·강화',rehab:'재활',contract:'계약',national:'대표팀',match:'경기 결과',season:'시즌 결산',draft:'드래프트',roster:'선수단',scout:'스카우트',recruit:'영입 제안',budget:'구단 예산',rebirth:'보관 선수 투입',creation:'선수 생성',route:'졸업 진로',college:'대학 커리어',america:'미국 커리어',traits:'특성 도감',repertoire:'구종·성향',goals:"시즌 목표",achievements:"도전과제",agents:"에이전트·협상",relations:"라이벌·동료",staff:"지도자",commentary:"문자 중계",chronicle:"연대기",exportCard:"기념 카드 내보내기"};
 const densities={compact:{name:'작게',height:160},balanced:{name:'균형',height:225},immersive:{name:'크게',height:300}};
 const scenes=[

@@ -1,3 +1,11 @@
+# 현재 재개 위치 — 네이비3PNG 반영·야간 한 컷 확인
+
+우리팀 네이비 수정본 중 메인·기본사건·고교3PNG는 사용자 승인에 따라 새 v2 파일로 연결했다. 원본3PNG는 보존했다. 추가사건 atlas의 야간 라이벌은 우리팀 흰색/네이비 vs 상대 버건디로 추가 수정했고 이 최종본만 사용자 확인 대기다. 이미지 레지스터 TODO41/EXISTS39와 게임 규칙은 그대로다.
+
+다른3개 승인을 반복 질문하지 않는다. 확인이 필요한 것은 임시 폴더 extra-navy-candidate-v2.png의 버건디 상대 야간 장면뿐이다.
+
+---
+
 # 현재 재개 위치 — 청춘6컷 승인 반영·팀색 통일
 
 P1 청춘 애니6컷을 사용자 승인 후 반영했다. 라이벌은 흰색/네이비 팀과 버건디 팀으로 구분한다. finish 보드의 대학·마이너·기록·계약 화면은 의미에 맞는 패널로 연결했다. 전체92항목 중 TODO41/EXISTS39/CODE_ONLY11/LEGACY_REFERENCE1이다.
@@ -81,3 +89,5 @@ V: 루트에서 verify-design.mjs·verify-state-ui.mjs·verify-art-direction.mjs
 아이콘1 승인 반영은 세 정적 검증 모두 PASS. 실기기 설치 검수는 미실행이며 다음은 P1 이미지 별도 시안·승인이다.
 
 승인6컷 반영은 세 정적 검증 모두 PASS. 네이비 수정4PNG는 C:/Users/N-052/AppData/Local/Temp/baseball-navy-consistency-20261020 에만 보관하며 사용자 승인 후 새 버전으로 연결한다.
+
+메인·기본사건·고교 네이비3PNG 반영은 검증3개 모두 PASS. 최종 확인 대상은 extra-navy-candidate-v2.png 하나뿐이다.

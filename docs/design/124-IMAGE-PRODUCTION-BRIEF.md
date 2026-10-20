@@ -49,12 +49,12 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-SCN-TRAINING|사건 장면 새로운 시즌|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열0/행0, 3×2 아틀라스 1536×1024|있음|S04, S07, S24, S25, S27, S28|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E01/E08/E41|
-|IMG-SCN-COLLEGE|사건 장면 대학 진학|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열1/행0, 3×2 아틀라스 1536×1024|있음|S28, S34, S35|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E70/E71/E73/E75|
-|IMG-SCN-OVERSEAS|사건 장면 미국으로|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열2/행0, 3×2 아틀라스 1536×1024|있음|S28, S29, S30, S33|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E57/E58|
-|IMG-SCN-INTERNATIONAL|사건 장면 국제무대|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열0/행1, 3×2 아틀라스 1536×1024|있음|S07, S25, S45|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E47/E48|
-|IMG-SCN-RETIREMENT|사건 장면 마지막 유니폼|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열1/행1, 3×2 아틀라스 1536×1024|있음|S09, S11, S12, S45|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E37/E69/E99|
-|IMG-SCN-FRONTOFFICE|사건 장면 구단의 내일|assets/art-lab/career-events-animation-v1.png|정사각 패널, 열2/행1, 3×2 아틀라스 1536×1024|있음|S12, S13, S17, S36|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E38/E39/E40/E77/E79/E81|
+|IMG-SCN-TRAINING|사건 장면 새로운 시즌|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열0/행0, 3×2 아틀라스 1536×1024|있음|S04, S07, S24, S25, S27, S28|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E01/E08/E41|
+|IMG-SCN-COLLEGE|사건 장면 대학 진학|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열1/행0, 3×2 아틀라스 1536×1024|있음|S28, S34, S35|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E70/E71/E73/E75|
+|IMG-SCN-OVERSEAS|사건 장면 미국으로|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열2/행0, 3×2 아틀라스 1536×1024|있음|S28, S29, S30, S33|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E57/E58|
+|IMG-SCN-INTERNATIONAL|사건 장면 국제무대|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열0/행1, 3×2 아틀라스 1536×1024|있음|S07, S25, S45|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E47/E48|
+|IMG-SCN-RETIREMENT|사건 장면 마지막 유니폼|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열1/행1, 3×2 아틀라스 1536×1024|있음|S09, S11, S12, S45|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E37/E69/E99|
+|IMG-SCN-FRONTOFFICE|사건 장면 구단의 내일|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열2/행1, 3×2 아틀라스 1536×1024|있음|S12, S13, S17, S36|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E38/E39/E40/E77/E79/E81|
 |IMG-SCN-DRAFT|사건 장면 지명을 기다리며|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열0/행0, 3×2 아틀라스 1536×1024|있음|S05, S28|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E04/E05/E06|
 |IMG-SCN-ENHANCEMENT|사건 장면 한 번의 특별훈련|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열1/행0, 3×2 아틀라스 1536×1024|있음|S23|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E43|
 |IMG-SCN-REHAB|사건 장면 다시 뛰는 준비|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열2/행0, 3×2 아틀라스 1536×1024|있음|-|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E21/E22/E23|
@@ -77,8 +77,8 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-HERO-MAIN|메인 hero 배경|assets/art-lab/hero-animation-v1.png|1672×941|있음|S01, S03, S19, S30|청춘 애니 활성. 시간대 변형은 선택(P2)|
-|IMG-HERO-GRAD|고교 졸업 가로 장면|assets/art-lab/graduation-animation-day-v1.png|가로 hero|있음|S04|S04 전용|
+|IMG-HERO-MAIN|메인 hero 배경|assets/art-lab/hero-animation-navy-v2.png|1672×941|있음|S01, S03, S19, S30|청춘 애니 활성. 시간대 변형은 선택(P2)|
+|IMG-HERO-GRAD|고교 졸업 가로 장면|assets/art-lab/graduation-animation-day-navy-v2.png|가로 hero|있음|S04|S04 전용|
 
 ### G5 실제 구단 로고
 
@@ -276,3 +276,9 @@ IM-D01 TODO 항목마다 파일 경로·규격·화면이 있음/02 실루엣 14
 P1 청춘 애니6컷을 사용자 승인 후 반영했다. 라이벌은 흰색/네이비 팀과 버건디 팀으로 구분한다. finish 보드의 대학·마이너·기록·계약 화면은 의미에 맞는 패널로 연결했다. 전체92항목 중 TODO41/EXISTS39/CODE_ONLY11/LEGACY_REFERENCE1이다.
 
 우리팀 복장은 네이비로 통일한다. 기존 활성 hero/사건2장/고교 hero의 초록 팀 복장 정정은 시안 승인 후 새 버전으로 연결한다. 미승인 수정본과 원본을 덮어쓰지 않는다.
+
+## 우리팀 네이비 수정본 — 2026-10-20
+
+우리팀 네이비 수정본 중 메인·기본사건·고교3PNG는 사용자 승인에 따라 새 v2 파일로 연결했다. 원본3PNG는 보존했다. 추가사건 atlas의 야간 라이벌은 우리팀 흰색/네이비 vs 상대 버건디로 추가 수정했고 이 최종본만 사용자 확인 대기다. 이미지 레지스터 TODO41/EXISTS39와 게임 규칙은 그대로다.
+
+[NAVY-UNIFORM-GENERATION](assets/art-lab/NAVY-UNIFORM-GENERATION.json)에 수정 프롬프트·원본·신규 파일과 해시를 기록했다. 상대팀 라이벌은 동일 구단 소속으로 표현하지 않는다.

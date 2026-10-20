@@ -5,7 +5,7 @@
       "row": 0,
       "name": "새로운 시즌",
       "id": "training",
-      "asset": "assets/art-lab/career-events-animation-v1.png",
+      "asset": "assets/art-lab/career-events-animation-navy-v2.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 18,
       "eligibilityNote": "훈련·시즌 준비",
@@ -22,7 +22,7 @@
       "row": 0,
       "name": "대학 진학",
       "id": "college",
-      "asset": "assets/art-lab/career-events-animation-v1.png",
+      "asset": "assets/art-lab/career-events-animation-navy-v2.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 35,
       "eligibilityNote": "학교와 학적 확인",
@@ -40,7 +40,7 @@
       "row": 0,
       "name": "미국으로",
       "id": "overseas",
-      "asset": "assets/art-lab/career-events-animation-v1.png",
+      "asset": "assets/art-lab/career-events-animation-navy-v2.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 15,
       "eligibilityNote": "유효 미국 제안 또는 확정 해외 이동",
@@ -56,7 +56,7 @@
       "row": 1,
       "name": "국제무대",
       "id": "international",
-      "asset": "assets/art-lab/career-events-animation-v1.png",
+      "asset": "assets/art-lab/career-events-animation-navy-v2.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 0,
       "eligibilityNote": "실제 메달 성과 확정,개인병역완료와 별개",
@@ -72,7 +72,7 @@
       "row": 1,
       "name": "마지막 유니폼",
       "id": "retirement",
-      "asset": "assets/art-lab/career-events-animation-v1.png",
+      "asset": "assets/art-lab/career-events-animation-navy-v2.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 30,
       "eligibilityNote": "은퇴/연대기 확정 근거",
@@ -89,7 +89,7 @@
       "row": 1,
       "name": "구단의 내일",
       "id": "frontoffice",
-      "asset": "assets/art-lab/career-events-animation-v1.png",
+      "asset": "assets/art-lab/career-events-animation-navy-v2.png",
       "implementationStatus": "DESIGN_PREVIEW_ONLY",
       "cropFocusPercent": 65,
       "eligibilityNote": "구단 운영 검토",
@@ -222,7 +222,7 @@
     },
     {
       "name": "청춘 야구 애니",
-      "hero": "assets/art-lab/hero-animation-v1.png",
+      "hero": "assets/art-lab/hero-animation-navy-v2.png",
       "id": "animation",
       "status": "USER_SELECTED"
     },
@@ -333,9 +333,10 @@
   ],
   "selectionUpdated": "2026-10-19 USER_CONFIRMED",
   "legacySlotAliases": {
-    "almanacHero": "assets/art-lab/hero-animation-v1.png",
+    "almanacHero": "assets/art-lab/hero-animation-navy-v2.png",
     "almanacPortrait": "assets/silhouettes/hitter-RR.svg"
   },
   "selectedPalette": "NAVY_BLUE_V1",
-  "approvedArt": "assets/brand/APPROVED-ART-v3.json"
+  "approvedArt": "assets/brand/APPROVED-ART-v3.json",
+  "navyUniformGeneration": "assets/art-lab/NAVY-UNIFORM-GENERATION.json"
 }

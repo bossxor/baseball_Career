@@ -12,7 +12,7 @@
       "action": "이 선수로 시작",
       "guard": "생성 전 입력 검증. 이름·집중4·종류·난이도·초상을 확인합니다.",
       "image": {
-        "asset": "assets/art-lab/graduation-animation-day-v1.png"
+        "asset": "assets/art-lab/graduation-animation-day-navy-v2.png"
       },
       "eventIds": [],
       "age": 18,
@@ -26,7 +26,7 @@
       "action": "육성 계획 확인",
       "guard": "E01 안내 재열람은 성장·훈련 기회를 지급하지 않습니다.",
       "image": {
-        "asset": "assets/art-lab/career-events-animation-v1.png",
+        "asset": "assets/art-lab/career-events-animation-navy-v2.png",
         "x": 0,
         "y": 0
       },
@@ -44,7 +44,7 @@
       "action": "현재 구간 진행",
       "guard": "첫 안타나 승리를 안내 보상으로 만들지 않습니다.",
       "image": {
-        "asset": "assets/art-lab/career-events-animation-v1.png",
+        "asset": "assets/art-lab/career-events-animation-navy-v2.png",
         "x": 0,
         "y": 0
       },
@@ -79,7 +79,7 @@
       "action": "스타일 비교",
       "guard": "타자/투수 유형과 실제 남은 변경 기회를 사용합니다.",
       "image": {
-        "asset": "assets/art-lab/career-events-animation-v1.png",
+        "asset": "assets/art-lab/career-events-animation-navy-v2.png",
         "x": 0,
         "y": 0
       },
@@ -95,7 +95,7 @@
       "action": "졸업 진로 보기",
       "guard": "확정 성장과 예상 성장을 섞지 않습니다.",
       "image": {
-        "asset": "assets/art-lab/graduation-animation-day-v1.png"
+        "asset": "assets/art-lab/graduation-animation-day-navy-v2.png"
       },
       "eventIds": [
         "E04"
@@ -111,7 +111,7 @@
       "action": "가능한 진로 비교",
       "guard": "제안을 읽는 것만으로 다른 진로가 닫히지 않습니다.",
       "image": {
-        "asset": "assets/art-lab/career-events-animation-v1.png",
+        "asset": "assets/art-lab/career-events-animation-navy-v2.png",
         "x": 50,
         "y": 0
       },
@@ -180,7 +180,7 @@
         "action": "현재 계획 확인",
         "guard": "1군 콜업과 실제 첫 출장은 별도입니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-v1.png",
+          "asset": "assets/art-lab/career-events-animation-navy-v2.png",
           "x": 0,
           "y": 0
         },
@@ -198,7 +198,7 @@
         "action": "다음 일정 보기",
         "guard": "미출장을 가짜 타석·안타로 채우지 않습니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-v1.png",
+          "asset": "assets/art-lab/career-events-animation-navy-v2.png",
           "x": 0,
           "y": 0
         },
@@ -214,7 +214,7 @@
         "action": "시즌 기록 보기",
         "guard": "등록0/출장0/낮은 성적도 원기록대로 보존합니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-v1.png",
+          "asset": "assets/art-lab/career-events-animation-navy-v2.png",
           "x": 0,
           "y": 0
         },
@@ -232,7 +232,7 @@
         "action": "학교 상세 비교",
         "guard": "단순 입학 조건에 확률 배지를 만들지 않습니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-v1.png",
+          "asset": "assets/art-lab/career-events-animation-navy-v2.png",
           "x": 50,
           "y": 0
         },
@@ -248,7 +248,7 @@
         "action": "입학 조건 확인",
         "guard": "열람과 실제 수락을 구별합니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-v1.png",
+          "asset": "assets/art-lab/career-events-animation-navy-v2.png",
           "x": 50,
           "y": 0
         },
@@ -264,7 +264,7 @@
         "action": "현재 학사 구간 보기",
         "guard": "학년과 나이는 별도입니다. 준비시즌 예산은 소모하지 않습니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-v1.png",
+          "asset": "assets/art-lab/career-events-animation-navy-v2.png",
           "x": 0,
           "y": 0
         },
@@ -280,7 +280,7 @@
         "action": "대회 자격 보기",
         "guard": "선수권 경기를 정규48경기로 합치지 않습니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-v1.png",
+          "asset": "assets/art-lab/career-events-animation-navy-v2.png",
           "x": 0,
           "y": 0
         },
@@ -296,7 +296,7 @@
         "action": "학년 기록 보기",
         "guard": "학년 마감과 성장 정산은 기존 원장을 따릅니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-v1.png",
+          "asset": "assets/art-lab/career-events-animation-navy-v2.png",
           "x": 50,
           "y": 0
         },
@@ -314,7 +314,7 @@
         "action": "제안 상세 비교",
         "guard": "오퍼0이면 이 경로 카드를 표시하지 않습니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-v1.png",
+          "asset": "assets/art-lab/career-events-animation-navy-v2.png",
           "x": 100,
           "y": 0
         },
@@ -346,7 +346,7 @@
         "action": "현재 레벨 보기",
         "guard": "등록·콜업·실제 출장의 근거를 나눕니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-v1.png",
+          "asset": "assets/art-lab/career-events-animation-navy-v2.png",
           "x": 100,
           "y": 0
         },
@@ -362,7 +362,7 @@
         "action": "현재 구간 보기",
         "guard": "레벨 이동으로 시즌 성장·강화 기회를 초기화하지 않습니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-v1.png",
+          "asset": "assets/art-lab/career-events-animation-navy-v2.png",
           "x": 0,
           "y": 0
         },
@@ -378,7 +378,7 @@
         "action": "시즌 기록 보기",
         "guard": "MLB0출장을 실패한 세이브로 취급하지 않습니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-v1.png",
+          "asset": "assets/art-lab/career-events-animation-navy-v2.png",
           "x": 100,
           "y": 0
         },
@@ -414,7 +414,7 @@
         "action": "현재 경로 비교",
         "guard": "준비 예산은 최대3시즌 기본안이며 입대·대학 재학으로 소모하지 않습니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-v1.png",
+          "asset": "assets/art-lab/career-events-animation-navy-v2.png",
           "x": 50,
           "y": 0
         },
@@ -430,7 +430,7 @@
         "action": "현재 계획 확인",
         "guard": "모든 합법 경로가 없을 때만 은퇴 정리로 갑니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-v1.png",
+          "asset": "assets/art-lab/career-events-animation-navy-v2.png",
           "x": 0,
           "y": 0
         },

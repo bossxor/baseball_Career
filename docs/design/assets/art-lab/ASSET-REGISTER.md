@@ -33,3 +33,9 @@ career-scenes-finish-v1.png —1536×1024/3×2패널6컷,대학/마이너원정/
 ## 2026-10-20 승인 청춘 마감6컷
 
 career-scenes-finish-animation-v1.png: 대학/마이너원정/중립라이벌/복귀/은퇴/구장, 1536×1024 정사각3×2. 라이벌 흰색/네이비 vs 버건디 수정 후 사용자 승인. FINISH-ANIMATION-GENERATION.json에 생성·편집 프롬프트와 출처 기록. 기존 빈티지 원본 보존. 기존 활성4PNG의 네이비 복장 통일 수정본은 별도 승인 대기이며 반영하지 않았다.
+
+## 2026-10-20 승인 네이비 수정3PNG
+
+우리팀 네이비 수정본 중 메인·기본사건·고교3PNG는 사용자 승인에 따라 새 v2 파일로 연결했다. 원본3PNG는 보존했다. 추가사건 atlas의 야간 라이벌은 우리팀 흰색/네이비 vs 상대 버건디로 추가 수정했고 이 최종본만 사용자 확인 대기다. 이미지 레지스터 TODO41/EXISTS39와 게임 규칙은 그대로다.
+
+메인 hero-animation-navy-v2, 기본사건 career-events-animation-navy-v2, 고교 graduation-animation-day-navy-v2. 기존 파일 덮어쓰기 없음. NAVY-UNIFORM-GENERATION.json 참고.

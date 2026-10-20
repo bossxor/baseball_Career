@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-20",
+  "mode": "built-in image_gen",
+  "approval": "USER_SELECTED",
+  "records": [
+    {
+      "key": "hero",
+      "previousAsset": "assets/art-lab/hero-animation-v1.png",
+      "asset": "assets/art-lab/hero-animation-navy-v2.png",
+      "sourceOriginal": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-6a3804ba-7e8b-415d-8ebb-37cd624ae9b6.png",
+      "prompt": "Use case: precise-object-edit. This is a LOCALIZED COLOR CORRECTION of the supplied existing anime illustration, not a new illustration. Recolor our-team forest-green cap, undershirt, collar/cuff piping, belt and uniform accents to deep NAVY #172c50 with subtle blue highlights. White jersey and trousers stay white. Preserve faces, hairstyles, anatomy, hands, expressions, poses, equipment, exact framing, panel grid, canvas dimensions and lighting. Crucially do NOT recolor grass, trees, fences, walls, roofs or any scenery: only team kit changes. Do not introduce typography, jersey numbers, logos, cap emblems or watermarks. Preserve the existing contemporary 2D youth sports-anime finish. ONE wide hero image, keep exact1672x941 dimensions and composition. Change ONLY the right-side player's green cap, undershirt and uniform piping/belt to navy. Brown glove and field unchanged.",
+      "sha256": "b98216d9930b857dc7f0589a472f6c9cafd3faa6851f753811db2737e9fedc0f"
+    },
+    {
+      "key": "events",
+      "previousAsset": "assets/art-lab/career-events-animation-v1.png",
+      "asset": "assets/art-lab/career-events-animation-navy-v2.png",
+      "sourceOriginal": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-19a777f4-8ce1-46ae-98c5-35c4e87ad2ca.png",
+      "prompt": "Use case: precise-object-edit. This is a LOCALIZED COLOR CORRECTION of the supplied existing anime illustration, not a new illustration. Recolor our-team forest-green cap, undershirt, collar/cuff piping, belt and uniform accents to deep NAVY #172c50 with subtle blue highlights. White jersey and trousers stay white. Preserve faces, hairstyles, anatomy, hands, expressions, poses, equipment, exact framing, panel grid, canvas dimensions and lighting. Crucially do NOT recolor grass, trees, fences, walls, roofs or any scenery: only team kit changes. Do not introduce typography, jersey numbers, logos, cap emblems or watermarks. Preserve the existing contemporary 2D youth sports-anime finish. Keep1536x1024 canvas, 3columns x2rows of square panels. Top-left training player's green sleeves/piping ->navy. Top-middle college player's green undershirt/piping ->navy. Bottom-middle retirement: folded green-trim uniform ->navy. Top-right airport black casual jacket, bottom-left medal/representative navy kit, bottom-right office suits and all backgrounds stay unchanged. Do NOT change the medal or imply any extra success.",
+      "sha256": "1ce0d3a137a081a327b9c4c25f7c5895ea3f44668108e279fd6cc31e17a00ad7"
+    },
+    {
+      "key": "graduation",
+      "previousAsset": "assets/art-lab/graduation-animation-day-v1.png",
+      "asset": "assets/art-lab/graduation-animation-day-navy-v2.png",
+      "sourceOriginal": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-35c031cd-c8b4-47f9-98b2-95d362dbd671.png",
+      "prompt": "Use case: precise-object-edit. This is a LOCALIZED COLOR CORRECTION of the supplied existing anime illustration, not a new illustration. Recolor our-team forest-green cap, undershirt, collar/cuff piping, belt and uniform accents to deep NAVY #172c50 with subtle blue highlights. White jersey and trousers stay white. Preserve faces, hairstyles, anatomy, hands, expressions, poses, equipment, exact framing, panel grid, canvas dimensions and lighting. Crucially do NOT recolor grass, trees, fences, walls, roofs or any scenery: only team kit changes. Do not introduce typography, jersey numbers, logos, cap emblems or watermarks. Preserve the existing contemporary 2D youth sports-anime finish. ONE wide high-school graduation scene. Preserve exact1672x941 canvas and full composition. Seated player's green undershirt, collar/cuff piping and sock stripes ->NAVY. White jersey/trousers, brown/black glove, duffel, dugout padding and green field stay unchanged.",
+      "sha256": "c867f1ae4be7ac53264d2ab87901186dea75f3488003a75bbbbe84ae9064118d"
+    }
+  ],
+  "pending": "Extra event atlas night rival corrected to burgundy; final user confirmation pending outside repository.",
+  "rule": "Own-team kit uses navy. White uniform base, green scenery and casual clothing are unchanged. Historic originals preserved.",
+  "browserReview": "NOT_EXECUTED"
+}
