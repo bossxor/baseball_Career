@@ -54,7 +54,7 @@
       "screenId": "S02",
       "title": "생성",
       "layout": "FORM",
-      "informationOrder": "이름·투타 → 거포형 등 유형 → 초상 → 6능력·종합 → 집중4 요약",
+      "informationOrder": "이름·던지는 손·타석·(투수)투구폼 → 거포형 등 유형 → 실루엣 카드 → 6능력·종합 → 집중4 요약",
       "primaryAction": "커리어 시작",
       "edgeRequirement": "집중3/5개·좌투 불가 포지션·빈 이름은 해당 필드 옆 오류",
       "imageSlot": {
@@ -319,7 +319,7 @@
       "screenId": "S09",
       "title": "은퇴",
       "layout": "PLAYER",
-      "informationOrder": "은퇴 당시 초상·나이 → 사유 → 리그별 기록 → 원본 보관 완료",
+      "informationOrder": "은퇴 당시 실루엣 카드·나이 → 사유 → 리그별 기록 → 원본 보관 완료",
       "primaryAction": "보관 선수 보기",
       "edgeRequirement": "보관 확정 전 중복 은퇴 금지; 새 구단 자동 생성하지 않음",
       "imageSlot": {
@@ -594,7 +594,7 @@
       "screenId": "S16",
       "title": "선수상세",
       "layout": "PLAYER",
-      "informationOrder": "초상·이름·역할 → 종합·6능력 → 실제 기록 → 계약·출처 → 기용",
+      "informationOrder": "실루엣 카드·이름·역할 → 종합·6능력 → 실제 기록 → 계약·출처 → 기용",
       "primaryAction": "현재 모드의 기용/계약 보기",
       "edgeRequirement": "원본 출처는 새 선수의 현재 기록과 분리; 타구단 선수에 기용 명령 없음",
       "imageSlot": {
