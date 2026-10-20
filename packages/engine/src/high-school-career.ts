@@ -20,6 +20,8 @@ import {createOwnCareerAssessment} from './high-school-assessment.js';
 import type {OwnCareerAssessment} from './high-school-assessment.js';
 import {createCareerTraitLedger} from './high-school-traits.js';
 import type {CareerTraitLedger} from './high-school-traits.js';
+import type {SeasonGrowthLedger} from './growth-ledger.js';
+import type {HighSchoolGraduation,CollegeAdmission} from './high-school-route.js';
 
 export interface HighSchoolAdvancePlan {mode:'NEXT_MAJOR_EVENT'|'ONE_GAME'|'ONE_WEEK';startWorldDay:number;startTeamGames:number}
 export type HighSchoolProgressPhase={phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:HighSchoolGameJob|null;advancePlan?:HighSchoolAdvancePlan|null};
@@ -28,7 +30,9 @@ export type HighSchoolCareerPhase =
  | {phase:'PRESEASON_SETUP'}
  | HighSchoolProgressPhase
  | {phase:'SEASON_REVIEW'}
- | {phase:'EVENT_DECISION';eventKey:string;resume:{phase:'PRESEASON_SETUP'}|HighSchoolProgressPhase};
+ | {phase:'CAREER_ROUTE'}
+ | {phase:'NEXT_SEASON_READY';route:'COLLEGE';admissionKey:string}
+ | {phase:'EVENT_DECISION';eventKey:string;resume:{phase:'PRESEASON_SETUP'}|HighSchoolProgressPhase|{phase:'CAREER_ROUTE'}};
 export interface HighSchoolCareer {
  schemaVersion:1;revision:number;world:HighSchoolWorld;difficulty:Difficulty;
  phaseContext:HighSchoolCareerPhase;events:readonly EventInstance[];
@@ -37,6 +41,9 @@ export interface HighSchoolCareer {
  development?:CareerDevelopmentLedger;
  ownAssessment?:OwnCareerAssessment;
  traits?:CareerTraitLedger;
+ seasonGrowth?:SeasonGrowthLedger;
+ graduation?:HighSchoolGraduation;
+ collegeAdmission?:CollegeAdmission;
  planHistory:readonly {completedTeamGames:number;focus:readonly string[];archetype:string}[];
 }
 /** Difficulty is immutable save metadata. Never accept a replacement policy on later commands. */

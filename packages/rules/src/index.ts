@@ -109,3 +109,4 @@ export * from './player.js';
 /** User-confirmed amateur US-direct overall gate (2026-10-20); evaluator/actual-offer checks remain separate. */
 export const US_DIRECT_MIN_OVERALL = 52;
 export * from './career.js';
+export * from './college.js';

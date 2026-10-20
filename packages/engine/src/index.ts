@@ -31,3 +31,6 @@ export * from './high-school-progress.js';
 export * from './high-school-training.js';
 export * from './high-school-assessment.js';
 export * from './high-school-traits.js';
+export * from './high-school-growth.js';
+export * from './season-calendar.js';
+export * from './high-school-route.js';

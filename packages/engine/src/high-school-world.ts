@@ -9,6 +9,8 @@ import { createRepertoire, validatePitchWeights } from './repertoire.js';
 import type { Repertoire } from './repertoire.js';
 import { createRoundRobinSchedule, assertSchedule } from './schedule.js';
 import type { ScheduledGame } from './schedule.js';
+import {createSeasonCalendar,assertSeasonCalendar,scheduleHighSchoolCalendar} from './season-calendar.js';
+import type {SeasonCalendar} from './season-calendar.js';
 
 export const HIGH_SCHOOLS = [
   {id:'H01',name:'한울빛고'},{id:'H02',name:'청해솔고'},{id:'H03',name:'별하람고'},
@@ -22,9 +24,10 @@ export interface HighSchoolWorld {
   phase:'CREATED'; protagonistKey:string; protagonistSchoolId:string;
   schools:{id:string;name:string;roster:string[]}[];
   players:Record<string,DevelopmentPlayer>; repertoires:Record<string,Repertoire>; schedule:ScheduledGame[];
+  calendar?:SeasonCalendar;
   rng:{roster:RngState;potential:RngState;protagonist:RngState;handedness:RngState};
 }
-export function createHighSchoolWorld(input:{worldKey:string;seasonKey:string;seed:string;schoolId:string;player:CreationInput;secondaryPitch?:PitchId;startDay:number}):HighSchoolWorld {
+export function createHighSchoolWorld(input:{worldKey:string;seasonKey:string;seed:string;schoolId:string;player:CreationInput;secondaryPitch?:PitchId;startDay?:number;seasonYear?:number}):HighSchoolWorld {
   if(!input.worldKey || !input.seasonKey || !input.seed || !HIGH_SCHOOLS.some(s=>s.id===input.schoolId)) throw new RangeError('INVALID_WORLD_CREATION');
   if(input.player.kind==='PITCHER' && (!input.secondaryPitch || input.secondaryPitch==='P01' || !PITCH_IDS.includes(input.secondaryPitch))) throw new RangeError('SECONDARY_PITCH_REQUIRED');
   const schools=HIGH_SCHOOLS.map(s=>({...s,roster:[] as string[]}));
@@ -53,12 +56,22 @@ export function createHighSchoolWorld(input:{worldKey:string;seasonKey:string;se
   players[creation.player.simulationKey]=creation.player;schools.find(s=>s.id===input.schoolId)!.roster.push(creation.player.simulationKey);
   if(creation.player.kind==='PITCHER') repertoires[creation.player.simulationKey]=createRepertoire(input.secondaryPitch!,input.seasonKey);
   for(const school of schools) school.roster.sort();
-  const schedule=createRoundRobinSchedule({teamKeys:schools.map(s=>s.id),leagueKey:'HS',seasonKey:input.seasonKey,startDay:input.startDay},6);
+  const calendar=input.seasonYear===undefined?undefined:createSeasonCalendar(input.seasonYear);
+  if(calendar && input.startDay!==undefined && input.startDay!==calendar.highSchoolDays[0])throw new RangeError('SCHOOL_CALENDAR_START_MISMATCH');
+  const baseSchedule=createRoundRobinSchedule({teamKeys:schools.map(s=>s.id),leagueKey:'HS',seasonKey:input.seasonKey,startDay:calendar?.highSchoolDays[0]??input.startDay!},6);
+  const schedule=calendar?scheduleHighSchoolCalendar(baseSchedule,calendar):baseSchedule;
   assertSchedule(schedule,schools.map(s=>s.id),48,24);
   const world:HighSchoolWorld={schemaVersion:1,rulesVersion:'1.0.0',worldKey:input.worldKey,seasonKey:input.seasonKey,seed:input.seed,phase:'CREATED',protagonistKey:creation.player.simulationKey,protagonistSchoolId:input.schoolId,schools,players,repertoires,schedule,rng:{roster:rosterRng,potential:potentialRng,protagonist:creation.state,handedness:identity.state}};
+  if(calendar)world.calendar=calendar;
   assertHighSchoolWorld(world);return world;
 }
 export function assertHighSchoolWorld(world:HighSchoolWorld):void {
+  if(world.calendar){
+    assertSeasonCalendar(world.calendar);
+    assertSchedule(world.schedule,world.schools.map(s=>s.id),48,24);
+    const expected=scheduleHighSchoolCalendar(world.schedule,world.calendar);
+    if(world.schedule.some((g,i)=>g.worldDay!==expected[i]!.worldDay))throw new RangeError('CHANGED_SCHOOL_CALENDAR');
+  }
   if(world.schools.length!==9 || Object.keys(world.players).length!==225 || !world.players[world.protagonistKey]) throw new RangeError('INVALID_WORLD_ROSTER');
   const registered=new Set<string>();
   for(const school of world.schools) {
