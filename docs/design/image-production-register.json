@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "PRODUCTION_BRIEF",
   "gameRulesChanged": false,
-  "note": "이미지 제작 레지스터. status: TODO=제작 필요, EXISTS=이미 있음, CODE_ONLY=코드로 제작(이미지 불필요), LEGACY_REFERENCE=보존. 제작 후 이 파일의 status와 해당 문서를 갱신한다. 2026-10-20: 1단계 결과 승인 후에만 2단계 제작 시작. 시안은 저장소 밖 임시 폴더에 두고 사용자 선택본만 반영; 후속 묶음마다 재승인. 미선택·거절 시 자산과 status·화면 슬롯을 변경하지 않음. 2026-10-20 승인 반영: 투수 A·타자 A·로고2, 네이비·블루. 첫 3항목만 EXISTS; 나머지 제작은 묶음별 승인 대기. 2차 사용자 승인 반영: 우투좌타·좌투좌타·좌투 오버핸드·우투 쓰리쿼터 4종. 실루엣 6/14, TODO57/EXISTS23. 3차 사용자 승인: 남은 실루엣8종 반영, 14/14 완료. 전체 TODO49/EXISTS31. Android/PWA 아이콘2묶음은 여전히 미완료. 2026-10-20 아이콘1 네이비 배경 승인 반영. P0 모두 파일 제작 완료; 실제 설치 검수는 미실행. 2026-10-20 P1 장면6컷 승인 반영(라이벌 상대 버건디). TODO41/EXISTS39. 기존 우리팀 유니폼은 네이비 통일 원칙 확정, 수정 시안은 별도 승인 대기. 2026-10-20 메인·기본사건·고교3PNG 우리팀 네이비 수정 승인 반영, 이전 원본 보존. 추가사건 야간 라이벌 버건디 수정본은 최종 확인 대기. 2026-10-20 야간 라이벌 수정본 최종 승인. 활성4PNG 네이비 통일 완료, 야간 우리팀 흰색/네이비와 상대 버건디 구분. 2026-10-20: 학교별 고유 주색·보조색의 대학9·군 체육팀1 배지 승인 반영. EXISTS49/TODO31. 우리팀 네이비 통일은 익명 선수 사건 일러스트이며 학교 배지에는 적용하지 않음. 2026-10-20 프레임3·배경3·책장표지1 승인 반영. 도장13은 사용자 요청에 따라 컬러 수정 후 별도 승인. EXISTS56/TODO24. 2026-10-20 컬러 도장13종 최종 승인 반영. 기념 보상20항목 모두 파일 완료. EXISTS69/TODO11.",
+  "note": "이미지 제작 레지스터. status: TODO=제작 필요, EXISTS=이미 있음, CODE_ONLY=코드로 제작(이미지 불필요), LEGACY_REFERENCE=보존. 제작 후 이 파일의 status와 해당 문서를 갱신한다. 2026-10-20: 1단계 결과 승인 후에만 2단계 제작 시작. 시안은 저장소 밖 임시 폴더에 두고 사용자 선택본만 반영; 후속 묶음마다 재승인. 미선택·거절 시 자산과 status·화면 슬롯을 변경하지 않음. 2026-10-20 승인 반영: 투수 A·타자 A·로고2, 네이비·블루. 첫 3항목만 EXISTS; 나머지 제작은 묶음별 승인 대기. 2차 사용자 승인 반영: 우투좌타·좌투좌타·좌투 오버핸드·우투 쓰리쿼터 4종. 실루엣 6/14, TODO57/EXISTS23. 3차 사용자 승인: 남은 실루엣8종 반영, 14/14 완료. 전체 TODO49/EXISTS31. Android/PWA 아이콘2묶음은 여전히 미완료. 2026-10-20 아이콘1 네이비 배경 승인 반영. P0 모두 파일 제작 완료; 실제 설치 검수는 미실행. 2026-10-20 P1 장면6컷 승인 반영(라이벌 상대 버건디). TODO41/EXISTS39. 기존 우리팀 유니폼은 네이비 통일 원칙 확정, 수정 시안은 별도 승인 대기. 2026-10-20 메인·기본사건·고교3PNG 우리팀 네이비 수정 승인 반영, 이전 원본 보존. 추가사건 야간 라이벌 버건디 수정본은 최종 확인 대기. 2026-10-20 야간 라이벌 수정본 최종 승인. 활성4PNG 네이비 통일 완료, 야간 우리팀 흰색/네이비와 상대 버건디 구분. 2026-10-20: 학교별 고유 주색·보조색의 대학9·군 체육팀1 배지 승인 반영. EXISTS49/TODO31. 우리팀 네이비 통일은 익명 선수 사건 일러스트이며 학교 배지에는 적용하지 않음. 2026-10-20 프레임3·배경3·책장표지1 승인 반영. 도장13은 사용자 요청에 따라 컬러 수정 후 별도 승인. EXISTS56/TODO24. 2026-10-20 컬러 도장13종 최종 승인 반영. 기념 보상20항목 모두 파일 완료. EXISTS69/TODO11. 2026-10-20 마지막 메달3·대회엠블럼4·연대기테마3·스플래시1 사용자 승인 반영. 레지스터92항목 중 EXISTS80/TODO0/CODE_ONLY11/LEGACY_REFERENCE1. 파일 제작 완료이며 앱·브라우저·설치 검수 완료를 뜻하지 않음.",
   "groups": {
     "G1": "선수 실루엣(SVG)",
     "G2": "사건 장면 12(청춘 애니)",
@@ -1035,7 +1035,19 @@
         "S14",
         "S18"
       ],
-      "notes": "사용 허가는 92의 V12에서 확인. 수정·재색칠 금지"
+      "notes": "사용 허가는 92의 V12에서 확인. 수정·재색칠 금지",
+      "files": [
+        "assets/team-logos/kbo/hh.png",
+        "assets/team-logos/kbo/ht.png",
+        "assets/team-logos/kbo/kt.png",
+        "assets/team-logos/kbo/lg.png",
+        "assets/team-logos/kbo/lt.png",
+        "assets/team-logos/kbo/nc.png",
+        "assets/team-logos/kbo/ob.png",
+        "assets/team-logos/kbo/sk.png",
+        "assets/team-logos/kbo/ss.png",
+        "assets/team-logos/kbo/wo.png"
+      ]
     },
     {
       "id": "IMG-LOGO-MLB",
@@ -1052,7 +1064,39 @@
         "S29",
         "S30"
       ],
-      "notes": "사용 허가는 V12. 마이너 하위팀에 혼용 금지"
+      "notes": "사용 허가는 V12. 마이너 하위팀에 혼용 금지",
+      "files": [
+        "assets/team-logos/mlb/108.svg",
+        "assets/team-logos/mlb/109.svg",
+        "assets/team-logos/mlb/110.svg",
+        "assets/team-logos/mlb/111.svg",
+        "assets/team-logos/mlb/112.svg",
+        "assets/team-logos/mlb/113.svg",
+        "assets/team-logos/mlb/114.svg",
+        "assets/team-logos/mlb/115.svg",
+        "assets/team-logos/mlb/116.svg",
+        "assets/team-logos/mlb/117.svg",
+        "assets/team-logos/mlb/118.svg",
+        "assets/team-logos/mlb/119.svg",
+        "assets/team-logos/mlb/120.svg",
+        "assets/team-logos/mlb/121.svg",
+        "assets/team-logos/mlb/133.svg",
+        "assets/team-logos/mlb/134.svg",
+        "assets/team-logos/mlb/135.svg",
+        "assets/team-logos/mlb/136.svg",
+        "assets/team-logos/mlb/137.svg",
+        "assets/team-logos/mlb/138.svg",
+        "assets/team-logos/mlb/139.svg",
+        "assets/team-logos/mlb/140.svg",
+        "assets/team-logos/mlb/141.svg",
+        "assets/team-logos/mlb/142.svg",
+        "assets/team-logos/mlb/143.svg",
+        "assets/team-logos/mlb/144.svg",
+        "assets/team-logos/mlb/145.svg",
+        "assets/team-logos/mlb/146.svg",
+        "assets/team-logos/mlb/147.svg",
+        "assets/team-logos/mlb/158.svg"
+      ]
     },
     {
       "id": "IMG-BADGE-U01",
@@ -1878,13 +1922,18 @@
       "file": "assets/medals/gold.svg",
       "spec": "128×128 viewBox, 글자 없음",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S25",
         "S45"
       ],
-      "notes": "메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지"
+      "notes": "메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/brand/APPROVED-FINAL-IMAGES-v1.json"
     },
     {
       "id": "IMG-MEDAL-SILVER",
@@ -1894,13 +1943,18 @@
       "file": "assets/medals/silver.svg",
       "spec": "128×128 viewBox, 글자 없음",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S25",
         "S45"
       ],
-      "notes": "메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지"
+      "notes": "메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/brand/APPROVED-FINAL-IMAGES-v1.json"
     },
     {
       "id": "IMG-MEDAL-BRONZE",
@@ -1910,13 +1964,18 @@
       "file": "assets/medals/bronze.svg",
       "spec": "128×128 viewBox, 글자 없음",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S25",
         "S45"
       ],
-      "notes": "메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지"
+      "notes": "메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/brand/APPROVED-FINAL-IMAGES-v1.json"
     },
     {
       "id": "IMG-COMP-WBC",
@@ -1926,14 +1985,19 @@
       "file": "assets/medals/comp-wbc.svg",
       "spec": "96×96 viewBox, 독자 디자인",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P2",
       "screens": [
         "S24",
         "S25",
         "S45"
       ],
-      "notes": "실제 대회 로고 사용 금지. 대회 명칭은 텍스트"
+      "notes": "실제 대회 로고 사용 금지. 대회 명칭은 텍스트",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/brand/APPROVED-FINAL-IMAGES-v1.json"
     },
     {
       "id": "IMG-COMP-OLY",
@@ -1943,14 +2007,19 @@
       "file": "assets/medals/comp-oly.svg",
       "spec": "96×96 viewBox, 독자 디자인",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P2",
       "screens": [
         "S24",
         "S25",
         "S45"
       ],
-      "notes": "실제 대회 로고 사용 금지. 대회 명칭은 텍스트"
+      "notes": "실제 대회 로고 사용 금지. 대회 명칭은 텍스트",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/brand/APPROVED-FINAL-IMAGES-v1.json"
     },
     {
       "id": "IMG-COMP-AG",
@@ -1960,14 +2029,19 @@
       "file": "assets/medals/comp-ag.svg",
       "spec": "96×96 viewBox, 독자 디자인",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P2",
       "screens": [
         "S24",
         "S25",
         "S45"
       ],
-      "notes": "실제 대회 로고 사용 금지. 대회 명칭은 텍스트"
+      "notes": "실제 대회 로고 사용 금지. 대회 명칭은 텍스트",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/brand/APPROVED-FINAL-IMAGES-v1.json"
     },
     {
       "id": "IMG-COMP-P12",
@@ -1977,14 +2051,19 @@
       "file": "assets/medals/comp-p12.svg",
       "spec": "96×96 viewBox, 독자 디자인",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P2",
       "screens": [
         "S24",
         "S25",
         "S45"
       ],
-      "notes": "실제 대회 로고 사용 금지. 대회 명칭은 텍스트"
+      "notes": "실제 대회 로고 사용 금지. 대회 명칭은 텍스트",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/brand/APPROVED-FINAL-IMAGES-v1.json"
     },
     {
       "id": "IMG-CARD-DEFAULT",
@@ -1992,14 +2071,19 @@
       "name": "연대기 카드 테마 DEFAULT",
       "kind": "PNG",
       "file": "assets/cards/theme-default.png",
-      "spec": "1080×1350 배경, 글자·로고 없음, 사용자 메모 6줄 여백",
+      "spec": "1122×1402 PNG 생성 원본, 글자·로고 없음, 사용자 메모6줄 중앙 여백",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S45"
       ],
-      "notes": "테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더"
+      "notes": "테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/brand/APPROVED-FINAL-IMAGES-v1.json"
     },
     {
       "id": "IMG-CARD-OFFSEASON",
@@ -2007,14 +2091,19 @@
       "name": "연대기 카드 테마 OFFSEASON",
       "kind": "PNG",
       "file": "assets/cards/theme-offseason.png",
-      "spec": "1080×1350 배경, 글자·로고 없음, 사용자 메모 6줄 여백",
+      "spec": "1122×1402 PNG 생성 원본, 글자·로고 없음, 사용자 메모6줄 중앙 여백",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S45"
       ],
-      "notes": "테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더"
+      "notes": "테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/brand/APPROVED-FINAL-IMAGES-v1.json"
     },
     {
       "id": "IMG-CARD-RETIRE",
@@ -2022,14 +2111,19 @@
       "name": "연대기 카드 테마 RETIRE",
       "kind": "PNG",
       "file": "assets/cards/theme-retire.png",
-      "spec": "1080×1350 배경, 글자·로고 없음, 사용자 메모 6줄 여백",
+      "spec": "1122×1402 PNG 생성 원본, 글자·로고 없음, 사용자 메모6줄 중앙 여백",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S45"
       ],
-      "notes": "테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더"
+      "notes": "테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/brand/APPROVED-FINAL-IMAGES-v1.json"
     },
     {
       "id": "IMG-BRAND-MARK",
@@ -2114,10 +2208,15 @@
       "file": "assets/brand/splash-icon.svg",
       "spec": "Android 12 스플래시 아이콘 288, 단색 배경",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [],
-      "notes": "큰 일러스트 불필요"
+      "notes": "큰 일러스트 불필요",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/brand/APPROVED-FINAL-IMAGES-v1.json"
     },
     {
       "id": "IMG-ICON-TRAIT",

@@ -272,7 +272,8 @@
     },
     {
       "assetRefs": [
-        "training"
+        "training",
+        "medalsAndCompetitions"
       ],
       "screenId": "S24",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -285,7 +286,8 @@
       "assetRefs": [
         "training",
         "international",
-        "finishScenes"
+        "finishScenes",
+        "medalsAndCompetitions"
       ],
       "screenId": "S25",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -533,7 +535,9 @@
         "international",
         "rival",
         "NONE",
-        "commemorativeRewards"
+        "commemorativeRewards",
+        "medalsAndCompetitions",
+        "chronicleThemes"
       ],
       "screenId": "S45",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -1114,6 +1118,117 @@
           ]
         }
       ]
+    },
+    "medalsAndCompetitions": {
+      "status": "APPROVED",
+      "approval": "assets/brand/APPROVED-FINAL-IMAGES-v1.json",
+      "variants": [
+        {
+          "id": "IMG-MEDAL-GOLD",
+          "file": "assets/medals/gold.svg",
+          "screens": [
+            "S25",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-MEDAL-SILVER",
+          "file": "assets/medals/silver.svg",
+          "screens": [
+            "S25",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-MEDAL-BRONZE",
+          "file": "assets/medals/bronze.svg",
+          "screens": [
+            "S25",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-COMP-WBC",
+          "file": "assets/medals/comp-wbc.svg",
+          "screens": [
+            "S24",
+            "S25",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-COMP-OLY",
+          "file": "assets/medals/comp-oly.svg",
+          "screens": [
+            "S24",
+            "S25",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-COMP-AG",
+          "file": "assets/medals/comp-ag.svg",
+          "screens": [
+            "S24",
+            "S25",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-COMP-P12",
+          "file": "assets/medals/comp-p12.svg",
+          "screens": [
+            "S24",
+            "S25",
+            "S45"
+          ]
+        }
+      ],
+      "fallback": "COMPETITION_NAME_AND_CONFIRMED_RESULT_TEXT",
+      "guard": "Medal only with confirmed earned result; emblems do not imply selection, participation or victory."
+    },
+    "chronicleThemes": {
+      "status": "APPROVED",
+      "approval": "assets/brand/APPROVED-FINAL-IMAGES-v1.json",
+      "variants": [
+        {
+          "id": "IMG-CARD-DEFAULT",
+          "file": "assets/cards/theme-default.png",
+          "width": 1122,
+          "height": 1402,
+          "screens": [
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-CARD-OFFSEASON",
+          "file": "assets/cards/theme-offseason.png",
+          "width": 1122,
+          "height": 1402,
+          "screens": [
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-CARD-RETIRE",
+          "file": "assets/cards/theme-retire.png",
+          "width": 1122,
+          "height": 1402,
+          "screens": [
+            "S45"
+          ]
+        }
+      ],
+      "fallback": "PLAIN_READABLE_CARD",
+      "guard": "Theme does not modify career facts; title and six-line note rendered as accessible UI text."
+    },
+    "splashIcon": {
+      "status": "APPROVED",
+      "file": "assets/brand/splash-icon.svg",
+      "size": 288,
+      "background": "#172c50",
+      "approval": "assets/brand/APPROVED-FINAL-IMAGES-v1.json",
+      "integrationStatus": "NOT_IMPLEMENTED"
     }
   }
 }

@@ -909,7 +909,8 @@
       "edgeRequirement": "후보 전망과 확정 선발 구분; 실제 출장 전 메달·병역 결과 선표시 금지",
       "imageSlot": {
         "assetRefs": [
-          "training"
+          "training",
+          "medalsAndCompetitions"
         ],
         "screenId": "S24",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -948,7 +949,8 @@
         "assetRefs": [
           "training",
           "international",
-          "finishScenes"
+          "finishScenes",
+          "medalsAndCompetitions"
         ],
         "screenId": "S25",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -1747,7 +1749,9 @@
           "international",
           "rival",
           "NONE",
-          "commemorativeRewards"
+          "commemorativeRewards",
+          "medalsAndCompetitions",
+          "chronicleThemes"
         ],
         "screenId": "S45",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",

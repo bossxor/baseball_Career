@@ -62,7 +62,7 @@ assert.ok(!/\b(fetch|XMLHttpRequest|WebSocket)\s*\(/.test(scripts));
 const visible=html.replace(/<style>[\s\S]*?<\/style>/g,'').replace(/<script>[\s\S]*?<\/script>/g,'').replace(/<[^>]+>/g,'');
 assert.ok(!visible.includes('100%'));
 assert.equal(slots.screens.length,45);unique(slots.screens.map(s=>s.screenId));
-const refs=new Set(['NONE','EVENT_RESOLVER','almanacHero','almanacPortrait','silhouetteCard','appBrandMark','finishScenes','fictionalTeamBadges','commemorativeRewards',...art.scenes.map(s=>s.id)]);
+const refs=new Set(['NONE','EVENT_RESOLVER','almanacHero','almanacPortrait','silhouetteCard','appBrandMark','finishScenes','fictionalTeamBadges','commemorativeRewards','medalsAndCompetitions','chronicleThemes',...art.scenes.map(s=>s.id)]);
 for(const row of slots.screens){assert.ok(screens.some(s=>s.id===row.screenId));for(const ref of row.assetRefs)assert.ok(refs.has(ref),ref);assert.ok(row.guard&&row.purpose);assert.equal(row.gameStateAuthority,'SERVER_TEXT_AND_RECEIPTS');}
 const values=[72,80,64,68,66,76];assert.equal(values.reduce((a,b)=>a+b,0)/6,71);
 assert.ok(fs.existsSync(path.join(root,art.prompts)));
@@ -175,9 +175,9 @@ console.log('NOT TESTED: art-lab browser rendering, interactive clicks, viewport
   const approvedBoard=read('approved-art-board.html');
   assert.equal((approvedBoard.match(/<svg\b/g)||[]).length,15);
   assert.ok(!/player-youth-animation-v1|player-pitcher-animation-v1/.test(approvedBoard));
-  assert.equal(registry.items.filter(i=>i.status==='TODO').length,11);
-  assert.equal(registry.items.filter(i=>i.status==='EXISTS').length,69);
-  console.log('PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 14/14 silhouettes ready, 11 image TODOs remain.');
+  assert.equal(registry.items.filter(i=>i.status==='TODO').length,0);
+  assert.equal(registry.items.filter(i=>i.status==='EXISTS').length,80);
+  console.log('PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 14/14 silhouettes ready, 0 image TODOs remain.');
 }
 
 {
@@ -242,5 +242,12 @@ console.log('PASS: 7 approved cosmetic reward assets and screen references; 13 c
 {
 const stamps=JSON.parse(read('assets/rewards/APPROVED-STAMPS-v1.json'));assert.equal(stamps.files.length,13);assert.equal(slots.assetLibrary.commemorativeRewards.stamps.length,13);assert.equal(slots.assetLibrary.commemorativeRewards.status,'APPROVED');
 for(const f of stamps.files){const svg=read(f.file);assert.ok(svg.includes('viewBox="0 0 256 256"'));assert.ok(svg.includes('<title>'));assert.ok(!/<(?:script|foreignObject|image|text)\b/i.test(svg));assert.ok(svg.includes(f.palette.ink)&&svg.includes(f.palette.accent));for(const id of f.screens)assert.ok(slots.screens.find(s=>s.screenId===id).assetRefs.includes('commemorativeRewards'));}
-console.log('PASS: 13 approved colored record stamps, safe SVGs and acquired-only cosmetic references; 11 image TODOs remain.');
+console.log('PASS: 13 approved colored record stamps, safe SVGs and acquired-only cosmetic references; 0 image TODOs remain.');
+}
+
+{
+const final=JSON.parse(read('assets/brand/APPROVED-FINAL-IMAGES-v1.json'));assert.equal(final.files.length,11);assert.equal(slots.assetLibrary.medalsAndCompetitions.variants.length,7);assert.equal(slots.assetLibrary.chronicleThemes.variants.length,3);assert.equal(slots.assetLibrary.splashIcon.integrationStatus,'NOT_IMPLEMENTED');
+for(const f of final.files){const data=fs.readFileSync(path.join(root,f.file));if(f.file.endsWith('.svg')){const svg=data.toString();assert.ok(svg.includes('<title>'));assert.ok(!/<(?:script|foreignObject|image|text)\b/i.test(svg));const size=f.id==='IMG-BRAND-SPLASH'?288:f.id.startsWith('IMG-MEDAL-')?128:96;assert.ok(svg.includes('viewBox="0 0 '+size+' '+size+'"'));}else{assert.equal(data.readUInt32BE(16),f.width);assert.equal(data.readUInt32BE(20),f.height);}for(const id of f.screens){const ref=f.id.startsWith('IMG-CARD-')?'chronicleThemes':'medalsAndCompetitions';assert.ok(slots.screens.find(s=>s.screenId===id).assetRefs.includes(ref));}}
+const registry=json('image-production-register.json');assert.equal(registry.items.filter(i=>i.status==='TODO').length,0);assert.equal(registry.items.filter(i=>i.status==='EXISTS').length,80);assert.equal(registry.items.filter(i=>i.status==='CODE_ONLY').length,11);assert.equal(registry.items.filter(i=>i.status==='LEGACY_REFERENCE').length,1);for(const i of registry.items.filter(i=>i.status==='EXISTS')){const files=i.files||[i.file];assert.ok(files.length>0,i.id);for(const f of files)assert.ok(fs.existsSync(path.join(root,f)),i.id+' '+f);}
+console.log('PASS: final 11 approved assets, actual dimensions and bound screens; 80 EXISTS / 0 TODO / 11 CODE_ONLY / 1 LEGACY. Browser/device/application execution remains NOT_EXECUTED.');
 }

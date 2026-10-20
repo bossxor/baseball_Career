@@ -1,0 +1,170 @@
+{
+  "date": "2026-10-20",
+  "status": "USER_APPROVED",
+  "scope": "FINAL_11_DESIGN_ASSETS",
+  "gameRulesChanged": false,
+  "method": "Native SVG assets; built-in image_gen for 3 chronicle PNGs. Original generated dimensions retained.",
+  "files": [
+    {
+      "id": "IMG-MEDAL-GOLD",
+      "name": "메달 금",
+      "file": "assets/medals/gold.svg",
+      "screens": [
+        "S25",
+        "S45"
+      ],
+      "sha256": "c1047276a428fa758a3c9e5d9f282d0c68570561b4aef183475a42410150eeef",
+      "sourceFile": "gold.svg",
+      "method": "Original SVG medal / nonofficial tournament emblem."
+    },
+    {
+      "id": "IMG-MEDAL-SILVER",
+      "name": "메달 은",
+      "file": "assets/medals/silver.svg",
+      "screens": [
+        "S25",
+        "S45"
+      ],
+      "sha256": "d26fd53f594a15d4f2c9ed43fb3efe63c2470d1649d9f5b3f378222a1a983c48",
+      "sourceFile": "silver.svg",
+      "method": "Original SVG medal / nonofficial tournament emblem."
+    },
+    {
+      "id": "IMG-MEDAL-BRONZE",
+      "name": "메달 동",
+      "file": "assets/medals/bronze.svg",
+      "screens": [
+        "S25",
+        "S45"
+      ],
+      "sha256": "bcbfa5fa62fde0def704646831851eb1cfeaa6c59de5ed6a52a25457fc8567a3",
+      "sourceFile": "bronze.svg",
+      "method": "Original SVG medal / nonofficial tournament emblem."
+    },
+    {
+      "id": "IMG-COMP-WBC",
+      "name": "대회 엠블럼 WBC",
+      "file": "assets/medals/comp-wbc.svg",
+      "screens": [
+        "S24",
+        "S25",
+        "S45"
+      ],
+      "sha256": "86d08691d9fc9fd037259a2e4e2bd129b36d7ca397b46d05a595a2a4deadaf8f",
+      "sourceFile": "comp-wbc.svg",
+      "method": "Original SVG medal / nonofficial tournament emblem."
+    },
+    {
+      "id": "IMG-COMP-OLY",
+      "name": "대회 엠블럼 OLY",
+      "file": "assets/medals/comp-oly.svg",
+      "screens": [
+        "S24",
+        "S25",
+        "S45"
+      ],
+      "sha256": "36ad0ec96921eb74fc00a2011b8ea541797c722ae75e63a160cc8a3de5fb750a",
+      "sourceFile": "comp-oly.svg",
+      "method": "Original SVG medal / nonofficial tournament emblem."
+    },
+    {
+      "id": "IMG-COMP-AG",
+      "name": "대회 엠블럼 AG",
+      "file": "assets/medals/comp-ag.svg",
+      "screens": [
+        "S24",
+        "S25",
+        "S45"
+      ],
+      "sha256": "e4be255c5c9e1ba63daf55266a1b2362aad926fba74d2c45f2ab4729f1cd3067",
+      "sourceFile": "comp-ag.svg",
+      "method": "Original SVG medal / nonofficial tournament emblem."
+    },
+    {
+      "id": "IMG-COMP-P12",
+      "name": "대회 엠블럼 P12",
+      "file": "assets/medals/comp-p12.svg",
+      "screens": [
+        "S24",
+        "S25",
+        "S45"
+      ],
+      "sha256": "bbec54948ab9ac1a3b3846c307dd158eabab5a20a03f85876d3973bf3f200d49",
+      "sourceFile": "comp-p12.svg",
+      "method": "Original SVG medal / nonofficial tournament emblem."
+    },
+    {
+      "id": "IMG-CARD-DEFAULT",
+      "name": "연대기 카드 테마 DEFAULT",
+      "file": "assets/cards/theme-default.png",
+      "screens": [
+        "S45"
+      ],
+      "sha256": "64b2a31f5d25e9cbe3b2bf76c9111baeb2300031281da371e77b479ff6e998e8",
+      "sourceFile": "theme-default-v2.png",
+      "width": 1122,
+      "height": 1402,
+      "generation": {
+        "id": "theme-default",
+        "prompt": "Use case: illustration-story. Create one premium finished 2D youth baseball anime game chronicle card BACKGROUND, portrait 4:5. No people. Bright clear mid-morning baseball field, an elegant diagonal close-up unmarked baseball scorebook corner and a baseball at the bottom right, stadium fencing at very low horizon, lush grass restricted to bottom strip. Upper and central 70 percent is a softly luminous very pale ivory blue open sky with subtle cloud wisps and no objects, low contrast ready for six lines of dark Korean user note overlay and title (do NOT draw text). Refined clean anime linework, controlled detail, cheerful understated blue/ivory palette, realistic baseball props, sophisticated collectible UI background. No inner borders, no framed panels, no sunset, no letters, numbers, writing, logos, watermarks. Single illustration fills canvas, never a collage. This is everyday career memory theme, no trophy or implied win.",
+        "source": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-f7cf79c3-1511-42c4-b2ad-102e9c0b7ead.png"
+      },
+      "edit": {
+        "id": "theme-default",
+        "prompt": "Edit this card background with one precise change: remove ALL tiny writing, numbers, letters and handwritten marks from the open scorebook and distant scoreboard. Keep only empty thin scorebook grid ruling with no characters whatsoever. Preserve composition, baseball, bright blue daylight sky, anime linework and open center exactly. No other changes.",
+        "original": "C:\\Users\\N-052\\AppData\\Local\\Temp\\baseball-final-images-drafts-20261020\\theme-default.png",
+        "source": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-f4fe5d9f-20b1-481c-accf-967aeccad188.png"
+      }
+    },
+    {
+      "id": "IMG-CARD-OFFSEASON",
+      "name": "연대기 카드 테마 OFFSEASON",
+      "file": "assets/cards/theme-offseason.png",
+      "screens": [
+        "S45"
+      ],
+      "sha256": "209a42cf498aaa27bfe0abc943600c1723d2ec96bac594ad442481f9f09b73a1",
+      "sourceFile": "theme-offseason.png",
+      "width": 1122,
+      "height": 1402,
+      "generation": {
+        "id": "theme-offseason",
+        "prompt": "Use case: illustration-story. Create one premium polished 2D youth baseball anime game chronicle card BACKGROUND, portrait 4:5. No people. Quiet baseball clubhouse offseason desk under neutral daylight: a closed navy cap with absolutely no mark, neatly folded white uniform with navy trim, a wooden bat handle and white unmarked planning paper just along the bottom 25 percent and outer edges. Very pale misty aqua and warm ivory central upper 70 percent as clean low-contrast blank softly lit wall/desk space for six lines of dark UI user notes and title overlay. Fine clean anime linework, beautifully drawn cloth and wood, calm hopeful preparation mood, subtle teal palette, no yellow sunset. No text, numerals, writing, brand marks, official team logos, watermark, poster layout, borders or collage. One background asset, not a complete UI.",
+        "source": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-7eb2269b-d661-4804-af30-a452ea35016a.png"
+      },
+      "edit": null
+    },
+    {
+      "id": "IMG-CARD-RETIRE",
+      "name": "연대기 카드 테마 RETIRE",
+      "file": "assets/cards/theme-retire.png",
+      "screens": [
+        "S45"
+      ],
+      "sha256": "92a5327667b8fb10483bb9d2ea44f8c068c05c3fdc88d7a9d0c64b5bc0d9adf6",
+      "sourceFile": "theme-retire-v2.png",
+      "width": 1122,
+      "height": 1402,
+      "generation": {
+        "id": "theme-retire",
+        "prompt": "Use case: illustration-story. Create one refined finished 2D youth baseball anime game chronicle card BACKGROUND, portrait 4:5. No people. An empty baseball dugout bench in soft neutral afternoon daylight, a well worn brown glove and white baseball resting on bottom left, navy uniform jacket folded on bench at lower right, small peaceful field seen only at bottom horizon. Upper and central 70 percent is clean warm ivory subtly textured lit space, pale enough for dark six-line user note and title overlay. Sophisticated soft slate/lavender, ivory and natural leather accents, gentle reflective mood but bright and warm, not sunset and not orange wash. Detailed polished clean anime illustration matching a youthful baseball career game. No trophy or medal implying outcomes. Absolutely no text, letters, numbers, writing, logos, watermarks, ornate borders or collage. One full canvas background portrait4:5.",
+        "source": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-380e5fdb-55b2-45bc-a2da-302dd7a8afa0.png"
+      },
+      "edit": {
+        "id": "theme-retire",
+        "prompt": "Edit lighting/weather only. This baseball anime card background currently feels like warm sunset. Change to bright neutral mid-afternoon daylight with a very pale ivory-blue sky, subtle cool lavender at edges, naturally green grass, neutral brown wooden bench and realistic brown leather glove. Remove warm peach/orange wash entirely. Retain calm reflective retirement mood, all objects and composition, empty central 70% for dark UI notes, navy folded jacket, glove and ball. No new text, writing, numerals, logos or objects. Preserve clean anime linework.",
+        "original": "C:\\Users\\N-052\\AppData\\Local\\Temp\\baseball-final-images-drafts-20261020\\theme-retire.png",
+        "source": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-2841a315-3615-4d5b-93da-6731b5208a8a.png"
+      }
+    },
+    {
+      "id": "IMG-BRAND-SPLASH",
+      "name": "스플래시 아이콘",
+      "file": "assets/brand/splash-icon.svg",
+      "screens": [],
+      "sha256": "3bbb29e08b97b425d87f576ed0ac860b02d0332ae1bb7dd2eb8d0f16e2c8179f",
+      "sourceFile": "splash-icon.svg",
+      "method": "Derived from approved Android foreground; 288 square navy background, no app integration."
+    }
+  ]
+}

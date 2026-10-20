@@ -166,6 +166,14 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 
 <!-- SOURCE: STATUS.md -->
 
+# 현재 작업 — 이미지 파일 제작 목록 승인 반영 완료
+
+2026-10-20: 사용자 승인 마지막11종(메달3·대회 독자엠블럼4·연대기테마3·스플래시1)을 반영했다. 이미지 레지스터92항목은 EXISTS80/TODO0/CODE_ONLY11/LEGACY_REFERENCE1이다. 제작 목록의 이미지 파일은 모두 준비됐으며 CODE_ONLY11묶음 표시 명세와 화면45×8상태/접근성/반응형 마감 검수는 남는다. 실제 브라우저·기기·APK 설치·DB 시험 미실행. 게임 규칙·45화면/99이벤트/핵심298 불변, 앱 구현 미착수.
+
+[승인 이미지 전체 보드](approved-art-board.html) · [마지막11종 승인 기록](assets/brand/APPROVED-FINAL-IMAGES-v1.json). 미승인 시안은 반영하지 않았다. 다음은 구현 전 표시 명세와 화면/인계 정합 점검이다. 아래는 이전 작업 이력이다.
+
+---
+
 # 현재 작업 — 컬러 도장13종 승인 반영
 
 2026-10-20: 컬러 기록 도장13종 사용자 승인 반영. 프레임3·배경3·도장13·책장표지1, 기념 보상20항목 모두 파일 완료. 레지스터 EXISTS69/TODO11/CODE_ONLY11/LEGACY_REFERENCE1. 남은 이미지는 메달3·연대기 테마3·스플래시1(P1 7항목), 대회 엠블럼4(P2). 게임 규칙·45화면/99이벤트/핵심298 유지. 앱/DB/API/APK 구현은 시작하지 않음.
@@ -412,6 +420,14 @@ AVG상한1.000과SLG상한4.000/OPS5.000·짧은표본·AB0·P100과현재A를�
 ---
 
 <!-- SOURCE: DETAIL-PLAN.md -->
+
+# 현재 작업 — 이미지 파일 제작 목록 승인 반영 완료
+
+2026-10-20: 사용자 승인 마지막11종(메달3·대회 독자엠블럼4·연대기테마3·스플래시1)을 반영했다. 이미지 레지스터92항목은 EXISTS80/TODO0/CODE_ONLY11/LEGACY_REFERENCE1이다. 제작 목록의 이미지 파일은 모두 준비됐으며 CODE_ONLY11묶음 표시 명세와 화면45×8상태/접근성/반응형 마감 검수는 남는다. 실제 브라우저·기기·APK 설치·DB 시험 미실행. 게임 규칙·45화면/99이벤트/핵심298 불변, 앱 구현 미착수.
+
+[승인 이미지 전체 보드](approved-art-board.html) · [마지막11종 승인 기록](assets/brand/APPROVED-FINAL-IMAGES-v1.json). 미승인 시안은 반영하지 않았다. 다음은 구현 전 표시 명세와 화면/인계 정합 점검이다. 아래는 이전 작업 이력이다.
+
+---
 
 # 현재 작업 — 컬러 도장13종 승인 반영
 
@@ -882,6 +898,10 @@ U: 우리팀으로 표현된 선수의 모자·유니폼 장식·속옷은 네�
 ## 2026-10-20 컬러 기록 도장13종 승인 U
 
 2026-10-20: 컬러 기록 도장13종 사용자 승인 반영. 프레임3·배경3·도장13·책장표지1, 기념 보상20항목 모두 파일 완료. 레지스터 EXISTS69/TODO11/CODE_ONLY11/LEGACY_REFERENCE1. 남은 이미지는 메달3·연대기 테마3·스플래시1(P1 7항목), 대회 엠블럼4(P2). 게임 규칙·45화면/99이벤트/핵심298 유지. 앱/DB/API/APK 구현은 시작하지 않음.
+
+## 2026-10-20 마지막 이미지11종 승인 U
+
+2026-10-20: 사용자 승인 마지막11종(메달3·대회 독자엠블럼4·연대기테마3·스플래시1)을 반영했다. 이미지 레지스터92항목은 EXISTS80/TODO0/CODE_ONLY11/LEGACY_REFERENCE1이다. 제작 목록의 이미지 파일은 모두 준비됐으며 CODE_ONLY11묶음 표시 명세와 화면45×8상태/접근성/반응형 마감 검수는 남는다. 실제 브라우저·기기·APK 설치·DB 시험 미실행. 게임 규칙·45화면/99이벤트/핵심298 불변, 앱 구현 미착수.
 
 ---
 
@@ -8745,8 +8765,8 @@ ES-D01 X01~X07 적용합 재계산 일치/02 확률합 1/03 X04 K 원합 .12→.
 
 ## 한눈에 보기
 
-- 레지스터 항목 92개: 제작 필요(TODO) 11개, 이미 있음 69개, 코드로 만들면 되는 것(이미지 불필요) 11개, 보존 1개.
-- 우선순위: P0 미제작 0개, 승인 반영 17개(실루엣 14 + 로고 마크 1 + 아이콘 2묶음), P1 미제작 7개, P2 4개. P0는 앱을 처음 띄울 때 필요한 것이고 P1은 해당 기능 화면, P2는 선택이다.
+- 레지스터 항목 92개: 제작 필요(TODO) 0개, 이미 있음 80개, 코드로 만들면 되는 것(이미지 불필요) 11개, 보존 1개.
+- 우선순위: P0 미제작 0개, 승인 반영 17개(실루엣 14 + 로고 마크 1 + 아이콘 2묶음), P1 미제작 0개, P2 미제작 0개. P0는 앱을 처음 띄울 때 필요한 것이고 P1은 해당 기능 화면, P2는 선택이다.
 - 코드로 만드는 것(CODE_ONLY: 마이너·고교·국가 배지, 특성·구종·성향·폼·투타·목표 아이콘, 수비 다이어그램, 칭호)은 이미지 생성이 필요 없다.
 
 ## 공통 제작 규칙
@@ -8771,20 +8791,20 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-SIL-H-RR|타자 우투우타 실루엣|assets/silhouettes/hitter-RR.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|우투 선수의 우타석. 배트는 정면 기준 왼쪽 어깨 위, 글러브는 정면 기준 오른쪽 허리|
-|IMG-SIL-H-RL|타자 우투좌타 실루엣|assets/silhouettes/hitter-RL.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|좌타석. 배트는 정면 기준 오른쪽 어깨 위, 글러브는 정면 기준 오른쪽 허리|
-|IMG-SIL-H-RS|타자 우투양타 실루엣|assets/silhouettes/hitter-RS.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|양타. 두 배트 포즈를 겹쳐 한쪽은 옅게, 글러브는 정면 기준 오른쪽 허리|
-|IMG-SIL-H-LR|타자 좌투우타 실루엣|assets/silhouettes/hitter-LR.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|우타석, 글러브는 정면 기준 왼쪽 허리|
-|IMG-SIL-H-LL|타자 좌투좌타 실루엣|assets/silhouettes/hitter-LL.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|좌타석, 글러브는 정면 기준 왼쪽 허리|
-|IMG-SIL-H-LS|타자 좌투양타 실루엣|assets/silhouettes/hitter-LS.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|양타, 글러브는 정면 기준 왼쪽 허리|
-|IMG-SIL-P-R-OVERHAND|투수 우투 오버핸드 실루엣|assets/silhouettes/pitcher-R-overhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔이 머리 위로 수직. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
-|IMG-SIL-P-R-THREEQUARTER|투수 우투 쓰리쿼터 실루엣|assets/silhouettes/pitcher-R-threequarter.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 45도 위. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
-|IMG-SIL-P-R-SIDEARM|투수 우투 사이드암 실루엣|assets/silhouettes/pitcher-R-sidearm.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 수평. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
-|IMG-SIL-P-R-UNDERHAND|투수 우투 언더핸드 실루엣|assets/silhouettes/pitcher-R-underhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 낮게 아래로. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
-|IMG-SIL-P-L-OVERHAND|투수 좌투 오버핸드 실루엣|assets/silhouettes/pitcher-L-overhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔이 머리 위로 수직. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
-|IMG-SIL-P-L-THREEQUARTER|투수 좌투 쓰리쿼터 실루엣|assets/silhouettes/pitcher-L-threequarter.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 45도 위. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
-|IMG-SIL-P-L-SIDEARM|투수 좌투 사이드암 실루엣|assets/silhouettes/pitcher-L-sidearm.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 수평. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
-|IMG-SIL-P-L-UNDERHAND|투수 좌투 언더핸드 실루엣|assets/silhouettes/pitcher-L-underhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|승인 반영|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 낮게 아래로. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-H-RR|타자 우투우타 실루엣|assets/silhouettes/hitter-RR.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|있음|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|우투 선수의 우타석. 배트는 정면 기준 왼쪽 어깨 위, 글러브는 정면 기준 오른쪽 허리|
+|IMG-SIL-H-RL|타자 우투좌타 실루엣|assets/silhouettes/hitter-RL.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|있음|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|좌타석. 배트는 정면 기준 오른쪽 어깨 위, 글러브는 정면 기준 오른쪽 허리|
+|IMG-SIL-H-RS|타자 우투양타 실루엣|assets/silhouettes/hitter-RS.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|있음|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|양타. 두 배트 포즈를 겹쳐 한쪽은 옅게, 글러브는 정면 기준 오른쪽 허리|
+|IMG-SIL-H-LR|타자 좌투우타 실루엣|assets/silhouettes/hitter-LR.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|있음|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|우타석, 글러브는 정면 기준 왼쪽 허리|
+|IMG-SIL-H-LL|타자 좌투좌타 실루엣|assets/silhouettes/hitter-LL.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|있음|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|좌타석, 글러브는 정면 기준 왼쪽 허리|
+|IMG-SIL-H-LS|타자 좌투양타 실루엣|assets/silhouettes/hitter-LS.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수(--sil-uniform/--sil-accent/--sil-skin)|있음|S02, S03, S10, S11, S14, S16, S17, S22, S40, S42, S43|양타, 글러브는 정면 기준 왼쪽 허리|
+|IMG-SIL-P-R-OVERHAND|투수 우투 오버핸드 실루엣|assets/silhouettes/pitcher-R-overhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|있음|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔이 머리 위로 수직. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-R-THREEQUARTER|투수 우투 쓰리쿼터 실루엣|assets/silhouettes/pitcher-R-threequarter.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|있음|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 45도 위. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-R-SIDEARM|투수 우투 사이드암 실루엣|assets/silhouettes/pitcher-R-sidearm.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|있음|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 수평. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-R-UNDERHAND|투수 우투 언더핸드 실루엣|assets/silhouettes/pitcher-R-underhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|있음|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 낮게 아래로. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-L-OVERHAND|투수 좌투 오버핸드 실루엣|assets/silhouettes/pitcher-L-overhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|있음|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔이 머리 위로 수직. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-L-THREEQUARTER|투수 좌투 쓰리쿼터 실루엣|assets/silhouettes/pitcher-L-threequarter.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|있음|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 45도 위. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-L-SIDEARM|투수 좌투 사이드암 실루엣|assets/silhouettes/pitcher-L-sidearm.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|있음|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 수평. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
+|IMG-SIL-P-L-UNDERHAND|투수 좌투 언더핸드 실루엣|assets/silhouettes/pitcher-L-underhand.svg|viewBox 0 0 120 160, 얼굴·글자·로고 없음, 색은 CSS 변수|있음|S02, S03, S10, S11, S14, S16, S17, S22, S42, S43|던지는 팔 낮게 아래로. 글러브는 던지는 팔 반대쪽. 좌우 단순 반전 금지(글러브·공 위치 검수)|
 
 ### G2 사건 장면 12(청춘 애니)
 
@@ -8807,12 +8827,12 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-FIN-COLLEGE|마감 장면 대학(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 대학 캠퍼스 그라운드. 시간대 규칙 준수|
-|IMG-FIN-MINOR-AWAY|마감 장면 마이너 원정(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 마이너 원정 이동/구장. 시간대 규칙 준수|
-|IMG-FIN-RIVAL-NEUTRAL|마감 장면 중립 라이벌(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 중립 구장에서 마주 선 두 선수. 시간대 규칙 준수|
-|IMG-FIN-RETURN|마감 장면 복귀(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 귀국/복귀 장면. 시간대 규칙 준수|
-|IMG-FIN-RETIRE|마감 장면 은퇴(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 은퇴 기념 장면. 시간대 규칙 준수|
-|IMG-FIN-STADIUM|마감 장면 구장(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 구장 전경. 시간대 규칙 준수|
+|IMG-FIN-COLLEGE|마감 장면 대학(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|있음|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 대학 캠퍼스 그라운드. 시간대 규칙 준수|
+|IMG-FIN-MINOR-AWAY|마감 장면 마이너 원정(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|있음|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 마이너 원정 이동/구장. 시간대 규칙 준수|
+|IMG-FIN-RIVAL-NEUTRAL|마감 장면 중립 라이벌(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|있음|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 중립 구장에서 마주 선 두 선수. 시간대 규칙 준수|
+|IMG-FIN-RETURN|마감 장면 복귀(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|있음|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 귀국/복귀 장면. 시간대 규칙 준수|
+|IMG-FIN-RETIRE|마감 장면 은퇴(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|있음|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 은퇴 기념 장면. 시간대 규칙 준수|
+|IMG-FIN-STADIUM|마감 장면 구장(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|있음|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 구장 전경. 시간대 규칙 준수|
 
 ### G4 Hero·졸업 장면
 
@@ -8832,16 +8852,16 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-BADGE-U01|가상 대학 배지 한빛대|assets/badges/college-u01.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
-|IMG-BADGE-U02|가상 대학 배지 청해대|assets/badges/college-u02.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
-|IMG-BADGE-U03|가상 대학 배지 백림대|assets/badges/college-u03.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
-|IMG-BADGE-U04|가상 대학 배지 동운대|assets/badges/college-u04.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
-|IMG-BADGE-U05|가상 대학 배지 서강산대|assets/badges/college-u05.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
-|IMG-BADGE-U06|가상 대학 배지 남해솔대|assets/badges/college-u06.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
-|IMG-BADGE-U07|가상 대학 배지 해오름대|assets/badges/college-u07.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
-|IMG-BADGE-U08|가상 대학 배지 온누리대|assets/badges/college-u08.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
-|IMG-BADGE-U09|가상 대학 배지 새길대|assets/badges/college-u09.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|제작 필요 P1|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
-|IMG-BADGE-ARMY|군 체육팀(상무) 배지|assets/badges/military-team.svg|64×64 viewBox|제작 필요 P1|S26, S27|독자 디자인. 실제 부대 마크 사용 금지|
+|IMG-BADGE-U01|가상 대학 배지 한빛대|assets/badges/college-u01.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|있음|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U02|가상 대학 배지 청해대|assets/badges/college-u02.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|있음|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U03|가상 대학 배지 백림대|assets/badges/college-u03.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|있음|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U04|가상 대학 배지 동운대|assets/badges/college-u04.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|있음|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U05|가상 대학 배지 서강산대|assets/badges/college-u05.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|있음|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U06|가상 대학 배지 남해솔대|assets/badges/college-u06.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|있음|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U07|가상 대학 배지 해오름대|assets/badges/college-u07.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|있음|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U08|가상 대학 배지 온누리대|assets/badges/college-u08.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|있음|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-U09|가상 대학 배지 새길대|assets/badges/college-u09.svg|64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자|있음|S28, S34, S35|실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조|
+|IMG-BADGE-ARMY|군 체육팀(상무) 배지|assets/badges/military-team.svg|64×64 viewBox|있음|S26, S27|독자 디자인. 실제 부대 마크 사용 금지|
 |IMG-BADGE-MINOR|가상 마이너(Rookie/A/AA/AAA) 팀 배지|(코드 생성)|MLB 30구단×4 = 120팀. 약칭 2~3글자+팔레트로 코드 생성|코드 제작|S18, S29|이미지 제작 불필요. 모회사 로고와 혼용 금지(37)|
 |IMG-BADGE-HS|가상 고교 배지|(코드 생성)|가상 학교 목록(schoolId)별 약칭+팔레트|코드 제작|S02, S04|수는 고교 목록 크기. 이미지 제작 불필요|
 |IMG-BADGE-NAT|국가대표 참가국 배지|(코드 생성)|국가 코드 약칭+팔레트|코드 제작|S24, S25|실제 국기·협회 엠블럼 사용은 V12 권리 확인 전 금지|
@@ -8850,56 +8870,56 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-RWD-R-G01|기념 프레임 R-G01|assets/rewards/r-g01.svg|선수 카드 테두리, 9-slice 가능, 가운데 투명|제작 필요 P1|S40, S45|목표 G01 달성 기념. 능력 효과 없음(58)|
-|IMG-RWD-R-G06|기념 프레임 R-G06|assets/rewards/r-g06.svg|선수 카드 테두리, 9-slice 가능, 가운데 투명|제작 필요 P1|S40, S45|목표 G06 달성 기념. 능력 효과 없음(58)|
-|IMG-RWD-R-G10|기념 프레임 R-G10|assets/rewards/r-g10.svg|선수 카드 테두리, 9-slice 가능, 가운데 투명|제작 필요 P1|S40, S45|목표 G10 달성 기념. 능력 효과 없음(58)|
-|IMG-RWD-R-G03|기념 배경 R-G03|assets/rewards/r-g03.png|카드 배경 1080×1350, 글자 없음, 중앙 여백|제작 필요 P1|S40, S45|카드 텍스트 가독성 우선|
-|IMG-RWD-R-G05|기념 배경 R-G05|assets/rewards/r-g05.png|카드 배경 1080×1350, 글자 없음, 중앙 여백|제작 필요 P1|S40, S45|카드 텍스트 가독성 우선|
-|IMG-RWD-R-G08|기념 배경 R-G08|assets/rewards/r-g08.png|카드 배경 1080×1350, 글자 없음, 중앙 여백|제작 필요 P1|S40, S45|카드 텍스트 가독성 우선|
-|IMG-RWD-R-G04|도감 스탬프 R-G04|assets/rewards/r-g04.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
-|IMG-RWD-R-G09|도감 스탬프 R-G09|assets/rewards/r-g09.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
-|IMG-RWD-R-A01|도감 스탬프 R-A01|assets/rewards/r-a01.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
-|IMG-RWD-R-A02|도감 스탬프 R-A02|assets/rewards/r-a02.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
-|IMG-RWD-R-A03|도감 스탬프 R-A03|assets/rewards/r-a03.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
-|IMG-RWD-R-A04|도감 스탬프 R-A04|assets/rewards/r-a04.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
-|IMG-RWD-R-A05|도감 스탬프 R-A05|assets/rewards/r-a05.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
-|IMG-RWD-R-A06|도감 스탬프 R-A06|assets/rewards/r-a06.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
-|IMG-RWD-R-A07|도감 스탬프 R-A07|assets/rewards/r-a07.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
-|IMG-RWD-R-A08|도감 스탬프 R-A08|assets/rewards/r-a08.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
-|IMG-RWD-R-A09|도감 스탬프 R-A09|assets/rewards/r-a09.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
-|IMG-RWD-R-A10|도감 스탬프 R-A10|assets/rewards/r-a10.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
-|IMG-RWD-R-A11|도감 스탬프 R-A11|assets/rewards/r-a11.svg|256×256 viewBox, 단색 도장 스타일, 글자 없음(제목은 텍스트)|제작 필요 P1|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
-|IMG-RWD-R-A12|책장 표지 R-A12|assets/rewards/r-a12.png|표지 이미지 1080×1350|제작 필요 P1|S45|KBO·MLB 실제 출장 후 은퇴 기념|
+|IMG-RWD-R-G01|기념 프레임 R-G01|assets/rewards/r-g01.svg|선수 카드 테두리, 9-slice 가능, 가운데 투명|있음|S40, S45|목표 G01 달성 기념. 능력 효과 없음(58)|
+|IMG-RWD-R-G06|기념 프레임 R-G06|assets/rewards/r-g06.svg|선수 카드 테두리, 9-slice 가능, 가운데 투명|있음|S40, S45|목표 G06 달성 기념. 능력 효과 없음(58)|
+|IMG-RWD-R-G10|기념 프레임 R-G10|assets/rewards/r-g10.svg|선수 카드 테두리, 9-slice 가능, 가운데 투명|있음|S40, S45|목표 G10 달성 기념. 능력 효과 없음(58)|
+|IMG-RWD-R-G03|기념 배경 R-G03|assets/rewards/r-g03.png|1122×1402 PNG 생성 원본, 세로 카드 배경, 글자 없음; 원본 보존. UI는 카드 비율에 맞춰 표시|있음|S40, S45|카드 텍스트 가독성 우선|
+|IMG-RWD-R-G05|기념 배경 R-G05|assets/rewards/r-g05.png|1122×1402 PNG 생성 원본, 세로 카드 배경, 글자 없음; 원본 보존. UI는 카드 비율에 맞춰 표시|있음|S40, S45|카드 텍스트 가독성 우선|
+|IMG-RWD-R-G08|기념 배경 R-G08|assets/rewards/r-g08.png|1122×1402 PNG 생성 원본, 세로 카드 배경, 글자 없음; 원본 보존. UI는 카드 비율에 맞춰 표시|있음|S40, S45|카드 텍스트 가독성 우선|
+|IMG-RWD-R-G04|도감 스탬프 R-G04|assets/rewards/r-g04.svg|256×256 viewBox, 기록별 컬러 도장, 글자 없음; 제목은 UI 텍스트|있음|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-G09|도감 스탬프 R-G09|assets/rewards/r-g09.svg|256×256 viewBox, 기록별 컬러 도장, 글자 없음; 제목은 UI 텍스트|있음|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A01|도감 스탬프 R-A01|assets/rewards/r-a01.svg|256×256 viewBox, 기록별 컬러 도장, 글자 없음; 제목은 UI 텍스트|있음|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A02|도감 스탬프 R-A02|assets/rewards/r-a02.svg|256×256 viewBox, 기록별 컬러 도장, 글자 없음; 제목은 UI 텍스트|있음|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A03|도감 스탬프 R-A03|assets/rewards/r-a03.svg|256×256 viewBox, 기록별 컬러 도장, 글자 없음; 제목은 UI 텍스트|있음|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A04|도감 스탬프 R-A04|assets/rewards/r-a04.svg|256×256 viewBox, 기록별 컬러 도장, 글자 없음; 제목은 UI 텍스트|있음|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A05|도감 스탬프 R-A05|assets/rewards/r-a05.svg|256×256 viewBox, 기록별 컬러 도장, 글자 없음; 제목은 UI 텍스트|있음|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A06|도감 스탬프 R-A06|assets/rewards/r-a06.svg|256×256 viewBox, 기록별 컬러 도장, 글자 없음; 제목은 UI 텍스트|있음|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A07|도감 스탬프 R-A07|assets/rewards/r-a07.svg|256×256 viewBox, 기록별 컬러 도장, 글자 없음; 제목은 UI 텍스트|있음|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A08|도감 스탬프 R-A08|assets/rewards/r-a08.svg|256×256 viewBox, 기록별 컬러 도장, 글자 없음; 제목은 UI 텍스트|있음|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A09|도감 스탬프 R-A09|assets/rewards/r-a09.svg|256×256 viewBox, 기록별 컬러 도장, 글자 없음; 제목은 UI 텍스트|있음|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A10|도감 스탬프 R-A10|assets/rewards/r-a10.svg|256×256 viewBox, 기록별 컬러 도장, 글자 없음; 제목은 UI 텍스트|있음|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A11|도감 스탬프 R-A11|assets/rewards/r-a11.svg|256×256 viewBox, 기록별 컬러 도장, 글자 없음; 제목은 UI 텍스트|있음|S40, S45|도전과제·목표 근거는 58. 해당 성과가 있을 때만 해금 표시|
+|IMG-RWD-R-A12|책장 표지 R-A12|assets/rewards/r-a12.png|1122×1402 PNG 생성 원본, 세로 카드 배경, 글자 없음; 원본 보존. UI는 카드 비율에 맞춰 표시|있음|S45|KBO·MLB 실제 출장 후 은퇴 기념|
 |IMG-RWD-TITLES|칭호 R-G02/R-G07|(텍스트)|이미지 없음|코드 제작|S40|텍스트 칭호|
 
 ### G8 메달·대회 엠블럼
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-MEDAL-GOLD|메달 금|assets/medals/gold.svg|128×128 viewBox, 글자 없음|제작 필요 P1|S25, S45|메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지|
-|IMG-MEDAL-SILVER|메달 은|assets/medals/silver.svg|128×128 viewBox, 글자 없음|제작 필요 P1|S25, S45|메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지|
-|IMG-MEDAL-BRONZE|메달 동|assets/medals/bronze.svg|128×128 viewBox, 글자 없음|제작 필요 P1|S25, S45|메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지|
-|IMG-COMP-WBC|대회 엠블럼 WBC|assets/medals/comp-wbc.svg|96×96 viewBox, 독자 디자인|제작 필요 P2|S24, S25, S45|실제 대회 로고 사용 금지. 대회 명칭은 텍스트|
-|IMG-COMP-OLY|대회 엠블럼 OLY|assets/medals/comp-oly.svg|96×96 viewBox, 독자 디자인|제작 필요 P2|S24, S25, S45|실제 대회 로고 사용 금지. 대회 명칭은 텍스트|
-|IMG-COMP-AG|대회 엠블럼 AG|assets/medals/comp-ag.svg|96×96 viewBox, 독자 디자인|제작 필요 P2|S24, S25, S45|실제 대회 로고 사용 금지. 대회 명칭은 텍스트|
-|IMG-COMP-P12|대회 엠블럼 P12|assets/medals/comp-p12.svg|96×96 viewBox, 독자 디자인|제작 필요 P2|S24, S25, S45|실제 대회 로고 사용 금지. 대회 명칭은 텍스트|
+|IMG-MEDAL-GOLD|메달 금|assets/medals/gold.svg|128×128 viewBox, 글자 없음|있음|S25, S45|메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지|
+|IMG-MEDAL-SILVER|메달 은|assets/medals/silver.svg|128×128 viewBox, 글자 없음|있음|S25, S45|메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지|
+|IMG-MEDAL-BRONZE|메달 동|assets/medals/bronze.svg|128×128 viewBox, 글자 없음|있음|S25, S45|메달 근거가 있을 때만 사용(111). 실제 대회 공식 메달 디자인 사용 금지|
+|IMG-COMP-WBC|대회 엠블럼 WBC|assets/medals/comp-wbc.svg|96×96 viewBox, 독자 디자인|있음|S24, S25, S45|실제 대회 로고 사용 금지. 대회 명칭은 텍스트|
+|IMG-COMP-OLY|대회 엠블럼 OLY|assets/medals/comp-oly.svg|96×96 viewBox, 독자 디자인|있음|S24, S25, S45|실제 대회 로고 사용 금지. 대회 명칭은 텍스트|
+|IMG-COMP-AG|대회 엠블럼 AG|assets/medals/comp-ag.svg|96×96 viewBox, 독자 디자인|있음|S24, S25, S45|실제 대회 로고 사용 금지. 대회 명칭은 텍스트|
+|IMG-COMP-P12|대회 엠블럼 P12|assets/medals/comp-p12.svg|96×96 viewBox, 독자 디자인|있음|S24, S25, S45|실제 대회 로고 사용 금지. 대회 명칭은 텍스트|
 
 ### G9 연대기 카드 테마
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-CARD-DEFAULT|연대기 카드 테마 DEFAULT|assets/cards/theme-default.png|1080×1350 배경, 글자·로고 없음, 사용자 메모 6줄 여백|제작 필요 P1|S45|테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더|
-|IMG-CARD-OFFSEASON|연대기 카드 테마 OFFSEASON|assets/cards/theme-offseason.png|1080×1350 배경, 글자·로고 없음, 사용자 메모 6줄 여백|제작 필요 P1|S45|테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더|
-|IMG-CARD-RETIRE|연대기 카드 테마 RETIRE|assets/cards/theme-retire.png|1080×1350 배경, 글자·로고 없음, 사용자 메모 6줄 여백|제작 필요 P1|S45|테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더|
+|IMG-CARD-DEFAULT|연대기 카드 테마 DEFAULT|assets/cards/theme-default.png|1122×1402 PNG 생성 원본, 글자·로고 없음, 사용자 메모6줄 중앙 여백|있음|S45|테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더|
+|IMG-CARD-OFFSEASON|연대기 카드 테마 OFFSEASON|assets/cards/theme-offseason.png|1122×1402 PNG 생성 원본, 글자·로고 없음, 사용자 메모6줄 중앙 여백|있음|S45|테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더|
+|IMG-CARD-RETIRE|연대기 카드 테마 RETIRE|assets/cards/theme-retire.png|1122×1402 PNG 생성 원본, 글자·로고 없음, 사용자 메모6줄 중앙 여백|있음|S45|테마 개수는 D 3종(63의 coverTheme). 한글 텍스트는 코드가 렌더|
 
 ### G10 브랜드·앱 아이콘
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-BRAND-MARK|로고 마크 ‘다시, 플레이볼’|assets/brand/logo-mark.svg|정사각 viewBox, 글자 최소(마크 중심)|승인 반영|S01, S21|타이틀 로고타입은 현재 검은고딕 텍스트(37). 실제 구단 로고와 무관|
-|IMG-BRAND-ANDROID|Android 적응형 아이콘|assets/brand/android-adaptive-{fg,bg,mono}.svg|foreground/background/monochrome 각 432×432 안전영역 288|승인 반영|-|APK 런처 아이콘(86/29). 배경은 단색 가능|
-|IMG-BRAND-PWA|PWA/웹 아이콘|assets/brand/icon-{192,512,maskable-512}.png, favicon.svg, apple-touch-180.png|192/512/maskable512, favicon(SVG), 180|승인 반영|-|manifest(86). 홈 화면 추가 경로 검수|
-|IMG-BRAND-SPLASH|스플래시 아이콘|assets/brand/splash-icon.svg|Android 12 스플래시 아이콘 288, 단색 배경|제작 필요 P1|-|큰 일러스트 불필요|
+|IMG-BRAND-MARK|로고 마크 ‘다시, 플레이볼’|assets/brand/logo-mark.svg|정사각 viewBox, 글자 최소(마크 중심)|있음|S01, S21|타이틀 로고타입은 현재 검은고딕 텍스트(37). 실제 구단 로고와 무관|
+|IMG-BRAND-ANDROID|Android 적응형 아이콘|assets/brand/android-adaptive-{fg,bg,mono}.svg|foreground/background/monochrome 각 432×432 안전영역 288|있음|-|APK 런처 아이콘(86/29). 배경은 단색 가능|
+|IMG-BRAND-PWA|PWA/웹 아이콘|assets/brand/icon-{192,512,maskable-512}.png, favicon.svg, apple-touch-180.png|192/512/maskable512, favicon(SVG), 180|있음|-|manifest(86). 홈 화면 추가 경로 검수|
+|IMG-BRAND-SPLASH|스플래시 아이콘|assets/brand/splash-icon.svg|Android 12 스플래시 아이콘 288, 단색 배경|있음|-|큰 일러스트 불필요|
 
 ### G11 코드로 만드는 아이콘·다이어그램
 
@@ -8917,9 +8937,9 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-LEGACY|비교용 빈티지/시네마틱/선수 초상 PNG|assets/art-lab/*(almanac|cinematic|player-*).png|기존 PNG|보존|-|삭제하지 않음. 선수 초상 PNG는 시안 예시일 뿐 선수 외형 확정이 아님(119)|
+|IMG-LEGACY|비교용 빈티지/시네마틱/선수 초상 PNG|assets/art-lab/*(almanac|cinematic|player-*).png|기존 PNG|보존|기존 PNG|보존|-|삭제하지 않음. 선수 초상 PNG는 시안 예시일 뿐 선수 외형 확정이 아님(119)|
 
-## 화면별 필요(제작 필요 항목만)
+## 화면별 이미지 참조(제작 완료 파일 포함; 현재 상태는 상단 레지스터 기준)
 
 |화면|수|항목 ID|
 |---|---|---|
@@ -8953,7 +8973,7 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 ## 제작 브리프 요약
 
 - **실루엣(P0)**: 얼굴 없는 유니폼 인물 실루엣. 투수 8(우·좌×오버핸드/쓰리쿼터/사이드암/언더핸드), 타자 6(투타 6조합). 화면 정면 기준으로 던지는 팔·배트·글러브 위치를 목록 메모대로 맞춘다. 양타는 두 배트 포즈를 겹쳐 한쪽을 옅게. 팔레트는 CSS 변수.
-- **마감 장면(P1)**: 111의 활성 일러스트와 같은 그림체로 3×2 아틀라스 1장(대학·마이너 원정·중립 라이벌·복귀·은퇴·구장). 현재는 빈티지 1장뿐이라 청춘 애니 버전이 없다.
+- **마감 장면(P1)**: 111의 활성 일러스트와 같은 그림체로 3×2 아틀라스 1장(대학·마이너 원정·중립 라이벌·복귀·은퇴·구장). 청춘 애니6컷 승인 파일이 있으며 활성 파일·참조는 레지스터를 따른다.
 - **기념 보상(P1)**: 프레임 3, 배경 3, 스탬프 13, 표지 1. 스탬프는 글자 없는 도장. 2026-10-20 사용자 요청으로 컬러 포인트 수정안을 별도 승인 후 반영한다. 카드 위 텍스트 가독성을 우선하고 중앙 여백을 남긴다.
 - **가상 대학·상무 배지(P1)**: 실제 마크와 무관한 단순 문양. 대학 이름은 43의 U01~U09.
 - **메달·대회 엠블럼**: 메달 3(P1), 엠블럼 4(P2). 실제 대회 로고 금지.
@@ -8974,7 +8994,7 @@ IM-D01 TODO 항목마다 파일 경로·규격·화면이 있음/02 실루엣 14
 
 ## 남은 확인
 
-첫 승인본 3항목은 반영했다. 미선택 시안은 저장소에 넣지 않았다. 고교 학교 수·국가 참가국 수·카드 테마 개수(D 3종)는 확정 전이다. 사용 권리 확인(V12)과 실제 렌더 검수는 제작 후 진행한다.
+이미지 제작 목록의80항목 파일은 모두 준비됐다. 코드 표시11묶음과 실제 렌더·사용 권리 확인(V12) 검수는 별도다. 연대기 카드 테마3종은 승인 반영했다. 아래 제작 이력의 대기·수치는 당시 상태다.
 
 ## 2026-10-20 단계별 제작·승인 절차 (현재 기준 U)
 
@@ -9033,6 +9053,10 @@ P1 청춘 애니6컷을 사용자 승인 후 반영했다. 라이벌은 흰색/�
 ## 컬러 도장 승인 반영
 
 2026-10-20: 컬러 기록 도장13종 사용자 승인 반영. 프레임3·배경3·도장13·책장표지1, 기념 보상20항목 모두 파일 완료. 레지스터 EXISTS69/TODO11/CODE_ONLY11/LEGACY_REFERENCE1. 남은 이미지는 메달3·연대기 테마3·스플래시1(P1 7항목), 대회 엠블럼4(P2). 게임 규칙·45화면/99이벤트/핵심298 유지. 앱/DB/API/APK 구현은 시작하지 않음.
+
+## 마지막11종 승인 반영
+
+2026-10-20: 사용자 승인 마지막11종(메달3·대회 독자엠블럼4·연대기테마3·스플래시1)을 반영했다. 이미지 레지스터92항목은 EXISTS80/TODO0/CODE_ONLY11/LEGACY_REFERENCE1이다. 제작 목록의 이미지 파일은 모두 준비됐으며 CODE_ONLY11묶음 표시 명세와 화면45×8상태/접근성/반응형 마감 검수는 남는다. 실제 브라우저·기기·APK 설치·DB 시험 미실행. 게임 규칙·45화면/99이벤트/핵심298 불변, 앱 구현 미착수.
 
 ---
 
@@ -9148,6 +9172,10 @@ BLOCKING 판정은 선택지 명령 기준의 자동 분류(초안)다. 실제 �
 ## 기념 보상20종 마감
 
 2026-10-20: 컬러 기록 도장13종 사용자 승인 반영. 프레임3·배경3·도장13·책장표지1, 기념 보상20항목 모두 파일 완료. 레지스터 EXISTS69/TODO11/CODE_ONLY11/LEGACY_REFERENCE1. 남은 이미지는 메달3·연대기 테마3·스플래시1(P1 7항목), 대회 엠블럼4(P2). 게임 규칙·45화면/99이벤트/핵심298 유지. 앱/DB/API/APK 구현은 시작하지 않음.
+
+## 현재 이미지 제작 종료 상태
+
+2026-10-20: 사용자 승인 마지막11종(메달3·대회 독자엠블럼4·연대기테마3·스플래시1)을 반영했다. 이미지 레지스터92항목은 EXISTS80/TODO0/CODE_ONLY11/LEGACY_REFERENCE1이다. 제작 목록의 이미지 파일은 모두 준비됐으며 CODE_ONLY11묶음 표시 명세와 화면45×8상태/접근성/반응형 마감 검수는 남는다. 실제 브라우저·기기·APK 설치·DB 시험 미실행. 게임 규칙·45화면/99이벤트/핵심298 불변, 앱 구현 미착수.
 
 ---
 
@@ -10421,3 +10449,7 @@ verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료
 ## 2026-10-20 컬러 도장13종 승인 반영
 
 verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료코드0/PASS. 도장13종의 256×256 viewBox·title·금지 요소 부재·색상·화면 참조를 확인했다. EXISTS69/TODO11. 기념 보상20항목 파일 완료. 다음11항목은 저장소 밖 시안으로 사용자 승인 전 미반영. 실제 브라우저·기기·게임·DB·APK 검수는 미실행이며 구현 미착수.
+
+## 2026-10-20 마지막 이미지11종 승인 반영·파일 제작 마감
+
+verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행 모두 종료코드0/PASS. 메달3·엠블럼4·카드3·스플래시1의 실제 규격·SVG title/금지 요소·화면 참조를 확인했다. 레지스터92항목=EXISTS80/TODO0/CODE_ONLY11/LEGACY_REFERENCE1. 기존 완료 검사의 TODO>0 가정은 완료 수치 검사로 교체했고, 구단 로고·앱 아이콘 묶음은 명시적 files 목록으로 존재 검사를 보강했다. 첫 검사 실패 원인 두 가지는 이 수정 후 재검사에서 해소됐다. 실제 브라우저·앱·DB·APK 실행 검수는 미실행이며 구현 전 상태를 유지한다.

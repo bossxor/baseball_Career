@@ -380,7 +380,9 @@ const imgReg = JSON.parse(read('image-production-register.json'));
     if (i.status === 'TODO') assert.ok(['P0', 'P1', 'P2'].includes(i.priority), i.id);
   }
   assert.equal(imgReg.items.filter(i => i.group === 'G1').length, 14);
-  assert.ok(imgReg.items.filter(i => i.status === 'TODO').length > 0);
+  assert.equal(imgReg.items.length, 92);
+  assert.equal(imgReg.items.filter(i => i.status === 'TODO').length, 0);
+  assert.equal(imgReg.items.filter(i => i.status === 'EXISTS').length, 80);
 }
 {
   const screenSet = new Set(screens.screens.map(s => s.id));
