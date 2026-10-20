@@ -1,6 +1,6 @@
 # 구현 진행 안내 — 2026-10-20
 
-M0/M1 완료, M2 진행 중입니다. M2-T 성장 달력/부분 정산에 이어 M2-U에서 고교 결산→E04→진로 비교→대학 입학 결정/다음 시즌 준비를 연결했습니다. KBO 실제 모집·대학 다음 연도 세계와 미국52 도달성 충돌은 남아 있습니다. 실제 검사 결과는 [구현 진행](../implementation/PROGRESS.md)·[M2-U 인계](../implementation/M2-U-GRADUATION-COLLEGE-ROUTE.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 구현 전 이력이며 커리어·DB·인증·APK 전체 완료를 뜻하지 않습니다.
+M0/M1 완료, M2 진행 중입니다. M2-V에서 고교 연말 마감→대학 첫 세계/다음 연도 실제 등록을 연결했습니다. 대학 경기/학년·실제 KBO 모집과 미국52 도달성 충돌은 남아 있습니다. Git 체크포인트와 실제 검사 결과는 [구현 진행](../implementation/PROGRESS.md)·[M2-V 인계](../implementation/M2-V-COLLEGE-YEAR-ENTRY.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 구현 전 이력이며 커리어·DB·인증·APK 전체 완료를 뜻하지 않습니다.
 
 ---
 

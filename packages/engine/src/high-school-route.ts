@@ -15,7 +15,7 @@ export interface HighSchoolGraduation {
  version:1;eventKey:string;offerSetKey:string;sourceBasis:string;
 }
 export interface CollegeAdmission {
- admissionKey:string;collegeId:string;status:'ADMITTED';entryYear:number;
+ admissionKey:string;collegeId:string;status:'ADMITTED'|'ENROLLED';entryYear:number;
  academicYear:1;yearsCompleted:0;playerKey:string;position:string;
 }
 function evaluation(source:HighSchoolCareer){
@@ -28,6 +28,15 @@ function evaluation(source:HighSchoolCareer){
 }
 function basis(source:HighSchoolCareer):string {
  return canonicalJson({worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,schoolId:source.world.protagonistSchoolId,calendar:source.world.calendar,seasonGrowth:source.seasonGrowth,recordsRevision:source.records.revision,evaluation:evaluation(source)});
+}
+/** Validate the committed admission before year-end changes invalidate the old evaluation basis. */
+export function assertPendingCollegeAdmission(source:HighSchoolCareer):CollegeAdmission {
+ const admission=source.collegeAdmission,graduation=source.graduation,calendar=source.world.calendar;
+ if(source.world.leagueKey || source.phaseContext.phase!=='NEXT_SEASON_READY' || source.phaseContext.route!=='COLLEGE' || !admission || admission.status!=='ADMITTED' || !graduation || !calendar || source.events.some(e=>e.status==='OPEN'))throw new RangeError('INVALID_COLLEGE_ADMISSION');
+ assertSeasonCalendar(calendar);
+ const college=COLLEGES.find(c=>c.id===admission.collegeId),event=source.events.find(e=>e.eventKey===graduation.eventKey);
+ if(graduation.version!==1 || graduation.sourceBasis!==basis(source) || admission.admissionKey!==JSON.stringify(['college-admission',graduation.offerSetKey,admission.collegeId]) || source.phaseContext.admissionKey!==admission.admissionKey || admission.entryYear!==calendar.year+1 || admission.playerKey!==source.world.protagonistKey || admission.position!==source.world.players[admission.playerKey]?.position || admission.academicYear!==1 || admission.yearsCompleted!==0 || !college || evaluation(source).overall<college.minimumOverall || !event || event.definitionId!=='E04' || event.status!=='RESOLVED' || event.resolution?.command!=='ENROLL_COLLEGE' || event.resolution.receiptKey!==admission.admissionKey)throw new RangeError('INVALID_COLLEGE_ADMISSION');
+ return structuredClone(admission);
 }
 /** Growth and the blocking E04 task are committed together before route comparisons become available. */
 export function acknowledgeHighSchoolSeasonReview(source:HighSchoolCareer,expectedRevision:number):HighSchoolCareer {

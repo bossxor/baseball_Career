@@ -18,6 +18,7 @@ export const HIGH_SCHOOLS = [
 ] as const;
 import {HITTER_POSITIONS,PITCHER_POSITIONS,generateSchoolNpcRoster} from './school-roster.js';
 export interface HighSchoolWorld {
+  leagueKey?:'COLLEGE';
   schemaVersion:1; rulesVersion:'1.0.0'; worldKey:string; seasonKey:string; seed:string;
   phase:'CREATED'; protagonistKey:string; protagonistSchoolId:string;
   schools:{id:string;name:string;roster:string[]}[];
@@ -50,6 +51,7 @@ export function createHighSchoolWorld(input:{worldKey:string;seasonKey:string;se
   assertHighSchoolWorld(world);return world;
 }
 export function assertHighSchoolWorld(world:HighSchoolWorld):void {
+  if(world.leagueKey!==undefined)throw new RangeError('INVALID_HIGH_SCHOOL_LEAGUE');
   if(world.calendar){
     assertSeasonCalendar(world.calendar);
     assertSchedule(world.schedule,world.schools.map(s=>s.id),48,24);

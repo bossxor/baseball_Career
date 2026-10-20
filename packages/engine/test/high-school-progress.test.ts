@@ -10,6 +10,9 @@ import {collectHighSchoolGrowthEvidence,settleHighSchoolCareerGrowth} from '../s
 import {trainHighSchoolCareer,changeMidseasonCareerArchetype} from '../src/high-school-training.js';
 import {createSeasonGrowthLedger,settleClosedGrowthPeriods,validateSeasonGrowthLedger} from '../src/growth-ledger.js';
 import {acknowledgeHighSchoolSeasonReview,openHighSchoolCareerRoute,highSchoolCareerRouteView,enrollHighSchoolCollege} from '../src/high-school-route.js';
+import {closeHighSchoolSeasonForCollege,startAdmittedCollegeSeason} from '../src/college-entry.js';
+import {assertCollegeWorld} from '../src/college-world.js';
+import type {CollegeWorld} from '../src/college-world.js';
 const fixture=(calendar=false)=>{
  let state=createHighSchoolCareer(createHighSchoolWorld({worldKey:'progress-world',seasonKey:'2032',seed:'progress-fixture',schoolId:'H01',...(calendar?{seasonYear:2032}:{startDay:31}),player:{simulationKey:'my-hitter',name:'내타자',kind:'HITTER',position:'CF',throws:'R',bats:'R',pitchForm:null,archetype:'BALANCED',focus:['CONTACT','POWER','DISCIPLINE','DEFENSE'],difficulty:'GROWTH'}}),'GROWTH');
  state=confirmCareerPlayer(state,0);state=resolveCareerFocusEvent(state,1,{eventKey:state.events[0]!.eventKey,eventVersion:1,command:'KEEP_FOCUS'});return confirmCareerPreseason(state,2);
@@ -84,12 +87,14 @@ test('actual full HS league path: focus12, training16, style24, all216 games and
   const later=settleClosedGrowthPeriods(paid.career.world.players[key]!,ledger,[remaining]);assert.ok(later.newBudgetUnits>0);assert.equal(later.ledger.entries[0]!.budgetUnits,ledger.entries[0]!.budgetUnits);assert.equal(later.ledger.finalized,false);
   const corrupt=structuredClone(state);corrupt.seasonGrowth=createSeasonGrowthLedger(start,state.world.seasonKey,151);assert.throws(()=>settleHighSchoolCareerGrowth(corrupt,corrupt.revision),/CHANGED_GROWTH_SEASON/);
  });
- await t.test('actual graduation→E04→S28→college admission preserves all216 records and pays growth once',()=>{
+ await t.test('actual graduation→E04→college admission→next-year world preserves216 records and pays growth once',()=>{
   const before=canonicalJson(state),reviewed=acknowledgeHighSchoolSeasonReview(state,state.revision),view=highSchoolCareerRouteView(reviewed);
   assert.equal(reviewed.events.at(-1)!.definitionId,'E04');assert.ok(view.overall>50);assert.ok(view.colleges.find(c=>c.id==='U07')!.eligible);
   const opened=openHighSchoolCareerRoute(JSON.parse(JSON.stringify(reviewed)),reviewed.revision,1);assert.equal(opened.navigation!.targetScreen,'S28');assert.equal(opened.career.events.at(-1)!.status,'OPEN');
   const admitted=enrollHighSchoolCollege(opened.career,opened.career.revision,{eventVersion:1,offerSetKey:view.offerSetKey,offerSetVersion:view.offerSetVersion,collegeId:'U07'});
   assert.equal(admitted.phaseContext.phase,'NEXT_SEASON_READY');assert.equal(admitted.collegeAdmission!.entryYear,2033);assert.equal(admitted.records.revision,216);assert.deepEqual(admitted.records,state.records);assert.deepEqual(admitted.seasonGrowth,reviewed.seasonGrowth);
   assert.equal(canonicalJson(state),before);assert.throws(()=>advanceHighSchoolCareer(admitted,admitted.revision));
+  const closed=closeHighSchoolSeasonForCollege(admitted,admitted.revision),college=startAdmittedCollegeSeason(closed,closed.revision);
+  assertCollegeWorld(college.world as CollegeWorld);assert.equal(college.world.players['my-hitter']!.age,19);assert.equal(college.world.seasonKey,'2033');assert.equal(college.world.protagonistSchoolId,'U07');assert.deepEqual(college.records,state.records);assert.deepEqual(college.world.players['my-hitter']!.abilities,reviewed.world.players['my-hitter']!.abilities);assert.equal(college.previousSeasons![0]!.seasonGrowth.finalized,true);assert.equal(college.seasonGrowth!.totalBudgetUnits,0);assert.equal(college.development!.trainingResults.length,admitted.development!.trainingResults.length);
  });
 });

@@ -32,7 +32,7 @@ export function previewCareerTraining(source:HighSchoolCareer,choice:TrainingCho
  safeSetup(source);const ledger=development(source);
  return trainingPreview(source.world.players[source.world.protagonistKey]!,ledger.trainingUsedSeasons,choice,context(source));
 }
-function applyTraining(source:HighSchoolCareer,choice:TrainingChoice):HighSchoolCareer {
+export function applyCareerSeasonTraining(source:HighSchoolCareer,choice:TrainingChoice):HighSchoolCareer {
  const ledger=development(source),result=applySeasonTraining(source.world.players[source.world.protagonistKey]!,ledger.trainingUsedSeasons,choice,context(source),ledger.trainingRng),career=structuredClone(source);
  career.world.players[career.world.protagonistKey]=result.player;
  career.development={...structuredClone(ledger),trainingUsedSeasons:result.usedSeasons,trainingRng:result.state,trainingResults:[...ledger.trainingResults,{seasonKey:source.world.seasonKey,choice:structuredClone(choice),success:result.success,gainUnits:result.gainUnits,fatigueBefore:source.world.players[source.world.protagonistKey]!.fatigue,fatigueAfter:result.player.fatigue,receiptKey:JSON.stringify(['career-training',source.world.worldKey,source.world.seasonKey,source.revision+1])}]};return career;
@@ -40,7 +40,7 @@ function applyTraining(source:HighSchoolCareer,choice:TrainingChoice):HighSchool
 /** Policy, availability,48-game denominator and once-per-world-season usage come only from saved state. */
 export function trainHighSchoolCareer(source:HighSchoolCareer,expectedRevision:number,choice:TrainingChoice):HighSchoolCareer {
  assertHighSchoolCareerRevision(source,expectedRevision);safeSetup(source);
- const career=applyTraining(source,choice);career.revision++;return career;
+ const career=applyCareerSeasonTraining(source,choice);career.revision++;return career;
 }
 export function forfeitCareerTrainingEvent(source:HighSchoolCareer,expectedRevision:number,eventVersion:number):HighSchoolCareer {
  assertHighSchoolCareerRevision(source,expectedRevision);safeSetup(source,true);const phase=source.phaseContext;
@@ -49,7 +49,7 @@ export function forfeitCareerTrainingEvent(source:HighSchoolCareer,expectedRevis
  const event=source.events.find(e=>e.eventKey===phase.eventKey);if(!event || event.definitionId!=='E43')throw new RangeError('INVALID_CAREER_WINDOW');
  const eventContext={worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['FORFEIT_TRAINING']};
  const choice=resolveEventChoice(event,eventVersion,'FORFEIT_TRAINING',null,eventContext);if(!choice.domain)throw new RangeError('INVALID_TRAINING_FORFEIT');
- const career=applyTraining(source,{type:'SKIP'}),resolved=completeEventDomain(event,choice.domain,JSON.stringify(['career-forfeit-training',source.world.worldKey,source.world.seasonKey,source.revision+1]),eventContext);
+ const career=applyCareerSeasonTraining(source,{type:'SKIP'}),resolved=completeEventDomain(event,choice.domain,JSON.stringify(['career-forfeit-training',source.world.worldKey,source.world.seasonKey,source.revision+1]),eventContext);
  career.events=career.events.map(e=>e.eventKey===event.eventKey?resolved:e);career.phaseContext=structuredClone(phase.resume);career.revision++;return career;
 }
 export function changeMidseasonCareerArchetype(source:HighSchoolCareer,expectedRevision:number,archetype:string):HighSchoolCareer {

@@ -1,37 +1,11 @@
+import {completedHighSchoolCareer as completedCareer} from './fixtures.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createHighSchoolWorld} from '../src/high-school-world.js';
-import {createHighSchoolCareer} from '../src/high-school-career.js';
 import {acknowledgeHighSchoolSeasonReview,highSchoolCareerRouteView,openHighSchoolCareerRoute,enrollHighSchoolCollege} from '../src/high-school-route.js';
 import {advanceHighSchoolCareer} from '../src/high-school-progress.js';
 import {canonicalJson} from '../src/game.js';
-import type {GameContribution} from '../src/records.js';
-import {COLLEGES,abilityKeys} from '@playball/rules';
-import {createOwnCareerAssessment} from '../src/high-school-assessment.js';
+import {COLLEGES} from '@playball/rules';
 
-// Controlled no-appearance receipts isolate transitions. The progress test covers real216-game play.
-function completedCareer(capAt?:number){
- const state=createHighSchoolCareer(createHighSchoolWorld({worldKey:'route-world',seasonKey:'2029',seasonYear:2029,seed:'route-fixture',schoolId:'H01',player:{simulationKey:'own',name:'진로선수',kind:'HITTER',position:'CF',throws:'R',bats:'R',pitchForm:null,archetype:'BALANCED',focus:['CONTACT','POWER','DISCIPLINE','DEFENSE'],difficulty:'GROWTH'}}),'GROWTH');
- if(capAt!==undefined){
-  const values=Object.fromEntries(abilityKeys('HITTER').map(k=>[k,capAt]));
-  state.world.players.own={...state.world.players.own!,abilities:values,potential:{...values},careerPeaks:{...values}};
-  state.development!.seasonStartPlayer=structuredClone(state.world.players.own);
-  state.ownAssessment=createOwnCareerAssessment(state.world);
- }
- state.phaseContext={phase:'SEASON_REVIEW'};
- for(const game of state.world.schedule){
-  const line={games:1,W:0,L:0,T:1,R:0,RA:0};
-  const contribution:GameContribution={gameKey:game.simulationKey,worldDay:game.worldDay,scope:{seasonKey:state.world.seasonKey,leagueKey:'HS',phase:'REGULAR'},teams:{[game.awayTeamKey]:line,[game.homeTeamKey]:line},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}};
-  state.records.games[game.simulationKey]=contribution;
-  for(const teamKey of [game.awayTeamKey,game.homeTeamKey])state.health.games=[...state.health.games,{evidence:{gameKey:game.simulationKey,teamKey,seasonKey:state.world.seasonKey,day:game.worldDay,roster:state.world.schools.find(s=>s.id===teamKey)!.roster,appearances:[]},result:{injured:[],recovered:[]}}];
- }
- state.records.revision=216;
- state.days.days=Array.from({length:150},(_,i)=>{
-  const day=31+i,contributions=Object.values(state.records.games).filter(g=>g.worldDay===day).sort((a,b)=>a.gameKey<b.gameKey?-1:1);
-  return {day,evidence:canonicalJson({worldKey:state.world.worldKey,seasonKey:state.world.seasonKey,day,contributions}),result:{injured:[],recovered:[]}};
- });
- return state;
-}
 function ready(capAt?:number){const state=completedCareer(capAt);return acknowledgeHighSchoolSeasonReview(state,state.revision);}
 function opened(){const state=ready();return openHighSchoolCareerRoute(state,state.revision,1).career;}
 
