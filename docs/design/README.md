@@ -1,4 +1,4 @@
-현재 작업(2026-10-20): 네이비4PNG 통일·낮/야간 라이벌 팀 구분 승인 완료. [현황](STATUS.md), [승인본](approved-art-board.html). 다음 P1은 별도 시안·승인.
+현재 인계 기준(2026-10-20): 이미지80항목 파일 준비·CODE_ONLY11묶음 표시안 승인·메인 보드 최신화·파일 기반 접근성13검사 완료. 실제 렌더는 file: 브라우저 정책 차단으로 미실행이다. [130 최종 인계](130-PREIMPLEMENTATION-HANDOFF.md)와 [현황](STATUS.md)을 먼저 읽고 구현은 별도 요청 전 시작하지 않는다.
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -76,7 +76,7 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 
 최신 아트 U(2026-10-19): 메인 그림체는 **2번 청춘 야구 애니**로 변경했습니다. [111 현재 기준](111-ANIMATION-MAIN-ART-DIRECTION.md)을 우선합니다. 본문의 빈티지 선택은 이전 이력이며 원본은 보존합니다.
 
-최신 시각1.8: [마감 보드](finish-board.html)에추가17배치/136상태·새빈티지6장면을작성했습니다. 기존28대표+추가17=45화면ID 연결이며최종브라우저검수와구분합니다. [109 범위](109-FINISH-BOARD-ART-AUDIT.md).
+이전 시각1.8 제작 이력: [마감 보드](finish-board.html)에추가17배치/136상태·새빈티지6장면을작성했습니다. 기존28대표+추가17=45화면ID 연결이며최종브라우저검수와구분합니다. [109 범위](109-FINISH-BOARD-ART-AUDIT.md).
 
 화면 마감 명세: [108 전체45화면](108-ALL-SCREEN-FINALIZATION.md)에 읽기 순서·주행동·8종 상태·크기별 배치를 정리했습니다. 대표 시안 미명시17화면은 후속 제작 대상으로 구분합니다.
 

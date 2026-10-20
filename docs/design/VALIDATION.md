@@ -367,3 +367,7 @@ verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행
 ## 2026-10-20 메인 설계 보드 최신화·접근성 파일 점검
 
 최신 승인 배지10·카드3·표시11묶음 연결과 네이비/블루 기준·본문 건너뛰기·포커스·표 캡션/열머리·좁은 화면 CSS를 보완했다. 소스의61개 비동작 버튼은 네이티브 disabled 예시로 구분했다. 파일 기반 접근성13검사 PASS_STATIC(이미지60·입력37·표6), 명시한 단색 토큰6쌍 대비6.09~12.79:1. verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 검사 모두 종료코드0/PASS. 대학 배지의 동적 경로는 실제9개 파일 명시 목록으로 연결했고, 증거 해시는 Windows 줄바꿈을 LF로 정규화해 검증한다. 초기 검사 중 이 두 부분의 실패는 수정 후 재검사에서 해소했다. 현재 file: URL의 cua.getTab 관찰은 브라우저 보안 정책에 거절됐다. 다른 주소/브라우저/CDP 우회는 시도하지 않았다. 실제 렌더0·키보드/스크린리더/터치·200%·기기 검수 NOT_EXECUTED, WCAG 준수 미판정. 상세129와 design-board-accessibility-audit.json을 따른다.
+
+## 2026-10-20 구현 전 세 항목 인계 마감
+
+130-PREIMPLEMENTATION-HANDOFF.md와 preimplementation-readiness.json을 현재 인계 기준으로 작성하고 README/START-HERE/HANDOFF/92의 낡은 현재 안내를 정정했다. 확인된 보드 소스 문제 수정·정적 접근성13검사·45화면/8상태 참조 대조와 인계 정리는 완료, 실제 렌더/키보드/스크린리더는 기존 보안 차단/미실행 상태다. verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행 모두 종료코드0/PASS. 인계표 수치(45화면/99이벤트/핵심298/23기대값 묶음/EXISTS80/TODO0/CODE_ONLY11/LEGACY1)를 원본과 대조했고 V01~V12 runtimePassed=false·전체 기대값 NOT_EXECUTED를 유지했다. 새 게임 규칙·구현 착수 권한을 추가하지 않았으며 실제 실행 PASS로 대체하지 않는다.

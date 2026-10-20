@@ -169,5 +169,11 @@
     "supplementalStateExamples": 136,
     "authoredGameScreenUnion": 45,
     "finalBrowserApproval": "NOT_EXECUTED"
+  },
+  "latestPreimplementationHandoff": {
+    "source": "130-PREIMPLEMENTATION-HANDOFF.md",
+    "readiness": "preimplementation-readiness.json",
+    "implementationAuthorized": false,
+    "actualVisualVerification": "BLOCKED_OR_NOT_EXECUTED"
   }
 }

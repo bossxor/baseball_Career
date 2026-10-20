@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-20",
+  "status": "DESIGN_HANDOFF_WITH_OPEN_EXECUTION_GATES",
+  "basedOnCommit": "497b170",
+  "implementationAuthorized": false,
+  "newGameRulesAdded": false,
+  "counts": {
+    "screens": 45,
+    "events": 99,
+    "coreDesignExpectations": 298,
+    "expectationSets": 23,
+    "imageExists": 80,
+    "imageTodo": 0,
+    "codeDisplayGroups": 11,
+    "legacyReferences": 1,
+    "declaredScreenStates": 360,
+    "declaredViewports": [
+      360,
+      390,
+      768,
+      1280
+    ],
+    "executedBrowserViews": 0,
+    "staticAccessibilityChecks": 13
+  },
+  "areas": [
+    {
+      "id": "PRE01",
+      "area": "제품·규칙·사용자 결정",
+      "status": "SPECIFIED",
+      "sources": [
+        "14-CANONICAL-DECISIONS.md",
+        "91-CURRENT-CONTRACT-INDEX.md"
+      ],
+      "meaning": "기존 결정·분야별 원문 기준. 신규 게임 규칙 없음."
+    },
+    {
+      "id": "PRE02",
+      "area": "화면45·이벤트99·기대값",
+      "status": "STATIC_CHECKED_NOT_EXECUTED",
+      "sources": [
+        "screen-state-catalog.json",
+        "event-catalog-v2.json",
+        "expectation-sets-index.json"
+      ],
+      "meaning": "핵심298·전체23묶음은 서면 기대값. 실제 엔진 시험 통과 아님."
+    },
+    {
+      "id": "PRE03",
+      "area": "이미지 파일 제작",
+      "status": "FILES_READY",
+      "sources": [
+        "image-production-register.json",
+        "approved-art-board.html"
+      ],
+      "meaning": "EXISTS80/TODO0/CODE_ONLY11/LEGACY1. 이미지 존재와 게임 내 연동은 별개."
+    },
+    {
+      "id": "PRE04",
+      "area": "코드 표시11묶음",
+      "status": "APPROVED_WORKING_BASELINE",
+      "sources": [
+        "127-CODE-DISPLAY-SPECIFICATION.md",
+        "code-display-board.html"
+      ],
+      "meaning": "현재 시각안 승인. 실제 앱 구성요소는 미구현."
+    },
+    {
+      "id": "PRE05",
+      "area": "45화면×8상태·4크기",
+      "status": "SPECIFIED_STATIC_REFERENCES_CHECKED",
+      "sources": [
+        "108-ALL-SCREEN-FINALIZATION.md",
+        "128-PREIMPLEMENTATION-SCREEN-AUDIT.md",
+        "preimplementation-screen-audit.json"
+      ],
+      "meaning": "정상/로딩/빈/오류/제출/충돌/긴내용/자산실패 계약. 실제 렌더0."
+    },
+    {
+      "id": "PRE06",
+      "area": "메인 보드·정적 접근성 수정",
+      "status": "STATIC_CHECKED",
+      "sources": [
+        "design-board.html",
+        "design-board-refresh.css",
+        "design-board-accessibility-audit.json"
+      ],
+      "meaning": "13파일 검사 통과. 소스 이미지60·입력37·표6. 실제 계산 스타일/스크린리더 준수 미판정."
+    },
+    {
+      "id": "PRE07",
+      "area": "실제 화면 렌더 검수",
+      "status": "BLOCKED_BY_BROWSER_URL_POLICY",
+      "sources": [
+        "129-DESIGN-BOARD-REFRESH-ACCESSIBILITY.md"
+      ],
+      "meaning": "file: 관찰 차단. 주소 변환/대체 브라우저/CDP 우회 없음."
+    },
+    {
+      "id": "PRE08",
+      "area": "200%·키보드·터치·스크린리더",
+      "status": "NOT_EXECUTED",
+      "sources": [
+        "83-VISUAL-ASSETS-ACCESSIBILITY-HANDOFF.md",
+        "129-DESIGN-BOARD-REFRESH-ACCESSIBILITY.md"
+      ],
+      "meaning": "실제 허용 환경 증거 필요. 정적 소스 검사로 PASS 대체 금지."
+    },
+    {
+      "id": "PRE09",
+      "area": "다른 환경으로 설계 인계",
+      "status": "PACKAGED",
+      "sources": [
+        "START-HERE.md",
+        "HANDOFF-PROMPT.md",
+        "130-PREIMPLEMENTATION-HANDOFF.md",
+        "MANIFEST-SHA256.csv"
+      ],
+      "meaning": "현재 기준·승인 자산·차단 사항·검증 방법과 구현 중단선 정리."
+    },
+    {
+      "id": "PRE10",
+      "area": "게임·API·DB·인증·빌드·APK",
+      "status": "NOT_IMPLEMENTED_NOT_AUTHORIZED",
+      "sources": [
+        "120-IMPLEMENTATION-ROADMAP.md",
+        "92-DESIGN-CLOSURE-HANDOFF.md"
+      ],
+      "meaning": "사용자 구현 착수 지시 전 시작하지 않음. V01~V12 실행 증거는 구현 단계에서 별도."
+    }
+  ],
+  "reviewMatrix": {
+    "source": "screen-finish-register.json",
+    "states": [
+      "NORMAL",
+      "LOADING",
+      "EMPTY",
+      "ERROR",
+      "SUBMITTING",
+      "CONFLICT",
+      "LONG_CONTENT",
+      "ASSET_FAILURE"
+    ],
+    "viewports": [
+      360,
+      390,
+      768,
+      1280
+    ],
+    "executionStatus": "NOT_EXECUTED",
+    "rule": "Start with each normal screen, then relevant state/viewport cases. Read-only submitting states may be N/A with reason. No prefilled pass evidence."
+  },
+  "executionGates": [
+    {
+      "id": "V01",
+      "status": "NOT_EXECUTED",
+      "runtimePassed": false
+    },
+    {
+      "id": "V02",
+      "status": "NOT_EXECUTED",
+      "runtimePassed": false
+    },
+    {
+      "id": "V03",
+      "status": "NOT_EXECUTED",
+      "runtimePassed": false
+    },
+    {
+      "id": "V04",
+      "status": "NOT_EXECUTED",
+      "runtimePassed": false
+    },
+    {
+      "id": "V05",
+      "status": "NOT_EXECUTED",
+      "runtimePassed": false
+    },
+    {
+      "id": "V06",
+      "status": "NOT_EXECUTED",
+      "runtimePassed": false
+    },
+    {
+      "id": "V07",
+      "status": "NOT_EXECUTED",
+      "runtimePassed": false
+    },
+    {
+      "id": "V08",
+      "status": "NOT_EXECUTED",
+      "runtimePassed": false
+    },
+    {
+      "id": "V09",
+      "status": "NOT_EXECUTED",
+      "runtimePassed": false
+    },
+    {
+      "id": "V10",
+      "status": "NOT_EXECUTED",
+      "runtimePassed": false
+    },
+    {
+      "id": "V11",
+      "status": "NOT_EXECUTED",
+      "runtimePassed": false
+    },
+    {
+      "id": "V12",
+      "status": "NOT_EXECUTED",
+      "runtimePassed": false
+    }
+  ],
+  "nextAction": "Permitted-environment visual verification or continued design changes explicitly requested by user; never automatically start M0."
+}
