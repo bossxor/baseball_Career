@@ -180,7 +180,7 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 
 # 구현 진행 안내 — 2026-10-20
 
-M0/M1 완료, M2 진행 중입니다. M2-V에서 고교 연말 마감→대학 첫 세계/다음 연도 실제 등록을 연결했습니다. 대학 경기/학년·실제 KBO 모집과 미국52 도달성 충돌은 남아 있습니다. Git 체크포인트와 실제 검사 결과는 [구현 진행](../implementation/PROGRESS.md)·[M2-V 인계](../implementation/M2-V-COLLEGE-YEAR-ENTRY.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 구현 전 이력이며 커리어·DB·인증·APK 전체 완료를 뜻하지 않습니다.
+M0/M1 완료, M2 진행 중입니다. M2-W에서 대학 프리시즌·정규리그 진행과 COLLEGE 기록/연도별 평가·특성을 연결했습니다. 전체229/229·빌드/타입/lint·골든·HTTP smoke를 통과했습니다. 대학 선수권·성장 정산/학년·실제 KBO 모집과 미국52 충돌은 남아 있습니다. 최신 검사 결과는 [구현 진행](../implementation/PROGRESS.md)·[M2-W 인계](../implementation/M2-W-COLLEGE-REGULAR-SEASON.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 이전 이력이며 전체 완료를 뜻하지 않습니다.
 
 ---
 
@@ -6547,7 +6547,9 @@ baseSpent+baseReserved≤20,새 entry의 actualBudgetSpent 증분이 active cap�
 
 M2-U 구현 후속:19/34/43/125의 고교 결산·E04 blocking·대학 입학 결정은 `../implementation/M2-U-GRADUATION-COLLEGE-ROUTE.md`를 따른다. 실제 대학 시즌/구단 모집과 설계 검증의 미실행 범위는 별도로 유지한다.
 
-M2-V 구현 후속:43/72의 대학 첫 세계·연말 마감·다음 연도 등록 부분은 `../implementation/M2-V-COLLEGE-YEAR-ENTRY.md`를 따른다. 대학 NPC 수치는14의 기본안D이며 고교 승인 분포를 바꾸지 않는다. 전체 세계/DB 작업자·대학 실제 경기는 미구현이다.
+M2-V 구현 후속:43/72의 대학 첫 세계·연말 마감·다음 연도 등록 부분은 `../implementation/M2-V-COLLEGE-YEAR-ENTRY.md`를 따른다. 대학 NPC 수치는14의 기본안D이며 고교 승인 분포를 바꾸지 않는다. M2-V 당시 대학 실제 경기까지는 미구현이었으며 M2-W 후속을 우선한다. 전체 세계/DB 작업자는 남아 있다.
+
+M2-W 구현 후속:43의 대학 프리시즌/정규48경기와 학교 공통 진행·강화/MID·평가/특성의 COLLEGE 연결은 `../implementation/M2-W-COLLEGE-REGULAR-SEASON.md`를 따른다. 전체229/229·check/HTTP smoke를 통과했으며 대학 선수권·성장/학년 결과는 미구현이다.
 
 2026-10-19. 이전 문서의 기본안 위에 사용자 변경이 누적돼 단순 파일명 순서로 구현하면 충돌할 수 있다. [기계가독 적용표](current-contract-index.json)는25개 분야의 현재 적용 원문과 범위를 지정한다. 설계 문서를 새 게임 기능으로 확장하는 문서가 아니라 기존 계약의 검색·우선순위 인계표다.
 
@@ -8731,7 +8733,7 @@ AI 투구폼 분포・친화 표・효과 계수는 D 기본안이며 실제 밸
 
 # 구현 진행 안내 — 2026-10-20
 
-M0/M1 완료, M2 진행 중입니다. M2-V에서 고교 연말 마감과 대학 다음 연도 세계/실제 포지션 등록을 연결했습니다. 다음은 대학 경기/학년 진행 또는 실제 KBO 모집/지명입니다. 미국52 도달성 충돌과 세계 전체 연도 작업자는 남아 있습니다. 검사 결과는 [구현 진행](../implementation/PROGRESS.md)·[M2-V 인계](../implementation/M2-V-COLLEGE-YEAR-ENTRY.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 구현 전 이력이며 커리어·DB·인증·APK 전체 완료를 뜻하지 않습니다.
+M0/M1 완료, M2 진행 중입니다. M2-W에서 대학 프리시즌·정규리그 명령·COLLEGE 기록/연도별 평가·특성을 연결했습니다. 전체229/229·빌드/타입/lint·골든·HTTP smoke를 통과했습니다. 다음은 대학 선수권·성장/학년 결과 또는 실제 KBO 모집/지명입니다. 미국52 충돌과 세계 전체 연도 작업자는 남아 있습니다. 검사 결과는 [구현 진행](../implementation/PROGRESS.md)·[M2-W 인계](../implementation/M2-W-COLLEGE-REGULAR-SEASON.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 이전 이력이며 전체 완료를 뜻하지 않습니다.
 
 ---
 

@@ -2,7 +2,7 @@ import { abilityKeys, assertAbilities } from '@playball/rules';
 import type { AbilityUnits, PlayerKind } from '@playball/rules';
 import { createWorldStream, nextFloat } from './rng.js';
 export interface PotentialRange {lowUnits:number;highUnits:number}
-export interface AssessmentProgress { observed: {gameKey:string;worldDay:number}[]; stage:number }
+export interface AssessmentProgress { observed: {gameKey:string;worldDay:number;seasonYear?:number}[]; stage:number }
 export function ownAssessmentLevel(completedProSeasons:number):number {
   if(!Number.isSafeInteger(completedProSeasons) || completedProSeasons<0) throw new RangeError('INVALID_PRO_SEASONS');
   return Math.min(5,2+Math.floor(completedProSeasons/2));
@@ -28,12 +28,13 @@ export function reconcileAssessment(input:{playerKey:string;modelVersion:string;
   return Object.fromEntries(abilityKeys(input.kind).map(key=>[key,potentialRange({currentUnits:input.abilities[key]!,potentialUnits:input.potential[key]!,level:input.level,stage:input.stage,z:assessmentOffset(input.playerKey,key,input.modelVersion),...(input.previous?{previous:input.previous[key]!}:{})})]));
 }
 /** Caller supplies only actual eligible registered-team regular games, including healthy nonappearances. */
-export function observeAssessmentProgress(source:AssessmentProgress,evidence:{gameKey:string;worldDay:number}):AssessmentProgress {
-  if(source.stage!==Math.min(4,Math.floor(source.observed.length/20)) || !evidence.gameKey || !Number.isSafeInteger(evidence.worldDay) || evidence.worldDay<0) throw new RangeError('INVALID_OBSERVATION');
+export function observeAssessmentProgress(source:AssessmentProgress,evidence:AssessmentProgress['observed'][number]):AssessmentProgress {
+  if(source.stage!==Math.min(4,Math.floor(source.observed.length/20)) || !evidence.gameKey || !Number.isSafeInteger(evidence.worldDay) || evidence.worldDay<0 || evidence.seasonYear!==undefined && (!Number.isSafeInteger(evidence.seasonYear) || evidence.seasonYear<1)) throw new RangeError('INVALID_OBSERVATION');
   const old=source.observed.find(e=>e.gameKey===evidence.gameKey);
-  if(old) {if(old.worldDay!==evidence.worldDay) throw new RangeError('EVIDENCE_REUSED');return structuredClone(source);}
-  if(source.observed.some(e=>e.worldDay===evidence.worldDay)) throw new RangeError('DUPLICATE_REGISTRATION_DAY');
-  if(source.observed.length && evidence.worldDay<source.observed[source.observed.length-1]!.worldDay) throw new RangeError('OBSERVATION_OUT_OF_ORDER');
+  if(old) {if(old.worldDay!==evidence.worldDay || old.seasonYear!==evidence.seasonYear) throw new RangeError('EVIDENCE_REUSED');return structuredClone(source);}
+  if(source.observed.some(e=>e.worldDay===evidence.worldDay && e.seasonYear===evidence.seasonYear)) throw new RangeError('DUPLICATE_REGISTRATION_DAY');
+  const last=source.observed.at(-1),year=evidence.seasonYear??0,lastYear=last?.seasonYear??0;
+  if(last && (year<lastYear || year===lastYear && evidence.worldDay<last.worldDay)) throw new RangeError('OBSERVATION_OUT_OF_ORDER');
   const observed=[...source.observed,{...evidence}];return {observed,stage:Math.min(4,Math.floor(observed.length/20))};
 }
 /** Explicit allowlist: this function cannot accidentally spread internal P/seed/RNG into the view. */

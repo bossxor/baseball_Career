@@ -4,15 +4,15 @@ import {evaluateTraitUnlocks,validateTraits,TRAIT_IDS} from './traits.js';
 import type {TraitOwnership,TraitId} from './traits.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 
-export interface TraitUnlockReceipt {playerKey:string;traitId:TraitId;worldDay:number;recordRevision:number}
-export interface CareerTraitLedger {schemaVersion:1;owned:Record<string,TraitOwnership>;unlocks:readonly TraitUnlockReceipt[];lastClosedDay:number|null}
+export interface TraitUnlockReceipt {playerKey:string;traitId:TraitId;worldDay:number;recordRevision:number;seasonKey?:string;leagueKey?:string}
+export interface CareerTraitLedger {schemaVersion:1;owned:Record<string,TraitOwnership>;unlocks:readonly TraitUnlockReceipt[];lastClosedDay:number|null;lastSeasonKey?:string}
 
 const empty=():TraitOwnership=>({unlocked:[],qualifiedRivalPitcherKeys:[]});
 export const createCareerTraitLedger=():CareerTraitLedger=>({schemaVersion:1,owned:Object.create(null) as Record<string,TraitOwnership>,unlocks:[],lastClosedDay:null});
 
 /** Official contributions only. Season counts never mix leagues/phases; career counts add every official scope. */
-function evidenceFor(records:RecordLedger,seasonKey:string,playerKey:string) {
- const regular=recordTotals(records,{leagueKey:'HS',phase:'REGULAR',seasonKey});
+function evidenceFor(records:RecordLedger,seasonKey:string,leagueKey:string,playerKey:string) {
+ const regular=recordTotals(records,{leagueKey,phase:'REGULAR',seasonKey});
  const b=regular.batting[playerKey],p=regular.pitching[playerKey];
  const scopes=new Map<string,{leagueKey:string;phase:RecordScope['phase']}>();
  for(const g of Object.values(records.games))scopes.set(JSON.stringify([g.scope.leagueKey,g.scope.phase]),{leagueKey:g.scope.leagueKey,phase:g.scope.phase});
@@ -36,19 +36,23 @@ function evidenceFor(records:RecordLedger,seasonKey:string,playerKey:string) {
 export function refreshCareerTraits(source:HighSchoolCareer,closedDay:number):CareerTraitLedger {
  const ledger=structuredClone(source.traits??createCareerTraitLedger());
  if(ledger.schemaVersion!==1 || !Number.isSafeInteger(closedDay))throw new RangeError('INVALID_TRAIT_LEDGER');
- if(ledger.lastClosedDay!==null && closedDay<=ledger.lastClosedDay)return ledger;
+ // M2-V college saves carry an HS cursor without a season tag; college play did not exist yet.
+ const sameSeason=ledger.lastSeasonKey===source.world.seasonKey || ledger.lastSeasonKey===undefined && source.world.leagueKey!=='COLLEGE';
+ if(sameSeason && ledger.lastClosedDay!==null && closedDay<=ledger.lastClosedDay)return ledger;
+ const leagueKey=source.world.leagueKey??'HS';
  const played=new Set<string>();
- for(const g of Object.values(source.records.games))if(g.worldDay<=closedDay){for(const k of Object.keys(g.batting))played.add(k);for(const k of Object.keys(g.pitching))played.add(k);}
+ for(const g of Object.values(source.records.games))if(g.scope.seasonKey===source.world.seasonKey && g.scope.leagueKey===leagueKey && g.scope.phase==='REGULAR' && g.worldDay<=closedDay){for(const k of Object.keys(g.batting))played.add(k);for(const k of Object.keys(g.pitching))played.add(k);}
  for(const key of [...played].sort()) {
   const player=source.world.players[key];if(!player)continue;
   const before=Object.hasOwn(ledger.owned,key)?ledger.owned[key]!:empty();
-  const after=evaluateTraitUnlocks(player.kind,player.abilities,before,evidenceFor(source.records,source.world.seasonKey,key));
+  const after=evaluateTraitUnlocks(player.kind,player.abilities,before,evidenceFor(source.records,source.world.seasonKey,leagueKey,key));
   const added=after.unlocked.filter(id=>!before.unlocked.includes(id));
   if(added.length===0)continue;
   ledger.owned[key]=after;
-  ledger.unlocks=[...ledger.unlocks,...added.map(traitId=>({playerKey:key,traitId,worldDay:closedDay,recordRevision:source.records.revision}))];
+  ledger.unlocks=[...ledger.unlocks,...added.map(traitId=>({playerKey:key,traitId,worldDay:closedDay,recordRevision:source.records.revision,seasonKey:source.world.seasonKey,leagueKey}))];
  }
  ledger.lastClosedDay=closedDay;
+ ledger.lastSeasonKey=source.world.seasonKey;
  return ledger;
 }
 

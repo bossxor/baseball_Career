@@ -34,6 +34,18 @@ test('67: public allowlist and AI midpoint use ranges, not raw hidden potential'
   const expected=Object.values(ranges).reduce((s,r)=>s+(r.lowUnits+r.highUnits)/20_000,0)/6;assert.equal(assessmentMidpointScore('HITTER',ranges),expected);
   const cheat=assessmentView({kind:'HITTER',abilities,ranges,progress:{observed:[],stage:0},fixedCheat:true});assert.ok(cheat.abilities.every(row=>'fixedPotential' in row && row.fixedPotential===100 && !('potentialRange' in row)));
 });
+
+test('observations carry across calendar years, with duplicate/reused/backward evidence rejected',()=>{
+ const legacy=observeAssessmentProgress({observed:[],stage:0},{gameKey:'hs-last',worldDay:180});
+ const next=observeAssessmentProgress(legacy,{gameKey:'college-first',worldDay:31,seasonYear:2030});
+ const later=observeAssessmentProgress(next,{gameKey:'college-next-year',worldDay:31,seasonYear:2031});
+ assert.equal(later.observed.length,3);assert.deepEqual(observeAssessmentProgress(later,later.observed[0]!),later);
+ assert.throws(()=>observeAssessmentProgress(later,{gameKey:'college-next-year',worldDay:31,seasonYear:2032}),/EVIDENCE_REUSED/);
+ assert.throws(()=>observeAssessmentProgress(later,{gameKey:'duplicate',worldDay:31,seasonYear:2031}),/DUPLICATE/);
+ assert.throws(()=>observeAssessmentProgress(later,{gameKey:'backward',worldDay:100,seasonYear:2030}),/OUT_OF_ORDER/);
+ assert.throws(()=>observeAssessmentProgress(later,{gameKey:'missing-year',worldDay:200}),/OUT_OF_ORDER/);
+ assert.throws(()=>observeAssessmentProgress(later,{gameKey:'bad-year',worldDay:31,seasonYear:NaN}),/INVALID/);
+});
 test('34: B45 means50% selection, round10 40%+round9 10%, no draw for preview',()=>{
   const preview=draftPreview({baseScore:45,hasEligibleClubSlot:true});assert.equal(preview.selectionProbability,.5);assert.equal(preview.roundProbabilities[9]!.probability,.4);assert.equal(preview.roundProbabilities[8]!.probability,.1);assert.deepEqual(preview.conditionalLikelyRounds,[10]);
   assert.equal(draftBaseScore(50,50),50);assert.equal(draftRound(45),10);assert.equal(draftRound(49),9);assert.equal(draftRound(81),1);assert.equal(draftRound(44.999),null);

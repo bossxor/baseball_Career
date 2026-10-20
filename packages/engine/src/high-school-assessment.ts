@@ -13,8 +13,8 @@ export function refreshOwnCareerAssessment(source:HighSchoolCareer):OwnCareerAss
  const report=structuredClone(source.ownAssessment??createOwnCareerAssessment(source.world)),player=source.world.players[source.world.protagonistKey]!;
  if(report.schemaVersion!==1 || report.modelVersion!=='potential-1' || report.level!==ownAssessmentLevel(0))throw new RangeError('INVALID_OWN_ASSESSMENT');
  const closed=new Set(source.days.days.map(d=>d.day));
- const games=Object.values(source.records.games).filter(g=>g.scope.seasonKey===source.world.seasonKey && g.scope.leagueKey==='HS' && g.scope.phase==='REGULAR' && closed.has(g.worldDay) && Object.hasOwn(g.teams,source.world.protagonistSchoolId)).sort((a,b)=>a.worldDay-b.worldDay || (a.gameKey<b.gameKey?-1:1));
- for(const game of games)report.progress=observeAssessmentProgress(report.progress,{gameKey:game.gameKey,worldDay:game.worldDay});
+ const games=Object.values(source.records.games).filter(g=>g.scope.seasonKey===source.world.seasonKey && g.scope.leagueKey===(source.world.leagueKey??'HS') && g.scope.phase==='REGULAR' && closed.has(g.worldDay) && Object.hasOwn(g.teams,source.world.protagonistSchoolId)).sort((a,b)=>a.worldDay-b.worldDay || (a.gameKey<b.gameKey?-1:1));
+ for(const game of games)report.progress=observeAssessmentProgress(report.progress,{gameKey:game.gameKey,worldDay:game.worldDay,...(source.world.leagueKey==='COLLEGE'?{seasonYear:source.world.calendar!.year}:{})});
  report.ranges=reconcileAssessment({playerKey:JSON.stringify([source.world.worldKey,player.simulationKey]),modelVersion:report.modelVersion,kind:player.kind,abilities:player.abilities,potential:player.potential,level:report.level,stage:report.progress.stage,previous:report.ranges});
  return report;
 }

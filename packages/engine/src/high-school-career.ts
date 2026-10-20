@@ -64,10 +64,19 @@ export function assertHighSchoolCareerRevision(source:HighSchoolCareer,expectedR
  assertCareerRevision(source,expectedRevision);
  if(source.world.leagueKey==='COLLEGE')throw new RangeError('INVALID_CAREER_REGISTRATION');
 }
+export function assertCollegeCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
+ assertCareerRevision(source,expectedRevision);
+ const admission=source.collegeAdmission,world=source.world,player=world.players[world.protagonistKey];
+ if(world.leagueKey!=='COLLEGE' || !admission || admission.status!=='ENROLLED' || admission.collegeId!==world.protagonistSchoolId || admission.playerKey!==world.protagonistKey || admission.position!==player?.position || admission.entryYear+admission.yearsCompleted!==world.calendar?.year || world.seasonKey!==String(world.calendar?.year))throw new RangeError('INVALID_CAREER_REGISTRATION');
+}
+export function assertSchoolCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
+ if(source.world.leagueKey==='COLLEGE')assertCollegeCareerRevision(source,expectedRevision);
+ else assertHighSchoolCareerRevision(source,expectedRevision);
+}
 function updateCareerPlan(source:HighSchoolCareer,focus:readonly string[],archetype:string):HighSchoolCareer {
  const updated=structuredClone(source),key=updated.world.protagonistKey;
  updated.world.players[key]={...updated.world.players[key]!,focus:[...focus],archetype};
- const completedTeamGames=Object.values(source.records.games).filter(g=>g.scope.seasonKey===source.world.seasonKey && g.scope.leagueKey==='HS' && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,source.world.protagonistSchoolId)).length;
+ const completedTeamGames=Object.values(source.records.games).filter(g=>g.scope.seasonKey===source.world.seasonKey && g.scope.leagueKey===(source.world.leagueKey??'HS') && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,source.world.protagonistSchoolId)).length;
  updated.planHistory=[...source.planHistory.filter(p=>p.completedTeamGames!==completedTeamGames),{completedTeamGames,focus:[...focus],archetype}];return updated;
 }
 export function confirmCareerPlayer(source:HighSchoolCareer,expectedRevision:number):HighSchoolCareer {
@@ -94,12 +103,18 @@ export function resolveCareerFocusEvent(source:HighSchoolCareer,expectedRevision
 }
 export const resolveInitialCareerEvent=resolveCareerFocusEvent;
 export function setPreseasonCareerFocus(source:HighSchoolCareer,expectedRevision:number,focus:readonly string[]):HighSchoolCareer {
- assertHighSchoolCareerRevision(source,expectedRevision);if(source.phaseContext.phase!=='PRESEASON_SETUP')throw new RangeError('INVALID_CAREER_PHASE');
+ assertHighSchoolCareerRevision(source,expectedRevision);return setSchoolPreseasonFocus(source,expectedRevision,focus);
+}
+export function setSchoolPreseasonFocus(source:HighSchoolCareer,expectedRevision:number,focus:readonly string[]):HighSchoolCareer {
+ assertSchoolCareerRevision(source,expectedRevision);if(source.phaseContext.phase!=='PRESEASON_SETUP')throw new RangeError('INVALID_CAREER_PHASE');
  const player=source.world.players[source.world.protagonistKey]!;assertFocus(player.kind,focus);
  const updated=updateCareerPlan(source,focus,player.archetype);updated.revision++;return updated;
 }
 export function setPreseasonCareerArchetype(source:HighSchoolCareer,expectedRevision:number,archetype:string):HighSchoolCareer {
- assertHighSchoolCareerRevision(source,expectedRevision);if(source.phaseContext.phase!=='PRESEASON_SETUP')throw new RangeError('INVALID_CAREER_PHASE');
+ assertHighSchoolCareerRevision(source,expectedRevision);return setSchoolPreseasonArchetype(source,expectedRevision,archetype);
+}
+export function setSchoolPreseasonArchetype(source:HighSchoolCareer,expectedRevision:number,archetype:string):HighSchoolCareer {
+ assertSchoolCareerRevision(source,expectedRevision);if(source.phaseContext.phase!=='PRESEASON_SETUP')throw new RangeError('INVALID_CAREER_PHASE');
  const player=source.world.players[source.world.protagonistKey]!;archetypeFor(player.kind,archetype);
  const window=JSON.stringify([source.world.seasonKey,'PRE']);
  if(player.archetype!==archetype && source.styleUsedWindows.includes(window))throw new RangeError('STYLE_WINDOW_USED');
@@ -108,6 +123,9 @@ export function setPreseasonCareerArchetype(source:HighSchoolCareer,expectedRevi
  updated.revision++;return updated;
 }
 export function confirmCareerPreseason(source:HighSchoolCareer,expectedRevision:number):HighSchoolCareer {
- assertHighSchoolCareerRevision(source,expectedRevision);if(source.phaseContext.phase!=='PRESEASON_SETUP' || source.events.some(e=>e.status==='OPEN'))throw new RangeError('INVALID_CAREER_PHASE');
+ assertHighSchoolCareerRevision(source,expectedRevision);return confirmSchoolPreseason(source,expectedRevision);
+}
+export function confirmSchoolPreseason(source:HighSchoolCareer,expectedRevision:number):HighSchoolCareer {
+ assertSchoolCareerRevision(source,expectedRevision);if(source.phaseContext.phase!=='PRESEASON_SETUP' || source.events.some(e=>e.status==='OPEN'))throw new RangeError('INVALID_CAREER_PHASE');
  const updated=structuredClone(source);if(updated.development)updated.development.seasonStartPlayer=structuredClone(updated.world.players[updated.world.protagonistKey]!);updated.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:Math.min(...source.world.schedule.map(g=>g.worldDay)),pendingGame:null};updated.revision++;return updated;
 }

@@ -23,6 +23,9 @@ import {canonicalJson} from '../src/game.js';
 import type {GameContribution} from '../src/records.js';
 import {abilityKeys} from '@playball/rules';
 import {createOwnCareerAssessment} from '../src/high-school-assessment.js';
+import {refreshOwnCareerAssessment} from '../src/high-school-assessment.js';
+import {acknowledgeHighSchoolSeasonReview,openHighSchoolCareerRoute,highSchoolCareerRouteView,enrollHighSchoolCollege} from '../src/high-school-route.js';
+import {closeHighSchoolSeasonForCollege,startAdmittedCollegeSeason} from '../src/college-entry.js';
 
 // Controlled no-appearance receipts isolate transitions. The progress test covers real216-game play.
 export function completedHighSchoolCareer(capAt?:number,kind:'HITTER'|'PITCHER'='HITTER'){
@@ -46,4 +49,11 @@ export function completedHighSchoolCareer(capAt?:number,kind:'HITTER'|'PITCHER'=
   return {day,evidence:canonicalJson({worldKey:state.world.worldKey,seasonKey:state.world.seasonKey,day,contributions}),result:{injured:[],recovered:[]}};
  });
  return state;
+}
+
+export function enrolledCollegeCareer(kind:'HITTER'|'PITCHER'='HITTER'){
+ const source=completedHighSchoolCareer(undefined,kind);source.ownAssessment=refreshOwnCareerAssessment(source);
+ const reviewed=acknowledgeHighSchoolSeasonReview(source,source.revision),opened=openHighSchoolCareerRoute(reviewed,reviewed.revision,1).career,view=highSchoolCareerRouteView(opened);
+ const admitted=enrollHighSchoolCollege(opened,opened.revision,{eventVersion:1,offerSetKey:view.offerSetKey,offerSetVersion:1,collegeId:'U07'}),closed=closeHighSchoolSeasonForCollege(admitted,admitted.revision,true);
+ return startAdmittedCollegeSeason(closed,closed.revision);
 }

@@ -1,0 +1,31 @@
+✔ 67: range narrows monotonically across observations; lower facility does not widen (2.4818ms)
+✔ 67: A99/100 bounds, outward display rounding and impossible prior fail safely (0.4445ms)
+✔ 67: registered game19→20, duplicate no-op, transfer preserves progress, maxstage4 (0.4782ms)
+✔ 67: public allowlist and AI midpoint use ranges, not raw hidden potential (0.3113ms)
+✔ observations carry across calendar years, with duplicate/reused/backward evidence rejected (0.1851ms)
+✔ 34: B45 means50% selection, round10 40%+round9 10%, no draw for preview (0.2075ms)
+✔ 34: all boundary probabilities sum1, no fake round when no slot; tied likely rounds preserved (0.602ms)
+✔ 34: fixed-seed draft empirical distribution matches preview and consumes exactly one draw (15.5424ms)
+✔ 34: US direct only with ability AND assessment AND actual valid offer AND eligibility (0.3186ms)
+✔ college preseason preserves carried abilities, validates registration/revision/focus and uses a fresh PRE window (124.5538ms)
+▶ actual college216-game season: resume, annual windows, scoped records, observations and pitcher XP
+  ✔ safe chunk and pause preserve pending game exactly across JSON resume (375.7271ms)
+  ✔ college skips career-start focus, opens fresh E43 at16 and permits one annual training (21287.1566ms)
+  ✔ new E41 at24 permits MID once and records the college boundary (22403.7577ms)
+✔ actual college216-game season: resume, annual windows, scoped records, observations and pitcher XP (44137.0005ms)
+✔ college trait cursor resets by season, HS regular BB never counts toward a college-season threshold (55.1791ms)
+✔ college emergency uses school floors/age/namespace and saved RNG, release preserves identities (76.4463ms)
+✔ year-end requires explicit unused-training forfeit, closes growth/health once and pays no new growth (67.2458ms)
+✔ atomic college activation carries identity/abilities and archives HS, new calendar/growth ledger/age only once (118.8855ms)
+✔ college profiles respect school admission floors and preserve protagonist independently of school choice (53.1306ms)
+✔ pitcher carry keeps book/weights, opens fresh annual XP budget and refuses unfinished learning (59.654ms)
+✔ mild team-game recovery carries across calendar rest; major season injury closes at year-end (97.4751ms)
+✔ stale revision/ready snapshot/receipt and changed admission never publish a partial new world (136.325ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 44612.4838

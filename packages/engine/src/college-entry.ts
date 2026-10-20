@@ -58,6 +58,7 @@ export function startAdmittedCollegeSeason(source:HighSchoolCareer,expectedRevis
  // Calendar rest does not heal mild/medium injuries measured in team games.
  career.health={...career.health,injuries:Object.hasOwn(career.health.injuries,key)?{[key]:structuredClone(career.health.injuries[key]!)}:{}};
  career.days=createSchoolDayLedger(world);career.emergency=createSchoolEmergencyRegistry(world);
+ if(career.traits)career.traits={...career.traits,lastClosedDay:null,lastSeasonKey:seasonKey};
  career.seasonGrowth=createSeasonGrowthLedger(player,seasonKey,world.calendar.growthDays.length);
  career.development={...career.development!,seasonStartPlayer:structuredClone(player)};
  career.planHistory=[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}];

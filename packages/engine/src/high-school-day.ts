@@ -18,14 +18,14 @@ export function closeHighSchoolDay(world:HighSchoolWorld,records:RecordLedger,he
   const scheduled=world.schedule.filter(g=>g.worldDay===day).sort((a,b)=>a.simulationKey<b.simulationKey?-1:1);
   const contributions=scheduled.map(game=>{
     const c=Object.hasOwn(records.games,game.simulationKey)?records.games[game.simulationKey]:undefined;
-    if(!c || c.worldDay!==day || c.scope.leagueKey!=='HS' || c.scope.seasonKey!==world.seasonKey || c.scope.phase!=='REGULAR' || Object.keys(c.teams).length!==2 || !Object.hasOwn(c.teams,game.awayTeamKey) || !Object.hasOwn(c.teams,game.homeTeamKey))throw new RangeError('DAY_GAMES_NOT_FINAL');
+    if(!c || c.worldDay!==day || c.scope.leagueKey!==(world.leagueKey??'HS') || c.scope.seasonKey!==world.seasonKey || c.scope.phase!=='REGULAR' || Object.keys(c.teams).length!==2 || !Object.hasOwn(c.teams,game.awayTeamKey) || !Object.hasOwn(c.teams,game.homeTeamKey))throw new RangeError('DAY_GAMES_NOT_FINAL');
     return c;
   });
   const evidence=canonicalJson({worldKey:world.worldKey,seasonKey:world.seasonKey,day,contributions});
   const old=source.days.find(d=>d.day===day);
   if(old){if(old.evidence!==evidence)throw new RangeError('CHANGED_DAY_EVIDENCE');return {world,health,days:source,result:structuredClone(old.result),duplicate:true};}
   if(day!==(source.days.at(-1)?.day??first-1)+1 || source.days.some((d,i)=>d.day!==first+i))throw new RangeError('NON_CHRONOLOGICAL_SCHOOL_DAY');
-  if(Object.values(records.games).some(c=>c.scope.leagueKey==='HS' && c.scope.seasonKey===world.seasonKey && c.worldDay>day))throw new RangeError('FUTURE_GAME_BEFORE_DAY_CLOSE');
+  if(Object.values(records.games).some(c=>c.scope.leagueKey===(world.leagueKey??'HS') && c.scope.seasonKey===world.seasonKey && c.worldDay>day))throw new RangeError('FUTURE_GAME_BEFORE_DAY_CLOSE');
   if(health.games.some(g=>g.evidence.seasonKey===world.seasonKey && g.evidence.day>=day))throw new RangeError('PARTIAL_DAY_HEALTH_STATE');
   const registered=new Set<string>();
   for(const school of world.schools)for(const key of school.roster){if(registered.has(key) || !Object.hasOwn(world.players,key))throw new RangeError('INVALID_DAY_REGISTRATION');registered.add(key);}

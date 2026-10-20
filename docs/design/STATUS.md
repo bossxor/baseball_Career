@@ -1,6 +1,6 @@
 # 구현 진행 안내 — 2026-10-20
 
-M0/M1 완료, M2 진행 중입니다. M2-V에서 고교 연말 마감→대학 첫 세계/다음 연도 실제 등록을 연결했습니다. 대학 경기/학년·실제 KBO 모집과 미국52 도달성 충돌은 남아 있습니다. Git 체크포인트와 실제 검사 결과는 [구현 진행](../implementation/PROGRESS.md)·[M2-V 인계](../implementation/M2-V-COLLEGE-YEAR-ENTRY.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 구현 전 이력이며 커리어·DB·인증·APK 전체 완료를 뜻하지 않습니다.
+M0/M1 완료, M2 진행 중입니다. M2-W에서 대학 프리시즌·정규리그 진행과 COLLEGE 기록/연도별 평가·특성을 연결했습니다. 전체229/229·빌드/타입/lint·골든·HTTP smoke를 통과했습니다. 대학 선수권·성장 정산/학년·실제 KBO 모집과 미국52 충돌은 남아 있습니다. 최신 검사 결과는 [구현 진행](../implementation/PROGRESS.md)·[M2-W 인계](../implementation/M2-W-COLLEGE-REGULAR-SEASON.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 이전 이력이며 전체 완료를 뜻하지 않습니다.
 
 ---
 

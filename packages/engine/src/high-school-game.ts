@@ -32,7 +32,7 @@ const lookup=<T>(values:Readonly<Record<string,T>>,key:string):T|undefined=>Obje
 /** Internal server adapter only. The career command must authorize phase, queue and date first. */
 export function prepareHighSchoolGame(world:HighSchoolWorld,records:RecordLedger,gameKey:string,context:HighSchoolGameContext):HighSchoolGameJob {
   const scheduled=world.schedule.find(g=>g.simulationKey===gameKey);
-  if(!scheduled || scheduled.leagueKey!=='HS' || scheduled.seasonKey!==world.seasonKey || Object.hasOwn(records.games,gameKey))throw new RangeError('INVALID_SCHEDULED_GAME');
+  if(!scheduled || scheduled.leagueKey!==(world.leagueKey??'HS') || scheduled.seasonKey!==world.seasonKey || Object.hasOwn(records.games,gameKey))throw new RangeError('INVALID_SCHEDULED_GAME');
   if(!['GROWTH','REALISTIC','SECRET_CHEAT'].includes(context.difficulty) || new Set(context.unavailableKeys).size!==context.unavailableKeys.length || context.unavailableKeys.some(k=>!Object.hasOwn(world.players,k)))throw new RangeError('INVALID_GAME_CONTEXT');
   const development:NonNullable<GameInput['pitchDevelopment']>={seasonKey:world.seasonKey,players:Object.create(null) as NonNullable<GameInput['pitchDevelopment']>['players']};
   const snapshot=(player:DevelopmentPlayer):PlayerSnapshot=>({simulationKey:player.simulationKey,abilities:{...player.abilities},fatigue:player.fatigue,morale:1,temporary:{},traitLogits:[],traits:structuredClone(lookup(context.traits,player.simulationKey)??{unlocked:[],qualifiedRivalPitcherKeys:[]})});
@@ -69,8 +69,8 @@ export function advanceHighSchoolGame(job:HighSchoolGameJob,maxPlateAppearances=
 export function commitHighSchoolGame(world:HighSchoolWorld,records:RecordLedger,job:HighSchoolGameJob):{world:HighSchoolWorld;records:RecordLedger;duplicate:boolean} {
   if(job.schemaVersion!==1 || job.worldKey!==world.worldKey || job.seasonKey!==world.seasonKey || job.game.status!=='FINAL' || !job.game.pitchDevelopment)throw new RangeError('SCHOOL_GAME_NOT_COMMITTABLE');
   const scheduled=world.schedule.find(g=>g.simulationKey===job.game.input.simulationKey);
-  if(!scheduled || scheduled.worldDay!==job.worldDay || scheduled.seasonKey!==world.seasonKey || scheduled.leagueKey!=='HS' || job.game.input.teams[0].simulationKey!==scheduled.awayTeamKey || job.game.input.teams[1].simulationKey!==scheduled.homeTeamKey)throw new RangeError('SCHOOL_SCHEDULE_MISMATCH');
-  const contribution=buildGameContribution(job.game,{seasonKey:world.seasonKey,leagueKey:'HS',phase:'REGULAR'},scheduled.worldDay);
+  if(!scheduled || scheduled.worldDay!==job.worldDay || scheduled.seasonKey!==world.seasonKey || scheduled.leagueKey!==(world.leagueKey??'HS') || job.game.input.teams[0].simulationKey!==scheduled.awayTeamKey || job.game.input.teams[1].simulationKey!==scheduled.homeTeamKey)throw new RangeError('SCHOOL_SCHEDULE_MISMATCH');
+  const contribution=buildGameContribution(job.game,{seasonKey:world.seasonKey,leagueKey:world.leagueKey??'HS',phase:'REGULAR'},scheduled.worldDay);
   const result=putGameContribution(records,contribution);
   if(result.duplicate)return {world,records,duplicate:true};
   if(records.revision!==job.basisRecordRevision || canonicalJson(world)!==job.basisWorld)throw new RangeError('STALE_SCHOOL_GAME');

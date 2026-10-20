@@ -1,5 +1,5 @@
 import type {HighSchoolCareer} from './high-school-career.js';
-import {assertHighSchoolCareerRevision} from './high-school-career.js';
+import {assertHighSchoolCareerRevision,assertSchoolCareerRevision} from './high-school-career.js';
 import type {DevelopmentPlayer} from './player.js';
 import {archetypeFor} from './player.js';
 import type {RngState} from './rng.js';
@@ -17,12 +17,12 @@ function development(source:HighSchoolCareer):CareerDevelopmentLedger {
  player.focus=[...initialPlan.focus];player.archetype=initialPlan.archetype;player.fatigue=0;
  return {seasonStartPlayer:player,trainingUsedSeasons:[],trainingResults:[],trainingRng:createStreams(source.world.seed,JSON.stringify(['hs-training',source.world.worldKey])).growth};
 }
-function completedTeamGames(source:HighSchoolCareer):number {return Object.values(source.records.games).filter(g=>g.scope.leagueKey==='HS' && g.scope.seasonKey===source.world.seasonKey && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,source.world.protagonistSchoolId)).length;}
+function completedTeamGames(source:HighSchoolCareer):number {return Object.values(source.records.games).filter(g=>g.scope.leagueKey===(source.world.leagueKey??'HS') && g.scope.seasonKey===source.world.seasonKey && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,source.world.protagonistSchoolId)).length;}
 function safeSetup(source:HighSchoolCareer,allowForfeitEvent=false):void {
  const phase=source.phaseContext;
  if(allowForfeitEvent && phase.phase==='EVENT_DECISION')return;
  if(phase.phase!=='SEASON_PROGRESS' && phase.phase!=='SEASON_REVIEW')throw new RangeError('INVALID_CAREER_PHASE');
- if(phase.phase==='SEASON_PROGRESS' && (phase.pendingGame || phase.advancePlan || Object.values(source.records.games).some(g=>g.worldDay>=phase.nextWorldDay && g.scope.seasonKey===source.world.seasonKey && g.scope.leagueKey==='HS')))throw new RangeError('CAREER_DAY_IN_PROGRESS');
+ if(phase.phase==='SEASON_PROGRESS' && (phase.pendingGame || phase.advancePlan || Object.values(source.records.games).some(g=>g.worldDay>=phase.nextWorldDay && g.scope.seasonKey===source.world.seasonKey && g.scope.leagueKey===(source.world.leagueKey??'HS'))))throw new RangeError('CAREER_DAY_IN_PROGRESS');
 }
 function context(source:HighSchoolCareer):TrainingContext {
  const school=source.world.protagonistSchoolId;
@@ -39,11 +39,14 @@ export function applyCareerSeasonTraining(source:HighSchoolCareer,choice:Trainin
 }
 /** Policy, availability,48-game denominator and once-per-world-season usage come only from saved state. */
 export function trainHighSchoolCareer(source:HighSchoolCareer,expectedRevision:number,choice:TrainingChoice):HighSchoolCareer {
- assertHighSchoolCareerRevision(source,expectedRevision);safeSetup(source);
+ assertHighSchoolCareerRevision(source,expectedRevision);return trainSchoolCareer(source,expectedRevision,choice);
+}
+export function trainSchoolCareer(source:HighSchoolCareer,expectedRevision:number,choice:TrainingChoice):HighSchoolCareer {
+ assertSchoolCareerRevision(source,expectedRevision);safeSetup(source);
  const career=applyCareerSeasonTraining(source,choice);career.revision++;return career;
 }
 export function forfeitCareerTrainingEvent(source:HighSchoolCareer,expectedRevision:number,eventVersion:number):HighSchoolCareer {
- assertHighSchoolCareerRevision(source,expectedRevision);safeSetup(source,true);const phase=source.phaseContext;
+ assertSchoolCareerRevision(source,expectedRevision);safeSetup(source,true);const phase=source.phaseContext;
  if(phase.phase!=='EVENT_DECISION' || phase.resume.phase!=='SEASON_PROGRESS')throw new RangeError('INVALID_CAREER_PHASE');
  safeSetup({...source,phaseContext:phase.resume});
  const event=source.events.find(e=>e.eventKey===phase.eventKey);if(!event || event.definitionId!=='E43')throw new RangeError('INVALID_CAREER_WINDOW');
@@ -53,7 +56,7 @@ export function forfeitCareerTrainingEvent(source:HighSchoolCareer,expectedRevis
  career.events=career.events.map(e=>e.eventKey===event.eventKey?resolved:e);career.phaseContext=structuredClone(phase.resume);career.revision++;return career;
 }
 export function changeMidseasonCareerArchetype(source:HighSchoolCareer,expectedRevision:number,archetype:string):HighSchoolCareer {
- assertHighSchoolCareerRevision(source,expectedRevision);safeSetup(source);
+ assertSchoolCareerRevision(source,expectedRevision);safeSetup(source);
  if(source.phaseContext.phase!=='SEASON_PROGRESS' || completedTeamGames(source)<24 || Object.hasOwn(source.health.injuries,source.world.protagonistKey))throw new RangeError('STYLE_WINDOW_CLOSED');
  const player=source.world.players[source.world.protagonistKey]!;archetypeFor(player.kind,archetype);const window=JSON.stringify([source.world.seasonKey,'MID']);
  if(player.archetype!==archetype && source.styleUsedWindows.includes(window))throw new RangeError('STYLE_WINDOW_USED');

@@ -7,20 +7,21 @@ import {generateNpcIdentities,generateNpcPotential} from './npc.js';
 import {nextInteger,nextFloat} from './rng.js';
 import {archetypeFor,validateDevelopmentPlayer} from './player.js';
 import {createRepertoire} from './repertoire.js';
+import {schoolNpcTarget} from './school-roster.js';
 
 export interface SchoolEmergencyRegistry {
   schemaVersion:1;worldKey:string;nextSerial:number;
   entries:Record<string,{schoolKey:string;createdDay:number;releasedDay:number|null}>;
 }
 export const createSchoolEmergencyRegistry=(world:HighSchoolWorld):SchoolEmergencyRegistry=>({schemaVersion:1,worldKey:world.worldKey,nextSerial:1,entries:Object.create(null) as SchoolEmergencyRegistry['entries']});
-/** Reuses initial HS NPC distributions and streams. Temporary status is registration, not identity deletion. */
+/** Reuses the active school's NPC profile and saved streams. Release never deletes identity/history. */
 export function reconcileSchoolEmergency(world:HighSchoolWorld,health:HealthLedger,source:SchoolEmergencyRegistry,day:number,difficulty:Difficulty):{world:HighSchoolWorld;registry:SchoolEmergencyRegistry;added:string[];released:string[]} {
   if(source.schemaVersion!==1 || source.worldKey!==world.worldKey || !Number.isSafeInteger(source.nextSerial) || source.nextSerial<1 || !Number.isSafeInteger(day) || day<0 || !['GROWTH','REALISTIC','SECRET_CHEAT'].includes(difficulty))throw new RangeError('INVALID_EMERGENCY_REGISTRY');
   const membership=new Map<string,string>();
   for(const school of world.schools)for(const key of school.roster){if(membership.has(key) || !Object.hasOwn(world.players,key))throw new RangeError('INVALID_EMERGENCY_REGISTRATION');membership.set(key,school.id);}
   for(const [key,entry] of Object.entries(source.entries)){
     const identity:unknown=JSON.parse(key);
-    if(!Array.isArray(identity) || identity.length!==4 || identity[0]!=='hs-temp' || identity[1]!==entry.schoolKey || typeof identity[2]!=='string' || !identity[2] || !Number.isSafeInteger(identity[3]) || identity[3]<1 || identity[3]>=source.nextSerial)throw new RangeError('INVALID_TEMPORARY_KEY');
+    if(!Array.isArray(identity) || identity.length!==4 || identity[0]!==(world.leagueKey==='COLLEGE'?'college-temp':'hs-temp') || identity[1]!==entry.schoolKey || identity[2]!==world.seasonKey || !Number.isSafeInteger(identity[3]) || identity[3]<1 || identity[3]>=source.nextSerial)throw new RangeError('INVALID_TEMPORARY_KEY');
     if(!Object.hasOwn(world.players,key) || !world.schools.some(s=>s.id===entry.schoolKey) || !Number.isSafeInteger(entry.createdDay) || entry.createdDay<0 || entry.createdDay>day || entry.releasedDay!==null && (!Number.isSafeInteger(entry.releasedDay) || entry.releasedDay<entry.createdDay || entry.releasedDay>day) || (entry.releasedDay===null?membership.get(key)!==entry.schoolKey:membership.has(key)))throw new RangeError('INVALID_TEMPORARY_MEMBERSHIP');
   }
   const updated=structuredClone(world),registry=structuredClone(source),added:string[]=[],released:string[]=[];
@@ -31,7 +32,7 @@ export function reconcileSchoolEmergency(world:HighSchoolWorld,health:HealthLedg
     const requests:{simulationKey:string;kind:'HITTER'|'PITCHER';position:string}[]=[];
     const add=(kind:'HITTER'|'PITCHER',position:string)=>{
       if(!Number.isSafeInteger(registry.nextSerial+1))throw new RangeError('EMERGENCY_SERIAL_LIMIT');
-      const simulationKey=JSON.stringify(['hs-temp',school.id,world.seasonKey,registry.nextSerial++]);
+      const simulationKey=JSON.stringify([world.leagueKey==='COLLEGE'?'college-temp':'hs-temp',school.id,world.seasonKey,registry.nextSerial++]);
       if(simulationKey.length>128 || Object.hasOwn(updated.players,simulationKey) || Object.hasOwn(registry.entries,simulationKey))throw new RangeError('EMERGENCY_KEY_COLLISION');
       requests.push({simulationKey,kind,position});
     };
@@ -42,12 +43,13 @@ export function reconcileSchoolEmergency(world:HighSchoolWorld,health:HealthLedg
       const types=Object.keys(identity.kind==='HITTER'?HITTER_TYPES:PITCHER_TYPES),typeDraw=nextInteger(updated.rng.roster,types.length);updated.rng.roster=typeDraw.state;
       const archetype=types[typeDraw.value]!,type=archetypeFor(identity.kind,archetype),keys=abilityKeys(identity.kind);
       const u=nextFloat(updated.rng.roster);updated.rng.roster=u.state;
-      const target=Math.round(u.value<13/30?35+Math.sqrt(u.value*30*13):65-Math.sqrt((1-u.value)*30*17));
+      const target=schoolNpcTarget(u.value,school.id,world.leagueKey);let age=18;
+      if(world.leagueKey==='COLLEGE'){const ageDraw=nextInteger(updated.rng.roster,4);updated.rng.roster=ageDraw.state;age=19+ageDraw.value;}
       const abilities=Object.fromEntries(keys.map((key,i)=>[key,(type.initial[i]!+target-50)*10_000]));
       const potential=generateNpcPotential(identity.kind,abilities,{mode:'CAREER',difficulty,owned:false},updated.rng.potential);updated.rng.potential=potential.state;
       const focus=[...keys].sort((a,b)=>type.weights[keys.indexOf(b)]!-type.weights[keys.indexOf(a)]! || keys.indexOf(a)-keys.indexOf(b)).slice(0,4);
       const serial=registry.nextSerial-requests.length+index;
-      const player={...identity,name:['강','김','박','이','정'][serial%5]!+['도윤','민준','서준','시우','우진'][Math.floor(serial/5)%5]!,age:18,archetype,focus,abilities,potential:potential.potential,careerPeaks:{...abilities},fatigue:0};
+      const player={...identity,name:['강','김','박','이','정'][serial%5]!+['도윤','민준','서준','시우','우진'][Math.floor(serial/5)%5]!,age,archetype,focus,abilities,potential:potential.potential,careerPeaks:{...abilities},fatigue:0};
       validateDevelopmentPlayer(player);updated.players[player.simulationKey]=player;
       if(player.kind==='PITCHER'){const secondary=nextInteger(updated.rng.roster,6);updated.rng.roster=secondary.state;updated.repertoires[player.simulationKey]=createRepertoire(PITCH_IDS[secondary.value+1]!,world.seasonKey);}
       school.roster.push(player.simulationKey);registry.entries[player.simulationKey]={schoolKey:school.id,createdDay:day,releasedDay:null};added.push(player.simulationKey);

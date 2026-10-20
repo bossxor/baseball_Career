@@ -36,3 +36,4 @@ export * from './season-calendar.js';
 export * from './high-school-route.js';
 export * from './college-world.js';
 export * from './college-entry.js';
+export * from './college-career.js';

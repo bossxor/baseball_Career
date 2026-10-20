@@ -10,6 +10,12 @@ import type {Repertoire} from './repertoire.js';
 export const HITTER_POSITIONS=['C','C','1B','1B','2B','2B','3B','3B','SS','SS','LF','CF','RF','DH','DH'];
 export const PITCHER_POSITIONS=['SP','SP','SP','SP','RP','RP','RP','RP','CP','CP'];
 export interface SchoolNpcTemplate {simulationKey:string;kind:'HITTER'|'PITCHER';position:string;schoolId:string}
+export function schoolNpcTarget(u:number,schoolId:string,league?:'COLLEGE'):number {
+ if(league!=='COLLEGE')return Math.round(u<13/30?35+Math.sqrt(u*30*13):65-Math.sqrt((1-u)*30*17));
+ const college=COLLEGES.find(c=>c.id===schoolId);if(!college)throw new RangeError('INVALID_COLLEGE_ROSTER');
+ const low=Math.max(40,college.minimumOverall),mode=Math.max(52,low),width=65-low;
+ return Math.round(u<(mode-low)/width?low+Math.sqrt(u*width*(mode-low)):65-Math.sqrt((1-u)*width*(65-mode)));
+}
 export function generateSchoolNpcRoster(input:{templates:readonly SchoolNpcTemplate[];seed:string;worldKey:string;seasonKey:string;difficulty:Difficulty;league?:'COLLEGE'}){
   const identity=generateNpcIdentities(input.templates,createHandednessStream(input.seed,input.worldKey));
   const players:Record<string,DevelopmentPlayer>=Object.create(null),repertoires:Record<string,Repertoire>=Object.create(null),rosters:Record<string,string[]>=Object.create(null);
@@ -20,11 +26,8 @@ export function generateSchoolNpcRoster(input:{templates:readonly SchoolNpcTempl
     // Approved target OVR35..65, triangular mode48. Profile shape retained, no extra ability reroll.
     const u=nextFloat(rosterRng);rosterRng=u.state;
     const school=input.templates.find(t=>t.simulationKey===npc.simulationKey)!.schoolId;
-    let target=Math.round(u.value<13/30?35+Math.sqrt(u.value*30*13):65-Math.sqrt((1-u.value)*30*17)),age=18;
+    const target=schoolNpcTarget(u.value,school,input.league);let age=18;
     if(input.league==='COLLEGE'){
-      const college=COLLEGES.find(c=>c.id===school);if(!college)throw new RangeError('INVALID_COLLEGE_ROSTER');
-      const low=Math.max(40,college.minimumOverall),mode=Math.max(52,low),width=65-low;
-      target=Math.round(u.value<(mode-low)/width?low+Math.sqrt(u.value*width*(mode-low)):65-Math.sqrt((1-u.value)*width*(65-mode)));
       const ageDraw=nextInteger(rosterRng,4);rosterRng=ageDraw.state;age=19+ageDraw.value;
     }
     const abilities=Object.fromEntries(abilityKeysForKind.map((key,i)=>[key,(type.initial[i]!+target-50)*10_000]));
