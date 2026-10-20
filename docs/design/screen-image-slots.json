@@ -297,7 +297,8 @@
     {
       "assetRefs": [
         "NONE",
-        "finishScenes"
+        "finishScenes",
+        "fictionalTeamBadges"
       ],
       "screenId": "S26",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -310,7 +311,8 @@
       "assetRefs": [
         "training",
         "service",
-        "finishScenes"
+        "finishScenes",
+        "fictionalTeamBadges"
       ],
       "screenId": "S27",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -324,7 +326,8 @@
         "college",
         "overseas",
         "draft",
-        "training"
+        "training",
+        "fictionalTeamBadges"
       ],
       "screenId": "S28",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -397,7 +400,8 @@
     {
       "assetRefs": [
         "college",
-        "finishScenes"
+        "finishScenes",
+        "fictionalTeamBadges"
       ],
       "screenId": "S34",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -408,7 +412,8 @@
     },
     {
       "assetRefs": [
-        "college"
+        "college",
+        "fictionalTeamBadges"
       ],
       "screenId": "S35",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -744,6 +749,133 @@
         "assets/art-lab/career-events-animation-navy-v2.png",
         "assets/art-lab/graduation-animation-day-navy-v2.png",
         "assets/art-lab/career-events-animation-extra-navy-v2.png"
+      ]
+    },
+    "fictionalTeamBadges": {
+      "status": "APPROVED",
+      "approval": "assets/badges/APPROVED-BADGES-v1.json",
+      "fallback": "TEAM_NAME_TEXT",
+      "palettePolicy": "PER_TEAM_PRIMARY_SECONDARY",
+      "variants": [
+        {
+          "id": "U01",
+          "name": "한빛대",
+          "file": "assets/badges/college-u01.svg",
+          "primary": "#6f2036",
+          "secondary": "#efb84b",
+          "screens": [
+            "S28",
+            "S34",
+            "S35"
+          ]
+        },
+        {
+          "id": "U02",
+          "name": "청해대",
+          "file": "assets/badges/college-u02.svg",
+          "primary": "#005766",
+          "secondary": "#5dd5d9",
+          "screens": [
+            "S28",
+            "S34",
+            "S35"
+          ]
+        },
+        {
+          "id": "U03",
+          "name": "백림대",
+          "file": "assets/badges/college-u03.svg",
+          "primary": "#214c36",
+          "secondary": "#b9cf71",
+          "screens": [
+            "S28",
+            "S34",
+            "S35"
+          ]
+        },
+        {
+          "id": "U04",
+          "name": "동운대",
+          "file": "assets/badges/college-u04.svg",
+          "primary": "#233961",
+          "secondary": "#e7965d",
+          "screens": [
+            "S28",
+            "S34",
+            "S35"
+          ]
+        },
+        {
+          "id": "U05",
+          "name": "서강산대",
+          "file": "assets/badges/college-u05.svg",
+          "primary": "#8a3429",
+          "secondary": "#e7ba83",
+          "screens": [
+            "S28",
+            "S34",
+            "S35"
+          ]
+        },
+        {
+          "id": "U06",
+          "name": "남해솔대",
+          "file": "assets/badges/college-u06.svg",
+          "primary": "#15565d",
+          "secondary": "#d8bf6b",
+          "screens": [
+            "S28",
+            "S34",
+            "S35"
+          ]
+        },
+        {
+          "id": "U07",
+          "name": "해오름대",
+          "file": "assets/badges/college-u07.svg",
+          "primary": "#9b451b",
+          "secondary": "#ffcb57",
+          "screens": [
+            "S28",
+            "S34",
+            "S35"
+          ]
+        },
+        {
+          "id": "U08",
+          "name": "온누리대",
+          "file": "assets/badges/college-u08.svg",
+          "primary": "#4f3577",
+          "secondary": "#b6a0ea",
+          "screens": [
+            "S28",
+            "S34",
+            "S35"
+          ]
+        },
+        {
+          "id": "U09",
+          "name": "새길대",
+          "file": "assets/badges/college-u09.svg",
+          "primary": "#234b87",
+          "secondary": "#a8d4ee",
+          "screens": [
+            "S28",
+            "S34",
+            "S35"
+          ]
+        },
+        {
+          "id": "ARMY",
+          "name": "군 체육팀",
+          "file": "assets/badges/military-team.svg",
+          "primary": "#414b2d",
+          "secondary": "#c3ac6c",
+          "screens": [
+            "S26",
+            "S27"
+          ]
+        }
       ]
     }
   }

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "PRODUCTION_BRIEF",
   "gameRulesChanged": false,
-  "note": "이미지 제작 레지스터. status: TODO=제작 필요, EXISTS=이미 있음, CODE_ONLY=코드로 제작(이미지 불필요), LEGACY_REFERENCE=보존. 제작 후 이 파일의 status와 해당 문서를 갱신한다. 2026-10-20: 1단계 결과 승인 후에만 2단계 제작 시작. 시안은 저장소 밖 임시 폴더에 두고 사용자 선택본만 반영; 후속 묶음마다 재승인. 미선택·거절 시 자산과 status·화면 슬롯을 변경하지 않음. 2026-10-20 승인 반영: 투수 A·타자 A·로고2, 네이비·블루. 첫 3항목만 EXISTS; 나머지 제작은 묶음별 승인 대기. 2차 사용자 승인 반영: 우투좌타·좌투좌타·좌투 오버핸드·우투 쓰리쿼터 4종. 실루엣 6/14, TODO57/EXISTS23. 3차 사용자 승인: 남은 실루엣8종 반영, 14/14 완료. 전체 TODO49/EXISTS31. Android/PWA 아이콘2묶음은 여전히 미완료. 2026-10-20 아이콘1 네이비 배경 승인 반영. P0 모두 파일 제작 완료; 실제 설치 검수는 미실행. 2026-10-20 P1 장면6컷 승인 반영(라이벌 상대 버건디). TODO41/EXISTS39. 기존 우리팀 유니폼은 네이비 통일 원칙 확정, 수정 시안은 별도 승인 대기. 2026-10-20 메인·기본사건·고교3PNG 우리팀 네이비 수정 승인 반영, 이전 원본 보존. 추가사건 야간 라이벌 버건디 수정본은 최종 확인 대기. 2026-10-20 야간 라이벌 수정본 최종 승인. 활성4PNG 네이비 통일 완료, 야간 우리팀 흰색/네이비와 상대 버건디 구분.",
+  "note": "이미지 제작 레지스터. status: TODO=제작 필요, EXISTS=이미 있음, CODE_ONLY=코드로 제작(이미지 불필요), LEGACY_REFERENCE=보존. 제작 후 이 파일의 status와 해당 문서를 갱신한다. 2026-10-20: 1단계 결과 승인 후에만 2단계 제작 시작. 시안은 저장소 밖 임시 폴더에 두고 사용자 선택본만 반영; 후속 묶음마다 재승인. 미선택·거절 시 자산과 status·화면 슬롯을 변경하지 않음. 2026-10-20 승인 반영: 투수 A·타자 A·로고2, 네이비·블루. 첫 3항목만 EXISTS; 나머지 제작은 묶음별 승인 대기. 2차 사용자 승인 반영: 우투좌타·좌투좌타·좌투 오버핸드·우투 쓰리쿼터 4종. 실루엣 6/14, TODO57/EXISTS23. 3차 사용자 승인: 남은 실루엣8종 반영, 14/14 완료. 전체 TODO49/EXISTS31. Android/PWA 아이콘2묶음은 여전히 미완료. 2026-10-20 아이콘1 네이비 배경 승인 반영. P0 모두 파일 제작 완료; 실제 설치 검수는 미실행. 2026-10-20 P1 장면6컷 승인 반영(라이벌 상대 버건디). TODO41/EXISTS39. 기존 우리팀 유니폼은 네이비 통일 원칙 확정, 수정 시안은 별도 승인 대기. 2026-10-20 메인·기본사건·고교3PNG 우리팀 네이비 수정 승인 반영, 이전 원본 보존. 추가사건 야간 라이벌 버건디 수정본은 최종 확인 대기. 2026-10-20 야간 라이벌 수정본 최종 승인. 활성4PNG 네이비 통일 완료, 야간 우리팀 흰색/네이비와 상대 버건디 구분. 2026-10-20: 학교별 고유 주색·보조색의 대학9·군 체육팀1 배지 승인 반영. EXISTS49/TODO31. 우리팀 네이비 통일은 익명 선수 사건 일러스트이며 학교 배지에는 적용하지 않음.",
   "groups": {
     "G1": "선수 실루엣(SVG)",
     "G2": "사건 장면 12(청춘 애니)",
@@ -1062,14 +1062,24 @@
       "file": "assets/badges/college-u01.svg",
       "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S28",
         "S34",
         "S35"
       ],
-      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": [
+          "#6f2036",
+          "#efb84b",
+          "버건디 · 골드"
+        ]
+      },
+      "provenance": "assets/badges/APPROVED-BADGES-v1.json"
     },
     {
       "id": "IMG-BADGE-U02",
@@ -1079,14 +1089,24 @@
       "file": "assets/badges/college-u02.svg",
       "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S28",
         "S34",
         "S35"
       ],
-      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": [
+          "#005766",
+          "#5dd5d9",
+          "딥 틸 · 아쿠아"
+        ]
+      },
+      "provenance": "assets/badges/APPROVED-BADGES-v1.json"
     },
     {
       "id": "IMG-BADGE-U03",
@@ -1096,14 +1116,24 @@
       "file": "assets/badges/college-u03.svg",
       "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S28",
         "S34",
         "S35"
       ],
-      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": [
+          "#214c36",
+          "#b9cf71",
+          "포레스트 · 라임"
+        ]
+      },
+      "provenance": "assets/badges/APPROVED-BADGES-v1.json"
     },
     {
       "id": "IMG-BADGE-U04",
@@ -1113,14 +1143,24 @@
       "file": "assets/badges/college-u04.svg",
       "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S28",
         "S34",
         "S35"
       ],
-      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": [
+          "#233961",
+          "#e7965d",
+          "인디고 · 살구"
+        ]
+      },
+      "provenance": "assets/badges/APPROVED-BADGES-v1.json"
     },
     {
       "id": "IMG-BADGE-U05",
@@ -1130,14 +1170,24 @@
       "file": "assets/badges/college-u05.svg",
       "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S28",
         "S34",
         "S35"
       ],
-      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": [
+          "#8a3429",
+          "#e7ba83",
+          "브릭 · 샌드"
+        ]
+      },
+      "provenance": "assets/badges/APPROVED-BADGES-v1.json"
     },
     {
       "id": "IMG-BADGE-U06",
@@ -1147,14 +1197,24 @@
       "file": "assets/badges/college-u06.svg",
       "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S28",
         "S34",
         "S35"
       ],
-      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": [
+          "#15565d",
+          "#d8bf6b",
+          "파인 틸 · 골드"
+        ]
+      },
+      "provenance": "assets/badges/APPROVED-BADGES-v1.json"
     },
     {
       "id": "IMG-BADGE-U07",
@@ -1164,14 +1224,24 @@
       "file": "assets/badges/college-u07.svg",
       "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S28",
         "S34",
         "S35"
       ],
-      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": [
+          "#9b451b",
+          "#ffcb57",
+          "번트 오렌지 · 선샤인"
+        ]
+      },
+      "provenance": "assets/badges/APPROVED-BADGES-v1.json"
     },
     {
       "id": "IMG-BADGE-U08",
@@ -1181,14 +1251,24 @@
       "file": "assets/badges/college-u08.svg",
       "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S28",
         "S34",
         "S35"
       ],
-      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": [
+          "#4f3577",
+          "#b6a0ea",
+          "퍼플 · 라벤더"
+        ]
+      },
+      "provenance": "assets/badges/APPROVED-BADGES-v1.json"
     },
     {
       "id": "IMG-BADGE-U09",
@@ -1198,14 +1278,24 @@
       "file": "assets/badges/college-u09.svg",
       "spec": "64×64 viewBox, 단순 문양, 문자 없음 또는 한글 1자",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S28",
         "S34",
         "S35"
       ],
-      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조"
+      "notes": "실제 대학·구단 마크와 무관한 독자 디자인(37). 대학 성향은 43 참조",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": [
+          "#234b87",
+          "#a8d4ee",
+          "코발트 · 스카이"
+        ]
+      },
+      "provenance": "assets/badges/APPROVED-BADGES-v1.json"
     },
     {
       "id": "IMG-BADGE-ARMY",
@@ -1215,13 +1305,23 @@
       "file": "assets/badges/military-team.svg",
       "spec": "64×64 viewBox",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S26",
         "S27"
       ],
-      "notes": "독자 디자인. 실제 부대 마크 사용 금지"
+      "notes": "독자 디자인. 실제 부대 마크 사용 금지",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED",
+        "palette": [
+          "#414b2d",
+          "#c3ac6c",
+          "올리브 · 카키"
+        ]
+      },
+      "provenance": "assets/badges/APPROVED-BADGES-v1.json"
     },
     {
       "id": "IMG-BADGE-MINOR",

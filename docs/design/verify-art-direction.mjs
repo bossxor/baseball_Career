@@ -62,7 +62,7 @@ assert.ok(!/\b(fetch|XMLHttpRequest|WebSocket)\s*\(/.test(scripts));
 const visible=html.replace(/<style>[\s\S]*?<\/style>/g,'').replace(/<script>[\s\S]*?<\/script>/g,'').replace(/<[^>]+>/g,'');
 assert.ok(!visible.includes('100%'));
 assert.equal(slots.screens.length,45);unique(slots.screens.map(s=>s.screenId));
-const refs=new Set(['NONE','EVENT_RESOLVER','almanacHero','almanacPortrait','silhouetteCard','appBrandMark','finishScenes',...art.scenes.map(s=>s.id)]);
+const refs=new Set(['NONE','EVENT_RESOLVER','almanacHero','almanacPortrait','silhouetteCard','appBrandMark','finishScenes','fictionalTeamBadges',...art.scenes.map(s=>s.id)]);
 for(const row of slots.screens){assert.ok(screens.some(s=>s.id===row.screenId));for(const ref of row.assetRefs)assert.ok(refs.has(ref),ref);assert.ok(row.guard&&row.purpose);assert.equal(row.gameStateAuthority,'SERVER_TEXT_AND_RECEIPTS');}
 const values=[72,80,64,68,66,76];assert.equal(values.reduce((a,b)=>a+b,0)/6,71);
 assert.ok(fs.existsSync(path.join(root,art.prompts)));
@@ -175,9 +175,9 @@ console.log('NOT TESTED: art-lab browser rendering, interactive clicks, viewport
   const approvedBoard=read('approved-art-board.html');
   assert.equal((approvedBoard.match(/<svg\b/g)||[]).length,15);
   assert.ok(!/player-youth-animation-v1|player-pitcher-animation-v1/.test(approvedBoard));
-  assert.equal(registry.items.filter(i=>i.status==='TODO').length,41);
-  assert.equal(registry.items.filter(i=>i.status==='EXISTS').length,39);
-  console.log('PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 14/14 silhouettes ready, 41 image TODOs remain.');
+  assert.equal(registry.items.filter(i=>i.status==='TODO').length,31);
+  assert.equal(registry.items.filter(i=>i.status==='EXISTS').length,49);
+  console.log('PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 14/14 silhouettes ready, 31 image TODOs remain.');
 }
 
 {
@@ -222,4 +222,13 @@ console.log('NOT TESTED: art-lab browser rendering, interactive clicks, viewport
  for(const source of navy.records)assert.ok(fs.existsSync(path.join(root,source.asset))&&fs.existsSync(path.join(root,source.previousAsset)));
  for(const scene of art.scenes.filter(s=>['draft','enhancement','rehab','service','posting','rival'].includes(s.id)))assert.equal(scene.asset,extra.asset);
  console.log('PASS: all four approved navy story-art versions bound; night rival white/navy vs burgundy, originals preserved; runtime visual review remains NOT_EXECUTED.');
+}
+
+{
+ const badges=JSON.parse(read('assets/badges/APPROVED-BADGES-v1.json'));
+ assert.equal(badges.files.length,10);
+ assert.equal(new Set(badges.files.map(f=>f.primary)).size,10);
+ for(const b of badges.files){const svg=read(b.file);assert.ok(svg.includes('viewBox="0 0 64 64"'));assert.ok(svg.includes('<title>'));assert.ok(!/<(?:script|foreignObject|image|text)\b/i.test(svg));assert.ok(svg.includes(b.primary)&&svg.includes(b.secondary));for(const id of b.screens)assert.ok(slots.screens.find(s=>s.screenId===id).assetRefs.includes('fictionalTeamBadges'));}
+ assert.equal(slots.assetLibrary.fictionalTeamBadges.variants.length,10);
+ console.log('PASS: 10 approved fictional badges, distinct team palettes, safe SVGs and college/military screen references; design assets only.');
 }

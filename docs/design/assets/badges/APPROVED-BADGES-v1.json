@@ -1,0 +1,158 @@
+{
+  "date": "2026-10-20",
+  "status": "USER_APPROVED",
+  "method": "Original hand-authored SVG geometry; distinct school palettes. No external official logos.",
+  "scope": "DESIGN_ASSETS_ONLY",
+  "gameRulesChanged": false,
+  "files": [
+    {
+      "id": "U01",
+      "name": "한빛대",
+      "file": "assets/badges/college-u01.svg",
+      "primary": "#6f2036",
+      "secondary": "#efb84b",
+      "paletteName": "버건디 · 골드",
+      "concept": "햇살과 열린 책",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "sha256": "3f86a54242e70c20941192e0577995138b6ec57b39796b12d5fac1773d92278c"
+    },
+    {
+      "id": "U02",
+      "name": "청해대",
+      "file": "assets/badges/college-u02.svg",
+      "primary": "#005766",
+      "secondary": "#5dd5d9",
+      "paletteName": "딥 틸 · 아쿠아",
+      "concept": "파도와 항로",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "sha256": "1e791c268247356ed703ad8e893d1a7c3f591696a144b7ffcabce3e4597745ac"
+    },
+    {
+      "id": "U03",
+      "name": "백림대",
+      "file": "assets/badges/college-u03.svg",
+      "primary": "#214c36",
+      "secondary": "#b9cf71",
+      "paletteName": "포레스트 · 라임",
+      "concept": "숲과 수비의 방패",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "sha256": "192b1382e619e4881e96314c161e98a280d2d5707503c1f4f8c6421a6c4741dd"
+    },
+    {
+      "id": "U04",
+      "name": "동운대",
+      "file": "assets/badges/college-u04.svg",
+      "primary": "#233961",
+      "secondary": "#e7965d",
+      "paletteName": "인디고 · 살구",
+      "concept": "구름 위 아침 해",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "sha256": "13a9554a7fc8c68882f72d837186aa8cd61b7f67bb33017d168e8ed9460972d4"
+    },
+    {
+      "id": "U05",
+      "name": "서강산대",
+      "file": "assets/badges/college-u05.svg",
+      "primary": "#8a3429",
+      "secondary": "#e7ba83",
+      "paletteName": "브릭 · 샌드",
+      "concept": "산 능선과 강",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "sha256": "a9a1e9dfb9ea381a7de469457a88df561bcba2e986121eb7bc5285213d302b42"
+    },
+    {
+      "id": "U06",
+      "name": "남해솔대",
+      "file": "assets/badges/college-u06.svg",
+      "primary": "#15565d",
+      "secondary": "#d8bf6b",
+      "paletteName": "파인 틸 · 골드",
+      "concept": "바다와 소나무",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "sha256": "ad3d3be8444dab1600e3b0e055bee7b94e949f16410c0fef4ddf72f7e62f2618"
+    },
+    {
+      "id": "U07",
+      "name": "해오름대",
+      "file": "assets/badges/college-u07.svg",
+      "primary": "#9b451b",
+      "secondary": "#ffcb57",
+      "paletteName": "번트 오렌지 · 선샤인",
+      "concept": "떠오르는 태양과 수평선",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "sha256": "0ba50fb54bde7ac180c7d1aa5aef01883b6a77994d68445689a7e9d847fd6aab"
+    },
+    {
+      "id": "U08",
+      "name": "온누리대",
+      "file": "assets/badges/college-u08.svg",
+      "primary": "#4f3577",
+      "secondary": "#b6a0ea",
+      "paletteName": "퍼플 · 라벤더",
+      "concept": "지구와 다시 오르는 궤도",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "sha256": "2b2894a86840935acf0158c9b0deca49f00c393e5e043300348df9c2602ab3e9"
+    },
+    {
+      "id": "U09",
+      "name": "새길대",
+      "file": "assets/badges/college-u09.svg",
+      "primary": "#234b87",
+      "secondary": "#a8d4ee",
+      "paletteName": "코발트 · 스카이",
+      "concept": "열린 길과 전진",
+      "screens": [
+        "S28",
+        "S34",
+        "S35"
+      ],
+      "sha256": "b387bc04ec49fa5b4a7f17d223f1243855e8786d9106aaa10d437e70977554b8"
+    },
+    {
+      "id": "ARMY",
+      "name": "군 체육팀",
+      "file": "assets/badges/military-team.svg",
+      "primary": "#414b2d",
+      "secondary": "#c3ac6c",
+      "paletteName": "올리브 · 카키",
+      "concept": "별과 트랙 · 독자 문양",
+      "screens": [
+        "S26",
+        "S27"
+      ],
+      "sha256": "d76268eb0f880b04ed97167f796262e4796a7b87eaa0646692a4f5ae614eece0"
+    }
+  ]
+}

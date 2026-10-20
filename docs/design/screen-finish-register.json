@@ -990,7 +990,8 @@
       "imageSlot": {
         "assetRefs": [
           "NONE",
-          "finishScenes"
+          "finishScenes",
+          "fictionalTeamBadges"
         ],
         "screenId": "S26",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -1033,7 +1034,8 @@
         "assetRefs": [
           "training",
           "service",
-          "finishScenes"
+          "finishScenes",
+          "fictionalTeamBadges"
         ],
         "screenId": "S27",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -1075,7 +1077,8 @@
           "college",
           "overseas",
           "draft",
-          "training"
+          "training",
+          "fictionalTeamBadges"
         ],
         "screenId": "S28",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -1318,7 +1321,8 @@
       "imageSlot": {
         "assetRefs": [
           "college",
-          "finishScenes"
+          "finishScenes",
+          "fictionalTeamBadges"
         ],
         "screenId": "S34",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -1359,7 +1363,8 @@
       "edgeRequirement": "미출장·유급/졸업·중도 프로 경로를 실제 학적과 연결",
       "imageSlot": {
         "assetRefs": [
-          "college"
+          "college",
+          "fictionalTeamBadges"
         ],
         "screenId": "S35",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",

@@ -1,3 +1,11 @@
+# 현재 작업 — 컬러 팀 배지10개 승인 반영
+
+2026-10-20: 대학9·군 체육팀1 컬러 배지10개 사용자 승인 반영. 학교마다 고유 주색·보조색을 사용하며 선수 사건 일러스트 네이비 원칙과 구분한다. 이미지 레지스터92항목은 EXISTS49/TODO31/CODE_ONLY11/LEGACY_REFERENCE1. 남은 P1 27개·P2 4개. 게임 규칙·45화면/99이벤트/핵심298은 불변이며 구현은 시작하지 않았다.
+
+[승인 이미지 보드](approved-art-board.html) · [배지 승인 기록](assets/badges/APPROVED-BADGES-v1.json). 다음은 기념 보상 외형 시안이며 묶음별 승인 절차를 유지한다. 아래는 이전 작업 이력이다.
+
+---
+
 # 현재 재개 위치 — 구현 전 마감
 
 사용자는 남은 작업을 모두 진행하되 구현 전까지만 요청했다. [126](126-PREIMPLEMENTATION-ART-CLOSURE.md) 계획을 따른다. 배지10개 시안이 C:/Users/N-052/AppData/Local/Temp/baseball-badges-preimpl-20261020 에 있으며 사용자 승인 전 반영하지 않는다. 게임 규칙·레지스터 count는 불변이고 앱/DB/API/APK 구현은 시작하지 않는다.
