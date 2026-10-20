@@ -1,0 +1,16 @@
+✔ 41: appearance injury probability .15%, fatigue strictly above80 doubles; no appearance no RNG (5.6057ms)
+✔ 41: severity80/18/2 branches, durations3..7/8..30/season and unchanged source (12.5542ms)
+✔ registered team games heal once, diagnosis game excluded; JSON retry exact, no injured appearance (3.5633ms)
+✔ major persists through team games, closes only at season end; repeated closure no return event (2.4921ms)
+✔ unregistered injury does not heal, damaged duration rejected; future team evidence cannot heal twice (3.7287ms)
+✔ approved minimum emergency plan: no permanent gaps no temporary, zero healthy team9H+1P (7.2716ms)
+✔ temporary rights before lefts prevent excessive replacement; returned originals release temps (36.9755ms)
+✔ injured temporary not retained; shortage minimal, source and logged player identities retained (1.2564ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 883.6122
