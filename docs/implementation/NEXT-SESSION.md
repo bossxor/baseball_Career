@@ -6,13 +6,14 @@
 
 - 저장소: https://github.com/bossxor/baseball_Career.git
 - 이번 Git 루트: `E:/AI/Game/baseball_career`, 브랜치 `main`.
-- 최신 기능: [M2-AA 대학 졸업](M2-AA-COLLEGE-GRADUATION.md). 최종 전체252/252(232.3초)·check/HTTP smoke 통과. 실제 완료 결과는 PROGRESS/검사 로그와 Git을 우선한다.
+- 최신 기능 커밋: `39bda6e` [M2-AA 대학 졸업](M2-AA-COLLEGE-GRADUATION.md), origin/main push 성공. 최종 전체252/252(232.3초)·check/HTTP smoke, 최종 설계 정적10종, working/staged manifest359/359 바이트·SHA256 일치. 브라우저/인증/DB/APK는 미검증이다.
+- 이 최종 인계만 별도 문서 커밋·push한 뒤 실제 원격 main=로컬 HEAD 및 작업 트리 clean을 다시 확인하고 Windows 종료 명령을 실행한다. 최종 인계 커밋 해시는 새 환경의 `git log -1`을 확인한다.
 - M0/M1 완료, M2 진행 중이다. 플레이 UI/인증/DB와 실제 프로 모집/계약은 아직 없다. 웹은 개발 안내 화면이고 API는 health만 제공한다.
 - 상세 이력: [PROGRESS](PROGRESS.md), [M2-W 정규리그](M2-W-COLLEGE-REGULAR-SEASON.md), [M2-X 선수권](M2-X-COLLEGE-CUP.md), [M2-Y 성장/학년 결과](M2-Y-COLLEGE-YEAR-RESULT.md), [M2-Z 다음 학년](M2-Z-COLLEGE-NEXT-YEAR.md).
 
 ## Git 기준
 
-`dac8b4c` 성장 달력/졸업/입학, `c8f388e` NPC 공유 추출, `1a9a3f1` 대학 첫 세계, `16e9fd8` 대학 정규 진행, `c46a1af` 선수권, `f34d813` 성장/학년 결과, `ff0346c` 다음 학년/NPC 지속성장은 origin/main 반영 완료다. M2-AA와 최종 인계의 실제 커밋은 `git log -3`와 원격 HEAD를 확인한다.
+`dac8b4c` 성장 달력/졸업/입학, `c8f388e` NPC 공유 추출, `1a9a3f1` 대학 첫 세계, `16e9fd8` 대학 정규 진행, `c46a1af` 선수권, `f34d813` 성장/학년 결과, `ff0346c` 다음 학년/NPC 지속성장은 origin/main 반영 완료다. M2-AA `39bda6e`도 push 완료다. 최종 인계 문서 커밋은 `git log -1`와 원격 HEAD를 확인한다.
 
 이전 문서의 '미커밋/미푸시'는 해당 시점 이력이다. 최신 사용자 지시는 검증된 단계마다 진행 MD·증거와 함께 커밋하고 push하는 것이다. Git 작성자 미설정 환경에서는 커밋별 `Codex <codex@localhost>`를 썼으며 전역 설정은 바꾸지 않았다.
 
