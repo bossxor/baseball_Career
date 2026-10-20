@@ -1,6 +1,6 @@
 # 구현 진행 안내 — 2026-10-21
 
-M0/M1 완료, M2 진행 중입니다. 대학 정규/선수권·성장/학년 결과·NPC 지속성장과1→4학년 재학,4학년 필수 E75 졸업/진로 조회를 구현했습니다. 전체252/252·check·HTTP smoke를 통과했습니다. 실제 KBO 모집/조기 지명/계약·미국 오퍼, 플레이 UI·계정·DB 저장은 남아 있습니다. 미국 첫 고교 졸업52 도달성 충돌과 세계 전체 작업자는 미해결입니다. 최신 결과는 [구현 진행](../implementation/PROGRESS.md)·[최종 인계](../implementation/NEXT-SESSION.md)·[M2-AA](../implementation/M2-AA-COLLEGE-GRADUATION.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 이전 이력이며 전체 완료를 뜻하지 않습니다.
+M0/M1 완료, M2 진행 중입니다. 대학 정규/선수권·성장/학년 진급/졸업에 이어 KBO10구단·가상500명 초기 세계, 첫 국내 지명 미리보기/고정 결과와 신인 계약·보유권·다음 시즌 등록/연봉 예약을 연결했습니다. 프로 세계 실제 시즌 활성화/경기, 대학2학년 조기 지명/재도전, 미국 오퍼, 플레이 UI·계정·DB 저장은 남아 있습니다. 미국 첫 고교 졸업52 도달성은 사용자 조정 결정을 기다립니다. 최신 검증 결과는 [구현 진행](../implementation/PROGRESS.md)·[인계](../implementation/NEXT-SESSION.md)·[M2-AC](../implementation/M2-AC-KBO-DRAFT-SIGNING.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 이전 이력이며 전체 완료를 뜻하지 않습니다.
 
 ---
 

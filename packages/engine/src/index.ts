@@ -43,3 +43,5 @@ export * from './college-result.js';
 export * from './college-year.js';
 export * from './college-graduation.js';
 export * from './kbo-world.js';
+export * from './kbo-draft.js';
+export * from './career-kbo.js';

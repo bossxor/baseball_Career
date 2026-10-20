@@ -1,0 +1,47 @@
+✔ HS career route→actual KBO preview→fixed result→signed next-season contract preserves all school books/records/budgets (4902.6145ms)
+✔ declined draft keeps college admission legal, archives assessment and forbids later silent pro-world reroll (1153.8715ms)
+✔ career stale revision/player/world/book/program or event version cannot partially sign; repeat prepare cannot reroll (1868.7598ms)
+✔ college E75 graduation uses college-adjusted B and next-season reservation, without repeating degree or advancing age (73414.2896ms)
+✔ year-end requires explicit unused-training forfeit, closes growth/health once and pays no new growth (391.1901ms)
+✔ atomic college activation carries identity/abilities and archives HS, new calendar/growth ledger/age only once (897.4442ms)
+✔ college profiles respect school admission floors and preserve protagonist independently of school choice (508.4136ms)
+✔ pitcher carry keeps book/weights, opens fresh annual XP budget and refuses unfinished learning (551.2905ms)
+✔ mild team-game recovery carries across calendar rest; major season injury closes at year-end (958.5722ms)
+✔ stale revision/ready snapshot/receipt and changed admission never publish a partial new world (1153.9366ms)
+▶ four-year college journey ends in blocking E75 and an evidence-bound graduated route
+  ✔ only the fourth completed year attaches one E75 with current enrollment/year/result evidence (68.4391ms)
+  ✔ graduation commits only the degree/route: growth, health, training, age and official records stay intact (2093.2711ms)
+  ✔ stale revision/event version and changed evaluation/event source reject without partial graduation (4947.9729ms)
+  ✔ pre-E75 fourth-year saves attach the same legal task; earlier grades and repeated attachment reject (7729.3577ms)
+✔ four-year college journey ends in blocking E75 and an evidence-bound graduated route (90018.4373ms)
+✔ college year close requires explicit training forfeit, audits NPC growth/caps and seals once without repaying own growth (14758.7949ms)
+✔ next year retains continuing students/P/earned books, replaces only graduates with freshmen, archives cup/result and opens annual budgets (14460.2467ms)
+✔ continuing NPC medium injury carries; major injury closes, archive keeps original year-end evidence (17053.8467ms)
+✔ unfinished learning, invalid result, stale revision and changed sealed state never publish a partial next year (10687.1672ms)
+✔ continuing enrollment advances1→2→3→4 with persistent students and blocks a fifth year pending graduation route (47767.1913ms)
+✔ season review atomically pays growth and opens one blocking E04 with a post-growth route snapshot (353.5371ms)
+✔ opening S28 keeps E04 open, repeated views/JSON restore do not change growth, RNG or revision (425.2375ms)
+✔ 43: college eligibility uses exact post-growth overall at48/52/55, fallback three stay available (989.859ms)
+✔ college acceptance closes E04 once, preserves historical roster/records and reserves next-year admission (283.9869ms)
+✔ stale revision/event/offer, ineligible or unknown college, changed evaluation reject without partial effects (356.0424ms)
+✔ missing calendar, incomplete review and another pending event do not pay growth or create graduation (1061.0918ms)
+✔ 34: actual-roster preview is read-only, excludes hidden state and matches one persisted draw after JSON resume (766.9143ms)
+✔ 08/U: position demand beats preferred club, preference resolves equal need/strength only (490.3777ms)
+✔ 34/44: full60-player rosters produce0%/no draw/no offer; exhausted clubs never chosen (752.9337ms)
+✔ signed rookie commits one1-year KRW minimum contract/right/roster and salary reservation, never a first-team promise (1325.439ms)
+✔ stale roster/payroll/assessment/RNG/result/signing reject without partial reservation or reroll (1175.9106ms)
+✔ 44: next-season90% guarantee cap blocks a rookie before preview and produces no fake offer (683.1074ms)
+✔ 44: ten actual club identities,500 fictional players/500 active contracts,26H/24P and legal first28 (491.3593ms)
+✔ deterministic generation and JSON restore, distinct seeds change roster; identity/contract keys stay logical (1283.2748ms)
+✔ six-stat mean35..85 exact, profile ceilings100 do not inflate overall or erase profile shape (2.9168ms)
+✔ initial payroll common-scale floors/caps, integer won, future commitments<=90% budget and no signing bonus (507.8281ms)
+✔ career hard changes NPC potential only; career cheat does not make all KBO NPC potential100 (1469.454ms)
+✔ restored corrupt roster, contract, payroll, first team or age rejected without silent regeneration (781.1927ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 106286.0953

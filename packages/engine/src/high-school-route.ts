@@ -6,6 +6,7 @@ import {recordTotals} from './records.js';
 import {emptyBatting,emptyPitching} from './stats.js';
 import {recentBattingPerformance,recentPitchingPerformance} from './lineup.js';
 import {draftBaseScore} from './draft.js';
+import {kboDraftView,decideKboDraft,assertKboDraft} from './kbo-draft.js';
 import {canonicalJson} from './game.js';
 import {validateDevelopmentPlayer} from './player.js';
 import {createWorldEvent,resolveEventChoice,completeBlockingEvent} from './events.js';
@@ -26,6 +27,7 @@ function evaluation(source:HighSchoolCareer){
  const role=roleScore(player.kind,player.abilities,player.position);
  return {playerKey:player.simulationKey,kind:player.kind,position:player.position,age:player.age,abilities:player.abilities,overall:score.sumUnits/score.denominator,overallDisplay:score.display,roleScore:role,performance,appearances:player.kind==='HITTER'?batting.PA:pitching.outs,draftBaseScore:draftBaseScore(role,performance)};
 }
+export function highSchoolCareerDraftScore(source:HighSchoolCareer):number {return evaluation(source).draftBaseScore;}
 function basis(source:HighSchoolCareer):string {
  return canonicalJson({worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,schoolId:source.world.protagonistSchoolId,calendar:source.world.calendar,seasonGrowth:source.seasonGrowth,recordsRevision:source.records.revision,evaluation:evaluation(source)});
 }
@@ -61,8 +63,9 @@ function routeSource(source:HighSchoolCareer){
 /** Read-only allowlist. Recruitment results and US offers are never fabricated to fill a card. */
 export function highSchoolCareerRouteView(source:HighSchoolCareer){
  const {graduation}=routeSource(source),result=evaluation(source);
+ if(source.kboRecruitment && (source.kboRecruitment.program.input.baseScore!==result.draftBaseScore || canonicalJson(source.kboRecruitment.program.input.player)!==canonicalJson(source.world.players[source.world.protagonistKey])))throw new RangeError('STALE_CAREER_KBO_EVALUATION');
  return {offerSetKey:graduation.offerSetKey,offerSetVersion:graduation.version,overall:result.overall,overallDisplay:result.overallDisplay,
-  kbo:{status:'AWAITING_RECRUITMENT' as const},
+  kbo:source.kboRecruitment?kboDraftView(source.kboRecruitment.world,source.kboRecruitment.program):{status:'AWAITING_RECRUITMENT' as const},
   colleges:COLLEGES.map(college=>({...college,eligible:result.overall>=college.minimumOverall,reasonCode:result.overall>=college.minimumOverall?null:'OVERALL_TOO_LOW',position:result.position})),
  };
 }
@@ -81,6 +84,11 @@ export function enrollHighSchoolCollege(source:HighSchoolCareer,expectedRevision
  const entryYear=source.world.calendar!.year+1;createSeasonCalendar(entryYear);
  const admissionKey=JSON.stringify(['college-admission',graduation.offerSetKey,college.id]),career=structuredClone(source);
  const resolved=completeBlockingEvent(event,input.eventVersion,{sourceEvidenceKey:event.evidenceKey,receiptKey:admissionKey,command:'ENROLL_COLLEGE'},context);
+ if(career.kboRecruitment){
+  const recruitment=career.kboRecruitment;assertKboDraft(recruitment.world,recruitment.program);
+  if(recruitment.program.result?.round && recruitment.program.decision==='PENDING')recruitment.program=decideKboDraft(recruitment.world,recruitment.program,recruitment.program.version,'DECLINE');
+  career.previousKboRecruitments=[...(career.previousKboRecruitments??[]),recruitment];delete career.kboRecruitment;
+ }
  career.collegeAdmission={admissionKey,collegeId:college.id,status:'ADMITTED',entryYear,academicYear:1,yearsCompleted:0,playerKey:result.playerKey,position:result.position};
  career.events=career.events.map(e=>e.eventKey===event.eventKey?resolved:e);career.phaseContext={phase:'NEXT_SEASON_READY',route:'COLLEGE',admissionKey};career.revision++;return career;
 }

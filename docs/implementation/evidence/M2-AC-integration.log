@@ -1,0 +1,134 @@
+RUN npm run build
+
+> again-playball@0.1.0 build
+> npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/api && npm run build --workspace @playball/web
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/api@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/web@0.1.0 build
+> tsc -p tsconfig.json --noEmit && vite build
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 17 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                     0.57 kB │ gzip:  0.38 kB
+dist/assets/BlackHanSans-Regular-B0-nbKIc.ttf     998.42 kB
+dist/assets/NotoSansKR-Variable-k7NQXPol.ttf   10,414.58 kB
+dist/assets/index-D7SWy-NU.css                      1.44 kB │ gzip:  0.73 kB
+dist/assets/index-qvV079z_.js                     221.56 kB │ gzip: 69.64 kB
+
+✓ built in 380ms
+RUN npm run verify:engine
+
+> again-playball@0.1.0 verify:engine
+> node --import tsx scripts/verify-engine.mjs
+
+PASS: compiled engine in independent Node process matches source golden SHA256 113761f605145c79179c912841754bf060e25d42856822f847074317288d5c92
+RUN npm run verify:events
+
+> again-playball@0.1.0 verify:events
+> node scripts/generate-event-definitions.mjs --check
+
+PASS: approved99 event definitions /164 choices, occurrence domains and E63 branches synchronized. Domain triggers/effects are separately implemented.
+RUN npm run verify:design
+
+> again-playball@0.1.0 verify:design
+> node scripts/verify-design.mjs
+
+PASS: result/season/draft examples: inning totals 3:4 and X, batting .300/.369/.500/.869, pitching 150.0/3.00/1.23, B45 draft distribution; 14 NOT_IMPLEMENTED edge expectations.
+PASS: club examples: search .63 / offer .50, finite ledger 1,840,000,000 -> 1,835,000,000, reservation transfer conserved, report 80~96, rebirth overall 45.8 and capped potentials; 20 NOT_IMPLEMENTED edge expectations.
+PASS: journey examples: 2 initial arrays total 300, US visibility boundaries, 9 colleges / 48 team and 216 league games, B53.5 round distribution, MLB registration with zero appearances; 16 NOT_IMPLEMENTED edge expectations.
+PASS: expansion templates: 12 public challenges, PRE/MID/reward separation, salary previews 70/55/40, staff debt, DIRECT/COMPARISON, hidden-score viewer controls, chapter filters, escaped notes and export states.
+PASS: 2 alpha portrait assets, 30 preview variants, 26 detail flows / 78 state templates, evidence guards, hitter overall 71.0 and pitcher 72.0 / focus 4; pure HTML-string checks only.
+PASS: chosen animation direction, 3 hero alternatives, 12 scene data/crops, alpha PNG metadata, 45 image-slot contracts, lab script/IDs/assets and example overall 71.0.
+NOT TESTED: art-lab browser rendering, interactive clicks, viewport layout, clipboard and localStorage; file: browser navigation was policy-blocked.
+PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 14/14 silhouettes ready, 0 image TODOs remain.
+PASS: approved navy icon1; Android 3 SVGs / web 5 assets, PNG dimensions and safe-area evidence, registry/slot bindings; P0 files complete. App/device integration remains NOT_EXECUTED.
+PASS: all four approved navy story-art versions bound; night rival white/navy vs burgundy, originals preserved; runtime visual review remains NOT_EXECUTED.
+PASS: 10 approved fictional badges, distinct team palettes, safe SVGs and college/military screen references; design assets only.
+PASS: 7 approved cosmetic reward assets and screen references; 13 colored stamps also approved.
+PASS: 13 approved colored record stamps, safe SVGs and acquired-only cosmetic references; 0 image TODOs remain.
+PASS: final 11 approved assets, actual dimensions and bound screens; 80 EXISTS / 0 TODO / 11 CODE_ONLY / 1 LEGACY. Browser/device/application execution remains NOT_EXECUTED.
+PASS: club first-season 16 stages / 7 recovery cases / 3 starts, source screen links, half-peak import and finite chained search-offer ledger. Runtime remains NOT_EXECUTED.
+PASS: offseason 8 groups / 12 collision cases, deadline ordering and future-budget edges; S18 draft query/commands separated. Real draft/market/year transition remains NOT_EXECUTED.
+PASS: 99 event contracts, 45 screen contracts, unique IDs, local links/assets, JS syntax, embedded state catalog, no visible 100% badges.
+PASS: design arithmetic: search odds, offer distributions/monotonicity, 14 initial arrays, overall, advancement, draft, growth, import, budget, college schedule.
+PASS: expansion design arithmetic: negotiation .60/.68, income fee, staff budget, imported pitch mastery, skill modifier caps.
+PASS: 80 explicit design fixtures across 8 detailed modules; automatic traits and cheat pitch XP examples. Fixture execution is NOT implemented.
+CONFIRMED: cosmetic-only rewards and read-only commentary; no pending choices in these eight detailed modules.
+PASS: 82 world design expectations across 8 modules, 24 invariant contracts, 12 planned run scenarios, narrowing-range examples. World simulations are NOT executed.
+PASS: 30 cross-contract expectations (12 command, 6 exact-effect, 12 web/APK resume); 192 expectations in these three fixture sets. Actual interruption recovery is NOT tested.
+PASS: 45 screen-action bindings and 10 creation recovery design expectations; 202 expectations before the final audit set. Runtime creation recovery is NOT tested.
+PASS: 45 screen recovery rows, 99 event occurrence rows, 20 probability surfaces, 24 planned paths, 72 final fixtures; 274 expectations before the platform set. Runtime/UI/AI checks are NOT executed.
+PASS: six platform contracts with eight required flows each, and 24 platform expectations (8 auth, 8 update, 8 files); 298 unique design expectations total. Browser/device/auth/update/file behavior is NOT executed.
+PASS: E63 approved branch waits for domain commit; deferred branch allows ACK; invalid blocking ACK, swapped policy and wrong branch command are rejected (static design checks).
+PASS: 23 expectation sets indexed; FP12, first-club recovery7 and offseason12 match source counts and remain NOT_EXECUTED; core total remains 298.
+PASS: baseline 1.0 has 25 source topics, 10 specified closures and 12 NOT_EXECUTED gates; XP double-budget/cap-loss/remainder and import rounding examples. These are static/document arithmetic checks only.
+PASS: result/season/draft examples: inning totals 3:4 and X, batting .300/.369/.500/.869, pitching 150.0/3.00/1.23, B45 draft distribution; 14 NOT_IMPLEMENTED edge expectations.
+PASS: club examples: search .63 / offer .50, finite ledger 1,840,000,000 -> 1,835,000,000, reservation transfer conserved, report 80~96, rebirth overall 45.8 and capped potentials; 20 NOT_IMPLEMENTED edge expectations.
+PASS: journey examples: 2 initial arrays total 300, US visibility boundaries, 9 colleges / 48 team and 216 league games, B53.5 round distribution, MLB registration with zero appearances; 16 NOT_IMPLEMENTED edge expectations.
+PASS: expansion templates: 12 public challenges, PRE/MID/reward separation, salary previews 70/55/40, staff debt, DIRECT/COMPARISON, hidden-score viewer controls, chapter filters, escaped notes and export states.
+PASS: 2 alpha portrait assets, 30 preview variants, 26 detail flows / 78 state templates, evidence guards, hitter overall 71.0 and pitcher 72.0 / focus 4; pure HTML-string checks only.
+PASS: chosen animation direction, 3 hero alternatives, 12 scene data/crops, alpha PNG metadata, 45 image-slot contracts, lab script/IDs/assets and example overall 71.0.
+NOT TESTED: art-lab browser rendering, interactive clicks, viewport layout, clipboard and localStorage; file: browser navigation was policy-blocked.
+PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 14/14 silhouettes ready, 0 image TODOs remain.
+PASS: approved navy icon1; Android 3 SVGs / web 5 assets, PNG dimensions and safe-area evidence, registry/slot bindings; P0 files complete. App/device integration remains NOT_EXECUTED.
+PASS: all four approved navy story-art versions bound; night rival white/navy vs burgundy, originals preserved; runtime visual review remains NOT_EXECUTED.
+PASS: 10 approved fictional badges, distinct team palettes, safe SVGs and college/military screen references; design assets only.
+PASS: 7 approved cosmetic reward assets and screen references; 13 colored stamps also approved.
+PASS: 13 approved colored record stamps, safe SVGs and acquired-only cosmetic references; 0 image TODOs remain.
+PASS: final 11 approved assets, actual dimensions and bound screens; 80 EXISTS / 0 TODO / 11 CODE_ONLY / 1 LEGACY. Browser/device/application execution remains NOT_EXECUTED.
+PASS: expansion arithmetic, read-only commentary reducer and immutable log, note escaping, 61 source-to-preview mappings; runtime tests remain NOT_EXECUTED.
+PASS: locked hidden-trait DTO allowlist, approved T14 OPS/PA boundaries and unchanged caps; deterministic slider lower bounds / largest remainders / stable ties / sum100; 61 UI expectations remain NOT_EXECUTED.
+NOT TESTED: browser slider events/focus/layout, real API confidentiality, trait unlock transactions, game outcomes and database writes.
+PASS: 36 server-only edge expectations indexed; duel, exact OPS, shutout and consecutive-season example arithmetic consistent. All 36 remain NOT_IMPLEMENTED.
+PASS: 45 screen finish specifications, 28 declared representatives / 17 pending, 8 states and 4 viewports; final pixels and browser review remain unfinished.
+PASS: supplemental 17 screens x 8 = 136 pure render examples; original 28 + 17 = 45 IDs, resume-only home, local lineup example, escaping and six-panel PNG metadata.
+NOT TESTED: finish-board DOM/input/focus/rendering, image crops, responsive layout, real service integration, saves or application build.
+PASS: confirmed anime default, 12 new time-varied scenes, active portraits, uncropped square/full-width layouts, S04 two styles x eight states, three-image normal view and image-failure fallback.
+PASS: approved six anime finish scenes, square atlas positions and per-screen semantic bindings; rival teams differentiated; runtime rendering remains NOT_EXECUTED.
+PASS: four fixed ability-ceiling distributions, displayed AVG/SLG, positive out probabilities and correct PA/AB denominators; six balance runs remain NOT_EXECUTED.
+PASS: first-career storyboard 7 common + 19 branch stages, 45/99 source references, US eligibility boundaries/card hiding, immutable read-only templates. Real onboarding remains NOT_EXECUTED.
+PASS: club first-season 16 stages / 7 recovery cases / 3 starts, source screen links, half-peak import and finite chained search-offer ledger. Runtime remains NOT_EXECUTED.
+PASS: offseason 8 groups / 12 collision cases, deadline ordering and future-budget edges; S18 draft query/commands separated. Real draft/market/year transition remains NOT_EXECUTED.
+PASS: midcareer 12 groups, E13 command-based plan boundaries and confirmed fast-progression defaults / 12 checks; runtime remains NOT_EXECUTED.
+PASS: latecareer 9 scenes / 12 checks, peak-half age19 examples, immutable archive and root-role claim policy. Runtime remains NOT_EXECUTED.
+PASS: 11 code-display specifications and 45-screen/8-state reference audit; visual baseline approved, browser execution count remains zero.
+PASS: refreshed board references and 13 static accessibility evidence records match current source; browser rendering is policy-blocked, not passed.
+PASS: final preimplementation handoff matches current counts and 12 open runtime gates; no implementation authorization or executed visual checks inferred.
+PASS: final cross-document review corrections align creation, resume UI, public DTO and baserunning contracts; no new gameplay rule or runtime proof.
+NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.
+PASS: supplemental 17 screens x 8 = 136 pure render examples; original 28 + 17 = 45 IDs, resume-only home, local lineup example, escaping and six-panel PNG metadata.
+NOT TESTED: finish-board DOM/input/focus/rendering, image crops, responsive layout, real service integration, saves or application build.
+PASS: confirmed anime default, 12 new time-varied scenes, active portraits, uncropped square/full-width layouts, S04 two styles x eight states, three-image normal view and image-failure fallback.
+PASS: approved six anime finish scenes, square atlas positions and per-screen semantic bindings; rival teams differentiated; runtime rendering remains NOT_EXECUTED.
+PASS: first-career storyboard 7 common + 19 branch stages, 45/99 source references, US eligibility boundaries/card hiding, immutable read-only templates. Real onboarding remains NOT_EXECUTED.
+PASS: latecareer 9 scenes / 12 checks, peak-half age19 examples, immutable archive and root-role claim policy. Runtime remains NOT_EXECUTED.
+PASS: midcareer 12 groups, E13 command-based plan boundaries and confirmed fast-progression defaults / 12 checks; runtime remains NOT_EXECUTED.
+PASS: four fixed ability-ceiling distributions, displayed AVG/SLG, positive out probabilities and correct PA/AB denominators; six balance runs remain NOT_EXECUTED.
+PASS: expansion arithmetic, read-only commentary reducer and immutable log, note escaping, 61 source-to-preview mappings; runtime tests remain NOT_EXECUTED.
+PASS: locked hidden-trait DTO allowlist, approved T14 OPS/PA boundaries and unchanged caps; deterministic slider lower bounds / largest remainders / stable ties / sum100; 61 UI expectations remain NOT_EXECUTED.
+NOT TESTED: browser slider events/focus/layout, real API confidentiality, trait unlock transactions, game outcomes and database writes.
+PASS: 36 server-only edge expectations indexed; duel, exact OPS, shutout and consecutive-season example arithmetic consistent. All 36 remain NOT_IMPLEMENTED.
+PASS: 45 screen finish specifications, 28 declared representatives / 17 pending, 8 states and 4 viewports; final pixels and browser review remain unfinished.
+PASS: 10 static design validators. These are not runtime game tests.
+RUN npm run smoke
+
+> again-playball@0.1.0 smoke
+> node scripts/smoke.mjs
+
+PASS: built web HTML + 2 JS/CSS entry assets served over HTTP; web proxy → running API → rulesVersion 1.0.0.
+NOT TESTED: browser rendering, game simulation, authentication, database, storage or APK.

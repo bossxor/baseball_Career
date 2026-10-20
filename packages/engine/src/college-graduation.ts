@@ -10,6 +10,7 @@ import {recordTotals} from './records.js';
 import {emptyBatting,emptyPitching} from './stats.js';
 import {recentBattingPerformance,recentPitchingPerformance} from './lineup.js';
 import {draftBaseScore} from './draft.js';
+import {kboDraftView} from './kbo-draft.js';
 import {validateSeasonGrowthLedger} from './growth-ledger.js';
 
 export interface CollegeGraduation {schemaVersion:1;eventKey:string;receiptKey:string;sourceBasis:string}
@@ -46,7 +47,14 @@ export function graduateCollegeCareer(source:HighSchoolCareer,expectedRevision:n
 export function collegeGraduationRouteView(source:HighSchoolCareer){
  const {admission,graduation,event}=graduationSource(source);
  if(source.phaseContext.phase!=='CAREER_ROUTE' || admission.status!=='GRADUATED' || event.status!=='RESOLVED' || event.resolution?.command!=='GRADUATE_COLLEGE' || event.resolution.receiptKey!==graduation.receiptKey)throw new RangeError('INVALID_CAREER_PHASE');
+ const evaluation=collegeCareerDraftEvaluation(source);
+ if(source.kboRecruitment && (source.kboRecruitment.program.input.baseScore!==evaluation.draftBaseScore || canonicalJson(source.kboRecruitment.program.input.player)!==canonicalJson(source.world.players[source.world.protagonistKey])))throw new RangeError('STALE_CAREER_KBO_EVALUATION');
+ return {seasonKey:source.world.seasonKey,collegeId:admission.collegeId,status:'GRADUATED' as const,yearsCompleted:4 as const,...evaluation,kbo:source.kboRecruitment?kboDraftView(source.kboRecruitment.world,source.kboRecruitment.program):{status:'AWAITING_RECRUITMENT' as const}};
+}
+
+/** Shared official college evaluation; callers validate the route/task before commands. */
+export function collegeCareerDraftEvaluation(source:HighSchoolCareer){
  const player=source.world.players[source.world.protagonistKey]!,totals=recordTotals(source.records,{seasonKey:source.world.seasonKey,leagueKey:'COLLEGE',phase:'REGULAR'}),score=overall(player.kind,player.abilities);
  const raw=player.kind==='HITTER'?recentBattingPerformance(totals.batting[player.simulationKey]??emptyBatting()):recentPitchingPerformance(totals.pitching[player.simulationKey]??emptyPitching()),performanceCollege=Math.max(0,Math.min(100,raw-18)),overallValue=score.sumUnits/score.denominator;
- return {seasonKey:source.world.seasonKey,collegeId:admission.collegeId,status:'GRADUATED' as const,yearsCompleted:4 as const,overall:overallValue,overallDisplay:score.display,performanceCollege,draftBaseScore:draftBaseScore(overallValue,performanceCollege),kbo:{status:'AWAITING_RECRUITMENT' as const}};
+ return {overall:overallValue,overallDisplay:score.display,performanceCollege,draftBaseScore:draftBaseScore(overallValue,performanceCollege)};
 }
