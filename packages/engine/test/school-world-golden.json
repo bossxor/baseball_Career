@@ -1,0 +1,32 @@
+[
+  {
+    "kind": "HITTER",
+    "difficulty": "GROWTH",
+    "sha256": "a15cc94d701cd2bfca265c910bdd32089de4440cc9021c7da0dc95ae1dee0538"
+  },
+  {
+    "kind": "HITTER",
+    "difficulty": "REALISTIC",
+    "sha256": "1556339a648cae19a5e37c38ca8167e5daaf77f6bce868720aeb21ca2c623b58"
+  },
+  {
+    "kind": "HITTER",
+    "difficulty": "SECRET_CHEAT",
+    "sha256": "438672314e01c24ebbb4a0d423d25e1ac8c9ecaa1a496a98da93f8dd8bcf29fb"
+  },
+  {
+    "kind": "PITCHER",
+    "difficulty": "GROWTH",
+    "sha256": "56ad41d295b908cd6d9c51d4173ca6041a13180881b73085c86656e6969ee2ad"
+  },
+  {
+    "kind": "PITCHER",
+    "difficulty": "REALISTIC",
+    "sha256": "809b56e2feb0e6fa472408b177052ad4ae6a3603be1277ec35c9b09e01429b59"
+  },
+  {
+    "kind": "PITCHER",
+    "difficulty": "SECRET_CHEAT",
+    "sha256": "c632d7be84466d28062bf6041c7733d9ab6547bbc9d4accf9b1a93f348d7b8cc"
+  }
+]

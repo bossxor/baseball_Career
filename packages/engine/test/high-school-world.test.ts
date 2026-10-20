@@ -4,8 +4,18 @@ import {createHighSchoolWorld,assertHighSchoolWorld} from '../src/high-school-wo
 import {abilityKeys,HITTER_TYPES,PITCHER_TYPES} from '@playball/rules';
 import type {CreationInput} from '../src/player.js';
 import {canonicalJson} from '../src/game.js';
+import {readFileSync} from 'node:fs';
+import {createHash} from 'node:crypto';
 const player=(overrides:Partial<CreationInput>={}):CreationInput=>({simulationKey:'my-player',name:'내선수',kind:'HITTER',position:'CF',throws:'R',bats:'R',pitchForm:null,archetype:'SLUGGER',focus:['CONTACT','POWER','DISCIPLINE','CLUTCH'],difficulty:'GROWTH',...overrides});
 const input=()=>({worldKey:'world-fixture',seasonKey:'2027',seed:'seed42',schoolId:'H01',player:player(),startDay:31});
+
+test('school roster extraction preserves all six pre-refactor world/RNG hashes',()=>{
+ const cases=JSON.parse(readFileSync(new URL('./school-world-golden.json',import.meta.url),'utf8')) as {kind:'HITTER'|'PITCHER';difficulty:CreationInput['difficulty'];sha256:string}[];
+ for(const {kind,difficulty,sha256} of cases){
+  const world=createHighSchoolWorld({worldKey:'world-refactor',seasonKey:'2032',seed:'refactor-baseline',schoolId:'H01',startDay:31,...(kind==='PITCHER'?{secondaryPitch:'P03' as const}:{}),player:{simulationKey:'own',name:'기준선수',kind,position:kind==='HITTER'?'CF':'SP',throws:'R',bats:'R',pitchForm:kind==='HITTER'?null:'OVERHAND',archetype:'BALANCED',focus:abilityKeys(kind).slice(0,4),difficulty}});
+  assert.equal(createHash('sha256').update(canonicalJson(world)).digest('hex'),sha256);
+ }
+});
 test('HS world: 9 schools/225 players, real protagonist replacement, all positions and216 games',()=>{
   const source=input(),before=JSON.stringify(source),world=createHighSchoolWorld(source);assertHighSchoolWorld(world);
   assert.equal(world.phase,'CREATED');assert.equal(world.schedule.length,216);assert.equal(Object.keys(world.players).length,225);

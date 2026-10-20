@@ -1,9 +1,8 @@
-import { abilityKeys, HITTER_TYPES, PITCHER_TYPES, PITCH_IDS } from '@playball/rules';
+import { PITCH_IDS } from '@playball/rules';
 import type { PitchId } from '@playball/rules';
-import { createWorldStream, nextFloat, nextInteger, createHandednessStream } from './rng.js';
+import { createWorldStream } from './rng.js';
 import type { RngState } from './rng.js';
-import { generateNpcIdentities, generateNpcPotential } from './npc.js';
-import { archetypeFor, createCareerPlayer, validateDevelopmentPlayer } from './player.js';
+import { createCareerPlayer, validateDevelopmentPlayer } from './player.js';
 import type { CreationInput, DevelopmentPlayer } from './player.js';
 import { createRepertoire, validatePitchWeights } from './repertoire.js';
 import type { Repertoire } from './repertoire.js';
@@ -17,8 +16,7 @@ export const HIGH_SCHOOLS = [
   {id:'H04',name:'해온누리고'},{id:'H05',name:'서리들고'},{id:'H06',name:'새나래고'},
   {id:'H07',name:'빛여울고'},{id:'H08',name:'다온숲고'},{id:'H09',name:'푸른결고'},
 ] as const;
-const HITTER_POSITIONS=['C','C','1B','1B','2B','2B','3B','3B','SS','SS','LF','CF','RF','DH','DH'];
-const PITCHER_POSITIONS=['SP','SP','SP','SP','RP','RP','RP','RP','CP','CP'];
+import {HITTER_POSITIONS,PITCHER_POSITIONS,generateSchoolNpcRoster} from './school-roster.js';
 export interface HighSchoolWorld {
   schemaVersion:1; rulesVersion:'1.0.0'; worldKey:string; seasonKey:string; seed:string;
   phase:'CREATED'; protagonistKey:string; protagonistSchoolId:string;
@@ -35,24 +33,10 @@ export function createHighSchoolWorld(input:{worldKey:string;seasonKey:string;se
   if(templates.some(p=>p.simulationKey===input.player.simulationKey)) throw new RangeError('PLAYER_KEY_COLLISION');
   const replaced=templates.find(p=>p.schoolId===input.schoolId && p.kind===input.player.kind && p.position===input.player.position);
   if(!replaced) throw new RangeError('INVALID_STARTING_POSITION');
-  const npcTemplates=templates.filter(p=>p!==replaced),identity=generateNpcIdentities(npcTemplates,createHandednessStream(input.seed,input.worldKey));
   const creation=createCareerPlayer(input.player,createWorldStream(input.seed,input.worldKey,'protagonist'));
-  const players:Record<string,DevelopmentPlayer>=Object.create(null),repertoires:Record<string,Repertoire>=Object.create(null);
-  let rosterRng=createWorldStream(input.seed,input.worldKey,'roster'),potentialRng=createWorldStream(input.seed,input.worldKey,'potential');
-  for(const [index,npc] of identity.players.entries()) {
-    const types=Object.keys(npc.kind==='HITTER'?HITTER_TYPES:PITCHER_TYPES),typeDraw=nextInteger(rosterRng,types.length);rosterRng=typeDraw.state;
-    const archetype=types[typeDraw.value]!,type=archetypeFor(npc.kind,archetype),abilityKeysForKind=abilityKeys(npc.kind);
-    // Approved target OVR35..65, triangular mode48. Profile shape retained, no extra ability reroll.
-    const u=nextFloat(rosterRng);rosterRng=u.state;
-    const target=Math.round(u.value<13/30?35+Math.sqrt(u.value*30*13):65-Math.sqrt((1-u.value)*30*17));
-    const abilities=Object.fromEntries(abilityKeysForKind.map((key,i)=>[key,(type.initial[i]!+target-50)*10_000]));
-    const generated=generateNpcPotential(npc.kind,abilities,{mode:'CAREER',difficulty:input.player.difficulty,owned:false},potentialRng);potentialRng=generated.state;
-    const focus=[...abilityKeysForKind].sort((a,b)=>type.weights[abilityKeysForKind.indexOf(b)]!-type.weights[abilityKeysForKind.indexOf(a)]! || abilityKeysForKind.indexOf(a)-abilityKeysForKind.indexOf(b)).slice(0,4);
-    const player:DevelopmentPlayer={...npc,name:['강','고','권','김','남','문','박','백','서','송','신','안','오','유','이','정'][Math.floor(index/15)]!+['건우','도윤','민준','서준','시우','예준','우진','윤호','재민','정우','준서','지호','태윤','하준','현우'][index%15]!,age:18,archetype,focus,abilities,potential:generated.potential,careerPeaks:{...abilities},fatigue:0};
-    validateDevelopmentPlayer(player);players[player.simulationKey]=player;
-    const school=npcTemplates.find(t=>t.simulationKey===npc.simulationKey)!.schoolId;schools.find(s=>s.id===school)!.roster.push(player.simulationKey);
-    if(player.kind==='PITCHER') {const pitchDraw=nextInteger(rosterRng,6);rosterRng=pitchDraw.state;repertoires[player.simulationKey]=createRepertoire(PITCH_IDS[pitchDraw.value+1]!,input.seasonKey);}
-  }
+  const generated=generateSchoolNpcRoster({templates:templates.filter(p=>p!==replaced),seed:input.seed,worldKey:input.worldKey,seasonKey:input.seasonKey,difficulty:input.player.difficulty});
+  const {players,repertoires}=generated;
+  for(const school of schools)school.roster=generated.rosters[school.id]??[];
   players[creation.player.simulationKey]=creation.player;schools.find(s=>s.id===input.schoolId)!.roster.push(creation.player.simulationKey);
   if(creation.player.kind==='PITCHER') repertoires[creation.player.simulationKey]=createRepertoire(input.secondaryPitch!,input.seasonKey);
   for(const school of schools) school.roster.sort();
@@ -61,7 +45,7 @@ export function createHighSchoolWorld(input:{worldKey:string;seasonKey:string;se
   const baseSchedule=createRoundRobinSchedule({teamKeys:schools.map(s=>s.id),leagueKey:'HS',seasonKey:input.seasonKey,startDay:calendar?.highSchoolDays[0]??input.startDay!},6);
   const schedule=calendar?scheduleHighSchoolCalendar(baseSchedule,calendar):baseSchedule;
   assertSchedule(schedule,schools.map(s=>s.id),48,24);
-  const world:HighSchoolWorld={schemaVersion:1,rulesVersion:'1.0.0',worldKey:input.worldKey,seasonKey:input.seasonKey,seed:input.seed,phase:'CREATED',protagonistKey:creation.player.simulationKey,protagonistSchoolId:input.schoolId,schools,players,repertoires,schedule,rng:{roster:rosterRng,potential:potentialRng,protagonist:creation.state,handedness:identity.state}};
+  const world:HighSchoolWorld={schemaVersion:1,rulesVersion:'1.0.0',worldKey:input.worldKey,seasonKey:input.seasonKey,seed:input.seed,phase:'CREATED',protagonistKey:creation.player.simulationKey,protagonistSchoolId:input.schoolId,schools,players,repertoires,schedule,rng:{roster:generated.rng.roster,potential:generated.rng.potential,protagonist:creation.state,handedness:generated.rng.handedness}};
   if(calendar)world.calendar=calendar;
   assertHighSchoolWorld(world);return world;
 }
@@ -72,6 +56,9 @@ export function assertHighSchoolWorld(world:HighSchoolWorld):void {
     const expected=scheduleHighSchoolCalendar(world.schedule,world.calendar);
     if(world.schedule.some((g,i)=>g.worldDay!==expected[i]!.worldDay))throw new RangeError('CHANGED_SCHOOL_CALENDAR');
   }
+  assertSchoolWorldRoster(world);
+}
+export function assertSchoolWorldRoster(world:HighSchoolWorld):void {
   if(world.schools.length!==9 || Object.keys(world.players).length!==225 || !world.players[world.protagonistKey]) throw new RangeError('INVALID_WORLD_ROSTER');
   const registered=new Set<string>();
   for(const school of world.schools) {
