@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-20",
+  "mode": "built-in image_gen",
+  "approval": "USER_SELECTED",
+  "selectedStyle": "animation",
+  "asset": "career-scenes-finish-animation-v1.png",
+  "sourceOriginal": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-a8d1947e-7835-4df3-9d3c-30d91f276ba3.png",
+  "originalGeneration": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-9170856a-3169-4520-9930-345abf15bc63.png",
+  "prompt": "Use case: illustration-story. Asset type: production-quality original game-event illustration atlas for a Korean baseball career simulation. Create ONE cohesive six-panel contact sheet, 1536x1024 pixels if possible, landscape aspect 3:2, precisely 3 columns and 2 rows, SIX equal SQUARE 512x512 panels touching edge-to-edge with no gutters, no decorative borders, no text. Style: polished contemporary 2D youth baseball anime, beautifully drawn natural human proportions and expressive clean ink contours, subtle cel shading, detailed painted backgrounds, gentle believable fabric folds and light. Anonymous fictional Korean adult athletes only, never real people or identifiable existing characters. Their appearance is generic story atmosphere, not the player's avatar. Plain white or ivory uniforms with navy/blue trim and plain unmarked navy caps. Color: clear sky blue, natural grass, navy/blue accents, balanced whites. NO warm orange wash, NO sunset. Keep important heads, gloves and hands inside the central 80 percent of each panel with comfortable headroom. Top-left: COLLEGE, bright late-morning university baseball practice field, red-brick campus and leafy trees beyond, one adult player seen three-quarter rear carrying a baseball duffel toward the field, full head inside panel. Top-middle: MINOR LEAGUE AWAY TRAVEL, clear midday light, adult player in a casual navy jacket with a gear bag beside an unbranded team bus outside a modest small-town American baseball park, compact bleachers, natural greenery, equipment and travel anticipation, no signs. Top-right: NEUTRAL RIVAL ENCOUNTER, bright overcast afternoon, two fictional adult players in plain contrasting white/navy kits facing each other by a neutral ballpark fence, calm respectful tension, neither winning, no trophies. Bottom-left: RETURN TO BASEBALL, cool bright daytime airport arrivals hall windows, adult player in a plain navy jacket carrying a duffel with a brown baseball glove attached, quiet hopeful return, subtle distant aircraft silhouettes; no readable airport signage. Bottom-middle: RETIREMENT, calm neutral daylight from a clubhouse window, neatly folded unmarked white uniform, plain navy cap and well-used brown glove on a wooden bench beside open lockers, no face or player needed, reflective peaceful composition, no medals or celebration. Bottom-right: STADIUM, expansive clear-afternoon baseball ballpark with accurate recognizable diamond, white foul lines, green grass and blue sky, grandstands, clean original architecture, no people needed. Six clearly DIFFERENT compositions with consistent anime finish. No typography, numbers, jersey numbers, team logos, cap emblems, flags, watermark, UI, captions, speech bubbles, collage labels or real-brand signage. Balanced neutral daylight throughout; no all-evening palette.",
+  "editPrompt": "Use case: precise-object-edit. Edit target: the supplied 1536x1024 six-panel anime baseball atlas. Make ONLY ONE localized change in TOP-RIGHT panel (third panel, x1024..1535,y0..511): recolor ONLY the RIGHT-HAND athlete's plain uniform jersey, cap and undershirt to a rich burgundy/wine red so he clearly belongs to a DIFFERENT TEAM from the left athlete. His trousers can stay white, glove stays brown, belt stays dark. Left athlete must keep white jersey and navy cap/sleeves. Preserve BOTH athletes' faces, anatomy, expressions, pose, glove positions and all background details. Do not add text, numbers, logos, cap symbols or emblems. Keep shading and fabric folds believable and keep precisely the same contemporary 2D youth sports-anime finish. CRITICAL: Preserve the other FIVE panels unchanged: top-left college, top-middle minor-league bus, bottom-left airport return, bottom-middle retirement equipment, bottom-right stadium. Preserve exact 3-column x2-row grid and square panel boundaries, dimensions1536x1024, no gutters, no crops, no new lighting, no sunset. This is a uniform color correction only, not a redesign.",
+  "panels": [
+    {
+      "id": "IMG-FIN-COLLEGE",
+      "col": 0,
+      "row": 0,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "IMG-FIN-MINOR-AWAY",
+      "col": 1,
+      "row": 0,
+      "position": [
+        50,
+        0
+      ]
+    },
+    {
+      "id": "IMG-FIN-RIVAL-NEUTRAL",
+      "col": 2,
+      "row": 0,
+      "position": [
+        100,
+        0
+      ]
+    },
+    {
+      "id": "IMG-FIN-RETURN",
+      "col": 0,
+      "row": 1,
+      "position": [
+        0,
+        100
+      ]
+    },
+    {
+      "id": "IMG-FIN-RETIRE",
+      "col": 1,
+      "row": 1,
+      "position": [
+        50,
+        100
+      ]
+    },
+    {
+      "id": "IMG-FIN-STADIUM",
+      "col": 2,
+      "row": 1,
+      "position": [
+        100,
+        100
+      ]
+    }
+  ],
+  "sha256": "7a2c4f55bf595aa26c700c8fdd8aa5f926c761e36c885a282360bdf564d353d7",
+  "inspection": "Approved by user after rival right athlete was changed to burgundy. White/navy own team, distinct opposing team. Six equal square panels, no embedded UI text. Browser review NOT_EXECUTED."
+}

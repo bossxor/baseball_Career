@@ -4,7 +4,7 @@
 
 <!-- SOURCE: START-HERE.md -->
 
-현재 작업(2026-10-20): P0 이미지17항목 파일 제작·승인 완료. [승인본](approved-art-board.html), [현황](STATUS.md). 실제 앱·OS 검수는 미실행, P1은 별도 시안 승인.
+현재 작업(2026-10-20): 청춘 애니6컷 승인 반영. 우리팀 네이비 통일 원칙 확정, 기존 활성4PNG 수정 시안은 별도 승인 대기. [현황](STATUS.md), [승인본](approved-art-board.html).
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -76,7 +76,7 @@ GitHub https://github.com/bossxor/baseball_Career 의 docs/design이 원본. 다
 
 <!-- SOURCE: README.md -->
 
-현재 작업(2026-10-20): P0 이미지17항목 파일 제작·승인 완료. [승인본](approved-art-board.html), [현황](STATUS.md). 실제 앱·OS 검수는 미실행, P1은 별도 시안 승인.
+현재 작업(2026-10-20): 청춘 애니6컷 승인 반영. 우리팀 네이비 통일 원칙 확정, 기존 활성4PNG 수정 시안은 별도 승인 대기. [현황](STATUS.md), [승인본](approved-art-board.html).
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -165,6 +165,18 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 ---
 
 <!-- SOURCE: STATUS.md -->
+
+# 설계 현황 — 청춘 장면6컷 반영 / 네이비 통일 시안 승인 대기
+
+## 현재 요약 (2026-10-20)
+
+- P1 청춘 애니6컷을 사용자 승인 후 반영했다. 라이벌은 흰색/네이비 팀과 버건디 팀으로 구분한다. finish 보드의 대학·마이너·기록·계약 화면은 의미에 맞는 패널로 연결했다. 전체92항목 중 TODO41/EXISTS39/CODE_ONLY11/LEGACY_REFERENCE1이다.
+- 우리팀 복장 네이비 통일 U. 기존 활성4PNG 수정 시안은 임시 폴더에 제작 완료·승인 대기 상태이며 승인 전 연결하지 않는다.
+- 승인6컷 검증3개 모두 종료코드0/PASS. 네이비 수정4PNG는 별도 승인 대기.
+- P0 17항목 파일 완료. 45화면·99이벤트·핵심298·23기대값 묶음 유지. 실제 앱/DB/브라우저/APK는 미실행이다.
+- 작업 V:\docs\design, 승인 변경만 기존 정상 Git 체크아웃으로 커밋·푸시한다.
+
+## 이전 진행 이력
 
 # 설계 현황 — P0 이미지 파일 승인 반영 완료
 
@@ -347,6 +359,14 @@ AVG상한1.000과SLG상한4.000/OPS5.000·짧은표본·AB0·P100과현재A를�
 ---
 
 <!-- SOURCE: DETAIL-PLAN.md -->
+
+# 현재 작업 — 승인6컷 반영·네이비 팀복장 통일
+
+P1 청춘 애니6컷을 사용자 승인 후 반영했다. 라이벌은 흰색/네이비 팀과 버건디 팀으로 구분한다. finish 보드의 대학·마이너·기록·계약 화면은 의미에 맞는 패널로 연결했다. 전체92항목 중 TODO41/EXISTS39/CODE_ONLY11/LEGACY_REFERENCE1이다.
+
+다음은 기존 활성4PNG의 네이비 수정본 승인이다.
+
+---
 
 # 현재 작업 — P0 이미지 파일 승인 반영 완료
 
@@ -733,6 +753,12 @@ U:100~104의 확정 UI 요구와 히든4개/슬라이더 규칙을 유지한다.
 사용자가 앱 아이콘1(네이비 배경)을 승인했다. Android 전경/배경/단색 SVG3개와 PWA192/512/maskable512·apple180 PNG4개·favicon SVG를 반영했다. P0의17항목(실루엣14·브랜드3묶음) 파일 제작은 모두 완료다. 전체92항목은 TODO47/EXISTS33/CODE_ONLY11/LEGACY_REFERENCE1이며 앱 연결·OS 설치 검수는 미실행이다.
 
 [아이콘 승인·규격 기록](assets/brand/APPROVED-ICONS-v1.json). 앱 아이콘 배경은 네이비이며 승인 로고2의 형태는 유지한다.
+
+## 2026-10-20 장면6컷 승인·우리팀 배색 통일 U
+
+P1 청춘 애니6컷을 사용자 승인 후 반영했다. 라이벌은 흰색/네이비 팀과 버건디 팀으로 구분한다. finish 보드의 대학·마이너·기록·계약 화면은 의미에 맞는 패널로 연결했다. 전체92항목 중 TODO41/EXISTS39/CODE_ONLY11/LEGACY_REFERENCE1이다.
+
+U: 우리팀으로 표현된 선수의 모자·유니폼 장식·속옷은 네이비로 통일한다. 잔디/나무 같은 배경 초록과 상대팀 고유색·사복은 팀 유니폼으로 간주하지 않는다. 기존 활성4PNG 수정 시안은 저장소 밖에서 제시하고 별도 승인 후 교체한다. 원본과 과거 비교 자산은 보존한다.
 
 ---
 
@@ -8596,8 +8622,8 @@ ES-D01 X01~X07 적용합 재계산 일치/02 확률합 1/03 X04 K 원합 .12→.
 
 ## 한눈에 보기
 
-- 레지스터 항목 92개: 제작 필요(TODO) 47개, 이미 있음 33개, 코드로 만들면 되는 것(이미지 불필요) 11개, 보존 1개.
-- 우선순위: P0 미제작 0개, 승인 반영 17개(실루엣 14 + 로고 마크 1 + 아이콘 2묶음), P1 43개, P2 4개. P0는 앱을 처음 띄울 때 필요한 것이고 P1은 해당 기능 화면, P2는 선택이다.
+- 레지스터 항목 92개: 제작 필요(TODO) 41개, 이미 있음 39개, 코드로 만들면 되는 것(이미지 불필요) 11개, 보존 1개.
+- 우선순위: P0 미제작 0개, 승인 반영 17개(실루엣 14 + 로고 마크 1 + 아이콘 2묶음), P1 미제작 37개, P2 4개. P0는 앱을 처음 띄울 때 필요한 것이고 P1은 해당 기능 화면, P2는 선택이다.
 - 코드로 만드는 것(CODE_ONLY: 마이너·고교·국가 배지, 특성·구종·성향·폼·투타·목표 아이콘, 수비 다이어그램, 칭호)은 이미지 생성이 필요 없다.
 
 ## 공통 제작 규칙
@@ -8658,12 +8684,12 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-FIN-COLLEGE|마감 장면 대학(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 대학 캠퍼스 그라운드. 시간대 규칙 준수|
-|IMG-FIN-MINOR-AWAY|마감 장면 마이너 원정(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 마이너 원정 이동/구장. 시간대 규칙 준수|
-|IMG-FIN-RIVAL-NEUTRAL|마감 장면 중립 라이벌(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 중립 구장에서 마주 선 두 선수. 시간대 규칙 준수|
-|IMG-FIN-RETURN|마감 장면 복귀(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 귀국/복귀 장면. 시간대 규칙 준수|
-|IMG-FIN-RETIRE|마감 장면 은퇴(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 은퇴 기념 장면. 시간대 규칙 준수|
-|IMG-FIN-STADIUM|마감 장면 구장(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 구장 전경. 시간대 규칙 준수|
+|IMG-FIN-COLLEGE|마감 장면 대학(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 대학 캠퍼스 그라운드. 시간대 규칙 준수|
+|IMG-FIN-MINOR-AWAY|마감 장면 마이너 원정(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 마이너 원정 이동/구장. 시간대 규칙 준수|
+|IMG-FIN-RIVAL-NEUTRAL|마감 장면 중립 라이벌(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 중립 구장에서 마주 선 두 선수. 시간대 규칙 준수|
+|IMG-FIN-RETURN|마감 장면 복귀(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 귀국/복귀 장면. 시간대 규칙 준수|
+|IMG-FIN-RETIRE|마감 장면 은퇴(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 은퇴 기념 장면. 시간대 규칙 준수|
+|IMG-FIN-STADIUM|마감 장면 구장(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 구장 전경. 시간대 규칙 준수|
 
 ### G4 Hero·졸업 장면
 
@@ -8862,6 +8888,12 @@ IM-D01 TODO 항목마다 파일 경로·규격·화면이 있음/02 실루엣 14
 사용자가 앱 아이콘1(네이비 배경)을 승인했다. Android 전경/배경/단색 SVG3개와 PWA192/512/maskable512·apple180 PNG4개·favicon SVG를 반영했다. P0의17항목(실루엣14·브랜드3묶음) 파일 제작은 모두 완료다. 전체92항목은 TODO47/EXISTS33/CODE_ONLY11/LEGACY_REFERENCE1이며 앱 연결·OS 설치 검수는 미실행이다.
 
 네 PNG는 완전 불투명이고 각 규격을 확인했다. Android 전경의 실제 alpha 픽셀 전체가 432캔버스 중앙 반경144 안전영역에 든다. 동일 전경은 maskable 중앙 반경40% 안에 든다. 앱 manifest·Android 리소스 연결과 실제 설치·테마 검수는 별도다.
+
+## 청춘 사건6컷 승인 — 2026-10-20
+
+P1 청춘 애니6컷을 사용자 승인 후 반영했다. 라이벌은 흰색/네이비 팀과 버건디 팀으로 구분한다. finish 보드의 대학·마이너·기록·계약 화면은 의미에 맞는 패널로 연결했다. 전체92항목 중 TODO41/EXISTS39/CODE_ONLY11/LEGACY_REFERENCE1이다.
+
+우리팀 복장은 네이비로 통일한다. 기존 활성 hero/사건2장/고교 hero의 초록 팀 복장 정정은 시안 승인 후 새 버전으로 연결한다. 미승인 수정본과 원본을 덮어쓰지 않는다.
 
 ---
 
@@ -9786,7 +9818,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: HANDOFF-PROMPT.md -->
 
-현재 작업(2026-10-20): P0 이미지17항목 파일 제작·승인 완료. [승인본](approved-art-board.html), [현황](STATUS.md). 실제 앱·OS 검수는 미실행, P1은 별도 시안 승인.
+현재 작업(2026-10-20): 청춘 애니6컷 승인 반영. 우리팀 네이비 통일 원칙 확정, 기존 활성4PNG 수정 시안은 별도 승인 대기. [현황](STATUS.md), [승인본](approved-art-board.html).
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -10149,3 +10181,15 @@ PASS: approved navy icon1; Android 3 SVGs / web 5 assets, PNG dimensions and saf
 ```
 
 sharp로 PNG4개 실제 크기와 전체 alpha255를 확인했다. Android 전경432의 모든 alpha 픽셀을 검사했고 경계 [128,136,303,313], 중심으로부터 최대거리118.23 미만으로 반경144 안전영역을 만족했다. maskable 전경 반경 비율은 .274 미만으로 .4 안에 든다. SVG 금지요소·title/viewBox·실제파일/레지스터/슬롯 연결도 정적 검증했다. PNG512를 육안 확인했다. 이는 OS 설치 화면 검증이 아니며 Android 리소스·실제 PWA manifest 연결·기기 설치·APK/build는 미실행이다.
+
+## 2026-10-20 청춘 장면6컷 승인·우리팀 색상 통일 원칙
+
+사용자가 라이벌 오른쪽 선수 버건디 수정본의6컷 전체를 승인했다. 1536×1024 atlas 원본과 생성/편집 프롬프트를 보존하고 finish 보드·스크린 슬롯·제작 레지스터·승인 보드를 연결했다. 기존 빈티지6컷은 비교 이력으로 보존한다. S34 대학은 대학 패널, S29 마이너는 원정 패널로 명시 연결하고 계약 화면은 승패를 암시하지 않는 구장 패널로 배정했다. S04 선수 카드 예시는119의 승인 실루엣을 쓴다.
+
+V:에서 verify-design.mjs·verify-state-ui.mjs·verify-art-direction.mjs 각각 종료코드0/PASS. 추가 출력:
+
+```text
+PASS: approved six anime finish scenes, square atlas positions and per-screen semantic bindings; rival teams differentiated; runtime rendering remains NOT_EXECUTED.
+```
+
+6개 정사각 패널 좌표·원문/슬롯·화면별 패널 ID와 위치·데이터 JSON/JS 일치를 정적으로 검사했다. 45화면/99이벤트/핵심298은 유지한다. 실제 브라우저 렌더/기기/DB/API/build/APK는 미실행이다. 우리팀 네이비 통일은 사용자 확정 원칙으로 기록했고 기존 활성4PNG의 네이비 수정본은 별도 승인 대기로 저장소 밖에 보관한다. 수정본 원래 크기는 hero/고교1672×941, 사건2장1536×1024이며 아직 활성 파일을 교체하지 않았다.

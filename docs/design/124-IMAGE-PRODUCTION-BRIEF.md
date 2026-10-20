@@ -4,8 +4,8 @@
 
 ## 한눈에 보기
 
-- 레지스터 항목 92개: 제작 필요(TODO) 47개, 이미 있음 33개, 코드로 만들면 되는 것(이미지 불필요) 11개, 보존 1개.
-- 우선순위: P0 미제작 0개, 승인 반영 17개(실루엣 14 + 로고 마크 1 + 아이콘 2묶음), P1 43개, P2 4개. P0는 앱을 처음 띄울 때 필요한 것이고 P1은 해당 기능 화면, P2는 선택이다.
+- 레지스터 항목 92개: 제작 필요(TODO) 41개, 이미 있음 39개, 코드로 만들면 되는 것(이미지 불필요) 11개, 보존 1개.
+- 우선순위: P0 미제작 0개, 승인 반영 17개(실루엣 14 + 로고 마크 1 + 아이콘 2묶음), P1 미제작 37개, P2 4개. P0는 앱을 처음 띄울 때 필요한 것이고 P1은 해당 기능 화면, P2는 선택이다.
 - 코드로 만드는 것(CODE_ONLY: 마이너·고교·국가 배지, 특성·구종·성향·폼·투타·목표 아이콘, 수비 다이어그램, 칭호)은 이미지 생성이 필요 없다.
 
 ## 공통 제작 규칙
@@ -66,12 +66,12 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 
 |ID|이름|파일(예정 경로)|규격|상태|쓰이는 화면|메모|
 |---|---|---|---|---|---|---|
-|IMG-FIN-COLLEGE|마감 장면 대학(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 대학 캠퍼스 그라운드. 시간대 규칙 준수|
-|IMG-FIN-MINOR-AWAY|마감 장면 마이너 원정(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 마이너 원정 이동/구장. 시간대 규칙 준수|
-|IMG-FIN-RIVAL-NEUTRAL|마감 장면 중립 라이벌(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 중립 구장에서 마주 선 두 선수. 시간대 규칙 준수|
-|IMG-FIN-RETURN|마감 장면 복귀(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 귀국/복귀 장면. 시간대 규칙 준수|
-|IMG-FIN-RETIRE|마감 장면 은퇴(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 은퇴 기념 장면. 시간대 규칙 준수|
-|IMG-FIN-STADIUM|마감 장면 구장(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|제작 필요 P1|S04, S09, S27, S28, S33, S34, S35|현재 finish-board는 빈티지 career-scenes-finish-v1.png만 사용. 구장 전경. 시간대 규칙 준수|
+|IMG-FIN-COLLEGE|마감 장면 대학(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 대학 캠퍼스 그라운드. 시간대 규칙 준수|
+|IMG-FIN-MINOR-AWAY|마감 장면 마이너 원정(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 마이너 원정 이동/구장. 시간대 규칙 준수|
+|IMG-FIN-RIVAL-NEUTRAL|마감 장면 중립 라이벌(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 중립 구장에서 마주 선 두 선수. 시간대 규칙 준수|
+|IMG-FIN-RETURN|마감 장면 복귀(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 귀국/복귀 장면. 시간대 규칙 준수|
+|IMG-FIN-RETIRE|마감 장면 은퇴(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 은퇴 기념 장면. 시간대 규칙 준수|
+|IMG-FIN-STADIUM|마감 장면 구장(청춘 애니)|assets/art-lab/career-scenes-finish-animation-v1.png|3×2 정사각 패널 아틀라스 1536×1024 중 한 컷|승인 반영|S04, S09, S27, S28, S33, S34, S35|청춘 애니 승인본 연결. 구장 전경. 시간대 규칙 준수|
 
 ### G4 Hero·졸업 장면
 
@@ -270,3 +270,9 @@ IM-D01 TODO 항목마다 파일 경로·규격·화면이 있음/02 실루엣 14
 사용자가 앱 아이콘1(네이비 배경)을 승인했다. Android 전경/배경/단색 SVG3개와 PWA192/512/maskable512·apple180 PNG4개·favicon SVG를 반영했다. P0의17항목(실루엣14·브랜드3묶음) 파일 제작은 모두 완료다. 전체92항목은 TODO47/EXISTS33/CODE_ONLY11/LEGACY_REFERENCE1이며 앱 연결·OS 설치 검수는 미실행이다.
 
 네 PNG는 완전 불투명이고 각 규격을 확인했다. Android 전경의 실제 alpha 픽셀 전체가 432캔버스 중앙 반경144 안전영역에 든다. 동일 전경은 maskable 중앙 반경40% 안에 든다. 앱 manifest·Android 리소스 연결과 실제 설치·테마 검수는 별도다.
+
+## 청춘 사건6컷 승인 — 2026-10-20
+
+P1 청춘 애니6컷을 사용자 승인 후 반영했다. 라이벌은 흰색/네이비 팀과 버건디 팀으로 구분한다. finish 보드의 대학·마이너·기록·계약 화면은 의미에 맞는 패널로 연결했다. 전체92항목 중 TODO41/EXISTS39/CODE_ONLY11/LEGACY_REFERENCE1이다.
+
+우리팀 복장은 네이비로 통일한다. 기존 활성 hero/사건2장/고교 hero의 초록 팀 복장 정정은 시안 승인 후 새 버전으로 연결한다. 미승인 수정본과 원본을 덮어쓰지 않는다.

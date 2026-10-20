@@ -3,7 +3,8 @@
     {
       "assetRefs": [
         "almanacHero",
-        "appBrandMark"
+        "appBrandMark",
+        "finishScenes"
       ],
       "screenId": "S01",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -105,7 +106,8 @@
     },
     {
       "assetRefs": [
-        "silhouetteCard"
+        "silhouetteCard",
+        "finishScenes"
       ],
       "screenId": "S10",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -117,7 +119,8 @@
     {
       "assetRefs": [
         "silhouetteCard",
-        "retirement"
+        "retirement",
+        "finishScenes"
       ],
       "screenId": "S11",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -163,7 +166,8 @@
     },
     {
       "assetRefs": [
-        "NONE"
+        "NONE",
+        "finishScenes"
       ],
       "screenId": "S15",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -197,7 +201,8 @@
     },
     {
       "assetRefs": [
-        "NONE"
+        "NONE",
+        "finishScenes"
       ],
       "screenId": "S18",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -219,7 +224,8 @@
     },
     {
       "assetRefs": [
-        "NONE"
+        "NONE",
+        "finishScenes"
       ],
       "screenId": "S20",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -231,7 +237,8 @@
     {
       "assetRefs": [
         "NONE",
-        "appBrandMark"
+        "appBrandMark",
+        "finishScenes"
       ],
       "screenId": "S21",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -242,7 +249,8 @@
     },
     {
       "assetRefs": [
-        "silhouetteCard"
+        "silhouetteCard",
+        "finishScenes"
       ],
       "screenId": "S22",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -276,7 +284,8 @@
     {
       "assetRefs": [
         "training",
-        "international"
+        "international",
+        "finishScenes"
       ],
       "screenId": "S25",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -287,7 +296,8 @@
     },
     {
       "assetRefs": [
-        "NONE"
+        "NONE",
+        "finishScenes"
       ],
       "screenId": "S26",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -299,7 +309,8 @@
     {
       "assetRefs": [
         "training",
-        "service"
+        "service",
+        "finishScenes"
       ],
       "screenId": "S27",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -324,7 +335,8 @@
     },
     {
       "assetRefs": [
-        "overseas"
+        "overseas",
+        "finishScenes"
       ],
       "screenId": "S29",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -347,7 +359,8 @@
     },
     {
       "assetRefs": [
-        "posting"
+        "posting",
+        "finishScenes"
       ],
       "screenId": "S31",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -358,7 +371,8 @@
     },
     {
       "assetRefs": [
-        "posting"
+        "posting",
+        "finishScenes"
       ],
       "screenId": "S32",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -370,7 +384,8 @@
     {
       "assetRefs": [
         "overseas",
-        "service"
+        "service",
+        "finishScenes"
       ],
       "screenId": "S33",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -381,7 +396,8 @@
     },
     {
       "assetRefs": [
-        "college"
+        "college",
+        "finishScenes"
       ],
       "screenId": "S34",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -637,6 +653,85 @@
         "assets/brand/favicon.svg"
       ],
       "implementationStatus": "ASSETS_READY_APP_INTEGRATION_NOT_IMPLEMENTED"
+    },
+    "finishScenes": {
+      "file": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "generationRecord": "assets/art-lab/FINISH-ANIMATION-GENERATION.json",
+      "panels": [
+        {
+          "id": "IMG-FIN-COLLEGE",
+          "col": 0,
+          "row": 0,
+          "position": [
+            0,
+            0
+          ]
+        },
+        {
+          "id": "IMG-FIN-MINOR-AWAY",
+          "col": 1,
+          "row": 0,
+          "position": [
+            50,
+            0
+          ]
+        },
+        {
+          "id": "IMG-FIN-RIVAL-NEUTRAL",
+          "col": 2,
+          "row": 0,
+          "position": [
+            100,
+            0
+          ]
+        },
+        {
+          "id": "IMG-FIN-RETURN",
+          "col": 0,
+          "row": 1,
+          "position": [
+            0,
+            100
+          ]
+        },
+        {
+          "id": "IMG-FIN-RETIRE",
+          "col": 1,
+          "row": 1,
+          "position": [
+            50,
+            100
+          ]
+        },
+        {
+          "id": "IMG-FIN-STADIUM",
+          "col": 2,
+          "row": 1,
+          "position": [
+            100,
+            100
+          ]
+        }
+      ],
+      "screenBindings": {
+        "S01": "IMG-FIN-STADIUM",
+        "S10": "IMG-FIN-RETIRE",
+        "S11": "IMG-FIN-RETIRE",
+        "S15": "IMG-FIN-STADIUM",
+        "S18": "IMG-FIN-STADIUM",
+        "S20": "IMG-FIN-STADIUM",
+        "S21": "IMG-FIN-STADIUM",
+        "S22": "IMG-FIN-STADIUM",
+        "S25": "IMG-FIN-STADIUM",
+        "S26": "IMG-FIN-RETURN",
+        "S27": "IMG-FIN-RETURN",
+        "S29": "IMG-FIN-MINOR-AWAY",
+        "S31": "IMG-FIN-STADIUM",
+        "S32": "IMG-FIN-STADIUM",
+        "S33": "IMG-FIN-RETURN",
+        "S34": "IMG-FIN-COLLEGE"
+      },
+      "approval": "USER_SELECTED"
     }
   }
 }

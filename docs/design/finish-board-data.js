@@ -3,7 +3,7 @@ globalThis.PBFinishData = {
   "schemaVersion": 1,
   "status": "DESIGN_PREVIEW_ONLY",
   "browserReview": "NOT_EXECUTED",
-  "image": "assets/art-lab/career-scenes-finish-v1.png",
+  "image": "assets/art-lab/career-scenes-finish-animation-v1.png",
   "states": [
     "NORMAL",
     "LOADING",
@@ -57,7 +57,8 @@ globalThis.PBFinishData = {
       "guard": "최근 저장 없음은 새 게임 두 경로만; 중단 상태·복구 안내 카드는 없음",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
       "hero": "assets/art-lab/hero-animation-v1.png",
-      "sceneAsset": null
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-STADIUM"
     },
     {
       "id": "S04",
@@ -65,7 +66,7 @@ globalThis.PBFinishData = {
       "title": "다음 유니폼을 고르는 날",
       "subtitle": "기록은 남기고, 진로는 여기서 고릅니다.",
       "scene": [
-        50,
+        0,
         0
       ],
       "sceneAlt": "캠퍼스와 야구장을 향하는 가상 선수",
@@ -126,7 +127,7 @@ globalThis.PBFinishData = {
         },
         "animation": {
           "hero": "assets/art-lab/graduation-animation-day-v1.png",
-          "portrait": "assets/art-lab/player-youth-animation-v1.png",
+          "portrait": "assets/silhouettes/hitter-RR.svg",
           "memory": "assets/art-lab/hero-animation-v1.png",
           "label": "청춘 야구 애니 · 맑은 낮"
         }
@@ -136,7 +137,8 @@ globalThis.PBFinishData = {
         "meta": "18세 · 외야수 · 졸업 시즌",
         "caption": "마지막 고교 시즌을 마치고, 다음 무대를 준비합니다."
       },
-      "sceneAsset": "assets/art-lab/career-events-animation-v1.png"
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-COLLEGE"
     },
     {
       "id": "S10",
@@ -193,7 +195,8 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "보관0명도 정상; 회색 빈 카드가 영입/삭제처럼 동작하지 않음",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "sceneAsset": "assets/art-lab/career-events-animation-v1.png"
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-RETIRE"
     },
     {
       "id": "S11",
@@ -276,7 +279,8 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "원본과 복사 예상 수치를 나란히 구별; 원본 기록 수정 없음",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "sceneAsset": "assets/art-lab/career-events-animation-v1.png"
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-RETIRE"
     },
     {
       "id": "S15",
@@ -308,7 +312,8 @@ globalThis.PBFinishData = {
       "guard": "같은 선수 중복·빈 수비·부상 등 필수 오류 먼저; 다이아몬드만으로 입력하지 않음",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
       "hero": "assets/art-lab/hero-animation-v1.png",
-      "sceneAsset": null
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-STADIUM"
     },
     {
       "id": "S18",
@@ -385,7 +390,8 @@ globalThis.PBFinishData = {
       "guard": "분모0은 대시; 무경기 시즌·동률 수상·다른 리그 기록 분리",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
       "hero": "assets/art-lab/hero-animation-v1.png",
-      "sceneAsset": null
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-STADIUM"
     },
     {
       "id": "S20",
@@ -433,7 +439,8 @@ globalThis.PBFinishData = {
       "guard": "삭제·복원은 대상명과 영향 확인; 오류를 세이브0으로 오인하지 않음",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
       "hero": "assets/art-lab/hero-animation-v1.png",
-      "sceneAsset": null
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-STADIUM"
     },
     {
       "id": "S21",
@@ -475,7 +482,8 @@ globalThis.PBFinishData = {
       "guard": "즉시 선호와 서버 계정 작업 구별; 계정 삭제는 일반 설정 적용과 합치지 않음",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
       "hero": "assets/art-lab/hero-animation-v1.png",
-      "sceneAsset": null
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-STADIUM"
     },
     {
       "id": "S22",
@@ -509,7 +517,8 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "확률 없는 변경에 적용100% 없음; 거포형·거포수비형 등 게임 명칭 사용",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "sceneAsset": "assets/art-lab/career-events-animation-extra-v1.png"
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-STADIUM"
     },
     {
       "id": "S25",
@@ -552,7 +561,8 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "명단 포함과 실제 출장 다름; 탈락·미출장도 정상 결산",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "sceneAsset": "assets/art-lab/career-events-animation-extra-v1.png"
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-STADIUM"
     },
     {
       "id": "S26",
@@ -592,7 +602,8 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "메달만으로 자동 해결 가정 금지; 실제 게임 조건 충족 결과만 표시",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "sceneAsset": "assets/art-lab/career-events-animation-extra-v1.png"
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-RETURN"
     },
     {
       "id": "S27",
@@ -635,7 +646,8 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "달력과 팀 경기 회복 혼용 금지; 복귀 선수의 실제 등록과 계약 확인",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "sceneAsset": "assets/art-lab/career-events-animation-extra-v1.png"
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-RETURN"
     },
     {
       "id": "S29",
@@ -643,7 +655,7 @@ globalThis.PBFinishData = {
       "title": "먼 길의 첫 계약",
       "subtitle": "미국 카드가 열렸다면, 실제 제안부터 봅니다.",
       "scene": [
-        100,
+        50,
         0
       ],
       "sceneAlt": "미국으로 향하는 공항의 가상 선수",
@@ -679,7 +691,8 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "유효 오퍼0이면 수락 제거; 메이저 계약과 마이너 계약 구분",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "sceneAsset": "assets/art-lab/career-events-animation-v1.png"
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-MINOR-AWAY"
     },
     {
       "id": "S31",
@@ -688,7 +701,7 @@ globalThis.PBFinishData = {
       "subtitle": "요청 자격과 승인은 같은 뜻이 아닙니다.",
       "scene": [
         100,
-        0
+        100
       ],
       "sceneAlt": "미국으로 향하는 공항",
       "fallback": "포스팅",
@@ -719,7 +732,8 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "자격 미달·구단 거절·군 문제를 별도 사유로 표시; MLB 오퍼 보장 없음",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "sceneAsset": "assets/art-lab/career-events-animation-v1.png"
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-STADIUM"
     },
     {
       "id": "S32",
@@ -728,7 +742,7 @@ globalThis.PBFinishData = {
       "subtitle": "제안과 현재 계약을 함께 놓고 비교합니다.",
       "scene": [
         100,
-        0
+        100
       ],
       "sceneAlt": "해외 이동을 준비하는 선수",
       "fallback": "해외 협상",
@@ -766,7 +780,8 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "오퍼 소멸은 잔류 등 실제 대안으로; 국내 계약과 이중 수락 방지",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "sceneAsset": "assets/art-lab/career-events-animation-v1.png"
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-STADIUM"
     },
     {
       "id": "S33",
@@ -809,7 +824,8 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "권리 해결 전 FA처럼 계약 불가; 준비 진행 취소와 확정 이적 분리",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "sceneAsset": "assets/art-lab/career-events-animation-extra-v1.png"
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-RETURN"
     },
     {
       "id": "S34",
@@ -817,7 +833,7 @@ globalThis.PBFinishData = {
       "title": "캠퍼스에도 다음 타석이",
       "subtitle": "학교의 이름보다 내 자리와 경쟁을 봅니다.",
       "scene": [
-        50,
+        0,
         0
       ],
       "sceneAlt": "가상 대학 캠퍼스에서 야구장으로 향하는 선수",
@@ -867,7 +883,8 @@ globalThis.PBFinishData = {
       "conflict": "다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.",
       "guard": "미충족 조건은 학교 카드 사유; 열람만으로 입학 확정하지 않음",
       "review": "최종 픽셀·실제 브라우저 동작은 미검수입니다. 입력과 버튼은 로컬 배치 확인용입니다.",
-      "sceneAsset": "assets/art-lab/career-events-animation-v1.png"
+      "sceneAsset": "assets/art-lab/career-scenes-finish-animation-v1.png",
+      "scenePanelId": "IMG-FIN-COLLEGE"
     }
   ],
   "styleComparison": {
@@ -876,5 +893,6 @@ globalThis.PBFinishData = {
     "previousSelection": "almanac",
     "status": "USER_CONFIRMED",
     "timeDirection": "SCENE_APPROPRIATE_MORNING_DAY_NEUTRAL_INTERIOR_NIGHT"
-  }
+  },
+  "generationRecord": "assets/art-lab/FINISH-ANIMATION-GENERATION.json"
 };

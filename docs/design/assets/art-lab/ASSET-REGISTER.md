@@ -29,3 +29,7 @@ career-scenes-finish-v1.png —1536×1024/3×2패널6컷,대학/마이너원정/
 ## 시각1.9 사용자확정: 청춘 야구 애니
 
 111을현재기준으로사용. graduation-almanac-wide-v1/player-youth-almanac-v1은비교보존,graduation-animation-day-v1/player-youth-animation-v1은고교활성,career-events-animation-v1/extra-v1은12사건활성,player-pitcher-animation-v1은투수활성. 모두별도PNG로추가했고원본유지. 총일러스트PNG16개. GRADUATION-STYLE-GENERATION/ANIMATION-MAIN-GENERATION에프롬프트/원본파일을기록. 작은문양과실제화면크롭은최종검수전.
+
+## 2026-10-20 승인 청춘 마감6컷
+
+career-scenes-finish-animation-v1.png: 대학/마이너원정/중립라이벌/복귀/은퇴/구장, 1536×1024 정사각3×2. 라이벌 흰색/네이비 vs 버건디 수정 후 사용자 승인. FINISH-ANIMATION-GENERATION.json에 생성·편집 프롬프트와 출처 기록. 기존 빈티지 원본 보존. 기존 활성4PNG의 네이비 복장 통일 수정본은 별도 승인 대기이며 반영하지 않았다.

@@ -34,7 +34,7 @@ assert.ok(data.screens.find(s=>s.id==='S34').cards.some(c=>c.table?.rows.some(r=
 assert.ok(ctx.PBFinish.render(data.screens.find(s=>s.id==='S11')).includes('19세 / 45.8'));
 assert.equal([45,50,44,43,46,47].reduce((a,b)=>a+b,0)/6,275/6);
 const png=fs.readFileSync(path.join(root,data.image));assert.equal(png.subarray(1,4).toString(),'PNG');assert.equal(png.readUInt32BE(16),1536);assert.equal(png.readUInt32BE(20),1024);
-const record=json('assets/art-lab/FINISH-GENERATION.json');assert.ok(record.prompt?.length>300);assert.equal(record.asset,path.basename(data.image));
+const record=json(data.generationRecord || 'assets/art-lab/FINISH-GENERATION.json');assert.ok(record.prompt?.length>300);assert.equal(record.asset,path.basename(data.image));
 const html=read('finish-board.html');for(const src of ['finish-board-data.js','finish-board.js'])assert.ok(html.includes('src="'+src+'"'));
 for(const src of ['finish-board.js','finish-board-data.js'])assert.ok(!/\bfetch\s*\(|XMLHttpRequest|WebSocket|localStorage/.test(read(src)));
 for(const source of ['design-board.html','art-direction-lab.html'])assert.ok(read(source).includes('href="finish-board.html"'));
@@ -50,3 +50,16 @@ assert.ok(!html.includes('height:185px'));assert.ok(!html.includes('translateY(-
 assert.equal(art.selectedStyle,'animation');assert.equal(art.activePortraits.length,2);for(const p of art.activePortraits)assert.ok(fs.existsSync(path.join(root,p.asset)));
 assert.ok(read('art-direction-lab.html').includes("const state={style:'animation'"));assert.ok(read('art-direction-lab.html').includes("playball-art-lab-v3"));
 console.log('PASS: confirmed anime default, 12 new time-varied scenes, active portraits, uncropped square/full-width layouts, S04 two styles x eight states, three-image normal view and image-failure fallback.');
+
+{
+ const record=json(data.generationRecord),slots=json('screen-image-slots.json');
+ assert.equal(record.approval,'USER_SELECTED');assert.equal(record.panels.length,6);
+ assert.equal(data.image,slots.assetLibrary.finishScenes.file);
+ for(const screen of data.screens){
+  const panel=record.panels.find(p=>p.id===screen.scenePanelId);assert.ok(panel,screen.id);
+  assert.deepEqual(screen.scene,panel.position);assert.equal(screen.sceneAsset,data.image);
+ }
+ assert.equal(data.screens.find(s=>s.id==='S34').scenePanelId,'IMG-FIN-COLLEGE');
+ assert.equal(data.screens.find(s=>s.id==='S29').scenePanelId,'IMG-FIN-MINOR-AWAY');
+ console.log('PASS: approved six anime finish scenes, square atlas positions and per-screen semantic bindings; rival teams differentiated; runtime rendering remains NOT_EXECUTED.');
+}

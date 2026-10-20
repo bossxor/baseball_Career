@@ -1,3 +1,11 @@
+# 현재 재개 위치 — 청춘6컷 승인 반영·팀색 통일
+
+P1 청춘 애니6컷을 사용자 승인 후 반영했다. 라이벌은 흰색/네이비 팀과 버건디 팀으로 구분한다. finish 보드의 대학·마이너·기록·계약 화면은 의미에 맞는 패널로 연결했다. 전체92항목 중 TODO41/EXISTS39/CODE_ONLY11/LEGACY_REFERENCE1이다.
+
+기존 우리팀 복장을 네이비로 바꾸는 활성4PNG 수정 시안을 보여주고 승인받아야 한다. 신규6컷은 이미 승인됐다. 아래는 이전 진행 이력이다.
+
+---
+
 # 현재 재개 위치 — 아이콘1 승인
 
 사용자가 앱 아이콘1(네이비 배경)을 승인했다. Android 전경/배경/단색 SVG3개와 PWA192/512/maskable512·apple180 PNG4개·favicon SVG를 반영했다. P0의17항목(실루엣14·브랜드3묶음) 파일 제작은 모두 완료다. 전체92항목은 TODO47/EXISTS33/CODE_ONLY11/LEGACY_REFERENCE1이며 앱 연결·OS 설치 검수는 미실행이다.
@@ -71,3 +79,5 @@ V: 루트에서 verify-design.mjs·verify-state-ui.mjs·verify-art-direction.mjs
 실루엣14종 반영은 검증3개 모두 PASS(종료코드0). 다음 P0 Android/PWA 아이콘은 별도 시안·승인 대상이다.
 
 아이콘1 승인 반영은 세 정적 검증 모두 PASS. 실기기 설치 검수는 미실행이며 다음은 P1 이미지 별도 시안·승인이다.
+
+승인6컷 반영은 세 정적 검증 모두 PASS. 네이비 수정4PNG는 C:/Users/N-052/AppData/Local/Temp/baseball-navy-consistency-20261020 에만 보관하며 사용자 승인 후 새 버전으로 연결한다.

@@ -309,3 +309,15 @@ PASS: approved navy icon1; Android 3 SVGs / web 5 assets, PNG dimensions and saf
 ```
 
 sharp로 PNG4개 실제 크기와 전체 alpha255를 확인했다. Android 전경432의 모든 alpha 픽셀을 검사했고 경계 [128,136,303,313], 중심으로부터 최대거리118.23 미만으로 반경144 안전영역을 만족했다. maskable 전경 반경 비율은 .274 미만으로 .4 안에 든다. SVG 금지요소·title/viewBox·실제파일/레지스터/슬롯 연결도 정적 검증했다. PNG512를 육안 확인했다. 이는 OS 설치 화면 검증이 아니며 Android 리소스·실제 PWA manifest 연결·기기 설치·APK/build는 미실행이다.
+
+## 2026-10-20 청춘 장면6컷 승인·우리팀 색상 통일 원칙
+
+사용자가 라이벌 오른쪽 선수 버건디 수정본의6컷 전체를 승인했다. 1536×1024 atlas 원본과 생성/편집 프롬프트를 보존하고 finish 보드·스크린 슬롯·제작 레지스터·승인 보드를 연결했다. 기존 빈티지6컷은 비교 이력으로 보존한다. S34 대학은 대학 패널, S29 마이너는 원정 패널로 명시 연결하고 계약 화면은 승패를 암시하지 않는 구장 패널로 배정했다. S04 선수 카드 예시는119의 승인 실루엣을 쓴다.
+
+V:에서 verify-design.mjs·verify-state-ui.mjs·verify-art-direction.mjs 각각 종료코드0/PASS. 추가 출력:
+
+```text
+PASS: approved six anime finish scenes, square atlas positions and per-screen semantic bindings; rival teams differentiated; runtime rendering remains NOT_EXECUTED.
+```
+
+6개 정사각 패널 좌표·원문/슬롯·화면별 패널 ID와 위치·데이터 JSON/JS 일치를 정적으로 검사했다. 45화면/99이벤트/핵심298은 유지한다. 실제 브라우저 렌더/기기/DB/API/build/APK는 미실행이다. 우리팀 네이비 통일은 사용자 확정 원칙으로 기록했고 기존 활성4PNG의 네이비 수정본은 별도 승인 대기로 저장소 밖에 보관한다. 수정본 원래 크기는 hero/고교1672×941, 사건2장1536×1024이며 아직 활성 파일을 교체하지 않았다.

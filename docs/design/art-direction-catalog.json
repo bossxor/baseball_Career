@@ -310,9 +310,10 @@
       "S34"
     ],
     "stateCount": 136,
-    "newIllustration": "assets/art-lab/career-scenes-finish-v1.png",
+    "newIllustration": "assets/art-lab/career-scenes-finish-animation-v1.png",
     "sceneCount": 6,
-    "browserReview": "NOT_EXECUTED"
+    "browserReview": "NOT_EXECUTED",
+    "generationRecord": "assets/art-lab/FINISH-ANIMATION-GENERATION.json"
   },
   "activePortraits": [
     {

@@ -19,7 +19,8 @@
       "imageSlot": {
         "assetRefs": [
           "almanacHero",
-          "appBrandMark"
+          "appBrandMark",
+          "finishScenes"
         ],
         "screenId": "S01",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -360,7 +361,8 @@
       "edgeRequirement": "보관0명도 정상; 회색 빈 카드가 영입/삭제처럼 동작하지 않음",
       "imageSlot": {
         "assetRefs": [
-          "silhouetteCard"
+          "silhouetteCard",
+          "finishScenes"
         ],
         "screenId": "S10",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -400,7 +402,8 @@
       "imageSlot": {
         "assetRefs": [
           "silhouetteCard",
-          "retirement"
+          "retirement",
+          "finishScenes"
         ],
         "screenId": "S11",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -554,7 +557,8 @@
       "edgeRequirement": "같은 선수 중복·빈 수비·부상 등 필수 오류 먼저; 다이아몬드만으로 입력하지 않음",
       "imageSlot": {
         "assetRefs": [
-          "NONE"
+          "NONE",
+          "finishScenes"
         ],
         "screenId": "S15",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -670,7 +674,8 @@
       "edgeRequirement": "분모0은 대시; 무경기 시즌·동률 수상·다른 리그 기록 분리; 기록 조회는 QUERY, 구단 실제 지명만 version검사 SAVE_COMMAND",
       "imageSlot": {
         "assetRefs": [
-          "NONE"
+          "NONE",
+          "finishScenes"
         ],
         "screenId": "S18",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -746,7 +751,8 @@
       "edgeRequirement": "삭제·복원은 대상명과 영향 확인; 오류를 세이브0으로 오인하지 않음",
       "imageSlot": {
         "assetRefs": [
-          "NONE"
+          "NONE",
+          "finishScenes"
         ],
         "screenId": "S20",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -786,7 +792,8 @@
       "imageSlot": {
         "assetRefs": [
           "NONE",
-          "appBrandMark"
+          "appBrandMark",
+          "finishScenes"
         ],
         "screenId": "S21",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -825,7 +832,8 @@
       "edgeRequirement": "확률 없는 변경에 적용100% 없음; 거포형·거포수비형 등 게임 명칭 사용",
       "imageSlot": {
         "assetRefs": [
-          "silhouetteCard"
+          "silhouetteCard",
+          "finishScenes"
         ],
         "screenId": "S22",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -939,7 +947,8 @@
       "imageSlot": {
         "assetRefs": [
           "training",
-          "international"
+          "international",
+          "finishScenes"
         ],
         "screenId": "S25",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -980,7 +989,8 @@
       "edgeRequirement": "메달만으로 자동 해결 가정 금지; 실제 게임 조건 충족 결과만 표시",
       "imageSlot": {
         "assetRefs": [
-          "NONE"
+          "NONE",
+          "finishScenes"
         ],
         "screenId": "S26",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -1022,7 +1032,8 @@
       "imageSlot": {
         "assetRefs": [
           "training",
-          "service"
+          "service",
+          "finishScenes"
         ],
         "screenId": "S27",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -1102,7 +1113,8 @@
       "edgeRequirement": "유효 오퍼0이면 수락 제거; 메이저 계약과 마이너 계약 구분",
       "imageSlot": {
         "assetRefs": [
-          "overseas"
+          "overseas",
+          "finishScenes"
         ],
         "screenId": "S29",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -1182,7 +1194,8 @@
       "edgeRequirement": "자격 미달·구단 거절·군 문제를 별도 사유로 표시; MLB 오퍼 보장 없음",
       "imageSlot": {
         "assetRefs": [
-          "posting"
+          "posting",
+          "finishScenes"
         ],
         "screenId": "S31",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -1221,7 +1234,8 @@
       "edgeRequirement": "오퍼 소멸은 잔류 등 실제 대안으로; 국내 계약과 이중 수락 방지",
       "imageSlot": {
         "assetRefs": [
-          "posting"
+          "posting",
+          "finishScenes"
         ],
         "screenId": "S32",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -1263,7 +1277,8 @@
       "imageSlot": {
         "assetRefs": [
           "overseas",
-          "service"
+          "service",
+          "finishScenes"
         ],
         "screenId": "S33",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -1302,7 +1317,8 @@
       "edgeRequirement": "미충족 조건은 학교 카드 사유; 열람만으로 입학 확정하지 않음",
       "imageSlot": {
         "assetRefs": [
-          "college"
+          "college",
+          "finishScenes"
         ],
         "screenId": "S34",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
