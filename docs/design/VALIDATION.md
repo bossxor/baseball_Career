@@ -371,3 +371,11 @@ verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행
 ## 2026-10-20 구현 전 세 항목 인계 마감
 
 130-PREIMPLEMENTATION-HANDOFF.md와 preimplementation-readiness.json을 현재 인계 기준으로 작성하고 README/START-HERE/HANDOFF/92의 낡은 현재 안내를 정정했다. 확인된 보드 소스 문제 수정·정적 접근성13검사·45화면/8상태 참조 대조와 인계 정리는 완료, 실제 렌더/키보드/스크린리더는 기존 보안 차단/미실행 상태다. verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행 모두 종료코드0/PASS. 인계표 수치(45화면/99이벤트/핵심298/23기대값 묶음/EXISTS80/TODO0/CODE_ONLY11/LEGACY1)를 원본과 대조했고 V01~V12 runtimePassed=false·전체 기대값 NOT_EXECUTED를 유지했다. 새 게임 규칙·구현 착수 권한을 추가하지 않았으며 실제 실행 PASS로 대체하지 않는다.
+
+## 2026-10-20 구현 직전 최종 문서 리뷰
+
+131 최종 리뷰에서5개 정합 위험을 기록·정정했다:06 생성 endpoint/creationId,78 생성 전 잠재력 및 홈 이어하기 문구,24 추가진루 확률/논리 동률키,06/28의 게임 화면 공개 DTO 경계,OS 캐시·LF 패키지 정합. 기존78/79/76/41/70/67/75/100의 확정 의미만 반영했으며 새 게임 규칙/실제 앱 코드는 추가하지 않았다. verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행 모두 종료코드0/PASS. 원격 main과 작업 기준155abd2 일치 확인. 실제 렌더·키보드·스크린리더·V01~V12·엔진/DB/인증/build/APK는 미실행이며 단순 문서 점검으로 PASS 처리하지 않는다.
+
+## 최종 검증 결과
+
+verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료코드0/PASS. 설계 파일359개를 MANIFEST의 경로·크기·SHA256으로 작업 폴더와 Git staged blob 양쪽에서 확인해359/359 일치, tracked 파일 집합도 정확히 일치했다. OS 캐시 항목0. 실제 앱 빌드/경기/DB/브라우저 검수가 아니라 설계 파일·정적 계약의 검증 결과다.

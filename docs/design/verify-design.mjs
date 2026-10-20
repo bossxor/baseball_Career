@@ -539,4 +539,9 @@ await import('./verify-latecareer-continuity.mjs');
  for(const [field,status] of [['imageExists','EXISTS'],['imageTodo','TODO'],['codeDisplayGroups','CODE_ONLY'],['legacyReferences','LEGACY_REFERENCE']])assert.equal(handoff.counts[field],registry.items.filter(i=>i.status===status).length);assert.deepEqual(handoff.executionGates,gates.map(({id,status,runtimePassed})=>({id,status,runtimePassed})));assert.ok(handoff.executionGates.every(g=>g.runtimePassed===false));assert.equal(handoff.counts.executedBrowserViews,0);assert.equal(handoff.reviewMatrix.executionStatus,'NOT_EXECUTED');unique(handoff.areas.map(a=>a.id));for(const a of handoff.areas)for(const f of a.sources)assert.ok(existsSync(path.join(root,f)),f);
  console.log('PASS: final preimplementation handoff matches current counts and 12 open runtime gates; no implementation authorization or executed visual checks inferred.');
 }
+{
+ const tech=read('06-TECH.md'),create=read('78-NEW-GAME-CREATION-RECOVERY.md'),game=read('24-GAME-ENGINE-SCORING.md');
+ assert.ok(tech.includes('새 게임 생성은78의 POST /api/game-creations'));assert.ok(tech.includes('공개 정책을 적용한 게임 화면용 DTO'));assert.ok(!create.includes("홈에 '만들던 게임 확인'"));assert.ok(!create.includes('홈에 각각 표시'));assert.ok(create.includes('생성 전에는 개인 잠재력을 아직 추첨하지'));assert.ok(game.includes('현재투수견제 기반 p=clamp'));assert.ok(game.includes('불변 simulationKey'));assert.ok(!game.includes('성공률70%'));assert.ok(read('rebuild-design-package.mjs').includes("'Thumbs.db'"));
+ console.log('PASS: final cross-document review corrections align creation, resume UI, public DTO and baserunning contracts; no new gameplay rule or runtime proof.');
+}
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

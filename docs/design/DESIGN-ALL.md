@@ -4,7 +4,7 @@
 
 <!-- SOURCE: START-HERE.md -->
 
-현재 인계 기준(2026-10-20): 이미지80항목 파일 준비·CODE_ONLY11묶음 표시안 승인·메인 보드 최신화·파일 기반 접근성13검사 완료. 실제 렌더는 file: 브라우저 정책 차단으로 미실행이다. [130 최종 인계](130-PREIMPLEMENTATION-HANDOFF.md)와 [현황](STATUS.md)을 먼저 읽고 구현은 별도 요청 전 시작하지 않는다.
+최종 점검(2026-10-20): [131 구현 직전 리뷰](131-FINAL-DESIGN-REVIEW.md)에서5개 문서/패키지 정합 문제를 기존 기준으로 정정했다. [130 인계](130-PREIMPLEMENTATION-HANDOFF.md)와 STATUS를 함께 읽는다. 실제 실행 검수는 미실행이며 이번 작업은 앱 구현을 시작한 기록이 아니다.
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -76,7 +76,7 @@ GitHub https://github.com/bossxor/baseball_Career 의 docs/design이 원본. 다
 
 <!-- SOURCE: README.md -->
 
-현재 인계 기준(2026-10-20): 이미지80항목 파일 준비·CODE_ONLY11묶음 표시안 승인·메인 보드 최신화·파일 기반 접근성13검사 완료. 실제 렌더는 file: 브라우저 정책 차단으로 미실행이다. [130 최종 인계](130-PREIMPLEMENTATION-HANDOFF.md)와 [현황](STATUS.md)을 먼저 읽고 구현은 별도 요청 전 시작하지 않는다.
+최종 점검(2026-10-20): [131 구현 직전 리뷰](131-FINAL-DESIGN-REVIEW.md)에서5개 문서/패키지 정합 문제를 기존 기준으로 정정했다. [130 인계](130-PREIMPLEMENTATION-HANDOFF.md)와 STATUS를 함께 읽는다. 실제 실행 검수는 미실행이며 이번 작업은 앱 구현을 시작한 기록이 아니다.
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 
@@ -165,6 +165,14 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 ---
 
 <!-- SOURCE: STATUS.md -->
+
+# 현재 작업 — 구현 직전 최종 설계 리뷰·정정 완료
+
+2026-10-20: 구현 직전 최종 리뷰131에서 생성 API·생성 전 잠재력/홈 안내·추가진루/동률키·공개 DTO·패키지 무결성의5개 정합 문제를 발견하고 기존 확정 기준으로 정정했다. 새 게임 규칙은 추가하지 않았다. 이번 요청은 마지막 점검이며 실제 앱/엔진/API/DB/APK 구현은 시작하지 않음. 실제 렌더·키보드·스크린리더와 V01~V12는 미실행 상태를 유지한다.
+
+[131 최종 리뷰](131-FINAL-DESIGN-REVIEW.md) · [130 인계 기준](130-PREIMPLEMENTATION-HANDOFF.md) · [120 구현 순서](120-IMPLEMENTATION-ROADMAP.md). 다음에 명시적으로 구현을 요청하면 M0부터 진행한다. 이미 확정한 게임 규칙을 반복 질문하지 않고 실제 실행 검증은 구현 뒤 별도로 기록한다. 아래는 이전 이력이다.
+
+---
 
 # 현재 작업 — 구현 전 설계 인계 마감 / 실제 실행 검수는 열림
 
@@ -452,6 +460,14 @@ AVG상한1.000과SLG상한4.000/OPS5.000·짧은표본·AB0·P100과현재A를�
 ---
 
 <!-- SOURCE: DETAIL-PLAN.md -->
+
+# 현재 작업 — 구현 직전 최종 설계 리뷰·정정 완료
+
+2026-10-20: 구현 직전 최종 리뷰131에서 생성 API·생성 전 잠재력/홈 안내·추가진루/동률키·공개 DTO·패키지 무결성의5개 정합 문제를 발견하고 기존 확정 기준으로 정정했다. 새 게임 규칙은 추가하지 않았다. 이번 요청은 마지막 점검이며 실제 앱/엔진/API/DB/APK 구현은 시작하지 않음. 실제 렌더·키보드·스크린리더와 V01~V12는 미실행 상태를 유지한다.
+
+[131 최종 리뷰](131-FINAL-DESIGN-REVIEW.md) · [130 인계 기준](130-PREIMPLEMENTATION-HANDOFF.md) · [120 구현 순서](120-IMPLEMENTATION-ROADMAP.md). 다음에 명시적으로 구현을 요청하면 M0부터 진행한다. 이미 확정한 게임 규칙을 반복 질문하지 않고 실제 실행 검증은 구현 뒤 별도로 기록한다. 아래는 이전 이력이다.
+
+---
 
 # 현재 작업 — 구현 전 설계 인계 마감 / 실제 실행 검수는 열림
 
@@ -1440,11 +1456,11 @@ ScheduleGame: id, season, dayIndex, homeTeamId, awayTeamId, status, rngSeed, res
 
 POST /api/saves/{id}/commands
 요청: commandId, expectedRevision, type, payload. header의 사용자 ID는 신뢰하지 않고 세션 subject 사용.
-응답: commandId, revision, summary, stateChanges 또는 state, emittedEvents, nextActions.
+응답: commandId, revision, summary, stateChanges 또는 state, emittedEvents, nextActions. 여기의 state/stateChanges는67/75/100의 공개 정책을 적용한 게임 화면용 DTO이며 DB SaveState JSONB를 그대로 직렬화한 값이 아니다. 일반 응답에는 rawP·서버 seed·미해금 히든 조건/진척을 포함하지 않는다. 백업용 완전 상태는70의 내부 보존 계약으로 구분한다.
 
 허용 type: SET_FOCUS, ADVANCE_CHUNK, RESOLVE_EVENT, ACCEPT_DRAFT, ACCEPT_CONTRACT, RETIRE, SET_LINEUP, SET_PITCHING_PLAN, MOVE_ROSTER, SUBMIT_OFFER, WITHDRAW_OFFER, RELEASE_PLAYER, DRAFT_PLAYER, AUTO_DRAFT, COMPLETE_OFFSEASON.
 
-생성 POST /api/saves는 별도 creationRequestId로 중복방지. body mode와 설정 및 archiveIds, expectedArchiveVersions를 받는다. 생성 중 보관선수 소유권과 스냅샷을 다시 확인한다. 목록 API는 state 대신 summary만 반환하며 cursor 페이지당20, archive50. 상세 state 초기 한도5MiB, 명령 body64KiB, 백업 압축 해제 후10MiB 상한 기본안. 크기를 초과하면 조용히 잘라내지 않고 명시적 오류로 처리한다.
+새 게임 생성은78의 POST /api/game-creations와 owner 범위 creationId를 사용한다. 이전 POST /api/saves 생성 경로와 creationRequestId 명칭은 폐기한다. body mode와 설정 및 archiveIds, expectedArchiveVersions를 받는다. 생성 중 보관선수 소유권과 스냅샷을 다시 확인한다. 목록 API는 state 대신 summary만 반환하며 cursor 페이지당20, archive50. 상세 state 초기 한도5MiB, 명령 body64KiB, 백업 압축 해제 후10MiB 상한 기본안. 크기를 초과하면 조용히 잘라내지 않고 명시적 오류로 처리한다.
 
 | HTTP/코드 | 의미 |
 | --- | --- |
@@ -2790,7 +2806,7 @@ GameInput:고정gameId/seed/rulesVersion/홈원정/명단/라인업/유효능력
 | HR |홈|전원득점|0 |
 | OUT |아웃|정지,조건부병살|1또는2 |
 
-주자이동은원래3루→2루→1루순서로새베이스배열에구성. 추가홈시도는01의주력/2아웃조건,성공률70%. 2아웃에서추가주루아웃이면타자의안타는유지,3아웃이발생한후다른주자추가득점없음. 병살은타자/1루주자강제아웃,3아웃이면그플레이득점0. 병살이3아웃을넘어4아웃으로기록되지않게경계검사.
+주자이동은원래3루→2루→1루순서로새베이스배열에구성. 추가홈시도는41의2아웃·주루≥60 조건과 주루/현재투수견제 기반 p=clamp(.70+.002×(RUNNING-50)-.0015×(PICKOFF-50),.40,.90)을 사용한다. 초기 고정70% 규칙은 폐기한다. 2아웃에서추가주루아웃이면타자의안타는유지,3아웃이발생한후다른주자추가득점없음. 병살은타자/1루주자강제아웃,3아웃이면그플레이득점0. 병살이3아웃을넘어4아웃으로기록되지않게경계검사.
 
 실책/희생타/도루/고의사구/낫아웃/타격방해는v1제외. UI전체기록에서이항목을가짜실제값처럼표시하지않음. 안타주루아웃은타격기록H/AB유지,타점은실제합법득점만. HBP는BB와분리해OBP에는포함하고WHIP의BB에는불포함.
 
@@ -2802,7 +2818,7 @@ GameInput:고정gameId/seed/rulesVersion/홈원정/명단/라인업/유효능력
 
 ## 투수 운용
 
-선발은08의90구/피로80검토·110구상한,불펜30구/2이닝교체검토. 현재타석은끝내고교체하므로110구를넘긴타석을삭제하지않음. 보직/피로/최근등판/남은이닝으로적임자선정,동률ID. 마지막가용투수는상한초과에도지속할수있되피로페널티유지. 투수고갈때가상투수를공짜로추가하지않음.
+선발은08의90구/피로80검토·110구상한,불펜30구/2이닝교체검토. 현재타석은끝내고교체하므로110구를넘긴타석을삭제하지않음. 보직/피로/최근등판/남은이닝으로적임자선정,동률은70의 불변 simulationKey 기준이며 복원 시 바뀌는 물리 rowId를 사용하지 않는다. 마지막가용투수는상한초과에도지속할수있되피로페널티유지. 투수고갈때가상투수를공짜로추가하지않음.
 
 시뮬레이션에투구수와타석수둘다상한감시. 한이닝300타석에도종료안되면결과추첨조작대신ENGINE_LIMIT오류로안전저장중지,진단seed기록. 이는확률상극단입력복구장치이며추첨승리기능아님. 요청당타석1000개또는완료이닝20개까지처리하고나머지는pendingGame에저장한다.
 
@@ -3084,7 +3100,7 @@ request_hash는type/payload/expectedRevision의canonical JSON으로계산,토큰
 
 ## API 계약
 
-공통요청헤더Authorization또는웹세션,Client-Version,Request-ID.명령POST에는commandId/expectedRevision/type/payload.성공{commandId,revision,phase,summary,eventIds,nextActions,result};오류{code,messageKey,requestId,fieldErrors?,currentRevision?,retryAfter?}.민감예외stack/SQL/접속문자열전달금지.
+공통요청헤더Authorization또는웹세션,Client-Version,Request-ID.명령POST에는commandId/expectedRevision/type/payload.성공{commandId,revision,phase,summary,eventIds,nextActions,result};오류{code,messageKey,requestId,fieldErrors?,currentRevision?,retryAfter?}.민감예외stack/SQL/접속문자열전달금지. 게임 화면용 state/stateChanges는67/75/100의 공개 DTO projection을 거친다. 서버 SaveState를 그대로 반환하지 않고 일반 응답의 rawP/seed와 미해금 히든 조건·진척을 제외한다. 원본 보관·백업 내부 상태와 화면 응답은 별도 자료형이다.
 
 목록cursor는updatedAt+id의 안정적인 조합,타사용자목록접근불가.상세기록API에는leagueId/seasonId/phase필터필수에서 대표/MLB/마이너통계를혼합하지않음.정렬열은정적allowlist,사용자문자열SQL직접연결금지.문자입력은문자열로렌더링.
 
@@ -5638,10 +5654,10 @@ S18의원래리그/기록탭은읽기전용이고커리어S05의지명결과수�
 ## 사용자 흐름
 
 1. 모드 선택 → 이름·역할·팀·난이도·외형 등 입력. 커리어 집중 능력은 해당 역할의 6개 중 서로 다른 4개. 구단은 독립 시작할 수 있고 보관 선수 투입은 선택이다.
-2. 확인 화면에 시작 나이·소속·6능력·평균 종합·선택한 난이도·클라우드 저장 계정을 표시한다. 미공개 잠재력은 일반·하드에서 범위로 표시한다. 숨김 난이도는 기존 해금 동작 뒤에만 나타난다. 단순 생성 버튼에 확률 배지를 붙이지 않는다.
+2. 확인 화면에 시작 나이·소속·6능력·평균 종합·선택한 난이도·클라우드 저장 계정을 표시한다. 79대로 생성 전에는 개인 잠재력을 아직 추첨하지 않으며 분포 설명만 표시한다. 생성 완료 후67의 첫 공개 평가 범위를 표시한다. 숨김 난이도는 기존 해금 동작 뒤에만 나타난다. 단순 생성 버튼에 확률 배지를 붙이지 않는다.
 3. 시작을 누르면 creationId와 정규화된 요청을 로컬 저널에 먼저 기록하고 서버에 전송한다. 입력을 잠그고 '새 게임을 준비하고 있어요'와 진행 단계를 표시한다. 단계는 준비/리그 생성/검증/저장 완료이며 가짜 진행률·예상 시간은 쓰지 않는다.
 4. 완료된 saveId로 첫 화면을 연다. 커리어는 고교 시작 상태, 구단은 개막 준비 상태이며 구체 날짜·초기 능력은 기존 생성 규칙을 따른다. 신규 생성 자체가 졸업·드래프트·영입·첫 경기 진행을 실행하지 않는다.
-5. 앱을 닫았다면 홈에 '만들던 게임 확인'을 표시한다. 완료됐으면 해당 게임 열기, 진행 중이면 같은 작업 보기, 실패했으면 원인과 같은 요청 재시도 안내. 확인 전 새 생성 버튼으로 동일 요청을 반복하지 않는다.
+5. 앱을 닫았다면 홈에는76의 최신 U대로 '이어하기' 버튼만 표시한다. 별도 생성 중단 상태·복구 설명 카드는 만들지 않는다. 서버 resumeDescriptor로 같은 생성 작업/완료 게임에 연결하며 필요한 상태·실패 사유·동일 요청 재시도는 생성 화면에서 처리한다. 확인 전 새 creationId로 동일 요청을 반복하지 않는다.
 
 ## 소유자 범위의 API
 
@@ -5674,7 +5690,7 @@ SUCCEEDED는 불변 receipt. 이후 유저가 세이브를 삭제한 경우 같�
 
 초안은 owner/creationId/mode/schemaVersion을 키로 저장하고 서버 접수 전에는 '이 기기의 초안'으로 표시한다. 다른 기기로 초안이 전송됐다고 표현하지 않는다. 서버 접수 후 진행 상황은 같은 계정 어느 기기에서든 조회할 수 있다. 로그아웃은 해당 owner의 로컬 초안·저널 접근을 잠그고 다음 계정에 노출하지 않는다. 서버 게임은 로그아웃으로 삭제하지 않는다. 만료 로그인 복구 뒤 원래 owner를 확인한 후 같은 요청을 재개한다.
 
-생성 성공만으로 기존 최근 플레이를 덮지 않는다. 실제 새 게임 열기 시 [76](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)의 last-played CAS를 적용한다. 여러 생성 작업이 완료됐다면 홈에 각각 표시하고 임의로 하나를 선택하지 않는다. 이미 확인된 완료 항목은 일반 저장 목록에서 접근한다.
+생성 성공만으로 기존 최근 플레이를 덮지 않는다. 실제 새 게임 열기 시 [76](76-CROSS-PLATFORM-INTERRUPTION-RESUME.md)의 last-played CAS를 적용한다. 여러 생성 작업이 완료됐어도 홈에 작업 상태 카드를 나열하지 않는다. 실제 대상 선택이 필요하면 기존 저장/작업 목록에서 명시적으로 선택하며, 조회만으로 임의의 작업을 최근 플레이로 바꾸지 않는다. 홈은 이어하기 버튼만 유지하고 이미 확인된 완료 항목은 일반 저장 목록에서 접근한다.
 
 ## 검수와 구현 준비
 
@@ -9593,6 +9609,62 @@ DESIGN-ALL은 원문을 모은 전달본, MANIFEST-SHA256.csv는 파일 무결�
 
 현재 가능한 서면·정적 작업은 인계했다. 열린 실제 검수는 위 한계대로 남겨두며 문서를 늘려 실행 PASS를 대신하지 않는다. 별도 구현 착수 요청이 오면120의 M0 전에 해당 요청과 필요한 실행 시점 정보를 확인한다. 기존 사용자 결정을 다시 질문하지 않는다. 실제 서비스/서명/배포 정보는 해당 마일스톤에서만 묻는다.
 
+## 구현 직전 최종 리뷰
+
+[131](131-FINAL-DESIGN-REVIEW.md)의5개 정합 정정과 패키지 무결성 보완을 반영했다. 이는 기존 규칙의 해석 정리이며 구현·실행 PASS를 추가하지 않는다.
+
+---
+
+<!-- SOURCE: 131-FINAL-DESIGN-REVIEW.md -->
+
+# 131. 구현 직전 최종 설계 리뷰
+
+2026-10-20 / FINAL_DOCUMENT_REVIEW. 사용자 요청은 마지막 설계 점검이며 이번 작업에서 앱·엔진·API·DB·APK 구현은 시작하지 않았다. 검토 시작 Git 기준155abd2. 기존 자동 검증만 반복하지 않고 초기 원문과 후속 확정 계약의 의미 충돌을 대조했다.
+
+## 결론
+
+이번 검토 범위에서 새 게임 규칙을 선택해야 할 미결정 사항은 발견하지 않았다. 아래5개 문서/인계 정합 문제를 기존 확정 원문에 맞춰 정정했다. 기본 구현 골격 M0를 시작할 설계 자료는 갖춰져 있다. 이 판단은 실제 경기 밸런스·API/DB·인증·빌드·기기·최종 화면 검수 PASS와 다르다.
+
+## 발견 사항과 정정
+
+| ID | 중요도 | 발견한 위험 | 기존 기준·처리 | 상태 |
+|---|---|---|---|---|
+|FR01|높음|06의 POST /api/saves·creationRequestId를 그대로 구현하면78의 생성 job·이어하기·멱등 계약과 다른 API를 만들 수 있음|06을78의 POST /api/game-creations·owner 범위 creationId로 통일, 이전 명칭은 폐기임을 명시|문서 정정 완료|
+|FR02|높음|78에 생성 전 개인 잠재력 범위와 홈의 만들던 게임 카드·여러 완료 작업 나열 설명이 남아79/76 최신 기준과 충돌|생성 전 분포 설명/생성 후 평가 범위로 구분. 홈 이어하기 버튼만, 상태 처리는 생성 화면·필요한 대상 선택은 기존 목록. 최근 플레이 임의 변경 금지 유지|문서 정정 완료|
+|FR03|높음|24의 추가홈진루 성공률70% 고정과 동률ID 문구는41의 주루/견제 산식·70의 복원 불변키와 다르게 옮겨질 수 있음|2아웃·주루≥60 및41의 clamp 산식을 명시. 동률은 물리rowId가 아닌 simulationKey를 사용한다고 정리|문서 정정 완료|
+|FR04|높음|06의 응답 state/stateChanges가 DB SaveState 원본인지 공개 DTO인지 명확하지 않아 잠재력/seed/히든 조건 비공개 계약을 누락할 수 있음|06/28에67/75/100 공개 projection을 명시. 일반 화면 응답과70 내부 백업 상태를 구분. 실제 응답 누출이 발생했다는 뜻은 아님|문서 정정 완료|
+|FR05|보통|SHA 목록에 Git에 없는 Windows Thumbs.db 포함. HTML/CSS의CRLF와 Git LF 정규화 때문에 새 체크아웃의 바이트 검증이 달라질 수 있음|생성기에서 OS 캐시 제외, 현재 두 파일 LF 정리, .gitattributes에 CSS/SVG LF 규칙 추가. 원본 그림·게임 규칙은 변경하지 않음|패키지 정정 완료|
+
+고정 성공률·생성 경로·홈 문구의 최초 표현을 단순히 여러 문서에 보존하는 대신 실제 구현자가 먼저 읽는 원문을 수정했다. 이 정정은 새 확률·API 기능·해금/보상·게임 규칙을 추가하지 않는다.
+
+## 검토한 범위와 증거의 한계
+
+| 영역 | 점검 |
+|---|---|
+|생성·종류·초기값|79/78/122의6능력·집중4·투구폼·치트 발견·단일 생성·공개 시점|
+|성장·치트·XP|90/85의 기본예산/실제소비/지급·상한손실·이적과 복원·배율 중복 금지|
+|경기·기록|24/41/08과 자동 산술 검사의 주루/견제·자동주자·outs·AVG/SLG·능력100 비보장|
+|진로·대학·병역|34/43/21 및 기존 동선 검사의 미국 카드 조건·대학 일정·복무와 메달 구분|
+|API·저장·복구|06/28/64/74/70/72의 소유권·receipt·revision·원자 활성화·불변 논리키·공개 정보|
+|화면·자료|45화면/99이벤트·핵심298/전체23기대값 묶음·이미지80/TODO0·CODE_ONLY11의 원본 대조|
+|Git·인계|원본V:와 정상 체크아웃·열람용 복사본·통합MD·파일 목록의 정합. 비어 있는V:/.git는 수정하지 않음|
+
+이는 모든 문장의 무오류 증명이나 실행 검증이 아니다. 스크립트가 검증하는 산술/정적 참조와 사람이 대조한 의미 범위를 구분한다. 전체 문서의 과거 진행 이력은 현재 기준으로 재해석하지 않는다.
+
+## 구현을 시작할 때 지킬 것
+
+1. [120](120-IMPLEMENTATION-ROADMAP.md)의 M0부터 시작해 빌드/타입/규칙 정의의 골격을 먼저 확인한다. 디자인 보드의 시연 코드를 실제 엔진으로 복사하지 않는다.
+2. 서비스 연결 시 실제 런타임·인증 지원·SDK·접속 환경을 [92 V 게이트](92-DESIGN-CLOSURE-HANDOFF.md)에서 확인한다. 현재 설계의 후보를 이미 연결된 서비스라고 쓰지 않는다.
+3. 핵심298과 전체23기대값 묶음은 테스트를 옮길 원본이다. NOT_EXECUTED를 실제 실행 전 PASS로 바꾸지 않는다. 같은 계산식으로 기대값까지 다시 생성해 자기 검증하지 않는다.
+4. 기존 file: 렌더 관찰 차단은 그대로다.129의 실제 렌더·키보드·스크린리더 미실행과 V01~V12를 열린 항목으로 인계한다. 정책 우회나 개발 전 실행 성공 주장은 하지 않는다.
+5. 사용자 착수 요청이 오면 현재 사람의 요청을 우선한다. 이 리뷰 자체는 앱 생성·배포·운영 DB 쓰기를 실행한 기록이 아니다.
+
+현재 기본 구조는06의 TypeScript/React·Vite/Hono Node/Drizzle·Neon/Capacitor 설계안이다. 실제 의존성 버전·인증/호스팅·APK 서명·자산 배포 권리·장기 밸런스는 해당 구현 단계에서 확인해야 한다. 새 게임 규칙 질문으로 기존 결정을 반복하지 않는다.
+
+## 최종 검증 결과
+
+verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료코드0/PASS. 설계 파일359개를 MANIFEST의 경로·크기·SHA256으로 작업 폴더와 Git staged blob 양쪽에서 확인해359/359 일치, tracked 파일 집합도 정확히 일치했다. OS 캐시 항목0. 실제 앱 빌드/경기/DB/브라우저 검수가 아니라 설계 파일·정적 계약의 검증 결과다.
+
 ---
 
 <!-- SOURCE: EVENT-CATALOG.md -->
@@ -10462,7 +10534,7 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 # 다른 채팅·개발 환경에서 이어갈 요청문
 
-이 저장소는 '다시, 플레이볼'의 구현 전 설계 패키지다. 먼저 START-HERE.md, STATUS.md,14-CANONICAL-DECISIONS.md,91-CURRENT-CONTRACT-INDEX.md,130-PREIMPLEMENTATION-HANDOFF.md와 preimplementation-readiness.json을 읽고 실제 Git/파일 상태를 확인하라. 과거 대화를 안다고 가정하지 말라.
+이 저장소는 '다시, 플레이볼'의 구현 전 설계 패키지다. 먼저 START-HERE.md, STATUS.md,14-CANONICAL-DECISIONS.md,91-CURRENT-CONTRACT-INDEX.md,130-PREIMPLEMENTATION-HANDOFF.md,131-FINAL-DESIGN-REVIEW.md와 preimplementation-readiness.json을 읽고 실제 Git/파일 상태를 확인하라. 과거 대화를 안다고 가정하지 말라.
 
 현재 별도 구현 착수 권한은 없다. 설계 계속 요청을 앱/엔진/API/Neon/인증/APK/호스팅 구축 요청으로 해석하지 말라. 사용자가 명시적으로 구현을 지시하면120의 순서와92의 실행 게이트를 사용한다.
 
@@ -10475,6 +10547,8 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 현재 원본 V:/docs/design, 비어 있는 V:/.git는 수정/초기화하지 않는다. 기존 정상 작업용 체크아웃 경로는 CONTINUATION-CHECKPOINT.md와 실제 Git 상태를 확인하라. 다른 PC에서는 새 정상 clone을 쓰고 기록된 로컬 경로를 그대로 실행하지 말라. 코드/비밀값/개인 토큰을 문서나 출력에 넣지 말라.
 
 기존 권한 범위의 설계 변경은 해당 MD·14 사용자 결정·91 색인·STATUS·검증·통합MD·SHA를 맞추고 승인 변경만 커밋·푸시하라. 시각 수정안은 저장소 밖에서 보여주고 사용자 승인본만 반영한다. 이미 승인한 표시안을 반복 승인받지 말라. 새 게임 규칙이 필요할 때만 선택지를 제시하라. 모든 판단은 현재 실제 사람의 요청과 해당 범위의 최신 명시 결정을 우선한다.
+
+최종131 정정: 생성은78의 /api/game-creations·creationId, 홈은이어하기만, 생성 전 개인P추첨 없음, 추가진루는41 산식, 동률은simulationKey, 게임 화면 state는공개 DTO이다. 기존 실제 사용자 구현 착수 요청이 있으면 그 요청을 우선하고 과거 설계 단계의 권한 없음 기록을 영구 금지로 해석하지 말라.
 
 ---
 
@@ -10853,3 +10927,11 @@ verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행
 ## 2026-10-20 구현 전 세 항목 인계 마감
 
 130-PREIMPLEMENTATION-HANDOFF.md와 preimplementation-readiness.json을 현재 인계 기준으로 작성하고 README/START-HERE/HANDOFF/92의 낡은 현재 안내를 정정했다. 확인된 보드 소스 문제 수정·정적 접근성13검사·45화면/8상태 참조 대조와 인계 정리는 완료, 실제 렌더/키보드/스크린리더는 기존 보안 차단/미실행 상태다. verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행 모두 종료코드0/PASS. 인계표 수치(45화면/99이벤트/핵심298/23기대값 묶음/EXISTS80/TODO0/CODE_ONLY11/LEGACY1)를 원본과 대조했고 V01~V12 runtimePassed=false·전체 기대값 NOT_EXECUTED를 유지했다. 새 게임 규칙·구현 착수 권한을 추가하지 않았으며 실제 실행 PASS로 대체하지 않는다.
+
+## 2026-10-20 구현 직전 최종 문서 리뷰
+
+131 최종 리뷰에서5개 정합 위험을 기록·정정했다:06 생성 endpoint/creationId,78 생성 전 잠재력 및 홈 이어하기 문구,24 추가진루 확률/논리 동률키,06/28의 게임 화면 공개 DTO 경계,OS 캐시·LF 패키지 정합. 기존78/79/76/41/70/67/75/100의 확정 의미만 반영했으며 새 게임 규칙/실제 앱 코드는 추가하지 않았다. verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행 모두 종료코드0/PASS. 원격 main과 작업 기준155abd2 일치 확인. 실제 렌더·키보드·스크린리더·V01~V12·엔진/DB/인증/build/APK는 미실행이며 단순 문서 점검으로 PASS 처리하지 않는다.
+
+## 최종 검증 결과
+
+verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료코드0/PASS. 설계 파일359개를 MANIFEST의 경로·크기·SHA256으로 작업 폴더와 Git staged blob 양쪽에서 확인해359/359 일치, tracked 파일 집합도 정확히 일치했다. OS 캐시 항목0. 실제 앱 빌드/경기/DB/브라우저 검수가 아니라 설계 파일·정적 계약의 검증 결과다.

@@ -213,6 +213,7 @@
       "scope": "같은ID/요청해시·revision·receipt·소유자생성",
       "topic": "미리보기·명령·동시성",
       "currentSources": [
+        "131-FINAL-DESIGN-REVIEW.md",
         "74-PREVIEW-COMMAND-RECONCILIATION.md",
         "75-EXACT-EFFECTS-PUBLIC-INFORMATION.md",
         "64-EXPANSION-COMMON-CONTRACT.md",
@@ -300,6 +301,7 @@
       "scope": "6능력목록·평균·로고·폰트·모바일검수",
       "topic": "시각·이미지·접근성",
       "currentSources": [
+        "131-FINAL-DESIGN-REVIEW.md",
         "130-PREIMPLEMENTATION-HANDOFF.md",
         "129-DESIGN-BOARD-REFRESH-ACCESSIBILITY.md",
         "127-CODE-DISPLAY-SPECIFICATION.md",

@@ -1,6 +1,6 @@
 # 다른 채팅·개발 환경에서 이어갈 요청문
 
-이 저장소는 '다시, 플레이볼'의 구현 전 설계 패키지다. 먼저 START-HERE.md, STATUS.md,14-CANONICAL-DECISIONS.md,91-CURRENT-CONTRACT-INDEX.md,130-PREIMPLEMENTATION-HANDOFF.md와 preimplementation-readiness.json을 읽고 실제 Git/파일 상태를 확인하라. 과거 대화를 안다고 가정하지 말라.
+이 저장소는 '다시, 플레이볼'의 구현 전 설계 패키지다. 먼저 START-HERE.md, STATUS.md,14-CANONICAL-DECISIONS.md,91-CURRENT-CONTRACT-INDEX.md,130-PREIMPLEMENTATION-HANDOFF.md,131-FINAL-DESIGN-REVIEW.md와 preimplementation-readiness.json을 읽고 실제 Git/파일 상태를 확인하라. 과거 대화를 안다고 가정하지 말라.
 
 현재 별도 구현 착수 권한은 없다. 설계 계속 요청을 앱/엔진/API/Neon/인증/APK/호스팅 구축 요청으로 해석하지 말라. 사용자가 명시적으로 구현을 지시하면120의 순서와92의 실행 게이트를 사용한다.
 
@@ -13,3 +13,5 @@
 현재 원본 V:/docs/design, 비어 있는 V:/.git는 수정/초기화하지 않는다. 기존 정상 작업용 체크아웃 경로는 CONTINUATION-CHECKPOINT.md와 실제 Git 상태를 확인하라. 다른 PC에서는 새 정상 clone을 쓰고 기록된 로컬 경로를 그대로 실행하지 말라. 코드/비밀값/개인 토큰을 문서나 출력에 넣지 말라.
 
 기존 권한 범위의 설계 변경은 해당 MD·14 사용자 결정·91 색인·STATUS·검증·통합MD·SHA를 맞추고 승인 변경만 커밋·푸시하라. 시각 수정안은 저장소 밖에서 보여주고 사용자 승인본만 반영한다. 이미 승인한 표시안을 반복 승인받지 말라. 새 게임 규칙이 필요할 때만 선택지를 제시하라. 모든 판단은 현재 실제 사람의 요청과 해당 범위의 최신 명시 결정을 우선한다.
+
+최종131 정정: 생성은78의 /api/game-creations·creationId, 홈은이어하기만, 생성 전 개인P추첨 없음, 추가진루는41 산식, 동률은simulationKey, 게임 화면 state는공개 DTO이다. 기존 실제 사용자 구현 착수 요청이 있으면 그 요청을 우선하고 과거 설계 단계의 권한 없음 기록을 영구 금지로 해석하지 말라.

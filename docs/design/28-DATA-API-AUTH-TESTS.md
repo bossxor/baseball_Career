@@ -26,7 +26,7 @@ request_hash는type/payload/expectedRevision의canonical JSON으로계산,토큰
 
 ## API 계약
 
-공통요청헤더Authorization또는웹세션,Client-Version,Request-ID.명령POST에는commandId/expectedRevision/type/payload.성공{commandId,revision,phase,summary,eventIds,nextActions,result};오류{code,messageKey,requestId,fieldErrors?,currentRevision?,retryAfter?}.민감예외stack/SQL/접속문자열전달금지.
+공통요청헤더Authorization또는웹세션,Client-Version,Request-ID.명령POST에는commandId/expectedRevision/type/payload.성공{commandId,revision,phase,summary,eventIds,nextActions,result};오류{code,messageKey,requestId,fieldErrors?,currentRevision?,retryAfter?}.민감예외stack/SQL/접속문자열전달금지. 게임 화면용 state/stateChanges는67/75/100의 공개 DTO projection을 거친다. 서버 SaveState를 그대로 반환하지 않고 일반 응답의 rawP/seed와 미해금 히든 조건·진척을 제외한다. 원본 보관·백업 내부 상태와 화면 응답은 별도 자료형이다.
 
 목록cursor는updatedAt+id의 안정적인 조합,타사용자목록접근불가.상세기록API에는leagueId/seasonId/phase필터필수에서 대표/MLB/마이너통계를혼합하지않음.정렬열은정적allowlist,사용자문자열SQL직접연결금지.문자입력은문자열로렌더링.
 

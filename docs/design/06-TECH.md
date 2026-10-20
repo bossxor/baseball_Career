@@ -42,11 +42,11 @@ ScheduleGame: id, season, dayIndex, homeTeamId, awayTeamId, status, rngSeed, res
 
 POST /api/saves/{id}/commands
 요청: commandId, expectedRevision, type, payload. header의 사용자 ID는 신뢰하지 않고 세션 subject 사용.
-응답: commandId, revision, summary, stateChanges 또는 state, emittedEvents, nextActions.
+응답: commandId, revision, summary, stateChanges 또는 state, emittedEvents, nextActions. 여기의 state/stateChanges는67/75/100의 공개 정책을 적용한 게임 화면용 DTO이며 DB SaveState JSONB를 그대로 직렬화한 값이 아니다. 일반 응답에는 rawP·서버 seed·미해금 히든 조건/진척을 포함하지 않는다. 백업용 완전 상태는70의 내부 보존 계약으로 구분한다.
 
 허용 type: SET_FOCUS, ADVANCE_CHUNK, RESOLVE_EVENT, ACCEPT_DRAFT, ACCEPT_CONTRACT, RETIRE, SET_LINEUP, SET_PITCHING_PLAN, MOVE_ROSTER, SUBMIT_OFFER, WITHDRAW_OFFER, RELEASE_PLAYER, DRAFT_PLAYER, AUTO_DRAFT, COMPLETE_OFFSEASON.
 
-생성 POST /api/saves는 별도 creationRequestId로 중복방지. body mode와 설정 및 archiveIds, expectedArchiveVersions를 받는다. 생성 중 보관선수 소유권과 스냅샷을 다시 확인한다. 목록 API는 state 대신 summary만 반환하며 cursor 페이지당20, archive50. 상세 state 초기 한도5MiB, 명령 body64KiB, 백업 압축 해제 후10MiB 상한 기본안. 크기를 초과하면 조용히 잘라내지 않고 명시적 오류로 처리한다.
+새 게임 생성은78의 POST /api/game-creations와 owner 범위 creationId를 사용한다. 이전 POST /api/saves 생성 경로와 creationRequestId 명칭은 폐기한다. body mode와 설정 및 archiveIds, expectedArchiveVersions를 받는다. 생성 중 보관선수 소유권과 스냅샷을 다시 확인한다. 목록 API는 state 대신 summary만 반환하며 cursor 페이지당20, archive50. 상세 state 초기 한도5MiB, 명령 body64KiB, 백업 압축 해제 후10MiB 상한 기본안. 크기를 초과하면 조용히 잘라내지 않고 명시적 오류로 처리한다.
 
 | HTTP/코드 | 의미 |
 | --- | --- |
