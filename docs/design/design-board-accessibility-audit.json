@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-20",
+  "status": "STATIC_ACCESSIBILITY_AUDIT_ONLY",
+  "sourceCommitBeforeChange": "efa9f2e",
+  "files": {
+    "design-board.html": "9067773a52c65288a81ddb21bbd988ccdeb777a7ba7878db291df3401d11b2b4",
+    "design-board-refresh.css": "68ea7c89cdf94ab5822830de922bbaf81077061985a466240e5bcd573d07e598"
+  },
+  "checks": [
+    {
+      "id": "SA01",
+      "name": "unique source IDs",
+      "result": "PASS_STATIC",
+      "details": {
+        "count": 161
+      }
+    },
+    {
+      "id": "SA02",
+      "name": "language and landmark markup",
+      "result": "PASS_STATIC",
+      "details": {
+        "lang": "ko",
+        "mainCount": 1,
+        "h1Count": 1
+      }
+    },
+    {
+      "id": "SA03",
+      "name": "image alternative attribute",
+      "result": "PASS_STATIC",
+      "details": {
+        "imageCount": 60,
+        "missing": []
+      }
+    },
+    {
+      "id": "SA04",
+      "name": "static input names",
+      "result": "PASS_STATIC",
+      "details": {
+        "controlCount": 37,
+        "missing": []
+      }
+    },
+    {
+      "id": "SA05",
+      "name": "table captions and column scope",
+      "result": "PASS_STATIC",
+      "details": {
+        "tableCount": 6,
+        "newCaptions": 2
+      }
+    },
+    {
+      "id": "SA06",
+      "name": "in-page anchor references",
+      "result": "PASS_STATIC",
+      "details": {
+        "count": 43,
+        "broken": []
+      }
+    },
+    {
+      "id": "SA07",
+      "name": "nonfunctional example button semantics",
+      "result": "PASS_STATIC",
+      "details": {
+        "disabledExamples": 61,
+        "note": "Static drawing actions disabled; existing real design-demo controls retained."
+      }
+    },
+    {
+      "id": "SA08",
+      "name": "declared keyboard and motion styles",
+      "result": "PASS_STATIC",
+      "details": {
+        "scope": "CSS presence only; actual keyboard/motion behavior not tested."
+      }
+    },
+    {
+      "id": "SA09",
+      "name": "declared narrow layout and table overflow styles",
+      "result": "PASS_STATIC",
+      "details": {
+        "scope": "CSS presence only; no viewport render executed."
+      }
+    },
+    {
+      "id": "SA10",
+      "name": "static file references",
+      "result": "PASS_STATIC",
+      "details": {
+        "referenceCount": 73,
+        "missing": []
+      }
+    },
+    {
+      "id": "SA11",
+      "name": "approved catalog visibility in source",
+      "result": "PASS_STATIC",
+      "details": {
+        "badges": 10,
+        "themes": 3,
+        "guide": "code-display-board.html"
+      }
+    },
+    {
+      "id": "SA12",
+      "name": "six-ability archive example",
+      "result": "PASS_STATIC",
+      "details": {
+        "exampleOnly": true,
+        "peak": [
+          92,
+          88,
+          86,
+          94,
+          80,
+          76
+        ],
+        "imported": [
+          46,
+          44,
+          43,
+          47,
+          40,
+          38
+        ],
+        "overall": 43
+      }
+    },
+    {
+      "id": "SA13",
+      "name": "selected opaque token contrast",
+      "result": "PASS_STATIC",
+      "details": {
+        "pairs": [
+          {
+            "name": "body",
+            "foreground": "#172c50",
+            "background": "#f2f6fb",
+            "ratio": 12.79,
+            "threshold": 4.5
+          },
+          {
+            "name": "muted",
+            "foreground": "#526477",
+            "background": "#ffffff",
+            "ratio": 6.09,
+            "threshold": 4.5
+          },
+          {
+            "name": "action",
+            "foreground": "#ffffff",
+            "background": "#254f86",
+            "ratio": 8.26,
+            "threshold": 4.5
+          },
+          {
+            "name": "secondary",
+            "foreground": "#254f86",
+            "background": "#ffffff",
+            "ratio": 8.26,
+            "threshold": 4.5
+          },
+          {
+            "name": "header link",
+            "foreground": "#ffffff",
+            "background": "#233f66",
+            "ratio": 10.64,
+            "threshold": 4.5
+          },
+          {
+            "name": "badge",
+            "foreground": "#284b76",
+            "background": "#e9f0fb",
+            "ratio": 7.77,
+            "threshold": 4.5
+          }
+        ],
+        "note": "Explicit opaque token pairs only; image overlays, inherited styles and actual computed contrast not tested."
+      }
+    }
+  ],
+  "render": {
+    "status": "BLOCKED_BY_BROWSER_URL_POLICY",
+    "attempt": "cua.getTab existing file URL",
+    "reason": "Only http/https protocols allowed; file URL observation rejected.",
+    "attemptedWorkaround": false,
+    "executedViewports": [],
+    "keyboardExecution": "NOT_EXECUTED",
+    "screenReaderExecution": "NOT_EXECUTED",
+    "wcagConformance": "NOT_ESTABLISHED"
+  },
+  "scopeNote": "Static source checks are not an axe scan, a live DOM audit, actual screen rendering or WCAG conformance proof. All 45 screen final-pixel flags remain unchanged.",
+  "hashNormalization": "UTF8_LF"
+}

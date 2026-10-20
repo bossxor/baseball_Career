@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { Script } from 'node:vm';
+import { createHash } from 'node:crypto';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const read = name => readFileSync(path.join(root, name), 'utf8');
@@ -525,5 +526,11 @@ await import('./verify-latecareer-continuity.mjs');
  const spec=read('127-CODE-DISPLAY-SPECIFICATION.md');
  for(const i of registry.items.filter(i=>i.status==='CODE_ONLY')){assert.ok(spec.includes(i.id));assert.equal(i.displaySpec,'127-CODE-DISPLAY-SPECIFICATION.md');assert.equal(i.implementationStatus,'NOT_IMPLEMENTED');assert.equal(i.visualReview,'USER_APPROVED_WORKING_BASELINE');assert.equal(i.designGuide,'code-display-board.html');}
  console.log('PASS: 11 code-display specifications and 45-screen/8-state reference audit; visual baseline approved, browser execution count remains zero.');
+}
+{
+ const evidence=JSON.parse(read('design-board-accessibility-audit.json'));assert.equal(evidence.status,'STATIC_ACCESSIBILITY_AUDIT_ONLY');assert.equal(evidence.checks.length,13);for(const c of evidence.checks)assert.equal(c.result,'PASS_STATIC');
+ for(const [file,digest] of Object.entries(evidence.files))assert.equal(createHash('sha256').update(read(file).replace(/\r\n/g,'\n')).digest('hex'),digest,'Outdated source audit: '+file);
+ assert.equal((html.match(/<img\b/g)||[]).length,evidence.checks.find(c=>c.id==='SA03').details.imageCount);assert.equal((html.match(/<table\b/g)||[]).length,evidence.checks.find(c=>c.id==='SA05').details.tableCount);assert.equal(evidence.render.status,'BLOCKED_BY_BROWSER_URL_POLICY');assert.equal(evidence.render.attemptedWorkaround,false);assert.deepEqual(evidence.render.executedViewports,[]);
+ console.log('PASS: refreshed board references and 13 static accessibility evidence records match current source; browser rendering is policy-blocked, not passed.');
 }
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

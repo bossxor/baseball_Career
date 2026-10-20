@@ -690,5 +690,11 @@
     "status": "USER_APPROVED_WORKING_BASELINE",
     "source": "assets/design-guides/APPROVED-CODE-DISPLAY-v1.json",
     "implementationStatus": "NOT_IMPLEMENTED"
+  },
+  "latestBoardReview": {
+    "source": "129-DESIGN-BOARD-REFRESH-ACCESSIBILITY.md",
+    "staticAudit": "design-board-accessibility-audit.json",
+    "renderStatus": "BLOCKED_BY_BROWSER_URL_POLICY",
+    "browserExecutedCases": 0
   }
 }

@@ -363,3 +363,7 @@ verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행
 ## 2026-10-20 코드 표시11묶음 시각안 승인 반영
 
 사용자가 현재 작업 기준으로 승인한11묶음 정적 보드·SVG 비교도·승인 기록을 반영했다. verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료코드0/PASS. 승인 기록의11 ID와 레지스터·화면별 가이드 참조를 대조했으며 CODE_ONLY/NOT_IMPLEMENTED는 유지했다. 이미지 EXISTS80/TODO0, 코드 표시11묶음 시각 승인 완료. 실제 브라우저·최종픽셀·스크린리더·기기·게임·Neon/DB·APK 검수는 미실행이다.
+
+## 2026-10-20 메인 설계 보드 최신화·접근성 파일 점검
+
+최신 승인 배지10·카드3·표시11묶음 연결과 네이비/블루 기준·본문 건너뛰기·포커스·표 캡션/열머리·좁은 화면 CSS를 보완했다. 소스의61개 비동작 버튼은 네이티브 disabled 예시로 구분했다. 파일 기반 접근성13검사 PASS_STATIC(이미지60·입력37·표6), 명시한 단색 토큰6쌍 대비6.09~12.79:1. verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 검사 모두 종료코드0/PASS. 대학 배지의 동적 경로는 실제9개 파일 명시 목록으로 연결했고, 증거 해시는 Windows 줄바꿈을 LF로 정규화해 검증한다. 초기 검사 중 이 두 부분의 실패는 수정 후 재검사에서 해소했다. 현재 file: URL의 cua.getTab 관찰은 브라우저 보안 정책에 거절됐다. 다른 주소/브라우저/CDP 우회는 시도하지 않았다. 실제 렌더0·키보드/스크린리더/터치·200%·기기 검수 NOT_EXECUTED, WCAG 준수 미판정. 상세129와 design-board-accessibility-audit.json을 따른다.
