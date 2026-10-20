@@ -355,3 +355,7 @@ verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료
 ## 2026-10-20 마지막 이미지11종 승인 반영·파일 제작 마감
 
 verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행 모두 종료코드0/PASS. 메달3·엠블럼4·카드3·스플래시1의 실제 규격·SVG title/금지 요소·화면 참조를 확인했다. 레지스터92항목=EXISTS80/TODO0/CODE_ONLY11/LEGACY_REFERENCE1. 기존 완료 검사의 TODO>0 가정은 완료 수치 검사로 교체했고, 구단 로고·앱 아이콘 묶음은 명시적 files 목록으로 존재 검사를 보강했다. 첫 검사 실패 원인 두 가지는 이 수정 후 재검사에서 해소됐다. 실제 브라우저·앱·DB·APK 실행 검수는 미실행이며 구현 전 상태를 유지한다.
+
+## 2026-10-20 코드 표시11묶음·45화면 정합 마감
+
+127 표시 상세와128 화면 대조·기계 판독 등록부를 작성했다. verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행 모두 종료코드0/PASS.11개 CODE_ONLY ID의 명세 연결·구현 미착수 상태와45화면의8상태·현재 그림 참조·미실행 렌더 상태를 대조했다.83/94/95/108/109/111의 낡은 아트 표기는 승인된 청춘 애니/실루엣 기준으로 정리했다. 시각 비교 보드는 저장소 밖 사용자 승인 대기. 브라우저 실행0, 최종픽셀/터치/스크린리더/API/DB/APK 검수 미실행을 유지한다.

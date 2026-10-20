@@ -514,4 +514,15 @@ await import('./verify-club-first-season.mjs');
 await import('./verify-club-offseason.mjs');
 await import('./verify-midcareer-progression.mjs');
 await import('./verify-latecareer-continuity.mjs');
+{
+ const audit=JSON.parse(read('preimplementation-screen-audit.json'));
+ const finish=JSON.parse(read('screen-finish-register.json'));
+ const slots=JSON.parse(read('screen-image-slots.json'));
+ const registry=JSON.parse(read('image-production-register.json'));
+ assert.equal(audit.rows.length,45);assert.equal(audit.counts.executedBrowserCases,0);
+ for(const r of audit.rows){const row=finish.rows.find(x=>x.screenId===r.screenId);assert.ok(row);assert.equal(r.stateCount,row.states.length);assert.equal(r.stateCount,8);assert.deepEqual(r.assetRefs,slots.screens.find(x=>x.screenId===r.screenId).assetRefs);assert.equal(r.finalPixelStatus,row.finalPixelStatus);assert.equal(r.browserReview,row.browserReview);const ids=registry.items.filter(i=>i.status==='CODE_ONLY'&&i.screens.includes(r.screenId)).map(i=>i.id);assert.deepEqual(r.codeDisplayGroups,ids);}
+ const spec=read('127-CODE-DISPLAY-SPECIFICATION.md');
+ for(const i of registry.items.filter(i=>i.status==='CODE_ONLY')){assert.ok(spec.includes(i.id));assert.equal(i.displaySpec,'127-CODE-DISPLAY-SPECIFICATION.md');assert.equal(i.implementationStatus,'NOT_IMPLEMENTED');}
+ console.log('PASS: 11 code-display specifications and 45-screen/8-state reference audit; visual approval pending, browser execution count remains zero.');
+}
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

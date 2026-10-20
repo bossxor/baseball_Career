@@ -1,4 +1,4 @@
-실루엣 이미지 표기(2026-10-19): 선수 초상 자리는 사람 외형 초상이 아니라 [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md)의 실루엣+이름 카드를 쓴다. **실루엣 이미지는 아직 제작되지 않았고 별도로 만들어야 한다.** screen-image-slots.json의 SILHOUETTE_CARD/silhouetteCard 슬롯이 그 자리이며, 시안·보드의 기존 초상 PNG는 예시 자산일 뿐 선수 외형 확정이 아니다.
+실루엣 이미지 표기(2026-10-20 현재): 선수 초상 자리는 사람 외형 초상이 아니라 [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md)의 실루엣+이름 카드를 쓴다. **타자6·투수8 실루엣14종은 사용자 승인·파일 반영을 완료했다.** 현재 이미지 제작 레지스터는 EXISTS80/TODO0이며 실제 브라우저/기기 검수는 별도다. screen-image-slots.json의 SILHOUETTE_CARD/silhouetteCard 슬롯이 그 자리이며, 시안·보드의 기존 초상 PNG는 예시 자산일 뿐 선수 외형 확정이 아니다.
 
 # 111. 메인 그림체 변경 — 청춘 야구 애니 U
 

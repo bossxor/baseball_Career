@@ -1,0 +1,689 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-20",
+  "status": "STATIC_DOCUMENT_AUDIT_ONLY",
+  "sourceCommit": "7068cd7",
+  "scope": "PRE_IMPLEMENTATION_ONLY",
+  "sources": [
+    "screen-finish-register.json",
+    "screen-image-slots.json",
+    "image-production-register.json",
+    "127-CODE-DISPLAY-SPECIFICATION.md"
+  ],
+  "counts": {
+    "screens": 45,
+    "statesPerScreen": 8,
+    "declaredStateSlots": 360,
+    "declaredViewports": 4,
+    "executedBrowserCases": 0,
+    "codeDisplayGroups": 11,
+    "imageExists": 80,
+    "imageTodo": 0
+  },
+  "note": "360 declared state slots are specification coverage, not 360 executed renders. Four viewport contracts are not device evidence.",
+  "rows": [
+    {
+      "screenId": "S01",
+      "title": "홈",
+      "layout": "DASHBOARD",
+      "stateCount": 8,
+      "assetRefs": [
+        "almanacHero",
+        "appBrandMark",
+        "finishScenes"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S02",
+      "title": "생성",
+      "layout": "FORM",
+      "stateCount": 8,
+      "assetRefs": [
+        "silhouetteCard",
+        "NONE"
+      ],
+      "codeDisplayGroups": [
+        "IMG-BADGE-HS",
+        "IMG-ICON-FORM",
+        "IMG-ICON-HAND"
+      ],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S03",
+      "title": "커리어",
+      "layout": "DASHBOARD",
+      "stateCount": 8,
+      "assetRefs": [
+        "almanacHero",
+        "silhouetteCard"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S04",
+      "title": "고교결산",
+      "layout": "RECORD",
+      "stateCount": 8,
+      "assetRefs": [
+        "training"
+      ],
+      "codeDisplayGroups": [
+        "IMG-BADGE-HS"
+      ],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S05",
+      "title": "드래프트",
+      "layout": "DECISION",
+      "stateCount": 8,
+      "assetRefs": [
+        "draft"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S06",
+      "title": "사건",
+      "layout": "DECISION",
+      "stateCount": 8,
+      "assetRefs": [
+        "EVENT_RESOLVER"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S07",
+      "title": "결산",
+      "layout": "RECORD",
+      "stateCount": 8,
+      "assetRefs": [
+        "training",
+        "international"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S08",
+      "title": "계약",
+      "layout": "DECISION",
+      "stateCount": 8,
+      "assetRefs": [
+        "posting"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S09",
+      "title": "은퇴",
+      "layout": "PLAYER",
+      "stateCount": 8,
+      "assetRefs": [
+        "retirement"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S10",
+      "title": "보관목록",
+      "layout": "RECORD",
+      "stateCount": 8,
+      "assetRefs": [
+        "silhouetteCard",
+        "finishScenes"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S11",
+      "title": "보관상세",
+      "layout": "PLAYER",
+      "stateCount": 8,
+      "assetRefs": [
+        "silhouetteCard",
+        "retirement",
+        "finishScenes"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S12",
+      "title": "구단생성",
+      "layout": "FORM",
+      "stateCount": 8,
+      "assetRefs": [
+        "frontoffice",
+        "retirement"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S13",
+      "title": "구단홈",
+      "layout": "DASHBOARD",
+      "stateCount": 8,
+      "assetRefs": [
+        "frontoffice"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S14",
+      "title": "선수단",
+      "layout": "RECORD",
+      "stateCount": 8,
+      "assetRefs": [
+        "silhouetteCard",
+        "NONE"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S15",
+      "title": "라인업",
+      "layout": "FORM",
+      "stateCount": 8,
+      "assetRefs": [
+        "NONE",
+        "finishScenes"
+      ],
+      "codeDisplayGroups": [
+        "IMG-FIELD"
+      ],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S16",
+      "title": "선수상세",
+      "layout": "PLAYER",
+      "stateCount": 8,
+      "assetRefs": [
+        "silhouetteCard"
+      ],
+      "codeDisplayGroups": [
+        "IMG-ICON-HAND"
+      ],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S17",
+      "title": "시장",
+      "layout": "FORM",
+      "stateCount": 8,
+      "assetRefs": [
+        "silhouetteCard",
+        "frontoffice"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S18",
+      "title": "리그",
+      "layout": "RECORD",
+      "stateCount": 8,
+      "assetRefs": [
+        "NONE",
+        "finishScenes"
+      ],
+      "codeDisplayGroups": [
+        "IMG-BADGE-MINOR"
+      ],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S19",
+      "title": "경기",
+      "layout": "RECORD",
+      "stateCount": 8,
+      "assetRefs": [
+        "almanacHero"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S20",
+      "title": "저장",
+      "layout": "UTILITY",
+      "stateCount": 8,
+      "assetRefs": [
+        "NONE",
+        "finishScenes"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S21",
+      "title": "설정",
+      "layout": "UTILITY",
+      "stateCount": 8,
+      "assetRefs": [
+        "NONE",
+        "appBrandMark",
+        "finishScenes"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S22",
+      "title": "스타일",
+      "layout": "FORM",
+      "stateCount": 8,
+      "assetRefs": [
+        "silhouetteCard",
+        "finishScenes"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S23",
+      "title": "강화",
+      "layout": "DECISION",
+      "stateCount": 8,
+      "assetRefs": [
+        "enhancement"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S24",
+      "title": "대표선발",
+      "layout": "DECISION",
+      "stateCount": 8,
+      "assetRefs": [
+        "training",
+        "medalsAndCompetitions"
+      ],
+      "codeDisplayGroups": [
+        "IMG-BADGE-NAT"
+      ],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S25",
+      "title": "국제대회",
+      "layout": "RECORD",
+      "stateCount": 8,
+      "assetRefs": [
+        "training",
+        "international",
+        "finishScenes",
+        "medalsAndCompetitions"
+      ],
+      "codeDisplayGroups": [
+        "IMG-BADGE-NAT"
+      ],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S26",
+      "title": "병역",
+      "layout": "DECISION",
+      "stateCount": 8,
+      "assetRefs": [
+        "NONE",
+        "finishScenes",
+        "fictionalTeamBadges"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S27",
+      "title": "복무복귀",
+      "layout": "UTILITY",
+      "stateCount": 8,
+      "assetRefs": [
+        "training",
+        "service",
+        "finishScenes",
+        "fictionalTeamBadges"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S28",
+      "title": "졸업진로",
+      "layout": "DECISION",
+      "stateCount": 8,
+      "assetRefs": [
+        "college",
+        "overseas",
+        "draft",
+        "training",
+        "fictionalTeamBadges"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S29",
+      "title": "미국제안",
+      "layout": "DECISION",
+      "stateCount": 8,
+      "assetRefs": [
+        "overseas",
+        "finishScenes"
+      ],
+      "codeDisplayGroups": [
+        "IMG-BADGE-MINOR"
+      ],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S30",
+      "title": "미국홈",
+      "layout": "DASHBOARD",
+      "stateCount": 8,
+      "assetRefs": [
+        "almanacHero",
+        "overseas"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S31",
+      "title": "포스팅",
+      "layout": "DECISION",
+      "stateCount": 8,
+      "assetRefs": [
+        "posting",
+        "finishScenes"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S32",
+      "title": "해외협상",
+      "layout": "DECISION",
+      "stateCount": 8,
+      "assetRefs": [
+        "posting",
+        "finishScenes"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S33",
+      "title": "국내복귀",
+      "layout": "DECISION",
+      "stateCount": 8,
+      "assetRefs": [
+        "overseas",
+        "service",
+        "finishScenes"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S34",
+      "title": "대학 선택",
+      "layout": "FORM",
+      "stateCount": 8,
+      "assetRefs": [
+        "college",
+        "finishScenes",
+        "fictionalTeamBadges"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S35",
+      "title": "대학 커리어",
+      "layout": "DASHBOARD",
+      "stateCount": 8,
+      "assetRefs": [
+        "college",
+        "fictionalTeamBadges"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S36",
+      "title": "스카우트 탐색",
+      "layout": "FORM",
+      "stateCount": 8,
+      "assetRefs": [
+        "frontoffice"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S37",
+      "title": "구단 예산",
+      "layout": "RECORD",
+      "stateCount": 8,
+      "assetRefs": [
+        "NONE"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S38",
+      "title": "특성·시그니처",
+      "layout": "RECORD",
+      "stateCount": 8,
+      "assetRefs": [
+        "NONE"
+      ],
+      "codeDisplayGroups": [
+        "IMG-ICON-TRAIT"
+      ],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S39",
+      "title": "구종·타격성향",
+      "layout": "FORM",
+      "stateCount": 8,
+      "assetRefs": [
+        "NONE"
+      ],
+      "codeDisplayGroups": [
+        "IMG-ICON-PITCH",
+        "IMG-ICON-APPROACH",
+        "IMG-ICON-FORM"
+      ],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S40",
+      "title": "목표·도전과제",
+      "layout": "RECORD",
+      "stateCount": 8,
+      "assetRefs": [
+        "NONE",
+        "silhouetteCard",
+        "commemorativeRewards"
+      ],
+      "codeDisplayGroups": [
+        "IMG-RWD-TITLES",
+        "IMG-ICON-GOAL"
+      ],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S41",
+      "title": "에이전트·구단관계",
+      "layout": "DECISION",
+      "stateCount": 8,
+      "assetRefs": [
+        "posting",
+        "NONE"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S42",
+      "title": "라이벌·동료",
+      "layout": "RECORD",
+      "stateCount": 8,
+      "assetRefs": [
+        "rival",
+        "silhouetteCard",
+        "NONE"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S43",
+      "title": "코치·스카우트",
+      "layout": "FORM",
+      "stateCount": 8,
+      "assetRefs": [
+        "silhouetteCard",
+        "NONE"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S44",
+      "title": "중요경기중계",
+      "layout": "VIEWER",
+      "stateCount": 8,
+      "assetRefs": [
+        "NONE"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    },
+    {
+      "screenId": "S45",
+      "title": "야구연대기",
+      "layout": "RECORD",
+      "stateCount": 8,
+      "assetRefs": [
+        "retirement",
+        "international",
+        "rival",
+        "NONE",
+        "commemorativeRewards",
+        "medalsAndCompetitions",
+        "chronicleThemes"
+      ],
+      "codeDisplayGroups": [],
+      "staticReferenceCheck": "PASS",
+      "finalPixelStatus": "NOT_FINALIZED",
+      "browserReview": "NOT_EXECUTED"
+    }
+  ]
+}

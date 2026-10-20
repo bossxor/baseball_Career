@@ -1381,7 +1381,11 @@
         "S18",
         "S29"
       ],
-      "notes": "이미지 제작 불필요. 모회사 로고와 혼용 금지(37)"
+      "notes": "이미지 제작 불필요. 모회사 로고와 혼용 금지(37)",
+      "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
+      "designSpecificationStatus": "SPECIFIED",
+      "visualReview": "PENDING_USER_APPROVAL",
+      "implementationStatus": "NOT_IMPLEMENTED"
     },
     {
       "id": "IMG-BADGE-HS",
@@ -1397,7 +1401,11 @@
         "S02",
         "S04"
       ],
-      "notes": "수는 고교 목록 크기. 이미지 제작 불필요"
+      "notes": "수는 고교 목록 크기. 이미지 제작 불필요",
+      "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
+      "designSpecificationStatus": "SPECIFIED",
+      "visualReview": "PENDING_USER_APPROVAL",
+      "implementationStatus": "NOT_IMPLEMENTED"
     },
     {
       "id": "IMG-BADGE-NAT",
@@ -1413,7 +1421,11 @@
         "S24",
         "S25"
       ],
-      "notes": "실제 국기·협회 엠블럼 사용은 V12 권리 확인 전 금지"
+      "notes": "실제 국기·협회 엠블럼 사용은 V12 권리 확인 전 금지",
+      "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
+      "designSpecificationStatus": "SPECIFIED",
+      "visualReview": "PENDING_USER_APPROVAL",
+      "implementationStatus": "NOT_IMPLEMENTED"
     },
     {
       "id": "IMG-RWD-R-G01",
@@ -1912,7 +1924,11 @@
       "screens": [
         "S40"
       ],
-      "notes": "텍스트 칭호"
+      "notes": "텍스트 칭호",
+      "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
+      "designSpecificationStatus": "SPECIFIED",
+      "visualReview": "PENDING_USER_APPROVAL",
+      "implementationStatus": "NOT_IMPLEMENTED"
     },
     {
       "id": "IMG-MEDAL-GOLD",
@@ -2231,7 +2247,11 @@
       "screens": [
         "S38"
       ],
-      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요"
+      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요",
+      "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
+      "designSpecificationStatus": "SPECIFIED",
+      "visualReview": "PENDING_USER_APPROVAL",
+      "implementationStatus": "NOT_IMPLEMENTED"
     },
     {
       "id": "IMG-ICON-PITCH",
@@ -2246,7 +2266,11 @@
       "screens": [
         "S39"
       ],
-      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요"
+      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요",
+      "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
+      "designSpecificationStatus": "SPECIFIED",
+      "visualReview": "PENDING_USER_APPROVAL",
+      "implementationStatus": "NOT_IMPLEMENTED"
     },
     {
       "id": "IMG-ICON-APPROACH",
@@ -2261,7 +2285,11 @@
       "screens": [
         "S39"
       ],
-      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요"
+      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요",
+      "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
+      "designSpecificationStatus": "SPECIFIED",
+      "visualReview": "PENDING_USER_APPROVAL",
+      "implementationStatus": "NOT_IMPLEMENTED"
     },
     {
       "id": "IMG-ICON-FORM",
@@ -2277,7 +2305,11 @@
         "S02",
         "S39"
       ],
-      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요"
+      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요",
+      "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
+      "designSpecificationStatus": "SPECIFIED",
+      "visualReview": "PENDING_USER_APPROVAL",
+      "implementationStatus": "NOT_IMPLEMENTED"
     },
     {
       "id": "IMG-ICON-HAND",
@@ -2293,7 +2325,11 @@
         "S02",
         "S16"
       ],
-      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요"
+      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요",
+      "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
+      "designSpecificationStatus": "SPECIFIED",
+      "visualReview": "PENDING_USER_APPROVAL",
+      "implementationStatus": "NOT_IMPLEMENTED"
     },
     {
       "id": "IMG-ICON-GOAL",
@@ -2308,7 +2344,11 @@
       "screens": [
         "S40"
       ],
-      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요"
+      "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요",
+      "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
+      "designSpecificationStatus": "SPECIFIED",
+      "visualReview": "PENDING_USER_APPROVAL",
+      "implementationStatus": "NOT_IMPLEMENTED"
     },
     {
       "id": "IMG-FIELD",
@@ -2323,7 +2363,11 @@
       "screens": [
         "S15"
       ],
-      "notes": "FIELD_DIAGRAM. 이미지 생성 불필요"
+      "notes": "FIELD_DIAGRAM. 이미지 생성 불필요",
+      "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
+      "designSpecificationStatus": "SPECIFIED",
+      "visualReview": "PENDING_USER_APPROVAL",
+      "implementationStatus": "NOT_IMPLEMENTED"
     },
     {
       "id": "IMG-LEGACY",
