@@ -60,7 +60,7 @@ globalThis.PBFirstCareerData = {
       "action": "선택지 효과 확인",
       "guard": "시즌1회 공유. 안내 열람만으로 기회를 소비하지 않습니다.",
       "image": {
-        "asset": "assets/art-lab/career-events-animation-extra-v1.png",
+        "asset": "assets/art-lab/career-events-animation-extra-navy-v2.png",
         "x": 50,
         "y": 0
       },
@@ -130,7 +130,7 @@ globalThis.PBFirstCareerData = {
         "action": "전망 상세 보기",
         "guard": "전망은 확정 라운드가 아닙니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-extra-v1.png",
+          "asset": "assets/art-lab/career-events-animation-extra-navy-v2.png",
           "x": 0,
           "y": 0
         },
@@ -146,7 +146,7 @@ globalThis.PBFirstCareerData = {
         "action": "계약 조건 확인",
         "guard": "이 보드에서 결과를 새로 추첨하지 않습니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-extra-v1.png",
+          "asset": "assets/art-lab/career-events-animation-extra-navy-v2.png",
           "x": 0,
           "y": 0
         },
@@ -164,7 +164,7 @@ globalThis.PBFirstCareerData = {
         "action": "계약 상세 확인",
         "guard": "조건이 생략된 요약에 수락 확정 버튼을 두지 않습니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-extra-v1.png",
+          "asset": "assets/art-lab/career-events-animation-extra-navy-v2.png",
           "x": 50,
           "y": 100
         },
@@ -330,7 +330,7 @@ globalThis.PBFirstCareerData = {
         "action": "계약 조건 확인",
         "guard": "조회만으로 국내·대학 진로를 닫지 않습니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-extra-v1.png",
+          "asset": "assets/art-lab/career-events-animation-extra-navy-v2.png",
           "x": 50,
           "y": 100
         },
@@ -396,7 +396,7 @@ globalThis.PBFirstCareerData = {
         "action": "가능한 진로 확인",
         "guard": "KBO 성공 사례를 되돌려 재추첨한 것이 아닙니다.",
         "image": {
-          "asset": "assets/art-lab/career-events-animation-extra-v1.png",
+          "asset": "assets/art-lab/career-events-animation-extra-navy-v2.png",
           "x": 0,
           "y": 0
         },

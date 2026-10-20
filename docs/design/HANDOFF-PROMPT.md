@@ -1,4 +1,4 @@
-현재 작업(2026-10-20): 메인·기본사건·고교 네이비3PNG 승인 반영. 추가사건 야간 라이벌 버건디 수정본만 최종 확인 대기. [현황](STATUS.md).
+현재 작업(2026-10-20): 네이비4PNG 통일·낮/야간 라이벌 팀 구분 승인 완료. [현황](STATUS.md), [승인본](approved-art-board.html). 다음 P1은 별도 시안·승인.
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
 

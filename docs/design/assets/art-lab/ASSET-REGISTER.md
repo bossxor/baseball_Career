@@ -39,3 +39,7 @@ career-scenes-finish-animation-v1.png: 대학/마이너원정/중립라이벌/�
 우리팀 네이비 수정본 중 메인·기본사건·고교3PNG는 사용자 승인에 따라 새 v2 파일로 연결했다. 원본3PNG는 보존했다. 추가사건 atlas의 야간 라이벌은 우리팀 흰색/네이비 vs 상대 버건디로 추가 수정했고 이 최종본만 사용자 확인 대기다. 이미지 레지스터 TODO41/EXISTS39와 게임 규칙은 그대로다.
 
 메인 hero-animation-navy-v2, 기본사건 career-events-animation-navy-v2, 고교 graduation-animation-day-navy-v2. 기존 파일 덮어쓰기 없음. NAVY-UNIFORM-GENERATION.json 참고.
+
+## 2026-10-20 야간 라이벌 최종 승인
+
+야간 라이벌의 버건디 상대 수정본을 사용자가 최종 승인해 추가사건 atlas를 새 v2 PNG로 연결했다. 기존3개를 포함해 활성4PNG의 우리팀 네이비 통일이 완료됐고 낮·야간 라이벌은 우리팀 흰색/네이비 vs 상대 버건디로 구분된다. 원본4PNG는 보존했다. 레지스터41TODO/39EXISTS·45화면/99이벤트/핵심298은 유지한다.

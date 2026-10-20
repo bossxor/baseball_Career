@@ -26,9 +26,23 @@
       "sourceOriginal": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-35c031cd-c8b4-47f9-98b2-95d362dbd671.png",
       "prompt": "Use case: precise-object-edit. This is a LOCALIZED COLOR CORRECTION of the supplied existing anime illustration, not a new illustration. Recolor our-team forest-green cap, undershirt, collar/cuff piping, belt and uniform accents to deep NAVY #172c50 with subtle blue highlights. White jersey and trousers stay white. Preserve faces, hairstyles, anatomy, hands, expressions, poses, equipment, exact framing, panel grid, canvas dimensions and lighting. Crucially do NOT recolor grass, trees, fences, walls, roofs or any scenery: only team kit changes. Do not introduce typography, jersey numbers, logos, cap emblems or watermarks. Preserve the existing contemporary 2D youth sports-anime finish. ONE wide high-school graduation scene. Preserve exact1672x941 canvas and full composition. Seated player's green undershirt, collar/cuff piping and sock stripes ->NAVY. White jersey/trousers, brown/black glove, duffel, dugout padding and green field stay unchanged.",
       "sha256": "c867f1ae4be7ac53264d2ab87901186dea75f3488003a75bbbbe84ae9064118d"
+    },
+    {
+      "key": "extra",
+      "previousAsset": "assets/art-lab/career-events-animation-extra-v1.png",
+      "asset": "assets/art-lab/career-events-animation-extra-navy-v2.png",
+      "sourceOriginal": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-e296a67a-bbe6-4b55-847e-ec9dbbee6d8e.png",
+      "prompt": "Use case: precise-object-edit. This is a LOCALIZED COLOR CORRECTION of the supplied existing anime illustration, not a new illustration. Recolor our-team forest-green cap, undershirt, collar/cuff piping, belt and uniform accents to deep NAVY #172c50 with subtle blue highlights. White jersey and trousers stay white. Preserve faces, hairstyles, anatomy, hands, expressions, poses, equipment, exact framing, panel grid, canvas dimensions and lighting. Crucially do NOT recolor grass, trees, fences, walls, roofs or any scenery: only team kit changes. Do not introduce typography, jersey numbers, logos, cap emblems or watermarks. Preserve the existing contemporary 2D youth sports-anime finish. Keep1536x1024 canvas and exact3x2 square-panel grid. Top-left draft player's green undershirt/trim/cap ->navy; his green glove may become neutral dark brown without losing stitching. Top-middle batting cage player's green undershirt/trim ->navy. Bottom-right NIGHT rival: LEFT own-team player green cap/sleeves/trim ->navy, WHITE jersey remains white; RIGHT opponent keeps grey uniform and navy cap so he remains visibly distinct. Remove any tiny pseudo-letter or emblem from either cap. Keep NIGHT blue sky and WHITE floodlights. Top-right rehab clothes, bottom-left return casual clothes, bottom-middle player's casual green overshirt and office suit remain unchanged because they are not team uniform.",
+      "opponentCorrectionPrompt": "Use case: precise-object-edit. EDIT TARGET is supplied 1536x1024 six-panel anime baseball atlas. ONLY change BOTTOM-RIGHT square panel, and within that panel ONLY recolor the RIGHT athlete's CAP, JERSEY and UNDERSHIRT to rich BURGUNDY/WINE RED (#772c42 family), with light trim; trousers stay grey/white and glove stays black. This athlete is the opponent from a different team. LEFT athlete must remain WHITE JERSEY with NAVY CAP and NAVY sleeves; do NOT recolor the left athlete. Make the opposing teams immediately recognizable. No cap letters, numbers or logos. Preserve both faces, hair, hands, gloves, expressions, anatomy and poses, and the cool blue night sky and WHITE floodlights. CRITICAL: other FIVE panels must preserve their existing compositions and colors, especially our-team NAVY uniform accents in top-left and top-middle. Keep exact1536x1024 dimensions and exactly3 columns x2rows square-panel grid, no gutters, no crops, no new people or UI. Existing polished 2D youth baseball anime style. A localized opponent team-kit color fix only.",
+      "initialNavyEditOriginal": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-ff43dbb4-f8dd-463e-b54b-75581762127c.png",
+      "sha256": "470f0c411f9c5acc169b25ad647153a78643e51f1e8d6e24b1e2f4ab4bee1984",
+      "approval": "USER_SELECTED",
+      "ownTeam": "WHITE_NAVY",
+      "opponentTeam": "BURGUNDY"
     }
   ],
-  "pending": "Extra event atlas night rival corrected to burgundy; final user confirmation pending outside repository.",
+  "pending": null,
   "rule": "Own-team kit uses navy. White uniform base, green scenery and casual clothing are unchanged. Historic originals preserved.",
-  "browserReview": "NOT_EXECUTED"
+  "browserReview": "NOT_EXECUTED",
+  "allFourApproved": true
 }

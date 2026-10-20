@@ -327,3 +327,15 @@ PASS: approved six anime finish scenes, square atlas positions and per-screen se
 사용자가4개 네이비 수정본을 승인하면서 추가사건의 야간 라이벌 구분 문제를 제기했다. 다른3개(메인·기본사건·고교)의 승인은 유지해 v2 PNG로 반영했다. 기존 파일을 덮어쓰지 않고 활성 HTML/JS/JSON 참조만 신규 파일로 바꿨다. 생성 프롬프트·출처·해시는 NAVY-UNIFORM-GENERATION.json에 기록했다. 야간 라이벌은 상대 모자/상의를 버건디로 추가 수정했으며 이 최종 수정본만 임시 폴더에서 사용자 확인 대기다.
 
 V:에서 verify-design.mjs·verify-state-ui.mjs·verify-art-direction.mjs 모두 종료코드0/PASS. 활성 PNG 존재/크기·장면 참조 일치·first-career와finish 데이터 JSON/JS 일치·순수 HTML 템플릿 검사 통과. 메인/고교1672×941, 기본사건1536×1024 유지. 실제 픽셀/브라우저·기기/DB/API/build/APK는 미검증이다. 제작 레지스터41TODO/39EXISTS 및45화면/99이벤트/핵심298은 그대로다.
+
+## 2026-10-20 야간 라이벌 최종 승인 반영
+
+사용자가 야간 상대팀의 버건디 수정본을 최종 승인했다. career-events-animation-extra-navy-v2.png를 추가하고 활성6패널·첫 커리어 동선·제작 레지스터·승인 보드 참조를 연결했다. NAVY-UNIFORM-GENERATION.json은4개 승인 기록과 야간 팀 구분을 포함하며 pending=null/allFourApproved=true다. 기존4개 PNG 원본은 보존했다.
+
+V:에서 verify-design.mjs·verify-state-ui.mjs·verify-art-direction.mjs 모두 종료코드0/PASS. 추가 출력:
+
+```text
+PASS: all four approved navy story-art versions bound; night rival white/navy vs burgundy, originals preserved; runtime visual review remains NOT_EXECUTED.
+```
+
+1536×1024 PNG·정사각6패널·활성 참조·기존 원본 존재·41TODO/39EXISTS·45화면/99이벤트/핵심298을 정적으로 확인했다. 사용자에게 제시된 생성 결과는 육안 확인됐으나 실제 HTML 픽셀/기기/DOM·DB/API/build/APK 검수는 미실행이다. 해당 네이비 수정4PNG의 승인 대기는 모두 해소됐다.

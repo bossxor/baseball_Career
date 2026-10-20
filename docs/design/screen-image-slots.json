@@ -732,6 +732,19 @@
         "S34": "IMG-FIN-COLLEGE"
       },
       "approval": "USER_SELECTED"
+    },
+    "ownTeamStoryArt": {
+      "approval": "assets/art-lab/NAVY-UNIFORM-GENERATION.json",
+      "status": "APPROVED",
+      "ownUniform": "WHITE_NAVY",
+      "rivalUniform": "BURGUNDY",
+      "scope": "GENERIC_STORY_ILLUSTRATIONS",
+      "files": [
+        "assets/art-lab/hero-animation-navy-v2.png",
+        "assets/art-lab/career-events-animation-navy-v2.png",
+        "assets/art-lab/graduation-animation-day-navy-v2.png",
+        "assets/art-lab/career-events-animation-extra-navy-v2.png"
+      ]
     }
   }
 }

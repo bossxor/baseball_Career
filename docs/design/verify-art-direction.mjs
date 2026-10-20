@@ -49,7 +49,7 @@ for(const scene of art.scenes){
   const preview=previewScenes.find(s=>s.id===scene.id);assert.ok(preview);
   assert.equal(preview.x,[0,50,100][scene.column]+'%');assert.equal(preview.y,[0,100][scene.row]+'%');
   assert.equal(preview.focus,scene.cropFocusPercent+'%');
-  const file=preview.pack==='extra'?'assets/art-lab/career-events-animation-extra-v1.png':'assets/art-lab/career-events-animation-navy-v2.png';assert.equal(file,scene.asset);
+  const file=preview.pack==='extra'?'assets/art-lab/career-events-animation-extra-navy-v2.png':'assets/art-lab/career-events-animation-navy-v2.png';assert.equal(file,scene.asset);
 }
 assert.ok(scripts.includes("const state={style:'animation'"));
 assert.ok(scripts.includes("const key='playball-art-lab-v3'"));
@@ -209,4 +209,17 @@ console.log('NOT TESTED: art-lab browser rendering, interactive clicks, viewport
   }
   assert.ok(registry.items.filter(i=>i.priority==='P0').every(i=>i.status==='EXISTS'));
   console.log('PASS: approved navy icon1; Android 3 SVGs / web 5 assets, PNG dimensions and safe-area evidence, registry/slot bindings; P0 files complete. App/device integration remains NOT_EXECUTED.');
+}
+
+{
+ const navy=json('assets/art-lab/NAVY-UNIFORM-GENERATION.json');
+ assert.equal(navy.allFourApproved,true);assert.equal(navy.pending,null);assert.equal(navy.records.length,4);
+ assert.deepEqual(slots.assetLibrary.ownTeamStoryArt.files,navy.records.map(r=>r.asset));
+ assert.equal(slots.assetLibrary.ownTeamStoryArt.status,'APPROVED');
+ const extra=navy.records.find(r=>r.key==='extra');
+ assert.equal(extra.asset,'assets/art-lab/career-events-animation-extra-navy-v2.png');
+ assert.equal(extra.ownTeam,'WHITE_NAVY');assert.equal(extra.opponentTeam,'BURGUNDY');
+ for(const source of navy.records)assert.ok(fs.existsSync(path.join(root,source.asset))&&fs.existsSync(path.join(root,source.previousAsset)));
+ for(const scene of art.scenes.filter(s=>['draft','enhancement','rehab','service','posting','rival'].includes(s.id)))assert.equal(scene.asset,extra.asset);
+ console.log('PASS: all four approved navy story-art versions bound; night rival white/navy vs burgundy, originals preserved; runtime visual review remains NOT_EXECUTED.');
 }

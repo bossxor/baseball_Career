@@ -55,12 +55,12 @@ assets/silhouettes/(SVG 14), assets/badges/(대학 9·군 체육팀 1), assets/r
 |IMG-SCN-INTERNATIONAL|사건 장면 국제무대|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열0/행1, 3×2 아틀라스 1536×1024|있음|S07, S25, S45|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E47/E48|
 |IMG-SCN-RETIREMENT|사건 장면 마지막 유니폼|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열1/행1, 3×2 아틀라스 1536×1024|있음|S09, S11, S12, S45|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E37/E69/E99|
 |IMG-SCN-FRONTOFFICE|사건 장면 구단의 내일|assets/art-lab/career-events-animation-navy-v2.png|정사각 패널, 열2/행1, 3×2 아틀라스 1536×1024|있음|S12, S13, S17, S36|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E38/E39/E40/E77/E79/E81|
-|IMG-SCN-DRAFT|사건 장면 지명을 기다리며|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열0/행0, 3×2 아틀라스 1536×1024|있음|S05, S28|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E04/E05/E06|
-|IMG-SCN-ENHANCEMENT|사건 장면 한 번의 특별훈련|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열1/행0, 3×2 아틀라스 1536×1024|있음|S23|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E43|
-|IMG-SCN-REHAB|사건 장면 다시 뛰는 준비|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열2/행0, 3×2 아틀라스 1536×1024|있음|-|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E21/E22/E23|
-|IMG-SCN-SERVICE|사건 장면 돌아오는 길|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열0/행1, 3×2 아틀라스 1536×1024|있음|S27, S33|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E53/E76|
-|IMG-SCN-POSTING|사건 장면 다음 리그의 제안|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열1/행1, 3×2 아틀라스 1536×1024|있음|S08, S31, S32, S41|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E62/E63/E64|
-|IMG-SCN-RIVAL|사건 장면 같은 출발선|assets/art-lab/career-events-animation-extra-v1.png|정사각 패널, 열2/행1, 3×2 아틀라스 1536×1024|있음|S42, S45|청춘 애니, 시간대 NIGHT_WHITE_FLOODLIGHTS, 이벤트 E26/E94/E95/E96|
+|IMG-SCN-DRAFT|사건 장면 지명을 기다리며|assets/art-lab/career-events-animation-extra-navy-v2.png|정사각 패널, 열0/행0, 3×2 아틀라스 1536×1024|있음|S05, S28|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E04/E05/E06|
+|IMG-SCN-ENHANCEMENT|사건 장면 한 번의 특별훈련|assets/art-lab/career-events-animation-extra-navy-v2.png|정사각 패널, 열1/행0, 3×2 아틀라스 1536×1024|있음|S23|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E43|
+|IMG-SCN-REHAB|사건 장면 다시 뛰는 준비|assets/art-lab/career-events-animation-extra-navy-v2.png|정사각 패널, 열2/행0, 3×2 아틀라스 1536×1024|있음|-|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E21/E22/E23|
+|IMG-SCN-SERVICE|사건 장면 돌아오는 길|assets/art-lab/career-events-animation-extra-navy-v2.png|정사각 패널, 열0/행1, 3×2 아틀라스 1536×1024|있음|S27, S33|청춘 애니, 시간대 MORNING_OR_DAY, 이벤트 E53/E76|
+|IMG-SCN-POSTING|사건 장면 다음 리그의 제안|assets/art-lab/career-events-animation-extra-navy-v2.png|정사각 패널, 열1/행1, 3×2 아틀라스 1536×1024|있음|S08, S31, S32, S41|청춘 애니, 시간대 NEUTRAL_INTERIOR_DAY, 이벤트 E62/E63/E64|
+|IMG-SCN-RIVAL|사건 장면 같은 출발선|assets/art-lab/career-events-animation-extra-navy-v2.png|정사각 패널, 열2/행1, 3×2 아틀라스 1536×1024|있음|S42, S45|청춘 애니, 시간대 NIGHT_WHITE_FLOODLIGHTS, 이벤트 E26/E94/E95/E96|
 
 ### G3 마감 장면 6컷
 
@@ -282,3 +282,9 @@ P1 청춘 애니6컷을 사용자 승인 후 반영했다. 라이벌은 흰색/�
 우리팀 네이비 수정본 중 메인·기본사건·고교3PNG는 사용자 승인에 따라 새 v2 파일로 연결했다. 원본3PNG는 보존했다. 추가사건 atlas의 야간 라이벌은 우리팀 흰색/네이비 vs 상대 버건디로 추가 수정했고 이 최종본만 사용자 확인 대기다. 이미지 레지스터 TODO41/EXISTS39와 게임 규칙은 그대로다.
 
 [NAVY-UNIFORM-GENERATION](assets/art-lab/NAVY-UNIFORM-GENERATION.json)에 수정 프롬프트·원본·신규 파일과 해시를 기록했다. 상대팀 라이벌은 동일 구단 소속으로 표현하지 않는다.
+
+## 야간 라이벌 최종 승인 — 2026-10-20
+
+야간 라이벌의 버건디 상대 수정본을 사용자가 최종 승인해 추가사건 atlas를 새 v2 PNG로 연결했다. 기존3개를 포함해 활성4PNG의 우리팀 네이비 통일이 완료됐고 낮·야간 라이벌은 우리팀 흰색/네이비 vs 상대 버건디로 구분된다. 원본4PNG는 보존했다. 레지스터41TODO/39EXISTS·45화면/99이벤트/핵심298은 유지한다.
+
+[NAVY-UNIFORM-GENERATION](assets/art-lab/NAVY-UNIFORM-GENERATION.json)에4개 활성 파일과 생성·편집 출처를 기록했다. 네이비 통일 수정본의 승인 대기는 모두 해소됐다.
