@@ -383,3 +383,7 @@ verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료
 ## 2026-10-20 구현 M0 실제 검증
 
 사용자 구현 승인 후 M0를 착수·완료했다. npm ci / npm run check / npm run smoke 성공. check는 린트·소스/테스트 타입 검사·단위7/7·rules/API/Web build·기존 설계 정적10종을 포함한다. 개발 서버 실제 HTTP200과 프록시→API도 확인했다. 전체 출력과 다음 M1 작업은 [구현 진행](../implementation/PROGRESS.md)에 기록한다. 이 결과는 전체 경기 fixture/인증/DB/기기/APK 또는 V01~V12 전체 통과를 뜻하지 않으며 기존 구현 전 준비표는 역사적 스냅샷으로 보존한다.
+
+## 2026-10-20 M1 경기 엔진 코어 실제 검증
+
+M1 순수 경기 코어를 추가했고 단위67/67·린트·타입·rules/engine/API/web 빌드·설계 정적10종·웹/API HTTP smoke가 통과했다. BP4조건/X7예제·4조건각10만PA·타자8/투수6유형각100시드 및 기본100경기(97승부/3무승부)를 실행했다. 단발/PA단위 JSON재개/별도 Node 빌드 엔진의 골든SHA256이 일치한다. 사용자 선택 병살 수비/주루10점당±2%p를14/41에 기록했다. 실제 리그 시즌 균형/커리어/DB receipt/인증/브라우저·OS교차/APK는 미실행이다. 상세 [M1 인계](../implementation/M1-ENGINE.md)·[현재 진행](../implementation/PROGRESS.md)을 따른다.

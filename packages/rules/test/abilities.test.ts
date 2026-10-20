@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { assertAbilities, assertFocus, halfPeakAbilities, HITTER_ABILITIES, overall, PITCHER_ABILITIES } from '../src/index.js';
+import { assertAbilities, assertFocus, halfPeakAbilities, HITTER_ABILITIES, overall, PITCHER_ABILITIES, roleScore } from '../src/index.js';
 
 const hitter = (points: number[]) => Object.fromEntries(HITTER_ABILITIES.map((key, i) => [key, points[i]! * 10_000]));
 
@@ -43,4 +43,13 @@ test('90: archive half-up precision and minimum; source stays immutable', () => 
   assert.equal(result.POWER, 10_000);
   assert.equal(peaks.CONTACT, 912_501);
   assert.equal(Object.isFrozen(result), true);
+});
+test('41/ENG07: role weights preserve neutral50 and stay distinct from overall', () => {
+  const neutral = hitter([50, 50, 50, 50, 50, 50]);
+  for (const role of ['C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH']) assert.equal(roleScore('HITTER', neutral, role), 50);
+  const pitcher = Object.fromEntries(PITCHER_ABILITIES.map(key => [key, 500_000]));
+  for (const role of ['SP', 'RP', 'CP']) assert.equal(roleScore('PITCHER', pitcher, role), 50);
+  const defense = hitter([50, 50, 50, 100, 50, 50]);
+  assert.equal(roleScore('HITTER', defense, 'DH'), 50); assert.equal(roleScore('HITTER', defense, 'SS'), 65);
+  assert.throws(() => roleScore('HITTER', neutral, 'SP'));
 });

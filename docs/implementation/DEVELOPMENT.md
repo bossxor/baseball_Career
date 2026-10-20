@@ -5,14 +5,15 @@
 - `packages/rules`: 순수 규칙/정수 정밀도. 시간·네트워크·Math.random 의존 금지.
 - `apps/api`: Hono Node API. 현재 liveness만 구현. 게임 쓰기 엔드포인트는 미노출.
 - `apps/web`: React/Vite. 승인 로고·폰트만 직접 참조하며 설계 보드를 앱으로 실행하지 않음.
-- engine/db/android는 해당 마일스톤에서 생성하며 빈 패키지를 미리 추가하지 않음.
+- `packages/engine`: M1 순수 경기 코어. PCG32·타석·주자/이닝·경기·JSON 청크 재개.
+- db/android는 해당 마일스톤에서 생성하며 빈 패키지를 미리 추가하지 않음.
 
 ## 명령
 
 | 명령 | 목적 |
 |---|---|
 | npm ci | lockfile대로 설치 |
-| npm run check | 린트→타입→단위 테스트→프로덕션 빌드→설계 정적 검증10종 |
+| npm run check | 린트→타입→단위 테스트→프로덕션 빌드→빌드 엔진 해시→설계 정적 검증10종 |
 | npm run smoke | 빌드된 웹·API를 임시 HTTP 포트에서 실제 시작해 응답·프록시 확인 후 종료 |
 | npm run dev | rules 빌드 후 API watch·Vite 함께 실행 |
 | npm start | 빌드된 API만 실행 |

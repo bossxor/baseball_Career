@@ -1,0 +1,6 @@
+{
+  "engineVersion": "1.0.0",
+  "fixture": "game() in fixtures.ts: fixture-game / test-42 / REGULAR",
+  "scope": "Node24 canonical full internal state, including input and RNG; not a public DTO",
+  "sha256": "113761f605145c79179c912841754bf060e25d42856822f847074317288d5c92"
+}

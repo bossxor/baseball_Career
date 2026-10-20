@@ -8,7 +8,7 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   { languageOptions: { globals: { ...globals.node, ...globals.browser } } },
   {
-    files: ['packages/rules/src/**/*.ts'],
+    files: ['packages/rules/src/**/*.ts', 'packages/engine/src/**/*.ts'],
     rules: {
       'no-restricted-globals': ['error', 'Date', 'fetch'],
       'no-restricted-properties': ['error', { object: 'Math', property: 'random', message: 'Use an injected deterministic RNG.' }],

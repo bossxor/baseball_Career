@@ -25,7 +25,7 @@ export const ABILITY_LABELS: Readonly<Record<AbilityKey, string>> = Object.freez
   RUNNING: '주루', CLUTCH: '클러치', VELOCITY: '구속', STUFF: '구위',
   COMMAND: '제구', COMPOSURE: '위기관리', STAMINA: '체력', PICKOFF: '견제',
 });
-export const PITCH_FORMS = Object.freeze(['OVERHAND', 'THREEQUARTER', 'SIDEARM', 'UNDERHAND'] as const);
+export const PITCH_FORMS = Object.freeze(['OVERHAND', 'THREE_QUARTER', 'SIDEARM', 'UNDERHAND'] as const);
 export const THROWING_HANDS = Object.freeze(['R', 'L'] as const);
 export const BATTING_SIDES = Object.freeze(['R', 'L', 'S'] as const);
 
@@ -90,3 +90,17 @@ export function halfPeakAbilities(kind: PlayerKind, sourcePeaks: AbilityUnits): 
     key, Math.max(ABILITY_MIN_UNITS, Math.floor((sourcePeaks[key]! + 1) / 2)),
   ])));
 }
+
+/** 41: lineup role score only; never replaces the six-axis overall. */
+export function roleScore(kind: PlayerKind, abilities: AbilityUnits, role: string): number {
+  assertAbilities(kind, abilities);
+  const rows: Record<string, readonly number[]> = kind === 'HITTER' ? {
+    C: [20, 15, 15, 30, 10, 10], '2B': [20, 15, 15, 30, 10, 10], SS: [20, 15, 15, 30, 10, 10], CF: [20, 15, 15, 30, 10, 10],
+    '1B': [25, 25, 20, 15, 5, 10], '3B': [25, 25, 20, 15, 5, 10], LF: [25, 25, 20, 15, 5, 10], RF: [25, 25, 20, 15, 5, 10], DH: [30, 30, 25, 0, 5, 10],
+  } : { SP: [15, 25, 25, 10, 20, 5], RP: [15, 30, 25, 20, 5, 5], CP: [15, 30, 25, 20, 5, 5] };
+  const weights = Object.hasOwn(rows, role) ? rows[role] : undefined;
+  if (!weights) throw new RangeError('Invalid player role');
+  return abilityKeys(kind).reduce((sum, key, i) => sum + abilities[key]! * weights[i]!, 0) / (100 * UNITS_PER_POINT);
+}
+
+export * from './baseball.js';
