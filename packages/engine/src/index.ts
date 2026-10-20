@@ -30,3 +30,4 @@ export * from './high-school-career.js';
 export * from './high-school-progress.js';
 export * from './high-school-training.js';
 export * from './high-school-assessment.js';
+export * from './high-school-traits.js';

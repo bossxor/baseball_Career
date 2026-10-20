@@ -9,10 +9,12 @@ import type {HighSchoolGameContext} from './high-school-game.js';
 import type {BattingLine} from './types.js';
 import {forfeitCareerTrainingEvent} from './high-school-training.js';
 import {refreshOwnCareerAssessment} from './high-school-assessment.js';
+import {refreshCareerTraits} from './high-school-traits.js';
 export type SchoolProgressStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'ONE_GAME'|'ONE_WEEK'|'MAJOR_EVENT'|'HEALTH_CHANGE'|'SEASON_REVIEW';
 export interface SchoolProgressResult {career:HighSchoolCareer;stopReason:SchoolProgressStop;plateAppearances:number;completedInnings:number;healthChanges:{injured:boolean;recovered:boolean}|null}
 function teamGames(state:HighSchoolCareer):number {return Object.values(state.records.games).filter(g=>g.scope.seasonKey===state.world.seasonKey && g.scope.leagueKey==='HS' && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,state.world.protagonistSchoolId)).length;}
-function gameContext(state:HighSchoolCareer):HighSchoolGameContext {
+/** Server-internal world AI context; never returned to clients. */
+export function highSchoolGameContext(state:HighSchoolCareer):HighSchoolGameContext {
  const total=recordTotals(state.records,{leagueKey:'HS',phase:'REGULAR',seasonKey:state.world.seasonKey});
  const starters:Record<string,string>=Object.create(null) as Record<string,string>,recentBatting:Record<string,BattingLine>=Object.create(null) as Record<string,BattingLine>;
  for(const school of state.world.schools){
@@ -24,7 +26,7 @@ function gameContext(state:HighSchoolCareer):HighSchoolGameContext {
   const reviewed=recordTotals({...state.records,games:Object.fromEntries(Object.entries(state.records.games).filter(([key])=>reviewGames.has(key)))},{leagueKey:'HS',phase:'REGULAR',seasonKey:state.world.seasonKey});
   for(const key of school.roster)if(Object.hasOwn(reviewed.batting,key))recentBatting[key]=reviewed.batting[key]!;
  }
- return {difficulty:state.difficulty,unavailableKeys:Object.keys(state.health.injuries),starters,recentBatting,recentPitchingOuts:Object.fromEntries(Object.entries(total.pitching).map(([key,p])=>[key,p.outs])),traits:{},approaches:{}};
+ return {difficulty:state.difficulty,unavailableKeys:Object.keys(state.health.injuries),starters,recentBatting,recentPitchingOuts:Object.fromEntries(Object.entries(total.pitching).map(([key,p])=>[key,p.outs])),traits:state.traits?.owned??{},approaches:{}};
 }
 /** Bounded server worker. A plan survives safe chunks; a fresh click never redraws a pending game. */
 export function advanceHighSchoolCareer(source:HighSchoolCareer,expectedRevision:number,mode?:HighSchoolAdvancePlan['mode']):SchoolProgressResult {
@@ -46,7 +48,7 @@ export function advanceHighSchoolCareer(source:HighSchoolCareer,expectedRevision
    const pending=career.world.schedule.filter(g=>g.worldDay===day && !Object.hasOwn(career.records.games,g.simulationKey)).sort((a,b)=>a.simulationKey<b.simulationKey?-1:1)[0];
    if(pending){
     const emergency=reconcileSchoolEmergency(career.world,career.health,career.emergency,day,career.difficulty);career.world=emergency.world;career.emergency=emergency.registry;
-    progress.pendingGame=prepareHighSchoolGame(career.world,career.records,pending.simulationKey,gameContext(career));
+    progress.pendingGame=prepareHighSchoolGame(career.world,career.records,pending.simulationKey,highSchoolGameContext(career));
    }
   }
   if(progress.pendingGame){
@@ -57,7 +59,7 @@ export function advanceHighSchoolCareer(source:HighSchoolCareer,expectedRevision
    const committed=commitHighSchoolGame(career.world,career.records,job);career.world=committed.world;career.records=committed.records;progress.pendingGame=null;
    if(career.world.schedule.some(g=>g.worldDay===day && !Object.hasOwn(career.records.games,g.simulationKey)))continue;
   }
-  const closed=closeHighSchoolDay(career.world,career.records,career.health,career.days,day);career.world=closed.world;career.health=closed.health;career.days=closed.days;progress.nextWorldDay=day+1;career.ownAssessment=refreshOwnCareerAssessment(career);
+  const closed=closeHighSchoolDay(career.world,career.records,career.health,career.days,day);career.world=closed.world;career.health=closed.health;career.days=closed.days;progress.nextWorldDay=day+1;career.ownAssessment=refreshOwnCareerAssessment(career);career.traits=refreshCareerTraits(career,day);
   const player=career.world.players[career.world.protagonistKey]!,count=teamGames(career);
   const healthChanges={injured:closed.result.injured.includes(player.simulationKey),recovered:closed.result.recovered.includes(player.simulationKey)};
   const healthy=!Object.hasOwn(career.health.injuries,player.simulationKey);
