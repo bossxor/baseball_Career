@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-20",
+  "status": "USER_APPROVED_WORKING_BASELINE",
+  "scope": "STATIC_DESIGN_ONLY",
+  "note": "사용자 일단 그렇게 반영 승인. 현재 표시안 기준 채택이며 최종 픽셀/브라우저 검수 통과나 실제 앱 컴포넌트 구현을 뜻하지 않음.",
+  "board": "code-display-board.html",
+  "visual": "assets/design-guides/code-display-comparison.svg",
+  "spec": "127-CODE-DISPLAY-SPECIFICATION.md",
+  "sha256": "829c8f57e420b1114e12f2c3555f166a576f38ac6d8b1ffb64c9ac2193f379a7",
+  "groups": [
+    {
+      "id": "IMG-BADGE-MINOR",
+      "name": "마이너 팀 배지",
+      "hint": "소속 조직·레벨을 이름으로 구분"
+    },
+    {
+      "id": "IMG-BADGE-HS",
+      "name": "고교 학교 배지",
+      "hint": "가상 학교 약칭 + 학교 이름"
+    },
+    {
+      "id": "IMG-BADGE-NAT",
+      "name": "국가대표 참가국",
+      "hint": "국가 코드와 이름 · 결과는 별도"
+    },
+    {
+      "id": "IMG-RWD-TITLES",
+      "name": "칭호 · 글자로 표시",
+      "hint": "R-G02 / R-G07 · 이미지 보상 추가 없음"
+    },
+    {
+      "id": "IMG-ICON-TRAIT",
+      "name": "특성 · 공개 / 히든",
+      "hint": "장착 슬롯 없이 보유 효과 자동 적용"
+    },
+    {
+      "id": "IMG-ICON-PITCH",
+      "name": "구종 7종",
+      "hint": "공과 선은 식별 도식 · 실제 궤적 아님"
+    },
+    {
+      "id": "IMG-ICON-APPROACH",
+      "name": "타격 성향 4종",
+      "hint": "거포형 등 초기 유형과 별개"
+    },
+    {
+      "id": "IMG-ICON-FORM",
+      "name": "투구폼 4종",
+      "hint": "팔 각도만 도식화 · 던지는 손은 별도"
+    },
+    {
+      "id": "IMG-ICON-HAND",
+      "name": "투타 구분",
+      "hint": "던지는 손과 타석을 두 필드로 표시"
+    },
+    {
+      "id": "IMG-ICON-GOAL",
+      "name": "목표 · 도전 과제",
+      "hint": "시즌 목표10개 · 도전12개"
+    },
+    {
+      "id": "IMG-FIELD",
+      "name": "수비 배치도",
+      "hint": "그림 + 같은 정보의 슬롯 목록"
+    }
+  ]
+}

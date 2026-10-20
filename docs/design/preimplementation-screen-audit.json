@@ -685,5 +685,10 @@
       "finalPixelStatus": "NOT_FINALIZED",
       "browserReview": "NOT_EXECUTED"
     }
-  ]
+  ],
+  "codeDisplayVisualApproval": {
+    "status": "USER_APPROVED_WORKING_BASELINE",
+    "source": "assets/design-guides/APPROVED-CODE-DISPLAY-v1.json",
+    "implementationStatus": "NOT_IMPLEMENTED"
+  }
 }

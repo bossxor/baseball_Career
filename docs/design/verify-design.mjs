@@ -521,8 +521,9 @@ await import('./verify-latecareer-continuity.mjs');
  const registry=JSON.parse(read('image-production-register.json'));
  assert.equal(audit.rows.length,45);assert.equal(audit.counts.executedBrowserCases,0);
  for(const r of audit.rows){const row=finish.rows.find(x=>x.screenId===r.screenId);assert.ok(row);assert.equal(r.stateCount,row.states.length);assert.equal(r.stateCount,8);assert.deepEqual(r.assetRefs,slots.screens.find(x=>x.screenId===r.screenId).assetRefs);assert.equal(r.finalPixelStatus,row.finalPixelStatus);assert.equal(r.browserReview,row.browserReview);const ids=registry.items.filter(i=>i.status==='CODE_ONLY'&&i.screens.includes(r.screenId)).map(i=>i.id);assert.deepEqual(r.codeDisplayGroups,ids);}
+ const approved=JSON.parse(read('assets/design-guides/APPROVED-CODE-DISPLAY-v1.json'));assert.equal(approved.status,'USER_APPROVED_WORKING_BASELINE');assert.deepEqual(approved.groups.map(g=>g.id).sort(),registry.items.filter(i=>i.status==='CODE_ONLY').map(i=>i.id).sort());assert.ok(read('code-display-board.html').includes('assets/design-guides/code-display-comparison.svg'));assert.equal(slots.assetLibrary.codeDisplayGuide.groups.length,11);for(const g of slots.assetLibrary.codeDisplayGuide.groups)assert.deepEqual(g.screens,registry.items.find(i=>i.id===g.id).screens);
  const spec=read('127-CODE-DISPLAY-SPECIFICATION.md');
- for(const i of registry.items.filter(i=>i.status==='CODE_ONLY')){assert.ok(spec.includes(i.id));assert.equal(i.displaySpec,'127-CODE-DISPLAY-SPECIFICATION.md');assert.equal(i.implementationStatus,'NOT_IMPLEMENTED');}
- console.log('PASS: 11 code-display specifications and 45-screen/8-state reference audit; visual approval pending, browser execution count remains zero.');
+ for(const i of registry.items.filter(i=>i.status==='CODE_ONLY')){assert.ok(spec.includes(i.id));assert.equal(i.displaySpec,'127-CODE-DISPLAY-SPECIFICATION.md');assert.equal(i.implementationStatus,'NOT_IMPLEMENTED');assert.equal(i.visualReview,'USER_APPROVED_WORKING_BASELINE');assert.equal(i.designGuide,'code-display-board.html');}
+ console.log('PASS: 11 code-display specifications and 45-screen/8-state reference audit; visual baseline approved, browser execution count remains zero.');
 }
 console.log('NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.');

@@ -1384,8 +1384,10 @@
       "notes": "이미지 제작 불필요. 모회사 로고와 혼용 금지(37)",
       "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
       "designSpecificationStatus": "SPECIFIED",
-      "visualReview": "PENDING_USER_APPROVAL",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "visualReview": "USER_APPROVED_WORKING_BASELINE",
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "designGuide": "code-display-board.html",
+      "designApproval": "assets/design-guides/APPROVED-CODE-DISPLAY-v1.json"
     },
     {
       "id": "IMG-BADGE-HS",
@@ -1404,8 +1406,10 @@
       "notes": "수는 고교 목록 크기. 이미지 제작 불필요",
       "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
       "designSpecificationStatus": "SPECIFIED",
-      "visualReview": "PENDING_USER_APPROVAL",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "visualReview": "USER_APPROVED_WORKING_BASELINE",
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "designGuide": "code-display-board.html",
+      "designApproval": "assets/design-guides/APPROVED-CODE-DISPLAY-v1.json"
     },
     {
       "id": "IMG-BADGE-NAT",
@@ -1424,8 +1428,10 @@
       "notes": "실제 국기·협회 엠블럼 사용은 V12 권리 확인 전 금지",
       "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
       "designSpecificationStatus": "SPECIFIED",
-      "visualReview": "PENDING_USER_APPROVAL",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "visualReview": "USER_APPROVED_WORKING_BASELINE",
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "designGuide": "code-display-board.html",
+      "designApproval": "assets/design-guides/APPROVED-CODE-DISPLAY-v1.json"
     },
     {
       "id": "IMG-RWD-R-G01",
@@ -1927,8 +1933,10 @@
       "notes": "텍스트 칭호",
       "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
       "designSpecificationStatus": "SPECIFIED",
-      "visualReview": "PENDING_USER_APPROVAL",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "visualReview": "USER_APPROVED_WORKING_BASELINE",
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "designGuide": "code-display-board.html",
+      "designApproval": "assets/design-guides/APPROVED-CODE-DISPLAY-v1.json"
     },
     {
       "id": "IMG-MEDAL-GOLD",
@@ -2250,8 +2258,10 @@
       "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요",
       "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
       "designSpecificationStatus": "SPECIFIED",
-      "visualReview": "PENDING_USER_APPROVAL",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "visualReview": "USER_APPROVED_WORKING_BASELINE",
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "designGuide": "code-display-board.html",
+      "designApproval": "assets/design-guides/APPROVED-CODE-DISPLAY-v1.json"
     },
     {
       "id": "IMG-ICON-PITCH",
@@ -2269,8 +2279,10 @@
       "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요",
       "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
       "designSpecificationStatus": "SPECIFIED",
-      "visualReview": "PENDING_USER_APPROVAL",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "visualReview": "USER_APPROVED_WORKING_BASELINE",
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "designGuide": "code-display-board.html",
+      "designApproval": "assets/design-guides/APPROVED-CODE-DISPLAY-v1.json"
     },
     {
       "id": "IMG-ICON-APPROACH",
@@ -2288,8 +2300,10 @@
       "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요",
       "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
       "designSpecificationStatus": "SPECIFIED",
-      "visualReview": "PENDING_USER_APPROVAL",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "visualReview": "USER_APPROVED_WORKING_BASELINE",
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "designGuide": "code-display-board.html",
+      "designApproval": "assets/design-guides/APPROVED-CODE-DISPLAY-v1.json"
     },
     {
       "id": "IMG-ICON-FORM",
@@ -2308,8 +2322,10 @@
       "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요",
       "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
       "designSpecificationStatus": "SPECIFIED",
-      "visualReview": "PENDING_USER_APPROVAL",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "visualReview": "USER_APPROVED_WORKING_BASELINE",
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "designGuide": "code-display-board.html",
+      "designApproval": "assets/design-guides/APPROVED-CODE-DISPLAY-v1.json"
     },
     {
       "id": "IMG-ICON-HAND",
@@ -2328,8 +2344,10 @@
       "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요",
       "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
       "designSpecificationStatus": "SPECIFIED",
-      "visualReview": "PENDING_USER_APPROVAL",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "visualReview": "USER_APPROVED_WORKING_BASELINE",
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "designGuide": "code-display-board.html",
+      "designApproval": "assets/design-guides/APPROVED-CODE-DISPLAY-v1.json"
     },
     {
       "id": "IMG-ICON-GOAL",
@@ -2347,8 +2365,10 @@
       "notes": "screen-image-slots의 CODE_BADGES/CODE_DIAGRAM. 이미지 생성 불필요",
       "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
       "designSpecificationStatus": "SPECIFIED",
-      "visualReview": "PENDING_USER_APPROVAL",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "visualReview": "USER_APPROVED_WORKING_BASELINE",
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "designGuide": "code-display-board.html",
+      "designApproval": "assets/design-guides/APPROVED-CODE-DISPLAY-v1.json"
     },
     {
       "id": "IMG-FIELD",
@@ -2366,8 +2386,10 @@
       "notes": "FIELD_DIAGRAM. 이미지 생성 불필요",
       "displaySpec": "127-CODE-DISPLAY-SPECIFICATION.md",
       "designSpecificationStatus": "SPECIFIED",
-      "visualReview": "PENDING_USER_APPROVAL",
-      "implementationStatus": "NOT_IMPLEMENTED"
+      "visualReview": "USER_APPROVED_WORKING_BASELINE",
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "designGuide": "code-display-board.html",
+      "designApproval": "assets/design-guides/APPROVED-CODE-DISPLAY-v1.json"
     },
     {
       "id": "IMG-LEGACY",

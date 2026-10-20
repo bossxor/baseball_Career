@@ -359,3 +359,7 @@ verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행
 ## 2026-10-20 코드 표시11묶음·45화면 정합 마감
 
 127 표시 상세와128 화면 대조·기계 판독 등록부를 작성했다. verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행 모두 종료코드0/PASS.11개 CODE_ONLY ID의 명세 연결·구현 미착수 상태와45화면의8상태·현재 그림 참조·미실행 렌더 상태를 대조했다.83/94/95/108/109/111의 낡은 아트 표기는 승인된 청춘 애니/실루엣 기준으로 정리했다. 시각 비교 보드는 저장소 밖 사용자 승인 대기. 브라우저 실행0, 최종픽셀/터치/스크린리더/API/DB/APK 검수 미실행을 유지한다.
+
+## 2026-10-20 코드 표시11묶음 시각안 승인 반영
+
+사용자가 현재 작업 기준으로 승인한11묶음 정적 보드·SVG 비교도·승인 기록을 반영했다. verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료코드0/PASS. 승인 기록의11 ID와 레지스터·화면별 가이드 참조를 대조했으며 CODE_ONLY/NOT_IMPLEMENTED는 유지했다. 이미지 EXISTS80/TODO0, 코드 표시11묶음 시각 승인 완료. 실제 브라우저·최종픽셀·스크린리더·기기·게임·Neon/DB·APK 검수는 미실행이다.

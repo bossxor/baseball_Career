@@ -1229,6 +1229,86 @@
       "background": "#172c50",
       "approval": "assets/brand/APPROVED-FINAL-IMAGES-v1.json",
       "integrationStatus": "NOT_IMPLEMENTED"
+    },
+    "codeDisplayGuide": {
+      "status": "APPROVED_DESIGN_PREVIEW_ONLY",
+      "board": "code-display-board.html",
+      "spec": "127-CODE-DISPLAY-SPECIFICATION.md",
+      "approval": "assets/design-guides/APPROVED-CODE-DISPLAY-v1.json",
+      "implementationStatus": "NOT_IMPLEMENTED",
+      "groups": [
+        {
+          "id": "IMG-BADGE-MINOR",
+          "screens": [
+            "S18",
+            "S29"
+          ]
+        },
+        {
+          "id": "IMG-BADGE-HS",
+          "screens": [
+            "S02",
+            "S04"
+          ]
+        },
+        {
+          "id": "IMG-BADGE-NAT",
+          "screens": [
+            "S24",
+            "S25"
+          ]
+        },
+        {
+          "id": "IMG-RWD-TITLES",
+          "screens": [
+            "S40"
+          ]
+        },
+        {
+          "id": "IMG-ICON-TRAIT",
+          "screens": [
+            "S38"
+          ]
+        },
+        {
+          "id": "IMG-ICON-PITCH",
+          "screens": [
+            "S39"
+          ]
+        },
+        {
+          "id": "IMG-ICON-APPROACH",
+          "screens": [
+            "S39"
+          ]
+        },
+        {
+          "id": "IMG-ICON-FORM",
+          "screens": [
+            "S02",
+            "S39"
+          ]
+        },
+        {
+          "id": "IMG-ICON-HAND",
+          "screens": [
+            "S02",
+            "S16"
+          ]
+        },
+        {
+          "id": "IMG-ICON-GOAL",
+          "screens": [
+            "S40"
+          ]
+        },
+        {
+          "id": "IMG-FIELD",
+          "screens": [
+            "S15"
+          ]
+        }
+      ]
     }
   }
 }
