@@ -1,0 +1,14 @@
+✔ 44: ten actual club identities,500 fictional players/500 active contracts,26H/24P and legal first28 (261.4142ms)
+✔ deterministic generation and JSON restore, distinct seeds change roster; identity/contract keys stay logical (848.6435ms)
+✔ six-stat mean35..85 exact, profile ceilings100 do not inflate overall or erase profile shape (2.4095ms)
+✔ initial payroll common-scale floors/caps, integer won, future commitments<=90% budget and no signing bonus (309.0717ms)
+✔ career hard changes NPC potential only; career cheat does not make all KBO NPC potential100 (614.86ms)
+✔ restored corrupt roster, contract, payroll, first team or age rejected without silent regeneration (401.2847ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3146.8673

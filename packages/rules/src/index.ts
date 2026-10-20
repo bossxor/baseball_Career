@@ -110,3 +110,4 @@ export * from './player.js';
 export const US_DIRECT_MIN_OVERALL = 52;
 export * from './career.js';
 export * from './college.js';
+export * from './kbo.js';

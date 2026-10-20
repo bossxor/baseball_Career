@@ -1,0 +1,3 @@
+Isolated copy validation: V:/packages/{rules,engine}, unchanged lockfile.
+rules: exit 0
+engine: exit 0

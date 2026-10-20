@@ -42,3 +42,4 @@ export * from './college-cup.js';
 export * from './college-result.js';
 export * from './college-year.js';
 export * from './college-graduation.js';
+export * from './kbo-world.js';
