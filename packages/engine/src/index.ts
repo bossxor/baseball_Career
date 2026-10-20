@@ -23,3 +23,4 @@ export * from './growth-ledger.js';
 export * from './events.js';
 export * from './health.js';
 export * from './emergency-roster.js';
+export * from './high-school-game.js';

@@ -1,0 +1,13 @@
+✔ generated HS roster becomes actual1.2 game; selected starter, nine distinct legal hitters and owned-only cheatXP (102.7257ms)
+✔ HS game serialized PA resume equals continuous final; records and XP publish once after FINAL (161.8265ms)
+✔ stale world/revision and tampered scheduled date rejected without partial record/book changes (81.9179ms)
+✔ unavailable hitters excluded, insufficient roster rejects; bad starter, missing book and allocation reject (116.5107ms)
+✔ all four first-day scheduled games commit sequentially, eight teams once; independent9th team bye (251.4492ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1129.8959
