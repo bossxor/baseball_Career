@@ -1,3 +1,9 @@
+# 구현 진행 안내 — 2026-10-20
+
+사용자가 구현 착수를 승인해 M0 공통 규칙·웹/서버 골격을 완료했습니다. 다음은 M1 경기 엔진입니다. 최신 구현 결과·실행 증거·다음 작업은 [구현 진행 문서](../implementation/PROGRESS.md)를 우선합니다. 아래 설계 인계 및 NOT_EXECUTED 표기는 구현 착수 전 기준본의 이력입니다. 실제 게임·인증·DB·APK의 완료를 뜻하지 않습니다.
+
+---
+
 # 다른 채팅·개발 환경에서 이어갈 요청문
 
 이 저장소는 '다시, 플레이볼'의 구현 전 설계 패키지다. 먼저 START-HERE.md, STATUS.md,14-CANONICAL-DECISIONS.md,91-CURRENT-CONTRACT-INDEX.md,130-PREIMPLEMENTATION-HANDOFF.md,131-FINAL-DESIGN-REVIEW.md와 preimplementation-readiness.json을 읽고 실제 Git/파일 상태를 확인하라. 과거 대화를 안다고 가정하지 말라.

@@ -10,3 +10,12 @@
 
 *.css text eol=lf
 *.svg text eol=lf
+
+*.ts text eol=lf
+*.tsx text eol=lf
+*.yml text eol=lf
+*.log text eol=lf
+/.gitattributes text eol=lf
+/.gitignore text eol=lf
+/.nvmrc text eol=lf
+/.env.example text eol=lf

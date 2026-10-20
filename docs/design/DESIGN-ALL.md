@@ -4,6 +4,12 @@
 
 <!-- SOURCE: START-HERE.md -->
 
+# 구현 진행 안내 — 2026-10-20
+
+사용자가 구현 착수를 승인해 M0 공통 규칙·웹/서버 골격을 완료했습니다. 다음은 M1 경기 엔진입니다. 최신 구현 결과·실행 증거·다음 작업은 [구현 진행 문서](../implementation/PROGRESS.md)를 우선합니다. 아래 설계 인계 및 NOT_EXECUTED 표기는 구현 착수 전 기준본의 이력입니다. 실제 게임·인증·DB·APK의 완료를 뜻하지 않습니다.
+
+---
+
 최종 점검(2026-10-20): [131 구현 직전 리뷰](131-FINAL-DESIGN-REVIEW.md)에서5개 문서/패키지 정합 문제를 기존 기준으로 정정했다. [130 인계](130-PREIMPLEMENTATION-HANDOFF.md)와 STATUS를 함께 읽는다. 실제 실행 검수는 미실행이며 이번 작업은 앱 구현을 시작한 기록이 아니다.
 
 최신 안내(2026-10-19): 진행 현황은 [STATUS](STATUS.md), 분야별 현재 기준 문서는 [91](91-CURRENT-CONTRACT-INDEX.md), 사용자 결정은 [14](14-CANONICAL-DECISIONS.md)를 봅니다. 최근 문서: [119](119-PLAYER-DISPLAY-PITCH-FORM-SILHOUETTE.md) 선수 표시·투구폼, [121](121-HANDEDNESS-DISTRIBUTION-SPLIT-RECORDS.md) 손·타석 분포, [122](122-API-SCHEMA-LOG-ALIGNMENT.md) API 정합, [123](123-EFFECT-SUM-EXAMPLES.md) 합산 예제, [124](124-IMAGE-PRODUCTION-BRIEF.md) 이미지 제작 명세, [125](125-EVENT-CHOICE-DISPATCH.md) 사건 선택지 처리, [120](120-IMPLEMENTATION-ROADMAP.md) 구현 로드맵. 기대값 묶음 목록은 [expectation-sets-index.json](expectation-sets-index.json).
@@ -75,6 +81,12 @@ GitHub https://github.com/bossxor/baseball_Career 의 docs/design이 원본. 다
 ---
 
 <!-- SOURCE: README.md -->
+
+# 구현 진행 안내 — 2026-10-20
+
+사용자가 구현 착수를 승인해 M0 공통 규칙·웹/서버 골격을 완료했습니다. 다음은 M1 경기 엔진입니다. 최신 구현 결과·실행 증거·다음 작업은 [구현 진행 문서](../implementation/PROGRESS.md)를 우선합니다. 아래 설계 인계 및 NOT_EXECUTED 표기는 구현 착수 전 기준본의 이력입니다. 실제 게임·인증·DB·APK의 완료를 뜻하지 않습니다.
+
+---
 
 최종 점검(2026-10-20): [131 구현 직전 리뷰](131-FINAL-DESIGN-REVIEW.md)에서5개 문서/패키지 정합 문제를 기존 기준으로 정정했다. [130 인계](130-PREIMPLEMENTATION-HANDOFF.md)와 STATUS를 함께 읽는다. 실제 실행 검수는 미실행이며 이번 작업은 앱 구현을 시작한 기록이 아니다.
 
@@ -165,6 +177,12 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 ---
 
 <!-- SOURCE: STATUS.md -->
+
+# 구현 진행 안내 — 2026-10-20
+
+사용자가 구현 착수를 승인해 M0 공통 규칙·웹/서버 골격을 완료했습니다. 다음은 M1 경기 엔진입니다. 최신 구현 결과·실행 증거·다음 작업은 [구현 진행 문서](../implementation/PROGRESS.md)를 우선합니다. 아래 설계 인계 및 NOT_EXECUTED 표기는 구현 착수 전 기준본의 이력입니다. 실제 게임·인증·DB·APK의 완료를 뜻하지 않습니다.
+
+---
 
 # 현재 작업 — 구현 직전 최종 설계 리뷰·정정 완료
 
@@ -986,6 +1004,10 @@ U: 우리팀으로 표현된 선수의 모자·유니폼 장식·속옷은 네�
 ## 2026-10-20 코드 표시11묶음 현재 기준 승인 U
 
 2026-10-20: 사용자 승인에 따라 코드 표시11묶음의 비교 보드·승인 기록·화면별 표시 가이드를 반영했다. 현재 수정 가능한 승인 작업 기준이며 실제 앱 구성요소는 NOT_IMPLEMENTED다. 이미지 EXISTS80/TODO0/CODE_ONLY11/LEGACY_REFERENCE1과45화면/99이벤트/핵심298은 유지한다. 게임 구현은 시작하지 않으며 최종픽셀·브라우저·기기·접근성 실행 검수는 미실행이다.
+
+## 2026-10-20 구현 착수 U
+
+사용자가 구현 시작을 명시 승인했습니다. M0부터 120 순서로 진행하고, 진행사항·검증·다음 작업을 [구현 진행 문서](../implementation/PROGRESS.md)에 기록합니다. 남은 사용량 1% 확인 시 진행 문서를 갱신해 진행분을 커밋하되 마일스톤마다 선제 저장합니다. 동일 계정 앱↔PC 이어하기는 기존 R10 및74/76/87 계약을 유지합니다. 새로운 게임 규칙은 추가하지 않았습니다.
 
 ---
 
@@ -8655,6 +8677,12 @@ AI 투구폼 분포・친화 표・효과 계수는 D 기본안이며 실제 밸
 
 <!-- SOURCE: 120-IMPLEMENTATION-ROADMAP.md -->
 
+# 구현 진행 안내 — 2026-10-20
+
+사용자가 구현 착수를 승인해 M0 공통 규칙·웹/서버 골격을 완료했습니다. 다음은 M1 경기 엔진입니다. 최신 구현 결과·실행 증거·다음 작업은 [구현 진행 문서](../implementation/PROGRESS.md)를 우선합니다. 아래 설계 인계 및 NOT_EXECUTED 표기는 구현 착수 전 기준본의 이력입니다. 실제 게임·인증·DB·APK의 완료를 뜻하지 않습니다.
+
+---
+
 # 120. 구현 착수 대비 — 모듈 경계·마일스톤·게이트 매핑
 
 2026-10-19. 구현 착수 지시가 아직 없으므로 이 문서는 **착수 시 바로 쓸 순서표**이며 앱·DB·APK는 만들지 않는다. 기본 구조는 [06](06-TECH.md)(React/Vite·Hono·Drizzle·Neon·Capacitor)을 따르고, 순서와 완료 기준은 초안D다. 사용자가 착수를 지시하면 첫 마일스톤부터 시작하고 순서 변경은 새 결정으로 기록한다.
@@ -10534,6 +10562,12 @@ FA 자격을 얻었습니다. 익숙한 팀과 새로운 팀이 각기 다른 �
 
 <!-- SOURCE: HANDOFF-PROMPT.md -->
 
+# 구현 진행 안내 — 2026-10-20
+
+사용자가 구현 착수를 승인해 M0 공통 규칙·웹/서버 골격을 완료했습니다. 다음은 M1 경기 엔진입니다. 최신 구현 결과·실행 증거·다음 작업은 [구현 진행 문서](../implementation/PROGRESS.md)를 우선합니다. 아래 설계 인계 및 NOT_EXECUTED 표기는 구현 착수 전 기준본의 이력입니다. 실제 게임·인증·DB·APK의 완료를 뜻하지 않습니다.
+
+---
+
 # 다른 채팅·개발 환경에서 이어갈 요청문
 
 이 저장소는 '다시, 플레이볼'의 구현 전 설계 패키지다. 먼저 START-HERE.md, STATUS.md,14-CANONICAL-DECISIONS.md,91-CURRENT-CONTRACT-INDEX.md,130-PREIMPLEMENTATION-HANDOFF.md,131-FINAL-DESIGN-REVIEW.md와 preimplementation-readiness.json을 읽고 실제 Git/파일 상태를 확인하라. 과거 대화를 안다고 가정하지 말라.
@@ -10937,3 +10971,7 @@ verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행
 ## 최종 검증 결과
 
 verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료코드0/PASS. 설계 파일359개를 MANIFEST의 경로·크기·SHA256으로 작업 폴더와 Git staged blob 양쪽에서 확인해359/359 일치, tracked 파일 집합도 정확히 일치했다. OS 캐시 항목0. 실제 앱 빌드/경기/DB/브라우저 검수가 아니라 설계 파일·정적 계약의 검증 결과다.
+
+## 2026-10-20 구현 M0 실제 검증
+
+사용자 구현 승인 후 M0를 착수·완료했다. npm ci / npm run check / npm run smoke 성공. check는 린트·소스/테스트 타입 검사·단위7/7·rules/API/Web build·기존 설계 정적10종을 포함한다. 개발 서버 실제 HTTP200과 프록시→API도 확인했다. 전체 출력과 다음 M1 작업은 [구현 진행](../implementation/PROGRESS.md)에 기록한다. 이 결과는 전체 경기 fixture/인증/DB/기기/APK 또는 V01~V12 전체 통과를 뜻하지 않으며 기존 구현 전 준비표는 역사적 스냅샷으로 보존한다.

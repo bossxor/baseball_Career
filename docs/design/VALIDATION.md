@@ -379,3 +379,7 @@ verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 최종 실행
 ## 최종 검증 결과
 
 verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료코드0/PASS. 설계 파일359개를 MANIFEST의 경로·크기·SHA256으로 작업 폴더와 Git staged blob 양쪽에서 확인해359/359 일치, tracked 파일 집합도 정확히 일치했다. OS 캐시 항목0. 실제 앱 빌드/경기/DB/브라우저 검수가 아니라 설계 파일·정적 계약의 검증 결과다.
+
+## 2026-10-20 구현 M0 실제 검증
+
+사용자 구현 승인 후 M0를 착수·완료했다. npm ci / npm run check / npm run smoke 성공. check는 린트·소스/테스트 타입 검사·단위7/7·rules/API/Web build·기존 설계 정적10종을 포함한다. 개발 서버 실제 HTTP200과 프록시→API도 확인했다. 전체 출력과 다음 M1 작업은 [구현 진행](../implementation/PROGRESS.md)에 기록한다. 이 결과는 전체 경기 fixture/인증/DB/기기/APK 또는 V01~V12 전체 통과를 뜻하지 않으며 기존 구현 전 준비표는 역사적 스냅샷으로 보존한다.

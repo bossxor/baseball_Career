@@ -1,0 +1,15 @@
+@font-face{font-family:BlackHanSans;src:url('../../../docs/design/assets/fonts/BlackHanSans-Regular.ttf') format('truetype');font-display:swap}
+@font-face{font-family:NotoSansKR;src:url('../../../docs/design/assets/fonts/NotoSansKR-Variable.ttf') format('truetype');font-weight:100 900;font-display:swap}
+:root{font-family:NotoSansKR,sans-serif;color:#172e4e;background:#f2f5fa;font-synthesis:none;text-rendering:optimizeLegibility;font-optical-sizing:auto}
+*{box-sizing:border-box}
+body{margin:0;min-width:320px}
+.welcome{max-width:1120px;min-height:100svh;margin:auto;padding:clamp(24px,6vw,72px);display:flex;flex-direction:column;gap:40px;background:radial-gradient(ellipse at 100% 25%,#d7e7ff 0,transparent 55%),#f9fbfe}
+.brand{display:flex;align-items:center;gap:16px;font-size:.8rem;font-weight:800;letter-spacing:.16em}
+.copy{margin-top:24px}
+.eyebrow{font-weight:700;color:#355d8b}
+h1{font-family:BlackHanSans,sans-serif;font-size:clamp(3.5rem,10vw,6.8rem);font-weight:400;line-height:1.14;margin:16px 0 24px;letter-spacing:-.04em}
+.description{font-size:clamp(1.1rem,3vw,1.5rem);line-height:1.7}
+.notice{background:#fff;border:1px solid #cbd8e9;border-radius:20px;padding:24px;max-width:560px;line-height:1.7}
+.notice p{margin:12px 0 0}.badge{background:#e4edfb;color:#213f68;padding:5px 10px;border-radius:8px;font-size:.8rem;font-weight:700}
+.muted,footer{color:#4e627a;font-size:.88rem}footer{margin-top:auto;padding-top:12px}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}

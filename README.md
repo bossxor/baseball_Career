@@ -1,21 +1,25 @@
 # 다시, 플레이볼
 
-소수 친구용 야구 선수 커리어·독립 구단 시뮬레이션의 **서면 설계 기준본1.0**입니다. 실제 앱 구현·서비스 배포 전입니다.
+야구 선수 커리어·독립 구단 운영 시뮬레이션. M0 공통 규칙·웹/서버 골격을 완료했고, 다음은 M1 경기 엔진입니다.
 
-- [설계 시작 안내](docs/design/START-HERE.md)
-- [현재 현황](docs/design/STATUS.md)
-- [사용자 결정과 기본안](docs/design/14-CANONICAL-DECISIONS.md)
-- [25분야 현재 적용 문서 지도](docs/design/91-CURRENT-CONTRACT-INDEX.md)
-- [종결 점검·구현 인계](docs/design/92-DESIGN-CLOSURE-HANDOFF.md)
-- [통합 설계 MD](docs/design/DESIGN-ALL.md)
-- [빈티지 이미지·화면 비교 보드](docs/design/art-direction-lab.html)
-- [45화면 목업](docs/design/design-board.html)
-- [아트 선택·제작 기록](docs/design/93-ART-DIRECTION-CHOICE-LAB.md)
+## 개발 시작
 
-45화면·99이벤트·298서면검수기대값·24통합경로·6플랫폼대상을설계했습니다. Android/iPhone/Windows/macOS 온라인웹과Android APK가기본목표입니다. 정적목업은실제게임/로그인/저장을실행하지않습니다.
+Node.js 24 LTS와 npm을 사용합니다. 로컬 디스크에 Git checkout을 만들고 저장소 루트에서 실행하세요.
 
-정적검사: `node docs/design/verify-design.mjs`. 구조·링크·예시산술검사이며게임/Neon/기기/build검증과구분합니다. [검증기록](docs/design/VALIDATION.md)을확인하세요.
+```sh
+npm ci
+npm run check
+npm run smoke
+npm run dev
+```
 
-사용자는설계후구현을원합니다.현재구현착수지시전에는앱·DB·배포를자동시작하지않습니다. 실제실행게이트는92의V01~12에남아있습니다.
+웹 주소는 개발 서버 출력에 표시됩니다. API 기본 주소는 http://127.0.0.1:3001 입니다. 현재 게임 진행·계정·DB 저장은 아직 연결되지 않았습니다. `npm run start`는 빌드된 API만 실행하며 웹 정적 배포는 별도입니다.
 
-시각확장1.1:사용자선택빈티지기록실을반영하고메인3안·빈티지12장면·투명초상·45화면이미지슬롯을추가했습니다.이미지생성결과는확인했고브라우저file정책차단으로실제HTML렌더링은미검수입니다.
+## 이어서 작업하기
+
+- [구현 진행·다음 작업](docs/implementation/PROGRESS.md)
+- [개발 환경과 검증](docs/implementation/DEVELOPMENT.md)
+- [설계 시작점](docs/design/START-HERE.md)
+- [구현 순서 M0~M9](docs/design/120-IMPLEMENTATION-ROADMAP.md)
+
+`docs/design`의 정적 설계 검증과 실제 앱 실행 검증은 별개입니다. 세이브·인증·DB·Android 검증은 해당 기능을 구현한 뒤 기록합니다. 비밀값은 `.env` 등에만 두고 Git에 올리지 않습니다.

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.neon
+*.jks
+*.keystore
+Thumbs.db
+.DS_Store
