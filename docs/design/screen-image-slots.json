@@ -469,7 +469,8 @@
     {
       "assetRefs": [
         "NONE",
-        "silhouetteCard"
+        "silhouetteCard",
+        "commemorativeRewards"
       ],
       "screenId": "S40",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -531,7 +532,8 @@
         "retirement",
         "international",
         "rival",
-        "NONE"
+        "NONE",
+        "commemorativeRewards"
       ],
       "screenId": "S45",
       "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -877,6 +879,69 @@
           ]
         }
       ]
+    },
+    "commemorativeRewards": {
+      "status": "PARTIALLY_APPROVED",
+      "approval": "assets/rewards/APPROVED-REWARDS-v1.json",
+      "files": [
+        {
+          "id": "IMG-RWD-R-G01",
+          "file": "assets/rewards/r-g01.svg",
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-RWD-R-G06",
+          "file": "assets/rewards/r-g06.svg",
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "IMG-RWD-R-G10",
+          "file": "assets/rewards/r-g10.svg",
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "r-g03",
+          "file": "assets/rewards/r-g03.png",
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "r-g05",
+          "file": "assets/rewards/r-g05.png",
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "r-g08",
+          "file": "assets/rewards/r-g08.png",
+          "screens": [
+            "S40",
+            "S45"
+          ]
+        },
+        {
+          "id": "r-a12",
+          "file": "assets/rewards/r-a12.png",
+          "screens": [
+            "S45"
+          ]
+        }
+      ],
+      "fallback": "REWARD_NAME_TEXT",
+      "guard": "COSMETIC_ONLY; show acquired rewards only; never imply unlock from imagery"
     }
   }
 }

@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "status": "PRODUCTION_BRIEF",
   "gameRulesChanged": false,
-  "note": "이미지 제작 레지스터. status: TODO=제작 필요, EXISTS=이미 있음, CODE_ONLY=코드로 제작(이미지 불필요), LEGACY_REFERENCE=보존. 제작 후 이 파일의 status와 해당 문서를 갱신한다. 2026-10-20: 1단계 결과 승인 후에만 2단계 제작 시작. 시안은 저장소 밖 임시 폴더에 두고 사용자 선택본만 반영; 후속 묶음마다 재승인. 미선택·거절 시 자산과 status·화면 슬롯을 변경하지 않음. 2026-10-20 승인 반영: 투수 A·타자 A·로고2, 네이비·블루. 첫 3항목만 EXISTS; 나머지 제작은 묶음별 승인 대기. 2차 사용자 승인 반영: 우투좌타·좌투좌타·좌투 오버핸드·우투 쓰리쿼터 4종. 실루엣 6/14, TODO57/EXISTS23. 3차 사용자 승인: 남은 실루엣8종 반영, 14/14 완료. 전체 TODO49/EXISTS31. Android/PWA 아이콘2묶음은 여전히 미완료. 2026-10-20 아이콘1 네이비 배경 승인 반영. P0 모두 파일 제작 완료; 실제 설치 검수는 미실행. 2026-10-20 P1 장면6컷 승인 반영(라이벌 상대 버건디). TODO41/EXISTS39. 기존 우리팀 유니폼은 네이비 통일 원칙 확정, 수정 시안은 별도 승인 대기. 2026-10-20 메인·기본사건·고교3PNG 우리팀 네이비 수정 승인 반영, 이전 원본 보존. 추가사건 야간 라이벌 버건디 수정본은 최종 확인 대기. 2026-10-20 야간 라이벌 수정본 최종 승인. 활성4PNG 네이비 통일 완료, 야간 우리팀 흰색/네이비와 상대 버건디 구분. 2026-10-20: 학교별 고유 주색·보조색의 대학9·군 체육팀1 배지 승인 반영. EXISTS49/TODO31. 우리팀 네이비 통일은 익명 선수 사건 일러스트이며 학교 배지에는 적용하지 않음.",
+  "note": "이미지 제작 레지스터. status: TODO=제작 필요, EXISTS=이미 있음, CODE_ONLY=코드로 제작(이미지 불필요), LEGACY_REFERENCE=보존. 제작 후 이 파일의 status와 해당 문서를 갱신한다. 2026-10-20: 1단계 결과 승인 후에만 2단계 제작 시작. 시안은 저장소 밖 임시 폴더에 두고 사용자 선택본만 반영; 후속 묶음마다 재승인. 미선택·거절 시 자산과 status·화면 슬롯을 변경하지 않음. 2026-10-20 승인 반영: 투수 A·타자 A·로고2, 네이비·블루. 첫 3항목만 EXISTS; 나머지 제작은 묶음별 승인 대기. 2차 사용자 승인 반영: 우투좌타·좌투좌타·좌투 오버핸드·우투 쓰리쿼터 4종. 실루엣 6/14, TODO57/EXISTS23. 3차 사용자 승인: 남은 실루엣8종 반영, 14/14 완료. 전체 TODO49/EXISTS31. Android/PWA 아이콘2묶음은 여전히 미완료. 2026-10-20 아이콘1 네이비 배경 승인 반영. P0 모두 파일 제작 완료; 실제 설치 검수는 미실행. 2026-10-20 P1 장면6컷 승인 반영(라이벌 상대 버건디). TODO41/EXISTS39. 기존 우리팀 유니폼은 네이비 통일 원칙 확정, 수정 시안은 별도 승인 대기. 2026-10-20 메인·기본사건·고교3PNG 우리팀 네이비 수정 승인 반영, 이전 원본 보존. 추가사건 야간 라이벌 버건디 수정본은 최종 확인 대기. 2026-10-20 야간 라이벌 수정본 최종 승인. 활성4PNG 네이비 통일 완료, 야간 우리팀 흰색/네이비와 상대 버건디 구분. 2026-10-20: 학교별 고유 주색·보조색의 대학9·군 체육팀1 배지 승인 반영. EXISTS49/TODO31. 우리팀 네이비 통일은 익명 선수 사건 일러스트이며 학교 배지에는 적용하지 않음. 2026-10-20 프레임3·배경3·책장표지1 승인 반영. 도장13은 사용자 요청에 따라 컬러 수정 후 별도 승인. EXISTS56/TODO24.",
   "groups": {
     "G1": "선수 실루엣(SVG)",
     "G2": "사건 장면 12(청춘 애니)",
@@ -1379,13 +1379,18 @@
       "file": "assets/rewards/r-g01.svg",
       "spec": "선수 카드 테두리, 9-slice 가능, 가운데 투명",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S40",
         "S45"
       ],
-      "notes": "목표 G01 달성 기념. 능력 효과 없음(58)"
+      "notes": "목표 G01 달성 기념. 능력 효과 없음(58)",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/rewards/APPROVED-REWARDS-v1.json"
     },
     {
       "id": "IMG-RWD-R-G06",
@@ -1395,13 +1400,18 @@
       "file": "assets/rewards/r-g06.svg",
       "spec": "선수 카드 테두리, 9-slice 가능, 가운데 투명",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S40",
         "S45"
       ],
-      "notes": "목표 G06 달성 기념. 능력 효과 없음(58)"
+      "notes": "목표 G06 달성 기념. 능력 효과 없음(58)",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/rewards/APPROVED-REWARDS-v1.json"
     },
     {
       "id": "IMG-RWD-R-G10",
@@ -1411,13 +1421,18 @@
       "file": "assets/rewards/r-g10.svg",
       "spec": "선수 카드 테두리, 9-slice 가능, 가운데 투명",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S40",
         "S45"
       ],
-      "notes": "목표 G10 달성 기념. 능력 효과 없음(58)"
+      "notes": "목표 G10 달성 기념. 능력 효과 없음(58)",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/rewards/APPROVED-REWARDS-v1.json"
     },
     {
       "id": "IMG-RWD-R-G03",
@@ -1425,15 +1440,20 @@
       "name": "기념 배경 R-G03",
       "kind": "PNG",
       "file": "assets/rewards/r-g03.png",
-      "spec": "카드 배경 1080×1350, 글자 없음, 중앙 여백",
+      "spec": "1122×1402 PNG 생성 원본, 세로 카드 배경, 글자 없음; 원본 보존. UI는 카드 비율에 맞춰 표시",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S40",
         "S45"
       ],
-      "notes": "카드 텍스트 가독성 우선"
+      "notes": "카드 텍스트 가독성 우선",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/rewards/APPROVED-REWARDS-v1.json"
     },
     {
       "id": "IMG-RWD-R-G05",
@@ -1441,15 +1461,20 @@
       "name": "기념 배경 R-G05",
       "kind": "PNG",
       "file": "assets/rewards/r-g05.png",
-      "spec": "카드 배경 1080×1350, 글자 없음, 중앙 여백",
+      "spec": "1122×1402 PNG 생성 원본, 세로 카드 배경, 글자 없음; 원본 보존. UI는 카드 비율에 맞춰 표시",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S40",
         "S45"
       ],
-      "notes": "카드 텍스트 가독성 우선"
+      "notes": "카드 텍스트 가독성 우선",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/rewards/APPROVED-REWARDS-v1.json"
     },
     {
       "id": "IMG-RWD-R-G08",
@@ -1457,15 +1482,20 @@
       "name": "기념 배경 R-G08",
       "kind": "PNG",
       "file": "assets/rewards/r-g08.png",
-      "spec": "카드 배경 1080×1350, 글자 없음, 중앙 여백",
+      "spec": "1122×1402 PNG 생성 원본, 세로 카드 배경, 글자 없음; 원본 보존. UI는 카드 비율에 맞춰 표시",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S40",
         "S45"
       ],
-      "notes": "카드 텍스트 가독성 우선"
+      "notes": "카드 텍스트 가독성 우선",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/rewards/APPROVED-REWARDS-v1.json"
     },
     {
       "id": "IMG-RWD-R-G04",
@@ -1681,14 +1711,19 @@
       "name": "책장 표지 R-A12",
       "kind": "PNG",
       "file": "assets/rewards/r-a12.png",
-      "spec": "표지 이미지 1080×1350",
+      "spec": "1122×1402 PNG 생성 원본, 세로 카드 배경, 글자 없음; 원본 보존. UI는 카드 비율에 맞춰 표시",
       "count": 1,
-      "status": "TODO",
+      "status": "EXISTS",
       "priority": "P1",
       "screens": [
         "S45"
       ],
-      "notes": "KBO·MLB 실제 출장 후 은퇴 기념"
+      "notes": "KBO·MLB 실제 출장 후 은퇴 기념",
+      "approval": {
+        "date": "2026-10-20",
+        "status": "USER_SELECTED"
+      },
+      "provenance": "assets/rewards/APPROVED-REWARDS-v1.json"
     },
     {
       "id": "IMG-RWD-TITLES",

@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-20",
+  "status": "USER_APPROVED",
+  "scope": "FRAMES_3_BACKGROUNDS_3_COVER_1",
+  "method": "Native SVG frames; built-in image_gen for PNG illustrations. Generated originals preserved without resizing.",
+  "pending": "13 color stamp revisions remain outside repository pending approval",
+  "files": [
+    {
+      "id": "IMG-RWD-R-G01",
+      "name": "기념 프레임 R-G01",
+      "file": "assets/rewards/r-g01.svg",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "057917152a0a4c918e36435baf3fad77ef5d52eea2f116874f2d793f5b4070d4"
+    },
+    {
+      "id": "IMG-RWD-R-G06",
+      "name": "기념 프레임 R-G06",
+      "file": "assets/rewards/r-g06.svg",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "0dea0f155f101c34b6e5b463be38763b29d7606cfd100c6cecf1521a35f8075a"
+    },
+    {
+      "id": "IMG-RWD-R-G10",
+      "name": "기념 프레임 R-G10",
+      "file": "assets/rewards/r-g10.svg",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "2cc378cdd7f683713c408b7c41a425410f876d2aa7b3a7ddd4cc21fbe3aabe4f"
+    },
+    {
+      "id": "r-g03",
+      "name": "기념 배경 R-G03",
+      "file": "assets/rewards/r-g03.png",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "413d66feced9886b5faea802f9140ee7913f193e6042dc132cea9636baa76f8c",
+      "prompt": "Premium finished 2D youth baseball anime illustration, portrait 4:5 commemorative player card background, no people. Bright daytime baseball outfield after a home-run, a tiny white baseball arcing high over distant left-field wall near the top outer edge, expansive pale azure sky with soft white cloud lighting, detailed grass and stadium fence only in lower 20%, tasteful blue and warm ivory. Quiet center 65% nearly empty soft very pale sky for overlaid six-line Korean statistics UI, no inset panel and no fake UI. Fine clean hand drawn anime linework, sophisticated color grading, believable stadium, no sunset. Exact no text, no letters, no numbers, no logos, no watermark. This is one single background asset filling canvas, not a collage, no frame. Portrait composition. Reward for 20 season home runs, original nonbranded imagery.",
+      "source": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-7e917b0f-98d9-45a9-900f-ab0a14248baa.png"
+    },
+    {
+      "id": "r-g05",
+      "name": "기념 배경 R-G05",
+      "file": "assets/rewards/r-g05.png",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "bc959e05b83d4982a661642e547caed88979968b69f1ecf643ed5fee8ab39bc8",
+      "prompt": "Premium finished 2D youth baseball anime illustration, portrait 4:5 commemorative player card background, no people. Crisp morning baseball pitcher mound with very subtle chalk traces at the bottom edge, a well rendered brown leather glove and baseball resting in lower right corner, small distant backstop and stadium seats on lower horizon. Vast very pale cool blue open sky occupies center and upper two thirds, uncluttered center 65% for six-line UI statistics overlay, no drawn UI panels. Fine clean anime linework, textured clay and leather, understated cyan and slate blue accents, neutral daylight, high quality game collectible background. No sunset. NO text, letters, numbers, logos, watermark. Single full canvas illustration no collage no frame. Reward for 100 strikeouts.",
+      "source": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-677e92ad-3953-4de6-aecc-6b35471efbb1.png"
+    },
+    {
+      "id": "r-g08",
+      "name": "기념 배경 R-G08",
+      "file": "assets/rewards/r-g08.png",
+      "screens": [
+        "S40",
+        "S45"
+      ],
+      "sha256": "79c5e0bc64c7300d739ad0ff2330e164d1079622b61aafc714ab11f2680b0e1e",
+      "prompt": "Premium finished 2D youth baseball anime illustration, portrait 4:5 commemorative player card background about returning to baseball after rehabilitation. No people. View from open dugout towards a sunlit baseball field on a fresh clear spring morning; softly detailed open gate and navy baseball cap on wooden bench restricted to bottom corners, fresh grass strip along lowest edge, gentle green and aqua accents with warm ivory neutral daylight. Center 65% is luminous very pale open sky with almost no detail so six lines of UI stats remain readable. Delicate clean linework matching polished Japanese youth baseball anime, not painterly vintage, no sunset. Single illustration, no panels or collage or frame. Absolutely no text, letters, numbers, real logos, watermark.",
+      "source": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-6fba6725-b790-49e0-8eb6-a9c458ded007.png"
+    },
+    {
+      "id": "r-a12",
+      "name": "책장 표지 R-A12",
+      "file": "assets/rewards/r-a12.png",
+      "screens": [
+        "S45"
+      ],
+      "sha256": "cf19ec1dc0f385f548fa5dcd08d9528456e10a7e97c391b166f0b0154f0fc344",
+      "prompt": "Premium finished 2D youth baseball anime collectible career archive book cover, portrait 4:5. Original quiet illustrated still life commemorating retired career in both Korean and American professional baseball, NO official logos or flags or text. Elegant navy hardbound scorebook lying slightly diagonal at bottom right beside worn brown baseball glove and one baseball; an unmarked cream ticket and two subtle differently shaped stadium silhouettes appear near bottom left. Bright neutral afternoon window light, sophisticated navy, ivory, soft gold palette. Upper and central 65% is uncluttered warm off-white paper texture for UI title and career stats overlay. Detailed clean anime illustration with polished edges, calm celebratory nostalgic mood, no sunset tint, no trophy or medal. Single background with no inner border no collage. No people, letters, numbers, writing, branding, or watermark.",
+      "source": "C:\\Users\\N-052\\.codex\\generated_images\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\exec-c6d52490-7b02-4580-8a0e-5bd25efc325f.png"
+    }
+  ]
+}

@@ -1551,7 +1551,8 @@
       "imageSlot": {
         "assetRefs": [
           "NONE",
-          "silhouetteCard"
+          "silhouetteCard",
+          "commemorativeRewards"
         ],
         "screenId": "S40",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
@@ -1745,7 +1746,8 @@
           "retirement",
           "international",
           "rival",
-          "NONE"
+          "NONE",
+          "commemorativeRewards"
         ],
         "screenId": "S45",
         "gameStateAuthority": "SERVER_TEXT_AND_RECEIPTS",
