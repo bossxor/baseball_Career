@@ -63,8 +63,10 @@ export function createStreams(seed: string, simulationGameKey: string): Streams 
 }
 
 /** World generation namespace is separate from persisted M1 game streams. */
-export function createHandednessStream(seed: string, worldKey: string): RngState {
+export function createWorldStream(seed: string, worldKey: string, name: 'handedness' | 'roster' | 'potential' | 'protagonist'): RngState {
   if (!seed || !worldKey) throw new RangeError('WORLD_SEED_REQUIRED');
-  const key=JSON.stringify(['world-1',seed,worldKey,'handedness']);
+  const key=JSON.stringify(['world-1',seed,worldKey,name]);
   return seedPcg32(hash64(key),hash64(JSON.stringify([key,'sequence'])));
 }
+
+export function createHandednessStream(seed:string,worldKey:string):RngState { return createWorldStream(seed,worldKey,'handedness'); }

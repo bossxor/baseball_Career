@@ -11,3 +11,5 @@ export * from './training.js';
 export * from './pitch-xp.js';
 export * from './repertoire.js';
 export * from './npc.js';
+export * from './schedule.js';
+export * from './high-school-world.js';

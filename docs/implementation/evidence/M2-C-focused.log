@@ -1,0 +1,18 @@
+✔ HS world: 9 schools/225 players, real protagonist replacement, all positions and216 games (53.5866ms)
+✔ HS world: same seed and serialized snapshot exact, new seed changes generated roster (120.7784ms)
+✔ HS world: all player archetypes/positions and pitcher forms accepted without illegal rosters (207.4953ms)
+✔ HS world: hard does not secretly raise current abilities; NPC P+5, protagonist normal/hard unchanged (41.2322ms)
+✔ HS world rejects invalid school/pitch choice/key collision and corrupted persisted rosters (26.5268ms)
+✔ 01: KBO720/team144/home72 and pair16/home8, no double booking or >6 consecutive (22.358ms)
+✔ 43/HS: nine-team216/team48/home24, 54 rounds with one bye each (3.0371ms)
+✔ 13: MLB2430/team162/home81, every opponent5 plus exactly17 distinct extra opponents (54.8974ms)
+✔ 13: minor60/100/120/144 exact games and equal venues, fixed JSON schedule (58.1912ms)
+✔ schedule rejects duplicate/odd degree and validator catches count/venue/date corruption (13.2613ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1347.477
