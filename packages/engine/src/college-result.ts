@@ -2,8 +2,14 @@ import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCollegeCareerRevision} from './high-school-career.js';
 import {collegeCupSchedule} from './college-cup.js';
 import {settleSchoolCareerGrowth} from './high-school-growth.js';
+import {attachCollegeGraduationTask} from './college-graduation.js';
 
 export interface CollegeSeasonResult {receiptKey:string;seasonKey:string;academicYear:1|2|3|4;recordRevision:number;championKey:string}
+export function assertCollegeYearResult(source:HighSchoolCareer):CollegeSeasonResult {
+ const admission=source.collegeAdmission,result=source.collegeResult;
+ if(!admission || !result || admission.yearsCompleted!==admission.academicYear || result.seasonKey!==source.world.seasonKey || result.academicYear!==admission.academicYear || result.recordRevision!==source.records.revision || result.championKey!==source.collegeCup?.championKey || result.receiptKey!==JSON.stringify(['college-result',source.world.worldKey,source.world.seasonKey,admission.academicYear,source.world.protagonistKey]))throw new RangeError('COLLEGE_YEAR_RESULT_REQUIRED');
+ return result;
+}
 export function completedCollegeSchedule(source:HighSchoolCareer){
  if(source.phaseContext.phase!=='SEASON_REVIEW' || source.collegeCup?.status!=='COMPLETE' || !source.collegeCup.championKey)throw new RangeError('COLLEGE_CUP_NOT_COMPLETE');
  const schedule=[...source.world.schedule,...collegeCupSchedule(source)],last=Math.max(...schedule.map(g=>g.worldDay));
@@ -29,5 +35,5 @@ export function acknowledgeCollegeSeasonReview(source:HighSchoolCareer,expectedR
  const career=settleCollegeCareerGrowth(source,expectedRevision).career;
  career.collegeAdmission={...admission,yearsCompleted:admission.academicYear};
  career.collegeResult={receiptKey:JSON.stringify(['college-result',source.world.worldKey,source.world.seasonKey,admission.academicYear,source.world.protagonistKey]),seasonKey:source.world.seasonKey,academicYear:admission.academicYear,recordRevision:source.records.revision,championKey:source.collegeCup!.championKey!};
- career.phaseContext={phase:'OFFSEASON_REVIEW'};return career;
+ career.phaseContext={phase:'OFFSEASON_REVIEW'};return admission.academicYear===4?attachCollegeGraduationTask(career):career;
 }

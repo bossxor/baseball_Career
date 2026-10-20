@@ -178,12 +178,9 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 
 <!-- SOURCE: STATUS.md -->
 
-# 구현 진행 안내 — 2026-10-20
+# 구현 진행 안내 — 2026-10-21
 
-M0/M1 완료, M2 진행 중입니다. M2-Z에서 대학 연말 마감·NPC 성장/졸업 교체·다음 학년 등록을 연결했습니다. 전체247/247·check/HTTP smoke 통과. 다음은 대학 졸업/조기 지명과 실제 모집입니다. 미국52 충돌·세계 전체 작업자·UI/계정/DB는 남아 있습니다. 최신 결과는 [구현 진행](../implementation/PROGRESS.md)·[M2-Z 인계](../implementation/M2-Z-COLLEGE-NEXT-YEAR.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 이전 이력이며 전체 완료를 뜻하지 않습니다.
-
-
-
+M0/M1 완료, M2 진행 중입니다. 대학 정규/선수권·성장/학년 결과·NPC 지속성장과1→4학년 재학,4학년 필수 E75 졸업/진로 조회를 구현했습니다. 전체252/252·check·HTTP smoke를 통과했습니다. 실제 KBO 모집/조기 지명/계약·미국 오퍼, 플레이 UI·계정·DB 저장은 남아 있습니다. 미국 첫 고교 졸업52 도달성 충돌과 세계 전체 작업자는 미해결입니다. 최신 결과는 [구현 진행](../implementation/PROGRESS.md)·[최종 인계](../implementation/NEXT-SESSION.md)·[M2-AA](../implementation/M2-AA-COLLEGE-GRADUATION.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 이전 이력이며 전체 완료를 뜻하지 않습니다.
 
 ---
 
@@ -6566,6 +6563,8 @@ M2-Y 구현 후속:42/43의 대학 정규 성장·선수권 건강 감사/예산
 
 M2-Z 구현 후속:43/72의 대학 학생 세계 연말 마감·NPC 지속성장/졸업 교체·다음 학년 등록 부분은 `../implementation/M2-Z-COLLEGE-NEXT-YEAR.md`를 따른다. 전체247/247·check/HTTP smoke 통과, 세계 전체 NPC 진로/타 리그 작업자는 남아 있다.
 
+M2-AA 구현 후속:43/E75의4학년 졸업·필수 사건·GRADUATED 진로 조회는 `../implementation/M2-AA-COLLEGE-GRADUATION.md`를 따른다. 집중10/10·전체252/252·check/HTTP smoke 통과이며 같은 세계연도 성장 원장은 후속 등록을 위해 보존한다.
+
 2026-10-19. 이전 문서의 기본안 위에 사용자 변경이 누적돼 단순 파일명 순서로 구현하면 충돌할 수 있다. [기계가독 적용표](current-contract-index.json)는25개 분야의 현재 적용 원문과 범위를 지정한다. 설계 문서를 새 게임 기능으로 확장하는 문서가 아니라 기존 계약의 검색·우선순위 인계표다.
 
 ## 읽는 순서와 우선순위
@@ -8746,12 +8745,9 @@ AI 투구폼 분포・친화 표・효과 계수는 D 기본안이며 실제 밸
 
 <!-- SOURCE: 120-IMPLEMENTATION-ROADMAP.md -->
 
-# 구현 진행 안내 — 2026-10-20
+# 구현 진행 안내 — 2026-10-21
 
-M0/M1 완료, M2 진행 중입니다. M2-Z에서 대학 연말 마감·NPC 성장/졸업 교체·다음 학년 등록을 연결했습니다. 전체247/247·check/HTTP smoke 통과. 다음은 대학 졸업/조기 지명과 실제 모집입니다. 미국52 충돌·세계 전체 작업자·UI/계정/DB는 남아 있습니다. 최신 결과는 [구현 진행](../implementation/PROGRESS.md)·[M2-Z 인계](../implementation/M2-Z-COLLEGE-NEXT-YEAR.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 이전 이력이며 전체 완료를 뜻하지 않습니다.
-
-
-
+M0/M1 완료, M2 진행 중입니다. 대학 정규/선수권·성장/학년 결과·NPC 지속성장과1→4학년 재학,4학년 필수 E75 졸업/진로 조회를 구현했습니다. 전체252/252·check·HTTP smoke를 통과했습니다. 실제 KBO 모집/조기 지명/계약·미국 오퍼, 플레이 UI·계정·DB 저장은 남아 있습니다. 미국 첫 고교 졸업52 도달성 충돌과 세계 전체 작업자는 미해결입니다. 최신 결과는 [구현 진행](../implementation/PROGRESS.md)·[최종 인계](../implementation/NEXT-SESSION.md)·[M2-AA](../implementation/M2-AA-COLLEGE-GRADUATION.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 이전 이력이며 전체 완료를 뜻하지 않습니다.
 
 ---
 

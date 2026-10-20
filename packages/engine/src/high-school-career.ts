@@ -27,6 +27,7 @@ import type {CollegeCup} from './college-cup.js';
 import type {CollegeSeasonResult} from './college-result.js';
 import {validateSeasonGrowthLedger} from './growth-ledger.js';
 import type {CollegeNpcGrowth} from './college-year.js';
+import type {CollegeGraduation} from './college-graduation.js';
 
 export interface HighSchoolAdvancePlan {mode:'NEXT_MAJOR_EVENT'|'ONE_GAME'|'ONE_WEEK';startWorldDay:number;startTeamGames:number}
 export type HighSchoolProgressPhase={phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:HighSchoolGameJob|null;advancePlan?:HighSchoolAdvancePlan|null};
@@ -56,6 +57,7 @@ export interface HighSchoolCareer {
  collegeCup?:CollegeCup;
  collegeResult?:CollegeSeasonResult;
  collegeNpcGrowth?:CollegeNpcGrowth;
+ collegeGraduation?:CollegeGraduation;
  planHistory:readonly {completedTeamGames:number;focus:readonly string[];archetype:string}[];
 }
 /** Difficulty is immutable save metadata. Never accept a replacement policy on later commands. */

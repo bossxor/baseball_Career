@@ -15,7 +15,7 @@ export interface HighSchoolGraduation {
  version:1;eventKey:string;offerSetKey:string;sourceBasis:string;
 }
 export interface CollegeAdmission {
- admissionKey:string;collegeId:string;status:'ADMITTED'|'ENROLLED';entryYear:number;
+ admissionKey:string;collegeId:string;status:'ADMITTED'|'ENROLLED'|'GRADUATED';entryYear:number;
  academicYear:1|2|3|4;yearsCompleted:0|1|2|3|4;playerKey:string;position:string;
 }
 function evaluation(source:HighSchoolCareer){

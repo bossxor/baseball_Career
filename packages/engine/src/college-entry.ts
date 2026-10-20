@@ -14,7 +14,7 @@ import {createSchoolDayLedger} from './high-school-day.js';
 import {createSchoolEmergencyRegistry} from './high-school-emergency.js';
 
 export interface CollegeYearEnd {receiptKey:string;admissionKey:string;sourceRevision:number;sourceBasis:string}
-export type SchoolSeasonArchive=Pick<HighSchoolCareer,'world'|'health'|'days'|'emergency'|'development'|'planHistory'|'collegeCup'|'collegeResult'|'collegeNpcGrowth'> & {seasonGrowth:SeasonGrowthLedger;yearEndReceiptKey:string};
+export type SchoolSeasonArchive=Pick<HighSchoolCareer,'world'|'health'|'days'|'emergency'|'development'|'planHistory'|'collegeCup'|'collegeResult'|'collegeNpcGrowth'|'collegeGraduation'> & {seasonGrowth:SeasonGrowthLedger;yearEndReceiptKey:string};
 export function schoolYearEndBasis(source:HighSchoolCareer):string {
  const snapshot={...source};delete snapshot.collegeYearEnd;return canonicalJson(snapshot);
 }
@@ -29,7 +29,7 @@ export function schoolYearEndRepertoire(source:HighSchoolCareer,playerKey:string
 }
 /** The caller already cloned the career; subsequent activation replaces these objects, never mutates them. */
 export function archiveSchoolSeason(source:HighSchoolCareer,yearEndReceiptKey:string):SchoolSeasonArchive {
- return {world:source.world,health:source.health,days:source.days,emergency:source.emergency,development:source.development!,planHistory:source.planHistory,seasonGrowth:source.seasonGrowth!,yearEndReceiptKey,...(source.collegeCup?{collegeCup:source.collegeCup}:{}),...(source.collegeResult?{collegeResult:source.collegeResult}:{}),...(source.collegeNpcGrowth?{collegeNpcGrowth:source.collegeNpcGrowth}:{})};
+ return {world:source.world,health:source.health,days:source.days,emergency:source.emergency,development:source.development!,planHistory:source.planHistory,seasonGrowth:source.seasonGrowth!,yearEndReceiptKey,...(source.collegeCup?{collegeCup:source.collegeCup}:{}),...(source.collegeResult?{collegeResult:source.collegeResult}:{}),...(source.collegeNpcGrowth?{collegeNpcGrowth:source.collegeNpcGrowth}:{}),...(source.collegeGraduation?{collegeGraduation:source.collegeGraduation}:{})};
 }
 /** Explicit year-end domain action; unresolved training/learning is never silently discarded by activation. */
 export function closeHighSchoolSeasonForCollege(source:HighSchoolCareer,expectedRevision:number,forfeitUnusedTraining=false):HighSchoolCareer {

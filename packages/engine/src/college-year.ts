@@ -18,6 +18,7 @@ import {createSchoolDayLedger} from './high-school-day.js';
 import {createSchoolEmergencyRegistry} from './high-school-emergency.js';
 import type {DevelopmentPlayer} from './player.js';
 import type {Repertoire} from './repertoire.js';
+import {assertCollegeYearResult} from './college-result.js';
 
 export interface CollegeNpcGrowth {seasonKey:string;results:Record<string,{budgetUnits:number;gainedUnits:number;discardedUnits:number;gains:readonly number[]}>}
 function permanentWorld(source:HighSchoolCareer):CollegeWorld {
@@ -26,15 +27,11 @@ function permanentWorld(source:HighSchoolCareer):CollegeWorld {
  const world:CollegeWorld={...source.world,leagueKey:'COLLEGE',calendar:source.world.calendar!,schools,players};assertCollegeWorld(world);return world;
 }
 function receiptKey(source:HighSchoolCareer):string {return JSON.stringify(['college-academic-year-end',source.world.worldKey,source.world.seasonKey,source.collegeAdmission!.academicYear]);}
-function resultRequired(source:HighSchoolCareer):void {
- const admission=source.collegeAdmission!,result=source.collegeResult;
- if(!result || admission.yearsCompleted!==admission.academicYear || result.seasonKey!==source.world.seasonKey || result.academicYear!==admission.academicYear || result.recordRevision!==source.records.revision || result.championKey!==source.collegeCup?.championKey || result.receiptKey!==JSON.stringify(['college-result',source.world.worldKey,source.world.seasonKey,admission.academicYear,source.world.protagonistKey]))throw new RangeError('COLLEGE_YEAR_RESULT_REQUIRED');
-}
 /** Explicit continuation after academic completion. Unused training and unfinished learning cannot disappear. */
 export function closeCollegeSeasonForNextYear(source:HighSchoolCareer,expectedRevision:number,forfeitUnusedTraining=false):HighSchoolCareer {
- assertCollegeCareerRevision(source,expectedRevision);resultRequired(source);
- if(source.phaseContext.phase!=='OFFSEASON_REVIEW' || source.collegeYearEnd || source.collegeNpcGrowth || !source.seasonGrowth || !source.development || source.events.some(e=>e.status==='OPEN') || source.collegeCup?.status!=='COMPLETE')throw new RangeError('INVALID_COLLEGE_YEAR_END');
+ assertCollegeCareerRevision(source,expectedRevision);assertCollegeYearResult(source);
  if(source.collegeAdmission!.academicYear===4)throw new RangeError('COLLEGE_GRADUATION_ROUTE_REQUIRED');
+ if(source.phaseContext.phase!=='OFFSEASON_REVIEW' || source.collegeYearEnd || source.collegeNpcGrowth || !source.seasonGrowth || !source.development || source.events.some(e=>e.status==='OPEN') || source.collegeCup?.status!=='COMPLETE')throw new RangeError('INVALID_COLLEGE_YEAR_END');
  validateSeasonGrowthLedger(source.seasonGrowth);
  const base=permanentWorld(source),schedule=[...base.schedule,...collegeCupSchedule(source)],previous=source.previousSeasons?.at(-1);
  if(!previous)throw new RangeError('MISSING_PREVIOUS_SEASON');
@@ -81,7 +78,7 @@ function nextWorld(source:HighSchoolCareer):CollegeWorld {
 }
 /** Existing students carry identity/P/earned growth/books; only age22 graduates receive new freshman replacements. */
 export function startNextCollegeSeason(source:HighSchoolCareer,expectedRevision:number):HighSchoolCareer {
- assertCollegeCareerRevision(source,expectedRevision);resultRequired(source);
+ assertCollegeCareerRevision(source,expectedRevision);assertCollegeYearResult(source);
  const ready=source.collegeYearEnd,admission=source.collegeAdmission!;
  if(source.phaseContext.phase!=='NEXT_SEASON_READY' || source.phaseContext.route!=='COLLEGE' || source.phaseContext.admissionKey!==admission.admissionKey || admission.academicYear===4 || !ready || ready.receiptKey!==receiptKey(source) || ready.admissionKey!==admission.admissionKey || ready.sourceRevision!==source.revision || ready.sourceBasis!==schoolYearEndBasis(source) || !source.seasonGrowth?.finalized || !source.health.closedSeasons.includes(source.world.seasonKey) || !source.collegeNpcGrowth || source.events.some(e=>e.status==='OPEN'))throw new RangeError('COLLEGE_YEAR_END_REQUIRED');
  validateSeasonGrowthLedger(source.seasonGrowth);

@@ -61,5 +61,5 @@ test('continuing enrollment advances1→2→3→4 with persistent students and b
   if(year===4){assert.throws(()=>closeCollegeSeasonForNextYear(state,state.revision,true),/GRADUATION_ROUTE_REQUIRED/);break;}
   const ready=closeCollegeSeasonForNextYear(state,state.revision,true);state=startNextCollegeSeason(ready,ready.revision);assert.equal(state.previousSeasons!.length,year+1);assertCollegeWorld(state.world as CollegeWorld);
  }
- assert.equal(state.world.seasonKey,'2033');assert.equal(state.collegeAdmission!.yearsCompleted,4);assert.equal(state.phaseContext.phase,'OFFSEASON_REVIEW');
+ assert.equal(state.world.seasonKey,'2033');assert.equal(state.collegeAdmission!.yearsCompleted,4);assert.equal(state.phaseContext.phase,'EVENT_DECISION');assert.equal(state.events.at(-1)!.definitionId,'E75');
 });

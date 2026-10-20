@@ -1,9 +1,6 @@
-# 구현 진행 안내 — 2026-10-20
+# 구현 진행 안내 — 2026-10-21
 
-M0/M1 완료, M2 진행 중입니다. M2-Z에서 대학 연말 마감·NPC 성장/졸업 교체·다음 학년 등록을 연결했습니다. 전체247/247·check/HTTP smoke 통과. 다음은 대학 졸업/조기 지명과 실제 모집입니다. 미국52 충돌·세계 전체 작업자·UI/계정/DB는 남아 있습니다. 최신 결과는 [구현 진행](../implementation/PROGRESS.md)·[M2-Z 인계](../implementation/M2-Z-COLLEGE-NEXT-YEAR.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 이전 이력이며 전체 완료를 뜻하지 않습니다.
-
-
-
+M0/M1 완료, M2 진행 중입니다. 대학 정규/선수권·성장/학년 결과·NPC 지속성장과1→4학년 재학,4학년 필수 E75 졸업/진로 조회를 구현했습니다. 전체252/252·check·HTTP smoke를 통과했습니다. 실제 KBO 모집/조기 지명/계약·미국 오퍼, 플레이 UI·계정·DB 저장은 남아 있습니다. 미국 첫 고교 졸업52 도달성 충돌과 세계 전체 작업자는 미해결입니다. 최신 결과는 [구현 진행](../implementation/PROGRESS.md)·[최종 인계](../implementation/NEXT-SESSION.md)·[M2-AA](../implementation/M2-AA-COLLEGE-GRADUATION.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 이전 이력이며 전체 완료를 뜻하지 않습니다.
 
 ---
 
