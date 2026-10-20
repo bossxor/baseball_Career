@@ -1,0 +1,15 @@
+✔ training cannot run before16 team games or during pending game/partial date (395.2278ms)
+▶ actual career training16 and MID24 use authoritative state and preserve annual opportunities
+  ✔ guaranteed exact preview/gain, once-per-season and immutable original (493.6872ms)
+  ✔ cheat challenge guaranteed+2 without3x reinforcement, injury blocks permanent gain only (199.4607ms)
+  ✔ DEFER keeps usage; FORFEIT commits real SKIP usage before closing event (106.252ms)
+  ✔ MID24 type choice once with historical boundary and current abilities unchanged (16833.0678ms)
+✔ actual career training16 and MID24 use authoritative state and preserve annual opportunities (32753.3705ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33887.5515

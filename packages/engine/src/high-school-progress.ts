@@ -7,6 +7,7 @@ import {assertHighSchoolCareerRevision} from './high-school-career.js';
 import type {HighSchoolCareer,HighSchoolProgressPhase,HighSchoolAdvancePlan} from './high-school-career.js';
 import type {HighSchoolGameContext} from './high-school-game.js';
 import type {BattingLine} from './types.js';
+import {forfeitCareerTrainingEvent} from './high-school-training.js';
 export type SchoolProgressStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'ONE_GAME'|'ONE_WEEK'|'MAJOR_EVENT'|'HEALTH_CHANGE'|'SEASON_REVIEW';
 export interface SchoolProgressResult {career:HighSchoolCareer;stopReason:SchoolProgressStop;plateAppearances:number;completedInnings:number;healthChanges:{injured:boolean;recovered:boolean}|null}
 function teamGames(state:HighSchoolCareer):number {return Object.values(state.records.games).filter(g=>g.scope.seasonKey===state.world.seasonKey && g.scope.leagueKey==='HS' && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,state.world.protagonistSchoolId)).length;}
@@ -63,7 +64,7 @@ export function advanceHighSchoolCareer(source:HighSchoolCareer,expectedRevision
   if(definitionId){
    progress.advancePlan=null;
    const start=definitionId==='E02' || definitionId==='E03',definition=eventDefinition(definitionId);
-   const event=createWorldEvent({definitionId,worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,evidence:{version:1,type:definition.evidenceDomain,fields:start?{careerSimulationKey:player.simulationKey}:{playerOrTeamSimulationKey:player.simulationKey,worldSeasonId:career.world.seasonKey,windowType:definitionId==='E43'?'TRAINING':'MID'}},resume:{worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,phase:'SEASON_PROGRESS',competitionKey:'HS',registrationKey:career.world.protagonistSchoolId,sourceRevision:career.revision+1},sourceSequence:career.events.length+1,worldDay:day,...(definitionId==='E43'?{offeredChoices:['OPEN_TRAINING','DEFER_TRAINING']}:{})});
+   const event=createWorldEvent({definitionId,worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,evidence:{version:1,type:definition.evidenceDomain,fields:start?{careerSimulationKey:player.simulationKey}:{playerOrTeamSimulationKey:player.simulationKey,worldSeasonId:career.world.seasonKey,windowType:definitionId==='E43'?'TRAINING':'MID'}},resume:{worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,phase:'SEASON_PROGRESS',competitionKey:'HS',registrationKey:career.world.protagonistSchoolId,sourceRevision:career.revision+1},sourceSequence:career.events.length+1,worldDay:day});
    career.events=[...career.events,event];career.phaseContext={phase:'EVENT_DECISION',eventKey:event.eventKey,resume:structuredClone(progress)};return finish('MAJOR_EVENT',healthChanges);
   }
   if(healthChanges.injured || healthChanges.recovered)return finish('HEALTH_CHANGE',healthChanges);
@@ -83,7 +84,7 @@ export function resolveCareerWindowEvent(source:HighSchoolCareer,expectedRevisio
  assertHighSchoolCareerRevision(source,expectedRevision);const phase=source.phaseContext;
  if(phase.phase!=='EVENT_DECISION' || phase.eventKey!==input.eventKey || phase.resume.phase!=='SEASON_PROGRESS')throw new RangeError('INVALID_CAREER_PHASE');
  const event=source.events.find(e=>e.eventKey===input.eventKey);if(!event || !['E41','E43'].includes(event.definitionId))throw new RangeError('INVALID_CAREER_WINDOW');
- // FORFEIT requires the actual training usage reducer, added with the training command; never fake its effect.
+ if(event.definitionId==='E43' && input.command==='FORFEIT_TRAINING')return {career:forfeitCareerTrainingEvent(source,expectedRevision,input.eventVersion),navigation:null};
  const eligible=event.definitionId==='E41'?['OPEN_STYLE','ACK_EVENT']:['OPEN_TRAINING','DEFER_TRAINING'];
  const context={worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:eligible};
  const selected=resolveEventChoice(event,input.eventVersion,input.command,null,context);

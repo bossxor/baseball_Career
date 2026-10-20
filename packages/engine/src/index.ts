@@ -28,3 +28,4 @@ export * from './high-school-day.js';
 export * from './high-school-emergency.js';
 export * from './high-school-career.js';
 export * from './high-school-progress.js';
+export * from './high-school-training.js';
