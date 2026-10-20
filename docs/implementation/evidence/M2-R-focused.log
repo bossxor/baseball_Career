@@ -1,0 +1,11 @@
+✔ own six potential ranges contain true potential; repeated reads consume no RNG, revision or observation (80.3567ms)
+✔ only closed registered team games observed, byes not counted; repeat refresh has no duplicate progress (1008.7283ms)
+✔ cheat own report gives six fixed100 values and no range or hidden raw fields (15.8884ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1816.7125

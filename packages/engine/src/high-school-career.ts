@@ -16,6 +16,8 @@ import {createStreams} from './rng.js';
 import {createWorldEvent,resolveEventChoice,completeEventDomain} from './events.js';
 import type {EventInstance} from './events.js';
 import type {CareerDevelopmentLedger} from './high-school-training.js';
+import {createOwnCareerAssessment} from './high-school-assessment.js';
+import type {OwnCareerAssessment} from './high-school-assessment.js';
 
 export interface HighSchoolAdvancePlan {mode:'NEXT_MAJOR_EVENT'|'ONE_GAME'|'ONE_WEEK';startWorldDay:number;startTeamGames:number}
 export type HighSchoolProgressPhase={phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:HighSchoolGameJob|null;advancePlan?:HighSchoolAdvancePlan|null};
@@ -31,6 +33,7 @@ export interface HighSchoolCareer {
  records:RecordLedger;health:HealthLedger;days:SchoolDayLedger;emergency:SchoolEmergencyRegistry;
  styleUsedWindows:readonly string[];
  development?:CareerDevelopmentLedger;
+ ownAssessment?:OwnCareerAssessment;
  planHistory:readonly {completedTeamGames:number;focus:readonly string[];archetype:string}[];
 }
 /** Difficulty is immutable save metadata. Never accept a replacement policy on later commands. */
@@ -38,7 +41,7 @@ export function createHighSchoolCareer(world:HighSchoolWorld,difficulty:Difficul
  assertHighSchoolWorld(world);
  if(!['GROWTH','REALISTIC','SECRET_CHEAT'].includes(difficulty))throw new RangeError('INVALID_CAREER_DIFFICULTY');
  const player=world.players[world.protagonistKey]!;
- return {schemaVersion:1,revision:0,world:structuredClone(world),difficulty,phaseContext:{phase:'CREATED'},events:[],records:emptyRecordLedger(),health:createHealthLedger(createStreams(world.seed,JSON.stringify(['hs-health',world.worldKey])).injury),days:createSchoolDayLedger(world),emergency:createSchoolEmergencyRegistry(world),styleUsedWindows:[],development:{seasonStartPlayer:structuredClone(player),trainingUsedSeasons:[],trainingResults:[],trainingRng:createStreams(world.seed,JSON.stringify(['hs-training',world.worldKey])).growth},planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
+ return {schemaVersion:1,revision:0,world:structuredClone(world),difficulty,phaseContext:{phase:'CREATED'},events:[],records:emptyRecordLedger(),health:createHealthLedger(createStreams(world.seed,JSON.stringify(['hs-health',world.worldKey])).injury),days:createSchoolDayLedger(world),emergency:createSchoolEmergencyRegistry(world),styleUsedWindows:[],ownAssessment:createOwnCareerAssessment(world),development:{seasonStartPlayer:structuredClone(player),trainingUsedSeasons:[],trainingResults:[],trainingRng:createStreams(world.seed,JSON.stringify(['hs-training',world.worldKey])).growth},planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
 }
 export function assertHighSchoolCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
  if(source.schemaVersion!==1 || !Number.isSafeInteger(source.revision) || source.revision<0 || !Number.isSafeInteger(expectedRevision) || source.revision!==expectedRevision)throw new RangeError('CAREER_REVISION_CHANGED');

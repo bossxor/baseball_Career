@@ -53,7 +53,7 @@ test('actual full HS league path: focus12, training16, style24, all216 games and
   const before=state.world.players['my-hitter']!.archetype,result=resolveCareerWindowEvent(state,state.revision,{eventKey:event.eventKey,eventVersion:event.version,command:'OPEN_STYLE'});assert.equal(result.navigation!.targetScreen,'S22');state=result.career;assert.equal(state.world.players['my-hitter']!.archetype,before);
  });
  await t.test('league completion stops SEASON_REVIEW, no US offer/route or automatic growth invented',()=>{
-  state=advance(state).career;assert.equal(state.phaseContext.phase,'SEASON_REVIEW');assert.equal(state.records.revision,216);
+  state=advance(state).career;assert.equal(state.phaseContext.phase,'SEASON_REVIEW');assert.equal(state.records.revision,216);assert.equal(state.ownAssessment!.progress.observed.length,48);assert.equal(state.ownAssessment!.progress.stage,2);
   const totals=recordTotals(state.records,{leagueKey:'HS',phase:'REGULAR',seasonKey:'2032'});assert.equal(Object.keys(totals.teams).length,9);assert.ok(Object.values(totals.teams).every(t=>t.games===48));assert.equal(state.events.filter(e=>e.definitionId==='E43').length,1);assert.equal(state.events.filter(e=>e.definitionId==='E41').length,1);
   assert.throws(()=>advanceHighSchoolCareer(state,state.revision));
  });
