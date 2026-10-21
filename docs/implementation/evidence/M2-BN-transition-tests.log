@@ -1,0 +1,15 @@
+✔ year transition readiness lists every Y01 blocker until postseason, growth, season close and my contract are done (4176.6797ms)
+✔ E30 renewal offer follows 08 once and closes only through the accepted domain commit (4406.7271ms)
+✔ Y02 stages age+1 and contract years for every pro player without changing the source (4977.5522ms)
+✔ next season activates every player at once and the second pro season opens and plays (20150.6497ms)
+✔ my retirement: E36 cancel returns, confirm closes E30 and archives; age 45 ends the career without a renewal (8522.092ms)
+✔ forced retirement review needs age 35 and two closed seasons under the first-team threshold (8428.1914ms)
+✔ year transition drafts a 100-player rookie class in reverse standings order, with room and budget respected (8025.7009ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59350.1946

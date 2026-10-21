@@ -1,3 +1,4 @@
+import {nextKboFreeAgentYear} from './kbo-free-agents.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {validateSeasonGrowthLedger,createSeasonGrowthLedger} from './growth-ledger.js';
 import {kboContractDecisionRequired,acceptedRenewal} from './kbo-renewal.js';
@@ -79,6 +80,7 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
  for(const club of world.clubs){club.paidSalaryWon=0;club.reservedSalaryWon=club.roster.reduce((n,k)=>n+world.contracts[k]!.annualSalaryWon,0);}
  const standings=leagueStandings(source.records,{seasonKey:source.world.seasonKey,leagueKey:'KBO',phase:'REGULAR'},world.clubs.map(c=>c.id),source.world.seed,source.world.worldKey);
  career.rookieDrafts=[...(source.rookieDrafts??[]),draftKboRookieClass(world,target,standings.map(s=>s.teamKey).reverse(),source.difficulty)];
+ career.freeAgents=nextKboFreeAgentYear({...(source.freeAgents?{source:source.freeAgents}:{}),worldKey:world.worldKey,seed:world.seed,seasonKey:target,difficulty:career.difficulty,registeredKeys:Object.keys(world.players)});
  world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target));assertKboRecruitmentWorld(world);
  const player=world.players[key]!,club=world.clubs.find(c=>c.id===career.protagonistClubId)!;
  const archive:KboSeasonArchive={seasonKey:source.world.seasonKey,seasonClose:source.seasonClose!,postseason:source.postseason!,days:source.days!,seasonGrowth:source.seasonGrowth,planHistory:source.planHistory,...(source.openingRoster?{openingRoster:source.openingRoster}:{}),...(source.callupReviews?{callupReviews:source.callupReviews}:{})};

@@ -112,6 +112,7 @@ test('next season activates every player at once and the second pro season opens
  let c=closed();assert.throws(()=>startNextKboSeason(c,c.revision),/YEAR_TRANSITION_NOT_READY/);
  c=renewed(c);const before=JSON.stringify(c),stage=stageKboAgeAndContracts(c),key=c.protagonistKey,season=c.world.seasonKey,target=String(Number(season)+1);
  const n=startNextKboSeason(c,c.revision);assert.equal(JSON.stringify(c),before);
+ assert.equal(Object.keys(n.freeAgents!.players).length,80);assert.ok(Object.keys(n.freeAgents!.players).every(k=>!Object.hasOwn(n.world.players,k) && !Object.hasOwn(n.world.contracts,k)));
  assert.equal(n.world.seasonKey,target);assert.equal(n.world.calendar.year,Number(target));assert.equal(n.phaseContext.phase,'PRESEASON_SETUP');assert.equal(n.revision,c.revision+1);
  for(const [k,s] of Object.entries(stage.players)){assert.equal(n.world.players[k]!.age,s.age);assert.equal(n.world.contracts[k]!.seasonKey,target);}
  assert.equal(n.world.contracts[key]!.annualSalaryWon,c.renewal!.annualSalaryWon);assert.equal(n.world.contracts[key]!.contractKey,c.renewal!.offerKey);

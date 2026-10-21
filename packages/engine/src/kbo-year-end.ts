@@ -1,3 +1,4 @@
+import {settleKboFreeAgentSeason} from './kbo-free-agents.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {validateSeasonGrowthLedger,finalizeSeasonGrowth} from './growth-ledger.js';
@@ -51,6 +52,7 @@ export function closeKboSeason(source:KboCareer,expectedRevision:number,forfeitU
  const closed=finalizeSeasonGrowth(career.world.players[key]!,career.seasonGrowth,W);
  career.world.players[key]=closed.player;career.seasonGrowth=closed.ledger;career.health=closeSeasonHealth(career.health,season).ledger;
  const npc=closeKboNpcSeasons(career);career.world.players=npc.players;
+ if(career.freeAgents)career.freeAgents=settleKboFreeAgentSeason(career.freeAgents,career.world.calendar,career.difficulty);
  career.revision++;
  career.seasonClose={receiptKey:JSON.stringify(['kbo-season-close',career.world.worldKey,season]),seasonKey:season,sourceRevision:career.revision,agingLossUnits:closed.lossUnits,trainingForfeited:forfeited,npcGrowth:npc.results};
  return career;

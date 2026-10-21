@@ -84,3 +84,5 @@ export * from './kbo-renewal.js';
 export * from './kbo-retirement.js';
 export * from './kbo-supply.js';
 export * from './kbo-retirement-review.js';
+
+export * from './kbo-free-agents.js';
