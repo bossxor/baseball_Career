@@ -1,3 +1,4 @@
+import {assertKboAmateurYearEnd} from './kbo-entry.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {highSchoolCareerRouteView,highSchoolCareerDraftScore} from './high-school-route.js';
@@ -17,7 +18,8 @@ function route(source:HighSchoolCareer):number {
  return highSchoolCareerDraftScore(source);
 }
 function current(source:HighSchoolCareer){
- const r=source.kboRecruitment;if(!r || r.schemaVersion!==1 || r.sourceBasis!==basis(source) || r.world.worldKey!==source.world.worldKey || r.world.seed!==source.world.seed || r.world.difficulty!==source.difficulty || r.world.seasonKey!==String(source.world.calendar!.year+1) || canonicalJson(r.program.input.player)!==canonicalJson(source.world.players[source.world.protagonistKey]))throw new RangeError('STALE_CAREER_KBO_RECRUITMENT');
+ const seal=source.kboYearEnd?assertKboAmateurYearEnd(source):null;
+ const r=source.kboRecruitment;if(!r || r.schemaVersion!==1 || r.sourceBasis!==(seal?.recruitmentSourceBasis??basis(source)) || r.world.worldKey!==source.world.worldKey || r.world.seed!==source.world.seed || r.world.difficulty!==source.difficulty || r.world.seasonKey!==String(source.world.calendar!.year+1) || canonicalJson(r.program.input.player)!==canonicalJson(source.world.players[source.world.protagonistKey]))throw new RangeError('STALE_CAREER_KBO_RECRUITMENT');
  if(r.program.assessmentKey!==JSON.stringify(['amateur-kbo',source.world.worldKey,source.world.seasonKey,source.world.protagonistKey]) || r.program.input.baseScore!==(source.world.leagueKey==='COLLEGE'?collegeCareerDraftEvaluation(source).draftBaseScore:highSchoolCareerDraftScore(source)))throw new RangeError('STALE_CAREER_KBO_EVALUATION');
  assertKboDraft(r.world,r.program);return r;
 }
@@ -50,4 +52,11 @@ export function decideCareerKboDraft(source:HighSchoolCareer,expectedRevision:nu
   if(career.usRecruitment){career.previousUsRecruitments=[...(career.previousUsRecruitments??[]),{...career.usRecruitment,closedBy:'KBO'}];delete career.usRecruitment;}
  }
  career.revision++;return career;
+}
+
+/** Signed route boundary shared by year-end and future activation commands. */
+export function assertCareerKboSigning(source:HighSchoolCareer):CareerKboRecruitment {
+ const r=current(source),phase=source.phaseContext;
+ if(phase.phase!=='NEXT_SEASON_READY' || phase.route!=='KBO' || r.program.decision!=='SIGNED' || !r.program.signing || phase.contractKey!==r.program.signing.contract.contractKey)throw new RangeError('KBO_SIGNED_CONTRACT_REQUIRED');
+ return r;
 }

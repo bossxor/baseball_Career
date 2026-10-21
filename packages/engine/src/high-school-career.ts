@@ -1,3 +1,4 @@
+import type {KboAmateurYearEnd} from './kbo-entry.js';
 import {assertFocus} from '@playball/rules';
 import type {Difficulty} from '@playball/rules';
 import type {HighSchoolWorld} from './high-school-world.js';
@@ -57,7 +58,7 @@ export interface HighSchoolCareer {
  development?:CareerDevelopmentLedger;
  ownAssessment?:OwnCareerAssessment;
  traits?:CareerTraitLedger;
- /** 60 high-school rival/teammate formed once at career start. Absent on saves created before M2-AI. */
+ /** 60 career relations preserve HS history and teammates from the first actual registration in each later team. Absent before M2-AI. */
  relationships?:RelationshipLedger;
  relationNotices?:readonly EventInstance[];
  seasonGrowth?:SeasonGrowthLedger;
@@ -65,6 +66,7 @@ export interface HighSchoolCareer {
  collegeAdmission?:CollegeAdmission;
  previousSeasons?:readonly SchoolSeasonArchive[];
  collegeYearEnd?:CollegeYearEnd;
+ kboYearEnd?:KboAmateurYearEnd;
  collegeCup?:CollegeCup;
  collegeResult?:CollegeSeasonResult;
  collegeNpcGrowth?:CollegeNpcGrowth;

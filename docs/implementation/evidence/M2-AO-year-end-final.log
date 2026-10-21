@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: HITTER signed school year closes only with explicit unused-training decision, without age/pro roster/salary or growth payout
+ok 1 - HITTER signed school year closes only with explicit unused-training decision, without age/pro roster/salary or growth payout
+  ---
+  duration_ms: 1830.7319
+  type: 'test'
+  ...
+# Subtest: PITCHER signed school year closes only with explicit unused-training decision, without age/pro roster/salary or growth payout
+ok 2 - PITCHER signed school year closes only with explicit unused-training decision, without age/pro roster/salary or growth payout
+  ---
+  duration_ms: 2109.5915
+  type: 'test'
+  ...
+# Subtest: already used training is preserved and an unfinished pitch learning never publishes year end
+ok 3 - already used training is preserved and an unfinished pitch learning never publishes year end
+  ---
+  duration_ms: 1398.2742
+  type: 'test'
+  ...
+# Subtest: mild/medium injuries retain team-game recovery across closure while major season injury ends
+ok 4 - mild/medium injuries retain team-game recovery across closure while major season injury ends
+  ---
+  duration_ms: 2147.568
+  type: 'test'
+  ...
+# Subtest: stale revision/unsigned route/changed signing and changed sealed data cannot close or repair a year end
+ok 5 - stale revision/unsigned route/changed signing and changed sealed data cannot close or repair a year end
+  ---
+  duration_ms: 1431.7378
+  type: 'test'
+  ...
+# Subtest: reading E94 after KBO year end validates then updates only its metadata seal and keeps signing valid
+ok 6 - reading E94 after KBO year end validates then updates only its metadata seal and keeps signing valid
+  ---
+  duration_ms: 1396.2516
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11392.6945

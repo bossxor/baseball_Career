@@ -1,3 +1,4 @@
+import {closeSchoolSeasonForKbo,assertKboAmateurYearEnd} from '../src/kbo-entry.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {completedHighSchoolCareer,enrolledCollegeCareer,completedCollegeAcademicYear} from './fixtures.js';
@@ -30,4 +31,5 @@ test('college E75 graduation uses college-adjusted B and next-season reservation
  const degree=graduateCollegeCareer(s,s.revision,s.events.at(-1)!.version),before=canonicalJson(degree),prepared=prepareCareerKboDraft(degree,degree.revision),p=prepared.kboRecruitment!.program;
  const overall=Object.values(degree.world.players.own!.abilities).reduce((a,b)=>a+b,0)/60_000;assert.equal(p.input.baseScore,.7*overall+.3*32);assert.equal(prepared.kboRecruitment!.world.seasonKey,'2034');
  const drawn=resolveCareerKboDraft(prepared,prepared.revision,1),view=careerKboDraftView(drawn);assert.equal(view.status,'RESULT');assert.ok(view.result!.round);const signed=decideCareerKboDraft(drawn,drawn.revision,{programVersion:2,decision:'SIGN'});assert.equal(signed.kboRecruitment!.program.decision,'SIGNED');assert.equal(signed.phaseContext.phase,'NEXT_SEASON_READY');assert.equal(signed.collegeAdmission!.status,'GRADUATED');assert.equal(drawn.collegeAdmission!.status,'GRADUATED');assert.equal(drawn.world.players.own!.age,22);assert.deepEqual(drawn.records,degree.records);assert.equal(canonicalJson(degree),before);
+ const closed=closeSchoolSeasonForKbo(signed,signed.revision,true);assertKboAmateurYearEnd(closed);assert.equal(careerKboDraftView(closed).status,'SIGNED');assert.equal(closed.world.players.own!.age,22);assert.equal(closed.collegeAdmission!.status,'GRADUATED');assert.deepEqual(closed.records,signed.records);assert.deepEqual(closed.kboRecruitment,signed.kboRecruitment);assert.equal(closed.seasonGrowth!.finalized,true);
 });

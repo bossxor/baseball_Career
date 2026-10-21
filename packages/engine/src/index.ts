@@ -57,3 +57,5 @@ export * from './relation-notices.js';
 export * from './relationship-history.js';
 
 export * from './team-teammates.js';
+
+export * from './kbo-entry.js';

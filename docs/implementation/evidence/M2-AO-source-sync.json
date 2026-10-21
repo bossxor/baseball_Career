@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "files": 10,
+  "differences": 0,
+  "rows": [
+    {
+      "path": "packages/engine/src/kbo-entry.ts",
+      "working": "f5ea4b9dc3cdec12b68566f35b34d9ec12aa705c3ccdfd13c87462b4d1aa89b9",
+      "source": "f5ea4b9dc3cdec12b68566f35b34d9ec12aa705c3ccdfd13c87462b4d1aa89b9"
+    },
+    {
+      "path": "packages/engine/src/career-kbo.ts",
+      "working": "feabaefe9791ef7935f6f62ac4896e07d25c964428f7b175d1d7171932ffc6f7",
+      "source": "feabaefe9791ef7935f6f62ac4896e07d25c964428f7b175d1d7171932ffc6f7"
+    },
+    {
+      "path": "packages/engine/src/college-entry.ts",
+      "working": "888415139836b84b642c71dbd11d254c41852f941f67c02c1a28da596e5ba03a",
+      "source": "888415139836b84b642c71dbd11d254c41852f941f67c02c1a28da596e5ba03a"
+    },
+    {
+      "path": "packages/engine/src/high-school-career.ts",
+      "working": "7e86b49625515e8edf927bf7d0149a55a35ad09b3d292a05433574397f13cbb3",
+      "source": "7e86b49625515e8edf927bf7d0149a55a35ad09b3d292a05433574397f13cbb3"
+    },
+    {
+      "path": "packages/engine/src/relation-notices.ts",
+      "working": "d344c4b09412c4a90aca152291bd168f4ed95bd299067fa49876c554981b1276",
+      "source": "d344c4b09412c4a90aca152291bd168f4ed95bd299067fa49876c554981b1276"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "working": "db353cadc7e5055d02fe491aec8b6a599839598395cd35d93d8a083d4ebb96ea",
+      "source": "db353cadc7e5055d02fe491aec8b6a599839598395cd35d93d8a083d4ebb96ea"
+    },
+    {
+      "path": "packages/engine/test/kbo-entry.test.ts",
+      "working": "794d1f341ae84a06b1451c4f4dd6a77e9ff5d30f37386c3cec2efa7c22673bf6",
+      "source": "794d1f341ae84a06b1451c4f4dd6a77e9ff5d30f37386c3cec2efa7c22673bf6"
+    },
+    {
+      "path": "packages/engine/test/career-kbo.test.ts",
+      "working": "057671916b6451a41ae346adf3f90ea94ae7024ef1b44e3dc9c8e1a706b0dd80",
+      "source": "057671916b6451a41ae346adf3f90ea94ae7024ef1b44e3dc9c8e1a706b0dd80"
+    },
+    {
+      "path": "packages/engine/src/trait-notices.ts",
+      "working": "d0aecc2bf6c42cefcbcd375f9c6628754cddf7b3122ca7c941d4fabd68129fb9",
+      "source": "d0aecc2bf6c42cefcbcd375f9c6628754cddf7b3122ca7c941d4fabd68129fb9"
+    },
+    {
+      "path": "packages/engine/test/college-entry.test.ts",
+      "working": "2acebc067a5cc2459d2eed3ec6514f1b77e56655a13d27048f062e5d57208a47",
+      "source": "2acebc067a5cc2459d2eed3ec6514f1b77e56655a13d27048f062e5d57208a47"
+    }
+  ]
+}

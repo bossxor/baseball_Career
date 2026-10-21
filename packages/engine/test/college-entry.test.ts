@@ -1,3 +1,4 @@
+import {acknowledgeTraitSummary,unreadTraitSummary} from '../src/trait-notices.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {completedHighSchoolCareer} from './fixtures.js';
@@ -79,4 +80,11 @@ test('stale revision/ready snapshot/receipt and changed admission never publish 
   const state=structuredClone(closed);mutate(state);const before=canonicalJson(state);assert.throws(()=>startAdmittedCollegeSeason(state,state.revision));assert.equal(canonicalJson(state),before);
  }
  assert.throws(()=>startAdmittedCollegeSeason(closed,0),/REVISION/);
+});
+
+test('reading general trait summary after college year-end reseals metadata and preserves enrollment activation',()=>{
+ const source=admitted();source.traits!.owned.own={unlocked:['T02'],qualifiedRivalPitcherKeys:[]};source.traits!.unlocks=[{playerKey:'own',traitId:'T02',worldDay:100,recordRevision:source.records.revision}];
+ const closed=closeHighSchoolSeasonForCollege(source,source.revision,true),read=acknowledgeTraitSummary(closed,closed.revision),next=startAdmittedCollegeSeason(read,read.revision);
+ assert.equal(unreadTraitSummary(read).length,0);assert.equal(read.collegeYearEnd!.receiptKey,closed.collegeYearEnd!.receiptKey);assert.equal(next.collegeAdmission!.status,'ENROLLED');assert.equal(next.world.players.own!.age,19);assert.equal(canonicalJson(read.world),canonicalJson(closed.world));
+ const bad=structuredClone(closed);bad.collegeYearEnd!.sourceBasis='bad';assert.throws(()=>acknowledgeTraitSummary(bad,bad.revision),/YEAR_END/);
 });

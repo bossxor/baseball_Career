@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: reading general trait summary after college year-end reseals metadata and preserves enrollment activation
+ok 1 - reading general trait summary after college year-end reseals metadata and preserves enrollment activation
+  ---
+  duration_ms: 3888.8828
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9048.8608

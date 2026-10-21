@@ -18,7 +18,7 @@ import {createSchoolEmergencyRegistry} from './high-school-emergency.js';
 export interface CollegeYearEnd {receiptKey:string;admissionKey:string;sourceRevision:number;sourceBasis:string}
 export type SchoolSeasonArchive=Pick<HighSchoolCareer,'world'|'health'|'days'|'emergency'|'development'|'planHistory'|'collegeCup'|'collegeResult'|'collegeNpcGrowth'|'collegeGraduation'> & {seasonGrowth:SeasonGrowthLedger;yearEndReceiptKey:string};
 export function schoolYearEndBasis(source:HighSchoolCareer):string {
- const snapshot={...source};delete snapshot.collegeYearEnd;return canonicalJson(snapshot);
+ const snapshot={...source};delete snapshot.collegeYearEnd;delete snapshot.kboYearEnd;return canonicalJson(snapshot);
 }
 export function schoolYearEndRepertoire(source:HighSchoolCareer,playerKey:string):Repertoire|undefined {
  const player=source.world.players[playerKey]!;
