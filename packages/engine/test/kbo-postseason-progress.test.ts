@@ -10,7 +10,9 @@ import type {KboCareer} from '../src/kbo-career-entry.js';
 import {enteredKboCareer} from './fixtures.js';
 import {canonicalJson} from '../src/game.js';
 import {closeKboSeason} from '../src/kbo-year-end.js';
-import {kboYearTransitionReadiness} from '../src/kbo-year-transition.js';
+import {kboYearTransitionReadiness,stageKboAgeAndContracts,startNextKboSeason} from '../src/kbo-year-transition.js';
+import {advanceKboCareer} from '../src/kbo-progress.js';
+import {offerKboRenewal,acceptKboRenewal,kboRenewalValueWon} from '../src/kbo-renewal.js';
 
 /** Controlled season-review state: closed day receipts for the whole regular range (no regular games played). */
 function review():KboCareer {
@@ -48,16 +50,79 @@ test('postseason home runs feed career trait evidence after each postseason day'
 });
 
 
-test('year transition readiness lists every Y01 blocker until postseason, growth and season close are done',()=>{
+/** Review → postseason to a champion → regular growth paid → season closed (unused training forfeited). */
+function closed():KboCareer {
+ let c=startKboPostseason(review(),review().revision);
+ for(let i=0;i<400;i++){const out=advanceKboPostseason(c,c.revision);c=out.career;if(out.stopReason==='POSTSEASON_COMPLETE')break;}
+ c=settleKboSeasonGrowth(c,c.revision).career;return closeKboSeason(c,c.revision,true);
+}
+function renewed(c:KboCareer):KboCareer {const o=offerKboRenewal(c,c.revision),e=o.events.find(x=>x.eventKey===o.renewal!.eventKey)!;return acceptKboRenewal(o,o.revision,{eventKey:e.eventKey,eventVersion:e.version});}
+
+test('year transition readiness lists every Y01 blocker until postseason, growth, season close and my contract are done',()=>{
  const r=review(),first=kboYearTransitionReadiness(r);
- assert.equal(first.ready,false);assert.deepEqual(first.blockers.sort(),['GROWTH_NOT_FINALIZED','POSTSEASON_NOT_COMPLETE','SEASON_NOT_CLOSED']);
+ assert.equal(first.ready,false);assert.deepEqual(first.blockers.sort(),['CONTRACT_DECISION_REQUIRED','GROWTH_NOT_FINALIZED','POSTSEASON_NOT_COMPLETE','SEASON_NOT_CLOSED']);
  assert.equal(first.targetSeasonKey,String(Number(r.world.seasonKey)+1));
  let c=startKboPostseason(r,r.revision);assert.ok(kboYearTransitionReadiness(c).blockers.includes('SEASON_NOT_IN_REVIEW'));
  for(let i=0;i<400;i++){const out=advanceKboPostseason(c,c.revision);c=out.career;if(out.stopReason==='POSTSEASON_COMPLETE')break;}
  c=settleKboSeasonGrowth(c,c.revision).career;const before=JSON.stringify(c);
- assert.deepEqual(kboYearTransitionReadiness(c).blockers.sort(),['GROWTH_NOT_FINALIZED','SEASON_NOT_CLOSED']);assert.equal(JSON.stringify(c),before);
- c=closeKboSeason(c,c.revision,true);
+ assert.deepEqual(kboYearTransitionReadiness(c).blockers.sort(),['CONTRACT_DECISION_REQUIRED','GROWTH_NOT_FINALIZED','SEASON_NOT_CLOSED']);assert.equal(JSON.stringify(c),before);
+ c=closeKboSeason(c,c.revision,true);assert.deepEqual(kboYearTransitionReadiness(c).blockers,['CONTRACT_DECISION_REQUIRED']);
+ const offered=offerKboRenewal(c,c.revision);assert.deepEqual(kboYearTransitionReadiness(offered).blockers.sort(),['CONTRACT_DECISION_REQUIRED','OPEN_EVENT']);
+ c=renewed(c);
  assert.deepEqual(kboYearTransitionReadiness(c),{ready:true,blockers:[],targetSeasonKey:String(Number(c.world.seasonKey)+1),nextAge:c.world.players[c.protagonistKey]!.age+1});
  const old=structuredClone(c);old.world.players[old.protagonistKey]={...old.world.players[old.protagonistKey]!,age:45};
  assert.deepEqual(kboYearTransitionReadiness(old).blockers,['MAX_AGE_REACHED']);
+});
+
+test('E30 renewal offer follows 08 once and closes only through the accepted domain commit',()=>{
+ const c=closed(),key=c.protagonistKey,prev=c.world.contracts[key]!.annualSalaryWon;
+ const o=offerKboRenewal(c,c.revision),r=o.renewal!,{valueWon}=kboRenewalValueWon(c);
+ // No regular games in this controlled season: neutral OPS .600 / ERA 5 below sample.
+ assert.equal(r.basis.PA,0);assert.equal(r.basis.OPS,.6);assert.equal(r.valueWon,valueWon);
+ assert.equal(r.annualSalaryWon,Math.min(3_000_000_000,Math.max(30_000_000,Math.round((.5*prev+.5*valueWon)/10_000)*10_000)));
+ assert.equal(r.seasonKey,String(Number(c.world.seasonKey)+1));assert.equal(r.years,1);
+ const e=o.events.find(x=>x.eventKey===r.eventKey)!;assert.equal(e.definitionId,'E30');assert.equal(e.status,'OPEN');
+ assert.throws(()=>offerKboRenewal(o,o.revision),/KBO_RENEWAL_NOT_AVAILABLE/);
+ const a=acceptKboRenewal(o,o.revision,{eventKey:e.eventKey,eventVersion:e.version});
+ assert.equal(a.renewal!.status,'ACCEPTED');assert.equal(a.events.find(x=>x.eventKey===e.eventKey)!.status,'RESOLVED');
+ assert.equal(a.world.contracts[key]!.annualSalaryWon,prev);
+ assert.throws(()=>acceptKboRenewal(a,a.revision,{eventKey:e.eventKey,eventVersion:e.version}),/INVALID_KBO_RENEWAL/);
+});
+
+test('Y02 stages age+1 and contract years for every pro player without changing the source',()=>{
+ let c=closed();assert.throws(()=>stageKboAgeAndContracts(c),/YEAR_TRANSITION_NOT_READY/);
+ c=renewed(c);
+ const npc=Object.keys(c.world.players).find(k=>k!==c.protagonistKey)!;c.world.players[npc]={...c.world.players[npc]!,age:45};
+ const before=JSON.stringify(c),stage=stageKboAgeAndContracts(c),target=Number(c.world.seasonKey)+1;
+ assert.equal(JSON.stringify(c),before);assert.deepEqual(stageKboAgeAndContracts(c),stage);
+ assert.equal(Object.keys(stage.players).length,Object.keys(c.world.players).length);
+ for(const [key,p] of Object.entries(c.world.players)){
+  const s=stage.players[key]!;assert.equal(s.age,p.age+1);if(key===c.protagonistKey)continue;
+  const k=c.world.contracts[key]!;assert.equal(s.contract!.contractYear,target-Number(k.seasonKey)+1);assert.equal(s.contract!.expired,s.contract!.contractYear>k.years);
+ }
+ assert.deepEqual(stage.players[c.protagonistKey]!.contract,{contractKey:c.renewal!.offerKey,contractYear:1,years:1,expired:false});
+ assert.deepEqual(stage.overAge,[npc]);
+ assert.deepEqual(stage.expiring,Object.keys(stage.players).filter(k=>stage.players[k]!.contract!.expired));
+ assert.ok(stage.expiring.length>0 && !stage.expiring.includes(c.protagonistKey));
+});
+
+test('next season activates every player at once and the second pro season opens and plays',()=>{
+ let c=closed();assert.throws(()=>startNextKboSeason(c,c.revision),/YEAR_TRANSITION_NOT_READY/);
+ c=renewed(c);const before=JSON.stringify(c),stage=stageKboAgeAndContracts(c),key=c.protagonistKey,season=c.world.seasonKey,target=String(Number(season)+1);
+ const n=startNextKboSeason(c,c.revision);assert.equal(JSON.stringify(c),before);
+ assert.equal(n.world.seasonKey,target);assert.equal(n.world.calendar.year,Number(target));assert.equal(n.phaseContext.phase,'PRESEASON_SETUP');assert.equal(n.revision,c.revision+1);
+ for(const [k,s] of Object.entries(stage.players)){assert.equal(n.world.players[k]!.age,s.age);assert.equal(n.world.contracts[k]!.seasonKey,target);}
+ assert.equal(n.world.contracts[key]!.annualSalaryWon,c.renewal!.annualSalaryWon);assert.equal(n.world.contracts[key]!.contractKey,c.renewal!.offerKey);
+ for(const [k,p] of Object.entries(c.world.players))assert.deepEqual(n.world.players[k]!.abilities,p.abilities);
+ assert.equal(n.proSeasons!.length,1);assert.equal(n.proSeasons![0]!.postseason.championKey,c.postseason!.championKey);
+ assert.ok(!n.days && !n.seasonClose && !n.postseason && !n.competitionSchedule && !n.openingRoster);
+ assert.equal(n.seasonGrowth.seasonKey,target);assert.equal(n.seasonGrowth.finalized,false);
+ assert.throws(()=>startNextKboSeason(n,n.revision));
+ // Second season: same preseason → opening roster → schedule → regular season commands as the first.
+ const p=confirmKboPreseasonPlan(n,n.revision),o=confirmKboOpeningRoster(p,p.revision),s=confirmKboSeasonSchedule(o,o.revision);
+ let g=startKboRegularSeason(s,s.revision);assert.equal(g.phaseContext.phase,'SEASON_PROGRESS');
+ for(let i=0;i<40 && !Object.values(g.records.games).some(x=>x.scope.seasonKey===target);i++)g=advanceKboCareer(g,g.revision,1).career;
+ assert.ok(Object.values(g.records.games).some(x=>x.scope.seasonKey===target && x.scope.phase==='REGULAR'));
+ assert.equal((g.campNotices??[]).filter(e=>e.seasonKey===target).length,0);
+ assert.equal(offerKboRenewal(closed(),closed().revision).renewal!.seasonKey,target);
 });

@@ -1,6 +1,8 @@
 import type {KboPostseasonPhase} from './kbo-postseason-progress.js';
 import type {KboPostseason} from './kbo-postseason.js';
 import type {KboSeasonClose} from './kbo-year-end.js';
+import type {KboRenewal} from './kbo-renewal.js';
+import type {KboSeasonArchive} from './kbo-year-transition.js';
 import type {KboCallupReview} from './kbo-callup.js';
 import type {KboSeasonProgress} from './kbo-progress.js';
 import type {SchoolDayLedger} from './high-school-day.js';
@@ -41,7 +43,7 @@ export interface KboCareer {
  records:RecordLedger;health:HealthLedger;seasonGrowth:SeasonGrowthLedger;development:CareerDevelopmentLedger;
  traits?:CareerTraitLedger;relationships:RelationshipLedger;events:readonly EventInstance[];relationNotices:readonly EventInstance[];
  styleUsedWindows:readonly string[];planHistory:HighSchoolCareer['planHistory'];
- days?:SchoolDayLedger;callupReviews?:readonly KboCallupReview[];aiRosterReviews?:readonly string[];seasonClose?:KboSeasonClose;postseason?:KboPostseason;campNotices?:readonly EventInstance[];preseasonPlan?:KboPreseasonPlan;openingRoster?:KboOpeningRoster;competitionSchedule?:KboSeasonSchedule;
+ days?:SchoolDayLedger;callupReviews?:readonly KboCallupReview[];aiRosterReviews?:readonly string[];seasonClose?:KboSeasonClose;renewal?:KboRenewal;proSeasons?:readonly KboSeasonArchive[];postseason?:KboPostseason;campNotices?:readonly EventInstance[];preseasonPlan?:KboPreseasonPlan;openingRoster?:KboOpeningRoster;competitionSchedule?:KboSeasonSchedule;
 }
 function entryKey(ready:KboAmateurYearEnd){return JSON.stringify(['kbo-season-entry',ready.receiptKey]);}
 /** One atomic result consumes the frozen reservation once. Replaying the same old source is deterministic;
@@ -67,6 +69,6 @@ export function startSignedKboCareer(source:HighSchoolCareer,expectedRevision:nu
 /** Public entry receipt, not the raw pro root containing P, RNG and the full sealed amateur history. */
 export function kboCareerEntryView(source:KboCareer){
  const key=source.protagonistKey,club=source.world.clubs.find(c=>c.id===source.protagonistClubId),player=source.world.players[key],contract=source.world.contracts[key],r=source.registration;
- if(source.schemaVersion!==1 || source.world.status!=='ACTIVE' || source.phaseContext.phase!=='PRESEASON_SETUP' || !player || !contract || !club || !club.roster.includes(key) || r.firstTeam!==club.firstTeam.includes(key) || r.status!=='ACTIVE' || r.playerKey!==key || r.clubId!==club.id || r.seasonKey!==source.world.seasonKey || source.activation.contractKey!==contract.contractKey)throw new RangeError('INVALID_KBO_ENTRY_VIEW');
+ if(source.schemaVersion!==1 || source.world.status!=='ACTIVE' || source.phaseContext.phase!=='PRESEASON_SETUP' || !player || !contract || !club || !club.roster.includes(key) || r.firstTeam!==club.firstTeam.includes(key) || r.status!=='ACTIVE' || r.playerKey!==key || r.clubId!==club.id || r.seasonKey!==source.world.seasonKey || (source.renewal?.status==='ACCEPTED' && source.renewal.seasonKey===source.world.seasonKey?source.renewal.offerKey:source.activation.contractKey)!==contract.contractKey)throw new RangeError('INVALID_KBO_ENTRY_VIEW');
  return {seasonKey:source.world.seasonKey,player:{name:player.name,age:player.age,kind:player.kind,position:player.position},club:{id:club.id,name:club.name},registration:{status:'ACTIVE' as const,firstTeam:r.firstTeam},contract:{years:contract.years,annualSalaryWon:contract.annualSalaryWon,signingBonusWon:contract.signingBonusWon,currency:'KRW' as const},phase:'PRESEASON_SETUP' as const};
 }

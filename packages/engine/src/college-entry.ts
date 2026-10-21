@@ -20,7 +20,7 @@ export type SchoolSeasonArchive=Pick<HighSchoolCareer,'world'|'health'|'days'|'e
 export function schoolYearEndBasis(source:HighSchoolCareer):string {
  const snapshot={...source};delete snapshot.collegeYearEnd;delete snapshot.kboYearEnd;return canonicalJson(snapshot);
 }
-export function schoolYearEndRepertoire(source:HighSchoolCareer,playerKey:string):Repertoire|undefined {
+export function schoolYearEndRepertoire(source:{world:Pick<HighSchoolCareer['world'],'players'|'repertoires'|'seasonKey'>},playerKey:string):Repertoire|undefined {
  const player=source.world.players[playerKey]!;
  if(player.kind!=='PITCHER')return undefined;
  const repertoire=source.world.repertoires[player.simulationKey];

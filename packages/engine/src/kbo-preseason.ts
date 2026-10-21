@@ -34,9 +34,9 @@ function campSource(s:KboCareer,e:EventInstance){
  enqueueWorldEvent([],e);
  if(e.definitionId!=='E08' || e.worldKey!==s.world.worldKey || e.seasonKey!==s.world.seasonKey || canonicalJson(e.evidence.fields)!==canonicalJson({playerSimulationKey:s.protagonistKey,milestoneKey:s.activation.receiptKey}) || e.resume.competitionKey!=='KBO' || e.resume.registrationKey!==s.protagonistClubId || e.resume.phase!=='PRESEASON_SETUP' || e.occurredWorldDay!==s.world.calendar.growthDays[0])throw new RangeError('INVALID_KBO_FIRST_CAMP_SOURCE');
 }
-/** Nonblocking E08; old AP saves catch up on a write, never on a read. */
+/** Nonblocking E08; old AP saves catch up on a write, never on a read. First pro season only: later seasons keep the old notice as history. */
 export function queueKboFirstCampNotices(s:KboCareer):readonly EventInstance[]{
- assertSource(s,s.revision,true);const notices=s.campNotices??[];if(notices.length>1)throw new RangeError('DUPLICATE_KBO_FIRST_CAMP');for(const e of notices)campSource(s,e);if(notices.length || s.preseasonPlan)return structuredClone(notices);
+ assertSource(s,s.revision,true);if(s.proSeasons?.length)return structuredClone(s.campNotices??[]);const notices=s.campNotices??[];if(notices.length>1)throw new RangeError('DUPLICATE_KBO_FIRST_CAMP');for(const e of notices)campSource(s,e);if(notices.length || s.preseasonPlan)return structuredClone(notices);
  const event=createWorldEvent({definitionId:'E08',worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,evidence:{version:1,type:'FIRST_PRO_MILESTONE',fields:{playerSimulationKey:s.protagonistKey,milestoneKey:s.activation.receiptKey}},resume:{worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,phase:'PRESEASON_SETUP',competitionKey:'KBO',registrationKey:s.protagonistClubId,sourceRevision:s.revision},sourceSequence:s.events.length+1,worldDay:s.world.calendar.growthDays[0]!});return enqueueWorldEvent(notices,event).events;
 }
 function written(s:KboCareer){s.revision++;s.campNotices=queueKboFirstCampNotices(s);return s;}
@@ -54,10 +54,10 @@ export function beginKboPreseasonPitchLearning(s:KboCareer,revision:number,pitch
  assertSource(s,revision);const key=s.protagonistKey;if(s.world.players[key]!.kind!=='PITCHER')throw new RangeError('PITCHER_REQUIRED');const next=structuredClone(s);next.world.repertoires[key]=beginPitchLearning(s.world.repertoires[key]!,pitchId,true,replacedPitchId?{pitchId:replacedPitchId,windowId:windowKey(s)}:undefined);return written(next);
 }
 export function unreadKboFirstCampNotices(s:KboCareer){
- assertSource(s,s.revision,true);const notices=s.campNotices??[];if(notices.length>1)throw new RangeError('DUPLICATE_KBO_FIRST_CAMP');return notices.flatMap(e=>{campSource(s,e);if(e.status!=='OPEN')return [];const d=eventDefinition('E08');return [{eventKey:e.eventKey,eventVersion:e.version,definitionId:'E08' as const,title:d.title,body:d.body,offeredCommands:s.preseasonPlan?['KEEP_FOCUS']:['CHOOSE_FOCUS','KEEP_FOCUS']}];});
+ assertSource(s,s.revision,true);if(s.proSeasons?.length)return [];const notices=s.campNotices??[];if(notices.length>1)throw new RangeError('DUPLICATE_KBO_FIRST_CAMP');return notices.flatMap(e=>{campSource(s,e);if(e.status!=='OPEN')return [];const d=eventDefinition('E08');return [{eventKey:e.eventKey,eventVersion:e.version,definitionId:'E08' as const,title:d.title,body:d.body,offeredCommands:s.preseasonPlan?['KEEP_FOCUS']:['CHOOSE_FOCUS','KEEP_FOCUS']}];});
 }
 export function resolveKboFirstCampNotice(s:KboCareer,revision:number,input:{eventKey:string;eventVersion:number;command:string;focus?:readonly string[]}):KboCareer {
- assertSource(s,revision,true);const matches=(s.campNotices??[]).filter(e=>e.eventKey===input.eventKey);if(matches.length!==1)throw new RangeError('UNKNOWN_KBO_FIRST_CAMP');const e=matches[0]!;campSource(s,e);
+ assertSource(s,revision,true);const matches=(s.campNotices??[]).filter(e=>e.eventKey===input.eventKey && !s.proSeasons?.length);if(matches.length!==1)throw new RangeError('UNKNOWN_KBO_FIRST_CAMP');const e=matches[0]!;campSource(s,e);
  const context={worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:s.preseasonPlan?['KEEP_FOCUS']:['CHOOSE_FOCUS','KEEP_FOCUS']};
  if(input.command==='KEEP_FOCUS' && input.focus!==undefined)throw new RangeError('UNEXPECTED_FOCUS');const chosen=resolveEventChoice(e,input.eventVersion,input.command,input.focus?{focus:[...input.focus]}:null,context);let next=structuredClone(s),resolved=chosen.event;
  if(chosen.domain){if(!input.focus)throw new RangeError('FOCUS_REQUIRED');assertFocus(s.world.players[s.protagonistKey]!.kind,input.focus);next=updatePlan(s,input.focus,s.world.players[s.protagonistKey]!.archetype);resolved=completeEventDomain(e,chosen.domain,JSON.stringify(['kbo-first-camp-focus',s.activation.receiptKey,s.revision+1]),context);}

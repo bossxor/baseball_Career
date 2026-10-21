@@ -23,6 +23,8 @@
 
 ## 현재 체크포인트
 
+- M2-BH(2026-10-21): 비FA 재계약 E30(offerKboRenewal/acceptKboRenewal, 08 산식)·Y02 stageKboAgeAndContracts·startNextKboSeason. 연속 경로: closeKboSeason→offerKboRenewal→acceptKboRenewal→startNextKboSeason→(PRESEASON_SETUP) confirmKboPreseasonPlan→…. 다음: 프로 NPC 연말 성장/노쇠, Y04 은퇴(45세·강제 은퇴 검토)·신인 공급, AI 오프시즌 재계약/FA, 재계약 거절/내 은퇴(S09). [M2-BH](M2-BH-KBO-RENEWAL-NEXT-SEASON.md).
+
 - M2-BG(2026-10-21): 72 Y01 시작 조건 읽기 검사(kboYearTransitionReadiness). 다음은 Y02~Y08 staging과 원자 활성화(큰 작업). 프로 한 시즌 경로: startKboRegularSeason→advanceKboCareer(E43/E41/E09 창·건강 정지)→SEASON_REVIEW→startKboPostseason→advanceKboPostseason→settleKboSeasonGrowth→closeKboSeason→kboYearTransitionReadiness. [M2-BG](M2-BG-KBO-YEAR-READINESS.md).
 
 - M2-BF(2026-10-21): 포스트시즌 일마감 후 특성(T06)·내 선수 건강 정지. 전체 check 404/404. 다음 큰 단계: 다음 세계 시즌 개시(72: 나이+1·계약 연차·새 달력/일정·새 성장 원장·NPC 노화). 그 전 설계 72 원문 확인 필요. [M2-BE/BF](M2-BE-KBO-POSTSEASON-GAMES.md).
