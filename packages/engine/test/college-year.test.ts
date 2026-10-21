@@ -22,6 +22,7 @@ test('college year close requires explicit training forfeit, audits NPC growth/c
 test('next year retains continuing students/P/earned books, replaces only graduates with freshmen, archives cup/result and opens annual budgets',()=>{
  const entered=enrolledCollegeCareer('PITCHER');entered.world.repertoires.own=grantPracticePitchXp(entered.world.repertoires.own!,'carry-actual-practice','P01',3,5);
  const source=completedCollegeAcademicYear(entered),ready=closeCollegeSeasonForNextYear(source,source.revision,true),before=canonicalJson(ready),next=startNextCollegeSeason(ready,ready.revision);
+ assert.deepEqual(next.relationships,ready.relationships);assert.deepEqual(next.relationNotices,ready.relationNotices);assert.equal(next.relationships!.teamEntries!.length,1);
  assertCollegeWorld(next.world as CollegeWorld);assert.equal(next.world.seasonKey,'2031');assert.equal(next.world.players.own!.age,20);assert.deepEqual(next.world.players.own!.abilities,ready.world.players.own!.abilities);assert.equal(next.collegeAdmission!.academicYear,2);assert.equal(next.collegeAdmission!.yearsCompleted,1);
  for(const school of ready.world.schools)for(const key of school.roster.filter(k=>!Object.hasOwn(ready.emergency.entries,k))){
   const old=ready.world.players[key]!;

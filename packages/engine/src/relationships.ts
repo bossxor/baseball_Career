@@ -1,3 +1,4 @@
+import type {TeamEntryRelationReceipt} from './team-teammates.js';
 import {abilityKeys} from '@playball/rules';
 import {createStreams,nextInteger} from './rng.js';
 import type {HighSchoolWorld} from './high-school-world.js';
@@ -10,6 +11,7 @@ export interface RelationMilestone {stage:RelationStage;evidenceKey:string;world
 export interface PlayerRelationship {relationKey:string;type:RelationType;normalPairKey:string;primaryPlayerKey:string;otherPlayerKey:string;stage:RelationStage;milestones:readonly RelationMilestone[]}
 export interface RelationshipLedger {
  schemaVersion:1;relations:readonly PlayerRelationship[];
+ teamEntries?:readonly TeamEntryRelationReceipt[];
  /** Why a role is empty. Empty is a normal state and never blocks the career. */
  formation:{rival:'FORMED'|'NO_CANDIDATE';teammate:'FORMED'|'NO_CANDIDATE'};
 }

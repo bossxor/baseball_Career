@@ -10,6 +10,7 @@ import {queueRelationFormationNotices,unreadRelationNotices} from '../src/relati
 function fixture(){
  const s=enrolledCollegeCareer(),archive=s.previousSeasons![0]!,old=archive.world;
  // Restore known HS formation receipts into a real college-entry fixture; no new college relation is fabricated.
+ delete s.relationNotices; // This fixture isolates HS history rather than the new college formation notice.
  s.relationships=formHighSchoolRelations(old,Math.min(...old.schedule.map(g=>g.worldDay)));return s;
 }
 test('college S42 keeps archived HS rival/teammate identity and last known registration without inferring a new stage',()=>{

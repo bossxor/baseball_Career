@@ -1,3 +1,5 @@
+import {formRegisteredTeamTeammate} from './team-teammates.js';
+import {queueRelationFormationNotices} from './relation-notices.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertHighSchoolCareerRevision} from './high-school-career.js';
 import {assertPendingCollegeAdmission} from './high-school-route.js';
@@ -66,5 +68,7 @@ export function startAdmittedCollegeSeason(source:HighSchoolCareer,expectedRevis
  career.seasonGrowth=createSeasonGrowthLedger(player,seasonKey,world.calendar.growthDays.length);
  career.development={...career.development!,seasonStartPlayer:structuredClone(player)};
  career.planHistory=[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}];
- career.collegeAdmission={...admission,status:'ENROLLED'};career.phaseContext={phase:'PRESEASON_SETUP'};delete career.collegeYearEnd;career.revision++;return career;
+ career.collegeAdmission={...admission,status:'ENROLLED'};career.phaseContext={phase:'PRESEASON_SETUP'};delete career.collegeYearEnd;career.revision++;
+ const entryDay=world.calendar.growthDays[0]!;career.relationships=formRegisteredTeamTeammate(career.relationships,world,admission.admissionKey,entryDay);
+ const notices=queueRelationFormationNotices(career,entryDay);if(notices)career.relationNotices=notices;return career;
 }

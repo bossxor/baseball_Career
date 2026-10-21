@@ -1,0 +1,244 @@
+TAP version 13
+# Subtest: year-end requires explicit unused-training forfeit, closes growth/health once and pays no new growth
+ok 1 - year-end requires explicit unused-training forfeit, closes growth/health once and pays no new growth
+  ---
+  duration_ms: 352.2776
+  type: 'test'
+  ...
+# Subtest: atomic college activation carries identity/abilities and archives HS, new calendar/growth ledger/age only once
+ok 2 - atomic college activation carries identity/abilities and archives HS, new calendar/growth ledger/age only once
+  ---
+  duration_ms: 616.7879
+  type: 'test'
+  ...
+# Subtest: college profiles respect school admission floors and preserve protagonist independently of school choice
+ok 3 - college profiles respect school admission floors and preserve protagonist independently of school choice
+  ---
+  duration_ms: 304.8939
+  type: 'test'
+  ...
+# Subtest: pitcher carry keeps book/weights, opens fresh annual XP budget and refuses unfinished learning
+ok 4 - pitcher carry keeps book/weights, opens fresh annual XP budget and refuses unfinished learning
+  ---
+  duration_ms: 239.0545
+  type: 'test'
+  ...
+# Subtest: mild team-game recovery carries across calendar rest; major season injury closes at year-end
+ok 5 - mild team-game recovery carries across calendar rest; major season injury closes at year-end
+  ---
+  duration_ms: 432.8791
+  type: 'test'
+  ...
+# Subtest: stale revision/ready snapshot/receipt and changed admission never publish a partial new world
+ok 6 - stale revision/ready snapshot/receipt and changed admission never publish a partial new world
+  ---
+  duration_ms: 580.7542
+  type: 'test'
+  ...
+# Subtest: college year close requires explicit training forfeit, audits NPC growth/caps and seals once without repaying own growth
+ok 7 - college year close requires explicit training forfeit, audits NPC growth/caps and seals once without repaying own growth
+  ---
+  duration_ms: 9837.8528
+  type: 'test'
+  ...
+# Subtest: next year retains continuing students/P/earned books, replaces only graduates with freshmen, archives cup/result and opens annual budgets
+ok 8 - next year retains continuing students/P/earned books, replaces only graduates with freshmen, archives cup/result and opens annual budgets
+  ---
+  duration_ms: 11398.2368
+  type: 'test'
+  ...
+# Subtest: continuing NPC medium injury carries; major injury closes, archive keeps original year-end evidence
+ok 9 - continuing NPC medium injury carries; major injury closes, archive keeps original year-end evidence
+  ---
+  duration_ms: 14764.7393
+  type: 'test'
+  ...
+# Subtest: unfinished learning, invalid result, stale revision and changed sealed state never publish a partial next year
+ok 10 - unfinished learning, invalid result, stale revision and changed sealed state never publish a partial next year
+  ---
+  duration_ms: 7125.8792
+  type: 'test'
+  ...
+# Subtest: continuing enrollment advances1→2→3→4 with persistent students and blocks a fifth year pending graduation route
+ok 11 - continuing enrollment advances1→2→3→4 with persistent students and blocks a fifth year pending graduation route
+  ---
+  duration_ms: 39037.791
+  type: 'test'
+  ...
+# Subtest: preseason confirmation persists two E94 notices for pinned rival/teammate without blocking progress
+ok 12 - preseason confirmation persists two E94 notices for pinned rival/teammate without blocking progress
+  ---
+  duration_ms: 157.7774
+  type: 'test'
+  ...
+# Subtest: opening a notice acknowledges only that notice and navigates to its relation; gameplay phase and RNG stay unchanged
+ok 13 - opening a notice acknowledges only that notice and navigates to its relation; gameplay phase and RNG stay unchanged
+  ---
+  duration_ms: 162.1183
+  type: 'test'
+  ...
+# Subtest: stale revision/version, wrong command, foreign or rewritten relation evidence reject atomically
+ok 14 - stale revision/version, wrong command, foreign or rewritten relation evidence reject atomically
+  ---
+  duration_ms: 197.4503
+  type: 'test'
+  ...
+# Subtest: unread notices do not stop real games; acknowledging both does not alter first-day results/health/trait evidence
+ok 15 - unread notices do not stop real games; acknowledging both does not alter first-day results/health/trait evidence
+  ---
+  duration_ms: 4181.6098
+  type: 'test'
+  ...
+# Subtest: legacy HS saves catch up once at day close; absence of relations and college worlds creates no fictitious notice
+ok 16 - legacy HS saves catch up once at day close; absence of relations and college worlds creates no fictitious notice
+  ---
+  duration_ms: 2079.9344
+  type: 'test'
+  ...
+# Subtest: notice acknowledgment during a pending task leaves that task and its saved resume untouched
+ok 17 - notice acknowledgment during a pending task leaves that task and its saved resume untouched
+  ---
+  duration_ms: 164.1336
+  type: 'test'
+  ...
+# Subtest: notice acknowledgment during a real pending game preserves the exact cursor/RNG and resumed game result
+ok 18 - notice acknowledgment during a real pending game preserves the exact cursor/RNG and resumed game result
+  ---
+  duration_ms: 4324.8333
+  type: 'test'
+  ...
+# Subtest: approved25-player rule: no eligible rival produces no rival notice or extra NPC, while the teammate notice remains
+ok 19 - approved25-player rule: no eligible rival produces no rival notice or extra NPC, while the teammate notice remains
+  ---
+  duration_ms: 65.1615
+  type: 'test'
+  ...
+# Subtest: acknowledging a notice after sealed year end preserves the valid seal and college activation; corrupt seals never get repaired
+ok 20 - acknowledging a notice after sealed year end preserves the valid seal and college activation; corrupt seals never get repaired
+  ---
+  duration_ms: 501.3917
+  type: 'test'
+  ...
+# Subtest: college S42 keeps archived HS rival/teammate identity and last known registration without inferring a new stage
+ok 21 - college S42 keeps archived HS rival/teammate identity and last known registration without inferring a new stage
+  ---
+  duration_ms: 547.5648
+  type: 'test'
+  ...
+# Subtest: archived same-kind identity reuses real scoped contributions, not invented meetings; zero scopes remain empty
+ok 22 - archived same-kind identity reuses real scoped contributions, not invented meetings; zero scopes remain empty
+  ---
+  duration_ms: 406.3721
+  type: 'test'
+  ...
+# Subtest: unknown history stays as an unresolved reference, not retirement or an invented player
+ok 23 - unknown history stays as an unresolved reference, not retirement or an invented player
+  ---
+  duration_ms: 252.2076
+  type: 'test'
+  ...
+# Subtest: current identity takes priority and the latest archived snapshot is chosen for historical identity
+ok 24 - current identity takes priority and the latest archived snapshot is chosen for historical identity
+  ---
+  duration_ms: 264.3898
+  type: 'test'
+  ...
+# Subtest: foreign history and malformed relationship ownership reject instead of leaking another world
+ok 25 - foreign history and malformed relationship ownership reject instead of leaking another world
+  ---
+  duration_ms: 301.5031
+  type: 'test'
+  ...
+# Subtest: persisted E94 notices keep the archived name after college entry without recreating the formation event
+ok 26 - persisted E94 notices keep the archived name after college entry without recreating the formation event
+  ---
+  duration_ms: 340.1283
+  type: 'test'
+  ...
+# Subtest: career start forms one same-team teammate and one eligible rival, distinct and deterministic
+ok 27 - career start forms one same-team teammate and one eligible rival, distinct and deterministic
+  ---
+  duration_ms: 52.337
+  type: 'test'
+  ...
+# Subtest: no eligible rival is a normal empty state; teammate still forms
+ok 28 - no eligible rival is a normal empty state; teammate still forms
+  ---
+  duration_ms: 44.5037
+  type: 'test'
+  ...
+# Subtest: confirmCareerPlayer stores relations once; list view shows identity only
+ok 29 - confirmCareerPlayer stores relations once; list view shows identity only
+  ---
+  duration_ms: 76.2096
+  type: 'test'
+  ...
+# Subtest: same-kind detail compares own lines only in games both played; leagues and phases stay separate
+ok 30 - same-kind detail compares own lines only in games both played; leagues and phases stay separate
+  ---
+  duration_ms: 11492.8913
+  type: 'test'
+  ...
+# Subtest: cross-kind detail sums only real batter-vs-pitcher plate appearances
+ok 31 - cross-kind detail sums only real batter-vs-pitcher plate appearances
+  ---
+  duration_ms: 10751.4423
+  type: 'test'
+  ...
+# Subtest: teammate gets one COEXIST_20 milestone on the 20th shared team game day only
+ok 32 - teammate gets one COEXIST_20 milestone on the 20th shared team game day only
+  ---
+  duration_ms: 53.1298
+  type: 'test'
+  ...
+# Subtest: HITTER actual college activation adds one teammate with registration E94, no blocking or growth changes
+ok 33 - HITTER actual college activation adds one teammate with registration E94, no blocking or growth changes
+  ---
+  duration_ms: 640.4158
+  type: 'test'
+  ...
+# Subtest: PITCHER actual college activation adds one teammate with registration E94, no blocking or growth changes
+ok 34 - PITCHER actual college activation adds one teammate with registration E94, no blocking or growth changes
+  ---
+  duration_ms: 463.1082
+  type: 'test'
+  ...
+# Subtest: old HS relationships survive, new college teammate appends and historical/current identities remain distinct
+ok 35 - old HS relationships survive, new college teammate appends and historical/current identities remain distinct
+  ---
+  duration_ms: 261.4684
+  type: 'test'
+  ...
+# Subtest: same team next season or return uses first entry without RNG/extra teammate; another actual team may add one
+ok 36 - same team next season or return uses first entry without RNG/extra teammate; another actual team may add one
+  ---
+  duration_ms: 262.7048
+  type: 'test'
+  ...
+# Subtest: no candidate records empty first entry without generating anyone or retrying; unregistered/invalid receipts reject
+ok 37 - no candidate records empty first entry without generating anyone or retrying; unregistered/invalid receipts reject
+  ---
+  duration_ms: 260.8478
+  type: 'test'
+  ...
+# Subtest: existing rival may also become teammate without overwriting rival history
+ok 38 - existing rival may also become teammate without overwriting rival history
+  ---
+  duration_ms: 190.5685
+  type: 'test'
+  ...
+# Subtest: college E94 requires exact formation/registration receipt; never synthesizes HS notice in college
+ok 39 - college E94 requires exact formation/registration receipt; never synthesizes HS notice in college
+  ---
+  duration_ms: 241.2061
+  type: 'test'
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 39
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 83181.8041

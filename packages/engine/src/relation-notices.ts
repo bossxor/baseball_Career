@@ -1,3 +1,5 @@
+import {assertTeamEntryRelationReceipt,teamEntryFormationKey} from './team-teammates.js';
+import type {PlayerRelationship,RelationMilestone} from './relationships.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {createWorldEvent,enqueueWorldEvent,eventDefinition,resolveEventChoice} from './events.js';
@@ -6,19 +8,27 @@ import {canonicalJson} from './game.js';
 import {schoolYearEndBasis} from './college-entry.js';
 import {careerRelationshipListView} from './relationship-history.js';
 
+function formationContext(source:HighSchoolCareer,relation:PlayerRelationship,formation:RelationMilestone){
+ if(formation.evidenceKey===JSON.stringify(['hs-formation',source.world.worldKey,relation.type]))return {competitionKey:'HS',seasonKey:source.previousSeasons?.find(a=>(a.world.leagueKey??'HS')==='HS')?.world.seasonKey??source.world.seasonKey,registrationKey:source.previousSeasons?.find(a=>(a.world.leagueKey??'HS')==='HS')?.world.protagonistSchoolId??source.world.protagonistSchoolId};
+ const matches=(source.relationships?.teamEntries??[]).filter(r=>r.relationKey===relation.relationKey && teamEntryFormationKey(r)===formation.evidenceKey);
+ if(matches.length!==1)return null;const entry=matches[0]!;assertTeamEntryRelationReceipt(entry);
+ if(entry.worldKey!==source.world.worldKey || entry.primaryPlayerKey!==relation.primaryPlayerKey || entry.otherPlayerKey!==relation.otherPlayerKey || relation.type!=='TEAMMATE' || entry.worldDay!==formation.worldDay)throw new RangeError('INVALID_RELATION_FORMATION_NOTICE');
+ return {competitionKey:entry.leagueKey,seasonKey:entry.seasonKey,registrationKey:entry.teamId};
+}
+
 /** E94 is a NOTICE. It lives outside blocking tasks and never stops an E01/E02/E84 or pending game. */
 export function queueRelationFormationNotices(source:HighSchoolCareer,worldDay:number):readonly EventInstance[]|undefined {
  if(!Number.isSafeInteger(worldDay) || worldDay<0)throw new RangeError('INVALID_RELATION_NOTICE_DAY');
  let notices=source.relationNotices?structuredClone([...source.relationNotices]):undefined;
- // College/pro transitions need their own formation receipts, not a guessed replay of old HS notices.
- if(source.world.leagueKey==='COLLEGE' || !source.relationships)return notices;
+ if(!source.relationships)return notices;
  for(const relation of source.relationships.relations){
   const formation=relation.milestones.find(m=>m.stage==='FORMED' && (m.kind===undefined || m.kind==='FORMATION'));
-  if(!formation || formation.worldDay>worldDay || formation.evidenceKey!==JSON.stringify(['hs-formation',source.world.worldKey,relation.type]))continue;
+  if(!formation || formation.worldDay>worldDay)continue;
+  const context=formationContext(source,relation,formation);if(!context || context.seasonKey!==source.world.seasonKey || context.competitionKey!==(source.world.leagueKey??'HS'))continue;
   if(relation.primaryPlayerKey!==source.world.protagonistKey || !Object.hasOwn(source.world.players,relation.otherPlayerKey) || relation.otherPlayerKey===relation.primaryPlayerKey || !['RIVAL','TEAMMATE'].includes(relation.type) || relation.normalPairKey!==JSON.stringify([relation.primaryPlayerKey,relation.otherPlayerKey].sort()) || relation.relationKey!==JSON.stringify([relation.type,relation.normalPairKey]))throw new RangeError('INVALID_RELATION_FORMATION_NOTICE');
   const event=createWorldEvent({definitionId:'E94',worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,
    evidence:{version:1,type:'RELATIONS',fields:{relationId:relation.relationKey,creationReceiptId:formation.evidenceKey}},
-   resume:{worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,phase:'SEASON_PROGRESS',competitionKey:'HS',registrationKey:source.world.protagonistSchoolId,sourceRevision:source.revision},
+   resume:{worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,phase:context.competitionKey==='HS'?'SEASON_PROGRESS':source.phaseContext.phase,competitionKey:context.competitionKey,registrationKey:context.registrationKey,sourceRevision:source.revision},
    sourceSequence:source.events.length+(notices?.length??0)+1,worldDay:formation.worldDay});
   notices=enqueueWorldEvent(notices??[],event).events;
  }
@@ -30,7 +40,8 @@ function noticeSource(source:HighSchoolCareer,event:EventInstance){
  enqueueWorldEvent([],event);
  const relation=source.relationships?.relations.find(r=>r.relationKey===event.evidence.fields.relationId);
  const formation=relation?.milestones.find(m=>m.evidenceKey===event.evidence.fields.creationReceiptId && m.stage==='FORMED' && (m.kind===undefined || m.kind==='FORMATION'));
- if(event.definitionId!=='E94' || event.worldKey!==source.world.worldKey || !relation || relation.primaryPlayerKey!==source.world.protagonistKey || relation.otherPlayerKey===relation.primaryPlayerKey || !['RIVAL','TEAMMATE'].includes(relation.type) || relation.normalPairKey!==JSON.stringify([relation.primaryPlayerKey,relation.otherPlayerKey].sort()) || relation.relationKey!==JSON.stringify([relation.type,relation.normalPairKey]) || !formation || formation.evidenceKey!==JSON.stringify(['hs-formation',source.world.worldKey,relation.type]) || formation.worldDay!==event.occurredWorldDay || event.resume.competitionKey!=='HS' || canonicalJson(event.evidence.fields)!==canonicalJson({relationId:relation.relationKey,creationReceiptId:formation.evidenceKey}))throw new RangeError('INVALID_RELATION_NOTICE_SOURCE');
+ const context=relation && formation?formationContext(source,relation,formation):null;
+ if(event.definitionId!=='E94' || event.worldKey!==source.world.worldKey || !relation || relation.primaryPlayerKey!==source.world.protagonistKey || relation.otherPlayerKey===relation.primaryPlayerKey || !['RIVAL','TEAMMATE'].includes(relation.type) || relation.normalPairKey!==JSON.stringify([relation.primaryPlayerKey,relation.otherPlayerKey].sort()) || relation.relationKey!==JSON.stringify([relation.type,relation.normalPairKey]) || !formation || !context || context.seasonKey!==event.seasonKey || context.registrationKey!==event.resume.registrationKey || formation.worldDay!==event.occurredWorldDay || event.resume.competitionKey!==context.competitionKey || canonicalJson(event.evidence.fields)!==canonicalJson({relationId:relation.relationKey,creationReceiptId:formation.evidenceKey}))throw new RangeError('INVALID_RELATION_NOTICE_SOURCE');
  return relation;
 }
 
