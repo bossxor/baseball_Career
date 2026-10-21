@@ -6,6 +6,7 @@ import {createSeasonCalendar} from './season-calendar.js';
 import {schoolYearEndRepertoire} from './college-entry.js';
 import {emptyPitchXpLedger} from './pitch-xp.js';
 import {assertKboRecruitmentWorld} from './kbo-draft.js';
+import {retireKboOverAgeNpcs} from './kbo-retirement.js';
 
 export type KboTransitionBlocker='SEASON_NOT_IN_REVIEW'|'POSTSEASON_NOT_COMPLETE'|'SEASON_NOT_CLOSED'|'OPEN_EVENT'|'PENDING_GAME'|'GROWTH_NOT_FINALIZED'|'MAX_AGE_REACHED'|'CONTRACT_DECISION_REQUIRED';
 /** 14: 45 is the last playable age in every league. */
@@ -59,11 +60,14 @@ export interface KboSeasonArchive {seasonKey:string;seasonClose:NonNullable<KboC
 export function startNextKboSeason(source:KboCareer,expectedRevision:number):KboCareer {
  assertCareerRevision(source,expectedRevision);
  const stage=stageKboAgeAndContracts(source),target=stage.targetSeasonKey,key=source.protagonistKey;
- // ponytail: no Y04 supply yet; an over-age NPC stops the transition instead of shrinking a roster.
- if(stage.overAge.length)throw new RangeError('KBO_PLAYER_SUPPLY_REQUIRED');
  if(Object.values(source.records.games).some(g=>g.scope.seasonKey===target))throw new RangeError('NEXT_SEASON_RECORDS_ALREADY_EXIST');
  const career=structuredClone(source),world=career.world,renewal=acceptedRenewal(source)!;
+ // ponytail: Y04 retirement only; the 15 rookie supply (100 prospects/draft) is not created yet.
+ const retired=retireKboOverAgeNpcs(world,stage.overAge,source.world.seasonKey);
+ if(retired.length)career.retiredPlayers=[...(source.retiredPlayers??[]),...retired];
+ for(const r of retired)delete career.health.injuries[r.playerKey];
  for(const [k,s] of Object.entries(stage.players)){
+  if(!Object.hasOwn(world.players,k))continue;
   world.players[k]={...world.players[k]!,age:s.age,fatigue:0};
   const c=world.contracts[k]!;
   // ponytail: AI clubs re-sign every expiring NPC for 1 year at the same salary until the 05/115 offseason (O05) exists.

@@ -3,6 +3,7 @@ import type {KboPostseason} from './kbo-postseason.js';
 import type {KboSeasonClose} from './kbo-year-end.js';
 import type {KboRenewal} from './kbo-renewal.js';
 import type {KboSeasonArchive} from './kbo-year-transition.js';
+import type {KboRetiredPlayer} from './kbo-retirement.js';
 import type {KboCallupReview} from './kbo-callup.js';
 import type {KboSeasonProgress} from './kbo-progress.js';
 import type {SchoolDayLedger} from './high-school-day.js';
@@ -43,7 +44,7 @@ export interface KboCareer {
  records:RecordLedger;health:HealthLedger;seasonGrowth:SeasonGrowthLedger;development:CareerDevelopmentLedger;
  traits?:CareerTraitLedger;relationships:RelationshipLedger;events:readonly EventInstance[];relationNotices:readonly EventInstance[];
  styleUsedWindows:readonly string[];planHistory:HighSchoolCareer['planHistory'];
- days?:SchoolDayLedger;callupReviews?:readonly KboCallupReview[];aiRosterReviews?:readonly string[];seasonClose?:KboSeasonClose;renewal?:KboRenewal;proSeasons?:readonly KboSeasonArchive[];postseason?:KboPostseason;campNotices?:readonly EventInstance[];preseasonPlan?:KboPreseasonPlan;openingRoster?:KboOpeningRoster;competitionSchedule?:KboSeasonSchedule;
+ days?:SchoolDayLedger;callupReviews?:readonly KboCallupReview[];aiRosterReviews?:readonly string[];seasonClose?:KboSeasonClose;renewal?:KboRenewal;proSeasons?:readonly KboSeasonArchive[];retiredPlayers?:readonly KboRetiredPlayer[];postseason?:KboPostseason;campNotices?:readonly EventInstance[];preseasonPlan?:KboPreseasonPlan;openingRoster?:KboOpeningRoster;competitionSchedule?:KboSeasonSchedule;
 }
 function entryKey(ready:KboAmateurYearEnd){return JSON.stringify(['kbo-season-entry',ready.receiptKey]);}
 /** One atomic result consumes the frozen reservation once. Replaying the same old source is deterministic;

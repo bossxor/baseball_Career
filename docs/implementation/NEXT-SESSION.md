@@ -23,6 +23,8 @@
 
 ## 현재 체크포인트
 
+- M2-BJ(2026-10-21): 45세 NPC 은퇴(retireKboOverAgeNpcs, startNextKboSeason 안). 집중20/20·lint·타입·build·골든, 전체 check는 다음 묶음에서. 다음: 15 신인100명 공급·AI 드래프트, AI 재계약/FA, 내 선수 최종/강제 은퇴. [M2-BJ](M2-BJ-KBO-NPC-RETIREMENT.md).
+
 - M2-BI(2026-10-21): 프로 NPC 연말 자연 성장·노쇠(closeKboSeason, seasonClose.npcGrowth). 다음: Y04 45세 최종 은퇴·강제 은퇴 검토·신인 공급, AI 오프시즌 재계약/FA, 재계약 거절/내 은퇴(S09). [M2-BI](M2-BI-KBO-NPC-YEAR-END.md).
 
 - M2-BH(2026-10-21): 비FA 재계약 E30(offerKboRenewal/acceptKboRenewal, 08 산식)·Y02 stageKboAgeAndContracts·startNextKboSeason. 연속 경로: closeKboSeason→offerKboRenewal→acceptKboRenewal→startNextKboSeason→(PRESEASON_SETUP) confirmKboPreseasonPlan→…. 다음: 프로 NPC 연말 성장/노쇠, Y04 은퇴(45세·강제 은퇴 검토)·신인 공급, AI 오프시즌 재계약/FA, 재계약 거절/내 은퇴(S09). [M2-BH](M2-BH-KBO-RENEWAL-NEXT-SEASON.md).

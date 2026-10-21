@@ -139,3 +139,13 @@ test('season close grows and ages every pro NPC once from the natural PRO period
  assert.ok(keys.filter(k=>c.world.players[k]!.age<=24).some(k=>npc[k]!.gainedUnits>0));
  assert.throws(()=>closeKboSeason(after,after.revision,true));
 });
+
+test('NPCs who played at 45 retire at activation and only their first team is reselected',()=>{
+ const c=renewed(closed()),other=c.world.clubs.find(x=>x.id!==c.protagonistClubId)!,starter=other.firstTeam.find(k=>c.world.players[k]!.kind==='HITTER')!;
+ c.world.players[starter]={...c.world.players[starter]!,age:45};const untouched=c.world.clubs.filter(x=>x.id!==other.id).map(x=>[...x.firstTeam]);
+ const n=startNextKboSeason(c,c.revision),club=n.world.clubs.find(x=>x.id===other.id)!;
+ assert.deepEqual(n.retiredPlayers!.map(r=>[r.playerKey,r.clubId,r.reason,r.lastSeasonKey]),[[starter,other.id,'MAX_AGE',c.world.seasonKey]]);
+ assert.ok(!Object.hasOwn(n.world.players,starter) && !Object.hasOwn(n.world.contracts,starter) && !club.roster.includes(starter));
+ assert.equal(club.firstTeam.length,28);assert.equal(club.roster.length,other.roster.length-1);
+ assert.deepEqual(n.world.clubs.filter(x=>x.id!==other.id).map(x=>[...x.firstTeam]),untouched);
+});

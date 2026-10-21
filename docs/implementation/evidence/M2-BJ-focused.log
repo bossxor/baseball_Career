@@ -1,0 +1,90 @@
+
+> again-playball@0.1.0 typecheck
+> npm run build --workspace @playball/rules && npm run typecheck --workspaces --if-present && tsc -p tsconfig.tests.json
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/rules@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/api@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/web@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+✔ the postseason plays real games day by day to one champion and returns to SEASON_REVIEW (12398.3754ms)
+✔ postseason home runs feed career trait evidence after each postseason day (1397.2261ms)
+✔ year transition readiness lists every Y01 blocker until postseason, growth, season close and my contract are done (7057.7217ms)
+✔ E30 renewal offer follows 08 once and closes only through the accepted domain commit (7800.2437ms)
+✔ Y02 stages age+1 and contract years for every pro player without changing the source (7827.4355ms)
+✔ next season activates every player at once and the second pro season opens and plays (18394.4816ms)
+✔ season close grows and ages every pro NPC once from the natural PRO period (5966.0245ms)
+✔ NPCs who played at 45 retire at activation and only their first team is reselected (6583.0322ms)
+✔ start needs the confirmed plan, roster and schedule and cannot repeat (3658.6851ms)
+✔ one real opening day: both leagues play and close once; chunk limits resume exactly from JSON (9237.9688ms)
+✔ a stale revision, wrong phase or bad day count is rejected without changing the career (1256.3403ms)
+✔ three days close in order; pitcher books never roll back and each club plays at most once per league and day (8622.6702ms)
+✔ recovery of my own player stops progress with HEALTH_CHANGE after the day closes (3378.6664ms)
+✔ official records that cross a trait threshold unlock it once after a pro day close (6425.3214ms)
+✔ pro season close settles T16 once from official starter outs and labels the qualifying league (1011.538ms)
+✔ advancing past the last scheduled day enters SEASON_REVIEW and settles the season once (2053.4405ms)
+✔ pro AI context reads the last completed 20-game block per club and league, and season pitching outs (1141.9866ms)
+✔ pro growth pays one PRO period over the growth calendar from official appearances, once (4202.6194ms)
+✔ growth rejects wrong phase, missing day receipts, double-booked days and rehabilitation appearances (4395.3851ms)
+✔ pro year-end needs paid growth and an explicit unused-training forfeit, then ages once and closes health (1633.6364ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 68289.1534
+
+> again-playball@0.1.0 build
+> npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/api && npm run build --workspace @playball/web
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/api@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/web@0.1.0 build
+> tsc -p tsconfig.json --noEmit && vite build
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 17 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                     0.57 kB │ gzip:  0.38 kB
+dist/assets/BlackHanSans-Regular-B0-nbKIc.ttf     998.42 kB
+dist/assets/NotoSansKR-Variable-k7NQXPol.ttf   10,414.58 kB
+dist/assets/index-D7SWy-NU.css                      1.44 kB │ gzip:  0.73 kB
+dist/assets/index-qvV079z_.js                     221.56 kB │ gzip: 69.64 kB
+
+✓ built in 285ms
+
+> again-playball@0.1.0 verify:engine
+> node --import tsx scripts/verify-engine.mjs
+
+PASS: compiled engine in independent Node process matches source golden SHA256 113761f605145c79179c912841754bf060e25d42856822f847074317288d5c92
+EXIT=0
