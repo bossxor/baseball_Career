@@ -3,8 +3,32 @@ import {assertCareerRevision} from './high-school-career.js';
 import {validateSeasonGrowthLedger,finalizeSeasonGrowth} from './growth-ledger.js';
 import {closeSeasonHealth} from './health.js';
 import {applySeasonTraining} from './training.js';
+import {naturalGrowthBudgetUnits,applyGrowthBudget,applyAging} from './development.js';
 
-export interface KboSeasonClose {receiptKey:string;seasonKey:string;sourceRevision:number;agingLossUnits:number;trainingForfeited:boolean}
+export interface KboSeasonClose {receiptKey:string;seasonKey:string;sourceRevision:number;agingLossUnits:number;trainingForfeited:boolean;npcGrowth?:Record<string,{budgetUnits:number;gainedUnits:number;agingLossUnits:number}>}
+/** Every pro NPC at year end (college M2-Z pattern): one natural PRO growth period over the whole growth calendar from
+ * official regular KBO+FUTURES appearances and club-game rehab days, then full-season aging once. No in-season NPC
+ * training exists, so the season-start snapshot is the closing player. */
+function closeKboNpcSeasons(source:KboCareer){
+ const season=source.world.seasonKey,W=source.world.calendar.growthDays.length,appear=new Map<string,number>(),games=Object.values(source.records.games).filter(g=>g.scope.seasonKey===season && g.scope.phase==='REGULAR' && (g.scope.leagueKey==='KBO' || g.scope.leagueKey==='FUTURES'));
+ const clubDays=new Map<string,Set<number>>();
+ for(const g of games){
+  for(const team of Object.keys(g.teams)){if(!clubDays.has(team))clubDays.set(team,new Set());clubDays.get(team)!.add(g.worldDay);}
+  for(const [k,line] of Object.entries(g.batting))if(source.world.players[k]?.kind==='HITTER')appear.set(k,(appear.get(k)??0)+line.PA);
+  for(const [k,line] of Object.entries(g.pitching))if(source.world.players[k]?.kind==='PITCHER')appear.set(k,(appear.get(k)??0)+line.outs);
+ }
+ const players={...source.world.players},results:NonNullable<KboSeasonClose['npcGrowth']>={};
+ for(const club of source.world.clubs){const days=clubDays.get(club.id)??new Set<number>();for(const k of club.roster){
+  if(k===source.protagonistKey)continue;const player=players[k]!;
+  let rehab=Object.hasOwn(source.health.injuries,k) && source.health.injuries[k]!.seasonKey!==season && !source.days!.days.some(d=>d.result.injured.includes(k)),rehabDays=0;
+  for(const d of source.days!.days){if(days.has(d.day) && rehab)rehabDays++;if(d.result.injured.includes(k))rehab=true;if(d.result.recovered.includes(k))rehab=false;}
+  const budgetUnits=naturalGrowthBudgetUnits(player,W,[{startDay:0,endDay:W,levelSeasonDays:W,level:'PRO',appearances:appear.get(k)??0,pitcherRole:player.position==='RP'?'RP':player.position==='CP'?'CP':'SP',rehabRatio:days.size?rehabDays/days.size:0,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER',difficulty:source.difficulty,beneficiary:false}}]);
+  const grown=applyGrowthBudget(player,budgetUnits),aged=applyAging(grown.player,1),sum=(p:typeof player)=>Object.values(p.abilities).reduce((a,b)=>a+b,0);
+  players[k]=aged.player;results[k]={budgetUnits,gainedUnits:grown.gains.reduce((a,b)=>a+b,0),agingLossUnits:sum(grown.player)-sum(aged.player)};
+ }}
+ return {players,results};
+}
+
 
 /** Explicit pro year-end for one world season (same order as the school closure): the regular-season growth must
  * already be paid, an unused special training must be explicitly forfeited, then aging is applied once over the
@@ -26,7 +50,8 @@ export function closeKboSeason(source:KboCareer,expectedRevision:number,forfeitU
  }
  const closed=finalizeSeasonGrowth(career.world.players[key]!,career.seasonGrowth,W);
  career.world.players[key]=closed.player;career.seasonGrowth=closed.ledger;career.health=closeSeasonHealth(career.health,season).ledger;
+ const npc=closeKboNpcSeasons(career);career.world.players=npc.players;
  career.revision++;
- career.seasonClose={receiptKey:JSON.stringify(['kbo-season-close',career.world.worldKey,season]),seasonKey:season,sourceRevision:career.revision,agingLossUnits:closed.lossUnits,trainingForfeited:forfeited};
+ career.seasonClose={receiptKey:JSON.stringify(['kbo-season-close',career.world.worldKey,season]),seasonKey:season,sourceRevision:career.revision,agingLossUnits:closed.lossUnits,trainingForfeited:forfeited,npcGrowth:npc.results};
  return career;
 }

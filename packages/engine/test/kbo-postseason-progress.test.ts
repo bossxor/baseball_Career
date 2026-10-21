@@ -126,3 +126,16 @@ test('next season activates every player at once and the second pro season opens
  assert.equal((g.campNotices??[]).filter(e=>e.seasonKey===target).length,0);
  assert.equal(offerKboRenewal(closed(),closed().revision).renewal!.seasonKey,target);
 });
+
+test('season close grows and ages every pro NPC once from the natural PRO period',()=>{
+ let c=startKboPostseason(review(),review().revision);
+ for(let i=0;i<400;i++){const out=advanceKboPostseason(c,c.revision);c=out.career;if(out.stopReason==='POSTSEASON_COMPLETE')break;}
+ c=settleKboSeasonGrowth(c,c.revision).career;const after=closeKboSeason(c,c.revision,true),npc=after.seasonClose!.npcGrowth!;
+ const keys=Object.keys(c.world.players).filter(k=>k!==c.protagonistKey);
+ assert.equal(Object.keys(npc).length,keys.length);assert.ok(!Object.hasOwn(npc,c.protagonistKey));
+ const sum=(p:{abilities:Record<string,number>})=>Object.values(p.abilities).reduce((a,b)=>a+b,0);
+ for(const k of keys)assert.equal(sum(after.world.players[k]!),sum(c.world.players[k]!)+npc[k]!.gainedUnits-npc[k]!.agingLossUnits);
+ const old=keys.filter(k=>c.world.players[k]!.age>=34);assert.ok(old.length>0 && old.some(k=>npc[k]!.agingLossUnits>0));
+ assert.ok(keys.filter(k=>c.world.players[k]!.age<=24).some(k=>npc[k]!.gainedUnits>0));
+ assert.throws(()=>closeKboSeason(after,after.revision,true));
+});
