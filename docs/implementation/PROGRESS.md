@@ -24,6 +24,33 @@
 
 ## 현재 위치
 
+### 2026-10-22 정리: 프로(KBO) 커리어는 엔진에서 시즌 반복 → 은퇴까지 닫혀 있다 (M2-AV ~ M2-BM)
+
+한 시즌 경로(KboCareer, packages/engine):
+`startKboRegularSeason` → `advanceKboCareer`(두 리그 일마감·E43/E41/E09 창·건강 정지·특성·AI 라인업/승강) → SEASON_REVIEW(T16) → `startKboPostseason`/`advanceKboPostseason` → `settleKboSeasonGrowth` → `closeKboSeason`(내 성장 확정·노쇠·**모든 NPC 성장·노쇠**) → `offerKboRenewal`/`acceptKboRenewal`(E30, 08 산식) → `kboYearTransitionReadiness` → `startNextKboSeason`(Y02 나이·계약 전원 원자 적용, 45세 NPC 은퇴, **신인 100명 드래프트**, 새 달력/원장, PRESEASON_SETUP 복귀) → 같은 프리시즌→개막 명단→일정→정규 시즌 명령 반복.
+끝: `requestKboRetirement`/`resolveKboRetirement`(E36) 또는 `retireKboAtMaxAge`(45세) → 은퇴 영수증·E37·ARCHIVED. `kboForcedRetirementReview`는 35세+·2시즌 미달 판정(읽기).
+
+| 단계 | 내용 | 문서 |
+|---|---|---|
+| M2-AV~AX | 두 리그 일마감, 정규 시즌 진행, 건강 정지·특성 | [AV](M2-AV-KBO-DAY-CLOSE.md) [AW](M2-AW-KBO-SEASON-PROGRESS.md) [AX](M2-AX-KBO-DAY-HOOKS.md) |
+| M2-AY~AZ | T16·시즌 성장 정산, E43/E41 창, 리그별 라인업 | [AY](M2-AY-KBO-SEASON-CLOSE-GROWTH.md) [AZ](M2-AZ-KBO-WINDOWS-LINEUP.md) |
+| M2-BA~BB | 콜업 E09, AI 정기 승강 | [BA/BB](M2-BA-KBO-CALLUP.md) |
+| M2-BC | 연말 마감(노쇠·건강·강화 포기) | [BC](M2-BC-KBO-SEASON-CLOSE.md) |
+| M2-BD~BF | 포스트시즌 대진·실제 경기·일마감 후처리 | [BD](M2-BD-KBO-POSTSEASON-BRACKET.md) [BE/BF](M2-BE-KBO-POSTSEASON-GAMES.md) |
+| M2-BG | 연도 전환 시작 조건(Y01) | [BG](M2-BG-KBO-YEAR-READINESS.md) |
+| M2-BH | 재계약 E30, Y02 staging, 다음 시즌 원자 활성화 | [BH](M2-BH-KBO-RENEWAL-NEXT-SEASON.md) |
+| M2-BI | 프로 NPC 연말 성장·노쇠 | [BI](M2-BI-KBO-NPC-YEAR-END.md) |
+| M2-BJ | 45세 NPC 은퇴 | [BJ](M2-BJ-KBO-NPC-RETIREMENT.md) |
+| M2-BK | 내 선수 은퇴(E36·45세) | [BK](M2-BK-KBO-MY-RETIREMENT.md) |
+| M2-BL | 강제 은퇴 검토 조건(읽기) | [BL](M2-BL-KBO-FORCED-RETIREMENT-REVIEW.md) |
+| M2-BM | 신인 100명 공급·AI 드래프트 | [BM](M2-BM-KBO-ROOKIE-SUPPLY.md) |
+
+검증 상태: 마지막 전체 `npm run check`는 M2-BM 413/413(M2-BL 포함, 1035.1초).
+
+아직 없는 것(다음 후보): AI 오프시즌(재계약·방출·FA 풀80·정원 정리, 05/115), 재도전 사건·E30 거절(프로 재도전 3회)·강제 은퇴 실패 은퇴, 은퇴 페이지/기록실(15), 72 Y05 국제창·대학 일정 / Y06 AI 전략 / Y08 전체 불변 검사, 저장소 job/staging(DB)·API·화면(엔진 순수 상태까지만), 병역/미국/MLB 경로의 프로 연결, 내 선수 강등 정책(설계 불명).
+
+### 이전 항목
+
 - M2-AL(2026-10-21): 고교 관계 형성을 E94 알림·S42 이동/읽음으로 연결했다. 필수 과제/진행과 분리하고 실제 pending 경기 재개·연말 봉인 후 대학 진입을 보존한다. 관련38/38(23.09초). 사용자 확정으로 고교25명 고정·후보0은 NO_CANDIDATE이며 추가 생성은 폐기했다. [M2-AL](M2-AL-RELATION-FORMATION-NOTICES.md).
 
 - 이어받은 M2-AK: 동료20경기 milestone(39/39), M2-AJ: S42 관계 상세, M2-AI: 고교 관계 형성(전체305/305), M2-AH: 히든 최초 해금 알림, M2-AG: T16 시즌 근거/도감까지 구현됐다. 아래 상세 링크/로그를 보존한다. 최신 항목이 중간에 있었던 요약을 이 위치에서 정리했다.
@@ -88,12 +115,16 @@
 1. Git 상태와 최신 remote를 확인하고 미커밋 변경을 보존합니다.
 2. 이 문서와 DEVELOPMENT, 설계 14/91/120 및 작업 분야 원문을 읽습니다.
 3. Node 24에서 `npm ci`, `npm run check`, `npm run smoke`를 실행합니다.
-4. NEXT-SESSION의 최신 체크포인트와 M2-AL/AK 인계·실제 코드를 먼저 읽습니다. 미국 자격은 스카우트 평가65·유효오퍼·권리이며30게임일 기한/예약까지 M2-AE/AF에 연결됐습니다. 고교25명 고정/후보0 정상 상태, 고교 부분 정산·세계2~10월/고교2~6월, 공식 기록 scope와 원본 보존을 유지합니다. 프로 실제 시즌 활성화와 NPC 진로/관계 재회는 아직 후속입니다.
+4. NEXT-SESSION의 최신 체크포인트와 M2-AL/AK 인계·실제 코드를 먼저 읽습니다. 미국 자격은 스카우트 평가65·유효오퍼·권리이며30게임일 기한/예약까지 M2-AE/AF에 연결됐습니다. 고교25명 고정/후보0 정상 상태, 고교 부분 정산·세계2~10월/고교2~6월, 공식 기록 scope와 원본 보존을 유지합니다. 프로 시즌 반복·은퇴까지는 위 "현재 위치" 요약(M2-AV~BM)이 최신이며, NPC 진로/관계 재회와 AI 오프시즌은 후속입니다.
 5. 마일스톤별로 이 문서에 완료 범위·실제 검사 결과·실패·다음 작업을 기록하고 커밋·푸시합니다.
 
 ## 구현과 설계의 경계
 
 rules의 6능력/집중4개/종합 반올림/최고값 반감은35·90을 따르고 기용 역할 가중은41입니다. 경기 코어·선수 육성·고교 실제 기록 기반 특성 해금·부분 성장·대학 입학/첫 등록과 대학 정규 진행까지 연결했습니다. 전체 보관 선수 가져오기, 전체 커리어/다시즌 전이, 관계 근거 특성, KBO 실제 모집·계약/졸업 후 진로, 인증·Neon 저장·APK는 미구현입니다. 대학 학년 결과/진급과4학년 졸업은 M2-Y/Z/AA에서 구현했습니다. 설계 fixture 전체의 NOT_EXECUTED 상태를 일괄 구현 PASS로 바꾸지 않습니다.
+
+## M2-BM 프로 신인 100명 공급·AI 드래프트 — 부분 완료
+
+연도 전환에서 매년 신인 100명(고정 묶음 키)을 역순위 10라운드로 지명, 1년 최저연봉. AI 방출/FA는 다음. [M2-BM](M2-BM-KBO-ROOKIE-SUPPLY.md).
 
 ## M2-BL 강제 은퇴 검토 조건 — 부분 완료
 

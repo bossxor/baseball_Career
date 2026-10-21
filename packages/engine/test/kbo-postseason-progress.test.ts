@@ -148,7 +148,7 @@ test('NPCs who played at 45 retire at activation and only their first team is re
  const n=startNextKboSeason(c,c.revision),club=n.world.clubs.find(x=>x.id===other.id)!;
  assert.deepEqual(n.retiredPlayers!.map(r=>[r.playerKey,r.clubId,r.reason,r.lastSeasonKey]),[[starter,other.id,'MAX_AGE',c.world.seasonKey]]);
  assert.ok(!Object.hasOwn(n.world.players,starter) && !Object.hasOwn(n.world.contracts,starter) && !club.roster.includes(starter));
- assert.equal(club.firstTeam.length,28);assert.equal(club.roster.length,other.roster.length-1);
+ assert.equal(club.firstTeam.length,28);assert.equal(club.roster.length,other.roster.length-1+n.rookieDrafts![0]!.picks.filter(p=>p.clubId===other.id).length);
  assert.deepEqual(n.world.clubs.filter(x=>x.id!==other.id).map(x=>[...x.firstTeam]),untouched);
 });
 
@@ -179,4 +179,16 @@ test('forced retirement review needs age 35 and two closed seasons under the fir
   batting:{[key]:{PA:50,AB:50,BB:0,HBP:0,K:0,H:0,TB:0,HR:0,R:0,RBI:0,twoB:0,threeB:0,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0}},pitching:{},
   batterSplits:{[key]:{L:{PA:0,AB:0,H:0,BB:0,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0},R:{PA:50,AB:50,H:0,BB:0,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0}}},pitcherSplits:{},matchups:{}};
  assert.equal(kboForcedRetirementReview(vet).required,c.world.players[key]!.kind==='PITCHER');
+});
+
+test('year transition drafts a 100-player rookie class in reverse standings order, with room and budget respected',()=>{
+ const c=renewed(closed()),n=startNextKboSeason(c,c.revision),target=n.world.seasonKey,d=n.rookieDrafts!;
+ assert.equal(d.length,1);assert.equal(d[0]!.seasonKey,target);assert.equal(d[0]!.classKeys.length,100);
+ const picks=d[0]!.picks;assert.ok(picks.length>0 && picks.length<=100);assert.equal(new Set(picks.map(p=>p.playerKey)).size,picks.length);
+ // Round 1 follows one fixed club order that every round repeats (skips only for full clubs).
+ const order=picks.filter(p=>p.round===1).map(p=>p.clubId);assert.equal(order.length,n.world.clubs.length);
+ for(let r=2;r<=10;r++)assert.deepEqual(picks.filter(p=>p.round===r).map(p=>p.clubId),order.filter(id=>picks.some(p=>p.round===r&&p.clubId===id)));
+ for(const club of n.world.clubs){assert.ok(club.roster.length<=60);const mine=picks.filter(p=>p.clubId===club.id);assert.ok(mine.every(p=>club.roster.includes(p.playerKey)));}
+ for(const p of picks){const k=n.world.contracts[p.playerKey]!;assert.equal(k.years,1);assert.equal(k.annualSalaryWon,30_000_000);assert.equal(k.seasonKey,target);assert.equal(n.world.players[p.playerKey]!.age,18);}
+ const again=startNextKboSeason(c,c.revision);assert.deepEqual(again.rookieDrafts,n.rookieDrafts);assert.deepEqual(again.world.clubs,n.world.clubs);
 });

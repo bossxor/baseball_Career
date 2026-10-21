@@ -7,6 +7,8 @@ import {schoolYearEndRepertoire} from './college-entry.js';
 import {emptyPitchXpLedger} from './pitch-xp.js';
 import {assertKboRecruitmentWorld} from './kbo-draft.js';
 import {retireKboOverAgeNpcs} from './kbo-retirement.js';
+import {draftKboRookieClass} from './kbo-supply.js';
+import {leagueStandings} from './standings.js';
 
 export type KboTransitionBlocker='SEASON_NOT_IN_REVIEW'|'POSTSEASON_NOT_COMPLETE'|'SEASON_NOT_CLOSED'|'OPEN_EVENT'|'PENDING_GAME'|'GROWTH_NOT_FINALIZED'|'MAX_AGE_REACHED'|'CONTRACT_DECISION_REQUIRED';
 /** 14: 45 is the last playable age in every league. */
@@ -62,7 +64,7 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
  const stage=stageKboAgeAndContracts(source),target=stage.targetSeasonKey,key=source.protagonistKey;
  if(Object.values(source.records.games).some(g=>g.scope.seasonKey===target))throw new RangeError('NEXT_SEASON_RECORDS_ALREADY_EXIST');
  const career=structuredClone(source),world=career.world,renewal=acceptedRenewal(source)!;
- // ponytail: Y04 retirement only; the 15 rookie supply (100 prospects/draft) is not created yet.
+ // Y04: 45-year retirements first, then the yearly rookie class (15) after the new contracts are in place.
  const retired=retireKboOverAgeNpcs(world,stage.overAge,source.world.seasonKey);
  if(retired.length)career.retiredPlayers=[...(source.retiredPlayers??[]),...retired];
  for(const r of retired)delete career.health.injuries[r.playerKey];
@@ -75,6 +77,8 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
   const book=schoolYearEndRepertoire(source,k);if(book)world.repertoires[k]={...structuredClone(book),seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};
  }
  for(const club of world.clubs){club.paidSalaryWon=0;club.reservedSalaryWon=club.roster.reduce((n,k)=>n+world.contracts[k]!.annualSalaryWon,0);}
+ const standings=leagueStandings(source.records,{seasonKey:source.world.seasonKey,leagueKey:'KBO',phase:'REGULAR'},world.clubs.map(c=>c.id),source.world.seed,source.world.worldKey);
+ career.rookieDrafts=[...(source.rookieDrafts??[]),draftKboRookieClass(world,target,standings.map(s=>s.teamKey).reverse(),source.difficulty)];
  world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target));assertKboRecruitmentWorld(world);
  const player=world.players[key]!,club=world.clubs.find(c=>c.id===career.protagonistClubId)!;
  const archive:KboSeasonArchive={seasonKey:source.world.seasonKey,seasonClose:source.seasonClose!,postseason:source.postseason!,days:source.days!,seasonGrowth:source.seasonGrowth,planHistory:source.planHistory,...(source.openingRoster?{openingRoster:source.openingRoster}:{}),...(source.callupReviews?{callupReviews:source.callupReviews}:{})};

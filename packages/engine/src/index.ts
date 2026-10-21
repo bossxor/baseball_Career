@@ -82,4 +82,5 @@ export * from './kbo-postseason-progress.js';
 export * from './kbo-year-transition.js';
 export * from './kbo-renewal.js';
 export * from './kbo-retirement.js';
+export * from './kbo-supply.js';
 export * from './kbo-retirement-review.js';
