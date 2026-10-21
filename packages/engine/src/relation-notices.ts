@@ -1,3 +1,4 @@
+import type {RelationshipHistorySource} from './relationship-history.js';
 import {assertKboAmateurYearEnd} from './kbo-entry.js';
 import {assertTeamEntryRelationReceipt,teamEntryFormationKey} from './team-teammates.js';
 import type {PlayerRelationship,RelationMilestone} from './relationships.js';
@@ -42,7 +43,7 @@ export function queueRelationFormationNotices(source:RelationFormationNoticeSour
  return notices;
 }
 
-function noticeSource(source:HighSchoolCareer,event:EventInstance){
+function noticeSource(source:RelationFormationNoticeSource,event:EventInstance){
  // Reuse the event contract validation without changing its state or revision.
  enqueueWorldEvent([],event);
  const relation=source.relationships?.relations.find(r=>r.relationKey===event.evidence.fields.relationId);
@@ -53,7 +54,8 @@ function noticeSource(source:HighSchoolCareer,event:EventInstance){
 }
 
 /** Public unread projection. No receipt snapshots, abilities, P, seed, RNG or phase-resume state. */
-export function unreadRelationNotices(source:HighSchoolCareer){
+export type RelationNoticeReadSource=RelationFormationNoticeSource & RelationshipHistorySource;
+export function unreadRelationNotices(source:RelationNoticeReadSource){
  const seen=new Set<string>();
  return (source.relationNotices??[]).flatMap(event=>{
   if(seen.has(event.eventKey))throw new RangeError('DUPLICATE_RELATION_NOTICE');seen.add(event.eventKey);
@@ -63,17 +65,24 @@ export function unreadRelationNotices(source:HighSchoolCareer){
  });
 }
 
+export interface RelationNoticeReadInput {eventKey:string;eventVersion:number;command:string}
+/** Pure notice transition shared by roots; caller owns revision/phase/seal validation and persistence. */
+export function prepareRelationNoticeRead(source:RelationFormationNoticeSource,input:RelationNoticeReadInput){
+ const matches=(source.relationNotices??[]).filter(e=>e.eventKey===input.eventKey);if(matches.length!==1)throw new RangeError('UNKNOWN_RELATION_NOTICE');
+ const event=matches[0]!,relation=noticeSource(source,event);
+ const selected=resolveEventChoice(event,input.eventVersion,input.command,null,{worldKey:source.world.worldKey,seasonKey:event.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['OPEN_RELATIONS']});
+ return {notices:structuredClone(source.relationNotices!.map(e=>e.eventKey===event.eventKey?selected.event:e)),navigation:{...selected.navigation!,relationKey:relation.relationKey}};
+}
+
 /** OPEN_RELATIONS acknowledges just this notice. It never restores an obsolete event phase or applies game effects. */
 export function resolveCareerRelationNotice(source:HighSchoolCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number;command:string}) {
  assertCareerRevision(source,expectedRevision);
  if(source.kboYearEnd)assertKboAmateurYearEnd(source);
  if(source.collegeYearEnd && (source.collegeYearEnd.sourceRevision!==source.revision || source.collegeYearEnd.sourceBasis!==schoolYearEndBasis(source)))throw new RangeError('STALE_RELATION_NOTICE_YEAR_END');
- const matches=(source.relationNotices??[]).filter(e=>e.eventKey===input.eventKey);if(matches.length!==1)throw new RangeError('UNKNOWN_RELATION_NOTICE');
- const event=matches[0]!,relation=noticeSource(source,event);
- const selected=resolveEventChoice(event,input.eventVersion,input.command,null,{worldKey:source.world.worldKey,seasonKey:event.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['OPEN_RELATIONS']});
- const career=structuredClone(source);career.relationNotices=career.relationNotices!.map(e=>e.eventKey===event.eventKey?selected.event:e);career.revision++;
+ const selected=prepareRelationNoticeRead(source,input);
+ const career=structuredClone(source);career.relationNotices=selected.notices;career.revision++;
  // The full-career seal includes notice metadata. Verify it first, then carry that seal across this read-state-only commit.
  if(career.collegeYearEnd)career.collegeYearEnd={...career.collegeYearEnd,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};
  if(career.kboYearEnd)career.kboYearEnd={...career.kboYearEnd,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};
- return {career,navigation:{...selected.navigation!,relationKey:relation.relationKey}};
+ return {career,navigation:selected.navigation};
 }

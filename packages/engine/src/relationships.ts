@@ -56,7 +56,7 @@ const rate=(num:number,den:number)=>den>0?(num/den).toFixed(3).replace(/^0/,''):
 export interface RelationScope {leagueKey:string;phase:'REGULAR'|'POSTSEASON'|'INTERNATIONAL';seasonKey?:string}
 /** S42 detail (60): same-kind pairs never pretend to face each other; they compare their own lines in games both played.
  * Cross-kind pairs show only real batter-vs-pitcher plate appearances. Leagues/phases never mix. Read-only. */
-export function relationDetailView(source:{world:HighSchoolWorld;records:RecordLedger;relationships?:RelationshipLedger},relationKey:string,scope:RelationScope) {
+export function relationDetailView(source:{world:Pick<HighSchoolWorld,'players'>;records:RecordLedger;relationships?:RelationshipLedger},relationKey:string,scope:RelationScope) {
  const relation=source.relationships?.relations.find(r=>r.relationKey===relationKey);if(!relation)throw new RangeError('UNKNOWN_RELATION');
  const me=source.world.players[relation.primaryPlayerKey],other=source.world.players[relation.otherPlayerKey];
  if(!me || !other)return {relationKey,mode:'UNAVAILABLE' as const,reason:'OTHER_NOT_IN_CURRENT_WORLD' as const};

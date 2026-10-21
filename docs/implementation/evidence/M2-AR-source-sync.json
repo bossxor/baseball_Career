@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "files": 7,
+  "differences": 0,
+  "rows": [
+    {
+      "path": "packages/engine/src/relationship-history.ts",
+      "working": "7584e5526f6e60ba75a89dfced80200513ddedb49821c518c7067b47e3acbdfe",
+      "source": "7584e5526f6e60ba75a89dfced80200513ddedb49821c518c7067b47e3acbdfe"
+    },
+    {
+      "path": "packages/engine/src/relationships.ts",
+      "working": "d1548490737d31ce6110e9a54ba5e6c57a8d1d4c5201df61590a54ac93e8a833",
+      "source": "d1548490737d31ce6110e9a54ba5e6c57a8d1d4c5201df61590a54ac93e8a833"
+    },
+    {
+      "path": "packages/engine/src/relation-notices.ts",
+      "working": "0b8c20d1ab03acd8a4a9ca8c50792072cb7e8d5609cf5bc267718c590e30ffc8",
+      "source": "0b8c20d1ab03acd8a4a9ca8c50792072cb7e8d5609cf5bc267718c590e30ffc8"
+    },
+    {
+      "path": "packages/engine/src/kbo-relations.ts",
+      "working": "20b17e372d0139ea7b0762b534f4ce6bf7d6fa8dd4378dbffa7d8dfb2d1e619c",
+      "source": "20b17e372d0139ea7b0762b534f4ce6bf7d6fa8dd4378dbffa7d8dfb2d1e619c"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "working": "48d083788a3c7dbdb88d20b14acbe2f6481d1bab685329087ec3259c68eb6305",
+      "source": "48d083788a3c7dbdb88d20b14acbe2f6481d1bab685329087ec3259c68eb6305"
+    },
+    {
+      "path": "packages/engine/test/fixtures.ts",
+      "working": "c45ba6a9678f9840fb95280220c9c4e2ed3188cdb7089e09ef1ce9a8b5556462",
+      "source": "c45ba6a9678f9840fb95280220c9c4e2ed3188cdb7089e09ef1ce9a8b5556462"
+    },
+    {
+      "path": "packages/engine/test/kbo-relations.test.ts",
+      "working": "a10798a3c35a901336422815fef1e9e1146c576975ae2e2921d8978b6d12d63d",
+      "source": "a10798a3c35a901336422815fef1e9e1146c576975ae2e2921d8978b6d12d63d"
+    }
+  ]
+}

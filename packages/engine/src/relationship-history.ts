@@ -1,11 +1,12 @@
-import type {HighSchoolWorld} from './high-school-world.js';
+import type {RegisteredTeamRelationWorld} from './team-teammates.js';
 import type {RecordLedger} from './records.js';
 import {relationDetailView} from './relationships.js';
 import type {RelationshipLedger,PlayerRelationship,RelationScope} from './relationships.js';
 
+export type RelationHistoryWorld=RegisteredTeamRelationWorld & {seed:string};
 export interface RelationshipHistorySource {
- world:HighSchoolWorld;records:RecordLedger;relationships?:RelationshipLedger;
- previousSeasons?:readonly {world:HighSchoolWorld}[];
+ world:RelationHistoryWorld;records:RecordLedger;relationships?:RelationshipLedger;
+ previousSeasons?:readonly {world:RelationHistoryWorld}[];
 }
 const STAGES=['FORMED','SEPARATED','REUNITED_OPPONENT','REUNITED_TEAM','RETIRED'];
 function validateRelation(source:RelationshipHistorySource,r:PlayerRelationship):void {

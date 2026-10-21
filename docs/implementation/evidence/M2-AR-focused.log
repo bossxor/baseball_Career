@@ -1,0 +1,286 @@
+TAP version 13
+# Subtest: HITTER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+ok 1 - HITTER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+  ---
+  duration_ms: 5207.7862
+  type: 'test'
+  ...
+# Subtest: PITCHER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+ok 2 - PITCHER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+  ---
+  duration_ms: 5568.2673
+  type: 'test'
+  ...
+# Subtest: pitcher earned book/weights survive entry but annual XP/learning/window state starts fresh
+ok 3 - pitcher earned book/weights survive entry but annual XP/learning/window state starts fresh
+  ---
+  duration_ms: 2786.8705
+  type: 'test'
+  ...
+# Subtest: new pro teammate/formation notice append to HS history from actual club registration, not guaranteed first team
+ok 4 - new pro teammate/formation notice append to HS history from actual club registration, not guaranteed first team
+  ---
+  duration_ms: 2155.7386
+  type: 'test'
+  ...
+# Subtest: team-game injury carries without healing across new calendar; old school injuries stay only in archive
+ok 5 - team-game injury carries without healing across new calendar; old school injuries stay only in archive
+  ---
+  duration_ms: 2690.758
+  type: 'test'
+  ...
+# Subtest: stale/unsigned/unclosed/changed sealed source and wrong root reject without duplicate roster/salary or age
+ok 6 - stale/unsigned/unclosed/changed sealed source and wrong root reject without duplicate roster/salary or age
+  ---
+  duration_ms: 3036.0529
+  type: 'test'
+  ...
+# Subtest: entry public DTO omits raw roots/P/abilities/seed/RNG; restored entry projects identically and malformed registration rejects
+ok 7 - entry public DTO omits raw roots/P/abilities/seed/RNG; restored entry projects identically and malformed registration rejects
+  ---
+  duration_ms: 2921.9887
+  type: 'test'
+  ...
+# Subtest: HITTER actual entry queues one nonblocking E08 and exposes only public preseason choices
+ok 8 - HITTER actual entry queues one nonblocking E08 and exposes only public preseason choices
+  ---
+  duration_ms: 4610.2503
+  type: 'test'
+  ...
+# Subtest: PITCHER actual entry queues one nonblocking E08 and exposes only public preseason choices
+ok 9 - PITCHER actual entry queues one nonblocking E08 and exposes only public preseason choices
+  ---
+  duration_ms: 4385.4493
+  type: 'test'
+  ...
+# Subtest: E08 focus choice commits only four-focus plan; KEEP_FOCUS acknowledges without a new saved plan
+ok 10 - E08 focus choice commits only four-focus plan; KEEP_FOCUS acknowledges without a new saved plan
+  ---
+  duration_ms: 4040.4751
+  type: 'test'
+  ...
+# Subtest: focus validates four distinct own-kind axes and preseason style permits one actual change, no ability/RNG bonus
+ok 11 - focus validates four distinct own-kind axes and preseason style permits one actual change, no ability/RNG bonus
+  ---
+  duration_ms: 3325.2416
+  type: 'test'
+  ...
+# Subtest: pitcher weight command reuses one PRE configuration chance, unchanged weights consume none and hitters reject
+ok 12 - pitcher weight command reuses one PRE configuration chance, unchanged weights consume none and hitters reject
+  ---
+  duration_ms: 5825.8956
+  type: 'test'
+  ...
+# Subtest: learning reserves10 base XP without instant mastery; free slot keeps configuration chance and second plan rejects
+ok 13 - learning reserves10 base XP without instant mastery; free slot keeps configuration chance and second plan rejects
+  ---
+  duration_ms: 3059.185
+  type: 'test'
+  ...
+# Subtest: controlled four learned pitches: replacement and learning atomically consume the same PRE chance
+ok 14 - controlled four learned pitches: replacement and learning atomically consume the same PRE chance
+  ---
+  duration_ms: 3184.7961
+  type: 'test'
+  ...
+# Subtest: confirm freezes the selected plan/snapshots once, pays no growth and does not require reading E08
+ok 15 - confirm freezes the selected plan/snapshots once, pays no growth and does not require reading E08
+  ---
+  duration_ms: 3431.7659
+  type: 'test'
+  ...
+# Subtest: confirmed pitcher learning/configuration snapshot remains valid but further edits cannot reopen PRE
+ok 16 - confirmed pitcher learning/configuration snapshot remains valid but further edits cannot reopen PRE
+  ---
+  duration_ms: 2888.3491
+  type: 'test'
+  ...
+# Subtest: stale revision/event version, foreign camp evidence and invalid focus reject without state/RNG changes
+ok 17 - stale revision/event version, foreign camp evidence and invalid focus reject without state/RNG changes
+  ---
+  duration_ms: 5741.2583
+  type: 'test'
+  ...
+# Subtest: legacy AP state is read-only until a write catches up one camp notice; duplicate and changed source reject
+ok 18 - legacy AP state is read-only until a write catches up one camp notice; duplicate and changed source reject
+  ---
+  duration_ms: 6942.2351
+  type: 'test'
+  ...
+# Subtest: HITTER pro list retains historical school and active club teammate identities without invented transfers/stages
+ok 19 - HITTER pro list retains historical school and active club teammate identities without invented transfers/stages
+  ---
+  duration_ms: 4120.9797
+  type: 'test'
+  ...
+# Subtest: PITCHER pro list retains historical school and active club teammate identities without invented transfers/stages
+ok 20 - PITCHER pro list retains historical school and active club teammate identities without invented transfers/stages
+  ---
+  duration_ms: 4051.5078
+  type: 'test'
+  ...
+# Subtest: historical relation details reuse existing official scoped records; never fabricate pro games or new player registration
+ok 21 - historical relation details reuse existing official scoped records; never fabricate pro games or new player registration
+  ---
+  duration_ms: 3675.1536
+  type: 'test'
+  ...
+# Subtest: both historical and new pro E94 preserve names and ACK only their notice while the confirmed plan remains sealed
+ok 22 - both historical and new pro E94 preserve names and ACK only their notice while the confirmed plan remains sealed
+  ---
+  duration_ms: 4072.724
+  type: 'test'
+  ...
+# Subtest: stale revision/version, wrong command or foreign/duplicate relation evidence reject without changes
+ok 23 - stale revision/version, wrong command or foreign/duplicate relation evidence reject without changes
+  ---
+  duration_ms: 4131.7967
+  type: 'test'
+  ...
+# Subtest: unknown historical player remains unresolved; malformed ownership, foreign history and changed confirmed plan reject
+ok 24 - unknown historical player remains unresolved; malformed ownership, foreign history and changed confirmed plan reject
+  ---
+  duration_ms: 9401.407
+  type: 'test'
+  ...
+# Subtest: absence of relations/notices on restored old pro state is empty and querying never creates a new relation
+ok 25 - absence of relations/notices on restored old pro state is empty and querying never creates a new relation
+  ---
+  duration_ms: 2798.3484
+  type: 'test'
+  ...
+# Subtest: preseason confirmation persists two E94 notices for pinned rival/teammate without blocking progress
+ok 26 - preseason confirmation persists two E94 notices for pinned rival/teammate without blocking progress
+  ---
+  duration_ms: 422.6477
+  type: 'test'
+  ...
+# Subtest: opening a notice acknowledges only that notice and navigates to its relation; gameplay phase and RNG stay unchanged
+ok 27 - opening a notice acknowledges only that notice and navigates to its relation; gameplay phase and RNG stay unchanged
+  ---
+  duration_ms: 417.9052
+  type: 'test'
+  ...
+# Subtest: stale revision/version, wrong command, foreign or rewritten relation evidence reject atomically
+ok 28 - stale revision/version, wrong command, foreign or rewritten relation evidence reject atomically
+  ---
+  duration_ms: 429.0566
+  type: 'test'
+  ...
+# Subtest: unread notices do not stop real games; acknowledging both does not alter first-day results/health/trait evidence
+ok 29 - unread notices do not stop real games; acknowledging both does not alter first-day results/health/trait evidence
+  ---
+  duration_ms: 9960.1442
+  type: 'test'
+  ...
+# Subtest: legacy HS saves catch up once at day close; absence of relations and college worlds creates no fictitious notice
+ok 30 - legacy HS saves catch up once at day close; absence of relations and college worlds creates no fictitious notice
+  ---
+  duration_ms: 3595.2258
+  type: 'test'
+  ...
+# Subtest: notice acknowledgment during a pending task leaves that task and its saved resume untouched
+ok 31 - notice acknowledgment during a pending task leaves that task and its saved resume untouched
+  ---
+  duration_ms: 168.8967
+  type: 'test'
+  ...
+# Subtest: notice acknowledgment during a real pending game preserves the exact cursor/RNG and resumed game result
+ok 32 - notice acknowledgment during a real pending game preserves the exact cursor/RNG and resumed game result
+  ---
+  duration_ms: 7581.8455
+  type: 'test'
+  ...
+# Subtest: approved25-player rule: no eligible rival produces no rival notice or extra NPC, while the teammate notice remains
+ok 33 - approved25-player rule: no eligible rival produces no rival notice or extra NPC, while the teammate notice remains
+  ---
+  duration_ms: 112.0444
+  type: 'test'
+  ...
+# Subtest: acknowledging a notice after sealed year end preserves the valid seal and college activation; corrupt seals never get repaired
+ok 34 - acknowledging a notice after sealed year end preserves the valid seal and college activation; corrupt seals never get repaired
+  ---
+  duration_ms: 1008.9921
+  type: 'test'
+  ...
+# Subtest: college S42 keeps archived HS rival/teammate identity and last known registration without inferring a new stage
+ok 35 - college S42 keeps archived HS rival/teammate identity and last known registration without inferring a new stage
+  ---
+  duration_ms: 1371.6811
+  type: 'test'
+  ...
+# Subtest: archived same-kind identity reuses real scoped contributions, not invented meetings; zero scopes remain empty
+ok 36 - archived same-kind identity reuses real scoped contributions, not invented meetings; zero scopes remain empty
+  ---
+  duration_ms: 944.289
+  type: 'test'
+  ...
+# Subtest: unknown history stays as an unresolved reference, not retirement or an invented player
+ok 37 - unknown history stays as an unresolved reference, not retirement or an invented player
+  ---
+  duration_ms: 681.87
+  type: 'test'
+  ...
+# Subtest: current identity takes priority and the latest archived snapshot is chosen for historical identity
+ok 38 - current identity takes priority and the latest archived snapshot is chosen for historical identity
+  ---
+  duration_ms: 549.4295
+  type: 'test'
+  ...
+# Subtest: foreign history and malformed relationship ownership reject instead of leaking another world
+ok 39 - foreign history and malformed relationship ownership reject instead of leaking another world
+  ---
+  duration_ms: 668.0368
+  type: 'test'
+  ...
+# Subtest: persisted E94 notices keep the archived name after college entry without recreating the formation event
+ok 40 - persisted E94 notices keep the archived name after college entry without recreating the formation event
+  ---
+  duration_ms: 709.4827
+  type: 'test'
+  ...
+# Subtest: career start forms one same-team teammate and one eligible rival, distinct and deterministic
+ok 41 - career start forms one same-team teammate and one eligible rival, distinct and deterministic
+  ---
+  duration_ms: 199.2514
+  type: 'test'
+  ...
+# Subtest: no eligible rival is a normal empty state; teammate still forms
+ok 42 - no eligible rival is a normal empty state; teammate still forms
+  ---
+  duration_ms: 49.3081
+  type: 'test'
+  ...
+# Subtest: confirmCareerPlayer stores relations once; list view shows identity only
+ok 43 - confirmCareerPlayer stores relations once; list view shows identity only
+  ---
+  duration_ms: 145.0365
+  type: 'test'
+  ...
+# Subtest: same-kind detail compares own lines only in games both played; leagues and phases stay separate
+ok 44 - same-kind detail compares own lines only in games both played; leagues and phases stay separate
+  ---
+  duration_ms: 23025.9394
+  type: 'test'
+  ...
+# Subtest: cross-kind detail sums only real batter-vs-pitcher plate appearances
+ok 45 - cross-kind detail sums only real batter-vs-pitcher plate appearances
+  ---
+  duration_ms: 25781.0098
+  type: 'test'
+  ...
+# Subtest: teammate gets one COEXIST_20 milestone on the 20th shared team game day only
+ok 46 - teammate gets one COEXIST_20 milestone on the 20th shared team game day only
+  ---
+  duration_ms: 88.5504
+  type: 'test'
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 46
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 52115.4623
