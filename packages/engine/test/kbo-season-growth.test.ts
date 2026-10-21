@@ -5,6 +5,7 @@ import {confirmKboOpeningRoster} from '../src/kbo-opening-roster.js';
 import {confirmKboSeasonSchedule} from '../src/kbo-schedule.js';
 import {startKboRegularSeason} from '../src/kbo-progress.js';
 import {settleKboSeasonGrowth} from '../src/kbo-season-growth.js';
+import {closeKboSeason} from '../src/kbo-year-end.js';
 import {naturalGrowthBudgetUnits} from '../src/development.js';
 import type {KboCareer} from '../src/kbo-career-entry.js';
 import type {GameContribution} from '../src/records.js';
@@ -42,4 +43,17 @@ test('growth rejects wrong phase, missing day receipts, double-booked days and r
  assert.throws(()=>settleKboSeasonGrowth(doubled,doubled.revision),/DOUBLE_BOOKED_GROWTH_DAY/);
  const rehab=reviewed({[d+2]:4},c=>{c.days!.days=c.days!.days.map(x=>x.day===d?{...x,result:{injured:[c.protagonistKey],recovered:[]}}:x);});
  assert.throws(()=>settleKboSeasonGrowth(rehab,rehab.revision),/INVALID_GROWTH_APPEARANCES/);
+});
+
+test('pro year-end needs paid growth and an explicit unused-training forfeit, then ages once and closes health',()=>{
+ const c=reviewed({}),season=c.world.seasonKey;
+ assert.throws(()=>closeKboSeason(c,c.revision,true),/KBO_SEASON_GROWTH_NOT_SETTLED/);
+ const paid=settleKboSeasonGrowth(c,c.revision).career;
+ assert.throws(()=>closeKboSeason(paid,paid.revision),/TRAINING_FORFEIT_REQUIRED/);
+ const closed=closeKboSeason(paid,paid.revision,true);
+ assert.equal(closed.seasonGrowth.finalized,true);assert.ok(closed.health.closedSeasons.includes(season));
+ assert.ok(closed.development.trainingUsedSeasons.includes(season));assert.equal(closed.seasonClose!.trainingForfeited,true);assert.equal(closed.seasonClose!.seasonKey,season);
+ assert.equal(closed.revision,paid.revision+1);
+ assert.throws(()=>closeKboSeason(closed,closed.revision,true),/INVALID_KBO_SEASON_CLOSE/);
+ assert.throws(()=>closeKboSeason({...paid,phaseContext:{phase:'PRESEASON_SETUP'}} as KboCareer,paid.revision,true),/INVALID_KBO_SEASON_CLOSE/);
 });

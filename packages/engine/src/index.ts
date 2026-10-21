@@ -76,3 +76,4 @@ export * from './kbo-progress.js';
 export * from './kbo-season-growth.js';
 export * from './kbo-windows.js';
 export * from './kbo-callup.js';
+export * from './kbo-year-end.js';

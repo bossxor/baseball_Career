@@ -1,0 +1,595 @@
+
+> again-playball@0.1.0 check
+> npm run lint && npm run typecheck && npm test && npm run build && npm run verify:engine && npm run verify:events && npm run verify:design
+
+
+> again-playball@0.1.0 lint
+> eslint packages apps scripts
+
+
+> again-playball@0.1.0 typecheck
+> npm run build --workspace @playball/rules && npm run typecheck --workspaces --if-present && tsc -p tsconfig.tests.json
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/rules@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/api@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/web@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> again-playball@0.1.0 test
+> npm run build --workspace @playball/rules && tsx --test packages/rules/test/*.test.ts packages/engine/test/*.test.ts apps/api/test/*.test.ts
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+✔ liveness exposes no save, secret or database readiness claim (78.8452ms)
+✔ game writes are unavailable until their authenticated pipeline exists (2.1948ms)
+M1 fixed100 HITTER/balanced: {"batting":{"AVG":0.2562396006655574,"OBP":0.3266382124027115,"SLG":0.4021075984470327,"OPS":0.7287458108497442},"pitching":{"ERA":3.4512055109070032,"WHIP":1.4316877152698049,"K9":8.039035591274397},"HRperPA":0.025608837559628422}
+M1 fixed100 HITTER/slugger: {"batting":{"AVG":0.2425183512140034,"OBP":0.3056418219461698,"SLG":0.4209486166007905,"OPS":0.7265904385469604},"pitching":{"ERA":3.843786071565987,"WHIP":1.5086571758368603,"K9":8.321277414390151},"HRperPA":0.03674948240165631}
+M1 fixed100 HITTER/sluggerDefense: {"batting":{"AVG":0.2432732316227462,"OBP":0.3005128205128205,"SLG":0.4099861303744799,"OPS":0.7104989508873004},"pitching":{"ERA":2.991048116374487,"WHIP":1.2700484893696382,"K9":7.684073107049608},"HRperPA":0.03435897435897436}
+M1 fixed100 HITTER/contact: {"batting":{"AVG":0.30008002133902373,"OBP":0.3776091081593928,"SLG":0.4387836756468392,"OPS":0.8163927838062319},"pitching":{"ERA":4.022832817337461,"WHIP":1.5208978328173375,"K9":8.045665634674922},"HRperPA":0.023244781783681213}
+M1 fixed100 HITTER/onBase: {"batting":{"AVG":0.2580101180438449,"OBP":0.3502338173763229,"SLG":0.37155705452501403,"OPS":0.721790871901337},"pitching":{"ERA":4.18368932038835,"WHIP":1.5448543689320389,"K9":8.283495145631068},"HRperPA":0.01968988432192961}
+M1 fixed100 HITTER/onBaseDefense: {"batting":{"AVG":0.24188540784645782,"OBP":0.32359607151850917,"SLG":0.3609935083262772,"OPS":0.6845895798447863},"pitching":{"ERA":2.963539688568173,"WHIP":1.2783896695784276,"K9":7.6703380174705655},"HRperPA":0.019390581717451522}
+M1 fixed100 HITTER/defenseRunning: {"batting":{"AVG":0.21740362811791383,"OBP":0.28117677688102055,"SLG":0.33900226757369617,"OPS":0.6201790444547167},"pitching":{"ERA":2.7857943925233646,"WHIP":1.2280373831775702,"K9":7.701308411214954},"HRperPA":0.020567560531111688}
+M1 fixed100 HITTER/fiveTool: {"batting":{"AVG":0.2705028233396074,"OBP":0.33341523341523344,"SLG":0.428609841355203,"OPS":0.7620250747704365},"pitching":{"ERA":3.338218714768884,"WHIP":1.3878241262683202,"K9":7.772266065388951},"HRperPA":0.030466830466830467}
+M1 fixed100 PITCHER/balanced: {"batting":{"AVG":0.2562396006655574,"OBP":0.3266382124027115,"SLG":0.4021075984470327,"OPS":0.7287458108497442},"pitching":{"ERA":3.4512055109070032,"WHIP":1.4316877152698049,"K9":8.039035591274397},"HRperPA":0.025608837559628422}
+M1 fixed100 PITCHER/velocity: {"batting":{"AVG":0.26513284031772116,"OBP":0.3363838733613653,"SLG":0.41112024102985484,"OPS":0.7475041143912202},"pitching":{"ERA":2.657077971233914,"WHIP":1.2024981074943224,"K9":8.655942467827403},"HRperPA":0.025476131585456346}
+M1 fixed100 PITCHER/command: {"batting":{"AVG":0.26225020531070353,"OBP":0.32943518288131374,"SLG":0.41171639748152206,"OPS":0.7411515803628358},"pitching":{"ERA":3.1734499809813617,"WHIP":1.3282616964625333,"K9":8.236591860022822},"HRperPA":0.02687235630753919}
+M1 fixed100 PITCHER/stuffCommand: {"batting":{"AVG":0.26715686274509803,"OBP":0.33571957541347813,"SLG":0.4215686274509804,"OPS":0.7572882028644585},"pitching":{"ERA":1.8450336071695295,"WHIP":1.0877520537714713,"K9":8.610156833457804},"HRperPA":0.02863490496173784}
+M1 fixed100 PITCHER/innings: {"batting":{"AVG":0.2584238373712058,"OBP":0.32769502650845744,"SLG":0.4046226677805625,"OPS":0.7323176942890199},"pitching":{"ERA":4.3321678321678325,"WHIP":1.597902097902098,"K9":7.8671328671328675},"HRperPA":0.02726584195910124}
+M1 fixed100 PITCHER/composure: {"batting":{"AVG":0.2595862068965517,"OBP":0.32647427854454203,"SLG":0.4148965517241379,"OPS":0.7413708302686799},"pitching":{"ERA":3.580053496369889,"WHIP":1.4742071073748566,"K9":7.8719908291937335},"HRperPA":0.029109159347553325}
+✔ 41 fixed100-seed matchup HITTER/balanced: legal games and conserved records (1442.5044ms)
+✔ 41 fixed100-seed matchup HITTER/slugger: legal games and conserved records (1446.4713ms)
+✔ 41 fixed100-seed matchup HITTER/sluggerDefense: legal games and conserved records (1199.4018ms)
+✔ 41 fixed100-seed matchup HITTER/contact: legal games and conserved records (1091.4201ms)
+✔ 41 fixed100-seed matchup HITTER/onBase: legal games and conserved records (934.7746ms)
+✔ 41 fixed100-seed matchup HITTER/onBaseDefense: legal games and conserved records (1054.7778ms)
+✔ 41 fixed100-seed matchup HITTER/defenseRunning: legal games and conserved records (921.0114ms)
+✔ 41 fixed100-seed matchup HITTER/fiveTool: legal games and conserved records (1008.2385ms)
+✔ 41 fixed100-seed matchup PITCHER/balanced: legal games and conserved records (919.1011ms)
+✔ 41 fixed100-seed matchup PITCHER/velocity: legal games and conserved records (864.246ms)
+✔ 41 fixed100-seed matchup PITCHER/command: legal games and conserved records (948.8688ms)
+✔ 41 fixed100-seed matchup PITCHER/stuffCommand: legal games and conserved records (938.0836ms)
+✔ 41 fixed100-seed matchup PITCHER/innings: legal games and conserved records (928.9432ms)
+✔ 41 fixed100-seed matchup PITCHER/composure: legal games and conserved records (894.3731ms)
+✔ 67: range narrows monotonically across observations; lower facility does not widen (27.0539ms)
+✔ 67: A99/100 bounds, outward display rounding and impossible prior fail safely (2.3462ms)
+✔ 67: registered game19→20, duplicate no-op, transfer preserves progress, maxstage4 (2.6112ms)
+✔ 67: public allowlist and AI midpoint use ranges, not raw hidden potential (1.656ms)
+✔ observations carry across calendar years, with duplicate/reused/backward evidence rejected (0.926ms)
+✔ 34: B45 means50% selection, round10 40%+round9 10%, no draw for preview (1.0785ms)
+✔ 34: all boundary probabilities sum1, no fake round when no slot; tied likely rounds preserved (3.8487ms)
+✔ 34: fixed-seed draft empirical distribution matches preview and consumes exactly one draw (114.1385ms)
+✔ 34: US direct requires scout65, actual valid offer and eligibility; no overall gate (1.9689ms)
+✔ US scouting: average growth does not qualify automatically; exceptional role/performance can, without raw P (46.8863ms)
+✔ REC01: loaded walk forces exactly one run, preserving pitcher responsibility (7.9406ms)
+✔ REC12: HBP has the same forced advancement but stays a distinct outcome upstream (0.538ms)
+✔ REC02: two-out extra-home failure keeps the hit, prior score, and blocks following runners (0.663ms)
+✔ 41: running below60 or outs below2 makes no extra-home draw (0.4885ms)
+✔ REC03: successful double play gives two outs at0/1 outs and never four at2 outs (0.8681ms)
+✔ REC05: non-HR walkoff stops at necessary run; HR credits everyone (0.4518ms)
+✔ REC06/07: automatic runner flag and inherited responsibility survive advancement (0.5662ms)
+✔ all8 outcomes ×8 occupancy masks ×3 outs preserve runners/outs/input (15.1637ms)
+✔ HS career route→actual KBO preview→fixed result→signed next-season contract preserves all school books/records/budgets (4393.5929ms)
+✔ declined draft keeps college admission legal, archives assessment and forbids later silent pro-world reroll (1178.8734ms)
+✔ career stale revision/player/world/book/program or event version cannot partially sign; repeat prepare cannot reroll (1803.0832ms)
+✔ college E75 graduation uses college-adjusted B and next-season reservation, without repeating degree or advancing age (102044.9835ms)
+✔ fresh hitter sees six exact-progress general traits and two name/hint-only hidden cards (135.1394ms)
+✔ pitcher sees pitcher traits only; unlocked hidden trait reveals condition, effects and evidence (74.6428ms)
+✔ HS hitter/pitcher: fixed US offers appear only with valid offers; signing preserves school history/age/growth and reserves minors (2241.9819ms)
+✔ average career hides US; declining all offers keeps domestic/college route and never rerolls (937.4624ms)
+✔ career US: forged score input, world/player drift, stale revision/event cannot sign partially (694.8071ms)
+✔ competing KBO/US signing closes the alternative without two active contracts or loss of old recruitment history (1888.5189ms)
+✔ career offer deadline is30 game days; clock persists, expiry hides US and preserves domestic/college paths (953.4427ms)
+✔ college graduation US comparison uses adjusted college performance and never reopens E75 or college enrollment (96078.5231ms)
+✔ college preseason preserves carried abilities, validates registration/revision/focus and uses a fresh PRE window (1144.1559ms)
+▶ actual college216-game season: resume, annual windows, scoped records, observations and pitcher XP
+  ✔ safe chunk and pause preserve pending game exactly across JSON resume (2907.9371ms)
+  ✔ college skips career-start focus, opens fresh E43 at16 and permits one annual training (171927.4495ms)
+  ✔ new E41 at24 permits MID once and records the college boundary (120539.4477ms)
+  ✔ all216 FINAL college games and48 per team preserve HS records and archive; observation48→96 (443561.3254ms)
+  ✔ actual college regular216→cup4/5 games preserves regular totals and observation denominator (63219.443ms)
+  ✔ actual college year growth uses regular outs/plans and acknowledges one academic year without repeating training (2261.423ms)
+  ✔ actual played college year seals NPC growth and activates academic year2 without changing official records (2509.2052ms)
+✔ actual college216-game season: resume, annual windows, scoped records, observations and pitcher XP (807481.7468ms)
+✔ college trait cursor resets by season, HS regular BB never counts toward a college-season threshold (162.4045ms)
+✔ college emergency uses school floors/age/namespace and saved RNG, release preserves identities (211.2977ms)
+✔ cup freezes top4 and regular basis, admits only a complete closed season and rejects duplicate/stale start (9357.4403ms)
+✔ semifinal upsets seed final venues high/low/high; two wins cancel third final, split requires it (7823.1445ms)
+✔ actual AI cup for a nonqualifying protagonist: bounded JSON replay, whole-date health, separate records/no extra growth (16664.4595ms)
+✔ postseason-only appearance can unlock T06 from career cup HR without increasing regular PA (7779.9483ms)
+✔ year-end requires explicit unused-training forfeit, closes growth/health once and pays no new growth (599.2627ms)
+✔ atomic college activation carries identity/abilities and archives HS, new calendar/growth ledger/age only once (947.4321ms)
+✔ college profiles respect school admission floors and preserve protagonist independently of school choice (426.4804ms)
+✔ pitcher carry keeps book/weights, opens fresh annual XP budget and refuses unfinished learning (465.3477ms)
+✔ mild team-game recovery carries across calendar rest; major season injury closes at year-end (770.04ms)
+✔ stale revision/ready snapshot/receipt and changed admission never publish a partial new world (914.2955ms)
+✔ reading general trait summary after college year-end reseals metadata and preserves enrollment activation (481.0223ms)
+▶ four-year college journey ends in blocking E75 and an evidence-bound graduated route
+  ✔ only the fourth completed year attaches one E75 with current enrollment/year/result evidence (95.0318ms)
+  ✔ graduation commits only the degree/route: growth, health, training, age and official records stay intact (3121.5062ms)
+  ✔ stale revision/event version and changed evaluation/event source reject without partial graduation (7182.3688ms)
+  ✔ pre-E75 fourth-year saves attach the same legal task; earlier grades and repeated attachment reject (13876.8005ms)
+✔ four-year college journey ends in blocking E75 and an evidence-bound graduated route (116487.8045ms)
+✔ college PRE plan anchors growth, regular days pay once, cup adds no entitlement and academic result increments only completion (11980.8321ms)
+✔ carried HS mild injury starts college rehabilitation and recovery reduces only subsequent dates (11543.2062ms)
+✔ cup-only recovery is audited while growth remains restricted to regular dates (11322.2616ms)
+✔ legacy empty college ledger rebases only PRE plan fields and still rejects changed abilities, incomplete cup and stale revision (11087.5257ms)
+✔ college year close requires explicit training forfeit, audits NPC growth/caps and seals once without repaying own growth (12966.6241ms)
+✔ next year retains continuing students/P/earned books, replaces only graduates with freshmen, archives cup/result and opens annual budgets (16374.7062ms)
+✔ continuing NPC medium injury carries; major injury closes, archive keeps original year-end evidence (23952.2425ms)
+✔ unfinished learning, invalid result, stale revision and changed sealed state never publish a partial next year (12105.7414ms)
+✔ continuing enrollment advances1→2→3→4 with persistent students and blocks a fifth year pending graduation route (92525.3938ms)
+✔ REC08: starter14 outs yields W to best later relief; 15 outs keeps starter W (14.1417ms)
+✔ REC09: BS and W may coexist; that pitcher cannot also receive HLD/SV (3.4402ms)
+✔ save3-inning exception and tie no W/L/SV (2.3296ms)
+✔ 08: hold does not require the final winning side, including a tied game (5.3285ms)
+✔ 79: shared versioned graphemes, NFC, trim, emoji and control/name limits (5.5915ms)
+✔ 35/79: every archetype starts with six axes, sum300, age18 and immutable source input (6.5454ms)
+✔ 42/85: normal/hard protagonist A/P and RNG match; cheat only fixes P100 (2.7704ms)
+✔ 79/119: left-handed restricted positions, wrong axes, missing pitcher form and extra hitter form reject (0.8722ms)
+✔ 42: G10 gives focused2 each and unselected .6667/1.3333 with exact total (1.8167ms)
+✔ 42: capped weights redistribute all units; all-capped discards; no overshoot (11.018ms)
+✔ 42/85: actual period budget10→15/10/30; hardNPC12; no multiplier stacking (2.0039ms)
+✔ 42/85: ownership periods use their own growth policy; overlap and repeated settlement reject (3.5839ms)
+✔ 42: aging does not triple or erase career peaks; lower1 cap is conserved (1.2084ms)
+✔ 75: exact preview caps at1.25, fatigue95→100, is read-only and rejects <1 capacity (1.8274ms)
+✔ 42: all choices share one world-season opportunity; cheat keeps +2, no random draw (1.3934ms)
+✔ 75: failed challenge consumes chance/fatigue; conditioning cannot invent recovery (0.659ms)
+✔ 90: general→cheat spent10+30=40, not60; transfer cannot reset spent base (1.148ms)
+✔ 90: cheat→normal gives0, rejoin grants only remaining base; no clawback (0.5004ms)
+✔ 90: pitch cap loss consumes budget; reserved base protected; hard fractional remainder exact (0.5442ms)
+✔ 90: evidence replay is a no-op including zero grants; altered source rejected (0.5288ms)
+M1 PA-only 50vs50/D50: {"BB":8461,"HBP":1036,"K":20182,"1B":15901,"2B":4513,"3B":520,"HR":3009,"OUT":46378}
+M1 PA-only 100vs50/D50: {"BB":15623,"HBP":969,"K":8210,"1B":22810,"2B":7433,"3B":898,"HR":7688,"OUT":36369}
+M1 PA-only 100vs100/D100: {"BB":7867,"HBP":820,"K":18693,"1B":12183,"2B":4159,"3B":733,"HR":2868,"OUT":52677}
+M1 PA-only 100vs1/D1: {"BB":15818,"HBP":1189,"K":8300,"1B":28130,"2B":7460,"3B":912,"HR":7892,"OUT":30299}
+✔ B100-01/02 PA-only: 4 fixed conditions ×100,000 sampled plate appearances match probabilities (1703.9985ms)
+✔ B100-03: independent contact/power/discipline directions, other inputs held fixed (0.8353ms)
+✔ 125: generated99/164 metadata, all dispatch/branch counts; domain implementations not implied (17.4443ms)
+✔ 81: exact typed evidence key, duplicates including already-resolved source never resurrect (4.4849ms)
+✔ 125: blocking navigation remains OPEN, no ACK bypass; actual domain source commits resolution (1.4731ms)
+✔ 125: DOMAIN is only a plan until actual reducer succeeds; invalid focus leaves event unchanged (1.4573ms)
+✔ 125: nonblocking navigation and ACK resolve once; current availability/context/version rechecked (1.2462ms)
+✔ E63 approved/deferred branch must come from saved posting decision, no fallback/re-roll (1.3209ms)
+✔ 69/81: one active task deadline→source sequence order, no FORM/PRESENTATION world tasks (1.5684ms)
+✔ 125: deadline expiry only after committed day-closing domain outcome; invalidation reason preserved (1.0774ms)
+✔ 57/90 game1.2: every PA supplies outs-based source exactly once, no phantom BF, JSON resume stable (353.6999ms)
+✔ 57: mastery crossing uses pre-PA grade now and the new grade starting next PA (184.8525ms)
+✔ 85: normal/hardNPC/cheat XP policies apply once and leave below-threshold game outcomes identical (93.2855ms)
+✔ 90: learning reservation survives actual game, ledger corruption or initial mastery mismatch rejects (33.3478ms)
+M1 deterministic fixture SHA256: 113761f605145c79179c912841754bf060e25d42856822f847074317288d5c92
+M1 fixed100 games: 97 wins / 3 ties / 35 skipped bottoms / 10 walkoffs / 56 saves
+✔ REC10/14: uninterrupted vs one-PA JSON resumes give identical full-state SHA256 (277.9178ms)
+✔ REC11: completed game replay is a no-op with unchanged RNG/records (19.3954ms)
+✔ REC13: no available pitchers/duplicate lineup/bad repertoire fail before creating state (3.4908ms)
+✔ last eligible pitcher finishes without creating a free replacement (14.5261ms)
+✔ 24: fatigued named starter completes a PA before replacement review (6.5141ms)
+✔ REC04/05/08/09/15: 100 seeded games keep legal ending, pitching awards and box totals (1014.5077ms)
+✔ postseason: automatic runners are unearned, and chunk boundaries preserve all cursors (133.2116ms)
+✔ 24: engine safety cap stops with last complete-PA state and no draws (5.7885ms)
+✔ 24: prescribed all-strikeout PS fixture pauses after20 innings and resumes inning21 (294.5945ms)
+✔ 08/112: rate denominators separate HBP/BB; SLG can exceed1 and outs use thirds (1.0985ms)
+✔ 22/42: HS partial then same-year next period shares one cumulative budget; duplicate gives0 (10.6207ms)
+✔ 22: period-specific focus/type allocations preserved; old history does not overwrite current plan (1.2816ms)
+✔ 90: cumulative integer rounding conserved across tiny periods; capped loss never refunds (2.5076ms)
+✔ 71: altered evidence, overlap, damaged totals and post-final new period rejected atomically (4.0463ms)
+✔ 22: aging settles once on elapsed calendar fraction, unmultiplied; peak preserved (1.6777ms)
+✔ growth fixture: overall52 does not itself qualify for US direct entry (3.7714ms)
+✔ 41: appearance injury probability .15%, fatigue strictly above80 doubles; no appearance no RNG (5.9435ms)
+✔ 41: severity80/18/2 branches, durations3..7/8..30/season and unchanged source (18.1675ms)
+✔ registered team games heal once, diagnosis game excluded; JSON retry exact, no injured appearance (7.9363ms)
+✔ major persists through team games, closes only at season end; repeated closure no return event (4.5958ms)
+✔ unregistered injury does not heal, damaged duration rejected; future team evidence cannot heal twice (5.0566ms)
+✔ approved minimum emergency plan: no permanent gaps no temporary, zero healthy team9H+1P (7.4504ms)
+✔ temporary rights before lefts prevent excessive replacement; returned originals release temps (43.3857ms)
+✔ injured temporary not retained; shortage minimal, source and logged player identities retained (2.0326ms)
+✔ own six potential ranges contain true potential; repeated reads consume no RNG, revision or observation (120.8293ms)
+✔ only closed registered team games observed, byes not counted; repeat refresh has no duplicate progress (3233.1488ms)
+✔ cheat own report gives six fixed100 values and no range or hidden raw fields (46.3827ms)
+✔ career creation/confirmation uses canonical phases and persisted E01, no game auto-play (189.86ms)
+✔ E01 domain focus validates4 before commit; failed choice leaves event and world untouched (126.8496ms)
+✔ KEEP_FOCUS resolves E01; initial plan changes preserve current ability, potential and stream state (88.0167ms)
+✔ PRE archetype change once; keeping current archetype uses no new opportunity or ability reset (81.7372ms)
+✔ preseason confirmation enters progress at first schedule day, revision protected; unresolved source mismatch rejected (124.6653ms)
+✔ all same-day games required before fatigue/injury; first-day close changes each player only once, bye rests (1205.4612ms)
+✔ day ordering, world identity, altered official contribution and partial health publication reject (933.0183ms)
+✔ six actual league dates then rest day: rest once, no injury RNG or healing tick on calendar rest (6731.2996ms)
+✔ healthy world reconciliation consumes no generation RNG, keeps initial225 and exact25 creation invariant (105.5247ms)
+✔ all injured school receives exactly9H+1P; playable actual game and JSON retry consumes no extra generation (402.5843ms)
+✔ originals return: all excess temps leave roster, identities/repertoires preserved; later shortages use new serials (62.4792ms)
+✔ partial hitter shortage is minimum; world/registry mismatch and backward reconciliation rejected (44.0898ms)
+✔ generated HS roster becomes actual1.2 game; selected starter, nine distinct legal hitters and owned-only cheatXP (281.9098ms)
+✔ HS game serialized PA resume equals continuous final; records and XP publish once after FINAL (488.0521ms)
+✔ stale world/revision and tampered scheduled date rejected without partial record/book changes (255.4536ms)
+✔ unavailable hitters excluded, insufficient roster rejects; bad starter, missing book and allocation reject (426.5057ms)
+✔ all four first-day scheduled games commit sequentially, eight teams once; independent9th team bye (904.3736ms)
+✔ growth evidence maps plans to the following date, preserves rest/rehab days and pre-training snapshot (139.3618ms)
+✔ pitcher evidence uses actual outs, not BF or displayed innings; end-of-season plan pays no previous date (49.6486ms)
+✔ incomplete dates, changed FINAL evidence, missing registration and invalid plan history reject without mutation (280.3589ms)
+✔ ONE_GAME plan persists across safe chunks, serializes exactly and closes whole game date (6187.2834ms)
+✔ pause keeps pending RNG/cursor; active plan cannot be silently changed; invalid phase/revision rejected (1335.1341ms)
+✔ ONE_WEEK includes calendar rest, stops within7 dates with same-day games complete (13794.4934ms)
+▶ actual full HS league path: focus12, training16, style24, all216 games and48 per team without auto route
+  ✔ default NEXT_MAJOR_EVENT stops at actual12 team games and typed E02 (111186.4229ms)
+  ✔ training first valid window16; DEFER preserves opportunity and never applies ability growth (62610.8272ms)
+  ✔ style first valid window24; navigation is read/open only and does not repeat same event (99667.1219ms)
+  ✔ league completion stops SEASON_REVIEW, no US offer/route or automatic growth invented (527147.5921ms)
+  ✔ graduation pays only actual school periods once, preserves training and leaves the shared ledger open (1307.2847ms)
+  ✔ actual graduation→E04→college admission→next-year world preserves216 records and pays growth once (1840.178ms)
+✔ actual full HS league path: focus12, training16, style24, all216 games and48 per team without auto route (803830.2439ms)
+✔ season review atomically pays growth and opens one blocking E04 with a post-growth route snapshot (345.1286ms)
+✔ opening S28 keeps E04 open, repeated views/JSON restore do not change growth, RNG or revision (343.1902ms)
+✔ 43: college eligibility uses exact post-growth overall at48/52/55, fallback three stay available (693.5251ms)
+✔ college acceptance closes E04 once, preserves historical roster/records and reserves next-year admission (242.206ms)
+✔ stale revision/event/offer, ineligible or unknown college, changed evaluation reject without partial effects (230.8612ms)
+✔ missing calendar, incomplete review and another pending event do not pay growth or create graduation (619.2818ms)
+✔ training cannot run before16 team games or during pending game/partial date (560.2041ms)
+▶ actual career training16 and MID24 use authoritative state and preserve annual opportunities
+  ✔ guaranteed exact preview/gain, once-per-season and immutable original (741.5926ms)
+  ✔ cheat challenge guaranteed+2 without3x reinforcement, injury blocks permanent gain only (372.5043ms)
+  ✔ DEFER keeps usage; FORFEIT commits real SKIP usage before closing event (233.1694ms)
+  ✔ MID24 type choice once with historical boundary and current abilities unchanged (99302.6414ms)
+✔ actual career training16 and MID24 use authoritative state and preserve annual opportunities (195107.654ms)
+✔ day close records the evaluated day and unlocks nothing without evidence (3351.6432ms)
+✔ crossing BB30 unlocks T02 once with a receipt; replay and older days are no-ops (3788.3878ms)
+✔ owned traits survive a later correction and pitcher-only traits never reach a hitter (4091.0252ms)
+✔ unlocked traits feed the next game context and the career keeps advancing (4912.4199ms)
+✔ school roster extraction preserves all six pre-refactor world/RNG hashes (329.9851ms)
+✔ HS world: 9 schools/225 players, real protagonist replacement, all positions and216 games (43.2935ms)
+✔ HS world: same seed and serialized snapshot exact, new seed changes generated roster (175.2225ms)
+✔ HS world: all player archetypes/positions and pitcher forms accepted without illegal rosters (423.298ms)
+✔ HS world: hard does not secretly raise current abilities; NPC P+5, protagonist normal/hard unchanged (79.2484ms)
+✔ HS world rejects invalid school/pitch choice/key collision and corrupted persisted rosters (43.9513ms)
+✔ a futures player is reviewed only at each 20th futures team game and only once (5360.8027ms)
+✔ a stronger futures player is offered E09; ACCEPT swaps the weakest same-position first-team player (2684.667ms)
+✔ an injured futures player is reviewed without an offer (2487.156ms)
+✔ AI clubs promote a stronger futures player every 20 futures games without events, never moving my player (2981.7609ms)
+✔ HITTER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets (3904.66ms)
+✔ PITCHER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets (3848.3177ms)
+✔ pitcher earned book/weights survive entry but annual XP/learning/window state starts fresh (1995.6956ms)
+✔ new pro teammate/formation notice append to HS history from actual club registration, not guaranteed first team (1918.3307ms)
+✔ team-game injury carries without healing across new calendar; old school injuries stay only in archive (1828.5921ms)
+✔ stale/unsigned/unclosed/changed sealed source and wrong root reject without duplicate roster/salary or age (2463.3499ms)
+✔ entry public DTO omits raw roots/P/abilities/seed/RNG; restored entry projects identically and malformed registration rejects (2774.6378ms)
+✔ both leagues close one pro day together: one fatigue step for every club player and per-league team-game health (6346.7424ms)
+✔ day close rejects missing games, changed evidence, wrong order and a second health pass (5319.2241ms)
+✔ 34: actual-roster preview is read-only, excludes hidden state and matches one persisted draw after JSON resume (880.89ms)
+✔ 08/U: position demand beats preferred club, preference resolves equal need/strength only (549.1707ms)
+✔ 34/44: full60-player rosters produce0%/no draw/no offer; exhausted clubs never chosen (626.248ms)
+✔ signed rookie commits one1-year KRW minimum contract/right/roster and salary reservation, never a first-team promise (960.1931ms)
+✔ stale roster/payroll/assessment/RNG/result/signing reject without partial reservation or reroll (859.3679ms)
+✔ 44: next-season90% guarantee cap blocks a rookie before preview and produces no fake offer (599.5054ms)
+✔ HITTER signed school year closes only with explicit unused-training decision, without age/pro roster/salary or growth payout (3908.5322ms)
+✔ PITCHER signed school year closes only with explicit unused-training decision, without age/pro roster/salary or growth payout (3700.7516ms)
+✔ already used training is preserved and an unfinished pitch learning never publishes year end (3137.2164ms)
+✔ mild/medium injuries retain team-game recovery across closure while major season injury ends (4403.6005ms)
+✔ stale revision/unsigned route/changed signing and changed sealed data cannot close or repair a year end (2493.0542ms)
+✔ reading E94 after KBO year end validates then updates only its metadata seal and keeps signing valid (2673.5443ms)
+✔ general trait summary after sealed KBO year end does not invalidate activation evidence or repair bad seals (2746.348ms)
+✔ actual KBO and FUTURES games use disjoint rosters; JSON PA resume/official scopes/books publish once without changing the career root (4056.0212ms)
+✔ HITTER healthy strong rookie competes into28; first-team registration is separate from games/salary/growth (4466.9829ms)
+✔ PITCHER healthy strong rookie competes into28; first-team registration is separate from games/salary/growth (4097.7291ms)
+✔ ordinary50-start school career can earn a spot in its actual destination club on position merit (1963.2382ms)
+✔ injured star starts in futures roster, keeps remaining team-game recovery, never occupies an opening1st-team slot (2329.7047ms)
+✔ view is pending before confirmation, does not select automatically and exposes no hidden potential/RNG or fake odds (4835.091ms)
+✔ late camp/relation reading preserves opening roster and confirmed growth plan;1st-team registration does not fabricate callup event (2256.175ms)
+✔ stale revision/tampered receipt/roster/competition reject without salary or registration repair (2918.7056ms)
+✔ controlled absence of all catchers fails safely: no emergency players, silent healing or partially published roster (2306.3227ms)
+✔ controlled stronger club leaves the ordinary rookie in futures without changing ability or granting a free slot (1990.4091ms)
+✔ HITTER actual entry queues one nonblocking E08 and exposes only public preseason choices (2986.8308ms)
+✔ PITCHER actual entry queues one nonblocking E08 and exposes only public preseason choices (2521.8438ms)
+✔ E08 focus choice commits only four-focus plan; KEEP_FOCUS acknowledges without a new saved plan (2893.1221ms)
+✔ focus validates four distinct own-kind axes and preseason style permits one actual change, no ability/RNG bonus (2813.0747ms)
+✔ pitcher weight command reuses one PRE configuration chance, unchanged weights consume none and hitters reject (4661.2845ms)
+✔ learning reserves10 base XP without instant mastery; free slot keeps configuration chance and second plan rejects (2178.5959ms)
+✔ controlled four learned pitches: replacement and learning atomically consume the same PRE chance (2832.9651ms)
+✔ confirm freezes the selected plan/snapshots once, pays no growth and does not require reading E08 (2638.9753ms)
+✔ confirmed pitcher learning/configuration snapshot remains valid but further edits cannot reopen PRE (2039.5604ms)
+✔ stale revision/event version, foreign camp evidence and invalid focus reject without state/RNG changes (2356.4032ms)
+✔ legacy AP state is read-only until a write catches up one camp notice; duplicate and changed source reject (2909.7164ms)
+✔ start needs the confirmed plan, roster and schedule and cannot repeat (5039.738ms)
+✔ one real opening day: both leagues play and close once; chunk limits resume exactly from JSON (17017.1191ms)
+✔ a stale revision, wrong phase or bad day count is rejected without changing the career (2890.0762ms)
+✔ three days close in order; pitcher books never roll back and each club plays at most once per league and day (19578.8536ms)
+✔ recovery of my own player stops progress with HEALTH_CHANGE after the day closes (8331.3073ms)
+✔ official records that cross a trait threshold unlock it once after a pro day close (15965.8948ms)
+✔ pro season close settles T16 once from official starter outs and labels the qualifying league (2354.3325ms)
+✔ advancing past the last scheduled day enters SEASON_REVIEW and settles the season once (4723.7782ms)
+✔ pro AI context reads the last completed 20-game block per club and league, and season pitching outs (2437.889ms)
+✔ HITTER pro list retains historical school and active club teammate identities without invented transfers/stages (2968.3861ms)
+✔ PITCHER pro list retains historical school and active club teammate identities without invented transfers/stages (2840.214ms)
+✔ historical relation details reuse existing official scoped records; never fabricate pro games or new player registration (2403.7069ms)
+✔ both historical and new pro E94 preserve names and ACK only their notice while the confirmed plan remains sealed (3444.8201ms)
+✔ stale revision/version, wrong command or foreign/duplicate relation evidence reject without changes (2538.4977ms)
+✔ unknown historical player remains unresolved; malformed ownership, foreign history and changed confirmed plan reject (7622.0346ms)
+✔ absence of relations/notices on restored old pro state is empty and querying never creates a new relation (2233.5411ms)
+✔ both independent leagues have720 games,144/team,8 home and8 away/opponent; all calendar barriers and rest respected (248.5724ms)
+✔ bad teams/year/calendar reject; publication cannot bypass the confirmed roster (2550.8748ms)
+✔ old roots read pending; confirmed schedule survives JSON/replay/notice ACK with no played games or extra side effects (4030.6492ms)
+✔ changed date/venue/identity/receipt rejects atomically rather than silently rebuilding (5531.7808ms)
+✔ pro growth pays one PRO period over the growth calendar from official appearances, once (6209.0252ms)
+✔ growth rejects wrong phase, missing day receipts, double-booked days and rehabilitation appearances (7214.5639ms)
+✔ pro year-end needs paid growth and an explicit unused-training forfeit, then ages once and closes health (2728.0006ms)
+✔ E43 opens at 48 team games and E41 at 72, once per season and only while healthy (3410.972ms)
+✔ window choices resolve once and return to progress; FORFEIT spends the season chance (5091.5286ms)
+✔ training uses the 48-game window once per season (5181.0109ms)
+✔ MID style change needs 72 healthy team games, keeps abilities, records the plan and splits season growth (5452.4573ms)
+✔ 44: ten actual club identities,500 fictional players/500 active contracts,26H/24P and legal first28 (449.4864ms)
+✔ deterministic generation and JSON restore, distinct seeds change roster; identity/contract keys stay logical (1252.4248ms)
+✔ six-stat mean35..85 exact, profile ceilings100 do not inflate overall or erase profile shape (2.4511ms)
+✔ initial payroll common-scale floors/caps, integer won, future commitments<=90% budget and no signing bonus (324.9019ms)
+✔ career hard changes NPC potential only; career cheat does not make all KBO NPC potential100 (1004.826ms)
+✔ restored corrupt roster, contract, payroll, first team or age rejected without silent regeneration (538.6374ms)
+✔ 05/41: automatic field assignment legal, distinct, exact primary fit, stable input ordering (38.2442ms)
+✔ AI global assignment preserves scarce SS utility instead of greedy C theft (11.5369ms)
+✔ 01/05: unavailable players, left-handed restrictions, low-fit fallback and insufficient roster errors (185.4569ms)
+✔ 08: role/performance competition uses minimum PA50/outs30 then exact index (1.1834ms)
+✔ 05: batting order chooses discipline leaders then power core without changing field assignment (42.6489ms)
+✔ 01/41: appearance and rest fatigue use existing 5/-8 and stamina40/15/-10 once, source immutable (1.9971ms)
+✔ 112/BP1: engine matches every published extreme-ability probability (3.5691ms)
+✔ 112/BP2: engine matches every published extreme-ability probability (0.4767ms)
+✔ 112/BP3: engine matches every published extreme-ability probability (0.3634ms)
+✔ 112/BP4: engine matches every published extreme-ability probability (0.3649ms)
+✔ 123/X01: trait-first cap and final cap match published sums/distribution (0.8008ms)
+✔ 123/X02: trait-first cap and final cap match published sums/distribution (0.4548ms)
+✔ 123/X03: trait-first cap and final cap match published sums/distribution (0.4932ms)
+✔ 123/X04: trait-first cap and final cap match published sums/distribution (0.6677ms)
+✔ 123/X05: trait-first cap and final cap match published sums/distribution (0.4272ms)
+✔ 123/X06: trait-first cap and final cap match published sums/distribution (0.5599ms)
+✔ 123/X07: trait-first cap and final cap match published sums/distribution (0.378ms)
+✔ 41: clutch is RISP-only, composure is symmetric and permanent inputs remain unchanged (2.3725ms)
+✔ 41: temporary clamp → fatigue → morale → final clamp, without changing permanent abilities (2.8629ms)
+✔ 119/PF-D01..07: forms, opposite/same and switch sides; one platoon effect only (0.7921ms)
+✔ 57: representative pitch uses pitchId order and .60 belongs to next segment (0.8525ms)
+✔ 41/U DP: running/pickoff examples and approved 2%p-per-ten double play equation (0.4416ms)
+✔ 41/ENG04: stamina50 gives SP/RP fatigue40/15 and review90/30 (0.3382ms)
+✔ 122: v2 identity snapshots self-contained from immutable game input and switch hitter opposite side (52.7601ms)
+✔ 60/121: contribution splits/matchups conserve all PA,AB,H,TB,K,outs and team records (465.5769ms)
+✔ 60: duplicate contribution no-op and changed evidence rejects; original ledger immutable (54.5994ms)
+✔ 60: official correction atomically replaces old stats, never appends twice or changes scope/score (56.7369ms)
+✔ 121: league/phase separate, career same-league years only, zero AB rates remain null (30.4335ms)
+✔ 107: direct duel is based on PA/H/TB and independent of team result (0.8177ms)
+✔ 71 INV03: same player cannot contribute twice in one world-season day across different leagues (20.6761ms)
+✔ record keys remain data after JSON restore, including prototype-like logical names (32.0664ms)
+✔ preseason confirmation persists two E94 notices for pinned rival/teammate without blocking progress (190.4768ms)
+✔ opening a notice acknowledges only that notice and navigates to its relation; gameplay phase and RNG stay unchanged (214.6046ms)
+✔ stale revision/version, wrong command, foreign or rewritten relation evidence reject atomically (223.2958ms)
+✔ unread notices do not stop real games; acknowledging both does not alter first-day results/health/trait evidence (6855.088ms)
+✔ legacy HS saves catch up once at day close; absence of relations and college worlds creates no fictitious notice (3914.6317ms)
+✔ notice acknowledgment during a pending task leaves that task and its saved resume untouched (188.3036ms)
+✔ notice acknowledgment during a real pending game preserves the exact cursor/RNG and resumed game result (6808.8786ms)
+✔ approved25-player rule: no eligible rival produces no rival notice or extra NPC, while the teammate notice remains (83.1691ms)
+✔ acknowledging a notice after sealed year end preserves the valid seal and college activation; corrupt seals never get repaired (724.645ms)
+✔ college S42 keeps archived HS rival/teammate identity and last known registration without inferring a new stage (737.9176ms)
+✔ archived same-kind identity reuses real scoped contributions, not invented meetings; zero scopes remain empty (566.0866ms)
+✔ unknown history stays as an unresolved reference, not retirement or an invented player (383.2138ms)
+✔ current identity takes priority and the latest archived snapshot is chosen for historical identity (369.6186ms)
+✔ foreign history and malformed relationship ownership reject instead of leaking another world (531.6628ms)
+✔ persisted E94 notices keep the archived name after college entry without recreating the formation event (546.491ms)
+✔ career start forms one same-team teammate and one eligible rival, distinct and deterministic (62.6478ms)
+✔ no eligible rival is a normal empty state; teammate still forms (43.7608ms)
+✔ confirmCareerPlayer stores relations once; list view shows identity only (61.5261ms)
+✔ same-kind detail compares own lines only in games both played; leagues and phases stay separate (18802.947ms)
+✔ cross-kind detail sums only real batter-vs-pitcher plate appearances (15993.3439ms)
+✔ teammate gets one COEXIST_20 milestone on the 20th shared team game day only (71.5072ms)
+✔ 57: initial book, exact grade thresholds, invalid loadouts and source preservation (4.1488ms)
+✔ 101: every slider target respects sum100/lower10, deterministic ties, immutable input (25.1376ms)
+✔ 57: four healthy learning quarters normal10/cheat30, 0 XP stays inactive, no cancel/reselect (3.066ms)
+✔ 57/90: half-healthy cheat3.75, fraction carry, zero denominator and duplicate quarters (1.8381ms)
+✔ 57/90: reservation protects learning, released missed learning is future practice only (1001.0694ms)
+✔ 57: full-slot learning consumes PRE once atomically; unchanged loadout costs zero (1.5671ms)
+✔ 57: AI ranking/thresholds and archive grade reduction preserve history without RNG (4.3989ms)
+✔ 121: identity sorted generation, JSON resume and restricted positions (2.8823ms)
+✔ 121: fixed large sample hand/bat/form probabilities and corrected hitter population (527.2253ms)
+✔ 42/85: NPC hard potential+5, club cheat owned-only, unchanged A/RNG and old player floor (2.3048ms)
+✔ 57: newly learned pitch can enter four-pitch loadout without counting the same slot twice (871.2788ms)
+✔ PCG32 official 42/54 reference vector (5.1384ms)
+✔ 08/70 JSON cursor roundtrip resumes exact next draw without mutating source (3.2511ms)
+✔ 08: event/growth/injury draws cannot shift the game or pitch plan stream (10.8442ms)
+✔ invalid PCG snapshots/seed/bounds are rejected (1.2835ms)
+✔ 01: KBO720/team144/home72 and pair16/home8, no double booking or >6 consecutive (27.2788ms)
+✔ 43/HS: nine-team216/team48/home24, 54 rounds with one bye each (3.1283ms)
+✔ 13: MLB2430/team162/home81, every opponent5 plus exactly17 distinct extra opponents (88.8558ms)
+✔ 13: minor60/100/120/144 exact games and equal venues, fixed JSON schedule (98.8923ms)
+✔ schedule rejects duplicate/odd degree and validator catches count/venue/date corruption (15.4755ms)
+✔ v2:74% near44..52 and about0.5 OVR60+ per224; tail remains possible without school quotas or cap piles (339.5711ms)
+✔ v2: NPC profiles shrink to60% while exact mean/type ordering survive; protagonist and college profiles stay intact (164.7149ms)
+✔ NPC generation balance does not increase player growth or alter1.5/1/3 difficulty multipliers (74.3062ms)
+✔ real HS settlement retains the baseline budget and duplicate payout stays zero (329.7171ms)
+✔ repeated careers vary potential by seed; handedness changes matchups without guaranteeing superior potential (42.388ms)
+✔ fixed annual calendar includes weekly rest, excludes actual tournament windows and handles leap years (24.5827ms)
+✔ calendar-backed school season spreads all216 games over Feb-Jun without international collisions (240.9302ms)
+✔ baseline growth stays average: perfect school appearances and +2 still below52; US entry uses a separate scout score (32.7711ms)
+✔ standings use exact winning percentage then tied-group head-to-head, before run difference (7.9207ms)
+✔ multi-team mini-league ties use overall run difference and deterministic independent seeded lots (9.7833ms)
+✔ 3×G boundary uses starter outs only and ignores postseason (6.3795ms)
+✔ five consecutive qualified seasons unlock T16 once at the fifth season close (5.4723ms)
+✔ a missed season resets the streak and owned T16 survives a later miss (9.2696ms)
+✔ HITTER actual college activation adds one teammate with registration E94, no blocking or growth changes (907.958ms)
+✔ PITCHER actual college activation adds one teammate with registration E94, no blocking or growth changes (774.9458ms)
+✔ old HS relationships survive, new college teammate appends and historical/current identities remain distinct (481.1862ms)
+✔ same team next season or return uses first entry without RNG/extra teammate; another actual team may add one (533.3072ms)
+✔ no candidate records empty first entry without generating anyone or retrying; unregistered/invalid receipts reject (505.8618ms)
+✔ existing rival may also become teammate without overwriting rival history (425.1973ms)
+✔ college E94 requires exact formation/registration receipt; never synthesizes HS notice in college (512.0546ms)
+✔ hidden unlock raises one E84 stop; general unlock does not (180.092ms)
+✔ OPEN_TRAITS resolves E84, navigates to S38 and restores the saved phase once (121.5002ms)
+✔ general unlocks collect in the unread summary until acknowledged (124.3172ms)
+✔ season progress stops at the day close with MAJOR_EVENT when a hidden unlock is pending (5837.0609ms)
+✔ 56: first meeting, bases loaded, postseason and exact owned targets evaluated each PA (5.7851ms)
+✔ 100: walkoff exact bottom9+/tied or down1, pitcher late lead/start/run boundaries (1.0606ms)
+✔ 56/123: owned effects all apply then shared cap; nonlogit effects separate (1.3217ms)
+✔ 56: finalized evidence unlocks once and never removes owned traits after decline/correction (3.7475ms)
+✔ 107: exact OPS .900/PA20/WIN and AB0 guards, no rounded-OPS unlock (0.7015ms)
+✔ 56: runner retains own T03 bonus across future batters, without bonus for unrelated runners (2.2048ms)
+✔ game1.1: actual owned traits affect probabilities; JSON PA-chunk resume exactly matches full run (345.6086ms)
+✔ game1.1 empty ownership leaves every probability/RNG/result unchanged relative to game1.0 (47.4554ms)
+✔ 100: locked hidden trait card strictly excludes supplied secret details; unlock reveals them (13.003ms)
+✔ US offers: fixed snapshot, distinct max3 clubs, minor A/Rookie, canonical USD terms and no mutation (20.4522ms)
+✔ US offers: average evaluation, no roster slot, no budget or ineligible produces no visible US choice (13.8301ms)
+✔ US offers: boundary expiry, stale world/offer/version and player registration reject atomically (9.9355ms)
+✔ US signing: one contract/rights/registration/income reservation, no duplicate payout or world mutation (16.3376ms)
+✔ full generated US roster feeds actual vacancy/budget-bound career offers and one signing reservation (1997.2839ms)
+✔ US allocation forbids invented organizations, negative/combined over160 vacancies and unknown budget (699.6503ms)
+✔ US reservation deducts one real level slot and bonus+first-year salary; identical receipt retries preserve totals (34.681ms)
+✔ US reservation supports sequential candidates from current inventory and rejects stale competing snapshots atomically (33.6683ms)
+✔ US reservation detects changed totals/duplicated receipts/rewritten receipt and rejects invalid inventory (7.4773ms)
+✔ US initial world has30 organizations,114 players each, minor22/MLB26 and1590 pitcher books (680.8448ms)
+✔ US generation is repeatable, registry order independent, new seed changes ability/potential; no extra cheat P100 for rivals (2876.5924ms)
+✔ US level overall values cluster near the approved means; extremes are not per-team quotas (460.2746ms)
+✔ US initial restore rejects duplicate registration, changed level means, bad position depth or pitcher book (787.313ms)
+✔ 35/ABI02: six permanent abilities average 70.0; ceiling is 100.0 (4.6138ms)
+✔ 90: display rounds the exact sum, not each ability first (0.4856ms)
+✔ 35/ABI01: rejects wrong kind, extra/missing axes and invalid integer units (1.1205ms)
+✔ 35/ABI03: exactly four distinct abilities, no mixed player kinds (0.7809ms)
+✔ 90: archive half-up precision and minimum; source stays immutable (0.5351ms)
+✔ 41/ENG07: role weights preserve neutral50 and stay distinct from overall (0.8839ms)
+ℹ tests 399
+ℹ suites 0
+ℹ pass 399
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 890158.39
+
+> again-playball@0.1.0 build
+> npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/api && npm run build --workspace @playball/web
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/api@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/web@0.1.0 build
+> tsc -p tsconfig.json --noEmit && vite build
+
+[36mvite v8.3.4 [32mbuilding client environment for production...[36m[39m
+transforming...
+✓ 17 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                     0.57 kB │ gzip:  0.38 kB
+dist/assets/BlackHanSans-Regular-B0-nbKIc.ttf     998.42 kB
+dist/assets/NotoSansKR-Variable-k7NQXPol.ttf   10,414.58 kB
+dist/assets/index-D7SWy-NU.css                      1.44 kB │ gzip:  0.73 kB
+dist/assets/index-qvV079z_.js                     221.56 kB │ gzip: 69.64 kB
+
+[32m✓ built in 218ms[39m
+
+> again-playball@0.1.0 verify:engine
+> node --import tsx scripts/verify-engine.mjs
+
+PASS: compiled engine in independent Node process matches source golden SHA256 113761f605145c79179c912841754bf060e25d42856822f847074317288d5c92
+
+> again-playball@0.1.0 verify:events
+> node scripts/generate-event-definitions.mjs --check
+
+PASS: approved99 event definitions /164 choices, occurrence domains and E63 branches synchronized. Domain triggers/effects are separately implemented.
+
+> again-playball@0.1.0 verify:design
+> node scripts/verify-design.mjs
+
+PASS: result/season/draft examples: inning totals 3:4 and X, batting .300/.369/.500/.869, pitching 150.0/3.00/1.23, B45 draft distribution; 14 NOT_IMPLEMENTED edge expectations.
+PASS: club examples: search .63 / offer .50, finite ledger 1,840,000,000 -> 1,835,000,000, reservation transfer conserved, report 80~96, rebirth overall 45.8 and capped potentials; 20 NOT_IMPLEMENTED edge expectations.
+PASS: journey examples: 2 initial arrays total 300, US visibility boundaries, 9 colleges / 48 team and 216 league games, B53.5 round distribution, MLB registration with zero appearances; 16 NOT_IMPLEMENTED edge expectations.
+PASS: expansion templates: 12 public challenges, PRE/MID/reward separation, salary previews 70/55/40, staff debt, DIRECT/COMPARISON, hidden-score viewer controls, chapter filters, escaped notes and export states.
+PASS: 2 alpha portrait assets, 30 preview variants, 26 detail flows / 78 state templates, evidence guards, hitter overall 71.0 and pitcher 72.0 / focus 4; pure HTML-string checks only.
+PASS: chosen animation direction, 3 hero alternatives, 12 scene data/crops, alpha PNG metadata, 45 image-slot contracts, lab script/IDs/assets and example overall 71.0.
+NOT TESTED: art-lab browser rendering, interactive clicks, viewport layout, clipboard and localStorage; file: browser navigation was policy-blocked.
+PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 14/14 silhouettes ready, 0 image TODOs remain.
+PASS: approved navy icon1; Android 3 SVGs / web 5 assets, PNG dimensions and safe-area evidence, registry/slot bindings; P0 files complete. App/device integration remains NOT_EXECUTED.
+PASS: all four approved navy story-art versions bound; night rival white/navy vs burgundy, originals preserved; runtime visual review remains NOT_EXECUTED.
+PASS: 10 approved fictional badges, distinct team palettes, safe SVGs and college/military screen references; design assets only.
+PASS: 7 approved cosmetic reward assets and screen references; 13 colored stamps also approved.
+PASS: 13 approved colored record stamps, safe SVGs and acquired-only cosmetic references; 0 image TODOs remain.
+PASS: final 11 approved assets, actual dimensions and bound screens; 80 EXISTS / 0 TODO / 11 CODE_ONLY / 1 LEGACY. Browser/device/application execution remains NOT_EXECUTED.
+PASS: club first-season 16 stages / 7 recovery cases / 3 starts, source screen links, half-peak import and finite chained search-offer ledger. Runtime remains NOT_EXECUTED.
+PASS: offseason 8 groups / 12 collision cases, deadline ordering and future-budget edges; S18 draft query/commands separated. Real draft/market/year transition remains NOT_EXECUTED.
+PASS: 99 event contracts, 45 screen contracts, unique IDs, local links/assets, JS syntax, embedded state catalog, no visible 100% badges.
+PASS: design arithmetic: search odds, offer distributions/monotonicity, 14 initial arrays, overall, advancement, draft, growth, import, budget, college schedule.
+PASS: expansion design arithmetic: negotiation .60/.68, income fee, staff budget, imported pitch mastery, skill modifier caps.
+PASS: 80 explicit design fixtures across 8 detailed modules; automatic traits and cheat pitch XP examples. Fixture execution is NOT implemented.
+CONFIRMED: cosmetic-only rewards and read-only commentary; no pending choices in these eight detailed modules.
+PASS: 82 world design expectations across 8 modules, 24 invariant contracts, 12 planned run scenarios, narrowing-range examples. World simulations are NOT executed.
+PASS: 30 cross-contract expectations (12 command, 6 exact-effect, 12 web/APK resume); 192 expectations in these three fixture sets. Actual interruption recovery is NOT tested.
+PASS: 45 screen-action bindings and 10 creation recovery design expectations; 202 expectations before the final audit set. Runtime creation recovery is NOT tested.
+PASS: 45 screen recovery rows, 99 event occurrence rows, 20 probability surfaces, 24 planned paths, 72 final fixtures; 274 expectations before the platform set. Runtime/UI/AI checks are NOT executed.
+PASS: six platform contracts with eight required flows each, and 24 platform expectations (8 auth, 8 update, 8 files); 298 unique design expectations total. Browser/device/auth/update/file behavior is NOT executed.
+PASS: E63 approved branch waits for domain commit; deferred branch allows ACK; invalid blocking ACK, swapped policy and wrong branch command are rejected (static design checks).
+PASS: 23 expectation sets indexed; FP12, first-club recovery7 and offseason12 match source counts and remain NOT_EXECUTED; core total remains 298.
+PASS: baseline 1.0 has 25 source topics, 10 specified closures and 12 NOT_EXECUTED gates; XP double-budget/cap-loss/remainder and import rounding examples. These are static/document arithmetic checks only.
+PASS: result/season/draft examples: inning totals 3:4 and X, batting .300/.369/.500/.869, pitching 150.0/3.00/1.23, B45 draft distribution; 14 NOT_IMPLEMENTED edge expectations.
+PASS: club examples: search .63 / offer .50, finite ledger 1,840,000,000 -> 1,835,000,000, reservation transfer conserved, report 80~96, rebirth overall 45.8 and capped potentials; 20 NOT_IMPLEMENTED edge expectations.
+PASS: journey examples: 2 initial arrays total 300, US visibility boundaries, 9 colleges / 48 team and 216 league games, B53.5 round distribution, MLB registration with zero appearances; 16 NOT_IMPLEMENTED edge expectations.
+PASS: expansion templates: 12 public challenges, PRE/MID/reward separation, salary previews 70/55/40, staff debt, DIRECT/COMPARISON, hidden-score viewer controls, chapter filters, escaped notes and export states.
+PASS: 2 alpha portrait assets, 30 preview variants, 26 detail flows / 78 state templates, evidence guards, hitter overall 71.0 and pitcher 72.0 / focus 4; pure HTML-string checks only.
+PASS: chosen animation direction, 3 hero alternatives, 12 scene data/crops, alpha PNG metadata, 45 image-slot contracts, lab script/IDs/assets and example overall 71.0.
+NOT TESTED: art-lab browser rendering, interactive clicks, viewport layout, clipboard and localStorage; file: browser navigation was policy-blocked.
+PASS: approved pitcher A, hitter A and logo2 SVGs; navy-blue palette, CSS paints, forbidden-element guards and real slot bindings; 14/14 silhouettes ready, 0 image TODOs remain.
+PASS: approved navy icon1; Android 3 SVGs / web 5 assets, PNG dimensions and safe-area evidence, registry/slot bindings; P0 files complete. App/device integration remains NOT_EXECUTED.
+PASS: all four approved navy story-art versions bound; night rival white/navy vs burgundy, originals preserved; runtime visual review remains NOT_EXECUTED.
+PASS: 10 approved fictional badges, distinct team palettes, safe SVGs and college/military screen references; design assets only.
+PASS: 7 approved cosmetic reward assets and screen references; 13 colored stamps also approved.
+PASS: 13 approved colored record stamps, safe SVGs and acquired-only cosmetic references; 0 image TODOs remain.
+PASS: final 11 approved assets, actual dimensions and bound screens; 80 EXISTS / 0 TODO / 11 CODE_ONLY / 1 LEGACY. Browser/device/application execution remains NOT_EXECUTED.
+PASS: expansion arithmetic, read-only commentary reducer and immutable log, note escaping, 61 source-to-preview mappings; runtime tests remain NOT_EXECUTED.
+PASS: locked hidden-trait DTO allowlist, approved T14 OPS/PA boundaries and unchanged caps; deterministic slider lower bounds / largest remainders / stable ties / sum100; 61 UI expectations remain NOT_EXECUTED.
+NOT TESTED: browser slider events/focus/layout, real API confidentiality, trait unlock transactions, game outcomes and database writes.
+PASS: 36 server-only edge expectations indexed; duel, exact OPS, shutout and consecutive-season example arithmetic consistent. All 36 remain NOT_IMPLEMENTED.
+PASS: 45 screen finish specifications, 28 declared representatives / 17 pending, 8 states and 4 viewports; final pixels and browser review remain unfinished.
+PASS: supplemental 17 screens x 8 = 136 pure render examples; original 28 + 17 = 45 IDs, resume-only home, local lineup example, escaping and six-panel PNG metadata.
+NOT TESTED: finish-board DOM/input/focus/rendering, image crops, responsive layout, real service integration, saves or application build.
+PASS: confirmed anime default, 12 new time-varied scenes, active portraits, uncropped square/full-width layouts, S04 two styles x eight states, three-image normal view and image-failure fallback.
+PASS: approved six anime finish scenes, square atlas positions and per-screen semantic bindings; rival teams differentiated; runtime rendering remains NOT_EXECUTED.
+PASS: four fixed ability-ceiling distributions, displayed AVG/SLG, positive out probabilities and correct PA/AB denominators; six balance runs remain NOT_EXECUTED.
+PASS: first-career storyboard 7 common + 19 branch stages, 45/99 source references, US eligibility boundaries/card hiding, immutable read-only templates. Real onboarding remains NOT_EXECUTED.
+PASS: club first-season 16 stages / 7 recovery cases / 3 starts, source screen links, half-peak import and finite chained search-offer ledger. Runtime remains NOT_EXECUTED.
+PASS: offseason 8 groups / 12 collision cases, deadline ordering and future-budget edges; S18 draft query/commands separated. Real draft/market/year transition remains NOT_EXECUTED.
+PASS: midcareer 12 groups, E13 command-based plan boundaries and confirmed fast-progression defaults / 12 checks; runtime remains NOT_EXECUTED.
+PASS: latecareer 9 scenes / 12 checks, peak-half age19 examples, immutable archive and root-role claim policy. Runtime remains NOT_EXECUTED.
+PASS: 11 code-display specifications and 45-screen/8-state reference audit; visual baseline approved, browser execution count remains zero.
+PASS: refreshed board references and 13 static accessibility evidence records match current source; browser rendering is policy-blocked, not passed.
+PASS: final preimplementation handoff matches current counts and 12 open runtime gates; no implementation authorization or executed visual checks inferred.
+PASS: final cross-document review corrections align creation, resume UI, public DTO and baserunning contracts; no new gameplay rule or runtime proof.
+NOT TESTED: browser rendering, gameplay, balance simulations, Neon/API/auth, build, Android APK.
+PASS: supplemental 17 screens x 8 = 136 pure render examples; original 28 + 17 = 45 IDs, resume-only home, local lineup example, escaping and six-panel PNG metadata.
+NOT TESTED: finish-board DOM/input/focus/rendering, image crops, responsive layout, real service integration, saves or application build.
+PASS: confirmed anime default, 12 new time-varied scenes, active portraits, uncropped square/full-width layouts, S04 two styles x eight states, three-image normal view and image-failure fallback.
+PASS: approved six anime finish scenes, square atlas positions and per-screen semantic bindings; rival teams differentiated; runtime rendering remains NOT_EXECUTED.
+PASS: first-career storyboard 7 common + 19 branch stages, 45/99 source references, US eligibility boundaries/card hiding, immutable read-only templates. Real onboarding remains NOT_EXECUTED.
+PASS: latecareer 9 scenes / 12 checks, peak-half age19 examples, immutable archive and root-role claim policy. Runtime remains NOT_EXECUTED.
+PASS: midcareer 12 groups, E13 command-based plan boundaries and confirmed fast-progression defaults / 12 checks; runtime remains NOT_EXECUTED.
+PASS: four fixed ability-ceiling distributions, displayed AVG/SLG, positive out probabilities and correct PA/AB denominators; six balance runs remain NOT_EXECUTED.
+PASS: expansion arithmetic, read-only commentary reducer and immutable log, note escaping, 61 source-to-preview mappings; runtime tests remain NOT_EXECUTED.
+PASS: locked hidden-trait DTO allowlist, approved T14 OPS/PA boundaries and unchanged caps; deterministic slider lower bounds / largest remainders / stable ties / sum100; 61 UI expectations remain NOT_EXECUTED.
+NOT TESTED: browser slider events/focus/layout, real API confidentiality, trait unlock transactions, game outcomes and database writes.
+PASS: 36 server-only edge expectations indexed; duel, exact OPS, shutout and consecutive-season example arithmetic consistent. All 36 remain NOT_IMPLEMENTED.
+PASS: 45 screen finish specifications, 28 declared representatives / 17 pending, 8 states and 4 viewports; final pixels and browser review remain unfinished.
+PASS: 10 static design validators. These are not runtime game tests.
+EXIT=0
