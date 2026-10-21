@@ -1,0 +1,26 @@
+
+> again-playball@0.1.0 typecheck
+> npm run build --workspace @playball/rules && npm run typecheck --workspaces --if-present && tsc -p tsconfig.tests.json
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/rules@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/api@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/web@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+packages/engine/test/relationship-history.test.ts(24,2): error TS2740: Type '{ PA: number; AB: number; H: number; TB: number; K: number; BB: number; HBP: number; HR: number; R: number; RBI: number; }' is missing the following properties from type 'BattingTotals': twoB, threeB, games, fieldingGames, and 3 more.
+packages/engine/test/relationship-history.test.ts(24,78): error TS2740: Type '{ PA: number; AB: number; H: number; TB: number; BB: number; HBP: number; K: number; HR: number; R: number; RBI: number; }' is missing the following properties from type 'BattingTotals': twoB, threeB, games, fieldingGames, and 3 more.

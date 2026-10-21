@@ -1,0 +1,29 @@
+✔ preseason confirmation persists two E94 notices for pinned rival/teammate without blocking progress (296.2986ms)
+✔ opening a notice acknowledges only that notice and navigates to its relation; gameplay phase and RNG stay unchanged (250.3141ms)
+✔ stale revision/version, wrong command, foreign or rewritten relation evidence reject atomically (264.4318ms)
+✔ unread notices do not stop real games; acknowledging both does not alter first-day results/health/trait evidence (10267.9541ms)
+✔ legacy HS saves catch up once at day close; absence of relations and college worlds creates no fictitious notice (2900.7063ms)
+✔ notice acknowledgment during a pending task leaves that task and its saved resume untouched (120.9645ms)
+✔ notice acknowledgment during a real pending game preserves the exact cursor/RNG and resumed game result (4859.8713ms)
+✔ approved25-player rule: no eligible rival produces no rival notice or extra NPC, while the teammate notice remains (109.3615ms)
+✔ acknowledging a notice after sealed year end preserves the valid seal and college activation; corrupt seals never get repaired (1169.0397ms)
+✔ college S42 keeps archived HS rival/teammate identity and last known registration without inferring a new stage (673.4341ms)
+✔ archived same-kind identity reuses real scoped contributions, not invented meetings; zero scopes remain empty (867.0873ms)
+✔ unknown history stays as an unresolved reference, not retirement or an invented player (1144.2247ms)
+✔ current identity takes priority and the latest archived snapshot is chosen for historical identity (997.6764ms)
+✔ foreign history and malformed relationship ownership reject instead of leaking another world (707.1852ms)
+✔ persisted E94 notices keep the archived name after college entry without recreating the formation event (691.9534ms)
+✔ career start forms one same-team teammate and one eligible rival, distinct and deterministic (67.3265ms)
+✔ no eligible rival is a normal empty state; teammate still forms (60.6566ms)
+✔ confirmCareerPlayer stores relations once; list view shows identity only (78.4938ms)
+✔ same-kind detail compares own lines only in games both played; leagues and phases stay separate (19768.953ms)
+✔ cross-kind detail sums only real batter-vs-pitcher plate appearances (13268.1215ms)
+✔ teammate gets one COEXIST_20 milestone on the 20th shared team game day only (31.7994ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 34702.3285

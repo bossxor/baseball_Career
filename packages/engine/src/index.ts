@@ -54,3 +54,4 @@ export * from './career-trait-view.js';
 export * from './trait-notices.js';
 export * from './relationships.js';
 export * from './relation-notices.js';
+export * from './relationship-history.js';

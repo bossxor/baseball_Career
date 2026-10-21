@@ -1,5 +1,7 @@
 # 다음 환경 구현 인계 — 2026-10-21
 
+- M2-AM(2026-10-21): 대학 진입 후 고교 관계의 과거 신원/등록·기록 조회와 E94 이름 보존. 관련21/21·타입/lint/build/골든/이벤트/설계10종/HTTP 통과. 다음은 사용자 승인한 새 팀 최초 등록 동료1명. [상세](M2-AM-RELATION-HISTORY.md).
+
 ## 현재 체크포인트
 
 - M2-AL(2026-10-21): 고교 관계 E94 NOTICE를 별도 relationNotices에 저장하고 비차단 요약/OPEN_RELATIONS→S42를 연결했다. pending 경기/필수 phase 불변, 연말 봉인 검증 후 메타데이터 읽음 갱신과 대학 진입을 보존한다. 관련38/38 통과. 사용자 결정: 고교25명 고정·후보0 NO_CANDIDATE, 추가 NPC 생성 폐기. [M2-AL](M2-AL-RELATION-FORMATION-NOTICES.md).

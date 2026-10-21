@@ -4,6 +4,7 @@ import {createWorldEvent,enqueueWorldEvent,eventDefinition,resolveEventChoice} f
 import type {EventInstance} from './events.js';
 import {canonicalJson} from './game.js';
 import {schoolYearEndBasis} from './college-entry.js';
+import {careerRelationshipListView} from './relationship-history.js';
 
 /** E94 is a NOTICE. It lives outside blocking tasks and never stops an E01/E02/E84 or pending game. */
 export function queueRelationFormationNotices(source:HighSchoolCareer,worldDay:number):readonly EventInstance[]|undefined {
@@ -39,8 +40,8 @@ export function unreadRelationNotices(source:HighSchoolCareer){
  return (source.relationNotices??[]).flatMap(event=>{
   if(seen.has(event.eventKey))throw new RangeError('DUPLICATE_RELATION_NOTICE');seen.add(event.eventKey);
   const relation=noticeSource(source,event);if(event.status!=='OPEN')return [];
-  const definition=eventDefinition(event.definitionId),other=Object.hasOwn(source.world.players,relation.otherPlayerKey)?source.world.players[relation.otherPlayerKey]:undefined;
-  return [{eventKey:event.eventKey,eventVersion:event.version,definitionId:'E94' as const,title:definition.title,body:definition.body,relationKey:relation.relationKey,type:relation.type,otherPlayerKey:relation.otherPlayerKey,otherName:other?.name??null,otherInCurrentWorld:other!==undefined,seasonKey:event.seasonKey,occurredWorldDay:event.occurredWorldDay,targetScreen:'S42' as const}];
+  const definition=eventDefinition(event.definitionId),other=careerRelationshipListView(source).find(r=>r.relationKey===relation.relationKey)!;
+  return [{eventKey:event.eventKey,eventVersion:event.version,definitionId:'E94' as const,title:definition.title,body:definition.body,relationKey:relation.relationKey,type:relation.type,otherPlayerKey:relation.otherPlayerKey,otherName:other.other?.name??null,otherInCurrentWorld:other.otherAvailability==='CURRENT_WORLD',seasonKey:event.seasonKey,occurredWorldDay:event.occurredWorldDay,targetScreen:'S42' as const}];
  });
 }
 
