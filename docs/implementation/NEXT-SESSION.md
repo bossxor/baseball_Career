@@ -2,6 +2,8 @@
 
 ## 현재 체크포인트
 
+- M2-AK(2026-10-21): 동료 20경기 공존 이정표를 일마감에 연결했다. 39/39 통과. 다음 관계 후보: 졸업 시 SEPARATED 전이(NPC 진로 추적 필요), 후보0 선수 생성, E94~96, 프로 cross-kind 관계(T14). [M2-AK](M2-AK-TEAMMATE-MILESTONE.md).
+
 - M2-AJ(2026-10-21): 관계 상세 relationDetailView(같은 종류 비교·다른 종류 직접 대결·범위 분리). 관계5/5·테스트 타입·lint 통과. 다음 후보: 동료 20경기 공존 milestone, 졸업 시 SEPARATED 전이(NPC 진로 추적 필요), 후보0 선수 생성, E94~96, 프로 cross-kind 관계(T14). [M2-AJ](M2-AJ-RELATION-DETAIL.md).
 
 - M2-AI(2026-10-21): 고교 라이벌·동료 형성과 S42 목록 투영. 전체 npm run check 305/305(843.5초) 통과. 다음 관계 작업: 후보0 선수 생성, 분리/재회/은퇴 전이, 맞대결 집계, E94~96, 프로 cross-kind 관계(T14). [M2-AI](M2-AI-HS-RELATIONS.md).

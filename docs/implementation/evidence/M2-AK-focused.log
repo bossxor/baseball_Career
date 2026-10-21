@@ -1,0 +1,49 @@
+✔ college preseason preserves carried abilities, validates registration/revision/focus and uses a fresh PRE window (1063.7886ms)
+▶ actual college216-game season: resume, annual windows, scoped records, observations and pitcher XP
+  ✔ safe chunk and pause preserve pending game exactly across JSON resume (3453.3125ms)
+  ✔ college skips career-start focus, opens fresh E43 at16 and permits one annual training (120363.9546ms)
+  ✔ new E41 at24 permits MID once and records the college boundary (105489.4391ms)
+  ✔ all216 FINAL college games and48 per team preserve HS records and archive; observation48→96 (693617.6018ms)
+  ✔ actual college regular216→cup4/5 games preserves regular totals and observation denominator (100556.3236ms)
+  ✔ actual college year growth uses regular outs/plans and acknowledges one academic year without repeating training (2717.9234ms)
+  ✔ actual played college year seals NPC growth and activates academic year2 without changing official records (3067.7327ms)
+✔ actual college216-game season: resume, annual windows, scoped records, observations and pitcher XP (1029836.6506ms)
+✔ college trait cursor resets by season, HS regular BB never counts toward a college-season threshold (222.5084ms)
+✔ college emergency uses school floors/age/namespace and saved RNG, release preserves identities (260.6882ms)
+✔ cup freezes top4 and regular basis, admits only a complete closed season and rejects duplicate/stale start (9512.357ms)
+✔ semifinal upsets seed final venues high/low/high; two wins cancel third final, split requires it (6778.4047ms)
+✔ actual AI cup for a nonqualifying protagonist: bounded JSON replay, whole-date health, separate records/no extra growth (10980.331ms)
+✔ postseason-only appearance can unlock T06 from career cup HR without increasing regular PA (5430.1718ms)
+✔ ONE_GAME plan persists across safe chunks, serializes exactly and closes whole game date (7692.4402ms)
+✔ pause keeps pending RNG/cursor; active plan cannot be silently changed; invalid phase/revision rejected (1414.1447ms)
+✔ ONE_WEEK includes calendar rest, stops within7 dates with same-day games complete (12011.5988ms)
+▶ actual full HS league path: focus12, training16, style24, all216 games and48 per team without auto route
+  ✔ default NEXT_MAJOR_EVENT stops at actual12 team games and typed E02 (71889.4602ms)
+  ✔ training first valid window16; DEFER preserves opportunity and never applies ability growth (49189.4766ms)
+  ✔ style first valid window24; navigation is read/open only and does not repeat same event (129567.8394ms)
+  ✔ league completion stops SEASON_REVIEW, no US offer/route or automatic growth invented (833464.5464ms)
+  ✔ graduation pays only actual school periods once, preserves training and leaves the shared ledger open (2400.8276ms)
+  ✔ actual graduation→E04→college admission→next-year world preserves216 records and pays growth once (3287.7817ms)
+✔ actual full HS league path: focus12, training16, style24, all216 games and48 per team without auto route (1089856.2107ms)
+✔ day close records the evaluated day and unlocks nothing without evidence (3976.4064ms)
+✔ crossing BB30 unlocks T02 once with a receipt; replay and older days are no-ops (4070.0774ms)
+✔ owned traits survive a later correction and pitcher-only traits never reach a hitter (3632.555ms)
+✔ unlocked traits feed the next game context and the career keeps advancing (3729.9738ms)
+✔ career start forms one same-team teammate and one eligible rival, distinct and deterministic (118.4727ms)
+✔ no eligible rival is a normal empty state; teammate still forms (70.2702ms)
+✔ confirmCareerPlayer stores relations once; list view shows identity only (172.6889ms)
+✔ same-kind detail compares own lines only in games both played; leagues and phases stay separate (15223.5504ms)
+✔ cross-kind detail sums only real batter-vs-pitcher plate appearances (10486.8635ms)
+✔ teammate gets one COEXIST_20 milestone on the 20th shared team game day only (61.9249ms)
+✔ hidden unlock raises one E84 stop; general unlock does not (227.5609ms)
+✔ OPEN_TRAITS resolves E84, navigates to S38 and restores the saved phase once (116.7495ms)
+✔ general unlocks collect in the unread summary until acknowledged (150.2959ms)
+✔ season progress stops at the day close with MAJOR_EVENT when a hidden unlock is pending (5893.9855ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1111986.8984

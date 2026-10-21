@@ -6,7 +6,7 @@ import type {RecordLedger,GameContribution} from './records.js';
 
 export type RelationType='RIVAL'|'TEAMMATE';
 export type RelationStage='FORMED'|'SEPARATED'|'REUNITED_OPPONENT'|'REUNITED_TEAM'|'RETIRED';
-export interface RelationMilestone {stage:RelationStage;evidenceKey:string;worldDay:number}
+export interface RelationMilestone {stage:RelationStage;evidenceKey:string;worldDay:number;kind?:'FORMATION'|'COEXIST_20'}
 export interface PlayerRelationship {relationKey:string;type:RelationType;normalPairKey:string;primaryPlayerKey:string;otherPlayerKey:string;stage:RelationStage;milestones:readonly RelationMilestone[]}
 export interface RelationshipLedger {
  schemaVersion:1;relations:readonly PlayerRelationship[];
@@ -72,4 +72,20 @@ export function relationDetailView(source:{world:HighSchoolWorld;records:RecordL
  const s={PA:0,AB:0,H:0,BB:0,HBP:0,K:0,TB:0,HR:0};
  for(const g of games)for(const m of Object.values(g.matchups))if(m.batterKey===batter.simulationKey && m.pitcherKey===pitcher.simulationKey)for(const k of Object.keys(s) as (keyof typeof s)[])s[k]+=m.stats[k];
  return {relationKey,mode:'DIRECT' as const,batterKey:batter.simulationKey,pitcherKey:pitcher.simulationKey,stats:{...s,AVG:rate(s.H,s.AB),OBP:rate(s.H+s.BB+s.HBP,s.AB+s.BB+s.HBP),SLG:rate(s.TB,s.AB)}};
+}
+
+/** 60/51: a teammate's first milestone is 20 shared registered team game days in one regular season (rest/rain days are not games).
+ * Regular school rosters do not change within a season, so current roster membership is the registration for each game day. */
+export function refreshRelationMilestones(source:{world:HighSchoolWorld;records:RecordLedger;relationships?:RelationshipLedger}):RelationshipLedger|undefined {
+ if(!source.relationships)return source.relationships;
+ const ledger=structuredClone(source.relationships),school=source.world.schools.find(s=>s.id===source.world.protagonistSchoolId);
+ if(!school)return ledger;
+ const leagueKey=source.world.leagueKey??'HS';
+ const days=[...new Set(Object.values(source.records.games).filter(g=>g.scope.leagueKey===leagueKey && g.scope.phase==='REGULAR' && g.scope.seasonKey===source.world.seasonKey && Object.hasOwn(g.teams,school.id)).map(g=>g.worldDay))].sort((a,b)=>a-b);
+ ledger.relations=ledger.relations.map(r=>{
+  if(r.type!=='TEAMMATE' || r.milestones.some(m=>m.kind==='COEXIST_20'))return r;
+  if(!school.roster.includes(r.primaryPlayerKey) || !school.roster.includes(r.otherPlayerKey) || days.length<20)return r;
+  return {...r,milestones:[...r.milestones,{stage:r.stage,kind:'COEXIST_20',evidenceKey:JSON.stringify(['coexist20',r.relationKey,source.world.seasonKey]),worldDay:days[19]!}]};
+ });
+ return ledger;
 }

@@ -4,7 +4,7 @@ import {abilityKeys} from '@playball/rules';
 import {createHighSchoolWorld} from '../src/high-school-world.js';
 import type {HighSchoolWorld} from '../src/high-school-world.js';
 import {canonicalJson} from '../src/game.js';
-import {formHighSchoolRelations,validateRelationshipLedger,relationshipListView,relationDetailView} from '../src/relationships.js';
+import {formHighSchoolRelations,validateRelationshipLedger,relationshipListView,relationDetailView,refreshRelationMilestones} from '../src/relationships.js';
 import {createHighSchoolCareer,confirmCareerPlayer,resolveCareerFocusEvent,confirmCareerPreseason} from '../src/high-school-career.js';
 import {advanceHighSchoolCareer} from '../src/high-school-progress.js';
 import type {HighSchoolCareer} from '../src/high-school-career.js';
@@ -77,4 +77,17 @@ test('cross-kind detail sums only real batter-vs-pitcher plate appearances',()=>
  assert.equal(view.stats.PA,expected);assert.ok(view.stats.PA>0);
  const moved={...state,world:{...state.world,players:Object.fromEntries(Object.entries(state.world.players).filter(([k])=>k!==m.pitcherKey))}};
  assert.equal(relationDetailView(moved,key,{leagueKey:'HS',phase:'REGULAR'}).mode,'UNAVAILABLE');
+});
+
+test('teammate gets one COEXIST_20 milestone on the 20th shared team game day only',()=>{
+ const started=confirmCareerPlayer(createHighSchoolCareer(world(),'GROWTH'),0);
+ const withDays=(n:number)=>{const s=structuredClone(started);for(let i=0;i<n;i++){const key=`fake-${i}`;s.records.games[key]={gameKey:key,worldDay:40+i*2,scope:{seasonKey:'2032',leagueKey:'HS',phase:'REGULAR'},teams:{H01:{games:1,W:1,L:0,T:0,R:1,RA:0}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}};}return s;};
+ const mateOf=(l:ReturnType<typeof refreshRelationMilestones>)=>l!.relations.find(r=>r.type==='TEAMMATE')!;
+ assert.equal(mateOf(refreshRelationMilestones(withDays(19))).milestones.length,1);
+ const twenty=withDays(20),ledger=refreshRelationMilestones(twenty)!;
+ assert.deepEqual(mateOf(ledger).milestones.at(-1),{stage:'FORMED',kind:'COEXIST_20',evidenceKey:JSON.stringify(['coexist20',mateOf(ledger).relationKey,'2032']),worldDay:78});
+ assert.equal(canonicalJson(refreshRelationMilestones({...twenty,relationships:ledger})),canonicalJson(ledger));
+ assert.equal(ledger.relations.find(r=>r.type==='RIVAL')!.milestones.length,1);
+ const moved=structuredClone(twenty);moved.world.schools=moved.world.schools.map(s=>({...s,roster:s.roster.filter(k=>k!==mateOf(ledger).otherPlayerKey)}));
+ assert.equal(mateOf(refreshRelationMilestones(moved)).milestones.length,1);
 });
