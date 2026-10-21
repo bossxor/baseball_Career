@@ -8,6 +8,8 @@ import type {KboSeasonProgress} from '../src/kbo-progress.js';
 import type {KboCareer} from '../src/kbo-career-entry.js';
 import {enteredKboCareer} from './fixtures.js';
 import {canonicalJson} from '../src/game.js';
+import {createKboCompetitionGameWorld} from '../src/kbo-game-world.js';
+import {kboGameContext} from '../src/kbo-progress.js';
 import {settleStarterSeasonTraits} from '../src/high-school-traits.js';
 
 const scheduled=(kind:'HITTER'|'PITCHER'='PITCHER')=>{const e=enteredKboCareer(kind),p=confirmKboPreseasonPlan(e,e.revision),o=confirmKboOpeningRoster(p,p.revision);return confirmKboSeasonSchedule(o,o.revision);};
@@ -112,4 +114,18 @@ test('advancing past the last scheduled day enters SEASON_REVIEW and settles the
  assert.equal(r.stopReason,'SEASON_REVIEW');assert.equal(r.career.phaseContext.phase,'SEASON_REVIEW');
  assert.deepEqual(r.career.traits!.settledStarterSeasons,[r.career.world.seasonKey]);
  assert.throws(()=>advanceKboCareer(r.career,r.career.revision),/INVALID_CAREER_PHASE/);
+});
+
+
+test('pro AI context reads the last completed 20-game block per club and league, and season pitching outs',()=>{
+ const s=scheduled('HITTER'),world=createKboCompetitionGameWorld(s.world,'KBO',s.protagonistKey),club=world.schools[0]!;
+ const hitter=club.roster.find(k=>world.players[k]!.kind==='HITTER')!,pitcher=club.roster.find(k=>world.players[k]!.kind==='PITCHER')!;
+ const seed=(n:number,pa:number)=>{const c=structuredClone(s);for(let i=0;i<n;i++){const gameKey=`ctx-${i}`;c.records.games[gameKey]={gameKey,worldDay:i+1,scope:{seasonKey:c.world.seasonKey,leagueKey:'KBO',phase:'REGULAR'},teams:{[club.id]:{games:1,W:1,L:0,T:0,R:1,RA:0},other:{games:1,W:0,L:1,T:0,R:0,RA:1}},
+  batting:{[hitter]:{PA:pa,AB:pa,BB:0,HBP:0,K:0,H:1,TB:1,HR:0,R:0,RBI:0,twoB:0,threeB:0,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0}},
+  pitching:{[pitcher]:{BF:3,outs:3,H:0,HR:0,BB:0,HBP:0,K:0,R:0,ER:0,pitches:12,games:1,starts:0,starterOuts:0,loadedBF:0,W:0,L:0,SV:0,HLD:0,BS:0,shutouts:0}},batterSplits:{[hitter]:{L:{PA:0,AB:0,H:0,BB:0,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0},R:{PA:pa,AB:pa,H:1,BB:0,HBP:0,K:0,TB:1,HR:0,twoB:0,threeB:0,RBI:0}}},pitcherSplits:{[pitcher]:{L:{BF:0,outs:0,AB:0,H:0,TB:0,HR:0,BB:0,HBP:0,K:0},R:{BF:3,outs:3,AB:3,H:0,TB:0,HR:0,BB:0,HBP:0,K:0}}},matchups:{}};}return c;};
+ assert.equal(kboGameContext(seed(19,4),'KBO').recentBatting[hitter],undefined);
+ const twenty=kboGameContext(seed(25,4),'KBO');
+ assert.equal(twenty.recentBatting[hitter]!.PA,80);assert.equal(twenty.recentBatting[hitter]!.H,20);
+ assert.equal(twenty.recentPitchingOuts[pitcher],75);
+ assert.equal(kboGameContext(seed(25,4),'FUTURES').recentBatting[hitter],undefined);
 });

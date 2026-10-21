@@ -30,7 +30,7 @@ export interface ActiveKboRosterWorld extends Omit<KboRosterWorld,'status'> {sta
 /** New pro root: never pass this world to HS/COLLEGE commands. Scheduling and games follow separately. */
 export interface KboCareer {
  schemaVersion:1;revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveKboRosterWorld;
- protagonistKey:string;protagonistClubId:string;phaseContext:{phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase:'SEASON_REVIEW'};
+ protagonistKey:string;protagonistClubId:string;phaseContext:{phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase:'SEASON_REVIEW'}|{phase:'EVENT_DECISION';eventKey:string;resume:KboSeasonProgress};
  activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string};
  registration:{playerKey:string;clubId:string;seasonKey:string;status:'ACTIVE';firstTeam:boolean;competitionKey?:'KBO'|'FUTURES'};
  rights:KboRookieSigning['rights'];amateurHistory:HighSchoolCareer;

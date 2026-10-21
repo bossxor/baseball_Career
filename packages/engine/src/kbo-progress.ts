@@ -7,10 +7,13 @@ import {closeKboCompetitionDay,createKboDayLedger} from './kbo-day.js';
 import type {KboLeagueKey} from './kbo-day.js';
 import type {ScheduledGame} from './schedule.js';
 import {refreshCareerTraits,settleStarterSeasonTraits} from './high-school-traits.js';
+import {recordTotals} from './records.js';
+import {raiseKboWindowEvent} from './kbo-windows.js';
+import type {BattingLine} from './types.js';
 
 export interface KboPendingGame {leagueKey:KboLeagueKey;job:HighSchoolGameJob}
 export type KboSeasonProgress={phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:KboPendingGame|null};
-export type KboProgressStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'DAY_CLOSED'|'HEALTH_CHANGE'|'SEASON_REVIEW';
+export type KboProgressStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'DAY_CLOSED'|'MAJOR_EVENT'|'HEALTH_CHANGE'|'SEASON_REVIEW';
 export interface KboProgressResult {career:KboCareer;stopReason:KboProgressStop;plateAppearances:number;completedInnings:number;daysClosed:number}
 const LEAGUES:readonly KboLeagueKey[]=['KBO','FUTURES'];
 const schedulesOf=(c:KboCareer)=>c.competitionSchedule!.leagues;
@@ -30,15 +33,20 @@ export function startKboRegularSeason(source:KboCareer,expectedRevision:number):
 /** Server-internal world AI context for one league. Rotations follow each club's own games in that league. Never sent to clients. */
 export function kboGameContext(career:KboCareer,leagueKey:KboLeagueKey):HighSchoolGameContext {
  const world=createKboCompetitionGameWorld(career.world,leagueKey,career.protagonistKey);
- const starters:Record<string,string>=Object.create(null) as Record<string,string>;
+ const starters:Record<string,string>=Object.create(null) as Record<string,string>,recentBatting:Record<string,BattingLine>=Object.create(null) as Record<string,BattingLine>;
+ const scope={leagueKey,phase:'REGULAR' as const,seasonKey:career.world.seasonKey},season=recordTotals(career.records,scope);
  for(const club of world.schools){
   const available=club.roster.filter(k=>world.players[k]!.kind==='PITCHER' && !Object.hasOwn(career.health.injuries,k)).sort();
   const rotation=available.filter(k=>world.players[k]!.position==='SP'),pool=rotation.length?rotation:available;
   if(pool.length===0)throw new RangeError('NO_HEALTHY_KBO_PITCHER');
   const games=Object.values(career.records.games).filter(g=>g.scope.leagueKey===leagueKey && g.scope.seasonKey===career.world.seasonKey && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,club.id)).length;
   starters[club.id]=pool[games%pool.length]!;
+  // 41/44: lineup competition reads the last completed 20-team-game block of this league, like school play.
+  const clubGames=Object.values(career.records.games).filter(g=>g.scope.leagueKey===leagueKey && g.scope.seasonKey===career.world.seasonKey && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,club.id)).sort((a,b)=>a.worldDay-b.worldDay || (a.gameKey<b.gameKey?-1:1));
+  const review=Math.floor(clubGames.length/20)*20,block=new Set(clubGames.slice(Math.max(0,review-20),review).map(g=>g.gameKey));
+  if(block.size){const reviewed=recordTotals({...career.records,games:Object.fromEntries(Object.entries(career.records.games).filter(([k])=>block.has(k)))},scope);for(const key of club.roster)if(Object.hasOwn(reviewed.batting,key))recentBatting[key]=reviewed.batting[key]!;}
  }
- return {difficulty:career.difficulty,unavailableKeys:Object.keys(career.health.injuries),starters,recentBatting:{},recentPitchingOuts:{},traits:career.traits?.owned??{},approaches:{}};
+ return {difficulty:career.difficulty,unavailableKeys:Object.keys(career.health.injuries),starters,recentBatting,recentPitchingOuts:Object.fromEntries(Object.entries(season.pitching).map(([k,p])=>[k,p.outs])),traits:career.traits?.owned??{},approaches:{}};
 }
 
 function pendingQueue(career:KboCareer,day:number):{leagueKey:KboLeagueKey;game:ScheduledGame}[] {
@@ -88,6 +96,8 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   const closed=closeKboCompetitionDay(career.world,schedulesOf(career),career.protagonistKey,career.records,career.health,career.days!,day);
   career.world=closed.world;career.health=closed.health;career.days=closed.days;progress.nextWorldDay=day+1;daysClosed++;
   career.traits=refreshCareerTraits(career,day,LEAGUES);
+  const windowEvent=progress.nextWorldDay>last?null:raiseKboWindowEvent(career,day,progress);
+  if(windowEvent){Object.assign(career,windowEvent);return finish('MAJOR_EVENT');}
   // Like school careers, a change to my own player's health stops progress so the player can react before the next day.
   if(closed.result.injured.includes(career.protagonistKey) || closed.result.recovered.includes(career.protagonistKey)){
    if(progress.nextWorldDay>last){return review();}

@@ -74,3 +74,4 @@ export * from './kbo-game-world.js';
 export * from './kbo-day.js';
 export * from './kbo-progress.js';
 export * from './kbo-season-growth.js';
+export * from './kbo-windows.js';
