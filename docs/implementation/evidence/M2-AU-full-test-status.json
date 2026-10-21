@@ -1,0 +1,18 @@
+{
+  "status": "INTENTIONALLY_INTERRUPTED",
+  "reason": "User requested progress checkpoint/commit/push at 5% remaining; primary used95% observed before interruption.",
+  "command": "npm test",
+  "completedPasses": 356,
+  "terminatedTestFileReports": 2,
+  "durationMs": 653378.7271,
+  "terminatedFiles": [
+    "packages/engine/test/college-career.test.ts",
+    "packages/engine/test/high-school-progress.test.ts"
+  ],
+  "fullSuitePassed": false,
+  "focusedSuite": {
+    "passed": 10,
+    "failed": 0
+  },
+  "nextAction": "Rerun full npm test to completion; do not treat interrupted run as full acceptance."
+}

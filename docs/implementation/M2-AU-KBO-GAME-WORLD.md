@@ -15,7 +15,7 @@ createKboCompetitionGameWorld는 유효한 프로 등록/계약과1군28명의 �
 - 관련10/10: 신규 프로1 + 기존 학교5 + 일정4. 실제 서명한 투수의1군/퓨처스 각각 실제1경기를 엔진 FINAL까지 진행하고 PA13에서 JSON 복원 후 PA7씩 진행한 결과와 연속 진행을 비교했다. 완전히 같은 경기/기록·구종 결과, 공식 KBO/FUTURES REGULAR 범위와1회 게시/중복 무효·날짜 위조 거절을 확인했다. 원래 커리어 루트는 변경하지 않는다.
 - 별도 개막일 실측10경기(KBO5/퓨처스5)가 모두 완료됐다. 실제 모든20팀의 라인업/구종이 엔진에 들어가며 해당 리그 하루 중복 선수0이다. 원본은 고교216경기를 유지하고 반환된 worker 원장만226경기로 증가했다. 이것을 프로 커리어 진행 완료나 UI/DB 저장 증거로 보고하지 않는다. evidence/M2-AU-opening-day.log 참조.
 - 첫 집중 테스트에서 변조1군 명단의 거절이 빠진 것을 발견했다. 모집 세계 검증은 firstTeam을 검사하지 않으므로 프로 경기 투영 경계에28명·고유성·소속 검사를 추가해 최종10/10을 통과했다.
-- 타입/lint/전체 build·compiled 골든·이벤트 동기화·설계 정적10종·HTTP smoke 통과. 전체 테스트는 실행 중이며 완료 결과를 추가한다.
+- 타입/lint/전체 build·compiled 골든·이벤트 동기화·설계 정적10종·HTTP smoke 통과. 추가 전체 npm test는 사용자5% 체크포인트를 지키기 위해653.38초에 명시적으로 중단했다. Node는 완료356통과와 종료한 college-career.test.ts/high-school-progress.test.ts 두 파일을 fail2로 표시했다. 이2개는 게임 단언 실패를 확인한 것이 아니라 Stop-Process로 종료한 미완주이며 전체 통과를 주장하지 않는다. 다음 환경에서 전체 npm test를 다시 완주해야 한다. evidence/M2-AU-full-tests.log 및 M2-AU-full-test-status.json 참조.
 
 ## 다음 상위 명령의 필수 조건
 

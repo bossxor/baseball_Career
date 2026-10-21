@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "9405f5c08f157081f9a6c625fdda4851dab08bb5a0d9be2dda8d2f37028d1548"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "7d1a3a33e617829819f958506916e27b1e06f7f72b91147e34a27c928949e0e3"
+    },
+    {
+      "path": "docs/implementation/M2-AU-KBO-GAME-WORLD.md",
+      "sha256": "3192dfb610ccff76ca51f25e06f8d2874776aa87ee28b8167051f32096d7b634"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AU-full-tests.log",
+      "sha256": "97b6152ddb3ca3f32db58ea8e9ee683b1f40cc301636be575d9593fd8383eee4"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AU-full-test-status.json",
+      "sha256": "d93a82c3d901fe022532a52932eb810c88204cd0a08a63010c5fd44077e9fd1e"
+    }
+  ]
+}
