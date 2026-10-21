@@ -19,6 +19,8 @@ import type {CareerDevelopmentLedger} from './high-school-training.js';
 import {createOwnCareerAssessment} from './high-school-assessment.js';
 import type {OwnCareerAssessment} from './high-school-assessment.js';
 import {createCareerTraitLedger} from './high-school-traits.js';
+import {formHighSchoolRelations} from './relationships.js';
+import type {RelationshipLedger} from './relationships.js';
 import type {CareerTraitLedger} from './high-school-traits.js';
 import type {SeasonGrowthLedger} from './growth-ledger.js';
 import type {HighSchoolGraduation,CollegeAdmission} from './high-school-route.js';
@@ -54,6 +56,8 @@ export interface HighSchoolCareer {
  development?:CareerDevelopmentLedger;
  ownAssessment?:OwnCareerAssessment;
  traits?:CareerTraitLedger;
+ /** 60 high-school rival/teammate formed once at career start. Absent on saves created before M2-AI. */
+ relationships?:RelationshipLedger;
  seasonGrowth?:SeasonGrowthLedger;
  graduation?:HighSchoolGraduation;
  collegeAdmission?:CollegeAdmission;
@@ -103,7 +107,7 @@ export function confirmCareerPlayer(source:HighSchoolCareer,expectedRevision:num
  assertHighSchoolCareerRevision(source,expectedRevision);if(source.phaseContext.phase!=='CREATED')throw new RangeError('INVALID_CAREER_PHASE');
  const updated=structuredClone(source),world=updated.world;
  const event=createWorldEvent({definitionId:'E01',worldKey:world.worldKey,seasonKey:world.seasonKey,evidence:{version:1,type:'CAREER_START',fields:{careerSimulationKey:world.protagonistKey}},resume:{worldKey:world.worldKey,seasonKey:world.seasonKey,phase:'PRESEASON_SETUP',competitionKey:'HS',registrationKey:world.protagonistSchoolId,sourceRevision:source.revision+1},sourceSequence:1,worldDay:Math.max(0,Math.min(...world.schedule.map(g=>g.worldDay))-1)});
- updated.events=[event];updated.phaseContext={phase:'EVENT_DECISION',eventKey:event.eventKey,resume:{phase:'PRESEASON_SETUP'}};updated.revision++;return updated;
+ updated.events=[event];updated.relationships=formHighSchoolRelations(world,Math.min(...world.schedule.map(g=>g.worldDay)));updated.phaseContext={phase:'EVENT_DECISION',eventKey:event.eventKey,resume:{phase:'PRESEASON_SETUP'}};updated.revision++;return updated;
 }
 /** Focus domain handlers only; other events are never automatically confirmed here. */
 export function resolveCareerFocusEvent(source:HighSchoolCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number;command:'KEEP_FOCUS'|'CHOOSE_FOCUS';focus?:readonly string[]}):HighSchoolCareer {

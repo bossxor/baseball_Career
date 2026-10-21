@@ -52,3 +52,4 @@ export * from './us-world.js';
 export * from './us-inventory.js';
 export * from './career-trait-view.js';
 export * from './trait-notices.js';
+export * from './relationships.js';
