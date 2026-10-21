@@ -95,6 +95,10 @@
 
 rules의 6능력/집중4개/종합 반올림/최고값 반감은35·90을 따르고 기용 역할 가중은41입니다. 경기 코어·선수 육성·고교 실제 기록 기반 특성 해금·부분 성장·대학 입학/첫 등록과 대학 정규 진행까지 연결했습니다. 전체 보관 선수 가져오기, 전체 커리어/다시즌 전이, 관계 근거 특성, KBO 실제 모집·계약/졸업 후 진로, 인증·Neon 저장·APK는 미구현입니다. 대학 학년 결과/진급과4학년 졸업은 M2-Y/Z/AA에서 구현했습니다. 설계 fixture 전체의 NOT_EXECUTED 상태를 일괄 구현 PASS로 바꾸지 않습니다.
 
+## M2-AX 프로 일마감 후 건강 정지·특성 해금 — 부분 완료
+
+내 선수의 부상/회복이 있는 날 HEALTH_CHANGE로 멈추고, 두 리그의 같은 시즌 공식 기록으로 특성 해금을 평가한다(refreshCareerTraits를 구조 타입·leagueKeys로 일반화). 관련6/6, 전체 check 385/385 통과. [M2-AX](M2-AX-KBO-DAY-HOOKS.md).
+
 ## M2-AW 프로 정규 시즌 진행 명령 — 부분 완료
 
 startKboRegularSeason/advanceKboCareer로 KboCareer에 정규 시즌 phase·날짜 원장·두 리그 날짜순 경기 큐(안전 청크·JSON 재개)·구종 장부 부분 병합·두 리그 일마감을 연결했다. 관련4/4, 전체 check 383/383 통과. [M2-AW](M2-AW-KBO-SEASON-PROGRESS.md).

@@ -60,3 +60,32 @@ test('three days close in order; pitcher books never roll back and each club pla
  const first=career.days!.days[0]!.day,expected=Object.values(career.competitionSchedule!.leagues).flatMap(l=>l.filter(g=>g.worldDay>=first && g.worldDay<first+3)).length;
  assert.equal(proGames(career).length,expected);assert.ok(expected>0);
 });
+
+const firstScheduledDay=(c:KboCareer)=>Math.min(...Object.values(c.competitionSchedule!.leagues).flatMap(l=>l.map(g=>g.worldDay)));
+
+test('recovery of my own player stops progress with HEALTH_CHANGE after the day closes',()=>{
+ const s=scheduled('HITTER'),first=firstScheduledDay(s),key=s.protagonistKey,season=s.world.seasonKey;
+ const injured=structuredClone(s);
+ injured.health={...injured.health,injuries:Object.assign(Object.create(null),injured.health.injuries,{[key]:{severity:'MILD',remainingTeamGames:1,diagnosedGameKey:'earlier-game',seasonKey:season}}),
+  games:[...injured.health.games,{evidence:{gameKey:'earlier-game',teamKey:'earlier-team',seasonKey:season,day:first-5,roster:[key],appearances:[]},result:{injured:[key],recovered:[]}}]};
+ const started=startKboRegularSeason(injured,injured.revision);
+ let career=started,stop='',days=0;
+ for(let i=0;i<200;i++){const r=advanceKboCareer(career,career.revision,1);career=r.career;days+=r.daysClosed;stop=r.stopReason;if(r.stopReason!=='CHUNK_LIMIT')break;}
+ assert.equal(stop,'HEALTH_CHANGE');assert.equal(days,1);assert.ok(!Object.hasOwn(career.health.injuries,key));
+ assert.equal((career.phaseContext as KboSeasonProgress).nextWorldDay,first+1);assert.equal(career.days!.days.length,1);
+});
+
+test('official records that cross a trait threshold unlock it once after a pro day close',()=>{
+ const s=scheduled('HITTER'),first=firstScheduledDay(s),key=s.protagonistKey,season=s.world.seasonKey;
+ const seeded=structuredClone(s),gameKey='seed-official-game';
+ seeded.records.games[gameKey]={gameKey,worldDay:first-1,scope:{seasonKey:season,leagueKey:'KBO',phase:'REGULAR'},teams:{seedA:{games:1,W:1,L:0,T:0,R:1,RA:0},seedB:{games:1,W:0,L:1,T:0,R:0,RA:1}},
+  batting:{[key]:{PA:30,AB:0,BB:30,HBP:0,K:0,H:0,TB:0,HR:0,R:0,RBI:0,twoB:0,threeB:0,games:1,fieldingGames:0,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0}},pitching:{},
+  batterSplits:{[key]:{L:{PA:0,AB:0,H:0,BB:0,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0},R:{PA:30,AB:0,H:0,BB:30,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0}}},pitcherSplits:{},matchups:{}};
+ seeded.records.revision+=1;
+ let career=startKboRegularSeason(seeded,seeded.revision);
+ career=runDay(career).career;
+ assert.ok(career.traits!.owned[key]!.unlocked.includes('T02'));
+ assert.equal(career.traits!.unlocks.filter(u=>u.traitId==='T02' && u.playerKey===key).length,1);
+ const once=career.traits!.unlocks.length;career=runDay(career).career;
+ assert.equal(career.traits!.unlocks.filter(u=>u.traitId==='T02').length,1);assert.ok(career.traits!.unlocks.length>=once);
+});

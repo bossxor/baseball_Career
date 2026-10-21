@@ -3,6 +3,7 @@ import type {RecordLedger,RecordScope} from './records.js';
 import {evaluateTraitUnlocks,validateTraits,TRAIT_IDS} from './traits.js';
 import type {TraitOwnership,TraitId} from './traits.js';
 import type {HighSchoolCareer} from './high-school-career.js';
+import type {DevelopmentPlayer} from './player.js';
 
 export interface TraitUnlockReceipt {playerKey:string;traitId:TraitId;worldDay:number;recordRevision:number;seasonKey?:string;leagueKey?:string}
 /** T16 (107 §7): consecutive world seasons whose official regular starter outs reach 3×G in one competition. */
@@ -35,13 +36,15 @@ function evidenceFor(records:RecordLedger,seasonKey:string,leagueKey:string,play
 
 /** Runs once per closed school day after every game of that date is FINAL. A team plays at most one game per day,
  * so new traits apply from each player's next game snapshot and never change a committed game. */
-export function refreshCareerTraits(source:HighSchoolCareer,closedDay:number):CareerTraitLedger {
+/** Structural source so school and pro careers share one unlock path. */
+export interface TraitSource {world:{seasonKey:string;leagueKey?:string;players:Readonly<Record<string,DevelopmentPlayer>>};records:RecordLedger;traits?:CareerTraitLedger}
+export function refreshCareerTraits(source:TraitSource,closedDay:number,leagueKeys?:readonly string[]):CareerTraitLedger {
  const ledger=structuredClone(source.traits??createCareerTraitLedger());
  if(ledger.schemaVersion!==1 || !Number.isSafeInteger(closedDay))throw new RangeError('INVALID_TRAIT_LEDGER');
  // M2-V college saves carry an HS cursor without a season tag; college play did not exist yet.
  const sameSeason=ledger.lastSeasonKey===source.world.seasonKey || ledger.lastSeasonKey===undefined && source.world.leagueKey!=='COLLEGE';
  if(sameSeason && ledger.lastClosedDay!==null && closedDay<=ledger.lastClosedDay)return ledger;
- const leagueKey=source.world.leagueKey??'HS';
+ for(const leagueKey of leagueKeys??[source.world.leagueKey??'HS']) {
  const played=new Set<string>();
  for(const g of Object.values(source.records.games))if(g.scope.seasonKey===source.world.seasonKey && g.scope.leagueKey===leagueKey && (g.scope.phase==='REGULAR' || g.scope.phase==='POSTSEASON') && g.worldDay<=closedDay){for(const k of Object.keys(g.batting))played.add(k);for(const k of Object.keys(g.pitching))played.add(k);}
  for(const key of [...played].sort()) {
@@ -52,6 +55,7 @@ export function refreshCareerTraits(source:HighSchoolCareer,closedDay:number):Ca
   if(added.length===0)continue;
   ledger.owned[key]=after;
   ledger.unlocks=[...ledger.unlocks,...added.map(traitId=>({playerKey:key,traitId,worldDay:closedDay,recordRevision:source.records.revision,seasonKey:source.world.seasonKey,leagueKey}))];
+ }
  }
  ledger.lastClosedDay=closedDay;
  ledger.lastSeasonKey=source.world.seasonKey;

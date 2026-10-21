@@ -6,10 +6,11 @@ import {createKboCompetitionGameWorld} from './kbo-game-world.js';
 import {closeKboCompetitionDay,createKboDayLedger} from './kbo-day.js';
 import type {KboLeagueKey} from './kbo-day.js';
 import type {ScheduledGame} from './schedule.js';
+import {refreshCareerTraits} from './high-school-traits.js';
 
 export interface KboPendingGame {leagueKey:KboLeagueKey;job:HighSchoolGameJob}
 export type KboSeasonProgress={phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:KboPendingGame|null};
-export type KboProgressStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'DAY_CLOSED'|'SEASON_REVIEW';
+export type KboProgressStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'DAY_CLOSED'|'HEALTH_CHANGE'|'SEASON_REVIEW';
 export interface KboProgressResult {career:KboCareer;stopReason:KboProgressStop;plateAppearances:number;completedInnings:number;daysClosed:number}
 const LEAGUES:readonly KboLeagueKey[]=['KBO','FUTURES'];
 const schedulesOf=(c:KboCareer)=>c.competitionSchedule!.leagues;
@@ -84,6 +85,12 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   }
   const closed=closeKboCompetitionDay(career.world,schedulesOf(career),career.protagonistKey,career.records,career.health,career.days!,day);
   career.world=closed.world;career.health=closed.health;career.days=closed.days;progress.nextWorldDay=day+1;daysClosed++;
+  career.traits=refreshCareerTraits(career,day,LEAGUES);
+  // Like school careers, a change to my own player's health stops progress so the player can react before the next day.
+  if(closed.result.injured.includes(career.protagonistKey) || closed.result.recovered.includes(career.protagonistKey)){
+   if(progress.nextWorldDay>last){career.phaseContext={phase:'SEASON_REVIEW'};return finish('SEASON_REVIEW');}
+   return finish('HEALTH_CHANGE');
+  }
  }
  if(progress.nextWorldDay>last && !progress.pendingGame){career.phaseContext={phase:'SEASON_REVIEW'};return finish('SEASON_REVIEW');}
  return finish(daysClosed>=maxDays?'DAY_CLOSED':'CHUNK_LIMIT');
