@@ -12,6 +12,7 @@ import {canonicalJson} from '../src/game.js';
 import {closeKboSeason} from '../src/kbo-year-end.js';
 import {kboYearTransitionReadiness,stageKboAgeAndContracts,startNextKboSeason} from '../src/kbo-year-transition.js';
 import {advanceKboCareer} from '../src/kbo-progress.js';
+import {kboForcedRetirementReview} from '../src/kbo-retirement-review.js';
 import {requestKboRetirement,resolveKboRetirement,retireKboAtMaxAge} from '../src/kbo-retirement.js';
 import {offerKboRenewal,acceptKboRenewal,kboRenewalValueWon} from '../src/kbo-renewal.js';
 
@@ -164,4 +165,18 @@ test('my retirement: E36 cancel returns, confirm closes E30 and archives; age 45
  const old=structuredClone(c);old.world.players[old.protagonistKey]={...old.world.players[old.protagonistKey]!,age:45};
  assert.throws(()=>offerKboRenewal(old,old.revision),/KBO_RENEWAL_NOT_AVAILABLE/);
  const end=retireKboAtMaxAge(old,old.revision);assert.equal(end.phaseContext.phase,'ARCHIVED');assert.equal(end.retirement!.reason,'MAX_AGE');assert.equal(end.retirement!.age,45);
+});
+
+test('forced retirement review needs age 35 and two closed seasons under the first-team threshold',()=>{
+ const c=closed(),key=c.protagonistKey,season=c.world.seasonKey,prev=String(Number(season)-1);
+ assert.equal(kboForcedRetirementReview(c).required,false);
+ const vet=structuredClone(c);vet.world.players[key]={...vet.world.players[key]!,age:35};
+ assert.deepEqual(kboForcedRetirementReview(vet),{required:false,age:35,seasons:[{seasonKey:season,amount:0}]});
+ vet.proSeasons=[{seasonKey:prev} as never];
+ assert.equal(kboForcedRetirementReview(vet).required,true);
+ // 50 first-team PA in the earlier season clears the review.
+ vet.records.games['prev-kbo']={gameKey:'prev-kbo',worldDay:1,scope:{seasonKey:prev,leagueKey:'KBO',phase:'REGULAR'},teams:{a:{games:1,W:1,L:0,T:0,R:0,RA:0},b:{games:1,W:0,L:1,T:0,R:0,RA:0}},
+  batting:{[key]:{PA:50,AB:50,BB:0,HBP:0,K:0,H:0,TB:0,HR:0,R:0,RBI:0,twoB:0,threeB:0,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0}},pitching:{},
+  batterSplits:{[key]:{L:{PA:0,AB:0,H:0,BB:0,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0},R:{PA:50,AB:50,H:0,BB:0,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0}}},pitcherSplits:{},matchups:{}};
+ assert.equal(kboForcedRetirementReview(vet).required,c.world.players[key]!.kind==='PITCHER');
 });

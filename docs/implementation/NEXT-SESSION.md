@@ -23,6 +23,8 @@
 
 ## 현재 체크포인트
 
+- M2-BL(2026-10-22): kboForcedRetirementReview 읽기 판정(전체 check는 M2-BK 411/411 이후 미실행). 다음: 재도전 사건·E30 거절(프로 재도전 3회)·실패 시 은퇴, 신인 100명 공급·AI 드래프트/FA, 은퇴 페이지(15). [M2-BL](M2-BL-KBO-FORCED-RETIREMENT-REVIEW.md).
+
 - M2-BK(2026-10-21): 내 선수 은퇴 requestKboRetirement/resolveKboRetirement(E36)·retireKboAtMaxAge, ARCHIVED+E37. 이제 프로 커리어가 시즌 반복→은퇴까지 엔진에서 닫힌다. 다음: 강제 은퇴 검토(35세+2시즌 미달), E30 거절/재도전, 신인 100명 공급·AI 드래프트/FA, 은퇴 페이지(15). [M2-BK](M2-BK-KBO-MY-RETIREMENT.md).
 
 - M2-BJ(2026-10-21): 45세 NPC 은퇴(retireKboOverAgeNpcs, startNextKboSeason 안). 집중20/20·lint·타입·build·골든, 전체 check는 다음 묶음에서. 다음: 15 신인100명 공급·AI 드래프트, AI 재계약/FA, 내 선수 최종/강제 은퇴. [M2-BJ](M2-BJ-KBO-NPC-RETIREMENT.md).

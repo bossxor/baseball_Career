@@ -1,0 +1,80 @@
+
+> again-playball@0.1.0 typecheck
+> npm run build --workspace @playball/rules && npm run typecheck --workspaces --if-present && tsc -p tsconfig.tests.json
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/rules@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/api@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/web@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+✔ the postseason plays real games day by day to one champion and returns to SEASON_REVIEW (13343.7491ms)
+✔ postseason home runs feed career trait evidence after each postseason day (1817.2699ms)
+✔ year transition readiness lists every Y01 blocker until postseason, growth, season close and my contract are done (11065.4405ms)
+✔ E30 renewal offer follows 08 once and closes only through the accepted domain commit (14769.8218ms)
+✔ Y02 stages age+1 and contract years for every pro player without changing the source (11857.1977ms)
+✔ next season activates every player at once and the second pro season opens and plays (33970.0724ms)
+✔ season close grows and ages every pro NPC once from the natural PRO period (9737.4352ms)
+✔ NPCs who played at 45 retire at activation and only their first team is reselected (15403.2448ms)
+✔ my retirement: E36 cancel returns, confirm closes E30 and archives; age 45 ends the career without a renewal (12757.6577ms)
+✔ forced retirement review needs age 35 and two closed seasons under the first-team threshold (10603.5193ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 137134.591
+
+> again-playball@0.1.0 build
+> npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/api && npm run build --workspace @playball/web
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/api@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/web@0.1.0 build
+> tsc -p tsconfig.json --noEmit && vite build
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 17 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                     0.57 kB │ gzip:  0.38 kB
+dist/assets/BlackHanSans-Regular-B0-nbKIc.ttf     998.42 kB
+dist/assets/NotoSansKR-Variable-k7NQXPol.ttf   10,414.58 kB
+dist/assets/index-D7SWy-NU.css                      1.44 kB │ gzip:  0.73 kB
+dist/assets/index-qvV079z_.js                     221.56 kB │ gzip: 69.64 kB
+
+✓ built in 1.56s
+
+> again-playball@0.1.0 verify:engine
+> node --import tsx scripts/verify-engine.mjs
+
+PASS: compiled engine in independent Node process matches source golden SHA256 113761f605145c79179c912841754bf060e25d42856822f847074317288d5c92
+EXIT=0
