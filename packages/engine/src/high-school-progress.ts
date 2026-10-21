@@ -9,7 +9,7 @@ import type {HighSchoolGameContext} from './high-school-game.js';
 import type {BattingLine} from './types.js';
 import {forfeitCareerTrainingEvent} from './high-school-training.js';
 import {refreshOwnCareerAssessment} from './high-school-assessment.js';
-import {refreshCareerTraits} from './high-school-traits.js';
+import {refreshCareerTraits,settleStarterSeasonTraits} from './high-school-traits.js';
 export type SchoolProgressStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'ONE_GAME'|'ONE_WEEK'|'MAJOR_EVENT'|'HEALTH_CHANGE'|'SEASON_REVIEW'|'CUP_COMPLETE';
 export interface SchoolProgressResult {career:HighSchoolCareer;stopReason:SchoolProgressStop;plateAppearances:number;completedInnings:number;healthChanges:{injured:boolean;recovered:boolean}|null}
 function teamGames(state:HighSchoolCareer):number {return Object.values(state.records.games).filter(g=>g.scope.seasonKey===state.world.seasonKey && g.scope.leagueKey===(state.world.leagueKey??'HS') && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,state.world.protagonistSchoolId)).length;}
@@ -47,7 +47,7 @@ export function advanceSchoolCareer(source:HighSchoolCareer,expectedRevision:num
  const finish=(stopReason:SchoolProgressStop,healthChanges:SchoolProgressResult['healthChanges']=null):SchoolProgressResult=>{if(stopReason!=='CHUNK_LIMIT' && stopReason!=='ENGINE_LIMIT')progress.advancePlan=null;career.revision++;return {career,stopReason,plateAppearances,completedInnings,healthChanges};};
  while(plateAppearances<1000 && completedInnings<20 && teamGames(career)-initialTeamGames<6){
   const day=progress.nextWorldDay;
-  if(day>lastDay){career.phaseContext={phase:'SEASON_REVIEW'};return finish('SEASON_REVIEW');}
+  if(day>lastDay){career.traits=settleStarterSeasonTraits(career,lastDay);career.phaseContext={phase:'SEASON_REVIEW'};return finish('SEASON_REVIEW');}
   if(!progress.pendingGame){
    const pending=career.world.schedule.filter(g=>g.worldDay===day && !Object.hasOwn(career.records.games,g.simulationKey)).sort((a,b)=>a.simulationKey<b.simulationKey?-1:1)[0];
    if(pending){
@@ -75,7 +75,7 @@ export function advanceSchoolCareer(source:HighSchoolCareer,expectedRevision:num
    career.events=[...career.events,event];career.phaseContext={phase:'EVENT_DECISION',eventKey:event.eventKey,resume:structuredClone(progress)};return finish('MAJOR_EVENT',healthChanges);
   }
   if(healthChanges.injured || healthChanges.recovered)return finish('HEALTH_CHANGE',healthChanges);
-  if(progress.nextWorldDay>lastDay){career.phaseContext={phase:'SEASON_REVIEW'};return finish('SEASON_REVIEW');}
+  if(progress.nextWorldDay>lastDay){career.traits=settleStarterSeasonTraits(career,lastDay);career.phaseContext={phase:'SEASON_REVIEW'};return finish('SEASON_REVIEW');}
   if(plan.mode==='ONE_GAME' && count>plan.startTeamGames)return finish('ONE_GAME');
   if(plan.mode==='ONE_WEEK' && progress.nextWorldDay>=plan.startWorldDay+7)return finish('ONE_WEEK');
  }

@@ -1,0 +1,10 @@
+✔ fresh hitter sees six exact-progress general traits and two name/hint-only hidden cards (33.0521ms)
+✔ pitcher sees pitcher traits only; unlocked hidden trait reveals condition, effects and evidence (15.0694ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 313.3004
