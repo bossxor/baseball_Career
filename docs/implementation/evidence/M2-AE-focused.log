@@ -1,0 +1,31 @@
+✔ HS career route→actual KBO preview→fixed result→signed next-season contract preserves all school books/records/budgets (3223.847ms)
+✔ declined draft keeps college admission legal, archives assessment and forbids later silent pro-world reroll (928.1001ms)
+✔ career stale revision/player/world/book/program or event version cannot partially sign; repeat prepare cannot reroll (1466.9111ms)
+✔ college E75 graduation uses college-adjusted B and next-season reservation, without repeating degree or advancing age (64533.8789ms)
+✔ HS hitter/pitcher: fixed US offers appear only with valid offers; signing preserves school history/age/growth and reserves minors (1545.8058ms)
+✔ average career hides US; declining all offers keeps domestic/college route and never rerolls (696.8483ms)
+✔ career US: forged score input, world/player drift, stale revision/event cannot sign partially (480.3088ms)
+✔ competing KBO/US signing closes the alternative without two active contracts or loss of old recruitment history (1500.8558ms)
+✔ career offer deadline is30 game days; clock persists, expiry hides US and preserves domestic/college paths (717.7874ms)
+✔ college graduation US comparison uses adjusted college performance and never reopens E75 or college enrollment (65220.0807ms)
+✔ season review atomically pays growth and opens one blocking E04 with a post-growth route snapshot (292.5688ms)
+✔ opening S28 keeps E04 open, repeated views/JSON restore do not change growth, RNG or revision (417.1006ms)
+✔ 43: college eligibility uses exact post-growth overall at48/52/55, fallback three stay available (596.2365ms)
+✔ college acceptance closes E04 once, preserves historical roster/records and reserves next-year admission (175.415ms)
+✔ stale revision/event/offer, ineligible or unknown college, changed evaluation reject without partial effects (237.1788ms)
+✔ missing calendar, incomplete review and another pending event do not pay growth or create graduation (592.038ms)
+✔ US offers: fixed snapshot, distinct max3 clubs, minor A/Rookie, canonical USD terms and no mutation (61.0047ms)
+✔ US offers: average evaluation, no roster slot, no budget or ineligible produces no visible US choice (22.1224ms)
+✔ US offers: boundary expiry, stale world/offer/version and player registration reject atomically (10.8275ms)
+✔ US signing: one contract/rights/registration/income reservation, no duplicate payout or world mutation (11.1462ms)
+✔ US reservation deducts one real level slot and bonus+first-year salary; identical receipt retries preserve totals (23.8016ms)
+✔ US reservation supports sequential candidates from current inventory and rejects stale competing snapshots atomically (14.1474ms)
+✔ US reservation detects changed totals/duplicated receipts/rewritten receipt and rejects invalid inventory (6.6585ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 71691.1051

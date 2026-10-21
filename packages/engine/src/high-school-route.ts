@@ -11,6 +11,7 @@ import {canonicalJson} from './game.js';
 import {validateDevelopmentPlayer} from './player.js';
 import {createWorldEvent,resolveEventChoice,completeBlockingEvent} from './events.js';
 import {createSeasonCalendar,assertSeasonCalendar} from './season-calendar.js';
+import {careerUsDirectView} from './career-us.js';
 
 export interface HighSchoolGraduation {
  version:1;eventKey:string;offerSetKey:string;sourceBasis:string;
@@ -67,6 +68,7 @@ export function highSchoolCareerRouteView(source:HighSchoolCareer){
  return {offerSetKey:graduation.offerSetKey,offerSetVersion:graduation.version,overall:result.overall,overallDisplay:result.overallDisplay,
   kbo:source.kboRecruitment?kboDraftView(source.kboRecruitment.world,source.kboRecruitment.program):{status:'AWAITING_RECRUITMENT' as const},
   colleges:COLLEGES.map(college=>({...college,eligible:result.overall>=college.minimumOverall,reasonCode:result.overall>=college.minimumOverall?null:'OVERALL_TOO_LOW',position:result.position})),
+  ...(source.usRecruitment && careerUsDirectView(source).visible?{us:careerUsDirectView(source)}:{}),
  };
 }
 export function openHighSchoolCareerRoute(source:HighSchoolCareer,expectedRevision:number,eventVersion:number){
@@ -90,5 +92,6 @@ export function enrollHighSchoolCollege(source:HighSchoolCareer,expectedRevision
   career.previousKboRecruitments=[...(career.previousKboRecruitments??[]),recruitment];delete career.kboRecruitment;
  }
  career.collegeAdmission={admissionKey,collegeId:college.id,status:'ADMITTED',entryYear,academicYear:1,yearsCompleted:0,playerKey:result.playerKey,position:result.position};
+ if(career.usRecruitment){career.previousUsRecruitments=[...(career.previousUsRecruitments??[]),{...career.usRecruitment,closedBy:'COLLEGE'}];delete career.usRecruitment;}
  career.events=career.events.map(e=>e.eventKey===event.eventKey?resolved:e);career.phaseContext={phase:'NEXT_SEASON_READY',route:'COLLEGE',admissionKey};career.revision++;return career;
 }

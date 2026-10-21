@@ -30,6 +30,7 @@ import type {CollegeNpcGrowth} from './college-year.js';
 import type {CollegeGraduation} from './college-graduation.js';
 
 import type {CareerKboRecruitment} from './career-kbo.js';
+import type {CareerUsRecruitment} from './career-us.js';
 
 export interface HighSchoolAdvancePlan {mode:'NEXT_MAJOR_EVENT'|'ONE_GAME'|'ONE_WEEK';startWorldDay:number;startTeamGames:number}
 export type HighSchoolProgressPhase={phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:HighSchoolGameJob|null;advancePlan?:HighSchoolAdvancePlan|null};
@@ -43,6 +44,7 @@ export type HighSchoolCareerPhase =
  | {phase:'CAREER_ROUTE'}
  | {phase:'NEXT_SEASON_READY';route:'COLLEGE';admissionKey:string}
  | {phase:'NEXT_SEASON_READY';route:'KBO';contractKey:string}
+ | {phase:'NEXT_SEASON_READY';route:'US';contractKey:string}
  | {phase:'EVENT_DECISION';eventKey:string;resume:{phase:'PRESEASON_SETUP'}|HighSchoolProgressPhase|{phase:'CAREER_ROUTE'}};
 export interface HighSchoolCareer {
  schemaVersion:1;revision:number;world:HighSchoolWorld;difficulty:Difficulty;
@@ -63,6 +65,8 @@ export interface HighSchoolCareer {
  collegeGraduation?:CollegeGraduation;
  kboRecruitment?:CareerKboRecruitment;
  previousKboRecruitments?:readonly CareerKboRecruitment[];
+ usRecruitment?:CareerUsRecruitment;
+ previousUsRecruitments?:readonly CareerUsRecruitment[];
  planHistory:readonly {completedTeamGames:number;focus:readonly string[];archetype:string}[];
 }
 /** Difficulty is immutable save metadata. Never accept a replacement policy on later commands. */

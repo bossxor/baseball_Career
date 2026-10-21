@@ -12,6 +12,7 @@ import {recentBattingPerformance,recentPitchingPerformance} from './lineup.js';
 import {draftBaseScore} from './draft.js';
 import {kboDraftView} from './kbo-draft.js';
 import {validateSeasonGrowthLedger} from './growth-ledger.js';
+import {careerUsDirectView} from './career-us.js';
 
 export interface CollegeGraduation {schemaVersion:1;eventKey:string;receiptKey:string;sourceBasis:string}
 function basis(source:HighSchoolCareer):string {
@@ -49,7 +50,7 @@ export function collegeGraduationRouteView(source:HighSchoolCareer){
  if(source.phaseContext.phase!=='CAREER_ROUTE' || admission.status!=='GRADUATED' || event.status!=='RESOLVED' || event.resolution?.command!=='GRADUATE_COLLEGE' || event.resolution.receiptKey!==graduation.receiptKey)throw new RangeError('INVALID_CAREER_PHASE');
  const evaluation=collegeCareerDraftEvaluation(source);
  if(source.kboRecruitment && (source.kboRecruitment.program.input.baseScore!==evaluation.draftBaseScore || canonicalJson(source.kboRecruitment.program.input.player)!==canonicalJson(source.world.players[source.world.protagonistKey])))throw new RangeError('STALE_CAREER_KBO_EVALUATION');
- return {seasonKey:source.world.seasonKey,collegeId:admission.collegeId,status:'GRADUATED' as const,yearsCompleted:4 as const,...evaluation,kbo:source.kboRecruitment?kboDraftView(source.kboRecruitment.world,source.kboRecruitment.program):{status:'AWAITING_RECRUITMENT' as const}};
+ return {seasonKey:source.world.seasonKey,collegeId:admission.collegeId,status:'GRADUATED' as const,yearsCompleted:4 as const,...evaluation,kbo:source.kboRecruitment?kboDraftView(source.kboRecruitment.world,source.kboRecruitment.program):{status:'AWAITING_RECRUITMENT' as const},...(source.usRecruitment && careerUsDirectView(source).visible?{us:careerUsDirectView(source)}:{})};
 }
 
 /** Shared official college evaluation; callers validate the route/task before commands. */

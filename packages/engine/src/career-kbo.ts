@@ -47,6 +47,7 @@ export function decideCareerKboDraft(source:HighSchoolCareer,expectedRevision:nu
    const resolved=completeBlockingEvent(event,input.eventVersion,{sourceEvidenceKey:event.evidenceKey,receiptKey:receipt.receiptKey,command:'ACCEPT_CAREER_OFFER'},{worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['ACCEPT_CAREER_OFFER']});career.events=career.events.map(e=>e.eventKey===event.eventKey?resolved:e);
   }else if(source.events.some(e=>e.status==='OPEN'))throw new RangeError('BLOCKING_EVENT_PENDING');
   career.phaseContext={phase:'NEXT_SEASON_READY',route:'KBO',contractKey:receipt.contract.contractKey};
+  if(career.usRecruitment){career.previousUsRecruitments=[...(career.previousUsRecruitments??[]),{...career.usRecruitment,closedBy:'KBO'}];delete career.usRecruitment;}
  }
  career.revision++;return career;
 }

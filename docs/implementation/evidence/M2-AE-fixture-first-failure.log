@@ -1,0 +1,44 @@
+✔ HS career route→actual KBO preview→fixed result→signed next-season contract preserves all school books/records/budgets (3015.2538ms)
+✔ declined draft keeps college admission legal, archives assessment and forbids later silent pro-world reroll (861.5443ms)
+✔ career stale revision/player/world/book/program or event version cannot partially sign; repeat prepare cannot reroll (1006.6758ms)
+✔ college E75 graduation uses college-adjusted B and next-season reservation, without repeating degree or advancing age (46908.4501ms)
+✔ HS hitter/pitcher: fixed US offers appear only with valid offers; signing preserves school history/age/growth and reserves minors (1453.3952ms)
+✔ average career hides US; declining all offers keeps domestic/college route and never rerolls (585.6172ms)
+✔ career US: forged score input, world/player drift, stale revision/event cannot sign partially (441.6995ms)
+✔ competing KBO/US signing closes the alternative without two active contracts or loss of old recruitment history (1201.7164ms)
+✔ career offer deadline is30 game days; clock persists, expiry hides US and preserves domestic/college paths (492.7823ms)
+✖ college graduation US comparison uses adjusted college performance and never reopens E75 or college enrollment (7309.5823ms)
+✔ season review atomically pays growth and opens one blocking E04 with a post-growth route snapshot (307.5887ms)
+✔ opening S28 keeps E04 open, repeated views/JSON restore do not change growth, RNG or revision (360.0896ms)
+✔ 43: college eligibility uses exact post-growth overall at48/52/55, fallback three stay available (622.1909ms)
+✔ college acceptance closes E04 once, preserves historical roster/records and reserves next-year admission (193.6346ms)
+✔ stale revision/event/offer, ineligible or unknown college, changed evaluation reject without partial effects (205.7706ms)
+✔ missing calendar, incomplete review and another pending event do not pay growth or create graduation (520.8201ms)
+✔ US offers: fixed snapshot, distinct max3 clubs, minor A/Rookie, canonical USD terms and no mutation (13.8491ms)
+✔ US offers: average evaluation, no roster slot, no budget or ineligible produces no visible US choice (6.5131ms)
+✔ US offers: boundary expiry, stale world/offer/version and player registration reject atomically (7.1034ms)
+✔ US signing: one contract/rights/registration/income reservation, no duplicate payout or world mutation (7.9092ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 19
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 52512.2475
+
+✖ failing tests:
+
+test at packages\engine\test\career-us.test.ts:1:6680
+✖ college graduation US comparison uses adjusted college performance and never reopens E75 or college enrollment (7309.5823ms)
+  RangeError: CHANGED_GROWTH_SEASON
+      at settleSchoolCareerGrowth (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\high-school-growth.ts:102:189)
+      at settleCollegeCareerGrowth (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\college-result.ts:28:9)
+      at acknowledgeCollegeSeasonReview (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\college-result.ts:35:15)
+      at completedCollegeAcademicYear (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\fixtures.ts:88:142)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\career-us.test.ts:46:35)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
