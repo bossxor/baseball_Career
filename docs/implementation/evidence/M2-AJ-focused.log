@@ -1,0 +1,16 @@
+✔ career start forms one same-team teammate and one eligible rival, distinct and deterministic (27.3168ms)
+✔ no eligible rival is a normal empty state; teammate still forms (17.1791ms)
+✔ confirmCareerPlayer stores relations once; list view shows identity only (22.6037ms)
+✔ same-kind detail compares own lines only in games both played; leagues and phases stay separate (11432.1408ms)
+✔ cross-kind detail sums only real batter-vs-pitcher plate appearances (9315.3286ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21271.4646
+EXIT=0
+TEST_TYPES_OK
+LINT_OK

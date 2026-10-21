@@ -2,6 +2,7 @@ import {abilityKeys} from '@playball/rules';
 import {createStreams,nextInteger} from './rng.js';
 import type {HighSchoolWorld} from './high-school-world.js';
 import type {DevelopmentPlayer} from './player.js';
+import type {RecordLedger,GameContribution} from './records.js';
 
 export type RelationType='RIVAL'|'TEAMMATE';
 export type RelationStage='FORMED'|'SEPARATED'|'REUNITED_OPPONENT'|'REUNITED_TEAM'|'RETIRED';
@@ -47,4 +48,28 @@ export function relationshipListView(ledger:RelationshipLedger|undefined,world:H
  // Relations to players outside the current world stay stored; their separation stages are a later transition.
  return (ledger?.relations??[]).filter(r=>Object.hasOwn(world.players,r.otherPlayerKey)).map(r=>{const p=world.players[r.otherPlayerKey]!;
   return {relationKey:r.relationKey,type:r.type,stage:r.stage,other:{name:p.name,kind:p.kind,position:p.position,throws:p.throws,bats:p.bats,pitchForm:p.pitchForm??null,schoolName:schoolName(p.simulationKey)}};});
+}
+
+const rate=(num:number,den:number)=>den>0?(num/den).toFixed(3).replace(/^0/,''):'-';
+export interface RelationScope {leagueKey:string;phase:'REGULAR'|'POSTSEASON'|'INTERNATIONAL';seasonKey?:string}
+/** S42 detail (60): same-kind pairs never pretend to face each other; they compare their own lines in games both played.
+ * Cross-kind pairs show only real batter-vs-pitcher plate appearances. Leagues/phases never mix. Read-only. */
+export function relationDetailView(source:{world:HighSchoolWorld;records:RecordLedger;relationships?:RelationshipLedger},relationKey:string,scope:RelationScope) {
+ const relation=source.relationships?.relations.find(r=>r.relationKey===relationKey);if(!relation)throw new RangeError('UNKNOWN_RELATION');
+ const me=source.world.players[relation.primaryPlayerKey],other=source.world.players[relation.otherPlayerKey];
+ if(!me || !other)return {relationKey,mode:'UNAVAILABLE' as const,reason:'OTHER_NOT_IN_CURRENT_WORLD' as const};
+ const games=Object.values(source.records.games).filter(g=>g.scope.leagueKey===scope.leagueKey && g.scope.phase===scope.phase && (scope.seasonKey===undefined || g.scope.seasonKey===scope.seasonKey));
+ if(games.length===0)return {relationKey,mode:'EMPTY' as const,reason:'NO_GAMES_IN_SCOPE' as const};
+ const played=(g:GameContribution,k:string)=>Object.hasOwn(g.batting,k) || Object.hasOwn(g.pitching,k);
+ if(me.kind===other.kind) {
+  const shared=games.filter(g=>played(g,me.simulationKey) && played(g,other.simulationKey));
+  const line=(k:string)=>{let PA=0,AB=0,H=0,BB=0,HBP=0,HR=0,TB=0,K=0,outs=0,ER=0;
+   for(const g of shared){const b=g.batting[k],p=g.pitching[k];if(b){PA+=b.PA;AB+=b.AB;H+=b.H;BB+=b.BB;HBP+=b.HBP;HR+=b.HR;TB+=b.TB;K+=b.K;}if(p){outs+=p.outs;ER+=p.ER;K+=p.K;}}
+   return me.kind==='HITTER'?{PA,AB,H,HR,BB,K,AVG:rate(H,AB),OBP:rate(H+BB+HBP,AB+BB+HBP),SLG:rate(TB,AB)}:{outs,K,ER,ERA:outs>0?(ER*27/outs).toFixed(2):'-'};};
+  return {relationKey,mode:'COMPARISON' as const,sharedGames:shared.length,mine:line(me.simulationKey),theirs:line(other.simulationKey),note:'같은 종류 선수끼리는 직접 상대 전적을 제공하지 않습니다.'};
+ }
+ const [batter,pitcher]=me.kind==='HITTER'?[me,other]:[other,me];
+ const s={PA:0,AB:0,H:0,BB:0,HBP:0,K:0,TB:0,HR:0};
+ for(const g of games)for(const m of Object.values(g.matchups))if(m.batterKey===batter.simulationKey && m.pitcherKey===pitcher.simulationKey)for(const k of Object.keys(s) as (keyof typeof s)[])s[k]+=m.stats[k];
+ return {relationKey,mode:'DIRECT' as const,batterKey:batter.simulationKey,pitcherKey:pitcher.simulationKey,stats:{...s,AVG:rate(s.H,s.AB),OBP:rate(s.H+s.BB+s.HBP,s.AB+s.BB+s.HBP),SLG:rate(s.TB,s.AB)}};
 }
