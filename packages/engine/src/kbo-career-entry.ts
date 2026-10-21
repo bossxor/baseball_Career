@@ -1,3 +1,5 @@
+import type {KboPostseasonPhase} from './kbo-postseason-progress.js';
+import type {KboPostseason} from './kbo-postseason.js';
 import type {KboSeasonClose} from './kbo-year-end.js';
 import type {KboCallupReview} from './kbo-callup.js';
 import type {KboSeasonProgress} from './kbo-progress.js';
@@ -32,14 +34,14 @@ export interface ActiveKboRosterWorld extends Omit<KboRosterWorld,'status'> {sta
 /** New pro root: never pass this world to HS/COLLEGE commands. Scheduling and games follow separately. */
 export interface KboCareer {
  schemaVersion:1;revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveKboRosterWorld;
- protagonistKey:string;protagonistClubId:string;phaseContext:{phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase:'SEASON_REVIEW'}|{phase:'EVENT_DECISION';eventKey:string;resume:KboSeasonProgress};
+ protagonistKey:string;protagonistClubId:string;phaseContext:{phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase:'SEASON_REVIEW'}|{phase:'EVENT_DECISION';eventKey:string;resume:KboSeasonProgress}|KboPostseasonPhase;
  activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string};
  registration:{playerKey:string;clubId:string;seasonKey:string;status:'ACTIVE';firstTeam:boolean;competitionKey?:'KBO'|'FUTURES'};
  rights:KboRookieSigning['rights'];amateurHistory:HighSchoolCareer;
  records:RecordLedger;health:HealthLedger;seasonGrowth:SeasonGrowthLedger;development:CareerDevelopmentLedger;
  traits?:CareerTraitLedger;relationships:RelationshipLedger;events:readonly EventInstance[];relationNotices:readonly EventInstance[];
  styleUsedWindows:readonly string[];planHistory:HighSchoolCareer['planHistory'];
- days?:SchoolDayLedger;callupReviews?:readonly KboCallupReview[];aiRosterReviews?:readonly string[];seasonClose?:KboSeasonClose;campNotices?:readonly EventInstance[];preseasonPlan?:KboPreseasonPlan;openingRoster?:KboOpeningRoster;competitionSchedule?:KboSeasonSchedule;
+ days?:SchoolDayLedger;callupReviews?:readonly KboCallupReview[];aiRosterReviews?:readonly string[];seasonClose?:KboSeasonClose;postseason?:KboPostseason;campNotices?:readonly EventInstance[];preseasonPlan?:KboPreseasonPlan;openingRoster?:KboOpeningRoster;competitionSchedule?:KboSeasonSchedule;
 }
 function entryKey(ready:KboAmateurYearEnd){return JSON.stringify(['kbo-season-entry',ready.receiptKey]);}
 /** One atomic result consumes the frozen reservation once. Replaying the same old source is deterministic;

@@ -18,7 +18,9 @@ export function settleKboSeasonGrowth(source:KboCareer,expectedRevision:number) 
  if(!history.length || history[0]!.completedTeamGames!==0 || history.some((p,i)=>i>0 && p.completedTeamGames<=history[i-1]!.completedTeamGames))throw new RangeError('INVALID_GROWTH_PLAN_HISTORY');
  const all=[...source.competitionSchedule.leagues.KBO,...source.competitionSchedule.leagues.FUTURES];
  const first=Math.min(...all.map(g=>g.worldDay)),last=Math.max(...all.map(g=>g.worldDay));
- if(source.days.days.length!==last-first+1 || source.days.days.some((d,i)=>d.day!==first+i))throw new RangeError('INCOMPLETE_GROWTH_DAYS');
+ // Postseason days follow the regular range in the same ledger; regular growth reads only the regular range.
+ const regularDays=source.days.days.filter(d=>d.day<=last);
+ if(regularDays.length!==last-first+1 || regularDays.some((d,i)=>d.day!==first+i))throw new RangeError('INCOMPLETE_GROWTH_DAYS');
  const player=source.world.players[key]!,start=source.seasonGrowth.seasonStart;
  // Plan boundaries: a plan recorded after N team games starts the growth day after my club's N-th game in my league.
  const league=protagonistLeague(source),growthIndex=new Map(calendar.growthDays.map((d,i)=>[d,i]));
@@ -29,7 +31,7 @@ export function settleKboSeasonGrowth(source:KboCareer,expectedRevision:number) 
  const partOf=(day:number)=>{const g=growthIndex.get(day);return g===undefined?-1:parts.findIndex(p=>g>=p.start && g<p.end);};
  // A registration that began injured from an earlier season starts in rehabilitation.
  let rehabilitating=Object.hasOwn(source.health.injuries,key) && source.health.injuries[key]!.seasonKey!==season && !source.days.days.some(d=>d.result.injured.includes(key));
- for(const closed of source.days.days){
+ for(const closed of regularDays){
   const games=Object.values(source.records.games).filter(g=>g.worldDay===closed.day && g.scope.seasonKey===season && g.scope.phase==='REGULAR' && (g.scope.leagueKey==='KBO' || g.scope.leagueKey==='FUTURES'));
   const mine=games.filter(g=>Object.hasOwn(g.batting,key) || Object.hasOwn(g.pitching,key));
   if(mine.length>1)throw new RangeError('DOUBLE_BOOKED_GROWTH_DAY');

@@ -29,7 +29,9 @@ export function closeKboCompetitionDay(world:ActiveKboRosterWorld,schedules:KboS
  const evidence=canonicalJson({worldKey:world.worldKey,seasonKey:world.seasonKey,day,contributions});
  const old=source.days.find(d=>d.day===day);
  if(old){if(old.evidence!==evidence)throw new RangeError('CHANGED_DAY_EVIDENCE');return {world,health,days:source,result:structuredClone(old.result),duplicate:true};}
- if(day!==(source.days.at(-1)?.day??first-1)+1 || source.days.some((d,i)=>d.day!==first+i))throw new RangeError('NON_CHRONOLOGICAL_PRO_DAY');
+ // The ledger may already hold the regular range when postseason days are closed with a postseason-only schedule.
+ const ledgerFirst=source.days[0]?.day??first;
+ if(day!==(source.days.at(-1)?.day??first-1)+1 || source.days.some((d,i)=>d.day!==ledgerFirst+i))throw new RangeError('NON_CHRONOLOGICAL_PRO_DAY');
  if(Object.values(records.games).some(c=>(c.scope.leagueKey==='KBO' || c.scope.leagueKey==='FUTURES') && c.scope.seasonKey===world.seasonKey && c.worldDay>day))throw new RangeError('FUTURE_GAME_BEFORE_DAY_CLOSE');
  if(health.games.some(g=>g.evidence.seasonKey===world.seasonKey && g.evidence.day>=day))throw new RangeError('PARTIAL_DAY_HEALTH_STATE');
  const registered=new Set<string>();
