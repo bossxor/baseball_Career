@@ -1,0 +1,16 @@
+LINT=0
+TYPES=0
+✔ wild card: 4th seed starts 1-0 and hosts; one 4th-seed win ends it, the 5th seed needs two (1.8125ms)
+✔ best-of 3/5/7 with 2-1, 2-2-1 and 2-2-3 home patterns and a single champion (1.0129ms)
+✔ invalid seeds or a winner outside the game are rejected (0.2049ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 207.3
+FOCUSED=0
+BUILD=0
+ENGINE=0

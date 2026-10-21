@@ -23,6 +23,8 @@
 
 ## 현재 체크포인트
 
+- M2-BD(2026-10-21): KBO 포스트시즌 대진·시리즈 순수 상태(kbo-postseason.ts). 다음: SEASON_REVIEW 뒤 PS phase와 실제 경기 진행·POSTSEASON 기록·우승 반영, 다음 세계 시즌 개시(72). [M2-BD](M2-BD-KBO-POSTSEASON-BRACKET.md).
+
 - M2-BC(2026-10-21): 프로 시즌 연말 마감 closeKboSeason(성장 지급 확인·강화 포기·노쇠·건강 마감). 전체 check 399/399. 다음: 나이 증가·계약 연차·다음 세계 시즌 개시(72 연도 전환), 포스트시즌, 내 선수 강등 정책. [M2-BC](M2-BC-KBO-SEASON-CLOSE.md).
 
 - M2-BB(2026-10-21): AI 클럽 20경기 정기 승강(사건 없음, 내 선수 제외). 전체 check 398/398. 다음: 내 선수 강등 정책(설계 확인 필요), 연말 노쇠·나이·연도 전환, 포스트시즌. [M2-BA/BB](M2-BA-KBO-CALLUP.md).
