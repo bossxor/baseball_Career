@@ -23,6 +23,8 @@
 
 ## 현재 체크포인트
 
+- M2-AW(2026-10-21): KboCareer 정규 시즌 진행 명령 연결(start/advance, 두 리그 날짜 큐·재개·일마감). 전체 check 383/383. 다음: 시즌 중 건강/부상 정지와 프로 사건 창, 일마감 후 성장·특성·관계·평가 마감, AI 로테이션 재편성, 정규 시즌 결산. [M2-AW](M2-AW-KBO-SEASON-PROGRESS.md).
+
 - M2-AV(2026-10-21): 깨끗한 HEAD 전체 check 377/377(1189.4초) 완주로 M2-AU 미완주 항목 해소. 프로 두 리그 일마감 closeKboCompetitionDay(클럽 전체 하루1회 피로·리그별 건강 팀 키) 추가, 관련3/3 통과. 다음은 KboCareer에 날짜 원장·정규 phase를 연결하고 두 리그 날짜순 큐를 하나의 원자 결과로 진행하는 것이다. [M2-AV](M2-AV-KBO-DAY-CLOSE.md).
 
 - M2-AL(2026-10-21): 고교 관계 E94 NOTICE를 별도 relationNotices에 저장하고 비차단 요약/OPEN_RELATIONS→S42를 연결했다. pending 경기/필수 phase 불변, 연말 봉인 검증 후 메타데이터 읽음 갱신과 대학 진입을 보존한다. 관련38/38 통과. 사용자 결정: 고교25명 고정·후보0 NO_CANDIDATE, 추가 NPC 생성 폐기. [M2-AL](M2-AL-RELATION-FORMATION-NOTICES.md).

@@ -72,3 +72,4 @@ export * from './kbo-schedule.js';
 
 export * from './kbo-game-world.js';
 export * from './kbo-day.js';
+export * from './kbo-progress.js';
