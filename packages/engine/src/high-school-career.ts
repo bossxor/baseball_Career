@@ -21,6 +21,7 @@ import type {OwnCareerAssessment} from './high-school-assessment.js';
 import {createCareerTraitLedger} from './high-school-traits.js';
 import {formHighSchoolRelations} from './relationships.js';
 import type {RelationshipLedger} from './relationships.js';
+import {queueRelationFormationNotices} from './relation-notices.js';
 import type {CareerTraitLedger} from './high-school-traits.js';
 import type {SeasonGrowthLedger} from './growth-ledger.js';
 import type {HighSchoolGraduation,CollegeAdmission} from './high-school-route.js';
@@ -58,6 +59,7 @@ export interface HighSchoolCareer {
  traits?:CareerTraitLedger;
  /** 60 high-school rival/teammate formed once at career start. Absent on saves created before M2-AI. */
  relationships?:RelationshipLedger;
+ relationNotices?:readonly EventInstance[];
  seasonGrowth?:SeasonGrowthLedger;
  graduation?:HighSchoolGraduation;
  collegeAdmission?:CollegeAdmission;
@@ -158,5 +160,7 @@ export function confirmSchoolPreseason(source:HighSchoolCareer,expectedRevision:
   // Entry opens the ledger before PRE choices; only the plan fields change at confirmation.
   updated.seasonGrowth.seasonStart={...updated.seasonGrowth.seasonStart,focus:[...player.focus],archetype:player.archetype};
  }
- if(updated.development)updated.development.seasonStartPlayer=structuredClone(player);updated.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:Math.min(...source.world.schedule.map(g=>g.worldDay)),pendingGame:null};updated.revision++;return updated;
+ if(updated.development)updated.development.seasonStartPlayer=structuredClone(player);updated.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:Math.min(...source.world.schedule.map(g=>g.worldDay)),pendingGame:null};updated.revision++;
+ const notices=queueRelationFormationNotices(updated,updated.phaseContext.nextWorldDay);if(notices!==undefined)updated.relationNotices=notices;
+ return updated;
 }

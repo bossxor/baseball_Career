@@ -10,7 +10,7 @@
 
 relationship.type=RIVAL또는TEAMMATE,stage=FORMED/SEPARATED/REUNITED_OPPONENT/REUNITED_TEAM/RETIRED. 현재stage는최근상태요약,이전단계는milestone행으로보존. 선수쌍은정렬ID로normalPairKey,주인공관점primaryPlayerId별화면을만든다. 같은쌍동일type중복없음,라이벌이동료가되어도과거type를덮지않고TEAMMATE관계추가/연결한다.
 
-고교라이벌후보는같은kind/나이차≤1/영구overall차≤5/현재HS/자기ID제외. 같은고교는가능하나고교동료와동일ID배정금지. 후보정렬ID뒤별도relationFormation seed로하나,후보0이면51의고교선수생성루틴한명,세계인원상한검사실패시라이벌없음정상상태와기록남김(커리어진행막지않음). 이선수는실제고교로스터/드래프트풀에포함해유령경력안만듦. 동료는실제팀정규명단다른선수중같은kind/나이차작음/ID순1명,없으면추가생성없이없음.
+고교라이벌후보는같은kind/나이차≤1/영구overall차≤5/현재HS/자기ID제외. 같은고교는가능하나고교동료와동일ID배정금지. 후보정렬ID뒤별도relationFormation seed로하나,사용자확정U(2026-10-21): 후보0이면 NO_CANDIDATE를 기록하고 라이벌 없이 정상 진행한다. 고교당25명/전체225명 고정이며 라이벌 보충 선수 생성·재추첨은 하지 않는다. 동료는실제팀정규명단다른선수중같은kind/나이차작음/ID순1명,없으면추가생성없이없음.
 
 ## 상태 전이
 

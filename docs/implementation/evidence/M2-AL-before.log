@@ -1,0 +1,22 @@
+✔ 125: generated99/164 metadata, all dispatch/branch counts; domain implementations not implied (21.3105ms)
+✔ 81: exact typed evidence key, duplicates including already-resolved source never resurrect (3.2283ms)
+✔ 125: blocking navigation remains OPEN, no ACK bypass; actual domain source commits resolution (0.8693ms)
+✔ 125: DOMAIN is only a plan until actual reducer succeeds; invalid focus leaves event unchanged (1.4505ms)
+✔ 125: nonblocking navigation and ACK resolve once; current availability/context/version rechecked (1.7479ms)
+✔ E63 approved/deferred branch must come from saved posting decision, no fallback/re-roll (2.2427ms)
+✔ 69/81: one active task deadline→source sequence order, no FORM/PRESENTATION world tasks (2.2461ms)
+✔ 125: deadline expiry only after committed day-closing domain outcome; invalidation reason preserved (11.1537ms)
+✔ career start forms one same-team teammate and one eligible rival, distinct and deterministic (35.5016ms)
+✔ no eligible rival is a normal empty state; teammate still forms (27.6407ms)
+✔ confirmCareerPlayer stores relations once; list view shows identity only (38.613ms)
+✔ same-kind detail compares own lines only in games both played; leagues and phases stay separate (8598.9539ms)
+✔ cross-kind detail sums only real batter-vs-pitcher plate appearances (6333.2758ms)
+✔ teammate gets one COEXIST_20 milestone on the 20th shared team game day only (33.2636ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15920.469

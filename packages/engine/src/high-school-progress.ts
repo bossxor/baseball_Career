@@ -12,6 +12,7 @@ import {refreshOwnCareerAssessment} from './high-school-assessment.js';
 import {refreshCareerTraits,settleStarterSeasonTraits} from './high-school-traits.js';
 import {raiseHiddenTraitNotice} from './trait-notices.js';
 import {refreshRelationMilestones} from './relationships.js';
+import {queueRelationFormationNotices} from './relation-notices.js';
 export type SchoolProgressStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'ONE_GAME'|'ONE_WEEK'|'MAJOR_EVENT'|'HEALTH_CHANGE'|'SEASON_REVIEW'|'CUP_COMPLETE';
 export interface SchoolProgressResult {career:HighSchoolCareer;stopReason:SchoolProgressStop;plateAppearances:number;completedInnings:number;healthChanges:{injured:boolean;recovered:boolean}|null}
 function teamGames(state:HighSchoolCareer):number {return Object.values(state.records.games).filter(g=>g.scope.seasonKey===state.world.seasonKey && g.scope.leagueKey===(state.world.leagueKey??'HS') && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,state.world.protagonistSchoolId)).length;}
@@ -66,6 +67,7 @@ export function advanceSchoolCareer(source:HighSchoolCareer,expectedRevision:num
    if(career.world.schedule.some(g=>g.worldDay===day && !Object.hasOwn(career.records.games,g.simulationKey)))continue;
   }
   const closed=closeHighSchoolDay(career.world,career.records,career.health,career.days,day);career.world=closed.world;career.health=closed.health;career.days=closed.days;progress.nextWorldDay=day+1;career.ownAssessment=refreshOwnCareerAssessment(career);career.traits=refreshCareerTraits(career,day);if(career.relationships)career.relationships=refreshRelationMilestones(career)!;
+  const notices=queueRelationFormationNotices(career,day);if(notices!==undefined)career.relationNotices=notices;
   const player=career.world.players[career.world.protagonistKey]!,count=teamGames(career);
   const healthChanges={injured:closed.result.injured.includes(player.simulationKey),recovered:closed.result.recovered.includes(player.simulationKey)};
   const healthy=!Object.hasOwn(career.health.injuries,player.simulationKey);

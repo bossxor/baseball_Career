@@ -1,0 +1,46 @@
+✔ 125: generated99/164 metadata, all dispatch/branch counts; domain implementations not implied (72.985ms)
+✔ 81: exact typed evidence key, duplicates including already-resolved source never resurrect (3.4484ms)
+✔ 125: blocking navigation remains OPEN, no ACK bypass; actual domain source commits resolution (0.9924ms)
+✔ 125: DOMAIN is only a plan until actual reducer succeeds; invalid focus leaves event unchanged (1.1886ms)
+✔ 125: nonblocking navigation and ACK resolve once; current availability/context/version rechecked (1.1676ms)
+✔ E63 approved/deferred branch must come from saved posting decision, no fallback/re-roll (1.007ms)
+✔ 69/81: one active task deadline→source sequence order, no FORM/PRESENTATION world tasks (1.2701ms)
+✔ 125: deadline expiry only after committed day-closing domain outcome; invalidation reason preserved (0.9205ms)
+✔ career creation/confirmation uses canonical phases and persisted E01, no game auto-play (328.8222ms)
+✔ E01 domain focus validates4 before commit; failed choice leaves event and world untouched (166.1702ms)
+✔ KEEP_FOCUS resolves E01; initial plan changes preserve current ability, potential and stream state (75.8023ms)
+✔ PRE archetype change once; keeping current archetype uses no new opportunity or ability reset (129.6358ms)
+✔ preseason confirmation enters progress at first schedule day, revision protected; unresolved source mismatch rejected (166.6408ms)
+✔ season review atomically pays growth and opens one blocking E04 with a post-growth route snapshot (408.6288ms)
+✔ opening S28 keeps E04 open, repeated views/JSON restore do not change growth, RNG or revision (396.763ms)
+✔ 43: college eligibility uses exact post-growth overall at48/52/55, fallback three stay available (713.2004ms)
+✔ college acceptance closes E04 once, preserves historical roster/records and reserves next-year admission (233.6959ms)
+✔ stale revision/event/offer, ineligible or unknown college, changed evaluation reject without partial effects (227.4938ms)
+✔ missing calendar, incomplete review and another pending event do not pay growth or create graduation (642.2194ms)
+✔ preseason confirmation persists two E94 notices for pinned rival/teammate without blocking progress (280.6306ms)
+✔ opening a notice acknowledges only that notice and navigates to its relation; gameplay phase and RNG stay unchanged (252.9094ms)
+✔ stale revision/version, wrong command, foreign or rewritten relation evidence reject atomically (248.7136ms)
+✔ unread notices do not stop real games; acknowledging both does not alter first-day results/health/trait evidence (4518.7155ms)
+✔ legacy HS saves catch up once at day close; absence of relations and college worlds creates no fictitious notice (1850.1224ms)
+✔ notice acknowledgment during a pending task leaves that task and its saved resume untouched (104.0764ms)
+✔ notice acknowledgment during a real pending game preserves the exact cursor/RNG and resumed game result (5390.9158ms)
+✔ approved25-player rule: no eligible rival produces no rival notice or extra NPC, while the teammate notice remains (60.3935ms)
+✔ acknowledging a notice after sealed year end preserves the valid seal and college activation; corrupt seals never get repaired (846.1474ms)
+✔ career start forms one same-team teammate and one eligible rival, distinct and deterministic (73.6834ms)
+✔ no eligible rival is a normal empty state; teammate still forms (57.149ms)
+✔ confirmCareerPlayer stores relations once; list view shows identity only (86.7875ms)
+✔ same-kind detail compares own lines only in games both played; leagues and phases stay separate (12829.1774ms)
+✔ cross-kind detail sums only real batter-vs-pitcher plate appearances (8537.8688ms)
+✔ teammate gets one COEXIST_20 milestone on the 20th shared team game day only (31.4684ms)
+✔ hidden unlock raises one E84 stop; general unlock does not (174.4915ms)
+✔ OPEN_TRAITS resolves E84, navigates to S38 and restores the saved phase once (115.0163ms)
+✔ general unlocks collect in the unread summary until acknowledged (110.63ms)
+✔ season progress stops at the day close with MAJOR_EVENT when a hidden unlock is pending (3888.7545ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23094.236
