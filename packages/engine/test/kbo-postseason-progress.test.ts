@@ -9,6 +9,8 @@ import {settleKboSeasonGrowth} from '../src/kbo-season-growth.js';
 import type {KboCareer} from '../src/kbo-career-entry.js';
 import {enteredKboCareer} from './fixtures.js';
 import {canonicalJson} from '../src/game.js';
+import {closeKboSeason} from '../src/kbo-year-end.js';
+import {kboYearTransitionReadiness} from '../src/kbo-year-transition.js';
 
 /** Controlled season-review state: closed day receipts for the whole regular range (no regular games played). */
 function review():KboCareer {
@@ -43,4 +45,19 @@ test('postseason home runs feed career trait evidence after each postseason day'
  for(let i=0;i<60;i++){const out=advanceKboPostseason(c,c.revision);c=out.career;if(out.stopReason!=='CHUNK_LIMIT')break;}
  assert.ok(c.traits!.owned[key]!.unlocked.includes('T06'));
  assert.equal(c.traits!.unlocks.filter(u=>u.traitId==='T06').length,1);
+});
+
+
+test('year transition readiness lists every Y01 blocker until postseason, growth and season close are done',()=>{
+ const r=review(),first=kboYearTransitionReadiness(r);
+ assert.equal(first.ready,false);assert.deepEqual(first.blockers.sort(),['GROWTH_NOT_FINALIZED','POSTSEASON_NOT_COMPLETE','SEASON_NOT_CLOSED']);
+ assert.equal(first.targetSeasonKey,String(Number(r.world.seasonKey)+1));
+ let c=startKboPostseason(r,r.revision);assert.ok(kboYearTransitionReadiness(c).blockers.includes('SEASON_NOT_IN_REVIEW'));
+ for(let i=0;i<400;i++){const out=advanceKboPostseason(c,c.revision);c=out.career;if(out.stopReason==='POSTSEASON_COMPLETE')break;}
+ c=settleKboSeasonGrowth(c,c.revision).career;const before=JSON.stringify(c);
+ assert.deepEqual(kboYearTransitionReadiness(c).blockers.sort(),['GROWTH_NOT_FINALIZED','SEASON_NOT_CLOSED']);assert.equal(JSON.stringify(c),before);
+ c=closeKboSeason(c,c.revision,true);
+ assert.deepEqual(kboYearTransitionReadiness(c),{ready:true,blockers:[],targetSeasonKey:String(Number(c.world.seasonKey)+1),nextAge:c.world.players[c.protagonistKey]!.age+1});
+ const old=structuredClone(c);old.world.players[old.protagonistKey]={...old.world.players[old.protagonistKey]!,age:45};
+ assert.deepEqual(kboYearTransitionReadiness(old).blockers,['MAX_AGE_REACHED']);
 });

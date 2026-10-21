@@ -79,3 +79,4 @@ export * from './kbo-callup.js';
 export * from './kbo-year-end.js';
 export * from './kbo-postseason.js';
 export * from './kbo-postseason-progress.js';
+export * from './kbo-year-transition.js';

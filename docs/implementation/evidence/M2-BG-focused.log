@@ -1,0 +1,16 @@
+LINT=0
+TYPES=0
+✔ the postseason plays real games day by day to one champion and returns to SEASON_REVIEW (6178.2577ms)
+✔ postseason home runs feed career trait evidence after each postseason day (1169.4767ms)
+✔ year transition readiness lists every Y01 blocker until postseason, growth and season close are done (4259.912ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12105.9628
+FOCUSED=0
+BUILD=0
+ENGINE=0

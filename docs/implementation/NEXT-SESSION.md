@@ -23,6 +23,8 @@
 
 ## 현재 체크포인트
 
+- M2-BG(2026-10-21): 72 Y01 시작 조건 읽기 검사(kboYearTransitionReadiness). 다음은 Y02~Y08 staging과 원자 활성화(큰 작업). 프로 한 시즌 경로: startKboRegularSeason→advanceKboCareer(E43/E41/E09 창·건강 정지)→SEASON_REVIEW→startKboPostseason→advanceKboPostseason→settleKboSeasonGrowth→closeKboSeason→kboYearTransitionReadiness. [M2-BG](M2-BG-KBO-YEAR-READINESS.md).
+
 - M2-BF(2026-10-21): 포스트시즌 일마감 후 특성(T06)·내 선수 건강 정지. 전체 check 404/404. 다음 큰 단계: 다음 세계 시즌 개시(72: 나이+1·계약 연차·새 달력/일정·새 성장 원장·NPC 노화). 그 전 설계 72 원문 확인 필요. [M2-BE/BF](M2-BE-KBO-POSTSEASON-GAMES.md).
 
 - M2-BE(2026-10-21): KBO 포스트시즌 실제 경기 진행(시드·하루 한 경기·우승 확정·SEASON_REVIEW 복귀). 전체 check 403/403. 다음: PS 중 건강 정지·T06 특성, 다음 세계 시즌 개시(72: 나이·계약 연차·새 일정), 내 선수 강등 정책. [M2-BE](M2-BE-KBO-POSTSEASON-GAMES.md).
