@@ -1,0 +1,14 @@
+[
+  {
+    "difficulty": "GROWTH",
+    "sha256": "8076003b02309212a88cab189e8bd61f916dca9952d5eaa282528db9031c39e8"
+  },
+  {
+    "difficulty": "REALISTIC",
+    "sha256": "e6f571bb77fd8a1317eb3b1715eb0d07af7b2155ad0a204f61b04792c826f033"
+  },
+  {
+    "difficulty": "SECRET_CHEAT",
+    "sha256": "d32e40f97698a7bc5e26f3e7a739d1e86488da888a2f5cf580e3fa8004a94505"
+  }
+]

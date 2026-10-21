@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "files": 5,
+  "differences": 0,
+  "rows": [
+    {
+      "path": "packages/engine/src/kbo-world.ts",
+      "working": "b8c3ae2e705719c9d9142eac9cb8d64aa5125f6c0da2d35705383efdc16ac35b",
+      "source": "b8c3ae2e705719c9d9142eac9cb8d64aa5125f6c0da2d35705383efdc16ac35b"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "working": "6189d982ad1f59e3a91306ad0e78d788399290bec94f9ba043dbdbf03ab68bce",
+      "source": "6189d982ad1f59e3a91306ad0e78d788399290bec94f9ba043dbdbf03ab68bce"
+    },
+    {
+      "path": "packages/engine/src/kbo-opening-roster.ts",
+      "working": "efbfb4f3caab1e9ce0b00832f529cc45293d7f097314767a151c704e33e2afc8",
+      "source": "efbfb4f3caab1e9ce0b00832f529cc45293d7f097314767a151c704e33e2afc8"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "working": "b843a2c6b66358ac6529611aa2126b476521cbbc7245c947c3a2356f4286a42b",
+      "source": "b843a2c6b66358ac6529611aa2126b476521cbbc7245c947c3a2356f4286a42b"
+    },
+    {
+      "path": "packages/engine/test/kbo-opening-roster.test.ts",
+      "working": "4f6e9aed97ed5c8e40f2a27e561fc6382007e08a2a3ddfbe8e60d421375f33b1",
+      "source": "4f6e9aed97ed5c8e40f2a27e561fc6382007e08a2a3ddfbe8e60d421375f33b1"
+    }
+  ]
+}

@@ -1,0 +1,264 @@
+TAP version 13
+# Subtest: HITTER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+ok 1 - HITTER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+  ---
+  duration_ms: 5806.3971
+  type: 'test'
+  ...
+# Subtest: PITCHER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+ok 2 - PITCHER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+  ---
+  duration_ms: 4505.248
+  type: 'test'
+  ...
+# Subtest: pitcher earned book/weights survive entry but annual XP/learning/window state starts fresh
+ok 3 - pitcher earned book/weights survive entry but annual XP/learning/window state starts fresh
+  ---
+  duration_ms: 2514.8338
+  type: 'test'
+  ...
+# Subtest: new pro teammate/formation notice append to HS history from actual club registration, not guaranteed first team
+ok 4 - new pro teammate/formation notice append to HS history from actual club registration, not guaranteed first team
+  ---
+  duration_ms: 1505.8012
+  type: 'test'
+  ...
+# Subtest: team-game injury carries without healing across new calendar; old school injuries stay only in archive
+ok 5 - team-game injury carries without healing across new calendar; old school injuries stay only in archive
+  ---
+  duration_ms: 1747.8205
+  type: 'test'
+  ...
+# Subtest: stale/unsigned/unclosed/changed sealed source and wrong root reject without duplicate roster/salary or age
+ok 6 - stale/unsigned/unclosed/changed sealed source and wrong root reject without duplicate roster/salary or age
+  ---
+  duration_ms: 2496.1791
+  type: 'test'
+  ...
+# Subtest: entry public DTO omits raw roots/P/abilities/seed/RNG; restored entry projects identically and malformed registration rejects
+ok 7 - entry public DTO omits raw roots/P/abilities/seed/RNG; restored entry projects identically and malformed registration rejects
+  ---
+  duration_ms: 2116.925
+  type: 'test'
+  ...
+# Subtest: HITTER healthy strong rookie competes into28; first-team registration is separate from games/salary/growth
+ok 8 - HITTER healthy strong rookie competes into28; first-team registration is separate from games/salary/growth
+  ---
+  duration_ms: 6401.4592
+  type: 'test'
+  ...
+# Subtest: PITCHER healthy strong rookie competes into28; first-team registration is separate from games/salary/growth
+ok 9 - PITCHER healthy strong rookie competes into28; first-team registration is separate from games/salary/growth
+  ---
+  duration_ms: 5369.269
+  type: 'test'
+  ...
+# Subtest: ordinary50-start school career signs through actual draft then loses pro position competition without forced1st-team boost
+not ok 10 - ordinary50-start school career signs through actual draft then loses pro position competition without forced1st-team boost
+  ---
+  duration_ms: 1973.1735
+  type: 'test'
+  location: 'C:\\Users\\N-052\\.codex\\visualizations\\2026\\10\\16\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\baseball-career-repo\\packages\\engine\\test\\kbo-opening-roster.test.ts:1:4125'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    true !== false
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: false
+  actual: true
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-opening-roster.test.ts:29:209)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+  ...
+# Subtest: injured star starts in futures roster, keeps remaining team-game recovery, never occupies an opening1st-team slot
+ok 11 - injured star starts in futures roster, keeps remaining team-game recovery, never occupies an opening1st-team slot
+  ---
+  duration_ms: 1888.2644
+  type: 'test'
+  ...
+# Subtest: view is pending before confirmation, does not select automatically and exposes no hidden potential/RNG or fake odds
+ok 12 - view is pending before confirmation, does not select automatically and exposes no hidden potential/RNG or fake odds
+  ---
+  duration_ms: 4028.6492
+  type: 'test'
+  ...
+# Subtest: late camp/relation reading preserves opening roster and confirmed growth plan;1st-team registration does not fabricate callup event
+ok 13 - late camp/relation reading preserves opening roster and confirmed growth plan;1st-team registration does not fabricate callup event
+  ---
+  duration_ms: 1975.9057
+  type: 'test'
+  ...
+# Subtest: stale revision/tampered receipt/roster/competition reject without salary or registration repair
+ok 14 - stale revision/tampered receipt/roster/competition reject without salary or registration repair
+  ---
+  duration_ms: 2130.3234
+  type: 'test'
+  ...
+# Subtest: controlled absence of all catchers fails safely: no emergency players, silent healing or partially published roster
+ok 15 - controlled absence of all catchers fails safely: no emergency players, silent healing or partially published roster
+  ---
+  duration_ms: 1596.3461
+  type: 'test'
+  ...
+# Subtest: HITTER actual entry queues one nonblocking E08 and exposes only public preseason choices
+ok 16 - HITTER actual entry queues one nonblocking E08 and exposes only public preseason choices
+  ---
+  duration_ms: 4712.9909
+  type: 'test'
+  ...
+# Subtest: PITCHER actual entry queues one nonblocking E08 and exposes only public preseason choices
+ok 17 - PITCHER actual entry queues one nonblocking E08 and exposes only public preseason choices
+  ---
+  duration_ms: 3896.2097
+  type: 'test'
+  ...
+# Subtest: E08 focus choice commits only four-focus plan; KEEP_FOCUS acknowledges without a new saved plan
+ok 18 - E08 focus choice commits only four-focus plan; KEEP_FOCUS acknowledges without a new saved plan
+  ---
+  duration_ms: 3341.5835
+  type: 'test'
+  ...
+# Subtest: focus validates four distinct own-kind axes and preseason style permits one actual change, no ability/RNG bonus
+ok 19 - focus validates four distinct own-kind axes and preseason style permits one actual change, no ability/RNG bonus
+  ---
+  duration_ms: 2566.8242
+  type: 'test'
+  ...
+# Subtest: pitcher weight command reuses one PRE configuration chance, unchanged weights consume none and hitters reject
+ok 20 - pitcher weight command reuses one PRE configuration chance, unchanged weights consume none and hitters reject
+  ---
+  duration_ms: 3906.4609
+  type: 'test'
+  ...
+# Subtest: learning reserves10 base XP without instant mastery; free slot keeps configuration chance and second plan rejects
+ok 21 - learning reserves10 base XP without instant mastery; free slot keeps configuration chance and second plan rejects
+  ---
+  duration_ms: 1666.1785
+  type: 'test'
+  ...
+# Subtest: controlled four learned pitches: replacement and learning atomically consume the same PRE chance
+ok 22 - controlled four learned pitches: replacement and learning atomically consume the same PRE chance
+  ---
+  duration_ms: 2333.0085
+  type: 'test'
+  ...
+# Subtest: confirm freezes the selected plan/snapshots once, pays no growth and does not require reading E08
+ok 23 - confirm freezes the selected plan/snapshots once, pays no growth and does not require reading E08
+  ---
+  duration_ms: 2025.2455
+  type: 'test'
+  ...
+# Subtest: confirmed pitcher learning/configuration snapshot remains valid but further edits cannot reopen PRE
+ok 24 - confirmed pitcher learning/configuration snapshot remains valid but further edits cannot reopen PRE
+  ---
+  duration_ms: 1320.9704
+  type: 'test'
+  ...
+# Subtest: stale revision/event version, foreign camp evidence and invalid focus reject without state/RNG changes
+ok 25 - stale revision/event version, foreign camp evidence and invalid focus reject without state/RNG changes
+  ---
+  duration_ms: 998.4391
+  type: 'test'
+  ...
+# Subtest: legacy AP state is read-only until a write catches up one camp notice; duplicate and changed source reject
+ok 26 - legacy AP state is read-only until a write catches up one camp notice; duplicate and changed source reject
+  ---
+  duration_ms: 1029.494
+  type: 'test'
+  ...
+# Subtest: HITTER pro list retains historical school and active club teammate identities without invented transfers/stages
+ok 27 - HITTER pro list retains historical school and active club teammate identities without invented transfers/stages
+  ---
+  duration_ms: 5184.2305
+  type: 'test'
+  ...
+# Subtest: PITCHER pro list retains historical school and active club teammate identities without invented transfers/stages
+ok 28 - PITCHER pro list retains historical school and active club teammate identities without invented transfers/stages
+  ---
+  duration_ms: 3710.761
+  type: 'test'
+  ...
+# Subtest: historical relation details reuse existing official scoped records; never fabricate pro games or new player registration
+ok 29 - historical relation details reuse existing official scoped records; never fabricate pro games or new player registration
+  ---
+  duration_ms: 3035.3868
+  type: 'test'
+  ...
+# Subtest: both historical and new pro E94 preserve names and ACK only their notice while the confirmed plan remains sealed
+ok 30 - both historical and new pro E94 preserve names and ACK only their notice while the confirmed plan remains sealed
+  ---
+  duration_ms: 2945.7971
+  type: 'test'
+  ...
+# Subtest: stale revision/version, wrong command or foreign/duplicate relation evidence reject without changes
+ok 31 - stale revision/version, wrong command or foreign/duplicate relation evidence reject without changes
+  ---
+  duration_ms: 2438.5084
+  type: 'test'
+  ...
+# Subtest: unknown historical player remains unresolved; malformed ownership, foreign history and changed confirmed plan reject
+ok 32 - unknown historical player remains unresolved; malformed ownership, foreign history and changed confirmed plan reject
+  ---
+  duration_ms: 6114.2472
+  type: 'test'
+  ...
+# Subtest: absence of relations/notices on restored old pro state is empty and querying never creates a new relation
+ok 33 - absence of relations/notices on restored old pro state is empty and querying never creates a new relation
+  ---
+  duration_ms: 1585.4391
+  type: 'test'
+  ...
+# Subtest: 44: ten actual club identities,500 fictional players/500 active contracts,26H/24P and legal first28
+ok 34 - 44: ten actual club identities,500 fictional players/500 active contracts,26H/24P and legal first28
+  ---
+  duration_ms: 458.7091
+  type: 'test'
+  ...
+# Subtest: deterministic generation and JSON restore, distinct seeds change roster; identity/contract keys stay logical
+ok 35 - deterministic generation and JSON restore, distinct seeds change roster; identity/contract keys stay logical
+  ---
+  duration_ms: 2319.1452
+  type: 'test'
+  ...
+# Subtest: six-stat mean35..85 exact, profile ceilings100 do not inflate overall or erase profile shape
+ok 36 - six-stat mean35..85 exact, profile ceilings100 do not inflate overall or erase profile shape
+  ---
+  duration_ms: 2.8197
+  type: 'test'
+  ...
+# Subtest: initial payroll common-scale floors/caps, integer won, future commitments<=90% budget and no signing bonus
+ok 37 - initial payroll common-scale floors/caps, integer won, future commitments<=90% budget and no signing bonus
+  ---
+  duration_ms: 656.3399
+  type: 'test'
+  ...
+# Subtest: career hard changes NPC potential only; career cheat does not make all KBO NPC potential100
+ok 38 - career hard changes NPC potential only; career cheat does not make all KBO NPC potential100
+  ---
+  duration_ms: 1705.5045
+  type: 'test'
+  ...
+# Subtest: restored corrupt roster, contract, payroll, first team or age rejected without silent regeneration
+ok 39 - restored corrupt roster, contract, payroll, first team or age rejected without silent regeneration
+  ---
+  duration_ms: 812.6609
+  type: 'test'
+  ...
+1..39
+# tests 39
+# suites 0
+# pass 38
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 29462.9346

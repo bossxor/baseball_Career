@@ -37,7 +37,8 @@ export function initialKboSalaries(players:readonly DevelopmentPlayer[]):Record<
  if(remaining!==0)throw new RangeError('KBO_SALARY_ALLOCATION_FAILED');
  return Object.fromEntries(sorted.map((p,i)=>[p.simulationKey,amounts[i]!*10_000]));
 }
-function firstTeam(players:readonly DevelopmentPlayer[]):string[] {
+/** Opening selection with no prior-season sample (41/44). Caller filters unavailable players; no RNG or payroll mutation. */
+export function selectKboFirstTeamRoster(players:readonly DevelopmentPlayer[]):string[] {
  const hitters=players.filter(p=>p.kind==='HITTER'),pitchers=players.filter(p=>p.kind==='PITCHER');
  const rank=(position:string)=>(a:DevelopmentPlayer,b:DevelopmentPlayer)=>roleScore(b.kind,b.abilities,position)-roleScore(a.kind,a.abilities,position) || (a.simulationKey<b.simulationKey?-1:1);
  const selection=automaticFieldLineup(hitters.map(player=>({player,available:true,fits:initialPositionFits(player.position),recent:emptyBatting()})),100),chosen=new Set(selection.lineup);
@@ -81,7 +82,7 @@ export function createKboRosterWorld(input:{worldKey:string;seasonKey:string;see
  while(failed.length && generationAttempts<100){for(const club of clubs.filter(c=>failed.includes(c.id)))for(const key of club.roster)generate(identities.get(key)!);generationAttempts++;failed=balanced(clubs,players);}
  if(failed.length)throw new RangeError('KBO_GENERATION_BALANCE_FAILED');
  for(const club of clubs){
-  const members=club.roster.map(k=>players[k]!),salaries=initialKboSalaries(members);club.firstTeam=firstTeam(members);club.reservedSalaryWon=Object.values(salaries).reduce((a,b)=>a+b,0);
+  const members=club.roster.map(k=>players[k]!),salaries=initialKboSalaries(members);club.firstTeam=selectKboFirstTeamRoster(members);club.reservedSalaryWon=Object.values(salaries).reduce((a,b)=>a+b,0);
   for(const player of members){const years=nextInteger(createWorldStream(input.seed,JSON.stringify(['kbo-contract-1',input.worldKey,player.simulationKey]),'roster'),4).value+1;contracts[player.simulationKey]={contractKey:JSON.stringify(['kbo-initial-contract',input.seasonKey,player.simulationKey]),playerKey:player.simulationKey,clubId:club.id,seasonKey:input.seasonKey,years,annualSalaryWon:salaries[player.simulationKey]!,signingBonusWon:0,status:'ACTIVE'};
    if(player.kind==='PITCHER'){const pitch=nextInteger(roster,6);roster=pitch.state;repertoires[player.simulationKey]=createRepertoire(PITCH_IDS[pitch.value+1]!,input.seasonKey);}
   }

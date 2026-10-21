@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: 44: ten actual club identities,500 fictional players/500 active contracts,26H/24P and legal first28
+ok 1 - 44: ten actual club identities,500 fictional players/500 active contracts,26H/24P and legal first28
+  ---
+  duration_ms: 213.8014
+  type: 'test'
+  ...
+# Subtest: deterministic generation and JSON restore, distinct seeds change roster; identity/contract keys stay logical
+ok 2 - deterministic generation and JSON restore, distinct seeds change roster; identity/contract keys stay logical
+  ---
+  duration_ms: 543.8276
+  type: 'test'
+  ...
+# Subtest: six-stat mean35..85 exact, profile ceilings100 do not inflate overall or erase profile shape
+ok 3 - six-stat mean35..85 exact, profile ceilings100 do not inflate overall or erase profile shape
+  ---
+  duration_ms: 1.2182
+  type: 'test'
+  ...
+# Subtest: initial payroll common-scale floors/caps, integer won, future commitments<=90% budget and no signing bonus
+ok 4 - initial payroll common-scale floors/caps, integer won, future commitments<=90% budget and no signing bonus
+  ---
+  duration_ms: 143.0065
+  type: 'test'
+  ...
+# Subtest: career hard changes NPC potential only; career cheat does not make all KBO NPC potential100
+ok 5 - career hard changes NPC potential only; career cheat does not make all KBO NPC potential100
+  ---
+  duration_ms: 357.4348
+  type: 'test'
+  ...
+# Subtest: restored corrupt roster, contract, payroll, first team or age rejected without silent regeneration
+ok 6 - restored corrupt roster, contract, payroll, first team or age rejected without silent regeneration
+  ---
+  duration_ms: 192.2304
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1887.5752

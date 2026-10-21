@@ -65,3 +65,5 @@ export * from './kbo-career-entry.js';
 export * from './kbo-preseason.js';
 
 export * from './kbo-relations.js';
+
+export * from './kbo-opening-roster.js';
