@@ -1,0 +1,11 @@
+✔ both leagues close one pro day together: one fatigue step for every club player and per-league team-game health (2620.7327ms)
+✔ day close rejects missing games, changed evidence, wrong order and a second health pass (1855.1003ms)
+✔ actual KBO and FUTURES games use disjoint rosters; JSON PA resume/official scopes/books publish once without changing the career root (1822.771ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5061.2643
