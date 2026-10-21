@@ -48,3 +48,5 @@ export * from './career-kbo.js';
 export * from './us-direct.js';
 export * from './career-us.js';
 export * from './us-reservations.js';
+export * from './us-world.js';
+export * from './us-inventory.js';

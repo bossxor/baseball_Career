@@ -10,6 +10,7 @@ import {createRepertoire,validatePitchWeights} from './repertoire.js';
 import type {Repertoire} from './repertoire.js';
 import {automaticFieldLineup,initialPositionFits} from './lineup.js';
 import {emptyBatting} from './stats.js';
+import {initialProfileAbilities} from './initial-abilities.js';
 const H_POSITIONS=['C','C','C','C','1B','1B','1B','2B','2B','2B','3B','3B','3B','SS','SS','SS','LF','LF','LF','CF','CF','CF','RF','RF','RF','DH'];
 const P_POSITIONS=[...Array<string>(8).fill('SP'),...Array<string>(12).fill('RP'),...Array<string>(4).fill('CP')];
 export interface KboInitialContract {contractKey:string;playerKey:string;clubId:string;seasonKey:string;years:number;annualSalaryWon:number;signingBonusWon:0;status:'ACTIVE'}
@@ -19,14 +20,7 @@ const dict=<T>():Record<string,T>=>Object.create(null) as Record<string,T>;
 /** Common-offset water filling retains profile shape, mean exactly target, and six ceilings100. */
 export function kboInitialAbilities(kind:PlayerKind,archetype:string,target:number):AbilityUnits {
  if(!Number.isInteger(target) || target<35 || target>85)throw new RangeError('INVALID_KBO_TARGET');
- const keys=abilityKeys(kind),type=archetypeFor(kind,archetype),wanted=target*60_000;
- const value=(i:number,offset:number)=>Math.max(10_000,Math.min(1_000_000,type.initial[i]!*10_000+offset));
- let low=-1_000_000,high=1_000_000;
- while(low<high){const middle=Math.floor((low+high+1)/2);if(keys.reduce((sum,_,i)=>sum+value(i,middle),0)<=wanted)low=middle;else high=middle-1;}
- const values=keys.map((_,i)=>value(i,low));let remaining=wanted-values.reduce((a,b)=>a+b,0);
- for(let i=0;remaining>0 && i<values.length;i++)if(values[i]!<1_000_000){values[i]=values[i]!+1;remaining--;}
- if(remaining!==0)throw new RangeError('KBO_ABILITY_ALLOCATION_FAILED');
- return Object.fromEntries(keys.map((key,i)=>[key,values[i]!]));
+  return initialProfileAbilities(kind,archetype,target);
 }
 /** 08 value with no qualifying prior sample;44 common scale, minimum floor, integer10,000 won. */
 export function initialKboSalaries(players:readonly DevelopmentPlayer[]):Record<string,number> {

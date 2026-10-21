@@ -1,0 +1,27 @@
+✔ 44: ten actual club identities,500 fictional players/500 active contracts,26H/24P and legal first28 (1024.3613ms)
+✔ deterministic generation and JSON restore, distinct seeds change roster; identity/contract keys stay logical (1270.2224ms)
+✔ six-stat mean35..85 exact, profile ceilings100 do not inflate overall or erase profile shape (12.5725ms)
+✔ initial payroll common-scale floors/caps, integer won, future commitments<=90% budget and no signing bonus (604.3556ms)
+✔ career hard changes NPC potential only; career cheat does not make all KBO NPC potential100 (914.2561ms)
+✔ restored corrupt roster, contract, payroll, first team or age rejected without silent regeneration (614.838ms)
+✔ US offers: fixed snapshot, distinct max3 clubs, minor A/Rookie, canonical USD terms and no mutation (19.7705ms)
+✔ US offers: average evaluation, no roster slot, no budget or ineligible produces no visible US choice (66.5308ms)
+✔ US offers: boundary expiry, stale world/offer/version and player registration reject atomically (16.1838ms)
+✔ US signing: one contract/rights/registration/income reservation, no duplicate payout or world mutation (27.2143ms)
+✔ full generated US roster feeds actual vacancy/budget-bound career offers and one signing reservation (2125.3924ms)
+✔ US allocation forbids invented organizations, negative/combined over160 vacancies and unknown budget (875.9812ms)
+✔ US reservation deducts one real level slot and bonus+first-year salary; identical receipt retries preserve totals (41.0015ms)
+✔ US reservation supports sequential candidates from current inventory and rejects stale competing snapshots atomically (28.328ms)
+✔ US reservation detects changed totals/duplicated receipts/rewritten receipt and rejects invalid inventory (7.33ms)
+✔ US initial world has30 organizations,114 players each, minor22/MLB26 and1590 pitcher books (709.24ms)
+✔ US generation is repeatable, registry order independent, new seed changes ability/potential; no extra cheat P100 for rivals (3435.9636ms)
+✔ US level overall values cluster near the approved means; extremes are not per-team quotas (308.8638ms)
+✔ US initial restore rejects duplicate registration, changed level means, bad position depth or pitcher book (454.2707ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6619.0993
