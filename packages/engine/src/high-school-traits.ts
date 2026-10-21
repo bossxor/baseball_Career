@@ -2,7 +2,6 @@ import {recordTotals} from './records.js';
 import type {RecordLedger,RecordScope} from './records.js';
 import {evaluateTraitUnlocks,validateTraits,TRAIT_IDS} from './traits.js';
 import type {TraitOwnership,TraitId} from './traits.js';
-import type {HighSchoolCareer} from './high-school-career.js';
 import type {DevelopmentPlayer} from './player.js';
 
 export interface TraitUnlockReceipt {playerKey:string;traitId:TraitId;worldDay:number;recordRevision:number;seasonKey?:string;leagueKey?:string}
@@ -82,7 +81,7 @@ export function starterSeasonEvidence(records:RecordLedger,playerKey:string,seas
  return {qualified:evidence.length>0,evidence};
 }
 /** Season close only, once per season key. A missed or empty season resets the streak; owned traits are never removed. */
-export function settleStarterSeasonTraits(source:HighSchoolCareer,closedDay:number):CareerTraitLedger {
+export function settleStarterSeasonTraits(source:TraitSource,closedDay:number):CareerTraitLedger {
  const ledger=structuredClone(source.traits??createCareerTraitLedger()),seasonKey=source.world.seasonKey,index=Number(seasonKey);
  if(ledger.schemaVersion!==1 || !Number.isSafeInteger(index) || !Number.isSafeInteger(closedDay))throw new RangeError('INVALID_TRAIT_LEDGER');
  const settled=ledger.settledStarterSeasons??[];if(settled.includes(seasonKey))return ledger;
@@ -92,16 +91,16 @@ export function settleStarterSeasonTraits(source:HighSchoolCareer,closedDay:numb
  for(const key of [...pitchers].sort()) {
   const prev=Object.hasOwn(streaks,key)?streaks[key]!:undefined;
   if(prev && prev.lastSeasonIndex>=index)throw new RangeError('STARTER_SEASON_OUT_OF_ORDER');
-  const {qualified}=starterSeasonEvidence(source.records,key,seasonKey);
+  const {qualified,evidence}=starterSeasonEvidence(source.records,key,seasonKey),receiptLeague=evidence[0]?.leagueKey??leagueKey;
   streaks[key]={lastSeasonIndex:index,streak:qualified?(prev && prev.lastSeasonIndex===index-1?prev.streak+1:1):0};
   const player=source.world.players[key];
   if(!player || player.kind!=='PITCHER' || streaks[key]!.streak<5)continue;
   const before=Object.hasOwn(ledger.owned,key)?ledger.owned[key]!:empty();
-  const after=evaluateTraitUnlocks(player.kind,player.abilities,before,evidenceFor(source.records,seasonKey,leagueKey,key,streaks[key]!.streak));
+  const after=evaluateTraitUnlocks(player.kind,player.abilities,before,evidenceFor(source.records,seasonKey,receiptLeague,key,streaks[key]!.streak));
   const added=after.unlocked.filter(id=>!before.unlocked.includes(id));
   if(added.length===0)continue;
   ledger.owned[key]=after;
-  ledger.unlocks=[...ledger.unlocks,...added.map(traitId=>({playerKey:key,traitId,worldDay:closedDay,recordRevision:source.records.revision,seasonKey,leagueKey}))];
+  ledger.unlocks=[...ledger.unlocks,...added.map(traitId=>({playerKey:key,traitId,worldDay:closedDay,recordRevision:source.records.revision,seasonKey,leagueKey:receiptLeague}))];
  }
  ledger.starterStreaks=streaks;ledger.settledStarterSeasons=[...settled,seasonKey];
  return ledger;

@@ -8,6 +8,7 @@ import type {KboSeasonProgress} from '../src/kbo-progress.js';
 import type {KboCareer} from '../src/kbo-career-entry.js';
 import {enteredKboCareer} from './fixtures.js';
 import {canonicalJson} from '../src/game.js';
+import {settleStarterSeasonTraits} from '../src/high-school-traits.js';
 
 const scheduled=(kind:'HITTER'|'PITCHER'='PITCHER')=>{const e=enteredKboCareer(kind),p=confirmKboPreseasonPlan(e,e.revision),o=confirmKboOpeningRoster(p,p.revision);return confirmKboSeasonSchedule(o,o.revision);};
 function runDay(start:KboCareer):{career:KboCareer;steps:number} {
@@ -88,4 +89,27 @@ test('official records that cross a trait threshold unlock it once after a pro d
  assert.equal(career.traits!.unlocks.filter(u=>u.traitId==='T02' && u.playerKey===key).length,1);
  const once=career.traits!.unlocks.length;career=runDay(career).career;
  assert.equal(career.traits!.unlocks.filter(u=>u.traitId==='T02').length,1);assert.ok(career.traits!.unlocks.length>=once);
+});
+
+
+test('pro season close settles T16 once from official starter outs and labels the qualifying league',()=>{
+ const s=scheduled('PITCHER'),season=s.world.seasonKey,index=Number(season),key=s.protagonistKey,first=firstScheduledDay(s);
+ const seeded=structuredClone(s);
+ seeded.traits={...(seeded.traits??{schemaVersion:1,owned:{},unlocks:[],lastClosedDay:null}),starterStreaks:{[key]:{lastSeasonIndex:index-1,streak:4}},settledStarterSeasons:[]};
+ const pz={BF:0,outs:0,AB:0,H:0,TB:0,HR:0,BB:0,HBP:0,K:0};
+ for(let i=0;i<3;i++){const gameKey=`seed-start-${i}`;seeded.records.games[gameKey]={gameKey,worldDay:first-10+i,scope:{seasonKey:season,leagueKey:'KBO',phase:'REGULAR'},teams:{sA:{games:1,W:1,L:0,T:0,R:1,RA:0},sB:{games:1,W:0,L:1,T:0,R:0,RA:1}},batting:{},
+  pitching:{[key]:{BF:27,outs:27,H:0,HR:0,BB:0,HBP:0,K:0,R:0,ER:0,pitches:90,games:1,starts:1,starterOuts:27,loadedBF:0,W:1,L:0,SV:0,HLD:0,BS:0,shutouts:0}},batterSplits:{},pitcherSplits:{[key]:{L:{...pz},R:{...pz,BF:27,outs:27}}},matchups:{}};}
+ const ledger=settleStarterSeasonTraits(seeded,first+200);
+ assert.equal(ledger.starterStreaks![key]!.streak,5);assert.ok(ledger.owned[key]!.unlocked.includes('T16'));
+ assert.deepEqual(ledger.unlocks.filter(u=>u.traitId==='T16').map(u=>[u.seasonKey,u.leagueKey]),[[season,'KBO']]);
+ assert.equal(JSON.stringify(settleStarterSeasonTraits({...seeded,traits:ledger},first+200)),JSON.stringify(ledger));
+});
+
+test('advancing past the last scheduled day enters SEASON_REVIEW and settles the season once',()=>{
+ const started=startKboRegularSeason(scheduled(),scheduled().revision),last=Math.max(...Object.values(started.competitionSchedule!.leagues).flatMap(l=>l.map(g=>g.worldDay)));
+ const atEnd=structuredClone(started);(atEnd.phaseContext as KboSeasonProgress).nextWorldDay=last+1;
+ const r=advanceKboCareer(atEnd,atEnd.revision);
+ assert.equal(r.stopReason,'SEASON_REVIEW');assert.equal(r.career.phaseContext.phase,'SEASON_REVIEW');
+ assert.deepEqual(r.career.traits!.settledStarterSeasons,[r.career.world.seasonKey]);
+ assert.throws(()=>advanceKboCareer(r.career,r.career.revision),/INVALID_CAREER_PHASE/);
 });

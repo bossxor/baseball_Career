@@ -6,7 +6,7 @@ import {createKboCompetitionGameWorld} from './kbo-game-world.js';
 import {closeKboCompetitionDay,createKboDayLedger} from './kbo-day.js';
 import type {KboLeagueKey} from './kbo-day.js';
 import type {ScheduledGame} from './schedule.js';
-import {refreshCareerTraits} from './high-school-traits.js';
+import {refreshCareerTraits,settleStarterSeasonTraits} from './high-school-traits.js';
 
 export interface KboPendingGame {leagueKey:KboLeagueKey;job:HighSchoolGameJob}
 export type KboSeasonProgress={phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:KboPendingGame|null};
@@ -57,9 +57,11 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
  if(progress.pendingGame && (progress.pendingGame.job.worldDay!==progress.nextWorldDay || progress.pendingGame.job.worldKey!==career.world.worldKey || progress.pendingGame.job.seasonKey!==career.world.seasonKey))throw new RangeError('PENDING_GAME_CONTEXT_CHANGED');
  let plateAppearances=0,completedInnings=0,daysClosed=0;
  const finish=(stopReason:KboProgressStop):KboProgressResult=>{career.revision++;return {career,stopReason,plateAppearances,completedInnings,daysClosed};};
+ // Regular-season close: T16 starter streaks settle once per season (107 §7), then the season review phase.
+ const review=():KboProgressResult=>{career.traits=settleStarterSeasonTraits(career,last);career.phaseContext={phase:'SEASON_REVIEW'};return finish('SEASON_REVIEW');};
  while(plateAppearances<1000 && completedInnings<20 && daysClosed<maxDays){
   const day=progress.nextWorldDay;
-  if(day>last){career.phaseContext={phase:'SEASON_REVIEW'};return finish('SEASON_REVIEW');}
+  if(day>last){return review();}
   if(!progress.pendingGame){
    const next=pendingQueue(career,day)[0];
    if(next){
@@ -88,10 +90,10 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   career.traits=refreshCareerTraits(career,day,LEAGUES);
   // Like school careers, a change to my own player's health stops progress so the player can react before the next day.
   if(closed.result.injured.includes(career.protagonistKey) || closed.result.recovered.includes(career.protagonistKey)){
-   if(progress.nextWorldDay>last){career.phaseContext={phase:'SEASON_REVIEW'};return finish('SEASON_REVIEW');}
+   if(progress.nextWorldDay>last){return review();}
    return finish('HEALTH_CHANGE');
   }
  }
- if(progress.nextWorldDay>last && !progress.pendingGame){career.phaseContext={phase:'SEASON_REVIEW'};return finish('SEASON_REVIEW');}
+ if(progress.nextWorldDay>last && !progress.pendingGame){return review();}
  return finish(daysClosed>=maxDays?'DAY_CLOSED':'CHUNK_LIMIT');
 }
