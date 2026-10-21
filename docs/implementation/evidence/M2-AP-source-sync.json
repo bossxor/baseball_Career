@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "files": 7,
+  "differences": 0,
+  "rows": [
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "working": "c0dc5c5e8d828cbe04cc232e55302c613a3f349a461615e8fed5fb6d25ecf79b",
+      "source": "c0dc5c5e8d828cbe04cc232e55302c613a3f349a461615e8fed5fb6d25ecf79b"
+    },
+    {
+      "path": "packages/engine/src/team-teammates.ts",
+      "working": "ce58ed72e3eea7c505f0fa4aeca097304845f6bd7a9c54fd06db6c206e60323d",
+      "source": "ce58ed72e3eea7c505f0fa4aeca097304845f6bd7a9c54fd06db6c206e60323d"
+    },
+    {
+      "path": "packages/engine/src/relation-notices.ts",
+      "working": "1c72ffb812500e833805f54fbf92aae83d05fc146c2782301c528454b1d7f5a3",
+      "source": "1c72ffb812500e833805f54fbf92aae83d05fc146c2782301c528454b1d7f5a3"
+    },
+    {
+      "path": "packages/engine/src/kbo-draft.ts",
+      "working": "80fd8c009266d8c009f51b42b88bb3250c17948cafc061897bfb60405f3abdd6",
+      "source": "80fd8c009266d8c009f51b42b88bb3250c17948cafc061897bfb60405f3abdd6"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "working": "d228f6696e1cdaee4df42d16e2a68abce3c7f67e846f09a24adbf53de1518097",
+      "source": "d228f6696e1cdaee4df42d16e2a68abce3c7f67e846f09a24adbf53de1518097"
+    },
+    {
+      "path": "packages/engine/test/kbo-career-entry.test.ts",
+      "working": "95b66a3e53dc41ac91ccc2b207c41c7e932a9ef10d8255da09e4bd0e5b8d043f",
+      "source": "95b66a3e53dc41ac91ccc2b207c41c7e932a9ef10d8255da09e4bd0e5b8d043f"
+    },
+    {
+      "path": "packages/engine/test/career-kbo.test.ts",
+      "working": "8b81e843ad504b141bbd1d3fe7a401ea0d8278d0cfd3b4ee26bbd5335274f9e8",
+      "source": "8b81e843ad504b141bbd1d3fe7a401ea0d8278d0cfd3b4ee26bbd5335274f9e8"
+    }
+  ]
+}

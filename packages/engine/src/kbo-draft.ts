@@ -20,7 +20,7 @@ export interface KboDraftProgram {
  result:KboDraftResult|null;decision:'PENDING'|'SIGNED'|'DECLINED';signing:KboRookieSigning|null;
 }
 /** Current salary-only world boundary. Initial age/distribution checks do not apply to recruitment. */
-export function assertKboRecruitmentWorld(world:KboRosterWorld):void {
+export function assertKboRecruitmentWorld(world:Omit<KboRosterWorld,'status'>):void {
  if(world.schemaVersion!==1 || !world.worldKey || !world.seasonKey || !world.seed || world.clubs.length!==10 || new Set(world.clubs.map(c=>c.id)).size!==10)throw new RangeError('INVALID_KBO_RECRUITMENT_WORLD');
  for(const stream of [world.rng.roster,world.rng.potential,world.rng.handedness])validateRng(stream);
  const seen=new Set<string>();

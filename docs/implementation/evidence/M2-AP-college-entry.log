@@ -1,0 +1,16 @@
+TAP version 13
+# Subtest: college E75 graduation uses college-adjusted B and next-season reservation, without repeating degree or advancing age
+ok 1 - college E75 graduation uses college-adjusted B and next-season reservation, without repeating degree or advancing age
+  ---
+  duration_ms: 38417.0555
+  type: 'test'
+  ...
+1..1
+# tests 1
+# suites 0
+# pass 1
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 38958.2338

@@ -2,6 +2,7 @@ import {assertKboAmateurYearEnd} from './kbo-entry.js';
 import {assertTeamEntryRelationReceipt,teamEntryFormationKey} from './team-teammates.js';
 import type {PlayerRelationship,RelationMilestone} from './relationships.js';
 import type {HighSchoolCareer} from './high-school-career.js';
+import type {RegisteredTeamRelationWorld} from './team-teammates.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {createWorldEvent,enqueueWorldEvent,eventDefinition,resolveEventChoice} from './events.js';
 import type {EventInstance} from './events.js';
@@ -9,7 +10,12 @@ import {canonicalJson} from './game.js';
 import {schoolYearEndBasis} from './college-entry.js';
 import {careerRelationshipListView} from './relationship-history.js';
 
-function formationContext(source:HighSchoolCareer,relation:PlayerRelationship,formation:RelationMilestone){
+export interface RelationFormationNoticeSource {
+ world:RegisteredTeamRelationWorld;relationships?:HighSchoolCareer['relationships'];relationNotices?:HighSchoolCareer['relationNotices'];
+ previousSeasons?:readonly {world:RegisteredTeamRelationWorld}[];events:readonly EventInstance[];revision:number;phaseContext:Pick<HighSchoolCareer['phaseContext'],'phase'>;
+}
+
+function formationContext(source:RelationFormationNoticeSource,relation:PlayerRelationship,formation:RelationMilestone){
  if(formation.evidenceKey===JSON.stringify(['hs-formation',source.world.worldKey,relation.type]))return {competitionKey:'HS',seasonKey:source.previousSeasons?.find(a=>(a.world.leagueKey??'HS')==='HS')?.world.seasonKey??source.world.seasonKey,registrationKey:source.previousSeasons?.find(a=>(a.world.leagueKey??'HS')==='HS')?.world.protagonistSchoolId??source.world.protagonistSchoolId};
  const matches=(source.relationships?.teamEntries??[]).filter(r=>r.relationKey===relation.relationKey && teamEntryFormationKey(r)===formation.evidenceKey);
  if(matches.length!==1)return null;const entry=matches[0]!;assertTeamEntryRelationReceipt(entry);
@@ -18,7 +24,7 @@ function formationContext(source:HighSchoolCareer,relation:PlayerRelationship,fo
 }
 
 /** E94 is a NOTICE. It lives outside blocking tasks and never stops an E01/E02/E84 or pending game. */
-export function queueRelationFormationNotices(source:HighSchoolCareer,worldDay:number):readonly EventInstance[]|undefined {
+export function queueRelationFormationNotices(source:RelationFormationNoticeSource,worldDay:number):readonly EventInstance[]|undefined {
  if(!Number.isSafeInteger(worldDay) || worldDay<0)throw new RangeError('INVALID_RELATION_NOTICE_DAY');
  let notices=source.relationNotices?structuredClone([...source.relationNotices]):undefined;
  if(!source.relationships)return notices;

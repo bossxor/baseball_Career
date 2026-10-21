@@ -1,6 +1,7 @@
 import type {HighSchoolWorld} from './high-school-world.js';
 import type {RelationshipLedger,PlayerRelationship} from './relationships.js';
 
+export type RegisteredTeamRelationWorld=Pick<HighSchoolWorld,'worldKey'|'seasonKey'|'protagonistKey'|'protagonistSchoolId'|'schools'|'players'> & {leagueKey?:string};
 export interface TeamEntryRelationReceipt {
  entryKey:string;registrationReceiptKey:string;worldKey:string;primaryPlayerKey:string;
  leagueKey:string;teamId:string;seasonKey:string;worldDay:number;otherPlayerKey:string|null;relationKey:string|null;
@@ -13,7 +14,7 @@ export function assertTeamEntryRelationReceipt(receipt:TeamEntryRelationReceipt)
 export const teamEntryFormationKey=(receipt:TeamEntryRelationReceipt)=>JSON.stringify(['team-entry-formation',receipt.entryKey,receipt.registrationReceiptKey]);
 /** Call only from a successful registration transaction. Same team is once per world, not once per season.
  * No RNG or roster mutation. Empty candidates consume the first-entry receipt too. */
-export function formRegisteredTeamTeammate(ledger:RelationshipLedger|undefined,world:HighSchoolWorld,registrationReceiptKey:string,worldDay:number):RelationshipLedger {
+export function formRegisteredTeamTeammate(ledger:RelationshipLedger|undefined,world:RegisteredTeamRelationWorld,registrationReceiptKey:string,worldDay:number):RelationshipLedger {
  if(!registrationReceiptKey || !Number.isSafeInteger(worldDay) || worldDay<0)throw new RangeError('INVALID_TEAM_ENTRY_RELATION');
  const me=world.players[world.protagonistKey],team=world.schools.find(t=>t.id===world.protagonistSchoolId),league=world.leagueKey??'HS';
  if(!me || !team || !team.roster.includes(me.simulationKey) || new Set(team.roster).size!==team.roster.length || team.roster.some(k=>!Object.hasOwn(world.players,k)))throw new RangeError('TEAM_REGISTRATION_REQUIRED');

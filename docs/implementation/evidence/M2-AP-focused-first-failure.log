@@ -1,0 +1,232 @@
+TAP version 13
+# Subtest: HITTER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+not ok 1 - HITTER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+  ---
+  duration_ms: 1202.9239
+  type: 'test'
+  location: 'C:\\Users\\N-052\\.codex\\visualizations\\2026\\10\\16\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\baseball-career-repo\\packages\\engine\\test\\kbo-career-entry.test.ts:1:1503'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+
+    + [Object: null prototype] {}
+    - {}
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-career-entry.test.ts:25:84)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.start (node:internal/test_runner/test:1242:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: PITCHER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+not ok 2 - PITCHER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+  ---
+  duration_ms: 896.8377
+  type: 'test'
+  location: 'C:\\Users\\N-052\\.codex\\visualizations\\2026\\10\\16\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\baseball-career-repo\\packages\\engine\\test\\kbo-career-entry.test.ts:1:1503'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+
+    + [Object: null prototype] {}
+    - {}
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual:
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-career-entry.test.ts:25:84)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1382:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+    Test.postRun (node:internal/test_runner/test:1522:19)
+    Test.run (node:internal/test_runner/test:1447:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: pitcher earned book/weights survive entry but annual XP/learning/window state starts fresh
+ok 3 - pitcher earned book/weights survive entry but annual XP/learning/window state starts fresh
+  ---
+  duration_ms: 750.2614
+  type: 'test'
+  ...
+# Subtest: new pro teammate/formation notice append to HS history from actual club registration, not guaranteed first team
+ok 4 - new pro teammate/formation notice append to HS history from actual club registration, not guaranteed first team
+  ---
+  duration_ms: 760.9928
+  type: 'test'
+  ...
+# Subtest: team-game injury carries without healing across new calendar; old school injuries stay only in archive
+ok 5 - team-game injury carries without healing across new calendar; old school injuries stay only in archive
+  ---
+  duration_ms: 852.4317
+  type: 'test'
+  ...
+# Subtest: stale/unsigned/unclosed/changed sealed source and wrong root reject without duplicate roster/salary or age
+ok 6 - stale/unsigned/unclosed/changed sealed source and wrong root reject without duplicate roster/salary or age
+  ---
+  duration_ms: 954.7174
+  type: 'test'
+  ...
+# Subtest: entry public DTO omits raw roots/P/abilities/seed/RNG; restored entry projects identically and malformed registration rejects
+ok 7 - entry public DTO omits raw roots/P/abilities/seed/RNG; restored entry projects identically and malformed registration rejects
+  ---
+  duration_ms: 1627.3855
+  type: 'test'
+  ...
+# Subtest: HITTER signed school year closes only with explicit unused-training decision, without age/pro roster/salary or growth payout
+ok 8 - HITTER signed school year closes only with explicit unused-training decision, without age/pro roster/salary or growth payout
+  ---
+  duration_ms: 1771.2636
+  type: 'test'
+  ...
+# Subtest: PITCHER signed school year closes only with explicit unused-training decision, without age/pro roster/salary or growth payout
+ok 9 - PITCHER signed school year closes only with explicit unused-training decision, without age/pro roster/salary or growth payout
+  ---
+  duration_ms: 1508.9496
+  type: 'test'
+  ...
+# Subtest: already used training is preserved and an unfinished pitch learning never publishes year end
+ok 10 - already used training is preserved and an unfinished pitch learning never publishes year end
+  ---
+  duration_ms: 1274.6545
+  type: 'test'
+  ...
+# Subtest: mild/medium injuries retain team-game recovery across closure while major season injury ends
+ok 11 - mild/medium injuries retain team-game recovery across closure while major season injury ends
+  ---
+  duration_ms: 1796.9795
+  type: 'test'
+  ...
+# Subtest: stale revision/unsigned route/changed signing and changed sealed data cannot close or repair a year end
+ok 12 - stale revision/unsigned route/changed signing and changed sealed data cannot close or repair a year end
+  ---
+  duration_ms: 974.0878
+  type: 'test'
+  ...
+# Subtest: reading E94 after KBO year end validates then updates only its metadata seal and keeps signing valid
+ok 13 - reading E94 after KBO year end validates then updates only its metadata seal and keeps signing valid
+  ---
+  duration_ms: 647.6364
+  type: 'test'
+  ...
+# Subtest: general trait summary after sealed KBO year end does not invalidate activation evidence or repair bad seals
+ok 14 - general trait summary after sealed KBO year end does not invalidate activation evidence or repair bad seals
+  ---
+  duration_ms: 637.0878
+  type: 'test'
+  ...
+# Subtest: preseason confirmation persists two E94 notices for pinned rival/teammate without blocking progress
+ok 15 - preseason confirmation persists two E94 notices for pinned rival/teammate without blocking progress
+  ---
+  duration_ms: 84.0878
+  type: 'test'
+  ...
+# Subtest: opening a notice acknowledges only that notice and navigates to its relation; gameplay phase and RNG stay unchanged
+ok 16 - opening a notice acknowledges only that notice and navigates to its relation; gameplay phase and RNG stay unchanged
+  ---
+  duration_ms: 135.1328
+  type: 'test'
+  ...
+# Subtest: stale revision/version, wrong command, foreign or rewritten relation evidence reject atomically
+ok 17 - stale revision/version, wrong command, foreign or rewritten relation evidence reject atomically
+  ---
+  duration_ms: 128.1411
+  type: 'test'
+  ...
+# Subtest: unread notices do not stop real games; acknowledging both does not alter first-day results/health/trait evidence
+ok 18 - unread notices do not stop real games; acknowledging both does not alter first-day results/health/trait evidence
+  ---
+  duration_ms: 2592.9899
+  type: 'test'
+  ...
+# Subtest: legacy HS saves catch up once at day close; absence of relations and college worlds creates no fictitious notice
+ok 19 - legacy HS saves catch up once at day close; absence of relations and college worlds creates no fictitious notice
+  ---
+  duration_ms: 1433.5046
+  type: 'test'
+  ...
+# Subtest: notice acknowledgment during a pending task leaves that task and its saved resume untouched
+ok 20 - notice acknowledgment during a pending task leaves that task and its saved resume untouched
+  ---
+  duration_ms: 62.3548
+  type: 'test'
+  ...
+# Subtest: notice acknowledgment during a real pending game preserves the exact cursor/RNG and resumed game result
+ok 21 - notice acknowledgment during a real pending game preserves the exact cursor/RNG and resumed game result
+  ---
+  duration_ms: 2230.2318
+  type: 'test'
+  ...
+# Subtest: approved25-player rule: no eligible rival produces no rival notice or extra NPC, while the teammate notice remains
+ok 22 - approved25-player rule: no eligible rival produces no rival notice or extra NPC, while the teammate notice remains
+  ---
+  duration_ms: 32.234
+  type: 'test'
+  ...
+# Subtest: acknowledging a notice after sealed year end preserves the valid seal and college activation; corrupt seals never get repaired
+ok 23 - acknowledging a notice after sealed year end preserves the valid seal and college activation; corrupt seals never get repaired
+  ---
+  duration_ms: 290.1684
+  type: 'test'
+  ...
+# Subtest: HITTER actual college activation adds one teammate with registration E94, no blocking or growth changes
+ok 24 - HITTER actual college activation adds one teammate with registration E94, no blocking or growth changes
+  ---
+  duration_ms: 450.4308
+  type: 'test'
+  ...
+# Subtest: PITCHER actual college activation adds one teammate with registration E94, no blocking or growth changes
+ok 25 - PITCHER actual college activation adds one teammate with registration E94, no blocking or growth changes
+  ---
+  duration_ms: 293.9295
+  type: 'test'
+  ...
+# Subtest: old HS relationships survive, new college teammate appends and historical/current identities remain distinct
+ok 26 - old HS relationships survive, new college teammate appends and historical/current identities remain distinct
+  ---
+  duration_ms: 159.5523
+  type: 'test'
+  ...
+# Subtest: same team next season or return uses first entry without RNG/extra teammate; another actual team may add one
+ok 27 - same team next season or return uses first entry without RNG/extra teammate; another actual team may add one
+  ---
+  duration_ms: 179.8548
+  type: 'test'
+  ...
+# Subtest: no candidate records empty first entry without generating anyone or retrying; unregistered/invalid receipts reject
+ok 28 - no candidate records empty first entry without generating anyone or retrying; unregistered/invalid receipts reject
+  ---
+  duration_ms: 195.0477
+  type: 'test'
+  ...
+# Subtest: existing rival may also become teammate without overwriting rival history
+ok 29 - existing rival may also become teammate without overwriting rival history
+  ---
+  duration_ms: 150.9687
+  type: 'test'
+  ...
+# Subtest: college E94 requires exact formation/registration receipt; never synthesizes HS notice in college
+ok 30 - college E94 requires exact formation/registration receipt; never synthesizes HS notice in college
+  ---
+  duration_ms: 178.7229
+  type: 'test'
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 28
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 9335.3858
