@@ -8,7 +8,7 @@ export interface TraitUnlockReceipt {playerKey:string;traitId:TraitId;worldDay:n
 /** T16 (107 §7): consecutive world seasons whose official regular starter outs reach 3×G in one competition. */
 export interface StarterSeasonStreak {lastSeasonIndex:number;streak:number}
 export interface StarterSeasonEvidence {leagueKey:string;starterOuts:number;teamGames:number}
-export interface CareerTraitLedger {schemaVersion:1;owned:Record<string,TraitOwnership>;unlocks:readonly TraitUnlockReceipt[];lastClosedDay:number|null;lastSeasonKey?:string;starterStreaks?:Record<string,StarterSeasonStreak>;settledStarterSeasons?:readonly string[]}
+export interface CareerTraitLedger {schemaVersion:1;owned:Record<string,TraitOwnership>;unlocks:readonly TraitUnlockReceipt[];lastClosedDay:number|null;lastSeasonKey?:string;starterStreaks?:Record<string,StarterSeasonStreak>;settledStarterSeasons?:readonly string[];summaryCursor?:number}
 
 const empty=():TraitOwnership=>({unlocked:[],qualifiedRivalPitcherKeys:[]});
 export const createCareerTraitLedger=():CareerTraitLedger=>({schemaVersion:1,owned:Object.create(null) as Record<string,TraitOwnership>,unlocks:[],lastClosedDay:null});

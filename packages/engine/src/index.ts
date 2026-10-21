@@ -51,3 +51,4 @@ export * from './us-reservations.js';
 export * from './us-world.js';
 export * from './us-inventory.js';
 export * from './career-trait-view.js';
+export * from './trait-notices.js';
