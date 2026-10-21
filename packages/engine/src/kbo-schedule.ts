@@ -1,0 +1,52 @@
+import type {KboCareer} from './kbo-career-entry.js';
+import {assertCareerRevision} from './high-school-career.js';
+import {assertKboOpeningRoster} from './kbo-opening-roster.js';
+import {assertSeasonCalendar} from './season-calendar.js';
+import type {SeasonCalendar} from './season-calendar.js';
+import {createRoundRobinSchedule,assertSchedule} from './schedule.js';
+import type {ScheduledGame} from './schedule.js';
+import {canonicalJson} from './game.js';
+
+export interface KboSeasonSchedule {
+ receiptKey:string;seasonKey:string;openingRosterReceiptKey:string;
+ sourceRevision:number;confirmedRevision:number;
+ leagues:{KBO:readonly ScheduledGame[];FUTURES:readonly ScheduledGame[]};
+}
+/** Independent game-world dates: whole rounds span Feb-Oct, leaving every international barrier empty.
+ * This is calendar placement only; growth budgets retain all calendar growthDays, including rest. */
+export function createKboSeasonSchedules(teamKeys:readonly string[],seasonKey:string,calendar:SeasonCalendar):KboSeasonSchedule['leagues'] {
+ assertSeasonCalendar(calendar);
+ if(teamKeys.length!==10 || seasonKey!==String(calendar.year))throw new RangeError('INVALID_KBO_SCHEDULE_INPUT');
+ const generate=(leagueKey:'KBO'|'FUTURES')=>{
+  const raw=createRoundRobinSchedule({teamKeys,leagueKey,seasonKey,startDay:0},16),days=calendar.growthDays;
+  if(days.length<144)throw new RangeError('INSUFFICIENT_KBO_CALENDAR');
+  const result=raw.map(g=>({...g,worldDay:days[Math.floor(g.round*(days.length-1)/143)]!}));
+  assertSchedule(result,teamKeys,144,72);return result;
+ };
+ return {KBO:generate('KBO'),FUTURES:generate('FUTURES')};
+}
+const receiptKey=(s:KboCareer)=>JSON.stringify(['kbo-season-schedule',s.openingRoster!.receiptKey]);
+/** PRE-only validation. Once games exist this receipt is historical, not a new roster decision. */
+export function assertKboSeasonSchedule(s:KboCareer):KboSeasonSchedule {
+ assertCareerRevision(s,s.revision);const opening=assertKboOpeningRoster(s),r=s.competitionSchedule;
+ if(!r || r.receiptKey!==receiptKey(s) || r.seasonKey!==s.world.seasonKey || r.openingRosterReceiptKey!==opening.receiptKey || !Number.isSafeInteger(r.sourceRevision) || r.sourceRevision<opening.confirmedRevision || !Number.isSafeInteger(r.confirmedRevision) || r.confirmedRevision!==r.sourceRevision+1 || r.confirmedRevision>s.revision)throw new RangeError('STALE_KBO_SEASON_SCHEDULE');
+ const expected=createKboSeasonSchedules(s.world.clubs.map(c=>c.id),s.world.seasonKey,s.world.calendar);
+ if(canonicalJson(r.leagues)!==canonicalJson(expected))throw new RangeError('CHANGED_KBO_SEASON_SCHEDULE');
+ return r;
+}
+/** One atomic schedule publication after a valid opening roster. No games/appearance/growth or phase advance. */
+export function confirmKboSeasonSchedule(s:KboCareer,revision:number):KboCareer {
+ assertCareerRevision(s,revision);const opening=assertKboOpeningRoster(s);
+ if(s.competitionSchedule){assertKboSeasonSchedule(s);return structuredClone(s);}
+ const leagues=createKboSeasonSchedules(s.world.clubs.map(c=>c.id),s.world.seasonKey,s.world.calendar),next=structuredClone(s);next.revision++;
+ next.competitionSchedule={receiptKey:receiptKey(s),seasonKey:s.world.seasonKey,openingRosterReceiptKey:opening.receiptKey,sourceRevision:s.revision,confirmedRevision:next.revision,leagues};
+ assertKboSeasonSchedule(next);return next;
+}
+/** Explicit allowlist. Reading an older root never creates a schedule or claims a played game. */
+export function kboSeasonScheduleView(s:KboCareer){
+ assertCareerRevision(s,s.revision);assertKboOpeningRoster(s);
+ if(!s.competitionSchedule)return {status:'PENDING' as const,seasonKey:s.world.seasonKey,competitionKey:s.registration.competitionKey!,gamesPerTeam:144,fixtures:[]};
+ const r=assertKboSeasonSchedule(s),competitionKey=s.registration.competitionKey!,club=s.protagonistClubId;
+ const fixtures=r.leagues[competitionKey].filter(g=>g.homeTeamKey===club || g.awayTeamKey===club).map(g=>({gameKey:g.simulationKey,worldDay:g.worldDay,round:g.round,home:{id:g.homeTeamKey,name:s.world.clubs.find(c=>c.id===g.homeTeamKey)!.name},away:{id:g.awayTeamKey,name:s.world.clubs.find(c=>c.id===g.awayTeamKey)!.name}}));
+ return {status:'CONFIRMED' as const,seasonKey:r.seasonKey,competitionKey,gamesPerTeam:144,fixtures};
+}

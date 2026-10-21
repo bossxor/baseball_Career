@@ -1,0 +1,64 @@
+{
+  "files": [
+    {
+      "path": "packages/engine/src/kbo-schedule.ts",
+      "sha256": "5dc04c9d89ac258601146c48b5cecb0615382ad8b3ef457fc0043c8b1e30e60c"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "sha256": "515b9b3b4c8b72748d9c3d6c34463481e06bcea36fc863fd72dba641c78b2d45"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "786a895007cf8e0798045162779ffbcd6e13aa9d2609c2705189ea796ead3a9a"
+    },
+    {
+      "path": "packages/engine/test/kbo-schedule.test.ts",
+      "sha256": "a67ed464b0b6b37c07a422695c8e5185056dd13cb5fb4c19d8502b1319fdc06b"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "e81c0dea920d8d84465193930b16bacd1857ca3c4ab51c36bf889464eff47a06"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "a78276661bcb962e293fb6ad0754a4cb82e0e27933c45e7e40fea55e996a0685"
+    },
+    {
+      "path": "docs/implementation/M2-AT-KBO-SEASON-SCHEDULE.md",
+      "sha256": "bd558ab5ae4a412b1735dc8c94242c43c44b3ebae5493cac65a5e1e33329ba4e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AT-build.log",
+      "sha256": "6ffca09b3fc99d1bcd5a98e15e9f44d64a2dd8a1055d31ed7571a95fb7945d68"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AT-design.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AT-events.log",
+      "sha256": "e4f563b151c3acfae1e351c53bf2c4633b4a60476e51cb14f34970334a86172a"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AT-golden.log",
+      "sha256": "fd6106507bc4069343297667513044ad7447998b5c028b0ed22bc26eea51c1e1"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AT-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AT-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AT-tests.log",
+      "sha256": "21e4177c3f5ae04739d74fcdb119c9fffe958130963a7a9a0ea31db2da8405e6"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AT-typecheck.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df"
+    }
+  ]
+}

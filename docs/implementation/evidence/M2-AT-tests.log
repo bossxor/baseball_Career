@@ -1,0 +1,47 @@
+✔ HITTER healthy strong rookie competes into28; first-team registration is separate from games/salary/growth (4364.2576ms)
+✔ PITCHER healthy strong rookie competes into28; first-team registration is separate from games/salary/growth (3212.9703ms)
+✔ ordinary50-start school career can earn a spot in its actual destination club on position merit (1948.7702ms)
+✔ injured star starts in futures roster, keeps remaining team-game recovery, never occupies an opening1st-team slot (1705.9386ms)
+✔ view is pending before confirmation, does not select automatically and exposes no hidden potential/RNG or fake odds (4259.307ms)
+✔ late camp/relation reading preserves opening roster and confirmed growth plan;1st-team registration does not fabricate callup event (2184.1303ms)
+✔ stale revision/tampered receipt/roster/competition reject without salary or registration repair (2890.2914ms)
+✔ controlled absence of all catchers fails safely: no emergency players, silent healing or partially published roster (2378.8165ms)
+✔ controlled stronger club leaves the ordinary rookie in futures without changing ability or granting a free slot (1784.4388ms)
+✔ HITTER actual entry queues one nonblocking E08 and exposes only public preseason choices (2848.4056ms)
+✔ PITCHER actual entry queues one nonblocking E08 and exposes only public preseason choices (2403.8714ms)
+✔ E08 focus choice commits only four-focus plan; KEEP_FOCUS acknowledges without a new saved plan (2199.8168ms)
+✔ focus validates four distinct own-kind axes and preseason style permits one actual change, no ability/RNG bonus (2527.5488ms)
+✔ pitcher weight command reuses one PRE configuration chance, unchanged weights consume none and hitters reject (3938.7457ms)
+✔ learning reserves10 base XP without instant mastery; free slot keeps configuration chance and second plan rejects (1855.3514ms)
+✔ controlled four learned pitches: replacement and learning atomically consume the same PRE chance (3057.0685ms)
+✔ confirm freezes the selected plan/snapshots once, pays no growth and does not require reading E08 (2332.9091ms)
+✔ confirmed pitcher learning/configuration snapshot remains valid but further edits cannot reopen PRE (2276.4173ms)
+✔ stale revision/event version, foreign camp evidence and invalid focus reject without state/RNG changes (2225.835ms)
+✔ legacy AP state is read-only until a write catches up one camp notice; duplicate and changed source reject (2397.9152ms)
+✔ HITTER pro list retains historical school and active club teammate identities without invented transfers/stages (2857.2815ms)
+✔ PITCHER pro list retains historical school and active club teammate identities without invented transfers/stages (2633.8348ms)
+✔ historical relation details reuse existing official scoped records; never fabricate pro games or new player registration (1869.7351ms)
+✔ both historical and new pro E94 preserve names and ACK only their notice while the confirmed plan remains sealed (2930.2618ms)
+✔ stale revision/version, wrong command or foreign/duplicate relation evidence reject without changes (2613.231ms)
+✔ unknown historical player remains unresolved; malformed ownership, foreign history and changed confirmed plan reject (7138.7168ms)
+✔ absence of relations/notices on restored old pro state is empty and querying never creates a new relation (2189.5457ms)
+✔ both independent leagues have720 games,144/team,8 home and8 away/opponent; all calendar barriers and rest respected (311.9661ms)
+✔ bad teams/year/calendar reject; publication cannot bypass the confirmed roster (2540.0686ms)
+✔ old roots read pending; confirmed schedule survives JSON/replay/notice ACK with no played games or extra side effects (3398.6149ms)
+✔ changed date/venue/identity/receipt rejects atomically rather than silently rebuilding (5217.6714ms)
+✔ 01: KBO720/team144/home72 and pair16/home8, no double booking or >6 consecutive (15.2248ms)
+✔ 43/HS: nine-team216/team48/home24, 54 rounds with one bye each (2.1195ms)
+✔ 13: MLB2430/team162/home81, every opponent5 plus exactly17 distinct extra opponents (62.1556ms)
+✔ 13: minor60/100/120/144 exact games and equal venues, fixed JSON schedule (63.0734ms)
+✔ schedule rejects duplicate/odd degree and validator catches count/venue/date corruption (13.7259ms)
+✔ fixed annual calendar includes weekly rest, excludes actual tournament windows and handles leap years (12.1893ms)
+✔ calendar-backed school season spreads all216 games over Feb-Jun without international collisions (220.1549ms)
+✔ baseline growth stays average: perfect school appearances and +2 still below52; US entry uses a separate scout score (36.4203ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29443.9997
