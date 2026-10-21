@@ -1,3 +1,4 @@
+import type {CareerPhase} from '@playball/rules';
 import type {RelationshipHistorySource} from './relationship-history.js';
 import {assertKboAmateurYearEnd} from './kbo-entry.js';
 import {assertTeamEntryRelationReceipt,teamEntryFormationKey} from './team-teammates.js';
@@ -13,7 +14,7 @@ import {careerRelationshipListView} from './relationship-history.js';
 
 export interface RelationFormationNoticeSource {
  world:RegisteredTeamRelationWorld;relationships?:HighSchoolCareer['relationships'];relationNotices?:HighSchoolCareer['relationNotices'];
- previousSeasons?:readonly {world:RegisteredTeamRelationWorld}[];events:readonly EventInstance[];revision:number;phaseContext:Pick<HighSchoolCareer['phaseContext'],'phase'>;
+ previousSeasons?:readonly {world:RegisteredTeamRelationWorld}[];events:readonly EventInstance[];revision:number;phaseContext:{phase:CareerPhase};
 }
 
 function formationContext(source:RelationFormationNoticeSource,relation:PlayerRelationship,formation:RelationMilestone){

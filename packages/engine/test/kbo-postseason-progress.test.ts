@@ -12,6 +12,7 @@ import {canonicalJson} from '../src/game.js';
 import {closeKboSeason} from '../src/kbo-year-end.js';
 import {kboYearTransitionReadiness,stageKboAgeAndContracts,startNextKboSeason} from '../src/kbo-year-transition.js';
 import {advanceKboCareer} from '../src/kbo-progress.js';
+import {requestKboRetirement,resolveKboRetirement,retireKboAtMaxAge} from '../src/kbo-retirement.js';
 import {offerKboRenewal,acceptKboRenewal,kboRenewalValueWon} from '../src/kbo-renewal.js';
 
 /** Controlled season-review state: closed day receipts for the whole regular range (no regular games played). */
@@ -148,4 +149,19 @@ test('NPCs who played at 45 retire at activation and only their first team is re
  assert.ok(!Object.hasOwn(n.world.players,starter) && !Object.hasOwn(n.world.contracts,starter) && !club.roster.includes(starter));
  assert.equal(club.firstTeam.length,28);assert.equal(club.roster.length,other.roster.length-1);
  assert.deepEqual(n.world.clubs.filter(x=>x.id!==other.id).map(x=>[...x.firstTeam]),untouched);
+});
+
+test('my retirement: E36 cancel returns, confirm closes E30 and archives; age 45 ends the career without a renewal',()=>{
+ const c=closed();assert.throws(()=>retireKboAtMaxAge(c,c.revision),/KBO_RETIREMENT_NOT_AVAILABLE/);
+ const o=offerKboRenewal(c,c.revision),asked=requestKboRetirement(o,o.revision),phase=asked.phaseContext as {phase:string;eventKey:string};
+ assert.equal(phase.phase,'RETIRE_CONFIRM');const e36=asked.events.find(e=>e.eventKey===phase.eventKey)!;assert.equal(e36.definitionId,'E36');
+ const back=resolveKboRetirement(asked,asked.revision,{eventKey:e36.eventKey,eventVersion:e36.version,command:'CANCEL_RETIRE'});
+ assert.equal(back.phaseContext.phase,'SEASON_REVIEW');assert.equal(back.events.find(e=>e.definitionId==='E30')!.status,'OPEN');
+ const done=resolveKboRetirement(asked,asked.revision,{eventKey:e36.eventKey,eventVersion:e36.version,command:'CONFIRM_RETIRE'});
+ assert.equal(done.phaseContext.phase,'ARCHIVED');assert.equal(done.retirement!.reason,'VOLUNTARY');assert.equal(done.retirement!.age,c.world.players[c.protagonistKey]!.age);
+ assert.ok(done.events.filter(e=>e.definitionId!=='E37').every(e=>e.status!=='OPEN'));assert.equal(done.events.at(-1)!.definitionId,'E37');
+ assert.throws(()=>startNextKboSeason(done,done.revision));
+ const old=structuredClone(c);old.world.players[old.protagonistKey]={...old.world.players[old.protagonistKey]!,age:45};
+ assert.throws(()=>offerKboRenewal(old,old.revision),/KBO_RENEWAL_NOT_AVAILABLE/);
+ const end=retireKboAtMaxAge(old,old.revision);assert.equal(end.phaseContext.phase,'ARCHIVED');assert.equal(end.retirement!.reason,'MAX_AGE');assert.equal(end.retirement!.age,45);
 });

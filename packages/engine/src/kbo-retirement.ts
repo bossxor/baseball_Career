@@ -1,5 +1,9 @@
 import {KBO_ROSTER_LIMITS} from '@playball/rules';
-import type {ActiveKboRosterWorld} from './kbo-career-entry.js';
+import type {ActiveKboRosterWorld,KboCareer} from './kbo-career-entry.js';
+import {assertCareerRevision} from './high-school-career.js';
+import {createWorldEvent,completeBlockingEvent,eventDefinition} from './events.js';
+import type {EventInstance} from './events.js';
+import {kboYearTransitionReadiness} from './kbo-year-transition.js';
 import type {DevelopmentPlayer} from './player.js';
 import type {KboInitialContract} from './kbo-world.js';
 import {selectKboFirstTeamRoster} from './kbo-world.js';
@@ -26,4 +30,48 @@ export function retireKboOverAgeNpcs(world:ActiveKboRosterWorld,keys:readonly st
  }
  if(retired.length!==gone.size)throw new RangeError('UNKNOWN_RETIRING_PLAYER');
  return retired.sort((a,b)=>a.playerKey<b.playerKey?-1:1);
+}
+
+/** My pro career's end: frozen with the archive in the same result (01 §6, 15). */
+export interface KboCareerRetirement {receiptKey:string;reason:'VOLUNTARY'|'MAX_AGE';seasonKey:string;age:number;clubId:string;remainingContractYears:number;sourceRevision:number}
+const taskKey=(s:KboCareer)=>JSON.stringify(['kbo-retirement',s.world.worldKey,s.world.seasonKey,s.protagonistKey]);
+function offseason(s:KboCareer){
+ if(s.phaseContext.phase!=='SEASON_REVIEW' || s.seasonClose?.seasonKey!==s.world.seasonKey)throw new RangeError('KBO_RETIREMENT_NOT_AVAILABLE');
+}
+function retirementEvent(s:KboCareer,definitionId:'E36'|'E37',revision:number){
+ return createWorldEvent({definitionId,worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,evidence:{version:1,type:eventDefinition(definitionId).evidenceDomain,fields:{playerSimulationKey:s.protagonistKey,retirementTaskOrReceiptId:taskKey(s)}},
+  resume:{worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,phase:'SEASON_REVIEW',competitionKey:null,registrationKey:s.protagonistClubId,sourceRevision:revision},sourceSequence:s.events.length+1,worldDay:s.days!.days.at(-1)!.day});
+}
+function retire(source:KboCareer,career:KboCareer,reason:KboCareerRetirement['reason']):KboCareer {
+ const c=source.world.contracts[source.protagonistKey]!;career.revision++;
+ career.retirement={receiptKey:taskKey(source),reason,seasonKey:source.world.seasonKey,age:source.world.players[source.protagonistKey]!.age,clubId:source.protagonistClubId,remainingContractYears:c.years-1,sourceRevision:career.revision};
+ const farewell=retirementEvent(career,'E37',career.revision);career.events=[...career.events,farewell];
+ career.phaseContext={phase:'ARCHIVED'};return career;
+}
+/** S09 / E30 REQUEST_RETIRE: manual retirement opens blocking E36 in the offseason after any finished pro season. */
+export function requestKboRetirement(source:KboCareer,expectedRevision:number):KboCareer {
+ assertCareerRevision(source,expectedRevision);offseason(source);
+ if(source.events.some(e=>e.status==='OPEN' && e.definitionId!=='E30'))throw new RangeError('KBO_RETIREMENT_NOT_AVAILABLE');
+ const career=structuredClone(source),event=retirementEvent(source,'E36',source.revision+1);
+ career.events=[...career.events,event];career.phaseContext={phase:'RETIRE_CONFIRM',eventKey:event.eventKey};career.revision++;return career;
+}
+/** E36: CANCEL returns to the review; CONFIRM ends the career (an open E30 closes with it, the remaining personal
+ * contract ends after the warning shown in S09) and archives in the same result. */
+export function resolveKboRetirement(source:KboCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number;command:'CONFIRM_RETIRE'|'CANCEL_RETIRE'}):KboCareer {
+ assertCareerRevision(source,expectedRevision);const phase=source.phaseContext;
+ if(phase.phase!=='RETIRE_CONFIRM' || phase.eventKey!==input.eventKey)throw new RangeError('INVALID_CAREER_PHASE');
+ const event=source.events.find(e=>e.eventKey===input.eventKey)!,context=(e:EventInstance)=>({worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:[input.command]});
+ const close=(e:EventInstance,command:string)=>completeBlockingEvent(e,e.version,{sourceEvidenceKey:e.evidenceKey,receiptKey:JSON.stringify(['kbo-retirement-decision',taskKey(source),command]),command},context(e));
+ if(input.eventVersion!==event.version)throw new RangeError('EVENT_VERSION_CONFLICT');
+ const career=structuredClone(source);
+ career.events=career.events.map(e=>e.eventKey===event.eventKey?close(e,input.command):e.status==='OPEN' && e.definitionId==='E30' && input.command==='CONFIRM_RETIRE'?close(e,'RETIRE'):e);
+ if(input.command==='CANCEL_RETIRE'){career.phaseContext={phase:'SEASON_REVIEW'};career.revision++;return career;}
+ return retire(source,career,'VOLUNTARY');
+}
+/** 01 §6: after the season played at 45 the career ends; no new season is forced (72 Y01 MAX_AGE_REACHED). */
+export function retireKboAtMaxAge(source:KboCareer,expectedRevision:number):KboCareer {
+ assertCareerRevision(source,expectedRevision);offseason(source);
+ const blockers=kboYearTransitionReadiness(source).blockers;
+ if(!blockers.includes('MAX_AGE_REACHED') || blockers.some(b=>b!=='MAX_AGE_REACHED' && b!=='CONTRACT_DECISION_REQUIRED'))throw new RangeError('KBO_RETIREMENT_NOT_AVAILABLE');
+ return retire(source,structuredClone(source),'MAX_AGE');
 }

@@ -41,7 +41,7 @@ export function kboContractDecisionRequired(source:KboCareer):boolean {
 export function offerKboRenewal(source:KboCareer,expectedRevision:number):KboCareer {
  assertCareerRevision(source,expectedRevision);
  const season=source.world.seasonKey,close=source.seasonClose;
- if(source.phaseContext.phase!=='SEASON_REVIEW' || !close || close.seasonKey!==season || source.renewal?.seasonKey===String(Number(season)+1) || !expiresAfterSeason(source) || source.events.some(e=>e.status==='OPEN'))throw new RangeError('KBO_RENEWAL_NOT_AVAILABLE');
+ if(source.phaseContext.phase!=='SEASON_REVIEW' || !close || close.seasonKey!==season || source.renewal?.seasonKey===String(Number(season)+1) || !expiresAfterSeason(source) || source.events.some(e=>e.status==='OPEN') || source.world.players[source.protagonistKey]!.age>=45)throw new RangeError('KBO_RENEWAL_NOT_AVAILABLE');
  const key=source.protagonistKey,previous=source.world.contracts[key]!.annualSalaryWon,{valueWon,basis}=kboRenewalValueWon(source);
  const target=String(Number(season)+1),offerKey=JSON.stringify(['kbo-renewal',source.world.worldKey,target,key]);
  const day=source.days!.days.at(-1)!.day,definition=eventDefinition('E30');
