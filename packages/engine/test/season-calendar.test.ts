@@ -30,7 +30,7 @@ test('calendar-backed school season spreads all216 games over Feb-Jun without in
  }
 });
 
-test('US52 reachability: even perfect school appearances and +2 cannot reach52 in normal/hard under partial-year budget',()=>{
+test('baseline growth stays average: perfect school appearances and +2 still below52; US entry uses a separate scout score',()=>{
  const player=world().players.own!;
  for(const year of [2029,2030,2031,2032])for(const difficulty of ['GROWTH','REALISTIC'] as const){
   const calendar=createSeasonCalendar(year),D=calendar.highSchoolDays.length,W=calendar.growthDays.length;

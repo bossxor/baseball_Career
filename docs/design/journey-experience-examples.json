@@ -24,43 +24,43 @@
     },
     "usGate": [
       {
-        "overall": 55,
-        "amateur": 50,
+        "overall": 50,
+        "scoutScore": 65,
         "validOffers": 1,
         "routeOpen": true,
         "visible": true
       },
       {
-        "overall": 51.9999,
-        "amateur": 50,
+        "overall": 80,
+        "scoutScore": 64.9999,
         "validOffers": 1,
         "routeOpen": true,
         "visible": false
       },
       {
-        "overall": 55,
-        "amateur": 49.9999,
+        "overall": 53,
+        "scoutScore": 56.5,
         "validOffers": 1,
         "routeOpen": true,
         "visible": false
       },
       {
         "overall": 80,
-        "amateur": 80,
+        "scoutScore": 80,
         "validOffers": 0,
         "routeOpen": true,
         "visible": false
       },
       {
         "overall": 80,
-        "amateur": 80,
+        "scoutScore": 80,
         "validOffers": 1,
         "routeOpen": false,
         "visible": false
       },
       {
-        "overall": 52,
-        "amateur": 50,
+        "overall": 51.9999,
+        "scoutScore": 65,
         "validOffers": 1,
         "routeOpen": true,
         "visible": true

@@ -1,7 +1,7 @@
 /* Read-only design storyboard. No game simulation or persistent storage. */
 (function(g){'use strict';
 const escape=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const canUS=c=>c.overall>=52&&c.amateurEvaluation>=50&&c.validOffers>=1&&c.rightsOpen===true;
+const canUS=c=>c.scoutScore>=65&&c.validOffers>=1&&c.rightsOpen===true;
 const routes=c=>['KBO','COLLEGE',...(canUS(c)?['US']:[])];
 function path(data,route,ctx){if(route==='US'&&!canUS(ctx))return [...data.common];return [...data.common,...(data.routes[route]||[])];}
 function render(stage,ctx){const image=stage.image;const art=typeof image.x==='number'?'<div class="scene" role="img" aria-label="청춘 야구 애니 · '+escape(stage.title)+'" style="background-image:url('+escape(image.asset)+');--x:'+image.x+'%;--y:'+image.y+'%"></div>':'<img class="wide" src="'+escape(image.asset)+'" alt="마지막 고교 시즌의 가상 선수">';const choices=stage.id==='C07'?'<div class="routes">'+routes(ctx).map(r=>'<button type="button" data-route="'+r+'">'+({KBO:'국내 드래프트 비교',COLLEGE:'대학 학교 비교',US:'미국 제안 비교'})[r]+'</button>').join('')+'</div>':'';return '<div class="top"><b>다시, 플레이볼</b><span>'+stage.age+'세 · '+(stage.age===18?'고교 마지막 시즌':'다음 무대의 첫 시즌')+'</span></div>'+art+'<div class="body"><span class="eyebrow">나의 커리어 이야기</span><h2>'+escape(stage.title)+'</h2><p>'+escape(stage.body)+'</p>'+choices+'<div class="cue"><strong>다음에 확인할 것</strong>'+escape(stage.action)+'</div></div><div class="footer">선수의 기록과 선택은 실제 확정 결과를 따릅니다.</div>';}

@@ -107,7 +107,7 @@
       "id": "C07",
       "screenId": "S28",
       "title": "다음 무대를 고르는 날",
-      "body": "국내 드래프트와 대학을 비교합니다. 미국 진출은 능력·권리와 실제 유효 오퍼가 모두 충족된 경우에만 보입니다.",
+      "body": "국내 드래프트와 대학을 비교합니다. 미국 진출은 미국 스카우트 평가65 이상·권리와 실제 유효 오퍼가 모두 충족된 경우에만 보입니다.",
       "action": "가능한 진로 비교",
       "guard": "제안을 읽는 것만으로 다른 진로가 닫히지 않습니다.",
       "image": {
@@ -310,7 +310,7 @@
         "id": "A01",
         "screenId": "S29",
         "title": "실제로 도착한 제안",
-        "body": "능력 기준·현재 권리가 유효하고 미국 오퍼가 있는 사례입니다. 마이너 시작 레벨과 계약 종류를 먼저 확인합니다.",
+        "body": "미국 스카우트 평가65 이상·현재 권리가 유효하고 미국 오퍼가 있는 사례입니다. 마이너 시작 레벨과 계약 종류를 먼저 확인합니다.",
         "action": "제안 상세 비교",
         "guard": "오퍼0이면 이 경로 카드를 표시하지 않습니다.",
         "image": {
@@ -442,20 +442,20 @@
   },
   "usExamples": {
     "ELIGIBLE": {
-      "overall": 55,
-      "amateurEvaluation": 50,
+      "overall": 50,
+      "scoutScore": 65,
       "validOffers": 1,
       "rightsOpen": true
     },
-    "LOW_ABILITY": {
-      "overall": 51.9999,
-      "amateurEvaluation": 50,
+    "LOW_SCOUT_SCORE": {
+      "overall": 80,
+      "scoutScore": 64.9999,
       "validOffers": 1,
       "rightsOpen": true
     },
     "NO_OFFER": {
-      "overall": 55,
-      "amateurEvaluation": 50,
+      "overall": 80,
+      "scoutScore": 65,
       "validOffers": 0,
       "rightsOpen": true
     }

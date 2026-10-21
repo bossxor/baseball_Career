@@ -1,6 +1,6 @@
 # 구현 진행 안내 — 2026-10-21
 
-M0/M1 완료, M2 진행 중입니다. 대학 정규/선수권·성장/학년 결과·NPC 지속성장과1→4학년 재학,4학년 필수 E75 졸업/진로 조회를 구현했습니다. 전체252/252·check·HTTP smoke를 통과했습니다. 실제 KBO 모집/조기 지명/계약·미국 오퍼, 플레이 UI·계정·DB 저장은 남아 있습니다. 미국 첫 고교 졸업52 도달성 충돌과 세계 전체 작업자는 미해결입니다. 최신 결과는 [구현 진행](../implementation/PROGRESS.md)·[최종 인계](../implementation/NEXT-SESSION.md)·[M2-AA](../implementation/M2-AA-COLLEGE-GRADUATION.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 이전 이력이며 전체 완료를 뜻하지 않습니다.
+M2-AD(2026-10-21): 고교 NPC 생성2는 평균48·희소 스타·유형 편차60%를 사용한다. 내 선수 평균 성장/시작 능력/잠재력 추첨은 유지한다. 미국 직행은 종합52 대신 스카우트 평가65·유효오퍼·자격으로 분리했다. KBO 초기 세계와 첫 지명/신인 계약 예약까지 구현했고, 미국 실제 오퍼 생성/프로 시즌 활성화/플레이 UI·인증·DB·APK는 후속이다. 최신 결과와 한계는 [구현 진행](../implementation/PROGRESS.md)·[인계](../implementation/NEXT-SESSION.md)·[M2-AD](../implementation/M2-AD-SCHOOL-BALANCE-V2.md)를 따른다. 아래는 이전 설계/실행 이력이다.
 
 ---
 

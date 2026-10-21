@@ -546,8 +546,8 @@
           "label": "미국 제안 있음",
           "allowedScene": "training",
           "requiredEvidence": [
-            "overall:55",
-            "amateurEvaluation:50",
+            "overall:50",
+            "scoutScore:65",
             "validUSOffers:1"
           ],
           "expected": "미국 제안 카드; 열람은 진로 포기 아님"

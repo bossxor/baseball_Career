@@ -1,4 +1,7 @@
-import {US_DIRECT_MIN_OVERALL} from '@playball/rules';
+import {US_DIRECT_MIN_SCOUT_SCORE} from '@playball/rules';
+import type {PlayerKind} from '@playball/rules';
+import {assessmentMidpointScore} from './assessment.js';
+import type {PotentialRange} from './assessment.js';
 import { nextFloat } from './rng.js';
 import type { RngState } from './rng.js';
 const LOW=[81,77,73,69,65,61,57,53,49,45];
@@ -26,7 +29,21 @@ export function draftBaseScore(overall:number,adjustedPerformance:number):number
   if([overall,adjustedPerformance].some(n=>!Number.isFinite(n) || n<0 || n>100)) throw new RangeError('INVALID_DRAFT_SCORE');
   return .7*overall+.3*adjustedPerformance;
 }
-export function canShowUsDirect(input:{overall:number;amateurScore:number;validOfferCount:number;eligible:boolean}):boolean {
-  if([input.overall,input.amateurScore].some(n=>!Number.isFinite(n) || n<0 || n>100) || !Number.isSafeInteger(input.validOfferCount) || input.validOfferCount<0) throw new RangeError('INVALID_US_ELIGIBILITY');
-  return input.eligible && input.overall>=US_DIRECT_MIN_OVERALL && input.amateurScore>=50 && input.validOfferCount>0;
+/** US evaluation uses the assessed range midpoint, never raw hidden potential. */
+export function usDirectBaseScore(input:{kind:PlayerKind;roleScore:number;adjustedPerformance:number;ranges:Readonly<Record<string,PotentialRange>>}):number {
+  if([input.roleScore,input.adjustedPerformance].some(n=>!Number.isFinite(n) || n<0 || n>100)) throw new RangeError('INVALID_US_EVALUATION');
+  return .5*input.roleScore+.3*input.adjustedPerformance+.2*assessmentMidpointScore(input.kind,input.ranges);
+}
+/** Same one-shot uniform[-5,5) model as the draft; preview never advances RNG. */
+export function usDirectPreview(baseScore:number):{probabilityKind:'EXACT';candidateProbability:number} {
+  if(!Number.isFinite(baseScore) || baseScore<0 || baseScore>100) throw new RangeError('INVALID_US_EVALUATION');
+  return {probabilityKind:'EXACT',candidateProbability:Math.max(0,Math.min(1,(baseScore+5-US_DIRECT_MIN_SCOUT_SCORE)/10))};
+}
+export function drawUsDirectEvaluation(baseScore:number,rng:RngState) {
+  usDirectPreview(baseScore);const draw=nextFloat(rng),score=baseScore-5+10*draw.value;
+  return {score,candidate:score>=US_DIRECT_MIN_SCOUT_SCORE,state:draw.state};
+}
+export function canShowUsDirect(input:{scoutScore:number;validOfferCount:number;eligible:boolean}):boolean {
+  if(!Number.isFinite(input.scoutScore) || input.scoutScore< -5 || input.scoutScore>=105 || !Number.isSafeInteger(input.validOfferCount) || input.validOfferCount<0 || typeof input.eligible!=='boolean') throw new RangeError('INVALID_US_ELIGIBILITY');
+  return input.eligible && input.scoutScore>=US_DIRECT_MIN_SCOUT_SCORE && input.validOfferCount>0;
 }

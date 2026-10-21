@@ -7,7 +7,7 @@ import {generateNpcIdentities,generateNpcPotential} from './npc.js';
 import {nextInteger,nextFloat} from './rng.js';
 import {archetypeFor,validateDevelopmentPlayer} from './player.js';
 import {createRepertoire} from './repertoire.js';
-import {schoolNpcTarget} from './school-roster.js';
+import {schoolNpcTarget,schoolNpcAbilities} from './school-roster.js';
 
 export interface SchoolEmergencyRegistry {
   schemaVersion:1;worldKey:string;nextSerial:number;
@@ -43,9 +43,9 @@ export function reconcileSchoolEmergency(world:HighSchoolWorld,health:HealthLedg
       const types=Object.keys(identity.kind==='HITTER'?HITTER_TYPES:PITCHER_TYPES),typeDraw=nextInteger(updated.rng.roster,types.length);updated.rng.roster=typeDraw.state;
       const archetype=types[typeDraw.value]!,type=archetypeFor(identity.kind,archetype),keys=abilityKeys(identity.kind);
       const u=nextFloat(updated.rng.roster);updated.rng.roster=u.state;
-      const target=schoolNpcTarget(u.value,school.id,world.leagueKey);let age=18;
+      const target=schoolNpcTarget(u.value,school.id,world.leagueKey,world.schoolBalanceVersion??1);let age=18;
       if(world.leagueKey==='COLLEGE'){const ageDraw=nextInteger(updated.rng.roster,4);updated.rng.roster=ageDraw.state;age=19+ageDraw.value;}
-      const abilities=Object.fromEntries(keys.map((key,i)=>[key,(type.initial[i]!+target-50)*10_000]));
+      const abilities=schoolNpcAbilities(identity.kind,archetype,target,world.leagueKey,world.schoolBalanceVersion??1);
       const potential=generateNpcPotential(identity.kind,abilities,{mode:'CAREER',difficulty,owned:false},updated.rng.potential);updated.rng.potential=potential.state;
       const focus=[...keys].sort((a,b)=>type.weights[keys.indexOf(b)]!-type.weights[keys.indexOf(a)]! || keys.indexOf(a)-keys.indexOf(b)).slice(0,4);
       const serial=registry.nextSerial-requests.length+index;

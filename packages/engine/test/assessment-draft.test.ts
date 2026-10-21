@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {potentialRange,reconcileAssessment,observeAssessmentProgress,assessmentView,assessmentMidpointScore,ownAssessmentLevel} from '../src/assessment.js';
-import {draftPreview,drawDraft,draftRound,draftBaseScore,canShowUsDirect} from '../src/draft.js';
+import {draftPreview,drawDraft,draftRound,draftBaseScore,canShowUsDirect,usDirectBaseScore,usDirectPreview,drawUsDirectEvaluation} from '../src/draft.js';
 import {seedPcg32} from '../src/rng.js';
 import {abilityKeys} from '@playball/rules';
 const abilities=Object.fromEntries(abilityKeys('HITTER').map(k=>[k,500_000])),potential=Object.fromEntries(abilityKeys('HITTER').map(k=>[k,900_000]));
@@ -61,8 +61,20 @@ test('34: fixed-seed draft empirical distribution matches preview and consumes e
   assert.equal(rng.draws,30_000);assert.ok(Math.abs(selected/30_000-.5)<.015);assert.ok(Math.abs(r9/30_000-.1)<.01);assert.ok(Math.abs(r10/30_000-.4)<.015);
   assert.deepEqual(drawDraft({baseScore:90,hasEligibleClubSlot:false},rng),{score:null,round:null,state:rng});
 });
-test('34: US direct only with ability AND assessment AND actual valid offer AND eligibility',()=>{
-  const valid={overall:52,amateurScore:50,validOfferCount:1,eligible:true};assert.equal(canShowUsDirect(valid),true);
-  for(const change of [{overall:51.9999},{amateurScore:49.9999},{validOfferCount:0},{eligible:false}]) assert.equal(canShowUsDirect({...valid,...change}),false);
+test('34: US direct requires scout65, actual valid offer and eligibility; no overall gate',()=>{
+  const valid={scoutScore:65,validOfferCount:1,eligible:true};assert.equal(canShowUsDirect(valid),true);
+  for(const change of [{scoutScore:64.9999},{validOfferCount:0},{eligible:false}]) assert.equal(canShowUsDirect({...valid,...change}),false);
   assert.throws(()=>canShowUsDirect({...valid,validOfferCount:-1}));
+  for(const scoutScore of [NaN,Infinity,-5.0001,105])assert.throws(()=>canShowUsDirect({...valid,scoutScore}));
+  assert.throws(()=>canShowUsDirect({...valid,eligible:1 as unknown as boolean}));
+});
+test('US scouting: average growth does not qualify automatically; exceptional role/performance can, without raw P',()=>{
+  const ranges=Object.fromEntries(abilityKeys('HITTER').map(k=>[k,{lowUnits:700_000,highUnits:800_000}]));
+  const average=usDirectBaseScore({kind:'HITTER',roleScore:53,adjustedPerformance:50,ranges});assert.equal(average,56.5);assert.equal(usDirectPreview(average).candidateProbability,0);
+  const exceptional=usDirectBaseScore({kind:'HITTER',roleScore:55,adjustedPerformance:80,ranges});assert.equal(exceptional,66.5);assert.equal(usDirectPreview(exceptional).candidateProbability,.65);
+  assert.equal(usDirectPreview(60).candidateProbability,0);assert.equal(usDirectPreview(65).candidateProbability,.5);assert.equal(usDirectPreview(70).candidateProbability,1);
+  assert.throws(()=>usDirectBaseScore({kind:'HITTER',roleScore:101,adjustedPerformance:50,ranges}));assert.throws(()=>usDirectPreview(NaN));
+  let rng=seedPcg32(42n,54n),qualified=0;const original=structuredClone(rng);
+  for(let i=0;i<10_000;i++){const result=drawUsDirectEvaluation(exceptional,rng);rng=result.state;assert.ok(result.score>=61.5 && result.score<71.5);if(result.candidate)qualified++;}
+  assert.equal(rng.draws,10_000);assert.ok(Math.abs(qualified/10_000-.65)<.02);assert.deepEqual(drawUsDirectEvaluation(exceptional,original),drawUsDirectEvaluation(exceptional,original));
 });

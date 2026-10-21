@@ -1,0 +1,138 @@
+{
+  "status": "MEASUREMENT_ONLY",
+  "schoolBalanceVersion": 1,
+  "seedCount": 200,
+  "npcCount": 44800,
+  "actualCurrent": {
+    "mean": 49.304129464285715,
+    "histogram": {
+      "35": 30,
+      "36": 221,
+      "37": 431,
+      "38": 712,
+      "39": 947,
+      "40": 1140,
+      "41": 1377,
+      "42": 1647,
+      "43": 1858,
+      "44": 2017,
+      "45": 2313,
+      "46": 2641,
+      "47": 2775,
+      "48": 2866,
+      "49": 2790,
+      "50": 2735,
+      "51": 2410,
+      "52": 2277,
+      "53": 2111,
+      "54": 1903,
+      "55": 1751,
+      "56": 1532,
+      "57": 1361,
+      "58": 1218,
+      "59": 1096,
+      "60": 859,
+      "61": 712,
+      "62": 541,
+      "63": 348,
+      "64": 158,
+      "65": 23
+    },
+    "max65InSchool": 1,
+    "max60InSchool": 6,
+    "axisCount": 268800,
+    "axisAtMost30": 15911,
+    "axisAtLeast70": 26723
+  },
+  "distributions": [
+    {
+      "label": "LEGACY_TRIANGLE_35_48_65",
+      "mean": 49.333333333333336,
+      "band44to52": 0.5083710407239819,
+      "band40to56": 0.8064102564102564,
+      "atLeast60": 0.05931372549019609,
+      "atLeast63": 0.01225490196078427,
+      "exactly65": 0.0004901960784313708,
+      "expected60Per224": 13.286274509803924,
+      "expected65Per224": 0.10980392156862706
+    },
+    {
+      "label": "TRUNCATED_NORMAL_MEAN48_SD4",
+      "mean": 48.007910475209826,
+      "band44to52": 0.7398457395247172,
+      "band40to56": 0.9669818821360563,
+      "atLeast60": 0.0020106892696931666,
+      "atLeast63": 0.00013389913508765616,
+      "exactly65": 0.00000785609927100861,
+      "expected60Per224": 0.4503943964112693,
+      "expected65Per224": 0.0017597662367059286
+    },
+    {
+      "label": "TRUNCATED_NORMAL_MEAN48_SD5",
+      "mean": 48.061960959528065,
+      "band44to52": 0.6350539452823444,
+      "band40to56": 0.9154447146823471,
+      "atLeast60": 0.010439277853175555,
+      "atLeast63": 0.0015365794516793985,
+      "exactly65": 0.00014723763714441507,
+      "expected60Per224": 2.3383982391113243,
+      "expected65Per224": 0.032981230720348975
+    }
+  ],
+  "growth": [
+    {
+      "year": 2029,
+      "difficulty": "GROWTH",
+      "budgetUnits": 90659,
+      "overallWithGuaranteedPlus1": 51.67765
+    },
+    {
+      "year": 2029,
+      "difficulty": "REALISTIC",
+      "budgetUnits": 60440,
+      "overallWithGuaranteedPlus1": 51.174
+    },
+    {
+      "year": 2030,
+      "difficulty": "GROWTH",
+      "budgetUnits": 89433,
+      "overallWithGuaranteedPlus1": 51.65721666666666
+    },
+    {
+      "year": 2030,
+      "difficulty": "REALISTIC",
+      "budgetUnits": 59622,
+      "overallWithGuaranteedPlus1": 51.16036666666667
+    },
+    {
+      "year": 2031,
+      "difficulty": "GROWTH",
+      "budgetUnits": 90659,
+      "overallWithGuaranteedPlus1": 51.67765
+    },
+    {
+      "year": 2031,
+      "difficulty": "REALISTIC",
+      "budgetUnits": 60440,
+      "overallWithGuaranteedPlus1": 51.174
+    },
+    {
+      "year": 2032,
+      "difficulty": "GROWTH",
+      "budgetUnits": 95827,
+      "overallWithGuaranteedPlus1": 51.763783333333336
+    },
+    {
+      "year": 2032,
+      "difficulty": "REALISTIC",
+      "budgetUnits": 63885,
+      "overallWithGuaranteedPlus1": 51.23141666666667
+    }
+  ],
+  "limits": [
+    "Real generation covers initial high-school NPC only, not season outcomes or later growth.",
+    "V2 changes NPC generation only: normalSD4/profile0.6; player growth remains1.5/1/3. SD5 is comparison only.",
+    "Growth rows assume full appearances/no rehab; actual play can miss eligibility.",
+    "Normal CDF uses numerical approximation; no per-school quota is implied."
+  ]
+}

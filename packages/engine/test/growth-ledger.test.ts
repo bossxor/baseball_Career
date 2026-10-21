@@ -47,9 +47,9 @@ test('22: aging settles once on elapsed calendar fraction, unmultiplied; peak pr
  const aged=finalizeSeasonGrowth(growth.player,growth.ledger,50);assert.equal(aged.lossUnits,25000);assert.deepEqual(aged.player.careerPeaks,source.careerPeaks);validateSeasonGrowthLedger(aged.ledger);
  assert.deepEqual(finalizeSeasonGrowth(aged.player,aged.ledger,50),{player:aged.player,ledger:aged.ledger,lossUnits:0,duplicate:true});assert.throws(()=>finalizeSeasonGrowth(aged.player,aged.ledger,100));
 });
-test('approved US52: full HS period hard starter plus guaranteed+1 can reach gate without cheat growth',()=>{
+test('growth fixture: overall52 does not itself qualify for US direct entry',()=>{
  const source=player('REALISTIC'),ledger=createSeasonGrowthLedger(source,'hs',100),growth=settleClosedGrowthPeriods(source,ledger,[closed('hs',period({startDay:0,endDay:100,appearances:100,policy:{mode:'CAREER',difficulty:'REALISTIC',beneficiary:true}}))]);assert.equal(growth.newBudgetUnits,110000);
  const trained=applySeasonTraining(growth.player,[],{type:'GUARANTEED',ability:'CONTACT'},{seasonId:'hs',completedTeamGames:48,scheduledTeamGames:48,injured:false,windowOpen:true,careerCheat:false},seedPcg32(42n,54n)).player;
- const ovr=overall('HITTER',trained.abilities);assert.equal(ovr.sumUnits/ovr.denominator,52);assert.equal(canShowUsDirect({overall:ovr.sumUnits/ovr.denominator,amateurScore:50,validOfferCount:1,eligible:true}),true);
+ const ovr=overall('HITTER',trained.abilities);assert.equal(ovr.sumUnits/ovr.denominator,52);assert.equal(canShowUsDirect({scoutScore:55,validOfferCount:1,eligible:true}),false);
  // This is a math-path fixture, not a simulated first-season or offer-generation integration pass.
 });

@@ -12,7 +12,7 @@ const input=()=>({worldKey:'world-fixture',seasonKey:'2027',seed:'seed42',school
 test('school roster extraction preserves all six pre-refactor world/RNG hashes',()=>{
  const cases=JSON.parse(readFileSync(new URL('./school-world-golden.json',import.meta.url),'utf8')) as {kind:'HITTER'|'PITCHER';difficulty:CreationInput['difficulty'];sha256:string}[];
  for(const {kind,difficulty,sha256} of cases){
-  const world=createHighSchoolWorld({worldKey:'world-refactor',seasonKey:'2032',seed:'refactor-baseline',schoolId:'H01',startDay:31,...(kind==='PITCHER'?{secondaryPitch:'P03' as const}:{}),player:{simulationKey:'own',name:'기준선수',kind,position:kind==='HITTER'?'CF':'SP',throws:'R',bats:'R',pitchForm:kind==='HITTER'?null:'OVERHAND',archetype:'BALANCED',focus:abilityKeys(kind).slice(0,4),difficulty}});
+  const world=createHighSchoolWorld({schoolBalanceVersion:1,worldKey:'world-refactor',seasonKey:'2032',seed:'refactor-baseline',schoolId:'H01',startDay:31,...(kind==='PITCHER'?{secondaryPitch:'P03' as const}:{}),player:{simulationKey:'own',name:'기준선수',kind,position:kind==='HITTER'?'CF':'SP',throws:'R',bats:'R',pitchForm:kind==='HITTER'?null:'OVERHAND',archetype:'BALANCED',focus:abilityKeys(kind).slice(0,4),difficulty}});
   assert.equal(createHash('sha256').update(canonicalJson(world)).digest('hex'),sha256);
  }
 });

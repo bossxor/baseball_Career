@@ -19,6 +19,7 @@ export const HIGH_SCHOOLS = [
 import {HITTER_POSITIONS,PITCHER_POSITIONS,generateSchoolNpcRoster} from './school-roster.js';
 export interface HighSchoolWorld {
   leagueKey?:'COLLEGE';
+  schoolBalanceVersion?:2;
   schemaVersion:1; rulesVersion:'1.0.0'; worldKey:string; seasonKey:string; seed:string;
   phase:'CREATED'; protagonistKey:string; protagonistSchoolId:string;
   schools:{id:string;name:string;roster:string[]}[];
@@ -26,8 +27,8 @@ export interface HighSchoolWorld {
   calendar?:SeasonCalendar;
   rng:{roster:RngState;potential:RngState;protagonist:RngState;handedness:RngState};
 }
-export function createHighSchoolWorld(input:{worldKey:string;seasonKey:string;seed:string;schoolId:string;player:CreationInput;secondaryPitch?:PitchId;startDay?:number;seasonYear?:number}):HighSchoolWorld {
-  if(!input.worldKey || !input.seasonKey || !input.seed || !HIGH_SCHOOLS.some(s=>s.id===input.schoolId)) throw new RangeError('INVALID_WORLD_CREATION');
+export function createHighSchoolWorld(input:{worldKey:string;seasonKey:string;seed:string;schoolId:string;player:CreationInput;secondaryPitch?:PitchId;startDay?:number;seasonYear?:number;schoolBalanceVersion?:1|2}):HighSchoolWorld {
+  if(![1,2].includes(input.schoolBalanceVersion??2) || !input.worldKey || !input.seasonKey || !input.seed || !HIGH_SCHOOLS.some(s=>s.id===input.schoolId)) throw new RangeError('INVALID_WORLD_CREATION');
   if(input.player.kind==='PITCHER' && (!input.secondaryPitch || input.secondaryPitch==='P01' || !PITCH_IDS.includes(input.secondaryPitch))) throw new RangeError('SECONDARY_PITCH_REQUIRED');
   const schools=HIGH_SCHOOLS.map(s=>({...s,roster:[] as string[]}));
   const templates=schools.flatMap(s=>[...HITTER_POSITIONS.map((position,i)=>({simulationKey:JSON.stringify(['hs',s.id,'H',i]),kind:'HITTER' as const,position,schoolId:s.id})),...PITCHER_POSITIONS.map((position,i)=>({simulationKey:JSON.stringify(['hs',s.id,'P',i]),kind:'PITCHER' as const,position,schoolId:s.id}))]);
@@ -35,7 +36,7 @@ export function createHighSchoolWorld(input:{worldKey:string;seasonKey:string;se
   const replaced=templates.find(p=>p.schoolId===input.schoolId && p.kind===input.player.kind && p.position===input.player.position);
   if(!replaced) throw new RangeError('INVALID_STARTING_POSITION');
   const creation=createCareerPlayer(input.player,createWorldStream(input.seed,input.worldKey,'protagonist'));
-  const generated=generateSchoolNpcRoster({templates:templates.filter(p=>p!==replaced),seed:input.seed,worldKey:input.worldKey,seasonKey:input.seasonKey,difficulty:input.player.difficulty});
+  const generated=generateSchoolNpcRoster({templates:templates.filter(p=>p!==replaced),seed:input.seed,worldKey:input.worldKey,seasonKey:input.seasonKey,difficulty:input.player.difficulty,balanceVersion:input.schoolBalanceVersion??2});
   const {players,repertoires}=generated;
   for(const school of schools)school.roster=generated.rosters[school.id]??[];
   players[creation.player.simulationKey]=creation.player;schools.find(s=>s.id===input.schoolId)!.roster.push(creation.player.simulationKey);
@@ -47,10 +48,12 @@ export function createHighSchoolWorld(input:{worldKey:string;seasonKey:string;se
   const schedule=calendar?scheduleHighSchoolCalendar(baseSchedule,calendar):baseSchedule;
   assertSchedule(schedule,schools.map(s=>s.id),48,24);
   const world:HighSchoolWorld={schemaVersion:1,rulesVersion:'1.0.0',worldKey:input.worldKey,seasonKey:input.seasonKey,seed:input.seed,phase:'CREATED',protagonistKey:creation.player.simulationKey,protagonistSchoolId:input.schoolId,schools,players,repertoires,schedule,rng:{roster:generated.rng.roster,potential:generated.rng.potential,protagonist:creation.state,handedness:generated.rng.handedness}};
+  if(input.schoolBalanceVersion!==1)world.schoolBalanceVersion=2;
   if(calendar)world.calendar=calendar;
   assertHighSchoolWorld(world);return world;
 }
 export function assertHighSchoolWorld(world:HighSchoolWorld):void {
+  if(world.schoolBalanceVersion!==undefined && world.schoolBalanceVersion!==2)throw new RangeError('UNKNOWN_SCHOOL_BALANCE_VERSION');
   if(world.leagueKey!==undefined || world.schedule.some(g=>g.phase!==undefined))throw new RangeError('INVALID_HIGH_SCHOOL_LEAGUE');
   if(world.calendar){
     assertSeasonCalendar(world.calendar);
