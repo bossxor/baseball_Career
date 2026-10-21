@@ -1,0 +1,17 @@
+✔ 08 hitter value uses exact OVR/sample PA/OPS; low samples use neutral.600, never hidden P (5.2483ms)
+✔ 08 pitcher value uses outs and ERA after20IP; salary rounded to manwon and bounded (1.029ms)
+✔ 08 FA terms use age4/3/2/1 years, desired1.2×value; demand is not an accepted contract (0.7489ms)
+✔ 40 OF01: one score.60 offer is50%, tied teams each1/3; third-round outside remains1/3 (1.1155ms)
+✔ 40 score uses guaranteed money/actual role/fixed preference, with money capped at1.5×desired (0.2692ms)
+✔ OF02/03 sum1, no input-order effects; better own pay increases own chance and a competing offer reduces it (0.9233ms)
+✔ OF04: one eligible club cheat takes1, no team/outside chance remains; two cheats reject (0.7738ms)
+✔ fixed round snapshot and RNG survives JSON and ordering; outside is a real result, empty offers consume0 draws (1.3862ms)
+✔ bad/duplicate candidates, invalid rounds, nonfinite scores/money/roles reject (0.2646ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 378.8864

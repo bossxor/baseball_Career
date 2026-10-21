@@ -1,8 +1,8 @@
-import {overall,KBO_MONEY} from '@playball/rules';
+import {kboPlayerContractValue,kboRenewalSalaryWon} from './kbo-contract-value.js';
+export {KBO_RENEWAL_SAMPLE} from './kbo-contract-value.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {recordTotals} from './records.js';
-import {battingRates,pitchingRates} from './stats.js';
 import {createWorldEvent,completeBlockingEvent,eventDefinition} from './events.js';
 
 /** 01 §6 non-FA 1-year renewal offer for my player, fixed once per season (no RNG, refresh never changes it). */
@@ -11,20 +11,10 @@ export interface KboRenewal {
  previousSalaryWon:number;valueWon:number;annualSalaryWon:number;
  basis:{ovr:number;PA:number;OPS:number;outs:number;ERA:number};status:'OFFERED'|'ACCEPTED';
 }
-/** Below these KBO regular samples the 08 neutral OPS .600 / ERA 5 is used (implementation default D: 01 §6 50PA/20IP). */
-export const KBO_RENEWAL_SAMPLE={PA:50,outs:60} as const;
-const clamp=(won:number)=>Math.min(KBO_MONEY.maximumSalaryWon,Math.max(KBO_MONEY.minimumSalaryWon,won));
-const manwon=(won:number)=>Math.round(won/10_000)*10_000;
-
-/** 08 role base value. */
+/** 08 role base value from current ability and this KBO regular-season sample. */
 export function kboRenewalValueWon(source:KboCareer):{valueWon:number;basis:KboRenewal['basis']} {
- const key=source.protagonistKey,player=source.world.players[key]!,o=overall(player.kind,player.abilities),ovr=o.sumUnits/o.denominator;
- const totals=recordTotals(source.records,{leagueKey:'KBO',phase:'REGULAR',seasonKey:source.world.seasonKey});
- const bat=totals.batting[key],pit=totals.pitching[key],PA=bat?.PA??0,outs=pit?.outs??0;
- const OPS=bat && PA>=KBO_RENEWAL_SAMPLE.PA?battingRates(bat).OPS??.6:.6,ERA=pit && outs>=KBO_RENEWAL_SAMPLE.outs?pitchingRates(pit).ERA??5:5;
- const base=30_000_000+Math.max(0,ovr-40)*10_000_000;
- const raw=player.kind==='PITCHER'?base+outs*200_000+Math.max(0,5-ERA)*50_000_000:base+PA*100_000+Math.max(0,OPS-.6)*500_000_000;
- return {valueWon:clamp(raw),basis:{ovr,PA,OPS,outs,ERA}};
+ const key=source.protagonistKey,totals=recordTotals(source.records,{leagueKey:'KBO',phase:'REGULAR',seasonKey:source.world.seasonKey});
+ return kboPlayerContractValue(source.world.players[key]!,totals.batting[key],totals.pitching[key]);
 }
 function expiresAfterSeason(source:KboCareer):boolean {
  const c=source.world.contracts[source.protagonistKey]!;return Number(source.world.seasonKey)-Number(c.seasonKey)+1>=c.years;
@@ -48,7 +38,7 @@ export function offerKboRenewal(source:KboCareer,expectedRevision:number):KboCar
  const event=createWorldEvent({definitionId:'E30',worldKey:source.world.worldKey,seasonKey:season,evidence:{version:1,type:definition.evidenceDomain,fields:{playerSimulationKey:key,contractWindowId:offerKey,sourceReceiptId:close.receiptKey}},
   resume:{worldKey:source.world.worldKey,seasonKey:season,phase:'SEASON_REVIEW',competitionKey:null,registrationKey:source.protagonistClubId,sourceRevision:source.revision+1},sourceSequence:source.events.length+1,worldDay:day});
  const career=structuredClone(source);
- career.renewal={offerKey,eventKey:event.eventKey,playerKey:key,clubId:source.protagonistClubId,seasonKey:target,years:1,previousSalaryWon:previous,valueWon,annualSalaryWon:clamp(manwon(.5*previous+.5*valueWon)),basis,status:'OFFERED'};
+ career.renewal={offerKey,eventKey:event.eventKey,playerKey:key,clubId:source.protagonistClubId,seasonKey:target,years:1,previousSalaryWon:previous,valueWon,annualSalaryWon:kboRenewalSalaryWon(previous,valueWon),basis,status:'OFFERED'};
  career.events=[...career.events,event];career.revision++;return career;
 }
 /** S08 accept: closes E30 by domain commit. The new contract activates with the next season (72 Y02), not now. */

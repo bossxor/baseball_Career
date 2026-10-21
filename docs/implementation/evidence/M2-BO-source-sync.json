@@ -1,0 +1,76 @@
+{
+  "files": [
+    {
+      "path": "packages/engine/src/kbo-contract-value.ts",
+      "sha256": "1d450d2be4a51ef6b3cfc3bd12f7ec54b151ec884ed3589727c9843f253cfd9e"
+    },
+    {
+      "path": "packages/engine/src/kbo-renewal.ts",
+      "sha256": "25d3e17defa89274f54c8fff38bceefb702617a9e2c80e80c65d3e584b1e7ded"
+    },
+    {
+      "path": "packages/engine/src/recruitment.ts",
+      "sha256": "5822200126670eac2e6b2a11867045b5f3472b829a380e53bd94ea421581a329"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "7298b08c95e0cec6f0d032b58fdb1ec68bc805328f5c1a99d2818f6a754109b4"
+    },
+    {
+      "path": "packages/engine/test/recruitment.test.ts",
+      "sha256": "b8d27b571b513d557042b94bcb8ddaefc47191cf2f19555c47c1e927937b3a14"
+    },
+    {
+      "path": "packages/engine/test/kbo-contract-value.test.ts",
+      "sha256": "e0666d80a52d11928b8ce427dbc35e8a136bf1bb148a7583e1eefb2884408341"
+    },
+    {
+      "path": "docs/implementation/M2-BO-KBO-CONTRACT-VALUE-AND-OFFER-ODDS.md",
+      "sha256": "a22cb113ceeb050f7694cbd0976ee5f5c1ebffb413f72041d5bbec136f95afc5"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "f3210f5607535be697170331661531864a623756e15f20379b0181de0655de5c"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "44dc03f70155fabb71305b8e228a346b83f5e7034bb51eb770ad338816e77022"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BO-build.log",
+      "sha256": "edb682a5e37adebd08ce1df72a2f9919fa7a78a90c2b8e99e978f822e54ccf96"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BO-design.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BO-events.log",
+      "sha256": "e4f563b151c3acfae1e351c53bf2c4633b4a60476e51cb14f34970334a86172a"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BO-focused.log",
+      "sha256": "6444ceca36baffcedc49f65d10c6d03941941264eac5b5946f0caa6f119d0f70"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BO-golden.log",
+      "sha256": "fd6106507bc4069343297667513044ad7447998b5c028b0ed22bc26eea51c1e1"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BO-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BO-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BO-transition-tests.log",
+      "sha256": "84b8770461cbd0edb33766f036140e5073748c802a924895ded08bce29c7816e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BO-typecheck.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df"
+    }
+  ]
+}
