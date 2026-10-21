@@ -84,7 +84,7 @@ export function createHighSchoolCareer(world:HighSchoolWorld,difficulty:Difficul
  const player=world.players[world.protagonistKey]!;
  return {schemaVersion:1,revision:0,world:structuredClone(world),difficulty,phaseContext:{phase:'CREATED'},events:[],records:emptyRecordLedger(),health:createHealthLedger(createStreams(world.seed,JSON.stringify(['hs-health',world.worldKey])).injury),days:createSchoolDayLedger(world),emergency:createSchoolEmergencyRegistry(world),styleUsedWindows:[],ownAssessment:createOwnCareerAssessment(world),traits:createCareerTraitLedger(),development:{seasonStartPlayer:structuredClone(player),trainingUsedSeasons:[],trainingResults:[],trainingRng:createStreams(world.seed,JSON.stringify(['hs-training',world.worldKey])).growth},planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
 }
-export function assertCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
+export function assertCareerRevision(source:Pick<HighSchoolCareer,'schemaVersion'|'revision'>,expectedRevision:number):void {
  if(source.schemaVersion!==1 || !Number.isSafeInteger(source.revision) || source.revision<0 || !Number.isSafeInteger(expectedRevision) || source.revision!==expectedRevision)throw new RangeError('CAREER_REVISION_CHANGED');
  if(source.revision===Number.MAX_SAFE_INTEGER)throw new RangeError('CAREER_REVISION_LIMIT');
 }

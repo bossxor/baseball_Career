@@ -1,0 +1,274 @@
+TAP version 13
+# Subtest: 125: generated99/164 metadata, all dispatch/branch counts; domain implementations not implied
+ok 1 - 125: generated99/164 metadata, all dispatch/branch counts; domain implementations not implied
+  ---
+  duration_ms: 12.6705
+  type: 'test'
+  ...
+# Subtest: 81: exact typed evidence key, duplicates including already-resolved source never resurrect
+ok 2 - 81: exact typed evidence key, duplicates including already-resolved source never resurrect
+  ---
+  duration_ms: 3.7903
+  type: 'test'
+  ...
+# Subtest: 125: blocking navigation remains OPEN, no ACK bypass; actual domain source commits resolution
+ok 3 - 125: blocking navigation remains OPEN, no ACK bypass; actual domain source commits resolution
+  ---
+  duration_ms: 1.5591
+  type: 'test'
+  ...
+# Subtest: 125: DOMAIN is only a plan until actual reducer succeeds; invalid focus leaves event unchanged
+ok 4 - 125: DOMAIN is only a plan until actual reducer succeeds; invalid focus leaves event unchanged
+  ---
+  duration_ms: 6.7835
+  type: 'test'
+  ...
+# Subtest: 125: nonblocking navigation and ACK resolve once; current availability/context/version rechecked
+ok 5 - 125: nonblocking navigation and ACK resolve once; current availability/context/version rechecked
+  ---
+  duration_ms: 1.3083
+  type: 'test'
+  ...
+# Subtest: E63 approved/deferred branch must come from saved posting decision, no fallback/re-roll
+ok 6 - E63 approved/deferred branch must come from saved posting decision, no fallback/re-roll
+  ---
+  duration_ms: 1.1582
+  type: 'test'
+  ...
+# Subtest: 69/81: one active task deadline→source sequence order, no FORM/PRESENTATION world tasks
+ok 7 - 69/81: one active task deadline→source sequence order, no FORM/PRESENTATION world tasks
+  ---
+  duration_ms: 1.4615
+  type: 'test'
+  ...
+# Subtest: 125: deadline expiry only after committed day-closing domain outcome; invalidation reason preserved
+ok 8 - 125: deadline expiry only after committed day-closing domain outcome; invalidation reason preserved
+  ---
+  duration_ms: 1.035
+  type: 'test'
+  ...
+# Subtest: HITTER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+ok 9 - HITTER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+  ---
+  duration_ms: 3172.8844
+  type: 'test'
+  ...
+# Subtest: PITCHER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+ok 10 - PITCHER school year end→actual pro roster applies signing once, ages own player once, preserves500 NPCs and opens fresh budgets
+  ---
+  duration_ms: 2066.686
+  type: 'test'
+  ...
+# Subtest: pitcher earned book/weights survive entry but annual XP/learning/window state starts fresh
+ok 11 - pitcher earned book/weights survive entry but annual XP/learning/window state starts fresh
+  ---
+  duration_ms: 1400.0544
+  type: 'test'
+  ...
+# Subtest: new pro teammate/formation notice append to HS history from actual club registration, not guaranteed first team
+ok 12 - new pro teammate/formation notice append to HS history from actual club registration, not guaranteed first team
+  ---
+  duration_ms: 909.8376
+  type: 'test'
+  ...
+# Subtest: team-game injury carries without healing across new calendar; old school injuries stay only in archive
+ok 13 - team-game injury carries without healing across new calendar; old school injuries stay only in archive
+  ---
+  duration_ms: 848.7631
+  type: 'test'
+  ...
+# Subtest: stale/unsigned/unclosed/changed sealed source and wrong root reject without duplicate roster/salary or age
+ok 14 - stale/unsigned/unclosed/changed sealed source and wrong root reject without duplicate roster/salary or age
+  ---
+  duration_ms: 1209.4421
+  type: 'test'
+  ...
+# Subtest: entry public DTO omits raw roots/P/abilities/seed/RNG; restored entry projects identically and malformed registration rejects
+ok 15 - entry public DTO omits raw roots/P/abilities/seed/RNG; restored entry projects identically and malformed registration rejects
+  ---
+  duration_ms: 1318.965
+  type: 'test'
+  ...
+# Subtest: HITTER actual entry queues one nonblocking E08 and exposes only public preseason choices
+ok 16 - HITTER actual entry queues one nonblocking E08 and exposes only public preseason choices
+  ---
+  duration_ms: 2311.6575
+  type: 'test'
+  ...
+# Subtest: PITCHER actual entry queues one nonblocking E08 and exposes only public preseason choices
+ok 17 - PITCHER actual entry queues one nonblocking E08 and exposes only public preseason choices
+  ---
+  duration_ms: 1590.79
+  type: 'test'
+  ...
+# Subtest: E08 focus choice commits only four-focus plan; KEEP_FOCUS acknowledges without a new saved plan
+ok 18 - E08 focus choice commits only four-focus plan; KEEP_FOCUS acknowledges without a new saved plan
+  ---
+  duration_ms: 1813.8442
+  type: 'test'
+  ...
+# Subtest: focus validates four distinct own-kind axes and preseason style permits one actual change, no ability/RNG bonus
+ok 19 - focus validates four distinct own-kind axes and preseason style permits one actual change, no ability/RNG bonus
+  ---
+  duration_ms: 1466.4117
+  type: 'test'
+  ...
+# Subtest: pitcher weight command reuses one PRE configuration chance, unchanged weights consume none and hitters reject
+ok 20 - pitcher weight command reuses one PRE configuration chance, unchanged weights consume none and hitters reject
+  ---
+  duration_ms: 2030.173
+  type: 'test'
+  ...
+# Subtest: learning reserves10 base XP without instant mastery; free slot keeps configuration chance and second plan rejects
+ok 21 - learning reserves10 base XP without instant mastery; free slot keeps configuration chance and second plan rejects
+  ---
+  duration_ms: 1050.4011
+  type: 'test'
+  ...
+# Subtest: controlled four learned pitches: replacement and learning atomically consume the same PRE chance
+ok 22 - controlled four learned pitches: replacement and learning atomically consume the same PRE chance
+  ---
+  duration_ms: 1397.1609
+  type: 'test'
+  ...
+# Subtest: confirm freezes the selected plan/snapshots once, pays no growth and does not require reading E08
+ok 23 - confirm freezes the selected plan/snapshots once, pays no growth and does not require reading E08
+  ---
+  duration_ms: 1320.8374
+  type: 'test'
+  ...
+# Subtest: confirmed pitcher learning/configuration snapshot remains valid but further edits cannot reopen PRE
+ok 24 - confirmed pitcher learning/configuration snapshot remains valid but further edits cannot reopen PRE
+  ---
+  duration_ms: 929.1445
+  type: 'test'
+  ...
+# Subtest: stale revision/event version, foreign camp evidence and invalid focus reject without state/RNG changes
+ok 25 - stale revision/event version, foreign camp evidence and invalid focus reject without state/RNG changes
+  ---
+  duration_ms: 1198.2309
+  type: 'test'
+  ...
+# Subtest: legacy AP state is read-only until a write catches up one camp notice; duplicate and changed source reject
+ok 26 - legacy AP state is read-only until a write catches up one camp notice; duplicate and changed source reject
+  ---
+  duration_ms: 1369.9452
+  type: 'test'
+  ...
+# Subtest: 57: initial book, exact grade thresholds, invalid loadouts and source preservation
+ok 27 - 57: initial book, exact grade thresholds, invalid loadouts and source preservation
+  ---
+  duration_ms: 4.7669
+  type: 'test'
+  ...
+# Subtest: 101: every slider target respects sum100/lower10, deterministic ties, immutable input
+ok 28 - 101: every slider target respects sum100/lower10, deterministic ties, immutable input
+  ---
+  duration_ms: 16.5863
+  type: 'test'
+  ...
+# Subtest: 57: four healthy learning quarters normal10/cheat30, 0 XP stays inactive, no cancel/reselect
+ok 29 - 57: four healthy learning quarters normal10/cheat30, 0 XP stays inactive, no cancel/reselect
+  ---
+  duration_ms: 3.3897
+  type: 'test'
+  ...
+# Subtest: 57/90: half-healthy cheat3.75, fraction carry, zero denominator and duplicate quarters
+ok 30 - 57/90: half-healthy cheat3.75, fraction carry, zero denominator and duplicate quarters
+  ---
+  duration_ms: 1.4991
+  type: 'test'
+  ...
+# Subtest: 57/90: reservation protects learning, released missed learning is future practice only
+ok 31 - 57/90: reservation protects learning, released missed learning is future practice only
+  ---
+  duration_ms: 791.3406
+  type: 'test'
+  ...
+# Subtest: 57: full-slot learning consumes PRE once atomically; unchanged loadout costs zero
+ok 32 - 57: full-slot learning consumes PRE once atomically; unchanged loadout costs zero
+  ---
+  duration_ms: 15.3994
+  type: 'test'
+  ...
+# Subtest: 57: AI ranking/thresholds and archive grade reduction preserve history without RNG
+ok 33 - 57: AI ranking/thresholds and archive grade reduction preserve history without RNG
+  ---
+  duration_ms: 3.5038
+  type: 'test'
+  ...
+# Subtest: 121: identity sorted generation, JSON resume and restricted positions
+ok 34 - 121: identity sorted generation, JSON resume and restricted positions
+  ---
+  duration_ms: 3.3625
+  type: 'test'
+  ...
+# Subtest: 121: fixed large sample hand/bat/form probabilities and corrected hitter population
+ok 35 - 121: fixed large sample hand/bat/form probabilities and corrected hitter population
+  ---
+  duration_ms: 560.5897
+  type: 'test'
+  ...
+# Subtest: 42/85: NPC hard potential+5, club cheat owned-only, unchanged A/RNG and old player floor
+ok 36 - 42/85: NPC hard potential+5, club cheat owned-only, unchanged A/RNG and old player floor
+  ---
+  duration_ms: 2.0007
+  type: 'test'
+  ...
+# Subtest: 57: newly learned pitch can enter four-pitch loadout without counting the same slot twice
+ok 37 - 57: newly learned pitch can enter four-pitch loadout without counting the same slot twice
+  ---
+  duration_ms: 693.5815
+  type: 'test'
+  ...
+# Subtest: HITTER actual college activation adds one teammate with registration E94, no blocking or growth changes
+ok 38 - HITTER actual college activation adds one teammate with registration E94, no blocking or growth changes
+  ---
+  duration_ms: 886.275
+  type: 'test'
+  ...
+# Subtest: PITCHER actual college activation adds one teammate with registration E94, no blocking or growth changes
+ok 39 - PITCHER actual college activation adds one teammate with registration E94, no blocking or growth changes
+  ---
+  duration_ms: 471.0532
+  type: 'test'
+  ...
+# Subtest: old HS relationships survive, new college teammate appends and historical/current identities remain distinct
+ok 40 - old HS relationships survive, new college teammate appends and historical/current identities remain distinct
+  ---
+  duration_ms: 199.5828
+  type: 'test'
+  ...
+# Subtest: same team next season or return uses first entry without RNG/extra teammate; another actual team may add one
+ok 41 - same team next season or return uses first entry without RNG/extra teammate; another actual team may add one
+  ---
+  duration_ms: 232.6506
+  type: 'test'
+  ...
+# Subtest: no candidate records empty first entry without generating anyone or retrying; unregistered/invalid receipts reject
+ok 42 - no candidate records empty first entry without generating anyone or retrying; unregistered/invalid receipts reject
+  ---
+  duration_ms: 275.819
+  type: 'test'
+  ...
+# Subtest: existing rival may also become teammate without overwriting rival history
+ok 43 - existing rival may also become teammate without overwriting rival history
+  ---
+  duration_ms: 285.412
+  type: 'test'
+  ...
+# Subtest: college E94 requires exact formation/registration receipt; never synthesizes HS notice in college
+ok 44 - college E94 requires exact formation/registration receipt; never synthesizes HS notice in college
+  ---
+  duration_ms: 337.8826
+  type: 'test'
+  ...
+1..44
+# tests 44
+# suites 0
+# pass 44
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 17962.4099

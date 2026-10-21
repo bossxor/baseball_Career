@@ -1,3 +1,5 @@
+import {queueKboFirstCampNotices} from './kbo-preseason.js';
+import type {KboPreseasonPlan} from './kbo-preseason.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {assertCareerKboSigning} from './career-kbo.js';
@@ -31,6 +33,7 @@ export interface KboCareer {
  records:RecordLedger;health:HealthLedger;seasonGrowth:SeasonGrowthLedger;development:CareerDevelopmentLedger;
  traits?:CareerTraitLedger;relationships:RelationshipLedger;events:readonly EventInstance[];relationNotices:readonly EventInstance[];
  styleUsedWindows:readonly string[];planHistory:HighSchoolCareer['planHistory'];
+ campNotices?:readonly EventInstance[];preseasonPlan?:KboPreseasonPlan;
 }
 function entryKey(ready:KboAmateurYearEnd){return JSON.stringify(['kbo-season-entry',ready.receiptKey]);}
 /** One atomic result consumes the frozen reservation once. Replaying the same old source is deterministic;
@@ -50,7 +53,7 @@ export function startSignedKboCareer(source:HighSchoolCareer,expectedRevision:nu
  const day=calendar.growthDays[0]!,relationships=formRegisteredTeamTeammate(source.relationships,teamWorld,signing.receiptKey,day);
  const career:KboCareer={schemaVersion:1,revision:source.revision+1,difficulty:source.difficulty,world,protagonistKey:key,protagonistClubId:club.id,phaseContext:{phase:'PRESEASON_SETUP'},activation:{receiptKey:entryKey(ready),sourceYearEndReceiptKey:ready.receiptKey,sourceRevision:source.revision,contractKey:signing.contract.contractKey},registration,rights:structuredClone(signing.rights),amateurHistory:structuredClone(source),records:structuredClone(source.records),health:{...structuredClone(source.health),injuries:Object.hasOwn(source.health.injuries,key)?{[key]:structuredClone(source.health.injuries[key]!)}:{}},seasonGrowth:createSeasonGrowthLedger(player,world.seasonKey,calendar.growthDays.length),development:{...structuredClone(source.development),seasonStartPlayer:structuredClone(player)},...(source.traits?{traits:{...structuredClone(source.traits),lastClosedDay:null,lastSeasonKey:world.seasonKey}}:{}),relationships,events:structuredClone(source.events),relationNotices:structuredClone(source.relationNotices??[]),styleUsedWindows:[...source.styleUsedWindows],planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
  career.relationNotices=queueRelationFormationNotices({...career,world:teamWorld,previousSeasons:[...(source.previousSeasons??[]),{world:source.world}]},day)??[];
- return career;
+ career.campNotices=queueKboFirstCampNotices(career);return career;
 }
 
 /** Public entry receipt, not the raw pro root containing P, RNG and the full sealed amateur history. */

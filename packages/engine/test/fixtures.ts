@@ -88,3 +88,11 @@ export function completedCollegeAcademicYear(source=enrolledCollegeCareer()){
  for(let i=0;i<40;i++){const result=advanceCollegeCup(state,state.revision);state=result.career;if(result.stopReason==='CUP_COMPLETE')return acknowledgeCollegeSeasonReview(state,state.revision);}
  throw new Error('ACADEMIC_YEAR_TEST_LIMIT');
 }
+
+import {prepareCareerKboDraft,resolveCareerKboDraft,decideCareerKboDraft} from '../src/career-kbo.js';
+import {closeSchoolSeasonForKbo} from '../src/kbo-entry.js';
+import {startSignedKboCareer} from '../src/kbo-career-entry.js';
+/** Controlled school contributions isolate the real signing/year-end/pro entry commands. */
+export function enteredKboCareer(kind:'HITTER'|'PITCHER'='HITTER'){
+ let s=completedHighSchoolCareer(800_000,kind);s=acknowledgeHighSchoolSeasonReview(s,s.revision);s=openHighSchoolCareerRoute(s,s.revision,1).career;s=prepareCareerKboDraft(s,s.revision);s=resolveCareerKboDraft(s,s.revision,1);s=decideCareerKboDraft(s,s.revision,{programVersion:2,decision:'SIGN',eventVersion:1});s=closeSchoolSeasonForKbo(s,s.revision,true);return startSignedKboCareer(s,s.revision);
+}

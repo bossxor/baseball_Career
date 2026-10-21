@@ -61,3 +61,5 @@ export * from './team-teammates.js';
 export * from './kbo-entry.js';
 
 export * from './kbo-career-entry.js';
+
+export * from './kbo-preseason.js';

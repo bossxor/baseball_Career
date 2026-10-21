@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "files": 6,
+  "differences": 0,
+  "rows": [
+    {
+      "path": "packages/engine/src/high-school-career.ts",
+      "working": "87463d0efc1553f1d08d76dd2742c396acbeec583b734a5080f3a6a639e0c6c0",
+      "source": "87463d0efc1553f1d08d76dd2742c396acbeec583b734a5080f3a6a639e0c6c0"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "working": "c97bf25f3ce32c388acbcb33649bec6c5b49a973ff5b831293b49c05d6dcbb8c",
+      "source": "c97bf25f3ce32c388acbcb33649bec6c5b49a973ff5b831293b49c05d6dcbb8c"
+    },
+    {
+      "path": "packages/engine/src/kbo-preseason.ts",
+      "working": "a110c373c3b9fcc428d38f99e6814864fa926f2d7af2d9c3b9f1ebc6aeb673d6",
+      "source": "a110c373c3b9fcc428d38f99e6814864fa926f2d7af2d9c3b9f1ebc6aeb673d6"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "working": "f3dd02272e19cc9201da970d5363d04b0cadc16510c1c20ea615cdc49accf2de",
+      "source": "f3dd02272e19cc9201da970d5363d04b0cadc16510c1c20ea615cdc49accf2de"
+    },
+    {
+      "path": "packages/engine/test/fixtures.ts",
+      "working": "51d194ecd7f564413fe7c89d2a9e6fddbc3ce23178a0eb21d920e8827ac780d2",
+      "source": "51d194ecd7f564413fe7c89d2a9e6fddbc3ce23178a0eb21d920e8827ac780d2"
+    },
+    {
+      "path": "packages/engine/test/kbo-preseason.test.ts",
+      "working": "e52cd1d41a77274fb0c90992dadd7225cbef6f2fe089ccb157bbcb9e7db5839d",
+      "source": "e52cd1d41a77274fb0c90992dadd7225cbef6f2fe089ccb157bbcb9e7db5839d"
+    }
+  ]
+}

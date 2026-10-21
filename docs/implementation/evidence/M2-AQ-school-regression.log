@@ -1,0 +1,106 @@
+TAP version 13
+# Subtest: year-end requires explicit unused-training forfeit, closes growth/health once and pays no new growth
+ok 1 - year-end requires explicit unused-training forfeit, closes growth/health once and pays no new growth
+  ---
+  duration_ms: 260.2103
+  type: 'test'
+  ...
+# Subtest: atomic college activation carries identity/abilities and archives HS, new calendar/growth ledger/age only once
+ok 2 - atomic college activation carries identity/abilities and archives HS, new calendar/growth ledger/age only once
+  ---
+  duration_ms: 327.4495
+  type: 'test'
+  ...
+# Subtest: college profiles respect school admission floors and preserve protagonist independently of school choice
+ok 3 - college profiles respect school admission floors and preserve protagonist independently of school choice
+  ---
+  duration_ms: 155.8214
+  type: 'test'
+  ...
+# Subtest: pitcher carry keeps book/weights, opens fresh annual XP budget and refuses unfinished learning
+ok 4 - pitcher carry keeps book/weights, opens fresh annual XP budget and refuses unfinished learning
+  ---
+  duration_ms: 119.5738
+  type: 'test'
+  ...
+# Subtest: mild team-game recovery carries across calendar rest; major season injury closes at year-end
+ok 5 - mild team-game recovery carries across calendar rest; major season injury closes at year-end
+  ---
+  duration_ms: 221.1966
+  type: 'test'
+  ...
+# Subtest: stale revision/ready snapshot/receipt and changed admission never publish a partial new world
+ok 6 - stale revision/ready snapshot/receipt and changed admission never publish a partial new world
+  ---
+  duration_ms: 371.5252
+  type: 'test'
+  ...
+# Subtest: reading general trait summary after college year-end reseals metadata and preserves enrollment activation
+ok 7 - reading general trait summary after college year-end reseals metadata and preserves enrollment activation
+  ---
+  duration_ms: 226.3971
+  type: 'test'
+  ...
+# Subtest: career creation/confirmation uses canonical phases and persisted E01, no game auto-play
+ok 8 - career creation/confirmation uses canonical phases and persisted E01, no game auto-play
+  ---
+  duration_ms: 98.7562
+  type: 'test'
+  ...
+# Subtest: E01 domain focus validates4 before commit; failed choice leaves event and world untouched
+ok 9 - E01 domain focus validates4 before commit; failed choice leaves event and world untouched
+  ---
+  duration_ms: 68.777
+  type: 'test'
+  ...
+# Subtest: KEEP_FOCUS resolves E01; initial plan changes preserve current ability, potential and stream state
+ok 10 - KEEP_FOCUS resolves E01; initial plan changes preserve current ability, potential and stream state
+  ---
+  duration_ms: 40.1415
+  type: 'test'
+  ...
+# Subtest: PRE archetype change once; keeping current archetype uses no new opportunity or ability reset
+ok 11 - PRE archetype change once; keeping current archetype uses no new opportunity or ability reset
+  ---
+  duration_ms: 43.8338
+  type: 'test'
+  ...
+# Subtest: preseason confirmation enters progress at first schedule day, revision protected; unresolved source mismatch rejected
+ok 12 - preseason confirmation enters progress at first schedule day, revision protected; unresolved source mismatch rejected
+  ---
+  duration_ms: 64.0885
+  type: 'test'
+  ...
+# Subtest: hidden unlock raises one E84 stop; general unlock does not
+ok 13 - hidden unlock raises one E84 stop; general unlock does not
+  ---
+  duration_ms: 71.9082
+  type: 'test'
+  ...
+# Subtest: OPEN_TRAITS resolves E84, navigates to S38 and restores the saved phase once
+ok 14 - OPEN_TRAITS resolves E84, navigates to S38 and restores the saved phase once
+  ---
+  duration_ms: 59.5238
+  type: 'test'
+  ...
+# Subtest: general unlocks collect in the unread summary until acknowledged
+ok 15 - general unlocks collect in the unread summary until acknowledged
+  ---
+  duration_ms: 60.3777
+  type: 'test'
+  ...
+# Subtest: season progress stops at the day close with MAJOR_EVENT when a hidden unlock is pending
+ok 16 - season progress stops at the day close with MAJOR_EVENT when a hidden unlock is pending
+  ---
+  duration_ms: 2013.3502
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 16
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 3102.798
