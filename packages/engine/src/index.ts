@@ -69,3 +69,5 @@ export * from './kbo-relations.js';
 export * from './kbo-opening-roster.js';
 
 export * from './kbo-schedule.js';
+
+export * from './kbo-game-world.js';

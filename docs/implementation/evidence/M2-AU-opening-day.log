@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "days": [
+    {
+      "league": "KBO",
+      "games": 5,
+      "registeredGamePlayers": 220,
+      "recordRevision": 221
+    },
+    {
+      "league": "FUTURES",
+      "games": 5,
+      "registeredGamePlayers": 200,
+      "recordRevision": 226
+    }
+  ],
+  "rootGamesStillUnchanged": 216,
+  "workerProGames": 10
+}

@@ -1,0 +1,18 @@
+✔ generated HS roster becomes actual1.2 game; selected starter, nine distinct legal hitters and owned-only cheatXP (294.6525ms)
+✔ HS game serialized PA resume equals continuous final; records and XP publish once after FINAL (401.1623ms)
+✔ stale world/revision and tampered scheduled date rejected without partial record/book changes (217.6235ms)
+✔ unavailable hitters excluded, insufficient roster rejects; bad starter, missing book and allocation reject (349.2872ms)
+✔ all four first-day scheduled games commit sequentially, eight teams once; independent9th team bye (680.8823ms)
+✔ actual KBO and FUTURES games use disjoint rosters; JSON PA resume/official scopes/books publish once without changing the career root (2663.3003ms)
+✔ both independent leagues have720 games,144/team,8 home and8 away/opponent; all calendar barriers and rest respected (146.2832ms)
+✔ bad teams/year/calendar reject; publication cannot bypass the confirmed roster (1807.1768ms)
+✔ old roots read pending; confirmed schedule survives JSON/replay/notice ACK with no played games or extra side effects (1779.4444ms)
+✔ changed date/venue/identity/receipt rejects atomically rather than silently rebuilding (2093.7736ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7070.066

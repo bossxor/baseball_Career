@@ -1,0 +1,76 @@
+{
+  "files": [
+    {
+      "path": "packages/engine/src/high-school-game.ts",
+      "sha256": "f58e77d689adf62987b9b61ceda0356b29afafa2bcd6e96730c8f0691e23520f"
+    },
+    {
+      "path": "packages/engine/src/kbo-game-world.ts",
+      "sha256": "daa5204707a9701892eb807d9a955d2f1db549ffbdb26d93698fabdc3f60027a"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "710db39148cb19fb638a8754127ca04911fe1634aa800244a4125f42dceea601"
+    },
+    {
+      "path": "packages/engine/test/kbo-game-world.test.ts",
+      "sha256": "0f4122a1de6611dc240a5f7d71fb01a4a8d6fc005c6b58bfbd32dab5daba18c9"
+    },
+    {
+      "path": "docs/implementation/M2-AU-KBO-GAME-WORLD.md",
+      "sha256": "b14b7adb931b6bdb960efb7eb112e91163bb895bc749c5e370dfb775273c480d"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "c788eccecab0820a06f3adf3d0becf9d93d7ed6cfbf8c0c25d7a6e13f4016235"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "6954449b1e184c0215155d2f21a86aa0f7dd8dd0d3f3dd3d3aa043d138008fad"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AU-after.log",
+      "sha256": "62f0f109540c8c0576babc0bb386e604afec25014558ae89aa9ca9f873690e3d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AU-baseline.log",
+      "sha256": "11cca1bc0f446b20a3c0e268add5f1ef1824851ef83703b7ab74b8e24b5b0d39"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AU-build.log",
+      "sha256": "9244277c8cd89c3035d3289ce647f161873f6e6f6ea25b9846241ef731e4c156"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AU-design.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AU-events.log",
+      "sha256": "e4f563b151c3acfae1e351c53bf2c4633b4a60476e51cb14f34970334a86172a"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AU-golden.log",
+      "sha256": "fd6106507bc4069343297667513044ad7447998b5c028b0ed22bc26eea51c1e1"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AU-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AU-opening-day.log",
+      "sha256": "fff9ebe2684fd4fbc49d0f8583e8eb6c1dee7d88c91ad75f383f2095a3d10b7e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AU-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AU-tests.log",
+      "sha256": "33019e2fccc3a273d66148de54a0be00db1b1ae45aaec3effb0f91e6b904e95b"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-AU-typecheck.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df"
+    }
+  ]
+}
