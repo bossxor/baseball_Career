@@ -9,7 +9,7 @@ import type {ScheduledGame} from './schedule.js';
 import {refreshCareerTraits,settleStarterSeasonTraits} from './high-school-traits.js';
 import {recordTotals} from './records.js';
 import {raiseKboWindowEvent} from './kbo-windows.js';
-import {reviewKboCallup} from './kbo-callup.js';
+import {reviewKboCallup,reviewKboAiRosters} from './kbo-callup.js';
 import type {BattingLine} from './types.js';
 
 export interface KboPendingGame {leagueKey:KboLeagueKey;job:HighSchoolGameJob}
@@ -98,6 +98,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   career.world=closed.world;career.health=closed.health;career.days=closed.days;progress.nextWorldDay=day+1;daysClosed++;
   career.traits=refreshCareerTraits(career,day,LEAGUES);
   // 14 order: call-up/demotion review before style/training windows.
+  const aiMoves=progress.nextWorldDay>last?null:reviewKboAiRosters(career);if(aiMoves)Object.assign(career,aiMoves);
   const callup=progress.nextWorldDay>last?null:reviewKboCallup(career,day,progress);
   if(callup){Object.assign(career,callup);if(career.phaseContext.phase==='EVENT_DECISION')return finish('MAJOR_EVENT');}
   const windowEvent=progress.nextWorldDay>last?null:raiseKboWindowEvent(career,day,progress);

@@ -38,7 +38,7 @@ export interface KboCareer {
  records:RecordLedger;health:HealthLedger;seasonGrowth:SeasonGrowthLedger;development:CareerDevelopmentLedger;
  traits?:CareerTraitLedger;relationships:RelationshipLedger;events:readonly EventInstance[];relationNotices:readonly EventInstance[];
  styleUsedWindows:readonly string[];planHistory:HighSchoolCareer['planHistory'];
- days?:SchoolDayLedger;callupReviews?:readonly KboCallupReview[];campNotices?:readonly EventInstance[];preseasonPlan?:KboPreseasonPlan;openingRoster?:KboOpeningRoster;competitionSchedule?:KboSeasonSchedule;
+ days?:SchoolDayLedger;callupReviews?:readonly KboCallupReview[];aiRosterReviews?:readonly string[];campNotices?:readonly EventInstance[];preseasonPlan?:KboPreseasonPlan;openingRoster?:KboOpeningRoster;competitionSchedule?:KboSeasonSchedule;
 }
 function entryKey(ready:KboAmateurYearEnd){return JSON.stringify(['kbo-season-entry',ready.receiptKey]);}
 /** One atomic result consumes the frozen reservation once. Replaying the same old source is deterministic;

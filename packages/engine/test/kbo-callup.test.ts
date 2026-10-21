@@ -6,7 +6,7 @@ import {confirmKboOpeningRoster} from '../src/kbo-opening-roster.js';
 import {confirmKboSeasonSchedule} from '../src/kbo-schedule.js';
 import {startKboRegularSeason} from '../src/kbo-progress.js';
 import type {KboSeasonProgress} from '../src/kbo-progress.js';
-import {reviewKboCallup,resolveKboCallup} from '../src/kbo-callup.js';
+import {reviewKboCallup,resolveKboCallup,reviewKboAiRosters} from '../src/kbo-callup.js';
 import {protagonistLeague} from '../src/kbo-windows.js';
 import {createKboCompetitionGameWorld} from '../src/kbo-game-world.js';
 import type {KboCareer} from '../src/kbo-career-entry.js';
@@ -53,4 +53,20 @@ test('a stronger futures player is offered E09; ACCEPT swaps the weakest same-po
 test('an injured futures player is reviewed without an offer',()=>{
  const c=futures(20,1_000_000);c.health={...c.health,injuries:{...c.health.injuries,[c.protagonistKey]:{severity:'MILD',remainingTeamGames:2,diagnosedGameKey:'x',seasonKey:c.world.seasonKey}}};
  const r=reviewKboCallup(c,50,progress(c))!;assert.equal(r.callupReviews!.at(-1)!.outcome,'INJURED');assert.equal(r.events.some(e=>e.definitionId==='E09'),false);
+});
+
+
+test('AI clubs promote a stronger futures player every 20 futures games without events, never moving my player',()=>{
+ const c=structuredClone(started()),club=c.world.clubs.find(x=>x.id!==c.protagonistClubId)!;
+ const star=club.roster.find(k=>!club.firstTeam.includes(k) && c.world.players[k]!.kind==='HITTER' && club.firstTeam.some(f=>c.world.players[f]!.kind==='HITTER' && c.world.players[f]!.position===c.world.players[k]!.position))!;
+ const p=c.world.players[star]!,v=Object.fromEntries(abilityKeys(p.kind).map(k=>[k,1_000_000]));c.world.players[star]={...p,abilities:v,potential:{...v},careerPeaks:{...v}};
+ const seed=(n:number)=>{const s=structuredClone(c);for(let i=0;i<n;i++){const gameKey=`ai-${i}`;s.records.games[gameKey]={gameKey,worldDay:i+1,scope:{seasonKey:s.world.seasonKey,leagueKey:'FUTURES',phase:'REGULAR'},teams:{[club.id]:{games:1,W:1,L:0,T:0,R:0,RA:0},opp:{games:1,W:0,L:1,T:0,R:0,RA:0}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}} as GameContribution;}return s;};
+ assert.equal(reviewKboAiRosters(seed(19)),null);
+ const before=seed(20),after=reviewKboAiRosters(before)!;
+ const updated=after.world.clubs.find(x=>x.id===club.id)!;assert.ok(updated.firstTeam.includes(star));assert.equal(updated.firstTeam.length,28);
+ assert.equal(after.events.length,before.events.length);
+ const mine=after.world.clubs.find(x=>x.id===after.protagonistClubId)!,mineBefore=before.world.clubs.find(x=>x.id===before.protagonistClubId)!;
+ assert.equal(mine.firstTeam.includes(after.protagonistKey),mineBefore.firstTeam.includes(before.protagonistKey));
+ assert.equal(reviewKboAiRosters(after),null);
+ assert.doesNotThrow(()=>createKboCompetitionGameWorld(after.world,'KBO',after.protagonistKey));
 });

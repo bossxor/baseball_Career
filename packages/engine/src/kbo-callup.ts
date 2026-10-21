@@ -70,3 +70,28 @@ export function resolveKboCallup(source:KboCareer,expectedRevision:number,input:
  career.events=career.events.map(e=>e.eventKey===event.eventKey?resolved:e);career.phaseContext=structuredClone(phase.resume);career.revision++;
  return career;
 }
+
+/** 01: AI clubs re-check futures vs first team every 20 of that club's FUTURES team games, without events.
+ * My own player never moves here (E09 handles my call-up; my demotion is not automated). One pass per review:
+ * strongest healthy futures candidate first, each against the weakest healthy same-position/role first-team player. */
+export function reviewKboAiRosters(source:KboCareer):KboCareer|null {
+ const season=source.world.seasonKey,done=new Set(source.aiRosterReviews??[]),career=structuredClone(source);let changed=false;
+ for(const club of career.world.clubs){
+  const games=Object.values(career.records.games).filter(g=>g.scope.leagueKey==='FUTURES' && g.scope.seasonKey===season && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,club.id)).length;
+  const key=JSON.stringify([season,club.id,games]);
+  if(games===0 || games%20!==0 || done.has(key))continue;
+  done.add(key);changed=true;
+  const healthy=(k:string)=>!Object.hasOwn(career.health.injuries,k) && k!==career.protagonistKey;
+  const candidates=club.roster.filter(k=>!club.firstTeam.includes(k) && healthy(k)).map(k=>({key:k,score:kboCompetitionScore(career,k,'FUTURES')})).sort((a,b)=>b.score-a.score || (a.key<b.key?-1:1));
+  const moved=new Set<string>();
+  for(const c of candidates){
+   const p=career.world.players[c.key]!;
+   const weakest=club.firstTeam.filter(k=>healthy(k) && !moved.has(k) && career.world.players[k]!.kind===p.kind && career.world.players[k]!.position===p.position)
+    .map(k=>({key:k,score:kboCompetitionScore(career,k,'KBO')})).sort((a,b)=>a.score-b.score || (a.key<b.key?1:-1))[0];
+   if(!weakest || c.score<=weakest.score)continue;
+   club.firstTeam=club.firstTeam.map(k=>k===weakest.key?c.key:k);moved.add(c.key);
+  }
+ }
+ if(!changed)return null;
+ career.aiRosterReviews=[...done].sort();return career;
+}
