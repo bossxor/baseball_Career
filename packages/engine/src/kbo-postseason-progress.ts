@@ -9,9 +9,10 @@ import {leagueStandings} from './standings.js';
 import {createKboPostseason,nextKboPostseasonGame,recordKboPostseasonGame} from './kbo-postseason.js';
 import type {KboPostseason} from './kbo-postseason.js';
 import type {ScheduledGame} from './schedule.js';
+import {refreshCareerTraits} from './high-school-traits.js';
 
 export type KboPostseasonPhase={phase:'POSTSEASON_PROGRESS';postseason:KboPostseason;nextWorldDay:number;pendingGame:KboPendingGame|null};
-export type KboPostseasonStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'GAME_FINAL'|'POSTSEASON_COMPLETE';
+export type KboPostseasonStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'GAME_FINAL'|'HEALTH_CHANGE'|'POSTSEASON_COMPLETE';
 const ROUNDS=['WILD_CARD','SEMI_PLAYOFF','PLAYOFF','KOREAN_SERIES'];
 
 /** SEASON_REVIEW → POSTSEASON_PROGRESS once per season: seeds are the final KBO regular-season ranks 1..5 (01 tie-breaks). */
@@ -53,6 +54,9 @@ export function advanceKboPostseason(source:KboCareer,expectedRevision:number):{
  const closed=closeKboCompetitionDay(career.world,{KBO:[scheduled],FUTURES:[]},career.protagonistKey,career.records,career.health,career.days!,scheduled.worldDay);
  career.world=closed.world;career.health=closed.health;career.days=closed.days;
  phase.postseason=recordKboPostseasonGame(phase.postseason,winner);phase.nextWorldDay=scheduled.worldDay+1;
+ // Same day-close hooks as the regular season: trait unlocks (PS records count for T06) and my health stop.
+ career.traits=refreshCareerTraits(career,scheduled.worldDay,['KBO']);
+ const healthChanged=closed.result.injured.includes(career.protagonistKey) || closed.result.recovered.includes(career.protagonistKey);
  if(!nextKboPostseasonGame(phase.postseason)){career.postseason=phase.postseason;career.phaseContext={phase:'SEASON_REVIEW'};return finish('POSTSEASON_COMPLETE');}
- return finish('GAME_FINAL');
+ return finish(healthChanged?'HEALTH_CHANGE':'GAME_FINAL');
 }

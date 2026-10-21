@@ -95,6 +95,10 @@
 
 rules의 6능력/집중4개/종합 반올림/최고값 반감은35·90을 따르고 기용 역할 가중은41입니다. 경기 코어·선수 육성·고교 실제 기록 기반 특성 해금·부분 성장·대학 입학/첫 등록과 대학 정규 진행까지 연결했습니다. 전체 보관 선수 가져오기, 전체 커리어/다시즌 전이, 관계 근거 특성, KBO 실제 모집·계약/졸업 후 진로, 인증·Neon 저장·APK는 미구현입니다. 대학 학년 결과/진급과4학년 졸업은 M2-Y/Z/AA에서 구현했습니다. 설계 fixture 전체의 NOT_EXECUTED 상태를 일괄 구현 PASS로 바꾸지 않습니다.
 
+## M2-BF 포스트시즌 일마감 후처리 — 부분 완료
+
+PS 경기일 마감 후 특성 해금(T06)과 내 선수 건강 정지를 연결했다. 전체 check 404/404. [M2-BE/BF](M2-BE-KBO-POSTSEASON-GAMES.md).
+
 ## M2-BE KBO 포스트시즌 실제 경기 — 부분 완료
 
 startKboPostseason/advanceKboPostseason으로 정규 1~5위 시드의 포스트시즌을 하루 한 경기씩 실제 엔진으로 진행해 우승팀을 정하고 SEASON_REVIEW로 돌아간다(POSTSEASON 기록·일마감 연속). 전체 check 403/403. [M2-BE](M2-BE-KBO-POSTSEASON-GAMES.md).
