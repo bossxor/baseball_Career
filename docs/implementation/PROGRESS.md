@@ -56,6 +56,18 @@
 
 ## 현재 위치
 
+### 2026-10-22 상무(군 체육부대) 경로 — M2-CA~CE (전체 check 474/474)
+
+| 단계 | 내용 | 문서 |
+|---|---|---|
+| M2-CA | 11팀 퓨처스 일정(14/15경기·홈72/원정72)·연간 선발 야수10·투수10 | [CA](M2-CA-SANGMU-FOUNDATION.md) |
+| M2-CB | 복무 두 블록·정지 계약(일급 round(연봉/144)) 순수 원장 | [CB](M2-CB-SANGMU-PROGRAM-LEDGER.md) |
+| M2-CC | 부대 소속 이동/복귀·FUTURES 11번째 학교 투영 | [CC](M2-CC-SANGMU-UNIT.md) |
+| M2-CD | 커리어 연결(선발 명령·일정·진행·연도 전환) | [CD](M2-CD-SANGMU-CAREER-WIRING.md) |
+| M2-CE | 내 선수 지원/입대/복무 대여·병역 기한 차단 | [CE](M2-CE-SANGMU-APPLICATION.md) |
+
+미구현: 현역(ACTIVE)·ATHLETE 경로, 계약 정지/지급 원장·구단 예산, 복무 성장 계수·서비스 연차 0, 사건 E49~E55, 상무 부상/긴급 등록, 반년 복귀, 화면/API.
+
 ### 2026-10-22 정리: 프로(KBO) 커리어는 엔진에서 시즌 반복 → 은퇴까지 닫혀 있다 (M2-AV ~ M2-BX)
 
 한 시즌 경로(KboCareer, packages/engine):

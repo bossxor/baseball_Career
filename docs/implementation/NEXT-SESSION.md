@@ -1,5 +1,7 @@
 # 다음 환경 구현 인계 — 2026-10-22
 
+> **최신 상태(2026-10-22 마무리, 0bc8003)**: 상무 경로가 M2-CA~CE로 엔진에 들어갔다 — 11팀 퓨처스 일정, 연간 20명 선발(구단 상한·포지션 커버), 복무 두 블록·정지 계약 원장, 부대 이동/복귀, 커리어 연결(`startSangmuCohort`·일마감·투영·연도 전환), 내 선수 지원/입대/복무 대여(`applyToSangmu`/`resolveSangmuApplication`). 전체 check 474/474. 다음 후보: 현역(ACTIVE) 경로+28세 기한, 국가대표(ATHLETE) 전이, 계약 정지/일일 지급 원장, 복무 성장 계수, 사건 E49~E55, 상무 부상/긴급 등록, 반년 복귀. 읽을 순서: [M2-CE](M2-CE-SANGMU-APPLICATION.md) → [M2-CD](M2-CD-SANGMU-CAREER-WIRING.md) → [M2-CC](M2-CC-SANGMU-UNIT.md) → [M2-CB](M2-CB-SANGMU-PROGRAM-LEDGER.md) → [M2-CA](M2-CA-SANGMU-FOUNDATION.md).
+
 ## 상무 결정 갱신 — 2026-10-22
 
 사용자가 퓨처스11팀·144경기·홈72/원정72와 매년 야수10·투수10 선발을 확정했다.14 U·21과 [연결 준비 메모](M2-NEXT-MILITARY-INTEGRATION-NOTES.md)에 기록했다. 아래5% 체크포인트의 응답 대기 문구는 답변 전 당시 이력이다. 현재는 응답 대기가 아니며 실제 군팀/병역 구현은 아직 없다. 이번에는 결정 기록과 설계 정적 검증만 수행한다.
