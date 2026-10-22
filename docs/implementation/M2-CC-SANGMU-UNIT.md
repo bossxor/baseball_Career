@@ -8,10 +8,14 @@
 - `returnSangmuPlayers(world, unit, resumeSeason)`: 두 블록을 마친 선수만 원구단 퓨처스로 복귀한다(1군 자동 편입·주전 보장 없음). 정지 계약을 남은 일수로 재개(연수 = 올림(일수/144), 연봉 동일)하고 피로 0. 원구단 정원이 60이면 삭제하지 않고 `blockedByRoster`로 보고, 계약일이 남지 않으면 `uncontracted`(MIL10, FA 분기는 호출자 몫)로 보고하며 부대에 남긴다.
 - `assertSangmuUnit`: 복무자가 world/계약/로스터에 동시에 있으면 거절.
 
+- **경기 투영**: `createKboCompetitionGameWorld(world, league, protagonist, sangmu?)`의 네 번째 인자로 부대를 주면 FUTURES 투영에 11번째 학교 `SANGMU`(복무 중 구성원 전원, 신원·구종 포함)가 추가된다. 1군(KBO) 투영과 인자 없는 기존 호출은 그대로다. 복무 구성원이 world.players에 있으면 `INVALID_SANGMU_UNIT`.
+
 ## 검증
 
-kbo-sangmu-unit 2/2(20명 이동·세계 검증 통과·1군 28 유지·연봉 감소 합·결정적·재입대 거절·프로그램 내용, 복귀 전/후·정원 초과·무계약·1군 제외). lint·타입·build·M1 골든: [집중](evidence/M2-CC-focused.log).
+kbo-sangmu-unit 3/3(상무 FUTURES 투영 11팀/1군 10팀·로스터 중복 0·실제 상무 홈 경기 1개가 FINAL까지 진행·공식 기록 게시, 20명 이동·세계 검증 통과·1군 28 유지·연봉 감소 합·결정적·재입대 거절·프로그램 내용, 복귀 전/후·정원 초과·무계약·1군 제외). lint·타입·build·M1 골든: [집중](evidence/M2-CC-focused.log).
 
 ## 미완료
 
-상무를 11번째 퓨처스 팀으로 등록하는 경기 투영(등록 선수 = 부대 구성원), 11팀 일정 버전 활성화와 연도 전환 호출 순서(선발→입대→이전 기수 준비), 일일 지급/예약 원장, 내 선수 지원·합격·입대(S26/S27), 노쇠 복무 비율·공통 연간 성장 원장, 서비스 연차 0 처리.
+상무 선수의 일마감(피로·건강)·`advanceKboCareer` 큐 연결, 11팀 일정 버전 활성화와 연도 전환 호출 순서(선발→입대→이전 기수 준비), 일일 지급/예약 원장, 내 선수 지원·합격·입대(S26/S27), 노쇠 복무 비율·공통 연간 성장 원장, 서비스 연차 0 처리.
+
+전체 `npm run check` 단일 실행 469/469 통과·실패 0(1020307 ms). [전체 검사](evidence/M2-CC-check.log).

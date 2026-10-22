@@ -45,3 +45,24 @@ test('returning Sangmu players resume the contract on the Futures squad; full cl
  }
  assert.deepEqual(Object.keys(out.unit.members).sort(),[...inFull,expiredKey].sort());
 });
+
+test('Sangmu plays Futures as the 11th team in the competition projection and a real game completes',async()=>{
+ const {createKboCompetitionGameWorld,SANGMU_TEAM_KEY}=await import('../src/kbo-game-world.js');
+ const {prepareSchoolCompetitionGame,advanceHighSchoolGame,commitSchoolCompetitionGame}=await import('../src/high-school-game.js');
+ const c=enteredKboCareer('HITTER'),sel=selectSangmuCohort({world:c.world,records:c.records,health:c.health,seasonKey:c.world.seasonKey,excluded:new Set([c.protagonistKey])});
+ const world=structuredClone(c.world),unit=enlistSangmuCohort(world,emptySangmuUnit(),sel);
+ const base=structuredClone(c);base.world=world;
+ const futures=createKboCompetitionGameWorld(world,'FUTURES',c.protagonistKey,unit),kbo=createKboCompetitionGameWorld(world,'KBO',c.protagonistKey,unit);
+ assert.equal(futures.schools.length,11);assert.equal(kbo.schools.length,10);assert.ok(!kbo.schools.some(s=>s.id===SANGMU_TEAM_KEY));
+ const team=futures.schools.find(s=>s.id===SANGMU_TEAM_KEY)!;assert.equal(team.roster.length,20);
+ const all=futures.schools.flatMap(s=>s.roster);assert.equal(new Set(all).size,all.length);assert.ok(team.roster.every(k=>Object.hasOwn(futures.players,k)));
+ assert.ok(!Object.hasOwn(world.players,team.roster[0]!));
+ const opponent=futures.schools.find(s=>s.id!==SANGMU_TEAM_KEY)!;
+ const starters:Record<string,string>={};for(const s of futures.schools)starters[s.id]=s.roster.filter(k=>futures.players[k]!.kind==='PITCHER' && futures.players[k]!.position==='SP').sort()[0]!;
+ const scheduled={simulationKey:'sangmu-test',leagueKey:'FUTURES',seasonKey:world.seasonKey,round:0,worldDay:c.world.calendar.growthDays[5]!,awayTeamKey:opponent.id,homeTeamKey:SANGMU_TEAM_KEY};
+ let job=prepareSchoolCompetitionGame(futures,c.records,scheduled,{difficulty:c.difficulty,unavailableKeys:[],starters,recentBatting:{},recentPitchingOuts:{},traits:{},approaches:{}});
+ for(let i=0;i<200 && job.game.status!=='FINAL';i++)job=advanceHighSchoolGame(job,1000,20);
+ assert.equal(job.game.status,'FINAL');
+ const committed=commitSchoolCompetitionGame(futures,c.records,job,scheduled);
+ assert.ok(Object.hasOwn(committed.records.games['sangmu-test']!.teams,SANGMU_TEAM_KEY));assert.ok(base);
+});

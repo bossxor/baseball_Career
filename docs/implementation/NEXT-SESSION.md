@@ -14,7 +14,7 @@
 
 ## 현재 체크포인트
 
-- M2-CC(2026-10-22): 상무 부대 소속 이동/복귀(`enlistSangmuCohort`/`returnSangmuPlayers`/`assertSangmuUnit`) 순수 구현. 복무자는 world.players 밖 `KboSangmuUnit`에 보관. 미연결. 다음: 상무 11번째 퓨처스 팀 경기 투영, 11팀 일정 활성화와 연도 전환 순서, 내 선수 지원(S26/S27). [M2-CC](M2-CC-SANGMU-UNIT.md).
+- M2-CC(2026-10-22): 상무 부대 소속 이동/복귀(`enlistSangmuCohort`/`returnSangmuPlayers`/`assertSangmuUnit`) 순수 구현. 복무자는 world.players 밖 `KboSangmuUnit`에 보관. 미연결. 경기 투영(FUTURES 11번째 학교)은 구현·실제 경기 검증. 다음: 일마감/진행 큐의 상무 연결, 11팀 일정 활성화와 연도 전환 순서, 내 선수 지원(S26/S27). [M2-CC](M2-CC-SANGMU-UNIT.md).
 
 - M2-CB(2026-10-22): 상무 복무 두 블록·정지 계약 순수 원장(`enlistInSangmu`/`completeSangmuBlock`/`suspendKboContract`/`resumedContractPayment`, 일급 round(연봉/144)·마지막 날 정산). 미연결. 다음: 선수 소속 이동·군팀 등록·복귀 슬롯, 11팀 일정 활성화. [M2-CB](M2-CB-SANGMU-PROGRAM-LEDGER.md).
 
