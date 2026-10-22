@@ -1,0 +1,20 @@
+{
+  "files": [
+    {
+      "path": "packages/engine/src/kbo-military-program.ts",
+      "sha256": "854ff37e32f29e4da404776775e4eda9ebd9735b820075ad3112189e6b22e2b3"
+    },
+    {
+      "path": "packages/engine/src/kbo-contract-payments.ts",
+      "sha256": "d57ab9b7a12d2f3bbdcfa56b354859a4763848b483d089bcbe8cabc931d7ba26"
+    },
+    {
+      "path": "packages/engine/test/kbo-military-program.test.ts",
+      "sha256": "941e86850057a0f2b0990821168fd3535c593eb359cbdf73dd959a2cf7292a83"
+    },
+    {
+      "path": "packages/engine/test/kbo-contract-payments.test.ts",
+      "sha256": "137544e089978ee81f05bfb6f7ce335b72222868670ac978e5aed42521119864"
+    }
+  ]
+}

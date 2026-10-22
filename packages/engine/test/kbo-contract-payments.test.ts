@@ -16,7 +16,7 @@ function finished(p=program()){return completeSangmuBlock(completeSangmuBlock(p,
 function resumed(days=72,salary=100_000_000){const p=program(days,salary);return resumeKboContractPayments(createKboContractPaymentLedger(p),finished(p));}
 function evidence(day:number,leagueKey='KBO',opponent='KT'):{game:GameContribution;registration:HealthGame}{
  const gameKey='g'+day;
- return {game:{gameKey,worldDay:day,scope:{seasonKey:day<1000?'2033':'2034',leagueKey,phase:'REGULAR'},teams:{LG:{games:1,W:0,L:0,T:1,R:0,RA:0},[opponent]:{games:1,W:0,L:0,T:1,R:0,RA:0}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}},registration:{gameKey,day,seasonKey:day<1000?'2033':'2034',teamKey:leagueKey+':LG',roster:['p'],appearances:[]}};
+ return {game:{gameKey,worldDay:day,scope:{seasonKey:day<1000?'2032':'2033',leagueKey,phase:'REGULAR'},teams:{LG:{games:1,W:0,L:0,T:1,R:0,RA:0},[opponent]:{games:1,W:0,L:0,T:1,R:0,RA:0}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}},registration:{gameKey,day,seasonKey:day<1000?'2032':'2033',teamKey:leagueKey+':LG',roster:['p'],appearances:[]}};
 }
 test('suspension pays nothing, preserves principal and cannot resume before the same two-block program completes',()=>{
  const p=program(),s=createKboContractPaymentLedger(p),before=structuredClone(s),e=evidence(501);
@@ -68,4 +68,23 @@ test('an actual finalized pro game and unused bench registration can pay one res
  const complete=completeSangmuBlock(completeSangmuBlock(p,p.blocks[0]!.seasonKey,game.worldDay-2),p.blocks[1]!.seasonKey,game.worldDay-1);
  const ledger=resumeKboContractPayments(createKboContractPaymentLedger(p),complete),before=JSON.stringify(career),paid=recordKboContractPayment(ledger,game,registration);
  assert.equal(paid.paidWon,Math.round(contract.annualSalaryWon/144));assert.equal(paid.ledger.receipts.length,1);assert.equal(JSON.stringify(career),before);
+});
+
+test('calendar-year reset: service return and registered pay use season plus day, preserving old receipts and replay safety',()=>{
+ const p=program(),completed=completeSangmuBlock(completeSangmuBlock(p,'2031',303),'2032',150);
+ let s=resumeKboContractPayments(createKboContractPaymentLedger(p),completed);
+ const at=(year:string,day:number)=>{const e=evidence(day);e.game.gameKey=year+':'+day;e.game.scope.seasonKey=year;e.registration.gameKey=e.game.gameKey;e.registration.seasonKey=year;return e;};
+ const one=at('2032',302);s=recordKboContractPayment(s,one.game,one.registration).ledger;const prior=JSON.stringify(s);
+ const two=at('2033',32),paid=recordKboContractPayment(s,two.game,two.registration);assert.equal(paid.paidWon,694_444);assert.equal(paid.ledger.receipts.length,2);assert.equal(JSON.stringify(s),prior);
+ assert.equal(recordKboContractPayment(JSON.parse(JSON.stringify(paid.ledger)),one.game,one.registration).paidWon,0);
+ const backward=at('2032',303);assert.throws(()=>recordKboContractPayment(paid.ledger,backward.game,backward.registration),/NON_CHRONOLOGICAL/);
+ const premature=at('2032',150);assert.throws(()=>recordKboContractPayment(s,premature.game,premature.registration),/INVALID_CONTRACT_PAYMENT_EVIDENCE/);
+});
+
+test('legacy v1 reads stay unchanged; an explicit matching-program resume upgrades to v2 without rewriting paid receipts',()=>{
+ const old=structuredClone(resumed());old.schemaVersion=1;delete old.resume!.completedSeasonKey;const e=evidence(501),paid=recordKboContractPayment(old,e.game,e.registration).ledger,before=JSON.stringify(paid);
+ assert.equal(paid.schemaVersion,1);assert.equal(kboContractPaymentBalance(paid).paidDays,1);assert.equal(JSON.stringify(paid),before);
+ const upgraded=resumeKboContractPayments(paid,finished());assert.equal(upgraded.schemaVersion,2);assert.equal(upgraded.resume!.completedSeasonKey,'2032');assert.deepEqual(upgraded.receipts,paid.receipts);assert.equal(JSON.stringify(paid),before);
+ assert.equal(recordKboContractPayment(upgraded,e.game,e.registration).paidWon,0);
+ const bad=structuredClone(upgraded);delete bad.resume!.completedSeasonKey;assert.throws(()=>kboContractPaymentBalance(bad),/INVALID_CONTRACT_PAYMENT_LEDGER/);
 });

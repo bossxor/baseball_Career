@@ -1,0 +1,32 @@
+✖ calendar-year reset: service return and registered pay use season plus day, preserving old receipts and replay safety (1.1617ms)
+✖ service completion accepts the next season with a smaller calendar day and rejects a backward season (1.2006ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 569.2062
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-contract-payments.test.ts:1:7502
+✖ calendar-year reset: service return and registered pay use season plus day, preserving old receipts and replay safety (1.1617ms)
+  RangeError: INVALID_SERVICE_BLOCK
+      at completeSangmuBlock (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-military-program.ts:48:138)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-contract-payments.test.ts:74:30)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at packages\engine\test\kbo-military-program.test.ts:1:2156
+✖ service completion accepts the next season with a smaller calendar day and rejects a backward season (1.2006ms)
+  RangeError: INVALID_SERVICE_BLOCK
+      at completeSangmuBlock (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-military-program.ts:48:138)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-military-program.test.ts:29:53)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

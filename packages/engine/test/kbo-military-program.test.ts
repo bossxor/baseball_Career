@@ -20,6 +20,13 @@ test('Sangmu program is two blocks; completion days are recorded once and in ord
  assert.deepEqual(p.blocks.map(b=>[b.seasonKey,b.kind]),[['2031','FULL_DOMESTIC_SEASON'],['2032','FIRST_HALF_SEASON']]);assert.equal(p.startedSeason,'2031');
  assert.throws(()=>completeSangmuBlock(p,'2032',500),/INVALID_SERVICE_BLOCK/);
  const a=completeSangmuBlock(p,'2031',300);assert.equal(a.completedBlocks,1);assert.equal(a.returnOptionId,null);assert.deepEqual(completeSangmuBlock(a,'2031',300),a);
- assert.throws(()=>completeSangmuBlock(a,'2031',301),/SERVICE_BLOCK_EVIDENCE_REUSED/);assert.throws(()=>completeSangmuBlock(a,'2032',300),/INVALID_SERVICE_BLOCK/);
+ assert.throws(()=>completeSangmuBlock(a,'2031',301),/SERVICE_BLOCK_EVIDENCE_REUSED/);assert.equal(completeSangmuBlock(a,'2032',300).completedBlocks,2);
  const b=completeSangmuBlock(a,'2032',420);assert.equal(b.completedBlocks,2);assert.ok(b.returnOptionId);assert.equal(p.completedBlocks,0);
+});
+
+test('service completion accepts the next season with a smaller calendar day and rejects a backward season',()=>{
+ const p=enlistInSangmu({worldKey:'w',playerKey:'p',clubId:'LG',selectionSeasonKey:'2030',contract:contract(100_000_000,2),remainingPaidGameDays:288});
+ const first=completeSangmuBlock(p,'2031',303),done=completeSangmuBlock(first,'2032',150);
+ assert.equal(done.completedBlocks,2);assert.equal(done.blocks[1]!.completedWorldDay,150);assert.deepEqual(completeSangmuBlock(done,'2032',150),done);
+ assert.throws(()=>completeSangmuBlock({...first,blocks:[first.blocks[0]!,{...first.blocks[1]!,seasonKey:'2030'}]},'2030',350),/INVALID_SERVICE_BLOCK/);
 });

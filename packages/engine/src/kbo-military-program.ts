@@ -2,6 +2,11 @@ import type {KboInitialContract} from './kbo-world.js';
 
 /** 21: scheduled pro games per year; the suspended contract is counted in game days, never in "years + 1". */
 export const KBO_CONTRACT_GAME_DAYS=144;
+/** World days are local to a season, not monotonically increasing across years. */
+export function compareKboSeasonDays(a:{seasonKey:string;worldDay:number},b:{seasonKey:string;worldDay:number}):number {
+ for(const d of [a,b])if(!/^\d{4}$/.test(d.seasonKey) || Number(d.seasonKey)<2027 || !Number.isSafeInteger(d.worldDay) || d.worldDay<0)throw new RangeError('INVALID_KBO_SEASON_DAY');
+ return Number(a.seasonKey)-Number(b.seasonKey) || a.worldDay-b.worldDay;
+}
 export interface KboSuspendedContract {
  contractKey:string;playerKey:string;clubId:string;annualSalaryWon:number;
  remainingPaidGameDays:number;dailyWon:number;totalRemainingWon:number;finalDayWon:number;
@@ -45,7 +50,7 @@ export function completeSangmuBlock(program:KboMilitaryProgram,seasonKey:string,
  if(index<0 || !Number.isSafeInteger(worldDay) || worldDay<0 || index>program.completedBlocks)throw new RangeError('INVALID_SERVICE_BLOCK');
  const block=program.blocks[index]!;
  if(block.completedWorldDay!==null){if(block.completedWorldDay===worldDay)return structuredClone(program);throw new RangeError('SERVICE_BLOCK_EVIDENCE_REUSED');}
- const previous=program.blocks[index-1];if(previous && (previous.completedWorldDay===null || worldDay<=previous.completedWorldDay))throw new RangeError('INVALID_SERVICE_BLOCK');
+ const previous=program.blocks[index-1];if(previous && (previous.completedWorldDay===null || compareKboSeasonDays({seasonKey,worldDay},{seasonKey:previous.seasonKey,worldDay:previous.completedWorldDay})<=0))throw new RangeError('INVALID_SERVICE_BLOCK');
  const blocks=program.blocks.map((b,i)=>i===index?{...b,completedWorldDay:worldDay}:b);
  return {...structuredClone(program),blocks,completedBlocks:program.completedBlocks+1,returnOptionId:index+1===program.scheduledBlocks?JSON.stringify(['sangmu-return',program.programId]):null};
 }

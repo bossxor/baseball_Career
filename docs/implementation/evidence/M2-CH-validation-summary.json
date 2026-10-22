@@ -1,0 +1,15 @@
+{
+  "command": "npm run check",
+  "exitCode": 0,
+  "tests": 482,
+  "passed": 482,
+  "failed": 0,
+  "cancelled": 0,
+  "durationMs": 1395683.9759,
+  "focusedPassed": 12,
+  "regressionBefore": {
+    "tests": 2,
+    "failed": 2
+  },
+  "scope": "Year boundary and explicit payment ledger v1 -> v2 only; June30 implementation follows."
+}
