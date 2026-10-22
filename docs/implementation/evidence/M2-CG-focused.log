@@ -1,0 +1,17 @@
+✔ suspension pays nothing, preserves principal and cannot resume before the same two-block program completes (7.3292ms)
+✔ 72 actual registered days pay exactly half the annual salary; duplicate retries after JSON reload never pay again (42.4549ms)
+✔ unregistered, mismatched, duplicated and pre-return evidence rejects without consuming days (0.9199ms)
+✔ zero remaining days stay settled after return; multi-season pay retains exact days and integer-won remainder (815.1137ms)
+✔ an actual finalized pro game and unused bench registration can pay one resumed day without changing career or records (5703.5159ms)
+✔ suspended contract pays day-rate round(annual/144) and settles the rounded remainder on the last day (2.2955ms)
+✔ Sangmu program is two blocks; completion days are recorded once and in order (2.1833ms)
+✔ Sangmu application: fixed result, retry returns the same application, wrong answers rejected, decline burns the recruitment (9978.4214ms)
+✔ an enlisted protagonist serves two seasons as a loan to the military team and then completes (11771.4499ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22959.9073

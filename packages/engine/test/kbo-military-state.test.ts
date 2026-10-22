@@ -56,6 +56,7 @@ test('an enlisted protagonist serves two seasons as a loan to the military team 
  const a=applyToSangmu(forced,forced.revision);assert.equal(a.military!.applications[0]!.accepted,true);
  const renewed=renew(a);assert.throws(()=>resolveSangmuApplication(a,a.revision,'ENLIST'),/CONTRACT_DECISION_REQUIRED/);
  const e=resolveSangmuApplication(renewed,renewed.revision,'ENLIST');
+ assert.equal(e.military!.program!.contract.contractKey,renewed.renewal!.offerKey);assert.equal(e.military!.program!.contract.annualSalaryWon,renewed.renewal!.annualSalaryWon);assert.equal(e.military!.program!.contract.totalRemainingWon,renewed.renewal!.annualSalaryWon);
  assert.equal(e.military!.status,'SERVING_SPORTS');assert.ok(kboProtagonistServing(e));assert.deepEqual(e.sangmu!.loaned,[e.protagonistKey]);assert.equal(e.military!.program!.blocks[0]!.seasonKey,String(Number(e.world.seasonKey)+1));
  assert.ok(!kboYearTransitionReadiness(e).blockers.includes('MILITARY_RESULT_PENDING'));
  const n=startNextKboSeason(e,e.revision);

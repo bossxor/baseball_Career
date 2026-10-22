@@ -1,0 +1,37 @@
+{
+  "fullCheck": {
+    "command": "npm run check",
+    "exitCode": 0,
+    "tests": 479,
+    "passed": 479,
+    "failed": 0,
+    "cancelled": 0,
+    "durationMs": 1418797.0875,
+    "lint": true,
+    "types": true,
+    "build": true,
+    "compiledGolden": true,
+    "events": true,
+    "staticDesignValidators": 10
+  },
+  "focusedBeforeCopyCorrection": {
+    "passed": 9
+  },
+  "finalPaymentTests": {
+    "passed": 5
+  },
+  "firstFullRun": {
+    "status": "INTERRUPTED_BY_AGENT",
+    "capturedExitCode": 1,
+    "reason": "Deep-copy historical receipt objects, add alias regression, then restart the entire full check; interrupted run is not pass evidence."
+  },
+  "implementationLinks": {
+    "checked": 209,
+    "missing": []
+  },
+  "limits": [
+    "Pure contract ledger; no automatic career day-close or club finance integration.",
+    "ACTIVE/deadline/events E49 and E51..E55 remain future work.",
+    "No UI/Auth/Neon writes tested."
+  ]
+}

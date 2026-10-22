@@ -63,7 +63,9 @@ export function resolveSangmuApplication(source:KboCareer,expectedRevision:numbe
  const career=structuredClone(source),set=(decision:KboSangmuApplication['decision'])=>career.military!.applications=record.applications.map((a,i)=>i===record.applications.length-1?{...a,decision}:a);
  if(command==='ENLIST'){
   const days=remainingDays(source);if(days===0)throw new RangeError('CONTRACT_DECISION_REQUIRED');
-  const program=enlistInSangmu({worldKey:source.world.worldKey,playerKey:source.protagonistKey,clubId:source.protagonistClubId,selectionSeasonKey:app.selectionSeasonKey,contract:source.world.contracts[source.protagonistKey]!,remainingPaidGameDays:days});
+  const renewal=acceptedRenewal(source),current=source.world.contracts[source.protagonistKey]!;
+  const contract=renewal?{...current,contractKey:renewal.offerKey,seasonKey:renewal.seasonKey,years:renewal.years,annualSalaryWon:renewal.annualSalaryWon}:current;
+  const program=enlistInSangmu({worldKey:source.world.worldKey,playerKey:source.protagonistKey,clubId:source.protagonistClubId,selectionSeasonKey:app.selectionSeasonKey,contract,remainingPaidGameDays:days});
   set('ENLISTED');career.military!.status='SERVING_SPORTS';career.military!.program=program;
   const unit=career.sangmu??emptySangmuUnit();career.sangmu={...unit,loaned:[...(unit.loaned??[]),source.protagonistKey]};
  } else {set(command==='DECLINE'?'DECLINED':'REJECTION_ACKNOWLEDGED');career.military!.status='UNRESOLVED';}

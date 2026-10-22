@@ -1,0 +1,13 @@
+✔ suspension pays nothing, preserves principal and cannot resume before the same two-block program completes (7.2691ms)
+✔ 72 actual registered days pay exactly half the annual salary; duplicate retries after JSON reload never pay again (98.5627ms)
+✔ unregistered, mismatched, duplicated and pre-return evidence rejects without consuming days (1.5562ms)
+✔ zero remaining days stay settled after return; multi-season pay retains exact days and integer-won remainder (4180.3251ms)
+✔ an actual finalized pro game and unused bench registration can pay one resumed day without changing career or records (18649.3552ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25548.3477

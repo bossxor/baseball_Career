@@ -1,0 +1,109 @@
+{
+  "baseCommit": "6d695350a76dd335b0ea36535a7857cce3de2a79",
+  "direction": "validated checkout -> V:/",
+  "testedSourcesUnchanged": true,
+  "files": [
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "e00f81a0e5c062f44d6a58762b2cf40370a98eea0acc67fe158ae6befe67fb33",
+      "gitBlob": "841e9acef775821940d26b66085f2732dad6ccde",
+      "indexBlob": "841e9acef775821940d26b66085f2732dad6ccde"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-state.ts",
+      "sha256": "aed3070c0c0303b566ad8721ae2a075befb05a8459e29fd2f3b83d3fbd5a4f35",
+      "gitBlob": "43a07666487ed787c799056624be93df89fcc5d7",
+      "indexBlob": "43a07666487ed787c799056624be93df89fcc5d7"
+    },
+    {
+      "path": "packages/engine/src/kbo-contract-payments.ts",
+      "sha256": "fcb9b08f301d28c4a8abbfc419946e7ec854d425d11a70af3c6de033714f39dc",
+      "gitBlob": "b84e73c36dd85c881f9c23dc16e5ae14319ece0b",
+      "indexBlob": "b84e73c36dd85c881f9c23dc16e5ae14319ece0b"
+    },
+    {
+      "path": "packages/engine/test/kbo-military-state.test.ts",
+      "sha256": "54136cd578dd0197c800de016853b759d263b0f16788baa671e6a9353ad5fbd8",
+      "gitBlob": "7fce9def2faba166f593f5f1790c4d602f9c1592",
+      "indexBlob": "7fce9def2faba166f593f5f1790c4d602f9c1592"
+    },
+    {
+      "path": "packages/engine/test/kbo-contract-payments.test.ts",
+      "sha256": "c8fb7b1bf1a408cc59f33cf3e03dd68fb6436abdf664a8569f66fe1d975ab14c",
+      "gitBlob": "5453c6ca70a41d14e51ed7552e1213a0ed307de5",
+      "indexBlob": "5453c6ca70a41d14e51ed7552e1213a0ed307de5"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "72cb4a7d29259979ed12b49b4529c565a1e19cb22bbb5751c16d76e946dd69e8",
+      "gitBlob": "05ea518bad176c56903d8a5abd2530a5f8cec99b",
+      "indexBlob": "05ea518bad176c56903d8a5abd2530a5f8cec99b"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "34a813abfc0c7bdf17adef28e531cb75d676d02830b02501f4778faca9ec87a8",
+      "gitBlob": "7fa079525c520216450493e9cabea57e7a7e9d8c",
+      "indexBlob": "7fa079525c520216450493e9cabea57e7a7e9d8c"
+    },
+    {
+      "path": "docs/implementation/M2-NEXT-MILITARY-INTEGRATION-NOTES.md",
+      "sha256": "fa00a445baf2a98215a9a318a2371c287bd3bfda94e4910d2ec3bc31a1c9fe93",
+      "gitBlob": "1beaf2611ef1bbfbd9b6dc139defb080115cf772",
+      "indexBlob": "1beaf2611ef1bbfbd9b6dc139defb080115cf772"
+    },
+    {
+      "path": "docs/implementation/M2-CG-CONTRACT-PAYMENT-RECEIPTS.md",
+      "sha256": "df7aa9883301ad28846a2e938134f53589d6e698dc2986dd2bbb9e388b0abcfe",
+      "gitBlob": "31c35e8f9890680f2605080a3024dde1692ecf49",
+      "indexBlob": "31c35e8f9890680f2605080a3024dde1692ecf49"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CG-check-interrupted-before-receipt-copy.log",
+      "sha256": "a9e976daeec6d9efa987c4c8314a3846c578f493e5e6c781426fdc2c58291977",
+      "gitBlob": "93f943aa39e67a468a36b4e21e02e63d14518d53",
+      "indexBlob": "93f943aa39e67a468a36b4e21e02e63d14518d53"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CG-check.log",
+      "sha256": "efb993bfcb78502322b971ccd15c1be2d4fb996d4e5b31b497dbc71058bb1529",
+      "gitBlob": "6ef159f51e55f34d40d6978f29b8c57548a9cf25",
+      "indexBlob": "6ef159f51e55f34d40d6978f29b8c57548a9cf25"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CG-final-payment-tests.log",
+      "sha256": "bf72fc8bdeea23df14510130d8fc725bdaad3e270b769474426a1aa08c9b7c38",
+      "gitBlob": "c3dbb2a373fadf47144dab8f2724359f88ddf17a",
+      "indexBlob": "c3dbb2a373fadf47144dab8f2724359f88ddf17a"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CG-focused.log",
+      "sha256": "6506545e7573c754e4e1bd6ccc1b8a7ab80c5006b12dd1b2ad2869e9ad9d2de5",
+      "gitBlob": "4fc6f20a168c9735cefdbeead198bfebfe3e3eb1",
+      "indexBlob": "4fc6f20a168c9735cefdbeead198bfebfe3e3eb1"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CG-initial-sync.json",
+      "sha256": "02930b477ef747d537ebcb70fed9b6e42d69c8dbd77a8001628b7653b6689f20",
+      "gitBlob": "0f092e04ebc0cd7484ec13ae2373ac2c3ca5d106",
+      "indexBlob": "0f092e04ebc0cd7484ec13ae2373ac2c3ca5d106"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CG-tested-source.json",
+      "sha256": "9b1fde9429be03e2eaa217a01671b9cea53320acbea4bff5a282f6cc03d08b83",
+      "gitBlob": "9d4a0cfb4aff4ad73f94c5a87f257e1eda6e2467",
+      "indexBlob": "9d4a0cfb4aff4ad73f94c5a87f257e1eda6e2467"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CG-types.log",
+      "sha256": "e09e0d743bf7313b7dbdb99a010ae0eea70606def441cfd4a6d228b9e921e2f4",
+      "gitBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300",
+      "indexBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CG-validation-summary.json",
+      "sha256": "280dd5a17198c6ba61c4ed607e7816f43e59cefd8f535954601f3b439b2506c0",
+      "gitBlob": "f33c3b3ad1916e62bc4853782454fcacc9ee7c3c",
+      "indexBlob": "f33c3b3ad1916e62bc4853782454fcacc9ee7c3c"
+    }
+  ]
+}

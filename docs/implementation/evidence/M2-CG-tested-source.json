@@ -1,0 +1,25 @@
+{
+  "purpose": "Source fingerprints for the final full check after receipt-copy correction; verify again before commit.",
+  "files": [
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "e00f81a0e5c062f44d6a58762b2cf40370a98eea0acc67fe158ae6befe67fb33"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-state.ts",
+      "sha256": "aed3070c0c0303b566ad8721ae2a075befb05a8459e29fd2f3b83d3fbd5a4f35"
+    },
+    {
+      "path": "packages/engine/src/kbo-contract-payments.ts",
+      "sha256": "fcb9b08f301d28c4a8abbfc419946e7ec854d425d11a70af3c6de033714f39dc"
+    },
+    {
+      "path": "packages/engine/test/kbo-military-state.test.ts",
+      "sha256": "54136cd578dd0197c800de016853b759d263b0f16788baa671e6a9353ad5fbd8"
+    },
+    {
+      "path": "packages/engine/test/kbo-contract-payments.test.ts",
+      "sha256": "c8fb7b1bf1a408cc59f33cf3e03dd68fb6436abdf664a8569f66fe1d975ab14c"
+    }
+  ]
+}
