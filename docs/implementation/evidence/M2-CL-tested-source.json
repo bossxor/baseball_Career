@@ -1,0 +1,88 @@
+{
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "6a36b96546ac6c40c2cede7e02f5cdd790618e268e9d42a99a87ebfe778a3584"
+    },
+    {
+      "path": "docs/design/21-MILITARY-CONTRACT-RETURN.md",
+      "sha256": "7843dda4e60b2874b801eb966f45367fcb8ab152d3c921ad913426500580af4e"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "0305a13101baa95e36ef40dc56d9cb3278e253ba0c240d62f8d7adcc87e188a1"
+    },
+    {
+      "path": "docs/design/EVENT-CATALOG.md",
+      "sha256": "7e413c267b021f2b476053b781d24f093c80666e3a79708a02a6b510a2283086"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "947f93a6b416612c70f3d928f2db03333f5cf92e02b570735ddaffa163eec9ba"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "5be245922434e4f0e10c773662d7a5fa3f6b6065d41c2ec4093abf591098f2c4"
+    },
+    {
+      "path": "docs/design/event-catalog-v2.json",
+      "sha256": "88c21dbb9e242e9df301e3bb016779c35dd6a8f52e88ad1ee7ed6a6310bb36e5"
+    },
+    {
+      "path": "packages/engine/src/event-catalogue.ts",
+      "sha256": "ba0d5e8ca3db67806b1ee0ba44c752535c06b7f61ca21d2eb902163c3797ec56"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "88da660643c02d0a3d79ba5d1f637408a8e46f9fccdcd62848033a56c57ed232"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "sha256": "45875d3edb13869404e4309c7246411e4c07e3ef2a2a31f911b9523ac0171eb0"
+    },
+    {
+      "path": "packages/engine/src/kbo-contract-payments.ts",
+      "sha256": "bacf5f15e841a984d227bcc1f0b9589cf3401d5265eb1b372badcf129ec45d42"
+    },
+    {
+      "path": "packages/engine/src/kbo-draft.ts",
+      "sha256": "b3cafc7826449c6c3bb77308956efe3d132c746228017fff2c0a1194d41e753d"
+    },
+    {
+      "path": "packages/engine/src/kbo-service-payroll.ts",
+      "sha256": "7d8eaf7ddd07f02f612c6641b2b628179919dd548458b5993b6e3e730028b4d9"
+    },
+    {
+      "path": "packages/engine/src/kbo-world.ts",
+      "sha256": "94ac2b06012a6e1de625a7bae4542aed52a5b2e35123b70f92da02236f12ddb0"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-end.ts",
+      "sha256": "97a5316629dc51d1db8686c02a89502d75efe0b98fa3b94f30f41de22ce31a34"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "e9c0ce463cf777a1d7eab3474c6e25dfb19921a2dd7432648ddd789b3f66e419"
+    },
+    {
+      "path": "packages/engine/src/kbo-remainder-pay.ts",
+      "sha256": "7980419c2b8f8b47148bc2b33269912955579c130507aa102e5817c6c1347f78"
+    },
+    {
+      "path": "packages/engine/src/kbo-remainder-renewal.ts",
+      "sha256": "86e46a76351d213990ce4658093da86bbb5fd28f57329f3ae023521c51eddc4c"
+    },
+    {
+      "path": "packages/engine/test/kbo-remainder-pay.test.ts",
+      "sha256": "17dc464aa822c371332da725b09217f3d13a95ab10c6bc40b5209f774c575f8f"
+    },
+    {
+      "path": "packages/engine/test/kbo-remainder-renewal.test.ts",
+      "sha256": "d14636d914cc774f3202db8359930602de2adb66946e34321d989309bc85bc12"
+    },
+    {
+      "path": "packages/engine/test/remainder-fixtures.ts",
+      "sha256": "b3010a3a246ab4d1b4fec3f99d601c2302f725b685dbc1eb2ada5acd9c72b68f"
+    }
+  ]
+}

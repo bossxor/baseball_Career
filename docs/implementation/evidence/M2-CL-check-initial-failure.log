@@ -1,0 +1,40 @@
+
+> again-playball@0.1.0 check
+> npm run lint && npm run typecheck && npm test && npm run build && npm run verify:engine && npm run verify:events && npm run verify:design
+
+
+> again-playball@0.1.0 lint
+> eslint packages apps scripts
+
+
+> again-playball@0.1.0 typecheck
+> npm run build --workspace @playball/rules && npm run typecheck --workspaces --if-present && tsc -p tsconfig.tests.json
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+src/kbo-remainder-pay.ts(60,62): error TS2304: Cannot find name 'canonicalJson'.
+npm error Lifecycle script `typecheck` failed with error:
+npm error code 2
+npm error path C:\Users\N-052\.codex\visualizations\2026\10\16\***\baseball-career-repo\packages\engine
+npm error workspace @playball/engine@0.1.0
+npm error location C:\Users\N-052\.codex\visualizations\2026\10\16\***\baseball-career-repo\packages\engine
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c tsc -p tsconfig.json --noEmit
+
+
+> @playball/rules@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/api@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/web@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit

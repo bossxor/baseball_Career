@@ -1,0 +1,17 @@
+✔ suspension pays nothing, preserves principal and cannot resume before the same two-block program completes (3.5437ms)
+✔ 72 actual registered days pay exactly half the annual salary; duplicate retries after JSON reload never pay again (34.31ms)
+✔ unregistered, mismatched, duplicated and pre-return evidence rejects without consuming days (0.5674ms)
+✔ zero remaining days stay settled after return; multi-season pay retains exact days and integer-won remainder (751.9072ms)
+✔ an actual finalized pro game and unused bench registration can pay one resumed day without changing career or records (2327.5559ms)
+✔ calendar-year reset: service return and registered pay use season plus day, preserving old receipts and replay safety (0.6919ms)
+✔ legacy v1 reads stay unchanged; an explicit matching-program resume upgrades to v2 without rewriting paid receipts (0.5088ms)
+✔ new prorated term preserves settled principal, pays registered bench once and settles both rounding signs exactly (2303.0086ms)
+✔ prorated payment rejects foreign/unregistered/international/changed evidence, stale dates and invalid previous principal without mutations (39.357ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3943.5469

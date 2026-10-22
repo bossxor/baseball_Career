@@ -6,6 +6,7 @@ import type {KboFreeAgentPool} from './kbo-free-agents.js';
 import type {KboPostseasonPhase} from './kbo-postseason-progress.js';
 import type {KboPostseason} from './kbo-postseason.js';
 import type {KboSeasonClose} from './kbo-year-end.js';
+import type {KboRemainderRenewal} from './kbo-remainder-renewal.js';
 import type {KboRenewal} from './kbo-renewal.js';
 import type {KboSeasonArchive} from './kbo-year-transition.js';
 import type {KboRetiredPlayer,KboCareerRetirement} from './kbo-retirement.js';
@@ -23,7 +24,7 @@ import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {assertCareerKboSigning} from './career-kbo.js';
 import {assertKboAmateurYearEnd, type KboAmateurYearEnd} from './kbo-entry.js';
-import type {KboRosterWorld} from './kbo-world.js';
+import type {KboRosterWorld,KboInitialContract} from './kbo-world.js';
 import {assertKboRecruitmentWorld} from './kbo-draft.js';
 import type {KboRookieSigning} from './kbo-draft.js';
 import {createSeasonCalendar} from './season-calendar.js';
@@ -52,6 +53,7 @@ export interface KboCareer {
  records:RecordLedger;health:HealthLedger;seasonGrowth:SeasonGrowthLedger;development:CareerDevelopmentLedger;
  traits?:CareerTraitLedger;relationships:RelationshipLedger;events:readonly EventInstance[];relationNotices:readonly EventInstance[];
  styleUsedWindows:readonly string[];planHistory:HighSchoolCareer['planHistory'];
+ remainderRenewal?:KboRemainderRenewal;contractHistory?:readonly KboInitialContract[];
  aiAssessments?:KboAiAssessments;aiOffseasons?:readonly {seasonKey:string;renewal:KboAiRenewalReceipt;repair:KboRosterRepairReceipt;rounds:readonly KboAiFaRound[]}[];
  freeAgents?:KboFreeAgentPool;days?:SchoolDayLedger;callupReviews?:readonly KboCallupReview[];aiRosterReviews?:readonly string[];seasonClose?:KboSeasonClose;renewal?:KboRenewal;proSeasons?:readonly KboSeasonArchive[];retiredPlayers?:readonly KboRetiredPlayer[];retirement?:KboCareerRetirement;sangmu?:KboSangmuUnit;military?:KboMilitaryRecord;rookieDrafts?:readonly KboRookieDraftReceipt[];postseason?:KboPostseason;campNotices?:readonly EventInstance[];preseasonPlan?:KboPreseasonPlan;openingRoster?:KboOpeningRoster;competitionSchedule?:KboSeasonSchedule;
 }

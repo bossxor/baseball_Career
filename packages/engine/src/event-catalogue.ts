@@ -678,7 +678,7 @@ export const EVENT_DEFINITIONS:readonly EventDefinition[] = [
   {
     "id": "E30",
     "title": "재계약 제안",
-    "body": "구단이 다음 시즌의 계약 조건을 제시했습니다. 역할과 연봉을 살펴볼 시간입니다.",
+    "body": "구단이 계약 조건을 제시했습니다. 적용 기간과 역할, 연봉을 확인합니다.",
     "queueClass": "CONTRACT",
     "evidenceDomain": "CONTRACT_WINDOW",
     "evidenceFields": [

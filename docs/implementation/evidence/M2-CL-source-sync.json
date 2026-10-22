@@ -1,0 +1,242 @@
+{
+  "baseCommit": "00316d050010cecacaaf056b5c7f539ca3ba708a",
+  "direction": "validated checkout -> V:/",
+  "runtimeTestedSourcesUnchanged": true,
+  "postCheckDocsValidatedSeparately": true,
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "b6cff79c0b9376c24bd8480f5b2b1438b60c5f1a7b6921f5f4d22c7290a2205b",
+      "gitBlob": "99471e506f6d1a52fb3da0a3594079cf6c8045b8",
+      "indexBlob": "99471e506f6d1a52fb3da0a3594079cf6c8045b8"
+    },
+    {
+      "path": "docs/design/21-MILITARY-CONTRACT-RETURN.md",
+      "sha256": "0b38dad4d6eabf7f6d5cd4550f86e04d6a28a58083259c6a281ae2177d762896",
+      "gitBlob": "885ca850e4a167ed7d24f1ca09c3a000765202af",
+      "indexBlob": "885ca850e4a167ed7d24f1ca09c3a000765202af"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "db588cabca58b625d8099f9cdd1786fa9330f4fb181a0c1e4d00414ee73f1a36",
+      "gitBlob": "81573e6f80d817cecbfa6b0e513fadf72d0aef2d",
+      "indexBlob": "81573e6f80d817cecbfa6b0e513fadf72d0aef2d"
+    },
+    {
+      "path": "docs/design/EVENT-CATALOG.md",
+      "sha256": "7e413c267b021f2b476053b781d24f093c80666e3a79708a02a6b510a2283086",
+      "gitBlob": "06c494710baca0dcfeecbf2618ae8292082e8312",
+      "indexBlob": "06c494710baca0dcfeecbf2618ae8292082e8312"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "2dd533190f98dc4a0a437ce952b3a44555e6d2b61c7a53c177b0db4e8cf66036",
+      "gitBlob": "06435554c4a758746f5e26f5e7b1d0f92bbc46e3",
+      "indexBlob": "06435554c4a758746f5e26f5e7b1d0f92bbc46e3"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "c4980a44dca62f8f584a40ce6798cf3d248d852d9d5febeabf274a0bd6e3dc0e",
+      "gitBlob": "c32a0c8b68de331c85511353a5666e9a5a00206f",
+      "indexBlob": "c32a0c8b68de331c85511353a5666e9a5a00206f"
+    },
+    {
+      "path": "docs/design/event-catalog-v2.json",
+      "sha256": "88c21dbb9e242e9df301e3bb016779c35dd6a8f52e88ad1ee7ed6a6310bb36e5",
+      "gitBlob": "95974d61c7afbac229b30032e40773193de17840",
+      "indexBlob": "95974d61c7afbac229b30032e40773193de17840"
+    },
+    {
+      "path": "packages/engine/src/event-catalogue.ts",
+      "sha256": "ba0d5e8ca3db67806b1ee0ba44c752535c06b7f61ca21d2eb902163c3797ec56",
+      "gitBlob": "601f49c28cb52d6478825081b35ed4cd211b5eb9",
+      "indexBlob": "601f49c28cb52d6478825081b35ed4cd211b5eb9"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "88da660643c02d0a3d79ba5d1f637408a8e46f9fccdcd62848033a56c57ed232",
+      "gitBlob": "c12541bbfbf342c1f023e40ef5ac36db721a3af1",
+      "indexBlob": "c12541bbfbf342c1f023e40ef5ac36db721a3af1"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "sha256": "45875d3edb13869404e4309c7246411e4c07e3ef2a2a31f911b9523ac0171eb0",
+      "gitBlob": "69e11113dcf390e565d47a4a3d1534bcc8129b66",
+      "indexBlob": "69e11113dcf390e565d47a4a3d1534bcc8129b66"
+    },
+    {
+      "path": "packages/engine/src/kbo-contract-payments.ts",
+      "sha256": "bacf5f15e841a984d227bcc1f0b9589cf3401d5265eb1b372badcf129ec45d42",
+      "gitBlob": "ce917f0071ad59d8c2f131d23167a7dd26ab3ac2",
+      "indexBlob": "ce917f0071ad59d8c2f131d23167a7dd26ab3ac2"
+    },
+    {
+      "path": "packages/engine/src/kbo-draft.ts",
+      "sha256": "b3cafc7826449c6c3bb77308956efe3d132c746228017fff2c0a1194d41e753d",
+      "gitBlob": "beed0cf6d854cb2398fe7ac0d1a9ee0c918f9ae3",
+      "indexBlob": "beed0cf6d854cb2398fe7ac0d1a9ee0c918f9ae3"
+    },
+    {
+      "path": "packages/engine/src/kbo-service-payroll.ts",
+      "sha256": "7d8eaf7ddd07f02f612c6641b2b628179919dd548458b5993b6e3e730028b4d9",
+      "gitBlob": "599714c3edbbe54c02067741b8041820c8eda567",
+      "indexBlob": "599714c3edbbe54c02067741b8041820c8eda567"
+    },
+    {
+      "path": "packages/engine/src/kbo-world.ts",
+      "sha256": "94ac2b06012a6e1de625a7bae4542aed52a5b2e35123b70f92da02236f12ddb0",
+      "gitBlob": "bbc514970404855e4bb78f6eb019e9b7b97639bc",
+      "indexBlob": "bbc514970404855e4bb78f6eb019e9b7b97639bc"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-end.ts",
+      "sha256": "97a5316629dc51d1db8686c02a89502d75efe0b98fa3b94f30f41de22ce31a34",
+      "gitBlob": "698973ab81f8113ff51131d1c5880cdb0c810bbb",
+      "indexBlob": "698973ab81f8113ff51131d1c5880cdb0c810bbb"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "e9c0ce463cf777a1d7eab3474c6e25dfb19921a2dd7432648ddd789b3f66e419",
+      "gitBlob": "b93c8594f585dd1480c629509384c1c899f2c28f",
+      "indexBlob": "b93c8594f585dd1480c629509384c1c899f2c28f"
+    },
+    {
+      "path": "packages/engine/src/kbo-remainder-pay.ts",
+      "sha256": "7980419c2b8f8b47148bc2b33269912955579c130507aa102e5817c6c1347f78",
+      "gitBlob": "a443bed508f4db1730cd19668a0887ebde4d45a2",
+      "indexBlob": "a443bed508f4db1730cd19668a0887ebde4d45a2"
+    },
+    {
+      "path": "packages/engine/src/kbo-remainder-renewal.ts",
+      "sha256": "86e46a76351d213990ce4658093da86bbb5fd28f57329f3ae023521c51eddc4c",
+      "gitBlob": "70a59c106f5ad875f9ea6adab13317fa77dd5f2d",
+      "indexBlob": "70a59c106f5ad875f9ea6adab13317fa77dd5f2d"
+    },
+    {
+      "path": "packages/engine/test/kbo-remainder-pay.test.ts",
+      "sha256": "17dc464aa822c371332da725b09217f3d13a95ab10c6bc40b5209f774c575f8f",
+      "gitBlob": "a9b479c88200ef3b656c6f2c0dbef5dff7a12e13",
+      "indexBlob": "a9b479c88200ef3b656c6f2c0dbef5dff7a12e13"
+    },
+    {
+      "path": "packages/engine/test/kbo-remainder-renewal.test.ts",
+      "sha256": "d14636d914cc774f3202db8359930602de2adb66946e34321d989309bc85bc12",
+      "gitBlob": "c845f12402102913c619e3974e3b1de810877b8b",
+      "indexBlob": "c845f12402102913c619e3974e3b1de810877b8b"
+    },
+    {
+      "path": "packages/engine/test/remainder-fixtures.ts",
+      "sha256": "b3010a3a246ab4d1b4fec3f99d601c2302f725b685dbc1eb2ada5acd9c72b68f",
+      "gitBlob": "658bd5115c886cb55020ded300e411fcb7cf0cb4",
+      "indexBlob": "658bd5115c886cb55020ded300e411fcb7cf0cb4"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "62e14541e212b99dc5c9e9843627c4bde915ea7c0ae38165dea7c028dfd73e12",
+      "gitBlob": "fc078a13bfc64763e97341777ccefb9b2ba14d73",
+      "indexBlob": "fc078a13bfc64763e97341777ccefb9b2ba14d73"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "f75b2fd07d315c61ff3e4361a147bf951ad910497f401080caa3281af64509ba",
+      "gitBlob": "fd6dab0e63555bc74371a1091cfbcde31456d9a5",
+      "indexBlob": "fd6dab0e63555bc74371a1091cfbcde31456d9a5"
+    },
+    {
+      "path": "docs/implementation/M2-NEXT-MILITARY-INTEGRATION-NOTES.md",
+      "sha256": "042922bb20572beddaa31fd54120bcaf085bd7905c20a4ba16ae3bf708060bba",
+      "gitBlob": "dbf14cfe3d0ff2b94e23574763ec0544d4537b7c",
+      "indexBlob": "dbf14cfe3d0ff2b94e23574763ec0544d4537b7c"
+    },
+    {
+      "path": "docs/implementation/M2-CL-REMAINDER-RENEWAL.md",
+      "sha256": "84b7589d6d2656b76620d8c0f15eebca54a664c157d609e7e0171c1a703d3968",
+      "gitBlob": "cdc5253d956fba9323b346d23cd50354946fc101",
+      "indexBlob": "cdc5253d956fba9323b346d23cd50354946fc101"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CL-check-initial-failure.log",
+      "sha256": "1c47bb4047ab7a94c04477786a33c24274d09083f0375650cdf3a0456ef2f470",
+      "gitBlob": "c4a90db10d6270da7b6c2475504ec43c8eeafcce",
+      "indexBlob": "c4a90db10d6270da7b6c2475504ec43c8eeafcce"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CL-check-retry-failure.log",
+      "sha256": "1c47bb4047ab7a94c04477786a33c24274d09083f0375650cdf3a0456ef2f470",
+      "gitBlob": "c4a90db10d6270da7b6c2475504ec43c8eeafcce",
+      "indexBlob": "c4a90db10d6270da7b6c2475504ec43c8eeafcce"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CL-check.log",
+      "sha256": "d472dbab727b0de266f888de8c30bc877bcb2b7258a79861b6b99cc4c1228ff1",
+      "gitBlob": "a6e89c656e2493429d331ff8240b19bbc2aeb357",
+      "indexBlob": "a6e89c656e2493429d331ff8240b19bbc2aeb357"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CL-core-focused.log",
+      "sha256": "dd933a4b7aa8ba2e118eb6698d5e8a6f92f596bf9be8d44d7177848f1eeeecf4",
+      "gitBlob": "8c237a0e85acf930ca566445b9be745c6ecb61e5",
+      "indexBlob": "8c237a0e85acf930ca566445b9be745c6ecb61e5"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CL-design-final.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090",
+      "gitBlob": "3dbeafbf5c570526f3080073cffb213824255b29",
+      "indexBlob": "3dbeafbf5c570526f3080073cffb213824255b29"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CL-focused.log",
+      "sha256": "81a59e6c1653cfc78e3783b3c086c09c9c5c66366b098f81e31f42ceff7e47e0",
+      "gitBlob": "9a2ad4944b8feacd2fe4a0f91e8ae3cb6fc56d2a",
+      "indexBlob": "9a2ad4944b8feacd2fe4a0f91e8ae3cb6fc56d2a"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CL-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f",
+      "gitBlob": "f61cd1e9f5eb3902a8bad2bb1881bc2b55805d70",
+      "indexBlob": "f61cd1e9f5eb3902a8bad2bb1881bc2b55805d70"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CL-manifest.log",
+      "sha256": "6089df69a426fe6756917ff6358256756f763977079292318b26040e4d062f1d",
+      "gitBlob": "65bd618ab839e74feaccf6833f4436ab0c0e747e",
+      "indexBlob": "65bd618ab839e74feaccf6833f4436ab0c0e747e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CL-post-docs-source.json",
+      "sha256": "d5dea76107bc51fcae1fd5363c78a68430f19c2813861dc8961fe5e2d9949ba5",
+      "gitBlob": "a73e83fe5fba8fab264d9700be33a61e979a93a2",
+      "indexBlob": "a73e83fe5fba8fab264d9700be33a61e979a93a2"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CL-tested-source.json",
+      "sha256": "75140122c8d8ff969e49c898ca9796eff4d5975060b5ecae3e2bd8226dfc7295",
+      "gitBlob": "49709810453c40ff63c8717212ddd33ec47c5b4f",
+      "indexBlob": "49709810453c40ff63c8717212ddd33ec47c5b4f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CL-types-final.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df",
+      "gitBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300",
+      "indexBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CL-types-initial.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df",
+      "gitBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300",
+      "indexBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CL-types-tests.log",
+      "sha256": "35f6e7802b3ab653720a5e45cc34a9b92498552b58ade0429b9f65dff6432c21",
+      "gitBlob": "31dcb4a9050a1a328ed1c1df395e73aa7dc01d1b",
+      "indexBlob": "31dcb4a9050a1a328ed1c1df395e73aa7dc01d1b"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CL-types-wiring.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df",
+      "gitBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300",
+      "indexBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300"
+    }
+  ]
+}

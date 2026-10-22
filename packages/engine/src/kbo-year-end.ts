@@ -39,6 +39,7 @@ export function closeKboSeason(source:KboCareer,expectedRevision:number,forfeitU
  if(source.phaseContext.phase!=='SEASON_REVIEW' || source.seasonClose || source.events.some(e=>e.status==='OPEN'))throw new RangeError('INVALID_KBO_SEASON_CLOSE');
  validateSeasonGrowthLedger(source.seasonGrowth);
  const season=source.world.seasonKey,key=source.protagonistKey,W=source.world.calendar.growthDays.length;
+ if(source.world.contracts[key]?.remainderPay && !source.world.contracts[key]!.remainderPay!.settlement)throw new RangeError('KBO_REMAINDER_NOT_FINALIZED');
  if(!source.seasonGrowth.entries.some(e=>JSON.parse(e.periodKey)[0]==='pro-growth'))throw new RangeError('KBO_SEASON_GROWTH_NOT_SETTLED');
  const career=structuredClone(source);let forfeited=false;
  if(!source.development.trainingUsedSeasons.includes(season)){

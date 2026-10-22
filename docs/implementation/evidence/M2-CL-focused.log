@@ -1,0 +1,13 @@
+✔ new prorated term preserves settled principal, pays registered bench once and settles both rounding signs exactly (2363.1101ms)
+✔ prorated payment rejects foreign/unregistered/international/changed evidence, stale dates and invalid previous principal without mutations (30.4764ms)
+✔ midseason offer is fixed, private and blocking; explicit acceptance preserves original receipts and budgets before real play resumes (4812.2168ms)
+✔ stale events and forged term/basis reject atomically; insufficient budget cannot silently fund a renewal (736.5928ms)
+✔ actual final regular date settles new pay once; postseason pays no extra; normal next-year renewal archives all prior contract receipts (11605.2315ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 17821.561

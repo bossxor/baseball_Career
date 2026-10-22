@@ -48,8 +48,8 @@ export function recordKboContractPayment(source:KboContractPaymentLedger,game:Ga
  assertKboContractPaymentLedger(source);
  if(!source.resume)throw new RangeError('CONTRACT_PAYMENT_SUSPENDED');
  const c=source.contract,league=game.scope.leagueKey;
- if(!['KBO','FUTURES'].includes(league) || game.scope.phase!=='REGULAR' || !/^\d{4}$/.test(game.scope.seasonKey) || !game.gameKey || registration.gameKey!==game.gameKey || registration.day!==game.worldDay || registration.seasonKey!==game.scope.seasonKey || registration.teamKey!==league+':'+c.clubId || Object.keys(game.teams).length!==2 || !Object.hasOwn(game.teams,c.clubId) || game.teams[c.clubId]!.games!==1 || new Set(registration.roster).size!==registration.roster.length || !registration.roster.includes(c.playerKey) || !Number.isSafeInteger(game.worldDay) || (source.resume.completedSeasonKey?compareKboSeasonDays({seasonKey:game.scope.seasonKey,worldDay:game.worldDay},{seasonKey:source.resume.completedSeasonKey,worldDay:source.resume.completedWorldDay})<=0:game.worldDay<=source.resume.completedWorldDay))throw new RangeError('INVALID_CONTRACT_PAYMENT_EVIDENCE');
- const evidenceKey=canonicalJson({gameKey:game.gameKey,worldDay:game.worldDay,scope:game.scope,teamKey:registration.teamKey,roster:[...registration.roster].sort()});
+ const evidenceKey=kboRegisteredContractEvidence(c,game,registration);
+ if((source.resume.completedSeasonKey?compareKboSeasonDays({seasonKey:game.scope.seasonKey,worldDay:game.worldDay},{seasonKey:source.resume.completedSeasonKey,worldDay:source.resume.completedWorldDay})<=0:game.worldDay<=source.resume.completedWorldDay))throw new RangeError('INVALID_CONTRACT_PAYMENT_EVIDENCE');
  const old=source.receipts.find(r=>r.gameKey===game.gameKey);
  if(old){if(old.evidenceKey!==evidenceKey)throw new RangeError('CHANGED_CONTRACT_PAYMENT_EVIDENCE');return {ledger:structuredClone(source),paidWon:0,duplicate:true};}
  const last=source.receipts.at(-1);
@@ -63,4 +63,11 @@ export function kboContractPaymentBalance(source:KboContractPaymentLedger){
  assertKboContractPaymentLedger(source);
  const paidDays=source.receipts.length,paidWon=source.receipts.reduce((n,r)=>n+r.amountWon,0);
  return {status:!source.resume?'SUSPENDED' as const:paidDays===source.contract.remainingPaidGameDays?'SETTLED' as const:'RESUMED' as const,paidDays,paidWon,remainingPaidGameDays:source.contract.remainingPaidGameDays-paidDays,remainingWon:source.contract.totalRemainingWon-paidWon};
+}
+
+/** Shared official-game/registration proof for daily contracts; no salary or suspension policy. */
+export function kboRegisteredContractEvidence(c:Pick<KboSuspendedContract,'playerKey'|'clubId'>,game:GameContribution,registration:HealthGame):string {
+ const league=game.scope.leagueKey;
+ if(!['KBO','FUTURES'].includes(league) || game.scope.phase!=='REGULAR' || !/^\d{4}$/.test(game.scope.seasonKey) || !game.gameKey || registration.gameKey!==game.gameKey || registration.day!==game.worldDay || registration.seasonKey!==game.scope.seasonKey || registration.teamKey!==league+':'+c.clubId || Object.keys(game.teams).length!==2 || !Object.hasOwn(game.teams,c.clubId) || game.teams[c.clubId]!.games!==1 || new Set(registration.roster).size!==registration.roster.length || !registration.roster.includes(c.playerKey) || !Number.isSafeInteger(game.worldDay))throw new RangeError('INVALID_CONTRACT_PAYMENT_EVIDENCE');
+ return canonicalJson({gameKey:game.gameKey,worldDay:game.worldDay,scope:game.scope,teamKey:registration.teamKey,roster:[...registration.roster].sort()});
 }

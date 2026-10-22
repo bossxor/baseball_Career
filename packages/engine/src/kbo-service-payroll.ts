@@ -1,3 +1,4 @@
+import {kboRemainderSeasonCharge,settleKboRemainderPayrollDay} from './kbo-remainder-pay.js';
 import {KBO_CLUBS} from '@playball/rules';
 import type {KboInitialContract} from './kbo-world.js';
 import type {KboMilitaryProgram} from './kbo-military-program.js';
@@ -29,6 +30,8 @@ export function assertKboServicePayroll(contract:KboInitialContract):void {
 export const kboContractSuspended=(c:KboInitialContract)=>!!c.servicePay && c.servicePay.ledger.resume===null;
 /** Same season receipts have been paid; only the remaining reservation remains unpaid. */
 export function kboContractSeasonCharge(contract:KboInitialContract):number {
+ if(contract.remainderPay)return kboRemainderSeasonCharge(contract);
+ if(contract.status==='ACTIVE_PRORATED')throw new RangeError('KBO_REMAINDER_REQUIRED');
  if(!contract.servicePay)return contract.annualSalaryWon;assertKboServicePayroll(contract);
  const p=contract.servicePay,paid=p.ledger.receipts.filter(r=>r.seasonKey===contract.seasonKey).reduce((n,r)=>n+r.amountWon,0);
  return paid+resumedContractPayment(p.ledger.contract,p.ledger.receipts.length,p.reservedGameDays);
@@ -51,6 +54,7 @@ export function carryKboServicePayroll(contract:KboInitialContract,targetSeasonK
 /** Project residual paid days after this year's reserved portion into later seasons; never calendar-years +1. */
 export function kboServiceFutureCommitment(contract:KboInitialContract,yearOffset:number):number {
  if(!Number.isSafeInteger(yearOffset) || yearOffset<1 || yearOffset>3)throw new RangeError('INVALID_KBO_FUTURE_YEAR');
+ if(contract.remainderPay){kboRemainderSeasonCharge(contract);return 0;}
  if(!contract.servicePay)return contract.years>yearOffset?contract.annualSalaryWon:0;assertKboServicePayroll(contract);
  const p=contract.servicePay,all=p.ledger.contract.remainingPaidGameDays;let index=p.ledger.receipts.length+p.reservedGameDays;
  for(let offset=1;offset<=yearOffset;offset++){
@@ -65,7 +69,7 @@ import {assertKboRecruitmentWorld} from './kbo-draft.js';
 
 /** Internal daily transaction hook; caller owns the clone. All games and registration receipts must already be final. */
 export function settleKboServicePayrollDay(career:KboCareer,day:number):void {
- const c=career.world.contracts[career.protagonistKey]!;if(!c.servicePay)return;
+ const c=career.world.contracts[career.protagonistKey]!;if(c.remainderPay){settleKboRemainderPayrollDay(career,day);return;}if(!c.servicePay)return;
  if(!career.competitionSchedule || career.days?.days.at(-1)?.day!==day)throw new RangeError('PAYROLL_DAY_NOT_FINAL');
  const oldCharge=kboContractSeasonCharge(c),p=c.servicePay,club=career.world.clubs.find(x=>x.id===c.clubId)!;
  const matches=career.health.games.map(x=>x.evidence).filter(r=>r.seasonKey===career.world.seasonKey && r.day===day && r.roster.includes(c.playerKey) && ['KBO:'+c.clubId,'FUTURES:'+c.clubId].includes(r.teamKey));
