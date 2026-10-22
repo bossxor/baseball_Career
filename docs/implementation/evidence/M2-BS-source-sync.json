@@ -1,0 +1,48 @@
+{
+  "files": [
+    {
+      "path": "packages/engine/src/kbo-finance.ts",
+      "sha256": "9ff25dff9ca28a7aba30481b9393585cbec1f8b66f7f39533236cc9f185a7fb6"
+    },
+    {
+      "path": "packages/engine/src/kbo-roster-repair.ts",
+      "sha256": "93e6d271382363be77c10c382bc4e666fc44b56e9f84dc5b8b450a47d6da52b8"
+    },
+    {
+      "path": "packages/engine/test/kbo-roster-repair.test.ts",
+      "sha256": "3a07b5eb37b7fe2d730e595c7da69a912c1c99a4a3ec74c30fb319c9e1f99ef1"
+    },
+    {
+      "path": "docs/implementation/M2-BS-KBO-DUAL-LEAGUE-REPAIR.md",
+      "sha256": "391645595e48bf008c2ffdec57bd104d28799e9415b6a20bf28250cde77fdd4f"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "f5fe9f65cd9718fcd742e8dfe497a7edb1b1a59a817062d3f90b528a32a54971"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "a5f41df40ac58ae3c110167ff0470a8a56380bdccc20b1377bdf0f29a5dd0c75"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BS-build.log",
+      "sha256": "4375c25de3cf944ee0ed8f8b0ec6effaf5fc3dafd34ba066cc690ceff4cbb881"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BS-engine.log",
+      "sha256": "fd6106507bc4069343297667513044ad7447998b5c028b0ed22bc26eea51c1e1"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BS-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BS-repair-tests.log",
+      "sha256": "093637094d05a137986059946dd816bc6776b22ba361687db50fef08ea0dabf5"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BS-typecheck.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df"
+    }
+  ]
+}

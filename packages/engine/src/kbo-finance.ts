@@ -3,7 +3,7 @@ import type {KboRosterWorld,KboInitialContract} from './kbo-world.js';
 import {canonicalJson} from './game.js';
 
 export interface KboGuarantee {
- obligationKey:string;sourceContractKey:string;playerKey:string;clubId:string;reason:'RETIREMENT'|'RELEASE';createdSeasonKey:string;
+ obligationKey:string;sourceContractKey:string;playerKey:string;clubId:string;reason:'RETIREMENT'|'RELEASE';createdSeasonKey:string;timing?:'BEFORE_SEASON';
  dues:readonly {seasonKey:string;amountWon:number}[];
 }
 export interface KboFinanceLedger {
@@ -18,8 +18,8 @@ const sum=(numbers:readonly number[])=>{const n=numbers.reduce((a,b)=>a+b,0);if(
 export function assertKboFinanceLedger(world:World):void {
  const ledger=world.finance;if(!ledger)return;const seen=new Set<string>(),contracts=new Set<string>();
  for(const g of ledger.guarantees){
-  if(!g.obligationKey || seen.has(g.obligationKey) || contracts.has(g.sourceContractKey) || !g.sourceContractKey || !g.playerKey || !KBO_CLUBS.some(c=>c.id===g.clubId) || !['RETIREMENT','RELEASE'].includes(g.reason) || !validYear(g.createdSeasonKey) || g.dues.length<1 || g.dues.length>3 || world.contracts[g.playerKey]?.contractKey===g.sourceContractKey)throw new RangeError('INVALID_KBO_GUARANTEE');seen.add(g.obligationKey);contracts.add(g.sourceContractKey);
-  for(const [i,d] of g.dues.entries())if(!validYear(d.seasonKey) || Number(d.seasonKey)!==Number(g.createdSeasonKey)+i+1 || !won(d.amountWon) || d.amountWon<KBO_MONEY.minimumSalaryWon || d.amountWon>KBO_MONEY.maximumSalaryWon)throw new RangeError('INVALID_KBO_GUARANTEE_DUE');
+  if(!g.obligationKey || seen.has(g.obligationKey) || contracts.has(g.sourceContractKey) || !g.sourceContractKey || !g.playerKey || !KBO_CLUBS.some(c=>c.id===g.clubId) || !['RETIREMENT','RELEASE'].includes(g.reason) || !validYear(g.createdSeasonKey) || g.dues.length<1 || g.dues.length>(g.timing==='BEFORE_SEASON'?4:3) || g.timing!==undefined && g.timing!=='BEFORE_SEASON' || g.timing==='BEFORE_SEASON' && g.reason!=='RELEASE' || world.contracts[g.playerKey]?.contractKey===g.sourceContractKey)throw new RangeError('INVALID_KBO_GUARANTEE');seen.add(g.obligationKey);contracts.add(g.sourceContractKey);
+  for(const [i,d] of g.dues.entries())if(!validYear(d.seasonKey) || Number(d.seasonKey)!==Number(g.createdSeasonKey)+i+(g.timing==='BEFORE_SEASON'?0:1) || !won(d.amountWon) || d.amountWon<KBO_MONEY.minimumSalaryWon || d.amountWon>KBO_MONEY.maximumSalaryWon)throw new RangeError('INVALID_KBO_GUARANTEE_DUE');
  }
  for(const g of ledger.grants){if(!g.receiptKey || seen.has(g.receiptKey) || !KBO_CLUBS.some(c=>c.id===g.clubId) || !validYear(g.seasonKey) || !won(g.amountWon) || g.amountWon<=0 || g.reason!=='MINIMUM_ROSTER_REBUILD')throw new RangeError('INVALID_KBO_SUPPORT_GRANT');seen.add(g.receiptKey);}
 }
@@ -40,6 +40,15 @@ export function reserveKboOffseasonGuarantee(world:World,contract:KboInitialCont
  const obligationKey=JSON.stringify(['kbo-guarantee',contract.contractKey,closedSeasonKey,reason]),entry:KboGuarantee={obligationKey,sourceContractKey:contract.contractKey,playerKey:contract.playerKey,clubId:contract.clubId,reason,createdSeasonKey:closedSeasonKey,dues};
  const old=world.finance?.guarantees.find(g=>g.obligationKey===obligationKey);if(old){if(canonicalJson(old)!==canonicalJson(entry))throw new RangeError('CHANGED_KBO_GUARANTEE');return;}
  if(world.finance?.guarantees.some(g=>g.sourceContractKey===contract.contractKey))throw new RangeError('DUPLICATE_KBO_GUARANTEE');
+ world.finance={guarantees:[...(world.finance?.guarantees??[]),entry],grants:[...(world.finance?.grants??[])]};
+}
+/** A preseason release still owes the target season, plus every later guaranteed year.
+ * Caller removes the active contract in the same cloned-world result. Old entries retain after-season semantics. */
+export function reserveKboPreseasonGuarantee(world:World,contract:KboInitialContract):void {
+ if(contract.seasonKey!==world.seasonKey || !validYear(contract.seasonKey) || contract.status!=='ACTIVE' || !contract.contractKey || !contract.playerKey || !KBO_CLUBS.some(c=>c.id===contract.clubId) || !Number.isInteger(contract.years) || contract.years<1 || contract.years>4 || !won(contract.annualSalaryWon) || contract.annualSalaryWon<KBO_MONEY.minimumSalaryWon || contract.annualSalaryWon>KBO_MONEY.maximumSalaryWon)throw new RangeError('INVALID_KBO_PRESEASON_GUARANTEE');
+ const dues=Array.from({length:contract.years},(_,i)=>({seasonKey:String(Number(contract.seasonKey)+i),amountWon:contract.annualSalaryWon}));if(dues.some(d=>!validYear(d.seasonKey)))throw new RangeError('INVALID_KBO_GUARANTEE_DUE');
+ const entry:KboGuarantee={obligationKey:JSON.stringify(['kbo-preseason-guarantee',contract.contractKey,contract.seasonKey]),sourceContractKey:contract.contractKey,playerKey:contract.playerKey,clubId:contract.clubId,reason:'RELEASE',createdSeasonKey:contract.seasonKey,timing:'BEFORE_SEASON',dues};
+ const old=world.finance?.guarantees.find(g=>g.sourceContractKey===contract.contractKey);if(old){if(canonicalJson(old)!==canonicalJson(entry))throw new RangeError('CHANGED_KBO_GUARANTEE');return;}
  world.finance={guarantees:[...(world.finance?.guarantees??[]),entry],grants:[...(world.finance?.grants??[])]};
 }
 /** 08/44 safety net: caller must already prove a real minimum-roster/required-slot repair, not a competitive bid.
