@@ -1,0 +1,72 @@
+{
+  "files": [
+    {
+      "path": "packages/engine/src/kbo-finance.ts",
+      "sha256": "9923cd207126768d1cf3dc416398eca64112a4fc9db25caa4594e7df604cfb72"
+    },
+    {
+      "path": "packages/engine/src/kbo-world.ts",
+      "sha256": "6cf6f5b8d4804903bbaa4a1afb6b76e8b5c5244800125bddfdeee6f71e32a24b"
+    },
+    {
+      "path": "packages/engine/src/kbo-draft.ts",
+      "sha256": "243ea8320de95d609b8af92c82e64fca254cffef9f7f74a7c0450e1e2e8be510"
+    },
+    {
+      "path": "packages/engine/src/kbo-retirement.ts",
+      "sha256": "eb4f7cb002a3e218aab631ccda011fbeceddf54da6fc451d51912ca9b136159d"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "ddf7f072d3197d40b65e6d15d7194b79234431c5152a63d1d6286a5857da045d"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "6da28be61e37d83360040c2031856b7fcf16591b31e4db5217635cc94347259b"
+    },
+    {
+      "path": "packages/engine/test/kbo-finance.test.ts",
+      "sha256": "2e0765cbcb8725d1f8c028b87591ba8f7a00a7af04dc33f7eb928411577f63d1"
+    },
+    {
+      "path": "docs/implementation/M2-BP-KBO-GUARANTEED-FINANCE.md",
+      "sha256": "f9e33dd8aff0d7120002707296661488f8f357c8134a0a5e4759744b911e26bf"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "3544c9516a513472419458df73101866fa79b25cda813a841402aadb22afe148"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "b9bf17a32007d915f74981fa2b20d98e7f2a0fc10f7e6edd81ba7f7eba68e183"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BP-baseline.log",
+      "sha256": "a20e3333dd8608e54348e0c947836a04e67a06432ea918c8da43fb691312f63e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BP-check.log",
+      "sha256": "ee59f2e55bac4c9f13d5970d2bebf8381cf91e385003eb7782b9390964190cb5"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BP-focused.log",
+      "sha256": "5a6c7a222b24c52b4094bb7deef1eec6d2245e3ac0ad63479d449b4b7e1bbc3c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BP-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BP-world-after.json",
+      "sha256": "a7c8806f6aaba02b256747baf1f1a1e83727469caf3a031c5b08de4937b5bb23"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BP-world-before.json",
+      "sha256": "a7c8806f6aaba02b256747baf1f1a1e83727469caf3a031c5b08de4937b5bb23"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BP-world-hash-check.log",
+      "sha256": "a5545fa027d653f7840bf7b05e967147fb24dfac2d9c8a2ba48473b2654e6ba2"
+    }
+  ]
+}

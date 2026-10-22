@@ -1,3 +1,4 @@
+import type {KboFinanceLedger} from './kbo-finance.js';
 import {abilityKeys,HITTER_TYPES,PITCHER_TYPES,PITCH_IDS,KBO_CLUBS,KBO_MONEY,overall,roleScore} from '@playball/rules';
 import type {Difficulty,PlayerKind,AbilityUnits} from '@playball/rules';
 import {createWorldStream,nextFloat,nextInteger,validateRng} from './rng.js';
@@ -15,7 +16,7 @@ const H_POSITIONS=['C','C','C','C','1B','1B','1B','2B','2B','2B','3B','3B','3B',
 const P_POSITIONS=[...Array<string>(8).fill('SP'),...Array<string>(12).fill('RP'),...Array<string>(4).fill('CP')];
 export interface KboInitialContract {contractKey:string;playerKey:string;clubId:string;seasonKey:string;years:number;annualSalaryWon:number;signingBonusWon:0;status:'ACTIVE'}
 export interface KboClub {id:string;name:string;roster:string[];firstTeam:string[];budgetWon:number;paidSalaryWon:number;reservedSalaryWon:number}
-export interface KboRosterWorld {schemaVersion:1;status:'CREATED';worldKey:string;seasonKey:string;seed:string;difficulty:Difficulty;clubs:KboClub[];players:Record<string,DevelopmentPlayer>;repertoires:Record<string,Repertoire>;contracts:Record<string,KboInitialContract>;rng:{roster:RngState;potential:RngState;handedness:RngState};generationAttempts:number}
+export interface KboRosterWorld {finance?:KboFinanceLedger;schemaVersion:1;status:'CREATED';worldKey:string;seasonKey:string;seed:string;difficulty:Difficulty;clubs:KboClub[];players:Record<string,DevelopmentPlayer>;repertoires:Record<string,Repertoire>;contracts:Record<string,KboInitialContract>;rng:{roster:RngState;potential:RngState;handedness:RngState};generationAttempts:number}
 const dict=<T>():Record<string,T>=>Object.create(null) as Record<string,T>;
 /** Common-offset water filling retains profile shape, mean exactly target, and six ceilings100. */
 export function kboInitialAbilities(kind:PlayerKind,archetype:string,target:number):AbilityUnits {

@@ -89,3 +89,5 @@ export * from './kbo-free-agents.js';
 
 export * from './kbo-contract-value.js';
 export * from './recruitment.js';
+
+export * from './kbo-finance.js';

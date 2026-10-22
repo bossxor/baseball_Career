@@ -1,3 +1,4 @@
+import {reserveKboOffseasonGuarantee} from './kbo-finance.js';
 import {KBO_ROSTER_LIMITS} from '@playball/rules';
 import type {ActiveKboRosterWorld,KboCareer} from './kbo-career-entry.js';
 import {assertCareerRevision} from './high-school-career.js';
@@ -19,7 +20,7 @@ export function retireKboOverAgeNpcs(world:ActiveKboRosterWorld,keys:readonly st
  const retired:KboRetiredPlayer[]=[],gone=new Set(keys);
  for(const club of world.clubs){
   const leaving=club.roster.filter(k=>gone.has(k));if(!leaving.length)continue;
-  for(const k of leaving){retired.push({playerKey:k,clubId:club.id,lastSeasonKey,reason:'MAX_AGE',player:world.players[k]!,contract:world.contracts[k]!});delete world.players[k];delete world.contracts[k];delete world.repertoires[k];}
+  for(const k of leaving){reserveKboOffseasonGuarantee(world,world.contracts[k]!,lastSeasonKey,'RETIREMENT');retired.push({playerKey:k,clubId:club.id,lastSeasonKey,reason:'MAX_AGE',player:world.players[k]!,contract:world.contracts[k]!});delete world.players[k];delete world.contracts[k];delete world.repertoires[k];}
   club.roster=club.roster.filter(k=>!gone.has(k));
   if(club.roster.length<KBO_ROSTER_LIMITS.minimum)throw new RangeError('KBO_PLAYER_SUPPLY_REQUIRED');
   if(club.firstTeam.some(k=>gone.has(k))){

@@ -1,3 +1,4 @@
+import {assertKboFinanceLedger,kboClubBalance,kboFutureCommitmentWon} from './kbo-finance.js';
 import {KBO_CLUBS,KBO_MONEY,KBO_ROSTER_LIMITS,roleScore} from '@playball/rules';
 import type {DevelopmentPlayer} from './player.js';
 import {validateDevelopmentPlayer} from './player.js';
@@ -23,12 +24,13 @@ export interface KboDraftProgram {
 export function assertKboRecruitmentWorld(world:Omit<KboRosterWorld,'status'>):void {
  if(world.schemaVersion!==1 || !world.worldKey || !world.seasonKey || !world.seed || world.clubs.length!==10 || new Set(world.clubs.map(c=>c.id)).size!==10)throw new RangeError('INVALID_KBO_RECRUITMENT_WORLD');
  for(const stream of [world.rng.roster,world.rng.potential,world.rng.handedness])validateRng(stream);
+ assertKboFinanceLedger(world);
  const seen=new Set<string>();
  for(const club of world.clubs){
   if(KBO_CLUBS.find(c=>c.id===club.id)?.name!==club.name || club.roster.length<KBO_ROSTER_LIMITS.minimum || club.roster.length>KBO_ROSTER_LIMITS.maximum || new Set(club.roster).size!==club.roster.length || club.budgetWon!==KBO_MONEY.annualBudgetWon || !Number.isSafeInteger(club.paidSalaryWon) || club.paidSalaryWon<0 || !Number.isSafeInteger(club.reservedSalaryWon) || club.reservedSalaryWon<0)throw new RangeError('INVALID_KBO_RECRUITMENT_CLUB');
   let annual=0;for(const key of club.roster){const p=world.players[key],c=world.contracts[key];if(!Object.hasOwn(world.players,key) || !p || p.simulationKey!==key || seen.has(key) || !Object.hasOwn(world.contracts,key) || !c || !c.contractKey || c.playerKey!==key || c.clubId!==club.id || c.seasonKey!==world.seasonKey || c.status!=='ACTIVE' || c.signingBonusWon!==0 || !Number.isInteger(c.years) || c.years<1 || c.years>4 || !Number.isSafeInteger(c.annualSalaryWon) || c.annualSalaryWon%10_000!==0 || c.annualSalaryWon<KBO_MONEY.minimumSalaryWon || c.annualSalaryWon>KBO_MONEY.maximumSalaryWon)throw new RangeError('INVALID_KBO_RECRUITMENT_CONTRACT');validateDevelopmentPlayer(p);seen.add(key);annual+=c.annualSalaryWon;}
-  if(annual!==club.paidSalaryWon+club.reservedSalaryWon || annual>club.budgetWon)throw new RangeError('INVALID_KBO_RECRUITMENT_PAYROLL');
-  for(let year=1;year<4;year++)if(club.roster.reduce((sum,k)=>sum+(world.contracts[k]!.years>year?world.contracts[k]!.annualSalaryWon:0),0)>club.budgetWon*.9)throw new RangeError('INVALID_KBO_FUTURE_COMMITMENT');
+  if(annual!==club.paidSalaryWon+club.reservedSalaryWon || kboClubBalance(world,club.id).availableWon<0)throw new RangeError('INVALID_KBO_RECRUITMENT_PAYROLL');
+  for(let year=1;year<4;year++)if(kboFutureCommitmentWon(world,club.id,year)>club.budgetWon*.9)throw new RangeError('INVALID_KBO_FUTURE_COMMITMENT');
  }
  if(seen.size!==Object.keys(world.players).length || seen.size!==Object.keys(world.contracts).length)throw new RangeError('INVALID_KBO_RECRUITMENT_REGISTRATION');
 }

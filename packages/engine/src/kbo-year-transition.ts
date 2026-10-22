@@ -1,3 +1,4 @@
+import {reserveKboOffseasonGuarantee} from './kbo-finance.js';
 import {nextKboFreeAgentYear} from './kbo-free-agents.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {validateSeasonGrowthLedger,createSeasonGrowthLedger} from './growth-ledger.js';
@@ -65,6 +66,8 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
  const stage=stageKboAgeAndContracts(source),target=stage.targetSeasonKey,key=source.protagonistKey;
  if(Object.values(source.records.games).some(g=>g.scope.seasonKey===target))throw new RangeError('NEXT_SEASON_RECORDS_ALREADY_EXIST');
  const career=structuredClone(source),world=career.world,renewal=acceptedRenewal(source)!;
+ // Older saves kept the retired contract snapshot but had no finance ledger. Restore it only in this explicit writer.
+ for(const r of source.retiredPlayers??[])reserveKboOffseasonGuarantee(world,r.contract,r.lastSeasonKey,'RETIREMENT');
  // Y04: 45-year retirements first, then the yearly rookie class (15) after the new contracts are in place.
  const retired=retireKboOverAgeNpcs(world,stage.overAge,source.world.seasonKey);
  if(retired.length)career.retiredPlayers=[...(source.retiredPlayers??[]),...retired];

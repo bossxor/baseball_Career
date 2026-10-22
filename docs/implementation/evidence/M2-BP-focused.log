@@ -1,0 +1,18 @@
+✔ 05/44: offseason retirement retains all three guaranteed future years; retry cannot charge twice (205.8105ms)
+✔ financial validator counts guarantees in both current available and future90% commitments; duplicate/active debts reject (299.2034ms)
+✔ 44 protection is minimum35 only; one-year support is exact deficit and is not future income (81.3397ms)
+✔ old world without finance keeps initial budget exactly; bad years/amounts cannot create obligations (118.6269ms)
+✔ 44: ten actual club identities,500 fictional players/500 active contracts,26H/24P and legal first28 (130.5131ms)
+✔ deterministic generation and JSON restore, distinct seeds change roster; identity/contract keys stay logical (396.5327ms)
+✔ six-stat mean35..85 exact, profile ceilings100 do not inflate overall or erase profile shape (1.4372ms)
+✔ initial payroll common-scale floors/caps, integer won, future commitments<=90% budget and no signing bonus (105.465ms)
+✔ career hard changes NPC potential only; career cheat does not make all KBO NPC potential100 (262.9225ms)
+✔ restored corrupt roster, contract, payroll, first team or age rejected without silent regeneration (116.7684ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1429.0278
