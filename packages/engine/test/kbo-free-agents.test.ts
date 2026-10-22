@@ -37,3 +37,8 @@ test('wrong season/world, overlapping ownership, bad books and skipped close rej
 test('public FA list is read-only and contains only identity/overall/former club; no hidden P, seed or private book',()=>{
  const pool=create(),before=canonicalJson(pool),list=kboFreeAgentListView(pool);assert.equal(list.length,80);assert.deepEqual(Object.keys(list[0]!).sort(),['playerKey','name','age','kind','position','overall','previousClubId'].sort());assert.equal(canonicalJson(pool),before);
 });
+
+test('unregistered injuries never recover by calendar days: mild games carry; current-season major closes with the season',()=>{
+ const pool=create(),keys=Object.keys(pool.players),mild=keys[0]!,major=keys[1]!;pool.players[mild]!.injury={severity:'MILD',remainingTeamGames:3,diagnosedGameKey:'controlled-old-injury',seasonKey:'2029'};pool.players[major]!.injury={severity:'MAJOR',remainingTeamGames:null,diagnosedGameKey:'controlled-major-injury',seasonKey:'2030'};
+ const n=settleKboFreeAgentSeason(pool,createSeasonCalendar(2030),'GROWTH');assert.equal(n.players[mild]!.injury!.remainingTeamGames,3);assert.equal(n.players[major]!.injury,undefined);const next=nextKboFreeAgentYear({...input,seasonKey:'2031',source:n});assert.equal(next.players[mild]!.injury!.remainingTeamGames,3);const view=kboFreeAgentListView(next).find(p=>p.playerKey===mild)!;assert.deepEqual(view.injury,{severity:'MILD',remainingTeamGames:3});
+});

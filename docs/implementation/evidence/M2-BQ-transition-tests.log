@@ -1,0 +1,10 @@
+✔ next season activates every player at once and the second pro season opens and plays (22188.3948ms)
+✔ year transition drafts a 100-player rookie class in reverse standings order, with room and budget respected (5280.5042ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 28213.7061

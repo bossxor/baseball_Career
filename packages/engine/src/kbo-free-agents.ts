@@ -1,3 +1,4 @@
+import type {Injury} from './health.js';
 import {overall,KBO_CLUBS} from '@playball/rules';
 import type {Difficulty} from '@playball/rules';
 import type {DevelopmentPlayer} from './player.js';
@@ -15,7 +16,7 @@ import {emptyPitchXpLedger} from './pitch-xp.js';
 
 export const KBO_FA_MINIMUM=80;
 export interface KboFreeAgent {
- player:DevelopmentPlayer;repertoire?:Repertoire;origin:'INDEPENDENT'|'EXPIRED'|'RELEASED';
+ player:DevelopmentPlayer;repertoire?:Repertoire;injury?:Injury;origin:'INDEPENDENT'|'EXPIRED'|'RELEASED';
  enteredSeasonKey:string;previousClubId:string|null;previousContract:KboInitialContract|null;
 }
 export interface KboFreeAgentPool {
@@ -33,7 +34,9 @@ export function assertKboFreeAgentPool(pool:KboFreeAgentPool,registeredKeys:read
   validateDevelopmentPlayer(e.player);
   if(key!==e.player.simulationKey || active.has(key) || !['INDEPENDENT','EXPIRED','RELEASED'].includes(e.origin) || year(e.enteredSeasonKey)>year(pool.seasonKey) || e.player.age<18 || e.player.age>45 || e.previousClubId!==null && !KBO_CLUBS.some(c=>c.id===e.previousClubId))throw new RangeError('INVALID_KBO_FA_ENTRY');
   if(e.previousContract && (e.previousContract.playerKey!==key || e.previousContract.clubId!==e.previousClubId))throw new RangeError('INVALID_KBO_FA_CONTRACT_HISTORY');
+  if(e.origin!=='INDEPENDENT' && (!e.previousClubId || !e.previousContract))throw new RangeError('INVALID_KBO_FA_ORIGIN');
   if(e.origin==='INDEPENDENT' && (e.previousClubId!==null || e.previousContract!==null))throw new RangeError('INVALID_KBO_FA_ORIGIN');
+  if(e.injury && (!['MILD','MEDIUM','MAJOR'].includes(e.injury.severity) || !e.injury.diagnosedGameKey || year(e.injury.seasonKey)>year(pool.seasonKey) || (e.injury.severity==='MAJOR'?e.injury.remainingTeamGames!==null:!Number.isSafeInteger(e.injury.remainingTeamGames) || e.injury.remainingTeamGames!<1)))throw new RangeError('INVALID_KBO_FA_INJURY');
   if(e.player.kind==='PITCHER'){if(!e.repertoire || e.repertoire.seasonId!==pool.seasonKey)throw new RangeError('INVALID_KBO_FA_REPERTOIRE');validatePitchWeights(e.repertoire.book,e.repertoire.weights);}else if(e.repertoire)throw new RangeError('INVALID_KBO_FA_REPERTOIRE');
  }
  for(const s of pool.supplies){if(year(s.seasonKey)>year(pool.seasonKey) || !s.batchKey)throw new RangeError('INVALID_KBO_FA_SUPPLY');for(const key of s.playerKeys){if(known.has(key))throw new RangeError('DUPLICATE_KBO_FA_SUPPLY');known.add(key);}}
@@ -64,8 +67,8 @@ export function settleKboFreeAgentSeason(source:KboFreeAgentPool,calendar:Season
  assertSeasonCalendar(calendar);assertKboFreeAgentPool(source);if(source.seasonKey!==String(calendar.year))throw new RangeError('KBO_FA_CALENDAR_MISMATCH');if(source.settlement)return structuredClone(source);
  const next=structuredClone(source),results:NonNullable<KboFreeAgentPool['settlement']>['players']={},W=calendar.growthDays.length;
  for(const [key,e] of Object.entries(next.players)){
-  const p=e.player,budgetUnits=naturalGrowthBudgetUnits(p,W,[{startDay:0,endDay:W,levelSeasonDays:W,level:'PRO',appearances:0,pitcherRole:p.position==='RP'?'RP':p.position==='CP'?'CP':'SP',rehabRatio:0,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER',difficulty,beneficiary:false}}]),grown=applyGrowthBudget(p,budgetUnits),aged=applyAging(grown.player,1);
-  e.player=aged.player;results[key]={budgetUnits,gainedUnits:grown.gains.reduce((a,b)=>a+b,0),agingLossUnits:Object.values(grown.player.abilities).reduce((a,b)=>a+b,0)-Object.values(aged.player.abilities).reduce((a,b)=>a+b,0)};
+  const p=e.player,budgetUnits=naturalGrowthBudgetUnits(p,W,[{startDay:0,endDay:W,levelSeasonDays:W,level:'PRO',appearances:0,pitcherRole:p.position==='RP'?'RP':p.position==='CP'?'CP':'SP',rehabRatio:e.injury?1:0,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER',difficulty,beneficiary:false}}]),grown=applyGrowthBudget(p,budgetUnits),aged=applyAging(grown.player,1);
+  e.player=aged.player;if(e.injury?.severity==='MAJOR' && e.injury.seasonKey===source.seasonKey)delete e.injury;results[key]={budgetUnits,gainedUnits:grown.gains.reduce((a,b)=>a+b,0),agingLossUnits:Object.values(grown.player.abilities).reduce((a,b)=>a+b,0)-Object.values(aged.player.abilities).reduce((a,b)=>a+b,0)};
  }
  next.settlement={seasonKey:source.seasonKey,players:results};return next;
 }
@@ -78,4 +81,4 @@ export function nextKboFreeAgentYear(input:{source?:KboFreeAgentPool;worldKey:st
  return replenishKboFreeAgents(pool,input);
 }
 /** Query allowlist: no raw potential, generation seed, private books or contract-history internals. */
-export function kboFreeAgentListView(pool:KboFreeAgentPool){assertKboFreeAgentPool(pool);return Object.entries(pool.players).sort(([a],[b])=>a<b?-1:a>b?1:0).map(([playerKey,e])=>{const p=e.player,o=overall(p.kind,p.abilities);return {playerKey,name:p.name,age:p.age,kind:p.kind,position:p.position,overall:Math.round(o.sumUnits/o.denominator*10)/10,previousClubId:e.previousClubId};});}
+export function kboFreeAgentListView(pool:KboFreeAgentPool){assertKboFreeAgentPool(pool);return Object.entries(pool.players).sort(([a],[b])=>a<b?-1:a>b?1:0).map(([playerKey,e])=>{const p=e.player,o=overall(p.kind,p.abilities);return {playerKey,name:p.name,age:p.age,kind:p.kind,position:p.position,overall:Math.round(o.sumUnits/o.denominator*10)/10,previousClubId:e.previousClubId,...(e.injury?{injury:{severity:e.injury.severity,remainingTeamGames:e.injury.remainingTeamGames}}:{})};});}
