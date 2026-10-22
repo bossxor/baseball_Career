@@ -28,7 +28,7 @@ function pick<T extends object>(source:T,keys:readonly string[]):Partial<T>{retu
  * regular lines (sample-weighted by summing PA/outs; the shared index uses 50 below its sample). Healthy players of the
  * window only; already-serving players and `excluded` keys (my player applies through the user path) are skipped.
  * Ties: younger, then a stable seed hash, then key. Missing healthy applicants leave vacancies; nobody is invented. */
-export function selectSangmuCohort(input:{world:ActiveKboRosterWorld;records:RecordLedger;health:HealthLedger;seasonKey:string;serving?:ReadonlySet<string>;excluded?:ReadonlySet<string>}):SangmuSelection {
+export function selectSangmuCohort(input:{world:ActiveKboRosterWorld;records:RecordLedger;health:HealthLedger;seasonKey:string;serving?:ReadonlySet<string>;excluded?:ReadonlySet<string>;reserved?:{hitters:number;pitchers:number}}):SangmuSelection {
  const {world,records,health,seasonKey}=input,seasons=[String(Number(seasonKey)-1),seasonKey];
  const line=<K extends 'batting'|'pitching'>(key:string,field:K) => {
   const sum:Record<string,number>={};
@@ -51,7 +51,7 @@ export function selectSangmuCohort(input:{world:ActiveKboRosterWorld;records:Rec
   for(const a of pool)if(room(a))chosen.push(a);
   return chosen.sort(order);
  };
- const hitters=choose('HITTER',KBO_SANGMU_INTAKE.hitters,KBO_SANGMU_FIELD_POSITIONS.map(p=>(a:SangmuApplicant)=>a.position===p),1,KBO_SANGMU_CLUB_CAP.hitters);
- const pitchers=choose('PITCHER',KBO_SANGMU_INTAKE.pitchers,[a=>a.position==='SP'],KBO_SANGMU_MIN_ROLES.starters,KBO_SANGMU_CLUB_CAP.pitchers);
- return {seasonKey,snapshotKey:JSON.stringify(['sangmu-selection',world.worldKey,seasonKey]),selected:[...hitters,...pitchers],applicants:applicants.length,vacancies:{hitters:KBO_SANGMU_INTAKE.hitters-hitters.length,pitchers:KBO_SANGMU_INTAKE.pitchers-pitchers.length}};
+ const hitters=choose('HITTER',KBO_SANGMU_INTAKE.hitters-(input.reserved?.hitters??0),KBO_SANGMU_FIELD_POSITIONS.map(p=>(a:SangmuApplicant)=>a.position===p),1,KBO_SANGMU_CLUB_CAP.hitters);
+ const pitchers=choose('PITCHER',KBO_SANGMU_INTAKE.pitchers-(input.reserved?.pitchers??0),[a=>a.position==='SP'],KBO_SANGMU_MIN_ROLES.starters,KBO_SANGMU_CLUB_CAP.pitchers);
+ return {seasonKey,snapshotKey:JSON.stringify(['sangmu-selection',world.worldKey,seasonKey]),selected:[...hitters,...pitchers],applicants:applicants.length,vacancies:{hitters:KBO_SANGMU_INTAKE.hitters-(input.reserved?.hitters??0)-hitters.length,pitchers:KBO_SANGMU_INTAKE.pitchers-(input.reserved?.pitchers??0)-pitchers.length}};
 }

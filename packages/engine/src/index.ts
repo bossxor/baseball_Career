@@ -98,3 +98,4 @@ export * from './kbo-sangmu.js';
 export * from './kbo-military-program.js';
 export * from './kbo-sangmu-unit.js';
 export * from './kbo-sangmu-start.js';
+export * from './kbo-military-state.js';

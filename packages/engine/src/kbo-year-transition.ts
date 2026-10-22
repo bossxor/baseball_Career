@@ -14,10 +14,11 @@ import {assertKboRecruitmentWorld} from './kbo-draft.js';
 import {retireKboOverAgeNpcs} from './kbo-retirement.js';
 import {draftKboRookieClass} from './kbo-supply.js';
 import {completeSangmuBlock} from './kbo-military-program.js';
+import {kboMilitaryStatus,kboMilitaryPlan,advanceKboMilitaryService} from './kbo-military-state.js';
 import {returnSangmuPlayers} from './kbo-sangmu-unit.js';
 import {leagueStandings} from './standings.js';
 
-export type KboTransitionBlocker='SEASON_NOT_IN_REVIEW'|'POSTSEASON_NOT_COMPLETE'|'SEASON_NOT_CLOSED'|'OPEN_EVENT'|'PENDING_GAME'|'GROWTH_NOT_FINALIZED'|'MAX_AGE_REACHED'|'CONTRACT_DECISION_REQUIRED';
+export type KboTransitionBlocker='SEASON_NOT_IN_REVIEW'|'POSTSEASON_NOT_COMPLETE'|'SEASON_NOT_CLOSED'|'OPEN_EVENT'|'PENDING_GAME'|'GROWTH_NOT_FINALIZED'|'MAX_AGE_REACHED'|'CONTRACT_DECISION_REQUIRED'|'MILITARY_RESULT_PENDING'|'MILITARY_PLAN_REQUIRED';
 /** 14: 45 is the last playable age in every league. */
 export const KBO_MAX_PLAYER_AGE=45;
 
@@ -34,6 +35,10 @@ export function kboYearTransitionReadiness(source:KboCareer):{ready:boolean;bloc
  validateSeasonGrowthLedger(source.seasonGrowth);
  if(!source.seasonGrowth.finalized)blockers.push('GROWTH_NOT_FINALIZED');
  if(kboContractDecisionRequired(source))blockers.push('CONTRACT_DECISION_REQUIRED');
+ if(kboMilitaryStatus(source)==='APPLICATION_PENDING')blockers.push('MILITARY_RESULT_PENDING');
+ // ponytail: the 28-year stop is enforced once my player has engaged with the military flow (a record exists). Without the
+ // 현역(ACTIVE) path an unmatched player would have no way past it, so untouched careers are not stopped yet.
+ if(source.military && kboMilitaryPlan(source).mustResolveBeforeNextSeason)blockers.push('MILITARY_PLAN_REQUIRED');
  const nextAge=source.world.players[source.protagonistKey]!.age+1;
  if(nextAge>KBO_MAX_PLAYER_AGE)blockers.push('MAX_AGE_REACHED');
  return {ready:blockers.length===0,blockers,targetSeasonKey:String(Number(source.world.seasonKey)+1),nextAge};
@@ -90,6 +95,7 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
 // Military unit carries over: members age and reset their books like everyone else, the block of the season just played is
 // recorded complete on its last day, and finished programs rejoin their club's Futures squad (full clubs wait in the unit).
 // ponytail: the second block is closed at the end of its season, not at the first half (a mid-season return is not modeled).
+advanceKboMilitaryService(career,source.world.seasonKey,source.days!.days.at(-1)!.day);
 if(career.sangmu){
  const lastDay=source.days!.days.at(-1)!.day,members=Object.fromEntries(Object.entries(career.sangmu.members).map(([k,m])=>{
   const open=m.program.blocks.find(b=>b.seasonKey===source.world.seasonKey && b.completedWorldDay===null);

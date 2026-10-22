@@ -26,7 +26,7 @@ function futuresTeamGames(career:KboCareer):number {
  * position (hitter) or role (pitcher); the candidate must score higher (ties: lower fatigue, then smaller ID).
  * Only the first ever call-up is an E09 event; later moves are outside this step. Returns null when nothing is due. */
 export function reviewKboCallup(source:KboCareer,day:number,progress:KboSeasonProgress):KboCareer|null {
- if(protagonistLeague(source)!=='FUTURES')return null;
+ if(protagonistLeague(source)!=='FUTURES' || source.military?.status==='SERVING_SPORTS')return null;
  const games=futuresTeamGames(source),season=source.world.seasonKey;
  if(games===0 || games%20!==0 || (source.callupReviews??[]).some(r=>r.seasonKey===season && r.teamGames===games))return null;
  if(source.events.some(e=>e.definitionId==='E09'))return null;

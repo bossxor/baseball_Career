@@ -1,0 +1,77 @@
+import type {KboCareer} from './kbo-career-entry.js';
+import {assertCareerRevision} from './high-school-career.js';
+import {selectSangmuCohort,KBO_SANGMU_INTAKE} from './kbo-sangmu.js';
+import {enlistInSangmu,completeSangmuBlock,KBO_CONTRACT_GAME_DAYS} from './kbo-military-program.js';
+import type {KboMilitaryProgram} from './kbo-military-program.js';
+import {emptySangmuUnit} from './kbo-sangmu-unit.js';
+import {acceptedRenewal} from './kbo-renewal.js';
+
+/** 21 states handled so far: UNRESOLVED → APPLICATION_PENDING → (decline/rejection → UNRESOLVED | enlist → SERVING_SPORTS) → COMPLETED.
+ * ACTIVE (현역) and ATHLETE service are not implemented; ACTIVE is the only way out for the unmatched, so the 28-year
+ * deadline stops the career at the plan screen instead of inventing a service. */
+export type KboMilitaryStatus='UNRESOLVED'|'APPLICATION_PENDING'|'SERVING_SPORTS'|'COMPLETED';
+export interface KboSangmuApplication {
+ applicationId:string;selectionSeasonKey:string;score:number;accepted:boolean;slotKind:'HITTER'|'PITCHER';
+ decision:'PENDING'|'ENLISTED'|'DECLINED'|'REJECTION_ACKNOWLEDGED';
+}
+export interface KboMilitaryRecord {status:KboMilitaryStatus;applications:readonly KboSangmuApplication[];program?:KboMilitaryProgram;completedSeasonKey?:string}
+export const KBO_MILITARY_DEADLINE_AGE=28;
+
+export const kboMilitaryStatus=(s:Pick<KboCareer,'military'>):KboMilitaryStatus=>s.military?.status??'UNRESOLVED';
+/** True while my player plays for the military team (loan model: he stays on his club's records and rights). */
+export const kboProtagonistServing=(s:Pick<KboCareer,'military'>)=>s.military?.status==='SERVING_SPORTS';
+
+/** S26 read: where my player stands against the game deadline. Age window 19..27 is the application window. */
+export function kboMilitaryPlan(s:KboCareer){
+ const age=s.world.players[s.protagonistKey]!.age,status=kboMilitaryStatus(s);
+ return {status,age,canApply:status==='UNRESOLVED' && age>=KBO_SANGMU_INTAKE.minAge && age<=KBO_SANGMU_INTAKE.maxAge,lastGraceSeason:status==='UNRESOLVED' && age===KBO_SANGMU_INTAKE.maxAge,
+  mustResolveBeforeNextSeason:status==='UNRESOLVED' && age+1>=KBO_MILITARY_DEADLINE_AGE,application:s.military?.applications.at(-1)??null,program:s.military?.program??null};
+}
+function remainingDays(s:KboCareer):number {
+ const renewal=acceptedRenewal(s);if(renewal)return renewal.years*KBO_CONTRACT_GAME_DAYS;
+ const c=s.world.contracts[s.protagonistKey]!;return Math.max(0,Number(c.seasonKey)+c.years-1-Number(s.world.seasonKey))*KBO_CONTRACT_GAME_DAYS;
+}
+function offseason(s:KboCareer){if(s.phaseContext.phase!=='SEASON_REVIEW' || s.seasonClose?.seasonKey!==s.world.seasonKey)throw new RangeError('KBO_MILITARY_NOT_AVAILABLE');}
+
+/** One application per yearly recruitment. The result is fixed now from the same snapshot the cohort uses (my player
+ * competes with the NPCs); a retry returns the same application, never a second roll. */
+export function applyToSangmu(source:KboCareer,expectedRevision:number):KboCareer {
+ assertCareerRevision(source,expectedRevision);offseason(source);
+ const plan=kboMilitaryPlan(source),season=source.world.seasonKey,id=JSON.stringify(['sangmu-application',source.world.worldKey,season,source.protagonistKey]);
+ const existing=source.military?.applications.find(a=>a.applicationId===id);
+ if(existing)return structuredClone(source);
+ if(!plan.canApply || Object.hasOwn(source.health.injuries,source.protagonistKey) || source.events.some(e=>e.status==='OPEN'&&e.definitionId!=='E30'))throw new RangeError('KBO_MILITARY_NOT_AVAILABLE');
+ const selection=selectSangmuCohort({world:source.world,records:source.records,health:source.health,seasonKey:season,serving:new Set(Object.keys(source.sangmu?.members??{}))});
+ const me=selection.selected.find(a=>a.playerKey===source.protagonistKey),kind=source.world.players[source.protagonistKey]!.kind;
+ const career=structuredClone(source);
+ career.military={status:'APPLICATION_PENDING',applications:[...(source.military?.applications??[]),{applicationId:id,selectionSeasonKey:season,score:me?.score??0,accepted:!!me,slotKind:kind,decision:'PENDING'}]};
+ career.revision++;return career;
+}
+/** Accepted: ENLIST (SERVING_SPORTS, the two blocks start next season) or DECLINE. Rejected: only ACK_REJECTION. Both
+ * non-enlisting answers go back to UNRESOLVED and burn this recruitment. Enlistment needs the contract question answered first. */
+export function resolveSangmuApplication(source:KboCareer,expectedRevision:number,command:'ENLIST'|'DECLINE'|'ACK_REJECTION'):KboCareer {
+ assertCareerRevision(source,expectedRevision);offseason(source);
+ const record=source.military,app=record?.applications.at(-1);
+ if(!record || record.status!=='APPLICATION_PENDING' || !app || app.decision!=='PENDING')throw new RangeError('KBO_MILITARY_NOT_AVAILABLE');
+ const allowed=app.accepted?['ENLIST','DECLINE']:['ACK_REJECTION'];
+ if(!allowed.includes(command))throw new RangeError('INVALID_MILITARY_COMMAND');
+ const career=structuredClone(source),set=(decision:KboSangmuApplication['decision'])=>career.military!.applications=record.applications.map((a,i)=>i===record.applications.length-1?{...a,decision}:a);
+ if(command==='ENLIST'){
+  const days=remainingDays(source);if(days===0)throw new RangeError('CONTRACT_DECISION_REQUIRED');
+  const program=enlistInSangmu({worldKey:source.world.worldKey,playerKey:source.protagonistKey,clubId:source.protagonistClubId,selectionSeasonKey:app.selectionSeasonKey,contract:source.world.contracts[source.protagonistKey]!,remainingPaidGameDays:days});
+  set('ENLISTED');career.military!.status='SERVING_SPORTS';career.military!.program=program;
+  const unit=career.sangmu??emptySangmuUnit();career.sangmu={...unit,loaned:[...(unit.loaned??[]),source.protagonistKey]};
+ } else {set(command==='DECLINE'?'DECLINED':'REJECTION_ACKNOWLEDGED');career.military!.status='UNRESOLVED';}
+ career.revision++;return career;
+}
+/** Year-transition step for my player: the block of the season just played is closed on its last day; after the second block
+ * the program is COMPLETED and he leaves the loan. Mutates the caller's clone. */
+export function advanceKboMilitaryService(career:KboCareer,playedSeasonKey:string,lastDay:number):void {
+ const record=career.military;if(!record || record.status!=='SERVING_SPORTS' || !record.program)return;
+ const open=record.program.blocks.find(b=>b.seasonKey===playedSeasonKey && b.completedWorldDay===null);
+ if(open)record.program=completeSangmuBlock(record.program,playedSeasonKey,lastDay);
+ if(record.program.completedBlocks>=record.program.scheduledBlocks){
+  record.status='COMPLETED';record.completedSeasonKey=playedSeasonKey;
+  if(career.sangmu)career.sangmu={...career.sangmu,loaned:(career.sangmu.loaned??[]).filter(k=>k!==career.protagonistKey)};
+ }
+}
