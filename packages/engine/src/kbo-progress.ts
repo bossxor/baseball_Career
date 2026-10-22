@@ -1,3 +1,4 @@
+import {closeKboMilitaryCalendarDay} from './kbo-military-events.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertCareerRevision} from './high-school-career.js';
 import type {HighSchoolGameContext,HighSchoolGameJob} from './high-school-game.js';
@@ -98,9 +99,11 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   }
   const closed=closeKboCompetitionDay(career.world,schedulesOf(career),career.protagonistKey,career.records,career.health,career.days!,day,career.sangmu);
   career.world=closed.world;career.health=closed.health;career.days=closed.days;if(closed.sangmu)career.sangmu=closed.sangmu;progress.nextWorldDay=day+1;daysClosed++;
+  const serviceReturn=closeKboMilitaryCalendarDay(career,day,progress);
   career.traits=refreshCareerTraits(career,day,LEAGUES);
   // 14 order: call-up/demotion review before style/training windows.
   const aiMoves=progress.nextWorldDay>last?null:reviewKboAiRosters(career);if(aiMoves)Object.assign(career,aiMoves);
+  if(serviceReturn)return finish('MAJOR_EVENT');
   const callup=progress.nextWorldDay>last?null:reviewKboCallup(career,day,progress);
   if(callup){Object.assign(career,callup);if(career.phaseContext.phase==='EVENT_DECISION')return finish('MAJOR_EVENT');}
   const windowEvent=progress.nextWorldDay>last?null:raiseKboWindowEvent(career,day,progress);

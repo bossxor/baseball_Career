@@ -1,3 +1,4 @@
+import {queueKboMilitaryFirstBlock} from './kbo-military-events.js';
 import {prepareKboAiRenewals} from './kbo-ai-offseason.js';
 import {runKboAiFreeAgentMarket} from './kbo-fa-market.js';
 import {repairKboDualLeagueRosters} from './kbo-roster-repair.js';
@@ -124,5 +125,5 @@ if(career.sangmu){
  career.planHistory=[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}];
  if(career.traits)career.traits={...career.traits,lastClosedDay:null,lastSeasonKey:target};
  for(const field of ['days','seasonClose','postseason','preseasonPlan','openingRoster','competitionSchedule','callupReviews'] as const)delete career[field];
- career.phaseContext={phase:'PRESEASON_SETUP'};career.revision++;return career;
+ career.phaseContext={phase:'PRESEASON_SETUP'};career.revision++;queueKboMilitaryFirstBlock(career);return career;
 }

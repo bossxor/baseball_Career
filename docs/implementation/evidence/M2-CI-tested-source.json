@@ -1,0 +1,48 @@
+{
+  "files": [
+    {
+      "path": "packages/engine/src/kbo-military-events.ts",
+      "sha256": "cabb78d0ab3c20879add523d2a8f0a3ff4538f1b12e0da9f9a737acd63f504f1"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-state.ts",
+      "sha256": "955dbfe1e32926f7e9f5bcede61aa6ba3ad7cfc14050628eb95307b6aae8d148"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "1478f335a2ffa7dad84797bb4dff3b91fa40f48e4786032b0f818bce179dee50"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "sha256": "8c00ebe4eee0eff8b6e1a6e27265c41a9c52898eda4d78fde6a08a498d9ec849"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "c6e365e25d08b3cbecdff61ff41f24b4183fd44bdf96f2e2b37e6818327b5d73"
+    },
+    {
+      "path": "packages/engine/test/kbo-military-events.test.ts",
+      "sha256": "0e732ca235f83454ce5dc12eb4148f7de552e3df4ee3e37d8ada669b37139c15"
+    },
+    {
+      "path": "packages/engine/test/kbo-military-state.test.ts",
+      "sha256": "a90ec7ed8da5924de000196dde88f38f58d9f55a3a64b73d34187aab34040f30"
+    },
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "c1dc71dd00ebb759d56321bd61bc60809e260bf3754fdf1c20f95cb8518dc583"
+    },
+    {
+      "path": "docs/design/21-MILITARY-CONTRACT-RETURN.md",
+      "sha256": "bf3ac94395a372a0ef6cfc376904240447702b635f55960fcd9af1d3ee70e637"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "f0cf535ad786731d7aadcfed51196d911eb5aecf04cc0b6b05d3d0dc13d1e42c"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "53189de2b6b936bda5a4f6fbe26405bd89404accc48b2502c9103dee60fa1f20"
+    }
+  ]
+}

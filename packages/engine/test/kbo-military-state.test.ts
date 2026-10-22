@@ -1,3 +1,4 @@
+import {resolveKboMilitaryEvent,kboMilitaryEventView} from '../src/kbo-military-events.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {applyToSangmu,resolveSangmuApplication,kboMilitaryPlan,kboMilitaryStatus,kboProtagonistServing} from '../src/kbo-military-state.js';
@@ -59,7 +60,8 @@ test('an enlisted protagonist serves two seasons as a loan to the military team 
  assert.equal(e.military!.program!.contract.contractKey,renewed.renewal!.offerKey);assert.equal(e.military!.program!.contract.annualSalaryWon,renewed.renewal!.annualSalaryWon);assert.equal(e.military!.program!.contract.totalRemainingWon,renewed.renewal!.annualSalaryWon);
  assert.equal(e.military!.status,'SERVING_SPORTS');assert.ok(kboProtagonistServing(e));assert.deepEqual(e.sangmu!.loaned,[e.protagonistKey]);assert.equal(e.military!.program!.blocks[0]!.seasonKey,String(Number(e.world.seasonKey)+1));
  assert.ok(!kboYearTransitionReadiness(e).blockers.includes('MILITARY_RESULT_PENDING'));
- const n=startNextKboSeason(e,e.revision);
+ const pending=startNextKboSeason(e,e.revision),notice=kboMilitaryEventView(pending)[0]!;
+ const n=resolveKboMilitaryEvent(pending,pending.revision,{eventKey:notice.eventKey,eventVersion:notice.eventVersion,command:'ADVANCE_SERVICE'});
  assert.equal(n.military!.program!.completedBlocks,0);
  // Next season: the NPC cohort leaves one slot for my player, he is never on the first team and plays Futures for the military team.
  const s0=startSangmuCohort(n,n.revision);assert.ok(kboSangmuServing(s0).includes(n.protagonistKey));
@@ -72,6 +74,7 @@ test('an enlisted protagonist serves two seasons as a loan to the military team 
  assert.ok(!g.world.clubs.find(c=>c.id===g.protagonistClubId)!.firstTeam.includes(g.protagonistKey));
  // Completion: relabel the fixture so the second block is the season just played; the transition closes it and ends the loan.
  const fin=structuredClone(e),season=Number(fin.world.seasonKey),pg=fin.military!.program!;
+ delete fin.military!.completionDays; // Explicitly exercises the pre-calendar legacy transition.
  fin.military!.program=completeSangmuBlock({...pg,blocks:[{...pg.blocks[0]!,seasonKey:String(season-1)},{...pg.blocks[1]!,seasonKey:String(season)}]},String(season-1),5);
  const out=startNextKboSeason(fin,fin.revision);
  assert.equal(out.military!.status,'COMPLETED');assert.equal(out.military!.completedSeasonKey,String(season));assert.deepEqual(out.sangmu!.loaned,[]);assert.equal(kboProtagonistServing(out),false);

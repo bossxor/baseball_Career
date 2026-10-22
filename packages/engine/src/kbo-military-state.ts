@@ -1,3 +1,4 @@
+import {kboMilitaryCompletionDays} from './kbo-military-events.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {selectSangmuCohort,KBO_SANGMU_INTAKE} from './kbo-sangmu.js';
@@ -15,7 +16,7 @@ export interface KboSangmuApplication {
  applicationId:string;eventKey:string;selectionSeasonKey:string;score:number;accepted:boolean;slotKind:'HITTER'|'PITCHER';
  decision:'PENDING'|'ENLISTED'|'DECLINED'|'REJECTION_ACKNOWLEDGED';
 }
-export interface KboMilitaryRecord {status:KboMilitaryStatus;applications:readonly KboSangmuApplication[];program?:KboMilitaryProgram;completedSeasonKey?:string}
+export interface KboMilitaryRecord {status:KboMilitaryStatus;applications:readonly KboSangmuApplication[];program?:KboMilitaryProgram;completedSeasonKey?:string;completionDays?:readonly {seasonKey:string;worldDay:number}[]}
 export const KBO_MILITARY_DEADLINE_AGE=28;
 
 export const kboMilitaryStatus=(s:Pick<KboCareer,'military'>):KboMilitaryStatus=>s.military?.status??'UNRESOLVED';
@@ -66,7 +67,7 @@ export function resolveSangmuApplication(source:KboCareer,expectedRevision:numbe
   const renewal=acceptedRenewal(source),current=source.world.contracts[source.protagonistKey]!;
   const contract=renewal?{...current,contractKey:renewal.offerKey,seasonKey:renewal.seasonKey,years:renewal.years,annualSalaryWon:renewal.annualSalaryWon}:current;
   const program=enlistInSangmu({worldKey:source.world.worldKey,playerKey:source.protagonistKey,clubId:source.protagonistClubId,selectionSeasonKey:app.selectionSeasonKey,contract,remainingPaidGameDays:days});
-  set('ENLISTED');career.military!.status='SERVING_SPORTS';career.military!.program=program;
+  set('ENLISTED');career.military!.status='SERVING_SPORTS';career.military!.program=program;career.military!.completionDays=kboMilitaryCompletionDays(program);
   const unit=career.sangmu??emptySangmuUnit();career.sangmu={...unit,loaned:[...(unit.loaned??[]),source.protagonistKey]};
  } else {set(command==='DECLINE'?'DECLINED':'REJECTION_ACKNOWLEDGED');career.military!.status='UNRESOLVED';}
  const closed=completeBlockingEvent(event,event.version,{sourceEvidenceKey:event.evidenceKey,receiptKey:JSON.stringify(['sangmu-result-confirmed',app.applicationId,command]),command:'CONFIRM_MILITARY_RESULT'},{worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['CONFIRM_MILITARY_RESULT']});
@@ -78,6 +79,7 @@ export function resolveSangmuApplication(source:KboCareer,expectedRevision:numbe
 export function advanceKboMilitaryService(career:KboCareer,playedSeasonKey:string,lastDay:number):void {
  const record=career.military;if(!record || record.status!=='SERVING_SPORTS' || !record.program)return;
  const open=record.program.blocks.find(b=>b.seasonKey===playedSeasonKey && b.completedWorldDay===null);
+ if(open && record.completionDays)throw new RangeError('MILITARY_DAY_NOT_SETTLED');
  if(open)record.program=completeSangmuBlock(record.program,playedSeasonKey,lastDay);
  if(record.program.completedBlocks>=record.program.scheduledBlocks){
   record.status='COMPLETED';record.completedSeasonKey=playedSeasonKey;

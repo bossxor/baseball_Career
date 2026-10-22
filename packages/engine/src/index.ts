@@ -100,3 +100,5 @@ export * from './kbo-contract-payments.js';
 export * from './kbo-sangmu-unit.js';
 export * from './kbo-sangmu-start.js';
 export * from './kbo-military-state.js';
+
+export * from './kbo-military-events.js';

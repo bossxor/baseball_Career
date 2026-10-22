@@ -1,0 +1,170 @@
+{
+  "baseCommit": "4a7dbb50c52580062f4af0130ec7a65015870dc1",
+  "direction": "validated checkout -> V:/",
+  "runtimeTestedSourcesUnchanged": true,
+  "postCheckDocsValidatedSeparately": true,
+  "files": [
+    {
+      "path": "packages/engine/src/kbo-military-events.ts",
+      "sha256": "cabb78d0ab3c20879add523d2a8f0a3ff4538f1b12e0da9f9a737acd63f504f1",
+      "gitBlob": "e625cf17c6a8b02c2cf35d8845c70662d0bf1fed",
+      "indexBlob": "e625cf17c6a8b02c2cf35d8845c70662d0bf1fed"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-state.ts",
+      "sha256": "955dbfe1e32926f7e9f5bcede61aa6ba3ad7cfc14050628eb95307b6aae8d148",
+      "gitBlob": "2a07937852bd023fe3581c7310953b2a3c89cdef",
+      "indexBlob": "2a07937852bd023fe3581c7310953b2a3c89cdef"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "1478f335a2ffa7dad84797bb4dff3b91fa40f48e4786032b0f818bce179dee50",
+      "gitBlob": "a9d817002a9d15a9be1cf2d0cddefa9d4eb54024",
+      "indexBlob": "a9d817002a9d15a9be1cf2d0cddefa9d4eb54024"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "sha256": "8c00ebe4eee0eff8b6e1a6e27265c41a9c52898eda4d78fde6a08a498d9ec849",
+      "gitBlob": "c1f51fc9448432d35fe78c0886fa5bf0ea67b00e",
+      "indexBlob": "c1f51fc9448432d35fe78c0886fa5bf0ea67b00e"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "c6e365e25d08b3cbecdff61ff41f24b4183fd44bdf96f2e2b37e6818327b5d73",
+      "gitBlob": "48ae1c9cca52e2b474fc3bea1eb5f06db65b6499",
+      "indexBlob": "48ae1c9cca52e2b474fc3bea1eb5f06db65b6499"
+    },
+    {
+      "path": "packages/engine/test/kbo-military-events.test.ts",
+      "sha256": "0e732ca235f83454ce5dc12eb4148f7de552e3df4ee3e37d8ada669b37139c15",
+      "gitBlob": "234ca3e4a6a52f5524441faadc3dfdc231b0be57",
+      "indexBlob": "234ca3e4a6a52f5524441faadc3dfdc231b0be57"
+    },
+    {
+      "path": "packages/engine/test/kbo-military-state.test.ts",
+      "sha256": "a90ec7ed8da5924de000196dde88f38f58d9f55a3a64b73d34187aab34040f30",
+      "gitBlob": "c20bbd544e3e873252037b3ccf6e12fd2409e2d2",
+      "indexBlob": "c20bbd544e3e873252037b3ccf6e12fd2409e2d2"
+    },
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "c1dc71dd00ebb759d56321bd61bc60809e260bf3754fdf1c20f95cb8518dc583",
+      "gitBlob": "9c72a2da7bf0eec9884b33916e07d79a8c3629c0",
+      "indexBlob": "9c72a2da7bf0eec9884b33916e07d79a8c3629c0"
+    },
+    {
+      "path": "docs/design/21-MILITARY-CONTRACT-RETURN.md",
+      "sha256": "bf3ac94395a372a0ef6cfc376904240447702b635f55960fcd9af1d3ee70e637",
+      "gitBlob": "218def1889b2097ebf9d90c6d935a6b4802888c3",
+      "indexBlob": "218def1889b2097ebf9d90c6d935a6b4802888c3"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "30efcaa4c2b4a3de1f34e5cb4b03e988a64e230163aaf186fc0bb333a7412c7b",
+      "gitBlob": "2ca3145c850be101e71d3c51e8b4b103e4df7fa9",
+      "indexBlob": "2ca3145c850be101e71d3c51e8b4b103e4df7fa9"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "0b564f2e925f6ea6b0d3cdce138398ee9b3b009335af72e5cd97e870b804e949",
+      "gitBlob": "b78815a0a0493e3127171798ebf2248eccf428d9",
+      "indexBlob": "b78815a0a0493e3127171798ebf2248eccf428d9"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "b3d6869028127a3cd0569dfa97e61772940d02c0af9c26b721e68e39cf725315",
+      "gitBlob": "a93cdc84100ea86fd9c69a0a66147842f9fd6b2a",
+      "indexBlob": "a93cdc84100ea86fd9c69a0a66147842f9fd6b2a"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "f4073d3b9fb6bcc03c62441d5a7b2eed02f374db5f6ad414ae22db8d65fa399d",
+      "gitBlob": "1a87154be253b12bf898893e884d04a48afa5910",
+      "indexBlob": "1a87154be253b12bf898893e884d04a48afa5910"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "d385ecc80f2f0e6c2d62e651813f72db3421e86dd235eb095805152494d9af31",
+      "gitBlob": "b6a661287c6d8184d77ab99b8fb9752c2f17055c",
+      "indexBlob": "b6a661287c6d8184d77ab99b8fb9752c2f17055c"
+    },
+    {
+      "path": "docs/implementation/M2-NEXT-MILITARY-INTEGRATION-NOTES.md",
+      "sha256": "d83fa4accf5287fda7f6214575f8ea50a96003554c592d1249841be6aee42941",
+      "gitBlob": "455960cb3878fc0490eec6f6c8f8a1176e26e40f",
+      "indexBlob": "455960cb3878fc0490eec6f6c8f8a1176e26e40f"
+    },
+    {
+      "path": "docs/implementation/M2-CI-SANGMU-JUNE-RETURN-EVENTS.md",
+      "sha256": "82ac1dcf4456a49996d7db86f7183bafddbb4ef518beb24012412f567af321ff",
+      "gitBlob": "c1ca665d4e5ca11ad3d43bd38aff1c597795e329",
+      "indexBlob": "c1ca665d4e5ca11ad3d43bd38aff1c597795e329"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CI-check.log",
+      "sha256": "2ba8427a2d75a27d4d92dd7a78d9e3ff904ac59ecb593034b79dd3a807330866",
+      "gitBlob": "a16a90018bcc09770af6afb1495e8083da2c10df",
+      "indexBlob": "a16a90018bcc09770af6afb1495e8083da2c10df"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CI-design.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090",
+      "gitBlob": "3dbeafbf5c570526f3080073cffb213824255b29",
+      "indexBlob": "3dbeafbf5c570526f3080073cffb213824255b29"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CI-fixture-scale-failure.log",
+      "sha256": "d2cc721911b08dc662ce421264b1bbc31ffe6e6e3acf9930e74ce975ffa15a68",
+      "gitBlob": "ff43ec88b538ce79e9a65c5d630204b96dce3906",
+      "indexBlob": "ff43ec88b538ce79e9a65c5d630204b96dce3906"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CI-focused-final.log",
+      "sha256": "1648f77921df9a035acaa4d442e90c84e617f98178ecc4f0dea74f1d2d529408",
+      "gitBlob": "d17324b32b0005cee6f1e910d20a1d217a01bb63",
+      "indexBlob": "d17324b32b0005cee6f1e910d20a1d217a01bb63"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CI-focused.log",
+      "sha256": "2ff132807f268c174ebba9bfa44fe3728f77630a3445be4f0d7bbc6398862c72",
+      "gitBlob": "580aaa76eab92aecde29564056b15bb5102b1cc0",
+      "indexBlob": "580aaa76eab92aecde29564056b15bb5102b1cc0"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CI-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f",
+      "gitBlob": "f61cd1e9f5eb3902a8bad2bb1881bc2b55805d70",
+      "indexBlob": "f61cd1e9f5eb3902a8bad2bb1881bc2b55805d70"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CI-post-docs-design.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090",
+      "gitBlob": "3dbeafbf5c570526f3080073cffb213824255b29",
+      "indexBlob": "3dbeafbf5c570526f3080073cffb213824255b29"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CI-post-docs-source.json",
+      "sha256": "69c10cbba13d01dc5360255c445f6654a2dca3cb73264dfc8c2935e4a01a1ad9",
+      "gitBlob": "52e7a9557775e629466069b06be7162edc4c97f9",
+      "indexBlob": "52e7a9557775e629466069b06be7162edc4c97f9"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CI-tested-source.json",
+      "sha256": "808e6be46266c4da68772485cc2a15bede28d6305de847967781135de3cbfe91",
+      "gitBlob": "2f679cedaab7d1f19ccd1881277f03073751c416",
+      "indexBlob": "2f679cedaab7d1f19ccd1881277f03073751c416"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CI-types-final.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df",
+      "gitBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300",
+      "indexBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CI-types.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df",
+      "gitBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300",
+      "indexBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300"
+    }
+  ]
+}

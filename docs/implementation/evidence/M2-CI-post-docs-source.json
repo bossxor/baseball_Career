@@ -1,0 +1,17 @@
+{
+  "note": "Full npm run check485/485 completed before STATUS progress/header and implementation MD update; runtime/tests unchanged. Then rebuilt design package and reran10 static validators,359 manifest checks.",
+  "files": [
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "b3d6869028127a3cd0569dfa97e61772940d02c0af9c26b721e68e39cf725315"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "30efcaa4c2b4a3de1f34e5cb4b03e988a64e230163aaf186fc0bb333a7412c7b"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "0b564f2e925f6ea6b0d3cdce138398ee9b3b009335af72e5cd97e870b804e949"
+    }
+  ]
+}
