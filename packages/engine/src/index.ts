@@ -96,3 +96,4 @@ export * from './kbo-archive-view.js';
 export * from './kbo-futures-schedule.js';
 export * from './kbo-sangmu.js';
 export * from './kbo-military-program.js';
+export * from './kbo-sangmu-unit.js';
