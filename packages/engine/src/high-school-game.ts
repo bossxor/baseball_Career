@@ -24,6 +24,8 @@ export interface HighSchoolGameContext {
   recentPitchingOuts:Readonly<Record<string,number>>;
   traits:Readonly<Record<string,TraitOwnership>>;
   approaches:Readonly<Record<string,Approach>>;
+  /** Internal current-condition factor; frozen into the existing effective multiplier of each game snapshot. */
+  conditionMultipliers?:Readonly<Record<string,number>>;
 }
 export interface HighSchoolGameJob {
   schemaVersion:1; worldKey:string; seasonKey:string; worldDay:number;
@@ -42,8 +44,9 @@ export function prepareHighSchoolGame(world:HighSchoolWorld,records:RecordLedger
 export function prepareSchoolCompetitionGame(world:CompetitionGameWorld,records:RecordLedger,scheduled:ScheduledGame,context:HighSchoolGameContext):HighSchoolGameJob {
   if(scheduled.leagueKey!==(world.leagueKey??'HS') || scheduled.seasonKey!==world.seasonKey || scheduled.phase!==undefined && scheduled.phase!=='POSTSEASON' || Object.hasOwn(records.games,scheduled.simulationKey))throw new RangeError('INVALID_SCHEDULED_GAME');
   if(!['GROWTH','REALISTIC','SECRET_CHEAT'].includes(context.difficulty) || new Set(context.unavailableKeys).size!==context.unavailableKeys.length || context.unavailableKeys.some(k=>!Object.hasOwn(world.players,k)))throw new RangeError('INVALID_GAME_CONTEXT');
+  if(context.conditionMultipliers && Object.entries(context.conditionMultipliers).some(([key,m])=>!Object.hasOwn(world.players,key)||!Number.isFinite(m)||m<=0||m>1))throw new RangeError('INVALID_GAME_CONTEXT');
   const development:NonNullable<GameInput['pitchDevelopment']>={seasonKey:world.seasonKey,players:Object.create(null) as NonNullable<GameInput['pitchDevelopment']>['players']};
-  const snapshot=(player:DevelopmentPlayer):PlayerSnapshot=>({simulationKey:player.simulationKey,abilities:{...player.abilities},fatigue:player.fatigue,morale:1,temporary:{},traitLogits:[],traits:structuredClone(lookup(context.traits,player.simulationKey)??{unlocked:[],qualifiedRivalPitcherKeys:[]})});
+  const snapshot=(player:DevelopmentPlayer):PlayerSnapshot=>({simulationKey:player.simulationKey,abilities:{...player.abilities},fatigue:player.fatigue,morale:lookup(context.conditionMultipliers??{},player.simulationKey)??1,temporary:{},traitLogits:[],traits:structuredClone(lookup(context.traits,player.simulationKey)??{unlocked:[],qualifiedRivalPitcherKeys:[]})});
   const team=(teamKey:string):TeamSnapshot=>{
     const school=world.schools.find(s=>s.id===teamKey);if(!school)throw new RangeError('MISSING_SCHOOL');
     if(new Set(school.roster).size!==school.roster.length)throw new RangeError('DUPLICATE_SCHOOL_PLAYER');

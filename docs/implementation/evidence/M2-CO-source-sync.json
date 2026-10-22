@@ -1,0 +1,218 @@
+{
+  "baseCommit": "1b3cd0799638fdce9e21340554812f4eede69cb5",
+  "direction": "validated checkout -> V:/",
+  "runtimeTestedSourcesUnchanged": true,
+  "postCheckDocsValidatedSeparately": true,
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "df682c3245800a11595071f3a7c131abd312ed7d3e5ce532e65c0e08edf275b5",
+      "gitBlob": "96d4c73b982bcd66e8f62a9b22e00f2c7464c2d8",
+      "indexBlob": "96d4c73b982bcd66e8f62a9b22e00f2c7464c2d8"
+    },
+    {
+      "path": "docs/design/21-MILITARY-CONTRACT-RETURN.md",
+      "sha256": "49acedca92c1f57cbb9e73db821b4cfdfb8f01192a89f2b7be1f5c4cd03982b4",
+      "gitBlob": "e9214a3fe53329f6e539ae32af213f2a6a645fdd",
+      "indexBlob": "e9214a3fe53329f6e539ae32af213f2a6a645fdd"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "5a07f8c601c0f42564106376937d9025cebf5658aef4e3e1c98874f2a84452ff",
+      "gitBlob": "5eec0c51bbc64e2628b8da078e97427f77d460b6",
+      "indexBlob": "5eec0c51bbc64e2628b8da078e97427f77d460b6"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "e65301c6cc8d623cbe51df87f949afb21f7729e9eb39e0adeeedf2dede00c7d0",
+      "gitBlob": "a8050f7201f6fc987c9dd6d995015034e2c64995",
+      "indexBlob": "a8050f7201f6fc987c9dd6d995015034e2c64995"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "53b8c77701dafa17367e8b33de2eeba2d1458904dd0c51357b86d7ec85743275",
+      "gitBlob": "3cf2081c338458f27120ea0bba993d0f1e80692d",
+      "indexBlob": "3cf2081c338458f27120ea0bba993d0f1e80692d"
+    },
+    {
+      "path": "packages/engine/src/high-school-game.ts",
+      "sha256": "ace3f119b8aaecaaf593c453cd2f39e70079774d1679c45a7692a140600e219c",
+      "gitBlob": "b362452ae600d07d1f8073442ed3c4dd9c8c16e7",
+      "indexBlob": "b362452ae600d07d1f8073442ed3c4dd9c8c16e7"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "6ab794d5e56990784eae1361ece559c4aa42c85cc4a19dd61bb08820cf350ab0",
+      "gitBlob": "aee65b20a9a14389e5e825ee92e7298e83dae641",
+      "indexBlob": "aee65b20a9a14389e5e825ee92e7298e83dae641"
+    },
+    {
+      "path": "packages/engine/src/kbo-active-service.ts",
+      "sha256": "d221954fcc274546568d2938e7855b62bb1eaa83d1f24787e8fdf1f181612ae1",
+      "gitBlob": "5343efea6da883c97fe1ff05280aabf33ba72eb7",
+      "indexBlob": "5343efea6da883c97fe1ff05280aabf33ba72eb7"
+    },
+    {
+      "path": "packages/engine/src/kbo-archive-view.ts",
+      "sha256": "f42c71c0800980b9642ad171106566e580d97d57f2f52adef0e89af4d6623f4c",
+      "gitBlob": "360f60fc942eeb27054a5d767639de1cae28b3e3",
+      "indexBlob": "360f60fc942eeb27054a5d767639de1cae28b3e3"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "sha256": "c24abb5961b477a8e8378674d8c7ac024745297cd1de0343b99bc0cafec3e182",
+      "gitBlob": "f990137fbe9db1430d0636321b05f77431024883",
+      "indexBlob": "f990137fbe9db1430d0636321b05f77431024883"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-version.ts",
+      "sha256": "6f2050e2752a9df131233327183f631ddd6471fd698b7b469706ec2bfe5e0c03",
+      "gitBlob": "c0b6e6734e5c34d77118ea92d92b6a75355944ab",
+      "indexBlob": "c0b6e6734e5c34d77118ea92d92b6a75355944ab"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-events.ts",
+      "sha256": "79de4a1a1e4565b5273a2dcb0c30c0b28fce93d61facbf4d4753884b94ac4f90",
+      "gitBlob": "cf0a8fc72ff3389b9fe9efc9e3004b3cd5cc0c41",
+      "indexBlob": "cf0a8fc72ff3389b9fe9efc9e3004b3cd5cc0c41"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-state.ts",
+      "sha256": "41902562816cc329561a3d496560e187c339b10068bc73561225dad35fb975ab",
+      "gitBlob": "da0af914822f981c3a4a627c53f723c56a0c21fb",
+      "indexBlob": "da0af914822f981c3a4a627c53f723c56a0c21fb"
+    },
+    {
+      "path": "packages/engine/src/kbo-postseason-progress.ts",
+      "sha256": "6771cc7b817fa64a00fe13221d9f875a2ec4a345dc1eebba822e91c55bc88f75",
+      "gitBlob": "9f25f0a08a52cbd228cf5da7d44f2427d5ee7de6",
+      "indexBlob": "9f25f0a08a52cbd228cf5da7d44f2427d5ee7de6"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "sha256": "4999d2a2f67c06d226cb0b834bb6903f6aac9c297e363e38680c6f102c137298",
+      "gitBlob": "49698488f798448819c98f9bb20c03a6a9ae556e",
+      "indexBlob": "49698488f798448819c98f9bb20c03a6a9ae556e"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "dc94204a8fc820a1bc93bdf9594b41f11ba914a21e8438522c63f724ce7bb773",
+      "gitBlob": "768d80627fba95c2eefcdb2f11d475dd068844c2",
+      "indexBlob": "768d80627fba95c2eefcdb2f11d475dd068844c2"
+    },
+    {
+      "path": "packages/engine/test/kbo-active-service.test.ts",
+      "sha256": "f55ede3ce6106f25a048aa9c3d8ddbea7eb4c227ca7b1221710ce1bcb55d8760",
+      "gitBlob": "df1efbee14fd888c6062b336dc16d526c80d22d0",
+      "indexBlob": "df1efbee14fd888c6062b336dc16d526c80d22d0"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-planning.ts",
+      "sha256": "c77b5972372903b9d0c916f7d5f6342b6d1b322f47d65f0004b4cbe7bf6022fb",
+      "gitBlob": "83f86b14567bdfd27d4fa62b7493cd5b445843b6",
+      "indexBlob": "83f86b14567bdfd27d4fa62b7493cd5b445843b6"
+    },
+    {
+      "path": "packages/engine/src/kbo-return-condition.ts",
+      "sha256": "31beed88401af39d33ace5a815851c6a21f0a8ad5873738eb61ae630eb46161c",
+      "gitBlob": "38c1cf7afe564eddb80ef086c50357b25fff48ad",
+      "indexBlob": "38c1cf7afe564eddb80ef086c50357b25fff48ad"
+    },
+    {
+      "path": "packages/engine/test/kbo-military-planning.test.ts",
+      "sha256": "76eb4b445e072736f31a3fa2405b10a7f7f39ceb5a5bc3e4ae682e58293f946d",
+      "gitBlob": "37b13420378f9e3bf1d0293d4b98b303ff081a1a",
+      "indexBlob": "37b13420378f9e3bf1d0293d4b98b303ff081a1a"
+    },
+    {
+      "path": "packages/engine/test/kbo-return-condition.test.ts",
+      "sha256": "f466e3a7563cdead233c10bd9eb39f23d8dcb714fd7c4e2fc92058e5271e2d35",
+      "gitBlob": "f2aa3a6650d507b4f1f21a6065f2c132d7abd42b",
+      "indexBlob": "f2aa3a6650d507b4f1f21a6065f2c132d7abd42b"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "c9710cbcdaf535c6f550d8ffac9b5bc3319cd8383578356248589998c4c06ca7",
+      "gitBlob": "3bc61436c4ca118917a02d763117a7bd06af057f",
+      "indexBlob": "3bc61436c4ca118917a02d763117a7bd06af057f"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "99fea7198bc1caf69c31fc053d016f6f664167d6b3b412c2e96459cacc9b3b65",
+      "gitBlob": "525414c7224ab3e49095feb0af7eecbe8dc1e727",
+      "indexBlob": "525414c7224ab3e49095feb0af7eecbe8dc1e727"
+    },
+    {
+      "path": "docs/implementation/M2-NEXT-MILITARY-INTEGRATION-NOTES.md",
+      "sha256": "78806b8cd068b17c0dc723220c497d6cac83babcdf5fd5b5390466d7f0db4f24",
+      "gitBlob": "4c5f4f29a2667cd871deff087b4dd5a8ca685134",
+      "indexBlob": "4c5f4f29a2667cd871deff087b4dd5a8ca685134"
+    },
+    {
+      "path": "docs/implementation/M2-CO-MILITARY-DEADLINE-AND-RETURN.md",
+      "sha256": "16c8c4545f2c58ce554a2341badcab8255efa041535b83c453b36df20520ab9d",
+      "gitBlob": "f536e900eb384f1a917938b1688b936a9f755080",
+      "indexBlob": "f536e900eb384f1a917938b1688b936a9f755080"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CO-active.log",
+      "sha256": "73187118ff41aef45cbc176b2182b4bba913f7c8c91e2abd3b492db30fe7c72c",
+      "gitBlob": "0f81c99ea4c143c2c074369121785b3c75a0a9e7",
+      "indexBlob": "0f81c99ea4c143c2c074369121785b3c75a0a9e7"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CO-check.log",
+      "sha256": "e69a2c96b0825ce4ef2769b894b0800240bdfd42371d598156fecf127b7bb498",
+      "gitBlob": "fd5bdf969050df97834c85730a2262a083fadae0",
+      "indexBlob": "fd5bdf969050df97834c85730a2262a083fadae0"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CO-design-final.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090",
+      "gitBlob": "3dbeafbf5c570526f3080073cffb213824255b29",
+      "indexBlob": "3dbeafbf5c570526f3080073cffb213824255b29"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CO-focused.log",
+      "sha256": "cebd2d7b7767ae38c0bbb696c34d0eb378ecdd0e8d48050f36474e2545b02bd6",
+      "gitBlob": "adb3f7c18dde815dd99ab32e296f90ff9eca7b5e",
+      "indexBlob": "adb3f7c18dde815dd99ab32e296f90ff9eca7b5e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CO-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f",
+      "gitBlob": "f61cd1e9f5eb3902a8bad2bb1881bc2b55805d70",
+      "indexBlob": "f61cd1e9f5eb3902a8bad2bb1881bc2b55805d70"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CO-manifest.log",
+      "sha256": "6089df69a426fe6756917ff6358256756f763977079292318b26040e4d062f1d",
+      "gitBlob": "65bd618ab839e74feaccf6833f4436ab0c0e747e",
+      "indexBlob": "65bd618ab839e74feaccf6833f4436ab0c0e747e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CO-post-docs-source.json",
+      "sha256": "5559f4476d300ac3a14ebdf364d6bc48697b1f625d280835996264eefc50e898",
+      "gitBlob": "9106209238a490c710fd836920fed3cc0e84a00c",
+      "indexBlob": "9106209238a490c710fd836920fed3cc0e84a00c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CO-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8",
+      "gitBlob": "44c3710ebb95acc2bae3c2ee24697eb90b52ce06",
+      "indexBlob": "44c3710ebb95acc2bae3c2ee24697eb90b52ce06"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CO-tested-source.json",
+      "sha256": "9be12d497f52b9f4631129d01433d1b6d7c011488f0f662417f75e6a4e409c02",
+      "gitBlob": "05185fe2b8c3ad1c03a2ccbe4a2bb5e713223cea",
+      "indexBlob": "05185fe2b8c3ad1c03a2ccbe4a2bb5e713223cea"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CO-types.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df",
+      "gitBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300",
+      "indexBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300"
+    }
+  ]
+}

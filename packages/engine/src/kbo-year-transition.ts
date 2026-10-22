@@ -39,9 +39,8 @@ export function kboYearTransitionReadiness(source:KboCareer):{ready:boolean;bloc
  if(!source.seasonGrowth.finalized)blockers.push('GROWTH_NOT_FINALIZED');
  if(kboContractDecisionRequired(source))blockers.push('CONTRACT_DECISION_REQUIRED');
  if(kboMilitaryStatus(source)==='APPLICATION_PENDING')blockers.push('MILITARY_RESULT_PENDING');
- // ponytail: the 28-year stop is enforced once my player has engaged with the military flow (a record exists). Without the
- // 현역(ACTIVE) path an unmatched player would have no way past it, so untouched careers are not stopped yet.
- if(source.military && kboMilitaryPlan(source).mustResolveBeforeNextSeason)blockers.push('MILITARY_PLAN_REQUIRED');
+ // Unresolved careers, including legacy saves without a military record, cannot start the age28 season.
+ if(kboMilitaryPlan(source).mustResolveBeforeNextSeason)blockers.push('MILITARY_PLAN_REQUIRED');
  const nextAge=source.world.players[source.protagonistKey]!.age+1;
  if(nextAge>KBO_MAX_PLAYER_AGE)blockers.push('MAX_AGE_REACHED');
  return {ready:blockers.length===0,blockers,targetSeasonKey:String(Number(source.world.seasonKey)+1),nextAge};
@@ -106,7 +105,7 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
  world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target));
 // Military unit carries over: members age and reset their books like everyone else, the block of the season just played is
 // recorded complete on its last day, and finished programs rejoin their club's Futures squad (full clubs wait in the unit).
-// ponytail: the second block is closed at the end of its season, not at the first half (a mid-season return is not modeled).
+// Legacy/NPC unit members still complete at year close; versioned protagonist programs use their actual completion-day ledger.
 advanceKboMilitaryService(career,source.world.seasonKey,source.days!.days.at(-1)!.day);
 if(career.sangmu){
  const lastDay=source.days!.days.at(-1)!.day,members=Object.fromEntries(Object.entries(career.sangmu.members).map(([k,m])=>{
@@ -138,5 +137,5 @@ if(career.sangmu){
  for(const field of ['days','seasonClose','postseason','preseasonPlan','openingRoster','competitionSchedule','callupReviews'] as const)delete career[field];
  // New unplayed season can adopt registration-aware growth without rewriting any prior receipts or plan boundaries.
  if(career.military?.completionDays && career.military.program?.blocks.some(b=>b.seasonKey===target))career.military.growthPolicyVersion=1;
- career.phaseContext={phase:'PRESEASON_SETUP'};career.revision++;queueKboMilitaryFirstBlock(career);return career;
+ career.schemaVersion=3;career.phaseContext={phase:'PRESEASON_SETUP'};career.revision++;queueKboMilitaryFirstBlock(career);return career;
 }

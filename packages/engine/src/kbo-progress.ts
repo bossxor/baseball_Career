@@ -1,3 +1,4 @@
+import {kboReturnConditionMultiplier,settleKboReturnConditionDay} from './kbo-return-condition.js';
 import {kboContractPaymentBalance} from './kbo-contract-payments.js';
 import {settleKboServicePayrollDay} from './kbo-service-payroll.js';
 import {closeKboMilitaryCalendarDay} from './kbo-military-events.js';
@@ -53,7 +54,8 @@ export function kboGameContext(career:KboCareer,leagueKey:KboLeagueKey):HighScho
   const review=Math.floor(clubGames.length/20)*20,block=new Set(clubGames.slice(Math.max(0,review-20),review).map(g=>g.gameKey));
   if(block.size){const reviewed=recordTotals({...career.records,games:Object.fromEntries(Object.entries(career.records.games).filter(([k])=>block.has(k)))},scope);for(const key of club.roster)if(Object.hasOwn(reviewed.batting,key))recentBatting[key]=reviewed.batting[key]!;}
  }
- return {difficulty:career.difficulty,unavailableKeys:Object.keys(career.health.injuries),starters,recentBatting,recentPitchingOuts:Object.fromEntries(Object.entries(season.pitching).map(([k,p])=>[k,p.outs])),traits:career.traits?.owned??{},approaches:{}};
+ const condition=kboReturnConditionMultiplier(career);
+ return {difficulty:career.difficulty,unavailableKeys:Object.keys(career.health.injuries),starters,recentBatting,recentPitchingOuts:Object.fromEntries(Object.entries(season.pitching).map(([k,p])=>[k,p.outs])),traits:career.traits?.owned??{},approaches:{},...(condition===1?{}:{conditionMultipliers:{[career.protagonistKey]:condition}})};
 }
 
 function pendingQueue(career:KboCareer,day:number):{leagueKey:KboLeagueKey;game:ScheduledGame}[] {
@@ -106,7 +108,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   const closed=closeKboCompetitionDay(career.world,schedulesOf(career),career.protagonistKey,career.records,career.health,career.days!,day,career.sangmu);
   career.world=closed.world;career.health=closed.health;career.days=closed.days;if(closed.sangmu)career.sangmu=closed.sangmu;progress.nextWorldDay=day+1;daysClosed++;
   const serviceReturn=closeKboMilitaryCalendarDay(career,day,progress);
-  settleKboServicePayrollDay(career,day);
+  settleKboServicePayrollDay(career,day);settleKboReturnConditionDay(career,day);
   career.traits=refreshCareerTraits(career,day,LEAGUES);
   // 14 order: call-up/demotion review before style/training windows.
   const aiMoves=progress.nextWorldDay>last?null:reviewKboAiRosters(career);if(aiMoves)Object.assign(career,aiMoves);

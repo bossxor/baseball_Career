@@ -1,3 +1,4 @@
+import {kboReturnConditionView} from '../src/kbo-return-condition.js';
 import {assertCareerRevision as legacyV1RevisionGuard} from '../src/high-school-career.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -42,7 +43,7 @@ function enlisted(kind:'HITTER'|'PITCHER'='HITTER'){const c=renewed(decision(kin
 test('ACTIVE preview is read-only; explicit confirmation fixes program, rights and contract without creating a military team',()=>{
  const c=decision(),before=canonicalJson(c);assert.equal(kboActiveServicePreview(c).canEnlist,false);assert.throws(()=>confirmKboActiveService(c,c.revision),/CONTRACT_DECISION_REQUIRED/);assert.equal(canonicalJson(c),before);
  const r=renewed(c),snapshot=canonicalJson(r),view=kboActiveServicePreview(r);assert.equal(view.canEnlist,true);assert.equal(canonicalJson(r),snapshot);assert.doesNotMatch(JSON.stringify(view),/potential|ledger|programId|seed|rng|sourceBasis/);
- const e=confirmKboActiveService(r,r.revision);assert.equal(e.schemaVersion,2);assert.equal(r.schemaVersion,1);assert.throws(()=>legacyV1RevisionGuard(e as never,e.revision),/CAREER_REVISION_CHANGED/);assert.equal(e.military!.status,'SERVING_ACTIVE');assert.equal(e.military!.program!.kind,'ACTIVE');assert.equal(e.military!.program!.contract.contractKey,r.renewal!.offerKey);assert.deepEqual(e.rights,r.rights);assert.deepEqual(e.world,r.world);assert.equal(e.sangmu,undefined);assert.deepEqual(confirmKboActiveService(e,e.revision),e);assert.equal(canonicalJson(r),snapshot);
+ const e=confirmKboActiveService(r,r.revision);assert.equal(e.schemaVersion,3);assert.equal(r.schemaVersion,1);assert.throws(()=>legacyV1RevisionGuard(e as never,e.revision),/CAREER_REVISION_CHANGED/);assert.equal(e.military!.status,'SERVING_ACTIVE');assert.equal(e.military!.program!.kind,'ACTIVE');assert.equal(e.military!.program!.contract.contractKey,r.renewal!.offerKey);assert.deepEqual(e.rights,r.rights);assert.deepEqual(e.world,r.world);assert.equal(e.sangmu,undefined);assert.deepEqual(confirmKboActiveService(e,e.revision),e);assert.equal(canonicalJson(r),snapshot);
  assert.throws(()=>confirmKboActiveService(r,r.revision-1));const bad=structuredClone(r);bad.rights.holderOrgId='OTHER';assert.throws(()=>confirmKboActiveService(bad,bad.revision),/MILITARY_CONTRACT_CHANGED/);
 });
 test('ACTIVE first block: E51, no registration/appearance, rest only and no calendar injury recovery',()=>{
@@ -66,15 +67,18 @@ test('ACTIVE full first season closes with zero natural growth and unchanged fro
  const next=startNextKboSeason(close,close.revision);assert.equal(next.military!.status,'SERVING_ACTIVE');assert.equal(kboMilitaryEventView(next).length,0);assert.ok(next.world.contracts[key]!.servicePay!.reservedGameDays>0);assertKboRecruitmentWorld(next.world);
  const retirement=requestKboRetirement(close,close.revision),event=retirement.events.find(e=>e.definitionId==='E36'&&e.status==='OPEN')!;
  const archived=resolveKboRetirement(retirement,retirement.revision,{eventKey:event.eventKey,eventVersion:event.version,command:'CONFIRM_RETIRE'});
- assert.equal(archived.schemaVersion,2);assert.equal(archived.military!.status,'SERVING_ACTIVE');assert.equal(archived.retirement!.remainingPaidGameDays,144);assert.equal(kboRetirementArchiveView(archived).player.name,archived.world.players[key]!.name);
+ assert.equal(archived.schemaVersion,3);assert.equal(archived.military!.status,'SERVING_ACTIVE');assert.equal(archived.retirement!.remainingPaidGameDays,144);assert.equal(kboRetirementArchiveView(archived).player.name,archived.world.players[key]!.name);
 });
 test('ACTIVE actual June30 return closes once, E53 confirms original Futures rights, following registered date pays once',()=>{
  const e=enlisted(),first=closed(startNextKboSeason(e,e.revision)),next=startNextKboSeason(first,first.revision);let c=playing(next);const key=c.protagonistKey,due=c.military!.completionDays![1]!.worldDay,start=c.days!.days.length?c.days!.days[0]!.day:Math.min(...c.competitionSchedule!.leagues.KBO.map(g=>g.worldDay));
  c.days={...c.days!,days:Array.from({length:due-start},(_,i)=>({day:start+i,evidence:'controlled-prior-date',result:{injured:[],recovered:[]}}))};c.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:due,pendingGame:null};
  for(let i=0;i<150 && c.phaseContext.phase==='SEASON_PROGRESS';i++)c=advanceKboCareer(c,c.revision,1).career;
  assert.equal(c.phaseContext.phase,'EVENT_DECISION');assert.equal(c.military!.status,'COMPLETED');assert.equal(c.military!.program!.blocks[1]!.completedWorldDay,due);assert.equal(kboMilitaryEventView(c)[0]!.definitionId,'E53');assert.equal(kboContractPaymentBalance(c.world.contracts[key]!.servicePay!.ledger).paidDays,0);assert.ok(c.health.games.filter(h=>h.evidence.day===due&&h.evidence.seasonKey===c.world.seasonKey).every(h=>!h.evidence.roster.includes(key)));
+ assert.equal(kboReturnConditionView(c)!.remainingTeamGames,6);const rawAbilities=structuredClone(c.world.players[key]!.abilities);
  c=ack(c);for(let i=0;i<150 && c.world.contracts[key]!.servicePay!.ledger.receipts.length===0;i++)c=advanceKboCareer(c,c.revision,1).career;
- assert.ok(c.world.contracts[key]!.servicePay!.ledger.receipts.length>0);assert.equal(c.registration.firstTeam,false);assertKboRecruitmentWorld(c.world);
+ assert.ok(c.world.contracts[key]!.servicePay!.ledger.receipts.length>0);assert.equal(c.registration.firstTeam,false);assertKboRecruitmentWorld(c.world);assert.equal(kboReturnConditionView(c)!.remainingTeamGames,5);
+ for(let i=0;i<400 && kboReturnConditionView(c)!.remainingTeamGames>0;i++)c=advanceKboCareer(c,c.revision,1).career;
+ assert.equal(kboReturnConditionView(c)!.effectiveMultiplier,1);assert.equal(kboReturnConditionView(c)!.remainingTeamGames,0);assert.deepEqual(c.world.players[key]!.abilities,rawAbilities);
  const replay=structuredClone(c),snapshot=canonicalJson(replay);settleKboServicePayrollDay(replay,replay.days!.days.at(-1)!.day);assert.equal(canonicalJson(replay),snapshot);
 });
 test('ACTIVE blocks special training and new-pitch learning while preserving the existing repertoire and source',()=>{

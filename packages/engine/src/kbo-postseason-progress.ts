@@ -1,3 +1,4 @@
+import {settleKboReturnConditionDay} from './kbo-return-condition.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import type {KboPendingGame} from './kbo-progress.js';
 import {kboGameContext} from './kbo-progress.js';
@@ -52,7 +53,7 @@ export function advanceKboPostseason(source:KboCareer,expectedRevision:number):{
  const line=career.records.games[scheduled.simulationKey]!.teams,winner=line[scheduled.homeTeamKey]!.W>0?scheduled.homeTeamKey:line[scheduled.awayTeamKey]!.W>0?scheduled.awayTeamKey:null;
  if(!winner)throw new RangeError('POSTSEASON_GAME_WITHOUT_WINNER');
  const closed=closeKboCompetitionDay(career.world,{KBO:[scheduled],FUTURES:[]},career.protagonistKey,career.records,career.health,career.days!,scheduled.worldDay,career.sangmu);
- career.world=closed.world;career.health=closed.health;career.days=closed.days;if(closed.sangmu)career.sangmu=closed.sangmu;
+ career.world=closed.world;career.health=closed.health;career.days=closed.days;if(closed.sangmu)career.sangmu=closed.sangmu;settleKboReturnConditionDay(career,scheduled.worldDay);
  phase.postseason=recordKboPostseasonGame(phase.postseason,winner);phase.nextWorldDay=scheduled.worldDay+1;
  // Same day-close hooks as the regular season: trait unlocks (PS records count for T06) and my health stop.
  career.traits=refreshCareerTraits(career,scheduled.worldDay,['KBO']);

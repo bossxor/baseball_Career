@@ -1,3 +1,4 @@
+import type {KboReturnCondition} from './kbo-return-condition.js';
 import {kboMilitaryCompletionDays} from './kbo-military-events.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
@@ -14,7 +15,7 @@ export interface KboSangmuApplication {
  applicationId:string;eventKey:string;selectionSeasonKey:string;score:number;accepted:boolean;slotKind:'HITTER'|'PITCHER';
  decision:'PENDING'|'ENLISTED'|'DECLINED'|'REJECTION_ACKNOWLEDGED';
 }
-export interface KboMilitaryRecord {status:KboMilitaryStatus;applications:readonly KboSangmuApplication[];program?:KboMilitaryProgram;completedSeasonKey?:string;contractPaymentVersion?:1;completionDays?:readonly {seasonKey:string;worldDay:number}[];growthPolicyVersion?:1}
+export interface KboMilitaryRecord {status:KboMilitaryStatus;applications:readonly KboSangmuApplication[];program?:KboMilitaryProgram;completedSeasonKey?:string;contractPaymentVersion?:1;completionDays?:readonly {seasonKey:string;worldDay:number}[];growthPolicyVersion?:1;returnCondition?:KboReturnCondition}
 export const KBO_MILITARY_DEADLINE_AGE=28;
 
 export const kboMilitaryStatus=(s:Pick<KboCareer,'military'>):KboMilitaryStatus=>s.military?.status??'UNRESOLVED';
@@ -24,8 +25,8 @@ export const kboProtagonistServing=(s:Pick<KboCareer,'military'>)=>s.military?.s
 /** S26 read: where my player stands against the game deadline. Age window 19..27 is the application window. */
 export function kboMilitaryPlan(s:KboCareer){
  const age=s.world.players[s.protagonistKey]!.age,status=kboMilitaryStatus(s);
- return {status,age,canApply:status==='UNRESOLVED' && age>=KBO_SANGMU_INTAKE.minAge && age<=KBO_SANGMU_INTAKE.maxAge,lastGraceSeason:status==='UNRESOLVED' && age===KBO_SANGMU_INTAKE.maxAge,
-  mustResolveBeforeNextSeason:status==='UNRESOLVED' && age+1>=KBO_MILITARY_DEADLINE_AGE,application:s.military?.applications.at(-1)??null,program:s.military?.program??null};
+ return {status,age,deadlineAge:28,futureGraceSeasons:Math.max(0,27-age),notice:status!=='UNRESOLVED'?null:age>=28&&age<45?'OVERDUE_PLAN':age===27?'FINAL_GRACE':age===25||age===26?'PLAN_REMINDER':null,canPlanActive:status==='UNRESOLVED'&&age>=19&&age<45,canApply:status==='UNRESOLVED' && age>=KBO_SANGMU_INTAKE.minAge && age<=KBO_SANGMU_INTAKE.maxAge,lastGraceSeason:status==='UNRESOLVED' && age===KBO_SANGMU_INTAKE.maxAge,
+  mustResolveBeforeNextSeason:status==='UNRESOLVED' && age<45 && age+1>=KBO_MILITARY_DEADLINE_AGE,application:s.military?.applications.at(-1)??null,program:s.military?.program??null};
 }
 export function remainingKboMilitaryContractDays(s:KboCareer):number {
  const renewal=acceptedRenewal(s);if(renewal)return renewal.years*KBO_CONTRACT_GAME_DAYS;

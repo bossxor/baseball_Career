@@ -1,0 +1,16 @@
+✔ global age28 guard covers legacy careers without a military record and preserves source until explicit enlistment (2939.7501ms)
+✔ E49 opens once, defers only within the deadline and START_SERVICE only navigates to review (827.6868ms)
+✔ E54 forbids indefinite defer and overdue Sangmu application, with stale/forged requests rejected atomically (1388.2889ms)
+✔ E49 application closes the planning task and creates one fixed E50 result; injury leaves original plan untouched (786.3861ms)
+✔ 25/26 reminders expose future grace seasons; max-age retirement remains possible without faking military completion (2141.9472ms)
+✔ return condition consumes exactly six registered team games, including bench, across years; breaks/INT and replay never consume (767.1718ms)
+✔ return condition freezes .95 into game snapshots and JSON chunks, leaves permanent abilities intact, and defaults legacy saves to1 (764.2195ms)
+✔ return counter rejects unsettled, altered, duplicate and missing official registration evidence without repairing it silently (687.778ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8700.7922

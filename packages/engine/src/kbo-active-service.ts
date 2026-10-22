@@ -33,5 +33,5 @@ export function confirmKboActiveService(source:KboCareer,expectedRevision:number
  const reason=eligible(source);if(reason)throw new RangeError(reason);
  assertKboRecruitmentWorld(source.world);const program=programFor(source),career=structuredClone(source);
  career.military={status:'SERVING_ACTIVE',applications:structuredClone(source.military?.applications??[]),program,completionDays:kboMilitaryCompletionDays(program),contractPaymentVersion:1,growthPolicyVersion:1};
- career.schemaVersion=2;career.revision++;return career;
+ career.schemaVersion=3;career.revision++;return career;
 }

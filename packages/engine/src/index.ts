@@ -107,3 +107,6 @@ export * from './kbo-military-state.js';
 export * from './kbo-military-events.js';
 
 export * from './kbo-active-service.js';
+
+export * from './kbo-military-planning.js';
+export * from './kbo-return-condition.js';

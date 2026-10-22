@@ -45,7 +45,7 @@ import {queueRelationFormationNotices} from './relation-notices.js';
 export interface ActiveKboRosterWorld extends Omit<KboRosterWorld,'status'> {status:'ACTIVE';calendar:SeasonCalendar}
 /** New pro root: never pass this world to HS/COLLEGE commands. Scheduling and games follow separately. */
 export interface KboCareer {
- schemaVersion:1|2;revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveKboRosterWorld;
+ schemaVersion:1|2|3;revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveKboRosterWorld;
  protagonistKey:string;protagonistClubId:string;phaseContext:{phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase:'SEASON_REVIEW'}|{phase:'EVENT_DECISION';eventKey:string;resume:KboSeasonProgress}|KboPostseasonPhase|{phase:'RETIRE_CONFIRM';eventKey:string}|{phase:'ARCHIVED'};
  activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string};
  registration:{playerKey:string;clubId:string;seasonKey:string;status:'ACTIVE';firstTeam:boolean;competitionKey?:'KBO'|'FUTURES'};
@@ -81,6 +81,6 @@ export function startSignedKboCareer(source:HighSchoolCareer,expectedRevision:nu
 /** Public entry receipt, not the raw pro root containing P, RNG and the full sealed amateur history. */
 export function kboCareerEntryView(source:KboCareer){
  const key=source.protagonistKey,club=source.world.clubs.find(c=>c.id===source.protagonistClubId),player=source.world.players[key],contract=source.world.contracts[key],r=source.registration;
- if(![1,2].includes(source.schemaVersion) || source.world.status!=='ACTIVE' || source.phaseContext.phase!=='PRESEASON_SETUP' || !player || !contract || !club || !club.roster.includes(key) || r.firstTeam!==club.firstTeam.includes(key) || r.status!=='ACTIVE' || r.playerKey!==key || r.clubId!==club.id || r.seasonKey!==source.world.seasonKey || (contract.servicePay?contract.servicePay.ledger.contract.contractKey:source.renewal?.status==='ACCEPTED' && source.renewal.seasonKey===source.world.seasonKey?source.renewal.offerKey:source.activation.contractKey)!==contract.contractKey)throw new RangeError('INVALID_KBO_ENTRY_VIEW');
+ if(![1,2,3].includes(source.schemaVersion) || source.world.status!=='ACTIVE' || source.phaseContext.phase!=='PRESEASON_SETUP' || !player || !contract || !club || !club.roster.includes(key) || r.firstTeam!==club.firstTeam.includes(key) || r.status!=='ACTIVE' || r.playerKey!==key || r.clubId!==club.id || r.seasonKey!==source.world.seasonKey || (contract.servicePay?contract.servicePay.ledger.contract.contractKey:source.renewal?.status==='ACCEPTED' && source.renewal.seasonKey===source.world.seasonKey?source.renewal.offerKey:source.activation.contractKey)!==contract.contractKey)throw new RangeError('INVALID_KBO_ENTRY_VIEW');
  return {seasonKey:source.world.seasonKey,player:{name:player.name,age:player.age,kind:player.kind,position:player.position},club:{id:club.id,name:club.name},registration:{status:'ACTIVE' as const,firstTeam:r.firstTeam},contract:{years:contract.years,annualSalaryWon:contract.annualSalaryWon,signingBonusWon:contract.signingBonusWon,currency:'KRW' as const,...(contract.servicePay?{payment:kboServiceContractView(contract)}:{})},phase:'PRESEASON_SETUP' as const};
 }
