@@ -1,0 +1,52 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import type {KboCareer} from '../src/kbo-career-entry.js';
+import type {PlayerRelationship,RelationStage,RelationType} from '../src/relationships.js';
+import {remainderDecisionCareer} from './remainder-fixtures.js';
+import {offerKboRemainderRenewal,compareKboRemainderOffers,kboRemainderRenewalView,acceptKboRemainderRenewal} from '../src/kbo-remainder-renewal.js';
+import {acceptKboRemainderTransfer} from '../src/kbo-remainder-transfer.js';
+import {separateKboTransferRelations} from '../src/kbo-relation-transfer.js';
+import {kboRelationshipListView,unreadKboRelationNotices,resolveKboRelationNotice} from '../src/kbo-relations.js';
+import {createKboServicePayroll} from '../src/kbo-service-payroll.js';
+import {enlistInActiveService} from '../src/kbo-military-program.js';
+import {emptySangmuUnit} from '../src/kbo-sangmu-unit.js';
+import {canonicalJson} from '../src/game.js';
+
+function relation(c:KboCareer,otherPlayerKey:string,type:RelationType='TEAMMATE',stage:RelationStage='FORMED'):PlayerRelationship {
+ const normalPairKey=JSON.stringify([c.protagonistKey,otherPlayerKey].sort());
+ return {relationKey:JSON.stringify([type,normalPairKey]),type,normalPairKey,primaryPlayerKey:c.protagonistKey,otherPlayerKey,stage,milestones:[{stage:'FORMED',evidenceKey:'controlled-relation-formation:'+otherPlayerKey,worldDay:31},...(stage==='FORMED'?[]:[{stage,evidenceKey:'controlled-prior-stage:'+otherPlayerKey,worldDay:50}])]};
+}
+function comparison(c:KboCareer){const offered=offerKboRemainderRenewal(c,c.revision),v=kboRemainderRenewalView(offered)!;return compareKboRemainderOffers(offered,offered.revision,{eventKey:v.eventKey,eventVersion:v.eventVersion}).career;}
+function request(c:KboCareer){const v=kboRemainderRenewalView(c)!;return {eventKey:v.eventKey,eventVersion:v.eventVersion,offerKey:v.comparison!.offers[0]!.offerKey};}
+const accept=(c:KboCareer)=>acceptKboRemainderTransfer(c,c.revision,request(c));
+
+test('actual transfer separates only current club relations, preserves all prior milestones and exposes the new stage without a reunion notice',()=>{
+ const base=remainderDecisionCareer(),club=base.world.clubs.find(c=>c.id===base.protagonistClubId)!,mate=base.relationships.relations.find(r=>r.type==='TEAMMATE' && club.roster.includes(r.otherPlayerKey))!,others=club.roster.filter(k=>k!==base.protagonistKey && k!==mate.otherPlayerKey),rival=relation(base,others[0]!,'RIVAL','REUNITED_TEAM'),retired=relation(base,others[1]!,'TEAMMATE','RETIRED'),separated=relation(base,others[2]!,'TEAMMATE','SEPARATED'),opponent=relation(base,base.world.clubs.find(c=>c.id!==club.id)!.roster[0]!,'RIVAL'),oldSchool=relation(base,Object.keys(base.amateurHistory.world.players).find(k=>k!==base.protagonistKey)!,'TEAMMATE'),oldCollege=relation(base,'controlled-archived-college-player','TEAMMATE');
+ base.relationships.relations=[...base.relationships.relations,rival,retired,separated,opponent,oldSchool,oldCollege];
+ base.health.injuries[mate.otherPlayerKey]={severity:'MILD',remainingTeamGames:1,diagnosedGameKey:'controlled-registered-injury',seasonKey:base.world.seasonKey};
+ const source=comparison(base),before=canonicalJson(source),moved=accept(source),receipt=moved.transferHistory!.at(-1)!,newRelations=moved.relationships.relations;
+ for(const r of source.relationships.relations){
+  const actual=newRelations.find(n=>n.relationKey===r.relationKey)!;
+  if([mate.relationKey,rival.relationKey].includes(r.relationKey)){assert.equal(actual.stage,'SEPARATED');assert.deepEqual(actual.milestones.slice(0,-1),r.milestones);assert.deepEqual(actual.milestones.at(-1),{stage:'SEPARATED',evidenceKey:JSON.stringify(['relation-separation',r.relationKey,receipt.receiptKey]),worldDay:receipt.afterWorldDay});}
+  else assert.deepEqual(actual,r);
+ }
+ assert.equal(newRelations.length,source.relationships.relations.length+1);assert.equal(newRelations.at(-1)!.stage,'FORMED');assert.deepEqual(moved.relationships.teamEntries!.slice(0,-1),source.relationships.teamEntries);assert.deepEqual(moved.relationNotices.slice(0,source.relationNotices.length),source.relationNotices);assert.ok(moved.relationNotices.every(n=>n.definitionId==='E94'));
+ for(const field of ['records','health','days','development','seasonGrowth','planHistory','styleUsedWindows','military'] as const)assert.deepEqual(moved[field],source[field]);assert.deepEqual(moved.world.rng,source.world.rng);assert.equal(canonicalJson(source),before);
+ const listed=kboRelationshipListView(moved);assert.equal(listed.find(r=>r.relationKey===mate.relationKey)!.stage,'SEPARATED');assert.equal(listed.find(r=>r.relationKey===rival.relationKey)!.stage,'SEPARATED');
+ const notice=unreadKboRelationNotices(moved).find(n=>n.relationKey===mate.relationKey)!;assert.ok(notice);const read=resolveKboRelationNotice(moved,moved.revision,{eventKey:notice.eventKey,eventVersion:notice.eventVersion,command:'OPEN_RELATIONS'}).career;assert.deepEqual(read.relationships,moved.relationships);assert.deepEqual(read.phaseContext,moved.phaseContext);
+ assert.deepEqual(accept(source),moved);assert.deepEqual(accept(JSON.parse(JSON.stringify(source))),moved);assert.deepEqual(separateKboTransferRelations(source,moved),moved.relationships);
+});
+
+test('registration adapter excludes loans and active-service suspension while injury alone does not exclude a teammate',()=>{
+ const source=comparison(remainderDecisionCareer()),moved=accept(source),club=source.world.clubs.find(c=>c.id===source.protagonistClubId)!,keys=club.roster.filter(k=>k!==source.protagonistKey).slice(0,3),loaned=relation(source,keys[0]!),active=relation(source,keys[1]!),injured=relation(source,keys[2]!);
+ // Controlled registration markers isolate this adapter; no military team game or contract mutation is published.
+ source.sangmu={...(source.sangmu??emptySangmuUnit()),loaned:[keys[0]!]};const contract=source.world.contracts[keys[1]!]!,year=Number(source.world.seasonKey),program=enlistInActiveService({worldKey:source.world.worldKey,playerKey:keys[1]!,clubId:club.id,selectionSeasonKey:String(year-2),contract,remainingPaidGameDays:1});contract.servicePay=createKboServicePayroll(contract,program,{seasonKey:source.world.seasonKey,worldDay:year%4===0&&(year%100!==0||year%400===0)?181:180});source.health.injuries[keys[2]!]={severity:'MILD',remainingTeamGames:1,diagnosedGameKey:'controlled-injury',seasonKey:source.world.seasonKey};
+ moved.relationships={...moved.relationships,relations:[loaned,active,injured]};const before=canonicalJson(source),result=separateKboTransferRelations(source,moved);assert.deepEqual(result.relations[0],loaned);assert.deepEqual(result.relations[1],active);assert.equal(result.relations[2]!.stage,'SEPARATED');assert.equal(result.relations[2]!.milestones.length,injured.milestones.length+1);assert.equal(canonicalJson(source),before);
+});
+
+test('same-club acceptance and rejected or read-only transfer paths never separate existing relations',()=>{
+ const source=comparison(remainderDecisionCareer()),before=canonicalJson(source),input=request(source),same=acceptKboRemainderRenewal(source,source.revision,input);assert.deepEqual(same.relationships,source.relationships);assert.deepEqual(same.relationNotices,source.relationNotices);
+ for(const command of [()=>acceptKboRemainderTransfer(source,source.revision-1,input),()=>acceptKboRemainderTransfer(source,source.revision,{...input,eventVersion:input.eventVersion+1}),()=>acceptKboRemainderTransfer(source,source.revision,{...input,offerKey:'foreign'})])assert.throws(command);
+ kboRemainderRenewalView(source);kboRelationshipListView(source);assert.equal(canonicalJson(source),before);assert.throws(()=>separateKboTransferRelations(source,source),/RELATION_TRANSFER/);
+ const invalid=structuredClone(source);invalid.relationships.relations[0]!.primaryPlayerKey='foreign';const invalidBefore=canonicalJson(invalid);assert.throws(()=>accept(invalid),/CAREER_RELATION/);assert.equal(canonicalJson(invalid),invalidBefore);
+});
