@@ -1,3 +1,4 @@
+import {kboMilitaryGrowthPeriods} from './kbo-military-growth.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {assertSeasonCalendar} from './season-calendar.js';
@@ -21,7 +22,8 @@ export function settleKboSeasonGrowth(source:KboCareer,expectedRevision:number) 
  // Postseason days follow the regular range in the same ledger; regular growth reads only the regular range.
  const regularDays=source.days.days.filter(d=>d.day<=last);
  if(regularDays.length!==last-first+1 || regularDays.some((d,i)=>d.day!==first+i))throw new RangeError('INCOMPLETE_GROWTH_DAYS');
- const player=source.world.players[key]!,start=source.seasonGrowth.seasonStart;
+ const military=kboMilitaryGrowthPeriods(source);if(military)return publishGrowth(source,military);
+ const start=source.seasonGrowth.seasonStart;
  // Plan boundaries: a plan recorded after N team games starts the growth day after my club's N-th game in my league.
  const league=protagonistLeague(source),growthIndex=new Map(calendar.growthDays.map((d,i)=>[d,i]));
  const teamGameDays=Object.values(source.records.games).filter(g=>g.scope.leagueKey===league && g.scope.seasonKey===season && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,source.protagonistClubId)).map(g=>g.worldDay).sort((a,b)=>a-b);
@@ -47,6 +49,10 @@ export function settleKboSeasonGrowth(source:KboCareer,expectedRevision:number) 
  const periods:ClosedGrowthPeriod[]=history.map((plan,i)=>{const p=parts[i]!;return {periodKey:JSON.stringify(['pro-growth',source.world.worldKey,season,p.start,p.end]),focus:[...plan.focus],archetype:plan.archetype,
   period:{startDay:p.start,endDay:p.end,levelSeasonDays:W,level:'PRO',appearances:p.appearances,pitcherRole:start.position==='RP'?'RP':start.position==='CP'?'CP':'SP',
    rehabRatio:p.scheduledDays?p.rehabDays/p.scheduledDays:0,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER',difficulty:source.difficulty,beneficiary:true}}};});
+ return publishGrowth(source,periods);
+}
+function publishGrowth(source:KboCareer,periods:readonly ClosedGrowthPeriod[]){
+ const key=source.protagonistKey,player=source.world.players[key]!;
  const settled=settleClosedGrowthPeriods(player,source.seasonGrowth,periods),career=structuredClone(source);
  if(settled.newBudgetUnits===0 && settled.ledger.entries.length===source.seasonGrowth.entries.length)return {career,budgetUnits:0,gainedUnits:0,discardedUnits:0,duplicate:true};
  career.world.players[key]=settled.player;career.seasonGrowth=settled.ledger;career.revision++;

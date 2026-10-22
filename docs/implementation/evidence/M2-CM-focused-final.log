@@ -1,0 +1,16 @@
+✔ military growth: full SPORTS season has one PRO/Futures period, actual military PA and one annual budget (2157.9623ms)
+✔ military growth: June30 splits service/return periods, preserves one annual cap and actual original-club registrations (1413.4063ms)
+✔ military growth: plan boundary uses military games, not the original club calendar; focus/history stay intact (1281.2561ms)
+✔ military growth rejects foreign/unregistered PA, reused days and changed calendar without mutation (5081.0381ms)
+✔ legacy military saves retain their existing unsplit periods and do not opt in during reads (2441.1188ms)
+✔ pro growth pays one PRO period over the growth calendar from official appearances, once (3474.1651ms)
+✔ growth rejects wrong phase, missing day receipts, double-booked days and rehabilitation appearances (4656.4606ms)
+✔ pro year-end needs paid growth and an explicit unused-training forfeit, then ages once and closes health (1890.9856ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13278.0053

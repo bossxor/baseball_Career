@@ -1,0 +1,19 @@
+{
+  "reason": "git diff --check found trailing blank lines after a successful full check; no functional edit.",
+  "files": [
+    {
+      "path": "packages/engine/src/kbo-military-growth.ts",
+      "testedSha256": "e9ac79ffa98cc4bc6ae966a9edcf87e49dddfaaac77d7e521001f37a310cbec5",
+      "sha256": "5ce2dd8723e5c9191962cd6f81c99ba1a8543090d045a70f6b0b6b9363fe5294",
+      "normalizedSha256": "8eb3af2ea443f03d8982a0fd32accb0255de0252a7c8828d4c7feb9f8fdb2c3f",
+      "transformation": "Remove trailing empty lines only; all other bytes identical."
+    },
+    {
+      "path": "packages/engine/test/kbo-military-growth.test.ts",
+      "testedSha256": "31a7321f04202197e920fcf19e125d0b54e567091922a2c7080ede8fe23a3abe",
+      "sha256": "875e112f1bc96fea3348ab7a966a62180926bde54f70ea67fdf9d29540ed5378",
+      "normalizedSha256": "6ef239b90e2812be2365b8947deb78fe8a31fc523eaac227a3f110e2e16853fb",
+      "transformation": "Remove trailing empty lines only; all other bytes identical."
+    }
+  ]
+}

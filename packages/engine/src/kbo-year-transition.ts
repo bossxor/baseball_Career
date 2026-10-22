@@ -136,5 +136,7 @@ if(career.sangmu){
  career.planHistory=[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}];
  if(career.traits)career.traits={...career.traits,lastClosedDay:null,lastSeasonKey:target};
  for(const field of ['days','seasonClose','postseason','preseasonPlan','openingRoster','competitionSchedule','callupReviews'] as const)delete career[field];
+ // New unplayed season can adopt registration-aware growth without rewriting any prior receipts or plan boundaries.
+ if(career.military?.completionDays && career.military.program?.blocks.some(b=>b.seasonKey===target))career.military.growthPolicyVersion=1;
  career.phaseContext={phase:'PRESEASON_SETUP'};career.revision++;queueKboMilitaryFirstBlock(career);return career;
 }

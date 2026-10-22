@@ -1,3 +1,4 @@
+import {kboMilitaryRegisteredGames,kboMilitaryScheduledGames} from './kbo-military-growth.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import type {KboSeasonProgress} from './kbo-progress.js';
 import {assertCareerRevision} from './high-school-career.js';
@@ -17,10 +18,12 @@ export function protagonistLeague(career:KboCareer):KboLeagueKey {
 }
 /** Completed official regular games of my club in my current league this season. */
 export function kboTeamGames(career:KboCareer):number {
+ const military=kboMilitaryRegisteredGames(career);if(military)return military.length;
  const league=protagonistLeague(career);
  return Object.values(career.records.games).filter(g=>g.scope.leagueKey===league && g.scope.seasonKey===career.world.seasonKey && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,career.protagonistClubId)).length;
 }
 function scheduledTeamGames(career:KboCareer):number {
+ const military=kboMilitaryScheduledGames(career);if(military!==null)return military;
  const league=protagonistLeague(career);
  return career.competitionSchedule!.leagues[league].filter(g=>g.awayTeamKey===career.protagonistClubId || g.homeTeamKey===career.protagonistClubId).length;
 }

@@ -60,7 +60,10 @@ test('an enlisted protagonist serves two seasons as a loan to the military team 
  assert.equal(e.military!.program!.contract.contractKey,renewed.renewal!.offerKey);assert.equal(e.military!.program!.contract.annualSalaryWon,renewed.renewal!.annualSalaryWon);assert.equal(e.military!.program!.contract.totalRemainingWon,renewed.renewal!.annualSalaryWon);
  assert.equal(e.military!.status,'SERVING_SPORTS');assert.ok(kboProtagonistServing(e));assert.deepEqual(e.sangmu!.loaned,[e.protagonistKey]);assert.equal(e.military!.program!.blocks[0]!.seasonKey,String(Number(e.world.seasonKey)+1));
  assert.ok(!kboYearTransitionReadiness(e).blockers.includes('MILITARY_RESULT_PENDING'));
- const pending=startNextKboSeason(e,e.revision),notice=kboMilitaryEventView(pending)[0]!;
+ assert.equal(e.military!.growthPolicyVersion,1);
+ const legacy=structuredClone(e);delete legacy.military!.growthPolicyVersion;
+ const pending=startNextKboSeason(legacy,legacy.revision),notice=kboMilitaryEventView(pending)[0]!;
+ assert.equal(pending.military!.growthPolicyVersion,1);assert.equal(legacy.military!.growthPolicyVersion,undefined);
  const n=resolveKboMilitaryEvent(pending,pending.revision,{eventKey:notice.eventKey,eventVersion:notice.eventVersion,command:'ADVANCE_SERVICE'});
  assert.equal(n.military!.program!.completedBlocks,0);
  // Next season: the NPC cohort leaves one slot for my player, he is never on the first team and plays Futures for the military team.

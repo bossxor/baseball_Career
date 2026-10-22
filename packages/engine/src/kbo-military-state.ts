@@ -16,7 +16,7 @@ export interface KboSangmuApplication {
  applicationId:string;eventKey:string;selectionSeasonKey:string;score:number;accepted:boolean;slotKind:'HITTER'|'PITCHER';
  decision:'PENDING'|'ENLISTED'|'DECLINED'|'REJECTION_ACKNOWLEDGED';
 }
-export interface KboMilitaryRecord {status:KboMilitaryStatus;applications:readonly KboSangmuApplication[];program?:KboMilitaryProgram;completedSeasonKey?:string;contractPaymentVersion?:1;completionDays?:readonly {seasonKey:string;worldDay:number}[]}
+export interface KboMilitaryRecord {status:KboMilitaryStatus;applications:readonly KboSangmuApplication[];program?:KboMilitaryProgram;completedSeasonKey?:string;contractPaymentVersion?:1;completionDays?:readonly {seasonKey:string;worldDay:number}[];growthPolicyVersion?:1}
 export const KBO_MILITARY_DEADLINE_AGE=28;
 
 export const kboMilitaryStatus=(s:Pick<KboCareer,'military'>):KboMilitaryStatus=>s.military?.status??'UNRESOLVED';
@@ -67,7 +67,7 @@ export function resolveSangmuApplication(source:KboCareer,expectedRevision:numbe
   const renewal=acceptedRenewal(source),current=source.world.contracts[source.protagonistKey]!;
   const contract=renewal?{...current,contractKey:renewal.offerKey,seasonKey:renewal.seasonKey,years:renewal.years,annualSalaryWon:renewal.annualSalaryWon}:current;
   const program=enlistInSangmu({worldKey:source.world.worldKey,playerKey:source.protagonistKey,clubId:source.protagonistClubId,selectionSeasonKey:app.selectionSeasonKey,contract,remainingPaidGameDays:days});
-  set('ENLISTED');career.military!.status='SERVING_SPORTS';career.military!.program=program;career.military!.completionDays=kboMilitaryCompletionDays(program);career.military!.contractPaymentVersion=1;
+  set('ENLISTED');career.military!.status='SERVING_SPORTS';career.military!.program=program;career.military!.completionDays=kboMilitaryCompletionDays(program);career.military!.contractPaymentVersion=1;career.military!.growthPolicyVersion=1;
   const unit=career.sangmu??emptySangmuUnit();career.sangmu={...unit,loaned:[...(unit.loaned??[]),source.protagonistKey]};
  } else {set(command==='DECLINE'?'DECLINED':'REJECTION_ACKNOWLEDGED');career.military!.status='UNRESOLVED';}
  const closed=completeBlockingEvent(event,event.version,{sourceEvidenceKey:event.evidenceKey,receiptKey:JSON.stringify(['sangmu-result-confirmed',app.applicationId,command]),command:'CONFIRM_MILITARY_RESULT'},{worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['CONFIRM_MILITARY_RESULT']});

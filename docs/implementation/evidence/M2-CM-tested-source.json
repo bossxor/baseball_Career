@@ -1,0 +1,52 @@
+{
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "050c287d07df553b16b0170f78dd020b21c74c972fa6500ba9c072f86021341b"
+    },
+    {
+      "path": "docs/design/21-MILITARY-CONTRACT-RETURN.md",
+      "sha256": "406088a6a4081daefcecfd8bc77a5718a40260fd2a61cc4b889658d22a50e52c"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "d3033566e916b149b73791e35b636d97b91ee0b17b646b25cb3367a93b5ed8e2"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "3026f454a9d18c86111e1158df9597a0b4c98dfbeb5be6d9141db9cec1ca952b"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "992992eeee25ee0c89a7767d012473f30019ec1a8f6f06efad7844965fbaabef"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-state.ts",
+      "sha256": "8d368513f54425d4fd1da96313e47cbeeaaa2e0e34ef0cdf30144e080556d13c"
+    },
+    {
+      "path": "packages/engine/src/kbo-season-growth.ts",
+      "sha256": "602571b1375096cd1244d1c7b7549dbff9e1ebf88590ad6fbe8a56f3ffe47ac3"
+    },
+    {
+      "path": "packages/engine/src/kbo-windows.ts",
+      "sha256": "d382ba11bc4b30149230fcba7a770604e96b2f252c11193c48342ebe8b334a82"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "319d122ba954e16da826e3d5a96423256e071be5909adedb3da4645a018e705f"
+    },
+    {
+      "path": "packages/engine/test/kbo-military-state.test.ts",
+      "sha256": "eb6800bad0f72fb42f4b1dddc9dc78b87b150a3921ceb3ee79b3a42750d079d8"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-growth.ts",
+      "sha256": "e9ac79ffa98cc4bc6ae966a9edcf87e49dddfaaac77d7e521001f37a310cbec5"
+    },
+    {
+      "path": "packages/engine/test/kbo-military-growth.test.ts",
+      "sha256": "31a7321f04202197e920fcf19e125d0b54e567091922a2c7080ede8fe23a3abe"
+    }
+  ]
+}
