@@ -1,0 +1,25 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /INVALID_KBO_RECRUITMENT_PAYROLL/. Input:
+
+'RangeError: INVALID_KBO_SERVICE_PAYROLL'
+
+    at <anonymous> (C:\Users\N-052\AppData\Local\Temp\baseball-transfer-gap-probe.mjs:12:8) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: RangeError: INVALID_KBO_SERVICE_PAYROLL
+      at assertKboServicePayroll (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-service-payroll.ts:29:581)
+      at kboContractSeasonCharge (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-service-payroll.ts:36:58)
+      at assertKboRecruitmentWorld (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-draft.ts:32:757)
+      at <anonymous> (C:\Users\N-052\AppData\Local\Temp\baseball-transfer-gap-probe.mjs:12:19)
+      at getActual (node:assert:611:5)
+      at strict.throws (node:assert:759:24)
+      at <anonymous> (C:\Users\N-052\AppData\Local\Temp\baseball-transfer-gap-probe.mjs:12:8),
+  expected: /INVALID_KBO_RECRUITMENT_PAYROLL/,
+  operator: 'throws',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

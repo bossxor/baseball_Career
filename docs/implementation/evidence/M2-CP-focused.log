@@ -1,0 +1,12 @@
+✔ comparison request keeps E30, original offer, clock, rights and money intact while games remain paused (2415.7014ms)
+✔ comparison excludes fully committed clubs and keeps the original contract option when no alternate can fund the remainder (232.4885ms)
+✔ comparison is idempotent after JSON resume; stale and altered requests reject without rerolls or state changes (1252.8046ms)
+✔ original club acceptance remains possible after comparison and actually resumes registered prorated payment exactly once (2437.1858ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6875.0975

@@ -1,0 +1,2 @@
+{"kind":"EXPECTED_REJECTION_OF_NAIVE_TRANSFER","rejection":"INVALID_KBO_SERVICE_PAYROLL","unattributedOriginalClubPaidWon":208333,"originalClubPaidWon":208333,"originalUnchanged":true,"contractAccepted":false}
+PASS: a roster/clubId-only transfer is rejected before publication. This is a next-step gap probe, not an implemented transfer command or an unexpected runtime failure.

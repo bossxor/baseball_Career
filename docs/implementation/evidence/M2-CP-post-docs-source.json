@@ -1,0 +1,25 @@
+{
+  "reason": "Runtime sources remained frozen; completion status and newly confirmed user decision documented after full check, rebuilt and static validators rerun.",
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "4f22020bab35332fff30fad026e3832b1ba097e60155fb8f1a342b2ae802c9ed"
+    },
+    {
+      "path": "docs/design/21-MILITARY-CONTRACT-RETURN.md",
+      "sha256": "3ce4db5d890dee35c1ee0c897ed2d13af7ef2047342db9ab12775c5ab6e16f75"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "fdde0aebdfa2fbdb5267397b82def5d4afa30393620718238d4bb79e1a41eb19"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "69172a75d7bd239cc34e93af695f9407710ae9931ffe3f99002c5d1268ea7fa7"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "2c4590627ee0f0b06206ac764ee9b8b3ae376465d4afb10b688ccb9685d1a812"
+    }
+  ]
+}

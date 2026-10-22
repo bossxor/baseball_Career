@@ -1,0 +1,32 @@
+{
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "4f22020bab35332fff30fad026e3832b1ba097e60155fb8f1a342b2ae802c9ed"
+    },
+    {
+      "path": "docs/design/21-MILITARY-CONTRACT-RETURN.md",
+      "sha256": "3ce4db5d890dee35c1ee0c897ed2d13af7ef2047342db9ab12775c5ab6e16f75"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "00e32ecfcbe30ff5f5bc1cc01447d80ab5ce44e62dae40372ef1db3874da3db2"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "c585e60543ef2fae98834a5db87b4e6b4a61aa696ff5624c3be3430b940ff034"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "6fab9709ceb55003cd64636a0b85265bd3fedc15a21169bba333bf41448c4191"
+    },
+    {
+      "path": "packages/engine/src/kbo-remainder-renewal.ts",
+      "sha256": "2e5cffe9a57eb128a6e05309b2a012765a736eb88dfb24e606853c2032cc7660"
+    },
+    {
+      "path": "packages/engine/test/kbo-remainder-comparison.test.ts",
+      "sha256": "8a9a624ed3bfc18e716bef849eca2b3a7894f79f0b3f146c2424583e9c0c03e5"
+    }
+  ]
+}
