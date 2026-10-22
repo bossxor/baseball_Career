@@ -1,0 +1,146 @@
+{
+  "baseCommit": "8732e62c047b100694b86492e80d9fb8e241de7b",
+  "direction": "validated checkout -> V:/",
+  "runtimeTestedSourcesUnchanged": true,
+  "postCheckDocsValidatedSeparately": true,
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "3d63706c3ce37e2a261592bf1581b31ae7d7df7db7c9756538b33aa1711c29e5",
+      "gitBlob": "5e26203f107610163dc45549e4e23870cdd31e63",
+      "indexBlob": "5e26203f107610163dc45549e4e23870cdd31e63"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "68b0d92540bd4c0dbf40750cb859638978340f40bfdfa9d4fcac94f2189af7bf",
+      "gitBlob": "c9a164c998b236eae5e2bb06ea51b6f3a1793d09",
+      "indexBlob": "c9a164c998b236eae5e2bb06ea51b6f3a1793d09"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "179f894723c6fc5d5db4f4a2a42965723c093ba7bad30b0a1d7f5f5113b06b4b",
+      "gitBlob": "b41f9869fd7b18cbbe5935fa7c1412592242cb1f",
+      "indexBlob": "b41f9869fd7b18cbbe5935fa7c1412592242cb1f"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "0667864ddcf1bf59f0f2942ff3fc55ed6570859371967159b30295510d961ab1",
+      "gitBlob": "06ab1fe9d5bcb026b75e88de038e77837f7bebc5",
+      "indexBlob": "06ab1fe9d5bcb026b75e88de038e77837f7bebc5"
+    },
+    {
+      "path": "docs/implementation/M2-CR-KBO-TRANSFER-RELATIONS.md",
+      "sha256": "5a9cc07e7017efb3b083bc71dc08365da4aa6a307487cdeed9431f0a4c362751",
+      "gitBlob": "815499c0f67ebfb913c8488f1d9c02f0a3aaf089",
+      "indexBlob": "815499c0f67ebfb913c8488f1d9c02f0a3aaf089"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "6f5efc08fd4cdedc87790776e87683a2c899ad06801d630ae627a1ad2b112f39",
+      "gitBlob": "b3815eb3cba4b51458143f9d6303f0db1313a02f",
+      "indexBlob": "b3815eb3cba4b51458143f9d6303f0db1313a02f"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "1812051e87ac5fe026288668567701d4f90b923b34b87d3bbcc9d1207f5f487c",
+      "gitBlob": "88d722b3d496ad9af89385caa255394602f2fdd8",
+      "indexBlob": "88d722b3d496ad9af89385caa255394602f2fdd8"
+    },
+    {
+      "path": "docs/implementation/drafts/M2-CR-UNVERIFIED/README.md",
+      "sha256": "fccc6efc2bea13a677ccb82ae6e70a043731a8287f9a8227e670319eb2078cd4",
+      "gitBlob": "8b7daa58186c3888f79513a10f3c08b54f089b51",
+      "indexBlob": "8b7daa58186c3888f79513a10f3c08b54f089b51"
+    },
+    {
+      "path": "packages/engine/src/kbo-remainder-transfer.ts",
+      "sha256": "c55b1c8318728de3c5bd1d416670f599c8f2f0c48e9d99402a6bc5af45e9f8f3",
+      "gitBlob": "68fdbd7650b417089cfa4cd6e349bca9cc91c2fe",
+      "indexBlob": "68fdbd7650b417089cfa4cd6e349bca9cc91c2fe"
+    },
+    {
+      "path": "packages/engine/test/kbo-remainder-transfer.test.ts",
+      "sha256": "0585021f6f93ffadc0818a1ca653d1f92ebb7a57a3c519969a3916342aa54b1a",
+      "gitBlob": "854cea4f7e74f2956b7374b81241fcb8066953f5",
+      "indexBlob": "854cea4f7e74f2956b7374b81241fcb8066953f5"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CR-before-wiring.log",
+      "sha256": "22ac991efaec10044c7aa56e7b4d8aae8979c149f250aa44cbb1ea41f13135a4",
+      "gitBlob": "1be2ef7698b51dca6ab8e56c6adaf54fe7bf18e3",
+      "indexBlob": "1be2ef7698b51dca6ab8e56c6adaf54fe7bf18e3"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CR-check.log",
+      "sha256": "445b8ad17addf48c4749c2e1b1189e935b7712ccf4fab7e08284f1e4dc677e66",
+      "gitBlob": "a885f20f009dd0da0cccc96a1eefa30b97adadac",
+      "indexBlob": "a885f20f009dd0da0cccc96a1eefa30b97adadac"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CR-design-final.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090",
+      "gitBlob": "3dbeafbf5c570526f3080073cffb213824255b29",
+      "indexBlob": "3dbeafbf5c570526f3080073cffb213824255b29"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CR-focused-final.log",
+      "sha256": "02207da28f93246c13e07911309c864e401bce30703a6b607c66b36596ea3b08",
+      "gitBlob": "c4e55c110ec3cada0224fe73f2e849a1f80fefe1",
+      "indexBlob": "c4e55c110ec3cada0224fe73f2e849a1f80fefe1"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CR-focused.log",
+      "sha256": "75f4a6c6f5cd9aaaccbe18ef5a38976ffdec1501d4507d126a1e1c9d1ccb52c9",
+      "gitBlob": "4e6477516bcf3598d2ceea70361ab54a7f36a856",
+      "indexBlob": "4e6477516bcf3598d2ceea70361ab54a7f36a856"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CR-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f",
+      "gitBlob": "f61cd1e9f5eb3902a8bad2bb1881bc2b55805d70",
+      "indexBlob": "f61cd1e9f5eb3902a8bad2bb1881bc2b55805d70"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CR-manifest.log",
+      "sha256": "6089df69a426fe6756917ff6358256756f763977079292318b26040e4d062f1d",
+      "gitBlob": "65bd618ab839e74feaccf6833f4436ab0c0e747e",
+      "indexBlob": "65bd618ab839e74feaccf6833f4436ab0c0e747e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CR-post-docs-source.json",
+      "sha256": "6511c0dbd9ea77bd50f92ad053737580cc364e4b04099ca60ce5fb2b12e291b7",
+      "gitBlob": "54429819a2f3fe8a89c213034a24f82f8aa250c2",
+      "indexBlob": "54429819a2f3fe8a89c213034a24f82f8aa250c2"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CR-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8",
+      "gitBlob": "44c3710ebb95acc2bae3c2ee24697eb90b52ce06",
+      "indexBlob": "44c3710ebb95acc2bae3c2ee24697eb90b52ce06"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CR-tested-source.json",
+      "sha256": "921351d5f5697579ae33732d0650056999f2c155d9b29fef25d691e886922aed",
+      "gitBlob": "deca808d7fed4b963a1d856e190d9f1c7998cd44",
+      "indexBlob": "deca808d7fed4b963a1d856e190d9f1c7998cd44"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CR-types.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df",
+      "gitBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300",
+      "indexBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300"
+    },
+    {
+      "path": "packages/engine/src/kbo-relation-transfer.ts",
+      "sha256": "0ab4149302a0c241ad89818b9a338bfd744d05cc59cbc835559681ec6d3e2f59",
+      "gitBlob": "b48768ce9f95d3e19d80fab53d2ca5fa47529be7",
+      "indexBlob": "b48768ce9f95d3e19d80fab53d2ca5fa47529be7"
+    },
+    {
+      "path": "packages/engine/test/kbo-relation-transfer.test.ts",
+      "sha256": "d171a8367cc495466b97e0671a66c500a94ac2596b5c7a1e025b09082fd17c54",
+      "gitBlob": "781060917157ed6ef6976279aec051cbe4b80bd7",
+      "indexBlob": "781060917157ed6ef6976279aec051cbe4b80bd7"
+    }
+  ]
+}

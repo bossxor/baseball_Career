@@ -16,6 +16,7 @@ import {emptyBatting} from './stats.js';
 import {captureKboTransferPlanBoundaryDays} from './kbo-season-growth.js';
 import {formRegisteredTeamTeammate} from './team-teammates.js';
 import {queueRelationFormationNotices} from './relation-notices.js';
+import {separateKboTransferRelations} from './kbo-relation-transfer.js';
 
 /** Only the two affected clubs may fill missing legal slots; existing healthy registrations stay in place. */
 function repairTransferClub(c:KboCareer,club:KboClub,leaving?:DevelopmentPlayer):KboRosterRepairReceipt['signings'] {
@@ -64,6 +65,7 @@ export function acceptKboRemainderTransfer(source:KboCareer,expectedRevision:num
  if(source.phaseContext.phase!=='EVENT_DECISION')throw new RangeError('INVALID_CAREER_PHASE');
  c.phaseContext=structuredClone(source.phaseContext.resume);c.schemaVersion=4;c.revision++;
  const world={worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,leagueKey:'KBO',protagonistKey:key,protagonistSchoolId:to.id,schools:c.world.clubs,players:c.world.players};
+ c.relationships=separateKboTransferRelations(source,c);
  c.relationships=formRegisteredTeamTeammate(c.relationships,world,receiptKey,o.startAfterWorldDay);
  c.relationNotices=queueRelationFormationNotices({...c,world,previousSeasons:[...(c.amateurHistory.previousSeasons??[]),{world:c.amateurHistory.world}]},o.startAfterWorldDay)??[];
  captureKboTransferPlanBoundaryDays(c);assertKboRecruitmentWorld(c.world);return c;

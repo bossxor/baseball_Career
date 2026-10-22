@@ -1,0 +1,21 @@
+✔ completed CQ-shaped saves retain their old relation stages during reads and notice acknowledgement (8167.3617ms)
+✔ actual transfer separates only current club relations, preserves all prior milestones and exposes the new stage without a reunion notice (2190.3142ms)
+✔ registration adapter excludes loans and active-service suspension while injury alone does not exclude a teammate (1263.9725ms)
+✔ same-club acceptance and rejected or read-only transfer paths never separate existing relations (2648.9993ms)
+✔ midseason offer is fixed, private and blocking; explicit acceptance preserves original receipts and budgets before real play resumes (12585.2438ms)
+✔ stale events and forged term/basis reject atomically; insufficient budget cannot silently fund a renewal (2194.9133ms)
+✔ actual final regular date settles new pay once; postseason pays no extra; normal next-year renewal archives all prior contract receipts (33376.5944ms)
+✔ pitcher transfer carries the exact book and XP budget, then actual new-club pitching continues without resetting prior entries (25026.8644ms)
+✔ foreign acceptance atomically preserves old pay, records, health, growth and relations; actual next registration pays new club once (14343.5143ms)
+✔ foreign acceptance rejects stale/forged/funded-capacity changes with the entire source intact (2716.3933ms)
+✔ recipient injury repair keeps incoming player in Futures and preserves existing injury evidence (877.1427ms)
+✔ leaving a first-team required position repairs only the old club vacancy and independent Futures slot (736.6448ms)
+✔ transferred term settles on final regular day, pays no postseason extra and preserves receipts/version into next year (28591.3135ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 74444.7003

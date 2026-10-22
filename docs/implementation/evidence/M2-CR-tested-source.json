@@ -1,0 +1,36 @@
+{
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "3d63706c3ce37e2a261592bf1581b31ae7d7df7db7c9756538b33aa1711c29e5"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "c1f3ad609a49353162461f67eb284ea5fc758ae3586a30188514a6f16a26e603"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "741bf20f7dd5bbe3b6809f9e7ba348c5049de5ead3efa54710ad97cb3e66832f"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "e2bdcf7e30e1f64267b3da190253383af357dee6597f203c5d3dcaa4f20eb3ed"
+    },
+    {
+      "path": "packages/engine/src/kbo-remainder-transfer.ts",
+      "sha256": "c55b1c8318728de3c5bd1d416670f599c8f2f0c48e9d99402a6bc5af45e9f8f3"
+    },
+    {
+      "path": "packages/engine/test/kbo-remainder-transfer.test.ts",
+      "sha256": "0585021f6f93ffadc0818a1ca653d1f92ebb7a57a3c519969a3916342aa54b1a"
+    },
+    {
+      "path": "packages/engine/src/kbo-relation-transfer.ts",
+      "sha256": "0ab4149302a0c241ad89818b9a338bfd744d05cc59cbc835559681ec6d3e2f59"
+    },
+    {
+      "path": "packages/engine/test/kbo-relation-transfer.test.ts",
+      "sha256": "d171a8367cc495466b97e0671a66c500a94ac2596b5c7a1e025b09082fd17c54"
+    }
+  ]
+}

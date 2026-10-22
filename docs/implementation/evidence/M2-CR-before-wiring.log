@@ -1,0 +1,65 @@
+✖ actual transfer separates only current club relations, preserves all prior milestones and exposes the new stage without a reunion notice (3954.5491ms)
+✔ registration adapter excludes loans and active-service suspension while injury alone does not exclude a teammate (707.7585ms)
+✖ same-club acceptance and rejected or read-only transfer paths never separate existing relations (1910.1923ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 1
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7901.7976
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-relation-transfer.test.ts:1:1902
+✖ actual transfer separates only current club relations, preserves all prior milestones and exposes the new stage without a reunion notice (3954.5491ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'FORMED'
+  - 'SEPARATED'
+
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-relation-transfer.test.ts:30:75)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'FORMED',
+    expected: 'SEPARATED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\kbo-relation-transfer.test.ts:1:6570
+✖ same-club acceptance and rejected or read-only transfer paths never separate existing relations (1910.1923ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /CAREER_RELATION/. Input:
+
+  'RangeError: INVALID_RELATION_FORMATION_NOTICE'
+
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-relation-transfer.test.ts:51:153)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: RangeError: INVALID_RELATION_FORMATION_NOTICE
+        at formationContext (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\relation-notices.ts:24:223)
+        at queueRelationFormationNotices (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\relation-notices.ts:36:17)
+        at acceptKboRemainderTransfer (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-remainder-transfer.ts:68:20)
+        at accept (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-relation-transfer.test.ts:21:29)
+        at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-relation-transfer.test.ts:51:164)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-relation-transfer.test.ts:51:153)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25),
+    expected: /CAREER_RELATION/,
+    operator: 'throws',
+    diff: 'simple'
+  }

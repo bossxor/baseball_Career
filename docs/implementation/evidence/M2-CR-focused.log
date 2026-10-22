@@ -1,0 +1,17 @@
+✔ actual transfer separates only current club relations, preserves all prior milestones and exposes the new stage without a reunion notice (9318.7362ms)
+✔ registration adapter excludes loans and active-service suspension while injury alone does not exclude a teammate (1408.1001ms)
+✔ same-club acceptance and rejected or read-only transfer paths never separate existing relations (3008.8629ms)
+✔ pitcher transfer carries the exact book and XP budget, then actual new-club pitching continues without resetting prior entries (27199.6465ms)
+✔ foreign acceptance atomically preserves old pay, records, health, growth and relations; actual next registration pays new club once (18663.673ms)
+✔ foreign acceptance rejects stale/forged/funded-capacity changes with the entire source intact (4782.8534ms)
+✔ recipient injury repair keeps incoming player in Futures and preserves existing injury evidence (1650.4422ms)
+✔ leaving a first-team required position repairs only the old club vacancy and independent Futures slot (1303.1919ms)
+✔ transferred term settles on final regular day, pays no postseason extra and preserves receipts/version into next year (35630.1142ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 90510.4603
