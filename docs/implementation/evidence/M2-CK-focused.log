@@ -1,0 +1,31 @@
+✔ zero-first-team career archives actual identity/six peaks and zero rates without exposing hidden state or creating a player copy (1872.0013ms)
+✔ KBO, Futures and postseason totals stay distinct, with rates from summed raw numerators rather than averaged seasons (1033.7567ms)
+✔ pitcher archive retains hand/form and active pitch mastery without exposing pitch XP or treating zero outs as ERA0 (1706.4969ms)
+✔ live roots, foreign retirement club/year, mismatched age and future receipt cannot masquerade as a retired archive (3624.9422ms)
+✔ the postseason plays real games day by day to one champion and returns to SEASON_REVIEW (12575.8298ms)
+✔ postseason home runs feed career trait evidence after each postseason day (1426.9468ms)
+✔ year transition readiness lists every Y01 blocker until postseason, growth, season close and my contract are done (9912.0408ms)
+✔ E30 renewal offer follows 08 once and closes only through the accepted domain commit (13072.1128ms)
+✔ Y02 stages age+1 and contract years for every pro player without changing the source (7756.8115ms)
+✔ next season activates every player at once and the second pro season opens and plays (22330.6377ms)
+✔ season close grows and ages every pro NPC once from the natural PRO period (5475.2655ms)
+✔ NPCs who played at45 retire before AI renewal, supply and complete two-league reselection (7238.2548ms)
+✔ my retirement: E36 cancel returns, confirm closes E30 and archives; age 45 ends the career without a renewal (6298.2235ms)
+✔ forced retirement review needs age 35 and two closed seasons under the first-team threshold (5775.9628ms)
+✔ year transition drafts a 100-player rookie class in reverse standings order, with room and budget respected (8559.8418ms)
+✔ mass NPC retirement repairs both leagues before atomic activation, without deleting debt, records or the old generation (10308.4176ms)
+✔ legacy multi-year contracts carry only actual remaining years, including my unexpired contract without a new renewal (8754.2145ms)
+✔ the military unit ages with the year transition, completes the played block and rejoins finished programs (15562.5671ms)
+✔ retiring a suspended contract preserves all unpaid game days instead of losing one calendar year in its warning (6689.9761ms)
+✔ service payroll reserves zero in the full service year, actual return-year Futures capacity and residual future principal (16.5309ms)
+✔ service payroll rejects changed contract identity, principal version, wrong completion date and excessive reservation (2.4753ms)
+✔ public service contract view reports suspended/returned money and exact days without exposing receipts or mutating source (1.7832ms)
+✔ career entry adds payment details only for a service contract, keeping ordinary view shape and private state intact (1971.2768ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 143069.4364

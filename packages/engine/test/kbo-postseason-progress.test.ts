@@ -243,3 +243,13 @@ test('the military unit ages with the year transition, completes the played bloc
  for(const k of returned){const club=back.world.clubs.find(x=>x.roster.includes(k))!;assert.equal(club.id,o2.sangmu!.members[k]!.program.originalClubId);assert.equal(back.world.players[k]!.age,o2.sangmu!.members[k]!.player.age+1);assert.ok(!Object.hasOwn(back.sangmu!.members,k));}
  assert.equal(returned.length+Object.keys(back.sangmu!.members).length,20);
 });
+
+test('retiring a suspended contract preserves all unpaid game days instead of losing one calendar year in its warning',async()=>{
+ const {createKboServicePayroll}=await import('../src/kbo-service-payroll.js'),{enlistInSangmu}=await import('../src/kbo-military-program.js');
+ const c=closed(),key=c.protagonistKey,contract=c.world.contracts[key]!,year=Number(c.world.seasonKey);contract.years=4;
+ const program=enlistInSangmu({worldKey:c.world.worldKey,playerKey:key,clubId:c.protagonistClubId,selectionSeasonKey:String(year-1),contract,remainingPaidGameDays:576}),returnYear=year+1,day=returnYear%4===0 && (returnYear%100!==0 || returnYear%400===0)?181:180;
+ contract.servicePay=createKboServicePayroll(contract,program,{seasonKey:String(returnYear),worldDay:day});c.world.clubs.find(x=>x.id===c.protagonistClubId)!.reservedSalaryWon-=contract.annualSalaryWon;
+ const before=canonicalJson(c),asked=requestKboRetirement(c,c.revision),e=asked.events.at(-1)!,out=resolveKboRetirement(asked,asked.revision,{eventKey:e.eventKey,eventVersion:e.version,command:'CONFIRM_RETIRE'});
+ assert.equal(out.retirement!.remainingContractYears,4);assert.equal(out.retirement!.remainingPaidGameDays,576);assert.equal(kboRetirementArchiveView(out).retirement.endedContractGameDays,576);assert.equal(canonicalJson(c),before);assert.deepEqual(out.world.contracts[key]!.servicePay,contract.servicePay);
+ const invalid=structuredClone(out);invalid.retirement!.remainingPaidGameDays=575;assert.throws(()=>kboRetirementArchiveView(invalid),/ARCHIVE_CONTRACT_INVALID/);
+});

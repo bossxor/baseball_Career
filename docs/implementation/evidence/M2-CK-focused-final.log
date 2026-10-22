@@ -1,0 +1,12 @@
+✔ retiring a suspended contract preserves all unpaid game days instead of losing one calendar year in its warning (10096.8075ms)
+✔ public service contract view reports suspended/returned money and exact days without exposing receipts or mutating source (11.8561ms)
+✔ career entry adds payment details only for a service contract, keeping ordinary view shape and private state intact (1846.2072ms)
+✔ last service-contract payment stops a multi-day worker at the closed date before any following games are published (5577.6694ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11243.8237

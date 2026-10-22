@@ -1,0 +1,25 @@
+{
+  "note": "Full check491/491 completed with runtime/tests unchanged. Afterwards updated progress MD and recorded user option1 in14/21, rebuilt design package, verified10 static validators and359 manifest entries. Prorated renewal commands are still not implemented.",
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "69d3045cb6b6aa6b8026fa2f3c90d540040fd82903501e344c46042aae427a6b"
+    },
+    {
+      "path": "docs/design/21-MILITARY-CONTRACT-RETURN.md",
+      "sha256": "469f895eaa4e79f1e8c1c16e63a356a7ac3e8542fe5218b0dc2f61f86c8716ea"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "def69a08b1047314c56fa05f41fe9e0395808ada70e9488e4535ce55f994002c"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "2af2369118e692ccc23cd1bb368a981a0251ea2a2c5990f57418d67b2894190f"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "2b481efff14b10ffefa586c42a033344ab4ce5530e66e32cea371e54fb8bf174"
+    }
+  ]
+}

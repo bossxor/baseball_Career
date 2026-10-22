@@ -1,3 +1,5 @@
+import {kboServiceContractView} from './kbo-service-payroll.js';
+import {KBO_CONTRACT_GAME_DAYS} from './kbo-military-program.js';
 import {reserveKboOffseasonGuarantee} from './kbo-finance.js';
 import {KBO_ROSTER_LIMITS} from '@playball/rules';
 import type {ActiveKboRosterWorld,KboCareer} from './kbo-career-entry.js';
@@ -35,7 +37,7 @@ export function retireKboOverAgeNpcs(world:ActiveKboRosterWorld,keys:readonly st
 }
 
 /** My pro career's end: frozen with the archive in the same result (01 §6, 15). */
-export interface KboCareerRetirement {receiptKey:string;reason:'VOLUNTARY'|'MAX_AGE';seasonKey:string;age:number;clubId:string;remainingContractYears:number;sourceRevision:number}
+export interface KboCareerRetirement {receiptKey:string;reason:'VOLUNTARY'|'MAX_AGE';seasonKey:string;age:number;clubId:string;remainingContractYears:number;remainingPaidGameDays?:number;sourceRevision:number}
 const taskKey=(s:KboCareer)=>JSON.stringify(['kbo-retirement',s.world.worldKey,s.world.seasonKey,s.protagonistKey]);
 function offseason(s:KboCareer){
  if(s.phaseContext.phase!=='SEASON_REVIEW' || s.seasonClose?.seasonKey!==s.world.seasonKey)throw new RangeError('KBO_RETIREMENT_NOT_AVAILABLE');
@@ -45,8 +47,8 @@ function retirementEvent(s:KboCareer,definitionId:'E36'|'E37',revision:number){
   resume:{worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,phase:'SEASON_REVIEW',competitionKey:null,registrationKey:s.protagonistClubId,sourceRevision:revision},sourceSequence:s.events.length+1,worldDay:s.days!.days.at(-1)!.day});
 }
 function retire(source:KboCareer,career:KboCareer,reason:KboCareerRetirement['reason']):KboCareer {
- const c=source.world.contracts[source.protagonistKey]!;career.revision++;
- career.retirement={receiptKey:taskKey(source),reason,seasonKey:source.world.seasonKey,age:source.world.players[source.protagonistKey]!.age,clubId:source.protagonistClubId,remainingContractYears:Math.max(0,c.years-(Number(source.world.seasonKey)-Number(c.seasonKey)+1)),sourceRevision:career.revision};
+ const c=source.world.contracts[source.protagonistKey]!,days=c.servicePay?kboServiceContractView(c)!.remainingPaidGameDays:undefined;career.revision++;
+ career.retirement={receiptKey:taskKey(source),reason,seasonKey:source.world.seasonKey,age:source.world.players[source.protagonistKey]!.age,clubId:source.protagonistClubId,...(days===undefined?{}:{remainingPaidGameDays:days}),remainingContractYears:days===undefined?Math.max(0,c.years-(Number(source.world.seasonKey)-Number(c.seasonKey)+1)):Math.ceil(days/KBO_CONTRACT_GAME_DAYS),sourceRevision:career.revision};
  const farewell=retirementEvent(career,'E37',career.revision);career.events=[...career.events,farewell];
  career.phaseContext={phase:'ARCHIVED'};return career;
 }

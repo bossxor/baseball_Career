@@ -1,3 +1,5 @@
+import {kboServiceContractView} from './kbo-service-payroll.js';
+import {KBO_CONTRACT_GAME_DAYS} from './kbo-military-program.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {KBO_MAX_PLAYER_AGE} from './kbo-year-transition.js';
 import {abilityKeys,overall} from '@playball/rules';
@@ -17,7 +19,8 @@ function pitching(line:PitchingTotals|undefined){const s=line??{...emptyPitching
 export function kboRetirementArchiveView(source:KboCareer){
  assertCareerRevision(source,source.revision);
  const r=source.retirement,key=source.protagonistKey,p=source.world.players[key],club=source.world.clubs.find(c=>c.id===source.protagonistClubId);
- if(source.schemaVersion!==1 || source.phaseContext.phase!=='ARCHIVED' || !r || !p || !club || r.clubId!==club.id || r.seasonKey!==source.world.seasonKey || r.age!==p.age || !['VOLUNTARY','MAX_AGE'].includes(r.reason) || r.reason==='MAX_AGE' && r.age!==KBO_MAX_PLAYER_AGE || !r.receiptKey || !Number.isSafeInteger(r.sourceRevision) || r.sourceRevision<1 || r.sourceRevision>source.revision || !Number.isSafeInteger(r.remainingContractYears) || r.remainingContractYears<0 || r.remainingContractYears>3)throw new RangeError('KBO_ARCHIVE_NOT_AVAILABLE');
+ if(source.schemaVersion!==1 || source.phaseContext.phase!=='ARCHIVED' || !r || !p || !club || r.clubId!==club.id || r.seasonKey!==source.world.seasonKey || r.age!==p.age || !['VOLUNTARY','MAX_AGE'].includes(r.reason) || r.reason==='MAX_AGE' && r.age!==KBO_MAX_PLAYER_AGE || !r.receiptKey || !Number.isSafeInteger(r.sourceRevision) || r.sourceRevision<1 || r.sourceRevision>source.revision || !Number.isSafeInteger(r.remainingContractYears) || r.remainingContractYears<0 || r.remainingContractYears>(r.remainingPaidGameDays===undefined?3:4))throw new RangeError('KBO_ARCHIVE_NOT_AVAILABLE');
+ const contract=source.world.contracts[key];if(r.remainingPaidGameDays!==undefined && (!contract?.servicePay || !Number.isSafeInteger(r.remainingPaidGameDays) || r.remainingPaidGameDays<0 || r.remainingPaidGameDays>4*KBO_CONTRACT_GAME_DAYS || r.remainingPaidGameDays!==kboServiceContractView(contract)!.remainingPaidGameDays || r.remainingContractYears!==Math.ceil(r.remainingPaidGameDays/KBO_CONTRACT_GAME_DAYS)))throw new RangeError('KBO_ARCHIVE_CONTRACT_INVALID');
  validateDevelopmentPlayer(p);
  const scopes=new Map<string,RecordScope>();
  for(const g of Object.values(source.records.games))if(Object.hasOwn(g.batting,key) || Object.hasOwn(g.pitching,key))scopes.set(JSON.stringify([g.scope.seasonKey,g.scope.leagueKey,g.scope.phase]),g.scope);
@@ -29,7 +32,7 @@ export function kboRetirementArchiveView(source:KboCareer){
  const records=[...groups.values()].sort((a,b)=>compare(a.leagueKey,b.leagueKey) || compare(a.phase,b.phase)).map(scope=>({...scope,record:own(scope)}));
  const score=overall(p.kind,p.abilities),peak=overall(p.kind,p.careerPeaks),book=source.world.repertoires[key];
  if(p.kind==='PITCHER' && !book || p.kind==='HITTER' && book)throw new RangeError('KBO_ARCHIVE_REPERTOIRE_INVALID');if(book)validatePitchWeights(book.book,book.weights);
- return {archiveKey:r.receiptKey,retirement:{reason:r.reason,seasonKey:r.seasonKey,age:r.age,lastTeam:{id:club.id,name:club.name}},player:{playerKey:key,name:p.name,kind:p.kind,position:p.position,throws:p.throws,bats:p.bats,pitchForm:p.pitchForm??null,archetype:p.archetype,
+ return {archiveKey:r.receiptKey,retirement:{reason:r.reason,seasonKey:r.seasonKey,age:r.age,lastTeam:{id:club.id,name:club.name},...(r.remainingPaidGameDays===undefined?{}:{endedContractGameDays:r.remainingPaidGameDays})},player:{playerKey:key,name:p.name,kind:p.kind,position:p.position,throws:p.throws,bats:p.bats,pitchForm:p.pitchForm??null,archetype:p.archetype,
   overall:Math.round(score.sumUnits/score.denominator*10)/10,careerPeakAbilityAverage:Math.round(peak.sumUnits/peak.denominator*10)/10,abilities:abilityKeys(p.kind).map(ability=>({ability,current:p.abilities[ability]!/10_000,careerPeak:p.careerPeaks[ability]!/10_000})),
   pitches:book?Object.keys(book.book).sort().map(pitchId=>({pitchId,active:Object.hasOwn(book.weights,pitchId),weight:book.weights[pitchId as PitchId]??0,mastery:pitchMastery(book.book[pitchId as PitchId]!)})):[]},records,seasonRows:rows};
 }

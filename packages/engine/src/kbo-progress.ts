@@ -1,3 +1,4 @@
+import {kboContractPaymentBalance} from './kbo-contract-payments.js';
 import {settleKboServicePayrollDay} from './kbo-service-payroll.js';
 import {closeKboMilitaryCalendarDay} from './kbo-military-events.js';
 import type {KboCareer} from './kbo-career-entry.js';
@@ -16,12 +17,15 @@ import type {BattingLine} from './types.js';
 
 export interface KboPendingGame {leagueKey:KboLeagueKey;job:HighSchoolGameJob}
 export type KboSeasonProgress={phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:KboPendingGame|null};
-export type KboProgressStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'DAY_CLOSED'|'MAJOR_EVENT'|'HEALTH_CHANGE'|'SEASON_REVIEW';
+export type KboProgressStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'DAY_CLOSED'|'MAJOR_EVENT'|'HEALTH_CHANGE'|'SEASON_REVIEW'|'CONTRACT_DECISION_REQUIRED';
 export interface KboProgressResult {career:KboCareer;stopReason:KboProgressStop;plateAppearances:number;completedInnings:number;daysClosed:number}
 const LEAGUES:readonly KboLeagueKey[]=['KBO','FUTURES'];
 const schedulesOf=(c:KboCareer)=>c.competitionSchedule!.leagues;
 const lastDay=(c:KboCareer)=>Math.max(...LEAGUES.flatMap(l=>schedulesOf(c)[l].map(g=>g.worldDay)));
 const firstDay=(c:KboCareer)=>Math.min(...LEAGUES.flatMap(l=>schedulesOf(c)[l].map(g=>g.worldDay)));
+
+/** A settled service principal pauses before another game; a chosen contract extension owns resuming it. */
+function contractDecisionRequired(c:KboCareer):boolean {const p=c.world.contracts[c.protagonistKey]!.servicePay;return !!p && p.ledger.resume!==null && kboContractPaymentBalance(p.ledger).remainingPaidGameDays===0;}
 
 /** PRESEASON_SETUP → SEASON_PROGRESS. Needs the confirmed plan, opening roster and schedule; replays are rejected. */
 export function startKboRegularSeason(source:KboCareer,expectedRevision:number):KboCareer {
@@ -63,6 +67,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
  assertCareerRevision(source,expectedRevision);
  if(source.phaseContext.phase!=='SEASON_PROGRESS' || !source.days || !source.competitionSchedule)throw new RangeError('INVALID_CAREER_PHASE');
  if(!Number.isSafeInteger(maxDays) || maxDays<1 || maxDays>7)throw new RangeError('INVALID_ADVANCE_DAYS');
+ if(contractDecisionRequired(source) && source.phaseContext.nextWorldDay<=lastDay(source))throw new RangeError('CONTRACT_DECISION_REQUIRED');
  const career=structuredClone(source),progress=career.phaseContext as KboSeasonProgress,last=lastDay(career);
  if(!Number.isSafeInteger(progress.nextWorldDay) || progress.nextWorldDay<firstDay(career))throw new RangeError('INVALID_KBO_PROGRESS');
  if(progress.pendingGame && (progress.pendingGame.job.worldDay!==progress.nextWorldDay || progress.pendingGame.job.worldKey!==career.world.worldKey || progress.pendingGame.job.seasonKey!==career.world.seasonKey))throw new RangeError('PENDING_GAME_CONTEXT_CHANGED');
@@ -106,6 +111,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   // 14 order: call-up/demotion review before style/training windows.
   const aiMoves=progress.nextWorldDay>last?null:reviewKboAiRosters(career);if(aiMoves)Object.assign(career,aiMoves);
   if(serviceReturn)return finish('MAJOR_EVENT');
+  if(progress.nextWorldDay<=last && contractDecisionRequired(career))return finish('CONTRACT_DECISION_REQUIRED');
   const callup=progress.nextWorldDay>last?null:reviewKboCallup(career,day,progress);
   if(callup){Object.assign(career,callup);if(career.phaseContext.phase==='EVENT_DECISION')return finish('MAJOR_EVENT');}
   const windowEvent=progress.nextWorldDay>last?null:raiseKboWindowEvent(career,day,progress);

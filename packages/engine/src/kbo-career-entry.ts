@@ -1,3 +1,4 @@
+import {kboServiceContractView} from './kbo-service-payroll.js';
 import type {KboAiAssessments,KboAiRenewalReceipt} from './kbo-ai-offseason.js';
 import type {KboAiFaRound} from './kbo-fa-market.js';
 import type {KboRosterRepairReceipt} from './kbo-roster-repair.js';
@@ -79,5 +80,5 @@ export function startSignedKboCareer(source:HighSchoolCareer,expectedRevision:nu
 export function kboCareerEntryView(source:KboCareer){
  const key=source.protagonistKey,club=source.world.clubs.find(c=>c.id===source.protagonistClubId),player=source.world.players[key],contract=source.world.contracts[key],r=source.registration;
  if(source.schemaVersion!==1 || source.world.status!=='ACTIVE' || source.phaseContext.phase!=='PRESEASON_SETUP' || !player || !contract || !club || !club.roster.includes(key) || r.firstTeam!==club.firstTeam.includes(key) || r.status!=='ACTIVE' || r.playerKey!==key || r.clubId!==club.id || r.seasonKey!==source.world.seasonKey || (contract.servicePay?contract.servicePay.ledger.contract.contractKey:source.renewal?.status==='ACCEPTED' && source.renewal.seasonKey===source.world.seasonKey?source.renewal.offerKey:source.activation.contractKey)!==contract.contractKey)throw new RangeError('INVALID_KBO_ENTRY_VIEW');
- return {seasonKey:source.world.seasonKey,player:{name:player.name,age:player.age,kind:player.kind,position:player.position},club:{id:club.id,name:club.name},registration:{status:'ACTIVE' as const,firstTeam:r.firstTeam},contract:{years:contract.years,annualSalaryWon:contract.annualSalaryWon,signingBonusWon:contract.signingBonusWon,currency:'KRW' as const},phase:'PRESEASON_SETUP' as const};
+ return {seasonKey:source.world.seasonKey,player:{name:player.name,age:player.age,kind:player.kind,position:player.position},club:{id:club.id,name:club.name},registration:{status:'ACTIVE' as const,firstTeam:r.firstTeam},contract:{years:contract.years,annualSalaryWon:contract.annualSalaryWon,signingBonusWon:contract.signingBonusWon,currency:'KRW' as const,...(contract.servicePay?{payment:kboServiceContractView(contract)}:{})},phase:'PRESEASON_SETUP' as const};
 }

@@ -1,0 +1,44 @@
+{
+  "files": [
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "33937b37c53d6a4b6703f337e938c27f6d1af49413e02b6049d27743db1b0289"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "bc6e769961bba79795b1dcf58f3ee69e6b713dbfb54af33f0d3e646fcd9d30c8"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "40161f038b731d94ef6dd4328c0e68ecc3e0ae2b54f529efefd2a5fda99fbc35"
+    },
+    {
+      "path": "packages/engine/src/kbo-archive-view.ts",
+      "sha256": "c61e1894e156a95ab34ac565cf97324bb25fd3c350b0a5881fad8b4664a9c035"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "sha256": "8a9e9f7b502764dff455ec410129f8a48464e59a397cacf6be8f8df1c6ee2878"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "sha256": "5b4c853f52116a0bec10cd759d28a68dbec7c8dd7eeb2af17a96f25697610ea5"
+    },
+    {
+      "path": "packages/engine/src/kbo-retirement.ts",
+      "sha256": "fac48f0bd42cc7ff26b6beaeeef563217607c371448ed0d547623b2f96708be1"
+    },
+    {
+      "path": "packages/engine/src/kbo-service-payroll.ts",
+      "sha256": "6f92c3163dc4fa1c4ec31701f958a61a67ed9d80b10a6a50d0c8fcfe2d3d5d9f"
+    },
+    {
+      "path": "packages/engine/test/kbo-postseason-progress.test.ts",
+      "sha256": "2f18add72360bbac72ea13f965365b34dc4ac21c412dc8149c6162dfc1879f0e"
+    },
+    {
+      "path": "packages/engine/test/kbo-service-payroll.test.ts",
+      "sha256": "dbe8b239fa1bedc8a86a4dd12e56d798195457896fa49fd0fcbdc652d9d1c5b8"
+    }
+  ]
+}

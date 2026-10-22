@@ -1,0 +1,20 @@
+✖ last service-contract payment stops a multi-day worker at the closed date before any following games are published (11611.2964ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12342.8887
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-service-payroll.test.ts:50:1
+✖ last service-contract payment stops a multi-day worker at the closed date before any following games are published (11611.2964ms)
+  RangeError: CONTRACT_DECISION_REQUIRED
+      at settleKboServicePayrollDay (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-service-payroll.ts:77:130)
+      at advanceKboCareer (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-progress.ts:104:3)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-service-payroll.test.ts:59:47)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

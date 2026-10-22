@@ -85,3 +85,10 @@ export function settleKboServicePayrollDay(career:KboCareer,day:number):void {
  const newCharge=kboContractSeasonCharge(c);club.reservedSalaryWon+=newCharge-oldCharge-paid;club.paidSalaryWon+=paid;
  assertKboRecruitmentWorld(career.world);
 }
+
+/** Public own-contract projection. Frozen receipts/program internals never leave the engine. */
+export function kboServiceContractView(contract:KboInitialContract){
+ if(!contract.servicePay)return null;assertKboServicePayroll(contract);
+ const p=contract.servicePay,b=kboContractPaymentBalance(p.ledger),paidThisSeasonWon=p.ledger.receipts.filter(r=>r.seasonKey===contract.seasonKey).reduce((n,r)=>n+r.amountWon,0);
+ return {status:b.status,remainingPaidGameDays:b.remainingPaidGameDays,paidGameDays:b.paidDays,unpaidPrincipalWon:b.remainingWon,paidThisSeasonWon,reservedThisSeasonWon:kboContractSeasonCharge(contract)-paidThisSeasonWon,returnSeasonKey:p.returnDate.seasonKey,returnWorldDay:p.returnDate.worldDay};
+}

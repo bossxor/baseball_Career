@@ -1,0 +1,164 @@
+{
+  "baseCommit": "07d84d62de03497ad59841613f0b3818431287e9",
+  "direction": "validated checkout -> V:/",
+  "runtimeTestedSourcesUnchanged": true,
+  "postCheckDocsValidatedSeparately": true,
+  "files": [
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "2af2369118e692ccc23cd1bb368a981a0251ea2a2c5990f57418d67b2894190f",
+      "gitBlob": "c0e702f8a6e4acfeea70f6df893dc38478b9f36e",
+      "indexBlob": "c0e702f8a6e4acfeea70f6df893dc38478b9f36e"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "2b481efff14b10ffefa586c42a033344ab4ce5530e66e32cea371e54fb8bf174",
+      "gitBlob": "25621c1d798611c96e25727d3394828fda72d110",
+      "indexBlob": "25621c1d798611c96e25727d3394828fda72d110"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "def69a08b1047314c56fa05f41fe9e0395808ada70e9488e4535ce55f994002c",
+      "gitBlob": "458eef2622d585cada0b8d34618c5f1145977d39",
+      "indexBlob": "458eef2622d585cada0b8d34618c5f1145977d39"
+    },
+    {
+      "path": "packages/engine/src/kbo-archive-view.ts",
+      "sha256": "c61e1894e156a95ab34ac565cf97324bb25fd3c350b0a5881fad8b4664a9c035",
+      "gitBlob": "6b42fbc560000d6b718029e53e726969a5a378ed",
+      "indexBlob": "6b42fbc560000d6b718029e53e726969a5a378ed"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "sha256": "8a9e9f7b502764dff455ec410129f8a48464e59a397cacf6be8f8df1c6ee2878",
+      "gitBlob": "8e94acd4248dbb2ad5362ff8049ffa76dba6ae02",
+      "indexBlob": "8e94acd4248dbb2ad5362ff8049ffa76dba6ae02"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "sha256": "5b4c853f52116a0bec10cd759d28a68dbec7c8dd7eeb2af17a96f25697610ea5",
+      "gitBlob": "fda46ed508fc2736ebbd69f7b83b269d5789b47e",
+      "indexBlob": "fda46ed508fc2736ebbd69f7b83b269d5789b47e"
+    },
+    {
+      "path": "packages/engine/src/kbo-retirement.ts",
+      "sha256": "fac48f0bd42cc7ff26b6beaeeef563217607c371448ed0d547623b2f96708be1",
+      "gitBlob": "69676d49bccffb400f84b985309f3b1415857135",
+      "indexBlob": "69676d49bccffb400f84b985309f3b1415857135"
+    },
+    {
+      "path": "packages/engine/src/kbo-service-payroll.ts",
+      "sha256": "6f92c3163dc4fa1c4ec31701f958a61a67ed9d80b10a6a50d0c8fcfe2d3d5d9f",
+      "gitBlob": "e298d2b64fe54d8f183687458a974a4d9f6d1922",
+      "indexBlob": "e298d2b64fe54d8f183687458a974a4d9f6d1922"
+    },
+    {
+      "path": "packages/engine/test/kbo-postseason-progress.test.ts",
+      "sha256": "2f18add72360bbac72ea13f965365b34dc4ac21c412dc8149c6162dfc1879f0e",
+      "gitBlob": "faee4c438be6382297f0bc557bf667af5c1721ed",
+      "indexBlob": "faee4c438be6382297f0bc557bf667af5c1721ed"
+    },
+    {
+      "path": "packages/engine/test/kbo-service-payroll.test.ts",
+      "sha256": "dbe8b239fa1bedc8a86a4dd12e56d798195457896fa49fd0fcbdc652d9d1c5b8",
+      "gitBlob": "c56ed0654e76a392204a2164f4ff4be0d1f68653",
+      "indexBlob": "c56ed0654e76a392204a2164f4ff4be0d1f68653"
+    },
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "69d3045cb6b6aa6b8026fa2f3c90d540040fd82903501e344c46042aae427a6b",
+      "gitBlob": "73bad43f7fea719d2bc4b90d77c536a91c75086d",
+      "indexBlob": "73bad43f7fea719d2bc4b90d77c536a91c75086d"
+    },
+    {
+      "path": "docs/design/21-MILITARY-CONTRACT-RETURN.md",
+      "sha256": "469f895eaa4e79f1e8c1c16e63a356a7ac3e8542fe5218b0dc2f61f86c8716ea",
+      "gitBlob": "a64ebf3efc4fb2164e2877a2fd7d347d352cd291",
+      "indexBlob": "a64ebf3efc4fb2164e2877a2fd7d347d352cd291"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "3cb107f649b06855f080d4b397c29a7b33e6942623b3efe7c284b359fd44e5a3",
+      "gitBlob": "048b8e93b85fedb83b66a86a227af9c0c57cfbf0",
+      "indexBlob": "048b8e93b85fedb83b66a86a227af9c0c57cfbf0"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "aa187fe18ed0c1715fa70d360f2095fa0482837263e0c7c7ff24602e4d4b27b3",
+      "gitBlob": "2047b44d0d799d2708e34d65b111547b089ecf5e",
+      "indexBlob": "2047b44d0d799d2708e34d65b111547b089ecf5e"
+    },
+    {
+      "path": "docs/implementation/M2-NEXT-MILITARY-INTEGRATION-NOTES.md",
+      "sha256": "a0850421f3ca09e026037f73252bcf6fe5c9a8c660c81e5c1c257dff87486e3b",
+      "gitBlob": "a6139fa513b88334bde4418a63107cb669f57b13",
+      "indexBlob": "a6139fa513b88334bde4418a63107cb669f57b13"
+    },
+    {
+      "path": "docs/implementation/M2-CK-PAYMENT-VIEW-AND-COMPLETION-GUARD.md",
+      "sha256": "dfbf78aaf360bb7d4c45ec976175cc6922dbc0fad655738b0e3f706f90aae340",
+      "gitBlob": "cdee4f01fe47ab2cd6d854ad86d3d8d9a1664164",
+      "indexBlob": "cdee4f01fe47ab2cd6d854ad86d3d8d9a1664164"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CK-before-guard.log",
+      "sha256": "265636b43ae4f30fcc4e15871b783204129e9b3f8051f31e8c9b571c9179381a",
+      "gitBlob": "1857aa63d75e8a10a39df85df0fae4babfd4cde2",
+      "indexBlob": "1857aa63d75e8a10a39df85df0fae4babfd4cde2"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CK-check.log",
+      "sha256": "3e5b027f47adce57c5e78d32a6e71c75d9f6509b910d45a693453552d6860d0a",
+      "gitBlob": "19313d8dac8fe1dd4eec23e623147615d2b056b3",
+      "indexBlob": "19313d8dac8fe1dd4eec23e623147615d2b056b3"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CK-focused-final.log",
+      "sha256": "ef0b61d896a4e9615b3fb9149d280663379e8fbc0dffa7a353082bd54d4d6eda",
+      "gitBlob": "693ba414cbf8d39d8d1d400d6d661c6ab92128a7",
+      "indexBlob": "693ba414cbf8d39d8d1d400d6d661c6ab92128a7"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CK-focused.log",
+      "sha256": "3eea99213567443872a827b3a5b70521eb54f232b9f71ad4680f3ba2eda60d87",
+      "gitBlob": "205847696e5fba622b374f673d8f530eedd1e9af",
+      "indexBlob": "205847696e5fba622b374f673d8f530eedd1e9af"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CK-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f",
+      "gitBlob": "f61cd1e9f5eb3902a8bad2bb1881bc2b55805d70",
+      "indexBlob": "f61cd1e9f5eb3902a8bad2bb1881bc2b55805d70"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CK-post-docs-design.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090",
+      "gitBlob": "3dbeafbf5c570526f3080073cffb213824255b29",
+      "indexBlob": "3dbeafbf5c570526f3080073cffb213824255b29"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CK-post-docs-source.json",
+      "sha256": "6dea92708b92407753c063a0ff782f4bb9fc6a49f2c8bf1a2dcc01c265b05dca",
+      "gitBlob": "41cedcb1e42508146cfb2e33fc11033ea2f3659d",
+      "indexBlob": "41cedcb1e42508146cfb2e33fc11033ea2f3659d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CK-tested-source.json",
+      "sha256": "1f680094baac8570f45fda0adf6906fa0c1fb7cc3f925c11a89bca3887c95a95",
+      "gitBlob": "81855475b0c75548d58987de25fba7762c04e289",
+      "indexBlob": "81855475b0c75548d58987de25fba7762c04e289"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CK-types-final.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df",
+      "gitBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300",
+      "indexBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CK-types.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df",
+      "gitBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300",
+      "indexBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300"
+    }
+  ]
+}
