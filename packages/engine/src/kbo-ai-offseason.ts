@@ -1,3 +1,4 @@
+import {kboContractSeasonCharge} from './kbo-service-payroll.js';
 import {KBO_MONEY,KBO_ROSTER_LIMITS,roleScore} from '@playball/rules';
 import type {ActiveKboRosterWorld} from './kbo-career-entry.js';
 import type {DevelopmentPlayer} from './player.js';
@@ -56,7 +57,7 @@ export function prepareKboAiRenewals(input:{world:ActiveKboRosterWorld;pool:KboF
   const mine=input.expiringKeys.filter(k=>input.priorContracts[k]!.clubId===club.id),unresolved=new Set(mine);
   club.roster=club.roster.filter(k=>!unresolved.has(k));club.firstTeam=club.firstTeam.filter(k=>!unresolved.has(k));
   for(const key of mine){delete next.players[key];delete next.contracts[key];delete next.repertoires[key];}
-  club.reservedSalaryWon=club.roster.reduce((n,k)=>n+next.contracts[k]!.annualSalaryWon,0);club.paidSalaryWon=0;
+  club.reservedSalaryWon=club.roster.reduce((n,k)=>n+kboContractSeasonCharge(next.contracts[k]!),0);club.paidSalaryWon=0;
   while(unresolved.size && club.roster.length<KBO_ROSTER_LIMITS.initial){
    const ranked=[...unresolved].map(key=>{const c=candidates.get(key)!,p=c.player,need=kboAiRoleNeed(p,club.roster.map(k=>next.players[k]!)),v=kboPlayerContractValue(p,totals.batting[key],totals.pitching[key]),salary=kboRenewalSalaryWon(c.contract.annualSalaryWon,v.valueWon),score=kboAiCandidatePriority({roleScore:roleScore(p.kind,p.abilities,p.position),...need,outlookMidpoint:assessmentMidpointScore(p.kind,reports[key]!.ranges),annualSalaryWon:salary,budgetWon:club.budgetWon});return {key,salary,score,need:need.needScore};}).sort((a,b)=>Number(b.need===100)-Number(a.need===100) || b.score-a.score || (a.key<b.key?-1:a.key>b.key?1:0));
    const best=ranked.find(r=>{const b=kboClubBalance(next,club.id),protectedAfter=Math.max(0,KBO_ROSTER_LIMITS.minimum-(club.roster.length+1))*KBO_MONEY.minimumSalaryWon;return club.paidSalaryWon+club.reservedSalaryWon+r.salary+b.guaranteedWon+protectedAfter<=club.budgetWon+b.supportWon;});if(!best)break;

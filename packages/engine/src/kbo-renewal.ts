@@ -1,3 +1,4 @@
+import {kboContractPaymentBalance} from './kbo-contract-payments.js';
 import {kboPlayerContractValue,kboRenewalSalaryWon} from './kbo-contract-value.js';
 export {KBO_RENEWAL_SAMPLE} from './kbo-contract-value.js';
 import type {KboCareer} from './kbo-career-entry.js';
@@ -17,7 +18,7 @@ export function kboRenewalValueWon(source:KboCareer):{valueWon:number;basis:KboR
  return kboPlayerContractValue(source.world.players[key]!,totals.batting[key],totals.pitching[key]);
 }
 function expiresAfterSeason(source:KboCareer):boolean {
- const c=source.world.contracts[source.protagonistKey]!;return Number(source.world.seasonKey)-Number(c.seasonKey)+1>=c.years;
+ const c=source.world.contracts[source.protagonistKey]!;if(c.servicePay)return kboContractPaymentBalance(c.servicePay.ledger).remainingPaidGameDays===0;return Number(source.world.seasonKey)-Number(c.seasonKey)+1>=c.years;
 }
 /** The accepted renewal that covers the season after the current one, if any. */
 export function acceptedRenewal(source:KboCareer):KboRenewal|null {

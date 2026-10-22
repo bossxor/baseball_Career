@@ -1,3 +1,5 @@
+import {kboContractSeasonCharge,createKboServicePayroll,carryKboServicePayroll} from './kbo-service-payroll.js';
+import {kboContractPaymentBalance} from './kbo-contract-payments.js';
 import {queueKboMilitaryFirstBlock} from './kbo-military-events.js';
 import {prepareKboAiRenewals} from './kbo-ai-offseason.js';
 import {runKboAiFreeAgentMarket} from './kbo-fa-market.js';
@@ -59,7 +61,8 @@ export function stageKboAgeAndContracts(source:KboCareer):KboAgeContractStage {
  const target=Number(ready.targetSeasonKey),players:KboAgeContractStage['players']={},overAge:string[]=[],expiring:string[]=[];
  for(const key of Object.keys(source.world.players).sort()){
   const age=source.world.players[key]!.age+1,c=source.world.contracts[key],renewed=key===source.protagonistKey?acceptedRenewal(source):null;
-  const contract=renewed?{contractKey:renewed.offerKey,contractYear:1,years:1,expired:false}:c?{contractKey:c.contractKey,contractYear:target-Number(c.seasonKey)+1,years:c.years,expired:target-Number(c.seasonKey)+1>c.years}:null;
+  const residual=c?.servicePay?kboContractPaymentBalance(c.servicePay.ledger).remainingPaidGameDays:0;
+  const contract=renewed?{contractKey:renewed.offerKey,contractYear:1,years:1,expired:false}:c?.servicePay && residual>0?{contractKey:c.contractKey,contractYear:1,years:Math.ceil(residual/144),expired:false}:c?{contractKey:c.contractKey,contractYear:target-Number(c.seasonKey)+1,years:c.years,expired:target-Number(c.seasonKey)+1>c.years}:null;
   players[key]={age,contract};
   if(age>KBO_MAX_PLAYER_AGE)overAge.push(key);
   if(contract?.expired)expiring.push(key);
@@ -89,9 +92,14 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
   const c=world.contracts[k]!;
   // Temporary expired placeholders stay private until the AI renewal stage resolves them.
   world.contracts[k]=k===key && renewal?{...c,contractKey:renewal.offerKey,seasonKey:target,years:1,annualSalaryWon:renewal.annualSalaryWon}:{...c,seasonKey:target,years:s.contract!.expired?1:c.years-(s.contract!.contractYear-1)};
+  const activated=world.contracts[k]!;
+  if(k===key && renewal)delete activated.servicePay;
+  else if(c.servicePay){activated.servicePay=carryKboServicePayroll(c,target);activated.years=Math.max(1,Math.ceil(kboContractPaymentBalance(activated.servicePay.ledger).remainingPaidGameDays/144));}
+  const service=career.military,program=service?.program;
+  if(k===key && !activated.servicePay && service?.contractPaymentVersion===1 && service.status==='SERVING_SPORTS' && program?.blocks[0]?.seasonKey===target && service.completionDays){activated.servicePay=createKboServicePayroll(activated,program,service.completionDays[1]!);activated.years=Math.ceil(program.contract.remainingPaidGameDays/144);}
   const book=schoolYearEndRepertoire(source,k);if(book)world.repertoires[k]={...structuredClone(book),seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};
  }
- for(const club of world.clubs){club.paidSalaryWon=0;club.reservedSalaryWon=club.roster.reduce((n,k)=>n+world.contracts[k]!.annualSalaryWon,0);}
+ for(const club of world.clubs){club.paidSalaryWon=0;club.reservedSalaryWon=club.roster.reduce((n,k)=>n+kboContractSeasonCharge(world.contracts[k]!),0);}
  world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target));
 // Military unit carries over: members age and reset their books like everyone else, the block of the season just played is
 // recorded complete on its last day, and finished programs rejoin their club's Futures squad (full clubs wait in the unit).

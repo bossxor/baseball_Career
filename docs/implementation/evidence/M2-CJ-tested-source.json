@@ -1,0 +1,76 @@
+{
+  "files": [
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "c0e6be1bfdad8b34a67693fe7df9ef3e52d252e2e637fb94add23b1b5b23fc6d"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "cbf7e8026771f4e063626ece31666de9c38f4d229bb9d2eb490127a3679b7d93"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "1cf4470aa90bd42a21b9b554cb1a5aa5220af6596a19b780fd938ad8063f1e88"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "8697b435a79fcce56ebc5151315aa25ddcc714ae4cce9cc04de330d9e2e6c291"
+    },
+    {
+      "path": "packages/engine/src/kbo-ai-offseason.ts",
+      "sha256": "2de9bd79c2eac28aa3940d01b775682a6e536fdda0c33b900cc8194e85aa6269"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "sha256": "af903b3b4b0cd5ed63bd9817ae2aa1017184339466f5e7e4c88b2988dda6fad4"
+    },
+    {
+      "path": "packages/engine/src/kbo-draft.ts",
+      "sha256": "46bb17cfd5f92509e37687f7f6e9c7b32ab798fc94d20bdab4e451c543db5e4e"
+    },
+    {
+      "path": "packages/engine/src/kbo-finance.ts",
+      "sha256": "9b794a9c439a1a39fc45c59558844756434546dc5e6e1c6feec400fb40893a1d"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-events.ts",
+      "sha256": "f0030fe1aa814a7a1c98c960cb658b9d12df463f74ff40e774593728be8e945e"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-state.ts",
+      "sha256": "30d6dcd725d11d46293196106105db511814e96ca5ceac53bc8de0c6385b61b4"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "sha256": "d7ce41e8390d6f18b66ff4d98502a778b35207f266628a2aaf6255f5b4156db4"
+    },
+    {
+      "path": "packages/engine/src/kbo-renewal.ts",
+      "sha256": "0d7ec57cbdff177503f669a2cd2cedf5f23e659c18576fa5387955d1ff5815f2"
+    },
+    {
+      "path": "packages/engine/src/kbo-roster-repair.ts",
+      "sha256": "462ddf7853426c7ce221c2234825a8734ab3c7521ffebd9d7c070f5e055e2192"
+    },
+    {
+      "path": "packages/engine/src/kbo-world.ts",
+      "sha256": "7b7a8bbe7974d7e9e5ae4bee981d55eb88956403bfcd5caad2082de6a9e1b915"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "b7a8493426a0933cde097ef5a41c260738e13d1743fe5634278137e90c729154"
+    },
+    {
+      "path": "packages/engine/test/kbo-military-events.test.ts",
+      "sha256": "3c8545a377aed410e84c5e6d265adc8170e7a4dd6719ea504c81d27f67d6bdde"
+    },
+    {
+      "path": "packages/engine/src/kbo-service-payroll.ts",
+      "sha256": "5fcb89d86e1ea1e1a7d3f84c8ffc6232714dae6a744b3dd039a38229394f60f0"
+    },
+    {
+      "path": "packages/engine/test/kbo-service-payroll.test.ts",
+      "sha256": "a90a3f72f9d979b7da19aa5b97b82cf38ccaf5df7597d8d59e596c10c9f361bf"
+    }
+  ]
+}

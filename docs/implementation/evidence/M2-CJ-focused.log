@@ -1,0 +1,13 @@
+✔ fixed service calendar uses June30 in leap and ordinary years, independent of fixture counts (2.0871ms)
+✔ E52 confirms four focus choices through the existing plan command; invalid focus/version and replay preserve source (9399.8807ms)
+✔ actual June30 date queue closes service once, E53 stops, following dates register only the original Futures club (26167.8469ms)
+✔ Sangmu application: fixed result, retry returns the same application, wrong answers rejected, decline burns the recruitment (8301.3447ms)
+✔ an enlisted protagonist serves two seasons as a loan to the military team and then completes (12897.9457ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36635.8664

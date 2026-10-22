@@ -1,3 +1,4 @@
+import {resumeKboContractPayments} from './kbo-contract-payments.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import type {KboMilitaryProgram} from './kbo-military-program.js';
 import type {KboSeasonProgress} from './kbo-progress.js';
@@ -41,6 +42,7 @@ export function closeKboMilitaryCalendarDay(career:KboCareer,day:number,progress
  if(record.program.completedBlocks<record.program.scheduledBlocks)return false;
  const club=career.world.clubs.find(c=>c.id===record.program!.originalClubId);
  if(!club || club.id!==career.protagonistClubId || !club.roster.includes(career.protagonistKey) || club.firstTeam.includes(career.protagonistKey))throw new RangeError('MILITARY_RETURN_SLOT_REQUIRED');
+ const contract=career.world.contracts[career.protagonistKey]!;if(contract.servicePay)contract.servicePay.ledger=resumeKboContractPayments(contract.servicePay.ledger,record.program);
  record.status='COMPLETED';record.completedSeasonKey=season;
  if(career.sangmu)career.sangmu={...career.sangmu,loaned:(career.sangmu.loaned??[]).filter(k=>k!==career.protagonistKey)};
  career.registration={...career.registration,firstTeam:false,competitionKey:'FUTURES'};

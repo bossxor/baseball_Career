@@ -1,3 +1,4 @@
+import {kboServiceFutureCommitment} from './kbo-service-payroll.js';
 import {KBO_CLUBS,KBO_MONEY,KBO_ROSTER_LIMITS} from '@playball/rules';
 import type {KboRosterWorld,KboInitialContract} from './kbo-world.js';
 import {canonicalJson} from './game.js';
@@ -63,5 +64,5 @@ export function protectKboEmergencyBudget(world:World,clubId:string,seasonKey:st
 export function kboFutureCommitmentWon(world:World,clubId:string,yearOffset:number):number {
  if(!Number.isSafeInteger(yearOffset) || yearOffset<1 || yearOffset>3)throw new RangeError('INVALID_KBO_FUTURE_YEAR');
  const club=world.clubs.find(c=>c.id===clubId);if(!club)throw new RangeError('MISSING_KBO_CLUB');
- return sum([kboGuaranteedWon(world,clubId,String(Number(world.seasonKey)+yearOffset)),...club.roster.map(k=>world.contracts[k]!.years>yearOffset?world.contracts[k]!.annualSalaryWon:0)]);
+ return sum([kboGuaranteedWon(world,clubId,String(Number(world.seasonKey)+yearOffset)),...club.roster.map(k=>kboServiceFutureCommitment(world.contracts[k]!,yearOffset))]);
 }

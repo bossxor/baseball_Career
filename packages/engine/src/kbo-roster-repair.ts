@@ -1,3 +1,4 @@
+import {kboContractSuspended} from './kbo-service-payroll.js';
 import {KBO_MONEY,KBO_ROSTER_LIMITS,overall,roleScore} from '@playball/rules';
 import type {Difficulty} from '@playball/rules';
 import type {ActiveKboRosterWorld} from './kbo-career-entry.js';
@@ -53,7 +54,7 @@ export function repairKboDualLeagueRosters(input:{world:ActiveKboRosterWorld;poo
  assertKboFreeAgentPool(pool,Object.keys(world.players));
  const signings:KboRosterRepairReceipt['signings'][number][]=[],releases:KboRosterRepairReceipt['releases'][number][]=[];
  for(const club of [...world.clubs].sort((a,b)=>a.id<b.id?-1:1)){
-  const healthy=()=>club.roster.filter(k=>!Object.hasOwn(health.injuries,k)).map(k=>world.players[k]!);
+  const healthy=()=>club.roster.filter(k=>!Object.hasOwn(health.injuries,k) && !kboContractSuspended(world.contracts[k]!)).map(k=>world.players[k]!);
   for(let step=0;missing(healthy())!==null;step++){
    if(step>=KBO_ROSTER_LIMITS.maximum)throw new RangeError('KBO_ROSTER_REPAIR_LIMIT');const position=missing(healthy())!;
    if(club.roster.length===KBO_ROSTER_LIMITS.maximum){

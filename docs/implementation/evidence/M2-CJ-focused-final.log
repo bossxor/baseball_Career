@@ -1,0 +1,22 @@
+✔ suspension pays nothing, preserves principal and cannot resume before the same two-block program completes (10.7595ms)
+✔ 72 actual registered days pay exactly half the annual salary; duplicate retries after JSON reload never pay again (132.8836ms)
+✔ unregistered, mismatched, duplicated and pre-return evidence rejects without consuming days (2.3882ms)
+✔ zero remaining days stay settled after return; multi-season pay retains exact days and integer-won remainder (3569.7189ms)
+✔ an actual finalized pro game and unused bench registration can pay one resumed day without changing career or records (7136.2083ms)
+✔ calendar-year reset: service return and registered pay use season plus day, preserving old receipts and replay safety (1.5796ms)
+✔ legacy v1 reads stay unchanged; an explicit matching-program resume upgrades to v2 without rewriting paid receipts (1.3519ms)
+✔ fixed service calendar uses June30 in leap and ordinary years, independent of fixture counts (8.2834ms)
+✔ E52 confirms four focus choices through the existing plan command; invalid focus/version and replay preserve source (19135.0874ms)
+✔ actual June30 date queue closes service once, E53 stops, following dates register only the original Futures club (35334.5865ms)
+✔ Sangmu application: fixed result, retry returns the same application, wrong answers rejected, decline burns the recruitment (17320.6293ms)
+✔ an enlisted protagonist serves two seasons as a loan to the military team and then completes (17443.3919ms)
+✔ service payroll reserves zero in the full service year, actual return-year Futures capacity and residual future principal (96.4438ms)
+✔ service payroll rejects changed contract identity, principal version, wrong completion date and excessive reservation (31.6498ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 56299.3778
