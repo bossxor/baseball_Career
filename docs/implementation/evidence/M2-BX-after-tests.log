@@ -1,0 +1,20 @@
+✔ private renewal preparation keeps every guaranteed/my contract and moves actual expired NPCs to FA; no player loss or redraw (862.1893ms)
+✔ normal50-person clubs are not forced to release players; guaranteed contracts above the50 target stay intact (611.6737ms)
+✔ 44 gap/backups and priority use explicit public report midpoint; no P field enters the decision boundary (171.3445ms)
+✔ actual registered bench observations19→20 advance stage once and repeated offseason reads never add evidence (183.3014ms)
+✔ wrong window/own contract/unexpired candidate/registered FA overlap reject without partially releasing a player (254.0511ms)
+✔ an expiring injured NPC moves to FA with unchanged recovery games and leaves no ghost injury in the active world (287.2115ms)
+✔ 35 contracts are not enough: exact required depth is repaired at minimum salary, independently playable and deterministic (1141.7081ms)
+✔ an absent replacement role generates only the required35..45 independent profile; valuable expired pros are not forced to minimum (316.322ms)
+✔ full roster with injured required roles releases only redundant NPC slots and preserves the whole preseason guarantee and injury (316.4844ms)
+✔ four-year preseason release includes current year; old after-season entries remain distinct and idempotent (215.1365ms)
+✔ healthy complete clubs require no extra50-player target and invalid/injured depth cannot produce a false legal roster (294.4167ms)
+✔ AI rookie draft fills a missing primary shortstop before covered hitter positions; generation and retry stay fixed (651.7812ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2867.1095
