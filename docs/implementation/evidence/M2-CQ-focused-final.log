@@ -1,0 +1,43 @@
+✔ HITTER pro list retains historical school and active club teammate identities without invented transfers/stages (865.3342ms)
+✔ PITCHER pro list retains historical school and active club teammate identities without invented transfers/stages (759.3786ms)
+✔ historical relation details reuse existing official scoped records; never fabricate pro games or new player registration (546.9687ms)
+✔ both historical and new pro E94 preserve names and ACK only their notice while the confirmed plan remains sealed (724.1727ms)
+✔ stale revision/version, wrong command or foreign/duplicate relation evidence reject without changes (563.0437ms)
+✔ unknown historical player remains unresolved; malformed ownership, foreign history and changed confirmed plan reject (1494.2953ms)
+✔ absence of relations/notices on restored old pro state is empty and querying never creates a new relation (499.988ms)
+✔ a pro teammate moved to FA or retirement keeps identity and notices as historical only, never a fake live registration (626.3425ms)
+✔ comparison request keeps E30, original offer, clock, rights and money intact while games remain paused (2595.3887ms)
+✔ comparison excludes fully committed clubs and keeps the original contract option when no alternate can fund the remainder (203.5506ms)
+✔ comparison is idempotent after JSON resume; stale and altered requests reject without rerolls or state changes (1097.6187ms)
+✔ original club acceptance remains possible after comparison and actually resumes registered prorated payment exactly once (1975.7522ms)
+✔ new prorated term preserves settled principal, pays registered bench once and settles both rounding signs exactly (2195.3116ms)
+✔ prorated payment rejects foreign/unregistered/international/changed evidence, stale dates and invalid previous principal without mutations (27.7882ms)
+✔ midseason offer is fixed, private and blocking; explicit acceptance preserves original receipts and budgets before real play resumes (4133.4875ms)
+✔ stale events and forged term/basis reject atomically; insufficient budget cannot silently fund a renewal (655.9449ms)
+✔ actual final regular date settles new pay once; postseason pays no extra; normal next-year renewal archives all prior contract receipts (9118.9488ms)
+✔ foreign v2 term preserves old-club principal and pays only the new registered club, including both rounding signs and JSON replays (2172.1272ms)
+✔ v1 same-club data stays unchanged; cross-club terms reject version downgrade, old-team registration and changed evidence (26.8041ms)
+✔ world payroll keeps the old-club paid cost and charges new registered days only to the new club once (454.4345ms)
+✔ foreign acceptance atomically preserves old pay, records, health, growth and relations; actual next registration pays new club once (4667.1312ms)
+✔ foreign acceptance rejects stale/forged/funded-capacity changes with the entire source intact (1009.3465ms)
+✔ recipient injury repair keeps incoming player in Futures and preserves existing injury evidence (332.0148ms)
+✔ leaving a first-team required position repairs only the old club vacancy and independent Futures slot (231.3685ms)
+✔ transferred term settles on final regular day, pays no postseason extra and preserves receipts/version into next year (9156.8842ms)
+✔ 35 contracts are not enough: exact required depth is repaired at minimum salary, independently playable and deterministic (544.132ms)
+✔ an absent replacement role generates only the required35..45 independent profile; valuable expired pros are not forced to minimum (174.6613ms)
+✔ full roster with injured required roles releases only redundant NPC slots and preserves the whole preseason guarantee and injury (199.9957ms)
+✔ four-year preseason release includes current year; old after-season entries remain distinct and idempotent (136.0184ms)
+✔ healthy complete clubs require no extra50-player target and invalid/injured depth cannot produce a false legal roster (177.3116ms)
+✔ transfer counts actual registrations, freezes legacy plan dates, and preserves one annual growth ledger (1156.5396ms)
+✔ new-club call-up review starts at twenty actual new registrations and keeps old reviews (66.3247ms)
+✔ transfer retains already-used season training and style windows without reopening either chance (145.2828ms)
+✔ completed ACTIVE military program keeps original rights/growth history across a valid transfer (62.5804ms)
+✔ completed SPORTS military program keeps original rights/growth history across a valid transfer (52.1518ms)
+ℹ tests 35
+ℹ suites 0
+ℹ pass 35
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16054.8936

@@ -1,4 +1,4 @@
-import {KBO_MONEY} from '@playball/rules';
+import {KBO_CLUBS,KBO_MONEY} from '@playball/rules';
 import type {KboInitialContract} from './kbo-world.js';
 import type {KboServicePayroll} from './kbo-service-payroll.js';
 import {assertKboServicePayroll} from './kbo-service-payroll.js';
@@ -9,14 +9,15 @@ import type {HealthGame} from './health.js';
 
 /** Calendar-limited new deal. The preceding military principal and receipts remain immutable. */
 export interface KboRemainderPay {
- schemaVersion:1;seasonKey:string;startAfterWorldDay:number;endWorldDay:number;dailyWon:number;reservedGameDays:number;
+ schemaVersion:1|2;seasonKey:string;startAfterWorldDay:number;endWorldDay:number;dailyWon:number;reservedGameDays:number;
  previous:Omit<KboInitialContract,'servicePay'|'remainderPay'> & {servicePay:KboServicePayroll};
  receipts:readonly KboContractPaymentReceipt[];settlement:null|{worldDay:number;adjustmentWon:number};
 }
 const integer=(n:number)=>Number.isSafeInteger(n)&&n>=0;
 export function assertKboRemainderPay(c:KboInitialContract):void {
  const p=c.remainderPay;if(!p)return;
- if(c.servicePay || c.status!=='ACTIVE_PRORATED' || c.years!==1 || c.signingBonusWon!==0 || !/^\d{4}$/.test(c.seasonKey) || Number(c.seasonKey)<2027 || p.schemaVersion!==1 || p.seasonKey!==c.seasonKey || !c.contractKey || c.contractKey===p.previous.contractKey || c.playerKey!==p.previous.playerKey || c.clubId!==p.previous.clubId || p.previous.seasonKey!==c.seasonKey || p.previous.status!=='ACTIVE' || !Number.isSafeInteger(c.annualSalaryWon) || c.annualSalaryWon%10_000!==0 || c.annualSalaryWon<KBO_MONEY.minimumSalaryWon || c.annualSalaryWon>KBO_MONEY.maximumSalaryWon || p.dailyWon!==Math.round(c.annualSalaryWon/144) || !integer(p.startAfterWorldDay) || !integer(p.endWorldDay) || p.endWorldDay>365 || p.endWorldDay<=p.startAfterWorldDay || !integer(p.reservedGameDays) || p.reservedGameDays>p.endWorldDay-p.startAfterWorldDay)throw new RangeError('INVALID_KBO_REMAINDER_PAY');
+ if(c.servicePay || c.status!=='ACTIVE_PRORATED' || c.years!==1 || c.signingBonusWon!==0 || !/^\d{4}$/.test(c.seasonKey) || Number(c.seasonKey)<2027 || ![1,2].includes(p.schemaVersion) || p.seasonKey!==c.seasonKey || !c.contractKey || c.contractKey===p.previous.contractKey || c.playerKey!==p.previous.playerKey || p.previous.seasonKey!==c.seasonKey || p.previous.status!=='ACTIVE' || !Number.isSafeInteger(c.annualSalaryWon) || c.annualSalaryWon%10_000!==0 || c.annualSalaryWon<KBO_MONEY.minimumSalaryWon || c.annualSalaryWon>KBO_MONEY.maximumSalaryWon || p.dailyWon!==Math.round(c.annualSalaryWon/144) || !integer(p.startAfterWorldDay) || !integer(p.endWorldDay) || p.endWorldDay>365 || p.endWorldDay<=p.startAfterWorldDay || !integer(p.reservedGameDays) || p.reservedGameDays>p.endWorldDay-p.startAfterWorldDay)throw new RangeError('INVALID_KBO_REMAINDER_PAY');
+ if(p.schemaVersion===1?c.clubId!==p.previous.clubId:c.clubId===p.previous.clubId || !KBO_CLUBS.some(x=>x.id===c.clubId) || !KBO_CLUBS.some(x=>x.id===p.previous.clubId))throw new RangeError('INVALID_KBO_REMAINDER_PAY');
  assertKboServicePayroll(p.previous);const prior=kboContractPaymentBalance(p.previous.servicePay.ledger),last=p.previous.servicePay.ledger.receipts.at(-1);
  if(prior.status!=='SETTLED' || !last || last.seasonKey!==p.seasonKey || last.worldDay!==p.startAfterWorldDay)throw new RangeError('INVALID_KBO_REMAINDER_SOURCE');
  const seen=new Set<string>();let day=p.startAfterWorldDay;
@@ -31,11 +32,17 @@ export function kboRemainderBalance(c:KboInitialContract){
  const reservedWon=p.settlement?0:p.dailyWon*p.reservedGameDays+Math.max(0,Math.round(c.annualSalaryWon*n/144)-p.dailyWon*n);
  return {status:p.settlement?'SETTLED' as const:'ACTIVE' as const,paidGameDays:p.receipts.length,paidWon,priorPaidWon,reservedWon};
 }
-export function kboRemainderSeasonCharge(c:KboInitialContract):number {const b=kboRemainderBalance(c);return b.priorPaidWon+b.paidWon+b.reservedWon;}
-export function createKboRemainderContract(previous:KboInitialContract,input:{contractKey:string;annualSalaryWon:number;startAfterWorldDay:number;endWorldDay:number;reservedGameDays:number}):KboInitialContract {
+export function kboRemainderSeasonCharge(c:KboInitialContract):number {const b=kboRemainderBalance(c);return (c.remainderPay!.schemaVersion===1?b.priorPaidWon:0)+b.paidWon+b.reservedWon;}
+/** The immutable old contract remains the original club's paid-cost evidence after a v2 transfer. */
+export function kboRemainderPriorClubCharge(c:KboInitialContract):{clubId:string;seasonKey:string;sourceContractKey:string;paidWon:number}|null {
+ if(!c.remainderPay)return null;assertKboRemainderPay(c);if(c.remainderPay.schemaVersion===1)return null;
+ const p=c.remainderPay;return {clubId:p.previous.clubId,seasonKey:p.seasonKey,sourceContractKey:p.previous.contractKey,paidWon:kboRemainderBalance(c).priorPaidWon};
+}
+export function createKboRemainderContract(previous:KboInitialContract,input:{contractKey:string;annualSalaryWon:number;startAfterWorldDay:number;endWorldDay:number;reservedGameDays:number;clubId?:string}):KboInitialContract {
  if(!previous.servicePay || previous.remainderPay)throw new RangeError('INVALID_KBO_REMAINDER_SOURCE');
  const inherited=structuredClone(previous);delete inherited.servicePay;
- const c:KboInitialContract={...inherited,contractKey:input.contractKey,playerKey:previous.playerKey,clubId:previous.clubId,seasonKey:previous.seasonKey,years:1,annualSalaryWon:input.annualSalaryWon,signingBonusWon:0,status:'ACTIVE_PRORATED',remainderPay:{schemaVersion:1,seasonKey:previous.seasonKey,startAfterWorldDay:input.startAfterWorldDay,endWorldDay:input.endWorldDay,dailyWon:Math.round(input.annualSalaryWon/144),reservedGameDays:input.reservedGameDays,previous:structuredClone(previous) as KboRemainderPay['previous'],receipts:[],settlement:null}};
+ const clubId=input.clubId??previous.clubId;
+ const c:KboInitialContract={...inherited,contractKey:input.contractKey,playerKey:previous.playerKey,clubId,seasonKey:previous.seasonKey,years:1,annualSalaryWon:input.annualSalaryWon,signingBonusWon:0,status:'ACTIVE_PRORATED',remainderPay:{schemaVersion:clubId===previous.clubId?1:2,seasonKey:previous.seasonKey,startAfterWorldDay:input.startAfterWorldDay,endWorldDay:input.endWorldDay,dailyWon:Math.round(input.annualSalaryWon/144),reservedGameDays:input.reservedGameDays,previous:structuredClone(previous) as KboRemainderPay['previous'],receipts:[],settlement:null}};
  assertKboRemainderPay(c);return c;
 }
 /** Registered bench/injured players qualify exactly as for the frozen military contract. */

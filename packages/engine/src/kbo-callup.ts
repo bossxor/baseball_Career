@@ -8,8 +8,10 @@ import {emptyBatting,emptyPitching} from './stats.js';
 import {createWorldEvent,resolveEventChoice,completeEventDomain,eventDefinition} from './events.js';
 import type {KboLeagueKey} from './kbo-day.js';
 import {protagonistLeague} from './kbo-windows.js';
+import {currentKboSeasonTransfers} from './kbo-transfer-registration.js';
+import {kboMilitaryRegisteredGames} from './kbo-military-growth.js';
 
-export interface KboCallupReview {seasonKey:string;teamGames:number;outcome:'NO_SLOT'|'BELOW'|'INJURED'|'OFFERED';comparedKey:string|null;candidateScore:number;comparedScore:number|null}
+export interface KboCallupReview {seasonKey:string;teamGames:number;outcome:'NO_SLOT'|'BELOW'|'INJURED'|'OFFERED';comparedKey:string|null;candidateScore:number;comparedScore:number|null;clubId?:string;registrationReceiptKey?:string}
 
 /** 01/08: competition = roleScore×.8 + performance index×.2 (index 50 below 50 PA / 30 outs). */
 export function kboCompetitionScore(career:KboCareer,key:string,league:KboLeagueKey):number {
@@ -19,6 +21,7 @@ export function kboCompetitionScore(career:KboCareer,key:string,league:KboLeague
 }
 function pick<T extends object>(source:T,keys:readonly string[]):Partial<T>{return Object.fromEntries(Object.entries(source).filter(([k])=>keys.includes(k))) as Partial<T>;}
 function futuresTeamGames(career:KboCareer):number {
+ const transfer=currentKboSeasonTransfers(career)?.at(-1);if(transfer)return kboMilitaryRegisteredGames(career)!.filter(g=>g.worldDay>transfer.afterWorldDay && g.scope.leagueKey==='FUTURES' && Object.hasOwn(g.teams,transfer.toClubId)).length;
  return Object.values(career.records.games).filter(g=>g.scope.leagueKey==='FUTURES' && g.scope.seasonKey===career.world.seasonKey && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,career.protagonistClubId)).length;
 }
 
@@ -27,12 +30,12 @@ function futuresTeamGames(career:KboCareer):number {
  * Only the first ever call-up is an E09 event; later moves are outside this step. Returns null when nothing is due. */
 export function reviewKboCallup(source:KboCareer,day:number,progress:KboSeasonProgress):KboCareer|null {
  if(protagonistLeague(source)!=='FUTURES' || ['SERVING_SPORTS','SERVING_ACTIVE'].includes(source.military?.status??''))return null;
- const games=futuresTeamGames(source),season=source.world.seasonKey;
- if(games===0 || games%20!==0 || (source.callupReviews??[]).some(r=>r.seasonKey===season && r.teamGames===games))return null;
+ const games=futuresTeamGames(source),season=source.world.seasonKey,transfer=currentKboSeasonTransfers(source)?.at(-1);
+ if(games===0 || games%20!==0 || (source.callupReviews??[]).some(r=>r.seasonKey===season && r.teamGames===games && (!transfer || r.registrationReceiptKey===transfer.receiptKey && r.clubId===transfer.toClubId)))return null;
  if(source.events.some(e=>e.definitionId==='E09'))return null;
  const key=source.protagonistKey,me=source.world.players[key]!,club=source.world.clubs.find(c=>c.id===source.protagonistClubId)!;
  const candidateScore=kboCompetitionScore(source,key,'FUTURES');
- const record=(outcome:KboCallupReview['outcome'],comparedKey:string|null,comparedScore:number|null)=>({seasonKey:season,teamGames:games,outcome,comparedKey,candidateScore,comparedScore});
+ const record=(outcome:KboCallupReview['outcome'],comparedKey:string|null,comparedScore:number|null)=>({seasonKey:season,teamGames:games,outcome,comparedKey,candidateScore,comparedScore,...(transfer?{clubId:transfer.toClubId,registrationReceiptKey:transfer.receiptKey}:{})});
  const career=structuredClone(source);
  if(Object.hasOwn(source.health.injuries,key)){career.callupReviews=[...(source.callupReviews??[]),record('INJURED',null,null)];return career;}
  const slots=club.firstTeam.filter(k=>!Object.hasOwn(source.health.injuries,k) && source.world.players[k]!.kind===me.kind && source.world.players[k]!.position===me.position)

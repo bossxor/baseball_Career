@@ -1,0 +1,35 @@
+✔ foreign acceptance atomically preserves old pay, records, health, growth and relations; actual next registration pays new club once (2873.9106ms)
+✔ foreign acceptance rejects stale/forged/funded-capacity changes with the entire source intact (725.2448ms)
+✖ leaving a first-team required position repairs only the old club vacancy and independent Futures slot (178.1829ms)
+✔ transferred term settles on final regular day, pays no postseason extra and preserves receipts/version into next year (6621.7479ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10752.3684
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-remainder-transfer.test.ts:1:6932
+✖ leaving a first-team required position repairs only the old club vacancy and independent Futures slot (178.1829ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  2 !== 1
+
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-remainder-transfer.test.ts:59:91)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,52 @@
+✔ HITTER pro list retains historical school and active club teammate identities without invented transfers/stages (812.8906ms)
+✔ PITCHER pro list retains historical school and active club teammate identities without invented transfers/stages (691.0755ms)
+✔ historical relation details reuse existing official scoped records; never fabricate pro games or new player registration (542.1616ms)
+✔ both historical and new pro E94 preserve names and ACK only their notice while the confirmed plan remains sealed (721.2479ms)
+✔ stale revision/version, wrong command or foreign/duplicate relation evidence reject without changes (575.3204ms)
+✔ unknown historical player remains unresolved; malformed ownership, foreign history and changed confirmed plan reject (1467.1632ms)
+✔ absence of relations/notices on restored old pro state is empty and querying never creates a new relation (504.3127ms)
+✔ a pro teammate moved to FA or retirement keeps identity and notices as historical only, never a fake live registration (621.9369ms)
+✔ comparison request keeps E30, original offer, clock, rights and money intact while games remain paused (2479.0401ms)
+✔ comparison excludes fully committed clubs and keeps the original contract option when no alternate can fund the remainder (202.0997ms)
+✔ comparison is idempotent after JSON resume; stale and altered requests reject without rerolls or state changes (1173.9566ms)
+✔ original club acceptance remains possible after comparison and actually resumes registered prorated payment exactly once (1874.6897ms)
+✔ new prorated term preserves settled principal, pays registered bench once and settles both rounding signs exactly (2106.1528ms)
+✔ prorated payment rejects foreign/unregistered/international/changed evidence, stale dates and invalid previous principal without mutations (30.3533ms)
+✔ midseason offer is fixed, private and blocking; explicit acceptance preserves original receipts and budgets before real play resumes (4098.1221ms)
+✔ stale events and forged term/basis reject atomically; insufficient budget cannot silently fund a renewal (684.4659ms)
+✔ actual final regular date settles new pay once; postseason pays no extra; normal next-year renewal archives all prior contract receipts (9332.3137ms)
+✔ foreign v2 term preserves old-club principal and pays only the new registered club, including both rounding signs and JSON replays (2085.6396ms)
+✔ v1 same-club data stays unchanged; cross-club terms reject version downgrade, old-team registration and changed evidence (31.8856ms)
+✔ world payroll keeps the old-club paid cost and charges new registered days only to the new club once (429.9996ms)
+✖ foreign acceptance atomically preserves old pay, records, health, growth and relations; actual next registration pays new club once (2449.3198ms)
+✔ foreign acceptance rejects stale/forged/funded-capacity changes with the entire source intact (1104.4207ms)
+✔ recipient injury repair keeps incoming player in Futures and preserves existing injury evidence (352.6111ms)
+✔ leaving a first-team required position repairs only the old club vacancy and independent Futures slot (285.7944ms)
+✔ transferred term settles on final regular day, pays no postseason extra and preserves receipts/version into next year (9706.71ms)
+✔ 35 contracts are not enough: exact required depth is repaired at minimum salary, independently playable and deterministic (518.9599ms)
+✔ an absent replacement role generates only the required35..45 independent profile; valuable expired pros are not forced to minimum (159.8273ms)
+✔ full roster with injured required roles releases only redundant NPC slots and preserves the whole preseason guarantee and injury (191.3023ms)
+✔ four-year preseason release includes current year; old after-season entries remain distinct and idempotent (119.3525ms)
+✔ healthy complete clubs require no extra50-player target and invalid/injured depth cannot produce a false legal roster (161.3144ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 29
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14524.1846
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-remainder-transfer.test.ts:1:1920
+✖ foreign acceptance atomically preserves old pay, records, health, growth and relations; actual next registration pays new club once (2449.3198ms)
+  RangeError: INVALID_CHOICE
+      at resolveEventChoice (E:\AI\Game\baseball_career\packages\engine\src\events.ts:58:156)
+      at prepareRelationNoticeRead (E:\AI\Game\baseball_career\packages\engine\src\relation-notices.ts:74:17)
+      at resolveKboRelationNotice (E:\AI\Game\baseball_career\packages\engine\src\kbo-relations.ts:48:50)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-remainder-transfer.test.ts:37:46)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

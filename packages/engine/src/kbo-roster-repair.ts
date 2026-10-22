@@ -66,19 +66,7 @@ export function repairKboDualLeagueRosters(input:{world:ActiveKboRosterWorld;poo
     pool.players[leaving]={player:structuredClone(player),...(book?{repertoire:structuredClone(book)}:{}),...(injury?{injury:structuredClone(injury)}:{}),origin:'RELEASED',enteredSeasonKey:world.seasonKey,previousClubId:club.id,previousContract:structuredClone(contract)};
     club.roster=club.roster.filter(k=>k!==leaving);club.firstTeam=club.firstTeam.filter(k=>k!==leaving);club.reservedSalaryWon-=contract.annualSalaryWon;delete world.players[leaving];delete world.contracts[leaving];delete world.repertoires[leaving];delete health.injuries[leaving];releases.push({playerKey:leaving,clubId:club.id,reason:'REQUIRED_ROSTER_SLOT'});
    }
-   const candidates=Object.entries(pool.players).filter(([,e])=>e.origin==='INDEPENDENT' && !e.injury && e.player.position===position && overall(e.player.kind,e.player.abilities).sumUnits<=45*overall(e.player.kind,e.player.abilities).denominator).map(([k,e])=>({key:k,player:e.player})).sort((a,b)=>weak(a.player,b.player));
-   let playerKey=candidates[0]?.key,generated=false;
-   if(!playerKey){
-    const index=pool.supplies.filter(s=>s.seasonKey===world.seasonKey).reduce((n,s)=>n+s.playerKeys.length,0),batchKey=JSON.stringify(['kbo-replacement',world.worldKey,world.seasonKey,index]),key=JSON.stringify(['kbo-replacement-player',world.worldKey,world.seasonKey,index]),kind=['SP','RP','CP'].includes(position)?'PITCHER' as const:'HITTER' as const;
-    if(Object.hasOwn(pool.players,key) || Object.hasOwn(world.players,key))throw new RangeError('KBO_REPLACEMENT_ID_CONFLICT');
-    const result=generateSchoolNpcRoster({templates:[{simulationKey:key,kind,position,schoolId:'INDEPENDENT'}],seed:world.seed,worldKey:batchKey,seasonKey:world.seasonKey,difficulty:input.difficulty,balanceVersion:2}),p=result.players[key]!,target=35+nextInteger(createWorldStream(world.seed,batchKey,'protagonist'),11).value,age=22+nextInteger(createWorldStream(world.seed,batchKey,'roster'),9).value,abilities=initialProfileAbilities(kind,p.archetype,target);
-    pool.players[key]={player:{...p,age,abilities,careerPeaks:{...abilities},potential:Object.fromEntries(Object.keys(abilities).map(k=>[k,Math.max(abilities[k]!,p.potential[k]!)]))},...(result.repertoires[key]?{repertoire:result.repertoires[key]}:{}),origin:'INDEPENDENT',enteredSeasonKey:world.seasonKey,previousClubId:null,previousContract:null};
-    pool.supplies=[...pool.supplies,{seasonKey:world.seasonKey,batchKey,playerKeys:[key]}];playerKey=key;generated=true;
-   }
-   const entry=pool.players[playerKey]!,supportWon=protectKboEmergencyBudget(world,club.id,world.seasonKey,1);
-   world.players[playerKey]=structuredClone(entry.player);if(entry.repertoire)world.repertoires[playerKey]=structuredClone(entry.repertoire);
-   world.contracts[playerKey]={contractKey:JSON.stringify(['kbo-safety-contract',world.seasonKey,club.id,playerKey]),playerKey,clubId:club.id,seasonKey:world.seasonKey,years:1,annualSalaryWon:KBO_MONEY.minimumSalaryWon,signingBonusWon:0,status:'ACTIVE'};club.roster=[...club.roster,playerKey].sort();club.reservedSalaryWon+=KBO_MONEY.minimumSalaryWon;delete pool.players[playerKey];
-   signings.push({playerKey,clubId:club.id,position,generated,reason:'REQUIRED_DUAL_LEAGUE_SLOT',supportWon});
+   signings.push(signKboRequiredReplacement(world,pool,club.id,position,input.difficulty));
   }
   club.firstTeam=selectKboDualLeagueRoster(healthy());if(kboClubBalance(world,club.id).availableWon<0)throw new RangeError('KBO_REPAIR_BUDGET_INVALID');
  }
@@ -88,4 +76,24 @@ export function repairKboDualLeagueRosters(input:{world:ActiveKboRosterWorld;poo
 function deficit(players:readonly DevelopmentPlayer[]):number {
  const hitters=players.filter(p=>p.kind==='HITTER'),pitchers=players.filter(p=>p.kind==='PITCHER');
  return Math.max(0,24-hitters.length)+FIELD_POSITIONS.reduce((n,pos)=>n+Math.max(0,(pos==='C'?3:2)-hitters.filter(p=>p.position===pos).length),0)+Math.max(0,14-pitchers.length)+([['SP',5],['RP',6],['CP',2]] as const).reduce((n,[pos,count])=>n+Math.max(0,count-pitchers.filter(p=>p.position===pos).length),0);
+}
+
+/** Internal transaction helper: caller owns world/pool and proves a missing legal slot before signing. */
+export function signKboRequiredReplacement(world:ActiveKboRosterWorld,pool:KboFreeAgentPool,clubId:string,position:string,difficulty:Difficulty):KboRosterRepairReceipt['signings'][number] {
+ const club=world.clubs.find(c=>c.id===clubId);
+ if(!club || club.roster.length>=KBO_ROSTER_LIMITS.maximum || pool.worldKey!==world.worldKey || pool.seasonKey!==world.seasonKey || pool.settlement)throw new RangeError('INVALID_KBO_ROSTER_REPAIR');
+ assertKboFreeAgentPool(pool,Object.keys(world.players));
+ const candidates=Object.entries(pool.players).filter(([,e])=>e.origin==='INDEPENDENT' && !e.injury && e.player.position===position && overall(e.player.kind,e.player.abilities).sumUnits<=45*overall(e.player.kind,e.player.abilities).denominator).map(([k,e])=>({key:k,player:e.player})).sort((a,b)=>weak(a.player,b.player));
+ let playerKey=candidates[0]?.key,generated=false;
+ if(!playerKey){
+  const index=pool.supplies.filter(s=>s.seasonKey===world.seasonKey).reduce((n,s)=>n+s.playerKeys.length,0),batchKey=JSON.stringify(['kbo-replacement',world.worldKey,world.seasonKey,index]),key=JSON.stringify(['kbo-replacement-player',world.worldKey,world.seasonKey,index]),kind=['SP','RP','CP'].includes(position)?'PITCHER' as const:'HITTER' as const;
+  if(Object.hasOwn(pool.players,key) || Object.hasOwn(world.players,key))throw new RangeError('KBO_REPLACEMENT_ID_CONFLICT');
+  const result=generateSchoolNpcRoster({templates:[{simulationKey:key,kind,position,schoolId:'INDEPENDENT'}],seed:world.seed,worldKey:batchKey,seasonKey:world.seasonKey,difficulty,balanceVersion:2}),p=result.players[key]!,target=35+nextInteger(createWorldStream(world.seed,batchKey,'protagonist'),11).value,age=22+nextInteger(createWorldStream(world.seed,batchKey,'roster'),9).value,abilities=initialProfileAbilities(kind,p.archetype,target);
+  pool.players[key]={player:{...p,age,abilities,careerPeaks:{...abilities},potential:Object.fromEntries(Object.keys(abilities).map(k=>[k,Math.max(abilities[k]!,p.potential[k]!)]))},...(result.repertoires[key]?{repertoire:result.repertoires[key]}:{}),origin:'INDEPENDENT',enteredSeasonKey:world.seasonKey,previousClubId:null,previousContract:null};
+  pool.supplies=[...pool.supplies,{seasonKey:world.seasonKey,batchKey,playerKeys:[key]}];playerKey=key;generated=true;
+ }
+ const entry=pool.players[playerKey]!,supportWon=protectKboEmergencyBudget(world,club.id,world.seasonKey,1);
+ world.players[playerKey]=structuredClone(entry.player);if(entry.repertoire)world.repertoires[playerKey]=structuredClone(entry.repertoire);
+ world.contracts[playerKey]={contractKey:JSON.stringify(['kbo-safety-contract',world.seasonKey,club.id,playerKey]),playerKey,clubId:club.id,seasonKey:world.seasonKey,years:1,annualSalaryWon:KBO_MONEY.minimumSalaryWon,signingBonusWon:0,status:'ACTIVE'};club.roster=[...club.roster,playerKey].sort();club.reservedSalaryWon+=KBO_MONEY.minimumSalaryWon;delete pool.players[playerKey];
+ return {playerKey,clubId:club.id,position,generated,reason:'REQUIRED_DUAL_LEAGUE_SLOT',supportWon};
 }

@@ -16,11 +16,11 @@ import {assertKboRecruitmentWorld} from './kbo-draft.js';
 export interface KboRemainderRenewal {
  offerKey:string;eventKey:string;playerKey:string;clubId:string;seasonKey:string;startAfterWorldDay:number;endWorldDay:number;
  previousSalaryWon:number;valueWon:number;annualSalaryWon:number;estimatedGameDays:number;reservedGameDays:number;
- sourceBasis:string;status:'OFFERED'|'ACCEPTED';comparison?:KboRemainderComparison;
+ sourceBasis:string;status:'OFFERED'|'ACCEPTED'|'TRANSFERRED';acceptedOfferKey?:string;comparison?:KboRemainderComparison;
 }
 const basis=(c:KboCareer)=>canonicalJson({contract:c.world.contracts[c.protagonistKey],schedule:c.competitionSchedule,club:c.world.clubs.find(x=>x.id===c.protagonistClubId),player:c.world.players[c.protagonistKey],recordsRevision:c.records.revision,lastClosedDay:c.days?.days.at(-1)?.day});
 function candidate(c:KboCareer,o:KboRemainderRenewal){return createKboRemainderContract(c.world.contracts[c.protagonistKey]!,{contractKey:o.offerKey,annualSalaryWon:o.annualSalaryWon,startAfterWorldDay:o.startAfterWorldDay,endWorldDay:o.endWorldDay,reservedGameDays:o.reservedGameDays});}
-function currentOffer(c:KboCareer):KboRemainderRenewal {
+export function assertKboRemainderRenewal(c:KboCareer):KboRemainderRenewal {
  const o=c.remainderRenewal,p=c.phaseContext,e=o?c.events.find(e=>e.eventKey===o.eventKey):undefined;
  if(c.rights.holderOrgId!==c.protagonistClubId || c.rights.playerKey!==c.protagonistKey || c.registration.clubId!==c.protagonistClubId || c.registration.playerKey!==c.protagonistKey)throw new RangeError('KBO_REMAINDER_OFFER_CHANGED');
  if(!o || o.status!=='OFFERED' || p.phase!=='EVENT_DECISION' || p.eventKey!==o.eventKey || p.resume.pendingGame || p.resume.nextWorldDay!==o.startAfterWorldDay+1 || !e || e.definitionId!=='E30' || e.status!=='OPEN' || e.worldKey!==c.world.worldKey || e.seasonKey!==c.world.seasonKey || o.playerKey!==c.protagonistKey || o.clubId!==c.protagonistClubId || o.seasonKey!==c.world.seasonKey || o.sourceBasis!==basis(c) || o.reservedGameDays!==kboRemainderFutureDates(c,o.startAfterWorldDay))throw new RangeError('KBO_REMAINDER_OFFER_CHANGED');
@@ -33,7 +33,7 @@ function currentOffer(c:KboCareer):KboRemainderRenewal {
 /** Freeze one current-season E30; game time remains at the last paid closed day until explicit acceptance. */
 export function offerKboRemainderRenewal(source:KboCareer,expectedRevision:number):KboCareer {
  assertCareerRevision(source,expectedRevision);assertKboRecruitmentWorld(source.world);
- if(source.remainderRenewal?.status==='OFFERED' && source.remainderRenewal.seasonKey===source.world.seasonKey){currentOffer(source);return structuredClone(source);}
+ if(source.remainderRenewal?.status==='OFFERED' && source.remainderRenewal.seasonKey===source.world.seasonKey){assertKboRemainderRenewal(source);return structuredClone(source);}
  const phase=source.phaseContext,contract=source.world.contracts[source.protagonistKey]!,service=contract.servicePay,day=source.days?.days.at(-1)?.day;
  if(source.rights.holderOrgId!==source.protagonistClubId || contract.clubId!==source.protagonistClubId || source.registration.clubId!==source.protagonistClubId || phase.phase!=='SEASON_PROGRESS' || phase.pendingGame || !service || kboContractPaymentBalance(service.ledger).status!=='SETTLED' || day===undefined || phase.nextWorldDay!==day+1 || source.events.some(e=>e.status==='OPEN') || !source.competitionSchedule || source.remainderRenewal?.seasonKey===source.world.seasonKey)throw new RangeError('KBO_REMAINDER_RENEWAL_NOT_AVAILABLE');
  const last=service.ledger.receipts.at(-1),all=[...source.competitionSchedule.leagues.KBO,...source.competitionSchedule.leagues.FUTURES],endWorldDay=Math.max(...all.map(g=>g.worldDay));
@@ -46,7 +46,7 @@ export function offerKboRemainderRenewal(source:KboCareer,expectedRevision:numbe
 }
 /** Same-club positive path only. Navigation can leave the frozen offer open; no automatic extension. */
 export function acceptKboRemainderRenewal(source:KboCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number}):KboCareer {
- assertCareerRevision(source,expectedRevision);const o=currentOffer(source),event=source.events.find(e=>e.eventKey===o.eventKey)!;
+ assertCareerRevision(source,expectedRevision);const o=assertKboRemainderRenewal(source),event=source.events.find(e=>e.eventKey===o.eventKey)!;
  if(input.eventKey!==event.eventKey)throw new RangeError('KBO_REMAINDER_OFFER_CHANGED');
  const resolved=completeBlockingEvent(event,input.eventVersion,{sourceEvidenceKey:event.evidenceKey,receiptKey:JSON.stringify(['kbo-remainder-accept',o.offerKey]),command:'ACCEPT_REMAINDER_RENEWAL'},{worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:o.startAfterWorldDay,eligibleCommands:['OPEN_CAREER_OFFERS']});
  const c=structuredClone(source),old=c.world.contracts[c.protagonistKey]!,next=candidate(c,o),club=c.world.clubs.find(x=>x.id===c.protagonistClubId)!;
@@ -55,7 +55,7 @@ export function acceptKboRemainderRenewal(source:KboCareer,expectedRevision:numb
 }
 /** Keep the original offer open while navigating to comparison. No contract, rights or money move here. */
 export function compareKboRemainderOffers(source:KboCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number}){
- assertCareerRevision(source,expectedRevision);const o=currentOffer(source),event=source.events.find(e=>e.eventKey===o.eventKey)!;
+ assertCareerRevision(source,expectedRevision);const o=assertKboRemainderRenewal(source),event=source.events.find(e=>e.eventKey===o.eventKey)!;
  if(input.eventKey!==o.eventKey || input.eventVersion!==event.version)throw new RangeError('KBO_REMAINDER_OFFER_CHANGED');
  const career=structuredClone(source);
  if(!o.comparison){career.remainderRenewal={...career.remainderRenewal!,comparison:expectedComparison(source,o)};career.revision++;}
@@ -74,9 +74,11 @@ function expectedComparison(c:KboCareer,o:KboRemainderRenewal):KboRemainderCompa
 }
 export function kboRemainderRenewalView(c:KboCareer){
  const o=c.remainderRenewal;if(!o || o.seasonKey!==c.world.seasonKey)return null;
- if(o.status==='OFFERED')currentOffer(c);
+ if(o.status==='OFFERED')assertKboRemainderRenewal(c);
  let canAccept=o.status==='OFFERED',reason:string|null=null;
  if(canAccept){const copy=structuredClone(c),old=copy.world.contracts[copy.protagonistKey]!,next=candidate(copy,o),club=copy.world.clubs.find(x=>x.id===copy.protagonistClubId)!;club.reservedSalaryWon+=kboContractSeasonCharge(next)-kboContractSeasonCharge(old);copy.world.contracts[copy.protagonistKey]=next;try{assertKboRecruitmentWorld(copy.world);}catch{canAccept=false;reason='BUDGET_CAPACITY_REQUIRED';}}
  const maximumReservedWon=o.status==='OFFERED'?kboRemainderBalance(candidate(c,o)).reservedWon:kboRemainderBalance(c.world.contracts[c.protagonistKey]!).reservedWon;
- return {...(o.comparison?{comparison:{originalOfferAvailable:o.status==='OFFERED',offers:o.comparison.offers.map(x=>({...x})),emptyReason:o.comparison.offers.length===0?'NO_ELIGIBLE_CLUB_CAPACITY_OR_BUDGET':null}}:{}),retirementAvailable:false,retirementReason:'SEASON_REVIEW_REQUIRED',eventKey:o.eventKey,eventVersion:c.events.find(e=>e.eventKey===o.eventKey)!.version,status:o.status,annualSalaryWon:o.annualSalaryWon,dailyWon:Math.round(o.annualSalaryWon/144),estimatedGameDays:o.estimatedGameDays,estimatedTotalWon:Math.round(o.annualSalaryWon*o.estimatedGameDays/144),maximumReservedWon,endWorldDay:o.endWorldDay,canAccept,reason};
+ const accepted=o.status==='TRANSFERRED'?o.comparison?.offers.find(x=>x.offerKey===o.acceptedOfferKey):null;if(o.status==='TRANSFERRED' && !accepted)throw new RangeError('KBO_REMAINDER_OFFER_CHANGED');
+ const display=accepted??o;
+ return {...(o.comparison?{comparison:{originalOfferAvailable:o.status==='OFFERED',offers:o.status==='TRANSFERRED'?[]:o.comparison.offers.map(x=>({...x})),emptyReason:o.comparison.offers.length===0?'NO_ELIGIBLE_CLUB_CAPACITY_OR_BUDGET':null}}:{}),retirementAvailable:false,retirementReason:'SEASON_REVIEW_REQUIRED',eventKey:o.eventKey,eventVersion:c.events.find(e=>e.eventKey===o.eventKey)!.version,status:o.status,...(accepted?{acceptedClubId:accepted.clubId}:{}),annualSalaryWon:display.annualSalaryWon,dailyWon:Math.round(display.annualSalaryWon/144),estimatedGameDays:display.estimatedGameDays,estimatedTotalWon:Math.round(display.annualSalaryWon*display.estimatedGameDays/144),maximumReservedWon,endWorldDay:o.endWorldDay,canAccept,reason};
 }

@@ -30,7 +30,7 @@ export function openKboMilitaryPlan(source:KboCareer,expectedRevision:number):Kb
  if(existing){if(existing.status==='OPEN')current(source,existing.eventKey);return structuredClone(source);}
  if(source.events.some(e=>e.status==='OPEN'&&e.definitionId!=='E30'))throw new RangeError('KBO_MILITARY_PLAN_UNAVAILABLE');
  const d=eventDefinition(id),event=createWorldEvent({definitionId:id,worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,evidence:{version:1,type:d.evidenceDomain,fields:{playerSimulationKey:source.protagonistKey,serviceTaskIdOrServicePeriodId:task(source),stage:'PLAN'}},resume:{worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,phase:'SEASON_REVIEW',competitionKey:null,registrationKey:source.protagonistClubId,sourceRevision:source.revision+1},sourceSequence:source.events.length+1,worldDay:source.days!.days.at(-1)!.day});
- const c=structuredClone(source);c.schemaVersion=3;c.events=[...c.events,event];c.revision++;return c;
+ const c=structuredClone(source);if(c.schemaVersion<3)c.schemaVersion=3;c.events=[...c.events,event];c.revision++;return c;
 }
 /** START_SERVICE only opens S26 review. Actual enlistment still requires confirmKboActiveService. */
 export function resolveKboMilitaryPlan(source:KboCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number;command:string}){
@@ -38,7 +38,7 @@ export function resolveKboMilitaryPlan(source:KboCareer,expectedRevision:number,
  const context={worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:available};
  const selected=resolveEventChoice(event,input.eventVersion,input.command,null,context);if(!selected.domain)throw new RangeError('INVALID_KBO_MILITARY_PLAN');
  const resolved=completeEventDomain(event,selected.domain,JSON.stringify(['kbo-military-plan-choice',task(source),input.command]),context);
- let c=structuredClone(source);c.schemaVersion=3;c.events=c.events.map(e=>e.eventKey===event.eventKey?resolved:e);
+ let c=structuredClone(source);if(c.schemaVersion<3)c.schemaVersion=3;c.events=c.events.map(e=>e.eventKey===event.eventKey?resolved:e);
  if(input.command==='APPLY_MILITARY_TEAM')c=applyToSangmu(c,c.revision);else c.revision++;
  return {career:c,navigation:input.command==='START_SERVICE'?{targetScreen:'S26',sourceEventKey:event.eventKey}:null};
 }

@@ -1,3 +1,4 @@
+import {assertKboRecruitmentWorld} from './kbo-draft.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {kboPreseasonPlanView} from './kbo-preseason.js';
@@ -9,7 +10,12 @@ import type {RelationNoticeReadInput,RelationNoticeReadSource} from './relation-
 
 /** Read adapter only. It never registers an archived student in the live pro roster. */
 function relationSource(s:KboCareer):RelationNoticeReadSource {
- assertCareerRevision(s,s.revision);kboPreseasonPlanView(s);
+ assertCareerRevision(s,s.revision);
+ if(s.phaseContext.phase==='PRESEASON_SETUP')kboPreseasonPlanView(s);
+ else {
+  assertKboRecruitmentWorld(s.world);const club=s.world.clubs.find(c=>c.id===s.protagonistClubId),r=s.registration;
+  if(!club || !club.roster.includes(s.protagonistKey) || s.rights.holderOrgId!==club.id || s.rights.playerKey!==s.protagonistKey || r.playerKey!==s.protagonistKey || r.clubId!==club.id || r.seasonKey!==s.world.seasonKey || r.status!=='ACTIVE' || r.firstTeam!==club.firstTeam.includes(s.protagonistKey))throw new RangeError('INVALID_KBO_RELATION_REGISTRATION');
+ }
  const world:RelationHistoryWorld={worldKey:s.world.worldKey,seed:s.world.seed,seasonKey:s.world.seasonKey,leagueKey:'KBO',protagonistKey:s.protagonistKey,protagonistSchoolId:s.protagonistClubId,schools:s.world.clubs,players:s.world.players};
  const detachedPlayers:Record<string,NonNullable<RelationshipHistorySource['detachedPlayers']>[string]>={};
  const registration=(clubId:string|null,seasonKey:string)=>{const c=s.world.clubs.find(c=>c.id===clubId);return c?{seasonKey,leagueKey:'KBO',teamId:c.id,teamName:c.name}:null;};

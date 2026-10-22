@@ -1,5 +1,7 @@
 # 91. 현재 적용 계약 지도 — 설계 기준본1.0
 
+M2-CQ 구현 후속:14/21의 시즌 중 잔여 계약 비교·타 구단 수락은 [CQ](../implementation/M2-CQ-KBO-REMAINDER-TRANSFER.md)를 따른다. 기존 지급 구단 귀속·실제 등록일 급여·성장/강화1회·v4 호환 경계를 보존하며 실제 웹/API/DB 구현과 분리한다.
+
 2026-10-20 성장 달력 후속:14의 최신 사용자 확정인 세계2~10월·고교2~6월·국제창 제외와 `calendar-1` 날짜를42의 기간 정규화에 적용한다. 실제 구현/수치 충돌은 `../implementation/M2-T-GROWTH-CALENDAR.md`를 따른다.
 
 M2-U 구현 후속:19/34/43/125의 고교 결산·E04 blocking·대학 입학 결정은 `../implementation/M2-U-GRADUATION-COLLEGE-ROUTE.md`를 따른다. 실제 대학 시즌/구단 모집과 설계 검증의 미실행 범위는 별도로 유지한다.

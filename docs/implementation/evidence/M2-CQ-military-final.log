@@ -1,0 +1,11 @@
+✔ legacy SPORTS growth history cannot publish an unusable transfer or silently adopt a new growth policy (1383.7709ms)
+✔ actual ACTIVE completed-service transfer preserves the original program and continues registered growth/pay and exactly six return games through next-year activation (22880.3262ms)
+✔ actual SPORTS completed-service transfer preserves the original program and continues registered growth/pay (1278.9761ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25863.1641

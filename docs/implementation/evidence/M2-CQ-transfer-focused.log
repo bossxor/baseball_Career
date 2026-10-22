@@ -1,0 +1,66 @@
+✔ foreign acceptance atomically preserves old pay, records, health, growth and relations; actual next registration pays new club once (2850.0689ms)
+✔ foreign acceptance rejects stale/forged/funded-capacity changes with the entire source intact (712.0427ms)
+✖ leaving a first-team required position repairs only the old club vacancy and independent Futures slot (197.2695ms)
+✖ transferred term settles on final regular day, pays no postseason extra and preserves receipts/version into next year (6031.8314ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10245.5043
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-remainder-transfer.test.ts:1:6776
+✖ leaving a first-team required position repairs only the old club vacancy and independent Futures slot (197.2695ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok(from.firstTeam.includes(former))
+
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-remainder-transfer.test.ts:59:48)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\kbo-remainder-transfer.test.ts:1:8144
+✖ transferred term settles on final regular day, pays no postseason extra and preserves receipts/version into next year (6031.8314ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /TRAINING/. Input:
+
+  'RangeError: WINDOW_CLOSED'
+
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-remainder-transfer.test.ts:68:141)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: RangeError: WINDOW_CLOSED
+        at applySeasonTraining (E:\AI\Game\baseball_career\packages\engine\src\training.ts:29:32)
+        at applyTraining (E:\AI\Game\baseball_career\packages\engine\src\kbo-windows.ts:45:15)
+        at trainKboCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-windows.ts:53:15)
+        at <anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-remainder-transfer.test.ts:68:152)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-remainder-transfer.test.ts:68:141)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1397:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:969:18),
+    expected: /TRAINING/,
+    operator: 'throws',
+    diff: 'simple'
+  }

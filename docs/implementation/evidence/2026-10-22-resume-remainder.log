@@ -1,0 +1,17 @@
+✔ comparison request keeps E30, original offer, clock, rights and money intact while games remain paused (2131.0479ms)
+✔ comparison excludes fully committed clubs and keeps the original contract option when no alternate can fund the remainder (215.5089ms)
+✔ comparison is idempotent after JSON resume; stale and altered requests reject without rerolls or state changes (1122.7834ms)
+✔ original club acceptance remains possible after comparison and actually resumes registered prorated payment exactly once (2081.7677ms)
+✔ new prorated term preserves settled principal, pays registered bench once and settles both rounding signs exactly (1872.5119ms)
+✔ prorated payment rejects foreign/unregistered/international/changed evidence, stale dates and invalid previous principal without mutations (19.9014ms)
+✔ midseason offer is fixed, private and blocking; explicit acceptance preserves original receipts and budgets before real play resumes (3826.6507ms)
+✔ stale events and forged term/basis reject atomically; insufficient budget cannot silently fund a renewal (685.1625ms)
+✔ actual final regular date settles new pay once; postseason pays no extra; normal next-year renewal archives all prior contract receipts (6786.4449ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12222.7972

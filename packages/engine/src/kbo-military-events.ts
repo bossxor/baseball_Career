@@ -45,7 +45,7 @@ export function closeKboMilitaryCalendarDay(career:KboCareer,day:number,progress
  if(!club || club.id!==career.protagonistClubId || !club.roster.includes(career.protagonistKey) || club.firstTeam.includes(career.protagonistKey))throw new RangeError('MILITARY_RETURN_SLOT_REQUIRED');
  const contract=career.world.contracts[career.protagonistKey]!;if(contract.servicePay)contract.servicePay.ledger=resumeKboContractPayments(contract.servicePay.ledger,record.program);
  record.status='COMPLETED';record.completedSeasonKey=season;
- if(record.program.kind==='ACTIVE'){career.schemaVersion=3;record.returnCondition={programId:record.program.programId,returnSeasonKey:season,returnWorldDay:day,gameKeys:[]};}
+ if(record.program.kind==='ACTIVE'){if(career.schemaVersion<3)career.schemaVersion=3;record.returnCondition={programId:record.program.programId,returnSeasonKey:season,returnWorldDay:day,gameKeys:[]};}
  if(career.sangmu)career.sangmu={...career.sangmu,loaned:(career.sangmu.loaned??[]).filter(k=>k!==career.protagonistKey)};
  career.registration={...career.registration,firstTeam:false,competitionKey:'FUTURES'};
  const event=serviceEvent(career,'E53',day,'SEASON_PROGRESS');career.events=[...career.events,event];

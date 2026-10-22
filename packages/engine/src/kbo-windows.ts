@@ -8,6 +8,7 @@ import {trainingPreview,applySeasonTraining} from './training.js';
 import type {TrainingChoice,TrainingContext} from './training.js';
 import {createWorldEvent,resolveEventChoice,completeEventDomain,eventDefinition} from './events.js';
 import type {KboLeagueKey} from './kbo-day.js';
+import {currentKboSeasonTransfers} from './kbo-transfer-registration.js';
 
 /** 14: pro seasons open special training at 48 team games and the style review at 72 (school uses 16/24 of 48). */
 export const KBO_TRAINING_GAMES=48,KBO_STYLE_GAMES=72;
@@ -17,7 +18,7 @@ export function protagonistLeague(career:KboCareer):KboLeagueKey {
  const club=career.world.clubs.find(c=>c.id===career.protagonistClubId);if(!club)throw new RangeError('MISSING_KBO_CLUB');
  return club.firstTeam.includes(career.protagonistKey)?'KBO':'FUTURES';
 }
-/** Completed official regular games of my club in my current league this season. */
+/** Legacy team games; transferred careers follow actual season registrations across clubs and leagues. */
 export function kboTeamGames(career:KboCareer):number {
  const military=kboMilitaryRegisteredGames(career);if(military)return military.length;
  const league=protagonistLeague(career);
@@ -60,7 +61,8 @@ export function changeKboMidseasonArchetype(source:KboCareer,expectedRevision:nu
  if(player.archetype!==archetype && source.styleUsedWindows.includes(window))throw new RangeError('STYLE_WINDOW_USED');
  const career=structuredClone(source);career.world.players[player.simulationKey]={...career.world.players[player.simulationKey]!,archetype};
  if(player.archetype!==archetype)career.styleUsedWindows=[...career.styleUsedWindows,window];
- const count=kboTeamGames(source);career.planHistory=[...career.planHistory.filter(p=>p.completedTeamGames!==count),{completedTeamGames:count,focus:[...player.focus],archetype}];career.revision++;return career;
+ const count=kboTeamGames(source),frozen=currentKboSeasonTransfers(source)?.at(-1)?.planBoundaryDays;
+ if(!frozen || player.archetype!==archetype)career.planHistory=[...career.planHistory.filter((p,i)=>i<(frozen?.length??0) || p.completedTeamGames!==count),{completedTeamGames:count,focus:[...player.focus],archetype}];career.revision++;return career;
 }
 
 /** After a pro day close: the first eligible window event (E43 then E41) for this season, or null. */

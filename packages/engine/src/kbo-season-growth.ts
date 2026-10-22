@@ -1,10 +1,17 @@
-import {kboMilitaryGrowthPeriods} from './kbo-military-growth.js';
+import {kboMilitaryGrowthPeriods,kboMilitaryRegisteredGames} from './kbo-military-growth.js';
+import {kboRegistrationPlanBoundaryDays,currentKboSeasonTransfers} from './kbo-transfer-registration.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {assertSeasonCalendar} from './season-calendar.js';
 import {settleClosedGrowthPeriods,validateSeasonGrowthLedger} from './growth-ledger.js';
 import type {ClosedGrowthPeriod} from './growth-ledger.js';
 import {protagonistLeague} from './kbo-windows.js';
+
+/** Capture before publishing a transfer so legacy count-based plans keep their original calendar dates. */
+export function captureKboTransferPlanBoundaryDays(source:KboCareer):readonly number[] {
+ const league=protagonistLeague(source),games=kboMilitaryRegisteredGames(source)??Object.values(source.records.games).filter(g=>g.scope.leagueKey===league && g.scope.seasonKey===source.world.seasonKey && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,source.protagonistClubId)).sort((a,b)=>a.worldDay-b.worldDay || (a.gameKey<b.gameKey?-1:1));
+ return kboRegistrationPlanBoundaryDays(source,games);
+}
 
 /** Pro regular-season growth (42): one registration period over the world growth calendar, PRO denominators
  * (hitter PA 500 / SP outs 450 / RP·CP outs 150), split at MID plan changes,, appearances from official KBO and FUTURES regular games,
@@ -16,7 +23,7 @@ export function settleKboSeasonGrowth(source:KboCareer,expectedRevision:number) 
  const key=source.protagonistKey,season=source.world.seasonKey,W=calendar.growthDays.length;
  if(source.seasonGrowth.seasonKey!==season || source.seasonGrowth.worldGrowthDays!==W || source.seasonGrowth.playerKey!==key)throw new RangeError('CHANGED_GROWTH_SEASON');
  const history=source.planHistory;
- if(!history.length || history[0]!.completedTeamGames!==0 || history.some((p,i)=>i>0 && p.completedTeamGames<=history[i-1]!.completedTeamGames))throw new RangeError('INVALID_GROWTH_PLAN_HISTORY');
+ if(!history.length || history[0]!.completedTeamGames!==0 || !currentKboSeasonTransfers(source) && history.some((p,i)=>i>0 && p.completedTeamGames<=history[i-1]!.completedTeamGames))throw new RangeError('INVALID_GROWTH_PLAN_HISTORY');
  const all=[...source.competitionSchedule.leagues.KBO,...source.competitionSchedule.leagues.FUTURES];
  const first=Math.min(...all.map(g=>g.worldDay)),last=Math.max(...all.map(g=>g.worldDay));
  // Postseason days follow the regular range in the same ledger; regular growth reads only the regular range.
