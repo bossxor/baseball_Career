@@ -1,0 +1,12 @@
+✔ AI fixes all offers before player-ID draws; each player signs once, costs/slots obey all-success reservations and rounds replay exactly (796.6969ms)
+✔ personal career cheat does not turn AI club bids into100% wins or NPC potential100 (691.0269ms)
+✔ an injured free agent keeps the same remaining games when signing; no market day heals or creates a medical receipt (429.6422ms)
+✔ wrong season/registered FA/closed pool rejects; no partial contracts or paid medical days (202.5251ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2519.1668

@@ -1,0 +1,72 @@
+{
+  "files": [
+    {
+      "path": "packages/engine/src/kbo-fa-market.ts",
+      "sha256": "0f70ca6b95945707e7e410be4c8e0d5e79c5f36a9a75a8e6facb83035013a21e"
+    },
+    {
+      "path": "packages/engine/test/kbo-fa-market.test.ts",
+      "sha256": "f4eaff4e1c5dbc0d06e469429a149ab0dd212b5d61cbbbdb2d9252848f8cb13d"
+    },
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "1dd04fd1be0c71e99457e6a858afbd47df6595162c7f4daed02b5925a53b64de"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "9a9f3dbabf4e4dfd5b1a69254f0f124b1b58758aaba909577cb55d4c2486482f"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "ff05285a563657babbf3918d1310c980ed9b854811deb39a6fcada295b883355"
+    },
+    {
+      "path": "docs/implementation/M2-BR-KBO-AI-FA-MARKET.md",
+      "sha256": "f7d20187d2f6af6ac3030a8995c4f00887cab8d3d055810d94714c4aab5a9298"
+    },
+    {
+      "path": "docs/implementation/M2-BQ-KBO-AI-RENEWAL-PREPARATION.md",
+      "sha256": "9a3c82defc6410e859719754d696a3fe5be9f1c2caaafcba37cf3c5f23dba905"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "5c5b8b55a27da2ee8bee3df0c740e88fb4bef6d1b139a5a5b39fc124cf32bb2c"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "9a764a239844a1caf509d8b6f254c88e9071352b28a11e6993b0616e744aa316"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BR-build.log",
+      "sha256": "6f0eb30c14a35e4d7042c7214bba8b110df65a41a7befa47bf7bd8f3977973fd"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BR-design.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BR-engine.log",
+      "sha256": "fd6106507bc4069343297667513044ad7447998b5c028b0ed22bc26eea51c1e1"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BR-events.log",
+      "sha256": "e4f563b151c3acfae1e351c53bf2c4633b4a60476e51cb14f34970334a86172a"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BR-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BR-market-tests.log",
+      "sha256": "b4ef012fdaa07747af5a8658fb12eae1bc46ef5f62e52b380ad2c7b9145624b2"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BR-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BR-typecheck.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df"
+    }
+  ]
+}
