@@ -1,0 +1,36 @@
+{
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "680d613028ead8b44f9fab35ee22048abbac2924a63990f5d75a8550e6f5fb4e"
+    },
+    {
+      "path": "docs/design/21-MILITARY-CONTRACT-RETURN.md",
+      "sha256": "4bbca09a3d3f87e7c8ffbbd4da748efe5dff946b12884e6b4c1b24bfdef63654"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "889ffc1c2ac469cc591d3df84c0e895c0015657bc99fe928ebcc400ec4bf6b9b"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "99445716889833245b5a25c4a85336bd1d17d9df0abf6ae38f350f7e3aaa3668"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "6b4c366e8b95712d7809febeb041c18f8bf9624ce97000c2e0cf13478ebb2ca0"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "c6db521e86500c94de478df8a92de01cf1748980e16d99eaa9dc609a70acd187"
+    },
+    {
+      "path": "docs/implementation/M2-NEXT-MILITARY-INTEGRATION-NOTES.md",
+      "sha256": "b4c23fd808967ad44c53f93d2dfc199447024d08bad943200a8601262b9ff9da"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BY-design.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090"
+    }
+  ]
+}
