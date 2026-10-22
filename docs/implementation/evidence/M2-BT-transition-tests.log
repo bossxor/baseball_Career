@@ -1,0 +1,13 @@
+✔ next season activates every player at once and the second pro season opens and plays (35367.0186ms)
+✔ NPCs who played at45 retire before AI renewal, supply and complete two-league reselection (8942.1548ms)
+✔ year transition drafts a 100-player rookie class in reverse standings order, with room and budget respected (10253.5172ms)
+✔ mass NPC retirement repairs both leagues before atomic activation, without deleting debt, records or the old generation (10913.5521ms)
+✔ legacy multi-year contracts carry only actual remaining years, including my unexpired contract without a new renewal (11096.7535ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 77904.8677

@@ -1,0 +1,12 @@
+✔ zero-first-team career archives actual identity/six peaks and zero rates without exposing hidden state or creating a player copy (1591.5021ms)
+✔ KBO, Futures and postseason totals stay distinct, with rates from summed raw numerators rather than averaged seasons (1832.3745ms)
+✔ pitcher archive retains hand/form and active pitch mastery without exposing pitch XP or treating zero outs as ERA0 (1632.0695ms)
+✔ live roots, foreign retirement club/year, mismatched age and future receipt cannot masquerade as a retired archive (3841.6886ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10170.8451

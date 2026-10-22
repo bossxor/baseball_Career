@@ -8,6 +8,7 @@ import {confirmKboPreseasonPlan,kboPreseasonPlanView,unreadKboFirstCampNotices} 
 import {canonicalJson} from '../src/game.js';
 import {emptyBatting} from '../src/stats.js';
 import {assertKboAmateurYearEnd} from '../src/kbo-entry.js';
+import {nextKboFreeAgentYear} from '../src/kbo-free-agents.js';
 function fixture(kind:'HITTER'|'PITCHER'='HITTER'){
  return enteredKboCareer(kind,s=>{s.relationships=formHighSchoolRelations(s.world,31);s.relationNotices=queueRelationFormationNotices(s,180)!;});
 }
@@ -43,4 +44,27 @@ test('unknown historical player remains unresolved; malformed ownership, foreign
 
 test('absence of relations/notices on restored old pro state is empty and querying never creates a new relation',()=>{
  const s=enteredKboCareer();s.relationships={schemaVersion:1,relations:[],formation:{rival:'NO_CANDIDATE',teammate:'NO_CANDIDATE'}};s.relationNotices=[];const before=canonicalJson(s);assert.deepEqual(kboRelationshipListView(s),[]);assert.deepEqual(unreadKboRelationNotices(s),[]);assert.throws(()=>kboRelationDetailView(s,'missing',{leagueKey:'KBO',phase:'REGULAR'}),/UNKNOWN_RELATION/);assert.equal(canonicalJson(s),before);
+});
+
+test('a pro teammate moved to FA or retirement keeps identity and notices as historical only, never a fake live registration',()=>{
+ const s=fixture(),r=s.relationships.relations.find(r=>Object.hasOwn(s.world.players,r.otherPlayerKey))!,key=r.otherPlayerKey,p=structuredClone(s.world.players[key]!),c=structuredClone(s.world.contracts[key]!),club=s.world.clubs.find(c=>c.roster.includes(key))!;
+ s.freeAgents=nextKboFreeAgentYear({worldKey:s.world.worldKey,seed:s.world.seed,seasonKey:s.world.seasonKey,difficulty:s.difficulty,registeredKeys:Object.keys(s.world.players)});
+ s.freeAgents.players[key]={player:p,origin:'EXPIRED',enteredSeasonKey:s.world.seasonKey,previousClubId:club.id,previousContract:c,...(s.world.repertoires[key]?{repertoire:structuredClone(s.world.repertoires[key])}:{})};
+ delete s.world.players[key];delete s.world.contracts[key];delete s.world.repertoires[key];club.roster=club.roster.filter(k=>k!==key);club.firstTeam=club.firstTeam.filter(k=>k!==key);club.reservedSalaryWon-=c.annualSalaryWon;
+ const before=canonicalJson(s),row=kboRelationshipListView(s).find(x=>x.relationKey===r.relationKey)!;
+ assert.equal(row.otherAvailability,'HISTORICAL_ONLY');assert.equal(row.other!.name,p.name);assert.equal(row.lastKnownRegistration!.teamId,club.id);assert.equal(row.lastKnownRegistration!.seasonKey,c.seasonKey);assert.equal(row.stage,r.stage);
+ const notice=unreadKboRelationNotices(s).find(n=>n.relationKey===r.relationKey)!;assert.equal(notice.otherName,p.name);assert.equal(notice.otherInCurrentWorld,false);
+ const view=kboRelationDetailView(s,r.relationKey,{leagueKey:'KBO',phase:'REGULAR'});assert.equal(view.mode,'EMPTY');assert.equal(view.otherAvailability,'HISTORICAL_ONLY');assert.equal(canonicalJson(s),before);assert.equal(s.world.players[key],undefined);assert.doesNotMatch(JSON.stringify(row),/potential|abilities|seed|rng/i);
+ delete s.freeAgents.players[key];s.retiredPlayers=[{playerKey:key,player:{...p,age:45},clubId:club.id,lastSeasonKey:s.world.seasonKey,reason:'MAX_AGE',contract:c}];
+ const retired=kboRelationshipListView(s).find(x=>x.relationKey===r.relationKey)!;assert.equal(retired.other!.name,p.name);assert.equal(retired.lastKnownRegistration!.seasonKey,s.world.seasonKey);assert.equal(retired.otherAvailability,'HISTORICAL_ONLY');assert.equal(retired.stage,r.stage);
+ s.retiredPlayers=[];s.freeAgents.retired=[{seasonKey:s.world.seasonKey,player:{...p,age:45}}];const unsigned=kboRelationshipListView(s).find(x=>x.relationKey===r.relationKey)!;assert.equal(unsigned.other!.name,p.name);assert.equal(unsigned.lastKnownRegistration,null);assert.equal(unsigned.other!.teamName,null);
+ // A newly signed contract released before activation must not become a fictitious prior club registration.
+ s.freeAgents.retired=[];const newClub=s.world.clubs.find(t=>t.id!==club.id)!;
+ s.freeAgents.players[key]={player:p,origin:'RELEASED',enteredSeasonKey:s.world.seasonKey,previousClubId:newClub.id,previousContract:{...c,clubId:newClub.id}};
+ assert.equal(kboRelationshipListView(s).find(x=>x.relationKey===r.relationKey)!.lastKnownRegistration,null);
+ const gameKey='controlled-old-futures-registration',seasonKey=String(Number(s.world.seasonKey)-1);
+ s.records.games[gameKey]={gameKey,worldDay:1,scope:{seasonKey,leagueKey:'FUTURES',phase:'REGULAR'},teams:{[club.id]:{games:1,W:0,L:0,T:1,R:0,RA:0},[newClub.id]:{games:1,W:0,L:0,T:1,R:0,RA:0}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}};
+ s.health.games=[...s.health.games,{evidence:{gameKey,teamKey:'FUTURES:'+club.id,seasonKey,day:1,roster:[key],appearances:[]},result:{injured:[],recovered:[]}}];
+ const registeredBefore=canonicalJson(s),known=kboRelationshipListView(s).find(x=>x.relationKey===r.relationKey)!;
+ assert.equal(known.lastKnownRegistration!.teamId,club.id);assert.equal(known.lastKnownRegistration!.leagueKey,'FUTURES');assert.equal(known.lastKnownRegistration!.seasonKey,seasonKey);assert.equal(canonicalJson(s),registeredBefore);assert.equal(s.world.players[key],undefined);
 });

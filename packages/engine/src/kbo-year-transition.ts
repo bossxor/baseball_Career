@@ -1,3 +1,6 @@
+import {prepareKboAiRenewals} from './kbo-ai-offseason.js';
+import {runKboAiFreeAgentMarket} from './kbo-fa-market.js';
+import {repairKboDualLeagueRosters} from './kbo-roster-repair.js';
 import {reserveKboOffseasonGuarantee} from './kbo-finance.js';
 import {nextKboFreeAgentYear} from './kbo-free-agents.js';
 import type {KboCareer} from './kbo-career-entry.js';
@@ -65,26 +68,35 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
  assertCareerRevision(source,expectedRevision);
  const stage=stageKboAgeAndContracts(source),target=stage.targetSeasonKey,key=source.protagonistKey;
  if(Object.values(source.records.games).some(g=>g.scope.seasonKey===target))throw new RangeError('NEXT_SEASON_RECORDS_ALREADY_EXIST');
- const career=structuredClone(source),world=career.world,renewal=acceptedRenewal(source)!;
+ const career=structuredClone(source),renewal=acceptedRenewal(source);let world=career.world;
  // Older saves kept the retired contract snapshot but had no finance ledger. Restore it only in this explicit writer.
  for(const r of source.retiredPlayers??[])reserveKboOffseasonGuarantee(world,r.contract,r.lastSeasonKey,'RETIREMENT');
  // Y04: 45-year retirements first, then the yearly rookie class (15) after the new contracts are in place.
- const retired=retireKboOverAgeNpcs(world,stage.overAge,source.world.seasonKey);
+ const retired=retireKboOverAgeNpcs(world,stage.overAge,source.world.seasonKey,true);
  if(retired.length)career.retiredPlayers=[...(source.retiredPlayers??[]),...retired];
  for(const r of retired)delete career.health.injuries[r.playerKey];
  for(const [k,s] of Object.entries(stage.players)){
   if(!Object.hasOwn(world.players,k))continue;
   world.players[k]={...world.players[k]!,age:s.age,fatigue:0};
   const c=world.contracts[k]!;
-  // ponytail: AI clubs re-sign every expiring NPC for 1 year at the same salary until the 05/115 offseason (O05) exists.
-  world.contracts[k]=k===key?{...c,contractKey:renewal.offerKey,seasonKey:target,years:1,annualSalaryWon:renewal.annualSalaryWon}:{...c,seasonKey:target,years:s.contract!.expired?1:c.years-1};
+  // Temporary expired placeholders stay private until the AI renewal stage resolves them.
+  world.contracts[k]=k===key && renewal?{...c,contractKey:renewal.offerKey,seasonKey:target,years:1,annualSalaryWon:renewal.annualSalaryWon}:{...c,seasonKey:target,years:s.contract!.expired?1:c.years-(s.contract!.contractYear-1)};
   const book=schoolYearEndRepertoire(source,k);if(book)world.repertoires[k]={...structuredClone(book),seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};
  }
  for(const club of world.clubs){club.paidSalaryWon=0;club.reservedSalaryWon=club.roster.reduce((n,k)=>n+world.contracts[k]!.annualSalaryWon,0);}
+ world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target));
+ const pool=nextKboFreeAgentYear({...(source.freeAgents?{source:source.freeAgents}:{}),worldKey:world.worldKey,seed:world.seed,seasonKey:target,difficulty:career.difficulty,registeredKeys:Object.keys(world.players)});
+ const prepared=prepareKboAiRenewals({world,pool,priorContracts:source.world.contracts,expiringKeys:stage.expiring.filter(k=>Object.hasOwn(world.players,k)),protagonistKey:key,sourceSeasonKey:source.world.seasonKey,records:source.records,health:career.health,...(source.aiAssessments?{reports:source.aiAssessments}:{})});
+ // This AI-only schedule closes FA before the draft;115 permits deadline-dependent ordering, not UI order.
+ const market=runKboAiFreeAgentMarket({...prepared,reports:prepared.reports,sourceSeasonKey:source.world.seasonKey,records:source.records,difficulty:career.difficulty});
+ world=market.world;career.world=world;career.health=market.health;career.freeAgents=market.pool;career.aiAssessments=market.reports;
  const standings=leagueStandings(source.records,{seasonKey:source.world.seasonKey,leagueKey:'KBO',phase:'REGULAR'},world.clubs.map(c=>c.id),source.world.seed,source.world.worldKey);
  career.rookieDrafts=[...(source.rookieDrafts??[]),draftKboRookieClass(world,target,standings.map(s=>s.teamKey).reverse(),source.difficulty)];
- career.freeAgents=nextKboFreeAgentYear({...(source.freeAgents?{source:source.freeAgents}:{}),worldKey:world.worldKey,seed:world.seed,seasonKey:target,difficulty:career.difficulty,registeredKeys:Object.keys(world.players)});
- world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target));assertKboRecruitmentWorld(world);
+ // Normal recruitment gets the first chance to fill gaps. Safety supply covers only what is still impossible.
+ const repaired=repairKboDualLeagueRosters({world,pool:market.pool,health:market.health,protagonistKey:key,difficulty:career.difficulty});
+ world=repaired.world;career.world=world;career.health=repaired.health;career.freeAgents=repaired.pool;
+ career.aiOffseasons=[...(source.aiOffseasons??[]),{seasonKey:target,renewal:prepared.receipt,repair:repaired.receipt,rounds:market.rounds}];
+ assertKboRecruitmentWorld(world);
  const player=world.players[key]!,club=world.clubs.find(c=>c.id===career.protagonistClubId)!;
  const archive:KboSeasonArchive={seasonKey:source.world.seasonKey,seasonClose:source.seasonClose!,postseason:source.postseason!,days:source.days!,seasonGrowth:source.seasonGrowth,planHistory:source.planHistory,...(source.openingRoster?{openingRoster:source.openingRoster}:{}),...(source.callupReviews?{callupReviews:source.callupReviews}:{})};
  career.proSeasons=[...(source.proSeasons??[]),structuredClone(archive)];

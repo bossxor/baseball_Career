@@ -91,3 +91,5 @@ export * from './kbo-contract-value.js';
 export * from './recruitment.js';
 
 export * from './kbo-finance.js';
+export * from './kbo-service-time.js';
+export * from './kbo-archive-view.js';

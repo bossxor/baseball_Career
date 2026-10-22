@@ -1,0 +1,20 @@
+✔ zero-first-team career archives actual identity/six peaks and zero rates without exposing hidden state or creating a player copy (1933.9757ms)
+✔ KBO, Futures and postseason totals stay distinct, with rates from summed raw numerators rather than averaged seasons (1460.8261ms)
+✔ pitcher archive retains hand/form and active pitch mastery without exposing pitch XP or treating zero outs as ERA0 (1664.547ms)
+✔ live roots, foreign retirement club/year, mismatched age and future receipt cannot masquerade as a retired archive (4655.7798ms)
+✔ HITTER pro list retains historical school and active club teammate identities without invented transfers/stages (2044.5068ms)
+✔ PITCHER pro list retains historical school and active club teammate identities without invented transfers/stages (2040.447ms)
+✔ historical relation details reuse existing official scoped records; never fabricate pro games or new player registration (1618.7962ms)
+✔ both historical and new pro E94 preserve names and ACK only their notice while the confirmed plan remains sealed (2590.8287ms)
+✔ stale revision/version, wrong command or foreign/duplicate relation evidence reject without changes (1846.7709ms)
+✔ unknown historical player remains unresolved; malformed ownership, foreign history and changed confirmed plan reject (4015.0592ms)
+✔ absence of relations/notices on restored old pro state is empty and querying never creates a new relation (1471.5464ms)
+✔ a pro teammate moved to FA or retirement keeps identity and notices as historical only, never a fake live registration (1513.0154ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18257.0522

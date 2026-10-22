@@ -1,0 +1,80 @@
+✔ ten controlled AI offseasons keep both leagues legal, debts finite, identities disjoint and annual budget unchanged (39549.6929ms)
+✔ HITTER pro list retains historical school and active club teammate identities without invented transfers/stages (1700.2422ms)
+✔ PITCHER pro list retains historical school and active club teammate identities without invented transfers/stages (1591.7971ms)
+✔ historical relation details reuse existing official scoped records; never fabricate pro games or new player registration (1585.7594ms)
+✔ both historical and new pro E94 preserve names and ACK only their notice while the confirmed plan remains sealed (2022.7955ms)
+✔ stale revision/version, wrong command or foreign/duplicate relation evidence reject without changes (1493.8582ms)
+✔ unknown historical player remains unresolved; malformed ownership, foreign history and changed confirmed plan reject (3984.8077ms)
+✔ absence of relations/notices on restored old pro state is empty and querying never creates a new relation (1308.8375ms)
+✔ a pro teammate moved to FA or retirement keeps identity and notices as historical only, never a fake live registration (1418.101ms)
+✖ registration thresholds stay separate at6/7/8/9 closed100-game seasons, independent of actual appearances (383.2535ms)
+✔ 99 fails and100 qualifies once; an open current100-game season is projected but not yet counted (230.2372ms)
+✖ Futures, PS, international, missing official games and unregistered days do not create service years; injury registration counts (237.1355ms)
+✖ duplicate registration, mismatched day/team/year and malformed close markers reject without modifying input (184.5171ms)
+✖ old careers without service evidence remain zero; no service year is inferred from age, salary, current roster or stats (239.0742ms)
+✔ an actual closed KBO opening day gives an unused registered bench player one game and no qualified service season (5335.5669ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 11
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 40315.2807
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-service-time.test.ts:1:1676
+✖ registration thresholds stay separate at6/7/8/9 closed100-game seasons, independent of actual appearances (383.2535ms)
+  TypeError: Unsupported canonical value
+      at canonicalJson (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\game.ts:270:9)
+      at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\game.ts:269:162)
+      at Array.map (<anonymous>)
+      at canonicalJson (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\game.ts:269:114)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-service-time.test.ts:24:108)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at packages\engine\test\kbo-service-time.test.ts:1:2879
+✖ Futures, PS, international, missing official games and unregistered days do not create service years; injury registration counts (237.1355ms)
+  TypeError: Unsupported canonical value
+      at canonicalJson (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\game.ts:270:9)
+      at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\game.ts:269:162)
+      at Array.map (<anonymous>)
+      at canonicalJson (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\game.ts:269:114)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-service-time.test.ts:31:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+
+test at packages\engine\test\kbo-service-time.test.ts:1:3634
+✖ duplicate registration, mismatched day/team/year and malformed close markers reject without modifying input (184.5171ms)
+  TypeError: Unsupported canonical value
+      at canonicalJson (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\game.ts:270:9)
+      at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\game.ts:269:162)
+      at Array.map (<anonymous>)
+      at canonicalJson (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\game.ts:269:114)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-service-time.test.ts:34:533)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+
+test at packages\engine\test\kbo-service-time.test.ts:1:4278
+✖ old careers without service evidence remain zero; no service year is inferred from age, salary, current roster or stats (239.0742ms)
+  TypeError: Unsupported canonical value
+      at canonicalJson (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\game.ts:270:9)
+      at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\game.ts:269:162)
+      at Array.map (<anonymous>)
+      at canonicalJson (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\game.ts:269:114)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-service-time.test.ts:37:27)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)

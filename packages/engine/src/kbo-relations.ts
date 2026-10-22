@@ -2,7 +2,7 @@ import type {KboCareer} from './kbo-career-entry.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {kboPreseasonPlanView} from './kbo-preseason.js';
 import {careerRelationshipListView,careerRelationDetailView} from './relationship-history.js';
-import type {RelationHistoryWorld} from './relationship-history.js';
+import type {RelationshipHistorySource,RelationHistoryWorld} from './relationship-history.js';
 import type {RelationScope} from './relationships.js';
 import {unreadRelationNotices,prepareRelationNoticeRead} from './relation-notices.js';
 import type {RelationNoticeReadInput,RelationNoticeReadSource} from './relation-notices.js';
@@ -11,7 +11,23 @@ import type {RelationNoticeReadInput,RelationNoticeReadSource} from './relation-
 function relationSource(s:KboCareer):RelationNoticeReadSource {
  assertCareerRevision(s,s.revision);kboPreseasonPlanView(s);
  const world:RelationHistoryWorld={worldKey:s.world.worldKey,seed:s.world.seed,seasonKey:s.world.seasonKey,leagueKey:'KBO',protagonistKey:s.protagonistKey,protagonistSchoolId:s.protagonistClubId,schools:s.world.clubs,players:s.world.players};
- return {world,records:s.records,relationships:s.relationships,previousSeasons:[...(s.amateurHistory.previousSeasons??[]),{world:s.amateurHistory.world}],events:s.events,revision:s.revision,phaseContext:s.phaseContext,relationNotices:s.relationNotices};
+ const detachedPlayers:Record<string,NonNullable<RelationshipHistorySource['detachedPlayers']>[string]>={};
+ const registration=(clubId:string|null,seasonKey:string)=>{const c=s.world.clubs.find(c=>c.id===clubId);return c?{seasonKey,leagueKey:'KBO',teamId:c.id,teamName:c.name}:null;};
+ for(const [key,e] of Object.entries(s.freeAgents?.players??{}))detachedPlayers[key]={player:e.player,lastKnownRegistration:e.origin==='RELEASED'?null:registration(e.previousClubId,e.previousContract?.seasonKey??e.enteredSeasonKey)};
+ for(const r of s.retiredPlayers??[])detachedPlayers[r.playerKey]={player:r.player,lastKnownRegistration:registration(r.clubId,r.lastSeasonKey)};
+ // A player retired while unsigned has no saved last club in the legacy FA archive. Do not invent one.
+ for(const r of s.freeAgents?.retired??[])detachedPlayers[r.player.simulationKey]={player:r.player,lastKnownRegistration:null};
+ // A preseason signing can be released before activation. Its contract club is not proof it ever registered there.
+ // Recover only official historical registration when the FA/archive snapshot has no known active registration.
+ const observed=new Map<string,{year:number;day:number;registration:NonNullable<NonNullable<RelationshipHistorySource['detachedPlayers']>[string]['lastKnownRegistration']>}>();
+ for(const row of s.health.games){const e=row.evidence,g=s.records.games[e.gameKey];if(!g || !['KBO','FUTURES'].includes(g.scope.leagueKey))continue;
+  const keys=e.roster.filter(k=>Object.hasOwn(detachedPlayers,k) && detachedPlayers[k]!.lastKnownRegistration===null);if(!keys.length)continue;
+  if(e.seasonKey!==g.scope.seasonKey || e.day!==g.worldDay || !e.teamKey.startsWith(g.scope.leagueKey+':') || !Object.hasOwn(g.teams,e.teamKey.slice(g.scope.leagueKey.length+1)))throw new RangeError('INVALID_KBO_RELATION_REGISTRATION');
+  const team=s.world.clubs.find(c=>c.id===e.teamKey.slice(g.scope.leagueKey.length+1));if(!team)continue;
+  for(const key of keys){const old=observed.get(key),year=Number(e.seasonKey);if(!old || year>old.year || year===old.year && e.day>old.day)observed.set(key,{year,day:e.day,registration:{seasonKey:e.seasonKey,leagueKey:g.scope.leagueKey,teamId:team.id,teamName:team.name}});}
+ }
+ for(const [key,value] of observed)detachedPlayers[key]!.lastKnownRegistration=value.registration;
+ return {world,detachedPlayers,records:s.records,relationships:s.relationships,previousSeasons:[...(s.amateurHistory.previousSeasons??[]),{world:s.amateurHistory.world}],events:s.events,revision:s.revision,phaseContext:s.phaseContext,relationNotices:s.relationNotices};
 }
 /** New pro DTO uses teamName for both a school and a club; old school DTOs remain compatible. */
 type Identity=NonNullable<ReturnType<typeof careerRelationshipListView>[number]['other']>;

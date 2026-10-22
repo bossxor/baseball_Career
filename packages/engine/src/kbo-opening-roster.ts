@@ -1,3 +1,4 @@
+import {selectKboDualLeagueRoster} from './kbo-roster-repair.js';
 import {KBO_ROSTER_LIMITS} from '@playball/rules';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertCareerRevision} from './high-school-career.js';
@@ -30,7 +31,7 @@ export function assertKboOpeningRoster(s:KboCareer):KboOpeningRoster {
 export function confirmKboOpeningRoster(s:KboCareer,revision:number):KboCareer {
  assertCareerRevision(s,revision);kboPreseasonPlanView(s);if(!s.preseasonPlan)throw new RangeError('KBO_PRESEASON_PLAN_REQUIRED');
  if(s.openingRoster){assertKboOpeningRoster(s);return structuredClone(s);}if(s.registration.competitionKey!==undefined)throw new RangeError('KBO_OPENING_ROSTER_ALREADY_APPLIED');
- assertKboRecruitmentWorld(s.world);const c=club(s),available=c.roster.filter(k=>!Object.hasOwn(s.health.injuries,k)).map(k=>s.world.players[k]!);const selected=selectKboFirstTeamRoster(available);assertFirstTeam(s,selected);
+ assertKboRecruitmentWorld(s.world);const c=club(s),available=c.roster.filter(k=>!Object.hasOwn(s.health.injuries,k)).map(k=>s.world.players[k]!);const selected=s.aiOffseasons?.some(o=>o.seasonKey===s.world.seasonKey)?selectKboDualLeagueRoster(available):selectKboFirstTeamRoster(available);assertFirstTeam(s,selected);
  const next=structuredClone(s),target=club(next);target.firstTeam=[...selected];next.registration={...next.registration,firstTeam:selected.includes(s.protagonistKey),competitionKey:selected.includes(s.protagonistKey)?'KBO':'FUTURES'};next.revision++;
  next.openingRoster={receiptKey:key(next),seasonKey:next.world.seasonKey,playerKey:next.protagonistKey,clubId:target.id,sourceRevision:s.revision,confirmedRevision:next.revision,firstTeam:[...selected],futures:target.roster.filter(k=>!selected.includes(k)).sort(),sourceBasis:basis(next)};assertKboOpeningRoster(next);return next;
 }

@@ -1,0 +1,32 @@
+
+> again-playball@0.1.0 build
+> npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/api && npm run build --workspace @playball/web
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/api@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/web@0.1.0 build
+> tsc -p tsconfig.json --noEmit && vite build
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 17 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                     0.57 kB │ gzip:  0.38 kB
+dist/assets/BlackHanSans-Regular-B0-nbKIc.ttf     998.42 kB
+dist/assets/NotoSansKR-Variable-k7NQXPol.ttf   10,414.58 kB
+dist/assets/index-D7SWy-NU.css                      1.44 kB │ gzip:  0.73 kB
+dist/assets/index-qvV079z_.js                     221.56 kB │ gzip: 69.64 kB
+
+✓ built in 362ms

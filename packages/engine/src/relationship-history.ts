@@ -1,3 +1,4 @@
+import type {DevelopmentPlayer} from './player.js';
 import type {RegisteredTeamRelationWorld} from './team-teammates.js';
 import type {RecordLedger} from './records.js';
 import {relationDetailView} from './relationships.js';
@@ -7,6 +8,8 @@ export type RelationHistoryWorld=RegisteredTeamRelationWorld & {seed:string};
 export interface RelationshipHistorySource {
  world:RelationHistoryWorld;records:RecordLedger;relationships?:RelationshipLedger;
  previousSeasons?:readonly {world:RelationHistoryWorld}[];
+ /** Explicit unregistered/retired identity, not an invented active roster or whole historical generation. */
+ detachedPlayers?:Readonly<Record<string,{player:DevelopmentPlayer;lastKnownRegistration:{seasonKey:string;leagueKey:string;teamId:string;teamName:string}|null}>>;
 }
 const STAGES=['FORMED','SEPARATED','REUNITED_OPPONENT','REUNITED_TEAM','RETIRED'];
 function validateRelation(source:RelationshipHistorySource,r:PlayerRelationship):void {
@@ -14,6 +17,7 @@ function validateRelation(source:RelationshipHistorySource,r:PlayerRelationship)
 }
 function findPlayer(source:RelationshipHistorySource,key:string){
  if(Object.hasOwn(source.world.players,key))return {player:source.world.players[key]!,world:source.world,availability:'CURRENT_WORLD' as const};
+ const detached=source.detachedPlayers && Object.hasOwn(source.detachedPlayers,key)?source.detachedPlayers[key]:undefined;if(detached){if(detached.player.simulationKey!==key)throw new RangeError('INVALID_DETACHED_RELATION_PLAYER');return {player:detached.player,world:null,registration:detached.lastKnownRegistration,availability:'HISTORICAL_ONLY' as const};}
  for(const archive of [...(source.previousSeasons??[])].reverse()){
   if(archive.world.worldKey!==source.world.worldKey || archive.world.seed!==source.world.seed)throw new RangeError('RELATION_HISTORY_WORLD_MISMATCH');
   if(Object.hasOwn(archive.world.players,key))return {player:archive.world.players[key]!,world:archive.world,availability:'HISTORICAL_ONLY' as const};
@@ -22,8 +26,8 @@ function findPlayer(source:RelationshipHistorySource,key:string){
 }
 function playerView(found:ReturnType<typeof findPlayer>){
  if(!found)return {other:null,otherAvailability:'UNKNOWN_REFERENCE' as const,lastKnownRegistration:null};
- const {player:p,world}=found,team=world.schools.find(s=>s.roster.includes(p.simulationKey));
- return {other:{name:p.name,kind:p.kind,position:p.position,throws:p.throws,bats:p.bats,pitchForm:p.pitchForm??null,schoolName:team?.name??null},otherAvailability:found.availability,lastKnownRegistration:team?{seasonKey:world.seasonKey,leagueKey:world.leagueKey??'HS',teamId:team.id,teamName:team.name}:null};
+ const {player:p,world}=found,team=world?.schools.find(s=>s.roster.includes(p.simulationKey)),registration=world?(team?{seasonKey:world.seasonKey,leagueKey:world.leagueKey??'HS',teamId:team.id,teamName:team.name}:null):found.registration;
+ return {other:{name:p.name,kind:p.kind,position:p.position,throws:p.throws,bats:p.bats,pitchForm:p.pitchForm??null,schoolName:registration?.teamName??null},otherAvailability:found.availability,lastKnownRegistration:registration};
 }
 /** Career S42 list: archived players stay visible; their last known team is never presented as a current transfer. */
 export function careerRelationshipListView(source:RelationshipHistorySource){

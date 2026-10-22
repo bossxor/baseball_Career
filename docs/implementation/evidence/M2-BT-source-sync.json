@@ -1,0 +1,165 @@
+{
+  "files": [
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "1412bb059ce4e3064a60044148c11d747f354b25a182ba8982ba35b966fb0ea5"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "sha256": "3843706e691359dbfed1e7f2a8a14d8aefad1264a18cc41036e697461c710cd7"
+    },
+    {
+      "path": "packages/engine/src/kbo-opening-roster.ts",
+      "sha256": "dd0a2d6f2e033a2f95a07cb1d33137b40aa61b304b3e0ec886a5849d56a675b6"
+    },
+    {
+      "path": "packages/engine/src/kbo-relations.ts",
+      "sha256": "fddd299ed7ae09b7d0d2968a80264b4bd2e3ffd6210940f502d11a6ab95d0e25"
+    },
+    {
+      "path": "packages/engine/src/kbo-retirement.ts",
+      "sha256": "36d6ecf1f2ed168fd77da8905836ed657b448cc61044c8e933dececfc4f12c58"
+    },
+    {
+      "path": "packages/engine/src/kbo-supply.ts",
+      "sha256": "2dcc487d6e7f9286631db934cc7478e25f87030e886180b93cf67906a0b39b62"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "0c415deb53f09c4860866ca8cbf25ea490bddb9cfa981bfb30079a116b34f4ef"
+    },
+    {
+      "path": "packages/engine/src/relationship-history.ts",
+      "sha256": "351b6a57220d8d5b22a81fca5357df807713480732a6298dd6da8695fb6537c1"
+    },
+    {
+      "path": "packages/engine/src/kbo-service-time.ts",
+      "sha256": "67163a5ab1b06fe8ef67fb0bed18d75102172e6978b6ecb59e7befc671dcf05a"
+    },
+    {
+      "path": "packages/engine/src/kbo-archive-view.ts",
+      "sha256": "2e8506b95243b2968e7d76d2fc638f5a92ba394e9a14d8d85227028d99b91e0e"
+    },
+    {
+      "path": "packages/engine/test/kbo-postseason-progress.test.ts",
+      "sha256": "0bbadb7cd8a8113389668ae6a785336ef1420af4f0d46ea4fb23cc3de222f0bf"
+    },
+    {
+      "path": "packages/engine/test/kbo-relations.test.ts",
+      "sha256": "9a83324ac4972534fef2eea4a9ca1e8cf86d17de9b47d4a7740920bb4230f24e"
+    },
+    {
+      "path": "packages/engine/test/kbo-ai-offseason-years.test.ts",
+      "sha256": "c1122d02a0e8909d469305c0a7eef432d2d5f728693f510c38038776c3184496"
+    },
+    {
+      "path": "packages/engine/test/kbo-service-time.test.ts",
+      "sha256": "00c71c0c0f759bd4c684d613018fa1657dcdbe259a0d90a2f309aee93a1bfd86"
+    },
+    {
+      "path": "packages/engine/test/kbo-archive-view.test.ts",
+      "sha256": "1728be8d9b0a7a9fbd7f67b8900f911db302d455dd9e35e4eed3e8a074ea94a8"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "ce7547eb6784759d0ebd1ad0b0e358cfafe6c6b4166afcfd98b5b7725a8ee026"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "23b56c77264c336dbccd7394eb8dc3a1cc9e080aa34aed873487b74a68acc5cf"
+    },
+    {
+      "path": "docs/implementation/M2-BT-KBO-AI-OFFSEASON-ACTIVATION.md",
+      "sha256": "9fef1ad38e8df2129135028dbeaa75478da0deafc227dd33831861d82cb976fd"
+    },
+    {
+      "path": "docs/implementation/M2-BU-KBO-DETACHED-RELATION-READS.md",
+      "sha256": "3e3eab63499ea6223e1ecee570673a498793b74625119c3ceb015e86bc5e7f05"
+    },
+    {
+      "path": "docs/implementation/M2-BV-KBO-SERVICE-TIME.md",
+      "sha256": "a1f21d324639b5398afb47037aea09ce803baf5c10f5ba1b9b738965a5d0de38"
+    },
+    {
+      "path": "docs/implementation/M2-BW-KBO-RETIREMENT-ARCHIVE-VIEW.md",
+      "sha256": "f04c7cd5a54bc85b6fc26d62b6b658a427053fde234fd95958578068ab7724f6"
+    },
+    {
+      "path": "docs/implementation/M2-NEXT-MILITARY-INTEGRATION-NOTES.md",
+      "sha256": "9bf62d51f274c9a58c2aa0378252b1331e655c72ac6d38d8a33c5e68ed1a644a"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BV-service-tests.log",
+      "sha256": "3c8e0accd6dbc354294a27502c98e69aef1e8f002bda4fed9045f0d96a40889c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BW-archive-tests.log",
+      "sha256": "6fa03318a19b579ba1e8df9d6d859ea4c0e717427eae3dbdec10ae348bb136d8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BW-build.log",
+      "sha256": "392fb1cf98d54df956fca799dec3e200f93facdd22fc5e21972f1b43644cb52f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BW-engine.log",
+      "sha256": "fd6106507bc4069343297667513044ad7447998b5c028b0ed22bc26eea51c1e1"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BW-final-read-tests.log",
+      "sha256": "7b95da23ff792d9b4466e03843feea13911c962eca5d0b3174b08245dc5a5dba"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BW-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BW-retirement-integration.log",
+      "sha256": "54594cd9d633d42cc5d9475f144e5d79c374ad27fec2c6aee30ebf37fd328290"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BW-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BW-typecheck.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BT-check-before-final-order.log",
+      "sha256": "daf8705ba9b9e825822b16ef21aa21f021dc555b47e1fa61b8b48480bb05c55b"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BT-check.log",
+      "sha256": "d8990af0e6dabe7be86204d48fb707e3cde3ecf747546be57cd5f912ed978c48"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BT-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BT-mass-before-final-order.log",
+      "sha256": "a78343cd9a0e60b966677a2d471a652c61cd2f94391bec58ddc1f5bcadb2954f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BT-related-initial-fixture-failure.log",
+      "sha256": "b75128d66ff55e778c5ef1101de942eb5c187d80d5e8f2f033a2843a01338747"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BT-ten-years-before-final-order.log",
+      "sha256": "ace522f1e81d362ebed8c3708b6a3568e156a7a2122c03fa7a8184797070aacd"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BT-transition-tests.log",
+      "sha256": "ba98ff7f6fcb43e8f6681421135357d238af34fc10b80069314e62e69fb4b2c9"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BT-typecheck.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-BT-world-hashes.log",
+      "sha256": "a7c8806f6aaba02b256747baf1f1a1e83727469caf3a031c5b08de4937b5bb23"
+    }
+  ],
+  "stagedBlobsVerified": 40
+}

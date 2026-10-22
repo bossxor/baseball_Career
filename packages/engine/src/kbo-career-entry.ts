@@ -1,3 +1,6 @@
+import type {KboAiAssessments,KboAiRenewalReceipt} from './kbo-ai-offseason.js';
+import type {KboAiFaRound} from './kbo-fa-market.js';
+import type {KboRosterRepairReceipt} from './kbo-roster-repair.js';
 import type {KboFreeAgentPool} from './kbo-free-agents.js';
 import type {KboPostseasonPhase} from './kbo-postseason-progress.js';
 import type {KboPostseason} from './kbo-postseason.js';
@@ -46,6 +49,7 @@ export interface KboCareer {
  records:RecordLedger;health:HealthLedger;seasonGrowth:SeasonGrowthLedger;development:CareerDevelopmentLedger;
  traits?:CareerTraitLedger;relationships:RelationshipLedger;events:readonly EventInstance[];relationNotices:readonly EventInstance[];
  styleUsedWindows:readonly string[];planHistory:HighSchoolCareer['planHistory'];
+ aiAssessments?:KboAiAssessments;aiOffseasons?:readonly {seasonKey:string;renewal:KboAiRenewalReceipt;repair:KboRosterRepairReceipt;rounds:readonly KboAiFaRound[]}[];
  freeAgents?:KboFreeAgentPool;days?:SchoolDayLedger;callupReviews?:readonly KboCallupReview[];aiRosterReviews?:readonly string[];seasonClose?:KboSeasonClose;renewal?:KboRenewal;proSeasons?:readonly KboSeasonArchive[];retiredPlayers?:readonly KboRetiredPlayer[];retirement?:KboCareerRetirement;rookieDrafts?:readonly KboRookieDraftReceipt[];postseason?:KboPostseason;campNotices?:readonly EventInstance[];preseasonPlan?:KboPreseasonPlan;openingRoster?:KboOpeningRoster;competitionSchedule?:KboSeasonSchedule;
 }
 function entryKey(ready:KboAmateurYearEnd){return JSON.stringify(['kbo-season-entry',ready.receiptKey]);}

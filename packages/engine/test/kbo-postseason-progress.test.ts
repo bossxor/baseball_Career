@@ -1,3 +1,5 @@
+import {kboRetirementArchiveView} from '../src/kbo-archive-view.js';
+import {selectKboDualLeagueRoster} from '../src/kbo-roster-repair.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {confirmKboPreseasonPlan} from '../src/kbo-preseason.js';
@@ -112,11 +114,12 @@ test('next season activates every player at once and the second pro season opens
  let c=closed();assert.throws(()=>startNextKboSeason(c,c.revision),/YEAR_TRANSITION_NOT_READY/);
  c=renewed(c);const before=JSON.stringify(c),stage=stageKboAgeAndContracts(c),key=c.protagonistKey,season=c.world.seasonKey,target=String(Number(season)+1);
  const n=startNextKboSeason(c,c.revision);assert.equal(JSON.stringify(c),before);
- assert.equal(Object.keys(n.freeAgents!.players).length,80);assert.ok(Object.keys(n.freeAgents!.players).every(k=>!Object.hasOwn(n.world.players,k) && !Object.hasOwn(n.world.contracts,k)));
+ assert.ok(Object.keys(n.freeAgents!.players).length>=80);assert.ok(Object.keys(n.freeAgents!.players).every(k=>!Object.hasOwn(n.world.players,k) && !Object.hasOwn(n.world.contracts,k)));
  assert.equal(n.world.seasonKey,target);assert.equal(n.world.calendar.year,Number(target));assert.equal(n.phaseContext.phase,'PRESEASON_SETUP');assert.equal(n.revision,c.revision+1);
- for(const [k,s] of Object.entries(stage.players)){assert.equal(n.world.players[k]!.age,s.age);assert.equal(n.world.contracts[k]!.seasonKey,target);}
+ for(const [k,s] of Object.entries(stage.players)){const p=n.world.players[k]??n.freeAgents!.players[k]?.player;assert.ok(p);assert.equal(p.age,s.age);if(n.world.contracts[k])assert.equal(n.world.contracts[k]!.seasonKey,target);}
  assert.equal(n.world.contracts[key]!.annualSalaryWon,c.renewal!.annualSalaryWon);assert.equal(n.world.contracts[key]!.contractKey,c.renewal!.offerKey);
- for(const [k,p] of Object.entries(c.world.players))assert.deepEqual(n.world.players[k]!.abilities,p.abilities);
+ for(const [k,p] of Object.entries(c.world.players))assert.deepEqual((n.world.players[k]??n.freeAgents!.players[k]?.player)!.abilities,p.abilities);
+ assert.equal(n.aiOffseasons!.length,1);assert.equal(n.aiOffseasons![0]!.rounds.length,3);assert.deepEqual(startNextKboSeason(JSON.parse(before),c.revision),n);
  assert.equal(n.proSeasons!.length,1);assert.equal(n.proSeasons![0]!.postseason.championKey,c.postseason!.championKey);
  assert.ok(!n.days && !n.seasonClose && !n.postseason && !n.competitionSchedule && !n.openingRoster);
  assert.equal(n.seasonGrowth.seasonKey,target);assert.equal(n.seasonGrowth.finalized,false);
@@ -143,14 +146,14 @@ test('season close grows and ages every pro NPC once from the natural PRO period
  assert.throws(()=>closeKboSeason(after,after.revision,true));
 });
 
-test('NPCs who played at 45 retire at activation and only their first team is reselected',()=>{
+test('NPCs who played at45 retire before AI renewal, supply and complete two-league reselection',()=>{
  const c=renewed(closed()),other=c.world.clubs.find(x=>x.id!==c.protagonistClubId)!,starter=other.firstTeam.find(k=>c.world.players[k]!.kind==='HITTER')!;
- c.world.players[starter]={...c.world.players[starter]!,age:45};const untouched=c.world.clubs.filter(x=>x.id!==other.id).map(x=>[...x.firstTeam]);
+ c.world.players[starter]={...c.world.players[starter]!,age:45};const oldRecords=structuredClone(c.records);
  const n=startNextKboSeason(c,c.revision),club=n.world.clubs.find(x=>x.id===other.id)!;
  assert.deepEqual(n.retiredPlayers!.map(r=>[r.playerKey,r.clubId,r.reason,r.lastSeasonKey]),[[starter,other.id,'MAX_AGE',c.world.seasonKey]]);
  assert.ok(!Object.hasOwn(n.world.players,starter) && !Object.hasOwn(n.world.contracts,starter) && !club.roster.includes(starter));
- assert.equal(club.firstTeam.length,28);assert.equal(club.roster.length,other.roster.length-1+n.rookieDrafts![0]!.picks.filter(p=>p.clubId===other.id).length);
- assert.deepEqual(n.world.clubs.filter(x=>x.id!==other.id).map(x=>[...x.firstTeam]),untouched);
+ assert.equal(club.firstTeam.length,28);assert.ok(club.roster.length>=38 && club.roster.length<=60);
+ assert.ok(n.world.clubs.every(x=>x.firstTeam.length===28));assert.deepEqual(n.records,oldRecords);assert.equal(n.aiOffseasons![0]!.seasonKey,n.world.seasonKey);
 });
 
 test('my retirement: E36 cancel returns, confirm closes E30 and archives; age 45 ends the career without a renewal',()=>{
@@ -160,7 +163,7 @@ test('my retirement: E36 cancel returns, confirm closes E30 and archives; age 45
  const back=resolveKboRetirement(asked,asked.revision,{eventKey:e36.eventKey,eventVersion:e36.version,command:'CANCEL_RETIRE'});
  assert.equal(back.phaseContext.phase,'SEASON_REVIEW');assert.equal(back.events.find(e=>e.definitionId==='E30')!.status,'OPEN');
  const done=resolveKboRetirement(asked,asked.revision,{eventKey:e36.eventKey,eventVersion:e36.version,command:'CONFIRM_RETIRE'});
- assert.equal(done.phaseContext.phase,'ARCHIVED');assert.equal(done.retirement!.reason,'VOLUNTARY');assert.equal(done.retirement!.age,c.world.players[c.protagonistKey]!.age);
+ assert.equal(done.phaseContext.phase,'ARCHIVED');const archiveBefore=canonicalJson(done),archive=kboRetirementArchiveView(done);assert.equal(archive.archiveKey,done.retirement!.receiptKey);assert.equal(archive.player.name,done.world.players[done.protagonistKey]!.name);assert.equal(canonicalJson(done),archiveBefore);assert.equal(done.retirement!.reason,'VOLUNTARY');assert.equal(done.retirement!.age,c.world.players[c.protagonistKey]!.age);
  assert.ok(done.events.filter(e=>e.definitionId!=='E37').every(e=>e.status!=='OPEN'));assert.equal(done.events.at(-1)!.definitionId,'E37');
  assert.throws(()=>startNextKboSeason(done,done.revision));
  const old=structuredClone(c);old.world.players[old.protagonistKey]={...old.world.players[old.protagonistKey]!,age:45};
@@ -192,4 +195,29 @@ test('year transition drafts a 100-player rookie class in reverse standings orde
  for(const club of n.world.clubs){assert.ok(club.roster.length<=60);const mine=picks.filter(p=>p.clubId===club.id);assert.ok(mine.every(p=>club.roster.includes(p.playerKey)));}
  for(const p of picks){const k=n.world.contracts[p.playerKey]!;assert.equal(k.years,1);assert.equal(k.annualSalaryWon,30_000_000);assert.equal(k.seasonKey,target);assert.equal(n.world.players[p.playerKey]!.age,18);}
  const again=startNextKboSeason(c,c.revision);assert.deepEqual(again.rookieDrafts,n.rookieDrafts);assert.deepEqual(again.world.clubs,n.world.clubs);
+});
+
+
+test('mass NPC retirement repairs both leagues before atomic activation, without deleting debt, records or the old generation',()=>{
+ const c=renewed(closed()),club=c.world.clubs.find(x=>x.id!==c.protagonistClubId)!,keys=[...club.roster];
+ for(const k of keys)c.world.players[k]!.age=45;
+ const before=canonicalJson(c),n=startNextKboSeason(c,c.revision),receipt=n.aiOffseasons![0]!;
+ assert.equal(canonicalJson(c),before);assert.equal(n.retiredPlayers!.filter(r=>r.clubId===club.id).length,keys.length);
+ const safety=receipt.repair.signings.filter(r=>r.clubId===club.id);assert.ok(safety.length>0 && safety.length<=38);assert.equal(receipt.repair.releases.length,0);
+ for(const signing of safety){const healthy=n.world.clubs.find(x=>x.id===club.id)!.roster.filter(k=>k!==signing.playerKey && !n.health.injuries[k]).map(k=>n.world.players[k]!);assert.throws(()=>selectKboDualLeagueRoster(healthy),/SUPPLY/);}
+ assert.deepEqual(n.records,c.records);assert.ok(n.world.finance!.guarantees.some(g=>g.clubId===club.id));
+ const target=n.world.clubs.find(x=>x.id===club.id)!;assert.equal(target.firstTeam.length,28);assert.ok(target.roster.length<=60);assert.ok(target.roster.every(k=>!keys.includes(k)));
+ for(const k of keys){assert.equal(n.world.players[k],undefined);assert.equal(n.world.contracts[k],undefined);assert.equal(n.health.injuries[k],undefined);}
+ assert.deepEqual(startNextKboSeason(JSON.parse(before),c.revision),n);
+});
+
+
+test('legacy multi-year contracts carry only actual remaining years, including my unexpired contract without a new renewal',()=>{
+ const c=closed(),key=c.protagonistKey,season=Number(c.world.seasonKey),npc=Object.keys(c.world.players).find(k=>k!==key)!;
+ c.world.contracts[key]={...c.world.contracts[key]!,seasonKey:String(season-1),years:4};
+ c.world.contracts[npc]={...c.world.contracts[npc]!,seasonKey:String(season-2),years:4};
+ assert.equal(kboYearTransitionReadiness(c).ready,true);const before=canonicalJson(c),n=startNextKboSeason(c,c.revision);
+ assert.equal(n.world.contracts[key]!.years,2);assert.equal(n.world.contracts[npc]!.years,1);assert.equal(n.world.contracts[key]!.contractKey,c.world.contracts[key]!.contractKey);assert.equal(n.world.contracts[npc]!.contractKey,c.world.contracts[npc]!.contractKey);assert.equal(n.renewal,undefined);assert.equal(canonicalJson(c),before);
+ assert.doesNotThrow(()=>confirmKboPreseasonPlan(n,n.revision));
+ const asked=requestKboRetirement(c,c.revision),event=asked.events.at(-1)!,retired=resolveKboRetirement(asked,asked.revision,{eventKey:event.eventKey,eventVersion:event.version,command:'CONFIRM_RETIRE'});assert.equal(retired.retirement!.remainingContractYears,2);assert.equal(kboRetirementArchiveView(retired).retirement.age,c.world.players[key]!.age);
 });

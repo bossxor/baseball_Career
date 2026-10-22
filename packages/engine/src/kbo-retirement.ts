@@ -16,12 +16,13 @@ export interface KboRetiredPlayer {playerKey:string;clubId:string;lastSeasonKey:
  * players/contracts/repertoires/rosters at once, and only a first team that lost someone is reselected by the 41/44
  * selector. No replacement is created here (the 15 rookie supply is Y04); a club that would fall below 35 or cannot
  * field 28 stops the transition instead of shrinking silently. */
-export function retireKboOverAgeNpcs(world:ActiveKboRosterWorld,keys:readonly string[],lastSeasonKey:string):KboRetiredPlayer[] {
+export function retireKboOverAgeNpcs(world:ActiveKboRosterWorld,keys:readonly string[],lastSeasonKey:string,deferSupply=false):KboRetiredPlayer[] {
  const retired:KboRetiredPlayer[]=[],gone=new Set(keys);
  for(const club of world.clubs){
   const leaving=club.roster.filter(k=>gone.has(k));if(!leaving.length)continue;
   for(const k of leaving){reserveKboOffseasonGuarantee(world,world.contracts[k]!,lastSeasonKey,'RETIREMENT');retired.push({playerKey:k,clubId:club.id,lastSeasonKey,reason:'MAX_AGE',player:world.players[k]!,contract:world.contracts[k]!});delete world.players[k];delete world.contracts[k];delete world.repertoires[k];}
   club.roster=club.roster.filter(k=>!gone.has(k));
+  if(deferSupply){club.firstTeam=club.firstTeam.filter(k=>!gone.has(k));continue;}
   if(club.roster.length<KBO_ROSTER_LIMITS.minimum)throw new RangeError('KBO_PLAYER_SUPPLY_REQUIRED');
   if(club.firstTeam.some(k=>gone.has(k))){
    const first=selectKboFirstTeamRoster(club.roster.map(k=>world.players[k]!));
@@ -45,7 +46,7 @@ function retirementEvent(s:KboCareer,definitionId:'E36'|'E37',revision:number){
 }
 function retire(source:KboCareer,career:KboCareer,reason:KboCareerRetirement['reason']):KboCareer {
  const c=source.world.contracts[source.protagonistKey]!;career.revision++;
- career.retirement={receiptKey:taskKey(source),reason,seasonKey:source.world.seasonKey,age:source.world.players[source.protagonistKey]!.age,clubId:source.protagonistClubId,remainingContractYears:c.years-1,sourceRevision:career.revision};
+ career.retirement={receiptKey:taskKey(source),reason,seasonKey:source.world.seasonKey,age:source.world.players[source.protagonistKey]!.age,clubId:source.protagonistClubId,remainingContractYears:Math.max(0,c.years-(Number(source.world.seasonKey)-Number(c.seasonKey)+1)),sourceRevision:career.revision};
  const farewell=retirementEvent(career,'E37',career.revision);career.events=[...career.events,farewell];
  career.phaseContext={phase:'ARCHIVED'};return career;
 }

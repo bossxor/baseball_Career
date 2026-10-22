@@ -1,0 +1,14 @@
+✔ registration thresholds stay separate at6/7/8/9 closed100-game seasons, independent of actual appearances (1330.7063ms)
+✔ 99 fails and100 qualifies once; an open current100-game season is projected but not yet counted (160.9569ms)
+✔ Futures, PS, international, missing official games and unregistered days do not create service years; injury registration counts (258.3585ms)
+✔ duplicate registration, mismatched day/team/year and malformed close markers reject without modifying input (620.8324ms)
+✔ old careers without service evidence remain zero; no service year is inferred from age, salary, current roster or stats (303.1298ms)
+✔ an actual closed KBO opening day gives an unused registered bench player one game and no qualified service season (4834.0938ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8549.7733
