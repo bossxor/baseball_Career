@@ -33,10 +33,11 @@ test('Sangmu application: fixed result, retry returns the same application, wron
  const a=applyToSangmu(c,c.revision);assert.equal(a.military!.status,'APPLICATION_PENDING');assert.equal(a.military!.applications.length,1);
  const again=applyToSangmu(a,a.revision);assert.deepEqual(again.military,a.military);assert.equal(again.revision,a.revision);
  assert.ok(kboYearTransitionReadiness(renew(a)).blockers.includes('MILITARY_RESULT_PENDING'));
- const app=a.military!.applications[0]!;
+ const app=a.military!.applications[0]!,e50=a.events.find(e=>e.eventKey===app.eventKey)!;
+ assert.equal(e50.definitionId,'E50');assert.equal(e50.status,'OPEN');assert.ok(kboYearTransitionReadiness(renew(a)).blockers.includes('OPEN_EVENT'));
  if(app.accepted){
   assert.throws(()=>resolveSangmuApplication(a,a.revision,'ACK_REJECTION'),/INVALID_MILITARY_COMMAND/);
-  const d=resolveSangmuApplication(a,a.revision,'DECLINE');assert.equal(d.military!.status,'UNRESOLVED');assert.equal(d.military!.applications[0]!.decision,'DECLINED');
+  const d=resolveSangmuApplication(a,a.revision,'DECLINE');assert.equal(d.military!.status,'UNRESOLVED');assert.equal(d.military!.applications[0]!.decision,'DECLINED');assert.equal(d.events.find(e=>e.eventKey===app.eventKey)!.status,'RESOLVED');assert.ok(!kboYearTransitionReadiness(renew(d)).blockers.includes('OPEN_EVENT'));
   assert.equal(applyToSangmu(d,d.revision).military!.applications.length,1);
  } else {
   assert.throws(()=>resolveSangmuApplication(a,a.revision,'ENLIST'),/INVALID_MILITARY_COMMAND/);

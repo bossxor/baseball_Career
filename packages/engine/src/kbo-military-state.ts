@@ -5,13 +5,14 @@ import {enlistInSangmu,completeSangmuBlock,KBO_CONTRACT_GAME_DAYS} from './kbo-m
 import type {KboMilitaryProgram} from './kbo-military-program.js';
 import {emptySangmuUnit} from './kbo-sangmu-unit.js';
 import {acceptedRenewal} from './kbo-renewal.js';
+import {createWorldEvent,completeBlockingEvent,eventDefinition} from './events.js';
 
 /** 21 states handled so far: UNRESOLVED → APPLICATION_PENDING → (decline/rejection → UNRESOLVED | enlist → SERVING_SPORTS) → COMPLETED.
  * ACTIVE (현역) and ATHLETE service are not implemented; ACTIVE is the only way out for the unmatched, so the 28-year
  * deadline stops the career at the plan screen instead of inventing a service. */
 export type KboMilitaryStatus='UNRESOLVED'|'APPLICATION_PENDING'|'SERVING_SPORTS'|'COMPLETED';
 export interface KboSangmuApplication {
- applicationId:string;selectionSeasonKey:string;score:number;accepted:boolean;slotKind:'HITTER'|'PITCHER';
+ applicationId:string;eventKey:string;selectionSeasonKey:string;score:number;accepted:boolean;slotKind:'HITTER'|'PITCHER';
  decision:'PENDING'|'ENLISTED'|'DECLINED'|'REJECTION_ACKNOWLEDGED';
 }
 export interface KboMilitaryRecord {status:KboMilitaryStatus;applications:readonly KboSangmuApplication[];program?:KboMilitaryProgram;completedSeasonKey?:string}
@@ -43,8 +44,11 @@ export function applyToSangmu(source:KboCareer,expectedRevision:number):KboCaree
  if(!plan.canApply || Object.hasOwn(source.health.injuries,source.protagonistKey) || source.events.some(e=>e.status==='OPEN'&&e.definitionId!=='E30'))throw new RangeError('KBO_MILITARY_NOT_AVAILABLE');
  const selection=selectSangmuCohort({world:source.world,records:source.records,health:source.health,seasonKey:season,serving:new Set(Object.keys(source.sangmu?.members??{}))});
  const me=selection.selected.find(a=>a.playerKey===source.protagonistKey),kind=source.world.players[source.protagonistKey]!.kind;
- const career=structuredClone(source);
- career.military={status:'APPLICATION_PENDING',applications:[...(source.military?.applications??[]),{applicationId:id,selectionSeasonKey:season,score:me?.score??0,accepted:!!me,slotKind:kind,decision:'PENDING'}]};
+ // E50 (상무 선발 발표) is blocking until the result is confirmed by the domain command below.
+ const definition=eventDefinition('E50'),event=createWorldEvent({definitionId:'E50',worldKey:source.world.worldKey,seasonKey:season,evidence:{version:1,type:definition.evidenceDomain,fields:{playerSimulationKey:source.protagonistKey,serviceTaskIdOrServicePeriodId:id,stage:'RESULT'}},
+  resume:{worldKey:source.world.worldKey,seasonKey:season,phase:'SEASON_REVIEW',competitionKey:null,registrationKey:source.protagonistClubId,sourceRevision:source.revision+1},sourceSequence:source.events.length+1,worldDay:source.days!.days.at(-1)!.day});
+ const career=structuredClone(source);career.events=[...career.events,event];
+ career.military={status:'APPLICATION_PENDING',applications:[...(source.military?.applications??[]),{applicationId:id,eventKey:event.eventKey,selectionSeasonKey:season,score:me?.score??0,accepted:!!me,slotKind:kind,decision:'PENDING'}]};
  career.revision++;return career;
 }
 /** Accepted: ENLIST (SERVING_SPORTS, the two blocks start next season) or DECLINE. Rejected: only ACK_REJECTION. Both
@@ -55,6 +59,7 @@ export function resolveSangmuApplication(source:KboCareer,expectedRevision:numbe
  if(!record || record.status!=='APPLICATION_PENDING' || !app || app.decision!=='PENDING')throw new RangeError('KBO_MILITARY_NOT_AVAILABLE');
  const allowed=app.accepted?['ENLIST','DECLINE']:['ACK_REJECTION'];
  if(!allowed.includes(command))throw new RangeError('INVALID_MILITARY_COMMAND');
+ const event=source.events.find(e=>e.eventKey===app.eventKey);if(!event || event.status!=='OPEN')throw new RangeError('KBO_MILITARY_NOT_AVAILABLE');
  const career=structuredClone(source),set=(decision:KboSangmuApplication['decision'])=>career.military!.applications=record.applications.map((a,i)=>i===record.applications.length-1?{...a,decision}:a);
  if(command==='ENLIST'){
   const days=remainingDays(source);if(days===0)throw new RangeError('CONTRACT_DECISION_REQUIRED');
@@ -62,6 +67,8 @@ export function resolveSangmuApplication(source:KboCareer,expectedRevision:numbe
   set('ENLISTED');career.military!.status='SERVING_SPORTS';career.military!.program=program;
   const unit=career.sangmu??emptySangmuUnit();career.sangmu={...unit,loaned:[...(unit.loaned??[]),source.protagonistKey]};
  } else {set(command==='DECLINE'?'DECLINED':'REJECTION_ACKNOWLEDGED');career.military!.status='UNRESOLVED';}
+ const closed=completeBlockingEvent(event,event.version,{sourceEvidenceKey:event.evidenceKey,receiptKey:JSON.stringify(['sangmu-result-confirmed',app.applicationId,command]),command:'CONFIRM_MILITARY_RESULT'},{worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['CONFIRM_MILITARY_RESULT']});
+ career.events=career.events.map(e=>e.eventKey===event.eventKey?closed:e);
  career.revision++;return career;
 }
 /** Year-transition step for my player: the block of the season just played is closed on its last day; after the second block

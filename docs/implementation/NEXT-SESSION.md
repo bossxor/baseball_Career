@@ -1,6 +1,6 @@
 # 다음 환경 구현 인계 — 2026-10-22
 
-> **최신 상태(2026-10-22 마무리, 0bc8003)**: 상무 경로가 M2-CA~CE로 엔진에 들어갔다 — 11팀 퓨처스 일정, 연간 20명 선발(구단 상한·포지션 커버), 복무 두 블록·정지 계약 원장, 부대 이동/복귀, 커리어 연결(`startSangmuCohort`·일마감·투영·연도 전환), 내 선수 지원/입대/복무 대여(`applyToSangmu`/`resolveSangmuApplication`). 전체 check 474/474. 다음 후보: 현역(ACTIVE) 경로+28세 기한, 국가대표(ATHLETE) 전이, 계약 정지/일일 지급 원장, 복무 성장 계수, 사건 E49~E55, 상무 부상/긴급 등록, 반년 복귀. 읽을 순서: [M2-CE](M2-CE-SANGMU-APPLICATION.md) → [M2-CD](M2-CD-SANGMU-CAREER-WIRING.md) → [M2-CC](M2-CC-SANGMU-UNIT.md) → [M2-CB](M2-CB-SANGMU-PROGRAM-LEDGER.md) → [M2-CA](M2-CA-SANGMU-FOUNDATION.md).
+> **최신 상태(2026-10-22 마무리)**: 상무 경로가 M2-CA~CE로 엔진에 들어갔다 — 11팀 퓨처스 일정, 연간 20명 선발(구단 상한·포지션 커버), 복무 두 블록·정지 계약 원장, 부대 이동/복귀, 커리어 연결(`startSangmuCohort`·일마감·투영·연도 전환), 내 선수 지원/입대/복무 대여(`applyToSangmu`/`resolveSangmuApplication`). 전체 check 474/474. 다음 후보: 현역(ACTIVE) 경로+28세 기한, 국가대표(ATHLETE) 전이, 계약 정지/일일 지급 원장, 복무 성장 계수, 사건 E49~E55, 상무 부상/긴급 등록, 반년 복귀. 읽을 순서: [M2-CE](M2-CE-SANGMU-APPLICATION.md) → [M2-CD](M2-CD-SANGMU-CAREER-WIRING.md) → [M2-CC](M2-CC-SANGMU-UNIT.md) → [M2-CB](M2-CB-SANGMU-PROGRAM-LEDGER.md) → [M2-CA](M2-CA-SANGMU-FOUNDATION.md).
 
 ## 상무 결정 갱신 — 2026-10-22
 
@@ -16,6 +16,7 @@
 
 ## 현재 체크포인트
 
+- M2-CE+(2026-10-22): 상무 지원 결과가 BLOCKING E50을 열고 결과 확정 명령이 닫는다(재계약 E30과 병행 가능). 나머지 병역 사건 E49·E51~E55는 미구현.
 - M2-CE(2026-10-22): 내 선수 상무 지원/결과/입대(`applyToSangmu`/`resolveSangmuApplication`/`kboMilitaryPlan`)와 상무 복무 대여 모델·연도 전환 완료. 병역 기한 차단은 병역 기록이 있는 커리어만. 미구현: 현역(ACTIVE)·ATHLETE 경로, 계약 정지/지급, 복무 성장 계수, 사건 E49~E55. [M2-CE](M2-CE-SANGMU-APPLICATION.md).
 
 - M2-CD(2026-10-22): 상무 부대를 커리어에 옵트인 연결: `startSangmuCohort` 명령→11팀 FUTURES 일정(792경기)→advance/일마감/포스트시즌 투영→연도 전환(나이·블록 완료·복귀). 선발에 구단당 야수1·투수2 상한과 포지션 커버 추가(D). 한계: 부상 모형 없음, 반년 복귀 없음(두 시즌 복무), 성장 계수 미적용. 다음: 내 선수 지원 S26/S27, 부상/긴급 등록, 반년 복귀. [M2-CD](M2-CD-SANGMU-CAREER-WIRING.md).
