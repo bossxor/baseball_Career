@@ -1,0 +1,23 @@
+{
+  "baseCommit": "082e5c73e11b8ae595e4f2c1b21c702dd352c0bd",
+  "direction": "checkout -> V:/",
+  "runtimeChanged": false,
+  "usage": {
+    "primaryUsedPercent": 98,
+    "secondaryUsedPercent": 78,
+    "previousPrimaryRemainingPercent": 6,
+    "exactFivePercentObserved": false
+  },
+  "files": [
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "b6e3a97130e32be68ee4f00f03ee4b6620f819dd6e261ea0fa48c364128d852b",
+      "indexBlob": "2c28db40759cec2c312a1002c54f557a4a92ff77"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "4e24eddbce6f79f78bb6f97196cae50664ba1895e41dcdb7fb828c367b2e656a",
+      "indexBlob": "41e92d0ff2e95938a988b50fe7b22c6977d25ad3"
+    }
+  ]
+}
