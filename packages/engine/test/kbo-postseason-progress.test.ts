@@ -221,3 +221,25 @@ test('legacy multi-year contracts carry only actual remaining years, including m
  assert.doesNotThrow(()=>confirmKboPreseasonPlan(n,n.revision));
  const asked=requestKboRetirement(c,c.revision),event=asked.events.at(-1)!,retired=resolveKboRetirement(asked,asked.revision,{eventKey:event.eventKey,eventVersion:event.version,command:'CONFIRM_RETIRE'});assert.equal(retired.retirement!.remainingContractYears,2);assert.equal(kboRetirementArchiveView(retired).retirement.age,c.world.players[key]!.age);
 });
+
+test('the military unit ages with the year transition, completes the played block and rejoins finished programs',async()=>{
+ const {selectSangmuCohort}=await import('../src/kbo-sangmu.js');
+ const {emptySangmuUnit,enlistSangmuCohort}=await import('../src/kbo-sangmu-unit.js');
+ const {completeSangmuBlock}=await import('../src/kbo-military-program.js');
+ const c=closed(),sel=selectSangmuCohort({world:c.world,records:c.records,health:c.health,seasonKey:String(Number(c.world.seasonKey)-1),excluded:new Set([c.protagonistKey])});
+ c.sangmu=enlistSangmuCohort(c.world,emptySangmuUnit(),sel,c.protagonistClubId);
+ const ready=renewed(c),n=startNextKboSeason(ready,ready.revision),keys=Object.keys(ready.sangmu!.members);
+ for(const k of keys){const m=n.sangmu!.members[k]!,before=ready.sangmu!.members[k]!;
+  assert.equal(m.player.age,before.player.age+1);assert.equal(m.program.completedBlocks,1);assert.ok(m.program.blocks[0]!.completedWorldDay!==null);assert.ok(!Object.hasOwn(n.world.players,k));}
+ // A program that already finished its first block ends at this transition and its players rejoin the original clubs.
+ const old=closed(),season=Number(old.world.seasonKey),selection=selectSangmuCohort({world:old.world,records:old.records,health:old.health,seasonKey:String(season-1),excluded:new Set([old.protagonistKey])});
+ old.sangmu=enlistSangmuCohort(old.world,emptySangmuUnit(),selection,old.protagonistClubId);
+ // Shift the fixture one year back (contracts in this fixture start in the played season): blocks are season-1 (done) and season.
+ for(const m of Object.values(old.sangmu.members)){m.program={...m.program,blocks:[{...m.program.blocks[0]!,seasonKey:String(season-1)},{...m.program.blocks[1]!,seasonKey:String(season)}]};m.program=completeSangmuBlock(m.program,String(season-1),5);}
+ const o2=renewed(old),back=startNextKboSeason(o2,o2.revision),home=Object.values(o2.sangmu!.members);
+ assert.equal(home.length,20);
+ const returned=Object.keys(o2.sangmu!.members).filter(k=>Object.hasOwn(back.world.players,k));
+ assert.ok(returned.length>0);
+ for(const k of returned){const club=back.world.clubs.find(x=>x.roster.includes(k))!;assert.equal(club.id,o2.sangmu!.members[k]!.program.originalClubId);assert.equal(back.world.players[k]!.age,o2.sangmu!.members[k]!.player.age+1);assert.ok(!Object.hasOwn(back.sangmu!.members,k));}
+ assert.equal(returned.length+Object.keys(back.sangmu!.members).length,20);
+});

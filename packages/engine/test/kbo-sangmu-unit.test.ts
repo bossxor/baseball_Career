@@ -66,3 +66,28 @@ test('Sangmu plays Futures as the 11th team in the competition projection and a 
  const committed=commitSchoolCompetitionGame(futures,c.records,job,scheduled);
  assert.ok(Object.hasOwn(committed.records.games['sangmu-test']!.teams,SANGMU_TEAM_KEY));assert.ok(base);
 });
+
+test('a career with a Sangmu cohort plays the 11-team Futures calendar through the normal commands',async()=>{
+ const {startSangmuCohort,kboSangmuServing}=await import('../src/kbo-sangmu-start.js');
+ const {confirmKboPreseasonPlan}=await import('../src/kbo-preseason.js');
+ const {confirmKboOpeningRoster}=await import('../src/kbo-opening-roster.js');
+ const {confirmKboSeasonSchedule,kboSeasonScheduleView}=await import('../src/kbo-schedule.js');
+ const {startKboRegularSeason,advanceKboCareer}=await import('../src/kbo-progress.js');
+ const e=enteredKboCareer('HITTER'),s0=startSangmuCohort(e,e.revision);
+ assert.equal(kboSangmuServing(s0).length,20);assert.throws(()=>startSangmuCohort(s0,s0.revision),/SANGMU_COHORT_NOT_AVAILABLE/);
+ assert.ok(!kboSangmuServing(s0).includes(e.protagonistKey));
+ const p=confirmKboPreseasonPlan(s0,s0.revision),o=confirmKboOpeningRoster(p,p.revision),s=confirmKboSeasonSchedule(o,o.revision);
+ const futures=s.competitionSchedule!.leagues.FUTURES;assert.equal(new Set(futures.flatMap(g=>[g.homeTeamKey,g.awayTeamKey])).size,11);
+ assert.equal(s.competitionSchedule!.leagues.KBO.length,720);assert.equal(futures.length,792);
+ if(s.registration.competitionKey==='FUTURES')assert.ok(kboSeasonScheduleView(s).fixtures.length===144);
+ let g=startKboRegularSeason(s,s.revision);
+ for(let i=0;i<14;i++){const out=advanceKboCareer(JSON.parse(JSON.stringify(g)) as typeof g,g.revision,1);g=out.career;}
+ const games=Object.values(g.records.games).filter(x=>x.scope.leagueKey==='FUTURES');
+ assert.ok(games.length>0);
+ const sangmuGames=games.filter(x=>Object.hasOwn(x.teams,'SANGMU'));
+ assert.ok(sangmuGames.length>0,'the military team has played');
+ assert.ok(sangmuGames.every(x=>Object.keys(x.batting).concat(Object.keys(x.pitching)).filter(k=>Object.hasOwn(g.sangmu!.members,k)).length>0),'military players appear in their games');
+ // Members rest/tire in the unit, not in world.players; the rest of the world stays valid.
+ assert.ok(Object.values(g.sangmu!.members).some(m=>m.player.fatigue>0));assert.equal(g.health.games.filter(x=>x.evidence.teamKey==='FUTURES:SANGMU').length,0);
+ assert.ok(Object.keys(g.sangmu!.members).every(k=>!Object.hasOwn(g.world.players,k)));
+});

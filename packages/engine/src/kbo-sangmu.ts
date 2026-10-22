@@ -9,9 +9,14 @@ import {emptyBatting,emptyPitching} from './stats.js';
 /** 21 + 2026-10-22 user rule (14 U): every year the military sports team selects 10 hitters and 10 pitchers.
  * Age window is the 19..27 game age of the application window. */
 export const KBO_SANGMU_INTAKE={hitters:10,pitchers:10,minAge:19,maxAge:27} as const;
-/** Implementation default D (the 10-player role split is still to be specified by the user): at least one catcher among
- * hitters and three starters among pitchers are guaranteed when such applicants exist; the rest follow the score. */
-export const KBO_SANGMU_MIN_ROLES={catchers:1,starters:3} as const;
+/** Implementation default D (the 10-player role split is still to be specified by the user): the squad must be able to
+ * field a legal lineup, so each of the eight fielding positions gets its best applicant first (when one exists), and
+ * pitchers keep at least three starters; the remaining places follow the score. */
+export const KBO_SANGMU_FIELD_POSITIONS=['C','1B','2B','3B','SS','LF','CF','RF'] as const;
+export const KBO_SANGMU_MIN_ROLES={starters:3} as const;
+/** Implementation default D: one club cannot lose more than this many of one kind in a yearly intake, so every Futures squad keeps
+ * the nine healthy hitters a legal lineup needs (the pro baseline is 11 Futures hitters per club). */
+export const KBO_SANGMU_CLUB_CAP={hitters:1,pitchers:2} as const;
 
 export interface SangmuApplicant {playerKey:string;clubId:string;kind:'HITTER'|'PITCHER';position:string;age:number;score:number}
 export interface SangmuSelection {seasonKey:string;snapshotKey:string;selected:readonly SangmuApplicant[];applicants:number;vacancies:{hitters:number;pitchers:number}}
@@ -39,13 +44,14 @@ export function selectSangmuCohort(input:{world:ActiveKboRosterWorld;records:Rec
  }
  const tie=(a:SangmuApplicant)=>fnv(JSON.stringify(['sangmu',world.seed,world.worldKey,seasonKey,a.playerKey]));
  const order=(a:SangmuApplicant,b:SangmuApplicant)=>b.score-a.score || a.age-b.age || tie(a)-tie(b) || (a.playerKey<b.playerKey?-1:1);
- const choose=(kind:'HITTER'|'PITCHER',count:number,role:(a:SangmuApplicant)=>boolean,minRole:number)=>{
+ const choose=(kind:'HITTER'|'PITCHER',count:number,musts:readonly ((a:SangmuApplicant)=>boolean)[],minEach:number,cap:number)=>{
   const pool=applicants.filter(a=>a.kind===kind).sort(order),chosen:SangmuApplicant[]=[];
-  for(const a of pool.filter(role))if(chosen.length<Math.min(minRole,count))chosen.push(a);
-  for(const a of pool)if(chosen.length<count && !chosen.includes(a))chosen.push(a);
+  const room=(a:SangmuApplicant)=>chosen.length<count && !chosen.includes(a) && chosen.filter(c=>c.clubId===a.clubId).length<cap;
+  for(const must of musts){let taken=0;for(const a of pool.filter(must))if(taken<minEach && room(a)){chosen.push(a);taken++;}}
+  for(const a of pool)if(room(a))chosen.push(a);
   return chosen.sort(order);
  };
- const hitters=choose('HITTER',KBO_SANGMU_INTAKE.hitters,a=>a.position==='C',KBO_SANGMU_MIN_ROLES.catchers);
- const pitchers=choose('PITCHER',KBO_SANGMU_INTAKE.pitchers,a=>a.position==='SP',KBO_SANGMU_MIN_ROLES.starters);
+ const hitters=choose('HITTER',KBO_SANGMU_INTAKE.hitters,KBO_SANGMU_FIELD_POSITIONS.map(p=>(a:SangmuApplicant)=>a.position===p),1,KBO_SANGMU_CLUB_CAP.hitters);
+ const pitchers=choose('PITCHER',KBO_SANGMU_INTAKE.pitchers,[a=>a.position==='SP'],KBO_SANGMU_MIN_ROLES.starters,KBO_SANGMU_CLUB_CAP.pitchers);
  return {seasonKey,snapshotKey:JSON.stringify(['sangmu-selection',world.worldKey,seasonKey]),selected:[...hitters,...pitchers],applicants:applicants.length,vacancies:{hitters:KBO_SANGMU_INTAKE.hitters-hitters.length,pitchers:KBO_SANGMU_INTAKE.pitchers-pitchers.length}};
 }

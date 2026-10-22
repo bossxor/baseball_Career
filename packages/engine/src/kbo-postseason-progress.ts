@@ -39,20 +39,20 @@ export function advanceKboPostseason(source:KboCareer,expectedRevision:number):{
  if(!nextKboPostseasonGame(phase.postseason)){career.postseason=phase.postseason;career.phaseContext={phase:'SEASON_REVIEW'};return finish('POSTSEASON_COMPLETE');}
  const scheduled=scheduledFor(career,phase);
  if(!phase.pendingGame){
-  const world=createKboCompetitionGameWorld(career.world,'KBO',career.protagonistKey);
+  const world=createKboCompetitionGameWorld(career.world,'KBO',career.protagonistKey,career.sangmu);
   phase.pendingGame={leagueKey:'KBO',job:prepareSchoolCompetitionGame(world,career.records,scheduled,kboGameContext(career,'KBO'))};
  }
  if(phase.pendingGame.job.game.input.simulationKey!==scheduled.simulationKey || phase.pendingGame.job.worldDay!==scheduled.worldDay)throw new RangeError('PENDING_GAME_CONTEXT_CHANGED');
  const job=advanceHighSchoolGame(phase.pendingGame.job,1000,20);phase.pendingGame={leagueKey:'KBO',job};
  if(job.stopReason==='ENGINE_LIMIT')return finish('ENGINE_LIMIT');
  if(job.game.status!=='FINAL')return finish('CHUNK_LIMIT');
- const world=createKboCompetitionGameWorld(career.world,'KBO',career.protagonistKey),committed=commitSchoolCompetitionGame(world,career.records,job,scheduled);
+ const world=createKboCompetitionGameWorld(career.world,'KBO',career.protagonistKey,career.sangmu),committed=commitSchoolCompetitionGame(world,career.records,job,scheduled);
  for(const key of Object.keys(job.game.pitchDevelopment!.players))career.world.repertoires[key]=structuredClone(committed.world.repertoires[key]!);
  career.records=committed.records;phase.pendingGame=null;
  const line=career.records.games[scheduled.simulationKey]!.teams,winner=line[scheduled.homeTeamKey]!.W>0?scheduled.homeTeamKey:line[scheduled.awayTeamKey]!.W>0?scheduled.awayTeamKey:null;
  if(!winner)throw new RangeError('POSTSEASON_GAME_WITHOUT_WINNER');
- const closed=closeKboCompetitionDay(career.world,{KBO:[scheduled],FUTURES:[]},career.protagonistKey,career.records,career.health,career.days!,scheduled.worldDay);
- career.world=closed.world;career.health=closed.health;career.days=closed.days;
+ const closed=closeKboCompetitionDay(career.world,{KBO:[scheduled],FUTURES:[]},career.protagonistKey,career.records,career.health,career.days!,scheduled.worldDay,career.sangmu);
+ career.world=closed.world;career.health=closed.health;career.days=closed.days;if(closed.sangmu)career.sangmu=closed.sangmu;
  phase.postseason=recordKboPostseasonGame(phase.postseason,winner);phase.nextWorldDay=scheduled.worldDay+1;
  // Same day-close hooks as the regular season: trait unlocks (PS records count for T06) and my health stop.
  career.traits=refreshCareerTraits(career,scheduled.worldDay,['KBO']);

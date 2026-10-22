@@ -19,9 +19,9 @@ function remainingDays(contractSeason:string,years:number,selectionSeason:string
 }
 /** Moves one yearly selection into the unit. Mutates the caller's cloned world: each selected player leaves his club
  * roster, first team, players, contracts and books at once; the suspended contract (not a +1 year) and the original
- * club are kept in the program. A club whose first team lost someone is reselected by the 41/44 selector. A season can
+ * club are kept in the program. A club whose first team lost someone is reselected by the 41/44 selector (except `openingRosterClubId`: my club's opening roster is picked later by the confirmed opening-roster step, which also needs my registration untouched). A season can
  * be enlisted only once. Never creates a player. */
-export function enlistSangmuCohort(world:ActiveKboRosterWorld,unit:KboSangmuUnit,selection:SangmuSelection):KboSangmuUnit {
+export function enlistSangmuCohort(world:ActiveKboRosterWorld,unit:KboSangmuUnit,selection:SangmuSelection,openingRosterClubId?:string):KboSangmuUnit {
  if(unit.enlistedSeasons.includes(selection.seasonKey))throw new RangeError('SANGMU_COHORT_ALREADY_ENLISTED');
  const members:Record<string,KboSangmuMember>={...structuredClone(unit.members)},touched=new Set<string>();
  for(const a of selection.selected){
@@ -37,7 +37,7 @@ export function enlistSangmuCohort(world:ActiveKboRosterWorld,unit:KboSangmuUnit
  for(const club of world.clubs){
   if(!touched.has(club.id))continue;
   if(club.roster.length<KBO_ROSTER_LIMITS.minimum)throw new RangeError('KBO_PLAYER_SUPPLY_REQUIRED');
-  if(club.firstTeam.length!==KBO_ROSTER_LIMITS.firstTeam){
+  if(club.id!==openingRosterClubId && club.firstTeam.length!==KBO_ROSTER_LIMITS.firstTeam){
    const first=selectKboFirstTeamRoster(club.roster.map(k=>world.players[k]!));
    if(first.length!==KBO_ROSTER_LIMITS.firstTeam)throw new RangeError('KBO_PLAYER_SUPPLY_REQUIRED');club.firstTeam=first;
   }

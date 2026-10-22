@@ -6,6 +6,9 @@ import type {SeasonCalendar} from './season-calendar.js';
 import {createRoundRobinSchedule,assertSchedule} from './schedule.js';
 import type {ScheduledGame} from './schedule.js';
 import {canonicalJson} from './game.js';
+import {createKboFutures11Schedule} from './kbo-futures-schedule.js';
+import {kboSangmuServing} from './kbo-sangmu-start.js';
+import {SANGMU_TEAM_KEY} from './kbo-game-world.js';
 
 export interface KboSeasonSchedule {
  receiptKey:string;seasonKey:string;openingRosterReceiptKey:string;
@@ -25,12 +28,18 @@ export function createKboSeasonSchedules(teamKeys:readonly string[],seasonKey:st
  };
  return {KBO:generate('KBO'),FUTURES:generate('FUTURES')};
 }
+/** Futures is the 11-team calendar (with the military team) only while someone serves; otherwise the stored 10-team form. */
+function schedulesFor(s:KboCareer):KboSeasonSchedule['leagues']{
+ const ids=s.world.clubs.map(c=>c.id),base=createKboSeasonSchedules(ids,s.world.seasonKey,s.world.calendar);
+ return kboSangmuServing(s).length?{KBO:base.KBO,FUTURES:createKboFutures11Schedule([...ids,SANGMU_TEAM_KEY],s.world.seasonKey,s.world.calendar)}:base;
+}
+const teamName=(s:KboCareer,id:string)=>s.world.clubs.find(c=>c.id===id)?.name??(id===SANGMU_TEAM_KEY?'상무':id);
 const receiptKey=(s:KboCareer)=>JSON.stringify(['kbo-season-schedule',s.openingRoster!.receiptKey]);
 /** PRE-only validation. Once games exist this receipt is historical, not a new roster decision. */
 export function assertKboSeasonSchedule(s:KboCareer):KboSeasonSchedule {
  assertCareerRevision(s,s.revision);const opening=assertKboOpeningRoster(s),r=s.competitionSchedule;
  if(!r || r.receiptKey!==receiptKey(s) || r.seasonKey!==s.world.seasonKey || r.openingRosterReceiptKey!==opening.receiptKey || !Number.isSafeInteger(r.sourceRevision) || r.sourceRevision<opening.confirmedRevision || !Number.isSafeInteger(r.confirmedRevision) || r.confirmedRevision!==r.sourceRevision+1 || r.confirmedRevision>s.revision)throw new RangeError('STALE_KBO_SEASON_SCHEDULE');
- const expected=createKboSeasonSchedules(s.world.clubs.map(c=>c.id),s.world.seasonKey,s.world.calendar);
+ const expected=schedulesFor(s);
  if(canonicalJson(r.leagues)!==canonicalJson(expected))throw new RangeError('CHANGED_KBO_SEASON_SCHEDULE');
  return r;
 }
@@ -38,7 +47,7 @@ export function assertKboSeasonSchedule(s:KboCareer):KboSeasonSchedule {
 export function confirmKboSeasonSchedule(s:KboCareer,revision:number):KboCareer {
  assertCareerRevision(s,revision);const opening=assertKboOpeningRoster(s);
  if(s.competitionSchedule){assertKboSeasonSchedule(s);return structuredClone(s);}
- const leagues=createKboSeasonSchedules(s.world.clubs.map(c=>c.id),s.world.seasonKey,s.world.calendar),next=structuredClone(s);next.revision++;
+ const leagues=schedulesFor(s),next=structuredClone(s);next.revision++;
  next.competitionSchedule={receiptKey:receiptKey(s),seasonKey:s.world.seasonKey,openingRosterReceiptKey:opening.receiptKey,sourceRevision:s.revision,confirmedRevision:next.revision,leagues};
  assertKboSeasonSchedule(next);return next;
 }
@@ -47,6 +56,6 @@ export function kboSeasonScheduleView(s:KboCareer){
  assertCareerRevision(s,s.revision);assertKboOpeningRoster(s);
  if(!s.competitionSchedule)return {status:'PENDING' as const,seasonKey:s.world.seasonKey,competitionKey:s.registration.competitionKey!,gamesPerTeam:144,fixtures:[]};
  const r=assertKboSeasonSchedule(s),competitionKey=s.registration.competitionKey!,club=s.protagonistClubId;
- const fixtures=r.leagues[competitionKey].filter(g=>g.homeTeamKey===club || g.awayTeamKey===club).map(g=>({gameKey:g.simulationKey,worldDay:g.worldDay,round:g.round,home:{id:g.homeTeamKey,name:s.world.clubs.find(c=>c.id===g.homeTeamKey)!.name},away:{id:g.awayTeamKey,name:s.world.clubs.find(c=>c.id===g.awayTeamKey)!.name}}));
+ const fixtures=r.leagues[competitionKey].filter(g=>g.homeTeamKey===club || g.awayTeamKey===club).map(g=>({gameKey:g.simulationKey,worldDay:g.worldDay,round:g.round,home:{id:g.homeTeamKey,name:teamName(s,g.homeTeamKey)},away:{id:g.awayTeamKey,name:teamName(s,g.awayTeamKey)}}));
  return {status:'CONFIRMED' as const,seasonKey:r.seasonKey,competitionKey,gamesPerTeam:144,fixtures};
 }

@@ -14,6 +14,8 @@
 
 ## 현재 체크포인트
 
+- M2-CD(2026-10-22): 상무 부대를 커리어에 옵트인 연결: `startSangmuCohort` 명령→11팀 FUTURES 일정(792경기)→advance/일마감/포스트시즌 투영→연도 전환(나이·블록 완료·복귀). 선발에 구단당 야수1·투수2 상한과 포지션 커버 추가(D). 한계: 부상 모형 없음, 반년 복귀 없음(두 시즌 복무), 성장 계수 미적용. 다음: 내 선수 지원 S26/S27, 부상/긴급 등록, 반년 복귀. [M2-CD](M2-CD-SANGMU-CAREER-WIRING.md).
+
 - M2-CC(2026-10-22): 상무 부대 소속 이동/복귀(`enlistSangmuCohort`/`returnSangmuPlayers`/`assertSangmuUnit`) 순수 구현. 복무자는 world.players 밖 `KboSangmuUnit`에 보관. 미연결. 경기 투영(FUTURES 11번째 학교)은 구현·실제 경기 검증. 다음: 일마감/진행 큐의 상무 연결, 11팀 일정 활성화와 연도 전환 순서, 내 선수 지원(S26/S27). [M2-CC](M2-CC-SANGMU-UNIT.md).
 
 - M2-CB(2026-10-22): 상무 복무 두 블록·정지 계약 순수 원장(`enlistInSangmu`/`completeSangmuBlock`/`suspendKboContract`/`resumedContractPayment`, 일급 round(연봉/144)·마지막 날 정산). 미연결. 다음: 선수 소속 이동·군팀 등록·복귀 슬롯, 11팀 일정 활성화. [M2-CB](M2-CB-SANGMU-PROGRAM-LEDGER.md).

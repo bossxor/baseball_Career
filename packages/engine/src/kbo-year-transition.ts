@@ -13,6 +13,8 @@ import {emptyPitchXpLedger} from './pitch-xp.js';
 import {assertKboRecruitmentWorld} from './kbo-draft.js';
 import {retireKboOverAgeNpcs} from './kbo-retirement.js';
 import {draftKboRookieClass} from './kbo-supply.js';
+import {completeSangmuBlock} from './kbo-military-program.js';
+import {returnSangmuPlayers} from './kbo-sangmu-unit.js';
 import {leagueStandings} from './standings.js';
 
 export type KboTransitionBlocker='SEASON_NOT_IN_REVIEW'|'POSTSEASON_NOT_COMPLETE'|'SEASON_NOT_CLOSED'|'OPEN_EVENT'|'PENDING_GAME'|'GROWTH_NOT_FINALIZED'|'MAX_AGE_REACHED'|'CONTRACT_DECISION_REQUIRED';
@@ -85,6 +87,16 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
  }
  for(const club of world.clubs){club.paidSalaryWon=0;club.reservedSalaryWon=club.roster.reduce((n,k)=>n+world.contracts[k]!.annualSalaryWon,0);}
  world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target));
+// Military unit carries over: members age and reset their books like everyone else, the block of the season just played is
+// recorded complete on its last day, and finished programs rejoin their club's Futures squad (full clubs wait in the unit).
+// ponytail: the second block is closed at the end of its season, not at the first half (a mid-season return is not modeled).
+if(career.sangmu){
+ const lastDay=source.days!.days.at(-1)!.day,members=Object.fromEntries(Object.entries(career.sangmu.members).map(([k,m])=>{
+  const open=m.program.blocks.find(b=>b.seasonKey===source.world.seasonKey && b.completedWorldDay===null);
+  return [k,{...m,player:{...m.player,age:m.player.age+1,fatigue:0},repertoire:m.repertoire?{...m.repertoire,seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()}:null,program:open?completeSangmuBlock(m.program,open.seasonKey,lastDay):m.program}];
+ }));
+ career.sangmu=returnSangmuPlayers(world,{...career.sangmu,members},target).unit;
+}
  const pool=nextKboFreeAgentYear({...(source.freeAgents?{source:source.freeAgents}:{}),worldKey:world.worldKey,seed:world.seed,seasonKey:target,difficulty:career.difficulty,registeredKeys:Object.keys(world.players)});
  const prepared=prepareKboAiRenewals({world,pool,priorContracts:source.world.contracts,expiringKeys:stage.expiring.filter(k=>Object.hasOwn(world.players,k)),protagonistKey:key,sourceSeasonKey:source.world.seasonKey,records:source.records,health:career.health,...(source.aiAssessments?{reports:source.aiAssessments}:{})});
  // This AI-only schedule closes FA before the draft;115 permits deadline-dependent ordering, not UI order.

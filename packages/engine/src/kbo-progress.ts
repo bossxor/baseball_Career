@@ -33,7 +33,7 @@ export function startKboRegularSeason(source:KboCareer,expectedRevision:number):
 
 /** Server-internal world AI context for one league. Rotations follow each club's own games in that league. Never sent to clients. */
 export function kboGameContext(career:KboCareer,leagueKey:KboLeagueKey):HighSchoolGameContext {
- const world=createKboCompetitionGameWorld(career.world,leagueKey,career.protagonistKey);
+ const world=createKboCompetitionGameWorld(career.world,leagueKey,career.protagonistKey,career.sangmu);
  const starters:Record<string,string>=Object.create(null) as Record<string,string>,recentBatting:Record<string,BattingLine>=Object.create(null) as Record<string,BattingLine>;
  const scope={leagueKey,phase:'REGULAR' as const,seasonKey:career.world.seasonKey},season=recordTotals(career.records,scope);
  for(const club of world.schools){
@@ -74,7 +74,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   if(!progress.pendingGame){
    const next=pendingQueue(career,day)[0];
    if(next){
-    const world=createKboCompetitionGameWorld(career.world,next.leagueKey,career.protagonistKey);
+    const world=createKboCompetitionGameWorld(career.world,next.leagueKey,career.protagonistKey,career.sangmu);
     progress.pendingGame={leagueKey:next.leagueKey,job:prepareSchoolCompetitionGame(world,career.records,next.game,kboGameContext(career,next.leagueKey))};
    }
   }
@@ -84,18 +84,20 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
    plateAppearances+=job.game.playCursor-before.playCursor;completedInnings+=job.game.completedInnings-before.completedInnings;
    if(job.stopReason==='ENGINE_LIMIT')return finish('ENGINE_LIMIT');
    if(job.game.status!=='FINAL')return finish('CHUNK_LIMIT');
-   const world=createKboCompetitionGameWorld(career.world,pending.leagueKey,career.protagonistKey),scheduled=schedulesOf(career)[pending.leagueKey].find(g=>g.simulationKey===job.game.input.simulationKey)!;
+   const world=createKboCompetitionGameWorld(career.world,pending.leagueKey,career.protagonistKey,career.sangmu),scheduled=schedulesOf(career)[pending.leagueKey].find(g=>g.simulationKey===job.game.input.simulationKey)!;
    const committed=commitSchoolCompetitionGame(world,career.records,job,scheduled);
    // Merge only the books this game touched so another league's earlier XP is never rolled back (M2-AU condition 2).
    for(const key of Object.keys(job.game.pitchDevelopment!.players)){
+    const member=career.sangmu?.members[key];
+    if(member?.repertoire){member.repertoire=structuredClone(committed.world.repertoires[key]!);continue;}
     if(!Object.hasOwn(career.world.repertoires,key))throw new RangeError('UNREGISTERED_GAME_PITCHER');
     career.world.repertoires[key]=structuredClone(committed.world.repertoires[key]!);
    }
    career.records=committed.records;progress.pendingGame=null;
    if(pendingQueue(career,day).length>0)continue;
   }
-  const closed=closeKboCompetitionDay(career.world,schedulesOf(career),career.protagonistKey,career.records,career.health,career.days!,day);
-  career.world=closed.world;career.health=closed.health;career.days=closed.days;progress.nextWorldDay=day+1;daysClosed++;
+  const closed=closeKboCompetitionDay(career.world,schedulesOf(career),career.protagonistKey,career.records,career.health,career.days!,day,career.sangmu);
+  career.world=closed.world;career.health=closed.health;career.days=closed.days;if(closed.sangmu)career.sangmu=closed.sangmu;progress.nextWorldDay=day+1;daysClosed++;
   career.traits=refreshCareerTraits(career,day,LEAGUES);
   // 14 order: call-up/demotion review before style/training windows.
   const aiMoves=progress.nextWorldDay>last?null:reviewKboAiRosters(career);if(aiMoves)Object.assign(career,aiMoves);
