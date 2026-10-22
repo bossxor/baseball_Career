@@ -5,11 +5,11 @@ import {canonicalJson} from './game.js';
 import {kboMilitaryCompletionDays} from './kbo-military-events.js';
 
 /** New enlistments opt in. Legacy growth receipts retain their exact old allocation. */
-export function kboMilitaryGrowthWindow(c:KboCareer):{untilWorldDay:number}|null {
+export function kboMilitaryGrowthWindow(c:KboCareer):{untilWorldDay:number;kind:'SPORTS'|'ACTIVE'}|null {
  const r=c.military,p=r?.program;
  if(r?.growthPolicyVersion!==1 || !p || !p.blocks.some(b=>b.seasonKey===c.world.seasonKey))return null;
- if(p.kind!=='SPORTS' || p.playerKey!==c.protagonistKey || p.originalClubId!==c.protagonistClubId || canonicalJson(r.completionDays)!==canonicalJson(kboMilitaryCompletionDays(p)))throw new RangeError('INVALID_MILITARY_GROWTH_CALENDAR');
- return {untilWorldDay:r.completionDays!.find(x=>x.seasonKey===c.world.seasonKey)!.worldDay};
+ if(!['SPORTS','ACTIVE'].includes(p.kind) || p.playerKey!==c.protagonistKey || p.originalClubId!==c.protagonistClubId || canonicalJson(r.completionDays)!==canonicalJson(kboMilitaryCompletionDays(p)))throw new RangeError('INVALID_MILITARY_GROWTH_CALENDAR');
+ return {untilWorldDay:r.completionDays!.find(x=>x.seasonKey===c.world.seasonKey)!.worldDay,kind:p.kind};
 }
 /** Team-game counts follow military registration, then actual original-club registration after return. */
 export function kboMilitaryRegisteredGames(c:KboCareer):GameContribution[]|null {
@@ -18,7 +18,7 @@ export function kboMilitaryRegisteredGames(c:KboCareer):GameContribution[]|null 
  const registrations=new Set(c.health.games.filter(h=>h.evidence.seasonKey===season && h.evidence.roster.includes(key)).map(h=>canonicalJson([h.evidence.gameKey,h.evidence.day,h.evidence.teamKey])));
  const games=Object.values(c.records.games).filter(g=>{
   if(g.scope.seasonKey!==season || g.scope.phase!=='REGULAR' || !['KBO','FUTURES'].includes(g.scope.leagueKey))return false;
-  if(g.worldDay<=window.untilWorldDay)return g.scope.leagueKey==='FUTURES' && Object.hasOwn(g.teams,'SANGMU');
+  if(g.worldDay<=window.untilWorldDay)return window.kind==='SPORTS' && g.scope.leagueKey==='FUTURES' && Object.hasOwn(g.teams,'SANGMU');
   return Object.hasOwn(g.teams,c.protagonistClubId) && registrations.has(canonicalJson([g.gameKey,g.worldDay,g.scope.leagueKey+':'+c.protagonistClubId]));
  }).sort((a,b)=>a.worldDay-b.worldDay || (a.gameKey<b.gameKey?-1:1));
  if(new Set(games.map(g=>g.worldDay)).size!==games.length)throw new RangeError('DOUBLE_BOOKED_GROWTH_DAY');
@@ -28,7 +28,7 @@ export function kboMilitaryScheduledGames(c:KboCareer):number|null {
  const window=kboMilitaryGrowthWindow(c);if(!window)return null;
  if(!c.competitionSchedule)throw new RangeError('KBO_SCHEDULE_REQUIRED');
  const club=c.world.clubs.find(x=>x.id===c.protagonistClubId)!,league=club.firstTeam.includes(c.protagonistKey)?'KBO':'FUTURES';
- const during=c.competitionSchedule.leagues.FUTURES.filter(g=>g.worldDay<=window.untilWorldDay && (g.homeTeamKey==='SANGMU' || g.awayTeamKey==='SANGMU')).length;
+ const during=window.kind==='ACTIVE'?0:c.competitionSchedule.leagues.FUTURES.filter(g=>g.worldDay<=window.untilWorldDay && (g.homeTeamKey==='SANGMU' || g.awayTeamKey==='SANGMU')).length;
  const after=c.competitionSchedule.leagues[league].filter(g=>g.worldDay>window.untilWorldDay && (g.homeTeamKey===club.id || g.awayTeamKey===club.id)).length;
  return during+after;
 }
@@ -62,6 +62,6 @@ export function kboMilitaryGrowthPeriods(c:KboCareer):ClosedGrowthPeriod[]|null 
  return parts.map(part=>{
   const plan=history[boundaries.findLastIndex(b=>b<=part.start)]!;
   return {periodKey:JSON.stringify(['pro-growth',c.world.worldKey,season,part.start,part.end,'military-v1']),focus:[...plan.focus],archetype:plan.archetype,
-   period:{startDay:part.start,endDay:part.end,levelSeasonDays:W,level:'PRO',appearances:part.appearances,pitcherRole:start.position==='RP'?'RP':start.position==='CP'?'CP':'SP',rehabRatio:part.scheduledDays?part.rehabDays/part.scheduledDays:0,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER',difficulty:c.difficulty,beneficiary:true}}};
+   period:{startDay:part.start,endDay:part.end,levelSeasonDays:W,level:'PRO',appearances:part.appearances,pitcherRole:start.position==='RP'?'RP':start.position==='CP'?'CP':'SP',rehabRatio:part.scheduledDays?part.rehabDays/part.scheduledDays:0,trainingMultiplier:1,ordinaryMilitary:window.kind==='ACTIVE' && part.end<=serviceEnd,policy:{mode:'CAREER',difficulty:c.difficulty,beneficiary:true}}};
  });
 }

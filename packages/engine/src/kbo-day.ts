@@ -1,3 +1,4 @@
+import {kboActiveContractSuspended} from './kbo-service-payroll.js';
 import {canonicalJson} from './game.js';
 import type {RecordLedger} from './records.js';
 import type {HealthLedger} from './health.js';
@@ -43,6 +44,7 @@ export function closeKboCompetitionDay(world:ActiveKboRosterWorld,schedules:KboS
  const updated=structuredClone(world);
  const unit=sangmu?structuredClone(sangmu):undefined,fatigued=(key:string)=>unit?.members[key]?.player??updated.players[key]!;
  for(const key of [...registered].sort()){const next=appearanceFatigue(fatigued(key),appearances.get(key)??'NONE');if(unit?.members[key])unit.members[key]!.player=next;else updated.players[key]=next;}
+ for(const key of Object.keys(updated.players).filter(k=>kboActiveContractSuspended(updated.contracts[k]!))){if(registered.has(key))throw new RangeError('ACTIVE_SERVICE_REGISTERED');updated.players[key]=appearanceFatigue(updated.players[key]!,'NONE');}
  let nextHealth=health;const result:SchoolDayResult={injured:[],recovered:[]};
  for(const {leagueKey,game} of scheduled){for(const teamKey of [game.awayTeamKey,game.homeTeamKey].sort()){
   // ponytail: the military team has no injury/emergency-roster model yet (its 10 hitters cannot absorb injuries); fatigue still applies.

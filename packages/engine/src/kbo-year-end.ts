@@ -1,6 +1,6 @@
 import {settleKboFreeAgentSeason} from './kbo-free-agents.js';
 import type {KboCareer} from './kbo-career-entry.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {validateSeasonGrowthLedger,finalizeSeasonGrowth} from './growth-ledger.js';
 import {closeSeasonHealth} from './health.js';
 import {applySeasonTraining} from './training.js';

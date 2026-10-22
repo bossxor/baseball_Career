@@ -3,7 +3,7 @@ import {KBO_CONTRACT_GAME_DAYS} from './kbo-military-program.js';
 import {reserveKboOffseasonGuarantee} from './kbo-finance.js';
 import {KBO_ROSTER_LIMITS} from '@playball/rules';
 import type {ActiveKboRosterWorld,KboCareer} from './kbo-career-entry.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {createWorldEvent,completeBlockingEvent,eventDefinition} from './events.js';
 import type {EventInstance} from './events.js';
 import {kboYearTransitionReadiness} from './kbo-year-transition.js';

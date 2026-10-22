@@ -1,0 +1,302 @@
+{
+  "baseCommit": "c37233d85ab5fac9327b4290008ac4ac26487c58",
+  "direction": "validated checkout -> V:/",
+  "runtimeTestedSourcesUnchanged": true,
+  "postCheckDocsValidatedSeparately": true,
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "51fcc0b9ff185aeb9e93ad127cd6c0695b9c25f1dd4708b6faf0d249a69043c3",
+      "gitBlob": "796bd7e429542dc88e6731ebcad8a412ecb57157",
+      "indexBlob": "796bd7e429542dc88e6731ebcad8a412ecb57157"
+    },
+    {
+      "path": "docs/design/21-MILITARY-CONTRACT-RETURN.md",
+      "sha256": "304935f76e2676cbd2ac757b79a421810caced836e325b41561795429e21e361",
+      "gitBlob": "92fe377acb2dac79335fc0b5392c381f26fd0beb",
+      "indexBlob": "92fe377acb2dac79335fc0b5392c381f26fd0beb"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "56927082c901e2766798e957110f873f6816c604c0378993136363870e6b72e6",
+      "gitBlob": "2a40106b7fb60f3298e5d6a0a43caf6fa53542ac",
+      "indexBlob": "2a40106b7fb60f3298e5d6a0a43caf6fa53542ac"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "d542256d2fd99c532c93ed0c5b42c425ce628eed90d2b0417544845baff53bed",
+      "gitBlob": "9e22f919ee76b0e889eab5a95ce93af081bade8c",
+      "indexBlob": "9e22f919ee76b0e889eab5a95ce93af081bade8c"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "d9fd6b161c82cbd0b8b98e8928ecd25fc6a6b81f6231a3a7f033b0494b963e33",
+      "gitBlob": "b7d176367d9ef7f5f404dde4ad8758564faaae09",
+      "indexBlob": "b7d176367d9ef7f5f404dde4ad8758564faaae09"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "6b4387eae8e51a35febf837000d38b4e9075c7d7c88a9ba50851c34f18cf0ec7",
+      "gitBlob": "759043810884ff06cb4d48ba013979414686c734",
+      "indexBlob": "759043810884ff06cb4d48ba013979414686c734"
+    },
+    {
+      "path": "packages/engine/src/kbo-archive-view.ts",
+      "sha256": "4a4673a153e2b6484c52e97ac6e291b82f008f31179f690199d3f94422d63ccf",
+      "gitBlob": "e7b31548afcc8b302b847b1ff25dff289e46be7a",
+      "indexBlob": "e7b31548afcc8b302b847b1ff25dff289e46be7a"
+    },
+    {
+      "path": "packages/engine/src/kbo-callup.ts",
+      "sha256": "9ac39076cb21e37105cb1c5f692939fca6eb31e536e6c3f97065fa4da93ec9ab",
+      "gitBlob": "92fcd7334248245c10985f3f695c0ee2ba6d0152",
+      "indexBlob": "92fcd7334248245c10985f3f695c0ee2ba6d0152"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "sha256": "f9a7d7c045053de58a97e1a338d396ffc066e9e6fbe0129f219142d5083e6282",
+      "gitBlob": "e85b46b572da670de9a916033ad9c8d554a4ea4b",
+      "indexBlob": "e85b46b572da670de9a916033ad9c8d554a4ea4b"
+    },
+    {
+      "path": "packages/engine/src/kbo-day.ts",
+      "sha256": "054d6f419313458fe338be0ab689608ff51459bcbb220ed84531dabaa73e125f",
+      "gitBlob": "793bb841f6a043557835f8453dd97c26b5daa35d",
+      "indexBlob": "793bb841f6a043557835f8453dd97c26b5daa35d"
+    },
+    {
+      "path": "packages/engine/src/kbo-game-world.ts",
+      "sha256": "d2a69f713e3accc5221f39cce4d9bf1a3334ac589a17ef3ffa5ab80c65c5ed39",
+      "gitBlob": "10f29b7034078142fe1358000af2227ada7df744",
+      "indexBlob": "10f29b7034078142fe1358000af2227ada7df744"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-events.ts",
+      "sha256": "a78679f9addc72e606fe71ecc218aeb23bc7ba0768e52691a80501b325b6f234",
+      "gitBlob": "0671eb84d1f549520e3819981d9ab23803d384af",
+      "indexBlob": "0671eb84d1f549520e3819981d9ab23803d384af"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-growth.ts",
+      "sha256": "f567fa72d329bd6a95c1f9a6b5324dd309636d8e25b952055939c1758757b716",
+      "gitBlob": "bb79e7c88996d32880a9a9f54098b6c186d41295",
+      "indexBlob": "bb79e7c88996d32880a9a9f54098b6c186d41295"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-program.ts",
+      "sha256": "2d1bb882fc3d93c47c759e0685eff41bc62a6858301c130219dc07747916d642",
+      "gitBlob": "933ea5111565c6dd292be322fc50d6c95fad2cb1",
+      "indexBlob": "933ea5111565c6dd292be322fc50d6c95fad2cb1"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-state.ts",
+      "sha256": "203ed8e69a4de65d514301941f71da707108b250f663bcf6715d99354d6ada11",
+      "gitBlob": "e31e0f9ae1b8a88d540663d775406dcac286d724",
+      "indexBlob": "e31e0f9ae1b8a88d540663d775406dcac286d724"
+    },
+    {
+      "path": "packages/engine/src/kbo-opening-roster.ts",
+      "sha256": "4f6f45f7ce74c33d873fd034d25b8c08ba73df9321c9becd0d10c46ce05ace5a",
+      "gitBlob": "80a66e0db5c5262ec28a476d48efaa8a21ab671e",
+      "indexBlob": "80a66e0db5c5262ec28a476d48efaa8a21ab671e"
+    },
+    {
+      "path": "packages/engine/src/kbo-postseason-progress.ts",
+      "sha256": "c2e0a1cb686c5dba32258e300a1cdea9b748dac62b4265e91f3f22194edcd85e",
+      "gitBlob": "bde8fae8acac7412ee07a4da55834dc520e9103d",
+      "indexBlob": "bde8fae8acac7412ee07a4da55834dc520e9103d"
+    },
+    {
+      "path": "packages/engine/src/kbo-preseason.ts",
+      "sha256": "538cccee8e23f23fdf5913d4e9f46288e3e7dce61674d70ddcde9329d8c55b15",
+      "gitBlob": "1186f927b7363dc310ead1bb8ac3280da0cc1685",
+      "indexBlob": "1186f927b7363dc310ead1bb8ac3280da0cc1685"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "sha256": "248032a68a59144f50f1ea58057dfcb9047291b223cedac706fed58094161593",
+      "gitBlob": "74e721148a77c94a0e7582a264b1619247d56ada",
+      "indexBlob": "74e721148a77c94a0e7582a264b1619247d56ada"
+    },
+    {
+      "path": "packages/engine/src/kbo-relations.ts",
+      "sha256": "83545919c213d58c0fee0d9f3aee1384259708adade5d914c578656a4902a2d1",
+      "gitBlob": "4383ef2edf7a2137309097fa3d0c4760adc4a84b",
+      "indexBlob": "4383ef2edf7a2137309097fa3d0c4760adc4a84b"
+    },
+    {
+      "path": "packages/engine/src/kbo-remainder-renewal.ts",
+      "sha256": "d019fea0fbb04ee116f419be657a16f4cc4a2567c113d4b2978c849f68d86740",
+      "gitBlob": "06b91ae572b2d7ce62b8ff68141adf4b6478beee",
+      "indexBlob": "06b91ae572b2d7ce62b8ff68141adf4b6478beee"
+    },
+    {
+      "path": "packages/engine/src/kbo-renewal.ts",
+      "sha256": "0da88122d78db7443968322695d9575d5a35d785155b7b990d795368abb8aa61",
+      "gitBlob": "39f00ec517ec7103b0b53e7dba888c9716cd3657",
+      "indexBlob": "39f00ec517ec7103b0b53e7dba888c9716cd3657"
+    },
+    {
+      "path": "packages/engine/src/kbo-retirement.ts",
+      "sha256": "60b42dfd683fb4dd868e58b5c88e698dae433ec387d61c846dd79b12958d411c",
+      "gitBlob": "6373ce3a63e0a702a9785d2f50914a364c83b0d9",
+      "indexBlob": "6373ce3a63e0a702a9785d2f50914a364c83b0d9"
+    },
+    {
+      "path": "packages/engine/src/kbo-sangmu-start.ts",
+      "sha256": "6d310defde5ad97e4994f0368598aff40a10c8ddeb77e8d51b7feb2487ce3d47",
+      "gitBlob": "45ac5f985aff0d58192718b5bd352c5ed01d7e2b",
+      "indexBlob": "45ac5f985aff0d58192718b5bd352c5ed01d7e2b"
+    },
+    {
+      "path": "packages/engine/src/kbo-schedule.ts",
+      "sha256": "8552b4dc1eea7ef677ae26aa93152577c46a6743c3cdeed2ffae134295d25cc5",
+      "gitBlob": "961422e4b817f25c8277f550482d7ea5f83bea2a",
+      "indexBlob": "961422e4b817f25c8277f550482d7ea5f83bea2a"
+    },
+    {
+      "path": "packages/engine/src/kbo-season-growth.ts",
+      "sha256": "21216579b794753a7f8333f32d302d649a85174187397fbf587ac0024752ce84",
+      "gitBlob": "9fb899127dcd6c5d566be7a61305ee9f78226249",
+      "indexBlob": "9fb899127dcd6c5d566be7a61305ee9f78226249"
+    },
+    {
+      "path": "packages/engine/src/kbo-service-payroll.ts",
+      "sha256": "d4d2482d7d9a7c62fe3af7dfaea8f07b1ef4f8fb7a320eab4a4ab17881a2b288",
+      "gitBlob": "17f326777f96be0c96b8bfe9e1b7bc2960e04c53",
+      "indexBlob": "17f326777f96be0c96b8bfe9e1b7bc2960e04c53"
+    },
+    {
+      "path": "packages/engine/src/kbo-windows.ts",
+      "sha256": "2df4983eee9876bca8554b0a7810c0b35235644d42e5d2e1bea642f9030ffc7e",
+      "gitBlob": "106abfa334bcc813d1efc7d5ff19bd692ba304dc",
+      "indexBlob": "106abfa334bcc813d1efc7d5ff19bd692ba304dc"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-end.ts",
+      "sha256": "9638b4395dd576dfc65c8e27d0bd89953612ea1c05dc4d335970a6ba52f25d2a",
+      "gitBlob": "c7e36a14be791e8dfdbd04a13a8806562dbfaa0c",
+      "indexBlob": "c7e36a14be791e8dfdbd04a13a8806562dbfaa0c"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "5e667657c6d8fbdfaa4e2a8b3efdee95312c544263a10a64d3c19d766095eb82",
+      "gitBlob": "14ae77aea049cda53eac839d564a38807ff6bef6",
+      "indexBlob": "14ae77aea049cda53eac839d564a38807ff6bef6"
+    },
+    {
+      "path": "packages/engine/src/kbo-active-service.ts",
+      "sha256": "d5c5a5fcdf0a76d2620c9d46919612e12acfb63f8aa4ed8c8b8b398756d92aa3",
+      "gitBlob": "724b630a15a5a757387c2eab6b7cd5fcb9c7ccf4",
+      "indexBlob": "724b630a15a5a757387c2eab6b7cd5fcb9c7ccf4"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-version.ts",
+      "sha256": "285bc13d7176143c1f6a1e2a5f29613126106147c6afa07ed14661a780daa3b1",
+      "gitBlob": "2c6f1485a4d3344f6047194e5151ced67c2dbb2e",
+      "indexBlob": "2c6f1485a4d3344f6047194e5151ced67c2dbb2e"
+    },
+    {
+      "path": "packages/engine/test/kbo-active-service.test.ts",
+      "sha256": "ca06e7fe98af1ab6b8facaa5a6f00570ef2c92b5011baeaa77c8994d1d26dce0",
+      "gitBlob": "1be2486613c9872f8a8b14ae59d0f6bcbdd34e57",
+      "indexBlob": "1be2486613c9872f8a8b14ae59d0f6bcbdd34e57"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "3241c586211dd743ce3c57d796ef6cb397120a8139b3b3db1edce52e5437b824",
+      "gitBlob": "01ff99b698a6f19f1f7269cc7f59d2ffeb75845b",
+      "indexBlob": "01ff99b698a6f19f1f7269cc7f59d2ffeb75845b"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "2d0068c16c8f9ba01f5570b16470e287266bb215c375f163b190fbc73b7814a7",
+      "gitBlob": "457210da9ea7ca6adf7dafd2a6c21f279e0991cd",
+      "indexBlob": "457210da9ea7ca6adf7dafd2a6c21f279e0991cd"
+    },
+    {
+      "path": "docs/implementation/M2-NEXT-MILITARY-INTEGRATION-NOTES.md",
+      "sha256": "a4863167f7f624300e346015656d88762c59eaa60dd973bed54ae28da2badf5c",
+      "gitBlob": "6f33e49244d60243cb1f92201fc7fe18f1f83d1e",
+      "indexBlob": "6f33e49244d60243cb1f92201fc7fe18f1f83d1e"
+    },
+    {
+      "path": "docs/implementation/M2-CN-ACTIVE-SERVICE-PATH.md",
+      "sha256": "0e2935075ee19c916855999017517d43442212cd35bae195d5f8b0cbf196f12d",
+      "gitBlob": "8ea108ebe1cc2308a10a11638e4c6e259a889431",
+      "indexBlob": "8ea108ebe1cc2308a10a11638e4c6e259a889431"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CN-active-final.log",
+      "sha256": "2c92287e72cba86c83b4864efc11326d5881ee5d12d2253ef62c5b36daa200f9",
+      "gitBlob": "626bbe4c68f5df7a55800577ba7676a230929db5",
+      "indexBlob": "626bbe4c68f5df7a55800577ba7676a230929db5"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CN-check.log",
+      "sha256": "1e038a878079d0e9118ee906181b1036a2aae713b81f8eaa73f5b382a0c76c3e",
+      "gitBlob": "df5df0f87eca07ad048cbdaf8e4968c45afe16c5",
+      "indexBlob": "df5df0f87eca07ad048cbdaf8e4968c45afe16c5"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CN-design-final.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090",
+      "gitBlob": "3dbeafbf5c570526f3080073cffb213824255b29",
+      "indexBlob": "3dbeafbf5c570526f3080073cffb213824255b29"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CN-focused-final.log",
+      "sha256": "987176df95267f790a40a25607be32a4f2cd95f2a4ae7ae40674f579e8b0ded0",
+      "gitBlob": "f40cb8e93d0ffcc910917612fd5ed75285c2fc18",
+      "indexBlob": "f40cb8e93d0ffcc910917612fd5ed75285c2fc18"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CN-focused-initial-failure.log",
+      "sha256": "af5fee81b570bc7c2bdbdd8128129209daab015372a0f09fc0cb60742b8782c9",
+      "gitBlob": "0a3bdfb3b19888ad4a90140af4ad0a5f11a74643",
+      "indexBlob": "0a3bdfb3b19888ad4a90140af4ad0a5f11a74643"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CN-focused.log",
+      "sha256": "c44d645fa431beb4c8d865d8fb57fdd3f00b4419a5e407952fa37f923187e524",
+      "gitBlob": "14f37b1b1ec8eb9c768b396b61b7b00f57042ac7",
+      "indexBlob": "14f37b1b1ec8eb9c768b396b61b7b00f57042ac7"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CN-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f",
+      "gitBlob": "f61cd1e9f5eb3902a8bad2bb1881bc2b55805d70",
+      "indexBlob": "f61cd1e9f5eb3902a8bad2bb1881bc2b55805d70"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CN-manifest.log",
+      "sha256": "6089df69a426fe6756917ff6358256756f763977079292318b26040e4d062f1d",
+      "gitBlob": "65bd618ab839e74feaccf6833f4436ab0c0e747e",
+      "indexBlob": "65bd618ab839e74feaccf6833f4436ab0c0e747e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CN-post-docs-source.json",
+      "sha256": "02697640ebcd210baba1452b9431410812b1bbc3c4d720ba933b349b8e6b9ce9",
+      "gitBlob": "168e5eadd74ff51a0de7be148f764cdf4e3f4332",
+      "indexBlob": "168e5eadd74ff51a0de7be148f764cdf4e3f4332"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CN-tested-source.json",
+      "sha256": "1a028a681d2f86d0c18ef27ba32b8b29d398ebf09b219dce916ac581069f98e4",
+      "gitBlob": "a90df75af9e50d73962d952c4ef5f2c61c648a4c",
+      "indexBlob": "a90df75af9e50d73962d952c4ef5f2c61c648a4c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CN-types-version.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df",
+      "gitBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300",
+      "indexBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CN-types.log",
+      "sha256": "33bd04c0d36a90efc5106e6b66a6863a4e3c04d0dbc7219c6ba0c7cf487a96df",
+      "gitBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300",
+      "indexBlob": "199c7997ace76b8217e44f855bbff46b0f8dc300"
+    }
+  ]
+}

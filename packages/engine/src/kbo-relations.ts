@@ -1,5 +1,5 @@
 import type {KboCareer} from './kbo-career-entry.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {kboPreseasonPlanView} from './kbo-preseason.js';
 import {careerRelationshipListView,careerRelationDetailView} from './relationship-history.js';
 import type {RelationshipHistorySource,RelationHistoryWorld} from './relationship-history.js';

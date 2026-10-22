@@ -1,6 +1,6 @@
 import {kboMilitaryCompletionDays} from './kbo-military-events.js';
 import type {KboCareer} from './kbo-career-entry.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {selectSangmuCohort,KBO_SANGMU_INTAKE} from './kbo-sangmu.js';
 import {enlistInSangmu,completeSangmuBlock,KBO_CONTRACT_GAME_DAYS} from './kbo-military-program.js';
 import type {KboMilitaryProgram} from './kbo-military-program.js';
@@ -8,10 +8,8 @@ import {emptySangmuUnit} from './kbo-sangmu-unit.js';
 import {acceptedRenewal} from './kbo-renewal.js';
 import {createWorldEvent,completeBlockingEvent,eventDefinition} from './events.js';
 
-/** 21 states handled so far: UNRESOLVED → APPLICATION_PENDING → (decline/rejection → UNRESOLVED | enlist → SERVING_SPORTS) → COMPLETED.
- * ACTIVE (현역) and ATHLETE service are not implemented; ACTIVE is the only way out for the unmatched, so the 28-year
- * deadline stops the career at the plan screen instead of inventing a service. */
-export type KboMilitaryStatus='UNRESOLVED'|'APPLICATION_PENDING'|'SERVING_SPORTS'|'COMPLETED';
+/** SPORTS and ACTIVE use fixed service-calendar blocks, retained original rights and suspended game-day pay. ATHLETE service remains a separate future path. */
+export type KboMilitaryStatus='UNRESOLVED'|'APPLICATION_PENDING'|'SERVING_SPORTS'|'SERVING_ACTIVE'|'COMPLETED';
 export interface KboSangmuApplication {
  applicationId:string;eventKey:string;selectionSeasonKey:string;score:number;accepted:boolean;slotKind:'HITTER'|'PITCHER';
  decision:'PENDING'|'ENLISTED'|'DECLINED'|'REJECTION_ACKNOWLEDGED';
@@ -20,8 +18,8 @@ export interface KboMilitaryRecord {status:KboMilitaryStatus;applications:readon
 export const KBO_MILITARY_DEADLINE_AGE=28;
 
 export const kboMilitaryStatus=(s:Pick<KboCareer,'military'>):KboMilitaryStatus=>s.military?.status??'UNRESOLVED';
-/** True while my player plays for the military team (loan model: he stays on his club's records and rights). */
-export const kboProtagonistServing=(s:Pick<KboCareer,'military'>)=>s.military?.status==='SERVING_SPORTS';
+/** True during SPORTS or ACTIVE; only SPORTS creates a military-team loan. */
+export const kboProtagonistServing=(s:Pick<KboCareer,'military'>)=>s.military?.status==='SERVING_SPORTS' || s.military?.status==='SERVING_ACTIVE';
 
 /** S26 read: where my player stands against the game deadline. Age window 19..27 is the application window. */
 export function kboMilitaryPlan(s:KboCareer){
@@ -29,7 +27,7 @@ export function kboMilitaryPlan(s:KboCareer){
  return {status,age,canApply:status==='UNRESOLVED' && age>=KBO_SANGMU_INTAKE.minAge && age<=KBO_SANGMU_INTAKE.maxAge,lastGraceSeason:status==='UNRESOLVED' && age===KBO_SANGMU_INTAKE.maxAge,
   mustResolveBeforeNextSeason:status==='UNRESOLVED' && age+1>=KBO_MILITARY_DEADLINE_AGE,application:s.military?.applications.at(-1)??null,program:s.military?.program??null};
 }
-function remainingDays(s:KboCareer):number {
+export function remainingKboMilitaryContractDays(s:KboCareer):number {
  const renewal=acceptedRenewal(s);if(renewal)return renewal.years*KBO_CONTRACT_GAME_DAYS;
  const c=s.world.contracts[s.protagonistKey]!;return Math.max(0,Number(c.seasonKey)+c.years-1-Number(s.world.seasonKey))*KBO_CONTRACT_GAME_DAYS;
 }
@@ -63,7 +61,7 @@ export function resolveSangmuApplication(source:KboCareer,expectedRevision:numbe
  const event=source.events.find(e=>e.eventKey===app.eventKey);if(!event || event.status!=='OPEN')throw new RangeError('KBO_MILITARY_NOT_AVAILABLE');
  const career=structuredClone(source),set=(decision:KboSangmuApplication['decision'])=>career.military!.applications=record.applications.map((a,i)=>i===record.applications.length-1?{...a,decision}:a);
  if(command==='ENLIST'){
-  const days=remainingDays(source);if(days===0)throw new RangeError('CONTRACT_DECISION_REQUIRED');
+  const days=remainingKboMilitaryContractDays(source);if(days===0)throw new RangeError('CONTRACT_DECISION_REQUIRED');
   const renewal=acceptedRenewal(source),current=source.world.contracts[source.protagonistKey]!;
   const contract=renewal?{...current,contractKey:renewal.offerKey,seasonKey:renewal.seasonKey,years:renewal.years,annualSalaryWon:renewal.annualSalaryWon}:current;
   const program=enlistInSangmu({worldKey:source.world.worldKey,playerKey:source.protagonistKey,clubId:source.protagonistClubId,selectionSeasonKey:app.selectionSeasonKey,contract,remainingPaidGameDays:days});
@@ -77,7 +75,7 @@ export function resolveSangmuApplication(source:KboCareer,expectedRevision:numbe
 /** Year-transition step for my player: the block of the season just played is closed on its last day; after the second block
  * the program is COMPLETED and he leaves the loan. Mutates the caller's clone. */
 export function advanceKboMilitaryService(career:KboCareer,playedSeasonKey:string,lastDay:number):void {
- const record=career.military;if(!record || record.status!=='SERVING_SPORTS' || !record.program)return;
+ const record=career.military;if(!record || !['SERVING_SPORTS','SERVING_ACTIVE'].includes(record.status) || !record.program)return;
  const open=record.program.blocks.find(b=>b.seasonKey===playedSeasonKey && b.completedWorldDay===null);
  if(open && record.completionDays)throw new RangeError('MILITARY_DAY_NOT_SETTLED');
  if(open)record.program=completeSangmuBlock(record.program,playedSeasonKey,lastDay);

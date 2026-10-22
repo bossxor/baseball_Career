@@ -31,26 +31,31 @@ export function resumedContractPayment(s:KboSuspendedContract,resumedDays:number
 export type KboServiceBlockKind='FULL_DOMESTIC_SEASON'|'FIRST_HALF_SEASON';
 export interface KboServiceBlock {seasonKey:string;kind:KboServiceBlockKind;completedWorldDay:number|null}
 export interface KboMilitaryProgram {
- programId:string;kind:'SPORTS';playerKey:string;originalClubId:string;startedSeason:string;
+ programId:string;kind:'SPORTS'|'ACTIVE';playerKey:string;originalClubId:string;startedSeason:string;
  scheduledBlocks:2;blocks:readonly KboServiceBlock[];completedBlocks:number;
  contract:KboSuspendedContract;returnOptionId:string|null;
 }
 /** 21: 18 game months = two blocks: the whole next domestic season, then the first half of the one after.
  * Completion points are recorded world days; team games are never converted to service time. */
-export function enlistInSangmu(input:{worldKey:string;playerKey:string;clubId:string;selectionSeasonKey:string;contract:KboInitialContract;remainingPaidGameDays:number}):KboMilitaryProgram {
+function enlistMilitary(kind:'SPORTS'|'ACTIVE',input:{worldKey:string;playerKey:string;clubId:string;selectionSeasonKey:string;contract:KboInitialContract;remainingPaidGameDays:number}):KboMilitaryProgram {
  const first=String(Number(input.selectionSeasonKey)+1),second=String(Number(input.selectionSeasonKey)+2);
  if(input.contract.playerKey!==input.playerKey || input.contract.clubId!==input.clubId)throw new RangeError('INVALID_SUSPENDED_CONTRACT');
- return {programId:JSON.stringify(['sangmu-program',input.worldKey,input.selectionSeasonKey,input.playerKey]),kind:'SPORTS',playerKey:input.playerKey,originalClubId:input.clubId,startedSeason:first,scheduledBlocks:2,
+ return {programId:JSON.stringify([kind==='SPORTS'?'sangmu-program':'active-program',input.worldKey,input.selectionSeasonKey,input.playerKey]),kind,playerKey:input.playerKey,originalClubId:input.clubId,startedSeason:first,scheduledBlocks:2,
   blocks:[{seasonKey:first,kind:'FULL_DOMESTIC_SEASON',completedWorldDay:null},{seasonKey:second,kind:'FIRST_HALF_SEASON',completedWorldDay:null}],completedBlocks:0,contract:suspendKboContract(input.contract,input.remainingPaidGameDays),returnOptionId:null};
 }
 /** Records one block's pre-fixed completion day once. A resend of the same day is the same result; a different day or an
  * out-of-order block is rejected. */
-export function completeSangmuBlock(program:KboMilitaryProgram,seasonKey:string,worldDay:number):KboMilitaryProgram {
+export function completeKboMilitaryBlock(program:KboMilitaryProgram,seasonKey:string,worldDay:number):KboMilitaryProgram {
  const index=program.blocks.findIndex(b=>b.seasonKey===seasonKey);
  if(index<0 || !Number.isSafeInteger(worldDay) || worldDay<0 || index>program.completedBlocks)throw new RangeError('INVALID_SERVICE_BLOCK');
  const block=program.blocks[index]!;
  if(block.completedWorldDay!==null){if(block.completedWorldDay===worldDay)return structuredClone(program);throw new RangeError('SERVICE_BLOCK_EVIDENCE_REUSED');}
  const previous=program.blocks[index-1];if(previous && (previous.completedWorldDay===null || compareKboSeasonDays({seasonKey,worldDay},{seasonKey:previous.seasonKey,worldDay:previous.completedWorldDay})<=0))throw new RangeError('INVALID_SERVICE_BLOCK');
  const blocks=program.blocks.map((b,i)=>i===index?{...b,completedWorldDay:worldDay}:b);
- return {...structuredClone(program),blocks,completedBlocks:program.completedBlocks+1,returnOptionId:index+1===program.scheduledBlocks?JSON.stringify(['sangmu-return',program.programId]):null};
+ return {...structuredClone(program),blocks,completedBlocks:program.completedBlocks+1,returnOptionId:index+1===program.scheduledBlocks?JSON.stringify([program.kind==='SPORTS'?'sangmu-return':'active-return',program.programId]):null};
 }
+
+export function enlistInSangmu(input:Parameters<typeof enlistMilitary>[1]):KboMilitaryProgram{return enlistMilitary('SPORTS',input);}
+export function enlistInActiveService(input:Parameters<typeof enlistMilitary>[1]):KboMilitaryProgram{return enlistMilitary('ACTIVE',input);}
+/** Compatibility name for existing SPORTS callers. */
+export const completeSangmuBlock=completeKboMilitaryBlock;

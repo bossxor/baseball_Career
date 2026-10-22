@@ -105,3 +105,5 @@ export * from './kbo-sangmu-start.js';
 export * from './kbo-military-state.js';
 
 export * from './kbo-military-events.js';
+
+export * from './kbo-active-service.js';

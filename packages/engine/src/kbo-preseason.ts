@@ -1,8 +1,9 @@
+import {kboActiveContractSuspended} from './kbo-service-payroll.js';
 import {assertFocus,PITCH_IDS} from '@playball/rules';
 import type {PitchId} from '@playball/rules';
 import type {KboCareer} from './kbo-career-entry.js';
 import {kboCareerEntryView} from './kbo-career-entry.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {archetypeFor,validateDevelopmentPlayer} from './player.js';
 import {canonicalJson} from './game.js';
 import {assertSeasonCalendar} from './season-calendar.js';
@@ -51,7 +52,7 @@ export function setKboPreseasonPitchWeights(s:KboCareer,revision:number,weights:
  assertSource(s,revision);const key=s.protagonistKey;if(s.world.players[key]!.kind!=='PITCHER')throw new RangeError('PITCHER_REQUIRED');const next=structuredClone(s);next.world.repertoires[key]=setPitchWeights(s.world.repertoires[key]!,weights,windowKey(s),true);return written(next);
 }
 export function beginKboPreseasonPitchLearning(s:KboCareer,revision:number,pitchId:PitchId,replacedPitchId?:PitchId):KboCareer {
- assertSource(s,revision);const key=s.protagonistKey;if(s.world.players[key]!.kind!=='PITCHER')throw new RangeError('PITCHER_REQUIRED');const next=structuredClone(s);next.world.repertoires[key]=beginPitchLearning(s.world.repertoires[key]!,pitchId,true,replacedPitchId?{pitchId:replacedPitchId,windowId:windowKey(s)}:undefined);return written(next);
+ assertSource(s,revision);if(kboActiveContractSuspended(s.world.contracts[s.protagonistKey]!))throw new RangeError('ACTIVE_SERVICE_TRAINING_UNAVAILABLE');const key=s.protagonistKey;if(s.world.players[key]!.kind!=='PITCHER')throw new RangeError('PITCHER_REQUIRED');const next=structuredClone(s);next.world.repertoires[key]=beginPitchLearning(s.world.repertoires[key]!,pitchId,true,replacedPitchId?{pitchId:replacedPitchId,windowId:windowKey(s)}:undefined);return written(next);
 }
 export function unreadKboFirstCampNotices(s:KboCareer){
  assertSource(s,s.revision,true);if(s.proSeasons?.length)return [];const notices=s.campNotices??[];if(notices.length>1)throw new RangeError('DUPLICATE_KBO_FIRST_CAMP');return notices.flatMap(e=>{campSource(s,e);if(e.status!=='OPEN')return [];const d=eventDefinition('E08');return [{eventKey:e.eventKey,eventVersion:e.version,definitionId:'E08' as const,title:d.title,body:d.body,offeredCommands:s.preseasonPlan?['KEEP_FOCUS']:['CHOOSE_FOCUS','KEEP_FOCUS']}];});
@@ -71,5 +72,5 @@ export function confirmKboPreseasonPlan(s:KboCareer,revision:number):KboCareer {
 }
 export function kboPreseasonPlanView(s:KboCareer){
  assertSource(s,s.revision,true);const p=s.world.players[s.protagonistKey]!,book=s.world.repertoires[s.protagonistKey],draft=!s.preseasonPlan;
- return {seasonKey:s.world.seasonKey,status:draft?'DRAFT' as const:'CONFIRMED' as const,focus:[...p.focus],archetype:p.archetype,styleChangeAvailable:draft && !s.styleUsedWindows.includes(windowKey(s)),pitcher:book?{active:Object.entries(book.weights).map(([pitchId,weight])=>({pitchId,weight,mastery:pitchMastery(book.book[pitchId as PitchId]!)})),learningPitchId:book.learning?.pitchId??null,configurationChangeAvailable:draft && !book.usedWindows.includes(windowKey(s)),learningAvailable:draft && !book.learning && book.ledger.baseSpentUnits+book.ledger.baseReservedUnits+100_000<=200_000 && (Object.keys(book.weights).length<4 || !book.usedWindows.includes(windowKey(s))) && PITCH_IDS.some(id=>!Object.hasOwn(book.book,id))}:null};
+ return {seasonKey:s.world.seasonKey,status:draft?'DRAFT' as const:'CONFIRMED' as const,focus:[...p.focus],archetype:p.archetype,styleChangeAvailable:draft && !s.styleUsedWindows.includes(windowKey(s)),pitcher:book?{active:Object.entries(book.weights).map(([pitchId,weight])=>({pitchId,weight,mastery:pitchMastery(book.book[pitchId as PitchId]!)})),learningPitchId:book.learning?.pitchId??null,configurationChangeAvailable:draft && !book.usedWindows.includes(windowKey(s)),learningAvailable:draft && !kboActiveContractSuspended(s.world.contracts[s.protagonistKey]!) && !book.learning && book.ledger.baseSpentUnits+book.ledger.baseReservedUnits+100_000<=200_000 && (Object.keys(book.weights).length<4 || !book.usedWindows.includes(windowKey(s))) && PITCH_IDS.some(id=>!Object.hasOwn(book.book,id))}:null};
 }

@@ -1,4 +1,5 @@
 import {kboRemainderSeasonCharge,settleKboRemainderPayrollDay} from './kbo-remainder-pay.js';
+import {createKboSeasonSchedules} from './kbo-schedule.js';
 import {KBO_CLUBS} from '@playball/rules';
 import type {KboInitialContract} from './kbo-world.js';
 import type {KboMilitaryProgram} from './kbo-military-program.js';
@@ -10,7 +11,7 @@ import {createKboFutures11Schedule} from './kbo-futures-schedule.js';
 
 /** Optional extension. Original annual salary stays immutable; this is the current-year reservation, not a new deal. */
 export interface KboServicePayroll {
- schemaVersion:1;kind:'SPORTS';ledger:KboContractPaymentLedger;seasonKey:string;reservedGameDays:number;
+ schemaVersion:1;kind:'SPORTS'|'ACTIVE';ledger:KboContractPaymentLedger;seasonKey:string;reservedGameDays:number;
  returnDate:{seasonKey:string;worldDay:number};
 }
 const june30=(year:number)=>year%4===0 && (year%100!==0 || year%400===0)?181:180;
@@ -25,7 +26,7 @@ export function assertKboServicePayroll(contract:KboInitialContract):void {
  const p=contract.servicePay;if(!p)return;assertKboContractPaymentLedger(p.ledger);
  const s=p.ledger.contract,b=kboContractPaymentBalance(p.ledger);
  if(p.ledger.resume && (p.ledger.resume.completedSeasonKey!==p.returnDate.seasonKey || p.ledger.resume.completedWorldDay!==p.returnDate.worldDay))throw new RangeError('INVALID_KBO_SERVICE_PAYROLL');
- if(p.schemaVersion!==1 || p.kind!=='SPORTS' || p.ledger.schemaVersion!==2 || p.seasonKey!==contract.seasonKey || !/^\d{4}$/.test(p.returnDate.seasonKey) || Number(p.returnDate.seasonKey)<2027 || p.returnDate.worldDay!==june30(Number(p.returnDate.seasonKey)) || s.contractKey!==contract.contractKey || s.playerKey!==contract.playerKey || s.clubId!==contract.clubId || s.annualSalaryWon!==contract.annualSalaryWon || !Number.isSafeInteger(p.reservedGameDays) || p.reservedGameDays<0 || p.reservedGameDays>b.remainingPaidGameDays || p.reservedGameDays>144)throw new RangeError('INVALID_KBO_SERVICE_PAYROLL');
+ if(p.schemaVersion!==1 || !['SPORTS','ACTIVE'].includes(p.kind) || p.ledger.schemaVersion!==2 || p.seasonKey!==contract.seasonKey || !/^\d{4}$/.test(p.returnDate.seasonKey) || Number(p.returnDate.seasonKey)<2027 || p.returnDate.worldDay!==june30(Number(p.returnDate.seasonKey)) || s.contractKey!==contract.contractKey || s.playerKey!==contract.playerKey || s.clubId!==contract.clubId || s.annualSalaryWon!==contract.annualSalaryWon || !Number.isSafeInteger(p.reservedGameDays) || p.reservedGameDays<0 || p.reservedGameDays>b.remainingPaidGameDays || p.reservedGameDays>144)throw new RangeError('INVALID_KBO_SERVICE_PAYROLL');
 }
 export const kboContractSuspended=(c:KboInitialContract)=>!!c.servicePay && c.servicePay.ledger.resume===null;
 /** Same season receipts have been paid; only the remaining reservation remains unpaid. */
@@ -38,11 +39,14 @@ export function kboContractSeasonCharge(contract:KboInitialContract):number {
 }
 function capacity(p:KboServicePayroll,clubId:string,seasonKey:string):number {
  if(Number(seasonKey)<Number(p.returnDate.seasonKey))return 0;
- return seasonKey===p.returnDate.seasonKey?returnCapacity(clubId,seasonKey,p.returnDate.worldDay):144;
+ if(seasonKey!==p.returnDate.seasonKey)return 144;
+ const futures=returnCapacity(clubId,seasonKey,p.returnDate.worldDay);if(p.kind==='SPORTS')return futures;
+ const schedules=createKboSeasonSchedules(KBO_CLUBS.map(c=>c.id),seasonKey,createSeasonCalendar(Number(seasonKey)));
+ return Math.max(futures,...Object.values(schedules).map(games=>games.filter(g=>g.worldDay>p.returnDate.worldDay && (g.homeTeamKey===clubId || g.awayTeamKey===clubId)).length));
 }
 export function createKboServicePayroll(contract:KboInitialContract,program:KboMilitaryProgram,returnDate:{seasonKey:string;worldDay:number}):KboServicePayroll {
  if(program.blocks[1]?.seasonKey!==returnDate.seasonKey)throw new RangeError('INVALID_KBO_SERVICE_PAYROLL');
- const p:KboServicePayroll={schemaVersion:1,kind:'SPORTS',ledger:createKboContractPaymentLedger(program),seasonKey:contract.seasonKey,reservedGameDays:0,returnDate:{...returnDate}};
+ const p:KboServicePayroll={schemaVersion:1,kind:program.kind,ledger:createKboContractPaymentLedger(program),seasonKey:contract.seasonKey,reservedGameDays:0,returnDate:{...returnDate}};
  p.reservedGameDays=Math.min(p.ledger.contract.remainingPaidGameDays,capacity(p,contract.clubId,contract.seasonKey));assertKboServicePayroll({...contract,servicePay:p});return p;
 }
 /** Called only during actual Y02 activation. Past receipts and frozen principal never reset. */
@@ -96,3 +100,6 @@ export function kboServiceContractView(contract:KboInitialContract){
  const p=contract.servicePay,b=kboContractPaymentBalance(p.ledger),paidThisSeasonWon=p.ledger.receipts.filter(r=>r.seasonKey===contract.seasonKey).reduce((n,r)=>n+r.amountWon,0);
  return {status:b.status,remainingPaidGameDays:b.remainingPaidGameDays,paidGameDays:b.paidDays,unpaidPrincipalWon:b.remainingWon,paidThisSeasonWon,reservedThisSeasonWon:kboContractSeasonCharge(contract)-paidThisSeasonWon,returnSeasonKey:p.returnDate.seasonKey,returnWorldDay:p.returnDate.worldDay};
 }
+
+/** No official registration while serving ACTIVE; ownership/master roster remains unchanged. */
+export const kboActiveContractSuspended=(c:KboInitialContract)=>c.servicePay?.kind==='ACTIVE' && c.servicePay.ledger.resume===null;

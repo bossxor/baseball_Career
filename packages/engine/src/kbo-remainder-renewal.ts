@@ -1,6 +1,6 @@
 import type {KboCareer} from './kbo-career-entry.js';
 import type {KboSeasonProgress} from './kbo-progress.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {kboRenewalValueWon} from './kbo-renewal.js';
 import {kboRenewalSalaryWon} from './kbo-contract-value.js';
 import {createWorldEvent,eventDefinition,completeBlockingEvent} from './events.js';

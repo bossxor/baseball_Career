@@ -1,7 +1,7 @@
 import type {KboCareer} from './kbo-career-entry.js';
 import type {KboPendingGame} from './kbo-progress.js';
 import {kboGameContext} from './kbo-progress.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {prepareSchoolCompetitionGame,advanceHighSchoolGame,commitSchoolCompetitionGame} from './high-school-game.js';
 import {createKboCompetitionGameWorld} from './kbo-game-world.js';
 import {closeKboCompetitionDay} from './kbo-day.js';

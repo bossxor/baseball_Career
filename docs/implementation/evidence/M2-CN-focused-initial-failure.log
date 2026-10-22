@@ -1,0 +1,29 @@
+✔ ACTIVE preview is read-only; explicit confirmation fixes program, rights and contract without creating a military team (8889.1317ms)
+✖ ACTIVE first block: E51, no registration/appearance, rest only and no calendar injury recovery (2796.3364ms)
+✔ ACTIVE full first season closes with zero natural growth and unchanged frozen principal before second activation (14831.217ms)
+✔ ACTIVE actual June30 return closes once, E53 confirms original Futures rights, following registered date pays once (21304.9503ms)
+✔ ACTIVE blocks special training and new-pitch learning while preserving the existing repertoire and source (9390.3867ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57841.1687
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-active-service.test.ts:1:4620
+✖ ACTIVE first block: E51, no registration/appearance, rest only and no calendar injury recovery (2796.3364ms)
+  RangeError: MISSING_INJURY_EVIDENCE
+      at validateHealthLedger (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\health.ts:29:162)
+      at settleTeamGameHealth (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\health.ts:41:3)
+      at closeKboCompetitionDay (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-day.ts:53:17)
+      at advanceKboCareer (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-progress.ts:106:16)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-active-service.test.ts:53:50)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)

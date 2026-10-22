@@ -1,5 +1,6 @@
+import {kboActiveContractSuspended} from './kbo-service-payroll.js';
 import type {KboCareer} from './kbo-career-entry.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {assertKboOpeningRoster} from './kbo-opening-roster.js';
 import {assertSeasonCalendar} from './season-calendar.js';
 import type {SeasonCalendar} from './season-calendar.js';
@@ -56,7 +57,8 @@ export function confirmKboSeasonSchedule(s:KboCareer,revision:number):KboCareer 
 export function kboSeasonScheduleView(s:KboCareer){
  assertCareerRevision(s,s.revision);assertKboOpeningRoster(s);
  if(!s.competitionSchedule)return {status:'PENDING' as const,seasonKey:s.world.seasonKey,competitionKey:s.registration.competitionKey!,gamesPerTeam:144,fixtures:[]};
- const r=assertKboSeasonSchedule(s),competitionKey=s.registration.competitionKey!,club=s.protagonistClubId;
+ const r=assertKboSeasonSchedule(s);if(kboActiveContractSuspended(s.world.contracts[s.protagonistKey]!))return {status:'CONFIRMED' as const,seasonKey:r.seasonKey,competitionKey:null,gamesPerTeam:144,fixtures:[],reason:'SERVING_ACTIVE'};
+ const competitionKey=s.registration.competitionKey!,club=s.protagonistClubId;
  const fixtures=r.leagues[competitionKey].filter(g=>g.homeTeamKey===club || g.awayTeamKey===club).map(g=>({gameKey:g.simulationKey,worldDay:g.worldDay,round:g.round,home:{id:g.homeTeamKey,name:teamName(s,g.homeTeamKey)},away:{id:g.awayTeamKey,name:teamName(s,g.awayTeamKey)}}));
  return {status:'CONFIRMED' as const,seasonKey:r.seasonKey,competitionKey,gamesPerTeam:144,fixtures};
 }

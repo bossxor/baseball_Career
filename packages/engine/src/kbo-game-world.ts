@@ -1,3 +1,4 @@
+import {kboActiveContractSuspended} from './kbo-service-payroll.js';
 import type {ActiveKboRosterWorld} from './kbo-career-entry.js';
 import type {CompetitionGameWorld} from './high-school-game.js';
 import {assertKboRecruitmentWorld} from './kbo-draft.js';
@@ -11,8 +12,8 @@ export const SANGMU_TEAM_KEY='SANGMU';
 export function createKboCompetitionGameWorld(world:ActiveKboRosterWorld,leagueKey:'KBO'|'FUTURES',protagonistKey:string,sangmu?:KboSangmuUnit):CompetitionGameWorld {
  if(!['KBO','FUTURES'].includes(leagueKey) || !Object.hasOwn(world.players,protagonistKey) || !world.clubs.some(c=>c.roster.includes(protagonistKey)))throw new RangeError('INVALID_KBO_GAME_WORLD');
  assertKboRecruitmentWorld(world);
- for(const c of world.clubs)if(c.firstTeam.length!==28 || new Set(c.firstTeam).size!==28 || c.firstTeam.some(k=>!c.roster.includes(k)))throw new RangeError('INVALID_KBO_GAME_REGISTRATION');
- const schools=world.clubs.map(c=>({id:c.id,name:c.name,roster:leagueKey==='KBO'?[...c.firstTeam]:c.roster.filter(k=>!c.firstTeam.includes(k))}));
+ for(const c of world.clubs)if(c.firstTeam.length!==28 || new Set(c.firstTeam).size!==28 || c.firstTeam.some(k=>!c.roster.includes(k) || kboActiveContractSuspended(world.contracts[k]!)))throw new RangeError('INVALID_KBO_GAME_REGISTRATION');
+ const schools=world.clubs.map(c=>({id:c.id,name:c.name,roster:leagueKey==='KBO'?[...c.firstTeam]:c.roster.filter(k=>!c.firstTeam.includes(k) && !kboActiveContractSuspended(world.contracts[k]!))}));
  const players={...world.players},repertoires={...world.repertoires};
  // Futures only: serving members play for the military team and are registered nowhere else (they are not in world.players).
  if(sangmu && leagueKey==='FUTURES' && (Object.keys(sangmu.members).length>0 || (sangmu.loaned?.length??0)>0)){

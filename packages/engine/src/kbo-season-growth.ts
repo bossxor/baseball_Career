@@ -1,6 +1,6 @@
 import {kboMilitaryGrowthPeriods} from './kbo-military-growth.js';
 import type {KboCareer} from './kbo-career-entry.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {assertSeasonCalendar} from './season-calendar.js';
 import {settleClosedGrowthPeriods,validateSeasonGrowthLedger} from './growth-ledger.js';
 import type {ClosedGrowthPeriod} from './growth-ledger.js';

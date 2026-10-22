@@ -4,7 +4,7 @@ import type {KboMilitaryProgram} from './kbo-military-program.js';
 import type {KboSeasonProgress} from './kbo-progress.js';
 import {completeSangmuBlock} from './kbo-military-program.js';
 import {createSeasonCalendar} from './season-calendar.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {createWorldEvent,eventDefinition,resolveEventChoice,completeEventDomain} from './events.js';
 import {setKboPreseasonFocus} from './kbo-preseason.js';
 import {canonicalJson} from './game.js';
@@ -17,21 +17,22 @@ export function kboMilitaryCompletionDays(program:KboMilitaryProgram):readonly {
  const leap=y%4===0 && (y%100!==0 || y%400===0);
  return [{seasonKey:first,worldDay:createSeasonCalendar(Number(first)).growthDays.at(-1)!},{seasonKey:second,worldDay:leap?181:180}];
 }
-function serviceEvent(career:KboCareer,id:'E52'|'E53',day:number,phase:'PRESEASON_SETUP'|'SEASON_PROGRESS'){
- const program=career.military!.program!,stage=id==='E52'?'FIRST_BLOCK':'RETURN',definition=eventDefinition(id);
+function serviceEvent(career:KboCareer,id:'E51'|'E52'|'E53',day:number,phase:'PRESEASON_SETUP'|'SEASON_PROGRESS'){
+ const program=career.military!.program!,stage=id==='E53'?'RETURN':'FIRST_BLOCK',definition=eventDefinition(id);
  return createWorldEvent({definitionId:id,worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,evidence:{version:1,type:definition.evidenceDomain,fields:{playerSimulationKey:career.protagonistKey,serviceTaskIdOrServicePeriodId:program.programId,stage}},resume:{worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,phase,competitionKey:'FUTURES',registrationKey:career.protagonistClubId,sourceRevision:phase==='PRESEASON_SETUP'?career.revision:career.revision+1},sourceSequence:career.events.length+1,worldDay:day});
 }
 /** Internal transition hook, caller owns the clone. Old unscheduled saves do not acquire events on a read. */
 export function queueKboMilitaryFirstBlock(career:KboCareer):void {
  const record=career.military,program=record?.program;
- if(record?.status!=='SERVING_SPORTS' || !record.completionDays || !program || program.blocks[0]!.seasonKey!==career.world.seasonKey || career.phaseContext.phase!=='PRESEASON_SETUP')return;
- if(career.events.some(e=>e.definitionId==='E52' && e.evidence.fields.serviceTaskIdOrServicePeriodId===program.programId))return;
- career.events=[...career.events,serviceEvent(career,'E52',career.world.calendar.growthDays[0]!,'PRESEASON_SETUP')];
+ if(!record || !['SERVING_SPORTS','SERVING_ACTIVE'].includes(record.status) || !record.completionDays || !program || program.blocks[0]!.seasonKey!==career.world.seasonKey || career.phaseContext.phase!=='PRESEASON_SETUP')return;
+ const id=program.kind==='ACTIVE'?'E51':'E52';
+ if(career.events.some(e=>e.definitionId===id && e.evidence.fields.serviceTaskIdOrServicePeriodId===program.programId))return;
+ career.events=[...career.events,serviceEvent(career,id,career.world.calendar.growthDays[0]!,'PRESEASON_SETUP')];
 }
 /** Internal post-day-close hook. Return happens AFTER this day's games, before any following day's registration. */
 export function closeKboMilitaryCalendarDay(career:KboCareer,day:number,progress:KboSeasonProgress):boolean {
  const record=career.military;
- if(record?.status!=='SERVING_SPORTS' || !record.program || !record.completionDays)return false;
+ if(!record || !['SERVING_SPORTS','SERVING_ACTIVE'].includes(record.status) || !record.program || !record.completionDays)return false;
  if(canonicalJson(record.completionDays)!==canonicalJson(kboMilitaryCompletionDays(record.program)))throw new RangeError('INVALID_SERVICE_CALENDAR');
  const season=career.world.seasonKey,open=record.program.blocks.find(b=>b.seasonKey===season && b.completedWorldDay===null);
  if(!open)return false;
@@ -53,9 +54,9 @@ export function closeKboMilitaryCalendarDay(career:KboCareer,day:number,progress
 export function resolveKboMilitaryEvent(source:KboCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number;command:string;focus?:readonly string[]}):KboCareer {
  assertCareerRevision(source,expectedRevision);
  const event=source.events.find(e=>e.eventKey===input.eventKey),record=source.military,program=record?.program;
- if(!event || !['E52','E53'].includes(event.definitionId) || !program || event.worldKey!==source.world.worldKey || event.seasonKey!==source.world.seasonKey || canonicalJson(event.evidence.fields)!==canonicalJson({playerSimulationKey:source.protagonistKey,serviceTaskIdOrServicePeriodId:program.programId,stage:event.definitionId==='E52'?'FIRST_BLOCK':'RETURN'}))throw new RangeError('INVALID_KBO_MILITARY_EVENT');
- if(event.definitionId==='E52'){
-  if(source.phaseContext.phase!=='PRESEASON_SETUP' || source.preseasonPlan || record?.status!=='SERVING_SPORTS' || program.blocks[0]!.seasonKey!==source.world.seasonKey)throw new RangeError('KBO_MILITARY_NOT_AVAILABLE');
+ if(!event || !['E51','E52','E53'].includes(event.definitionId) || !program || event.worldKey!==source.world.worldKey || event.seasonKey!==source.world.seasonKey || canonicalJson(event.evidence.fields)!==canonicalJson({playerSimulationKey:source.protagonistKey,serviceTaskIdOrServicePeriodId:program.programId,stage:event.definitionId==='E53'?'RETURN':'FIRST_BLOCK'}))throw new RangeError('INVALID_KBO_MILITARY_EVENT');
+ if(event.definitionId==='E51' || event.definitionId==='E52'){
+  if(source.phaseContext.phase!=='PRESEASON_SETUP' || source.preseasonPlan || record?.status!==(event.definitionId==='E51'?'SERVING_ACTIVE':'SERVING_SPORTS') || program.blocks[0]!.seasonKey!==source.world.seasonKey)throw new RangeError('KBO_MILITARY_NOT_AVAILABLE');
  }else{
   const phase=source.phaseContext,club=source.world.clubs.find(c=>c.id===source.protagonistClubId);
   if(phase.phase!=='EVENT_DECISION' || phase.eventKey!==event.eventKey || record?.status!=='COMPLETED' || !club?.roster.includes(source.protagonistKey) || club.firstTeam.includes(source.protagonistKey) || source.sangmu?.loaned?.includes(source.protagonistKey) || source.rights.holderOrgId!==club.id)throw new RangeError('MILITARY_RETURN_SLOT_REQUIRED');
@@ -74,5 +75,5 @@ export function resolveKboMilitaryEvent(source:KboCareer,expectedRevision:number
 }
 export function kboMilitaryEventView(source:KboCareer){
  const program=source.military?.program;
- return source.events.filter(e=>e.status==='OPEN' && ['E52','E53'].includes(e.definitionId) && e.seasonKey===source.world.seasonKey && e.evidence.fields.serviceTaskIdOrServicePeriodId===program?.programId).map(e=>{const d=eventDefinition(e.definitionId);return {eventKey:e.eventKey,eventVersion:e.version,definitionId:e.definitionId,title:d.title,body:d.body,choices:d.choices.map(c=>({command:c.command,label:c.label})),...(e.definitionId==='E52'?{focus:[...source.world.players[source.protagonistKey]!.focus]}:{})};});
+ return source.events.filter(e=>e.status==='OPEN' && ['E51','E52','E53'].includes(e.definitionId) && e.seasonKey===source.world.seasonKey && e.evidence.fields.serviceTaskIdOrServicePeriodId===program?.programId).map(e=>{const d=eventDefinition(e.definitionId);return {eventKey:e.eventKey,eventVersion:e.version,definitionId:e.definitionId,title:d.title,body:d.body,choices:d.choices.map(c=>({command:c.command,label:c.label})),...(e.definitionId==='E52'?{focus:[...source.world.players[source.protagonistKey]!.focus]}:{})};});
 }

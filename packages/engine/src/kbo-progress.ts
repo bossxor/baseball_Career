@@ -2,7 +2,7 @@ import {kboContractPaymentBalance} from './kbo-contract-payments.js';
 import {settleKboServicePayrollDay} from './kbo-service-payroll.js';
 import {closeKboMilitaryCalendarDay} from './kbo-military-events.js';
 import type {KboCareer} from './kbo-career-entry.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import type {HighSchoolGameContext,HighSchoolGameJob} from './high-school-game.js';
 import {prepareSchoolCompetitionGame,advanceHighSchoolGame,commitSchoolCompetitionGame} from './high-school-game.js';
 import {createKboCompetitionGameWorld} from './kbo-game-world.js';

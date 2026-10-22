@@ -2,7 +2,7 @@ import {kboContractPaymentBalance} from './kbo-contract-payments.js';
 import {kboPlayerContractValue,kboRenewalSalaryWon} from './kbo-contract-value.js';
 export {KBO_RENEWAL_SAMPLE} from './kbo-contract-value.js';
 import type {KboCareer} from './kbo-career-entry.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {recordTotals} from './records.js';
 import {createWorldEvent,completeBlockingEvent,eventDefinition} from './events.js';
 

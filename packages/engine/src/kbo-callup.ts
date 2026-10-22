@@ -1,7 +1,7 @@
 import {roleScore} from '@playball/rules';
 import type {KboCareer} from './kbo-career-entry.js';
 import type {KboSeasonProgress} from './kbo-progress.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {recordTotals} from './records.js';
 import {recentBattingPerformance,recentPitchingPerformance} from './lineup.js';
 import {emptyBatting,emptyPitching} from './stats.js';
@@ -26,7 +26,7 @@ function futuresTeamGames(career:KboCareer):number {
  * position (hitter) or role (pitcher); the candidate must score higher (ties: lower fatigue, then smaller ID).
  * Only the first ever call-up is an E09 event; later moves are outside this step. Returns null when nothing is due. */
 export function reviewKboCallup(source:KboCareer,day:number,progress:KboSeasonProgress):KboCareer|null {
- if(protagonistLeague(source)!=='FUTURES' || source.military?.status==='SERVING_SPORTS')return null;
+ if(protagonistLeague(source)!=='FUTURES' || ['SERVING_SPORTS','SERVING_ACTIVE'].includes(source.military?.status??''))return null;
  const games=futuresTeamGames(source),season=source.world.seasonKey;
  if(games===0 || games%20!==0 || (source.callupReviews??[]).some(r=>r.seasonKey===season && r.teamGames===games))return null;
  if(source.events.some(e=>e.definitionId==='E09'))return null;

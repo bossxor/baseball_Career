@@ -9,7 +9,7 @@ import {nextKboFreeAgentYear} from './kbo-free-agents.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {validateSeasonGrowthLedger,createSeasonGrowthLedger} from './growth-ledger.js';
 import {kboContractDecisionRequired,acceptedRenewal} from './kbo-renewal.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {createSeasonCalendar} from './season-calendar.js';
 import {schoolYearEndRepertoire} from './college-entry.js';
 import {emptyPitchXpLedger} from './pitch-xp.js';
@@ -99,7 +99,7 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
   }
   else if(c.servicePay){activated.servicePay=carryKboServicePayroll(c,target);activated.years=Math.max(1,Math.ceil(kboContractPaymentBalance(activated.servicePay.ledger).remainingPaidGameDays/144));}
   const service=career.military,program=service?.program;
-  if(k===key && !activated.servicePay && service?.contractPaymentVersion===1 && service.status==='SERVING_SPORTS' && program?.blocks[0]?.seasonKey===target && service.completionDays){activated.servicePay=createKboServicePayroll(activated,program,service.completionDays[1]!);activated.years=Math.ceil(program.contract.remainingPaidGameDays/144);}
+  if(k===key && !activated.servicePay && service?.contractPaymentVersion===1 && ['SERVING_SPORTS','SERVING_ACTIVE'].includes(service.status) && program?.blocks[0]?.seasonKey===target && service.completionDays){activated.servicePay=createKboServicePayroll(activated,program,service.completionDays[1]!);activated.years=Math.ceil(program.contract.remainingPaidGameDays/144);}
   const book=schoolYearEndRepertoire(source,k);if(book)world.repertoires[k]={...structuredClone(book),seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};
  }
  for(const club of world.clubs){club.paidSalaryWon=0;club.reservedSalaryWon=club.roster.reduce((n,k)=>n+kboContractSeasonCharge(world.contracts[k]!),0);}

@@ -1,6 +1,6 @@
 import {kboServiceContractView} from './kbo-service-payroll.js';
 import {KBO_CONTRACT_GAME_DAYS} from './kbo-military-program.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {KBO_MAX_PLAYER_AGE} from './kbo-year-transition.js';
 import {abilityKeys,overall} from '@playball/rules';
 import type {KboCareer} from './kbo-career-entry.js';
@@ -19,7 +19,7 @@ function pitching(line:PitchingTotals|undefined){const s=line??{...emptyPitching
 export function kboRetirementArchiveView(source:KboCareer){
  assertCareerRevision(source,source.revision);
  const r=source.retirement,key=source.protagonistKey,p=source.world.players[key],club=source.world.clubs.find(c=>c.id===source.protagonistClubId);
- if(source.schemaVersion!==1 || source.phaseContext.phase!=='ARCHIVED' || !r || !p || !club || r.clubId!==club.id || r.seasonKey!==source.world.seasonKey || r.age!==p.age || !['VOLUNTARY','MAX_AGE'].includes(r.reason) || r.reason==='MAX_AGE' && r.age!==KBO_MAX_PLAYER_AGE || !r.receiptKey || !Number.isSafeInteger(r.sourceRevision) || r.sourceRevision<1 || r.sourceRevision>source.revision || !Number.isSafeInteger(r.remainingContractYears) || r.remainingContractYears<0 || r.remainingContractYears>(r.remainingPaidGameDays===undefined?3:4))throw new RangeError('KBO_ARCHIVE_NOT_AVAILABLE');
+ if(![1,2].includes(source.schemaVersion) || source.phaseContext.phase!=='ARCHIVED' || !r || !p || !club || r.clubId!==club.id || r.seasonKey!==source.world.seasonKey || r.age!==p.age || !['VOLUNTARY','MAX_AGE'].includes(r.reason) || r.reason==='MAX_AGE' && r.age!==KBO_MAX_PLAYER_AGE || !r.receiptKey || !Number.isSafeInteger(r.sourceRevision) || r.sourceRevision<1 || r.sourceRevision>source.revision || !Number.isSafeInteger(r.remainingContractYears) || r.remainingContractYears<0 || r.remainingContractYears>(r.remainingPaidGameDays===undefined?3:4))throw new RangeError('KBO_ARCHIVE_NOT_AVAILABLE');
  const contract=source.world.contracts[key];if(r.remainingPaidGameDays!==undefined && (!contract?.servicePay || !Number.isSafeInteger(r.remainingPaidGameDays) || r.remainingPaidGameDays<0 || r.remainingPaidGameDays>4*KBO_CONTRACT_GAME_DAYS || r.remainingPaidGameDays!==kboServiceContractView(contract)!.remainingPaidGameDays || r.remainingContractYears!==Math.ceil(r.remainingPaidGameDays/KBO_CONTRACT_GAME_DAYS)))throw new RangeError('KBO_ARCHIVE_CONTRACT_INVALID');
  validateDevelopmentPlayer(p);
  const scopes=new Map<string,RecordScope>();

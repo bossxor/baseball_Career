@@ -1,7 +1,8 @@
+import {kboActiveContractSuspended} from './kbo-service-payroll.js';
 import {kboMilitaryRegisteredGames,kboMilitaryScheduledGames} from './kbo-military-growth.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import type {KboSeasonProgress} from './kbo-progress.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {archetypeFor} from './player.js';
 import {trainingPreview,applySeasonTraining} from './training.js';
 import type {TrainingChoice,TrainingContext} from './training.js';
@@ -33,6 +34,7 @@ function idle(career:KboCareer):void {
  if(phase.phase==='SEASON_PROGRESS' && phase.pendingGame)throw new RangeError('CAREER_DAY_IN_PROGRESS');
 }
 function trainingContext(career:KboCareer):TrainingContext {
+ if(kboActiveContractSuspended(career.world.contracts[career.protagonistKey]!))throw new RangeError('ACTIVE_SERVICE_TRAINING_UNAVAILABLE');
  return {seasonId:career.world.seasonKey,completedTeamGames:kboTeamGames(career),scheduledTeamGames:scheduledTeamGames(career),injured:Object.hasOwn(career.health.injuries,career.protagonistKey),windowOpen:true,careerCheat:career.difficulty==='SECRET_CHEAT'};
 }
 export function previewKboTraining(source:KboCareer,choice:TrainingChoice) {

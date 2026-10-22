@@ -1,5 +1,5 @@
 import type {KboCareer} from './kbo-career-entry.js';
-import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {selectSangmuCohort} from './kbo-sangmu.js';
 import {emptySangmuUnit,enlistSangmuCohort} from './kbo-sangmu-unit.js';
 
