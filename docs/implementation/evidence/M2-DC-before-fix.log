@@ -1,0 +1,14 @@
+Base commit: c0b4a90
+Scope: one isolated runtime reproduction; no feature source edits.
+DC_RUNTIME_EVIDENCE {"base":"c0b4a90","formation":"existing TEAMMATE/FORMED","enlistmentStage":"SEPARATED","completedBlocks":2,"returnSeason":"2031","returnDay":180,"gameDay":182,"clubId":"OB","healthTeamKey":"FUTURES:OB","primaryRegistered":true,"returnedNpcRegistered":true,"returnedNpcPaid":true,"afterGameStage":"SEPARATED","E96":0,"clock":"controlled unplayed gaps; actual first-year postseason/Y02 and return game/day/health/pay"}
+✔ DC before-fix: authentic NPC return shares civilian registration but retains SEPARATED without E96 (2597.5101ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2926.4499
+
+Exit code: 0

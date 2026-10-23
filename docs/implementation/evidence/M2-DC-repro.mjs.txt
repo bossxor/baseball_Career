@@ -1,0 +1,57 @@
+// Run from the repository root with Node24:
+// PowerShell: Get-Content -Raw docs/implementation/evidence/M2-DC-repro.mjs.txt | node --input-type=module
+// Reuses the committed DA/DB fixtures, appends one isolated test, then removes its temporary copy.
+import {readFileSync,writeFileSync,existsSync,unlinkSync} from 'node:fs';
+import {execFileSync,spawnSync} from 'node:child_process';
+import {resolve} from 'node:path';
+
+const root=process.cwd(),base='packages/engine/test/kbo-npc-military.test.ts';
+const temporary=resolve(root,'packages/engine/test/kbo-dc-before-fix.tmp.test.ts');
+const log=resolve(root,'docs/implementation/evidence/M2-DC-before-fix.log');
+const source=readFileSync(resolve(root,base),'utf8');
+const committed=execFileSync('git',['show','c0b4a90:'+base],{cwd:root,encoding:'utf8'});
+if(source.replace(/\r\n/g,'\n')!==committed.replace(/\r\n/g,'\n'))throw Error('The DA/DB base test differs from c0b4a90.');
+if(existsSync(temporary))throw Error('Temporary reproduction path already exists.');
+const appended=String.raw`
+
+test('DC before-fix: authentic NPC return shares civilian registration but retains SEPARATED without E96',()=>{
+ const entry=enteredKboCareer(),club=entry.world.clubs.find(t=>t.id===entry.protagonistClubId)!;
+ const relation=entry.relationships.relations.find(r=>r.type==='TEAMMATE' && r.stage==='FORMED' && club.roster.includes(r.otherPlayerKey))!;assert.ok(relation);
+ // An existing teammate receives controlled intake eligibility; formation/separation/programs remain real commands.
+ for(const key of club.roster)if(key!==relation.otherPlayerKey && key!==entry.protagonistKey && entry.world.players[key]!.kind==='HITTER')entry.world.players[key]!.age=28;
+ const candidate=entry.world.players[relation.otherPlayerKey]!;candidate.age=19;candidate.abilities=Object.fromEntries(Object.keys(candidate.abilities).map(k=>[k,1_000_000]));candidate.potential={...candidate.abilities};candidate.careerPeaks={...candidate.abilities};
+ const enlisted=startSangmuCohort(entry,entry.revision),key=relation.otherPlayerKey;
+ assert.ok(enlisted.sangmu!.members[key]);assert.equal(enlisted.relationships.relations.find(r=>r.relationKey===relation.relationKey)!.stage,'SEPARATED');
+ assert.equal(enlisted.sangmu!.members[key]!.program.completedBlocks,0);
+ const firstClosed=renewed(closeFirst(enlisted));assert.equal(firstClosed.sangmu!.members[key]!.program.completedBlocks,1);
+ const next=startNextKboSeason(firstClosed,firstClosed.revision);let playing=ready(startSangmuCohort(next,next.revision));
+ const due=playing.world.suspendedContracts![key]!.servicePay!.returnDate.worldDay;
+ const first=Math.min(...Object.values(playing.competitionSchedule!.leagues).flat().map(g=>g.worldDay));
+ playing.days!.days=Array.from({length:due-first+1},(_,i)=>({day:first+i,evidence:'controlled-unplayed-return-clock',result:{injured:[],recovered:[]}}));playing.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:due+1,pendingGame:null};
+ closeKboNpcMilitaryCalendarDay(playing,due);assert.ok(playing.world.players[key]);assert.ok(!playing.sangmu!.members[key]);
+ const returned=Object.values(playing.sangmu!.npcReturns!).find(r=>r.program.playerKey===key)!;assert.ok(returned);assert.equal(returned.program.completedBlocks,2);assert.equal(returned.returned.worldDay,due);
+ assert.equal(playing.relationships.relations.find(r=>r.relationKey===relation.relationKey)!.stage,'SEPARATED');
+ // Fixture pins the protagonist to the same Futures competition; it does not forge a game or health registration.
+ const original=playing.world.clubs.find(t=>t.id===playing.protagonistClubId)!;
+ if(original.firstTeam.includes(playing.protagonistKey)){
+  const me=playing.world.players[playing.protagonistKey]!,reserve=original.roster.find(k=>!original.firstTeam.includes(k) && !playing.health.injuries[k] && playing.world.players[k]!.position===me.position && !playing.world.contracts[k]!.servicePay)!;assert.ok(reserve);
+  original.firstTeam=original.firstTeam.map(k=>k===playing.protagonistKey?reserve:k);
+ }
+ playing.registration={...playing.registration,firstTeam:false,competitionKey:'FUTURES'};assert.ok(!original.firstTeam.includes(key));
+ const game=playing.competitionSchedule!.leagues.FUTURES.find(g=>g.worldDay>due && [g.homeTeamKey,g.awayTeamKey].includes(original.id) && ![g.homeTeamKey,g.awayTeamKey].includes('SANGMU'))!;assert.ok(game);
+ playing.competitionSchedule!.leagues={KBO:[],FUTURES:[game]};playing.days!.days=[];playing.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:game.worldDay,pendingGame:null};
+ const played=finishDay(playing),record=played.records.games[game.simulationKey]!;assert.ok(record);assert.equal(record.scope.phase,'REGULAR');assert.equal(record.scope.leagueKey,'FUTURES');
+ const health=played.health.games.find(h=>h.evidence.gameKey===game.simulationKey && h.evidence.teamKey==='FUTURES:'+original.id)!;assert.ok(health);assert.ok(health.evidence.roster.includes(played.protagonistKey));assert.ok(health.evidence.roster.includes(key));
+ assert.equal(played.days!.days.at(-1)!.day,game.worldDay);assert.equal(played.world.contracts[key]!.servicePay!.ledger.receipts.at(-1)!.gameKey,game.simulationKey);
+ const actual=played.relationships.relations.find(r=>r.relationKey===relation.relationKey)!,notices=played.relationNotices.filter(e=>e.definitionId==='E96' && e.evidence.fields.relationId===relation.relationKey);
+ console.log('DC_RUNTIME_EVIDENCE '+JSON.stringify({base:'c0b4a90',formation:'existing TEAMMATE/FORMED',enlistmentStage:'SEPARATED',completedBlocks:returned.program.completedBlocks,returnSeason:returned.returned.seasonKey,returnDay:due,gameDay:game.worldDay,clubId:original.id,healthTeamKey:health.evidence.teamKey,primaryRegistered:true,returnedNpcRegistered:true,returnedNpcPaid:true,afterGameStage:actual.stage,E96:notices.length,clock:'controlled unplayed gaps; actual first-year postseason/Y02 and return game/day/health/pay'}));
+ assert.equal(actual.stage,'SEPARATED');assert.equal(notices.length,0);
+});
+`;
+try{
+ writeFileSync(temporary,source+appended,'utf8');
+ const result=spawnSync(process.execPath,['--import','tsx','--test','--test-name-pattern','DC before-fix:',temporary],{cwd:root,encoding:'utf8',timeout:180_000});
+ const output='Base commit: c0b4a90\nScope: one isolated runtime reproduction; no feature source edits.\n'+result.stdout+result.stderr+'\nExit code: '+result.status+'\n';
+ writeFileSync(log,output,'utf8');process.stdout.write(output);
+ if(result.error)throw result.error;process.exitCode=result.status??1;
+}finally{if(existsSync(temporary))unlinkSync(temporary);}
