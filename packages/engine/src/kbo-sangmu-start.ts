@@ -1,3 +1,4 @@
+import {kboActiveContractSuspended} from './kbo-service-payroll.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {selectSangmuCohort} from './kbo-sangmu.js';
@@ -24,5 +25,16 @@ export function startSangmuCohort(source:KboCareer,expectedRevision:number):KboC
  // My own player already holds one slot of this recruitment when he enlisted for it (his application was the same snapshot).
  const mine=career.military?.status==='SERVING_SPORTS' && career.military.program?.blocks[0]?.seasonKey===career.world.seasonKey?career.world.players[career.protagonistKey]!.kind:null;
  const selection=selectSangmuCohort({world:career.world,records:career.records,health:career.health,seasonKey:selectionSeason,serving:new Set(Object.keys(unit.members)),excluded:new Set([career.protagonistKey]),reserved:{hitters:mine==='HITTER'?1:0,pitchers:mine==='PITCHER'?1:0}});
- career.sangmu=enlistSangmuCohort(career.world,unit,selection,career.protagonistClubId);career.revision++;return career;
+ career.sangmu=enlistSangmuCohort(career.world,unit,selection,career.protagonistClubId);
+ const club=source.world.clubs.find(c=>c.id===source.protagonistClubId),key=source.protagonistKey,selected=new Set(selection.selected.map(a=>a.playerKey)),seen=new Set<string>();
+ career.relationships.relations=career.relationships.relations.map(r=>{
+  if(seen.has(r.relationKey) || r.primaryPlayerKey!==key || key===r.otherPlayerKey || !['RIVAL','TEAMMATE'].includes(r.type) || r.normalPairKey!==JSON.stringify([key,r.otherPlayerKey].sort()) || r.relationKey!==JSON.stringify([r.type,r.normalPairKey]) || !r.milestones.length)throw new RangeError('INVALID_CAREER_RELATION');seen.add(r.relationKey);
+  if(!['FORMED','REUNITED_TEAM'].includes(r.stage) || !club?.roster.includes(key) || !club.roster.includes(r.otherPlayerKey) || !selected.has(r.otherPlayerKey) || source.sangmu?.loaned?.includes(key) || kboActiveContractSuspended(source.world.contracts[key]!))return r;
+  const member=career.sangmu!.members[r.otherPlayerKey]!;
+  if(member.program.startedSeason!==career.world.seasonKey || member.program.originalClubId!==club.id)throw new RangeError('INVALID_SANGMU_RELATION_ENLISTMENT');
+  const evidenceKey=JSON.stringify(['relation-separation',r.relationKey,member.program.programId]);
+  if(r.milestones.some(m=>m.evidenceKey===evidenceKey))throw new RangeError('SANGMU_RELATION_EVIDENCE_REUSED');
+  return {...r,stage:'SEPARATED' as const,milestones:[...r.milestones,{stage:'SEPARATED' as const,evidenceKey,worldDay:career.world.calendar.growthDays[0]!}]};
+ });
+ career.revision++;return career;
 }

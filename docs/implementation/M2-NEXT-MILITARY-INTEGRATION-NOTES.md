@@ -102,3 +102,10 @@ NPC 복귀 뒤 남은 계약 일수가 시즌 중 소진되면 기존 AI 선수 
 
 
 미래 채무 변경의 실제 도달 범위: kbo-finance의 현재 balance/미래 commitment만 고쳐서는 충분하지 않다. kbo-ai-offseason의 재계약, kbo-fa-market의 다년 제안, kbo-supply의 신인 제안은 availableWon 외에도 paidSalaryWon+reservedSalaryWon+guaranteedWon을 직접 비교한다. kbo-draft의 payroll 합계/미래90% 검사, kbo-roster-repair의 최소 편성 보조금도 같은 실제 채무를 포함해야 한다. 군 복무를 RELEASE/RETIREMENT 보장으로 위장하거나 임의 경쟁 영입에 최소 편성 보조금을 쓰지 않는다. 기존 kboPlayerContractValue/kboRenewalSalaryWon·kboAiRoleNeed/kboAiCandidatePriority는 재사용 가능한 순수 가치/수요 계산이며 주인공을 NPC로 바꾸는 가짜 커리어를 만들 필요가 없다.
+
+
+## CY 전체 검사 중 군팀 E96 초안 (정식 반영 전)
+
+현재 E96의 source 검증은 transferHistory만 받는다. 상무의 실제 FUTURES:SANGMU 건강 등록 행과 공식 경기로 공동 등록을 증명하는 저장소 밖 초안을 준비했다. SEPARATED/REUNITED_OPPONENT 관계만 REUNITED_TEAM으로 바꾸며 RIVAL 종류/기존 이력을 보존한다. 벤치·부상은 등록으로 인정하고 실제 출전 요구는 E95에만 둔다. 공유 등록 키는 경기·관계·당시 정렬 등록 신원을 봉인하며 현재 소속/능력/피로에서 추정하지 않는다. 새 게임 수치/추가 이벤트 필드는 없다.
+
+TEMP 초안6개와 별도 타입 검사 통과: 실제 경기/건강 등록·JSON·공지 읽기/메타데이터만 ACK·과거 조회·변경/누락/중복 등록 거부·구 군팀 건강 행 없는 저장 보존·게임/돈/성장/RNG 불변. 실제18개월 전역/새 NPC 급여는 미검증이다. 정식 파일은 아직 바꾸지 않았고 CY 전체585개 결과에 포함하지 않는다. 같은 PC TEMP의 baseball-CZ-team-native.ts/progress-native.ts/test-native.ts와 draft/tests Python 생성기가 있으며, 다른 환경은 이 책임/증명 기준으로 재구현한다. 실제 반영 때 callers: kbo-progress의 최종 일자 마감 뒤 훅, kbo-team-reunions의 양쪽 증거 검증/읽기, 관련 테스트와 문서/검증이다. index는 기존 wildcard export를 확인한다.

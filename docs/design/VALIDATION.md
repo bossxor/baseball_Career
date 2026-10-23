@@ -406,3 +406,8 @@ M1 순수 경기 코어를 추가했고 단위67/67·린트·타입·rules/engin
 ## 2026-10-23 구현 검증 참조 — M2-CX
 
 상무 전역/모집 공석 보충은 집중22/22·전체 npm run check580/580·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. [CX](../implementation/M2-CX-SANGMU-VACANCIES.md) · [전체](../implementation/evidence/M2-CX-check.log). 첫 타입 실패/두 번째 중단은 통과로 세지 않는다. 실제 NPC18개월 복무·복귀 급여·UI/계정/Neon/APK는 후속이다.
+
+
+## 2026-10-23 구현 검증 참조 — M2-CY
+
+실제 입대의 관계 분리는 집중30/30·전체 npm run check585/585·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. [CY](../implementation/M2-CY-SANGMU-RELATION-SEPARATION.md) · [전체](../implementation/evidence/M2-CY-check.log). 저장소 밖 군팀 E96 초안·NPC 실제 반년 복귀/급여·UI/계정/Neon/APK의 검증은 아니다.

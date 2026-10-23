@@ -1,0 +1,20 @@
+{
+  "completedAt": "2026-10-23T06:46:06.062Z",
+  "milestones": [
+    "M2-CY"
+  ],
+  "tests": 585,
+  "passed": 585,
+  "failed": 0,
+  "cancelled": 0,
+  "testDurationMs": 1086125.6368,
+  "focused": 30,
+  "staticDesignValidators": 10,
+  "manifestEntries": 359,
+  "httpSmoke": "skeleton only; no UI/auth/DB/storage/APK",
+  "runtimeUnchanged": true,
+  "design": {
+    "files": 360,
+    "sha256": "350516326daed9616517bac0bedfc868bcb7343c2b194fba5c3319f317344b60"
+  }
+}
