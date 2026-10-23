@@ -7,6 +7,8 @@ import type {RelationshipHistorySource,RelationHistoryWorld} from './relationshi
 import type {RelationScope} from './relationships.js';
 import {unreadRelationNotices,prepareRelationNoticeRead} from './relation-notices.js';
 import type {RelationNoticeReadInput,RelationNoticeReadSource} from './relation-notices.js';
+import {kboOpponentReunionNoticeRows,prepareKboOpponentReunionRead} from './kbo-reunion-events.js';
+import {kboTeamReunionNoticeRows,prepareKboTeamReunionRead} from './kbo-team-reunions.js';
 
 /** Read adapter only. It never registers an archived student in the live pro roster. */
 function relationSource(s:KboCareer):RelationNoticeReadSource {
@@ -42,9 +44,17 @@ function proIdentity(other:Identity|null){
 }
 export function kboRelationshipListView(s:KboCareer){return careerRelationshipListView(relationSource(s)).map(row=>({...row,other:proIdentity(row.other)}));}
 export function kboRelationDetailView(s:KboCareer,relationKey:string,scope:RelationScope){const row=careerRelationDetailView(relationSource(s),relationKey,scope);return {...row,other:proIdentity(row.other)};}
-export function unreadKboRelationNotices(s:KboCareer){return unreadRelationNotices(relationSource(s));}
+function noticeSources(s:KboCareer){
+ const seen=new Set<string>();for(const e of s.relationNotices){if(seen.has(e.eventKey))throw new RangeError('DUPLICATE_RELATION_NOTICE');if(!['E94','E95','E96'].includes(e.definitionId))throw new RangeError('INVALID_KBO_RELATION_NOTICE');seen.add(e.eventKey);}
+ return {...relationSource(s),relationNotices:s.relationNotices.filter(e=>e.definitionId==='E94')};
+}
+export function unreadKboRelationNotices(s:KboCareer){
+ const formation=unreadRelationNotices(noticeSources(s)),identities=kboRelationshipListView(s),reunions=[...kboOpponentReunionNoticeRows(s),...kboTeamReunionNoticeRows(s)].map(row=>{const other=identities.find(r=>r.relationKey===row.relationKey)!;return {...row,otherName:other.other?.name??null,otherInCurrentWorld:other.otherAvailability==='CURRENT_WORLD'};});
+ const rows=[...formation,...reunions];return s.relationNotices.flatMap(e=>rows.filter(r=>r.eventKey===e.eventKey));
+}
 /** Root-specific commit: read state/revision only. The immutable amateur seal and confirmed plan remain unchanged. */
 export function resolveKboRelationNotice(s:KboCareer,revision:number,input:RelationNoticeReadInput){
- assertCareerRevision(s,revision);const selected=prepareRelationNoticeRead(relationSource(s),input),career=structuredClone(s);
- career.relationNotices=selected.notices;career.revision++;return {career,navigation:selected.navigation};
+ assertCareerRevision(s,revision);if(s.relationNotices.filter(e=>e.eventKey===input.eventKey).length!==1)throw new RangeError('UNKNOWN_RELATION_NOTICE');const formation=noticeSources(s),event=s.relationNotices.find(e=>e.eventKey===input.eventKey);
+ const selected=event?.definitionId==='E95'?prepareKboOpponentReunionRead(s,input):event?.definitionId==='E96'?prepareKboTeamReunionRead(s,input):(()=>{const read=prepareRelationNoticeRead(formation,input);return {event:read.notices.find(e=>e.eventKey===input.eventKey)!,navigation:read.navigation};})();
+ const career=structuredClone(s);career.relationNotices=career.relationNotices.map(e=>e.eventKey===selected.event.eventKey?selected.event:e);career.revision++;return {career,navigation:selected.navigation};
 }

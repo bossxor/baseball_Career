@@ -1,0 +1,15 @@
+✔ actual regular day reunites opposing appearances once, preserves results/RNG and resumes identically from JSON (27258.9193ms)
+✔ E95 and E94 share a private-data-free read path; acknowledging a reunion changes no gameplay state or old notices (5001.5927ms)
+✔ bench-only registration, same team, other game, retired and already reunited relations do not create E95 (2662.8967ms)
+✔ unclosed days, corrupt registrations and invalid historical evidence reject atomically instead of inventing a meeting (7259.0105ms)
+✔ postseason hook uses a real final game without generating a direct-duel win or modifying permanent state (3282.6365ms)
+✔ cross-kind opponent meeting does not fabricate a duel, WIN, or hidden trait qualification (5200.3491ms)
+✔ reading a completed legacy day does not backfill an opponent reunion (410.1243ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57268.4094

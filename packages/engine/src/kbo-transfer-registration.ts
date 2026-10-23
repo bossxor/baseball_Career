@@ -6,6 +6,8 @@ export interface KboSeasonTransfer {
  receiptKey:string;seasonKey:string;playerKey:string;fromClubId:string;toClubId:string;afterWorldDay:number;
  previousContractKey:string;contractKey:string;planBoundaryDays:readonly number[];
  rosterSignings?:KboRosterRepairReceipt['signings'];
+ /** Present only for new successful transfers; immutable shared registration witness for E96. */
+ sharedRelationKeys?:readonly string[];
 }
 type MilitaryWindow={untilWorldDay:number;kind:'SPORTS'|'ACTIVE'};
 
@@ -16,6 +18,7 @@ export function currentKboSeasonTransfers(c:KboCareer):readonly KboSeasonTransfe
  for(const [i,r] of rows.entries()){
   const previous=rows[i-1];
   if(c.schemaVersion!==4 || !r.receiptKey || seen.has(r.receiptKey) || r.playerKey!==c.protagonistKey || !r.previousContractKey || !r.contractKey || r.previousContractKey===r.contractKey || r.fromClubId===r.toClubId || !c.world.clubs.some(t=>t.id===r.fromClubId) || !c.world.clubs.some(t=>t.id===r.toClubId) || !Number.isSafeInteger(r.afterWorldDay) || r.afterWorldDay<0 || lastDay===undefined || r.afterWorldDay>lastDay || !Array.isArray(r.planBoundaryDays) || !r.planBoundaryDays.length || r.planBoundaryDays.length>c.planHistory.length || r.planBoundaryDays[0]!==0 || r.planBoundaryDays.some((d,j)=>!Number.isSafeInteger(d) || d>r.afterWorldDay || j>0 && (!calendar.has(d) || d<=r.planBoundaryDays[j-1]!)) || previous && (previous.toClubId!==r.fromClubId || previous.contractKey!==r.previousContractKey || previous.afterWorldDay>=r.afterWorldDay || previous.planBoundaryDays.length>r.planBoundaryDays.length || previous.planBoundaryDays.some((d,j)=>r.planBoundaryDays[j]!==d)))throw new RangeError('INVALID_KBO_TRANSFER_REGISTRATION');
+  if(r.sharedRelationKeys!==undefined&&(!Array.isArray(r.sharedRelationKeys)||new Set(r.sharedRelationKeys).size!==r.sharedRelationKeys.length||r.sharedRelationKeys.some(k=>typeof k!=='string'||!k)))throw new RangeError('INVALID_KBO_TRANSFER_REGISTRATION');
   seen.add(r.receiptKey);
  }
  const latest=rows.at(-1)!,registration=c.registration,contract=c.world.contracts[c.protagonistKey];

@@ -1,0 +1,39 @@
+✔ completed CQ-shaped saves retain their old relation stages during reads and notice acknowledgement (68032.8556ms)
+✔ actual transfer separates only current club relations, preserves all prior milestones and exposes the new stage without a reunion notice (19242.1792ms)
+✔ registration adapter excludes loans and active-service suspension while injury alone does not exclude a teammate (13225.0099ms)
+✔ same-club acceptance and rejected or read-only transfer paths never separate existing relations (20740.3511ms)
+✔ HITTER pro list retains historical school and active club teammate identities without invented transfers/stages (21229.3784ms)
+✔ PITCHER pro list retains historical school and active club teammate identities without invented transfers/stages (15076.1775ms)
+✔ historical relation details reuse existing official scoped records; never fabricate pro games or new player registration (17659.6961ms)
+✔ both historical and new pro E94 preserve names and ACK only their notice while the confirmed plan remains sealed (13764.6658ms)
+✔ stale revision/version, wrong command or foreign/duplicate relation evidence reject without changes (10532.0535ms)
+✔ unknown historical player remains unresolved; malformed ownership, foreign history and changed confirmed plan reject (45587.1403ms)
+✔ absence of relations/notices on restored old pro state is empty and querying never creates a new relation (4736.5202ms)
+✔ a pro teammate moved to FA or retirement keeps identity and notices as historical only, never a fake live registration (4686.2423ms)
+✔ pitcher transfer carries the exact book and XP budget, then actual new-club pitching continues without resetting prior entries (144154.4774ms)
+✔ foreign acceptance atomically preserves old pay, records, health, growth and relations; actual next registration pays new club once (19755.1891ms)
+✔ foreign acceptance rejects stale/forged/funded-capacity changes with the entire source intact (2695.1673ms)
+✔ recipient injury repair keeps incoming player in Futures and preserves existing injury evidence (1237.5002ms)
+✔ leaving a first-team required position repairs only the old club vacancy and independent Futures slot (965.473ms)
+✔ transferred term settles on final regular day, pays no postseason extra and preserves receipts/version into next year (33055.8294ms)
+✔ actual regular day reunites opposing appearances once, preserves results/RNG and resumes identically from JSON (119110.6773ms)
+✔ E95 and E94 share a private-data-free read path; acknowledging a reunion changes no gameplay state or old notices (9237.7576ms)
+✔ bench-only registration, same team, other game, retired and already reunited relations do not create E95 (12200.165ms)
+✔ unclosed days, corrupt registrations and invalid historical evidence reject atomically instead of inventing a meeting (12152.8713ms)
+✔ postseason hook uses a real final game without generating a direct-duel win or modifying permanent state (3159.2179ms)
+✔ cross-kind opponent meeting does not fabricate a duel, WIN, or hidden trait qualification (5015.7889ms)
+✔ reading a completed legacy day does not backfill an opponent reunion (519.7921ms)
+✔ actual transfer reunites an existing rival at registration while preserving records, RNG and old history (87542.1148ms)
+✔ E94 and E96 coexist and acknowledgement changes only metadata without restoring the transfer phase (15551.4097ms)
+✔ historical reunion proof survives later membership changes; missing, duplicated or forged proof rejects without mutation (13069.3325ms)
+✔ old completed transfers are read without backfilling team reunions; failed registration leaves its source intact (6081.5131ms)
+✔ team registration includes an injured player but excludes loans, active service and already formed or retired relations (2408.2415ms)
+✔ actual opposing game E95 survives the later confirmed transfer E96 and both notices remain independently readable (4850.1985ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 225302.5775

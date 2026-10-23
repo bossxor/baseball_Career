@@ -1,0 +1,56 @@
+{
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "2997d9f3d30d258050a08d18651770078c134c62298f2b6702bab2d63aa1201c"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "e37b21c8d99a2ea072e5063b11bd5ff124609f173718432b4014c4720d6c1617"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "4d746ef1c6fc7764b992e3b5e5fedc02a4a9c94aa2088766747a11dc9a980d11"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "4f2605856625bab8a8d2cb8bbab780ba43c7d79d417ecc3b791a58eaa8185d7b"
+    },
+    {
+      "path": "packages/engine/src/kbo-postseason-progress.ts",
+      "sha256": "a50eadb2d8267fe165dd3adabf5784b19b639200cb6c205c2eb241dda9c0d611"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "sha256": "a4fba89d3271f984d10a127f1fd102f2329acad5eb990043e2b5bae27d9319d4"
+    },
+    {
+      "path": "packages/engine/src/kbo-relations.ts",
+      "sha256": "ccdb671b84f4ac67da751a186cdb849a2060bd57e6a54fc9b14175d783481a4d"
+    },
+    {
+      "path": "packages/engine/src/kbo-remainder-transfer.ts",
+      "sha256": "7ebf3ef3f6dec0956709f145a478ab2c1d813564940b7964f40a1408bcb1586e"
+    },
+    {
+      "path": "packages/engine/src/kbo-transfer-registration.ts",
+      "sha256": "936d46b75a09d8a688a7b48e7e8ff294ea4ec355a401ebd26848f3ead7c78018"
+    },
+    {
+      "path": "packages/engine/src/kbo-reunion-events.ts",
+      "sha256": "26385e68aea7693114a65db13d20031c37c029c90a28fbfc731ade2c628a0d67"
+    },
+    {
+      "path": "packages/engine/src/kbo-team-reunions.ts",
+      "sha256": "b959c3a3103ac8a07311e0cc8ea4938c2d30267cfe5300e1889787c811aa6840"
+    },
+    {
+      "path": "packages/engine/test/kbo-reunion-events.test.ts",
+      "sha256": "40713036f50b69232995f804e213e6e6d1a3151fc0f95c1c7da79fcec1a0378d"
+    },
+    {
+      "path": "packages/engine/test/kbo-team-reunions.test.ts",
+      "sha256": "2e407aa6e9447f39bf1e3790c2218a2a3fea0cd06aebe8790290bbbcd17e43e7"
+    }
+  ]
+}

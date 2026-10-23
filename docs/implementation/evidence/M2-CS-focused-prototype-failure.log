@@ -1,0 +1,102 @@
+✔ actual regular day reunites opposing appearances once, preserves results/RNG and resumes identically from JSON (17634.7546ms)
+✖ E95 and E94 share a private-data-free read path; acknowledging a reunion changes no gameplay state or old notices (7343.0587ms)
+✔ bench-only registration, same team, other game, retired and already reunited relations do not create E95 (4996.7349ms)
+✔ unclosed days, corrupt registrations and invalid historical evidence reject atomically instead of inventing a meeting (11442.4642ms)
+✔ postseason hook uses a real final game without generating a direct-duel win or modifying permanent state (1521.3082ms)
+✔ cross-kind opponent meeting does not fabricate a duel, WIN, or hidden trait qualification (4098.869ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48810.1048
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-reunion-events.test.ts:1:3778
+✖ E95 and E94 share a private-data-free read path; acknowledging a reunion changes no gameplay state or old notices (7343.0587ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+
+    {
+      closedSeasons: [
+        '2029'
+      ],
+      games: [
+  ...
+      ],
+  +   injuries: {},
+  -   injuries: [Object: null prototype] {},
+      rng: {
+        draws: 235,
+        increment: '15901077394495482343',
+        state: '1409152973442203271'
+      },
+
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-reunion-events.test.ts:40:202)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: {
+      schemaVersion: 1,
+      rng: { state: '1409152973442203271', increment: '15901077394495482343', draws: 235 },
+      injuries: {},
+      games: [
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        ... 352 more items
+      ],
+      closedSeasons: [ '2029' ]
+    },
+    expected: {
+      schemaVersion: 1,
+      rng: { state: '1409152973442203271', increment: '15901077394495482343', draws: 235 },
+      injuries: {},
+      games: [
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        ... 352 more items
+      ],
+      closedSeasons: [ '2029' ]
+    },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

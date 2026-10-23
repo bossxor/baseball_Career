@@ -1,0 +1,121 @@
+✖ actual regular day reunites opposing appearances once, preserves results/RNG and resumes identically from JSON (7744.2098ms)
+✖ E95 and E94 share a private-data-free read path; acknowledging a reunion changes no gameplay state or old notices (1704.3262ms)
+✔ bench-only registration, same team, other game, retired and already reunited relations do not create E95 (2551.2955ms)
+✔ unclosed days, corrupt registrations and invalid historical evidence reject atomically instead of inventing a meeting (3055.143ms)
+✔ postseason hook uses a real final game without generating a direct-duel win or modifying permanent state (878.6454ms)
+✔ cross-kind opponent meeting does not fabricate a duel, WIN, or hidden trait qualification (1644.0322ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 4
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18309.1766
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-reunion-events.test.ts:1:2576
+✖ actual regular day reunites opposing appearances once, preserves results/RNG and resumes identically from JSON (7744.2098ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+
+    {
+      closedSeasons: [
+        '2029'
+      ],
+      games: [
+  ...
+      ],
+  +   injuries: [Object: null prototype] {},
+  -   injuries: {},
+      rng: {
+        draws: 235,
+        increment: '15901077394495482343',
+        state: '1409152973442203271'
+      },
+
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-reunion-events.test.ts:32:126)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: {
+      schemaVersion: 1,
+      rng: { state: '1409152973442203271', increment: '15901077394495482343', draws: 235 },
+      injuries: {},
+      games: [
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        ... 352 more items
+      ],
+      closedSeasons: [ '2029' ]
+    },
+    expected: {
+      schemaVersion: 1,
+      rng: { state: '1409152973442203271', increment: '15901077394495482343', draws: 235 },
+      injuries: {},
+      games: [
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object], [Object], [Object],
+        [Object], [Object], [Object], [Object],
+        ... 352 more items
+      ],
+      closedSeasons: [ '2029' ]
+    },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\kbo-reunion-events.test.ts:1:3752
+✖ E95 and E94 share a private-data-free read path; acknowledging a reunion changes no gameplay state or old notices (1704.3262ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /abilities|potential|seed|rng|stageEvidenceId|actualMeetingGameId|sourceSequence|sourceRevision/. Input:
+
+  '[{"eventKey":"[\\"event-1\\",\\"route-world\\",\\"E94\\",\\"{\\\\\\"fields\\\\\\":{\\\\\\"creationReceiptId\\\\\\":\\\\\\"[\\\\\\\\\\\\\\"team-entry-formation\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"team-entry-relation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"route-world\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"own\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"KBO\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"OB\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"kbo-rookie-signing\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"career-kbo-draft-result\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"amateur-kbo\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"route-world\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"2029\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"own\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]\\\\\\\\\\\\\\"]\\\\\\",\\\\\\"relationId\\\\\\":\\\\\\"[\\\\\\\\\\\\\\"TEAMMATE\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"kbo\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"OB\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"H\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",11]\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"own\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]\\\\\\\\\\\\\\"]\\\\\\"},\\\\\\"type\\\\\\":\\\\\\"RELATIONS\\\\\\",\\\\\\"version\\\\\\":1}\\"]","eventVersion":1,"definitionId":"E94","title":"같은 출발선의 이름","body":"야구를 하며 기억에 남는 이름이 생겼습니다. 각자의 길은 다르게 이어질 수 있습니다.","relationKey":"[\\"TEAMMATE\\",\\"[\\\\\\"[\\\\\\\\\\\\\\"kbo\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"OB\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"H\\\\\\\\\\\\\\",11]\\\\\\",\\\\\\"own\\\\\\"]\\"]","type":"TEAMMATE","otherPlayerKey":"[\\"kbo\\",\\"OB\\",\\"H\\",11]","otherName":"송현우","otherInCurrentWorld":true,"seasonKey":"2030","occurredWorldDay":31,"targetScreen":"S42"},{"eventKey":"[\\"event-1\\",\\"route-world\\",\\"E95\\",\\"{\\\\\\"fields\\\\\\":{\\\\\\"actualMeetingGameId\\\\\\":\\\\\\"[\\\\\\\\\\\\\\"2030\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"KBO\\\\\\\\\\\\\\",0,3]\\\\\\",\\\\\\"relationId\\\\\\":\\\\\\"[\\\\\\\\\\\\\\"RIVAL\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"kbo\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"LG\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"H\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",10]\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"own\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]\\\\\\\\\\\\\\"]\\\\\\",\\\\\\"stageEvidenceId\\\\\\":\\\\\\"controlled-separation:[\\\\\\\\\\\\\\"kbo\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"LG\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"H\\\\\\\\\\\\\\",10]\\\\\\"},\\\\\\"type\\\\\\":\\\\\\"RELATIONS\\\\\\",\\\\\\"version\\\\\\":1}\\"]","eventVersion":1,"definitionId":"E95","title":"다시 마주한 유니폼","body":"서로 다른 시간을 보낸 두 선수가 다시 같은 경기에 나섭니다. 실제 맞대결과 경력을 비교합니다.","relationKey":"[\\"RIVAL\\",\\"[\\\\\\"[\\\\\\\\\\\\\\"kbo\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"LG\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"H\\\\\\\\\\\\\\",10]\\\\\\",\\\\\\"own\\\\\\"]\\"]","type":"RIVAL","otherPlayerKey":"[\\"kbo\\",\\"LG\\",\\"H\\",10]","seasonKey":"2030","occurredWorldDay":31,"targetScreen":"S42","otherName":"남정민","otherInCurrentWorld":true}]'
+
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-reunion-events.test.ts:38:254)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '[{"eventKey":"[\\"event-1\\",\\"route-world\\",\\"E94\\",\\"{\\\\\\"fields\\\\\\":{\\\\\\"creationReceiptId\\\\\\":\\\\\\"[\\\\\\\\\\\\\\"team-entry-formation\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"team-entry-relation\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"route-world\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"own\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"KBO\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"OB\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"kbo-rookie-signing\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"career-kbo-draft-result\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"amateur-kbo\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"route-world\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"2029\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"own\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]\\\\\\\\\\\\\\"]\\\\\\",\\\\\\"relationId\\\\\\":\\\\\\"[\\\\\\\\\\\\\\"TEAMMATE\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"kbo\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"OB\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"H\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",11]\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"own\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]\\\\\\\\\\\\\\"]\\\\\\"},\\\\\\"type\\\\\\":\\\\\\"RELATIONS\\\\\\",\\\\\\"version\\\\\\":1}\\"]","eventVersion":1,"definitionId":"E94","title":"같은 출발선의 이름","body":"야구를 하며 기억에 남는 이름이 생겼습니다. 각자의 길은 다르게 이어질 수 있습니다.","relationKey":"[\\"TEAMMATE\\",\\"[\\\\\\"[\\\\\\\\\\\\\\"kbo\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"OB\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"H\\\\\\\\\\\\\\",11]\\\\\\",\\\\\\"own\\\\\\"]\\"]","type":"TEAMMATE","otherPlayerKey":"[\\"kbo\\",\\"OB\\",\\"H\\",11]","otherName":"송현우","otherInCurrentWorld":true,"seasonKey":"2030","occurredWorldDay":31,"targetScreen":"S42"},{"eventKey":"[\\"event-1\\",\\"route-world\\",\\"E95\\",\\"{\\\\\\"fields\\\\\\":{\\\\\\"actualMeetingGameId\\\\\\":\\\\\\"[\\\\\\\\\\\\\\"2030\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"KBO\\\\\\\\\\\\\\",0,3]\\\\\\",\\\\\\"relationId\\\\\\":\\\\\\"[\\\\\\\\\\\\\\"RIVAL\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"[\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"kbo\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"LG\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"H\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",10]\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"own\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"]\\\\\\\\\\\\\\"]\\\\\\",\\\\\\"stageEvidenceId\\\\\\":\\\\\\"controlled-separation:[\\\\\\\\\\\\\\"kbo\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"LG\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"H\\\\\\\\\\\\\\",10]\\\\\\"},\\\\\\"type\\\\\\":\\\\\\"RELATIONS\\\\\\",\\\\\\"version\\\\\\":1}\\"]","eventVersion":1,"definitionId":"E95","title":"다시 마주한 유니폼","body":"서로 다른 시간을 보낸 두 선수가 다시 같은 경기에 나섭니다. 실제 맞대결과 경력을 비교합니다.","relationKey":"[\\"RIVAL\\",\\"[\\\\\\"[\\\\\\\\\\\\\\"kbo\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"LG\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"H\\\\\\\\\\\\\\",10]\\\\\\",\\\\\\"own\\\\\\"]\\"]","type":"RIVAL","otherPlayerKey":"[\\"kbo\\",\\"LG\\",\\"H\\",10]","seasonKey":"2030","occurredWorldDay":31,"targetScreen":"S42","otherName":"남정민","otherInCurrentWorld":true}]',
+    expected: /abilities|potential|seed|rng|stageEvidenceId|actualMeetingGameId|sourceSequence|sourceRevision/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }

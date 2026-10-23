@@ -1,0 +1,40 @@
+{
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "48736898e57ebd3af6239d799c27e9a9901a03ec6c668210be72cf67796db2b9"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "d9be4472f7738435c3b837c8eeb034d3acf41f78ee657abf9bf2adf5e9752fb9"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "1e086b84f5a917d1884152b4d77ffc482a71c0bfa1dbd9153c2c0cff7ebf791b"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "4f2605856625bab8a8d2cb8bbab780ba43c7d79d417ecc3b791a58eaa8185d7b"
+    },
+    {
+      "path": "packages/engine/src/kbo-postseason-progress.ts",
+      "sha256": "a50eadb2d8267fe165dd3adabf5784b19b639200cb6c205c2eb241dda9c0d611"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "sha256": "a4fba89d3271f984d10a127f1fd102f2329acad5eb990043e2b5bae27d9319d4"
+    },
+    {
+      "path": "packages/engine/src/kbo-relations.ts",
+      "sha256": "35725a34c397c1c604d1061dcf53ae71ac292738767ff4bbef7727239b805b2c"
+    },
+    {
+      "path": "packages/engine/src/kbo-reunion-events.ts",
+      "sha256": "26385e68aea7693114a65db13d20031c37c029c90a28fbfc731ade2c628a0d67"
+    },
+    {
+      "path": "packages/engine/test/kbo-reunion-events.test.ts",
+      "sha256": "40713036f50b69232995f804e213e6e6d1a3151fc0f95c1c7da79fcec1a0378d"
+    }
+  ]
+}
