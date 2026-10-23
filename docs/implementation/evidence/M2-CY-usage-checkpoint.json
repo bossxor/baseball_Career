@@ -1,0 +1,56 @@
+{
+  "recordedAt": "2026-10-23T06:51:34.769Z",
+  "baseCommit": "8ca630f6ec1c385d38d0e585482d1ea4c94bac7d",
+  "observedUsage": {
+    "primaryUsedPercent": 95,
+    "primaryRemainingPercent": 5,
+    "weeklyUsedPercent": 30,
+    "weeklyRemainingPercent": 70
+  },
+  "newImplementationFrozen": true,
+  "activeCodeTests": {
+    "tests": 585,
+    "pass": 585,
+    "fail": 0,
+    "cancelled": 0
+  },
+  "runtimeUnchangedFromFullCheck": true,
+  "postHandoffDesignValidators": 10,
+  "manifestEntries": 359,
+  "pending": [
+    "army E96 prototype not active",
+    "NPC June30 return/payroll/growth/future liabilities",
+    "real UI/auth/Neon/APK"
+  ],
+  "shutdownRequestedThisRun": false,
+  "files": [
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "8fe75309a37339251d0ed376fd0ab1191c612fb35b7b9f3d2c2cfaa91b22fb94"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "77d2341d294dfd50a7d72e6c04b87c4a09e21c8472d25cf9e1430c8ea2a2532a"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "c1561ad8db73736b7ae9cd7cd7862b7913989340dd836d9629f9e000aa2bf822"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "07ab484883070f03d3f1a685f059d6cfa86bcc72680ec74bb67e84d79b17b41f"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "0da5e97387f0c7c3ef188391e3c867f36a9f31fdab4c970aec26b98a1ac85d87"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CY-handoff-design.log",
+      "sha256": "13ea6ea3bb96a9c18baa45f723521771741fe90ac03b67f45c564b6745f026f2"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CY-handoff-manifest.log",
+      "sha256": "a877bca0177773bf3514bdee3fa1e9c0909a162ab18293d6695e5d21ed3bafb7"
+    }
+  ]
+}
