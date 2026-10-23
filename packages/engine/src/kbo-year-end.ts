@@ -1,3 +1,4 @@
+import {closeKboNpcMilitaryGrowth} from './kbo-npc-military-growth.js';
 import {settleKboFreeAgentSeason} from './kbo-free-agents.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
@@ -10,7 +11,7 @@ export interface KboSeasonClose {receiptKey:string;seasonKey:string;sourceRevisi
 /** Every pro NPC at year end (college M2-Z pattern): one natural PRO growth period over the whole growth calendar from
  * official regular KBO+FUTURES appearances and club-game rehab days, then full-season aging once. No in-season NPC
  * training exists, so the season-start snapshot is the closing player. */
-function closeKboNpcSeasons(source:KboCareer){
+function closeKboNpcSeasons(source:KboCareer,excluded:ReadonlySet<string>){
  const season=source.world.seasonKey,W=source.world.calendar.growthDays.length,appear=new Map<string,number>(),games=Object.values(source.records.games).filter(g=>g.scope.seasonKey===season && g.scope.phase==='REGULAR' && (g.scope.leagueKey==='KBO' || g.scope.leagueKey==='FUTURES'));
  const clubDays=new Map<string,Set<number>>();
  for(const g of games){
@@ -20,7 +21,7 @@ function closeKboNpcSeasons(source:KboCareer){
  }
  const players={...source.world.players},results:NonNullable<KboSeasonClose['npcGrowth']>={};
  for(const club of source.world.clubs){const days=clubDays.get(club.id)??new Set<number>();for(const k of club.roster){
-  if(k===source.protagonistKey)continue;const player=players[k]!;
+  if(k===source.protagonistKey || excluded.has(k))continue;const player=players[k]!;
   let rehab=Object.hasOwn(source.health.injuries,k) && source.health.injuries[k]!.seasonKey!==season && !source.days!.days.some(d=>d.result.injured.includes(k)),rehabDays=0;
   for(const d of source.days!.days){if(days.has(d.day) && rehab)rehabDays++;if(d.result.injured.includes(k))rehab=true;if(d.result.recovered.includes(k))rehab=false;}
   const budgetUnits=naturalGrowthBudgetUnits(player,W,[{startDay:0,endDay:W,levelSeasonDays:W,level:'PRO',appearances:appear.get(k)??0,pitcherRole:player.position==='RP'?'RP':player.position==='CP'?'CP':'SP',rehabRatio:days.size?rehabDays/days.size:0,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER',difficulty:source.difficulty,beneficiary:false}}]);
@@ -50,10 +51,17 @@ export function closeKboSeason(source:KboCareer,expectedRevision:number,forfeitU
   const ledger=career.development,result=applySeasonTraining(career.world.players[key]!,ledger.trainingUsedSeasons,{type:'SKIP'},{seasonId:season,completedTeamGames:scheduled,scheduledTeamGames:scheduled,injured:false,windowOpen:true,careerCheat:source.difficulty==='SECRET_CHEAT'},ledger.trainingRng);
   career.world.players[key]=result.player;career.development={...ledger,trainingUsedSeasons:result.usedSeasons,trainingRng:result.state};forfeited=true;
  }
+ const militaryNpc=closeKboNpcMilitaryGrowth(source);
  const closed=finalizeSeasonGrowth(career.world.players[key]!,career.seasonGrowth,W);
  career.world.players[key]=closed.player;career.seasonGrowth=closed.ledger;career.health=closeSeasonHealth(career.health,season).ledger;
- const npc=closeKboNpcSeasons(career);career.world.players=npc.players;
+ const npc=closeKboNpcSeasons(career,new Set(militaryNpc.keys()));career.world.players=npc.players;
  if(career.freeAgents)career.freeAgents=settleKboFreeAgentSeason(career.freeAgents,career.world.calendar,career.difficulty);
+ for(const [npcKey,value] of militaryNpc){
+  if(career.world.players[npcKey])career.world.players[npcKey]=value.player;
+  else if(career.sangmu?.members[npcKey])career.sangmu.members[npcKey]!.player=value.player;
+  else if(career.freeAgents?.players[npcKey]){career.freeAgents.players[npcKey]!.player=value.player;career.freeAgents.settlement!.players[npcKey]=value.result;}
+  npc.results[npcKey]=value.result;
+ }
  career.revision++;
  career.seasonClose={receiptKey:JSON.stringify(['kbo-season-close',career.world.worldKey,season]),seasonKey:season,sourceRevision:career.revision,agingLossUnits:closed.lossUnits,trainingForfeited:forfeited,npcGrowth:npc.results};
  return career;

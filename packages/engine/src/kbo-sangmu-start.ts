@@ -1,3 +1,4 @@
+import {activateKboNpcMilitaryContracts} from './kbo-npc-military.js';
 import {kboActiveContractSuspended} from './kbo-service-payroll.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
@@ -24,7 +25,7 @@ export function startSangmuCohort(source:KboCareer,expectedRevision:number):KboC
  const career=structuredClone(source),unit=career.sangmu??emptySangmuUnit();
  // My own player already holds one slot of this recruitment when he enlisted for it (his application was the same snapshot).
  const mine=career.military?.status==='SERVING_SPORTS' && career.military.program?.blocks[0]?.seasonKey===career.world.seasonKey?career.world.players[career.protagonistKey]!.kind:null;
- const selection=selectSangmuCohort({world:career.world,records:career.records,health:career.health,seasonKey:selectionSeason,serving:new Set(Object.keys(unit.members)),excluded:new Set([career.protagonistKey]),reserved:{hitters:mine==='HITTER'?1:0,pitchers:mine==='PITCHER'?1:0}});
+ const selection=selectSangmuCohort({world:career.world,records:career.records,health:career.health,seasonKey:selectionSeason,serving:new Set([...Object.keys(unit.members),...Object.values(unit.npcReturns??{}).map(r=>r.program.playerKey)]),excluded:new Set([career.protagonistKey]),reserved:{hitters:mine==='HITTER'?1:0,pitchers:mine==='PITCHER'?1:0}});
  career.sangmu=enlistSangmuCohort(career.world,unit,selection,career.protagonistClubId);
  const club=source.world.clubs.find(c=>c.id===source.protagonistClubId),key=source.protagonistKey,selected=new Set(selection.selected.map(a=>a.playerKey)),seen=new Set<string>();
  career.relationships.relations=career.relationships.relations.map(r=>{
@@ -36,5 +37,5 @@ export function startSangmuCohort(source:KboCareer,expectedRevision:number):KboC
   if(r.milestones.some(m=>m.evidenceKey===evidenceKey))throw new RangeError('SANGMU_RELATION_EVIDENCE_REUSED');
   return {...r,stage:'SEPARATED' as const,milestones:[...r.milestones,{stage:'SEPARATED' as const,evidenceKey,worldDay:career.world.calendar.growthDays[0]!}]};
  });
- career.revision++;return career;
+ activateKboNpcMilitaryContracts(source,career);career.revision++;return career;
 }

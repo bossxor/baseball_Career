@@ -1,0 +1,152 @@
+{
+  "method": "Exact unique context application; empty unified context markers restored; each resulting draft hash verified as LF or CRLF before any write.",
+  "files": [
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-ai-offseason.ts",
+      "hunks": 3,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "dfce44b8809aa06bbef5b476da1f12c553bb15e53fa49a3ca40a187506bee3c0"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-archive-view.ts",
+      "hunks": 1,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "cc9dadd8a4a2ef690036eed13bb8d9c7480f04af9dcb3a4c95b7c7ff6c03a8a6"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-callup.ts",
+      "hunks": 2,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "4d922bb213d299bb448f59390013efbfca698a90cb69edae65059ac63514b6f3"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "hunks": 2,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "875bedd24077a9f039093fde6431c5fbfc3ea8c2ac2fd1faf5b830720e6c63ae"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-career-version.ts",
+      "hunks": 1,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "1aae09d4eafb35f547a0803ef214a6fe24e82c4fd65e1728d8e5f615de62dee0"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-draft.ts",
+      "hunks": 2,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "b20dce5c7a1abae79669dedeefec341c98d3669009488c890bc99fad48ef674b"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-finance.ts",
+      "hunks": 6,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "7bd44c41db0b2750b9e10a1dd05aea1bec05b77241394367c5cfd9b6e3de0a1e"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-npc-military.ts",
+      "hunks": 1,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "43d1a60393b3b0ee125113b795a4c68677d21686ad19806fab8fec3644f3da48"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-progress.ts",
+      "hunks": 3,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "c4f84c5d0b256674f95eec43715f9e94fbd69122fff9b4c59786032d37ee1c09"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-remainder-pay.ts",
+      "hunks": 1,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "bb2d0d4d0a95814cc3c11c7b3e92e7a1f19c94043b518ba9f8672424615e69f5"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-sangmu-start.ts",
+      "hunks": 3,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "b257acc0ec41e56e8fe3d0cc9b976b848d959f9b89bc70b83b01d0aed17431f1"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-sangmu-unit.ts",
+      "hunks": 3,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "5a2fcf866c0f97d9442a500827e234f500b38b8ca1ee1862a223a52df9d0272e"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-service-payroll.ts",
+      "hunks": 3,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "b10f59db281d9f9e35512b2a166bef67d94b7100c3aaae077a1ec4d8b399aca9"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-world.ts",
+      "hunks": 1,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "ea6b209a22d03fcd3c317cd0af012ea6329d8a373dba5e84422b935816385c1d"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "hunks": 5,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "8b3e80f55297226f9cf57030013f91b56ef7b98b2fff1c198ca15775ece2c2a1"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/test/kbo-military-events.test.ts",
+      "hunks": 3,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "01c715f4b779d80929a2520abaa08d88db35a9cb1b45c66224c9f5502b96f442"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/test/kbo-npc-military.test.ts",
+      "hunks": 1,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "75e00296d7a60fcb4ef24dc5a37b1e00158871f545a9026521e32229e7cef266"
+    },
+    {
+      "artifact": "DA.patch",
+      "path": "packages/engine/test/kbo-sangmu-emergency.test.ts",
+      "hunks": 1,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "c3206c0d8d5512eaf121ec0f737fc86b9dd660cedde645c92ec704f1597ac778"
+    },
+    {
+      "artifact": "DB-over-DA.patch",
+      "path": "packages/engine/src/kbo-npc-military-growth.ts",
+      "hunks": 1,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "20a0f61649f201435d4336e323426339d0c02e94ba1336eabf48b17305be1843"
+    },
+    {
+      "artifact": "DB-over-DA.patch",
+      "path": "packages/engine/src/kbo-year-end.ts",
+      "hunks": 4,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "8b25a44201fe4195a6fe8bba70eccb34fab5f087b860016a723c26d677c17eb7"
+    },
+    {
+      "artifact": "DB-over-DA.patch",
+      "path": "packages/engine/test/kbo-npc-military.test.ts",
+      "hunks": 3,
+      "recordedDraftHashMatched": true,
+      "lfSha256": "1146252ab1d419e8a241d26672e169327f286e997f3eb474a934d17bb02ced66"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import {reserveKboNpcServiceRosterChange} from './kbo-service-payroll.js';
 import {roleScore} from '@playball/rules';
 import type {KboCareer} from './kbo-career-entry.js';
 import type {KboSeasonProgress} from './kbo-progress.js';
@@ -66,7 +67,8 @@ export function resolveKboCallup(source:KboCareer,expectedRevision:number,input:
  if(input.command==='ACCEPT_CALLUP'){
   const club=career.world.clubs.find(c=>c.id===career.protagonistClubId)!;
   if(!club.firstTeam.includes(review.comparedKey) || club.firstTeam.includes(career.protagonistKey))throw new RangeError('CALLUP_SLOT_CHANGED');
-  club.firstTeam=club.firstTeam.map(k=>k===review.comparedKey?career.protagonistKey:k);
+  const nextFirst=club.firstTeam.map(k=>k===review.comparedKey?career.protagonistKey:k);
+  if(!reserveKboNpcServiceRosterChange(career,club.id,nextFirst))throw new RangeError('CALLUP_BUDGET_CAPACITY_REQUIRED');club.firstTeam=nextFirst;
   career.registration={...career.registration,firstTeam:true,competitionKey:'KBO'};
  }
  const resolved=completeEventDomain(event,selected.domain,JSON.stringify(['kbo-callup',source.world.worldKey,input.command,source.revision+1]),context);
@@ -92,7 +94,7 @@ export function reviewKboAiRosters(source:KboCareer):KboCareer|null {
    const weakest=club.firstTeam.filter(k=>healthy(k) && !moved.has(k) && career.world.players[k]!.kind===p.kind && career.world.players[k]!.position===p.position)
     .map(k=>({key:k,score:kboCompetitionScore(career,k,'KBO')})).sort((a,b)=>a.score-b.score || (a.key<b.key?1:-1))[0];
    if(!weakest || c.score<=weakest.score)continue;
-   club.firstTeam=club.firstTeam.map(k=>k===weakest.key?c.key:k);moved.add(c.key);
+   const nextFirst=club.firstTeam.map(k=>k===weakest.key?c.key:k);if(!reserveKboNpcServiceRosterChange(career,club.id,nextFirst))continue;club.firstTeam=nextFirst;moved.add(c.key);
   }
  }
  if(!changed)return null;

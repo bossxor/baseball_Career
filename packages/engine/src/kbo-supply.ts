@@ -1,5 +1,5 @@
 import {kboAiRoleNeed} from './kbo-ai-offseason.js';
-import {kboClubBalance} from './kbo-finance.js';
+import {kboClubBalance,kboRecruitmentOpen} from './kbo-finance.js';
 import {KBO_MONEY,KBO_ROSTER_LIMITS,roleScore} from '@playball/rules';
 import type {ActiveKboRosterWorld} from './kbo-career-entry.js';
 import {generateSchoolNpcRoster,HITTER_POSITIONS,PITCHER_POSITIONS} from './school-roster.js';
@@ -23,7 +23,7 @@ export function draftKboRookieClass(world:ActiveKboRosterWorld,seasonKey:string,
  const pool=new Set(Object.keys(generated.players)),picks:KboRookiePick[]=[];
  for(let round=1;round<=KBO_ROOKIE_CLASS.rounds;round++)for(const [slot,clubId] of worstFirst.entries()){
   const club=world.clubs.find(c=>c.id===clubId)!;
-  if(club.roster.length>=KBO_ROSTER_LIMITS.maximum || kboClubBalance(world,club.id).availableWon<KBO_MONEY.minimumSalaryWon || club.paidSalaryWon+club.reservedSalaryWon+kboClubBalance(world,club.id).guaranteedWon+KBO_MONEY.minimumSalaryWon>club.budgetWon*.9)continue;
+  if(!kboRecruitmentOpen(world,club.id) || club.roster.length>=KBO_ROSTER_LIMITS.maximum || kboClubBalance(world,club.id).availableWon<KBO_MONEY.minimumSalaryWon || club.paidSalaryWon+club.reservedSalaryWon+kboClubBalance(world,club.id).guaranteedWon+KBO_MONEY.minimumSalaryWon>club.budgetWon*.9)continue;
   const members=club.roster.map(k=>world.players[k]!);
   let best:{key:string;tier:number;score:number}|null=null;
   for(const key of [...pool].sort()){

@@ -1,4 +1,4 @@
-import {kboContractSeasonCharge} from './kbo-service-payroll.js';
+import {kboContractPaymentBalance} from './kbo-contract-payments.js';
 import {KBO_MONEY,KBO_ROSTER_LIMITS,roleScore} from '@playball/rules';
 import type {ActiveKboRosterWorld} from './kbo-career-entry.js';
 import type {DevelopmentPlayer} from './player.js';
@@ -11,7 +11,7 @@ import type {HealthLedger} from './health.js';
 import {reconcileAssessment,assessmentMidpointScore,observeAssessmentProgress} from './assessment.js';
 import type {AssessmentProgress,PotentialRange} from './assessment.js';
 import {kboPlayerContractValue,kboRenewalSalaryWon} from './kbo-contract-value.js';
-import {kboClubBalance} from './kbo-finance.js';
+import {archiveKboSettledContract,kboRosterSeasonCharge,kboClubBalance,kboRecruitmentOpen,protectKboServiceBudget} from './kbo-finance.js';
 
 export interface KboAiAssessment {schemaVersion:1;modelVersion:'potential-1';level:number;progress:AssessmentProgress;ranges:Record<string,PotentialRange>}
 export type KboAiAssessments=Record<string,KboAiAssessment>;
@@ -49,20 +49,21 @@ export function prepareKboAiRenewals(input:{world:ActiveKboRosterWorld;pool:KboF
  const {world,pool}=input;
  if(Number(world.seasonKey)!==Number(input.sourceSeasonKey)+1 || pool.worldKey!==world.worldKey || pool.seasonKey!==world.seasonKey || pool.settlement || new Set(input.expiringKeys).size!==input.expiringKeys.length || input.expiringKeys.includes(input.protagonistKey))throw new RangeError('INVALID_KBO_AI_RENEWAL_SOURCE');
  assertKboFreeAgentPool(pool,Object.keys(world.players));
- for(const key of input.expiringKeys){const prior=input.priorContracts[key],c=world.contracts[key];if(!prior || !c || !Object.hasOwn(world.players,key) || c.seasonKey!==world.seasonKey || c.years!==1 || world.clubs.filter(t=>t.id===c.clubId && t.roster.includes(key)).length!==1 || c.contractKey!==prior.contractKey || c.annualSalaryWon!==prior.annualSalaryWon || c.clubId!==prior.clubId || Number(input.sourceSeasonKey)-Number(prior.seasonKey)+1<prior.years)throw new RangeError('INVALID_KBO_AI_EXPIRING_CONTRACT');}
- const next=structuredClone(world),freeAgents=structuredClone(pool),health=structuredClone(input.health),candidates=new Map(input.expiringKeys.map(key=>[key,{player:structuredClone(world.players[key]!),contract:structuredClone(input.priorContracts[key]!),repertoire:world.repertoires[key]?structuredClone(world.repertoires[key]):undefined}]));
+ for(const key of input.expiringKeys){const prior=input.priorContracts[key],c=world.contracts[key];if(!prior || !c || !Object.hasOwn(world.players,key) || c.seasonKey!==world.seasonKey || c.years!==1 || world.clubs.filter(t=>t.id===c.clubId && t.roster.includes(key)).length!==1 || c.contractKey!==prior.contractKey || c.annualSalaryWon!==prior.annualSalaryWon || c.clubId!==prior.clubId || Number(input.sourceSeasonKey)-Number(prior.seasonKey)+1<prior.years && !(prior.servicePay && kboContractPaymentBalance(prior.servicePay.ledger).status==='SETTLED'))throw new RangeError('INVALID_KBO_AI_EXPIRING_CONTRACT');}
+ const next=structuredClone(world);for(const k of input.expiringKeys){const c=input.priorContracts[k]!;if(c.servicePay || c.remainderPay)archiveKboSettledContract(next,c);}
+ const freeAgents=structuredClone(pool),health=structuredClone(input.health),candidates=new Map(input.expiringKeys.map(key=>[key,{player:structuredClone(world.players[key]!),contract:structuredClone(input.priorContracts[key]!),repertoire:world.repertoires[key]?structuredClone(world.repertoires[key]):undefined}]));
  const reports=refreshKboAiAssessments({...input,players:[...candidates.values()].map(c=>c.player)}),totals=recordTotals(input.records,{leagueKey:'KBO',phase:'REGULAR',seasonKey:input.sourceSeasonKey});
  const renewed:KboAiRenewalReceipt['renewed'][number][]=[],expired:KboAiRenewalReceipt['expired'][number][]=[];
  for(const club of next.clubs){
   const mine=input.expiringKeys.filter(k=>input.priorContracts[k]!.clubId===club.id),unresolved=new Set(mine);
   club.roster=club.roster.filter(k=>!unresolved.has(k));club.firstTeam=club.firstTeam.filter(k=>!unresolved.has(k));
   for(const key of mine){delete next.players[key];delete next.contracts[key];delete next.repertoires[key];}
-  club.reservedSalaryWon=club.roster.reduce((n,k)=>n+kboContractSeasonCharge(next.contracts[k]!),0);club.paidSalaryWon=0;
-  while(unresolved.size && club.roster.length<KBO_ROSTER_LIMITS.initial){
+  club.reservedSalaryWon=kboRosterSeasonCharge(next,club.id);club.paidSalaryWon=0;protectKboServiceBudget(next,club.id);
+  while(unresolved.size && club.roster.length<KBO_ROSTER_LIMITS.initial && kboRecruitmentOpen(next,club.id)){
    const ranked=[...unresolved].map(key=>{const c=candidates.get(key)!,p=c.player,need=kboAiRoleNeed(p,club.roster.map(k=>next.players[k]!)),v=kboPlayerContractValue(p,totals.batting[key],totals.pitching[key]),salary=kboRenewalSalaryWon(c.contract.annualSalaryWon,v.valueWon),score=kboAiCandidatePriority({roleScore:roleScore(p.kind,p.abilities,p.position),...need,outlookMidpoint:assessmentMidpointScore(p.kind,reports[key]!.ranges),annualSalaryWon:salary,budgetWon:club.budgetWon});return {key,salary,score,need:need.needScore};}).sort((a,b)=>Number(b.need===100)-Number(a.need===100) || b.score-a.score || (a.key<b.key?-1:a.key>b.key?1:0));
    const best=ranked.find(r=>{const b=kboClubBalance(next,club.id),protectedAfter=Math.max(0,KBO_ROSTER_LIMITS.minimum-(club.roster.length+1))*KBO_MONEY.minimumSalaryWon;return club.paidSalaryWon+club.reservedSalaryWon+r.salary+b.guaranteedWon+protectedAfter<=club.budgetWon+b.supportWon;});if(!best)break;
    const c=candidates.get(best.key)!;next.players[best.key]=c.player;if(c.repertoire)next.repertoires[best.key]=c.repertoire;
-   next.contracts[best.key]={...c.contract,contractKey:JSON.stringify(['kbo-ai-renewal',world.worldKey,world.seasonKey,best.key]),seasonKey:world.seasonKey,years:1,annualSalaryWon:best.salary};club.roster.push(best.key);club.reservedSalaryWon+=best.salary;unresolved.delete(best.key);renewed.push({playerKey:best.key,clubId:club.id,annualSalaryWon:best.salary});
+   next.contracts[best.key]={playerKey:best.key,clubId:club.id,signingBonusWon:0,status:'ACTIVE',contractKey:JSON.stringify(['kbo-ai-renewal',world.worldKey,world.seasonKey,best.key]),seasonKey:world.seasonKey,years:1,annualSalaryWon:best.salary};club.roster.push(best.key);club.reservedSalaryWon+=best.salary;unresolved.delete(best.key);renewed.push({playerKey:best.key,clubId:club.id,annualSalaryWon:best.salary});
   }
   for(const key of unresolved){const c=candidates.get(key)!;if(Object.hasOwn(freeAgents.players,key))throw new RangeError('KBO_AI_DOUBLE_FREE_AGENT');freeAgents.players[key]={player:c.player,previousClubId:club.id,previousContract:c.contract,origin:'EXPIRED',enteredSeasonKey:world.seasonKey,...(input.health.injuries[key]?{injury:structuredClone(input.health.injuries[key]!)}:{}),...(c.repertoire?{repertoire:c.repertoire}:{})};expired.push({playerKey:key,clubId:club.id});}
   club.roster.sort();

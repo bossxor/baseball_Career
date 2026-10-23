@@ -1,3 +1,4 @@
+import {closeKboNpcMilitaryCalendarDay} from '../src/kbo-npc-military.js';
 import {kboContractPaymentBalance} from '../src/kbo-contract-payments.js';
 import {kboContractSeasonCharge,settleKboServicePayrollDay} from '../src/kbo-service-payroll.js';
 import {assertKboRecruitmentWorld} from '../src/kbo-draft.js';
@@ -25,7 +26,7 @@ function closed(c:KboCareer):KboCareer {
  const p=confirmKboPreseasonPlan(c,c.revision),o=confirmKboOpeningRoster(p,p.revision),s=confirmKboSeasonSchedule(o,o.revision);let g=startKboRegularSeason(s,s.revision);
  const all=[...g.competitionSchedule!.leagues.KBO,...g.competitionSchedule!.leagues.FUTURES],first=Math.min(...all.map(x=>x.worldDay)),last=Math.max(...all.map(x=>x.worldDay));
  g.days={...g.days!,days:Array.from({length:last-first+1},(_,i)=>({day:first+i,evidence:'controlled-clock',result:{injured:[],recovered:[]}}))};
- g.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:last+1,pendingGame:null};closeKboMilitaryCalendarDay(g,last,g.phaseContext);g.phaseContext={phase:'SEASON_REVIEW'};
+ g.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:last+1,pendingGame:null};closeKboMilitaryCalendarDay(g,last,g.phaseContext);closeKboNpcMilitaryCalendarDay(g,last);g.phaseContext={phase:'SEASON_REVIEW'};
  g=startKboPostseason(g,g.revision);for(let i=0;i<400;i++){const out=advanceKboPostseason(g,g.revision);g=out.career;if(out.stopReason==='POSTSEASON_COMPLETE')break;}
  g=settleKboSeasonGrowth(g,g.revision).career;return closeKboSeason(g,g.revision,true);
 }
@@ -66,7 +67,7 @@ test('actual June30 date queue closes service once, E53 stops, following dates r
  assert.throws(()=>advanceKboCareer(g,g.revision,1),/INVALID_CAREER_PHASE/);g=acknowledge(g,'CONFIRM_SERVICE_RETURN');
  for(let i=0;i<150 && !g.health.games.some(x=>x.evidence.seasonKey===g.world.seasonKey && x.evidence.day>due && x.evidence.teamKey==='FUTURES:'+g.protagonistClubId && x.evidence.roster.includes(g.protagonistKey));i++)g=advanceKboCareer(g,g.revision,1).career;
  assert.ok(g.health.games.some(x=>x.evidence.seasonKey===g.world.seasonKey && x.evidence.day>due && x.evidence.teamKey==='FUTURES:'+g.protagonistClubId && x.evidence.roster.includes(g.protagonistKey)));
- const paidContract=g.world.contracts[g.protagonistKey]!,balance=kboContractPaymentBalance(paidContract.servicePay!.ledger);assert.ok(balance.paidDays>=1);const ownClub=g.world.clubs.find(c=>c.id===g.protagonistClubId)!;assert.equal(ownClub.paidSalaryWon,balance.paidWon);assertKboRecruitmentWorld(g.world);
+ const paidContract=g.world.contracts[g.protagonistKey]!,balance=kboContractPaymentBalance(paidContract.servicePay!.ledger);assert.ok(balance.paidDays>=1);const ownClub=g.world.clubs.find(c=>c.id===g.protagonistClubId)!;assert.equal(ownClub.paidSalaryWon,Object.values(g.world.contracts).filter(c=>c.clubId===g.protagonistClubId).reduce((n,c)=>n+(c.servicePay?.ledger.receipts.filter(r=>r.seasonKey===g.world.seasonKey).reduce((sum,r)=>sum+r.amountWon,0)??0),0));assertKboRecruitmentWorld(g.world);
  const replay=structuredClone(g),before=JSON.stringify(replay);settleKboServicePayrollDay(replay,replay.days!.days.at(-1)!.day);assert.equal(JSON.stringify(replay),before);assert.equal(first.world.contracts[first.protagonistKey]!.servicePay!.ledger.receipts.length,0);
  const games=Object.values(g.records.games).filter(x=>x.scope.seasonKey===g.world.seasonKey && x.worldDay>=due);for(const day of new Set(games.map(x=>x.worldDay)))assert.ok(games.filter(x=>x.worldDay===day && (Object.hasOwn(x.batting,g.protagonistKey)||Object.hasOwn(x.pitching,g.protagonistKey))).length<=1);
 });

@@ -1,0 +1,12 @@
+{
+  "sourceFilesUnchanged": 261,
+  "manifestEntriesVerified": 359,
+  "fullCheckExit": 0,
+  "tests": 613,
+  "pass": 613,
+  "fail": 0,
+  "cancelled": 0,
+  "testDurationMs": 405753.5182,
+  "designValidators": 10,
+  "smoke": "HTTP web assets and API rules version only; no browser/UI/auth/DB/APK test"
+}

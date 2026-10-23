@@ -68,20 +68,22 @@ import {assertKboRecruitmentWorld} from './kbo-draft.js';
 import {kboContractSeasonCharge} from './kbo-service-payroll.js';
 
 /** Conservative upper bound from both already-published calendars; never counts one date twice. */
-export function kboRemainderFutureDates(c:KboCareer,afterDay:number):number {
+export function kboRemainderFutureDates(c:KboCareer,afterDay:number):number {return kboClubRemainderFutureDates(c,c.protagonistClubId,afterDay);}
+export function kboClubRemainderFutureDates(c:KboCareer,clubId:string,afterDay:number):number {
  if(!c.competitionSchedule)throw new RangeError('KBO_SCHEDULE_REQUIRED');
- return new Set([...c.competitionSchedule.leagues.KBO,...c.competitionSchedule.leagues.FUTURES].filter(g=>g.worldDay>afterDay && (g.homeTeamKey===c.protagonistClubId || g.awayTeamKey===c.protagonistClubId)).map(g=>g.worldDay)).size;
+ return new Set([...c.competitionSchedule.leagues.KBO,...c.competitionSchedule.leagues.FUTURES].filter(g=>g.worldDay>afterDay && (g.homeTeamKey===clubId || g.awayTeamKey===clubId)).map(g=>g.worldDay)).size;
 }
 /** Caller owns the progress clone; joins actual official registrations and publishes one money transaction. */
-export function settleKboRemainderPayrollDay(career:KboCareer,day:number):void {
- const old=career.world.contracts[career.protagonistKey]!;if(!old.remainderPay)return;
+export function settleKboRemainderPayrollDay(career:KboCareer,day:number):void {settleKboPlayerRemainderPayrollDay(career,career.protagonistKey,day);}
+export function settleKboPlayerRemainderPayrollDay(career:KboCareer,playerKey:string,day:number):void {
+ const old=career.world.contracts[playerKey]!;if(!old.remainderPay)return;
  if(career.days?.days.at(-1)?.day!==day || day<=old.remainderPay.startAfterWorldDay || day>old.remainderPay.endWorldDay)throw new RangeError('PAYROLL_DAY_NOT_FINAL');
  const oldCharge=kboContractSeasonCharge(old),club=career.world.clubs.find(x=>x.id===old.clubId)!;
  const matches=career.health.games.map(x=>x.evidence).filter(r=>r.seasonKey===career.world.seasonKey && r.day===day && r.roster.includes(old.playerKey) && ['KBO:'+old.clubId,'FUTURES:'+old.clubId].includes(r.teamKey));
  if(matches.length>1)throw new RangeError('INVALID_REMAINDER_PAYROLL_REGISTRATION');
  let c=structuredClone(old),paidWon=0;
  if(matches.length){const r=matches[0]!,g=career.records.games[r.gameKey];if(!g)throw new RangeError('PAYROLL_GAME_NOT_FINAL');const out=recordKboRemainderPayment(c,g,r);c=out.contract;paidWon=out.paidWon;}
- if(!c.remainderPay!.settlement)c.remainderPay!.reservedGameDays=kboRemainderFutureDates(career,day);
+ if(!c.remainderPay!.settlement)c.remainderPay!.reservedGameDays=kboClubRemainderFutureDates(career,c.clubId,day);
  if(day===c.remainderPay!.endWorldDay){const out=finalizeKboRemainderPayments(c,day);c=out.contract;paidWon+=out.adjustmentWon;}
  career.world.contracts[c.playerKey]=c;club.reservedSalaryWon+=kboContractSeasonCharge(c)-oldCharge-paidWon;club.paidSalaryWon+=paidWon;assertKboRecruitmentWorld(career.world);
 }

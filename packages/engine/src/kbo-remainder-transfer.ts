@@ -8,8 +8,8 @@ import {assertKboCareerRevision} from './kbo-career-version.js';
 import {assertKboRemainderRenewal} from './kbo-remainder-renewal.js';
 import {assertKboRecruitmentWorld} from './kbo-draft.js';
 import {createKboRemainderContract,kboRemainderBalance} from './kbo-remainder-pay.js';
-import {kboContractSeasonCharge,kboContractSuspended} from './kbo-service-payroll.js';
-import {kboClubBalance} from './kbo-finance.js';
+import {kboContractSeasonCharge,kboContractSuspended,reserveKboNpcServiceRosterChange} from './kbo-service-payroll.js';
+import {kboClubBalance,kboRecruitmentOpen} from './kbo-finance.js';
 import {completeBlockingEvent} from './events.js';
 import {FIELD_POSITIONS,automaticFieldLineup,initialPositionFits} from './lineup.js';
 import {emptyBatting} from './stats.js';
@@ -27,11 +27,11 @@ function repairTransferClub(c:KboCareer,club:KboClub,leaving?:DevelopmentPlayer)
   c.freeAgents??={schemaVersion:1,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,players:{},supplies:[],retired:[]};
   const receipt=signKboRequiredReplacement(c.world,c.freeAgents,club.id,position,c.difficulty);signings.push(receipt);return receipt.playerKey;
  };
- const bench=(position:string)=>club.roster.filter(k=>k!==c.protagonistKey && !club.firstTeam.includes(k) && available(k) && c.world.players[k]!.position===position).sort((a,b)=>roleScore(c.world.players[b]!.kind,c.world.players[b]!.abilities,position)-roleScore(c.world.players[a]!.kind,c.world.players[a]!.abilities,position) || (a<b?-1:1))[0];
+ const bench=(position:string,leavingKey?:string)=>club.roster.filter(k=>k!==c.protagonistKey && !club.firstTeam.includes(k) && available(k) && c.world.players[k]!.position===position).sort((a,b)=>roleScore(c.world.players[b]!.kind,c.world.players[b]!.abilities,position)-roleScore(c.world.players[a]!.kind,c.world.players[a]!.abilities,position) || (a<b?-1:1)).find(key=>reserveKboNpcServiceRosterChange(c,club.id,leavingKey?club.firstTeam.map(k=>k===leavingKey?key:k):[...club.firstTeam,key]));
  if(club.firstTeam.length===27 && leaving)club.firstTeam=[...club.firstTeam,bench(leaving.position)??sign(leaving.position)];
  if(club.firstTeam.length!==28 || new Set(club.firstTeam).size!==28 || club.firstTeam.some(k=>!club.roster.includes(k)))throw new RangeError('INVALID_KBO_TRANSFER_ROSTER');
  for(const key of [...club.firstTeam])if(!available(key)){
-  const position=c.world.players[key]!.position,replacement=bench(position)??sign(position);club.firstTeam=club.firstTeam.map(k=>k===key?replacement:k);
+  const position=c.world.players[key]!.position,replacement=bench(position,key)??sign(position);club.firstTeam=club.firstTeam.map(k=>k===key?replacement:k);
  }
  const first=club.firstTeam.map(k=>c.world.players[k]!);
  if(first.filter(p=>p.kind==='HITTER').length!==15 || first.filter(p=>p.kind==='PITCHER').length!==13 || first.filter(p=>p.position==='C').length<2 || ([['SP',5],['RP',6],['CP',2]] as const).some(([position,n])=>first.filter(p=>p.position===position).length!==n))throw new RangeError('INVALID_KBO_TRANSFER_ROSTER');
@@ -51,7 +51,7 @@ export function acceptKboRemainderTransfer(source:KboCareer,expectedRevision:num
  const o=assertKboRemainderRenewal(source),event=source.events.find(e=>e.eventKey===o.eventKey)!,offer=o.comparison?.offers.find(x=>x.offerKey===input.offerKey);
  if(input.eventKey!==event.eventKey || !offer || offer.clubId===source.protagonistClubId || source.events.some(e=>e.status==='OPEN' && e.eventKey!==event.eventKey))throw new RangeError('KBO_REMAINDER_OFFER_CHANGED');
  const recipient=source.world.clubs.find(x=>x.id===offer.clubId);
- if(!recipient || recipient.roster.length>=KBO_ROSTER_LIMITS.maximum || kboClubBalance(source.world,recipient.id).availableWon<offer.maximumReservedWon)throw new RangeError('KBO_TRANSFER_CAPACITY_REQUIRED');
+ if(!recipient || !kboRecruitmentOpen(source.world,recipient.id) || recipient.roster.length>=KBO_ROSTER_LIMITS.maximum || kboClubBalance(source.world,recipient.id).availableWon<offer.maximumReservedWon)throw new RangeError('KBO_TRANSFER_CAPACITY_REQUIRED');
  const planBoundaryDays=captureKboTransferPlanBoundaryDays(source),receiptKey=JSON.stringify(['kbo-remainder-transfer',offer.offerKey]);
  const resolved=completeBlockingEvent(event,input.eventVersion,{sourceEvidenceKey:event.evidenceKey,receiptKey,command:'ACCEPT_REMAINDER_TRANSFER'},{worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:o.startAfterWorldDay,eligibleCommands:['OPEN_CAREER_OFFERS']});
  const c=structuredClone(source),key=c.protagonistKey,old=c.world.contracts[key]!,from=c.world.clubs.find(x=>x.id===c.protagonistClubId)!,to=c.world.clubs.find(x=>x.id===offer.clubId)!,wasFirst=from.firstTeam.includes(key);

@@ -7,7 +7,7 @@ import type {KboAiAssessments} from './kbo-ai-offseason.js';
 import {refreshKboAiAssessments,kboAiRoleNeed,kboAiCandidatePriority} from './kbo-ai-offseason.js';
 import {assessmentMidpointScore} from './assessment.js';
 import {kboFreeAgentTerms} from './kbo-contract-value.js';
-import {kboClubBalance,kboFutureCommitmentWon} from './kbo-finance.js';
+import {kboClubBalance,kboFutureCommitmentWon,kboRecruitmentOpen} from './kbo-finance.js';
 import {recordTotals} from './records.js';
 import type {RecordLedger} from './records.js';
 import type {HealthLedger} from './health.js';
@@ -30,6 +30,7 @@ export function runKboAiFreeAgentMarket(input:{world:ActiveKboRosterWorld;pool:K
   reports=refreshKboAiAssessments({world,players:Object.values(pool.players).map(e=>e.player),reports,records:input.records,health:input.health,sourceSeasonKey:input.sourceSeasonKey});
   const terms=new Map(Object.entries(pool.players).map(([k,e])=>[k,kboFreeAgentTerms(e.player,totals.batting[k],totals.pitching[k])])),offers:KboAiFaOffer[]=[];
   for(const club of [...world.clubs].sort((a,b)=>a.id<b.id?-1:a.id>b.id?1:0)){
+   if(!kboRecruitmentOpen(world,club.id))continue;
    const pending:KboAiFaOffer[]=[],members=club.roster.map(k=>world.players[k]!);
    const candidates=Object.keys(pool.players).sort().map(playerKey=>{
     const p=pool.players[playerKey]!.player,t=terms.get(playerKey)!,need=kboAiRoleNeed(p,members),preference=nextFloat(createWorldStream(world.seed,JSON.stringify(['kbo-fa-preference',world.worldKey,playerKey,club.id]),'potential')).value;

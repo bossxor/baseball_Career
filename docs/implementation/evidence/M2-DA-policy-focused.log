@@ -1,0 +1,37 @@
+✔ private renewal preparation keeps every guaranteed/my contract and moves actual expired NPCs to FA; no player loss or redraw (284.4049ms)
+✔ normal50-person clubs are not forced to release players; guaranteed contracts above the50 target stay intact (272.875ms)
+✔ 44 gap/backups and priority use explicit public report midpoint; no P field enters the decision boundary (83.4141ms)
+✔ actual registered bench observations19→20 advance stage once and repeated offseason reads never add evidence (65.1477ms)
+✔ wrong window/own contract/unexpired candidate/registered FA overlap reject without partially releasing a player (106.3021ms)
+✔ an expiring injured NPC moves to FA with unchanged recovery games and leaves no ghost injury in the active world (127.0628ms)
+✔ 34: actual-roster preview is read-only, excludes hidden state and matches one persisted draw after JSON resume (221.9312ms)
+✔ 08/U: position demand beats preferred club, preference resolves equal need/strength only (132.9022ms)
+✔ 34/44: full60-player rosters produce0%/no draw/no offer; exhausted clubs never chosen (127.1711ms)
+✔ signed rookie commits one1-year KRW minimum contract/right/roster and salary reservation, never a first-team promise (218.7211ms)
+✔ stale roster/payroll/assessment/RNG/result/signing reject without partial reservation or reroll (197.8244ms)
+✔ 44: next-season90% guarantee cap blocks a rookie before preview and produces no fake offer (111.2004ms)
+✔ AI fixes all offers before player-ID draws; each player signs once, costs/slots obey all-success reservations and rounds replay exactly (744.7481ms)
+✔ personal career cheat does not turn AI club bids into100% wins or NPC potential100 (569.9959ms)
+✔ an injured free agent keeps the same remaining games when signing; no market day heals or creates a medical receipt (261.5539ms)
+✔ wrong season/registered FA/closed pool rejects; no partial contracts or paid medical days (121.3795ms)
+✔ midseason offer is fixed, private and blocking; explicit acceptance preserves original receipts and budgets before real play resumes (2971.4503ms)
+✔ stale events and forged term/basis reject atomically; insufficient budget cannot silently fund a renewal (657.9146ms)
+✔ actual final regular date settles new pay once; postseason pays no extra; normal next-year renewal archives all prior contract receipts (10538.487ms)
+✔ pitcher transfer carries the exact book and XP budget, then actual new-club pitching continues without resetting prior entries (7032.8657ms)
+✔ foreign acceptance atomically preserves old pay, records, health, growth and relations; actual next registration pays new club once (4189.4075ms)
+✔ foreign acceptance rejects stale/forged/funded-capacity changes with the entire source intact (985.8187ms)
+✔ recipient injury repair keeps incoming player in Futures and preserves existing injury evidence (385.6017ms)
+✔ leaving a first-team required position repairs only the old club vacancy and independent Futures slot (266.8857ms)
+✔ transferred term settles on final regular day, pays no postseason extra and preserves receipts/version into next year (6988.4853ms)
+✔ valid pre-intake obligations may cross90% only through preserved service principal, without issuing future support (706.3161ms)
+✔ future debt blocks optional one-year FA and rookie acquisitions even with available current cash (443.4296ms)
+✔ AI sends an expired optional renewal to FA while faithfully retaining the original military debt (150.1432ms)
+✔ annual renewal checks its target year, preserves fundable choice after a current rescue, and refuses new overcommitment (115.7385ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20205.0907

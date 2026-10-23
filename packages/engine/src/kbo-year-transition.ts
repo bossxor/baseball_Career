@@ -1,10 +1,11 @@
-import {kboContractSeasonCharge,createKboServicePayroll,carryKboServicePayroll} from './kbo-service-payroll.js';
+import {returnKboNpcMilitaryPlayers} from './kbo-npc-military.js';
+import {createKboServicePayroll,carryKboServicePayroll} from './kbo-service-payroll.js';
 import {kboContractPaymentBalance} from './kbo-contract-payments.js';
 import {queueKboMilitaryFirstBlock} from './kbo-military-events.js';
 import {prepareKboAiRenewals} from './kbo-ai-offseason.js';
 import {runKboAiFreeAgentMarket} from './kbo-fa-market.js';
 import {repairKboDualLeagueRosters} from './kbo-roster-repair.js';
-import {reserveKboOffseasonGuarantee} from './kbo-finance.js';
+import {kboRosterSeasonCharge,reserveKboOffseasonGuarantee} from './kbo-finance.js';
 import {nextKboFreeAgentYear} from './kbo-free-agents.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {validateSeasonGrowthLedger,createSeasonGrowthLedger} from './growth-ledger.js';
@@ -61,7 +62,7 @@ export function stageKboAgeAndContracts(source:KboCareer):KboAgeContractStage {
  for(const key of Object.keys(source.world.players).sort()){
   const age=source.world.players[key]!.age+1,c=source.world.contracts[key],renewed=key===source.protagonistKey?acceptedRenewal(source):null;
   const residual=c?.servicePay?kboContractPaymentBalance(c.servicePay.ledger).remainingPaidGameDays:0;
-  const contract=renewed?{contractKey:renewed.offerKey,contractYear:1,years:1,expired:false}:c?.servicePay && residual>0?{contractKey:c.contractKey,contractYear:1,years:Math.ceil(residual/144),expired:false}:c?{contractKey:c.contractKey,contractYear:target-Number(c.seasonKey)+1,years:c.years,expired:target-Number(c.seasonKey)+1>c.years}:null;
+  const contract=renewed?{contractKey:renewed.offerKey,contractYear:1,years:1,expired:false}:c?.servicePay && residual>0?{contractKey:c.contractKey,contractYear:1,years:Math.ceil(residual/144),expired:false}:c?.servicePay?{contractKey:c.contractKey,contractYear:c.years+1,years:c.years,expired:true}:c?{contractKey:c.contractKey,contractYear:target-Number(c.seasonKey)+1,years:c.years,expired:target-Number(c.seasonKey)+1>c.years}:null;
   players[key]={age,contract};
   if(age>KBO_MAX_PLAYER_AGE)overAge.push(key);
   if(contract?.expired)expiring.push(key);
@@ -101,7 +102,8 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
   if(k===key && !activated.servicePay && service?.contractPaymentVersion===1 && ['SERVING_SPORTS','SERVING_ACTIVE'].includes(service.status) && program?.blocks[0]?.seasonKey===target && service.completionDays){activated.servicePay=createKboServicePayroll(activated,program,service.completionDays[1]!);activated.years=Math.ceil(program.contract.remainingPaidGameDays/144);}
   const book=schoolYearEndRepertoire(source,k);if(book)world.repertoires[k]={...structuredClone(book),seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};
  }
- for(const club of world.clubs){club.paidSalaryWon=0;club.reservedSalaryWon=club.roster.reduce((n,k)=>n+kboContractSeasonCharge(world.contracts[k]!),0);}
+ for(const [k,c] of Object.entries(world.suspendedContracts??{})){const carried={...c,seasonKey:target,servicePay:carryKboServicePayroll(c,target)};carried.years=Math.max(1,Math.ceil(kboContractPaymentBalance(carried.servicePay.ledger).remainingPaidGameDays/144));world.suspendedContracts![k]=carried;}
+ for(const club of world.clubs){club.paidSalaryWon=0;club.reservedSalaryWon=kboRosterSeasonCharge(world,club.id);}
  world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target));
 // Military unit carries over: members age and reset their books like everyone else, the block of the season just played is
 // recorded complete on its last day, and finished programs rejoin their club's Futures squad (full clubs wait in the unit).
@@ -110,7 +112,7 @@ advanceKboMilitaryService(career,source.world.seasonKey,source.days!.days.at(-1)
 if(career.sangmu){
  for(const e of Object.values(career.sangmu.emergency?.entries??{}))if(e.released===null)e.released={seasonKey:source.world.seasonKey,worldDay:source.days!.days.at(-1)!.day};
  const lastDay=source.days!.days.at(-1)!.day,members=Object.fromEntries(Object.entries(career.sangmu.members).map(([k,m])=>{
-  const open=m.program.blocks.find(b=>b.seasonKey===source.world.seasonKey && b.completedWorldDay===null);
+  const open=world.suspendedContracts?.[k]?undefined:m.program.blocks.find(b=>b.seasonKey===source.world.seasonKey && b.completedWorldDay===null);
   return [k,{...m,player:{...m.player,age:m.player.age+1,fatigue:0},repertoire:m.repertoire?{...m.repertoire,seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()}:null,program:open?completeSangmuBlock(m.program,open.seasonKey,lastDay):m.program}];
  }));
  career.sangmu=returnSangmuPlayers(world,{...career.sangmu,members},target).unit;
@@ -124,7 +126,7 @@ if(career.sangmu){
  career.rookieDrafts=[...(source.rookieDrafts??[]),draftKboRookieClass(world,target,standings.map(s=>s.teamKey).reverse(),source.difficulty)];
  // Normal recruitment gets the first chance to fill gaps. Safety supply covers only what is still impossible.
  const repaired=repairKboDualLeagueRosters({world,pool:market.pool,health:market.health,protagonistKey:key,difficulty:career.difficulty});
- world=repaired.world;career.world=world;career.health=repaired.health;career.freeAgents=repaired.pool;
+ world=repaired.world;career.world=world;career.health=repaired.health;career.freeAgents=repaired.pool;returnKboNpcMilitaryPlayers(career,0);
  career.aiOffseasons=[...(source.aiOffseasons??[]),{seasonKey:target,renewal:prepared.receipt,repair:repaired.receipt,rounds:market.rounds}];
  assertKboRecruitmentWorld(world);
  const player=world.players[key]!,club=world.clubs.find(c=>c.id===career.protagonistClubId)!;

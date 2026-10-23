@@ -1,3 +1,4 @@
+import {kboFutureCommitmentWon} from './kbo-finance.js';
 import {kboContractPaymentBalance} from './kbo-contract-payments.js';
 import {kboPlayerContractValue,kboRenewalSalaryWon} from './kbo-contract-value.js';
 export {KBO_RENEWAL_SAMPLE} from './kbo-contract-value.js';
@@ -34,12 +35,14 @@ export function offerKboRenewal(source:KboCareer,expectedRevision:number):KboCar
  const season=source.world.seasonKey,close=source.seasonClose;
  if(source.phaseContext.phase!=='SEASON_REVIEW' || !close || close.seasonKey!==season || source.renewal?.seasonKey===String(Number(season)+1) || !expiresAfterSeason(source) || source.events.some(e=>e.status==='OPEN' && e.definitionId!=='E50') || source.world.players[source.protagonistKey]!.age>=45)throw new RangeError('KBO_RENEWAL_NOT_AVAILABLE');
  const key=source.protagonistKey,previous=source.world.contracts[key]!.annualSalaryWon,{valueWon,basis}=kboRenewalValueWon(source);
+ const annualSalaryWon=kboRenewalSalaryWon(previous,valueWon),club=source.world.clubs.find(c=>c.id===source.protagonistClubId)!;
+ if(kboFutureCommitmentWon(source.world,club.id,1)+annualSalaryWon>club.budgetWon*.9)throw new RangeError('KBO_RENEWAL_NOT_AVAILABLE');
  const target=String(Number(season)+1),offerKey=JSON.stringify(['kbo-renewal',source.world.worldKey,target,key]);
  const day=source.days!.days.at(-1)!.day,definition=eventDefinition('E30');
  const event=createWorldEvent({definitionId:'E30',worldKey:source.world.worldKey,seasonKey:season,evidence:{version:1,type:definition.evidenceDomain,fields:{playerSimulationKey:key,contractWindowId:offerKey,sourceReceiptId:close.receiptKey}},
   resume:{worldKey:source.world.worldKey,seasonKey:season,phase:'SEASON_REVIEW',competitionKey:null,registrationKey:source.protagonistClubId,sourceRevision:source.revision+1},sourceSequence:source.events.length+1,worldDay:day});
  const career=structuredClone(source);
- career.renewal={offerKey,eventKey:event.eventKey,playerKey:key,clubId:source.protagonistClubId,seasonKey:target,years:1,previousSalaryWon:previous,valueWon,annualSalaryWon:kboRenewalSalaryWon(previous,valueWon),basis,status:'OFFERED'};
+ career.renewal={offerKey,eventKey:event.eventKey,playerKey:key,clubId:source.protagonistClubId,seasonKey:target,years:1,previousSalaryWon:previous,valueWon,annualSalaryWon,basis,status:'OFFERED'};
  career.events=[...career.events,event];career.revision++;return career;
 }
 /** S08 accept: closes E30 by domain commit. The new contract activates with the next season (72 Y02), not now. */
@@ -47,6 +50,8 @@ export function acceptKboRenewal(source:KboCareer,expectedRevision:number,input:
  assertCareerRevision(source,expectedRevision);
  const renewal=source.renewal,event=source.events.find(e=>e.eventKey===input.eventKey);
  if(!renewal || renewal.status!=='OFFERED' || renewal.eventKey!==input.eventKey || !event || event.definitionId!=='E30')throw new RangeError('INVALID_KBO_RENEWAL');
+ const club=source.world.clubs.find(c=>c.id===source.protagonistClubId)!;
+ if(kboFutureCommitmentWon(source.world,club.id,1)+renewal.annualSalaryWon>club.budgetWon*.9)throw new RangeError('INVALID_KBO_RENEWAL');
  const context={worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['OPEN_CAREER_OFFERS']};
  const resolved=completeBlockingEvent(event,input.eventVersion,{sourceEvidenceKey:event.evidenceKey,receiptKey:JSON.stringify(['kbo-renewal-accept',renewal.offerKey]),command:'ACCEPT_RENEWAL'},context);
  const career=structuredClone(source);

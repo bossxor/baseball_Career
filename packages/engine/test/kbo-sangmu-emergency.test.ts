@@ -25,7 +25,9 @@ import {enlistInSangmu} from '../src/kbo-military-program.js';
 
 let cached:KboCareer|undefined;
 function preseason(){
- if(!cached){const e=enteredKboCareer(),u=startSangmuCohort(e,e.revision),p=confirmKboPreseasonPlan(u,u.revision),o=confirmKboOpeningRoster(p,p.revision);cached=confirmKboSeasonSchedule(o,o.revision);}
+ if(!cached){const e=enteredKboCareer(),u=startSangmuCohort(e,e.revision),p=confirmKboPreseasonPlan(u,u.revision),o=confirmKboOpeningRoster(p,p.revision);cached=confirmKboSeasonSchedule(o,o.revision);
+ // Controlled pre-v6 NPC cohort: health/auxiliary tests must not manufacture new service-ledger histories.
+ delete cached.world.suspendedContracts;delete cached.sangmu!.npcReturns;cached.schemaVersion=5;}
  return structuredClone(cached);
 }
 function started(){const p=preseason();return startKboRegularSeason(p,p.revision);}

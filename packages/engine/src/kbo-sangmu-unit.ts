@@ -7,13 +7,16 @@ import {enlistInSangmu,KBO_CONTRACT_GAME_DAYS} from './kbo-military-program.js';
 import type {KboMilitaryProgram} from './kbo-military-program.js';
 import {selectKboFirstTeamRoster} from './kbo-world.js';
 import type {KboSangmuEmergency} from './kbo-sangmu-emergency.js';
+import {canonicalJson} from './game.js';
+import {kboMilitaryCompletionDays} from './kbo-military-events.js';
+import {compareKboSeasonDays} from './kbo-military-program.js';
 import {assertSangmuEmergency} from './kbo-sangmu-emergency.js';
 
 /** The 11th Futures team's people. Serving players are NOT in `world.players` (every world player must sit on a club
  * roster); their identity, books and suspended contract live here, and the original club keeps the rights. */
 export interface KboSangmuMember {player:DevelopmentPlayer;repertoire:Repertoire|null;wasFirstTeam:boolean;program:KboMilitaryProgram}
 /** `loaned` = my own player: he stays in world.players and on his club's records/rights but plays for the military team. */
-export interface KboSangmuUnit {schemaVersion:1;teamKey:'SANGMU';members:Readonly<Record<string,KboSangmuMember>>;enlistedSeasons:readonly string[];loaned?:readonly string[];emergency?:KboSangmuEmergency}
+export interface KboSangmuUnit {schemaVersion:1;teamKey:'SANGMU';members:Readonly<Record<string,KboSangmuMember>>;enlistedSeasons:readonly string[];npcReturns?:Readonly<Record<string,{program:KboMilitaryProgram;returned:{seasonKey:string;worldDay:number}}>>;loaned?:readonly string[];emergency?:KboSangmuEmergency}
 export const emptySangmuUnit=():KboSangmuUnit=>({schemaVersion:1,teamKey:'SANGMU',members:{},enlistedSeasons:[]});
 
 /** Contract days still unplayed when service starts: whole seasons of the contract after the selection season. */
@@ -48,8 +51,15 @@ export function enlistSangmuCohort(world:ActiveKboRosterWorld,unit:KboSangmuUnit
  return {...structuredClone(unit),members,enlistedSeasons:[...unit.enlistedSeasons,selection.seasonKey]};
 }
 /** Structural check against a world: nobody is both serving and on a club, programs match their keys. */
-export function assertSangmuUnit(unit:KboSangmuUnit,world:Pick<ActiveKboRosterWorld,'worldKey'|'seasonKey'|'players'|'contracts'|'clubs'>):void {
+export function assertSangmuUnit(unit:KboSangmuUnit,world:Pick<ActiveKboRosterWorld,'worldKey'|'seasonKey'|'players'|'contracts'|'clubs'|'suspendedContracts'|'finance'>):void {
  assertSangmuEmergency(unit,world);
+ for(const [key,c] of Object.entries(world.suspendedContracts??{})){const m=unit.members[key];if(!m || !c.servicePay || c.servicePay.ledger.programId!==m.program.programId || canonicalJson(c.servicePay.ledger.contract)!==canonicalJson(m.program.contract))throw new RangeError('INVALID_NPC_SERVICE_OWNER');}
+ for(const [key,r] of Object.entries(unit.npcReturns??{})){
+  const p=r.program,days=kboMilitaryCompletionDays(p);
+  const ledgers=[world.contracts[p.playerKey]?.servicePay?.ledger,world.contracts[p.playerKey]?.remainderPay?.previous.servicePay.ledger,...(world.finance?.closedContracts??[]).map(c=>c.servicePay?.ledger??c.remainderPay?.previous.servicePay.ledger)].filter(v=>v!==undefined);
+  if(key!==JSON.stringify(['sangmu-program',world.worldKey,String(Number(p.startedSeason)-1),p.playerKey]) || p.playerKey!==p.contract.playerKey || p.originalClubId!==p.contract.clubId || !world.clubs.some(t=>t.id===p.originalClubId) || !ledgers.some(l=>l.programId===p.programId && canonicalJson(l.contract)===canonicalJson(p.contract) && l.resume?.completedSeasonKey===days[1]!.seasonKey && l.resume.completedWorldDay===days[1]!.worldDay) || key!==p.programId || p.kind!=='SPORTS' || p.completedBlocks!==2 || p.returnOptionId!==JSON.stringify(['sangmu-return',p.programId]) || p.blocks.some((b,i)=>b.completedWorldDay!==days[i]!.worldDay) || compareKboSeasonDays(r.returned,days[1]!)<0 || Number(r.returned.seasonKey)>Number(world.seasonKey) || Object.hasOwn(unit.members,p.playerKey) || Object.hasOwn(world.suspendedContracts??{},p.playerKey))throw new RangeError('INVALID_NPC_RETURN_HISTORY');
+ }
+
  for(const key of unit.loaned??[])if(!Object.hasOwn(world.players,key) || !world.clubs.some(c=>c.roster.includes(key) && !c.firstTeam.includes(key)) || Object.hasOwn(unit.members,key))throw new RangeError('INVALID_SANGMU_UNIT');
  for(const [key,m] of Object.entries(unit.members)){
   if(m.player.simulationKey!==key || m.program.playerKey!==key || Object.hasOwn(world.players,key) || Object.hasOwn(world.contracts,key) || world.clubs.some(c=>c.roster.includes(key)))throw new RangeError('INVALID_SANGMU_UNIT');
@@ -66,7 +76,7 @@ export function returnSangmuPlayers(world:ActiveKboRosterWorld,unit:KboSangmuUni
  const members={...structuredClone(unit.members)} as Record<string,KboSangmuMember>,returned:string[]=[],blockedByRoster:string[]=[],uncontracted:string[]=[];
  for(const key of Object.keys(members).sort()){
   const m=members[key]!,p=m.program;
-  if(p.completedBlocks<p.scheduledBlocks)continue;
+  if(p.completedBlocks<p.scheduledBlocks || world.suspendedContracts?.[key])continue;
   if(p.contract.remainingPaidGameDays===0){uncontracted.push(key);continue;}
   const club=world.clubs.find(c=>c.id===p.originalClubId);
   if(!club || Object.hasOwn(world.players,key))throw new RangeError('INVALID_SANGMU_UNIT');
