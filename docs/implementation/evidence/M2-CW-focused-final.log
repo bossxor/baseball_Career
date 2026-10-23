@@ -1,0 +1,33 @@
+✔ real postseason injury cannot block or rewrite first regular growth settlement; injury and JSON replay survive (8696.9651ms)
+✔ SPORTS return partitions use regular-end health and preserve already-completed military evidence (271.4399ms)
+✔ ACTIVE return partitions use regular-end health and preserve already-completed military evidence (298.1146ms)
+✔ growth paid before postseason stays an identical duplicate after later injury, without a fresh budget (580.1178ms)
+✔ boundary rewind handles later recovery and diagnosis/recovery cycles without changing source (554.034ms)
+✔ contradictory postseason health and changed regular evidence still reject atomically (1101.7106ms)
+✔ military growth: full SPORTS season has one PRO/Futures period, actual military PA and one annual budget (1987.3112ms)
+✔ military growth: June30 splits service/return periods, preserves one annual cap and actual original-club registrations (1312.9502ms)
+✔ military growth: plan boundary uses military games, not the original club calendar; focus/history stay intact (1176.0196ms)
+✔ military growth rejects foreign/unregistered PA, reused days and changed calendar without mutation (3817.7507ms)
+✔ legacy military saves retain their existing unsplit periods and do not opt in during reads (1661.7639ms)
+✔ HITTER opening injury remains rehabilitation after actual registered recovery; no extra RNG or source mutation (2500.1862ms)
+✔ PITCHER opening injury remains rehabilitation after actual registered recovery; no extra RNG or source mutation (2088.2236ms)
+✔ already-paid legacy rehab inputs and amounts remain an exact duplicate, never refunded or issued again (355.2887ms)
+✔ missing historical opening receipt preserves legacy calculation without inventing a new opening fact (96.2451ms)
+✔ changed opening receipt or paid focus rejects atomically instead of rewriting the historical period (1325.1453ms)
+✔ versioned periods finalize through the existing season close without a second growth payment (185.7195ms)
+✔ SPORTS return growth uses the same opening injury proof after a real post-return recovery game (1881.1324ms)
+✔ ACTIVE return growth uses the same opening injury proof after a real post-return recovery game (460.7548ms)
+✔ legacy SPORTS growth history cannot publish an unusable transfer or silently adopt a new growth policy (5225.8491ms)
+✔ actual ACTIVE completed-service transfer preserves the original program and continues registered growth/pay and exactly six return games through next-year activation (54408.808ms)
+✔ actual SPORTS completed-service transfer preserves the original program and continues registered growth/pay (2701.7637ms)
+✔ pro growth pays one PRO period over the growth calendar from official appearances, once (3290.7387ms)
+✔ growth rejects wrong phase, missing day receipts, double-booked days and rehabilitation appearances (3615.2295ms)
+✔ pro year-end needs paid growth and an explicit unused-training forfeit, then ages once and closes health (1430.1654ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 63450.9009

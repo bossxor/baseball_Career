@@ -1,4 +1,4 @@
-import {kboRegularEndInjured} from './kbo-growth-health.js';
+import {kboRegularEndInjured,kboOpeningGrowthState} from './kbo-growth-health.js';
 import {kboMilitaryGrowthPeriods,kboMilitaryRegisteredGames} from './kbo-military-growth.js';
 import {kboRegistrationPlanBoundaryDays,currentKboSeasonTransfers} from './kbo-transfer-registration.js';
 import type {KboCareer} from './kbo-career-entry.js';
@@ -40,7 +40,7 @@ export function settleKboSeasonGrowth(source:KboCareer,expectedRevision:number) 
  // International barrier days are outside the growth calendar and carry no games; they only advance health state.
  const partOf=(day:number)=>{const g=growthIndex.get(day);return g===undefined?-1:parts.findIndex(p=>g>=p.start && g<p.end);};
  // A registration that began injured from an earlier season starts in rehabilitation.
- let rehabilitating=Object.hasOwn(source.health.injuries,key) && source.health.injuries[key]!.seasonKey!==season && !source.days.days.some(d=>d.result.injured.includes(key));
+ const openingHealth=kboOpeningGrowthState(source);let rehabilitating=openingHealth.injured;
  for(const closed of regularDays){
   const games=Object.values(source.records.games).filter(g=>g.worldDay===closed.day && g.scope.seasonKey===season && g.scope.phase==='REGULAR' && (g.scope.leagueKey==='KBO' || g.scope.leagueKey==='FUTURES'));
   const mine=games.filter(g=>Object.hasOwn(g.batting,key) || Object.hasOwn(g.pitching,key));
@@ -50,11 +50,12 @@ export function settleKboSeasonGrowth(source:KboCareer,expectedRevision:number) 
   const index=partOf(closed.day);
   if(index<0){if(games.length>0)throw new RangeError('DAY_OUTSIDE_GROWTH_CALENDAR');}
   else {const part=parts[index]!;part.appearances+=day;if(games.length>0){part.scheduledDays++;if(rehabilitating)part.rehabDays++;}}
+  if(openingHealth.versioned && (closed.result.injured.includes(key) && (rehabilitating || closed.result.recovered.includes(key)) || closed.result.recovered.includes(key) && !rehabilitating))throw new RangeError('CHANGED_GROWTH_HEALTH_EVIDENCE');
   if(closed.result.injured.includes(key))rehabilitating=true;
   if(closed.result.recovered.includes(key))rehabilitating=false;
  }
  if(rehabilitating!==kboRegularEndInjured(source,last))throw new RangeError('CHANGED_GROWTH_HEALTH_EVIDENCE');
- const periods:ClosedGrowthPeriod[]=history.map((plan,i)=>{const p=parts[i]!;return {periodKey:JSON.stringify(['pro-growth',source.world.worldKey,season,p.start,p.end]),focus:[...plan.focus],archetype:plan.archetype,
+ const periods:ClosedGrowthPeriod[]=history.map((plan,i)=>{const p=parts[i]!;return {periodKey:JSON.stringify(['pro-growth',source.world.worldKey,season,p.start,p.end,...(openingHealth.versioned?['opening-health-v1']:[])]),focus:[...plan.focus],archetype:plan.archetype,
   period:{startDay:p.start,endDay:p.end,levelSeasonDays:W,level:'PRO',appearances:p.appearances,pitcherRole:start.position==='RP'?'RP':start.position==='CP'?'CP':'SP',
    rehabRatio:p.scheduledDays?p.rehabDays/p.scheduledDays:0,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER',difficulty:source.difficulty,beneficiary:true}}};});
  return publishGrowth(source,periods);

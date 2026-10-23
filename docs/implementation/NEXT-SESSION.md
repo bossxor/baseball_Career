@@ -1,5 +1,11 @@
 # 다음 환경 구현 인계 — 2026-10-23
 
+## 최신 상태 — M2-CW 완료
+
+기반 CU/CV는 c2706c61f0c83a56f3cf64b79dfeeb894cc82b33. 원격=로컬·clean·추적1320개 V: 일치 확인 후 CW를 구현했다. 개막 부상 증거/기간 버전·옛 지급 보존, 집중25/25·전체 check574/574·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. 테스트 duration_ms1081868.4695. 마지막 커밋은 git log -1을 따른다. [CW 상세](M2-CW-OPENING-REHABILITATION.md) · [집중](evidence/M2-CW-focused-final.log).
+
+검사 동안 packages/apps/docs/design 소스를 고정했다. 전체 결과는 evidence/M2-CW-check.log와 M2-CW-check-exit.txt=0. 완료 문서 정적 검증·소스 불변·V:/index 증거는 M2-CW-post-docs.json/source-sync.json을 따른다. 다음은 NPC 군팀 실제 복귀/급여/성장 연결이며 아래 병역 점검표를 읽는다.
+
 ## 최신 상태 — M2-CU/CV 완료
 
 이번 검증의 기반 커밋은 a5bc5ba59fa432b551f31f623d2cf119364ee7b7(main). 재개 시 origin/main·체크아웃·V: 추적1290개가 모두 일치하고 작업트리가 깨끗했다. CU/CV 공동 전체 검사566/566·실패0·취소0 및 lint/타입/build/골든/이벤트/설계10종이 통과했다. 검증본을 V:에 동기화하고 같은 커밋으로 저장하는 인계다. 실제 최신 커밋은 git log -1을 따른다. 첫 중단 검사는 통과로 세지 않는다.
@@ -16,13 +22,15 @@ CV: 실제 한국시리즈 마지막 부상 뒤 정규 성장 최초 정산이 C
 - 실제 연도 이월 자기검사: node --import tsx docs/implementation/evidence/M2-CU-year-carry.mjs. 정규 경기는 통제된 시계, 포스트시즌·성장/시즌 마감·AI 연도 전환은 실제 명령이다.10명 신원/구종 보존·활성 등록0·JSON 동일·원본 불변을 검사한다. CV 적용 전 실패 로그도 보존한다.
 - 고정 소스의 전체 검사 뒤 완료 문서·설계 패키지 재생성/정적10종·MANIFEST·HTTP 기본 smoke를 별도로 재검증한다. HTTP는 웹/API 골격이며 실제 UI/계정/DB/Storage 검증이 아니다. 마지막 Git 해시는 git log -1을 따른다.
 
-## 다음 작업 — 개막 부상 증거, 그다음 NPC 병역 연결
+## 다음 작업 — NPC 병역 연결 (개막 증거는 CW 완료)
 
-개막 sourceBasis가 이미 보존한 unavailable로 미지급 정규/병역 성장의 초기 재활 상태를 복원한다. 실제 등록 회복 사례에서 기존105000 대 기대84000 단위를 재현했다. 옛 지급 periodKey/금액/검증은 유지하며 새 기간에는 명시 opening-health-v1 접미사를 검토한다. 저장소 밖 초안6개 통과는 이번 커밋의 정식 코드/결과가 아니다. 이 PC의 TEMP/baseball-CW-draft에 native3개·kbo-opening-growth-health.test.ts·별도 실행본이 있으며, 다른 환경에서는 [CV 후속 감사](M2-CV-POSTSEASON-GROWTH-HEALTH.md)의 재현 순서를 따른다.
+사용자 추가 확정: NPC 계약 소진은 기존 AI 가치·수요·예산으로 재계약/FA, 전역·모집 공석도 종합35~45 군팀 보조 선수를 최소 충원한다. 보조 선수에 입대/복무/민간 계약을 만들지 않는다. 실제 구현은 아직이며14/21/병역 점검표를 따른다.
+
+개막 sourceBasis unavailable 재사용·opening-health-v1은 CW에서 완료했다. 옛 지급 계산/periodKey/금액은 유지한다. TEMP 초안 대신 저장소의 CW 코드와 신규8개/집중25개/전체574개 검증을 따른다.
 
 [병역 연결 점검표](M2-NEXT-MILITARY-INTEGRATION-NOTES.md)의 마지막 섹션을 먼저 읽는다. NPC6월30일 복귀는 실제 잔여 급여·보유권/슬롯·군팀 후반 편성·성장/노쇠의 동일 원장이 필요하다. settleKboServicePayrollDay는 현재 주인공 계약 하나만 처리하고 closeKboNpcSeasons는 민간 world.players만 성장시킨다. 날짜 한 줄이나 기존 연말 복귀 호출만으로 완료 처리하지 않는다.
 
-CV는 정규 종료 경계만 바로잡는다. 이전 시즌 부상이 포스트시즌에 회복된 경우의 정규 시작 재활 추론은 별도 감사가 필요하며 이미 지급된 기간을 재작성하지 않는다. 군팀/AI 공동 등록 E96·ATHLETE/해외 병역·미국 실제 리그·실제 화면/클라우드 저장·구단 조작/보관 선수 투입·APK/배포도 후속이다.
+CV는 종료 경계, CW는 새 미지급 기간의 개막 증거를 바로잡았다. 이미 지급된 기간은 재작성하지 않는다. 군팀/AI 공동 등록 E96·ATHLETE/해외 병역·미국 실제 리그·실제 화면/클라우드 저장·구단 조작/보관 선수 투입·APK/배포도 후속이다.
 
 ## 작업 환경과 검증 계약
 

@@ -396,3 +396,8 @@ M1 순수 경기 코어를 추가했고 단위67/67·린트·타입·rules/engin
 ## 2026-10-23 구현 검증 참조 — M2-CU/CV
 
 상무 건강/군팀 임시 편성과 정규 성장 종료 경계는 공동 집중39/39·전체 npm run check566/566·실패0·취소0, lint/타입/build/골든/이벤트/설계10종을 통과했다. 실제 포스트시즌·성장/시즌 마감·AI 연도 전환 자기검사도 별도 통과했으며 그 정규 경기는 통제된 시계다. [CU](../implementation/M2-CU-SANGMU-HEALTH-EMERGENCY.md) · [CV](../implementation/M2-CV-POSTSEASON-GROWTH-HEALTH.md) · [전체 로그](../implementation/evidence/M2-CU-check.log). 실제 UI/계정/Neon DB·Storage/APK 검증이나 이 문서의 정적 기대값 전체 구현 완료를 뜻하지 않는다. 개막 부상 시작 증거 보정은 다음 작업이다.
+
+
+## 2026-10-23 구현 검증 참조 — M2-CW
+
+개막 재활 증거는 집중25/25·전체 npm run check574/574·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. 테스트 duration_ms1081868.4695. [CW](../implementation/M2-CW-OPENING-REHABILITATION.md) · [전체](../implementation/evidence/M2-CW-check.log). 옛 지급은 보존한다. NPC 복귀/추가 정책·실제 UI/계정/Neon/APK 통과는 아니다.

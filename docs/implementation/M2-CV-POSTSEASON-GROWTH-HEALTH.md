@@ -34,3 +34,6 @@ CU 신규8·CV 신규6·기존 병역 성장5의 집중19/19 통과. 공동 최�
 
 
 완료 문서 갱신 뒤 설계10종·MANIFEST359개를 다시 통과했고 기본 HTTP smoke도 통과했다. 웹 HTML/JS/CSS와 API health 골격 확인이며 실제 UI/계정/DB/Storage/APK 통과가 아니다. [정적 검사](evidence/M2-CU-design-final.log) · [해시](evidence/M2-CU-manifest.log) · [HTTP](evidence/M2-CU-smoke.log).
+
+
+후속 완료: 개막 증거 미지급 보정은 [M2-CW](M2-CW-OPENING-REHABILITATION.md)에서 신규8·집중25·전체574/574로 검증했다. 위 임시 초안/다음 작업 표기는 CU/CV 작성 당시 이력이다.

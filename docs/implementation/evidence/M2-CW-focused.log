@@ -1,0 +1,28 @@
+✔ real postseason injury cannot block or rewrite first regular growth settlement; injury and JSON replay survive (7510.1908ms)
+✔ SPORTS return partitions use regular-end health and preserve already-completed military evidence (156.4159ms)
+✔ ACTIVE return partitions use regular-end health and preserve already-completed military evidence (189.1001ms)
+✔ growth paid before postseason stays an identical duplicate after later injury, without a fresh budget (407.5027ms)
+✔ boundary rewind handles later recovery and diagnosis/recovery cycles without changing source (347.2633ms)
+✔ contradictory postseason health and changed regular evidence still reject atomically (680.9427ms)
+✔ military growth: full SPORTS season has one PRO/Futures period, actual military PA and one annual budget (1721.4077ms)
+✔ military growth: June30 splits service/return periods, preserves one annual cap and actual original-club registrations (1166.8141ms)
+✔ military growth: plan boundary uses military games, not the original club calendar; focus/history stay intact (1109.5578ms)
+✔ military growth rejects foreign/unregistered PA, reused days and changed calendar without mutation (3172.8463ms)
+✔ legacy military saves retain their existing unsplit periods and do not opt in during reads (1098.9256ms)
+✔ HITTER opening injury remains rehabilitation after actual registered recovery; no extra RNG or source mutation (2199.5647ms)
+✔ PITCHER opening injury remains rehabilitation after actual registered recovery; no extra RNG or source mutation (1863.9913ms)
+✔ already-paid legacy rehab inputs and amounts remain an exact duplicate, never refunded or issued again (298.9478ms)
+✔ missing historical opening receipt preserves legacy calculation without inventing a new opening fact (91.3424ms)
+✔ changed opening receipt or paid focus rejects atomically instead of rewriting the historical period (1195.6939ms)
+✔ versioned periods finalize through the existing season close without a second growth payment (167.4488ms)
+✔ pro growth pays one PRO period over the growth calendar from official appearances, once (2810.4639ms)
+✔ growth rejects wrong phase, missing day receipts, double-booked days and rehabilitation appearances (3222.4599ms)
+✔ pro year-end needs paid growth and an explicit unused-training forfeit, then ages once and closes health (1134.0334ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10696.7667
