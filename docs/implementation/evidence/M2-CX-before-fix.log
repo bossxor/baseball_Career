@@ -1,0 +1,21 @@
+✖ approved vacancies use minimum35..45 military auxiliaries without inventing enlistment or contracts (1330.2072ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2150.1925
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-sangmu-emergency.test.ts:1:14852
+✖ approved vacancies use minimum35..45 military auxiliaries without inventing enlistment or contracts (1330.2072ms)
+  RangeError: SANGMU_PERMANENT_ROSTER_INSUFFICIENT
+      at reconcileSangmuEmergency (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-sangmu-emergency.ts:46:71)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-sangmu-emergency.test.ts:135:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

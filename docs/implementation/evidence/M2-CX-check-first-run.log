@@ -1,0 +1,34 @@
+
+> again-playball@0.1.0 check
+> npm run lint && npm run typecheck && npm test && npm run build && npm run verify:engine && npm run verify:events && npm run verify:design
+
+
+> again-playball@0.1.0 lint
+> eslint packages apps scripts
+
+
+> again-playball@0.1.0 typecheck
+> npm run build --workspace @playball/rules && npm run typecheck --workspaces --if-present && tsc -p tsconfig.tests.json
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/rules@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/api@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/web@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+packages/engine/test/kbo-sangmu-emergency.test.ts(199,22): error TS2412: Type 'KboSangmuEmergency | undefined' is not assignable to type 'KboSangmuEmergency' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type 'KboSangmuEmergency'.

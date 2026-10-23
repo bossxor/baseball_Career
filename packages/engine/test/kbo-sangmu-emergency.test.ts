@@ -101,11 +101,11 @@ test('military-only identities remain visible in relationships while serving and
 test('corrupt archives or insufficient permanent intake reject without mutation; enlist/return keep archive',()=>{
  const c=started(),day=c.world.calendar.growthDays[0]!;injure(c,Object.keys(c.sangmu!.members));const u=reconcileSangmuEmergency(c.world,c.sangmu!,c.health,day),before=canonicalJson(u),key=Object.keys(u.emergency!.entries)[0]!;
  for(const mutate of [(x:typeof u)=>{x.emergency!.worldKey='foreign';},(x:typeof u)=>{x.emergency!.nextSerial=1;},(x:typeof u)=>{x.emergency!.entries[key]!.player.simulationKey='foreign';},(x:typeof u)=>{x.emergency!.entries[key]!.released={seasonKey:c.world.seasonKey,worldDay:-1};}]){const bad=structuredClone(u);mutate(bad);assert.throws(()=>assertSangmuEmergency(bad,c.world));}
- const empty={...u,members:{}};assert.throws(()=>reconcileSangmuEmergency(c.world,empty,c.health,day),/SANGMU_PERMANENT_ROSTER_INSUFFICIENT/);assert.equal(canonicalJson(u),before);
+ const empty={...structuredClone(u),members:{}};empty.emergency!.schemaVersion=1;assert.throws(()=>reconcileSangmuEmergency(c.world,empty,c.health,day),/SANGMU_PERMANENT_ROSTER_INSUFFICIENT/);assert.equal(canonicalJson(u),before);
  const ret=returnSangmuPlayers(structuredClone(c.world),u,c.world.seasonKey);assert.deepEqual(ret.unit.emergency,u.emergency);
  const initial=enteredKboCareer(),world=structuredClone(initial.world),selection=selectSangmuCohort({world,records:initial.records,health:initial.health,seasonKey:String(Number(world.seasonKey)-1),excluded:new Set([initial.protagonistKey])}),enlisted=enlistSangmuCohort(world,{...emptySangmuUnit(),emergency:structuredClone(u.emergency!)},selection,initial.protagonistClubId);assert.deepEqual(enlisted.emergency,u.emergency);
  const legacy=structuredClone(c.sangmu!);delete legacy.emergency;assert.equal(reconcileSangmuEmergency(c.world,legacy,c.health,day),legacy);
- assert.deepEqual(createSangmuEmergency(c.world),{schemaVersion:1,worldKey:c.world.worldKey,nextSerial:1,entries:{}});
+ assert.deepEqual(createSangmuEmergency(c.world),{schemaVersion:2,worldKey:c.world.worldKey,nextSerial:1,entries:{}});
 });
 
 test('a real army opponent game supplies E95 side evidence and the current military identity',()=>{
@@ -127,4 +127,86 @@ test('confirmed next-year sports enlistment keeps current civilian identity read
  assert.doesNotThrow(()=>kboRelationshipListView(c));assert.equal(canonicalJson(c),before);
  const active=structuredClone(c);active.military!.program!.startedSeason=c.world.seasonKey;assert.throws(()=>kboRelationshipListView(active),/INVALID_SANGMU_UNIT/);
  const foreign=structuredClone(c);foreign.military!.program!.playerKey='foreign';assert.throws(()=>kboRelationshipListView(foreign),/INVALID_SANGMU_UNIT/);
+});
+
+
+test('approved vacancies use minimum35..45 military auxiliaries without inventing enlistment or contracts',()=>{
+ const c=started(),unit={...c.sangmu!,members:{},loaned:[]},before=canonicalJson(c),day=c.world.calendar.growthDays[0]!;
+ const next=reconcileSangmuEmergency(c.world,unit,c.health,day);
+ assert.equal(next.emergency!.schemaVersion,2);
+ assert.equal(Object.keys(next.members).length,0);assert.deepEqual(next.enlistedSeasons,unit.enlistedSeasons);
+ assert.equal(Object.keys(next.emergency!.entries).length,10);
+ for(const [key,e] of Object.entries(next.emergency!.entries)){
+  const o=overall(e.player.kind,e.player.abilities);assert.ok(o.sumUnits>=35*o.denominator && o.sumUnits<=45*o.denominator);
+  assert.ok(!c.world.players[key] && !c.world.contracts[key]);assert.ok(!Object.hasOwn(next.members,key));
+ }
+ assert.deepEqual(reconcileSangmuEmergency(c.world,JSON.parse(JSON.stringify(next)),c.health,day),next);
+ assert.equal(canonicalJson(c),before);assert.deepEqual(c.world.contracts,JSON.parse(before).world.contracts);
+ const legacy=structuredClone(unit);legacy.emergency!.schemaVersion=1;
+ assert.throws(()=>reconcileSangmuEmergency(c.world,legacy,c.health,day),/SANGMU_PERMANENT_ROSTER_INSUFFICIENT/);
+});
+
+
+test('completed cohorts can finish a confirmed army game with auxiliary-only identities and real health receipts',()=>{
+ const c=started();
+ // Controlled completed-program snapshot isolates the vacancy boundary, not an eighteen-month service simulation.
+ for(const m of Object.values(c.sangmu!.members))m.program={...m.program,completedBlocks:m.program.scheduledBlocks};
+ const programs=canonicalJson(c.sangmu!.members),contracts=canonicalJson(c.world.contracts),before=canonicalJson(c);
+ const game=c.competitionSchedule!.leagues.FUTURES.find(g=>[g.homeTeamKey,g.awayTeamKey].includes('SANGMU'))!;
+ c.competitionSchedule!.leagues={KBO:[],FUTURES:[game]};c.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:game.worldDay,pendingGame:null};
+ const input=canonicalJson(c),a=finishDay(c),b=finishDay(JSON.parse(input),true),unit=a.sangmu!;
+ assert.deepEqual(a,b);assert.equal(canonicalJson(c),input);assert.notEqual(input,before);
+ assert.equal(canonicalJson(unit.members),programs);assert.equal(canonicalJson(a.world.contracts),contracts);
+ const row=a.health.games.find(r=>r.evidence.teamKey==='FUTURES:SANGMU')!;assert.ok(row);assert.equal(row.evidence.roster.length,10);
+ assert.ok(row.evidence.roster.every(k=>!!unit.emergency!.entries[k]));
+ const actual=a.records.games[game.simulationKey]!;assert.ok(row.evidence.roster.every(k=>actual.batting[k] || actual.pitching[k]));
+ const projection=createKboCompetitionGameWorld(a.world,'FUTURES',a.protagonistKey,unit);
+ assert.equal(projection.schools.find(t=>t.id==='SANGMU')!.roster.length,10);
+ const replay=closeKboCompetitionDay(a.world,a.competitionSchedule!.leagues,a.protagonistKey,a.records,a.health,a.days!,game.worldDay,unit);
+ assert.equal(replay.duplicate,true);assert.deepEqual(replay.sangmu,unit);assert.deepEqual(replay.health,a.health);
+});
+
+test('vacancy helpers cover only the healthy legal deficit and deregister when regular members return',()=>{
+ const c=started(),all=Object.entries(c.sangmu!.members),hitters=all.filter(([,m])=>m.player.kind==='HITTER'),pitchers=all.filter(([,m])=>m.player.kind==='PITCHER');
+ const unit={...c.sangmu!,members:Object.fromEntries([...hitters.slice(0,8),...pitchers.slice(0,1)])},day=c.world.calendar.growthDays[0]!;
+ const missing=hitters[8]![0];injure(c,[hitters[0]![0]]);
+ const next=reconcileSangmuEmergency(c.world,unit,c.health,day),active=Object.values(next.emergency!.entries).filter(e=>e.released===null);
+ assert.equal(active.length,2);assert.ok(active.every(e=>e.player.kind==='HITTER'));
+ const restored={...next,members:{...next.members,[missing]:c.sangmu!.members[missing]!}},health=structuredClone(c.health);delete health.injuries[hitters[0]![0]];
+ const released=reconcileSangmuEmergency(c.world,restored,health,day+1);
+ assert.ok(Object.values(released.emergency!.entries).every(e=>e.released?.worldDay===day+1));
+ assert.equal(Object.keys(released.emergency!.entries).length,2);assert.deepEqual(released.enlistedSeasons,next.enlistedSeasons);
+});
+
+test('legacy injury registries upgrade only at a new confirmed season; released auxiliaries do not create a new army team',()=>{
+ const p=preseason();p.sangmu!.emergency={...createSangmuEmergency(p.world),schemaVersion:1};p.schemaVersion=5;
+ const partial=structuredClone(p);partial.sangmu!.members=Object.fromEntries(Object.entries(partial.sangmu!.members).slice(0,1));
+ assert.throws(()=>confirmKboSeasonSchedule(partial,partial.revision),/SANGMU_TEAM_NOT_FIELDABLE/);partial.sangmu!.emergency!.schemaVersion=2;
+ assert.doesNotThrow(()=>confirmKboSeasonSchedule(partial,partial.revision));
+ const before=canonicalJson(p),fresh=startKboRegularSeason(p,p.revision);assert.equal(fresh.sangmu!.emergency!.schemaVersion,2);assert.equal(canonicalJson(p),before);
+ const current=started();current.sangmu!.emergency!.schemaVersion=1;
+ const old=finishDay(current);assert.equal(old.sangmu!.emergency!.schemaVersion,1);
+ const unit=reconcileSangmuEmergency(fresh.world,{...fresh.sangmu!,members:{},loaned:[]},fresh.health,fresh.world.calendar.growthDays[0]!);
+ for(const e of Object.values(unit.emergency!.entries))e.released={...e.created};
+ assert.ok(!createKboCompetitionGameWorld(fresh.world,'FUTURES',fresh.protagonistKey,unit).schools.some(t=>t.id==='SANGMU'));
+});
+
+test('unsupported emergency policy rejects atomically rather than silently granting vacancy fill',()=>{
+ const c=started(),unit=structuredClone(c.sangmu!),before=canonicalJson(unit);
+ Object.assign(unit.emergency!,{schemaVersion:3});const corrupt=canonicalJson(unit);
+ assert.throws(()=>reconcileSangmuEmergency(c.world,unit,c.health,c.world.calendar.growthDays[0]!),/INVALID_SANGMU_EMERGENCY/);
+ assert.equal(canonicalJson(unit),corrupt);assert.notEqual(corrupt,before);
+ const p=preseason();p.sangmu!.emergency=unit.emergency!;p.schemaVersion=5;const invalid=canonicalJson(p);
+ assert.throws(()=>startKboRegularSeason(p,p.revision),/INVALID_SANGMU_EMERGENCY/);assert.equal(canonicalJson(p),invalid);
+});
+
+
+test('a season without a confirmed army fixture never creates vacancy helpers or ghost army registration',()=>{
+ const c=started();c.sangmu!.members={};c.sangmu!.loaned=[];
+ const day=c.competitionSchedule!.leagues.KBO[0]!.worldDay;
+ c.competitionSchedule!.leagues={KBO:c.competitionSchedule!.leagues.KBO.filter(g=>g.worldDay===day),FUTURES:[]};
+ const before=canonicalJson(c),next=finishDay(c,true);assert.equal(canonicalJson(c),before);
+ assert.deepEqual(next.sangmu!.emergency!.entries,{});assert.equal(next.sangmu!.emergency!.nextSerial,1);
+ assert.ok(!next.health.games.some(r=>r.evidence.teamKey==='FUTURES:SANGMU'));
+ assert.ok(!createKboCompetitionGameWorld(next.world,'FUTURES',next.protagonistKey,next.sangmu).schools.some(t=>t.id==='SANGMU'));
 });

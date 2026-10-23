@@ -18,7 +18,7 @@ export function createKboCompetitionGameWorld(world:ActiveKboRosterWorld,leagueK
  const schools=world.clubs.map(c=>({id:c.id,name:c.name,roster:leagueKey==='KBO'?[...c.firstTeam]:c.roster.filter(k=>!c.firstTeam.includes(k) && !kboActiveContractSuspended(world.contracts[k]!))}));
  const players={...world.players},repertoires={...world.repertoires};
  // Futures only: serving members play for the military team and are registered nowhere else (they are not in world.players).
- if(sangmu && leagueKey==='FUTURES' && (Object.keys(sangmu.members).length>0 || (sangmu.loaned?.length??0)>0)){
+ if(sangmu && leagueKey==='FUTURES' && (Object.keys(sangmu.members).length>0 || (sangmu.loaned?.length??0)>0 || Object.values(sangmu.emergency?.entries??{}).some(e=>e.released===null))){
   const serving=Object.entries(sangmu.members).filter(([,m])=>m.program.completedBlocks<m.program.scheduledBlocks).sort(([a],[b])=>a<b?-1:1);
   if(serving.some(([k])=>Object.hasOwn(world.players,k)))throw new RangeError('INVALID_SANGMU_UNIT');
   for(const [k,m] of serving){players[k]=m.player;if(m.repertoire)repertoires[k]=m.repertoire;}

@@ -1,0 +1,21 @@
+✔ new military season opts in once; legacy current seasons neither migrate nor consume army health RNG (4519.5775ms)
+✔ minimum injury replacements use isolated35..45 identities; recovery releases registration without deleting history (361.6598ms)
+✔ normal advance fields injured army replacements, commits their XP/health/fatigue once and resumes from JSON (5730.7453ms)
+✔ new army health records a real diagnosis, heals by registered army games, never by a rest date (76.7404ms)
+✔ military-only identities remain visible in relationships while serving and after temporary release (1929.9547ms)
+✔ corrupt archives or insufficient permanent intake reject without mutation; enlist/return keep archive (763.5123ms)
+✔ a real army opponent game supplies E95 side evidence and the current military identity (478.0179ms)
+✔ confirmed next-year sports enlistment keeps current civilian identity readable without weakening active military registration (294.8826ms)
+✔ approved vacancies use minimum35..45 military auxiliaries without inventing enlistment or contracts (290.9458ms)
+✔ completed cohorts can finish a confirmed army game with auxiliary-only identities and real health receipts (942.9756ms)
+✔ vacancy helpers cover only the healthy legal deficit and deregister when regular members return (76.456ms)
+✔ legacy injury registries upgrade only at a new confirmed season; released auxiliaries do not create a new army team (2071.3451ms)
+✔ unsupported emergency policy rejects atomically rather than silently granting vacancy fill (66.6011ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18691.8144

@@ -401,3 +401,8 @@ M1 순수 경기 코어를 추가했고 단위67/67·린트·타입·rules/engin
 ## 2026-10-23 구현 검증 참조 — M2-CW
 
 개막 재활 증거는 집중25/25·전체 npm run check574/574·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. 테스트 duration_ms1081868.4695. [CW](../implementation/M2-CW-OPENING-REHABILITATION.md) · [전체](../implementation/evidence/M2-CW-check.log). 옛 지급은 보존한다. NPC 복귀/추가 정책·실제 UI/계정/Neon/APK 통과는 아니다.
+
+
+## 2026-10-23 구현 검증 참조 — M2-CX
+
+상무 전역/모집 공석 보충은 집중22/22·전체 npm run check580/580·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. [CX](../implementation/M2-CX-SANGMU-VACANCIES.md) · [전체](../implementation/evidence/M2-CX-check.log). 첫 타입 실패/두 번째 중단은 통과로 세지 않는다. 실제 NPC18개월 복무·복귀 급여·UI/계정/Neon/APK는 후속이다.

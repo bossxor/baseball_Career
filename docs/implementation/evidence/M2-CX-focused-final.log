@@ -1,0 +1,30 @@
+✔ HITTER opening injury remains rehabilitation after actual registered recovery; no extra RNG or source mutation (1982.1382ms)
+✔ PITCHER opening injury remains rehabilitation after actual registered recovery; no extra RNG or source mutation (2023.678ms)
+✔ already-paid legacy rehab inputs and amounts remain an exact duplicate, never refunded or issued again (291.8117ms)
+✔ missing historical opening receipt preserves legacy calculation without inventing a new opening fact (116.6457ms)
+✔ changed opening receipt or paid focus rejects atomically instead of rewriting the historical period (1182.3375ms)
+✔ versioned periods finalize through the existing season close without a second growth payment (176.5036ms)
+✔ SPORTS return growth uses the same opening injury proof after a real post-return recovery game (1729.4066ms)
+✔ ACTIVE return growth uses the same opening injury proof after a real post-return recovery game (351.534ms)
+✔ new military season opts in once; legacy current seasons neither migrate nor consume army health RNG (4123.9247ms)
+✔ minimum injury replacements use isolated35..45 identities; recovery releases registration without deleting history (357.4419ms)
+✔ normal advance fields injured army replacements, commits their XP/health/fatigue once and resumes from JSON (5083.6746ms)
+✔ new army health records a real diagnosis, heals by registered army games, never by a rest date (59.4923ms)
+✔ military-only identities remain visible in relationships while serving and after temporary release (1660.5684ms)
+✔ corrupt archives or insufficient permanent intake reject without mutation; enlist/return keep archive (820.4885ms)
+✔ a real army opponent game supplies E95 side evidence and the current military identity (605.4313ms)
+✔ confirmed next-year sports enlistment keeps current civilian identity readable without weakening active military registration (394.2453ms)
+✔ approved vacancies use minimum35..45 military auxiliaries without inventing enlistment or contracts (309.9794ms)
+✔ completed cohorts can finish a confirmed army game with auxiliary-only identities and real health receipts (773.8822ms)
+✔ vacancy helpers cover only the healthy legal deficit and deregister when regular members return (64.2396ms)
+✔ legacy injury registries upgrade only at a new confirmed season; released auxiliaries do not create a new army team (1914.2781ms)
+✔ unsupported emergency policy rejects atomically rather than silently granting vacancy fill (261.4704ms)
+✔ a season without a confirmed army fixture never creates vacancy helpers or ghost army registration (1123.9009ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18903.1795

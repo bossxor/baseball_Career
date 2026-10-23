@@ -32,7 +32,7 @@ export function createKboSeasonSchedules(teamKeys:readonly string[],seasonKey:st
 /** Futures is the 11-team calendar (with the military team) only while someone serves; otherwise the stored 10-team form. */
 function schedulesFor(s:KboCareer):KboSeasonSchedule['leagues']{
  const ids=s.world.clubs.map(c=>c.id),base=createKboSeasonSchedules(ids,s.world.seasonKey,s.world.calendar);
- if(kboSangmuServing(s).length && !kboSangmuFieldable(s))throw new RangeError('SANGMU_TEAM_NOT_FIELDABLE');
+ if(kboSangmuServing(s).length && !kboSangmuFieldable(s) && s.sangmu?.emergency?.schemaVersion!==2)throw new RangeError('SANGMU_TEAM_NOT_FIELDABLE');
  return kboSangmuServing(s).length?{KBO:base.KBO,FUTURES:createKboFutures11Schedule([...ids,SANGMU_TEAM_KEY],s.world.seasonKey,s.world.calendar)}:base;
 }
 const teamName=(s:KboCareer,id:string)=>s.world.clubs.find(c=>c.id===id)?.name??(id===SANGMU_TEAM_KEY?'상무':id);

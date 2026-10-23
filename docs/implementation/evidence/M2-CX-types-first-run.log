@@ -1,0 +1,2 @@
+packages/engine/test/kbo-sangmu-emergency.test.ts(199,22): error TS2412: Type 'KboSangmuEmergency | undefined' is not assignable to type 'KboSangmuEmergency' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type 'KboSangmuEmergency'.

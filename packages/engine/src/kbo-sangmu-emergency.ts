@@ -14,15 +14,15 @@ import {compareKboSeasonDays} from './kbo-military-program.js';
 type DatePoint={seasonKey:string;worldDay:number};
 /** Military-only identities survive deregistration; they have no club contract or service program. */
 export interface KboSangmuEmergency {
- schemaVersion:1;worldKey:string;nextSerial:number;
+ schemaVersion:1|2;worldKey:string;nextSerial:number;
  entries:Record<string,{player:DevelopmentPlayer;repertoire:Repertoire|null;created:DatePoint;released:DatePoint|null}>;
 }
-export const createSangmuEmergency=(world:ActiveKboRosterWorld):KboSangmuEmergency=>({schemaVersion:1,worldKey:world.worldKey,nextSerial:1,entries:{}});
+export const createSangmuEmergency=(world:ActiveKboRosterWorld):KboSangmuEmergency=>({schemaVersion:2,worldKey:world.worldKey,nextSerial:1,entries:{}});
 
 /** Validate the archive as well as active registrations before projecting a game or accepting a saved snapshot. */
 export function assertSangmuEmergency(unit:KboSangmuUnit,world:Pick<ActiveKboRosterWorld,'worldKey'|'seasonKey'|'players'|'contracts'|'clubs'>):void {
  const e=unit.emergency;if(!e)return;
- if(e.schemaVersion!==1 || e.worldKey!==world.worldKey || !Number.isSafeInteger(e.nextSerial) || e.nextSerial<1)throw new RangeError('INVALID_SANGMU_EMERGENCY');
+ if(![1,2].includes(e.schemaVersion) || e.worldKey!==world.worldKey || !Number.isSafeInteger(e.nextSerial) || e.nextSerial<1)throw new RangeError('INVALID_SANGMU_EMERGENCY');
  const serials=new Set<number>();
  for(const [key,entry] of Object.entries(e.entries)){
   const id:unknown=JSON.parse(key);
@@ -42,8 +42,8 @@ export function reconcileSangmuEmergency(world:ActiveKboRosterWorld,source:KboSa
  for(const e of Object.values(registry.entries))if(compareKboSeasonDays(e.created,date)>0 || e.released && compareKboSeasonDays(e.released,date)>0)throw new RangeError('FUTURE_SANGMU_TEMPORARY_HISTORY');
  const permanent=[...Object.values(unit.members).filter(m=>m.program.completedBlocks<m.program.scheduledBlocks).map(m=>m.player),...(unit.loaned??[]).map(k=>world.players[k]!)];
  const healthyPlan=planEmergencyRoster(permanent.map(player=>({player,available:true,temporary:false})));
- // Injury backup cannot disguise an empty/expired intake or recruit an early service cohort.
- if(healthyPlan.requiredHitters || healthyPlan.requiredPitchers)throw new RangeError('SANGMU_PERMANENT_ROSTER_INSUFFICIENT');
+ // Version1 preserves injury-only saves; version2 also covers approved discharge/recruitment vacancies.
+ if(registry.schemaVersion===1 && (healthyPlan.requiredHitters || healthyPlan.requiredPitchers))throw new RangeError('SANGMU_PERMANENT_ROSTER_INSUFFICIENT');
  const active=Object.values(registry.entries).filter(e=>e.released===null);
  const plan=planEmergencyRoster([...permanent.map(player=>({player,available:!Object.hasOwn(health.injuries,player.simulationKey),temporary:false})),...active.map(e=>({player:e.player,available:!Object.hasOwn(health.injuries,e.player.simulationKey),temporary:true}))]);
  for(const key of plan.releaseTemporaryKeys)registry.entries[key]!.released={...date};

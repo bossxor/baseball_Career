@@ -16,7 +16,7 @@ import {recordTotals} from './records.js';
 import {raiseKboWindowEvent} from './kbo-windows.js';
 import {reviewKboCallup,reviewKboAiRosters} from './kbo-callup.js';
 import type {BattingLine} from './types.js';
-import {createSangmuEmergency,reconcileSangmuEmergency} from './kbo-sangmu-emergency.js';
+import {assertSangmuEmergency,createSangmuEmergency,reconcileSangmuEmergency} from './kbo-sangmu-emergency.js';
 
 export interface KboPendingGame {leagueKey:KboLeagueKey;job:HighSchoolGameJob}
 export type KboSeasonProgress={phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:KboPendingGame|null};
@@ -36,7 +36,8 @@ export function startKboRegularSeason(source:KboCareer,expectedRevision:number):
  if(source.phaseContext.phase!=='PRESEASON_SETUP' || !source.preseasonPlan || !source.openingRoster || !source.competitionSchedule || source.days)throw new RangeError('KBO_SEASON_NOT_READY');
  const career=structuredClone(source);
  if(career.sangmu && career.competitionSchedule!.leagues.FUTURES.some(g=>g.homeTeamKey==='SANGMU' || g.awayTeamKey==='SANGMU')){
-  career.sangmu.emergency??=createSangmuEmergency(career.world);career.schemaVersion=5;
+  assertSangmuEmergency(career.sangmu,career.world);
+  career.sangmu.emergency??=createSangmuEmergency(career.world);career.sangmu.emergency.schemaVersion=2;career.schemaVersion=5;
  }
  career.days=createKboDayLedger(career.world);
  career.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:firstDay(career),pendingGame:null};
@@ -86,7 +87,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   const day=progress.nextWorldDay;
   if(day>last){return review();}
   if(!progress.pendingGame){
-   if(career.sangmu?.emergency)career.sangmu=reconcileSangmuEmergency(career.world,career.sangmu,career.health,day);
+   if(career.sangmu?.emergency && schedulesOf(career).FUTURES.some(g=>g.homeTeamKey==='SANGMU' || g.awayTeamKey==='SANGMU'))career.sangmu=reconcileSangmuEmergency(career.world,career.sangmu,career.health,day);
    const next=pendingQueue(career,day)[0];
    if(next){
     const world=createKboCompetitionGameWorld(career.world,next.leagueKey,career.protagonistKey,career.sangmu);

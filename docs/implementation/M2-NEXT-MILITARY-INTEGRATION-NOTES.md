@@ -87,3 +87,18 @@ CU의 임시선수는 부상 전 실제 정규 명단이 합법적으로 경기�
 NPC 복귀 뒤 남은 계약 일수가 시즌 중 소진되면 기존 AI 선수 가치·포지션 수요·예산으로 재계약 또는 FA를 결정한다. 내 선수의 계약 비교·선택은 유지한다.
 
 6월30일 전역·신규 지원자 부족으로 정규 군팀 인원이 부족해도 확정된 상무 시즌을 마치도록 종합35~45 군팀 보조 선수를 필요한 만큼만 충원한다. 부상 보충 외 전역·모집 공석에도 허용하되 정규 입대·복무 프로그램·민간 계약을 만들지 않는다. CU의 부상 전 정규 명단 충족 제한을 이 후속 경로에서 확장한다. CW574개 검증은 이 신규 NPC 정책의 구현 통과가 아니다.
+
+
+## CX 검사 중 관계 경계 조사 (정식 구현 전)
+
+실제 startSangmuCohort가 같은 민간 구단 동료를 상무 members로 옮겨도 관계 stage=FORMED가 남는 것을 저장소 밖에서 재현했다. 관계60의 실제 소속 분리 규칙에 맞춰 신규 확정 입대에서만 SEPARATED를 기록하는 초안은 양 종류/이력 보존·원본/게임 상태 불변·기존 소급 없음·실제 상대 경기 E95 등5개를 TEMP에서 통과했다. 현재 저장소 코드/전체 check에 포함하지 않으며 다음 단계에서 정식 코드·타입·전체 검사를 해야 한다. 군팀과 주인공이 이미 같이 대여 등록 중이면 분리로 처리하지 않는다.
+
+
+## 신규 확정 입대의 미래 채무 재현 (미구현)
+
+통제된 동료의 새4년 계약으로 실제 startSangmuCohort를 실행하면 programme.remainingPaidGameDays=576이 보존된다(프리시즌 입대라 당해 계약일도 아직 미지급). 하지만 kboFutureCommitmentWon은 민간 club.roster/world.contracts만 합산하므로 members로 분리한 채무를 계산하지 않는다. 같은 실제 최초 입대 프로그램으로 기존 createKboServicePayroll과 kboServiceFutureCommitment를 계산한 한 fixture에서는1/2/3년 뒤 누락분이 각각74448896/167510016/167510016원이었다. 일반 밸런스 수치나 새 급여 정책이 아니라 통제된 계약의 진단 결과다. 지급/복귀/AI 영입을 실행한 실증이 아니다.
+
+재현 순서: enteredKboCareer → 같은 구단 TEAMMATE 한 명을19세/선발 보장 통제 후보로 지정하고 구단 다른 야수를28세로 배제 → 그 후보의 원래 계약 years=4 → 실제 startSangmuCohort → members의 원래 프로그램 completedBlocks0 확인 → 삭제 전 실제 계약과 같은 프로그램으로 createKboServicePayroll(두 번째 시즌6월30일) → 기존 미래 전망과 분리 채무를 비교한다. 원본은 불변이다. 진행된 프로그램을0으로 되감거나 지급 영수증을 가짜로 만들어 보정하면 안 된다. 신규 입대에서 진짜 미지급 원장을 만들고 미래 예산→연도 이월→실제 복귀/등록 급여를 같은 소유권으로 이어야 한다. 구 저장의 이행 범위는 별도로 증명한다.
+
+
+미래 채무 변경의 실제 도달 범위: kbo-finance의 현재 balance/미래 commitment만 고쳐서는 충분하지 않다. kbo-ai-offseason의 재계약, kbo-fa-market의 다년 제안, kbo-supply의 신인 제안은 availableWon 외에도 paidSalaryWon+reservedSalaryWon+guaranteedWon을 직접 비교한다. kbo-draft의 payroll 합계/미래90% 검사, kbo-roster-repair의 최소 편성 보조금도 같은 실제 채무를 포함해야 한다. 군 복무를 RELEASE/RETIREMENT 보장으로 위장하거나 임의 경쟁 영입에 최소 편성 보조금을 쓰지 않는다. 기존 kboPlayerContractValue/kboRenewalSalaryWon·kboAiRoleNeed/kboAiCandidatePriority는 재사용 가능한 순수 가치/수요 계산이며 주인공을 NPC로 바꾸는 가짜 커리어를 만들 필요가 없다.

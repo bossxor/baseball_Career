@@ -1,0 +1,16 @@
+{
+  "head": "d2bb078aed999e2cbf0c4aa3e31e98751f0add1b",
+  "capturedAt": "2026-10-23T06:00:28.361Z",
+  "runtime": {
+    "files": 231,
+    "sha256": "365210b9efabebfcc87326b8270082d2cd4f53c56c508b8963358e94e6570e18"
+  },
+  "apps": {
+    "files": 12,
+    "sha256": "18acd3bcd4294ce9407cde2a8c46996fdb0f648e021628b56b87f71501984fe2"
+  },
+  "design": {
+    "files": 360,
+    "sha256": "361c30636426875ecedb3bfac54633a5c540f20f705c254ca7be1e47251075a8"
+  }
+}
