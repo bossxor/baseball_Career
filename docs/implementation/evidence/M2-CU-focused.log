@@ -1,0 +1,18 @@
+✔ new military season opts in once; legacy current seasons neither migrate nor consume army health RNG (12866.5266ms)
+✔ minimum injury replacements use isolated35..45 identities; recovery releases registration without deleting history (2347.1265ms)
+✔ normal advance fields injured army replacements, commits their XP/health/fatigue once and resumes from JSON (23623.6834ms)
+✔ new army health records a real diagnosis, heals by registered army games, never by a rest date (239.8644ms)
+✔ military-only identities remain visible in relationships while serving and after temporary release (18583.4095ms)
+✔ corrupt archives or insufficient permanent intake reject without mutation; enlist/return keep archive (7796.6739ms)
+✔ Sangmu enlistment moves 20 selected players out of club rosters into the unit and keeps the world valid (2310.2925ms)
+✔ returning Sangmu players resume the contract on the Futures squad; full clubs and expired contracts are reported, not forced (2048.102ms)
+✔ Sangmu plays Futures as the 11th team in the competition projection and a real game completes (2384.479ms)
+✔ a career with a Sangmu cohort plays the 11-team Futures calendar through the normal commands (66124.4866ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 76380.1905

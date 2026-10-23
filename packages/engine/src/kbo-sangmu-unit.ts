@@ -6,12 +6,14 @@ import type {SangmuSelection} from './kbo-sangmu.js';
 import {enlistInSangmu,KBO_CONTRACT_GAME_DAYS} from './kbo-military-program.js';
 import type {KboMilitaryProgram} from './kbo-military-program.js';
 import {selectKboFirstTeamRoster} from './kbo-world.js';
+import type {KboSangmuEmergency} from './kbo-sangmu-emergency.js';
+import {assertSangmuEmergency} from './kbo-sangmu-emergency.js';
 
 /** The 11th Futures team's people. Serving players are NOT in `world.players` (every world player must sit on a club
  * roster); their identity, books and suspended contract live here, and the original club keeps the rights. */
 export interface KboSangmuMember {player:DevelopmentPlayer;repertoire:Repertoire|null;wasFirstTeam:boolean;program:KboMilitaryProgram}
 /** `loaned` = my own player: he stays in world.players and on his club's records/rights but plays for the military team. */
-export interface KboSangmuUnit {schemaVersion:1;teamKey:'SANGMU';members:Readonly<Record<string,KboSangmuMember>>;enlistedSeasons:readonly string[];loaned?:readonly string[]}
+export interface KboSangmuUnit {schemaVersion:1;teamKey:'SANGMU';members:Readonly<Record<string,KboSangmuMember>>;enlistedSeasons:readonly string[];loaned?:readonly string[];emergency?:KboSangmuEmergency}
 export const emptySangmuUnit=():KboSangmuUnit=>({schemaVersion:1,teamKey:'SANGMU',members:{},enlistedSeasons:[]});
 
 /** Contract days still unplayed when service starts: whole seasons of the contract after the selection season. */
@@ -43,10 +45,11 @@ export function enlistSangmuCohort(world:ActiveKboRosterWorld,unit:KboSangmuUnit
    if(first.length!==KBO_ROSTER_LIMITS.firstTeam)throw new RangeError('KBO_PLAYER_SUPPLY_REQUIRED');club.firstTeam=first;
   }
  }
- return {schemaVersion:1,teamKey:'SANGMU',members,enlistedSeasons:[...unit.enlistedSeasons,selection.seasonKey],...(unit.loaned?{loaned:[...unit.loaned]}:{})};
+ return {...structuredClone(unit),members,enlistedSeasons:[...unit.enlistedSeasons,selection.seasonKey]};
 }
 /** Structural check against a world: nobody is both serving and on a club, programs match their keys. */
-export function assertSangmuUnit(unit:KboSangmuUnit,world:Pick<ActiveKboRosterWorld,'players'|'contracts'|'clubs'>):void {
+export function assertSangmuUnit(unit:KboSangmuUnit,world:Pick<ActiveKboRosterWorld,'worldKey'|'seasonKey'|'players'|'contracts'|'clubs'>):void {
+ assertSangmuEmergency(unit,world);
  for(const key of unit.loaned??[])if(!Object.hasOwn(world.players,key) || !world.clubs.some(c=>c.roster.includes(key) && !c.firstTeam.includes(key)) || Object.hasOwn(unit.members,key))throw new RangeError('INVALID_SANGMU_UNIT');
  for(const [key,m] of Object.entries(unit.members)){
   if(m.player.simulationKey!==key || m.program.playerKey!==key || Object.hasOwn(world.players,key) || Object.hasOwn(world.contracts,key) || world.clubs.some(c=>c.roster.includes(key)))throw new RangeError('INVALID_SANGMU_UNIT');
@@ -74,5 +77,5 @@ export function returnSangmuPlayers(world:ActiveKboRosterWorld,unit:KboSangmuUni
   world.contracts[key]={contractKey:s.contractKey,playerKey:key,clubId:club.id,seasonKey:resumeSeasonKey,years,annualSalaryWon:s.annualSalaryWon,signingBonusWon:0,status:'ACTIVE'};
   club.roster=[...club.roster,key].sort();club.reservedSalaryWon+=s.annualSalaryWon;returned.push(key);delete members[key];
  }
- return {unit:{schemaVersion:1,teamKey:'SANGMU',members,enlistedSeasons:[...unit.enlistedSeasons],...(unit.loaned?{loaned:[...unit.loaned]}:{})},returned,blockedByRoster,uncontracted};
+ return {unit:{...structuredClone(unit),members},returned,blockedByRoster,uncontracted};
 }

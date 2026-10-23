@@ -1,0 +1,332 @@
+{
+  "baseCommit": "a5bc5ba59fa432b551f31f623d2cf119364ee7b7",
+  "direction": "validated checkout -> V:/",
+  "runtimeTestedSourcesUnchanged": true,
+  "postCheckDocsValidatedSeparately": true,
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "e0a8df1816b8aeaded5bacea097607d8196709787996b9421c9550da2cab9f07",
+      "gitBlob": "17d7e9b846fd61076330ff8d114d926307e02eb7",
+      "indexBlob": "17d7e9b846fd61076330ff8d114d926307e02eb7"
+    },
+    {
+      "path": "docs/design/21-MILITARY-CONTRACT-RETURN.md",
+      "sha256": "edeacccfb60d4b74b56786b4fe55a6c59e0f3c5be1f868a332eaf9d7d22ec7e7",
+      "gitBlob": "7a0ceab225b4b539bc5bcf202e9fd80f13340e34",
+      "indexBlob": "7a0ceab225b4b539bc5bcf202e9fd80f13340e34"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "59b8493f4c55295ec6f6ad2cb7ba47c3f24ceed0bb6ebf2e1de3fc7b8bb800a5",
+      "gitBlob": "b33bfdfcc08e0c6df8f46795b4367ab77976c94f",
+      "indexBlob": "b33bfdfcc08e0c6df8f46795b4367ab77976c94f"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "e922966c5b4be1d1e8103e5a0d3bb6e0f454dfefd441cdb17234102b9c1e6f3b",
+      "gitBlob": "45f3dd37224a9e24f2d0c9d147cfcb88cb9de6f0",
+      "indexBlob": "45f3dd37224a9e24f2d0c9d147cfcb88cb9de6f0"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "32f889c848e9c62aea1323908b5057bae04e287e3f49660fd3b8af3b87e52394",
+      "gitBlob": "e8a0d6eca6e174e60f68d8163e13c67377453a8c",
+      "indexBlob": "e8a0d6eca6e174e60f68d8163e13c67377453a8c"
+    },
+    {
+      "path": "docs/design/VALIDATION.md",
+      "sha256": "b3c5fada336613d4ae315268e843f99b779a3e93c65b0e3fbfd02f89db241eb2",
+      "gitBlob": "5f79b67885ad8d72119c2850ae9cd97af84c6724",
+      "indexBlob": "5f79b67885ad8d72119c2850ae9cd97af84c6724"
+    },
+    {
+      "path": "docs/implementation/M2-NEXT-MILITARY-INTEGRATION-NOTES.md",
+      "sha256": "e0b9bbc788e835ad83d396c78cfa741d5e0538f3bb4a57ccc612c81052811d9d",
+      "gitBlob": "c07b2cb0b2a1b987ea7cc6b1a8f9430dd6958882",
+      "indexBlob": "c07b2cb0b2a1b987ea7cc6b1a8f9430dd6958882"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "78b7b499e908dde992f94dde30e8c2079681594a13bf0c18750a6cf5016a2d96",
+      "gitBlob": "b35d1ad88427d18cb7e5c97a5f7445bc8c911723",
+      "indexBlob": "b35d1ad88427d18cb7e5c97a5f7445bc8c911723"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "761604072d0c03175b3a9f2ececf9f3692328cf9bfc6f10097048d77f5be4857",
+      "gitBlob": "50fc82325074696705391106f1d18afc85a5689c",
+      "indexBlob": "50fc82325074696705391106f1d18afc85a5689c"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "d5b5910868b3c86acc41502cf5babb02434bc7e6d66c22a7f8fc2e4e990a6276",
+      "gitBlob": "a41b2986e61b9621a1fcac9ddbe94f589ef12618",
+      "indexBlob": "a41b2986e61b9621a1fcac9ddbe94f589ef12618"
+    },
+    {
+      "path": "packages/engine/src/kbo-archive-view.ts",
+      "sha256": "1a2b561cc38c6c8a7da8d810bfd0094ada5643a830e7c836f9767b8d5e579a73",
+      "gitBlob": "cf241687bb53d2de5db55a0e2289cb6ad62e30af",
+      "indexBlob": "cf241687bb53d2de5db55a0e2289cb6ad62e30af"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "sha256": "00246686a74e427fa4f70ac59e256d9423ca55ba986e1737b87b396f80150c37",
+      "gitBlob": "a91a3781ed5d7d15d8cfc069e05c1c7def5ae063",
+      "indexBlob": "a91a3781ed5d7d15d8cfc069e05c1c7def5ae063"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-version.ts",
+      "sha256": "6bd5708bc52d93c6d51e6b1066da31bfbcc0a43522c793087bc5759981fa0eab",
+      "gitBlob": "dc5bb2b5c16c378a3ebb88902d03bdb1a93e46cc",
+      "indexBlob": "dc5bb2b5c16c378a3ebb88902d03bdb1a93e46cc"
+    },
+    {
+      "path": "packages/engine/src/kbo-day.ts",
+      "sha256": "1767a7bc841196a29256f122c30fa96113bb77c03c6c8fdc8774e579faced322",
+      "gitBlob": "b2e62f09953c9c8a763ef66c76f14fdd12c7a60e",
+      "indexBlob": "b2e62f09953c9c8a763ef66c76f14fdd12c7a60e"
+    },
+    {
+      "path": "packages/engine/src/kbo-game-world.ts",
+      "sha256": "ac3aa7b4b605247b07b1a73d6b41be5d8b676a6ca1d5b1af08f779628feb6607",
+      "gitBlob": "36e1c3dfd80abad021c9895fb6124208c825c07a",
+      "indexBlob": "36e1c3dfd80abad021c9895fb6124208c825c07a"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-growth.ts",
+      "sha256": "67e14fb7a82b5cbdae9dfd4830dfae479ad5a5a0a468d0c9680e5c1c2f29da90",
+      "gitBlob": "d87d9374dec3b8f3dc146321df0c4736ebc7c9bf",
+      "indexBlob": "d87d9374dec3b8f3dc146321df0c4736ebc7c9bf"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "sha256": "c9b6d6028c51ccac1ea0ed39e8507835cdb1e7583009c63a949e0c7686487294",
+      "gitBlob": "54f441e85a6e2d36ab782884a39a627af5ea2f75",
+      "indexBlob": "54f441e85a6e2d36ab782884a39a627af5ea2f75"
+    },
+    {
+      "path": "packages/engine/src/kbo-relations.ts",
+      "sha256": "7289bbd0def91f7fc4afe3457bd75c9e5c236ab5acf1c70e810f75e919654935",
+      "gitBlob": "a6566e2a3cfb04e53c723b83e283dc260835c812",
+      "indexBlob": "a6566e2a3cfb04e53c723b83e283dc260835c812"
+    },
+    {
+      "path": "packages/engine/src/kbo-remainder-transfer.ts",
+      "sha256": "14b78ec6664014fc6e840b288bfe3430c5d2590b7b3d12c5b6c40bd291822643",
+      "gitBlob": "795c347efe923d97e7c502a2c96f6a89df7d4b79",
+      "indexBlob": "795c347efe923d97e7c502a2c96f6a89df7d4b79"
+    },
+    {
+      "path": "packages/engine/src/kbo-sangmu-unit.ts",
+      "sha256": "b5afc779ab80ed6e3daacac80690ba05692e7c8949eefee8b7d1e8c42b51180e",
+      "gitBlob": "4e8248bafa27feeefda012230b5c6cb5adf9f562",
+      "indexBlob": "4e8248bafa27feeefda012230b5c6cb5adf9f562"
+    },
+    {
+      "path": "packages/engine/src/kbo-season-growth.ts",
+      "sha256": "319a9d18161b341486a5473944a0666c2ed161d28f584c862ee0955d8173f7d5",
+      "gitBlob": "ac4babee9623f197c21b685118796479b202c585",
+      "indexBlob": "ac4babee9623f197c21b685118796479b202c585"
+    },
+    {
+      "path": "packages/engine/src/kbo-transfer-registration.ts",
+      "sha256": "05000740af582212fd2cc96866e9e3c9a4bbd1595c70ee74104e1dbfb71c8088",
+      "gitBlob": "54fb3bfb6fafea27022c99d120bca9a55140f605",
+      "indexBlob": "54fb3bfb6fafea27022c99d120bca9a55140f605"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "815766cfda5e8298cc832f3c8f789376718c58e239d4aba5d85b7a6840e3ac6d",
+      "gitBlob": "8982ca401e7843a870832b69a7e13bb65076f475",
+      "indexBlob": "8982ca401e7843a870832b69a7e13bb65076f475"
+    },
+    {
+      "path": "packages/engine/src/relationship-history.ts",
+      "sha256": "36e6df80fd27bf49cfda4535e1b65eada93baece556b7a120cff94a79a8526d1",
+      "gitBlob": "d87a9c1c95552f164a39bf08b312a97e061ac09b",
+      "indexBlob": "d87a9c1c95552f164a39bf08b312a97e061ac09b"
+    },
+    {
+      "path": "packages/engine/test/kbo-sangmu-unit.test.ts",
+      "sha256": "82215ee42a8779d6075b90866b20f9c16f82c4cda91a1b33bc50eac2550593b8",
+      "gitBlob": "fb05c6eec57c0e75674c395b92704f32f4d23f00",
+      "indexBlob": "fb05c6eec57c0e75674c395b92704f32f4d23f00"
+    },
+    {
+      "path": "docs/implementation/M2-CU-SANGMU-HEALTH-EMERGENCY.md",
+      "sha256": "65c8b37559cda1319a4ec7df23e767bbcad377dfd0b37b331e4559feac46d340",
+      "gitBlob": "d33d767ab56d1acdcaae2208810430826c8a090c",
+      "indexBlob": "d33d767ab56d1acdcaae2208810430826c8a090c"
+    },
+    {
+      "path": "docs/implementation/M2-CV-POSTSEASON-GROWTH-HEALTH.md",
+      "sha256": "73edba24d07635c1bffd3ddf33dc976837ccc5594a9684dc8726824a031e3af2",
+      "gitBlob": "6ea2edcacb79e5eb200b0bc47ed12fe7cbd72a66",
+      "indexBlob": "6ea2edcacb79e5eb200b0bc47ed12fe7cbd72a66"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-check-exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "gitBlob": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56",
+      "indexBlob": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-check-first-run.json",
+      "sha256": "e84add264f739527ceb039bf6bde59f642a79b67573d0f257b1ef822cf30f801",
+      "gitBlob": "8aa1396ae585ff2f9b351ef8f3856f0e1dfc3746",
+      "indexBlob": "8aa1396ae585ff2f9b351ef8f3856f0e1dfc3746"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-check-first-run.log",
+      "sha256": "78f4363127a2f543a0d2026e0595138cd655afbf27b613a0b4b27dfa07aeb357",
+      "gitBlob": "c6fcdbb585c39218564f2aca8a242623bd725eaa",
+      "indexBlob": "c6fcdbb585c39218564f2aca8a242623bd725eaa"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-check.log",
+      "sha256": "f6ec3a3b3eb346b02347b4ac9cb6c98318b951cccd82c9c6bac8862996f4f06d",
+      "gitBlob": "e8f4c6b5249ebf0e3bbf8dbc29933484aa4f19e2",
+      "indexBlob": "e8f4c6b5249ebf0e3bbf8dbc29933484aa4f19e2"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-design-final.log",
+      "sha256": "6e903695ba67f81a7f4cfd1b530a5664189fb389c389720927970b2fbaea61a6",
+      "gitBlob": "edabd7b6ed0470a245c701185675b94404ba4a5a",
+      "indexBlob": "edabd7b6ed0470a245c701185675b94404ba4a5a"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-design-preflight.log",
+      "sha256": "6e903695ba67f81a7f4cfd1b530a5664189fb389c389720927970b2fbaea61a6",
+      "gitBlob": "edabd7b6ed0470a245c701185675b94404ba4a5a",
+      "indexBlob": "edabd7b6ed0470a245c701185675b94404ba4a5a"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-focused-before-fix.log",
+      "sha256": "3556dec00ca95eb513b281c083718e01d74c46864202813214a89e3152643fd8",
+      "gitBlob": "fe0ccee10b36917bf4092c98915e40592ed432f1",
+      "indexBlob": "fe0ccee10b36917bf4092c98915e40592ed432f1"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-focused-final.log",
+      "sha256": "94c3f2c4bd39cdf6c2cd34ee2541159258de0388d70009b3263cfe6bdadfacca",
+      "gitBlob": "d0edede0b9499c025416c4792fb6121ff16f627a",
+      "indexBlob": "d0edede0b9499c025416c4792fb6121ff16f627a"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-focused.log",
+      "sha256": "61763b8fb57c50f7e4672afae30a299273a404f641b44a7da00b052c24e62c09",
+      "gitBlob": "cdf41207422a8775f7611540409921a173bbce77",
+      "indexBlob": "cdf41207422a8775f7611540409921a173bbce77"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-future-loan-before-fix.log",
+      "sha256": "1bb7011d1d40ea0b86d8863aae603054216f98abc0183d948395fc209a114a34",
+      "gitBlob": "3f102a6349cf2d2f5ea7d80ca111d6b12a6a86a1",
+      "indexBlob": "3f102a6349cf2d2f5ea7d80ca111d6b12a6a86a1"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-manifest.log",
+      "sha256": "6089df69a426fe6756917ff6358256756f763977079292318b26040e4d062f1d",
+      "gitBlob": "65bd618ab839e74feaccf6833f4436ab0c0e747e",
+      "indexBlob": "65bd618ab839e74feaccf6833f4436ab0c0e747e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-post-docs.json",
+      "sha256": "7d5796479d56affa9af54055c95c9b5ac99ee11fb36e6b45519e9f01a6d4524b",
+      "gitBlob": "62fa6175b8ac8fc9fc58c7cde7b4d680acb95cde",
+      "indexBlob": "62fa6175b8ac8fc9fc58c7cde7b4d680acb95cde"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8",
+      "gitBlob": "44c3710ebb95acc2bae3c2ee24697eb90b52ce06",
+      "indexBlob": "44c3710ebb95acc2bae3c2ee24697eb90b52ce06"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-source-freeze-first-run.json",
+      "sha256": "0c6ae461398c74a5f30db8dad52f90ff6388a72d2a4f8103306853f773a57e5c",
+      "gitBlob": "2c8c19407579f08de12f0b3ab471b6e5d66f9302",
+      "indexBlob": "2c8c19407579f08de12f0b3ab471b6e5d66f9302"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-source-freeze.json",
+      "sha256": "45a96f7f7d7e809f045b9f7df2b2913631f3e2107a02a28fd7110a6e3763085e",
+      "gitBlob": "7b47b3e0a6cab8f4ad522132ef2ba09cadb59db8",
+      "indexBlob": "7b47b3e0a6cab8f4ad522132ef2ba09cadb59db8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "indexBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-year-carry-before-isolation.log",
+      "sha256": "f9b8fc8838732a0d97dc4aa7434113c54c46adf0726656ccc20a33537c17085d",
+      "gitBlob": "2b10bc25be28520b7a2c2dd927f038d633e49c49",
+      "indexBlob": "2b10bc25be28520b7a2c2dd927f038d633e49c49"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-year-carry.log",
+      "sha256": "e3409eaebfbfe23beae49c8264b126269568f45b810901507a35266ac9766c48",
+      "gitBlob": "4796b9f1a9675200355660028e7c4073f91bc441",
+      "indexBlob": "4796b9f1a9675200355660028e7c4073f91bc441"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CU-year-carry.mjs",
+      "sha256": "dbb81a37a499a99425d68797aa374640cba747aae08df292af56fb16e074f3b3",
+      "gitBlob": "823f54618dd519dfefe58be3cab3b7d84b65a972",
+      "indexBlob": "823f54618dd519dfefe58be3cab3b7d84b65a972"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CV-before-fix.log",
+      "sha256": "77390cfbc3e81b471b285e3c9be86f596fe0d462f50db54e00d1022b8cfcc24e",
+      "gitBlob": "ef1d075ecd1ba11ef39bc214ab806a47d87a3a29",
+      "indexBlob": "ef1d075ecd1ba11ef39bc214ab806a47d87a3a29"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CV-focused-final.log",
+      "sha256": "85a19438f817f10dbea36e786e20ab6df33f6a1ce1de07779ccffbe1eaac9d85",
+      "gitBlob": "ece693782d77b48c8b36b6b01ef95dc1c527b0a9",
+      "indexBlob": "ece693782d77b48c8b36b6b01ef95dc1c527b0a9"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CV-focused.log",
+      "sha256": "fc002b9cc66d288b9ffe8cf93e3a68024b8017def93ecc09678dcf6543ba2b18",
+      "gitBlob": "08cda692191f086b76f34a2cde82b888a34850d8",
+      "indexBlob": "08cda692191f086b76f34a2cde82b888a34850d8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CV-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "indexBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "packages/engine/src/kbo-growth-health.ts",
+      "sha256": "dd852d9c31419ee6c57ff98c3b0a8d7e8bc6e3358fbbcc56789fcef57d4eee12",
+      "gitBlob": "0027c600cf7c03e7a26eb6da09323f8bf8694b29",
+      "indexBlob": "0027c600cf7c03e7a26eb6da09323f8bf8694b29"
+    },
+    {
+      "path": "packages/engine/src/kbo-sangmu-emergency.ts",
+      "sha256": "9a78e68c37f7b39699701916c2066d4a82df832273e1cfefbe8541a09c876f3f",
+      "gitBlob": "c704e3e253ca386f7398fe386bf4c43e9971c26f",
+      "indexBlob": "c704e3e253ca386f7398fe386bf4c43e9971c26f"
+    },
+    {
+      "path": "packages/engine/test/kbo-growth-health.test.ts",
+      "sha256": "2a1db9a27997b1291465966b0ee521527d96fc90516fff27092c311f2226c2ba",
+      "gitBlob": "2c77473eada1cc56480fd5c0bd26ba513c299073",
+      "indexBlob": "2c77473eada1cc56480fd5c0bd26ba513c299073"
+    },
+    {
+      "path": "packages/engine/test/kbo-sangmu-emergency.test.ts",
+      "sha256": "fc883ab173828b7017fcc6b2cf6068c24f2eac1f554649a530472e8d8c02c199",
+      "gitBlob": "32f50675d40549c29485d1b0c46c74849ae99dd3",
+      "indexBlob": "32f50675d40549c29485d1b0c46c74849ae99dd3"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "completedAt": "2026-10-23T05:18:52.328Z",
+  "milestones": [
+    "M2-CU",
+    "M2-CV"
+  ],
+  "tests": 566,
+  "passed": 566,
+  "failed": 0,
+  "cancelled": 0,
+  "testDurationMs": 1145193.7649,
+  "focused": 39,
+  "staticDesignValidators": 10,
+  "manifestEntries": 359,
+  "httpSmoke": "skeleton only; no UI/auth/DB/storage/APK",
+  "runtimeUnchanged": true,
+  "design": {
+    "files": 360,
+    "sha256": "be7c6335726dd46d1e00e719152c88368375222e04ffe26191709d170045c324"
+  }
+}

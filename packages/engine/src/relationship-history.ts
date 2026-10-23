@@ -4,7 +4,7 @@ import type {RecordLedger} from './records.js';
 import {relationDetailView} from './relationships.js';
 import type {RelationshipLedger,PlayerRelationship,RelationScope} from './relationships.js';
 
-export type RelationHistoryWorld=RegisteredTeamRelationWorld & {seed:string};
+export type RelationHistoryWorld=Omit<RegisteredTeamRelationWorld,'schools'> & {seed:string;schools:(RegisteredTeamRelationWorld['schools'][number] & {leagueKey?:string})[]};
 export interface RelationshipHistorySource {
  world:RelationHistoryWorld;records:RecordLedger;relationships?:RelationshipLedger;
  previousSeasons?:readonly {world:RelationHistoryWorld}[];
@@ -26,7 +26,7 @@ function findPlayer(source:RelationshipHistorySource,key:string){
 }
 function playerView(found:ReturnType<typeof findPlayer>){
  if(!found)return {other:null,otherAvailability:'UNKNOWN_REFERENCE' as const,lastKnownRegistration:null};
- const {player:p,world}=found,team=world?.schools.find(s=>s.roster.includes(p.simulationKey)),registration=world?(team?{seasonKey:world.seasonKey,leagueKey:world.leagueKey??'HS',teamId:team.id,teamName:team.name}:null):found.registration;
+ const {player:p,world}=found,team=world?.schools.find(s=>s.roster.includes(p.simulationKey)),registration=world?(team?{seasonKey:world.seasonKey,leagueKey:team.leagueKey??world.leagueKey??'HS',teamId:team.id,teamName:team.name}:null):found.registration;
  return {other:{name:p.name,kind:p.kind,position:p.position,throws:p.throws,bats:p.bats,pitchForm:p.pitchForm??null,schoolName:registration?.teamName??null},otherAvailability:found.availability,lastKnownRegistration:registration};
 }
 /** Career S42 list: archived players stay visible; their last known team is never presented as a current transfer. */

@@ -1,0 +1,35 @@
+✔ both leagues close one pro day together: one fatigue step for every club player and per-league team-game health (12058.6181ms)
+✔ day close rejects missing games, changed evidence, wrong order and a second health pass (4213.5948ms)
+✔ HITTER pro list retains historical school and active club teammate identities without invented transfers/stages (6941.7139ms)
+✔ PITCHER pro list retains historical school and active club teammate identities without invented transfers/stages (3392.4161ms)
+✔ historical relation details reuse existing official scoped records; never fabricate pro games or new player registration (2235.9949ms)
+✔ both historical and new pro E94 preserve names and ACK only their notice while the confirmed plan remains sealed (2572.6295ms)
+✔ stale revision/version, wrong command or foreign/duplicate relation evidence reject without changes (1667.8049ms)
+✔ unknown historical player remains unresolved; malformed ownership, foreign history and changed confirmed plan reject (4547.7353ms)
+✔ absence of relations/notices on restored old pro state is empty and querying never creates a new relation (1421.7074ms)
+✔ a pro teammate moved to FA or retirement keeps identity and notices as historical only, never a fake live registration (1794.3906ms)
+✔ new military season opts in once; legacy current seasons neither migrate nor consume army health RNG (12867.6838ms)
+✔ minimum injury replacements use isolated35..45 identities; recovery releases registration without deleting history (688.0974ms)
+✔ normal advance fields injured army replacements, commits their XP/health/fatigue once and resumes from JSON (7930.3143ms)
+✔ new army health records a real diagnosis, heals by registered army games, never by a rest date (118.4278ms)
+✔ military-only identities remain visible in relationships while serving and after temporary release (3303.6456ms)
+✔ corrupt archives or insufficient permanent intake reject without mutation; enlist/return keep archive (1406.3838ms)
+✔ a real army opponent game supplies E95 side evidence and the current military identity (882.978ms)
+✔ Sangmu enlistment moves 20 selected players out of club rosters into the unit and keeps the world valid (6829.2664ms)
+✔ returning Sangmu players resume the contract on the Futures squad; full clubs and expired contracts are reported, not forced (2573.624ms)
+✔ Sangmu plays Futures as the 11th team in the competition projection and a real game completes (2437.8478ms)
+✔ a career with a Sangmu cohort plays the 11-team Futures calendar through the normal commands (15809.7211ms)
+✔ college S42 keeps archived HS rival/teammate identity and last known registration without inferring a new stage (2851.5925ms)
+✔ archived same-kind identity reuses real scoped contributions, not invented meetings; zero scopes remain empty (1019.2766ms)
+✔ unknown history stays as an unresolved reference, not retirement or an invented player (596.5044ms)
+✔ current identity takes priority and the latest archived snapshot is chosen for historical identity (1160.2414ms)
+✔ foreign history and malformed relationship ownership reject instead of leaking another world (1085.478ms)
+✔ persisted E94 notices keep the archived name after college entry without recreating the formation event (620.6763ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30686.8717

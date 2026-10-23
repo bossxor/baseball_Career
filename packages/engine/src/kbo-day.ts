@@ -37,18 +37,18 @@ export function closeKboCompetitionDay(world:ActiveKboRosterWorld,schedules:KboS
  if(Object.values(records.games).some(c=>(c.scope.leagueKey==='KBO' || c.scope.leagueKey==='FUTURES') && c.scope.seasonKey===world.seasonKey && c.worldDay>day))throw new RangeError('FUTURE_GAME_BEFORE_DAY_CLOSE');
  if(health.games.some(g=>g.evidence.seasonKey===world.seasonKey && g.evidence.day>=day))throw new RangeError('PARTIAL_DAY_HEALTH_STATE');
  const registered=new Set<string>();
- for(const leagueKey of ['KBO','FUTURES'] as const)for(const club of worlds[leagueKey].schools)for(const key of club.roster){if(registered.has(key) || !Object.hasOwn(world.players,key) && !sangmu?.members[key])throw new RangeError('INVALID_DAY_REGISTRATION');registered.add(key);}
+ for(const leagueKey of ['KBO','FUTURES'] as const)for(const club of worlds[leagueKey].schools)for(const key of club.roster){if(registered.has(key) || !Object.hasOwn(world.players,key) && !sangmu?.members[key] && !sangmu?.emergency?.entries[key])throw new RangeError('INVALID_DAY_REGISTRATION');registered.add(key);}
  const appearances=new Map<string,'HITTER'|'STARTER'|'RELIEF'>();
  const mark=(key:string,kind:'HITTER'|'STARTER'|'RELIEF')=>{if(!registered.has(key) || appearances.has(key))throw new RangeError('INVALID_DAY_APPEARANCE');appearances.set(key,kind);};
  for(const c of contributions){for(const key of Object.keys(c.batting))mark(key,'HITTER');for(const [key,line] of Object.entries(c.pitching))mark(key,line.starts>0?'STARTER':'RELIEF');}
  const updated=structuredClone(world);
- const unit=sangmu?structuredClone(sangmu):undefined,fatigued=(key:string)=>unit?.members[key]?.player??updated.players[key]!;
- for(const key of [...registered].sort()){const next=appearanceFatigue(fatigued(key),appearances.get(key)??'NONE');if(unit?.members[key])unit.members[key]!.player=next;else updated.players[key]=next;}
+ const unit=sangmu?structuredClone(sangmu):undefined,fatigued=(key:string)=>unit?.members[key]?.player??unit?.emergency?.entries[key]?.player??updated.players[key]!;
+ for(const key of [...registered].sort()){const next=appearanceFatigue(fatigued(key),appearances.get(key)??'NONE');if(unit?.members[key])unit.members[key]!.player=next;else if(unit?.emergency?.entries[key])unit.emergency.entries[key]!.player=next;else updated.players[key]=next;}
  for(const key of Object.keys(updated.players).filter(k=>kboActiveContractSuspended(updated.contracts[k]!))){if(registered.has(key))throw new RangeError('ACTIVE_SERVICE_REGISTERED');updated.players[key]=appearanceFatigue(updated.players[key]!,'NONE');}
  let nextHealth=health;const result:SchoolDayResult={injured:[],recovered:[]};
  for(const {leagueKey,game} of scheduled){for(const teamKey of [game.awayTeamKey,game.homeTeamKey].sort()){
-  // ponytail: the military team has no injury/emergency-roster model yet (its 10 hitters cannot absorb injuries); fatigue still applies.
-  if(teamKey===SANGMU_TEAM_KEY)continue;
+  // Legacy in-progress seasons keep their original health draw order; new seasons opt in before their first game.
+  if(teamKey===SANGMU_TEAM_KEY && !sangmu?.emergency)continue;
   const roster=worlds[leagueKey].schools.find(s=>s.id===teamKey)!.roster;
   const settled=settleTeamGameHealth(nextHealth,{gameKey:game.simulationKey,teamKey:leagueKey+":"+teamKey,seasonKey:world.seasonKey,day,roster,appearances:roster.filter(key=>appearances.has(key)).map(playerKey=>({playerKey,riskFatigue:fatigued(playerKey).fatigue}))});
   nextHealth=settled.ledger;result.injured.push(...settled.result.injured);result.recovered.push(...settled.result.recovered);

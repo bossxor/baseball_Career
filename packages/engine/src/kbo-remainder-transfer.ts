@@ -64,7 +64,7 @@ export function acceptKboRemainderTransfer(source:KboCareer,expectedRevision:num
  c.transferHistory=[...(c.transferHistory??[]),{receiptKey,seasonKey:c.world.seasonKey,playerKey:key,fromClubId:from.id,toClubId:to.id,afterWorldDay:o.startAfterWorldDay,previousContractKey:old.contractKey,contractKey:next.contractKey,planBoundaryDays,rosterSignings}];
  c.events=c.events.map(e=>e.eventKey===event.eventKey?resolved:e);c.remainderRenewal={...o,status:'TRANSFERRED',acceptedOfferKey:offer.offerKey};
  if(source.phaseContext.phase!=='EVENT_DECISION')throw new RangeError('INVALID_CAREER_PHASE');
- c.phaseContext=structuredClone(source.phaseContext.resume);c.schemaVersion=4;c.revision++;
+ c.phaseContext=structuredClone(source.phaseContext.resume);if(c.schemaVersion<4)c.schemaVersion=4;c.revision++;
  const world={worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,leagueKey:'KBO',protagonistKey:key,protagonistSchoolId:to.id,schools:c.world.clubs,players:c.world.players};
  c.relationships=separateKboTransferRelations(source,c);
  settleKboTransferTeamReunions(source,c);

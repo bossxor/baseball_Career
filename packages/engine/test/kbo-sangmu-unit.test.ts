@@ -88,6 +88,6 @@ test('a career with a Sangmu cohort plays the 11-team Futures calendar through t
  assert.ok(sangmuGames.length>0,'the military team has played');
  assert.ok(sangmuGames.every(x=>Object.keys(x.batting).concat(Object.keys(x.pitching)).filter(k=>Object.hasOwn(g.sangmu!.members,k)).length>0),'military players appear in their games');
  // Members rest/tire in the unit, not in world.players; the rest of the world stays valid.
- assert.ok(Object.values(g.sangmu!.members).some(m=>m.player.fatigue>0));assert.equal(g.health.games.filter(x=>x.evidence.teamKey==='FUTURES:SANGMU').length,0);
+ assert.ok(Object.values(g.sangmu!.members).some(m=>m.player.fatigue>0));assert.equal(g.health.games.filter(x=>x.evidence.teamKey==='FUTURES:SANGMU').length,sangmuGames.length);
  assert.ok(Object.keys(g.sangmu!.members).every(k=>!Object.hasOwn(g.world.players,k)));
 });

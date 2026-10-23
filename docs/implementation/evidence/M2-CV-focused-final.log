@@ -1,0 +1,47 @@
+✔ both leagues close one pro day together: one fatigue step for every club player and per-league team-game health (13539.2316ms)
+✔ day close rejects missing games, changed evidence, wrong order and a second health pass (7944.6287ms)
+✔ real postseason injury cannot block or rewrite first regular growth settlement; injury and JSON replay survive (29034.7644ms)
+✔ SPORTS return partitions use regular-end health and preserve already-completed military evidence (619.8814ms)
+✔ ACTIVE return partitions use regular-end health and preserve already-completed military evidence (700.851ms)
+✔ growth paid before postseason stays an identical duplicate after later injury, without a fresh budget (1529.0534ms)
+✔ boundary rewind handles later recovery and diagnosis/recovery cycles without changing source (1226.5158ms)
+✔ contradictory postseason health and changed regular evidence still reject atomically (2973.0047ms)
+✔ military growth: full SPORTS season has one PRO/Futures period, actual military PA and one annual budget (8671.563ms)
+✔ military growth: June30 splits service/return periods, preserves one annual cap and actual original-club registrations (4498.6467ms)
+✔ military growth: plan boundary uses military games, not the original club calendar; focus/history stay intact (3825.4638ms)
+✔ military growth rejects foreign/unregistered PA, reused days and changed calendar without mutation (10248.7112ms)
+✔ legacy military saves retain their existing unsplit periods and do not opt in during reads (3802.9044ms)
+✔ HITTER pro list retains historical school and active club teammate identities without invented transfers/stages (7443.6695ms)
+✔ PITCHER pro list retains historical school and active club teammate identities without invented transfers/stages (5983.0335ms)
+✔ historical relation details reuse existing official scoped records; never fabricate pro games or new player registration (3683.3091ms)
+✔ both historical and new pro E94 preserve names and ACK only their notice while the confirmed plan remains sealed (4159.4674ms)
+✔ stale revision/version, wrong command or foreign/duplicate relation evidence reject without changes (3921.62ms)
+✔ unknown historical player remains unresolved; malformed ownership, foreign history and changed confirmed plan reject (9581.4264ms)
+✔ absence of relations/notices on restored old pro state is empty and querying never creates a new relation (2347.695ms)
+✔ a pro teammate moved to FA or retirement keeps identity and notices as historical only, never a fake live registration (2194.8343ms)
+✔ new military season opts in once; legacy current seasons neither migrate nor consume army health RNG (18158.544ms)
+✔ minimum injury replacements use isolated35..45 identities; recovery releases registration without deleting history (952.4109ms)
+✔ normal advance fields injured army replacements, commits their XP/health/fatigue once and resumes from JSON (17063.5266ms)
+✔ new army health records a real diagnosis, heals by registered army games, never by a rest date (188.0118ms)
+✔ military-only identities remain visible in relationships while serving and after temporary release (3954.7287ms)
+✔ corrupt archives or insufficient permanent intake reject without mutation; enlist/return keep archive (1500.7902ms)
+✔ a real army opponent game supplies E95 side evidence and the current military identity (804.967ms)
+✔ confirmed next-year sports enlistment keeps current civilian identity readable without weakening active military registration (540.4019ms)
+✔ Sangmu enlistment moves 20 selected players out of club rosters into the unit and keeps the world valid (7744.8481ms)
+✔ returning Sangmu players resume the contract on the Futures squad; full clubs and expired contracts are reported, not forced (3760.4547ms)
+✔ Sangmu plays Futures as the 11th team in the competition projection and a real game completes (3990.1786ms)
+✔ a career with a Sangmu cohort plays the 11-team Futures calendar through the normal commands (27106.422ms)
+✔ college S42 keeps archived HS rival/teammate identity and last known registration without inferring a new stage (1831.0689ms)
+✔ archived same-kind identity reuses real scoped contributions, not invented meetings; zero scopes remain empty (1681.7905ms)
+✔ unknown history stays as an unresolved reference, not retirement or an invented player (983.2888ms)
+✔ current identity takes priority and the latest archived snapshot is chosen for historical identity (819.646ms)
+✔ foreign history and malformed relationship ownership reject instead of leaking another world (1261.4553ms)
+✔ persisted E94 notices keep the archived name after college entry without recreating the formation event (1279.831ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 47061.2492

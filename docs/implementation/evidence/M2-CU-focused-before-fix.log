@@ -1,0 +1,60 @@
+✔ new military season opts in once; legacy current seasons neither migrate nor consume army health RNG (13148.5832ms)
+✔ minimum injury replacements use isolated35..45 identities; recovery releases registration without deleting history (1744.236ms)
+✖ normal advance fields injured army replacements, commits their XP/health/fatigue once and resumes from JSON (4129.8971ms)
+✔ new army health records a real diagnosis, heals by registered army games, never by a rest date (257.2767ms)
+✖ military-only identities remain visible in relationships while serving and after temporary release (3221.3443ms)
+✖ corrupt archives or insufficient permanent intake reject without mutation; enlist/return keep archive (652.7697ms)
+✔ Sangmu enlistment moves 20 selected players out of club rosters into the unit and keeps the world valid (3985.6892ms)
+✔ returning Sangmu players resume the contract on the Futures squad; full clubs and expired contracts are reported, not forced (3570.2188ms)
+✔ Sangmu plays Futures as the 11th team in the competition projection and a real game completes (2503.4909ms)
+✔ a career with a Sangmu cohort plays the 11-team Futures calendar through the normal commands (26078.6433ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 7
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 45432.6211
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-sangmu-emergency.test.ts:1:6475
+✖ normal advance fields injured army replacements, commits their XP/health/fatigue once and resumes from JSON (4129.8971ms)
+  RangeError: INVALID_GAME_CONTEXT
+      at prepareSchoolCompetitionGame (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\high-school-game.ts:46:222)
+      at advanceKboCareer (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-progress.ts:93:56)
+      at finishDay (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-sangmu-emergency.test.ts:36:82)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-sangmu-emergency.test.ts:69:103)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at packages\engine\test\kbo-sangmu-emergency.test.ts:1:9297
+✖ military-only identities remain visible in relationships while serving and after temporary release (3221.3443ms)
+  RangeError: INVALID_GAME_CONTEXT
+      at prepareSchoolCompetitionGame (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\high-school-game.ts:46:222)
+      at advanceKboCareer (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-progress.ts:93:56)
+      at finishDay (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-sangmu-emergency.test.ts:36:82)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-sangmu-emergency.test.ts:93:56)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at packages\engine\test\kbo-sangmu-emergency.test.ts:1:10535
+✖ corrupt archives or insufficient permanent intake reject without mutation; enlist/return keep archive (652.7697ms)
+  RangeError: KBO_PLAYER_SUPPLY_REQUIRED
+      at enlistSangmuCohort (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-sangmu-unit.ts:45:56)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\test\kbo-sangmu-emergency.test.ts:104:214)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

@@ -1,3 +1,4 @@
+import {kboRegularEndInjured} from './kbo-growth-health.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import type {ClosedGrowthPeriod} from './growth-ledger.js';
 import type {GameContribution} from './records.js';
@@ -51,8 +52,8 @@ export function kboMilitaryGrowthPeriods(c:KboCareer):ClosedGrowthPeriod[]|null 
  const registeredKeys=new Set(games.map(g=>g.gameKey)),dayGames=new Map(games.map(g=>[g.worldDay,g]));
  const official=Object.values(c.records.games).filter(g=>g.scope.seasonKey===season && g.scope.phase==='REGULAR' && ['KBO','FUTURES'].includes(g.scope.leagueKey));
  for(const g of official)if((Object.hasOwn(g.batting,key)||Object.hasOwn(g.pitching,key))&&!registeredKeys.has(g.gameKey))throw new RangeError('INVALID_MILITARY_GROWTH_REGISTRATION');
+  const lastRegular=Math.max(...[...c.competitionSchedule!.leagues.KBO,...c.competitionSchedule!.leagues.FUTURES].map(g=>g.worldDay));
  let rehab=Object.hasOwn(c.health.injuries,key) && c.health.injuries[key]!.seasonKey!==season && !c.days!.days.some(d=>d.result.injured.includes(key));
- const lastRegular=Math.max(...[...c.competitionSchedule!.leagues.KBO,...c.competitionSchedule!.leagues.FUTURES].map(g=>g.worldDay));
  for(const closed of c.days!.days.filter(d=>d.day<=lastRegular)){
   const game=dayGames.get(closed.day),appearance=game?(start.kind==='HITTER'?game.batting[key]?.PA??0:game.pitching[key]?.outs??0):0,growthIndex=index.get(closed.day);
   if(rehab && appearance>0)throw new RangeError('INVALID_GROWTH_APPEARANCES');
@@ -61,7 +62,7 @@ export function kboMilitaryGrowthPeriods(c:KboCareer):ClosedGrowthPeriod[]|null 
   if(closed.result.injured.includes(key))rehab=true;
   if(closed.result.recovered.includes(key))rehab=false;
  }
- if(rehab!==Object.hasOwn(c.health.injuries,key))throw new RangeError('CHANGED_GROWTH_HEALTH_EVIDENCE');
+ if(rehab!==kboRegularEndInjured(c,lastRegular))throw new RangeError('CHANGED_GROWTH_HEALTH_EVIDENCE');
  return parts.map(part=>{
   const plan=history[boundaries.findLastIndex(b=>b<=part.start)]!;
   return {periodKey:JSON.stringify(['pro-growth',c.world.worldKey,season,part.start,part.end,transfers?'transfer-v1':'military-v1']),focus:[...plan.focus],archetype:plan.archetype,

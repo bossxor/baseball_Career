@@ -108,6 +108,7 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
 // Legacy/NPC unit members still complete at year close; versioned protagonist programs use their actual completion-day ledger.
 advanceKboMilitaryService(career,source.world.seasonKey,source.days!.days.at(-1)!.day);
 if(career.sangmu){
+ for(const e of Object.values(career.sangmu.emergency?.entries??{}))if(e.released===null)e.released={seasonKey:source.world.seasonKey,worldDay:source.days!.days.at(-1)!.day};
  const lastDay=source.days!.days.at(-1)!.day,members=Object.fromEntries(Object.entries(career.sangmu.members).map(([k,m])=>{
   const open=m.program.blocks.find(b=>b.seasonKey===source.world.seasonKey && b.completedWorldDay===null);
   return [k,{...m,player:{...m.player,age:m.player.age+1,fatigue:0},repertoire:m.repertoire?{...m.repertoire,seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()}:null,program:open?completeSangmuBlock(m.program,open.seasonKey,lastDay):m.program}];

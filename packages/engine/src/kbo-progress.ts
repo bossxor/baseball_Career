@@ -16,6 +16,7 @@ import {recordTotals} from './records.js';
 import {raiseKboWindowEvent} from './kbo-windows.js';
 import {reviewKboCallup,reviewKboAiRosters} from './kbo-callup.js';
 import type {BattingLine} from './types.js';
+import {createSangmuEmergency,reconcileSangmuEmergency} from './kbo-sangmu-emergency.js';
 
 export interface KboPendingGame {leagueKey:KboLeagueKey;job:HighSchoolGameJob}
 export type KboSeasonProgress={phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:KboPendingGame|null};
@@ -34,6 +35,9 @@ export function startKboRegularSeason(source:KboCareer,expectedRevision:number):
  assertCareerRevision(source,expectedRevision);
  if(source.phaseContext.phase!=='PRESEASON_SETUP' || !source.preseasonPlan || !source.openingRoster || !source.competitionSchedule || source.days)throw new RangeError('KBO_SEASON_NOT_READY');
  const career=structuredClone(source);
+ if(career.sangmu && career.competitionSchedule!.leagues.FUTURES.some(g=>g.homeTeamKey==='SANGMU' || g.awayTeamKey==='SANGMU')){
+  career.sangmu.emergency??=createSangmuEmergency(career.world);career.schemaVersion=5;
+ }
  career.days=createKboDayLedger(career.world);
  career.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:firstDay(career),pendingGame:null};
  career.revision++;return career;
@@ -56,7 +60,7 @@ export function kboGameContext(career:KboCareer,leagueKey:KboLeagueKey):HighScho
   if(block.size){const reviewed=recordTotals({...career.records,games:Object.fromEntries(Object.entries(career.records.games).filter(([k])=>block.has(k)))},scope);for(const key of club.roster)if(Object.hasOwn(reviewed.batting,key))recentBatting[key]=reviewed.batting[key]!;}
  }
  const condition=kboReturnConditionMultiplier(career);
- return {difficulty:career.difficulty,unavailableKeys:Object.keys(career.health.injuries),starters,recentBatting,recentPitchingOuts:Object.fromEntries(Object.entries(season.pitching).map(([k,p])=>[k,p.outs])),traits:career.traits?.owned??{},approaches:{},...(condition===1?{}:{conditionMultipliers:{[career.protagonistKey]:condition}})};
+ return {difficulty:career.difficulty,unavailableKeys:Object.keys(career.health.injuries).filter(k=>Object.hasOwn(world.players,k)),starters,recentBatting,recentPitchingOuts:Object.fromEntries(Object.entries(season.pitching).map(([k,p])=>[k,p.outs])),traits:career.traits?.owned??{},approaches:{},...(condition===1?{}:{conditionMultipliers:{[career.protagonistKey]:condition}})};
 }
 
 function pendingQueue(career:KboCareer,day:number):{leagueKey:KboLeagueKey;game:ScheduledGame}[] {
@@ -82,6 +86,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   const day=progress.nextWorldDay;
   if(day>last){return review();}
   if(!progress.pendingGame){
+   if(career.sangmu?.emergency)career.sangmu=reconcileSangmuEmergency(career.world,career.sangmu,career.health,day);
    const next=pendingQueue(career,day)[0];
    if(next){
     const world=createKboCompetitionGameWorld(career.world,next.leagueKey,career.protagonistKey,career.sangmu);
@@ -100,6 +105,8 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
    for(const key of Object.keys(job.game.pitchDevelopment!.players)){
     const member=career.sangmu?.members[key];
     if(member?.repertoire){member.repertoire=structuredClone(committed.world.repertoires[key]!);continue;}
+    const temporary=career.sangmu?.emergency?.entries[key];
+    if(temporary?.repertoire && temporary.released===null){temporary.repertoire=structuredClone(committed.world.repertoires[key]!);continue;}
     if(!Object.hasOwn(career.world.repertoires,key))throw new RangeError('UNREGISTERED_GAME_PITCHER');
     career.world.repertoires[key]=structuredClone(committed.world.repertoires[key]!);
    }

@@ -7,6 +7,7 @@ import type {RelationshipHistorySource,RelationHistoryWorld} from './relationshi
 import type {RelationScope} from './relationships.js';
 import {unreadRelationNotices,prepareRelationNoticeRead} from './relation-notices.js';
 import type {RelationNoticeReadInput,RelationNoticeReadSource} from './relation-notices.js';
+import {assertSangmuUnit} from './kbo-sangmu-unit.js';
 import {kboOpponentReunionNoticeRows,prepareKboOpponentReunionRead} from './kbo-reunion-events.js';
 import {kboTeamReunionNoticeRows,prepareKboTeamReunionRead} from './kbo-team-reunions.js';
 
@@ -25,13 +26,25 @@ function relationSource(s:KboCareer):RelationNoticeReadSource {
  for(const r of s.retiredPlayers??[])detachedPlayers[r.playerKey]={player:r.player,lastKnownRegistration:registration(r.clubId,r.lastSeasonKey)};
  // A player retired while unsigned has no saved last club in the legacy FA archive. Do not invent one.
  for(const r of s.freeAgents?.retired??[])detachedPlayers[r.player.simulationKey]={player:r.player,lastKnownRegistration:null};
+ if(s.sangmu){
+  const future=s.military?.status==='SERVING_SPORTS' && s.military.program?.playerKey===s.protagonistKey && s.military.program.startedSeason===String(Number(s.world.seasonKey)+1);
+  const loaned=(s.sangmu.loaned??[]).filter(k=>!future || k!==s.protagonistKey);
+  // Confirmed next-year enlistment keeps this year's civilian registration until activation.
+  assertSangmuUnit({...s.sangmu,loaned},s.world);
+  const serving=Object.entries(s.sangmu.members).filter(([,m])=>m.program.completedBlocks<m.program.scheduledBlocks),active=Object.entries(s.sangmu.emergency?.entries??{}).filter(([,e])=>e.released===null);
+  // This is a read projection, not a civilian registration or a copy into the durable world.
+  world.players={...world.players,...Object.fromEntries(serving.map(([k,m])=>[k,m.player])),...Object.fromEntries(active.map(([k,e])=>[k,e.player]))};
+  world.schools=[...world.schools.map(c=>({...c,roster:c.roster.filter(k=>!loaned.includes(k))})),{id:'SANGMU',name:'상무',leagueKey:'FUTURES',roster:[...serving.map(([k])=>k),...active.map(([k])=>k),...loaned]}];
+  for(const [key,m] of Object.entries(s.sangmu.members))if(m.program.completedBlocks>=m.program.scheduledBlocks)detachedPlayers[key]={player:m.player,lastKnownRegistration:null};
+  for(const [key,e] of Object.entries(s.sangmu.emergency?.entries??{}))if(e.released!==null)detachedPlayers[key]={player:e.player,lastKnownRegistration:null};
+ }
  // A preseason signing can be released before activation. Its contract club is not proof it ever registered there.
  // Recover only official historical registration when the FA/archive snapshot has no known active registration.
  const observed=new Map<string,{year:number;day:number;registration:NonNullable<NonNullable<RelationshipHistorySource['detachedPlayers']>[string]['lastKnownRegistration']>}>();
  for(const row of s.health.games){const e=row.evidence,g=s.records.games[e.gameKey];if(!g || !['KBO','FUTURES'].includes(g.scope.leagueKey))continue;
   const keys=e.roster.filter(k=>Object.hasOwn(detachedPlayers,k) && detachedPlayers[k]!.lastKnownRegistration===null);if(!keys.length)continue;
   if(e.seasonKey!==g.scope.seasonKey || e.day!==g.worldDay || !e.teamKey.startsWith(g.scope.leagueKey+':') || !Object.hasOwn(g.teams,e.teamKey.slice(g.scope.leagueKey.length+1)))throw new RangeError('INVALID_KBO_RELATION_REGISTRATION');
-  const team=s.world.clubs.find(c=>c.id===e.teamKey.slice(g.scope.leagueKey.length+1));if(!team)continue;
+  const id=e.teamKey.slice(g.scope.leagueKey.length+1),team=s.world.clubs.find(c=>c.id===id)??(id==='SANGMU'?{id,name:'상무'}:undefined);if(!team)continue;
   for(const key of keys){const old=observed.get(key),year=Number(e.seasonKey);if(!old || year>old.year || year===old.year && e.day>old.day)observed.set(key,{year,day:e.day,registration:{seasonKey:e.seasonKey,leagueKey:g.scope.leagueKey,teamId:team.id,teamName:team.name}});}
  }
  for(const [key,value] of observed)detachedPlayers[key]!.lastKnownRegistration=value.registration;

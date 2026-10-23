@@ -1,0 +1,12 @@
+C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-season-growth.ts:55
+ if(rehabilitating!==Object.hasOwn(source.health.injuries,key))throw new RangeError('CHANGED_GROWTH_HEALTH_EVIDENCE');
+                                                                     ^
+
+RangeError: CHANGED_GROWTH_HEALTH_EVIDENCE
+    at settleKboSeasonGrowth (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo\packages\engine\src\kbo-season-growth.ts:55:70)
+    at file:///C:/Users/N-052/.codex/visualizations/2026/10/16/01a142f8-66ea-7782-ba3e-b52df94ae1be/baseball-career-repo/docs/implementation/evidence/M2-CU-year-carry.mjs:24:54
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v24.19.0

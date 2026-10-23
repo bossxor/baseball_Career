@@ -391,3 +391,8 @@ M1 순수 경기 코어를 추가했고 단위67/67·린트·타입·rules/engin
 ## 2026-10-20 M2-A 육성 기반 실제 검증
 
 생성/잠재력·성장/노쇠·시즌강화·구종XP 기본 계산의 신규16검사와 기존67검사를 합해83/83 통과. npm ci132 audit/취약점0, lint/typecheck/build/빌드엔진 골든/설계정적10종/웹API HTTP smoke 통과. M1 결과 해시 불변. M2 전체/고교·대학·드래프트·이벤트99·DB/인증·기기 이어하기/APK 완료가 아니다. 상세 [M2-A 인계](../implementation/M2-A-DEVELOPMENT.md)·[진행](../implementation/PROGRESS.md)을 따른다.
+
+
+## 2026-10-23 구현 검증 참조 — M2-CU/CV
+
+상무 건강/군팀 임시 편성과 정규 성장 종료 경계는 공동 집중39/39·전체 npm run check566/566·실패0·취소0, lint/타입/build/골든/이벤트/설계10종을 통과했다. 실제 포스트시즌·성장/시즌 마감·AI 연도 전환 자기검사도 별도 통과했으며 그 정규 경기는 통제된 시계다. [CU](../implementation/M2-CU-SANGMU-HEALTH-EMERGENCY.md) · [CV](../implementation/M2-CV-POSTSEASON-GROWTH-HEALTH.md) · [전체 로그](../implementation/evidence/M2-CU-check.log). 실제 UI/계정/Neon DB·Storage/APK 검증이나 이 문서의 정적 기대값 전체 구현 완료를 뜻하지 않는다. 개막 부상 시작 증거 보정은 다음 작업이다.

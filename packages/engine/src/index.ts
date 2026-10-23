@@ -101,6 +101,7 @@ export * from './kbo-service-payroll.js';
 export * from './kbo-remainder-pay.js';
 export * from './kbo-remainder-renewal.js';
 export * from './kbo-sangmu-unit.js';
+export * from './kbo-sangmu-emergency.js';
 export * from './kbo-sangmu-start.js';
 export * from './kbo-military-state.js';
 

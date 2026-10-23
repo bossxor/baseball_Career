@@ -1,0 +1,27 @@
+✔ real postseason injury cannot block or rewrite first regular growth settlement; injury and JSON replay survive (11618.8538ms)
+✔ SPORTS return partitions use regular-end health and preserve already-completed military evidence (321.1482ms)
+✔ ACTIVE return partitions use regular-end health and preserve already-completed military evidence (312.8411ms)
+✔ growth paid before postseason stays an identical duplicate after later injury, without a fresh budget (695.1927ms)
+✔ boundary rewind handles later recovery and diagnosis/recovery cycles without changing source (621.5591ms)
+✔ contradictory postseason health and changed regular evidence still reject atomically (1651.0893ms)
+✔ military growth: full SPORTS season has one PRO/Futures period, actual military PA and one annual budget (2594.6571ms)
+✔ military growth: June30 splits service/return periods, preserves one annual cap and actual original-club registrations (1666.2002ms)
+✔ military growth: plan boundary uses military games, not the original club calendar; focus/history stay intact (1686.2508ms)
+✔ military growth rejects foreign/unregistered PA, reused days and changed calendar without mutation (5071.2639ms)
+✔ legacy military saves retain their existing unsplit periods and do not opt in during reads (1948.0004ms)
+✔ new military season opts in once; legacy current seasons neither migrate nor consume army health RNG (6327.921ms)
+✔ minimum injury replacements use isolated35..45 identities; recovery releases registration without deleting history (476.9762ms)
+✔ normal advance fields injured army replacements, commits their XP/health/fatigue once and resumes from JSON (8519.7785ms)
+✔ new army health records a real diagnosis, heals by registered army games, never by a rest date (112.1185ms)
+✔ military-only identities remain visible in relationships while serving and after temporary release (3229.1707ms)
+✔ corrupt archives or insufficient permanent intake reject without mutation; enlist/return keep archive (1518.6365ms)
+✔ a real army opponent game supplies E95 side evidence and the current military identity (950.5722ms)
+✔ confirmed next-year sports enlistment keeps current civilian identity readable without weakening active military registration (596.2157ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23934.2412
