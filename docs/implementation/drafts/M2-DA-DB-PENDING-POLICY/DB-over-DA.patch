@@ -1,0 +1,162 @@
+--- /dev/null
++++ b/packages/engine/src/kbo-npc-military-growth.ts
+@@ -0,0 +1,55 @@
++import type {KboCareer} from './kbo-career-entry.js';
++import type {DevelopmentPlayer} from './player.js';
++import type {KboMilitaryProgram} from './kbo-military-program.js';
++import {naturalGrowthBudgetUnits,applyGrowthBudget,applyAging} from './development.js';
++import {kboMilitaryCompletionDays} from './kbo-military-events.js';
++import {assertSangmuUnit} from './kbo-sangmu-unit.js';
++import {canonicalJson} from './game.js';
++
++/** Only authentic v6 intakes opt in; legacy paid seasons and auxiliary identities keep their existing treatment. */
++export function closeKboNpcMilitaryGrowth(c:KboCareer){
++ const season=c.world.seasonKey,calendar=c.world.calendar.growthDays,W=calendar.length,programs=new Map<string,KboMilitaryProgram>();
++ if(!c.world.suspendedContracts)return new Map<string,{player:DevelopmentPlayer;result:{budgetUnits:number;gainedUnits:number;agingLossUnits:number}}>();
++ assertSangmuUnit(c.sangmu!,c.world);
++ for(const key of Object.keys(c.world.suspendedContracts))programs.set(key,c.sangmu!.members[key]!.program);
++ for(const r of Object.values(c.sangmu?.npcReturns??{}))if(r.returned.seasonKey===season || r.program.blocks.some(b=>b.seasonKey===season))programs.set(r.program.playerKey,r.program);
++ const games=Object.values(c.records.games).filter(g=>g.scope.seasonKey===season && g.scope.phase==='REGULAR' && ['KBO','FUTURES'].includes(g.scope.leagueKey));
++ const index=new Map(calendar.map((day,i)=>[day,i])),results=new Map<string,{player:DevelopmentPlayer;result:{budgetUnits:number;gainedUnits:number;agingLossUnits:number}}>();
++ for(const [key,program] of programs){
++  if(key===c.protagonistKey)throw new RangeError('INVALID_NPC_GROWTH_OWNER');
++  const member=c.sangmu!.members[key],agent=c.freeAgents?.players[key],player=c.world.players[key]??member?.player??agent?.player;
++  if(!player || Number(!!c.world.players[key])+Number(!!member)+Number(!!agent)!==1)throw new RangeError('INVALID_NPC_GROWTH_OWNER');
++  const due=kboMilitaryCompletionDays(program).find(d=>d.seasonKey===season)?.worldDay;
++  const release=agent?.previousContract?.servicePay?.ledger.receipts.at(-1)?.worldDay;
++  const cuts=[...new Set([0,W,...[due,release].filter((d):d is number=>d!==undefined).map(d=>calendar.filter(day=>day<=d).length)])].sort((a,b)=>a-b);
++  const parts=cuts.slice(0,-1).map((start,i)=>({start,end:cuts[i+1]!,appearances:0,registered:0,rehab:0}));
++  const registrations=new Set(c.health.games.filter(h=>h.evidence.seasonKey===season && h.evidence.roster.includes(key)).map(h=>canonicalJson([h.evidence.gameKey,h.evidence.day,h.evidence.teamKey])));
++  const registered=games.filter(g=>Object.keys(g.teams).some(team=>registrations.has(canonicalJson([g.gameKey,g.worldDay,g.scope.leagueKey+':'+team]))));
++  if(new Set(registered.map(g=>g.worldDay)).size!==registered.length)throw new RangeError('DOUBLE_BOOKED_GROWTH_DAY');
++  const byDay=new Map(registered.map(g=>[g.worldDay,g])),gameKeys=new Set(registered.map(g=>g.gameKey));
++  for(const g of games)if((g.batting[key] || g.pitching[key]) && !gameKeys.has(g.gameKey))throw new RangeError('INVALID_NPC_GROWTH_REGISTRATION');
++  let injured=!!(c.health.injuries[key]??agent?.injury);
++  // Reverse actual transitions before replaying; year-end healing must not erase a season's rehabilitation.
++  for(const d of [...c.days!.days].reverse()){
++   const diagnosis=d.result.injured.includes(key),recovery=d.result.recovered.includes(key);
++   if(diagnosis && recovery || diagnosis && !injured || recovery && injured)throw new RangeError('CHANGED_NPC_GROWTH_HEALTH');
++   if(diagnosis)injured=false;else if(recovery)injured=true;
++  }
++  for(const d of c.days!.days){
++   const g=byDay.get(d.day),i=index.get(d.day),part=i===undefined?undefined:parts.find(p=>i>=p.start && i<p.end);
++   if(g){
++    if(!part)throw new RangeError('DAY_OUTSIDE_GROWTH_CALENDAR');
++    const appearances=player.kind==='HITTER'?g.batting[key]?.PA??0:g.pitching[key]?.outs??0;
++    if(injured && appearances>0)throw new RangeError('INVALID_GROWTH_APPEARANCES');
++    const serving=due!==undefined && d.day<=due;
++    if(serving?!Object.hasOwn(g.teams,'SANGMU') || g.scope.leagueKey!=='FUTURES':Object.hasOwn(g.teams,'SANGMU'))throw new RangeError('INVALID_NPC_GROWTH_REGISTRATION');
++    part.appearances+=appearances;part.registered++;if(injured)part.rehab++;
++   }
++   if(d.result.injured.includes(key))injured=true;if(d.result.recovered.includes(key))injured=false;
++  }
++  const periods=parts.map(p=>({startDay:p.start,endDay:p.end,levelSeasonDays:W,level:'PRO' as const,appearances:p.appearances,pitcherRole:player.position==='RP'?'RP' as const:player.position==='CP'?'CP' as const:'SP' as const,rehabRatio:p.registered?p.rehab/p.registered:agent?.injury && release!==undefined && calendar[p.start]!>release?1:0,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER' as const,difficulty:c.difficulty,beneficiary:false}}));
++  const budgetUnits=naturalGrowthBudgetUnits(player,W,periods),grown=applyGrowthBudget(player,budgetUnits),aged=applyAging(grown.player,1),sum=(p:DevelopmentPlayer)=>Object.values(p.abilities).reduce((a,b)=>a+b,0);
++  results.set(key,{player:aged.player,result:{budgetUnits,gainedUnits:grown.gains.reduce((a,b)=>a+b,0),agingLossUnits:sum(grown.player)-sum(aged.player)}});
++ }
++ return results;
++}
+--- a/packages/engine/src/kbo-year-end.ts
++++ b/packages/engine/src/kbo-year-end.ts
+@@ -1,3 +1,4 @@
++import {closeKboNpcMilitaryGrowth} from './kbo-npc-military-growth.js';
+ import {settleKboFreeAgentSeason} from './kbo-free-agents.js';
+ import type {KboCareer} from './kbo-career-entry.js';
+ import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
+@@ -10,7 +11,7 @@
+ /** Every pro NPC at year end (college M2-Z pattern): one natural PRO growth period over the whole growth calendar from
+  * official regular KBO+FUTURES appearances and club-game rehab days, then full-season aging once. No in-season NPC
+  * training exists, so the season-start snapshot is the closing player. */
+-function closeKboNpcSeasons(source:KboCareer){
++function closeKboNpcSeasons(source:KboCareer,excluded:ReadonlySet<string>){
+  const season=source.world.seasonKey,W=source.world.calendar.growthDays.length,appear=new Map<string,number>(),games=Object.values(source.records.games).filter(g=>g.scope.seasonKey===season && g.scope.phase==='REGULAR' && (g.scope.leagueKey==='KBO' || g.scope.leagueKey==='FUTURES'));
+  const clubDays=new Map<string,Set<number>>();
+  for(const g of games){
+@@ -20,7 +21,7 @@
+  }
+  const players={...source.world.players},results:NonNullable<KboSeasonClose['npcGrowth']>={};
+  for(const club of source.world.clubs){const days=clubDays.get(club.id)??new Set<number>();for(const k of club.roster){
+-  if(k===source.protagonistKey)continue;const player=players[k]!;
++  if(k===source.protagonistKey || excluded.has(k))continue;const player=players[k]!;
+   let rehab=Object.hasOwn(source.health.injuries,k) && source.health.injuries[k]!.seasonKey!==season && !source.days!.days.some(d=>d.result.injured.includes(k)),rehabDays=0;
+   for(const d of source.days!.days){if(days.has(d.day) && rehab)rehabDays++;if(d.result.injured.includes(k))rehab=true;if(d.result.recovered.includes(k))rehab=false;}
+   const budgetUnits=naturalGrowthBudgetUnits(player,W,[{startDay:0,endDay:W,levelSeasonDays:W,level:'PRO',appearances:appear.get(k)??0,pitcherRole:player.position==='RP'?'RP':player.position==='CP'?'CP':'SP',rehabRatio:days.size?rehabDays/days.size:0,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER',difficulty:source.difficulty,beneficiary:false}}]);
+@@ -50,10 +51,17 @@
+   const ledger=career.development,result=applySeasonTraining(career.world.players[key]!,ledger.trainingUsedSeasons,{type:'SKIP'},{seasonId:season,completedTeamGames:scheduled,scheduledTeamGames:scheduled,injured:false,windowOpen:true,careerCheat:source.difficulty==='SECRET_CHEAT'},ledger.trainingRng);
+   career.world.players[key]=result.player;career.development={...ledger,trainingUsedSeasons:result.usedSeasons,trainingRng:result.state};forfeited=true;
+  }
++ const militaryNpc=closeKboNpcMilitaryGrowth(source);
+  const closed=finalizeSeasonGrowth(career.world.players[key]!,career.seasonGrowth,W);
+  career.world.players[key]=closed.player;career.seasonGrowth=closed.ledger;career.health=closeSeasonHealth(career.health,season).ledger;
+- const npc=closeKboNpcSeasons(career);career.world.players=npc.players;
++ const npc=closeKboNpcSeasons(career,new Set(militaryNpc.keys()));career.world.players=npc.players;
+  if(career.freeAgents)career.freeAgents=settleKboFreeAgentSeason(career.freeAgents,career.world.calendar,career.difficulty);
++ for(const [npcKey,value] of militaryNpc){
++  if(career.world.players[npcKey])career.world.players[npcKey]=value.player;
++  else if(career.sangmu?.members[npcKey])career.sangmu.members[npcKey]!.player=value.player;
++  else if(career.freeAgents?.players[npcKey]){career.freeAgents.players[npcKey]!.player=value.player;career.freeAgents.settlement!.players[npcKey]=value.result;}
++  npc.results[npcKey]=value.result;
++ }
+  career.revision++;
+  career.seasonClose={receiptKey:JSON.stringify(['kbo-season-close',career.world.worldKey,season]),seasonKey:season,sourceRevision:career.revision,agingLossUnits:closed.lossUnits,trainingForfeited:forfeited,npcGrowth:npc.results};
+  return career;
+--- a/packages/engine/test/kbo-npc-military.test.ts
++++ b/packages/engine/test/kbo-npc-military.test.ts
+@@ -1,3 +1,5 @@
++import {closeKboNpcMilitaryGrowth} from '../src/kbo-npc-military-growth.js';
++import {naturalGrowthBudgetUnits,applyGrowthBudget,applyAging} from '../src/development.js';
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import {enteredKboCareer} from './fixtures.js';
+@@ -89,6 +91,11 @@
+  assert.ok(available<10_000);assert.doesNotThrow(()=>assertKboRecruitmentWorld(c.world));const before=canonicalJson(c),out=finishDay(c);assert.equal(canonicalJson(c),before);
+  assert.ok(!out.world.players[key]);assert.ok(!out.world.contracts[key]);assert.equal(out.freeAgents!.players[key]!.origin,'EXPIRED');assert.equal(out.freeAgents!.players[key]!.previousContract!.servicePay!.ledger.receipts.length,1);assert.ok(out.world.finance!.closedContracts!.some(v=>v.playerKey===key));assert.equal(out.world.clubs.find(t=>t.id===club.id)!.firstTeam.length,28);assert.doesNotThrow(()=>assertKboRecruitmentWorld(out.world));
+  const corrupt=structuredClone(out);corrupt.world.finance!.closedContracts=[];assert.throws(()=>assertKboRecruitmentWorld(corrupt.world));
++ const annual=closeKboNpcMilitaryGrowth(out).get(key)!;assert.ok(annual);const savedAge=out.freeAgents!.players[key]!.player.age;
++ let closing=structuredClone(out);const setup=second(true).c,baseline=ready(startSangmuCohort(setup,setup.revision));closing.competitionSchedule!.leagues.FUTURES=baseline.competitionSchedule!.leagues.FUTURES;const fixtures=Object.values(closing.competitionSchedule!.leagues).flat(),start=Math.min(...fixtures.map(g=>g.worldDay)),last=Math.max(...fixtures.map(g=>g.worldDay)),receipts=new Map(closing.days!.days.map(d=>[d.day,d]));closing.days!.days=Array.from({length:last-start+1},(_,i)=>receipts.get(start+i)??{day:start+i,evidence:'controlled-unplayed-clock',result:{injured:[],recovered:[]}});closing.phaseContext={phase:'SEASON_REVIEW'};
++ closing=startKboPostseason(closing,closing.revision);for(let i=0;i<400;i++){const r=advanceKboPostseason(closing,closing.revision);closing=r.career;if(r.stopReason==='POSTSEASON_COMPLETE')break;}closing=settleKboSeasonGrowth(closing,closing.revision).career;closing=closeKboSeason(closing,closing.revision,true);
++ assert.deepEqual(closing.freeAgents!.players[key]!.player,annual.player);assert.deepEqual(closing.freeAgents!.settlement!.players[key],annual.result);assert.deepEqual(closing.seasonClose!.npcGrowth![key],annual.result);assert.equal(closing.freeAgents!.players[key]!.player.age,savedAge);
++
+ });
+
+
+@@ -112,3 +119,39 @@
+  const corrupt=structuredClone(c);delete (corrupt.sangmu!.members as Record<string,unknown>)[keys[0]!];assert.throws(()=>assertSangmuUnit(corrupt.sangmu!,corrupt.world),/INVALID_NPC_SERVICE_OWNER/);
+  const wrong=structuredClone(c);wrong.world.suspendedContracts![keys[0]!]!.servicePay!.ledger.contract.totalRemainingWon++;assert.throws(()=>assertKboRecruitmentWorld(wrong.world));
+ });
++
++
++test('authentic serving NPCs receive one annual PRO budget and one aging application without mutating source',()=>{
++ const entry=enteredKboCareer(),c=startSangmuCohort(entry,entry.revision),playing=ready(c),key=Object.keys(c.world.suspendedContracts!)[0]!;
++ playing.sangmu!.members[key]!.player.age=33;
++ const before=canonicalJson(playing),W=playing.world.calendar.growthDays.length,p=playing.sangmu!.members[key]!.player;
++ const units=naturalGrowthBudgetUnits(p,W,[{startDay:0,endDay:W,levelSeasonDays:W,level:'PRO',appearances:0,pitcherRole:p.position==='RP'?'RP':p.position==='CP'?'CP':'SP',rehabRatio:0,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER',difficulty:playing.difficulty,beneficiary:false}}]);
++ const expected=applyAging(applyGrowthBudget(p,units).player,1),first=closeKboNpcMilitaryGrowth(playing),second=closeKboNpcMilitaryGrowth(playing);
++ assert.equal(first.size,Object.keys(playing.world.suspendedContracts!).length);assert.equal(first.get(key)!.result.budgetUnits,units);assert.deepEqual(first.get(key)!.player,expected.player);assert.deepEqual(first,second);assert.equal(canonicalJson(playing),before);
++ const closed=closeFirst(c);for(const k of Object.keys(c.world.suspendedContracts!)){assert.ok(closed.seasonClose!.npcGrowth![k]);assert.equal(closed.sangmu!.members[k]!.player.age,c.sangmu!.members[k]!.player.age);}
++ const next=startNextKboSeason(renewed(closed),renewed(closed).revision);for(const k of Object.keys(c.world.suspendedContracts!)){assert.equal(next.sangmu!.members[k]!.player.age,c.sangmu!.members[k]!.player.age+1);assert.deepEqual(next.sangmu!.members[k]!.player.abilities,closed.sangmu!.members[k]!.player.abilities);}
++});
++
++
++let armyGrowthCache:KboCareer|undefined;
++function armyGrowthGame(){
++ if(!armyGrowthCache){const entry=enteredKboCareer();let c=ready(startSangmuCohort(entry,entry.revision));for(let i=0;i<300;i++){const r=advanceKboCareer(c,c.revision);c=r.career;if(r.daysClosed && Object.values(c.records.games).some(g=>g.scope.leagueKey==='FUTURES' && Object.hasOwn(g.teams,'SANGMU')))break;}armyGrowthCache=c;}
++ return structuredClone(armyGrowthCache);
++}
++
++test('NPC army growth counts only actual health registration and rejects double booking or missing registration',()=>{
++ const c=armyGrowthGame(),game=Object.values(c.records.games).find(g=>g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,'SANGMU'))!,key=Object.keys(game.batting).find(k=>c.sangmu!.members[k] && game.batting[k]!.PA>0)!;assert.ok(key);
++ const player=c.sangmu!.members[key]!.player,W=c.world.calendar.growthDays.length,expected=naturalGrowthBudgetUnits(player,W,[{startDay:0,endDay:W,levelSeasonDays:W,level:'PRO',appearances:game.batting[key]!.PA,pitcherRole:'SP',rehabRatio:0,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER',difficulty:c.difficulty,beneficiary:false}}]);
++ assert.equal(closeKboNpcMilitaryGrowth(c).get(key)!.result.budgetUnits,expected);
++ const doubled=structuredClone(c),other=doubled.health.games.find(g=>g.evidence.seasonKey===c.world.seasonKey && g.evidence.day===game.worldDay && g.evidence.teamKey!=='FUTURES:SANGMU')!;assert.ok(other);other.evidence.roster=[...other.evidence.roster,key];assert.throws(()=>closeKboNpcMilitaryGrowth(doubled),/DOUBLE_BOOKED_GROWTH_DAY/);
++ const missing=structuredClone(c);for(const h of missing.health.games)h.evidence.roster=h.evidence.roster.filter(k=>k!==key);assert.throws(()=>closeKboNpcMilitaryGrowth(missing),/INVALID_NPC_GROWTH_REGISTRATION/);
++});
++
++test('serving NPC rehabilitation uses actual injured registrations and survives season-end major-injury healing',()=>{
++ let c=armyGrowthGame();const first=Object.values(c.records.games).find(g=>g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,'SANGMU'))!,key=Object.keys(first.batting).find(k=>c.sangmu!.members[k] && first.batting[k]!.PA>0 && !c.days!.days.some(d=>d.result.injured.includes(k)))!;assert.ok(key);
++ c.health.injuries[key]={severity:'MAJOR',remainingTeamGames:null,diagnosedGameKey:first.gameKey,seasonKey:c.world.seasonKey};c.days!.days.find(d=>d.day===first.worldDay)!.result.injured.push(key);c.health.games.find(h=>h.evidence.gameKey===first.gameKey && h.evidence.teamKey==='FUTURES:SANGMU')!.result.injured.push(key);
++ for(let i=0;i<300;i++){const r=advanceKboCareer(c,c.revision);c=r.career;if(r.daysClosed && c.health.games.filter(h=>h.evidence.seasonKey===c.world.seasonKey && h.evidence.teamKey==='FUTURES:SANGMU').length>=2)break;}
++ const result=closeKboNpcMilitaryGrowth(c).get(key)!,player=c.sangmu!.members[key]!.player,W=c.world.calendar.growthDays.length,expected=naturalGrowthBudgetUnits(player,W,[{startDay:0,endDay:W,levelSeasonDays:W,level:'PRO',appearances:first.batting[key]!.PA,pitcherRole:'SP',rehabRatio:.5,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER',difficulty:c.difficulty,beneficiary:false}}]);assert.equal(result.result.budgetUnits,expected);
++ const all=Object.values(c.competitionSchedule!.leagues).flat(),start=Math.min(...all.map(g=>g.worldDay)),last=Math.max(...all.map(g=>g.worldDay)),receipts=new Map(c.days!.days.map(d=>[d.day,d]));c.days!.days=Array.from({length:last-start+1},(_,i)=>receipts.get(start+i)??{day:start+i,evidence:'controlled-future-clock',result:{injured:[],recovered:[]}});c.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:last+1,pendingGame:null};closeKboNpcMilitaryCalendarDay(c,last);c.phaseContext={phase:'SEASON_REVIEW'};
++ c=startKboPostseason(c,c.revision);for(let i=0;i<400;i++){const r=advanceKboPostseason(c,c.revision);c=r.career;if(r.stopReason==='POSTSEASON_COMPLETE')break;}c=settleKboSeasonGrowth(c,c.revision).career;const closed=closeKboSeason(c,c.revision,true);assert.equal(closed.seasonClose!.npcGrowth![key]!.budgetUnits,expected);assert.ok(!closed.health.injuries[key]);assert.deepEqual(closed.sangmu!.members[key]!.player.abilities,result.player.abilities);
++});

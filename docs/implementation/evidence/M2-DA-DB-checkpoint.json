@@ -1,0 +1,41 @@
+{
+  "createdAt": "2026-10-23T12:26:12.457Z",
+  "baseCommit": "b69e26b316eac426516855c4f847d4958ee84d08",
+  "activeRuntimeUnchanged": true,
+  "activeFullCheck": {
+    "milestone": "M2-CZ",
+    "tests": 591,
+    "passed": 591,
+    "failed": 0,
+    "cancelled": 0
+  },
+  "inactiveDrafts": {
+    "DA": {
+      "focusedKbo": 272,
+      "passed": 272
+    },
+    "DB": {
+      "focused": 36,
+      "passed": 36
+    },
+    "fullCheckRun": false,
+    "financialExceptionPolicy": "awaiting user answer; not activated"
+  },
+  "runtime": {
+    "files": 233,
+    "sha256": "4070fb5b8dbaca7cdf7e42f4ff39a62ae12163f129a1ff8d26b102aa93c04429"
+  },
+  "apps": {
+    "files": 12,
+    "sha256": "18acd3bcd4294ce9407cde2a8c46996fdb0f648e021628b56b87f71501984fe2"
+  },
+  "design": {
+    "files": 360,
+    "sha256": "e8ecc39bbaf532ddc474e485d7210068f1fab4154ba5e3c33c76a55412ad039f"
+  },
+  "staticValidators": 10,
+  "manifest": 359,
+  "httpSmoke": "skeleton only",
+  "shutdown": false,
+  "reason": "last actual remaining60%, not threshold; policy answer pending"
+}

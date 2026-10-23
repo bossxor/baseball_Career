@@ -1,0 +1,13 @@
+import {enteredKboCareer} from './packages/engine/test/fixtures.ts';
+import {startSangmuCohort} from './packages/engine/src/kbo-sangmu-start.ts';
+import {assertKboRecruitmentWorld} from './packages/engine/src/kbo-draft.ts';
+import {kboFutureCommitmentWon} from './packages/engine/src/kbo-finance.ts';
+import {KBO_MONEY} from '@playball/rules';
+const source=enteredKboCareer(),selection=startSangmuCohort(source,source.revision),selected=new Set(Object.keys(selection.world.suspendedContracts));
+const club=source.world.clubs.find(t=>t.roster.some(k=>selected.has(k) && source.world.contracts[k].years===1));
+for(const key of club.roster)source.world.contracts[key].years=selected.has(key)?1:2;
+let delta=club.budgetWon*.9-kboFutureCommitmentWon(source.world,club.id,1);
+for(const key of club.roster){if(selected.has(key))continue;const c=source.world.contracts[key],n=Math.min(KBO_MONEY.maximumSalaryWon-c.annualSalaryWon,delta);c.annualSalaryWon+=n;club.reservedSalaryWon+=n;delta-=n;}
+assertKboRecruitmentWorld(source.world);
+const output=startSangmuCohort(source,source.revision);let error=null;try{assertKboRecruitmentWorld(output.world);}catch(e){error=e.message;}
+console.log(JSON.stringify({clubId:club.id,sourceValid:true,limitWon:club.budgetWon*.9,beforeWon:kboFutureCommitmentWon(source.world,club.id,1),afterWon:kboFutureCommitmentWon(output.world,club.id,1),error,policyPending:true},null,2));

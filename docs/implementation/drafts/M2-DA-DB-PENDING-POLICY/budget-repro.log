@@ -1,0 +1,9 @@
+{
+  "clubId": "HH",
+  "sourceValid": true,
+  "limitWon": 10800000000,
+  "beforeWon": 10800000000,
+  "afterWon": 11220875520,
+  "error": "INVALID_KBO_FUTURE_COMMITMENT",
+  "policyPending": true
+}

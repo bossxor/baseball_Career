@@ -1,0 +1,44 @@
+✔ fixed service calendar uses June30 in leap and ordinary years, independent of fixture counts (4.2131ms)
+✔ E52 confirms four focus choices through the existing plan command; invalid focus/version and replay preserve source (12538.4714ms)
+✔ actual June30 date queue closes service once, E53 stops, following dates register only the original Futures club (35926.7513ms)
+✔ military growth: full SPORTS season has one PRO/Futures period, actual military PA and one annual budget (2244.4408ms)
+✔ military growth: June30 splits service/return periods, preserves one annual cap and actual original-club registrations (1457.1232ms)
+✔ military growth: plan boundary uses military games, not the original club calendar; focus/history stay intact (1311.4112ms)
+✔ military growth rejects foreign/unregistered PA, reused days and changed calendar without mutation (5207.9699ms)
+✔ legacy military saves retain their existing unsplit periods and do not opt in during reads (2405.8356ms)
+✔ Sangmu application: fixed result, retry returns the same application, wrong answers rejected, decline burns the recruitment (10843.0682ms)
+✔ an enlisted protagonist serves two seasons as a loan to the military team and then completes (16769.7123ms)
+✔ new real intake retains authentic unpaid contracts/future liabilities and rejects a downgraded root (2228.6437ms)
+✔ actual Y02 carries frozen principal and funding, fixed June30 restores only the original Futures registration (14323.3442ms)
+✔ NPC principal exhaustion uses actual AI salary/demand/budget, signs only remaining days and preserves old receipts (16114.6169ms)
+✔ unfunded NPC renewal enters FA with immutable paid-cost proof, no deleted money or protagonist decision (10706.0188ms)
+✔ full original roster keeps completed ownership unregistered and resumes only when a real slot is available (1038.0664ms)
+✔ NPC service blocks never finish early or from skipped fixed dates, and orphaned suspension proof rejects (668.5095ms)
+✔ authentic serving NPCs receive one annual PRO budget and one aging application without mutating source (6702.7107ms)
+✔ NPC army growth counts only actual health registration and rejects double booking or missing registration (2572.9586ms)
+✔ serving NPC rehabilitation uses actual injured registrations and survives season-end major-injury healing (11649.4142ms)
+✔ new military season opts in once; legacy current seasons neither migrate nor consume army health RNG (5220.9559ms)
+✔ minimum injury replacements use isolated35..45 identities; recovery releases registration without deleting history (461.9363ms)
+✔ normal advance fields injured army replacements, commits their XP/health/fatigue once and resumes from JSON (9299.1107ms)
+✔ new army health records a real diagnosis, heals by registered army games, never by a rest date (145.2891ms)
+✔ military-only identities remain visible in relationships while serving and after temporary release (3985.0278ms)
+✔ corrupt archives or insufficient permanent intake reject without mutation; enlist/return keep archive (1490.7719ms)
+✔ a real army opponent game supplies E95 side evidence and the current military identity (874.4702ms)
+✔ confirmed next-year sports enlistment keeps current civilian identity readable without weakening active military registration (747.2823ms)
+✔ approved vacancies use minimum35..45 military auxiliaries without inventing enlistment or contracts (636.0001ms)
+✔ completed cohorts can finish a confirmed army game with auxiliary-only identities and real health receipts (1725.3848ms)
+✔ vacancy helpers cover only the healthy legal deficit and deregister when regular members return (148.6991ms)
+✔ legacy injury registries upgrade only at a new confirmed season; released auxiliaries do not create a new army team (4014.4748ms)
+✔ unsupported emergency policy rejects atomically rather than silently granting vacancy fill (510.9172ms)
+✔ a season without a confirmed army fixture never creates vacancy helpers or ghost army registration (2025.0692ms)
+✔ pro growth pays one PRO period over the growth calendar from official appearances, once (3560.1803ms)
+✔ growth rejects wrong phase, missing day receipts, double-booked days and rehabilitation appearances (4157.6484ms)
+✔ pro year-end needs paid growth and an explicit unused-training forfeit, then ages once and closes health (2462.5417ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 66931.7947

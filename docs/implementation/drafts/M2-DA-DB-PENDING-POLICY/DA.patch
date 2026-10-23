@@ -1,0 +1,722 @@
+--- a/packages/engine/src/kbo-ai-offseason.ts
++++ b/packages/engine/src/kbo-ai-offseason.ts
+@@ -1,4 +1,4 @@
+-import {kboContractSeasonCharge} from './kbo-service-payroll.js';
++import {kboContractPaymentBalance} from './kbo-contract-payments.js';
+ import {KBO_MONEY,KBO_ROSTER_LIMITS,roleScore} from '@playball/rules';
+ import type {ActiveKboRosterWorld} from './kbo-career-entry.js';
+ import type {DevelopmentPlayer} from './player.js';
+@@ -11,7 +11,7 @@
+ import {reconcileAssessment,assessmentMidpointScore,observeAssessmentProgress} from './assessment.js';
+ import type {AssessmentProgress,PotentialRange} from './assessment.js';
+ import {kboPlayerContractValue,kboRenewalSalaryWon} from './kbo-contract-value.js';
+-import {kboClubBalance} from './kbo-finance.js';
++import {archiveKboSettledContract,kboRosterSeasonCharge,kboClubBalance} from './kbo-finance.js';
+
+ export interface KboAiAssessment {schemaVersion:1;modelVersion:'potential-1';level:number;progress:AssessmentProgress;ranges:Record<string,PotentialRange>}
+ export type KboAiAssessments=Record<string,KboAiAssessment>;
+@@ -49,20 +49,21 @@
+  const {world,pool}=input;
+  if(Number(world.seasonKey)!==Number(input.sourceSeasonKey)+1 || pool.worldKey!==world.worldKey || pool.seasonKey!==world.seasonKey || pool.settlement || new Set(input.expiringKeys).size!==input.expiringKeys.length || input.expiringKeys.includes(input.protagonistKey))throw new RangeError('INVALID_KBO_AI_RENEWAL_SOURCE');
+  assertKboFreeAgentPool(pool,Object.keys(world.players));
+- for(const key of input.expiringKeys){const prior=input.priorContracts[key],c=world.contracts[key];if(!prior || !c || !Object.hasOwn(world.players,key) || c.seasonKey!==world.seasonKey || c.years!==1 || world.clubs.filter(t=>t.id===c.clubId && t.roster.includes(key)).length!==1 || c.contractKey!==prior.contractKey || c.annualSalaryWon!==prior.annualSalaryWon || c.clubId!==prior.clubId || Number(input.sourceSeasonKey)-Number(prior.seasonKey)+1<prior.years)throw new RangeError('INVALID_KBO_AI_EXPIRING_CONTRACT');}
+- const next=structuredClone(world),freeAgents=structuredClone(pool),health=structuredClone(input.health),candidates=new Map(input.expiringKeys.map(key=>[key,{player:structuredClone(world.players[key]!),contract:structuredClone(input.priorContracts[key]!),repertoire:world.repertoires[key]?structuredClone(world.repertoires[key]):undefined}]));
++ for(const key of input.expiringKeys){const prior=input.priorContracts[key],c=world.contracts[key];if(!prior || !c || !Object.hasOwn(world.players,key) || c.seasonKey!==world.seasonKey || c.years!==1 || world.clubs.filter(t=>t.id===c.clubId && t.roster.includes(key)).length!==1 || c.contractKey!==prior.contractKey || c.annualSalaryWon!==prior.annualSalaryWon || c.clubId!==prior.clubId || Number(input.sourceSeasonKey)-Number(prior.seasonKey)+1<prior.years && !(prior.servicePay && kboContractPaymentBalance(prior.servicePay.ledger).status==='SETTLED'))throw new RangeError('INVALID_KBO_AI_EXPIRING_CONTRACT');}
++ const next=structuredClone(world);for(const k of input.expiringKeys){const c=input.priorContracts[k]!;if(c.servicePay || c.remainderPay)archiveKboSettledContract(next,c);}
++ const freeAgents=structuredClone(pool),health=structuredClone(input.health),candidates=new Map(input.expiringKeys.map(key=>[key,{player:structuredClone(world.players[key]!),contract:structuredClone(input.priorContracts[key]!),repertoire:world.repertoires[key]?structuredClone(world.repertoires[key]):undefined}]));
+  const reports=refreshKboAiAssessments({...input,players:[...candidates.values()].map(c=>c.player)}),totals=recordTotals(input.records,{leagueKey:'KBO',phase:'REGULAR',seasonKey:input.sourceSeasonKey});
+  const renewed:KboAiRenewalReceipt['renewed'][number][]=[],expired:KboAiRenewalReceipt['expired'][number][]=[];
+  for(const club of next.clubs){
+   const mine=input.expiringKeys.filter(k=>input.priorContracts[k]!.clubId===club.id),unresolved=new Set(mine);
+   club.roster=club.roster.filter(k=>!unresolved.has(k));club.firstTeam=club.firstTeam.filter(k=>!unresolved.has(k));
+   for(const key of mine){delete next.players[key];delete next.contracts[key];delete next.repertoires[key];}
+-  club.reservedSalaryWon=club.roster.reduce((n,k)=>n+kboContractSeasonCharge(next.contracts[k]!),0);club.paidSalaryWon=0;
++  club.reservedSalaryWon=kboRosterSeasonCharge(next,club.id);club.paidSalaryWon=0;
+   while(unresolved.size && club.roster.length<KBO_ROSTER_LIMITS.initial){
+    const ranked=[...unresolved].map(key=>{const c=candidates.get(key)!,p=c.player,need=kboAiRoleNeed(p,club.roster.map(k=>next.players[k]!)),v=kboPlayerContractValue(p,totals.batting[key],totals.pitching[key]),salary=kboRenewalSalaryWon(c.contract.annualSalaryWon,v.valueWon),score=kboAiCandidatePriority({roleScore:roleScore(p.kind,p.abilities,p.position),...need,outlookMidpoint:assessmentMidpointScore(p.kind,reports[key]!.ranges),annualSalaryWon:salary,budgetWon:club.budgetWon});return {key,salary,score,need:need.needScore};}).sort((a,b)=>Number(b.need===100)-Number(a.need===100) || b.score-a.score || (a.key<b.key?-1:a.key>b.key?1:0));
+    const best=ranked.find(r=>{const b=kboClubBalance(next,club.id),protectedAfter=Math.max(0,KBO_ROSTER_LIMITS.minimum-(club.roster.length+1))*KBO_MONEY.minimumSalaryWon;return club.paidSalaryWon+club.reservedSalaryWon+r.salary+b.guaranteedWon+protectedAfter<=club.budgetWon+b.supportWon;});if(!best)break;
+    const c=candidates.get(best.key)!;next.players[best.key]=c.player;if(c.repertoire)next.repertoires[best.key]=c.repertoire;
+-   next.contracts[best.key]={...c.contract,contractKey:JSON.stringify(['kbo-ai-renewal',world.worldKey,world.seasonKey,best.key]),seasonKey:world.seasonKey,years:1,annualSalaryWon:best.salary};club.roster.push(best.key);club.reservedSalaryWon+=best.salary;unresolved.delete(best.key);renewed.push({playerKey:best.key,clubId:club.id,annualSalaryWon:best.salary});
++   next.contracts[best.key]={playerKey:best.key,clubId:club.id,signingBonusWon:0,status:'ACTIVE',contractKey:JSON.stringify(['kbo-ai-renewal',world.worldKey,world.seasonKey,best.key]),seasonKey:world.seasonKey,years:1,annualSalaryWon:best.salary};club.roster.push(best.key);club.reservedSalaryWon+=best.salary;unresolved.delete(best.key);renewed.push({playerKey:best.key,clubId:club.id,annualSalaryWon:best.salary});
+   }
+   for(const key of unresolved){const c=candidates.get(key)!;if(Object.hasOwn(freeAgents.players,key))throw new RangeError('KBO_AI_DOUBLE_FREE_AGENT');freeAgents.players[key]={player:c.player,previousClubId:club.id,previousContract:c.contract,origin:'EXPIRED',enteredSeasonKey:world.seasonKey,...(input.health.injuries[key]?{injury:structuredClone(input.health.injuries[key]!)}:{}),...(c.repertoire?{repertoire:c.repertoire}:{})};expired.push({playerKey:key,clubId:club.id});}
+   club.roster.sort();
+--- a/packages/engine/src/kbo-archive-view.ts
++++ b/packages/engine/src/kbo-archive-view.ts
+@@ -19,7 +19,7 @@
+ export function kboRetirementArchiveView(source:KboCareer){
+  assertCareerRevision(source,source.revision);
+  const r=source.retirement,key=source.protagonistKey,p=source.world.players[key],club=source.world.clubs.find(c=>c.id===source.protagonistClubId);
+- if(![1,2,3,4,5].includes(source.schemaVersion) || source.phaseContext.phase!=='ARCHIVED' || !r || !p || !club || r.clubId!==club.id || r.seasonKey!==source.world.seasonKey || r.age!==p.age || !['VOLUNTARY','MAX_AGE'].includes(r.reason) || r.reason==='MAX_AGE' && r.age!==KBO_MAX_PLAYER_AGE || !r.receiptKey || !Number.isSafeInteger(r.sourceRevision) || r.sourceRevision<1 || r.sourceRevision>source.revision || !Number.isSafeInteger(r.remainingContractYears) || r.remainingContractYears<0 || r.remainingContractYears>(r.remainingPaidGameDays===undefined?3:4))throw new RangeError('KBO_ARCHIVE_NOT_AVAILABLE');
++ if(![1,2,3,4,5,6].includes(source.schemaVersion) || source.phaseContext.phase!=='ARCHIVED' || !r || !p || !club || r.clubId!==club.id || r.seasonKey!==source.world.seasonKey || r.age!==p.age || !['VOLUNTARY','MAX_AGE'].includes(r.reason) || r.reason==='MAX_AGE' && r.age!==KBO_MAX_PLAYER_AGE || !r.receiptKey || !Number.isSafeInteger(r.sourceRevision) || r.sourceRevision<1 || r.sourceRevision>source.revision || !Number.isSafeInteger(r.remainingContractYears) || r.remainingContractYears<0 || r.remainingContractYears>(r.remainingPaidGameDays===undefined?3:4))throw new RangeError('KBO_ARCHIVE_NOT_AVAILABLE');
+  const contract=source.world.contracts[key];if(r.remainingPaidGameDays!==undefined && (!contract?.servicePay || !Number.isSafeInteger(r.remainingPaidGameDays) || r.remainingPaidGameDays<0 || r.remainingPaidGameDays>4*KBO_CONTRACT_GAME_DAYS || r.remainingPaidGameDays!==kboServiceContractView(contract)!.remainingPaidGameDays || r.remainingContractYears!==Math.ceil(r.remainingPaidGameDays/KBO_CONTRACT_GAME_DAYS)))throw new RangeError('KBO_ARCHIVE_CONTRACT_INVALID');
+  validateDevelopmentPlayer(p);
+  const scopes=new Map<string,RecordScope>();
+--- a/packages/engine/src/kbo-callup.ts
++++ b/packages/engine/src/kbo-callup.ts
+@@ -1,3 +1,4 @@
++import {reserveKboNpcServiceRosterChange} from './kbo-service-payroll.js';
+ import {roleScore} from '@playball/rules';
+ import type {KboCareer} from './kbo-career-entry.js';
+ import type {KboSeasonProgress} from './kbo-progress.js';
+@@ -92,7 +93,7 @@
+    const weakest=club.firstTeam.filter(k=>healthy(k) && !moved.has(k) && career.world.players[k]!.kind===p.kind && career.world.players[k]!.position===p.position)
+     .map(k=>({key:k,score:kboCompetitionScore(career,k,'KBO')})).sort((a,b)=>a.score-b.score || (a.key<b.key?1:-1))[0];
+    if(!weakest || c.score<=weakest.score)continue;
+-   club.firstTeam=club.firstTeam.map(k=>k===weakest.key?c.key:k);moved.add(c.key);
++   const nextFirst=club.firstTeam.map(k=>k===weakest.key?c.key:k);if(!reserveKboNpcServiceRosterChange(career,club.id,nextFirst))continue;club.firstTeam=nextFirst;moved.add(c.key);
+   }
+  }
+  if(!changed)return null;
+--- a/packages/engine/src/kbo-career-entry.ts
++++ b/packages/engine/src/kbo-career-entry.ts
+@@ -47,7 +47,7 @@
+ export interface ActiveKboRosterWorld extends Omit<KboRosterWorld,'status'> {status:'ACTIVE';calendar:SeasonCalendar}
+ /** New pro root: never pass this world to HS/COLLEGE commands. Scheduling and games follow separately. */
+ export interface KboCareer {
+- schemaVersion:1|2|3|4|5;revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveKboRosterWorld;
++ schemaVersion:1|2|3|4|5|6;revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveKboRosterWorld;
+  protagonistKey:string;protagonistClubId:string;phaseContext:{phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase:'SEASON_REVIEW'}|{phase:'EVENT_DECISION';eventKey:string;resume:KboSeasonProgress}|KboPostseasonPhase|{phase:'RETIRE_CONFIRM';eventKey:string}|{phase:'ARCHIVED'};
+  activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string};
+  registration:{playerKey:string;clubId:string;seasonKey:string;status:'ACTIVE';firstTeam:boolean;competitionKey?:'KBO'|'FUTURES'};
+@@ -84,6 +84,6 @@
+ export function kboCareerEntryView(source:KboCareer){
+  assertKboCareerRevision(source,source.revision);
+  const key=source.protagonistKey,club=source.world.clubs.find(c=>c.id===source.protagonistClubId),player=source.world.players[key],contract=source.world.contracts[key],r=source.registration;
+- if(![1,2,3,4,5].includes(source.schemaVersion) || source.world.status!=='ACTIVE' || source.phaseContext.phase!=='PRESEASON_SETUP' || !player || !contract || !club || !club.roster.includes(key) || r.firstTeam!==club.firstTeam.includes(key) || r.status!=='ACTIVE' || r.playerKey!==key || r.clubId!==club.id || r.seasonKey!==source.world.seasonKey || (contract.servicePay?contract.servicePay.ledger.contract.contractKey:source.renewal?.status==='ACCEPTED' && source.renewal.seasonKey===source.world.seasonKey?source.renewal.offerKey:source.activation.contractKey)!==contract.contractKey)throw new RangeError('INVALID_KBO_ENTRY_VIEW');
++ if(![1,2,3,4,5,6].includes(source.schemaVersion) || source.world.status!=='ACTIVE' || source.phaseContext.phase!=='PRESEASON_SETUP' || !player || !contract || !club || !club.roster.includes(key) || r.firstTeam!==club.firstTeam.includes(key) || r.status!=='ACTIVE' || r.playerKey!==key || r.clubId!==club.id || r.seasonKey!==source.world.seasonKey || (contract.servicePay?contract.servicePay.ledger.contract.contractKey:source.renewal?.status==='ACCEPTED' && source.renewal.seasonKey===source.world.seasonKey?source.renewal.offerKey:source.activation.contractKey)!==contract.contractKey)throw new RangeError('INVALID_KBO_ENTRY_VIEW');
+  return {seasonKey:source.world.seasonKey,player:{name:player.name,age:player.age,kind:player.kind,position:player.position},club:{id:club.id,name:club.name},registration:{status:'ACTIVE' as const,firstTeam:r.firstTeam},contract:{years:contract.years,annualSalaryWon:contract.annualSalaryWon,signingBonusWon:contract.signingBonusWon,currency:'KRW' as const,...(contract.servicePay?{payment:kboServiceContractView(contract)}:{})},phase:'PRESEASON_SETUP' as const};
+ }
+--- a/packages/engine/src/kbo-career-version.ts
++++ b/packages/engine/src/kbo-career-version.ts
+@@ -1,10 +1,11 @@
+ import type {KboCareer} from './kbo-career-entry.js';
+ import {assertCareerRevision} from './high-school-career.js';
+
+-/** KBO v2 introduced ACTIVE. v3 adds mandatory plans and return conditioning. v4 adds midseason transfers. v5 enables military health/temporary identities. School/v1 guards remain unchanged. */
++/** KBO v2 introduced ACTIVE. v3 adds mandatory plans and return conditioning. v4 adds midseason transfers. v5 enables military health/temporary identities. v6 preserves NPC suspension/return obligations. School/v1 guards remain unchanged. */
+ export function assertKboCareerRevision(source:Pick<KboCareer,'schemaVersion'|'revision'> & Partial<Pick<KboCareer,'transferHistory'|'world'|'sangmu'>>,expectedRevision:number):void {
+- if(![1,2,3,4,5].includes(source.schemaVersion))throw new RangeError('CAREER_REVISION_CHANGED');
++ if(![1,2,3,4,5,6].includes(source.schemaVersion))throw new RangeError('CAREER_REVISION_CHANGED');
+  if(source.schemaVersion<4 && ((source.transferHistory?.length??0)>0 || Object.values(source.world?.contracts??{}).some(c=>c.remainderPay?.schemaVersion===2)))throw new RangeError('CAREER_REVISION_CHANGED');
++ if(source.schemaVersion<6 && (source.world?.suspendedContracts!==undefined || source.sangmu?.npcReturns!==undefined || source.world?.finance?.closedContracts!==undefined))throw new RangeError('CAREER_REVISION_CHANGED');
+  if(source.sangmu?.emergency && source.schemaVersion<5)throw new RangeError('CAREER_REVISION_CHANGED');
+  assertCareerRevision({schemaVersion:1,revision:source.revision},expectedRevision);
+ }
+--- a/packages/engine/src/kbo-draft.ts
++++ b/packages/engine/src/kbo-draft.ts
+@@ -1,6 +1,6 @@
+ import {kboContractSeasonCharge} from './kbo-service-payroll.js';
+ import {kboRemainderPriorClubCharge} from './kbo-remainder-pay.js';
+-import {assertKboFinanceLedger,kboClubBalance,kboFutureCommitmentWon} from './kbo-finance.js';
++import {assertKboFinanceLedger,kboArchivedPaidWon,kboClubBalance,kboFutureCommitmentWon} from './kbo-finance.js';
+ import {KBO_CLUBS,KBO_MONEY,KBO_ROSTER_LIMITS,roleScore} from '@playball/rules';
+ import type {DevelopmentPlayer} from './player.js';
+ import {validateDevelopmentPlayer} from './player.js';
+@@ -27,12 +27,12 @@
+  if(world.schemaVersion!==1 || !world.worldKey || !world.seasonKey || !world.seed || world.clubs.length!==10 || new Set(world.clubs.map(c=>c.id)).size!==10)throw new RangeError('INVALID_KBO_RECRUITMENT_WORLD');
+  for(const stream of [world.rng.roster,world.rng.potential,world.rng.handedness])validateRng(stream);
+  assertKboFinanceLedger(world);
+- const priorCharges=new Map<string,number>(),priorContracts=new Set<string>(),contracts=Object.values(world.contracts);
++ const priorCharges=new Map<string,number>(world.clubs.map(c=>[c.id,kboArchivedPaidWon(world,c.id,world.seasonKey)])),priorContracts=new Set<string>(),contracts=Object.values(world.contracts);
+  for(const contract of contracts){const charge=kboRemainderPriorClubCharge(contract);if(!charge)continue;if(charge.seasonKey!==world.seasonKey || priorContracts.has(charge.sourceContractKey) || contracts.some(c=>c.contractKey===charge.sourceContractKey))throw new RangeError('INVALID_KBO_RECRUITMENT_PAYROLL');priorContracts.add(charge.sourceContractKey);priorCharges.set(charge.clubId,(priorCharges.get(charge.clubId)??0)+charge.paidWon);}
+  const seen=new Set<string>();
+  for(const club of world.clubs){
+   if(KBO_CLUBS.find(c=>c.id===club.id)?.name!==club.name || club.roster.length<KBO_ROSTER_LIMITS.minimum || club.roster.length>KBO_ROSTER_LIMITS.maximum || new Set(club.roster).size!==club.roster.length || club.budgetWon!==KBO_MONEY.annualBudgetWon || !Number.isSafeInteger(club.paidSalaryWon) || club.paidSalaryWon<0 || !Number.isSafeInteger(club.reservedSalaryWon) || club.reservedSalaryWon<0)throw new RangeError('INVALID_KBO_RECRUITMENT_CLUB');
+-  let annual=priorCharges.get(club.id)??0;for(const key of club.roster){const p=world.players[key],c=world.contracts[key];if(!Object.hasOwn(world.players,key) || !p || p.simulationKey!==key || seen.has(key) || !Object.hasOwn(world.contracts,key) || !c || !c.contractKey || c.playerKey!==key || c.clubId!==club.id || c.seasonKey!==world.seasonKey || !(c.status==='ACTIVE' || c.status==='ACTIVE_PRORATED' && c.remainderPay) || c.signingBonusWon!==0 || !Number.isInteger(c.years) || c.years<1 || c.years>4 || !Number.isSafeInteger(c.annualSalaryWon) || c.annualSalaryWon%10_000!==0 || c.annualSalaryWon<KBO_MONEY.minimumSalaryWon || c.annualSalaryWon>KBO_MONEY.maximumSalaryWon)throw new RangeError('INVALID_KBO_RECRUITMENT_CONTRACT');validateDevelopmentPlayer(p);seen.add(key);annual+=kboContractSeasonCharge(c);}
++  let annual=(priorCharges.get(club.id)??0)+Object.values(world.suspendedContracts??{}).filter(c=>c.clubId===club.id).reduce((n,c)=>n+kboContractSeasonCharge(c),0);for(const key of club.roster){const p=world.players[key],c=world.contracts[key];if(!Object.hasOwn(world.players,key) || !p || p.simulationKey!==key || seen.has(key) || !Object.hasOwn(world.contracts,key) || !c || !c.contractKey || c.playerKey!==key || c.clubId!==club.id || c.seasonKey!==world.seasonKey || !(c.status==='ACTIVE' || c.status==='ACTIVE_PRORATED' && c.remainderPay) || c.signingBonusWon!==0 || !Number.isInteger(c.years) || c.years<1 || c.years>4 || !Number.isSafeInteger(c.annualSalaryWon) || c.annualSalaryWon%10_000!==0 || c.annualSalaryWon<KBO_MONEY.minimumSalaryWon || c.annualSalaryWon>KBO_MONEY.maximumSalaryWon)throw new RangeError('INVALID_KBO_RECRUITMENT_CONTRACT');validateDevelopmentPlayer(p);seen.add(key);annual+=kboContractSeasonCharge(c);}
+   if(annual!==club.paidSalaryWon+club.reservedSalaryWon || kboClubBalance(world,club.id).availableWon<0)throw new RangeError('INVALID_KBO_RECRUITMENT_PAYROLL');
+   for(let year=1;year<4;year++)if(kboFutureCommitmentWon(world,club.id,year)>club.budgetWon*.9)throw new RangeError('INVALID_KBO_FUTURE_COMMITMENT');
+  }
+--- a/packages/engine/src/kbo-finance.ts
++++ b/packages/engine/src/kbo-finance.ts
+@@ -1,4 +1,6 @@
+-import {kboServiceFutureCommitment} from './kbo-service-payroll.js';
++import {assertKboServicePayroll,kboContractSeasonCharge,kboServiceFutureCommitment} from './kbo-service-payroll.js';
++import {assertKboRemainderPay,kboRemainderPriorClubCharge} from './kbo-remainder-pay.js';
++import {kboContractPaymentBalance} from './kbo-contract-payments.js';
+ import {KBO_CLUBS,KBO_MONEY,KBO_ROSTER_LIMITS} from '@playball/rules';
+ import type {KboRosterWorld,KboInitialContract} from './kbo-world.js';
+ import {canonicalJson} from './game.js';
+@@ -8,6 +10,7 @@
+  dues:readonly {seasonKey:string;amountWon:number}[];
+ }
+ export interface KboFinanceLedger {
++ closedContracts?:readonly KboInitialContract[];
+  guarantees:readonly KboGuarantee[];
+  grants:readonly {receiptKey:string;seasonKey:string;clubId:string;amountWon:number;reason:'MINIMUM_ROSTER_REBUILD'}[];
+ }
+@@ -17,7 +20,15 @@
+ const sum=(numbers:readonly number[])=>{const n=numbers.reduce((a,b)=>a+b,0);if(!Number.isSafeInteger(n))throw new RangeError('KBO_FINANCE_OVERFLOW');return n;};
+ /** Optional reader-first ledger; old worlds have no historical guarantee/grant entries. */
+ export function assertKboFinanceLedger(world:World):void {
++ for(const [key,c] of Object.entries(world.suspendedContracts??{})){
++  assertKboServicePayroll(c);
++  if(!c.servicePay || c.remainderPay || c.servicePay.kind!=='SPORTS' || c.playerKey!==key || c.seasonKey!==world.seasonKey || c.status!=='ACTIVE' || !c.contractKey || !KBO_CLUBS.some(t=>t.id===c.clubId) || !Number.isInteger(c.years) || c.years<1 || c.years>4 || !won(c.annualSalaryWon) || c.annualSalaryWon<KBO_MONEY.minimumSalaryWon || c.annualSalaryWon>KBO_MONEY.maximumSalaryWon || c.signingBonusWon!==0 || Object.hasOwn(world.players,key) || Object.hasOwn(world.contracts,key) || world.clubs.some(t=>t.roster.includes(key)) || Object.values(world.contracts).some(x=>x.contractKey===c.contractKey))throw new RangeError('INVALID_KBO_DETACHED_CONTRACT');
++ }
+  const ledger=world.finance;if(!ledger)return;const seen=new Set<string>(),contracts=new Set<string>();
++ for(const c of ledger.closedContracts??[]){
++  assertSettledContract(c);
++  if(contracts.has(c.contractKey) || Object.values(world.contracts).some(x=>x.contractKey===c.contractKey || x.remainderPay?.previous.contractKey===c.contractKey) || Object.values(world.suspendedContracts??{}).some(x=>x.contractKey===c.contractKey))throw new RangeError('DUPLICATE_KBO_CLOSED_CONTRACT');contracts.add(c.contractKey);
++ }
+  for(const g of ledger.guarantees){
+   if(!g.obligationKey || seen.has(g.obligationKey) || contracts.has(g.sourceContractKey) || !g.sourceContractKey || !g.playerKey || !KBO_CLUBS.some(c=>c.id===g.clubId) || !['RETIREMENT','RELEASE'].includes(g.reason) || !validYear(g.createdSeasonKey) || g.dues.length<1 || g.dues.length>(g.timing==='BEFORE_SEASON'?4:3) || g.timing!==undefined && g.timing!=='BEFORE_SEASON' || g.timing==='BEFORE_SEASON' && g.reason!=='RELEASE' || world.contracts[g.playerKey]?.contractKey===g.sourceContractKey)throw new RangeError('INVALID_KBO_GUARANTEE');seen.add(g.obligationKey);contracts.add(g.sourceContractKey);
+   for(const [i,d] of g.dues.entries())if(!validYear(d.seasonKey) || Number(d.seasonKey)!==Number(g.createdSeasonKey)+i+(g.timing==='BEFORE_SEASON'?0:1) || !won(d.amountWon) || d.amountWon<KBO_MONEY.minimumSalaryWon || d.amountWon>KBO_MONEY.maximumSalaryWon)throw new RangeError('INVALID_KBO_GUARANTEE_DUE');
+@@ -41,7 +52,7 @@
+  const obligationKey=JSON.stringify(['kbo-guarantee',contract.contractKey,closedSeasonKey,reason]),entry:KboGuarantee={obligationKey,sourceContractKey:contract.contractKey,playerKey:contract.playerKey,clubId:contract.clubId,reason,createdSeasonKey:closedSeasonKey,dues};
+  const old=world.finance?.guarantees.find(g=>g.obligationKey===obligationKey);if(old){if(canonicalJson(old)!==canonicalJson(entry))throw new RangeError('CHANGED_KBO_GUARANTEE');return;}
+  if(world.finance?.guarantees.some(g=>g.sourceContractKey===contract.contractKey))throw new RangeError('DUPLICATE_KBO_GUARANTEE');
+- world.finance={guarantees:[...(world.finance?.guarantees??[]),entry],grants:[...(world.finance?.grants??[])]};
++ world.finance={...(world.finance??{}),guarantees:[...(world.finance?.guarantees??[]),entry],grants:[...(world.finance?.grants??[])]};
+ }
+ /** A preseason release still owes the target season, plus every later guaranteed year.
+  * Caller removes the active contract in the same cloned-world result. Old entries retain after-season semantics. */
+@@ -50,7 +61,7 @@
+  const dues=Array.from({length:contract.years},(_,i)=>({seasonKey:String(Number(contract.seasonKey)+i),amountWon:contract.annualSalaryWon}));if(dues.some(d=>!validYear(d.seasonKey)))throw new RangeError('INVALID_KBO_GUARANTEE_DUE');
+  const entry:KboGuarantee={obligationKey:JSON.stringify(['kbo-preseason-guarantee',contract.contractKey,contract.seasonKey]),sourceContractKey:contract.contractKey,playerKey:contract.playerKey,clubId:contract.clubId,reason:'RELEASE',createdSeasonKey:contract.seasonKey,timing:'BEFORE_SEASON',dues};
+  const old=world.finance?.guarantees.find(g=>g.sourceContractKey===contract.contractKey);if(old){if(canonicalJson(old)!==canonicalJson(entry))throw new RangeError('CHANGED_KBO_GUARANTEE');return;}
+- world.finance={guarantees:[...(world.finance?.guarantees??[]),entry],grants:[...(world.finance?.grants??[])]};
++ world.finance={...(world.finance??{}),guarantees:[...(world.finance?.guarantees??[]),entry],grants:[...(world.finance?.grants??[])]};
+ }
+ /** 08/44 safety net: caller must already prove a real minimum-roster/required-slot repair, not a competitive bid.
+  * The exact deficit is a current-year grant, never a permanent budget or a deleted guarantee. */
+@@ -58,11 +69,32 @@
+  const club=world.clubs.find(c=>c.id===clubId);if(!club || !Number.isSafeInteger(requiredNewContracts) || requiredNewContracts<1 || requiredNewContracts>KBO_ROSTER_LIMITS.minimum || club.roster.length+requiredNewContracts>KBO_ROSTER_LIMITS.maximum || !validYear(seasonKey))throw new RangeError('INVALID_KBO_EMERGENCY_BUDGET');
+  const balance=kboClubBalance(world,clubId,seasonKey),requiredWon=Math.max(requiredNewContracts*KBO_MONEY.minimumSalaryWon,balance.protectedWon),deficit=Math.max(0,requiredWon+club.paidSalaryWon+club.reservedSalaryWon+balance.guaranteedWon-club.budgetWon-balance.supportWon);if(!deficit)return 0;
+  const entry={receiptKey:JSON.stringify(['kbo-support',world.worldKey,seasonKey,clubId,world.finance?.grants.length??0]),seasonKey,clubId,amountWon:deficit,reason:'MINIMUM_ROSTER_REBUILD' as const};
+- world.finance={guarantees:[...(world.finance?.guarantees??[])],grants:[...(world.finance?.grants??[]),entry]};return deficit;
++ world.finance={...(world.finance??{}),guarantees:[...(world.finance?.guarantees??[])],grants:[...(world.finance?.grants??[]),entry]};return deficit;
+ }
+ /** Future commitments do not treat a one-off support grant as recurring income. */
+ export function kboFutureCommitmentWon(world:World,clubId:string,yearOffset:number):number {
+  if(!Number.isSafeInteger(yearOffset) || yearOffset<1 || yearOffset>3)throw new RangeError('INVALID_KBO_FUTURE_YEAR');
+  const club=world.clubs.find(c=>c.id===clubId);if(!club)throw new RangeError('MISSING_KBO_CLUB');
+- return sum([kboGuaranteedWon(world,clubId,String(Number(world.seasonKey)+yearOffset)),...club.roster.map(k=>kboServiceFutureCommitment(world.contracts[k]!,yearOffset))]);
++ return sum([kboGuaranteedWon(world,clubId,String(Number(world.seasonKey)+yearOffset)),...club.roster.map(k=>kboServiceFutureCommitment(world.contracts[k]!,yearOffset)),...Object.values(world.suspendedContracts??{}).filter(c=>c.clubId===clubId).map(c=>kboServiceFutureCommitment(c,yearOffset))]);
+ }
++
++
++function assertSettledContract(c:KboInitialContract):void {
++ if(c.remainderPay){assertKboRemainderPay(c);if(!c.remainderPay.settlement)throw new RangeError('UNSETTLED_KBO_CLOSED_CONTRACT');}
++ else {assertKboServicePayroll(c);if(!c.servicePay || kboContractPaymentBalance(c.servicePay.ledger).status!=='SETTLED')throw new RangeError('UNSETTLED_KBO_CLOSED_CONTRACT');}
++}
++/** A completed military/prorated deal retains this year's paid-cost proof after AI expiry. */
++export function archiveKboSettledContract(world:World,contract:KboInitialContract):void {
++ assertSettledContract(contract);const old=world.finance?.closedContracts?.find(c=>c.contractKey===contract.contractKey);
++ if(old){if(canonicalJson(old)!==canonicalJson(contract))throw new RangeError('CHANGED_KBO_CLOSED_CONTRACT');return;}
++ world.finance={guarantees:[],grants:[],...(world.finance??{}),closedContracts:[...(world.finance?.closedContracts??[]),structuredClone(contract)]};
++}
++export function kboArchivedPaidWon(world:World,clubId:string,seasonKey:string):number {
++ return sum((world.finance?.closedContracts??[]).flatMap(c=>{
++  const prior=kboRemainderPriorClubCharge(c);return [c.clubId===clubId && c.seasonKey===seasonKey?kboContractSeasonCharge(c):0,prior?.clubId===clubId && prior.seasonKey===seasonKey?prior.paidWon:0];
++ }));
++}
++export function kboRosterSeasonCharge(world:World,clubId:string):number {
++ const club=world.clubs.find(t=>t.id===clubId);if(!club)throw new RangeError('MISSING_KBO_CLUB');
++ return sum([...club.roster.map(k=>kboContractSeasonCharge(world.contracts[k]!)),...Object.values(world.suspendedContracts??{}).filter(c=>c.clubId===clubId).map(kboContractSeasonCharge)]);
++}
+--- /dev/null
++++ b/packages/engine/src/kbo-npc-military.ts
+@@ -0,0 +1,115 @@
++import type {KboCareer} from './kbo-career-entry.js';
++import {KBO_ROSTER_LIMITS,roleScore} from '@playball/rules';
++import {canonicalJson} from './game.js';
++import {createKboServicePayroll,settleKboPlayerServicePayrollDay,kboContractSeasonCharge,kboContractSuspended,kboActiveContractSuspended} from './kbo-service-payroll.js';
++import {kboMilitaryCompletionDays} from './kbo-military-events.js';
++import {completeSangmuBlock,compareKboSeasonDays} from './kbo-military-program.js';
++import {resumeKboContractPayments,kboContractPaymentBalance} from './kbo-contract-payments.js';
++import {createKboRemainderContract,kboClubRemainderFutureDates} from './kbo-remainder-pay.js';
++import {kboPlayerContractValue,kboRenewalSalaryWon} from './kbo-contract-value.js';
++import {kboAiRoleNeed,kboAiCandidatePriority,refreshKboAiAssessments} from './kbo-ai-offseason.js';
++import {assessmentMidpointScore} from './assessment.js';
++import {archiveKboSettledContract,kboClubBalance} from './kbo-finance.js';
++import {replenishKboFreeAgents} from './kbo-free-agents.js';
++import {assertKboRecruitmentWorld} from './kbo-draft.js';
++import {recordTotals} from './records.js';
++import {signKboRequiredReplacement} from './kbo-roster-repair.js';
++import {planEmergencyRoster} from './emergency-roster.js';
++
++/** New actual intakes only: the real untouched principal is suspended before either block can complete. */
++export function activateKboNpcMilitaryContracts(source:KboCareer,c:KboCareer):void {
++ const added=Object.entries(c.sangmu?.members??{}).filter(([key])=>!source.sangmu?.members[key]);if(!added.length)return;
++ c.world.suspendedContracts??={};c.sangmu!.npcReturns??={};
++ for(const [key,m] of added){
++  const original=source.world.contracts[key];
++  if(key===c.protagonistKey || !original || m.program.startedSeason!==c.world.seasonKey || Object.hasOwn(c.world.suspendedContracts,key) || original.contractKey!==m.program.contract.contractKey)throw new RangeError('INVALID_NPC_SERVICE_ACTIVATION');
++  const contract=structuredClone(original);contract.servicePay=createKboServicePayroll(contract,m.program,kboMilitaryCompletionDays(m.program)[1]!);
++  c.world.suspendedContracts[key]=contract;c.world.clubs.find(t=>t.id===contract.clubId)!.reservedSalaryWon+=kboContractSeasonCharge(contract);
++ }
++ c.schemaVersion=6;
++}
++
++/** A full original club keeps ownership and the completed member off army registration until a real slot opens. */
++export function returnKboNpcMilitaryPlayers(c:KboCareer,day:number):void {
++ if(!c.sangmu || !c.world.suspendedContracts)return;const date={seasonKey:c.world.seasonKey,worldDay:day};compareKboSeasonDays(date,date);
++ const members={...c.sangmu.members};let returned={...(c.sangmu.npcReturns??{})};
++ for(const key of Object.keys(c.world.suspendedContracts??{}).sort()){
++  const m=members[key],contract=c.world.suspendedContracts![key]!;
++  if(!m || !contract.servicePay || contract.servicePay.ledger.programId!==m.program.programId || canonicalJson(contract.servicePay.ledger.contract)!==canonicalJson(m.program.contract))throw new RangeError('INVALID_NPC_SERVICE_OWNER');
++  if(m.program.completedBlocks!==2)continue;
++  if(!contract.servicePay.ledger.resume || compareKboSeasonDays(date,kboMilitaryCompletionDays(m.program)[1]!)<0)throw new RangeError('INVALID_NPC_SERVICE_RETURN');
++  const club=c.world.clubs.find(t=>t.id===m.program.originalClubId)!;if(club.roster.length>=KBO_ROSTER_LIMITS.maximum)continue;
++  if(Object.hasOwn(c.world.players,key) || Object.hasOwn(returned,m.program.programId))throw new RangeError('DUPLICATE_NPC_SERVICE_RETURN');
++  c.world.players[key]=structuredClone(m.player);if(m.repertoire)c.world.repertoires[key]=structuredClone(m.repertoire);
++  c.world.contracts[key]=contract;club.roster=[...club.roster,key].sort();delete c.world.suspendedContracts![key];delete members[key];
++  returned={...returned,[m.program.programId]:{program:structuredClone(m.program),returned:{...date}}};
++ }
++ c.sangmu={...c.sangmu,members,npcReturns:returned};
++}
++
++/** Fixed first-season end / second-season June30, after the actual world-day close, never a game-count shortcut. */
++export function closeKboNpcMilitaryCalendarDay(c:KboCareer,day:number):void {
++ if(!c.world.suspendedContracts)return;
++ if(c.days?.days.at(-1)?.day!==day)throw new RangeError('NPC_MILITARY_DAY_NOT_FINAL');
++ for(const [key,contract] of Object.entries(c.world.suspendedContracts)){
++  const m=c.sangmu?.members[key];if(!m || !contract.servicePay)throw new RangeError('INVALID_NPC_SERVICE_OWNER');
++  const open=m.program.blocks.find(b=>b.seasonKey===c.world.seasonKey && b.completedWorldDay===null);if(!open)continue;
++  const due=kboMilitaryCompletionDays(m.program).find(d=>d.seasonKey===open.seasonKey)!;
++  if(day>due.worldDay)throw new RangeError('NPC_MILITARY_COMPLETION_DAY_MISSED');if(day!==due.worldDay)continue;
++  m.program=completeSangmuBlock(m.program,open.seasonKey,day);
++  if(m.program.completedBlocks===2)contract.servicePay.ledger=resumeKboContractPayments(contract.servicePay.ledger,m.program);
++ }
++ returnKboNpcMilitaryPlayers(c,day);
++}
++
++function repairExpiredNpcSlots(c:KboCareer,clubId:string,holes:readonly {key:string;kind:'HITTER'|'PITCHER';position:string}[]):void {
++ const club=c.world.clubs.find(t=>t.id===clubId)!,available=(key:string)=>!c.health.injuries[key],future=()=>club.roster.filter(k=>!club.firstTeam.includes(k) && !c.sangmu?.loaned?.includes(k) && !kboContractSuspended(c.world.contracts[k]!));
++ const legal=(keys:string[])=>{const p=planEmergencyRoster(keys.map(k=>({player:c.world.players[k]!,available:available(k),temporary:false})));return p.requiredHitters===0 && p.requiredPitchers===0;};
++ for(const hole of holes){
++  const candidates=future().filter(k=>k!==c.protagonistKey && c.world.players[k]!.kind===hole.kind && available(k) && legal(future().filter(n=>n!==k))).sort((a,b)=>Number(c.world.players[b]!.position===hole.position)-Number(c.world.players[a]!.position===hole.position) || roleScore(c.world.players[b]!.kind,c.world.players[b]!.abilities,c.world.players[b]!.position)-roleScore(c.world.players[a]!.kind,c.world.players[a]!.abilities,c.world.players[a]!.position) || (a<b?-1:1));
++  const key=candidates[0]??signKboRequiredReplacement(c.world,c.freeAgents!,club.id,hole.position,c.difficulty).playerKey;club.firstTeam=[...club.firstTeam,key];
++ }
++ for(let i=0;i<60;i++){
++  const plan=planEmergencyRoster(future().map(k=>({player:c.world.players[k]!,available:available(k),temporary:false})));if(plan.requiredHitters===0 && plan.requiredPitchers===0)return;
++  signKboRequiredReplacement(c.world,c.freeAgents!,club.id,plan.requiredRightThrowingHitters?'C':plan.requiredHitters?'CF':'SP',c.difficulty);
++ }
++ throw new RangeError('NPC_EXPIRY_REPAIR_LIMIT');
++}
++
++/** Existing AI value/demand/budget decide residual-season renewals; the user player's decision remains separate. */
++function settleNpcExpiry(c:KboCareer,day:number):void {
++ const future=(clubId:string)=>kboClubRemainderFutureDates(c,clubId,day);
++ const expired=Object.entries(c.world.contracts).filter(([k,v])=>k!==c.protagonistKey && v.servicePay && kboContractPaymentBalance(v.servicePay.ledger).status==='SETTLED' && future(v.clubId)>0);
++ if(!expired.length)return;
++ for(const [,v] of expired)if(v.servicePay!.ledger.receipts.at(-1)?.worldDay!==day)throw new RangeError('NPC_CONTRACT_DECISION_MISSED');
++ c.freeAgents??=replenishKboFreeAgents({schemaVersion:1,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,players:{},supplies:[],retired:[]},{seed:c.world.seed,difficulty:c.difficulty,registeredKeys:Object.keys(c.world.players)});
++ c.aiAssessments=refreshKboAiAssessments({world:c.world,players:expired.map(([k])=>c.world.players[k]!),records:c.records,health:c.health,sourceSeasonKey:c.world.seasonKey,...(c.aiAssessments?{reports:c.aiAssessments}:{})});
++ const totals=recordTotals(c.records,{seasonKey:c.world.seasonKey,leagueKey:'KBO',phase:'REGULAR'}),end=Math.max(...Object.values(c.competitionSchedule!.leagues).flat().map(g=>g.worldDay));
++ for(const club of c.world.clubs){
++  const pending=expired.filter(([,v])=>v.clubId===club.id).map(([key,contract])=>({key,contract,player:c.world.players[key]!,book:c.world.repertoires[key],wasFirst:club.firstTeam.includes(key)}));if(!pending.length)continue;
++  const removed=new Set(pending.map(x=>x.key));club.roster=club.roster.filter(k=>!removed.has(k));club.firstTeam=club.firstTeam.filter(k=>!removed.has(k));
++  for(const x of pending){delete c.world.players[x.key];delete c.world.contracts[x.key];delete c.world.repertoires[x.key];}
++  const remaining=[...pending];
++  while(remaining.length && club.roster.length<KBO_ROSTER_LIMITS.maximum){
++   const ranked=remaining.map(x=>{const need=kboAiRoleNeed(x.player,club.roster.map(k=>c.world.players[k]!)),v=kboPlayerContractValue(x.player,totals.batting[x.key],totals.pitching[x.key]),salary=kboRenewalSalaryWon(x.contract.annualSalaryWon,v.valueWon),deal=createKboRemainderContract(x.contract,{contractKey:JSON.stringify(['kbo-npc-remainder',c.world.worldKey,c.world.seasonKey,day,x.key]),annualSalaryWon:salary,startAfterWorldDay:day,endWorldDay:end,reservedGameDays:future(club.id)}),cost=kboContractSeasonCharge(deal)-kboContractSeasonCharge(x.contract),priority=kboAiCandidatePriority({roleScore:roleScore(x.player.kind,x.player.abilities,x.player.position),...need,outlookMidpoint:assessmentMidpointScore(x.player.kind,c.aiAssessments![x.key]!.ranges),annualSalaryWon:salary,budgetWon:club.budgetWon});return {x,deal,cost,priority,need:need.needScore};}).sort((a,b)=>Number(b.need===100)-Number(a.need===100) || b.priority-a.priority || (a.x.key<b.x.key?-1:1));
++   const best=ranked.find(x=>x.cost<=kboClubBalance(c.world,club.id).availableWon);if(!best)break;
++   const {x,deal,cost}=best;c.world.players[x.key]=x.player;c.world.contracts[x.key]=deal;if(x.book)c.world.repertoires[x.key]=x.book;club.roster.push(x.key);if(x.wasFirst)club.firstTeam.push(x.key);club.reservedSalaryWon+=cost;remaining.splice(remaining.findIndex(v=>v.key===x.key),1);
++  }
++  for(const x of remaining){
++   if(Object.hasOwn(c.freeAgents.players,x.key))throw new RangeError('DUPLICATE_NPC_EXPIRED_PLAYER');
++   archiveKboSettledContract(c.world,x.contract);const injury=c.health.injuries[x.key];
++   c.freeAgents.players[x.key]={player:x.player,previousClubId:club.id,previousContract:x.contract,origin:'EXPIRED',enteredSeasonKey:c.world.seasonKey,...(x.book?{repertoire:x.book}:{}),...(injury?{injury:structuredClone(injury)}:{})};delete c.health.injuries[x.key];
++   if(club.id===c.protagonistClubId && !c.sangmu?.loaned?.includes(c.protagonistKey) && !kboActiveContractSuspended(c.world.contracts[c.protagonistKey]!))c.relationships.relations=c.relationships.relations.map(r=>['FORMED','REUNITED_TEAM'].includes(r.stage) && r.otherPlayerKey===x.key?{...r,stage:'SEPARATED',milestones:[...r.milestones,{stage:'SEPARATED',worldDay:day,evidenceKey:JSON.stringify(['relation-separation',r.relationKey,'kbo-npc-expiry',x.contract.contractKey,c.world.seasonKey,day])}]}:r);
++  }
++  if(remaining.length)repairExpiredNpcSlots(c,club.id,remaining.filter(x=>x.wasFirst).map(x=>({key:x.key,kind:x.player.kind,position:x.player.position})));
++  club.roster.sort();
++ }
++ assertKboRecruitmentWorld(c.world);
++}
++
++export function settleKboNpcMilitaryPayrollDay(c:KboCareer,day:number):void {
++ if(!c.world.suspendedContracts)return;
++ const keys=new Set([...Object.keys(c.world.suspendedContracts),...Object.values(c.sangmu?.npcReturns??{}).map(r=>r.program.playerKey)]);
++ for(const key of [...keys].sort())if(c.world.suspendedContracts[key] || c.world.contracts[key]?.servicePay || c.world.contracts[key]?.remainderPay)settleKboPlayerServicePayrollDay(c,key,day);
++ settleNpcExpiry(c,day);
++}
+--- a/packages/engine/src/kbo-progress.ts
++++ b/packages/engine/src/kbo-progress.ts
+@@ -1,3 +1,4 @@
++import {closeKboNpcMilitaryCalendarDay,settleKboNpcMilitaryPayrollDay} from './kbo-npc-military.js';
+ import {kboReturnConditionMultiplier,settleKboReturnConditionDay} from './kbo-return-condition.js';
+ import {kboContractPaymentBalance} from './kbo-contract-payments.js';
+ import {settleKboServicePayrollDay} from './kbo-service-payroll.js';
+@@ -38,7 +39,7 @@
+  const career=structuredClone(source);
+  if(career.sangmu && career.competitionSchedule!.leagues.FUTURES.some(g=>g.homeTeamKey==='SANGMU' || g.awayTeamKey==='SANGMU')){
+   assertSangmuEmergency(career.sangmu,career.world);
+-  career.sangmu.emergency??=createSangmuEmergency(career.world);career.sangmu.emergency.schemaVersion=2;career.schemaVersion=5;
++  career.sangmu.emergency??=createSangmuEmergency(career.world);career.sangmu.emergency.schemaVersion=2;if(career.schemaVersion<5)career.schemaVersion=5;
+  }
+  career.days=createKboDayLedger(career.world);
+  career.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:firstDay(career),pendingGame:null};
+@@ -117,8 +118,8 @@
+   }
+   const closed=closeKboCompetitionDay(career.world,schedulesOf(career),career.protagonistKey,career.records,career.health,career.days!,day,career.sangmu);
+   career.world=closed.world;career.health=closed.health;career.days=closed.days;if(closed.sangmu)career.sangmu=closed.sangmu;progress.nextWorldDay=day+1;daysClosed++;
+-  const serviceReturn=closeKboMilitaryCalendarDay(career,day,progress);
+-  settleKboServicePayrollDay(career,day);settleKboReturnConditionDay(career,day);settleKboOpponentReunions(career,day);settleKboArmyTeamReunions(career,day);
++  const serviceReturn=closeKboMilitaryCalendarDay(career,day,progress);closeKboNpcMilitaryCalendarDay(career,day);
++  settleKboServicePayrollDay(career,day);settleKboNpcMilitaryPayrollDay(career,day);settleKboReturnConditionDay(career,day);settleKboOpponentReunions(career,day);settleKboArmyTeamReunions(career,day);
+   career.traits=refreshCareerTraits(career,day,LEAGUES);
+   // 14 order: call-up/demotion review before style/training windows.
+   const aiMoves=progress.nextWorldDay>last?null:reviewKboAiRosters(career);if(aiMoves)Object.assign(career,aiMoves);
+--- a/packages/engine/src/kbo-remainder-pay.ts
++++ b/packages/engine/src/kbo-remainder-pay.ts
+@@ -68,20 +68,22 @@
+ import {kboContractSeasonCharge} from './kbo-service-payroll.js';
+
+ /** Conservative upper bound from both already-published calendars; never counts one date twice. */
+-export function kboRemainderFutureDates(c:KboCareer,afterDay:number):number {
++export function kboRemainderFutureDates(c:KboCareer,afterDay:number):number {return kboClubRemainderFutureDates(c,c.protagonistClubId,afterDay);}
++export function kboClubRemainderFutureDates(c:KboCareer,clubId:string,afterDay:number):number {
+  if(!c.competitionSchedule)throw new RangeError('KBO_SCHEDULE_REQUIRED');
+- return new Set([...c.competitionSchedule.leagues.KBO,...c.competitionSchedule.leagues.FUTURES].filter(g=>g.worldDay>afterDay && (g.homeTeamKey===c.protagonistClubId || g.awayTeamKey===c.protagonistClubId)).map(g=>g.worldDay)).size;
++ return new Set([...c.competitionSchedule.leagues.KBO,...c.competitionSchedule.leagues.FUTURES].filter(g=>g.worldDay>afterDay && (g.homeTeamKey===clubId || g.awayTeamKey===clubId)).map(g=>g.worldDay)).size;
+ }
+ /** Caller owns the progress clone; joins actual official registrations and publishes one money transaction. */
+-export function settleKboRemainderPayrollDay(career:KboCareer,day:number):void {
+- const old=career.world.contracts[career.protagonistKey]!;if(!old.remainderPay)return;
++export function settleKboRemainderPayrollDay(career:KboCareer,day:number):void {settleKboPlayerRemainderPayrollDay(career,career.protagonistKey,day);}
++export function settleKboPlayerRemainderPayrollDay(career:KboCareer,playerKey:string,day:number):void {
++ const old=career.world.contracts[playerKey]!;if(!old.remainderPay)return;
+  if(career.days?.days.at(-1)?.day!==day || day<=old.remainderPay.startAfterWorldDay || day>old.remainderPay.endWorldDay)throw new RangeError('PAYROLL_DAY_NOT_FINAL');
+  const oldCharge=kboContractSeasonCharge(old),club=career.world.clubs.find(x=>x.id===old.clubId)!;
+  const matches=career.health.games.map(x=>x.evidence).filter(r=>r.seasonKey===career.world.seasonKey && r.day===day && r.roster.includes(old.playerKey) && ['KBO:'+old.clubId,'FUTURES:'+old.clubId].includes(r.teamKey));
+  if(matches.length>1)throw new RangeError('INVALID_REMAINDER_PAYROLL_REGISTRATION');
+  let c=structuredClone(old),paidWon=0;
+  if(matches.length){const r=matches[0]!,g=career.records.games[r.gameKey];if(!g)throw new RangeError('PAYROLL_GAME_NOT_FINAL');const out=recordKboRemainderPayment(c,g,r);c=out.contract;paidWon=out.paidWon;}
+- if(!c.remainderPay!.settlement)c.remainderPay!.reservedGameDays=kboRemainderFutureDates(career,day);
++ if(!c.remainderPay!.settlement)c.remainderPay!.reservedGameDays=kboClubRemainderFutureDates(career,c.clubId,day);
+  if(day===c.remainderPay!.endWorldDay){const out=finalizeKboRemainderPayments(c,day);c=out.contract;paidWon+=out.adjustmentWon;}
+  career.world.contracts[c.playerKey]=c;club.reservedSalaryWon+=kboContractSeasonCharge(c)-oldCharge-paidWon;club.paidSalaryWon+=paidWon;assertKboRecruitmentWorld(career.world);
+ }
+--- a/packages/engine/src/kbo-sangmu-start.ts
++++ b/packages/engine/src/kbo-sangmu-start.ts
+@@ -1,3 +1,4 @@
++import {activateKboNpcMilitaryContracts} from './kbo-npc-military.js';
+ import {kboActiveContractSuspended} from './kbo-service-payroll.js';
+ import type {KboCareer} from './kbo-career-entry.js';
+ import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
+@@ -24,7 +25,7 @@
+  const career=structuredClone(source),unit=career.sangmu??emptySangmuUnit();
+  // My own player already holds one slot of this recruitment when he enlisted for it (his application was the same snapshot).
+  const mine=career.military?.status==='SERVING_SPORTS' && career.military.program?.blocks[0]?.seasonKey===career.world.seasonKey?career.world.players[career.protagonistKey]!.kind:null;
+- const selection=selectSangmuCohort({world:career.world,records:career.records,health:career.health,seasonKey:selectionSeason,serving:new Set(Object.keys(unit.members)),excluded:new Set([career.protagonistKey]),reserved:{hitters:mine==='HITTER'?1:0,pitchers:mine==='PITCHER'?1:0}});
++ const selection=selectSangmuCohort({world:career.world,records:career.records,health:career.health,seasonKey:selectionSeason,serving:new Set([...Object.keys(unit.members),...Object.values(unit.npcReturns??{}).map(r=>r.program.playerKey)]),excluded:new Set([career.protagonistKey]),reserved:{hitters:mine==='HITTER'?1:0,pitchers:mine==='PITCHER'?1:0}});
+  career.sangmu=enlistSangmuCohort(career.world,unit,selection,career.protagonistClubId);
+  const club=source.world.clubs.find(c=>c.id===source.protagonistClubId),key=source.protagonistKey,selected=new Set(selection.selected.map(a=>a.playerKey)),seen=new Set<string>();
+  career.relationships.relations=career.relationships.relations.map(r=>{
+@@ -36,5 +37,5 @@
+   if(r.milestones.some(m=>m.evidenceKey===evidenceKey))throw new RangeError('SANGMU_RELATION_EVIDENCE_REUSED');
+   return {...r,stage:'SEPARATED' as const,milestones:[...r.milestones,{stage:'SEPARATED' as const,evidenceKey,worldDay:career.world.calendar.growthDays[0]!}]};
+  });
+- career.revision++;return career;
++ activateKboNpcMilitaryContracts(source,career);career.revision++;return career;
+ }
+--- a/packages/engine/src/kbo-sangmu-unit.ts
++++ b/packages/engine/src/kbo-sangmu-unit.ts
+@@ -7,13 +7,16 @@
+ import type {KboMilitaryProgram} from './kbo-military-program.js';
+ import {selectKboFirstTeamRoster} from './kbo-world.js';
+ import type {KboSangmuEmergency} from './kbo-sangmu-emergency.js';
++import {canonicalJson} from './game.js';
++import {kboMilitaryCompletionDays} from './kbo-military-events.js';
++import {compareKboSeasonDays} from './kbo-military-program.js';
+ import {assertSangmuEmergency} from './kbo-sangmu-emergency.js';
+
+ /** The 11th Futures team's people. Serving players are NOT in `world.players` (every world player must sit on a club
+  * roster); their identity, books and suspended contract live here, and the original club keeps the rights. */
+ export interface KboSangmuMember {player:DevelopmentPlayer;repertoire:Repertoire|null;wasFirstTeam:boolean;program:KboMilitaryProgram}
+ /** `loaned` = my own player: he stays in world.players and on his club's records/rights but plays for the military team. */
+-export interface KboSangmuUnit {schemaVersion:1;teamKey:'SANGMU';members:Readonly<Record<string,KboSangmuMember>>;enlistedSeasons:readonly string[];loaned?:readonly string[];emergency?:KboSangmuEmergency}
++export interface KboSangmuUnit {schemaVersion:1;teamKey:'SANGMU';members:Readonly<Record<string,KboSangmuMember>>;enlistedSeasons:readonly string[];npcReturns?:Readonly<Record<string,{program:KboMilitaryProgram;returned:{seasonKey:string;worldDay:number}}>>;loaned?:readonly string[];emergency?:KboSangmuEmergency}
+ export const emptySangmuUnit=():KboSangmuUnit=>({schemaVersion:1,teamKey:'SANGMU',members:{},enlistedSeasons:[]});
+
+ /** Contract days still unplayed when service starts: whole seasons of the contract after the selection season. */
+@@ -48,8 +51,15 @@
+  return {...structuredClone(unit),members,enlistedSeasons:[...unit.enlistedSeasons,selection.seasonKey]};
+ }
+ /** Structural check against a world: nobody is both serving and on a club, programs match their keys. */
+-export function assertSangmuUnit(unit:KboSangmuUnit,world:Pick<ActiveKboRosterWorld,'worldKey'|'seasonKey'|'players'|'contracts'|'clubs'>):void {
++export function assertSangmuUnit(unit:KboSangmuUnit,world:Pick<ActiveKboRosterWorld,'worldKey'|'seasonKey'|'players'|'contracts'|'clubs'|'suspendedContracts'|'finance'>):void {
+  assertSangmuEmergency(unit,world);
++ for(const [key,c] of Object.entries(world.suspendedContracts??{})){const m=unit.members[key];if(!m || !c.servicePay || c.servicePay.ledger.programId!==m.program.programId || canonicalJson(c.servicePay.ledger.contract)!==canonicalJson(m.program.contract))throw new RangeError('INVALID_NPC_SERVICE_OWNER');}
++ for(const [key,r] of Object.entries(unit.npcReturns??{})){
++  const p=r.program,days=kboMilitaryCompletionDays(p);
++  const ledgers=[world.contracts[p.playerKey]?.servicePay?.ledger,world.contracts[p.playerKey]?.remainderPay?.previous.servicePay.ledger,...(world.finance?.closedContracts??[]).map(c=>c.servicePay?.ledger??c.remainderPay?.previous.servicePay.ledger)].filter(v=>v!==undefined);
++  if(key!==JSON.stringify(['sangmu-program',world.worldKey,String(Number(p.startedSeason)-1),p.playerKey]) || p.playerKey!==p.contract.playerKey || p.originalClubId!==p.contract.clubId || !world.clubs.some(t=>t.id===p.originalClubId) || !ledgers.some(l=>l.programId===p.programId && canonicalJson(l.contract)===canonicalJson(p.contract) && l.resume?.completedSeasonKey===days[1]!.seasonKey && l.resume.completedWorldDay===days[1]!.worldDay) || key!==p.programId || p.kind!=='SPORTS' || p.completedBlocks!==2 || p.returnOptionId!==JSON.stringify(['sangmu-return',p.programId]) || p.blocks.some((b,i)=>b.completedWorldDay!==days[i]!.worldDay) || compareKboSeasonDays(r.returned,days[1]!)<0 || Number(r.returned.seasonKey)>Number(world.seasonKey) || Object.hasOwn(unit.members,p.playerKey) || Object.hasOwn(world.suspendedContracts??{},p.playerKey))throw new RangeError('INVALID_NPC_RETURN_HISTORY');
++ }
++
+  for(const key of unit.loaned??[])if(!Object.hasOwn(world.players,key) || !world.clubs.some(c=>c.roster.includes(key) && !c.firstTeam.includes(key)) || Object.hasOwn(unit.members,key))throw new RangeError('INVALID_SANGMU_UNIT');
+  for(const [key,m] of Object.entries(unit.members)){
+   if(m.player.simulationKey!==key || m.program.playerKey!==key || Object.hasOwn(world.players,key) || Object.hasOwn(world.contracts,key) || world.clubs.some(c=>c.roster.includes(key)))throw new RangeError('INVALID_SANGMU_UNIT');
+@@ -66,7 +76,7 @@
+  const members={...structuredClone(unit.members)} as Record<string,KboSangmuMember>,returned:string[]=[],blockedByRoster:string[]=[],uncontracted:string[]=[];
+  for(const key of Object.keys(members).sort()){
+   const m=members[key]!,p=m.program;
+-  if(p.completedBlocks<p.scheduledBlocks)continue;
++  if(p.completedBlocks<p.scheduledBlocks || world.suspendedContracts?.[key])continue;
+   if(p.contract.remainingPaidGameDays===0){uncontracted.push(key);continue;}
+   const club=world.clubs.find(c=>c.id===p.originalClubId);
+   if(!club || Object.hasOwn(world.players,key))throw new RangeError('INVALID_SANGMU_UNIT');
+--- a/packages/engine/src/kbo-service-payroll.ts
++++ b/packages/engine/src/kbo-service-payroll.ts
+@@ -1,4 +1,5 @@
+-import {kboRemainderSeasonCharge,settleKboRemainderPayrollDay} from './kbo-remainder-pay.js';
++import {kboClubBalance} from './kbo-finance.js';
++import {kboRemainderSeasonCharge,settleKboPlayerRemainderPayrollDay} from './kbo-remainder-pay.js';
+ import {createKboSeasonSchedules} from './kbo-schedule.js';
+ import {KBO_CLUBS} from '@playball/rules';
+ import type {KboInitialContract} from './kbo-world.js';
+@@ -72,8 +73,9 @@
+ import {assertKboRecruitmentWorld} from './kbo-draft.js';
+
+ /** Internal daily transaction hook; caller owns the clone. All games and registration receipts must already be final. */
+-export function settleKboServicePayrollDay(career:KboCareer,day:number):void {
+- const c=career.world.contracts[career.protagonistKey]!;if(c.remainderPay){settleKboRemainderPayrollDay(career,day);return;}if(!c.servicePay)return;
++export function settleKboServicePayrollDay(career:KboCareer,day:number):void {settleKboPlayerServicePayrollDay(career,career.protagonistKey,day);}
++export function settleKboPlayerServicePayrollDay(career:KboCareer,playerKey:string,day:number):void {
++ const c=career.world.contracts[playerKey]??career.world.suspendedContracts?.[playerKey];if(!c)throw new RangeError('MISSING_KBO_SERVICE_CONTRACT');if(c.remainderPay){settleKboPlayerRemainderPayrollDay(career,playerKey,day);return;}if(!c.servicePay)return;
+  if(!career.competitionSchedule || career.days?.days.at(-1)?.day!==day)throw new RangeError('PAYROLL_DAY_NOT_FINAL');
+  const oldCharge=kboContractSeasonCharge(c),p=c.servicePay,club=career.world.clubs.find(x=>x.id===c.clubId)!;
+  const matches=career.health.games.map(x=>x.evidence).filter(r=>r.seasonKey===career.world.seasonKey && r.day===day && r.roster.includes(c.playerKey) && ['KBO:'+c.clubId,'FUTURES:'+c.clubId].includes(r.teamKey));
+@@ -103,3 +105,20 @@
+
+ /** No official registration while serving ACTIVE; ownership/master roster remains unchanged. */
+ export const kboActiveContractSuspended=(c:KboInitialContract)=>c.servicePay?.kind==='ACTIVE' && c.servicePay.ledger.resume===null;
++
++
++/** AI registration changes fund the changed remaining calendar before exposing an extra payable date. */
++export function reserveKboNpcServiceRosterChange(c:KboCareer,clubId:string,nextFirstTeam:readonly string[]):boolean {
++ const club=c.world.clubs.find(t=>t.id===clubId);if(!club)throw new RangeError('KBO_SERVICE_ROSTER_CONTEXT_REQUIRED');
++ const affected=club.roster.filter(key=>key!==c.protagonistKey && c.world.contracts[key]!.servicePay?.ledger.resume && club.firstTeam.includes(key)!==nextFirstTeam.includes(key));if(!affected.length)return true;
++ if(!c.competitionSchedule || !c.days?.days.length)throw new RangeError('KBO_SERVICE_ROSTER_CONTEXT_REQUIRED');
++ const day=c.days.days.at(-1)!.day,changes:KboInitialContract[]=[];let delta=0;
++ for(const key of affected){
++  const old=c.world.contracts[key]!;
++  const next=structuredClone(old),league=nextFirstTeam.includes(key)?'KBO':'FUTURES';
++  const n=c.competitionSchedule.leagues[league].filter(g=>g.worldDay>day && (g.homeTeamKey===club.id || g.awayTeamKey===club.id)).length;
++  next.servicePay!.reservedGameDays=Math.min(kboContractPaymentBalance(next.servicePay!.ledger).remainingPaidGameDays,n);delta+=kboContractSeasonCharge(next)-kboContractSeasonCharge(old);changes.push(next);
++ }
++ if(delta>kboClubBalance(c.world,club.id).availableWon)return false;
++ for(const next of changes)c.world.contracts[next.playerKey]=next;club.reservedSalaryWon+=delta;return true;
++}
+--- a/packages/engine/src/kbo-world.ts
++++ b/packages/engine/src/kbo-world.ts
+@@ -18,7 +18,7 @@
+ const P_POSITIONS=[...Array<string>(8).fill('SP'),...Array<string>(12).fill('RP'),...Array<string>(4).fill('CP')];
+ export interface KboInitialContract {contractKey:string;playerKey:string;clubId:string;seasonKey:string;years:number;annualSalaryWon:number;signingBonusWon:0;status:'ACTIVE'|'ACTIVE_PRORATED';servicePay?:KboServicePayroll;remainderPay?:KboRemainderPay}
+ export interface KboClub {id:string;name:string;roster:string[];firstTeam:string[];budgetWon:number;paidSalaryWon:number;reservedSalaryWon:number}
+-export interface KboRosterWorld {finance?:KboFinanceLedger;schemaVersion:1;status:'CREATED';worldKey:string;seasonKey:string;seed:string;difficulty:Difficulty;clubs:KboClub[];players:Record<string,DevelopmentPlayer>;repertoires:Record<string,Repertoire>;contracts:Record<string,KboInitialContract>;rng:{roster:RngState;potential:RngState;handedness:RngState};generationAttempts:number}
++export interface KboRosterWorld {finance?:KboFinanceLedger;suspendedContracts?:Record<string,KboInitialContract>;schemaVersion:1;status:'CREATED';worldKey:string;seasonKey:string;seed:string;difficulty:Difficulty;clubs:KboClub[];players:Record<string,DevelopmentPlayer>;repertoires:Record<string,Repertoire>;contracts:Record<string,KboInitialContract>;rng:{roster:RngState;potential:RngState;handedness:RngState};generationAttempts:number}
+ const dict=<T>():Record<string,T>=>Object.create(null) as Record<string,T>;
+ /** Common-offset water filling retains profile shape, mean exactly target, and six ceilings100. */
+ export function kboInitialAbilities(kind:PlayerKind,archetype:string,target:number):AbilityUnits {
+--- a/packages/engine/src/kbo-year-transition.ts
++++ b/packages/engine/src/kbo-year-transition.ts
+@@ -1,10 +1,11 @@
+-import {kboContractSeasonCharge,createKboServicePayroll,carryKboServicePayroll} from './kbo-service-payroll.js';
++import {returnKboNpcMilitaryPlayers} from './kbo-npc-military.js';
++import {createKboServicePayroll,carryKboServicePayroll} from './kbo-service-payroll.js';
+ import {kboContractPaymentBalance} from './kbo-contract-payments.js';
+ import {queueKboMilitaryFirstBlock} from './kbo-military-events.js';
+ import {prepareKboAiRenewals} from './kbo-ai-offseason.js';
+ import {runKboAiFreeAgentMarket} from './kbo-fa-market.js';
+ import {repairKboDualLeagueRosters} from './kbo-roster-repair.js';
+-import {reserveKboOffseasonGuarantee} from './kbo-finance.js';
++import {kboRosterSeasonCharge,reserveKboOffseasonGuarantee} from './kbo-finance.js';
+ import {nextKboFreeAgentYear} from './kbo-free-agents.js';
+ import type {KboCareer} from './kbo-career-entry.js';
+ import {validateSeasonGrowthLedger,createSeasonGrowthLedger} from './growth-ledger.js';
+@@ -61,7 +62,7 @@
+  for(const key of Object.keys(source.world.players).sort()){
+   const age=source.world.players[key]!.age+1,c=source.world.contracts[key],renewed=key===source.protagonistKey?acceptedRenewal(source):null;
+   const residual=c?.servicePay?kboContractPaymentBalance(c.servicePay.ledger).remainingPaidGameDays:0;
+-  const contract=renewed?{contractKey:renewed.offerKey,contractYear:1,years:1,expired:false}:c?.servicePay && residual>0?{contractKey:c.contractKey,contractYear:1,years:Math.ceil(residual/144),expired:false}:c?{contractKey:c.contractKey,contractYear:target-Number(c.seasonKey)+1,years:c.years,expired:target-Number(c.seasonKey)+1>c.years}:null;
++  const contract=renewed?{contractKey:renewed.offerKey,contractYear:1,years:1,expired:false}:c?.servicePay && residual>0?{contractKey:c.contractKey,contractYear:1,years:Math.ceil(residual/144),expired:false}:c?.servicePay?{contractKey:c.contractKey,contractYear:c.years+1,years:c.years,expired:true}:c?{contractKey:c.contractKey,contractYear:target-Number(c.seasonKey)+1,years:c.years,expired:target-Number(c.seasonKey)+1>c.years}:null;
+   players[key]={age,contract};
+   if(age>KBO_MAX_PLAYER_AGE)overAge.push(key);
+   if(contract?.expired)expiring.push(key);
+@@ -101,7 +102,8 @@
+   if(k===key && !activated.servicePay && service?.contractPaymentVersion===1 && ['SERVING_SPORTS','SERVING_ACTIVE'].includes(service.status) && program?.blocks[0]?.seasonKey===target && service.completionDays){activated.servicePay=createKboServicePayroll(activated,program,service.completionDays[1]!);activated.years=Math.ceil(program.contract.remainingPaidGameDays/144);}
+   const book=schoolYearEndRepertoire(source,k);if(book)world.repertoires[k]={...structuredClone(book),seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};
+  }
+- for(const club of world.clubs){club.paidSalaryWon=0;club.reservedSalaryWon=club.roster.reduce((n,k)=>n+kboContractSeasonCharge(world.contracts[k]!),0);}
++ for(const [k,c] of Object.entries(world.suspendedContracts??{})){const carried={...c,seasonKey:target,servicePay:carryKboServicePayroll(c,target)};carried.years=Math.max(1,Math.ceil(kboContractPaymentBalance(carried.servicePay.ledger).remainingPaidGameDays/144));world.suspendedContracts![k]=carried;}
++ for(const club of world.clubs){club.paidSalaryWon=0;club.reservedSalaryWon=kboRosterSeasonCharge(world,club.id);}
+  world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target));
+ // Military unit carries over: members age and reset their books like everyone else, the block of the season just played is
+ // recorded complete on its last day, and finished programs rejoin their club's Futures squad (full clubs wait in the unit).
+@@ -110,7 +112,7 @@
+ if(career.sangmu){
+  for(const e of Object.values(career.sangmu.emergency?.entries??{}))if(e.released===null)e.released={seasonKey:source.world.seasonKey,worldDay:source.days!.days.at(-1)!.day};
+  const lastDay=source.days!.days.at(-1)!.day,members=Object.fromEntries(Object.entries(career.sangmu.members).map(([k,m])=>{
+-  const open=m.program.blocks.find(b=>b.seasonKey===source.world.seasonKey && b.completedWorldDay===null);
++  const open=world.suspendedContracts?.[k]?undefined:m.program.blocks.find(b=>b.seasonKey===source.world.seasonKey && b.completedWorldDay===null);
+   return [k,{...m,player:{...m.player,age:m.player.age+1,fatigue:0},repertoire:m.repertoire?{...m.repertoire,seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()}:null,program:open?completeSangmuBlock(m.program,open.seasonKey,lastDay):m.program}];
+  }));
+  career.sangmu=returnSangmuPlayers(world,{...career.sangmu,members},target).unit;
+@@ -124,7 +126,7 @@
+  career.rookieDrafts=[...(source.rookieDrafts??[]),draftKboRookieClass(world,target,standings.map(s=>s.teamKey).reverse(),source.difficulty)];
+  // Normal recruitment gets the first chance to fill gaps. Safety supply covers only what is still impossible.
+  const repaired=repairKboDualLeagueRosters({world,pool:market.pool,health:market.health,protagonistKey:key,difficulty:career.difficulty});
+- world=repaired.world;career.world=world;career.health=repaired.health;career.freeAgents=repaired.pool;
++ world=repaired.world;career.world=world;career.health=repaired.health;career.freeAgents=repaired.pool;returnKboNpcMilitaryPlayers(career,0);
+  career.aiOffseasons=[...(source.aiOffseasons??[]),{seasonKey:target,renewal:prepared.receipt,repair:repaired.receipt,rounds:market.rounds}];
+  assertKboRecruitmentWorld(world);
+  const player=world.players[key]!,club=world.clubs.find(c=>c.id===career.protagonistClubId)!;
+--- a/packages/engine/test/kbo-military-events.test.ts
++++ b/packages/engine/test/kbo-military-events.test.ts
+@@ -1,3 +1,4 @@
++import {closeKboNpcMilitaryCalendarDay} from '../src/kbo-npc-military.js';
+ import {kboContractPaymentBalance} from '../src/kbo-contract-payments.js';
+ import {kboContractSeasonCharge,settleKboServicePayrollDay} from '../src/kbo-service-payroll.js';
+ import {assertKboRecruitmentWorld} from '../src/kbo-draft.js';
+@@ -25,7 +26,7 @@
+  const p=confirmKboPreseasonPlan(c,c.revision),o=confirmKboOpeningRoster(p,p.revision),s=confirmKboSeasonSchedule(o,o.revision);let g=startKboRegularSeason(s,s.revision);
+  const all=[...g.competitionSchedule!.leagues.KBO,...g.competitionSchedule!.leagues.FUTURES],first=Math.min(...all.map(x=>x.worldDay)),last=Math.max(...all.map(x=>x.worldDay));
+  g.days={...g.days!,days:Array.from({length:last-first+1},(_,i)=>({day:first+i,evidence:'controlled-clock',result:{injured:[],recovered:[]}}))};
+- g.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:last+1,pendingGame:null};closeKboMilitaryCalendarDay(g,last,g.phaseContext);g.phaseContext={phase:'SEASON_REVIEW'};
++ g.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:last+1,pendingGame:null};closeKboMilitaryCalendarDay(g,last,g.phaseContext);closeKboNpcMilitaryCalendarDay(g,last);g.phaseContext={phase:'SEASON_REVIEW'};
+  g=startKboPostseason(g,g.revision);for(let i=0;i<400;i++){const out=advanceKboPostseason(g,g.revision);g=out.career;if(out.stopReason==='POSTSEASON_COMPLETE')break;}
+  g=settleKboSeasonGrowth(g,g.revision).career;return closeKboSeason(g,g.revision,true);
+ }
+@@ -66,7 +67,7 @@
+  assert.throws(()=>advanceKboCareer(g,g.revision,1),/INVALID_CAREER_PHASE/);g=acknowledge(g,'CONFIRM_SERVICE_RETURN');
+  for(let i=0;i<150 && !g.health.games.some(x=>x.evidence.seasonKey===g.world.seasonKey && x.evidence.day>due && x.evidence.teamKey==='FUTURES:'+g.protagonistClubId && x.evidence.roster.includes(g.protagonistKey));i++)g=advanceKboCareer(g,g.revision,1).career;
+  assert.ok(g.health.games.some(x=>x.evidence.seasonKey===g.world.seasonKey && x.evidence.day>due && x.evidence.teamKey==='FUTURES:'+g.protagonistClubId && x.evidence.roster.includes(g.protagonistKey)));
+- const paidContract=g.world.contracts[g.protagonistKey]!,balance=kboContractPaymentBalance(paidContract.servicePay!.ledger);assert.ok(balance.paidDays>=1);const ownClub=g.world.clubs.find(c=>c.id===g.protagonistClubId)!;assert.equal(ownClub.paidSalaryWon,balance.paidWon);assertKboRecruitmentWorld(g.world);
++ const paidContract=g.world.contracts[g.protagonistKey]!,balance=kboContractPaymentBalance(paidContract.servicePay!.ledger);assert.ok(balance.paidDays>=1);const ownClub=g.world.clubs.find(c=>c.id===g.protagonistClubId)!;assert.equal(ownClub.paidSalaryWon,Object.values(g.world.contracts).filter(c=>c.clubId===g.protagonistClubId).reduce((n,c)=>n+(c.servicePay?.ledger.receipts.filter(r=>r.seasonKey===g.world.seasonKey).reduce((sum,r)=>sum+r.amountWon,0)??0),0));assertKboRecruitmentWorld(g.world);
+  const replay=structuredClone(g),before=JSON.stringify(replay);settleKboServicePayrollDay(replay,replay.days!.days.at(-1)!.day);assert.equal(JSON.stringify(replay),before);assert.equal(first.world.contracts[first.protagonistKey]!.servicePay!.ledger.receipts.length,0);
+  const games=Object.values(g.records.games).filter(x=>x.scope.seasonKey===g.world.seasonKey && x.worldDay>=due);for(const day of new Set(games.map(x=>x.worldDay)))assert.ok(games.filter(x=>x.worldDay===day && (Object.hasOwn(x.batting,g.protagonistKey)||Object.hasOwn(x.pitching,g.protagonistKey))).length<=1);
+ });
+--- /dev/null
++++ b/packages/engine/test/kbo-npc-military.test.ts
+@@ -0,0 +1,114 @@
++import test from 'node:test';
++import assert from 'node:assert/strict';
++import {enteredKboCareer} from './fixtures.js';
++import type {KboCareer} from '../src/kbo-career-entry.js';
++import {startSangmuCohort} from '../src/kbo-sangmu-start.js';
++import {canonicalJson} from '../src/game.js';
++import {assertKboRecruitmentWorld} from '../src/kbo-draft.js';
++import {assertSangmuUnit} from '../src/kbo-sangmu-unit.js';
++import {KBO_MONEY} from '@playball/rules';
++import {enlistInSangmu} from '../src/kbo-military-program.js';
++import {createKboServicePayroll,reserveKboNpcServiceRosterChange} from '../src/kbo-service-payroll.js';
++import {signKboRequiredReplacement} from '../src/kbo-roster-repair.js';
++import {kboClubBalance,kboFutureCommitmentWon} from '../src/kbo-finance.js';
++import {kboServiceFutureCommitment} from '../src/kbo-service-payroll.js';
++import {assertKboCareerRevision} from '../src/kbo-career-version.js';
++import {confirmKboPreseasonPlan} from '../src/kbo-preseason.js';
++import {confirmKboOpeningRoster} from '../src/kbo-opening-roster.js';
++import {confirmKboSeasonSchedule} from '../src/kbo-schedule.js';
++import {startKboRegularSeason,advanceKboCareer} from '../src/kbo-progress.js';
++import {closeKboNpcMilitaryCalendarDay,returnKboNpcMilitaryPlayers,settleKboNpcMilitaryPayrollDay} from '../src/kbo-npc-military.js';
++import {startKboPostseason,advanceKboPostseason} from '../src/kbo-postseason-progress.js';
++import {settleKboSeasonGrowth} from '../src/kbo-season-growth.js';
++import {closeKboSeason} from '../src/kbo-year-end.js';
++import {startNextKboSeason} from '../src/kbo-year-transition.js';
++import {offerKboRenewal,acceptKboRenewal,kboContractDecisionRequired} from '../src/kbo-renewal.js';
++
++function ready(c:KboCareer){const p=confirmKboPreseasonPlan(c,c.revision),o=confirmKboOpeningRoster(p,p.revision),s=confirmKboSeasonSchedule(o,o.revision);return startKboRegularSeason(s,s.revision);}
++function closeFirst(source:KboCareer){
++ // Controlled regular clock plus real postseason/settlement/Y02, not a full18-month simulation.
++ let c=ready(source);const all=Object.values(c.competitionSchedule!.leagues).flat(),first=Math.min(...all.map(g=>g.worldDay)),last=Math.max(...all.map(g=>g.worldDay));
++ c.days={...c.days!,days:Array.from({length:last-first+1},(_,i)=>({day:first+i,evidence:'controlled-clock',result:{injured:[],recovered:[]}}))};c.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:last+1,pendingGame:null};closeKboNpcMilitaryCalendarDay(c,last);c.phaseContext={phase:'SEASON_REVIEW'};
++ c=startKboPostseason(c,c.revision);for(let i=0;i<400;i++){const r=advanceKboPostseason(c,c.revision);c=r.career;if(r.stopReason==='POSTSEASON_COMPLETE')break;}
++ c=settleKboSeasonGrowth(c,c.revision).career;return closeKboSeason(c,c.revision,true);
++}
++function renewed(c:KboCareer){if(!kboContractDecisionRequired(c))return c;const o=offerKboRenewal(c,c.revision);return acceptKboRenewal(o,o.revision,{eventKey:o.renewal!.eventKey,eventVersion:o.events.find(e=>e.eventKey===o.renewal!.eventKey)!.version});}
++const cache=new Map<boolean,{c:KboCareer;keys:string[]}>();
++function second(short=false){if(!cache.has(short)){const e=enteredKboCareer(),first=startSangmuCohort(e,e.revision),keys=Object.keys(first.world.suspendedContracts!);
++ if(short)for(const key of keys){
++  // Controlled one unpaid day is created at real first-block activation, never by rewinding a completed program.
++  const contract=first.world.suspendedContracts![key]!,m=first.sangmu!.members[key]!;
++  m.program=enlistInSangmu({worldKey:first.world.worldKey,playerKey:key,clubId:contract.clubId,selectionSeasonKey:String(Number(first.world.seasonKey)-1),contract,remainingPaidGameDays:1});
++  contract.servicePay=createKboServicePayroll(contract,m.program,{...contract.servicePay!.returnDate});
++ }
++ const closed=renewed(closeFirst(first)),c=startNextKboSeason(closed,closed.revision);cache.set(short,{c,keys});}return structuredClone(cache.get(short)!);}
++
++test('new real intake retains authentic unpaid contracts/future liabilities and rejects a downgraded root',()=>{
++ const source=enteredKboCareer(),before=canonicalJson(source),c=startSangmuCohort(source,source.revision);assert.equal(c.schemaVersion,6);assert.equal(Object.keys(c.world.suspendedContracts!).length,20);assert.equal(canonicalJson(source),before);assert.deepEqual(c.world.rng,source.world.rng);
++ for(const contract of Object.values(c.world.suspendedContracts!)){assert.equal(contract.servicePay!.ledger.resume,null);assert.equal(contract.servicePay!.ledger.receipts.length,0);assert.ok(!c.world.players[contract.playerKey]);assert.deepEqual(contract.servicePay!.ledger.contract,c.sangmu!.members[contract.playerKey]!.program.contract);}
++ for(const club of c.world.clubs)for(const offset of [1,2,3])assert.equal(kboFutureCommitmentWon(c.world,club.id,offset),club.roster.reduce((n,k)=>n+kboServiceFutureCommitment(c.world.contracts[k]!,offset),0)+Object.values(c.world.suspendedContracts!).filter(v=>v.clubId===club.id).reduce((n,v)=>n+kboServiceFutureCommitment(v,offset),0));
++ assert.doesNotThrow(()=>assertKboRecruitmentWorld(c.world));assert.doesNotThrow(()=>assertSangmuUnit(c.sangmu!,c.world));
++ const old=structuredClone(c);old.schemaVersion=5;assert.throws(()=>assertKboCareerRevision(old,old.revision),/CAREER_REVISION_CHANGED/);
++ const playing=ready(c);assert.equal(playing.schemaVersion,6);
++});
++
++test('actual Y02 carries frozen principal and funding, fixed June30 restores only the original Futures registration',()=>{
++ const {c,keys}=second(),source=canonicalJson(c),enlisted=startSangmuCohort(c,c.revision),playing=ready(enlisted),due=playing.world.suspendedContracts![keys[0]!]!.servicePay!.returnDate.worldDay;
++ const first=Math.min(...Object.values(playing.competitionSchedule!.leagues).flat().map(g=>g.worldDay));playing.days={...playing.days!,days:Array.from({length:due-first+1},(_,i)=>({day:first+i,evidence:'controlled-return-clock',result:{injured:[],recovered:[]}}))};playing.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:due+1,pendingGame:null};
++ closeKboNpcMilitaryCalendarDay(playing,due);
++ for(const key of keys){if(!playing.world.players[key]){const m=playing.sangmu!.members[key]!;assert.equal(m.program.completedBlocks,2);assert.equal(playing.world.clubs.find(t=>t.id===m.program.originalClubId)!.roster.length,60);assert.ok(playing.world.suspendedContracts![key]!.servicePay!.ledger.resume);continue;}assert.ok(!playing.world.suspendedContracts![key]);assert.ok(!playing.sangmu!.members[key]);const contract=playing.world.contracts[key]!,club=playing.world.clubs.find(t=>t.id===contract.clubId)!;assert.ok(club.roster.includes(key));assert.ok(!club.firstTeam.includes(key));assert.equal(contract.servicePay!.ledger.resume!.completedWorldDay,due);assert.equal(contract.servicePay!.ledger.receipts.length,0);}
++ assert.doesNotThrow(()=>assertSangmuUnit(playing.sangmu!,playing.world));assert.doesNotThrow(()=>assertKboRecruitmentWorld(playing.world));assert.equal(canonicalJson(c),source);
++ const key=keys.find(k=>!!playing.world.players[k])!;assert.ok(key);const club=playing.world.contracts[key]!.clubId,game=playing.competitionSchedule!.leagues.FUTURES.find(g=>g.worldDay>due && [g.homeTeamKey,g.awayTeamKey].includes(club))!;
++ playing.competitionSchedule!.leagues={KBO:[],FUTURES:[game]};playing.days={...playing.days!,days:[]};playing.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:game.worldDay,pendingGame:null};
++ let a=playing;for(let i=0;i<150;i++){const r=advanceKboCareer(a,a.revision);a=r.career;if(r.daysClosed)break;}
++ assert.equal(a.world.contracts[key]!.servicePay!.ledger.receipts.length,1);assert.equal(a.world.contracts[key]!.servicePay!.ledger.receipts[0]!.amountWon,Math.round(a.world.contracts[key]!.annualSalaryWon/144));assert.doesNotThrow(()=>assertKboRecruitmentWorld(a.world));
++});
++
++
++function returnedShort(league:'KBO'|'FUTURES'='FUTURES'){
++ const {c,keys}=second(true),u=startSangmuCohort(c,c.revision),playing=ready(u),due=playing.world.suspendedContracts![keys[0]!]!.servicePay!.returnDate.worldDay,first=Math.min(...Object.values(playing.competitionSchedule!.leagues).flat().map(g=>g.worldDay));
++ playing.days={...playing.days!,days:Array.from({length:due-first+1},(_,i)=>({day:first+i,evidence:'controlled-clock',result:{injured:[],recovered:[]}}))};playing.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:due+1,pendingGame:null};closeKboNpcMilitaryCalendarDay(playing,due);
++ const key=keys.find(k=>!!playing.world.players[k] && playing.world.contracts[k]!.clubId===playing.protagonistClubId)??keys.find(k=>!!playing.world.players[k])!;assert.ok(key);const club=playing.world.contracts[key]!.clubId;
++ if(league==='KBO'){const team=playing.world.clubs.find(t=>t.id===club)!,p=playing.world.players[key]!,swap=team.firstTeam.find(k=>k!==playing.protagonistKey && playing.world.players[k]!.kind===p.kind && playing.world.players[k]!.position===p.position)!;assert.ok(swap);const first=team.firstTeam.map(k=>k===swap?key:k);assert.ok(reserveKboNpcServiceRosterChange(playing,club,first));team.firstTeam=first;}
++ const games=playing.competitionSchedule!.leagues[league].filter(g=>g.worldDay>due && [g.homeTeamKey,g.awayTeamKey].includes(club)).slice(0,2);assert.equal(games.length,2);
++ playing.competitionSchedule!.leagues={KBO:league==='KBO'?games:[],FUTURES:league==='FUTURES'?games:[]};settleKboNpcMilitaryPayrollDay(playing,due);playing.days={...playing.days!,days:[]};playing.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:games[0]!.worldDay,pendingGame:null};return {c:playing,key,games};
++}
++function finishDay(c:KboCareer){for(let i=0;i<150;i++){const r=advanceKboCareer(c,c.revision);c=r.career;assert.notEqual(r.stopReason,'ENGINE_LIMIT');if(r.daysClosed)return c;}throw Error('DAY_LIMIT');}
++
++test('NPC principal exhaustion uses actual AI salary/demand/budget, signs only remaining days and preserves old receipts',()=>{
++ const {c,key,games}=returnedShort(),before=canonicalJson(c),a=finishDay(c),b=finishDay(JSON.parse(before));assert.deepEqual(a,b);assert.equal(canonicalJson(c),before);
++ const contract=a.world.contracts[key]!;assert.ok(contract);assert.equal(contract.status,'ACTIVE_PRORATED');assert.equal(contract.remainderPay!.previous.servicePay.ledger.receipts.length,1);assert.equal(contract.remainderPay!.startAfterWorldDay,games[0]!.worldDay);assert.equal(contract.remainderPay!.reservedGameDays,1);assert.equal(contract.remainderPay!.receipts.length,0);
++ let next=a;while(next.days!.days.at(-1)!.day<games[1]!.worldDay)next=finishDay(next);assert.equal(next.world.contracts[key]!.remainderPay!.receipts.length,1);assert.ok(next.world.contracts[key]!.remainderPay!.settlement);assert.doesNotThrow(()=>assertKboRecruitmentWorld(next.world));
++});
++
++test('unfunded NPC renewal enters FA with immutable paid-cost proof, no deleted money or protagonist decision',()=>{
++ const {c,key}=returnedShort('KBO'),club=c.world.clubs.find(t=>t.id===c.world.contracts[key]!.clubId)!;
++ // Controlled current-year ordinary salaries consume available budget without changing any future guarantee.
++ let available=kboClubBalance(c.world,club.id).availableWon;
++ for(const k of club.roster){const v=c.world.contracts[k]!;if(k===c.protagonistKey || v.years!==1 || v.servicePay || v.remainderPay)continue;const amount=Math.min(KBO_MONEY.maximumSalaryWon-v.annualSalaryWon,Math.floor(available/10_000)*10_000);v.annualSalaryWon+=amount;club.reservedSalaryWon+=amount;available-=amount;}
++ assert.ok(available<10_000);assert.doesNotThrow(()=>assertKboRecruitmentWorld(c.world));const before=canonicalJson(c),out=finishDay(c);assert.equal(canonicalJson(c),before);
++ assert.ok(!out.world.players[key]);assert.ok(!out.world.contracts[key]);assert.equal(out.freeAgents!.players[key]!.origin,'EXPIRED');assert.equal(out.freeAgents!.players[key]!.previousContract!.servicePay!.ledger.receipts.length,1);assert.ok(out.world.finance!.closedContracts!.some(v=>v.playerKey===key));assert.equal(out.world.clubs.find(t=>t.id===club.id)!.firstTeam.length,28);assert.doesNotThrow(()=>assertKboRecruitmentWorld(out.world));
++ const corrupt=structuredClone(out);corrupt.world.finance!.closedContracts=[];assert.throws(()=>assertKboRecruitmentWorld(corrupt.world));
++});
++
++
++test('full original roster keeps completed ownership unregistered and resumes only when a real slot is available',()=>{
++ const {c,keys}=second(),u=startSangmuCohort(c,c.revision),playing=ready(u),key=keys[0]!,old=playing.world.suspendedContracts![key]!,club=playing.world.clubs.find(t=>t.id===old.clubId)!,added:string[]=[];
++ while(club.roster.length<60)added.push(signKboRequiredReplacement(playing.world,playing.freeAgents!,club.id,'CF',playing.difficulty).playerKey);
++ const due=old.servicePay!.returnDate.worldDay,first=Math.min(...Object.values(playing.competitionSchedule!.leagues).flat().map(g=>g.worldDay));playing.days={...playing.days!,days:Array.from({length:due-first+1},(_,i)=>({day:first+i,evidence:'controlled-clock',result:{injured:[],recovered:[]}}))};playing.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:due+1,pendingGame:null};
++ closeKboNpcMilitaryCalendarDay(playing,due);assert.ok(!playing.world.players[key]);assert.equal(playing.sangmu!.members[key]!.program.completedBlocks,2);assert.ok(playing.world.suspendedContracts![key]!.servicePay!.ledger.resume);assert.equal(playing.world.suspendedContracts![key]!.servicePay!.ledger.receipts.length,0);assert.doesNotThrow(()=>assertSangmuUnit(playing.sangmu!,playing.world));
++ // Controlled unused fixture slot, not an implemented user release command.
++ const remove=added.at(-1)??club.roster.find(k=>!club.firstTeam.includes(k)&&k!==playing.protagonistKey&&!playing.world.contracts[k]!.servicePay)!;
++ club.reservedSalaryWon-=playing.world.contracts[remove]!.annualSalaryWon;club.roster=club.roster.filter(k=>k!==remove);delete playing.world.players[remove];delete playing.world.contracts[remove];delete playing.world.repertoires[remove];
++ returnKboNpcMilitaryPlayers(playing,due);assert.ok(playing.world.players[key]);assert.ok(!club.firstTeam.includes(key));assert.equal(playing.world.contracts[key]!.servicePay!.ledger.receipts.length,0);assert.doesNotThrow(()=>assertKboRecruitmentWorld(playing.world));
++ const stable=canonicalJson(playing);returnKboNpcMilitaryPlayers(playing,due);assert.equal(canonicalJson(playing),stable);
++ const corrupt=structuredClone(playing),record=Object.values(corrupt.sangmu!.npcReturns!)[0]!;record.program.originalClubId='foreign';assert.throws(()=>assertSangmuUnit(corrupt.sangmu!,corrupt.world));
++});
++
++test('NPC service blocks never finish early or from skipped fixed dates, and orphaned suspension proof rejects',()=>{
++ const {c,keys}=second(),u=startSangmuCohort(c,c.revision),playing=ready(u),due=playing.world.suspendedContracts![keys[0]!]!.servicePay!.returnDate.worldDay;
++ playing.days={...playing.days!,days:[{day:due-1,evidence:'controlled-clock',result:{injured:[],recovered:[]}}]};closeKboNpcMilitaryCalendarDay(playing,due-1);assert.equal(playing.sangmu!.members[keys[0]!]!.program.completedBlocks,1);
++ playing.days.days=[{day:due+1,evidence:'controlled-missed-date',result:{injured:[],recovered:[]}}];assert.throws(()=>closeKboNpcMilitaryCalendarDay(playing,due+1),/NPC_MILITARY_COMPLETION_DAY_MISSED/);
++ const corrupt=structuredClone(c);delete (corrupt.sangmu!.members as Record<string,unknown>)[keys[0]!];assert.throws(()=>assertSangmuUnit(corrupt.sangmu!,corrupt.world),/INVALID_NPC_SERVICE_OWNER/);
++ const wrong=structuredClone(c);wrong.world.suspendedContracts![keys[0]!]!.servicePay!.ledger.contract.totalRemainingWon++;assert.throws(()=>assertKboRecruitmentWorld(wrong.world));
++});
+--- a/packages/engine/test/kbo-sangmu-emergency.test.ts
++++ b/packages/engine/test/kbo-sangmu-emergency.test.ts
+@@ -25,7 +25,9 @@
+
+ let cached:KboCareer|undefined;
+ function preseason(){
+- if(!cached){const e=enteredKboCareer(),u=startSangmuCohort(e,e.revision),p=confirmKboPreseasonPlan(u,u.revision),o=confirmKboOpeningRoster(p,p.revision);cached=confirmKboSeasonSchedule(o,o.revision);}
++ if(!cached){const e=enteredKboCareer(),u=startSangmuCohort(e,e.revision),p=confirmKboPreseasonPlan(u,u.revision),o=confirmKboOpeningRoster(p,p.revision);cached=confirmKboSeasonSchedule(o,o.revision);
++ // Controlled pre-v6 NPC cohort: health/auxiliary tests must not manufacture new service-ledger histories.
++ delete cached.world.suspendedContracts;delete cached.sangmu!.npcReturns;cached.schemaVersion=5;}
+  return structuredClone(cached);
+ }
+ function started(){const p=preseason();return startKboRegularSeason(p,p.revision);}

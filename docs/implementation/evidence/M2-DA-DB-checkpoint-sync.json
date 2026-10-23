@@ -1,0 +1,120 @@
+{
+  "baseCommit": "b69e26b316eac426516855c4f847d4958ee84d08",
+  "activeSourcesUnchanged": true,
+  "files": [
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "b3ee54d7e4a5f599ae9fef9f80e857c3e7340ed52fa33fcf3251382b2fffa310",
+      "indexBlob": "262dd9e9e16e23c43fc0d27aa8d534598045effe",
+      "sourceBlob": "262dd9e9e16e23c43fc0d27aa8d534598045effe"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "5a183fc5792e13a4e442d04f1d4780a92bf2625e22de526a6cd79a620233cb75",
+      "indexBlob": "ae407efa68abb617de19c5d8ff6c595d15ad3ba9",
+      "sourceBlob": "ae407efa68abb617de19c5d8ff6c595d15ad3ba9"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "4c1f3867d09b76180ade19aa03cc13c3389187fb7ec0baee40bddf5d513a5e5e",
+      "indexBlob": "98f8115ba1f18f834cb0f435a479ee614be9da6e",
+      "sourceBlob": "98f8115ba1f18f834cb0f435a479ee614be9da6e"
+    },
+    {
+      "path": "docs/implementation/M2-NEXT-MILITARY-INTEGRATION-NOTES.md",
+      "sha256": "073ce57226518fb0a6ca976a739ee5b4c3f7f920083c14f9ebb91b01b4bc43a3",
+      "indexBlob": "34fe2c53ed1dfe8878fc890a1610d881ac52d211",
+      "sourceBlob": "34fe2c53ed1dfe8878fc890a1610d881ac52d211"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "48124b1a308011632c8faaebb7707fed59450242fb1d42dc73a0894ebe271cb9",
+      "indexBlob": "4d13d5b2e570a21f6d3f4ce3f2b048816e141bb4",
+      "sourceBlob": "4d13d5b2e570a21f6d3f4ce3f2b048816e141bb4"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "81deee73fe6067c3a8d12136743e8d36fb2c21c944e24a8a89729c119b773b9d",
+      "indexBlob": "b2dc19cc011d13adabf8f4941acf26d784fb954c",
+      "sourceBlob": "b2dc19cc011d13adabf8f4941acf26d784fb954c"
+    },
+    {
+      "path": "docs/implementation/drafts/M2-DA-DB-PENDING-POLICY/DA-kbo-272.log",
+      "sha256": "06525c7a5dddd0ef54ac3f310249add1381862c29257d871dc2d1398d271efe7",
+      "indexBlob": "fb5bfb5f75655bb5b95aaed50f1050606d3b037a",
+      "sourceBlob": "fb5bfb5f75655bb5b95aaed50f1050606d3b037a"
+    },
+    {
+      "path": "docs/implementation/drafts/M2-DA-DB-PENDING-POLICY/DA-types.log",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "indexBlob": "8b137891791fe96927ad78e64b0aad7bded08bdc",
+      "sourceBlob": "8b137891791fe96927ad78e64b0aad7bded08bdc"
+    },
+    {
+      "path": "docs/implementation/drafts/M2-DA-DB-PENDING-POLICY/DA.patch",
+      "sha256": "f9272ce5f297a5a253bcfbd45e90ead46447f10f431b86db145c49ade19a67e2",
+      "indexBlob": "703a244c4b4db1110c41692cca685826e7d6402e",
+      "sourceBlob": "703a244c4b4db1110c41692cca685826e7d6402e"
+    },
+    {
+      "path": "docs/implementation/drafts/M2-DA-DB-PENDING-POLICY/DB-focused-36.log",
+      "sha256": "cbb9f80129a527ae63382473770424e240c3ad0cd421133cc32141328c06ee59",
+      "indexBlob": "8c58dbf5edd8324f3f0d9f76b3db591a5acb838e",
+      "sourceBlob": "8c58dbf5edd8324f3f0d9f76b3db591a5acb838e"
+    },
+    {
+      "path": "docs/implementation/drafts/M2-DA-DB-PENDING-POLICY/DB-over-DA.patch",
+      "sha256": "31bc758d0e42db752a152b86377aae56b0da2f98d404eba6b9b321b5cb9c837b",
+      "indexBlob": "2dbdecfb9a6a7c9c00528604089d8aba1e75b19c",
+      "sourceBlob": "2dbdecfb9a6a7c9c00528604089d8aba1e75b19c"
+    },
+    {
+      "path": "docs/implementation/drafts/M2-DA-DB-PENDING-POLICY/DB-types.log",
+      "sha256": "7eb70257593da06f682a3ddda54a9d260d4fc514f645237f5ca74b08f8da61a6",
+      "indexBlob": "8b137891791fe96927ad78e64b0aad7bded08bdc",
+      "sourceBlob": "8b137891791fe96927ad78e64b0aad7bded08bdc"
+    },
+    {
+      "path": "docs/implementation/drafts/M2-DA-DB-PENDING-POLICY/README.md",
+      "sha256": "b0ee2d4b9460fb7071719555cf998a77ee424d3f4d1031193e4f4968a7fbad11",
+      "indexBlob": "15b2b2d7f1b5af3089fe6ef84589b409e0e1e112",
+      "sourceBlob": "15b2b2d7f1b5af3089fe6ef84589b409e0e1e112"
+    },
+    {
+      "path": "docs/implementation/drafts/M2-DA-DB-PENDING-POLICY/budget-repro.log",
+      "sha256": "5454de0155f8192b5908b577a5f026f2a7694873e2994426a9de4f7bee89ba40",
+      "indexBlob": "00aa215f631ed65afab5d801183104867aa79a95",
+      "sourceBlob": "00aa215f631ed65afab5d801183104867aa79a95"
+    },
+    {
+      "path": "docs/implementation/drafts/M2-DA-DB-PENDING-POLICY/budget-repro.mjs.txt",
+      "sha256": "a9be75ef5a442912d1df142166825c7196f72c6cdf959c64a48ac3d439b2e769",
+      "indexBlob": "fe31bab3bda95ba2d9692c48a8f70fac7c8391b4",
+      "sourceBlob": "fe31bab3bda95ba2d9692c48a8f70fac7c8391b4"
+    },
+    {
+      "path": "docs/implementation/drafts/M2-DA-DB-PENDING-POLICY/sources.json",
+      "sha256": "7d3105bd946252e2449bc3c2d5756461a20a900d3aff972dea0df8060b2406aa",
+      "indexBlob": "d5c0c21e5e52ec32415af6ae5d5aaa00f802c7a8",
+      "sourceBlob": "d5c0c21e5e52ec32415af6ae5d5aaa00f802c7a8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DA-DB-checkpoint-design.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090",
+      "indexBlob": "3dbeafbf5c570526f3080073cffb213824255b29",
+      "sourceBlob": "3dbeafbf5c570526f3080073cffb213824255b29"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DA-DB-checkpoint-smoke.log",
+      "sha256": "c7bbeafbacfdbe360bfda2d7c28eaf9f16a5ba094e7854c02a71571e446dbb74",
+      "indexBlob": "79c2bc89d6581e269f32fbd2141bdf07a96f45b0",
+      "sourceBlob": "79c2bc89d6581e269f32fbd2141bdf07a96f45b0"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DA-DB-checkpoint.json",
+      "sha256": "10845fecce76a8551c0f757c29438a08283892f82a28d2cb77fcd096c43b6a25",
+      "indexBlob": "257c5c3755e3cdb3fa94a6682d561b10c68fcac5",
+      "sourceBlob": "257c5c3755e3cdb3fa94a6682d561b10c68fcac5"
+    }
+  ]
+}
