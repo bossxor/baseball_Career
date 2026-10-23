@@ -1,0 +1,26 @@
+{
+  "observedUtc": "2026-10-23 01:18:56 UTC",
+  "remainingPercent": {
+    "primary": 5,
+    "weekly": 85
+  },
+  "verifiedFeatureCommit": "c4c4f9eb820a867211989f4f92705441702deae5",
+  "featureVerification": {
+    "tests": 552,
+    "passed": 552,
+    "failed": 0,
+    "cancelled": 0,
+    "focused": 31,
+    "staticValidators": 10,
+    "manifestEntries": 359,
+    "httpSkeletonSmoke": true,
+    "trackedMirrorFiles": 1289,
+    "allVFilesMatch": true,
+    "remoteHeadMatches": true,
+    "workingTreeClean": true
+  },
+  "runtimeChangesAfterFeatureVerification": false,
+  "approvedMilitaryTemporarySupply": "Decision documented; implementation not complete",
+  "currentHandoff": "docs/implementation/NEXT-SESSION.md",
+  "computerShutdownRequested": false
+}
