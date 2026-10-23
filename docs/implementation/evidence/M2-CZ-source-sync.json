@@ -1,0 +1,146 @@
+{
+  "baseCommit": "816ff2e16815ff3ac265d3c5910d0cf57f7bf715",
+  "direction": "validated checkout -> V:/",
+  "runtimeTestedSourcesUnchanged": true,
+  "postCheckDocsValidatedSeparately": true,
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "9b9c005d5c9512deaf791e57d73e445e4f31d19daa9d247b6b21bc87e21a3acb",
+      "gitBlob": "b6f0760f9ab651c509205e41546615f2beb24a52",
+      "indexBlob": "b6f0760f9ab651c509205e41546615f2beb24a52"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "2a6e9616e2b682153012dc041525b2b5c4315adda4b5d0ca7d69b3485eab940b",
+      "gitBlob": "4248a476d86f246e399b29e267968a6d5806710e",
+      "indexBlob": "4248a476d86f246e399b29e267968a6d5806710e"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "65c3ee60b9998beb63e182e60e64d64ce31662138f6ac0b525c9a2464328523e",
+      "gitBlob": "70488eac3bc9024b6c975be5c9c817cc37bb4a3e",
+      "indexBlob": "70488eac3bc9024b6c975be5c9c817cc37bb4a3e"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "3b4665614250cf1e2f55545e95260f1eedcb098bacd5b8cfeac9a251c5ad8226",
+      "gitBlob": "e7413af72e973bd6c37c5e005ddd569f8fa85da6",
+      "indexBlob": "e7413af72e973bd6c37c5e005ddd569f8fa85da6"
+    },
+    {
+      "path": "docs/design/VALIDATION.md",
+      "sha256": "6ea0354323e7d92121b998d5d8728c941f5a1c834a4033473d7be5b7129a8949",
+      "gitBlob": "a21f5226f34ef5aacfe647ee72ebce5c2f9ebe99",
+      "indexBlob": "a21f5226f34ef5aacfe647ee72ebce5c2f9ebe99"
+    },
+    {
+      "path": "docs/implementation/M2-NEXT-MILITARY-INTEGRATION-NOTES.md",
+      "sha256": "e65b9d8bf8bd7aed82dcb45217d1d090980c907ae208d2461b8ca4067a6c3939",
+      "gitBlob": "734367c752fffa89fd381d410459be96e8034977",
+      "indexBlob": "734367c752fffa89fd381d410459be96e8034977"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "63628d259fe362c9015f955fc6c67d89af6538f44d7aa1685bfff75afef4ba98",
+      "gitBlob": "bafc7d32708dc0662cd60b0edc6a3a56642b2721",
+      "indexBlob": "bafc7d32708dc0662cd60b0edc6a3a56642b2721"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "a5eb085a3c3ef9ed4f01eaae31ccb660d0056ec7b4489ca20edf6be5d163b161",
+      "gitBlob": "7dca3d81700e839e0fd9b7c5851e39bd2265ab10",
+      "indexBlob": "7dca3d81700e839e0fd9b7c5851e39bd2265ab10"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "sha256": "09cc0b019721ab9bdb97dc26b81b74d8b6c1514b1673c77842253b5d16d88e4d",
+      "gitBlob": "6090dd9febf62439dc9d1a705a615f03a24a1eff",
+      "indexBlob": "6090dd9febf62439dc9d1a705a615f03a24a1eff"
+    },
+    {
+      "path": "packages/engine/src/kbo-team-reunions.ts",
+      "sha256": "00b6a65491235f894f789fcaea298937bd55d8cb118eaaf6bf094d840d8bbf4d",
+      "gitBlob": "4f994ec3f7c03bf1b8de2cad70d33d3da0b74025",
+      "indexBlob": "4f994ec3f7c03bf1b8de2cad70d33d3da0b74025"
+    },
+    {
+      "path": "docs/implementation/M2-CZ-SANGMU-TEAM-REUNION.md",
+      "sha256": "b6e5f49fdf1aa3e8c879edf996056b8bed2540267cf9dfe82936c2dcb0ced121",
+      "gitBlob": "886eab20101be98a16c9f0d7d70369912d1b0b7a",
+      "indexBlob": "886eab20101be98a16c9f0d7d70369912d1b0b7a"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CZ-before-fix.log",
+      "sha256": "7521d221386ef1d68d63ab4a9c8ee3e8668ea42503bf4fa8fc1a9d626ec9d3cf",
+      "gitBlob": "ca8254618ce33396ec62ea26fd088c8f8c3a65d9",
+      "indexBlob": "ca8254618ce33396ec62ea26fd088c8f8c3a65d9"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CZ-check-exit.txt",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "gitBlob": "c227083464fb9af8955c90d2924774ee50abb547",
+      "indexBlob": "c227083464fb9af8955c90d2924774ee50abb547"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CZ-check.log",
+      "sha256": "84387e6941aa6d8f10f37651f746aee325fc86a4bd8b95d11be8e456b869fa40",
+      "gitBlob": "410391e9603c88d4e99ef52fec0315d634098189",
+      "indexBlob": "410391e9603c88d4e99ef52fec0315d634098189"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CZ-design-final.log",
+      "sha256": "13ea6ea3bb96a9c18baa45f723521771741fe90ac03b67f45c564b6745f026f2",
+      "gitBlob": "3dbeafbf5c570526f3080073cffb213824255b29",
+      "indexBlob": "3dbeafbf5c570526f3080073cffb213824255b29"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CZ-design-preflight.log",
+      "sha256": "13ea6ea3bb96a9c18baa45f723521771741fe90ac03b67f45c564b6745f026f2",
+      "gitBlob": "3dbeafbf5c570526f3080073cffb213824255b29",
+      "indexBlob": "3dbeafbf5c570526f3080073cffb213824255b29"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CZ-focused.log",
+      "sha256": "e92fe59370b69ac1dec4d213c8fb076ada11d3ac516b342e3e06973fd2097210",
+      "gitBlob": "30305fa9b513a17e2062ee57843746b0f16c3a5d",
+      "indexBlob": "30305fa9b513a17e2062ee57843746b0f16c3a5d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CZ-manifest.log",
+      "sha256": "a877bca0177773bf3514bdee3fa1e9c0909a162ab18293d6695e5d21ed3bafb7",
+      "gitBlob": "65bd618ab839e74feaccf6833f4436ab0c0e747e",
+      "indexBlob": "65bd618ab839e74feaccf6833f4436ab0c0e747e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CZ-post-docs.json",
+      "sha256": "341853d8175d425be9b74de2cc9813952e93439068ceac6f06f5484e11fdb1e9",
+      "gitBlob": "38af86cc184fda56b0b30df13660fbdd56beb1c7",
+      "indexBlob": "38af86cc184fda56b0b30df13660fbdd56beb1c7"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CZ-smoke.log",
+      "sha256": "b2e31371d5297d5f2f9626933839fe2f5b9550de8dd5f2f95064db5bd8c1576b",
+      "gitBlob": "44c3710ebb95acc2bae3c2ee24697eb90b52ce06",
+      "indexBlob": "44c3710ebb95acc2bae3c2ee24697eb90b52ce06"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CZ-source-freeze.json",
+      "sha256": "5d65f6ebd7dbe1eb0d6212aace00ab18c9eda6ea7ed7b41c49fe6eaf23c0188a",
+      "gitBlob": "2a731b7d690225587fd204b09a032479155352d5",
+      "indexBlob": "2a731b7d690225587fd204b09a032479155352d5"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-CZ-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gitBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "indexBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "packages/engine/test/kbo-army-team-reunions.test.ts",
+      "sha256": "cbbac2f4b6d2a8a1d2724f66d99967aa9e6af161cafd00667a06068512df3b72",
+      "gitBlob": "5bd197dd7c788325e47a0529f94ea21e8149ef8e",
+      "indexBlob": "5bd197dd7c788325e47a0529f94ea21e8149ef8e"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import {kboReturnConditionMultiplier,settleKboReturnConditionDay} from './kbo-return-condition.js';
 import {kboContractPaymentBalance} from './kbo-contract-payments.js';
 import {settleKboServicePayrollDay} from './kbo-service-payroll.js';
+import {settleKboArmyTeamReunions} from './kbo-team-reunions.js';
 import {settleKboOpponentReunions} from './kbo-reunion-events.js';
 import {closeKboMilitaryCalendarDay} from './kbo-military-events.js';
 import type {KboCareer} from './kbo-career-entry.js';
@@ -117,7 +118,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   const closed=closeKboCompetitionDay(career.world,schedulesOf(career),career.protagonistKey,career.records,career.health,career.days!,day,career.sangmu);
   career.world=closed.world;career.health=closed.health;career.days=closed.days;if(closed.sangmu)career.sangmu=closed.sangmu;progress.nextWorldDay=day+1;daysClosed++;
   const serviceReturn=closeKboMilitaryCalendarDay(career,day,progress);
-  settleKboServicePayrollDay(career,day);settleKboReturnConditionDay(career,day);settleKboOpponentReunions(career,day);
+  settleKboServicePayrollDay(career,day);settleKboReturnConditionDay(career,day);settleKboOpponentReunions(career,day);settleKboArmyTeamReunions(career,day);
   career.traits=refreshCareerTraits(career,day,LEAGUES);
   // 14 order: call-up/demotion review before style/training windows.
   const aiMoves=progress.nextWorldDay>last?null:reviewKboAiRosters(career);if(aiMoves)Object.assign(career,aiMoves);

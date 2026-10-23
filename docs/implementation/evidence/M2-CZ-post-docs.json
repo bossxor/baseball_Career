@@ -1,0 +1,20 @@
+{
+  "completedAt": "2026-10-23T11:37:38.761Z",
+  "milestones": [
+    "M2-CZ"
+  ],
+  "tests": 591,
+  "passed": 591,
+  "failed": 0,
+  "cancelled": 0,
+  "testDurationMs": 1062499.9007,
+  "focused": 38,
+  "staticDesignValidators": 10,
+  "manifestEntries": 359,
+  "httpSmoke": "skeleton only; no UI/auth/DB/storage/APK",
+  "runtimeUnchanged": true,
+  "design": {
+    "files": 360,
+    "sha256": "0543bb1d04b0cac100c1ecd5bbd0d8d2191bb392081d7a9bf3750f9975242d3f"
+  }
+}

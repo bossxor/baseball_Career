@@ -411,3 +411,8 @@ M1 순수 경기 코어를 추가했고 단위67/67·린트·타입·rules/engin
 ## 2026-10-23 구현 검증 참조 — M2-CY
 
 실제 입대의 관계 분리는 집중30/30·전체 npm run check585/585·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. [CY](../implementation/M2-CY-SANGMU-RELATION-SEPARATION.md) · [전체](../implementation/evidence/M2-CY-check.log). 저장소 밖 군팀 E96 초안·NPC 실제 반년 복귀/급여·UI/계정/Neon/APK의 검증은 아니다.
+
+
+## 2026-10-23 구현 검증 참조 — M2-CZ
+
+상무 실제 공동 등록 E96은 집중38/38·전체 npm run check591/591·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. [CZ](../implementation/M2-CZ-SANGMU-TEAM-REUNION.md) · [전체](../implementation/evidence/M2-CZ-check.log). NPC 실제18개월 복귀/급여·연간 성장/미래 채무·UI/계정/Neon/APK의 완료를 뜻하지 않는다.

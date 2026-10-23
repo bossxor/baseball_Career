@@ -1,0 +1,46 @@
+✔ actual shared army registration reunites a rival once with immutable registration proof and JSON replay (3461.6409ms)
+✔ injured bench registration qualifies without pretending there was an opposing appearance (401.4326ms)
+✔ army reunion acknowledgement changes only metadata and preserves the current phase, money, growth and records (785.1738ms)
+✔ historical army registration remains readable after current membership changes; damaged proof rejects without mutation (1820.0778ms)
+✔ formed relations and army games without legacy health registration do not manufacture a reunion (1293.5437ms)
+✔ reunion processing requires a closed date and leaves non-relation game results unchanged (1935.0186ms)
+✔ actual regular day reunites opposing appearances once, preserves results/RNG and resumes identically from JSON (11140.922ms)
+✔ E95 and E94 share a private-data-free read path; acknowledging a reunion changes no gameplay state or old notices (3179.1873ms)
+✔ bench-only registration, same team, other game, retired and already reunited relations do not create E95 (1556.5319ms)
+✔ unclosed days, corrupt registrations and invalid historical evidence reject atomically instead of inventing a meeting (4307.3826ms)
+✔ postseason hook uses a real final game without generating a direct-duel win or modifying permanent state (1040.7932ms)
+✔ cross-kind opponent meeting does not fabricate a duel, WIN, or hidden trait qualification (2692.3055ms)
+✔ reading a completed legacy day does not backfill an opponent reunion (298.4526ms)
+✔ new military season opts in once; legacy current seasons neither migrate nor consume army health RNG (5046.165ms)
+✔ minimum injury replacements use isolated35..45 identities; recovery releases registration without deleting history (373.8131ms)
+✔ normal advance fields injured army replacements, commits their XP/health/fatigue once and resumes from JSON (6787.4238ms)
+✔ new army health records a real diagnosis, heals by registered army games, never by a rest date (115.3864ms)
+✔ military-only identities remain visible in relationships while serving and after temporary release (2621.6835ms)
+✔ corrupt archives or insufficient permanent intake reject without mutation; enlist/return keep archive (919.1848ms)
+✔ a real army opponent game supplies E95 side evidence and the current military identity (606.2676ms)
+✔ confirmed next-year sports enlistment keeps current civilian identity readable without weakening active military registration (436.0675ms)
+✔ approved vacancies use minimum35..45 military auxiliaries without inventing enlistment or contracts (357.7468ms)
+✔ completed cohorts can finish a confirmed army game with auxiliary-only identities and real health receipts (1240.3116ms)
+✔ vacancy helpers cover only the healthy legal deficit and deregister when regular members return (94.4764ms)
+✔ legacy injury registries upgrade only at a new confirmed season; released auxiliaries do not create a new army team (2613.4059ms)
+✔ unsupported emergency policy rejects atomically rather than silently granting vacancy fill (484.7103ms)
+✔ a season without a confirmed army fixture never creates vacancy helpers or ghost army registration (2010.1277ms)
+✔ actual teammate intake separates both relation kinds, preserving prior history and all non-relation simulation state (2194.0024ms)
+✔ unselected, already separated and military-loaned relations retain their existing stages (862.8802ms)
+✔ invalid relation ownership or duplicate evidence rejects the entire intake without mutating its source (2029.9949ms)
+✔ duplicate intake and reading a previously enlisted save never add separation retroactively (440.9946ms)
+✔ intake separation supplies the real opposing army appearance path to E95, without a synthetic meeting (1384.9767ms)
+✔ actual transfer reunites an existing rival at registration while preserving records, RNG and old history (7049.038ms)
+✔ E94 and E96 coexist and acknowledgement changes only metadata without restoring the transfer phase (1033.7386ms)
+✔ historical reunion proof survives later membership changes; missing, duplicated or forged proof rejects without mutation (2616.4543ms)
+✔ old completed transfers are read without backfilling team reunions; failed registration leaves its source intact (2173.2025ms)
+✔ team registration includes an injured player but excludes loans, active service and already formed or retired relations (947.3885ms)
+✔ actual opposing game E95 survives the later confirmed transfer E96 and both notices remain independently readable (715.7195ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25197.5397
