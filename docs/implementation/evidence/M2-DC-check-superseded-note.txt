@@ -1,0 +1,1 @@
+Aborted before completion: focused expiry fixture used only one remaining renewal date; restoring the full calendar before the final source freeze. Not a passing final gate.
