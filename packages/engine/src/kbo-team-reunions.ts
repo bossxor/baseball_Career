@@ -39,6 +39,27 @@ function returnedRegistration(c:KboCareer,r:PlayerRelationship,g:GameContributio
  const team=sharedRegistration(c,r,g,clubId,'INVALID_KBO_RETURN_REGISTRATION');if(!team)return null;
  return {programId,program:h.program,clubId,key:JSON.stringify(['kbo-return-shared-registration',r.relationKey,programId,h.returned.seasonKey,h.returned.worldDay,g.gameKey,[...team.roster].sort()])};
 }
+/** Only the accepted identity/club witness is relevant; market scores and probability tables remain outside E96. */
+function aiAcquisition(c:KboCareer,playerKey:string,seasonKey:string,contractKey:string){
+ const seasons=(c.aiOffseasons??[]).filter(o=>o.seasonKey===seasonKey);if(!seasons.length)return null;
+ if(seasons.length!==1)throw new RangeError('INVALID_KBO_AI_REUNION_SOURCE');const offseason=seasons[0]!,renewal=offseason.renewal;
+ const renewed=renewal.renewed.filter(r=>r.playerKey===playerKey),accepted=offseason.rounds.flatMap(round=>round.outcomes.filter(o=>o.playerKey===playerKey && o.offerKey!==null).map(outcome=>({round,outcome})));
+ if(renewed.length+accepted.length>1)throw new RangeError('INVALID_KBO_AI_REUNION_SOURCE');
+ if(renewed.length){
+  const row=renewed[0]!,expected=JSON.stringify(['kbo-ai-renewal',c.world.worldKey,seasonKey,playerKey]);
+  if(renewal.seasonKey!==seasonKey || renewal.receiptKey!==JSON.stringify(['kbo-ai-renewals',c.world.worldKey,seasonKey]) || renewal.expired.some(r=>r.playerKey===playerKey) || !c.world.clubs.some(t=>t.id===row.clubId))throw new RangeError('INVALID_KBO_AI_REUNION_SOURCE');
+  return contractKey===expected?{receiptKey:renewal.receiptKey,clubId:row.clubId,annualSalaryWon:row.annualSalaryWon,years:1}:null;
+ }
+ const win=accepted[0];if(!win)return null;const {round,outcome}=win,offers=round.offers.filter(o=>o.offerKey===outcome.offerKey),offer=offers[0];
+ if(![1,2,3].includes(round.round) || round.receiptKey!==JSON.stringify(['kbo-fa-round',c.world.worldKey,seasonKey,round.round]) || offseason.rounds.filter(r=>r.receiptKey===round.receiptKey).length!==1 || round.outcomes.filter(o=>o.playerKey===playerKey).length!==1 || offers.length!==1 || !offer || offer.playerKey!==playerKey || !c.world.clubs.some(t=>t.id===offer.clubId) || offer.offerKey!==JSON.stringify(['kbo-ai-fa-offer',c.world.worldKey,seasonKey,round.round,offer.clubId,playerKey]) || round.releasedOfferKeys.includes(offer.offerKey))throw new RangeError('INVALID_KBO_AI_REUNION_SOURCE');
+ return contractKey===offer.offerKey?{receiptKey:round.receiptKey,clubId:offer.clubId,annualSalaryWon:offer.annualSalaryWon,years:offer.years}:null;
+}
+function aiRegistration(c:KboCareer,r:PlayerRelationship,g:GameContribution,contractKey:string){
+ if(!['KBO','FUTURES'].includes(g.scope.leagueKey) || g.scope.phase!=='REGULAR')return null;
+ const proof=aiAcquisition(c,r.otherPlayerKey,g.scope.seasonKey,contractKey);if(!proof || !Object.hasOwn(g.teams,proof.clubId))return null;
+ const team=sharedRegistration(c,r,g,proof.clubId,'INVALID_KBO_AI_REUNION_REGISTRATION');if(!team)return null;
+ return {...proof,key:JSON.stringify(['kbo-ai-shared-registration',r.relationKey,proof.receiptKey,contractKey,g.gameKey,[...team.roster].sort()])};
+}
 function parsedRegistration(value:string|number|undefined):unknown {
  try{return typeof value==='string'?JSON.parse(value):null;}catch{return null;}
 }
@@ -46,6 +67,12 @@ function source(c:KboCareer,event:EventInstance){
  enqueueWorldEvent([],event);const f=event.evidence.fields,relations=c.relationships.relations.filter(r=>r.relationKey===f.relationId),r=relations[0];
  if(event.definitionId!=='E96'||event.worldKey!==c.world.worldKey||relations.length!==1||!r)throw new RangeError('INVALID_KBO_TEAM_REUNION_NOTICE');assertRelation(c,r);
  const receipt=parsedRegistration(f.sharedTeamRegistrationReceiptId);
+ if(Array.isArray(receipt) && receipt[0]==='kbo-ai-shared-registration'){
+  const g=receipt.length===6 && receipt[1]===r.relationKey && typeof receipt[3]==='string' && typeof receipt[4]==='string'?c.records.games[receipt[4]]:undefined;
+  const match=g?aiRegistration(c,r,g,receipt[3]):null,index=r.milestones.findIndex(m=>m.stage==='REUNITED_TEAM' && m.evidenceKey===event.evidenceKey && m.worldDay===event.occurredWorldDay);
+  if(!g || !match || g.scope.seasonKey!==event.seasonKey || g.worldDay!==event.occurredWorldDay || index<0 || !r.milestones.slice(0,index).some(m=>m.stage==='SEPARATED') || r.milestones.filter(m=>m.evidenceKey===event.evidenceKey).length!==1 || c.relationNotices.filter(e=>e.eventKey===event.eventKey).length!==1 || event.resume.phase!=='SEASON_PROGRESS' || event.resume.competitionKey!==g.scope.leagueKey || event.resume.registrationKey!==match.clubId || event.resume.sourceRevision<1 || event.resume.sourceRevision>c.revision+1 || f.sharedTeamRegistrationReceiptId!==match.key || canonicalJson(f)!==canonicalJson({relationId:r.relationKey,sharedTeamRegistrationReceiptId:match.key}))throw new RangeError('INVALID_KBO_TEAM_REUNION_NOTICE');return r;
+ }
+
  if(Array.isArray(receipt) && receipt[0]==='kbo-return-shared-registration'){
   if(!c.sangmu?.npcReturns)throw new RangeError('INVALID_KBO_TEAM_REUNION_NOTICE');assertSangmuUnit(c.sangmu,c.world);
   const g=receipt.length===7 && receipt[1]===r.relationKey && typeof receipt[5]==='string'?c.records.games[receipt[5]]:undefined;
@@ -117,6 +144,27 @@ export function settleKboReturnedTeamReunions(c:KboCareer,day:number):void {
   const event=createWorldEvent({definitionId:'E96',worldKey:c.world.worldKey,seasonKey:g.scope.seasonKey,evidence:{version:1,type:'RELATIONS',fields:{relationId:r.relationKey,sharedTeamRegistrationReceiptId:key}},resume:{worldKey:c.world.worldKey,seasonKey:g.scope.seasonKey,phase:'SEASON_PROGRESS',competitionKey:g.scope.leagueKey,registrationKey:clubId,sourceRevision:c.revision+1},sourceSequence:c.events.length+notices.length+1,worldDay:day});
   // A paid last game can reunite the pair before same-day contract expiry separates them again.
   if(r.milestones.some(m=>m.evidenceKey===event.evidenceKey))return r;
+  notices=enqueueWorldEvent(notices,event).events;return {...r,stage:'REUNITED_TEAM' as const,milestones:[...r.milestones,{stage:'REUNITED_TEAM' as const,evidenceKey:event.evidenceKey,worldDay:day}]};
+ });
+ c.relationships={...c.relationships,relations};c.relationNotices=notices;
+}
+/** A real AI signing/renewal reunites an existing pair only on their first actual shared registration. */
+export function settleKboAiTeamReunions(c:KboCareer,day:number):void {
+ if(c.days?.seasonKey!==c.world.seasonKey || c.days.days.at(-1)?.day!==day)throw new RangeError('KBO_AI_REUNION_DAY_NOT_FINAL');
+ for(const e of c.relationNotices.filter(e=>{const id=parsedRegistration(e.evidence.fields.sharedTeamRegistrationReceiptId);return e.definitionId==='E96' && Array.isArray(id) && id[0]==='kbo-ai-shared-registration';}))source(c,e);
+ if(!c.aiOffseasons?.some(o=>o.seasonKey===c.world.seasonKey))return;
+ const games=Object.values(c.records.games).filter(g=>g.scope.seasonKey===c.world.seasonKey && g.worldDay===day && ['KBO','FUTURES'].includes(g.scope.leagueKey) && g.scope.phase==='REGULAR');
+ let notices=structuredClone([...c.relationNotices]);const seen=new Set<string>();
+ const relations=c.relationships.relations.map(r=>{
+  assertRelation(c,r);if(seen.has(r.relationKey))throw new RangeError('DUPLICATE_CAREER_RELATION');seen.add(r.relationKey);
+  if(!['SEPARATED','REUNITED_OPPONENT'].includes(r.stage))return r;
+  const contract=c.world.contracts[r.otherPlayerKey];if(!contract || contract.playerKey!==r.otherPlayerKey || contract.seasonKey!==c.world.seasonKey)return r;
+  const matches=games.flatMap(g=>{const match=aiRegistration(c,r,g,contract.contractKey);return match?[{g,...match}]:[];});
+  if(matches.length>1)throw new RangeError('INVALID_KBO_AI_REUNION_REGISTRATION');const match=matches[0];if(!match)return r;
+  if(contract.clubId!==match.clubId || contract.annualSalaryWon!==match.annualSalaryWon || contract.years!==match.years)throw new RangeError('INVALID_KBO_AI_REUNION_SOURCE');
+  if(!r.milestones.some(m=>m.stage==='SEPARATED'))throw new RangeError('INVALID_KBO_TEAM_REUNION_SEPARATION');
+  const event=createWorldEvent({definitionId:'E96',worldKey:c.world.worldKey,seasonKey:match.g.scope.seasonKey,evidence:{version:1,type:'RELATIONS',fields:{relationId:r.relationKey,sharedTeamRegistrationReceiptId:match.key}},resume:{worldKey:c.world.worldKey,seasonKey:match.g.scope.seasonKey,phase:'SEASON_PROGRESS',competitionKey:match.g.scope.leagueKey,registrationKey:match.clubId,sourceRevision:c.revision+1},sourceSequence:c.events.length+notices.length+1,worldDay:day});
+  if(r.milestones.some(m=>m.evidenceKey===event.evidenceKey)){if(!notices.some(e=>e.eventKey===event.eventKey))throw new RangeError('KBO_AI_REUNION_STAGE_CHANGED');return r;}
   notices=enqueueWorldEvent(notices,event).events;return {...r,stage:'REUNITED_TEAM' as const,milestones:[...r.milestones,{stage:'REUNITED_TEAM' as const,evidenceKey:event.evidenceKey,worldDay:day}]};
  });
  c.relationships={...c.relationships,relations};c.relationNotices=notices;

@@ -1,0 +1,13 @@
+Scope: one isolated actual AI/Y02 recruitment reproduction; no active code/test edits.
+DE_RUNTIME_EVIDENCE {"path":"native Y02 AI free-agent recruitment","sourceSeason":"2030","targetSeason":"2031","existingKnownFa":true,"controlledPriorRelation":true,"round":3,"roundReceiptKey":"[\"kbo-fa-round\",\"route-world\",\"2031\",3]","offerKey":"[\"kbo-ai-fa-offer\",\"route-world\",\"2031\",3,\"OB\",\"[\\\"kbo-fa\\\",\\\"route-world\\\",\\\"2030\\\",47]\"]","acceptedContractMatchesOffer":true,"clubId":"OB","gameDay":31,"healthTeamKey":"FUTURES:OB","primaryRegistered":true,"otherRegistered":true,"beforeStage":"SEPARATED","afterStage":"SEPARATED","E96":0,"militaryReturn":false,"userTransfer":false,"clock":"unplayed regular dates controlled; actual postseason/closure/Y02/AI market/signing and first regular game/day/health"}
+✔ DE before-fix: real AI FA signing and first shared civilian registration leave an existing relation separated (3412.725ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3722.4504
+
+Exit code: 0

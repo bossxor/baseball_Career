@@ -1,0 +1,58 @@
+// Run from the repository root, PowerShell/Node24:
+// Get-Content -Raw docs/implementation/evidence/M2-DE-ai-repro.mjs.txt | node --input-type=module
+// Creates one isolated docs/evidence test, runs only that test, then removes the temporary source.
+import {existsSync,writeFileSync,unlinkSync} from 'node:fs';
+import {spawnSync} from 'node:child_process';
+import {resolve} from 'node:path';
+const temporary=resolve('docs/implementation/evidence/M2-DE-ai-repro.tmp.test.ts');
+if(existsSync(temporary))throw Error('Temporary reproduction path already exists.');
+const source=String.raw`
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {enteredKboCareer} from '../../../packages/engine/test/fixtures.js';
+import {nextKboFreeAgentYear} from '../../../packages/engine/src/kbo-free-agents.js';
+import {confirmKboPreseasonPlan} from '../../../packages/engine/src/kbo-preseason.js';
+import {confirmKboOpeningRoster} from '../../../packages/engine/src/kbo-opening-roster.js';
+import {confirmKboSeasonSchedule} from '../../../packages/engine/src/kbo-schedule.js';
+import {startKboRegularSeason,advanceKboCareer} from '../../../packages/engine/src/kbo-progress.js';
+import {startKboPostseason,advanceKboPostseason} from '../../../packages/engine/src/kbo-postseason-progress.js';
+import {settleKboSeasonGrowth} from '../../../packages/engine/src/kbo-season-growth.js';
+import {closeKboSeason} from '../../../packages/engine/src/kbo-year-end.js';
+import {startNextKboSeason} from '../../../packages/engine/src/kbo-year-transition.js';
+import {offerKboRenewal,acceptKboRenewal} from '../../../packages/engine/src/kbo-renewal.js';
+import {canonicalJson} from '../../../packages/engine/src/game.js';
+import {assertKboRecruitmentWorld} from '../../../packages/engine/src/kbo-draft.js';
+function ready(c){const p=confirmKboPreseasonPlan(c,c.revision),o=confirmKboOpeningRoster(p,p.revision),s=confirmKboSeasonSchedule(o,o.revision);return startKboRegularSeason(s,s.revision);}
+function closed(entry){
+ let c=ready(entry);const fixtures=Object.values(c.competitionSchedule.leagues).flat(),first=Math.min(...fixtures.map(g=>g.worldDay)),last=Math.max(...fixtures.map(g=>g.worldDay));
+ c.days.days=Array.from({length:last-first+1},(_,i)=>({day:first+i,evidence:'controlled-unplayed-AI-source-clock',result:{injured:[],recovered:[]}}));c.phaseContext={phase:'SEASON_REVIEW'};
+ c=startKboPostseason(c,c.revision);for(let i=0;i<400;i++){const out=advanceKboPostseason(c,c.revision);c=out.career;if(out.stopReason==='POSTSEASON_COMPLETE')break;}
+ c=settleKboSeasonGrowth(c,c.revision).career;c=closeKboSeason(c,c.revision,true);const offer=offerKboRenewal(c,c.revision);return acceptKboRenewal(offer,offer.revision,{eventKey:offer.renewal.eventKey,eventVersion:offer.events.find(e=>e.eventKey===offer.renewal.eventKey).version});
+}
+function finishDay(c){for(let i=0;i<150;i++){const out=advanceKboCareer(c,c.revision);c=out.career;assert.notEqual(out.stopReason,'ENGINE_LIMIT');if(out.daysClosed)return c;}throw Error('DAY_LIMIT');}
+test('DE before-fix: real AI FA signing and first shared civilian registration leave an existing relation separated',()=>{
+ const entry=enteredKboCareer();entry.freeAgents=nextKboFreeAgentYear({worldKey:entry.world.worldKey,seed:entry.world.seed,seasonKey:entry.world.seasonKey,difficulty:entry.difficulty,registeredKeys:Object.keys(entry.world.players)});
+ const before=closed(entry),probe=startNextKboSeason(before,before.revision),clubId=probe.protagonistClubId,ownPosition=probe.world.players[probe.protagonistKey].position;
+ const wins=probe.aiOffseasons.at(-1).rounds.flatMap(round=>round.outcomes.filter(o=>o.offerKey!==null).map(outcome=>({round,outcome,offer:round.offers.find(o=>o.offerKey===outcome.offerKey)})));
+ const winner=wins.find(x=>x.offer.clubId===clubId && before.freeAgents.players[x.outcome.playerKey] && probe.world.players[x.outcome.playerKey].position!==ownPosition);
+ assert.ok(winner,JSON.stringify({message:'No suitable own-club known FA winner',ownWins:wins.filter(x=>x.offer.clubId===clubId).map(x=>({known:!!before.freeAgents.players[x.outcome.playerKey],kind:probe.world.players[x.outcome.playerKey].kind,position:probe.world.players[x.outcome.playerKey].position})),allWins:wins.length}));const other=winner.outcome.playerKey,pair=JSON.stringify([before.protagonistKey,other].sort()),relation={relationKey:JSON.stringify(['RIVAL',pair]),normalPairKey:pair,primaryPlayerKey:before.protagonistKey,otherPlayerKey:other,type:'RIVAL',stage:'SEPARATED',milestones:[{stage:'FORMED',worldDay:0,evidenceKey:'controlled-prior-FA-formation'},{stage:'SEPARATED',worldDay:1,evidenceKey:'controlled-prior-FA-separation'}]};
+ // Only prior relation history is controlled. The known FA identity, AI offers/draw/signing and Y02 remain native.
+ before.relationships.relations=[...before.relationships.relations,relation];const snapshot=canonicalJson(before),next=startNextKboSeason(before,before.revision);assert.equal(canonicalJson(before),snapshot);assert.deepEqual(next.aiOffseasons,probe.aiOffseasons);assert.equal(next.world.contracts[other].contractKey,winner.offer.offerKey);assert.ok(!next.freeAgents.players[other]);assert.ok(!next.sangmu);assert.ok(!next.transferHistory);
+ const c=ready(next),club=c.world.clubs.find(t=>t.id===clubId);
+ // Pin both players to one actual Futures fixture; no game, health registration or reunion is fabricated.
+ for(const key of [c.protagonistKey,other])if(club.firstTeam.includes(key)){
+  const position=c.world.players[key].position,swap=club.roster.find(k=>![c.protagonistKey,other].includes(k) && !club.firstTeam.includes(k) && !c.health.injuries[k] && c.world.players[k].position===position);assert.ok(swap);club.firstTeam=club.firstTeam.map(k=>k===key?swap:k);
+ }
+ c.registration={...c.registration,firstTeam:false,competitionKey:'FUTURES'};assert.doesNotThrow(()=>assertKboRecruitmentWorld(c.world));
+ const game=c.competitionSchedule.leagues.FUTURES.find(g=>[g.homeTeamKey,g.awayTeamKey].includes(clubId));assert.ok(game);c.competitionSchedule.leagues={KBO:[],FUTURES:[game]};c.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:game.worldDay,pendingGame:null};
+ const out=finishDay(c),health=out.health.games.find(h=>h.evidence.gameKey===game.simulationKey && h.evidence.teamKey==='FUTURES:'+clubId);assert.ok(health);assert.ok(health.evidence.roster.includes(c.protagonistKey));assert.ok(health.evidence.roster.includes(other));assert.ok(out.records.games[game.simulationKey]);assert.equal(out.days.days.at(-1).day,game.worldDay);
+ const actual=out.relationships.relations.find(r=>r.relationKey===relation.relationKey),notices=out.relationNotices.filter(e=>e.definitionId==='E96' && e.evidence.fields.relationId===relation.relationKey);
+ console.log('DE_RUNTIME_EVIDENCE '+JSON.stringify({path:'native Y02 AI free-agent recruitment',sourceSeason:before.world.seasonKey,targetSeason:out.world.seasonKey,existingKnownFa:true,controlledPriorRelation:true,round:winner.round.round,roundReceiptKey:winner.round.receiptKey,offerKey:winner.offer.offerKey,acceptedContractMatchesOffer:true,clubId,gameDay:game.worldDay,healthTeamKey:health.evidence.teamKey,primaryRegistered:true,otherRegistered:true,beforeStage:relation.stage,afterStage:actual.stage,E96:notices.length,militaryReturn:false,userTransfer:false,clock:'unplayed regular dates controlled; actual postseason/closure/Y02/AI market/signing and first regular game/day/health'}));
+ assert.equal(actual.stage,'SEPARATED');assert.equal(notices.length,0);
+});
+`;
+try{
+ writeFileSync(temporary,source,'utf8');const result=spawnSync(process.execPath,['--import','tsx','--test','--test-name-pattern','DE before-fix:',temporary],{encoding:'utf8',timeout:180_000});
+ const output='Scope: one isolated actual AI/Y02 recruitment reproduction; no active code/test edits.\n'+result.stdout+result.stderr+'\nExit code: '+result.status+'\n';
+ writeFileSync(resolve('docs/implementation/evidence/M2-DE-ai-before-fix.log'),output,'utf8');process.stdout.write(output);if(result.error)throw result.error;process.exitCode=result.status??1;
+}finally{if(existsSync(temporary))unlinkSync(temporary);}
