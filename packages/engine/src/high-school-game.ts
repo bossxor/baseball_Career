@@ -28,6 +28,8 @@ export interface HighSchoolGameContext {
   conditionMultipliers?:Readonly<Record<string,number>>;
   /** A hand-made lineup for one team (club mode): nine distinct available hitters, one per fielding position plus DH. Invalid → INVALID_GAME_CONTEXT. */
   lineupOverrides?:Readonly<Record<string,{battingOrder:readonly string[];fielders:Readonly<Record<string,string>>;dhKey:string}>>;
+  /** Club bullpen chart. Omitted teams keep SP/RP/CP relief order. */
+  bullpenSlots?:Readonly<Record<string,Readonly<Record<string,'CP'|'SU'|'MR'|'LR'>>>>;
 }
 export interface HighSchoolGameJob {
   schemaVersion:1; worldKey:string; seasonKey:string; worldDay:number;
@@ -75,7 +77,8 @@ export function prepareSchoolCompetitionGame(world:CompetitionGameWorld,records:
       const repertoire=world.repertoires[player.simulationKey];if(!repertoire || repertoire.seasonId!==world.seasonKey)throw new RangeError('MISSING_SCHOOL_REPERTOIRE');validatePitchWeights(repertoire.book,repertoire.weights);
       const numerator=player.simulationKey===world.protagonistKey?(context.difficulty==='SECRET_CHEAT'?15:5):(context.difficulty==='REALISTIC'?6:5);
       development.players[player.simulationKey]={repertoire:structuredClone(repertoire),numerator};
-      return {...snapshot(player),throws:player.throws,pitchForm:player.pitchForm!,role:player.position as 'SP'|'RP'|'CP',available:available(player) && (player.position!=='SP' || player===selected),recentOuts:lookup(context.recentPitchingOuts,player.simulationKey)??0,repertoire:Object.keys(repertoire.weights).sort().map(id=>({pitchId:id as PitchId,weight:repertoire.weights[id as PitchId]!,mastery:pitchMastery(repertoire.book[id as PitchId]!)}))};
+      const bullpen=lookup(lookup(context.bullpenSlots??{},teamKey)??{},player.simulationKey);
+      return {...snapshot(player),throws:player.throws,pitchForm:player.pitchForm!,role:player.position as 'SP'|'RP'|'CP',available:available(player) && (player.position!=='SP' || player===selected),recentOuts:lookup(context.recentPitchingOuts,player.simulationKey)??0,...(bullpen?{bullpen}:{}),repertoire:Object.keys(repertoire.weights).sort().map(id=>({pitchId:id as PitchId,weight:repertoire.weights[id as PitchId]!,mastery:pitchMastery(repertoire.book[id as PitchId]!)}))};
     })};
   };
   const teams:[TeamSnapshot,TeamSnapshot]=[team(scheduled.awayTeamKey),team(scheduled.homeTeamKey)];

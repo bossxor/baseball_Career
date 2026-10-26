@@ -17,6 +17,8 @@ export interface HitterSnapshot extends PlayerSnapshot { bats: BatSide; approach
 export interface PitchEntry { pitchId: PitchId; mastery: number; weight: number }
 export interface PitcherSnapshot extends PlayerSnapshot {
   throws: Hand; pitchForm: PitchForm; role: 'SP' | 'RP' | 'CP'; available: boolean; recentOuts: number;
+  /** Club-mode relief chart. Absent keeps the SP/RP/CP order, so older games do not change. */
+  bullpen?: 'CP' | 'SU' | 'MR' | 'LR';
   repertoire: readonly PitchEntry[];
 }
 export interface TeamSnapshot {

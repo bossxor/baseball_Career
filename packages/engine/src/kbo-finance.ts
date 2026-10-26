@@ -12,7 +12,7 @@ export interface KboGuarantee {
 export interface KboFinanceLedger {
  closedContracts?:readonly KboInitialContract[];
  guarantees:readonly KboGuarantee[];
- grants:readonly {receiptKey:string;seasonKey:string;clubId:string;amountWon:number;reason:'MINIMUM_ROSTER_REBUILD'|'SERVICE_OBLIGATION_REBUILD'}[];
+ grants:readonly {receiptKey:string;seasonKey:string;clubId:string;amountWon:number;reason:'MINIMUM_ROSTER_REBUILD'|'SERVICE_OBLIGATION_REBUILD'|'FINANCE_REBUILD'}[];
 }
 type World=Omit<KboRosterWorld,'status'>;
 const validYear=(key:string)=>Number.isSafeInteger(Number(key)) && Number(key)>=2027 && Number(key)<=9999 && String(Number(key))===key;
@@ -33,7 +33,7 @@ export function assertKboFinanceLedger(world:World):void {
   if(!g.obligationKey || seen.has(g.obligationKey) || contracts.has(g.sourceContractKey) || !g.sourceContractKey || !g.playerKey || !KBO_CLUBS.some(c=>c.id===g.clubId) || !['RETIREMENT','RELEASE'].includes(g.reason) || !validYear(g.createdSeasonKey) || g.dues.length<1 || g.dues.length>(g.timing==='BEFORE_SEASON'?4:3) || g.timing!==undefined && g.timing!=='BEFORE_SEASON' || g.timing==='BEFORE_SEASON' && g.reason!=='RELEASE' || world.contracts[g.playerKey]?.contractKey===g.sourceContractKey)throw new RangeError('INVALID_KBO_GUARANTEE');seen.add(g.obligationKey);contracts.add(g.sourceContractKey);
   for(const [i,d] of g.dues.entries())if(!validYear(d.seasonKey) || Number(d.seasonKey)!==Number(g.createdSeasonKey)+i+(g.timing==='BEFORE_SEASON'?0:1) || !won(d.amountWon) || d.amountWon<KBO_MONEY.minimumSalaryWon || d.amountWon>KBO_MONEY.maximumSalaryWon)throw new RangeError('INVALID_KBO_GUARANTEE_DUE');
  }
- for(const g of ledger.grants){if(!g.receiptKey || seen.has(g.receiptKey) || !KBO_CLUBS.some(c=>c.id===g.clubId) || !validYear(g.seasonKey) || !Number.isSafeInteger(g.amountWon) || g.amountWon<=0 || !['MINIMUM_ROSTER_REBUILD','SERVICE_OBLIGATION_REBUILD'].includes(g.reason) || g.reason==='SERVICE_OBLIGATION_REBUILD' && !world.suspendedContracts || g.reason==='MINIMUM_ROSTER_REBUILD' && !world.suspendedContracts && !won(g.amountWon))throw new RangeError('INVALID_KBO_SUPPORT_GRANT');seen.add(g.receiptKey);}
+ for(const g of ledger.grants){if(!g.receiptKey || seen.has(g.receiptKey) || !KBO_CLUBS.some(c=>c.id===g.clubId) || !validYear(g.seasonKey) || !Number.isSafeInteger(g.amountWon) || g.amountWon<=0 || !['MINIMUM_ROSTER_REBUILD','SERVICE_OBLIGATION_REBUILD','FINANCE_REBUILD'].includes(g.reason) || g.reason==='SERVICE_OBLIGATION_REBUILD' && !world.suspendedContracts || g.reason==='MINIMUM_ROSTER_REBUILD' && !world.suspendedContracts && !won(g.amountWon) || g.reason==='FINANCE_REBUILD' && !won(g.amountWon))throw new RangeError('INVALID_KBO_SUPPORT_GRANT');seen.add(g.receiptKey);}
 }
 export function kboGuaranteedWon(world:World,clubId:string,seasonKey:string):number {return sum((world.finance?.guarantees??[]).filter(g=>g.clubId===clubId).flatMap(g=>g.dues.filter(d=>d.seasonKey===seasonKey).map(d=>d.amountWon)));}
 export function kboSupportWon(world:World,clubId:string,seasonKey:string):number{return sum((world.finance?.grants??[]).filter(g=>g.clubId===clubId && g.seasonKey===seasonKey).map(g=>g.amountWon));}
@@ -62,6 +62,29 @@ export function reserveKboPreseasonGuarantee(world:World,contract:KboInitialCont
  const entry:KboGuarantee={obligationKey:JSON.stringify(['kbo-preseason-guarantee',contract.contractKey,contract.seasonKey]),sourceContractKey:contract.contractKey,playerKey:contract.playerKey,clubId:contract.clubId,reason:'RELEASE',createdSeasonKey:contract.seasonKey,timing:'BEFORE_SEASON',dues};
  const old=world.finance?.guarantees.find(g=>g.sourceContractKey===contract.contractKey);if(old){if(canonicalJson(old)!==canonicalJson(entry))throw new RangeError('CHANGED_KBO_GUARANTEE');return;}
  world.finance={...(world.finance??{}),guarantees:[...(world.finance?.guarantees??[]),entry],grants:[...(world.finance?.grants??[])]};
+}
+/** Read-only payroll check. nearCap uses the existing annual budget, not a new threshold. */
+export function kboSalaryRise(world:World,clubId:string){
+ const club=world.clubs.find(c=>c.id===clubId);if(!club)throw new RangeError('MISSING_KBO_CLUB');
+ const balance=kboClubBalance(world,clubId),payrollWon=club.paidSalaryWon+club.reservedSalaryWon;
+ return {payrollWon,budgetWon:club.budgetWon,annualBaseWon:KBO_MONEY.annualBudgetWon,guaranteedWon:balance.guaranteedWon,protectedWon:balance.protectedWon,availableWon:balance.availableWon,nearCap:payrollWon+balance.guaranteedWon>=club.budgetWon};
+}
+/** 08: guaranteed release + minimum-roster protection above the annual base blocks the next contracts.
+ * Guarantees stay. This season's budget grows only by a FINANCE_REBUILD grant (not a permanent budget). Same rule for every club. Idempotent. */
+export function applyKboFinanceRebuild(world:World):readonly {clubId:string;amountWon:number;receiptKey:string}[]{
+ const applied:{clubId:string;amountWon:number;receiptKey:string}[]=[];
+ for(const club of [...world.clubs].sort((a,b)=>a.id<b.id?-1:1)){
+  const guaranteedWon=kboGuaranteedWon(world,club.id,world.seasonKey),protectedWon=Math.max(0,KBO_ROSTER_LIMITS.minimum-club.roster.length)*KBO_MONEY.minimumSalaryWon;
+  if(guaranteedWon+protectedWon<=KBO_MONEY.annualBudgetWon)continue;
+  const deficit=club.paidSalaryWon+club.reservedSalaryWon+guaranteedWon+protectedWon-(club.budgetWon+kboSupportWon(world,club.id,world.seasonKey));
+  if(deficit<=0)continue;
+  if(!won(deficit))throw new RangeError('INVALID_KBO_FINANCE_REBUILD');
+  const receiptKey=JSON.stringify(['kbo-finance-rebuild',world.worldKey,world.seasonKey,club.id]);
+  if(world.finance?.grants.some(g=>g.receiptKey===receiptKey))continue;
+  world.finance={...(world.finance??{}),guarantees:[...(world.finance?.guarantees??[])],grants:[...(world.finance?.grants??[]),{receiptKey,seasonKey:world.seasonKey,clubId:club.id,amountWon:deficit,reason:'FINANCE_REBUILD' as const}]};
+  applied.push({clubId:club.id,amountWon:deficit,receiptKey});
+ }
+ return applied;
 }
 /** 08/44 safety net: caller must already prove a real minimum-roster/required-slot repair, not a competitive bid.
  * The exact deficit is a current-year grant, never a permanent budget or a deleted guarantee. */

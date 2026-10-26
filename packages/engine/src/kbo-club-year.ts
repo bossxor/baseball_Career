@@ -6,7 +6,8 @@ import { retireKboOverAgeNpcs } from './kbo-retirement.js';
 import { KBO_MAX_PLAYER_AGE } from './kbo-year-transition.js';
 import { schoolYearEndRepertoire } from './college-entry.js';
 import { emptyPitchXpLedger } from './pitch-xp.js';
-import { kboRosterSeasonCharge } from './kbo-finance.js';
+import { applyKboFinanceRebuild, kboRosterSeasonCharge } from './kbo-finance.js';
+import { applyKboClubRosterPlan } from './kbo-club-manage.js';
 import { createSeasonCalendar } from './season-calendar.js';
 import { prepareKboAiRenewals } from './kbo-ai-offseason.js';
 import { runKboAiFreeAgentMarket } from './kbo-fa-market.js';
@@ -59,7 +60,9 @@ export function startNextKboClubSeason(source: KboClubGame, expectedRevision: nu
   }
   for (const club of world.clubs) { club.paidSalaryWon = 0; club.reservedSalaryWon = kboRosterSeasonCharge(world, club.id); }
   world.seasonKey = target; world.calendar = calendar;
+  applyKboFinanceRebuild(world);
   const pool = nextKboFreeAgentYear({ source: game.freeAgents, worldKey: world.worldKey, seed: world.seed, seasonKey: target, difficulty: game.difficulty, registeredKeys: Object.keys(world.players) });
+  applyKboClubRosterPlan(game, source.world.contracts, season, expiring, pool);
   const prepared = prepareKboAiRenewals({ world, pool, priorContracts: source.world.contracts, expiringKeys: expiring, protagonistKey: '', sourceSeasonKey: season, records: source.records, health: game.health, ...(source.aiAssessments ? { reports: source.aiAssessments } : {}) });
   const plan = (source.offerPlan ?? []);
   const market = runKboAiFreeAgentMarket({ ...prepared, reports: prepared.reports, sourceSeasonKey: season, records: source.records, difficulty: game.difficulty, ...(plan.length ? { userClub: { clubId: game.userClubId, offers: plan } } : {}) });
@@ -73,7 +76,7 @@ export function startNextKboClubSeason(source: KboClubGame, expectedRevision: nu
   game.world = world;
   game.seasons = [...(source.seasons ?? []), { seasonKey: season, championKey: source.postseason?.championKey ?? null, standings: standings.map(s => ({ rank: s.rank, teamKey: s.teamKey, W: s.W, L: s.L, T: s.T })), seasonClose: source.seasonClose! }];
   game.schedule = createKboSeasonSchedules(world.clubs.map(c => c.id), target, calendar);
-  for (const field of ['days', 'progress', 'seasonClose', 'lineup', 'offerPlan', 'postseason', 'postseasonProgress'] as const) delete game[field];
+  for (const field of ['days', 'progress', 'seasonClose', 'lineup', 'offerPlan', 'rosterPlan', 'bullpen', 'notices', 'postseason', 'postseasonProgress'] as const) delete game[field];
   game.phase = 'PRESEASON_SETUP'; game.revision++;
   return game;
 }

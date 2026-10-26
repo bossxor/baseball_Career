@@ -37,6 +37,9 @@ export interface KboClubGame {
  seasons?:readonly {seasonKey:string;championKey?:string|null;standings:readonly {rank:number;teamKey:string;W:number;L:number;T:number}[];seasonClose:NonNullable<KboClubGame['seasonClose']>}[];
  aiAssessments?:KboAiAssessments;aiOffseasons?:readonly {seasonKey:string;renewal:unknown;repair:unknown;rounds:unknown;userOfferCount:number}[];
  rookieDrafts?:readonly KboRookieDraftReceipt[];retiredPlayers?:readonly KboRetiredPlayer[];offerPlan?:readonly {playerKey:string;annualSalaryWon:number;years:number}[];
+ rosterPlan?:readonly ({playerKey:string;action:'RENEW'|'RELEASE'}|{playerKey:string;action:'TRADE';counterClubId:string;counterPlayerKey:string})[];
+ bullpen?:{slots:Readonly<Record<string,'CP'|'SU'|'MR'|'LR'>>};
+ notices?:readonly {day:number;code:'OTHER_CLUB_HEALTH'|'CALLUP_RECOMMENDED';clubId?:string;playerKey?:string;candidateKey?:string}[];
  postseason?:KboPostseason;postseasonProgress?:{postseason:KboPostseason;nextWorldDay:number;pendingGame:KboPendingGame|null};
  days?:SchoolDayLedger;progress?:{nextWorldDay:number;pendingGame:KboPendingGame|null};
 }

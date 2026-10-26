@@ -10,14 +10,12 @@
 
 ## 코드 위치 (packages/engine/src)
 
-kbo-club-game.ts(뿌리·읽기·라인업 검사/적용) · kbo-club-import.ts(보관 투입) · kbo-club-progress.ts(시즌 진행) · kbo-club-postseason.ts · kbo-club-year.ts(연말 마감/다음 시즌) · kbo-club-manage.ts(1군 편성·FA 제안). 테스트: test/kbo-club-*.test.ts. 공유 코드를 건드린 곳은 추가만: `high-school-game.ts`(`lineupOverrides`), `kbo-game-world.ts`(빈 주인공 키), `kbo-year-end.ts`(`closeKboNpcSeasons` export), `kbo-roster-repair.ts`, `kbo-fa-market.ts`(`userClub`).
+kbo-club-game.ts(뿌리·읽기·라인업 검사/적용) · kbo-club-import.ts(보관 투입) · kbo-club-progress.ts(시즌 진행·승강 정지/뉴스) · kbo-club-postseason.ts · kbo-club-year.ts(연말 마감/다음 시즌·재정 재건·로스터 계획 적용) · kbo-club-manage.ts(1군 편성·FA 제안·재계약/방출/트레이드·불펜). 테스트: test/kbo-club-*.test.ts. 공유 코드를 건드린 곳은 추가만: `high-school-game.ts`(`lineupOverrides`), `kbo-game-world.ts`(빈 주인공 키), `kbo-year-end.ts`(`closeKboNpcSeasons` export), `kbo-roster-repair.ts`, `kbo-fa-market.ts`(`userClub`).
 
 ## 남은 M6 작업 (권장 순서, 가까운 것끼리 묶어서 구현한 뒤 한 번에 검증)
 
-1. **재정 재건 구제(08)와 급여 상승 점검**: 통제 5회 오프시즌에서 급여가 예산 상한 근처까지 오른다(M6-D 관찰). 08의 '재정 재건' 선택(보장액 유지, 해당 다음 연도 예산만 필요한 최소액까지 확대+지원 기록)을 `world.finance.grants`로 구현하고 AI/사용자에게 같은 규칙으로 적용한다.
-2. **내 구단의 재계약·방출·트레이드 선택(S14/S17)**: 지금은 내 구단의 만료 계약도 AI 재계약을 따른다. 사용자가 선수별로 재계약/FA 방출을 정하게 한다(보장액은 05/08대로, 방출해도 당해 연봉 100%).
-3. **불펜 역할 배정(CP1/SU2/MR4/LR1)**: 엔진은 현재 SP/RP/CP만 안다. 역할 필드와 경기 적용을 추가한다(공유 경기 엔진 변경이므로 M1 골든 해시를 깨지 않게 옵션 필드로).
-4. **구단 모드 승강 사건·뉴스**: 부상 대체 콜업 추천, 로스터 부족/계약 만료 자동 중지, 무관한 타팀 사건은 뉴스로만.
+1~4는 [M6-E](M6-E-CLUB-OPS.md)에서 끝냈다(재정 재건 보조금, 재계약/방출/트레이드, 불펜 슬롯, 콜업 추천·뉴스).
+
 5. **구단 모드 저장/API/화면 연결(S12~S19)**: M3(저장 명령 파이프라인)·M4/M5(화면)와 만나는 지점. `apps/web`는 `PlayballApi` 경계만 보고, 새 명령은 `commandId` 멱등을 지켜야 한다. 서버 쪽은 M3 문서(`M3-COMPLETE.md`)를 따른다.
 6. **12개 장기 시뮬레이션 계획과 균형 판정(M6 게이트)**: 실제 경기를 치르는 장기 실행은 시즌당 약 10분이므로 백그라운드 실행기와 중간 저장/재개(예: M2 DD 실행기 패턴)를 먼저 만든다. 통제 상태(경기 없음) 결과를 균형 근거로 쓰지 않는다.
 7. 그 외: 구단 모드 병역(상무/현역) 연결, 구단 모드 국제대회, 구단 AI 전략 라벨(68).

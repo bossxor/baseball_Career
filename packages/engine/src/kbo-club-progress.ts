@@ -1,5 +1,7 @@
 import type { KboClubGame } from './kbo-club-game.js';
 import { kboClubRosterIssues, validateClubLineup } from './kbo-club-game.js';
+import { recommendClubCallup, validateClubBullpen } from './kbo-club-manage.js';
+import { KBO_ROSTER_LIMITS } from '@playball/rules';
 import type { HighSchoolGameContext } from './high-school-game.js';
 import { prepareSchoolCompetitionGame, advanceHighSchoolGame, commitSchoolCompetitionGame } from './high-school-game.js';
 import { createKboCompetitionGameWorld } from './kbo-game-world.js';
@@ -8,7 +10,7 @@ import type { KboLeagueKey } from './kbo-day.js';
 import type { ScheduledGame } from './schedule.js';
 import { recordTotals } from './records.js';
 
-export type KboClubProgressStop = 'CHUNK_LIMIT' | 'ENGINE_LIMIT' | 'DAY_CLOSED' | 'HEALTH_CHANGE' | 'SEASON_REVIEW' | 'LINEUP_INVALID';
+export type KboClubProgressStop = 'CHUNK_LIMIT' | 'ENGINE_LIMIT' | 'DAY_CLOSED' | 'HEALTH_CHANGE' | 'SEASON_REVIEW' | 'LINEUP_INVALID' | 'BULLPEN_INVALID' | 'ROSTER_BLOCKED' | 'CONTRACT_EXPIRED';
 export interface KboClubProgressResult { game: KboClubGame; stopReason: KboClubProgressStop; plateAppearances: number; completedInnings: number; daysClosed: number }
 const LEAGUES: readonly KboLeagueKey[] = ['KBO', 'FUTURES'];
 const allDays = (g: KboClubGame) => LEAGUES.flatMap(l => g.schedule[l].map(x => x.worldDay));
@@ -38,6 +40,7 @@ export function kboClubGameContext(g: KboClubGame, leagueKey: KboLeagueKey): Hig
   if (manual) starters[g.userClubId] = manual.startingPitcher;
   return {
     ...(manual ? { lineupOverrides: { [g.userClubId]: { battingOrder: manual.battingOrder, fielders: manual.fielders, dhKey: manual.dhKey } } } : {}),
+    ...(leagueKey === 'KBO' && g.bullpen && !validateClubBullpen(g).length ? { bullpenSlots: { [g.userClubId]: g.bullpen.slots } } : {}),
     difficulty: g.difficulty, unavailableKeys: Object.keys(g.health.injuries).filter(k => Object.hasOwn(world.players, k)), starters, recentBatting: {},
     recentPitchingOuts: Object.fromEntries(Object.entries(season.pitching).map(([k, p]) => [k, p.outs])), traits: {}, approaches: {},
   };
@@ -55,6 +58,8 @@ export function advanceKboClubGame(source: KboClubGame, expectedRevision: number
   const game = structuredClone(source), progress = game.progress!, last = Math.max(...allDays(game)), mine = new Set(game.world.clubs.find(c => c.id === game.userClubId)!.roster);
   let plateAppearances = 0, completedInnings = 0, daysClosed = 0;
   const finish = (stopReason: KboClubProgressStop): KboClubProgressResult => { game.revision++; return { game, stopReason, plateAppearances, completedInnings, daysClosed }; };
+  const block = clubSeasonBlock(game);
+  if (block) return finish(block);
   const review = () => { game.phase = 'SEASON_REVIEW'; delete game.progress; return finish('SEASON_REVIEW'); };
   while (plateAppearances < 1000 && completedInnings < 20 && daysClosed < maxDays) {
     const day = progress.nextWorldDay;
@@ -62,7 +67,10 @@ export function advanceKboClubGame(source: KboClubGame, expectedRevision: number
     if (!progress.pendingGame) {
       const next = queue(game, day)[0];
       // 05: validate before every game; an invalid hand-made lineup stops here instead of being replaced silently.
-      if (next && next.leagueKey === 'KBO' && game.lineup && (next.game.homeTeamKey === game.userClubId || next.game.awayTeamKey === game.userClubId) && validateClubLineup(game, game.lineup.draft).length) return finish('LINEUP_INVALID');
+      if (next && next.leagueKey === 'KBO' && (next.game.homeTeamKey === game.userClubId || next.game.awayTeamKey === game.userClubId)) {
+        if (game.lineup && validateClubLineup(game, game.lineup.draft).length) return finish('LINEUP_INVALID');
+        if (game.bullpen && validateClubBullpen(game).length) return finish('BULLPEN_INVALID');
+      }
       if (next) progress.pendingGame = { leagueKey: next.leagueKey, job: prepareSchoolCompetitionGame(createKboCompetitionGameWorld(game.world, next.leagueKey, ''), game.records, next.game, kboClubGameContext(game, next.leagueKey)) };
     }
     if (progress.pendingGame) {
@@ -80,8 +88,23 @@ export function advanceKboClubGame(source: KboClubGame, expectedRevision: number
     }
     const closed = closeKboCompetitionDay(game.world, game.schedule, '', game.records, game.health, game.days!, day);
     game.world = closed.world; game.health = closed.health; game.days = closed.days; progress.nextWorldDay = day + 1; daysClosed++;
-    if ([...closed.result.injured, ...closed.result.recovered].some(k => mine.has(k))) return progress.nextWorldDay > last ? review() : finish('HEALTH_CHANGE');
+    const changed = [...closed.result.injured, ...closed.result.recovered];
+    for (const key of changed.filter(k => !mine.has(k))) {
+      const clubId = game.world.clubs.find(c => c.roster.includes(key))?.id;
+      game.notices = [...(game.notices ?? []), { day, code: 'OTHER_CLUB_HEALTH', playerKey: key, ...(clubId ? { clubId } : {}) }];
+    }
+    const callup = changed.some(k => mine.has(k)) ? recommendClubCallup(game) : null;
+    if (callup) game.notices = [...(game.notices ?? []), { day, code: 'CALLUP_RECOMMENDED', playerKey: callup.injuredKey, candidateKey: callup.candidateKey }];
+    if (changed.some(k => mine.has(k))) return progress.nextWorldDay > last ? review() : finish('HEALTH_CHANGE');
   }
   if (progress.nextWorldDay > last) return review();
   return finish(daysClosed >= maxDays ? 'DAY_CLOSED' : 'CHUNK_LIMIT');
+}
+
+/** 05: a short roster or a contract that does not cover this season stops play. Other clubs are news only. */
+export function clubSeasonBlock(game: Pick<KboClubGame, 'world' | 'userClubId'>): 'ROSTER_BLOCKED' | 'CONTRACT_EXPIRED' | null {
+  const club = game.world.clubs.find(c => c.id === game.userClubId)!;
+  if (club.roster.length < KBO_ROSTER_LIMITS.minimum || club.roster.length > KBO_ROSTER_LIMITS.maximum) return 'ROSTER_BLOCKED';
+  if (club.roster.some(k => game.world.contracts[k]!.seasonKey !== game.world.seasonKey)) return 'CONTRACT_EXPIRED';
+  return null;
 }
