@@ -1,3 +1,6 @@
+## M8 Capacitor Android 셸 (2026-10-26)
+
+`kr.againplayball.app` · debug APK · `VITE_API_BASE` https 비로컬 강제. JDK21. 실기기/release는 후속. [M8](M8-ANDROID.md).
 ## M7 마일스톤 마감 (2026-10-26)
 
 백업·복원·연대기JSON 셸·STATUS M7 100%(기여4). PNG/중계/APK공유는 후속. [COMPLETE](M7-COMPLETE.md).
