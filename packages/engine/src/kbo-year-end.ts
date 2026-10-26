@@ -11,7 +11,7 @@ export interface KboSeasonClose {receiptKey:string;seasonKey:string;sourceRevisi
 /** Every pro NPC at year end (college M2-Z pattern): one natural PRO growth period over the whole growth calendar from
  * official regular KBO+FUTURES appearances and club-game rehab days, then full-season aging once. No in-season NPC
  * training exists, so the season-start snapshot is the closing player. */
-function closeKboNpcSeasons(source:KboCareer,excluded:ReadonlySet<string>){
+export function closeKboNpcSeasons(source:Pick<KboCareer,'world'|'records'|'health'|'days'|'difficulty'|'protagonistKey'>,excluded:ReadonlySet<string>){
  const season=source.world.seasonKey,W=source.world.calendar.growthDays.length,appear=new Map<string,number>(),games=Object.values(source.records.games).filter(g=>g.scope.seasonKey===season && g.scope.phase==='REGULAR' && (g.scope.leagueKey==='KBO' || g.scope.leagueKey==='FUTURES'));
  const clubDays=new Map<string,Set<number>>();
  for(const g of games){

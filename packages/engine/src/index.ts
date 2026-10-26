@@ -118,3 +118,6 @@ export * from './kbo-offseason-exit.js';
 export * from './kbo-club-game.js';
 export * from './kbo-club-progress.js';
 export * from './kbo-club-import.js';
+export * from './kbo-club-year.js';
+export * from './kbo-club-manage.js';
+export * from './kbo-club-postseason.js';

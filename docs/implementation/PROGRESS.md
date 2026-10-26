@@ -1,5 +1,9 @@
 ## M4 마일스톤 마감 (2026-10-26)
 
+## M6-D 구단 모드 한 해 닫기 (2026-10-26)
+
+포스트시즌·연말 마감·다음 시즌 전환·1군 편성·FA 제안 계획(묶음 구현 후 한 번에 검증). 관찰: 5회 오프시즌 뒤 급여가 예산 상한 근처. [M6-D](M6-D-CLUB-YEAR.md).
+
 ## M6-C 손으로 만든 라인업 적용 (2026-10-26)
 
 `lineupOverrides`(엔진 추가)·`applyKboClubLineup`/`clearKboClubLineup`·경기 전 검증 `LINEUP_INVALID` 정지. [M6-C](M6-C-CLUB-LINEUP.md).

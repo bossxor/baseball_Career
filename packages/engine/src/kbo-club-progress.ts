@@ -24,7 +24,7 @@ export function startKboClubSeason(source: KboClubGame, expectedRevision: number
 
 /** Server-side AI context for one league: each club rotates its healthy starters by its own games, every unavailable player
  * is excluded, and the lineup is the automatic 41/44 selection (a hand-made lineup is not applied yet). */
-function contextOf(g: KboClubGame, leagueKey: KboLeagueKey): HighSchoolGameContext {
+export function kboClubGameContext(g: KboClubGame, leagueKey: KboLeagueKey): HighSchoolGameContext {
   const world = createKboCompetitionGameWorld(g.world, leagueKey, ''), starters: Record<string, string> = Object.create(null) as Record<string, string>;
   const season = recordTotals(g.records, { leagueKey, phase: 'REGULAR', seasonKey: g.world.seasonKey });
   for (const club of world.schools) {
@@ -63,7 +63,7 @@ export function advanceKboClubGame(source: KboClubGame, expectedRevision: number
       const next = queue(game, day)[0];
       // 05: validate before every game; an invalid hand-made lineup stops here instead of being replaced silently.
       if (next && next.leagueKey === 'KBO' && game.lineup && (next.game.homeTeamKey === game.userClubId || next.game.awayTeamKey === game.userClubId) && validateClubLineup(game, game.lineup.draft).length) return finish('LINEUP_INVALID');
-      if (next) progress.pendingGame = { leagueKey: next.leagueKey, job: prepareSchoolCompetitionGame(createKboCompetitionGameWorld(game.world, next.leagueKey, ''), game.records, next.game, contextOf(game, next.leagueKey)) };
+      if (next) progress.pendingGame = { leagueKey: next.leagueKey, job: prepareSchoolCompetitionGame(createKboCompetitionGameWorld(game.world, next.leagueKey, ''), game.records, next.game, kboClubGameContext(game, next.leagueKey)) };
     }
     if (progress.pendingGame) {
       const pending = progress.pendingGame, before = pending.job.game, job = advanceHighSchoolGame(pending.job, 1000 - plateAppearances, 20 - completedInnings);

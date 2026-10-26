@@ -16,6 +16,10 @@ import {kboClubBalance} from './kbo-finance.js';
 import {automaticFieldLineup,initialPositionFits,FIELD_POSITIONS} from './lineup.js';
 import type {FieldPosition} from './lineup.js';
 import {emptyBatting} from './stats.js';
+import type {KboAiAssessments} from './kbo-ai-offseason.js';
+import type {KboPostseason} from './kbo-postseason.js';
+import type {KboRookieDraftReceipt} from './kbo-supply.js';
+import type {KboRetiredPlayer} from './kbo-retirement.js';
 import {nextKboFreeAgentYear} from './kbo-free-agents.js';
 import type {KboFreeAgentPool} from './kbo-free-agents.js';
 import {importArchivedPlayers} from './kbo-club-import.js';
@@ -27,8 +31,13 @@ import type {KboPendingGame} from './kbo-progress.js';
  * 선수/구단 규칙·일정·재정은 프로 커리어와 같은 세계를 쓰고, 주인공 키는 없다. */
 export interface KboClubGame {
  schemaVersion:1;revision:number;difficulty:Difficulty;world:ActiveKboRosterWorld;userClubId:string;startYear:number;
- creationKey:string;phase:'PRESEASON_SETUP'|'SEASON_PROGRESS'|'SEASON_REVIEW';records:RecordLedger;health:HealthLedger;schedule:KboSeasonSchedule['leagues'];
+ creationKey:string;phase:'PRESEASON_SETUP'|'SEASON_PROGRESS'|'POSTSEASON_PROGRESS'|'SEASON_REVIEW';records:RecordLedger;health:HealthLedger;schedule:KboSeasonSchedule['leagues'];
  freeAgents:KboFreeAgentPool;imports:readonly ClubImportReceipt[];lineup?:{draft:ClubLineupDraft};
+ seasonClose?:{receiptKey:string;seasonKey:string;npcGrowth:Record<string,{budgetUnits:number;gainedUnits:number;agingLossUnits:number}>};
+ seasons?:readonly {seasonKey:string;championKey?:string|null;standings:readonly {rank:number;teamKey:string;W:number;L:number;T:number}[];seasonClose:NonNullable<KboClubGame['seasonClose']>}[];
+ aiAssessments?:KboAiAssessments;aiOffseasons?:readonly {seasonKey:string;renewal:unknown;repair:unknown;rounds:unknown;userOfferCount:number}[];
+ rookieDrafts?:readonly KboRookieDraftReceipt[];retiredPlayers?:readonly KboRetiredPlayer[];offerPlan?:readonly {playerKey:string;annualSalaryWon:number;years:number}[];
+ postseason?:KboPostseason;postseasonProgress?:{postseason:KboPostseason;nextWorldDay:number;pendingGame:KboPendingGame|null};
  days?:SchoolDayLedger;progress?:{nextWorldDay:number;pendingGame:KboPendingGame|null};
 }
 export const KBO_CLUB_DEFAULT_START_YEAR=2027;
