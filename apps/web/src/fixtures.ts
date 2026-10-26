@@ -77,11 +77,23 @@ const m4Catalogs: Partial<Record<PlayScreenId, Catalog>> = {
   },
 };
 
-const stub = (screenId: PlayScreenId): Catalog => ({
-  summary: [{ label: '화면', value: SCREEN_TITLES[screenId] }],
-  options: [{ id: 'back', label: '돌아가기', primary: true }],
-  notice: 'M5 셸 — 엔진·구단 연동 전 스텁',
-});
+const stub = (screenId: PlayScreenId): Catalog => {
+  if (screenId === 'S20') {
+    return {
+      summary: [{ label: '화면', value: SCREEN_TITLES.S20 }, { label: '백업', value: '서버 소유 READY 파일' }],
+      options: [
+        { id: 'backup', label: '게임 백업 만들기', primary: true },
+        { id: 'back', label: '돌아가기' },
+      ],
+      notice: '실제 백업·복원은 API /backups · /restores (M7). fixture는 안내만.',
+    };
+  }
+  return {
+    summary: [{ label: '화면', value: SCREEN_TITLES[screenId] }],
+    options: [{ id: 'back', label: '돌아가기', primary: true }],
+    notice: 'M5 셸 — 엔진·구단 연동 전 스텁',
+  };
+};
 
 const catalog = (screenId: PlayScreenId): Catalog => m4Catalogs[screenId] ?? stub(screenId);
 

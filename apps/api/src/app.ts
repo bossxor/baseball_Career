@@ -7,6 +7,7 @@ import { postGameCreation } from './game-creations.js';
 import { getCareer, getScreen } from './career-views.js';
 import { getSaveSummary, listSaves } from './saves.js';
 import { downloadFile, getFileMeta, listBackups, postBackup } from './private-files.js';
+import { postRestore, previewRestore } from './restores.js';
 
 export type CreateAppOptions = {
   db?: AuthDb;
@@ -59,6 +60,8 @@ export function createApp(options: CreateAppOptions = {}) {
   protectedRoutes.get('/saves/:id/backups', listBackups);
   protectedRoutes.get('/files/:fileId', getFileMeta);
   protectedRoutes.get('/files/:fileId/content', downloadFile);
+  protectedRoutes.post('/restores/preview', previewRestore);
+  protectedRoutes.post('/restores', postRestore);
   app.route('/api', protectedRoutes);
 
   app.notFound(c => c.json({ code: 'NOT_FOUND' }, 404));
