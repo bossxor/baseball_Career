@@ -1,7 +1,7 @@
 import type { ActiveKboRosterWorld } from './kbo-career-entry.js';
 import type { KboClubGame } from './kbo-club-game.js';
 import { selectSangmuCohort } from './kbo-sangmu.js';
-import { emptySangmuUnit, enlistSangmuCohort } from './kbo-sangmu-unit.js';
+import { emptySangmuUnit, enlistSangmuCohort, returnSangmuPlayers } from './kbo-sangmu-unit.js';
 import { validateClubLineup } from './kbo-club-game.js';
 
 /** 68 weights. They do not change ability or the shared free-agent accept odds. */
@@ -74,6 +74,20 @@ export function enlistClubMilitary(source: KboClubGame, expectedRevision: number
   const selection = selectSangmuCohort({ world: game.world, records: game.records, health: game.health, seasonKey: game.world.seasonKey });
   game.sangmu = enlistSangmuCohort(game.world, game.sangmu ?? emptySangmuUnit(), selection);
   if (game.lineup && validateClubLineup(game, game.lineup.draft).length) delete game.lineup;
+  game.revision++;
+  return game;
+}
+
+/** Players with both service blocks complete rejoin the original club's Futures list. Nobody is deleted. */
+export function returnClubMilitary(source: KboClubGame, expectedRevision: number): KboClubGame {
+  if (source.schemaVersion !== 1 || source.revision !== expectedRevision) throw new RangeError('CLUB_GAME_REVISION_CHANGED');
+  if (!source.sangmu) throw new RangeError('SANGMU_UNIT_MISSING');
+  const game = structuredClone(source);
+  const unit = game.sangmu;
+  if (!unit) throw new RangeError('SANGMU_UNIT_MISSING');
+  const result = returnSangmuPlayers(game.world, unit, game.world.seasonKey);
+  if (!result.returned.length && !result.blockedByRoster.length && !result.uncontracted.length) throw new RangeError('SANGMU_RETURN_NOT_DUE');
+  game.sangmu = result.unit;
   game.revision++;
   return game;
 }

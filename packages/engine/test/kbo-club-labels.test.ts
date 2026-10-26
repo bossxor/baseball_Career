@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createKboClubGame } from '../src/kbo-club-game.js';
-import { clubEraLabel, clubInternationalWindows, clubMilitaryWatch, clubStrategyReport, enlistClubMilitary, initialClubStrategy, nextClubStrategy } from '../src/kbo-club-labels.js';
+import { clubEraLabel, clubInternationalWindows, clubMilitaryWatch, clubStrategyReport, enlistClubMilitary, initialClubStrategy, nextClubStrategy, returnClubMilitary } from '../src/kbo-club-labels.js';
+import { completeSangmuBlock } from '../src/kbo-military-program.js';
+import { kboMilitaryCompletionDays } from '../src/kbo-military-events.js';
 import { kboClubRosterIssues } from '../src/kbo-club-game.js';
 
 test('strategy labels, sangmu enlistment and international windows', () => {
@@ -29,4 +31,19 @@ test('strategy labels, sangmu enlistment and international windows', () => {
   assert.equal(kboClubRosterIssues(enlisted).filter(issue => issue !== 'FIRST_TEAM_INJURED').length, 0);
   assert.equal(clubMilitaryWatch(enlisted).enlisted, true);
   assert.throws(() => enlistClubMilitary(enlisted, enlisted.revision), /SANGMU_COHORT_ALREADY_ENLISTED/);
+  assert.throws(() => returnClubMilitary(enlisted, enlisted.revision), /SANGMU_RETURN_NOT_DUE/);
+  const key = Object.keys(enlisted.sangmu!.members)[0]!;
+  const days = kboMilitaryCompletionDays(enlisted.sangmu!.members[key]!.program);
+  let program = enlisted.sangmu!.members[key]!.program;
+  program = completeSangmuBlock(program, days[0]!.seasonKey, days[0]!.worldDay);
+  program = completeSangmuBlock(program, days[1]!.seasonKey, days[1]!.worldDay);
+  const ready = structuredClone(enlisted);
+  const member = ready.sangmu!.members[key]!;
+  ready.sangmu = { ...ready.sangmu!, members: { ...ready.sangmu!.members, [key]: { ...member, program } } };
+  ready.world.seasonKey = days[1]!.seasonKey;
+  const back = returnClubMilitary(ready, ready.revision);
+  const home = back.world.clubs.find(club => club.id === program.originalClubId)!;
+  assert.equal(home.roster.includes(key), true);
+  assert.equal(home.firstTeam.includes(key), false);
+  assert.equal(back.sangmu!.members[key], undefined);
 });

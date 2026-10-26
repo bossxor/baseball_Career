@@ -6,7 +6,7 @@ import {
 } from './kbo-club-game.js';
 import { advanceKboClubGame, startKboClubSeason } from './kbo-club-progress.js';
 import { startNextKboClubSeason } from './kbo-club-year.js';
-import { clubInternationalWindows, clubMilitaryWatch, clubStrategyReport, enlistClubMilitary } from './kbo-club-labels.js';
+import { clubInternationalWindows, clubMilitaryWatch, clubStrategyReport, enlistClubMilitary, returnClubMilitary } from './kbo-club-labels.js';
 import {
   autoClubBullpen, kboClubFreeAgents, planKboClubOffers, planKboClubRoster, setKboClubBullpen, setKboClubFirstTeam,
 } from './kbo-club-manage.js';
@@ -44,6 +44,7 @@ export function kboClubScreen(game: KboClubGame, screenId: string, query: { play
   const commands: ClubScreenCommand[] = [];
   if (screenId === 'S13' && game.phase === 'PRESEASON_SETUP') commands.push({ id: 'start', label: '시즌 시작', type: 'CLUB_START', payload: {} });
   if (screenId === 'S13' && (game.phase === 'PRESEASON_SETUP' || game.phase === 'SEASON_REVIEW') && !game.sangmu?.enlistedSeasons.includes(game.world.seasonKey)) commands.push({ id: 'sangmu', label: '상무 입대', type: 'CLUB_SANGMU', payload: {} });
+  if (screenId === 'S13' && Object.values(game.sangmu?.members ?? {}).some(member => member.program.completedBlocks >= member.program.scheduledBlocks)) commands.push({ id: 'sangmu-return', label: '상무 복귀', type: 'CLUB_SANGMU_RETURN', payload: {} });
   if (screenId === 'S13' && game.phase === 'SEASON_PROGRESS') commands.push({ id: 'day', label: '1일 진행', type: 'CLUB_ADVANCE', payload: { maxDays: 1 } });
   if (screenId === 'S13' && game.phase === 'SEASON_REVIEW') commands.push({ id: 'next', label: '다음 시즌', type: 'CLUB_NEXT', payload: {} });
   if (screenId === 'S15') {
@@ -172,6 +173,7 @@ export function applyKboClubCommand(game: KboClubGame | null, command: { type: s
   if (command.type === 'CLUB_ROSTER') return planKboClubRoster(game, revision, parseRoster(command.payload));
   if (command.type === 'CLUB_NEXT') return startNextKboClubSeason(game, revision);
   if (command.type === 'CLUB_SANGMU') return enlistClubMilitary(game, revision);
+  if (command.type === 'CLUB_SANGMU_RETURN') return returnClubMilitary(game, revision);
   fail('UNSUPPORTED_COMMAND');
 }
 
