@@ -1,0 +1,10 @@
+✔ MLB100 registrations credit a year even with no appearance and injury; six credited seasons qualify separately from minor rights (13.7978ms)
+✔ minor and postseason games do not create service; duplicate dates and missing/changed receipts reject (7.0649ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 859.9191

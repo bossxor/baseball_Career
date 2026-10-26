@@ -1,0 +1,46 @@
+✔ HS hitter/pitcher US activation closes amateur year once, increments age once and consumes no second reservation (10863.4418ms)
+✔ US year-end requires explicit training forfeiture and valid signed route; stale state fails atomically (1739.8059ms)
+✖ US live registration guard rejects duplicate slots, orphan identities/books and organization capacity drift (2990.3743ms)
+✔ four-year graduate activates US at23 without repeating degree, college growth, salary reservation or amateur records (40017.5923ms)
+✔ a previously signed pre-population inventory bootstraps actual NPC registration without rewriting its contract or budget (1665.1072ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59860.0009
+
+✖ failing tests:
+
+test at packages\engine\test\us-career-entry.test.ts:38:1
+✖ US live registration guard rejects duplicate slots, orphan identities/books and organization capacity drift (2990.3743ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /INVALID_US_ENTRY_VIEW/. Input:
+
+  "TypeError: Cannot read properties of undefined (reading 'age')"
+
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-career-entry.test.ts:40:1076)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: Cannot read properties of undefined (reading 'age')
+        at openingUsMinorInventory (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-minor-history.ts:26:179)
+        at usCareerView (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-career-entry.ts:73:58)
+        at usCareerEntryView (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-career-entry.ts:81:144)
+        at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-career-entry.test.ts:40:1087)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-career-entry.test.ts:40:1076)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18),
+    expected: /INVALID_US_ENTRY_VIEW/,
+    operator: 'throws',
+    diff: 'simple'
+  }

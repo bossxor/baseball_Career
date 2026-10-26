@@ -38,6 +38,7 @@ function campSource(s:UsCareer,e:EventInstance){
 }
 /** E58 is queued only on writes; confirming the plan does not simulate a game or add a bonus. */
 export function queueUsFirstCampNotices(s:UsCareer):readonly EventInstance[]{
+ if(s.minorYears?.length)return s.campNotices??[];
  assertSource(s,s.revision,true);const notices=s.campNotices??[];if(notices.length>1)throw new RangeError('DUPLICATE_US_FIRST_CAMP');for(const e of notices)campSource(s,e);if(notices.length || s.preseasonPlan)return structuredClone(notices);
  const event=createWorldEvent({definitionId:'E58',worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,evidence:{version:1,type:'DIRECT_US_ROUTE',fields:{playerSimulationKey:s.protagonistKey,routeDecisionIdOrContractId:s.contract.contractKey,stage:'FIRST_CAMP'}},resume:{worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,phase:'PRESEASON_SETUP',competitionKey:s.registration.level,registrationKey:s.protagonistOrganizationId,sourceRevision:s.revision},sourceSequence:s.events.length+1,worldDay:s.world.calendar.growthDays[0]!});return enqueueWorldEvent(notices,event).events;
 }

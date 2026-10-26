@@ -1,0 +1,188 @@
+{
+  "utc": "2026-10-26T22:27:43.435Z",
+  "head": "10dbf94b69858888eb06798ca4061bc5305f45dd",
+  "fullCheckStatus": "FAILED_BEFORE_FINAL_CORRECTION; RECHECK_REQUIRED",
+  "runtimeFiles": 406,
+  "files": [
+    {
+      "path": "docs/design/13-MLB-CAREER.md",
+      "sha256": "8ed9420bf5b7513593642721a430e9b22ae82058b981a5d4392fe9f65c73c2d7"
+    },
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "b306acd9c51600c1be7b3caa3d1a66a781b975b79f9587620a079e1ab29de40a"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "f6b22cd5cdae67bc2870efe54fc80a0522029078c5d960d8f2c103411c5381b1"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "d8dbb96cb39f0a28683221f7322233088dc82b8915025c20c7e7b1d0aa0b3580"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "12a2a902e6b02a2d78d5fa65bc37cf191309397b2c1740902fcadb09ff6357d5"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "e520341904bb463c46ec901c02e3c338d76889d9ba1008496ee2ed5a6ea7e606"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "e7b98dcb9270acf914f1c5ce89f6a8ac6a48ae3e675ff532df7df7a2e7b6f897"
+    },
+    {
+      "path": "packages/engine/src/health.ts",
+      "sha256": "53a8d32d17855d560e957490c8dbc50627b8f2f66464f9d04ab13c64eb9dbfe4"
+    },
+    {
+      "path": "packages/engine/src/high-school-progress.ts",
+      "sha256": "3d5556becb28522272e22b259396e323c01a44c78e7e1a0cbd860d031dc80822"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "c9fa085bdb0beb2d28f404c41f3e95786afcb0065f87b513a1fd7ab922fe2232"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "sha256": "d4fbd0be1af86fd29e0cea40233286220ace0c4baea32d75204c37d25ac4dfd4"
+    },
+    {
+      "path": "packages/engine/src/pitch-learning-progress.ts",
+      "sha256": "01d394ac85ec3b76d1bc6ba4966cd9145f94a0fc3a850411c064bde6cde0cb51"
+    },
+    {
+      "path": "packages/engine/src/repertoire.ts",
+      "sha256": "8e858ec414c56acfa7bc5b4229d01ac95ed9055519baec89cdd506dafaa77cc6"
+    },
+    {
+      "path": "packages/engine/src/school-repertoire.ts",
+      "sha256": "8d53fe93fa6fcd19b41aa3798e3f2028718af81dc4bdc654b712ac3bba4e6dfc"
+    },
+    {
+      "path": "packages/engine/src/us-career-entry.ts",
+      "sha256": "764c48fd1267e94586cf087875fcbe492eb15ee1680f0c16cdcdb178abf7c578"
+    },
+    {
+      "path": "packages/engine/src/us-growth.ts",
+      "sha256": "e9b4b734da6912ed01cbe6decc1edb88d89f43f072e2bc92e535f592c1839916"
+    },
+    {
+      "path": "packages/engine/src/us-levels.ts",
+      "sha256": "5db4583ffd544245bfa30ae35ccc0428ff49bc644e6833be3ea7275dbfe34080"
+    },
+    {
+      "path": "packages/engine/src/us-postseason-progress.ts",
+      "sha256": "7aa2002cdfd3f97e052af0c0579dbcb08ae9fcc98cff543a83ac9c4e4e8e481b"
+    },
+    {
+      "path": "packages/engine/src/us-preseason.ts",
+      "sha256": "1255d93f3eea03e5527967cb0ec7630c6aea6364bc484f73ffcef8a77974df88"
+    },
+    {
+      "path": "packages/engine/src/us-season.ts",
+      "sha256": "ecef4ce48189abd5aad73a2f284fcce88fd37fa96e0eea3c4a2ce68931c0017b"
+    },
+    {
+      "path": "packages/engine/test/kbo-sangmu-unit.test.ts",
+      "sha256": "82e24e4df7f2e0ead02313505be85c2861150b3aace1c3bdae7c41580db0d2e8"
+    },
+    {
+      "path": "packages/engine/test/pitch-learning-progress.test.ts",
+      "sha256": "81d1f2790aa0869ce8929e9c964763f72d8279bef4750e826ec9324d900bc013"
+    },
+    {
+      "path": "packages/engine/test/us-levels-windows.test.ts",
+      "sha256": "6de1ed159191037e626f05fcc4f5fe94e135b289624ecaebc578caf703e67d9a"
+    },
+    {
+      "path": "packages/engine/test/us-preseason.test.ts",
+      "sha256": "9fd606c2ae17ad2f9aab2c1491df683e44ed1f762318e65e55df48a65b71e03d"
+    },
+    {
+      "path": "packages/engine/test/us-reviewed-fixture.ts",
+      "sha256": "173621184fec71c2e418f61462584f2c5cafdd3f47ee60e5712e84bcd303550b"
+    },
+    {
+      "path": "docs/implementation/M2-DK-US-YEARS-LEARNING-SUPPLY.md",
+      "sha256": "d50e1e697feefef0b7d59a213e35268557326e6ec168506e46ca7483ef532081"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-calendar-focused.log",
+      "sha256": "f4a232aed55f826d1a05b47442ced31b857aaf4a6f79b7a972f4340d13e9a3a1"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-mirror.json",
+      "sha256": "558ec6d8db984b027ea4363d5388d21c124b1faaa1933335cc1eac3a7919445c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-service-focused.log",
+      "sha256": "f8560eecbb78e0f9019316cf6249c2c75034fa7cab663be9e98bee1b200c964d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-source-freeze.json",
+      "sha256": "1ef0e88a7c2dc875061968804f6114dd0ae0c3e499610ac83340bad64e226e6d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-superseded-check.log",
+      "sha256": "bc55198a66ff38977a21d58fc0b289235708c9c432ef1e9c093e98e6ce6af10b"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-supply-review-focused.log",
+      "sha256": "8315e36ac1c91f46b8caf88b3cd0af2966e0a99d3301975cb7dcbe785ad26737"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-worker-focused.log",
+      "sha256": "ed33f24a25efe2d8cbc5f8c76f71710612267431f01ce15bb2de31cda86a3aff"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-year-focused.log",
+      "sha256": "3f8d601c6d69c31d67eb0b52fcbdd32a0a0e14b92e67229aee453ec285e2ab5a"
+    },
+    {
+      "path": "packages/engine/src/us-minor-history.ts",
+      "sha256": "3660ae377a651b39afaae9acd5fd97d8e27200f28ab08efac75e2e57f590328d"
+    },
+    {
+      "path": "packages/engine/src/us-service-time.ts",
+      "sha256": "83b992646e027e60c57bca4a6ea53cb08e52668c59930b80e7c80e379e453f76"
+    },
+    {
+      "path": "packages/engine/src/us-supply.ts",
+      "sha256": "d8d1b27b649b202ad30827cc05d910148ff82cea13c916b9ca5a37f7f036a83c"
+    },
+    {
+      "path": "packages/engine/src/us-year-transition.ts",
+      "sha256": "a4f476da9d2e979d4bd6ea03b51cf58bbdd898aa88f694767dfcb6ea1ffa3a08"
+    },
+    {
+      "path": "packages/engine/test/us-service-time.test.ts",
+      "sha256": "0929d769e637929632603e570943a226e69bc9c35ae8cc5084973d75066c6586"
+    },
+    {
+      "path": "packages/engine/test/us-supply.test.ts",
+      "sha256": "159ebff86c27d9a516fa4a3f1337f27e0980d290c93258cb8c3b0c671a6f31ec"
+    },
+    {
+      "path": "packages/engine/test/us-year-transition.test.ts",
+      "sha256": "e16c9eb21e579d31897719fa829fc7675291a67343d2693edfee8999169c9526"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-final-guard.log",
+      "sha256": "2f11f438e6b4e95e3f128331a5e31727b9c33ec4523515eccdac3ea0a7a8bb22"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-legacy-superseded.log",
+      "sha256": "f15c541df4fc74caf33c2df4b000e22a205904e0493dcd511d424511ad3fe66d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-final-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-final-typecheck.log",
+      "sha256": "66c92ff76b98acd40406928ef24ab00309a9ff46fe55adfe3a59feed2f7cb6be"
+    }
+  ]
+}

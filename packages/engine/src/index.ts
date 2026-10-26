@@ -136,3 +136,10 @@ export * from './school-repertoire.js';
 
 export * from './us-postseason.js';
 export * from './us-postseason-progress.js';
+
+export * from './us-supply.js';
+export * from './us-year-transition.js';
+
+export type {UsAnnualFunding,UsMinorYearArchive} from './us-minor-history.js';
+
+export * from './us-service-time.js';

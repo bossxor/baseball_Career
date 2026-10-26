@@ -9,7 +9,7 @@ export type PitchWeights = Partial<Record<PitchId, number>>;
 export interface Repertoire {
   book: PitchBook; weights: PitchWeights; ledger: PitchXpLedger;
   seasonId: string; usedWindows: string[];
-  learning: null | { registration?:{worldKey:string;playerKey:string;scheduledGames:number;openingInjured:boolean}; pitchId: PitchId; quarters: { healthyDays: number; registeredDays: number; numerator: 5 | 6 | 15 }[]; carryNumerator: string; carryDenominator: string };
+  learning: null | { registration?:{worldKey:string;playerKey:string;scheduledGames:number;openingInjured:boolean;calendar?:{gameKey:string;day:number}[]}; pitchId: PitchId; quarters: { healthyDays: number; registeredDays: number; numerator: 5 | 6 | 15 }[]; carryNumerator: string; carryDenominator: string };
 }
 function pitch(id: string): asserts id is PitchId { if (!PITCH_IDS.includes(id as PitchId)) throw new RangeError('INVALID_PITCH'); }
 export function pitchMastery(xp: number): number {

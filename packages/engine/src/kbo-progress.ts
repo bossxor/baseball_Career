@@ -1,4 +1,4 @@
-import {settleRegisteredPitchLearning} from './pitch-learning-progress.js';
+import {settleRegisteredPitchLearning,registerPitchLearning,registerPitchLearningCalendar} from './pitch-learning-progress.js';
 import {closeKboNpcMilitaryCalendarDay,settleKboNpcMilitaryPayrollDay} from './kbo-npc-military.js';
 import {kboReturnConditionMultiplier,settleKboReturnConditionDay} from './kbo-return-condition.js';
 import {kboContractPaymentBalance} from './kbo-contract-payments.js';
@@ -33,6 +33,17 @@ const firstDay=(c:KboCareer)=>Math.min(...LEAGUES.flatMap(l=>schedulesOf(c)[l].m
 /** A settled service principal pauses before another game; a chosen contract extension owns resuming it. */
 function contractDecisionRequired(c:KboCareer):boolean {const p=c.world.contracts[c.protagonistKey]!.servicePay;return !!p && p.ledger.resume!==null && kboContractPaymentBalance(p.ledger).remainingPaidGameDays===0;}
 
+
+/** The schedule is sealed only after the confirmed opening registration, before any game can be played. */
+function sealKboLearningCalendars(c:KboCareer):void {
+ const keys=new Set([...Object.entries(c.world.repertoires).filter(([,b])=>b.learning).map(([key])=>key),...Object.entries(c.sangmu?.members??{}).filter(([,m])=>m.repertoire?.learning).map(([key])=>key)]);
+ if(!keys.size)return;
+ const bind=(key:string,league:KboLeagueKey,team:string)=>{const member=c.sangmu?.members[key],book=member?.repertoire??c.world.repertoires[key]!,planned=schedulesOf(c)[league].filter(g=>g.homeTeamKey===team||g.awayTeamKey===team),next=registerPitchLearningCalendar(registerPitchLearning(book,c.world.worldKey,key,planned.length,book.learning!.registration?.openingInjured??Object.hasOwn(c.health.injuries,key)),planned);if(member)member.repertoire=next;else c.world.repertoires[key]=next;keys.delete(key);};
+ for(const league of LEAGUES){const projected=createKboCompetitionGameWorld(c.world,league,c.protagonistKey,c.sangmu);for(const team of projected.schools)for(const key of team.roster)if(keys.has(key))bind(key,league,team.id);}
+ // Unregistered service players still close zero-registration quarters against their original club calendar.
+ for(const key of keys){const club=c.world.clubs.find(t=>t.roster.includes(key)),member=c.sangmu?.members[key];if(!club&&!member)throw new RangeError('MISSING_LEARNING_REGISTRATION_TEAM');bind(key,key===c.protagonistKey?(c.registration.competitionKey??(c.registration.firstTeam?'KBO':'FUTURES')):club?.firstTeam.includes(key)?'KBO':'FUTURES',club?.id??member!.program.originalClubId);}
+}
+
 /** PRESEASON_SETUP → SEASON_PROGRESS. Needs the confirmed plan, opening roster and schedule; replays are rejected. */
 export function startKboRegularSeason(source:KboCareer,expectedRevision:number):KboCareer {
  assertCareerRevision(source,expectedRevision);
@@ -42,6 +53,7 @@ export function startKboRegularSeason(source:KboCareer,expectedRevision:number):
   assertSangmuEmergency(career.sangmu,career.world);
   career.sangmu.emergency??=createSangmuEmergency(career.world);career.sangmu.emergency.schemaVersion=2;if(career.schemaVersion<5)career.schemaVersion=5;
  }
+ sealKboLearningCalendars(career);
  career.days=createKboDayLedger(career.world);
  career.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:firstDay(career),pendingGame:null};
  career.revision++;return career;
@@ -119,9 +131,9 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   }
   const closed=closeKboCompetitionDay(career.world,schedulesOf(career),career.protagonistKey,career.records,career.health,career.days!,day,career.sangmu);
   career.world=closed.world;career.health=closed.health;career.days=closed.days;if(closed.sangmu)career.sangmu=closed.sangmu;progress.nextWorldDay=day+1;daysClosed++;
-  for(const [key,book]of Object.entries(career.world.repertoires))if(book.learning){const own=key===career.protagonistKey;career.world.repertoires[key]=settleRegisteredPitchLearning({worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,playerKey:key,repertoire:book,records:career.records,health:career.health,scheduledGames:book.learning.registration?.scheduledGames??144,numerator:own?(career.difficulty==='SECRET_CHEAT'?15:5):career.difficulty==='REALISTIC'?6:5});}
+  for(const [key,book]of Object.entries(career.world.repertoires))if(book.learning){const own=key===career.protagonistKey;career.world.repertoires[key]=settleRegisteredPitchLearning({worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,playerKey:key,repertoire:book,records:career.records,health:career.health,schedule:LEAGUES.flatMap(l=>schedulesOf(career)[l]),scheduledGames:book.learning.registration?.scheduledGames??144,numerator:own?(career.difficulty==='SECRET_CHEAT'?15:5):career.difficulty==='REALISTIC'?6:5});}
   // Serving NPC books live outside club rosters, but use the same official registration receipts.
-  for(const [key,member]of Object.entries(career.sangmu?.members??{}))if(member.repertoire?.learning)member.repertoire=settleRegisteredPitchLearning({worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,playerKey:key,repertoire:member.repertoire,records:career.records,health:career.health,scheduledGames:member.repertoire.learning.registration?.scheduledGames??144,numerator:career.difficulty==='REALISTIC'?6:5});
+  for(const [key,member]of Object.entries(career.sangmu?.members??{}))if(member.repertoire?.learning)member.repertoire=settleRegisteredPitchLearning({worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,playerKey:key,repertoire:member.repertoire,records:career.records,health:career.health,schedule:LEAGUES.flatMap(l=>schedulesOf(career)[l]),scheduledGames:member.repertoire.learning.registration?.scheduledGames??144,numerator:career.difficulty==='REALISTIC'?6:5});
   const serviceReturn=closeKboMilitaryCalendarDay(career,day,progress);closeKboNpcMilitaryCalendarDay(career,day);
   settleKboServicePayrollDay(career,day);settleKboReturnedTeamReunions(career,day);settleKboAiTeamReunions(career,day);settleKboNpcMilitaryPayrollDay(career,day);settleKboReturnConditionDay(career,day);settleKboOpponentReunions(career,day);settleKboArmyTeamReunions(career,day);
   career.traits=refreshCareerTraits(career,day,LEAGUES);

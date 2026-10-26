@@ -9,6 +9,7 @@ import {raiseUsWindowEvent,resolveUsWindowEvent,trainUsCareer,previewUsTraining,
 import {assertActiveUsRosterWorld,usCareerView} from '../src/us-career-entry.js';
 import {emptyBatting} from '../src/stats.js';
 import {canonicalJson} from '../src/game.js';
+import {prepareUsRosters} from '../src/us-roster-repair.js';
 import type {UsCareer} from '../src/us-career-entry.js';
 import type {UsLevel} from '../src/us-world.js';
 const cache=new Map<string,UsCareer>();
@@ -17,6 +18,16 @@ const phase=(c:UsCareer)=>c.phaseContext as UsProgress;
 const day=(c:UsCareer)=>phase(c).nextWorldDay-1;
 function offered(c:UsCareer){const r=reviewUsLevel(c,day(c),phase(c));assert.ok(r);assert.equal(r.season!.levelReviews!.at(-1)!.outcome,'OFFERED');return r;}
 function decide(c:UsCareer,command:string){const e=c.events.at(-1)!;return resolveUsLevelEvent(c,c.revision,{eventKey:e.eventKey,eventVersion:e.version,command});}
+
+test('call-up never moves an active injury replacement out of its restoration slot',()=>{
+ const c=fixture('AAA'),org=c.world.organizations.find(o=>o.id===c.protagonistOrganizationId)!,own=c.world.players[c.protagonistKey]!,replacement=org.levels.MLB.find(k=>c.world.players[k]!.kind===own.kind&&c.world.players[k]!.position===own.position)!,original='controlled-injured-original';
+ const alternate=org.levels.MLB.find(k=>k!==replacement&&c.world.players[k]!.kind===own.kind&&(own.position!=='C'||c.world.players[k]!.throws==='R'))!;c.world.players[alternate]!.position=own.position;
+ c.world.players[original]={...structuredClone(c.world.players[replacement]!),simulationKey:original};c.world.players[replacement]!.abilities=Object.fromEntries(Object.keys(own.abilities).map(k=>[k,100000]));
+ c.world.reserves={[org.id]:[original]};c.health.injuries[original]={severity:'MAJOR',remainingTeamGames:null,diagnosedGameKey:'controlled-unavailable',seasonKey:c.world.seasonKey};
+ c.season!.emergency={nextSerial:1,entries:{[replacement]:{clubId:org.id,level:'MLB',replacedKey:original,createdDay:c.season!.firstDay,releasedDay:null}},loans:[]};
+ const r=offered(c);assert.notEqual(r.season!.levelReviews!.at(-1)!.otherKey,replacement);const moved=decide(r,'CONFIRM_CALLUP');delete moved.health.injuries[original];prepareUsRosters(moved,day(c)+1);
+ const registered=moved.world.organizations.find(o=>o.id===org.id)!.levels.MLB;assert.equal(registered.length,26);assert.ok(registered.includes(original));assert.ok(moved.world.reserves![org.id]!.includes(replacement));assertActiveUsRosterWorld(moved.world);
+});
 test('US level review waits24 actual level games and minimum samples; defer consumes review without registration or salary changes',()=>{
  const short=fixture('A',23);assert.equal(reviewUsLevel(short,day(short),phase(short)),null);const c=fixture(),raw=canonicalJson(c),r=offered(c);assert.equal(canonicalJson(c),raw);assert.equal(r.events.at(-1)!.definitionId,'E59');const deferred=decide(r,'DEFER_PROMOTION');assert.equal(deferred.registration.level,'A');assert.deepEqual(deferred.contract,c.contract);assert.equal(reviewUsLevel(deferred,day(c),phase(c)),null);const sample=fixture();for(const g of Object.values(sample.records.games))if(g.scope.seasonKey===sample.world.seasonKey)g.batting={};assert.equal(reviewUsLevel(sample,day(sample),phase(sample))!.season!.levelReviews!.at(-1)!.outcome,'NO_SAMPLE');
 });

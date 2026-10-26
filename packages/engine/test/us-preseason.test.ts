@@ -11,6 +11,7 @@ import {initialUsRecruitmentInventory} from '../src/us-inventory.js';
 import {closeSchoolSeasonForUs} from '../src/us-entry.js';
 import {startSignedUsCareer} from '../src/us-career-entry.js';
 import {canonicalJson} from '../src/game.js';
+import {startUsRegularSeason} from '../src/us-season.js';
 
 const cache=new Map<string,ReturnType<typeof fixture>>();
 function fixture(kind:'HITTER'|'PITCHER'){
@@ -29,6 +30,11 @@ test('US first camp focus event dispatch is atomic, stale/invalid/fake-origin ch
 });
 test('US pitcher reuses repertoire allocation and learning reservation without inflating abilities or salary',()=>{
  const c=active('PITCHER'),book=c.world.repertoires.own!,pitch=PITCH_IDS.find(id=>!Object.hasOwn(book.book,id))!,raw=canonicalJson(c),n=beginUsPreseasonPitchLearning(c,c.revision,pitch);assert.equal(canonicalJson(c),raw);assert.equal(n.world.repertoires.own!.learning!.pitchId,pitch);assert.deepEqual(n.world.players.own!.abilities,c.world.players.own!.abilities);assert.deepEqual(n.income,c.income);assert.throws(()=>beginUsPreseasonPitchLearning(n,n.revision,pitch));const weighted=setUsPreseasonPitchWeights(c,c.revision,book.weights);assert.deepEqual(weighted.world.repertoires.own!.weights,book.weights);assert.throws(()=>setUsPreseasonPitchWeights(c,c.revision,{}));assert.throws(()=>beginUsPreseasonPitchLearning(active('HITTER'),c.revision,pitch));
+});
+
+test('US opening seals the original level calendar before the first game without spending learning XP',()=>{
+ let c=active('PITCHER');const book=c.world.repertoires.own!,pitch=PITCH_IDS.find(id=>!Object.hasOwn(book.book,id))!;c=beginUsPreseasonPitchLearning(c,c.revision,pitch);const event=unreadUsFirstCampNotices(c)[0]!;c=resolveUsFirstCampNotice(c,c.revision,{eventKey:event.eventKey,eventVersion:event.eventVersion,command:'ACK_EVENT'});c=confirmUsPreseasonPlan(c,c.revision);c=publishUsSeasonSchedule(c,c.revision);const before=canonicalJson(c),started=startUsRegularSeason(c,c.revision),plan=started.world.repertoires.own!.learning!;
+ assert.equal(canonicalJson(c),before);assert.equal(plan.registration!.calendar!.length,c.registration.level==='ROOKIE'?60:100);assert.equal(started.world.repertoires.own!.ledger.baseReservedUnits,100000);assert.equal(started.world.repertoires.own!.book[pitch],0);assert.equal(Object.values(started.records.games).filter(g=>g.scope.seasonKey===c.world.seasonKey).length,0);
 });
 
 test('all five US schedules publish atomically, use shared international rest and preserve JSON identities',()=>{

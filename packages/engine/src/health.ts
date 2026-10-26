@@ -67,7 +67,7 @@ export function closeSeasonHealth(source:HealthLedger,seasonKey:string):{ledger:
   validateHealthLedger(source);
   if(!key(seasonKey))throw new RangeError('INVALID_SEASON_KEY');
   if(source.closedSeasons.includes(seasonKey))return {ledger:source,recovered:[]};
-  const ledger=structuredClone(source),recovered:string[]=[];
+  const ledger:HealthLedger={...source,rng:{...source.rng},injuries:structuredClone(source.injuries)},recovered:string[]=[];
   for(const player of Object.keys(ledger.injuries).sort()){const injury=ledger.injuries[player]!;if(injury.severity==='MAJOR' && injury.seasonKey===seasonKey){delete ledger.injuries[player];recovered.push(player);}}
   ledger.closedSeasons=[...ledger.closedSeasons,seasonKey];return {ledger,recovered};
 }

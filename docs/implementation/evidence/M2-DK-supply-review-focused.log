@@ -1,0 +1,19 @@
+✔ call-up never moves an active injury replacement out of its restoration slot (6155.1928ms)
+✔ US level review waits24 actual level games and minimum samples; defer consumes review without registration or salary changes (2425.008ms)
+✔ US promotion swaps two existing registrations atomically, keeps records, shared identity and no immediate major appearance (2897.7669ms)
+✔ first MLB call-up preserves old minor salary basis and bonus; new800000 rate starts next day and budget is reserved once (1186.5032ms)
+✔ US protected40 and incompatible seats produce explicit NO_SLOT instead of silently registering27 MLB players (277.3336ms)
+✔ US training and style windows use level thirds/halves and cannot reset season uses by moving levels (1147.138ms)
+✔ US option year consumes once only after20 minor registered games, with replayed dates ignored (130.2722ms)
+✔ a second low Rookie review cannot accidentally promote, and changed offered evidence cannot move a player (815.958ms)
+✔ retirement vacancies promote existing organization players; all new identities stay in Rookie and old abilities survive (5311.8212ms)
+✔ reserve retirement creates no unnecessary rookie or RNG draws, and cheat does not give NPCs potential100 (2881.017ms)
+✔ supply rejects my player, invalid retirement ages and impossible existing promotion instead of fabricating MLB entrants (4060.5111ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16252.8856
