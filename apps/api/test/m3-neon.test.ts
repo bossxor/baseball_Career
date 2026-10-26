@@ -13,6 +13,7 @@ import {
   profiles,
 } from '@playball/db';
 import { createApp } from '../src/app.js';
+import { json } from './json.js';
 
 function loadEnvFile(): void {
   const path = resolve(process.cwd(), '.env');
@@ -64,7 +65,7 @@ test('Neon V03 unique/rollback/F08 on m3-dev', { skip: !neonReady }, async () =>
       body: JSON.stringify(body('neon-ok', 0)),
     });
     assert.equal(ok.status, 200);
-    assert.equal((await ok.json()).revision, '1');
+    assert.equal((await json(ok)).revision, '1');
 
     const replay = await app.request(`/api/saves/${saveId}/commands`, {
       method: 'POST',

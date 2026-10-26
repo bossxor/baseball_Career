@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createTestDb, seedAllowedSubject, seedSave } from '@playball/db';
 import { createApp } from '../src/app.js';
+import { json } from './json.js';
 
 const SUBJECT = 'user-a';
 const SAVE = 'save-1';
@@ -47,7 +48,7 @@ test('V03 unique receipt, idempotent replay, rollback on bad payload', async () 
     body: JSON.stringify(demoBody('cmd-ok', 0)),
   });
   assert.equal(ok.status, 200);
-  const okJson = await ok.json();
+  const okJson = await json<{ revision: string }>(ok);
   assert.equal(okJson.revision, '1');
 
   const replay = await app.request(`/api/saves/${SAVE}/commands`, {
@@ -56,7 +57,7 @@ test('V03 unique receipt, idempotent replay, rollback on bad payload', async () 
     body: JSON.stringify(demoBody('cmd-ok', 0)),
   });
   assert.equal(replay.status, 200);
-  assert.deepEqual(await replay.json(), okJson);
+  assert.deepEqual(await json(replay), okJson);
 
   const reused = await app.request(`/api/saves/${SAVE}/commands`, {
     method: 'POST',
@@ -64,7 +65,7 @@ test('V03 unique receipt, idempotent replay, rollback on bad payload', async () 
     body: JSON.stringify(demoBody('cmd-ok', 0, 4)),
   });
   assert.equal(reused.status, 409);
-  assert.equal((await reused.json()).code, 'COMMAND_ID_REUSED');
+  assert.equal((await json(reused)).code, 'COMMAND_ID_REUSED');
 
   const beforeBad = await app.request(`/api/saves/${SAVE}/commands/cmd-ok`, { headers: auth });
   assert.equal(beforeBad.status, 200);
@@ -87,7 +88,7 @@ test('V03 unique receipt, idempotent replay, rollback on bad payload', async () 
     body: JSON.stringify(demoBody('cmd-after-bad', 1)),
   });
   assert.equal(conflict.status, 200, 'bad payload must not bump revision');
-  assert.equal((await conflict.json()).revision, '2');
+  assert.equal((await json(conflict)).revision, '2');
 
   await client.close();
 });
@@ -114,8 +115,8 @@ test('F08 two devices same expectedRevision — one wins, other 409', async () =
   assert.deepEqual(statuses, [200, 409]);
   const winner = a.status === 200 ? a : b;
   const loser = a.status === 409 ? a : b;
-  const winJson = await winner.json();
-  const loseJson = await loser.json();
+  const winJson = await json<{ revision: string }>(winner);
+  const loseJson = await json<{ code: string; currentRevision: string }>(loser);
   assert.equal(winJson.revision, '1');
   assert.equal(loseJson.code, 'REVISION_CONFLICT');
   assert.equal(loseJson.currentRevision, '1');
