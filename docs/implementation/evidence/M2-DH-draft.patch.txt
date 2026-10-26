@@ -1,0 +1,175 @@
+--- a/packages/engine/src/us-career-entry.ts
++++ b/packages/engine/src/us-career-entry.ts
+@@ -1,3 +1,5 @@
++import type {UsPreseasonPlan} from './us-preseason.js';
++import type {EventInstance} from './events.js';
+ import type {HighSchoolCareer} from './high-school-career.js';
+ import {assertCareerRevision} from './high-school-career.js';
+ import {assertCareerUsSigning} from './career-us.js';
+@@ -20,7 +22,7 @@
+ export interface ActiveUsRosterWorld extends UsRosterWorld {status:'ACTIVE';calendar:SeasonCalendar}
+ export interface UsCareer {
+  schemaVersion:1;mode:'US_CAREER';revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveUsRosterWorld;protagonistKey:string;protagonistOrganizationId:string;
+- phaseContext:{phase:'PRESEASON_SETUP'};
++ phaseContext:{phase:'PRESEASON_SETUP'};preseasonPlan?:UsPreseasonPlan;campNotices?:readonly EventInstance[];
+  activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string;populationBasis:'INITIAL_INVENTORY'|'LEGACY_BOOTSTRAP'};
+  registration:{playerKey:string;clubId:string;level:UsLevel;seasonKey:string;status:'ACTIVE'};
+  rights:UsDirectSigning['rights'];contract:Omit<UsDirectSigning['contract'],'status'> & {status:'ACTIVE';seasonKey:string;nationalReleaseAllowed:boolean;militaryReturnOption:boolean};
+@@ -64,3 +66,5 @@
+  if(c.protagonistKey!==signing.playerKey || c.world.worldKey!==c.amateurHistory.world.worldKey || c.world.seed!==c.amateurHistory.world.seed || c.world.seasonKey!==signing.seasonKey || c.difficulty!==c.amateurHistory.difficulty || c.world.difficulty!==c.difficulty || r.level!==signing.registration.level || c.activation.receiptKey!==JSON.stringify(['us-career-entry',ready.receiptKey]) || c.activation.populationBasis!==(c.amateurHistory.usRecruitment!.world.registeredPlayerKeys.length?'INITIAL_INVENTORY':'LEGACY_BOOTSTRAP') || c.activation.sourceRevision!==c.amateurHistory.revision || c.activation.sourceYearEndReceiptKey!==ready.receiptKey || canonicalJson(c.rights)!==canonicalJson(signing.rights) || canonicalJson(c.contract)!==canonicalJson({...signing.contract,seasonKey:c.world.seasonKey,status:'ACTIVE',nationalReleaseAllowed:signing.offer.nationalReleaseAllowed,militaryReturnOption:signing.offer.militaryReturnOption}) || canonicalJson(c.income)!==canonicalJson([signing.income]) || canonicalJson(c.inventory)!==canonicalJson(c.amateurHistory.usRecruitment!.reservations.currentWorld))throw new RangeError('INVALID_US_ENTRY_VIEW');
+  return {seasonKey:c.world.seasonKey,player:{name:p.name,age:p.age,kind:p.kind,position:p.position},club:{id:org.id,name:org.name},registration:{status:r.status,level:r.level},contract:{type:c.contract.type,currency:c.contract.currency,annualSalaryUsd:c.contract.annualSalaryUsd,signingBonusUsd:c.contract.signingBonusUsd,controlSeasons:c.contract.controlSeasons,nationalReleaseAllowed:c.contract.nationalReleaseAllowed,militaryReturnOption:c.contract.militaryReturnOption},phase:'PRESEASON_SETUP' as const};
+ }
++
++export function assertUsCareerRevision(c:UsCareer,revision:number):void {if(!Number.isSafeInteger(revision) || !Number.isSafeInteger(c.revision) || revision!==c.revision || c.revision<1)throw new RangeError('STALE_US_CAREER_REVISION');usCareerEntryView(c);assertActiveUsRosterWorld(c.world);}
+--- a/packages/engine/src/index.ts
++++ b/packages/engine/src/index.ts
+@@ -118,3 +118,6 @@
+
+ export * from './us-entry.js';
+ export * from './us-career-entry.js';
++
++export * from './us-preseason.js';
++export * from './us-schedule.js';
+--- /dev/null
++++ b/packages/engine/src/us-preseason.ts
+@@ -0,0 +1,75 @@
++import {assertFocus,PITCH_IDS} from '@playball/rules';
++import type {PitchId} from '@playball/rules';
++import type {UsCareer} from './us-career-entry.js';
++import {usCareerEntryView} from './us-career-entry.js';
++import {assertUsCareerRevision as assertCareerRevision} from './us-career-entry.js';
++import {archetypeFor,validateDevelopmentPlayer} from './player.js';
++import {canonicalJson} from './game.js';
++import {assertSeasonCalendar} from './season-calendar.js';
++import {validateSeasonGrowthLedger} from './growth-ledger.js';
++import {setPitchWeights,beginPitchLearning,validatePitchWeights,pitchMastery} from './repertoire.js';
++import type {PitchWeights} from './repertoire.js';
++import {validatePitchXpLedger} from './pitch-xp.js';
++import {createWorldEvent,enqueueWorldEvent,resolveEventChoice,completeEventDomain,eventDefinition} from './events.js';
++import type {EventInstance} from './events.js';
++
++export interface UsPreseasonPlan {receiptKey:string;seasonKey:string;playerKey:string;confirmedRevision:number;sourceBasis:string}
++const windowKey=(s:UsCareer)=>JSON.stringify([s.world.seasonKey,'PRE']);
++const planKey=(s:UsCareer)=>JSON.stringify(['us-preseason-plan',s.activation.receiptKey,s.world.seasonKey]);
++function basis(s:UsCareer){return canonicalJson({player:s.world.players[s.protagonistKey],repertoire:s.world.repertoires[s.protagonistKey]??null,styleUsedWindows:s.styleUsedWindows,planHistory:s.planHistory});}
++function assertSource(s:UsCareer,revision:number,allowConfirmed=false){
++ assertCareerRevision(s,revision);usCareerEntryView(s);assertSeasonCalendar(s.world.calendar);validateSeasonGrowthLedger(s.seasonGrowth);
++ const p=s.world.players[s.protagonistKey]!,start=s.seasonGrowth.seasonStart,old=s.amateurHistory;
++ if(s.world.worldKey!==old.world.worldKey || s.world.seed!==old.world.seed || s.difficulty!==old.difficulty || s.protagonistKey!==old.world.protagonistKey || s.world.seasonKey!==String(s.world.calendar.year) || s.seasonGrowth.seasonKey!==s.world.seasonKey || s.seasonGrowth.playerKey!==p.simulationKey || s.seasonGrowth.worldGrowthDays!==s.world.calendar.growthDays.length || s.seasonGrowth.finalized || s.seasonGrowth.entries.length || s.seasonGrowth.totalBudgetUnits!==0 || s.events.some(e=>e.status==='OPEN') || Object.values(s.records.games).some(g=>g.scope.seasonKey===s.world.seasonKey) || s.development.trainingUsedSeasons.includes(s.world.seasonKey))throw new RangeError('INVALID_US_PRESEASON_SOURCE');
++ validateDevelopmentPlayer(p);
++ for(const key of ['simulationKey','name','kind','age','position','throws','bats','pitchForm','abilities','potential','careerPeaks','fatigue'] as const)if(canonicalJson(p[key])!==canonicalJson(start[key]))throw new RangeError('US_PRESEASON_PLAYER_CHANGED');
++ const book=s.world.repertoires[p.simulationKey];if(p.kind==='PITCHER'){if(!book || book.seasonId!==s.world.seasonKey)throw new RangeError('INVALID_US_PRESEASON_REPERTOIRE');validatePitchWeights(book.book,book.weights);validatePitchXpLedger(book.ledger);}else if(book)throw new RangeError('INVALID_US_PRESEASON_REPERTOIRE');
++ if(s.preseasonPlan){const plan=s.preseasonPlan;if(plan.receiptKey!==planKey(s) || plan.seasonKey!==s.world.seasonKey || plan.playerKey!==p.simulationKey || !Number.isSafeInteger(plan.confirmedRevision) || plan.confirmedRevision>s.revision || plan.confirmedRevision<1 || plan.sourceBasis!==basis(s) || canonicalJson(s.development.seasonStartPlayer)!==canonicalJson(p) || canonicalJson(start)!==canonicalJson(p))throw new RangeError('STALE_US_PRESEASON_PLAN');if(!allowConfirmed)throw new RangeError('US_PRESEASON_ALREADY_CONFIRMED');}
++}
++function updatePlan(s:UsCareer,focus:readonly string[],archetype:string){
++ const next=structuredClone(s),key=s.protagonistKey;next.world.players[key]={...next.world.players[key]!,focus:[...focus],archetype};
++ next.planHistory=[{completedTeamGames:0,focus:[...focus],archetype}];return next;
++}
++function campSource(s:UsCareer,e:EventInstance){
++ enqueueWorldEvent([],e);
++ if(e.definitionId!=='E58' || e.worldKey!==s.world.worldKey || e.seasonKey!==s.world.seasonKey || canonicalJson(e.evidence.fields)!==canonicalJson({playerSimulationKey:s.protagonistKey,routeDecisionIdOrContractId:s.contract.contractKey,stage:'FIRST_CAMP'}) || e.resume.competitionKey!==s.registration.level || e.resume.registrationKey!==s.protagonistOrganizationId || e.resume.phase!=='PRESEASON_SETUP' || e.occurredWorldDay!==s.world.calendar.growthDays[0])throw new RangeError('INVALID_US_FIRST_CAMP_SOURCE');
++}
++/** E58 is queued only on writes; confirming the plan does not simulate a game or add a bonus. */
++export function queueUsFirstCampNotices(s:UsCareer):readonly EventInstance[]{
++ assertSource(s,s.revision,true);const notices=s.campNotices??[];if(notices.length>1)throw new RangeError('DUPLICATE_US_FIRST_CAMP');for(const e of notices)campSource(s,e);if(notices.length || s.preseasonPlan)return structuredClone(notices);
++ const event=createWorldEvent({definitionId:'E58',worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,evidence:{version:1,type:'DIRECT_US_ROUTE',fields:{playerSimulationKey:s.protagonistKey,routeDecisionIdOrContractId:s.contract.contractKey,stage:'FIRST_CAMP'}},resume:{worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,phase:'PRESEASON_SETUP',competitionKey:s.registration.level,registrationKey:s.protagonistOrganizationId,sourceRevision:s.revision},sourceSequence:s.events.length+1,worldDay:s.world.calendar.growthDays[0]!});return enqueueWorldEvent(notices,event).events;
++}
++function written(s:UsCareer){s.revision++;s.campNotices=queueUsFirstCampNotices(s);return s;}
++export function setUsPreseasonFocus(s:UsCareer,revision:number,focus:readonly string[]):UsCareer {
++ assertSource(s,revision);const p=s.world.players[s.protagonistKey]!;assertFocus(p.kind,focus);return written(updatePlan(s,focus,p.archetype));
++}
++export function setUsPreseasonArchetype(s:UsCareer,revision:number,archetype:string):UsCareer {
++ assertSource(s,revision);const p=s.world.players[s.protagonistKey]!;archetypeFor(p.kind,archetype);const key=windowKey(s);
++ if(p.archetype!==archetype && s.styleUsedWindows.includes(key))throw new RangeError('STYLE_WINDOW_USED');const next=updatePlan(s,p.focus,archetype);if(p.archetype!==archetype)next.styleUsedWindows=[...s.styleUsedWindows,key];return written(next);
++}
++export function setUsPreseasonPitchWeights(s:UsCareer,revision:number,weights:PitchWeights):UsCareer {
++ assertSource(s,revision);const key=s.protagonistKey;if(s.world.players[key]!.kind!=='PITCHER')throw new RangeError('PITCHER_REQUIRED');const next=structuredClone(s);next.world.repertoires[key]=setPitchWeights(s.world.repertoires[key]!,weights,windowKey(s),true);return written(next);
++}
++export function beginUsPreseasonPitchLearning(s:UsCareer,revision:number,pitchId:PitchId,replacedPitchId?:PitchId):UsCareer {
++ assertSource(s,revision);const key=s.protagonistKey;if(s.world.players[key]!.kind!=='PITCHER')throw new RangeError('PITCHER_REQUIRED');const next=structuredClone(s);next.world.repertoires[key]=beginPitchLearning(s.world.repertoires[key]!,pitchId,true,replacedPitchId?{pitchId:replacedPitchId,windowId:windowKey(s)}:undefined);return written(next);
++}
++export function unreadUsFirstCampNotices(s:UsCareer){
++ assertSource(s,s.revision,true);const notices=s.campNotices??[];if(notices.length>1)throw new RangeError('DUPLICATE_US_FIRST_CAMP');return notices.flatMap(e=>{campSource(s,e);if(e.status!=='OPEN')return [];const d=eventDefinition('E58');return [{eventKey:e.eventKey,eventVersion:e.version,definitionId:'E58' as const,title:d.title,body:d.body,offeredCommands:s.preseasonPlan?['ACK_EVENT']:['CHOOSE_FOCUS','ACK_EVENT']}];});
++}
++export function resolveUsFirstCampNotice(s:UsCareer,revision:number,input:{eventKey:string;eventVersion:number;command:string;focus?:readonly string[]}):UsCareer {
++ assertSource(s,revision,true);const matches=(s.campNotices??[]).filter(e=>e.eventKey===input.eventKey);if(matches.length!==1)throw new RangeError('UNKNOWN_US_FIRST_CAMP');const e=matches[0]!;campSource(s,e);
++ const context={worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:s.preseasonPlan?['ACK_EVENT']:['CHOOSE_FOCUS','ACK_EVENT']};
++ if(input.command==='ACK_EVENT' && input.focus!==undefined)throw new RangeError('UNEXPECTED_FOCUS');const chosen=resolveEventChoice(e,input.eventVersion,input.command,input.focus?{focus:[...input.focus]}:null,context);let next=structuredClone(s),resolved=chosen.event;
++ if(chosen.domain){if(!input.focus)throw new RangeError('FOCUS_REQUIRED');assertFocus(s.world.players[s.protagonistKey]!.kind,input.focus);next=updatePlan(s,input.focus,s.world.players[s.protagonistKey]!.archetype);resolved=completeEventDomain(e,chosen.domain,JSON.stringify(['us-first-camp-focus',s.activation.receiptKey,s.revision+1]),context);}
++ next.campNotices=next.campNotices!.map(event=>event.eventKey===e.eventKey?resolved:event);return written(next);
++}
++/** Locks the plan for later roster/schedule activation. Does not create a game or claim a1st-team slot. */
++export function confirmUsPreseasonPlan(s:UsCareer,revision:number):UsCareer {
++ assertSource(s,revision,true);if(s.preseasonPlan)return structuredClone(s);const next=structuredClone(s),p=next.world.players[next.protagonistKey]!;
++ next.campNotices=queueUsFirstCampNotices(next);next.seasonGrowth.seasonStart=structuredClone(p);next.development.seasonStartPlayer=structuredClone(p);next.revision++;
++ next.preseasonPlan={receiptKey:planKey(next),seasonKey:next.world.seasonKey,playerKey:next.protagonistKey,confirmedRevision:next.revision,sourceBasis:basis(next)};return next;
++}
++export function usPreseasonPlanView(s:UsCareer){
++ assertSource(s,s.revision,true);const p=s.world.players[s.protagonistKey]!,book=s.world.repertoires[s.protagonistKey],draft=!s.preseasonPlan;
++ return {seasonKey:s.world.seasonKey,status:draft?'DRAFT' as const:'CONFIRMED' as const,focus:[...p.focus],archetype:p.archetype,styleChangeAvailable:draft && !s.styleUsedWindows.includes(windowKey(s)),pitcher:book?{active:Object.entries(book.weights).map(([pitchId,weight])=>({pitchId,weight,mastery:pitchMastery(book.book[pitchId as PitchId]!)})),learningPitchId:book.learning?.pitchId??null,configurationChangeAvailable:draft && !book.usedWindows.includes(windowKey(s)),learningAvailable:draft && !book.learning && book.ledger.baseSpentUnits+book.ledger.baseReservedUnits+100_000<=200_000 && (Object.keys(book.weights).length<4 || !book.usedWindows.includes(windowKey(s))) && PITCH_IDS.some(id=>!Object.hasOwn(book.book,id))}:null};
++}
+--- /dev/null
++++ b/packages/engine/src/us-schedule.ts
+@@ -0,0 +1,23 @@
++import type {UsCareer} from './us-career-entry.js';
++import {assertUsCareerRevision} from './us-career-entry.js';
++import {usPreseasonPlanView} from './us-preseason.js';
++import {createEvenLeagueSchedule,assertSchedule} from './schedule.js';
++import type {ScheduledGame} from './schedule.js';
++import type {UsLevel} from './us-world.js';
++import {canonicalJson} from './game.js';
++export const US_SEASON_GAMES={ROOKIE:60,A:100,AA:120,AAA:144,MLB:162} as const;
++export interface UsSeasonSchedule {receiptKey:string;seasonKey:string;sourceBasis:string;leagues:Record<UsLevel,readonly ScheduledGame[]>}
++export type ScheduledUsCareer=UsCareer & {seasonSchedule?:UsSeasonSchedule};
++const key=(s:UsCareer)=>JSON.stringify(['us-season-schedule',s.preseasonPlan!.receiptKey]);
++const basis=(s:UsCareer)=>canonicalJson({calendar:s.world.calendar,organizations:s.world.organizations.map(o=>({id:o.id,levels:o.levels})),preseasonPlan:s.preseasonPlan});
++function assertSource(s:ScheduledUsCareer,revision:number){assertUsCareerRevision(s,revision);if(usPreseasonPlanView(s).status!=='CONFIRMED' || (s.campNotices??[]).some(e=>e.status==='OPEN'))throw new RangeError('US_PRESEASON_UNCONFIRMED');}
++function leagues(s:UsCareer):UsSeasonSchedule['leagues'] {
++ const ids=s.world.organizations.map(o=>o.id),days=s.world.calendar.growthDays;
++ const result:UsSeasonSchedule['leagues']={ROOKIE:[],A:[],AA:[],AAA:[],MLB:[]};for(const level of Object.keys(US_SEASON_GAMES) as UsLevel[]){
++ const games=US_SEASON_GAMES[level],schedule=createEvenLeagueSchedule({teamKeys:ids,leagueKey:level,seasonKey:s.world.seasonKey,startDay:0},games).map(g=>{const day=days[g.worldDay];if(day===undefined)throw new RangeError('US_SCHEDULE_EXCEEDS_CALENDAR');return {...g,worldDay:day};});assertSchedule(schedule,ids,games,games/2);result[level]=schedule;
++ }return result;
++}
++export function assertUsSeasonSchedule(s:ScheduledUsCareer):void {assertSource(s,s.revision);const published=s.seasonSchedule;if(!published || published.receiptKey!==key(s) || published.seasonKey!==s.world.seasonKey || published.sourceBasis!==basis(s) || canonicalJson(published.leagues)!==canonicalJson(leagues(s)))throw new RangeError('STALE_US_SEASON_SCHEDULE');}
++/** Publication commits all five calendars together; it does not play games, pay salary or reserve a second contract. */
++export function publishUsSeasonSchedule(s:ScheduledUsCareer,revision:number):ScheduledUsCareer {assertSource(s,revision);if(s.seasonSchedule){assertUsSeasonSchedule(s);return structuredClone(s);}const next=structuredClone(s);next.seasonSchedule={receiptKey:key(s),seasonKey:s.world.seasonKey,sourceBasis:basis(s),leagues:leagues(s)};next.revision++;return next;}
++export function usSeasonScheduleView(s:ScheduledUsCareer){assertUsSeasonSchedule(s);return {seasonKey:s.world.seasonKey,leagues:(Object.keys(US_SEASON_GAMES) as UsLevel[]).map(level=>({level,gamesPerTeam:US_SEASON_GAMES[level],totalGames:s.seasonSchedule!.leagues[level].length,nextDay:s.seasonSchedule!.leagues[level][0]!.worldDay}))};}
+--- /dev/null
++++ b/packages/engine/test/us-preseason.test.ts
+@@ -0,0 +1,36 @@
++import test from 'node:test';
++import {publishUsSeasonSchedule,assertUsSeasonSchedule,usSeasonScheduleView} from '../src/us-schedule.js';
++import {setUsPreseasonFocus,setUsPreseasonArchetype,confirmUsPreseasonPlan,usPreseasonPlanView,unreadUsFirstCampNotices,resolveUsFirstCampNotice,beginUsPreseasonPitchLearning,setUsPreseasonPitchWeights} from '../src/us-preseason.js';
++import {PITCH_IDS} from '@playball/rules';
++import assert from 'node:assert/strict';
++import {completedHighSchoolCareer} from './fixtures.js';
++import {acknowledgeHighSchoolSeasonReview,openHighSchoolCareerRoute} from '../src/high-school-route.js';
++import {prepareCareerUsDirect,careerUsDirectView,decideCareerUsDirect} from '../src/career-us.js';
++import {createUsRosterWorld} from '../src/us-world.js';
++import {initialUsRecruitmentInventory} from '../src/us-inventory.js';
++import {closeSchoolSeasonForUs} from '../src/us-entry.js';
++import {startSignedUsCareer} from '../src/us-career-entry.js';
++import {canonicalJson} from '../src/game.js';
++
++const cache=new Map<string,ReturnType<typeof fixture>>();
++function fixture(kind:'HITTER'|'PITCHER'){
++ const hs=completedHighSchoolCareer(800_000,kind),review=acknowledgeHighSchoolSeasonReview(hs,hs.revision),open=openHighSchoolCareerRoute(review,review.revision,1).career,world=createUsRosterWorld({worldKey:open.world.worldKey,seasonKey:String(open.world.calendar!.year+1),seed:open.world.seed,difficulty:open.difficulty,organizations:Array.from({length:30},(_,i)=>({id:'US'+String(i+1).padStart(2,'0'),name:'가상미국조직'+(i+1)}))}),inventory=initialUsRecruitmentInventory(world,world.organizations.map(o=>({organizationId:o.id,rookieCapacity:23,aCapacity:23,availableBudgetUsd:3_000_000,nationalReleaseAllowed:true,militaryReturnOption:false}))),prepared=prepareCareerUsDirect(open,open.revision,inventory),offers=careerUsDirectView(prepared);assert.ok(offers.visible);assert.ok(offers.offers.length);
++ const signed=decideCareerUsDirect(prepared,prepared.revision,{programVersion:1,decision:{type:'SIGN',offerKey:offers.offers[0]!.offerKey},eventVersion:1});return {signed,world};
++}
++function ready(kind:'HITTER'|'PITCHER'){if(!cache.has(kind))cache.set(kind,fixture(kind));return structuredClone(cache.get(kind)!);}
++
++
++function active(kind:'HITTER'|'PITCHER'){const {signed,world}=ready(kind),closed=closeSchoolSeasonForUs(signed,signed.revision,true);return startSignedUsCareer(closed,closed.revision,world);}
++test('US first camp updates four focus and seals plan once without games, money, population or growth',()=>{
++ const c=active('HITTER'),raw=canonicalJson(c),keys=Object.keys(c.world.players.own!.abilities),n=setUsPreseasonFocus(c,c.revision,keys.slice(0,4));assert.equal(canonicalJson(c),raw);assert.equal(n.revision,c.revision+1);const notice=unreadUsFirstCampNotices(n)[0]!;assert.equal(notice.definitionId,'E58');const ack=resolveUsFirstCampNotice(n,n.revision,{eventKey:notice.eventKey,eventVersion:notice.eventVersion,command:'ACK_EVENT'}),done=confirmUsPreseasonPlan(ack,ack.revision);assert.equal(usPreseasonPlanView(done).status,'CONFIRMED');assert.deepEqual(done.records,c.records);assert.deepEqual(done.income,c.income);assert.deepEqual(done.inventory,c.inventory);assert.equal(done.seasonGrowth.entries.length,0);assert.deepEqual(done.world.rng,c.world.rng);assert.deepEqual(confirmUsPreseasonPlan(done,done.revision),done);assert.throws(()=>setUsPreseasonFocus(done,done.revision,keys.slice(0,4)));assert.deepEqual(usPreseasonPlanView(JSON.parse(JSON.stringify(done))),usPreseasonPlanView(done));
++});
++test('US first camp focus event dispatch is atomic, stale/invalid/fake-origin changes fail',()=>{
++ let c=active('HITTER');c=setUsPreseasonArchetype(c,c.revision,c.world.players.own!.archetype);const e=unreadUsFirstCampNotices(c)[0]!,focus=Object.keys(c.world.players.own!.abilities).slice(-4),raw=canonicalJson(c);assert.throws(()=>setUsPreseasonFocus(c,c.revision-1,focus),/REVISION/);assert.throws(()=>setUsPreseasonFocus(c,c.revision,focus.slice(1)));const chosen=resolveUsFirstCampNotice(c,c.revision,{eventKey:e.eventKey,eventVersion:e.eventVersion,command:'CHOOSE_FOCUS',focus});assert.deepEqual(chosen.world.players.own!.focus,focus);assert.equal(unreadUsFirstCampNotices(chosen).length,0);assert.equal(canonicalJson(c),raw);assert.throws(()=>resolveUsFirstCampNotice(chosen,chosen.revision,{eventKey:e.eventKey,eventVersion:e.eventVersion,command:'CHOOSE_FOCUS',focus}));const fake=structuredClone(c);fake.campNotices![0]!.resume.registrationKey='forged';assert.throws(()=>unreadUsFirstCampNotices(fake));
++});
++test('US pitcher reuses repertoire allocation and learning reservation without inflating abilities or salary',()=>{
++ const c=active('PITCHER'),book=c.world.repertoires.own!,pitch=PITCH_IDS.find(id=>!Object.hasOwn(book.book,id))!,raw=canonicalJson(c),n=beginUsPreseasonPitchLearning(c,c.revision,pitch);assert.equal(canonicalJson(c),raw);assert.equal(n.world.repertoires.own!.learning!.pitchId,pitch);assert.deepEqual(n.world.players.own!.abilities,c.world.players.own!.abilities);assert.deepEqual(n.income,c.income);assert.throws(()=>beginUsPreseasonPitchLearning(n,n.revision,pitch));const weighted=setUsPreseasonPitchWeights(c,c.revision,book.weights);assert.deepEqual(weighted.world.repertoires.own!.weights,book.weights);assert.throws(()=>setUsPreseasonPitchWeights(c,c.revision,{}));assert.throws(()=>beginUsPreseasonPitchLearning(active('HITTER'),c.revision,pitch));
++});
++
++test('all five US schedules publish atomically, use shared international rest and preserve JSON identities',()=>{
++ let c=active('HITTER');assert.throws(()=>publishUsSeasonSchedule(c,c.revision),/UNCONFIRMED/);c=setUsPreseasonArchetype(c,c.revision,c.world.players.own!.archetype);const e=unreadUsFirstCampNotices(c)[0]!;c=resolveUsFirstCampNotice(c,c.revision,{eventKey:e.eventKey,eventVersion:e.eventVersion,command:'ACK_EVENT'});c=confirmUsPreseasonPlan(c,c.revision);const raw=canonicalJson(c),n=publishUsSeasonSchedule(c,c.revision);assert.equal(canonicalJson(c),raw);assert.deepEqual(n.records,c.records);assert.deepEqual(n.income,c.income);assert.deepEqual(n.world,c.world);assert.equal(n.revision,c.revision+1);assert.deepEqual(usSeasonScheduleView(n).leagues.map(l=>l.totalGames),[900,1500,1800,2160,2430]);for(const schedule of Object.values(n.seasonSchedule!.leagues))for(const g of schedule)assert.ok(!c.world.calendar.international.some(w=>g.worldDay>=w.startDay && g.worldDay<w.endDay));assertUsSeasonSchedule(JSON.parse(JSON.stringify(n)));assert.deepEqual(publishUsSeasonSchedule(n,n.revision),n);const fake=structuredClone(n);fake.seasonSchedule!.leagues.MLB=[...fake.seasonSchedule!.leagues.MLB.slice(1)];assert.throws(()=>assertUsSeasonSchedule(fake),/STALE_US_SEASON_SCHEDULE/);
++});

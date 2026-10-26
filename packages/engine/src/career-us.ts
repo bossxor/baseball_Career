@@ -1,3 +1,4 @@
+import {assertUsAmateurYearEnd} from './us-entry.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {highSchoolCareerRouteView} from './high-school-route.js';
@@ -23,8 +24,8 @@ function candidate(s:HighSchoolCareer){
  return {player:p,adjustedPerformance,ranges:refreshOwnCareerAssessment(s).ranges};
 }
 function current(s:HighSchoolCareer):CareerUsRecruitment {
- const r=s.usRecruitment;
- if(!r || r.schemaVersion!==1 || r.closedBy!==undefined || r.sourceBasis!==basis(s) || r.world.worldKey!==s.world.worldKey || r.world.seed!==s.world.seed || r.world.seasonKey!==String(s.world.calendar!.year+1) || r.program.input.assessmentKey!==JSON.stringify(['amateur-us',s.world.worldKey,s.world.seasonKey,s.world.protagonistKey]) || canonicalJson(r.program.input.player)!==canonicalJson(s.world.players[s.world.protagonistKey]))throw new RangeError('STALE_CAREER_US_RECRUITMENT');
+ const seal=s.usYearEnd?assertUsAmateurYearEnd(s):null;const r=s.usRecruitment;
+ if(!r || r.schemaVersion!==1 || r.closedBy!==undefined || r.sourceBasis!==(seal?.recruitmentSourceBasis??basis(s)) || r.world.worldKey!==s.world.worldKey || r.world.seed!==s.world.seed || r.world.seasonKey!==String(s.world.calendar!.year+1) || r.program.input.assessmentKey!==JSON.stringify(['amateur-us',s.world.worldKey,s.world.seasonKey,s.world.protagonistKey]) || canonicalJson(r.program.input.player)!==canonicalJson(s.world.players[s.world.protagonistKey]))throw new RangeError('STALE_CAREER_US_RECRUITMENT');
  const expected=candidate(s),input=r.program.input;
  if(!input.eligible || input.issuedWorldDay!==day(s) || input.expiresWorldDay!==input.issuedWorldDay+30 || !Number.isSafeInteger(r.currentWorldDay) || r.currentWorldDay<input.issuedWorldDay || r.currentWorldDay>input.expiresWorldDay || input.adjustedPerformance!==expected.adjustedPerformance || canonicalJson(input.ranges)!==canonicalJson(expected.ranges))throw new RangeError('STALE_CAREER_US_EVALUATION');
  assertUsDirect(r.world,r.program);assertUsReservationLedger(r.reservations);
@@ -64,4 +65,9 @@ export function decideCareerUsDirect(s:HighSchoolCareer,expectedRevision:number,
   next.phaseContext={phase:'NEXT_SEASON_READY',route:'US',contractKey:program.signing!.contract.contractKey};
  }
  next.revision++;return next;
+}
+
+
+export function assertCareerUsSigning(s:HighSchoolCareer):CareerUsRecruitment {
+ const r=current(s),p=s.phaseContext;if(p.phase!=='NEXT_SEASON_READY' || p.route!=='US' || r.program.decision!=='SIGNED' || !r.program.signing || p.contractKey!==r.program.signing.contract.contractKey)throw new RangeError('US_SIGNED_CONTRACT_REQUIRED');return r;
 }

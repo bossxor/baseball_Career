@@ -1,0 +1,12 @@
+✔ US first camp updates four focus and seals plan once without games, money, population or growth (9517.1122ms)
+✔ US first camp focus event dispatch is atomic, stale/invalid/fake-origin changes fail (6057.1159ms)
+✔ US pitcher reuses repertoire allocation and learning reservation without inflating abilities or salary (7912.5839ms)
+✔ all five US schedules publish atomically, use shared international rest and preserve JSON identities (11384.4875ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 42261.6931

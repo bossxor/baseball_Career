@@ -1,4 +1,16 @@
-# 다음 환경 구현 인계 — 2026-10-23
+# 다음 환경 구현 인계 — 2026-10-26
+
+M2-DG는 codex/m2-career-engine 브랜치로 이어간다. 병렬 M4가 main a63d3e7에 올라와 main은 덮어쓰지 않았다. M2 전체637개는 이 브랜치 원본의 증거이며 M3/M4 병합 후 재검증은 별도다.
+
+## 최신 완료 — M2-DG (2026-10-26)
+다음 후보는 별도 DH 미국 프리시즌 초안과 실제 미국 시즌/승강이다. DH 폴더는 C:/Users/N-052/AppData/Local/Temp/baseball-DH-us-preseason-20261026이며 정식637개에 포함하지 않는다. DD 최신 상태는2030 day105·75마감일·354경기, V:/.local-verification/M2-DD-3064193-20261026/3003864151e4에 코드/원본/실행기/해시를 보관했다. 재개 시 STOP 파일만 제거하고 동일 지문으로 latest.json에서 재개한다.
+
+
+M2-DG 미국 계약 후 아마추어 정산/다음 시즌 실제 등록을 정식 반영했다. 신규 집중5/5·정식 전체637/637·실패0·취소0·종료0, lint/타입/build/골든/이벤트/설계10종 통과. duration_ms1905122.3771. 직전 DF337911e·632/632도 보존한다. M2 전체 완료가 아니다. [DG 상세](M2-DG-US-CAREER-ENTRY.md).
+
+작업/Git/빌드는 C:/Users/N-052/.codex/visualizations/2026/10/16/01a142f8-66ea-7782-ba3e-b52df94ae1be/baseball-career-m2 (codex/m2-career-engine)에서 진행한다. 원래 baseball-career-repo 체크아웃에는 다른 창의 웹 화면 변경이 있어 그대로 보존했다. 그 작업을 덮어쓰거나 함께 stage하지 않는다. V:는 M2 변경 파일만 보호 동기화하고 V:/.git을 생성하지 않는다. 이전 문서의 원래 체크아웃 경로는 이력이다. [분담/연동](M2-M3-INTEGRATION-NOTES.md).
+
+> **M4(웹 UI)는 별도 트랙**: `apps/web`에서 S01/S02/S03를 구현했다. 이어가려면 [M4-WEB-UI.md](https://github.com/bossxor/baseball_Career/blob/a63d3e71d2e1c75cccf87d9d2fccb530c3c23ae2/docs/implementation/M4-WEB-UI.md)를 읽고 `npm run test:web`로 확인한다. M2(엔진)·M3(DB/API)와 파일이 겹치지 않으며, 서버 연동은 `apps/web/src/api.ts`의 `PlayballApi`만 교체하면 된다.
 
 ## 최신 완료 — M2-DF 연말 계약 비교 (2026-10-26)
 

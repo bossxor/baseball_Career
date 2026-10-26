@@ -1,0 +1,13 @@
+✔ HS hitter/pitcher US activation closes amateur year once, increments age once and consumes no second reservation (9429.8954ms)
+✔ US year-end requires explicit training forfeiture and valid signed route; stale state fails atomically (1140.5208ms)
+✔ US live registration guard rejects duplicate slots, orphan identities/books and organization capacity drift (2566.746ms)
+✔ four-year graduate activates US at23 without repeating degree, college growth, salary reservation or amateur records (58739.5335ms)
+✔ a previously signed pre-population inventory bootstraps actual NPC registration without rewriting its contract or budget (832.1902ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 74789.4608

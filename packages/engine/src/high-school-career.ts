@@ -1,3 +1,4 @@
+import type {UsAmateurYearEnd} from './us-entry.js';
 import type {KboAmateurYearEnd} from './kbo-entry.js';
 import {assertFocus} from '@playball/rules';
 import type {Difficulty} from '@playball/rules';
@@ -66,7 +67,7 @@ export interface HighSchoolCareer {
  collegeAdmission?:CollegeAdmission;
  previousSeasons?:readonly SchoolSeasonArchive[];
  collegeYearEnd?:CollegeYearEnd;
- kboYearEnd?:KboAmateurYearEnd;
+ kboYearEnd?:KboAmateurYearEnd;usYearEnd?:UsAmateurYearEnd;
  collegeCup?:CollegeCup;
  collegeResult?:CollegeSeasonResult;
  collegeNpcGrowth?:CollegeNpcGrowth;

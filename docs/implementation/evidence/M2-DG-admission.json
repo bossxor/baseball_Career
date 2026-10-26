@@ -1,0 +1,33 @@
+{
+  "base": "337911ed3146dbeaac9bb20f060b8d1e7a7277ce",
+  "files": {
+    "packages/engine/src/career-us.ts": {
+      "before": "0a92c16e79491a7b379bdef7be2354780141896a9afc8cbfe7b70c1d74c84b86",
+      "after": "a43f7ff6584f02b1e9cfbf749cc3ddd370d635a5ac8a2d9224c3db088de3b3e6"
+    },
+    "packages/engine/src/college-entry.ts": {
+      "before": "0218578232ee037bef68cdc35eaa2e76095b0dd4c9206830aaf4aaa45779c6b1",
+      "after": "60de5306ffd2ac8489580575c1a4508008e80b1ec38dfffe125853aa41206be9"
+    },
+    "packages/engine/src/high-school-career.ts": {
+      "before": "87463d0efc1553f1d08d76dd2742c396acbeec583b734a5080f3a6a639e0c6c0",
+      "after": "8df769e32ce90a8dd12bce3b6b7b7ff8c393e02a382cb78ad8e32ca4a6100c79"
+    },
+    "packages/engine/src/index.ts": {
+      "before": "1058ac3d298092a54eb52ee5708b02dbadce65102ac46c7cd7fde3195978b4e4",
+      "after": "805d1e24e2a88f8230cc601a4c5bf50024365e8325a8b0cdd3656a2ff8fbd187"
+    },
+    "packages/engine/src/us-career-entry.ts": {
+      "before": null,
+      "after": "ef0b1d6819e4f517657795ea2cc4814f6507886ed6b1e92271dd83ff979d0fa8"
+    },
+    "packages/engine/src/us-entry.ts": {
+      "before": null,
+      "after": "14e994a61375f28473a977715473855f764ca7c588ae0f7ec58e4c75ceb7c7ac"
+    },
+    "packages/engine/test/us-career-entry.test.ts": {
+      "before": null,
+      "after": "14c4fae567c624655677382861104fd76aa6a26fbea21c20d9704be4b9f186dd"
+    }
+  }
+}

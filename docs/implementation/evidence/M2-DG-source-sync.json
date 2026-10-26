@@ -1,0 +1,172 @@
+{
+  "baseCommit": "337911ed3146dbeaac9bb20f060b8d1e7a7277ce",
+  "runtimeFilesUnchanged": 269,
+  "scope": "M2 files only; parallel M3/M4 STATUS and handoff retained; main untouched",
+  "files": [
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "cdf41e0a75e60d5cb6134540b1f2ded0e4bc0121daaefa3096805805cddf2929",
+      "indexBlob": "e2c5d56c133f5ad9e2c2297a283bbb31e24a94d9"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "0767db38df2c8e27f06048aee0adbef6f86f3cb57b2b266e67834aff7bc6b5d8",
+      "indexBlob": "212036a132fbcb40424b360004f868409a8db77b"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "82a65dc3a75a79295eda6b0d0fe56a1728aaffc64cef46477e25f86ca66744dd",
+      "indexBlob": "a7fe57e59c6d81da47bc40ace8d3c6082d163835"
+    },
+    {
+      "path": "docs/implementation/M2-COMPLETION-PLAN.md",
+      "sha256": "dd26b5d216624de3d817ddffebfcb177cd9922f8903007ef7841eb287bfbae9b",
+      "indexBlob": "99583535d85efa462a9094f565c97dcc0be92b4f"
+    },
+    {
+      "path": "docs/implementation/M2-DG-US-CAREER-ENTRY.md",
+      "sha256": "26d0ea17721808893da2fae2b55ebd2dbdd7e21432a9f64ae074d15b0872a84b",
+      "indexBlob": "e59be9e789a57cd09c368aa87056a438bdb8ee3e"
+    },
+    {
+      "path": "docs/implementation/M2-M3-INTEGRATION-NOTES.md",
+      "sha256": "2f4e09e7134daba0dc1c684d64f42c59d4ab4cad2e5fdb43e3253d21f5f4c5cc",
+      "indexBlob": "439d3822c9215cbd14ce6c7e96e7e570aec905d9"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "78cf7eaa275c978eb8ec518bebfb3bb8d75c076b510adc15e24320320671002e",
+      "indexBlob": "dd473a767507b0bb609b13e76e96557d30ce29d0"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "e2c51194343d45f69373386c7cba66de34b1d39a73b20f79a3b9832fabf40de9",
+      "indexBlob": "acf142e2022a66bbe61edf956dc76baf3f1eb58d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DD-full-service-checkpoint.json",
+      "sha256": "9f04240791f90c9e095a281eee4305d57021824c5e86eab0dc1ff3aa22857f20",
+      "indexBlob": "ce703d67831147faa4dda6907e045f59a3292f45"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DG-admission.json",
+      "sha256": "d80ba747451a66e870d3e84a024fa746ea47e5eb38a48cdba41c808aed413e42",
+      "indexBlob": "11942f329cd3f2dea0ba25e24756378c073c90af"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DG-check-exit.txt",
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "indexBlob": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DG-check.log",
+      "sha256": "41483204bf488607fd746b9952ba2ec13d45ce9bca356df4fad11dfb322f3d81",
+      "indexBlob": "0786a889db8ac87be45ca622b8f933283d43f6bc"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DG-focused.log",
+      "sha256": "2290142f146be23a1bb634d1eaf581161cc75edd9ba419bf66c5a6391d09333e",
+      "indexBlob": "310dda51170dbf3e8c59945a60dd00f89016b13e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DG-manifest.log",
+      "sha256": "6089df69a426fe6756917ff6358256756f763977079292318b26040e4d062f1d",
+      "indexBlob": "65bd618ab839e74feaccf6833f4436ab0c0e747e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DG-owned-mirror-baseline.json",
+      "sha256": "4ea5d12e1daf69d9d28e841b6a6a6f90c6a2e9cee08ec7b714c8f13b8eb0545a",
+      "indexBlob": "f9f14fc48305131bde2c63e5d599b02f6e7690bb"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DG-parallel-m4-status.md.txt",
+      "sha256": "2e8d1e45a34c17e76e6c564017a4ed067be6aca43cbc40db8e32bfad519ea79b",
+      "indexBlob": "40b45e9a952ae3c4c7716dcee8f805ed2406c74e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DG-parallel-status.md.txt",
+      "sha256": "90edd14c66742ccfa6b4364481bade6666fdde067873cdb33b4a7daa749c7e2b",
+      "indexBlob": "7003c025d694739ce34ebd9c9ebcb1d06d8d532e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DG-post-design.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090",
+      "indexBlob": "3dbeafbf5c570526f3080073cffb213824255b29"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DG-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8",
+      "indexBlob": "44c3710ebb95acc2bae3c2ee24697eb90b52ce06"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DG-source-freeze.json",
+      "sha256": "79faf15c2bf90fd3c158b89b012a8ffaab6df2b843b4ea8c35c92b701b212b8c",
+      "indexBlob": "4000815270153e9b1cf5b5b7292cc147077c7b3c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DG-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "indexBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-draft-apply.log",
+      "sha256": "02588c2b122bf6ffdc6584a48150f2972cffd92291924b270457ab5748b904c3",
+      "indexBlob": "64a211382d400f116a73e9e958b39989053cfca7"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-draft-focused.log",
+      "sha256": "dab9e6db7a83a737995dcec1e1f2405f437f67f3fad8c78a645e45fdb896d996",
+      "indexBlob": "2b7eb9c6bf40f91c75b3d785f92a7a3644833a34"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-draft-hashes.json",
+      "sha256": "c0f4bf961b878d167dfe7f8b6147e8445906e3f09f210b6e872fa35961471df6",
+      "indexBlob": "59d9769ac5faaf77e1ea6682fa18bb3fe320d7ae"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-draft-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "indexBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-draft.patch.txt",
+      "sha256": "82737b944e5480c9d5331b2083d194d9f92057300156d06b05cdcdaf94973370",
+      "indexBlob": "5c8ce0749004d858a9c0b26db1143dafcbb37d4d"
+    },
+    {
+      "path": "packages/engine/src/career-us.ts",
+      "sha256": "a43f7ff6584f02b1e9cfbf749cc3ddd370d635a5ac8a2d9224c3db088de3b3e6",
+      "indexBlob": "cd2fe01e5b12aae820352ea15bbcbb0691cd1cab"
+    },
+    {
+      "path": "packages/engine/src/college-entry.ts",
+      "sha256": "60de5306ffd2ac8489580575c1a4508008e80b1ec38dfffe125853aa41206be9",
+      "indexBlob": "2ee11576d78ec841cdcf6ce71027042c66f82272"
+    },
+    {
+      "path": "packages/engine/src/high-school-career.ts",
+      "sha256": "8df769e32ce90a8dd12bce3b6b7b7ff8c393e02a382cb78ad8e32ca4a6100c79",
+      "indexBlob": "554293227f03503462f68180769792079b8b72d8"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "805d1e24e2a88f8230cc601a4c5bf50024365e8325a8b0cdd3656a2ff8fbd187",
+      "indexBlob": "da5234d8b40a2a4b0fc1b0b0e8bdb6afa2c5d65a"
+    },
+    {
+      "path": "packages/engine/src/us-career-entry.ts",
+      "sha256": "ef0b1d6819e4f517657795ea2cc4814f6507886ed6b1e92271dd83ff979d0fa8",
+      "indexBlob": "ef652c212811c0cd9fa6bbd129a8e7be23005885"
+    },
+    {
+      "path": "packages/engine/src/us-entry.ts",
+      "sha256": "14e994a61375f28473a977715473855f764ca7c588ae0f7ec58e4c75ceb7c7ac",
+      "indexBlob": "ffffc9ed7b8b853d022feadb9c333a50e2d1a157"
+    },
+    {
+      "path": "packages/engine/test/us-career-entry.test.ts",
+      "sha256": "14c4fae567c624655677382861104fd76aa6a26fbea21c20d9704be4b9f186dd",
+      "indexBlob": "4a3f5e303266f99da301967ab163d5b863c31fea"
+    }
+  ]
+}
