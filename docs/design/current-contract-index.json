@@ -208,7 +208,7 @@
       "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
     },
     {
-      "implementationStatus": "NOT_IMPLEMENTED",
+      "implementationStatus": "PARTIAL",
       "id": "C15",
       "scope": "같은ID/요청해시·revision·receipt·소유자생성",
       "topic": "미리보기·명령·동시성",
@@ -239,7 +239,7 @@
       "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
     },
     {
-      "implementationStatus": "NOT_IMPLEMENTED",
+      "implementationStatus": "PARTIAL",
       "id": "C17",
       "scope": "같은owner journal·서버resume·오프라인읽기",
       "topic": "이어하기·초안·화면 복귀",
@@ -329,7 +329,7 @@
       "precedence": "MOST_SPECIFIC_RULE_WITHIN_SCOPE_THEN_EXPLICIT_OVERRIDE"
     },
     {
-      "implementationStatus": "NOT_IMPLEMENTED",
+      "implementationStatus": "PARTIAL",
       "id": "C22",
       "scope": "관리형인증후허용목록·AppLink·계정격리",
       "topic": "인증·초대·기기 전환",

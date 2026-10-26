@@ -1,5 +1,11 @@
 # 구현 진행·다른 환경 이어가기
 
+## 병렬 완료 — M3 계정·DB·명령 파이프라인 (2026-10-26)
+
+M2와 **별도 브랜치** `m3/save-command-pipeline`에서 진행. `packages/engine`·M2 구현 문서는 이 브랜치에서 수정하지 않았다. M2(main 쪽 잔여·DD 등)는 계속 진행 중이며 이 블록이 M2 완료를 뜻하지 않는다.
+
+Neon `m3-dev` + Managed Better Auth JWT·allowlist·owner 격리·행 잠금/receipt/F08·셸 `game-creations`/saves 목록. api 테스트7/7. 전 커리어 명령 매핑·웹 UI·메일 재설정 실발송은 미완. 전체 가중은 STATUS 기준 약46%(M3 영역~90%). [완료](M3-COMPLETE.md) · [증거](evidence/M3-COMPLETE-check.log).
+
 ## 최신 완료 — M2-DE AI 영입 공동 등록 E96
 
 2026-10-25 · 최종 전체 npm run check625/625·실패0·취소0, lint·타입·build·엔진 골든·이벤트·설계10종·HTTP 골격 smoke 통과. 테스트 duration_ms400562.5889·종료0. 신규 집중6/6에서 실제 Y02 AI FA 수락·재계약, 양 관계 종류, 공식 공동 등록·벤치 부상·JSON/control 불변·변조 거부·소속/계약 변경 후 조회/ACK·중복/구 저장을 검증했다.

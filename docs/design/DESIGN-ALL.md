@@ -4,9 +4,9 @@
 
 <!-- SOURCE: START-HERE.md -->
 
-# 구현 진행 안내 — 2026-10-20
+# 구현 진행 안내 — 2026-10-26
 
-M0/M1 완료 후 M2 커리어 구현 중이며 M2-A 선수 육성 기반을 검증했습니다. 다음은 구종 학습/NPC·세계 생성·고교 시즌 연결입니다. 최신 실행 증거·미완료 범위는 [구현 진행 문서](../implementation/PROGRESS.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 구현 전 이력이며 커리어·DB·인증·APK 전체 완료를 뜻하지 않습니다.
+M0/M1 완료. **M2 커리어는 계속 진행 중**(main/엔진 쪽). **M3 계정·DB·명령 인프라는** 브랜치 `m3/save-command-pipeline`에서 V02/V03까지 완료 — [M3-COMPLETE](../implementation/M3-COMPLETE.md). M2와 병렬이며 engine 미수정. 최신 증거는 [PROGRESS](../implementation/PROGRESS.md)·[STATUS](STATUS.md) 우선. 아래 옛 NOT_EXECUTED/설계 인계는 이력이다.
 
 ---
 
@@ -82,9 +82,9 @@ GitHub https://github.com/bossxor/baseball_Career 의 docs/design이 원본. 다
 
 <!-- SOURCE: README.md -->
 
-# 구현 진행 안내 — 2026-10-20
+# 구현 진행 안내 — 2026-10-26
 
-M0/M1 완료 후 M2 커리어 구현 중이며 M2-A 선수 육성 기반을 검증했습니다. 다음은 구종 학습/NPC·세계 생성·고교 시즌 연결입니다. 최신 실행 증거·미완료 범위는 [구현 진행 문서](../implementation/PROGRESS.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 구현 전 이력이며 커리어·DB·인증·APK 전체 완료를 뜻하지 않습니다.
+M0/M1 완료. M2 커리어 **진행 중**. M3(Neon Auth·세이브 명령)는 병렬 브랜치에서 완료 — [M3-COMPLETE](../implementation/M3-COMPLETE.md). 최신 증거는 [PROGRESS](../implementation/PROGRESS.md)·[STATUS](STATUS.md). 아래 설계 본문은 계약 원문이며 APK/전체 커리어 완료를 뜻하지 않습니다.
 
 ---
 
@@ -178,29 +178,31 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 
 <!-- SOURCE: STATUS.md -->
 
-# 전체 구현 진행률: 약 35% 완료 · 약 65% 남음
+# 전체 구현 진행률: 약 46% 완료 · 약 54% 남음
 
-2026-10-23 · 전체 검증 기준 M2-DE 완료.  **기능 범위를 가중한 추정치**이며 테스트 통과율·설계 문서 완성률·출시 예정일이 아니다. 실제 사용자 앱 완성을 100%로 본다. 작은 내부 마일스톤은 이 수치를 올리지 않을 수 있다.
+2026-10-26 · **M3 마일스톤 완료**(V02·V03). Managed Better Auth JWT·allowlist·owner 격리·명령 파이프라인·Neon `m3-dev`. M2 병렬·엔진 미수정. [M3 완료](../implementation/M3-COMPLETE.md).
 
-현재 활성 M2-DE·전체625/625·실패0·취소0. 실제 AI FA 수락·재계약 뒤 공동 등록 E96·과거 조회/ACK를 연결했다. DD 실제18개월 복무는 부분 실행/안전 재개 준비이며 완료 통과가 아니다. 전체 추정35%/65% 유지. [최신 인계](../implementation/NEXT-SESSION.md).
+M3 영역 ~90%(메일 재설정 실발송만 미실증). 전체 46% ≈ 35% + 12%×90%.
 
 | 구현 영역 | 전체 비중 | 영역 완료 추정 | 전체 기여 |
 |---|---:|---:|---:|
 | M0 저장소·검증 골격 | 5% | 100% | 5% |
 | M1 경기 시뮬레이션 엔진 | 10% | 100% | 10% |
 | M2 선수 커리어·사건 엔진 | 30% | 50% | 15% |
-| M3 계정·DB·기기 간 저장 명령 | 12% | 0% | 0% |
+| M3 계정·DB·기기 간 저장 명령 | 12% | 90% | 11% |
 | M4 실제 핵심 웹 플레이 화면 | 10% | 0% | 0% |
 | M5 나머지 실제 화면·접근성 | 5% | 0% | 0% |
 | M6 구단 운영·AI·장기 경제 | 20% | 25% | 5% |
 | M7 내보내기·백업·중계 | 4% | 0% | 0% |
 | M8 모바일 패키징·실기기 | 2% | 0% | 0% |
 | M9 배포·운영·출시 검증 | 2% | 0% | 0% |
-| **합계** | **100%** | — | **35%** |
+| **합계** | **100%** | — | **46%** |
 
 계산: 전체 완료 = 비중 × 영역 완료율의 합, 남음 = 100 − 전체 완료. 비중은 [120 구현 순서](120-IMPLEMENTATION-ROADMAP.md)의 범위를 바탕으로 만든 작업 추정치(D)다. 구현량·난도가 드러나면 근거와 함께 재평가하며, 같은 AI 기능을 M2와 M6에 중복 가산하지 않는다. M2는 내 선수 경로·사건, M6는 독립적인 리그 AI/재정 기반에 대한 평가다. 설계보드·준비된 이미지·빈 웹/API 골격은 실제 플레이 화면이나 클라우드 저장 완료로 세지 않는다.
 
-**이번 구현:** M2-DE — 실제 AI 수락/갱신·동일 공식 건강 등록 E96·영수증/계약/경기/등록 봉인·과거 읽기/ACK·JSON/중복/변조 거부. 집중6/6·전체625/625·실패0·취소0, lint/타입/build/골든/이벤트/설계10종·HTTP 골격 smoke 통과. 실제 UI/DB가 없는 좁은 연결이므로 가중35%/65% 유지. [DE](../implementation/M2-DE-AI-TEAM-REUNIONS.md).
+**이번 구현:** M3 완료 — Managed Auth JWT·game-creations/saves 목록·명령 파이프라인·V02/V03 Neon 실증. api 테스트 7/7. [완료](../implementation/M3-COMPLETE.md).
+
+**이전 완료:** M2-DE — 실제 AI 수락/갱신·동일 공식 건강 등록 E96·영수증/계약/경기/등록 봉인·과거 읽기/ACK·JSON/중복/변조 거부. 집중6/6·전체625/625·실패0·취소0. [DE](../implementation/M2-DE-AI-TEAM-REUNIONS.md).
 
 **최신 완료:** M2-CZ — 상무 실제 공동 등록 E96·과거 증거 조회/ACK·구 저장 증거 소급 없음. 집중38/38·전체 check591/591·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. [CZ](../implementation/M2-CZ-SANGMU-TEAM-REUNION.md).
 
@@ -6872,6 +6874,8 @@ baseSpent+baseReserved≤20,새 entry의 actualBudgetSpent 증분이 active cap�
 
 # 91. 현재 적용 계약 지도 — 설계 기준본1.0
 
+M3 병렬(2026-10-26): C15/C17/C22는 `PARTIAL`(명령 receipt·JWT allowlist·owner 격리·셸 생성). C16 백업/연도 복원·전 명령 타입·웹 UI는 미완. M2 엔진 계약은 이 갱신으로 완료 처리하지 않는다. 증거 [M3-COMPLETE](../implementation/M3-COMPLETE.md).
+
 M2-CQ 구현 후속:14/21의 시즌 중 잔여 계약 비교·타 구단 수락은 [CQ](../implementation/M2-CQ-KBO-REMAINDER-TRANSFER.md)를 따른다. 기존 지급 구단 귀속·실제 등록일 급여·성장/강화1회·v4 호환 경계를 보존하며 실제 웹/API/DB 구현과 분리한다.
 
 2026-10-20 성장 달력 후속:14의 최신 사용자 확정인 세계2~10월·고교2~6월·국제창 제외와 `calendar-1` 날짜를42의 기간 정규화에 적용한다. 실제 구현/수치 충돌은 `../implementation/M2-T-GROWTH-CALENDAR.md`를 따른다.
@@ -7013,8 +7017,8 @@ START-HERE → STATUS →14의 U/D/V → 이 지도에서 담당 분야 → 해�
 | ID | 필요한 실행 증거 | 현재 |
 |---|---|---|
 | V01 | 선택 런타임·패키지/lockfile·호환 버전·실제 npm run build | NOT_EXECUTED |
-| V02 | 관리형 인증 사용가능성·이메일 확인/재설정·허용목록·owner격리 | NOT_EXECUTED |
-| V03 | 개발 Neon DB/행잠금/unique/rollback/receipt·2기기 경합 | NOT_EXECUTED |
+| V02 | 관리형 인증 사용가능성·이메일 확인/재설정·허용목록·owner격리 | EXECUTED(2026-10-26 M3·Neon Auth JWT/allowlist/owner; 메일 재설정 실발송은 공유 SMTP 의존으로 미실증) |
+| V03 | 개발 Neon DB/행잠금/unique/rollback/receipt·2기기 경합 | EXECUTED(2026-10-26 M3·Neon m3-dev) |
 | V04 | private 파일 업/다운/hash·권한 거부·보존 청소 | NOT_EXECUTED |
 | V05 |24통합 경로의 초기 fixture/명령/결과 hash/불변조건 | NOT_EXECUTED |
 | V06 |웹·PWA·APK 강제종료/응답유실/저널/복원·서버 job | NOT_EXECUTED |
