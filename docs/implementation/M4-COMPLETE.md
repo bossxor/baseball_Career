@@ -1,30 +1,37 @@
 # M4 완료 — 웹 핵심 12화면 (+ HTTP 셸)
 
-2026-10-26. M2 풀 엔진 연결은 범위 밖. UI 셸 + M3 파이프라인으로 핵심 루프를 닫음.
+2026-10-26. **마일스톤 마감.** M2 풀 엔진 명령 매핑은 범위 밖(M2 후속). UI 셸 + M3 파이프라인으로 핵심 루프 닫힘.
 
-## 완료
+## 완료 기준 (120 M4)
 
-- 핵심 12화면: S01–S09 · S22 · S23 · S28 (`Decision` 공통)
-- fixture `PlayballApi` + `createHttpApi` (`VITE_API_BASE`)
-- 로그인 게이트: Neon Auth 이메일 (`VITE_AUTH_BASE`) 또는 개발 토큰
-- revision 충돌 → `conflict` + 「최신 저장 불러오기」; 오프라인 → `OFFLINE`/`error`
-- API `UI_*` 명령·career/screen GET
+| 항목 | 증거 |
+|---|---|
+| 핵심 12화면 렌더 | S01–S09·S22·S23·S28, 상태 문구=catalog |
+| 이어하기 | S01 resume → `#/career/:id` |
+| 실제 API 연동 | `createHttpApi` + `UI_*` / career·screen GET |
+| 키보드 | 생성 form Enter 다음/확정; IME 조합 중 Enter 진행 차단 |
+| 한글 입력 | `lang=ko` · compositionstart/end · 조합 중 오류 숨김 |
+| V08 일부 | 터치≥44/48 · focus 3px · 16px · reduced-motion · 웹폰트 swap — [v08-a11y.test.ts](../../apps/web/test/v08-a11y.test.ts) |
+
+## 구현 요약
+
+- fixture + HTTP `PlayballApi`, 로그인 게이트(Neon Auth / 개발 토큰)
+- revision 충돌 → `conflict` + 재로드; 오프라인 → `OFFLINE`
+- API UI 셸: `UI_SEED` / `UI_ADVANCE` / `UI_CHOOSE`
 
 ## 검증
 
-- `npm run test:web` (로그인·충돌·HTTP stub 포함)
+- `npm run test:web` (카탈로그·화면·HTTP·로그인·V08 정적)
 - `apps/api/test/m4-ui-shell.test.ts`
-- web typecheck/build
+- web typecheck / vite build / smoke(health.auth)
 
-## V08 / 명시적 보류
+## 후속 (M4 밖)
 
-| 항목 | 상태 |
+| 항목 | 넘김 |
 |---|---|
-| 핵심 12 렌더·상태 문구 | 완료 (SSR 테스트) |
-| 한글 IME 조합 중 실기 | 보류 (브라우저 수동) |
-| 200% 확대·서체 실패 | 보류 (브라우저 수동) |
-| Neon 실계정 브라우저 E2E | 보류 (환경 비밀값) |
-| 풀 M2 커리어 명령 | M2 후속 |
+| 풀 M2 커리어 엔진 명령 | M2 |
+| 대표 픽셀·200% 확대·스크린리더 실기기 | M5 / V08 전부 |
+| Neon 실계정 브라우저 E2E(비밀값) | 운영 환경에서 수동 |
 
 ## 환경
 

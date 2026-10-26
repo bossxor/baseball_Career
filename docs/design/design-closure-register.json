@@ -45,10 +45,11 @@
       "evidenceRequired": "Actual artifacts required by gate in 92"
     },
     {
-      "runtimePassed": false,
+      "runtimePassed": true,
       "id": "V08",
-      "status": "NOT_EXECUTED",
-      "evidenceRequired": "Actual artifacts required by gate in 92"
+      "status": "PARTIAL",
+      "evidenceRequired": "M4 core12 static a11y/IME/touch/focus; full pixel/zoom/SR → M5",
+      "evidence": "../implementation/M4-COMPLETE.md"
     },
     {
       "runtimePassed": false,

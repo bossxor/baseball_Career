@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ABILITY_LABELS, FOCUS_COUNT } from '@playball/rules';
 import type { PlayerKind } from '@playball/rules';
 import { ScreenFrame, Button, FieldError, isBusy } from '../ui.js';
@@ -26,6 +27,7 @@ function Radio<T extends string>({ name, value, current, label, onPick, describe
 
 /** S02 생성: one decision per step in the 01 order. Moving forward is blocked by that step's own validation; going back is free. */
 export function Create({ draft, step, state = 'ready', errors, onDraft, onStep, onSubmit, onCancel }: CreateProps) {
+  const [composing, setComposing] = useState(false);
   const set = (patch: Partial<CreationDraft>) => onDraft?.({ ...draft, ...patch });
   const index = CREATION_STEPS.indexOf(step), busy = isBusy(state), err = errors ?? {};
   // The shell validates the leaving step and shows its errors; this screen only asks to move on.
@@ -36,13 +38,22 @@ export function Create({ draft, step, state = 'ready', errors, onDraft, onStep, 
       <ol className="stepper" aria-label="생성 단계">
         {CREATION_STEPS.map((s, i) => <li key={s} aria-current={s === step ? 'step' : undefined} className={i < index ? 'done' : s === step ? 'now' : ''}>{STEP_LABELS[s]}</li>)}
       </ol>
-      <form className="panel" onSubmit={e => { e.preventDefault(); if (step === 'CONFIRM') onSubmit?.(); else next(); }} noValidate>
+      <form className="panel" onSubmit={e => {
+        e.preventDefault();
+        if (composing) return; // Hangul IME: do not advance mid-composition
+        if (step === 'CONFIRM') onSubmit?.(); else next();
+      }} noValidate>
         {step === 'NAME' ? (
           <div className="field">
             <label htmlFor="player-name">이름</label>
-            <input id="player-name" name="name" type="text" lang="ko" autoComplete="off" enterKeyHint="next" value={draft.name} onChange={e => set({ name: e.target.value })} aria-invalid={err.name ? true : undefined} aria-describedby="name-help name-error" />
+            <input id="player-name" name="name" type="text" lang="ko" autoComplete="off" enterKeyHint="next" value={draft.name}
+              onCompositionStart={() => setComposing(true)}
+              onCompositionEnd={e => { setComposing(false); set({ name: e.currentTarget.value }); }}
+              onChange={e => set({ name: e.target.value })}
+              aria-invalid={!composing && err.name ? true : undefined}
+              aria-describedby="name-help name-error" />
             <p id="name-help" className="muted">1~12글자. 공백은 앞뒤에서 지워집니다.</p>
-            <FieldError id="name-error" message={err.name} />
+            <FieldError id="name-error" message={composing ? undefined : err.name} />
           </div>
         ) : null}
         {step === 'KIND' ? (

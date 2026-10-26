@@ -190,8 +190,8 @@
     },
     {
       "id": "V08",
-      "status": "NOT_EXECUTED",
-      "runtimePassed": false
+      "status": "PARTIAL",
+      "runtimePassed": true
     },
     {
       "id": "V09",
