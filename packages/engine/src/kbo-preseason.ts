@@ -1,3 +1,4 @@
+import {registerPitchLearning} from './pitch-learning-progress.js';
 import {kboActiveContractSuspended} from './kbo-service-payroll.js';
 import {assertFocus,PITCH_IDS} from '@playball/rules';
 import type {PitchId} from '@playball/rules';
@@ -52,7 +53,7 @@ export function setKboPreseasonPitchWeights(s:KboCareer,revision:number,weights:
  assertSource(s,revision);const key=s.protagonistKey;if(s.world.players[key]!.kind!=='PITCHER')throw new RangeError('PITCHER_REQUIRED');const next=structuredClone(s);next.world.repertoires[key]=setPitchWeights(s.world.repertoires[key]!,weights,windowKey(s),true);return written(next);
 }
 export function beginKboPreseasonPitchLearning(s:KboCareer,revision:number,pitchId:PitchId,replacedPitchId?:PitchId):KboCareer {
- assertSource(s,revision);if(kboActiveContractSuspended(s.world.contracts[s.protagonistKey]!))throw new RangeError('ACTIVE_SERVICE_TRAINING_UNAVAILABLE');const key=s.protagonistKey;if(s.world.players[key]!.kind!=='PITCHER')throw new RangeError('PITCHER_REQUIRED');const next=structuredClone(s);next.world.repertoires[key]=beginPitchLearning(s.world.repertoires[key]!,pitchId,true,replacedPitchId?{pitchId:replacedPitchId,windowId:windowKey(s)}:undefined);return written(next);
+ assertSource(s,revision);if(kboActiveContractSuspended(s.world.contracts[s.protagonistKey]!))throw new RangeError('ACTIVE_SERVICE_TRAINING_UNAVAILABLE');const key=s.protagonistKey;if(s.world.players[key]!.kind!=='PITCHER')throw new RangeError('PITCHER_REQUIRED');const next=structuredClone(s);next.world.repertoires[key]=beginPitchLearning(s.world.repertoires[key]!,pitchId,true,replacedPitchId?{pitchId:replacedPitchId,windowId:windowKey(s)}:undefined);next.world.repertoires[key]=registerPitchLearning(next.world.repertoires[key]!,s.world.worldKey,key,144,Object.hasOwn(s.health.injuries,key));return written(next);
 }
 export function unreadKboFirstCampNotices(s:KboCareer){
  assertSource(s,s.revision,true);if(s.proSeasons?.length)return [];const notices=s.campNotices??[];if(notices.length>1)throw new RangeError('DUPLICATE_KBO_FIRST_CAMP');return notices.flatMap(e=>{campSource(s,e);if(e.status!=='OPEN')return [];const d=eventDefinition('E08');return [{eventKey:e.eventKey,eventVersion:e.version,definitionId:'E08' as const,title:d.title,body:d.body,offeredCommands:s.preseasonPlan?['KEEP_FOCUS']:['CHOOSE_FOCUS','KEEP_FOCUS']}];});

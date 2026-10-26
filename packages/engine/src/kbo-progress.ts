@@ -1,3 +1,4 @@
+import {settleRegisteredPitchLearning} from './pitch-learning-progress.js';
 import {closeKboNpcMilitaryCalendarDay,settleKboNpcMilitaryPayrollDay} from './kbo-npc-military.js';
 import {kboReturnConditionMultiplier,settleKboReturnConditionDay} from './kbo-return-condition.js';
 import {kboContractPaymentBalance} from './kbo-contract-payments.js';
@@ -118,6 +119,9 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   }
   const closed=closeKboCompetitionDay(career.world,schedulesOf(career),career.protagonistKey,career.records,career.health,career.days!,day,career.sangmu);
   career.world=closed.world;career.health=closed.health;career.days=closed.days;if(closed.sangmu)career.sangmu=closed.sangmu;progress.nextWorldDay=day+1;daysClosed++;
+  for(const [key,book]of Object.entries(career.world.repertoires))if(book.learning){const own=key===career.protagonistKey;career.world.repertoires[key]=settleRegisteredPitchLearning({worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,playerKey:key,repertoire:book,records:career.records,health:career.health,scheduledGames:book.learning.registration?.scheduledGames??144,numerator:own?(career.difficulty==='SECRET_CHEAT'?15:5):career.difficulty==='REALISTIC'?6:5});}
+  // Serving NPC books live outside club rosters, but use the same official registration receipts.
+  for(const [key,member]of Object.entries(career.sangmu?.members??{}))if(member.repertoire?.learning)member.repertoire=settleRegisteredPitchLearning({worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,playerKey:key,repertoire:member.repertoire,records:career.records,health:career.health,scheduledGames:member.repertoire.learning.registration?.scheduledGames??144,numerator:career.difficulty==='REALISTIC'?6:5});
   const serviceReturn=closeKboMilitaryCalendarDay(career,day,progress);closeKboNpcMilitaryCalendarDay(career,day);
   settleKboServicePayrollDay(career,day);settleKboReturnedTeamReunions(career,day);settleKboAiTeamReunions(career,day);settleKboNpcMilitaryPayrollDay(career,day);settleKboReturnConditionDay(career,day);settleKboOpponentReunions(career,day);settleKboArmyTeamReunions(career,day);
   career.traits=refreshCareerTraits(career,day,LEAGUES);

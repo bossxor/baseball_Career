@@ -1,3 +1,4 @@
+import { sql } from 'drizzle-orm';
 import { Hono } from 'hono';
 import { RULES_VERSION } from '@playball/rules';
 import type { AuthDb, AppVariables, AuthOptions } from './auth.js';
@@ -6,8 +7,13 @@ import { getCommand, postCommand } from './commands.js';
 import { postGameCreation } from './game-creations.js';
 import { getCareer, getScreen } from './career-views.js';
 import { getSaveSummary, listSaves } from './saves.js';
-import { downloadFile, getFileMeta, listBackups, postBackup } from './private-files.js';
+import { downloadFile, getFileMeta, listBackups, postBackup, postChronicleExport } from './private-files.js';
 import { postRestore, previewRestore } from './restores.js';
+
+/** Public ops surface — no secrets / connection strings. */
+export const APP_VERSION = '0.1.0';
+export const SCHEMA_VERSION = 1;
+export const MIN_CLIENT_VERSION = '0.1.0';
 
 export type CreateAppOptions = {
   db?: AuthDb;
@@ -39,6 +45,30 @@ export function createApp(options: CreateAppOptions = {}) {
     }),
   );
 
+  app.get('/api/version', c =>
+    c.json({
+      app: APP_VERSION,
+      api: APP_VERSION,
+      rulesVersion: RULES_VERSION,
+      schemaVersion: SCHEMA_VERSION,
+      minClientVersion: MIN_CLIENT_VERSION,
+    }),
+  );
+
+  app.get('/api/ready', async c => {
+    const db = c.get('db');
+    if (!db) {
+      return c.json({ status: 'not_ready', reason: 'db.unavailable' }, 503);
+    }
+    try {
+      await db.execute(sql`SELECT 1 AS ok`);
+      await db.execute(sql`SELECT 1 FROM game_saves LIMIT 0`);
+      return c.json({ status: 'ready', schemaCompatible: true });
+    } catch {
+      return c.json({ status: 'not_ready', reason: 'db.query_failed' }, 503);
+    }
+  });
+
   const protectedRoutes = new Hono<{ Variables: AppVariables }>();
   protectedRoutes.use('*', async (c, next) => {
     if (!c.get('db')) {
@@ -58,6 +88,7 @@ export function createApp(options: CreateAppOptions = {}) {
   protectedRoutes.get('/saves/:id/commands/:commandId', getCommand);
   protectedRoutes.post('/saves/:id/backups', postBackup);
   protectedRoutes.get('/saves/:id/backups', listBackups);
+  protectedRoutes.post('/saves/:id/exports/chronicle', postChronicleExport);
   protectedRoutes.get('/files/:fileId', getFileMeta);
   protectedRoutes.get('/files/:fileId/content', downloadFile);
   protectedRoutes.post('/restores/preview', previewRestore);

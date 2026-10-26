@@ -129,3 +129,7 @@ export * from './us-growth.js';
 export {usTeamGames,usProtagonistLeague,previewUsTraining,trainUsCareer,changeUsMidseasonArchetype,resolveUsWindowEvent} from './us-windows.js';
 
 export {usCompetitionScore,resolveUsLevelEvent} from './us-levels.js';
+
+export * from './pitch-learning-progress.js';
+
+export * from './school-repertoire.js';

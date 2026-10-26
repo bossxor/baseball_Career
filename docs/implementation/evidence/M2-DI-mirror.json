@@ -1,0 +1,153 @@
+{
+  "utc": "2026-10-26T06:50:19.660Z",
+  "head": "21ac6e54b309dcac8ee246cff0d229bbea6e3d07",
+  "mergedMain": "6eda98e6650aa4d0c23619831f726bd063d30521",
+  "meaning": "Only M2 changed files mirrored. Unknown V contents preserved. Not a final source check or commit.",
+  "files": [
+    {
+      "path": "docs/implementation/M2-COMPLETION-PLAN.md",
+      "before": "6fc8514e0a81c0e44fd8cf5cab06f38f3aec126827ee02850f406f64171aab45",
+      "after": "f740f4c241701a87436c81edc29a7c0ebfce4e4eb2084d0f42f17de3eff4156c"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "before": "dcea9b52363817dcdc72edca02c43a83269457e9eb7c47728c8b05d3071ed188",
+      "after": "811d83e1ae2f4a45dc47003ab53f2c24be0971c3d885a2015231fb3146f3180d"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "before": "97e9a6f22d1c51f908997dd75af45642a2ade15c989119024a30e2a9f2f3c24a",
+      "after": "fb87aa826ad4312485da439dc202f1747d544cbf455055997bece661a95e13dc"
+    },
+    {
+      "path": "packages/engine/src/health.ts",
+      "before": "11a551d8ec8cff8c36c22ea2493be92026800516323d4363a2e401bcfd0e593e",
+      "after": "ee1c0f89741e8a7517b0a28460fd0087563eb2fe7174dbdb39962c892dafa71a"
+    },
+    {
+      "path": "packages/engine/src/high-school-progress.ts",
+      "before": "1a645a685a71746876b1a1a9e629217618956482a8d30bcdf81b4da2793822b3",
+      "after": "e327e0b892f0afe843a5aa2cdc03bfca0d541e6acbc4981ddbca04aa913685da"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "before": "e13813ab9cc561d9049b687d10111007092f426512672b284c2ddf5c19e81514",
+      "after": "2a2f9076c58ab828f54a380d52e588f463f93cf7953598c409e1da53911a38ff"
+    },
+    {
+      "path": "packages/engine/src/kbo-preseason.ts",
+      "before": "538cccee8e23f23fdf5913d4e9f46288e3e7dce61674d70ddcde9329d8c55b15",
+      "after": "ff39efec32a158f23244e94801dd68fe70c8477c928ab77afcfd4aa6c9dae0ca"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "before": "132f220d184100709f295da56fb9803b16333f075ffb5dc9fe9361624462ac7c",
+      "after": "fe1c3bdee17d65b773ee022772874e7f61bddbcf6b557561ab92caa2b0524cd6"
+    },
+    {
+      "path": "packages/engine/src/repertoire.ts",
+      "before": "bf44008765302f520e6e1bb1ad77446b9a15321b42b259773bb4f7f05e461d1a",
+      "after": "e81bd394ba2c9166dc3188010411da016bed829d07bbfab5eab0f762d6a62d5e"
+    },
+    {
+      "path": "packages/engine/src/us-preseason.ts",
+      "before": "c80e88f5c6b7b3c58474d676830de15277eee8763f7dea8d8c5b9a9a93e38038",
+      "after": "f18ad2c3deb801a996eb7ee89124e93ffe01abfb7eb231e9760c24135eb4d085"
+    },
+    {
+      "path": "packages/engine/src/us-season.ts",
+      "before": "5d92cfe18b16d727c28b62af87d2d13a7ff04b814cac49feefce90969fb32da1",
+      "after": "e676f8edbf8313ffecb7b55a0241e69b5d4a39161cdc205445f535d003f3042a"
+    },
+    {
+      "path": "packages/engine/test/kbo-sangmu-unit.test.ts",
+      "before": "82215ee42a8779d6075b90866b20f9c16f82c4cda91a1b33bc50eac2550593b8",
+      "after": "2f59378a3c4d9835c8c1dfce2f20e6ed20ee3da4eb8c96f3b6377b1a5c729c2b"
+    },
+    {
+      "path": "docs/implementation/M2-DI-PITCH-LEARNING.md",
+      "before": null,
+      "after": "1eb97847b78cc50a22bffbae5d618eb7e71c3a9ea99950fcbe3e755ec5de3510"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-admission.json",
+      "before": null,
+      "after": "2f738307451532d4c7f2d228337448fcf7c2339c96cd1de44e4cf42f83b43074"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-focused27.log",
+      "before": null,
+      "after": "852fb8c6cdd13d496066959950932a9bad65794f961a4aa2d3f85dabaa122f80"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-focused8.log",
+      "before": null,
+      "after": "6294d64b2551f7aaecf2d8f50be3a2653d8551a76546e020f95d28166c345683"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-native-checkpoint-notes.md",
+      "before": null,
+      "after": "3f70d0780d70777d872f3c623942ac71e66aa15735c13e052867e99e414a14f6"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-native-checkpoint.json",
+      "before": null,
+      "after": "7fc9303a9a2b24ccda31cfaf965d6a370853f9b5767a3b7e0445d58773949e32"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-native-equivalence.log",
+      "before": null,
+      "after": "476e2fa6e9c6efe4e71c6a39083d53ab3d4d0fe76c93c53bf20ba2359b5099dc"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-native-equivalence.mts.txt",
+      "before": null,
+      "after": "7e3341b8531b1bb777d920c6b74ae52a27c32fe00f0241edde85dade376dc560"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-native-migration.json",
+      "before": null,
+      "after": "d788b75baa22e278b5013e14793f72bc562446c21f38b90fc80980201c489cfa"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-native-runner.mjs.txt",
+      "before": null,
+      "after": "64f961e6fb3f51161d19648ee301f6079af6a87bc085ad0c0d381587018fbd93"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-native.log",
+      "before": null,
+      "after": "818df473db7c82ea1b74639c3f025d571705aa98cea9ab10a2e5f57dc382587a"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-source-freeze.json",
+      "before": null,
+      "after": "78205b38cb426277c3d983baf66a80fa7012da1bc9297ccb0c8eeb65cd42ddc8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-superseded-typecheck.log",
+      "before": null,
+      "after": "cac9c3a4839ea2b2990dbb2b4bc2cda23c8527f0e9b03d7c433c07ed7c1c7dee"
+    },
+    {
+      "path": "packages/engine/src/pitch-learning-progress.ts",
+      "before": null,
+      "after": "55b0319657ff7d23a1fc4e333b6d6b3d5d12ed0e54756f45a62ff73e8233c4aa"
+    },
+    {
+      "path": "packages/engine/src/school-repertoire.ts",
+      "before": null,
+      "after": "476e1cc16f0aefd2a726f40cfb9420d7aae77012ce816f251dc648fa7f3ee9e8"
+    },
+    {
+      "path": "packages/engine/test/pitch-learning-progress.test.ts",
+      "before": null,
+      "after": "dcae1b5b7718f67fd1daa4cd2944de9a4f0041c0273e7a0287f3e9ef2d662f00"
+    }
+  ],
+  "conflicts": [
+    "docs/design/DESIGN-ALL.md",
+    "docs/design/MANIFEST-SHA256.csv",
+    "docs/design/STATUS.md"
+  ]
+}

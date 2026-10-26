@@ -1,0 +1,19 @@
+{
+  "utc": "2026-10-26T06:36:48.242Z",
+  "meaning": "No clock, records or player edits. Admit exact whole-state result of old/new paired native next game date. Original DH checkpoints and frozen archive preserved.",
+  "baselineCommit": "21ac6e54b309dcac8ee246cff0d229bbea6e3d07",
+  "fromStateSha": "290fe7c87af714e771daa024e26237b57bcc067e59a5c04b464629a190589e2c",
+  "toStateSha": "052fe72f971a22dcae3d613d2158eb63685042160471ecd6e0fabd9991c0fd51",
+  "calls": 1676,
+  "closedDays": 78,
+  "nativeGames": 3675,
+  "identity": {
+    "sourceSha": "e86ac5d675e9eeae3c42599c6a02d5ee12aa235bdb5217fc797ee48d41270cd5",
+    "node": "v24.19.0",
+    "runnerSha": "64f961e6fb3f51161d19648ee301f6079af6a87bc085ad0c0d381587018fbd93"
+  },
+  "sourceFreeze": "docs/implementation/evidence/M2-DI-source-freeze.json",
+  "comparison": "docs/implementation/evidence/M2-DI-native-equivalence.log",
+  "privateDirectory": "V:/.local-verification/M2-DI-US-native",
+  "command": "node --import tsx C:\\Users\\N-052\\AppData\\Local\\Temp\\baseball-M2-DI-native-runner.mjs V:/.local-verification/M2-DI-US-native"
+}

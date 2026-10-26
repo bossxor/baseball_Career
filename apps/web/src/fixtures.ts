@@ -88,6 +88,16 @@ const stub = (screenId: PlayScreenId): Catalog => {
       notice: '실제 백업·복원은 API /backups · /restores (M7). fixture는 안내만.',
     };
   }
+  if (screenId === 'S45') {
+    return {
+      summary: [{ label: '화면', value: SCREEN_TITLES.S45 }, { label: '내보내기', value: '연대기 JSON' }],
+      options: [
+        { id: 'export-json', label: '연대기 기록 내려받기', primary: true },
+        { id: 'back', label: '돌아가기' },
+      ],
+      notice: '게임 백업이 아님. API /exports/chronicle (M7). PNG 카드는 후속.',
+    };
+  }
   return {
     summary: [{ label: '화면', value: SCREEN_TITLES[screenId] }],
     options: [{ id: 'back', label: '돌아가기', primary: true }],

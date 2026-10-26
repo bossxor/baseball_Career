@@ -1,3 +1,7 @@
+# M2-DI 최신 완료 — 구종 학습 실제 연결
+
+2026-10-26 · 기존 M2 체크아웃에 직접 구현. 학교·KBO·상무·미국 학습 분기, 불변 건강 영수증 복제 개선, 미국 다일 검토 참조를 연결했다. 집중27/27과 추가8/8(중복 합산하지 않음), native 구/신 대조35청크 완전 일치. 미국 native 현재3857경기/마감80일로 안전 저장. 전체 npm run check 종료0: 엔진/API671통과·Neon2환경 부재 건너뜀·실패0, 웹20/20. lint/타입/build/골든/이벤트/설계10종/Android·자산 검사 및 HTTP 스모크 통과. duration_ms1381930.2751. 후속 DJ는 사용자 확정 숙련0 XP 이월/재학습 처리. 초기 테스트 RNG 태그 타입오류는 수정했고 superseded 로그로 구분한다. M2 완료 아님. [상세](M2-DI-PITCH-LEARNING.md) · [전체 완료 범위](M2-COMPLETION-PLAN.md).
+
 # 구현 진행·다른 환경 이어가기
 
 ## 최신 검증 완료 — M2-DH (2026-10-26)
@@ -22,6 +26,24 @@ M2/M3와 겹치지 않는 `apps/web`: 뼈대+S01 홈·S02 생성·S03 커리어,
 
 ## 병렬 환경 작업 기록
 
+
+ready/version/자산 OFL·STATUS M9 100%(기여2). 실 DNS/배포=후속. [COMPLETE](M9-COMPLETE.md).
+## M9 운영 셸 (2026-10-26)
+
+`/api/ready`·`/api/version` · `verify:assets`/provenance · STATUS 70%. 실 DNS·배포는 후속. [M9](M9-OPS.md).
+## M8 마일스톤 마감 (2026-10-26)
+
+Capacitor debug 셸·`kr.againplayball.app`·HTTPS API 게이트·STATUS M8 100%(기여2). 실기기/release=후속. [COMPLETE](M8-COMPLETE.md).
+## M8 Capacitor Android 셸 (2026-10-26)
+
+`kr.againplayball.app` · debug APK · `VITE_API_BASE` https 비로컬 강제. JDK21. 실기기/release는 후속. [M8](M8-ANDROID.md).
+## M7 마일스톤 마감 (2026-10-26)
+
+백업·복원·연대기JSON 셸·STATUS M7 100%(기여4). PNG/중계/APK공유는 후속. [COMPLETE](M7-COMPLETE.md).
+## M7 연대기 JSON export (2026-10-26)
+
+`POST /exports/chronicle` → CHRONICLE_JSON private file, 24h TTL, 비밀값 제외, 게임백업 아님 표시. [M7](M7-FILES.md).
+## M7 복원 preview·activate (2026-10-26)
 
 `/restores/preview`·`/restores` 새 saveId, 원본 백업무변경, hash 불일치 거부. [M7](M7-FILES.md).
 ## M7 private 파일·백업 V04 슬라이스 (2026-10-26)

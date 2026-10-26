@@ -143,6 +143,96 @@ export async function listBackups(c: Context<{ Variables: AppVariables }>) {
   return c.json({ items: ready.map(metaOf) });
 }
 
+type UiState = {
+  ui?: {
+    protagonist?: { name?: string };
+    day?: number;
+    phase?: string;
+  };
+};
+
+/**
+ * POST /api/saves/:id/exports/chronicle — 63 JSON export shell (not a game restore file).
+ * Idempotent on owner+exportRequestId. Expires in 24h. No ownerSubject/email/secrets in body.
+ */
+export async function postChronicleExport(c: Context<{ Variables: AppVariables }>) {
+  const saveId = c.req.param('id');
+  if (!saveId) return errorBody(c, 'INVALID_REQUEST', 400);
+  const body = (await c.req.json().catch(() => null)) as {
+    exportRequestId?: string;
+    format?: string;
+    displayName?: string;
+  } | null;
+  const exportRequestId = body?.exportRequestId?.trim();
+  if (!exportRequestId || exportRequestId.length > 128) return errorBody(c, 'INVALID_REQUEST', 400);
+  if (body?.format && body.format !== 'JSON') return errorBody(c, 'INVALID_REQUEST', 400);
+
+  const save = await loadOwnedSave(c, saveId);
+  if (!save) return errorBody(c, 'SAVE_NOT_FOUND', 404);
+
+  const db = c.get('db');
+  const subject = c.get('subject');
+  const [prior] = await db
+    .select()
+    .from(privateFiles)
+    .where(and(eq(privateFiles.ownerId, subject), eq(privateFiles.requestId, exportRequestId)))
+    .limit(1);
+  if (prior) {
+    if (prior.saveId !== saveId || prior.kind !== 'CHRONICLE_JSON') return errorBody(c, 'REQUEST_ID_CONFLICT', 400);
+    return c.json(metaOf(prior));
+  }
+
+  const ui = (save.state as UiState | null)?.ui;
+  const playerName = ui?.protagonist?.name?.trim() || '선수';
+  const day = typeof ui?.day === 'number' ? ui.day : 0;
+  const momentRef = `moment_${saveId}_d${day}`;
+  const exportDoc = {
+    exportSchemaVersion: 1,
+    presentationVersion: 1,
+    kind: 'CHRONICLE_JSON' as const,
+    notAGameBackup: true,
+    playerDisplayName: playerName,
+    scope: 'CAREER',
+    createdGameInstant: new Date().toISOString(),
+    moments: [
+      {
+        momentRef,
+        type: day === 0 ? 'CREATED' : 'PROGRESS',
+        gameInstant: new Date().toISOString(),
+        age: null,
+        scope: 'CAREER',
+        rawStats: { day, phase: ui?.phase ?? save.phase, revision: save.revision.toString() },
+        publicEvidenceRef: momentRef,
+        userTitle: null,
+        userCaption: null,
+      },
+    ],
+  };
+  const payload = `${JSON.stringify(exportDoc)}\n`;
+  const contentHash = sha256Hex(payload);
+  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+  const fileName = safeFileName(body?.displayName ?? `다시플레이볼_${playerName}_연대기`);
+  const id = randomUUID();
+  const [row] = await db
+    .insert(privateFiles)
+    .values({
+      id,
+      ownerId: subject,
+      saveId: save.id,
+      kind: 'CHRONICLE_JSON',
+      status: 'READY',
+      mime: 'application/json; charset=utf-8',
+      byteSize: Buffer.byteLength(payload, 'utf8'),
+      contentHash,
+      body: payload,
+      fileName,
+      requestId: exportRequestId,
+      expiresAt,
+    })
+    .returning();
+  return c.json(metaOf(row!), 201);
+}
+
 async function loadOwnedFile(c: Context<{ Variables: AppVariables }>, fileId: string) {
   const db = c.get('db');
   const subject = c.get('subject');

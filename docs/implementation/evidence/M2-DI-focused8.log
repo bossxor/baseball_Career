@@ -1,0 +1,16 @@
+✔ Sangmu enlistment moves 20 selected players out of club rosters into the unit and keeps the world valid (2609.102ms)
+✔ returning Sangmu players resume the contract on the Futures squad; full clubs and expired contracts are reported, not forced (1383.8502ms)
+✔ Sangmu plays Futures as the 11th team in the competition projection and a real game completes (2402.6972ms)
+✔ a career with a Sangmu cohort plays the 11-team Futures calendar through the normal commands (17304.3904ms)
+✔ actual registration receipts open quarter12/24/36/48, release100000 base reservation once and preserve replay (6.22ms)
+✔ quarter learning pays only healthy registered dates; cheat applies3x and PAs/refresh cannot create a second budget (1.3227ms)
+✔ learning rejects changed manifest, missing official contribution and double registration; JSON preserves remainder and plan (3.6531ms)
+✔ native high-school season closes first learning quarter from12 actual registered games before the first focus event (22539.5657ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24740.6677

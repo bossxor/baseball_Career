@@ -1,0 +1,35 @@
+✔ 41: appearance injury probability .15%, fatigue strictly above80 doubles; no appearance no RNG (7.4205ms)
+✔ 41: severity80/18/2 branches, durations3..7/8..30/season and unchanged source (10.8229ms)
+✔ registered team games heal once, diagnosis game excluded; JSON retry exact, no injured appearance (4.345ms)
+✔ major persists through team games, closes only at season end; repeated closure no return event (3.0733ms)
+✔ unregistered injury does not heal, damaged duration rejected; future team evidence cannot heal twice (3.1773ms)
+✔ approved minimum emergency plan: no permanent gaps no temporary, zero healthy team9H+1P (5.2571ms)
+✔ temporary rights before lefts prevent excessive replacement; returned originals release temps (33.4305ms)
+✔ injured temporary not retained; shortage minimal, source and logged player identities retained (1.6954ms)
+✔ HITTER actual entry queues one nonblocking E08 and exposes only public preseason choices (1399.082ms)
+✔ PITCHER actual entry queues one nonblocking E08 and exposes only public preseason choices (1535.7598ms)
+✔ E08 focus choice commits only four-focus plan; KEEP_FOCUS acknowledges without a new saved plan (1592.1567ms)
+✔ focus validates four distinct own-kind axes and preseason style permits one actual change, no ability/RNG bonus (2225.3284ms)
+✔ pitcher weight command reuses one PRE configuration chance, unchanged weights consume none and hitters reject (3516.1878ms)
+✔ learning reserves10 base XP without instant mastery; free slot keeps configuration chance and second plan rejects (2141.0567ms)
+✔ controlled four learned pitches: replacement and learning atomically consume the same PRE chance (5857.2831ms)
+✔ confirm freezes the selected plan/snapshots once, pays no growth and does not require reading E08 (4866.5506ms)
+✔ confirmed pitcher learning/configuration snapshot remains valid but further edits cannot reopen PRE (3781.7298ms)
+✔ stale revision/event version, foreign camp evidence and invalid focus reject without state/RNG changes (2716.3651ms)
+✔ legacy AP state is read-only until a write catches up one camp notice; duplicate and changed source reject (2532.6226ms)
+✔ actual registration receipts open quarter12/24/36/48, release100000 base reservation once and preserve replay (4.3242ms)
+✔ quarter learning pays only healthy registered dates; cheat applies3x and PAs/refresh cannot create a second budget (1.8158ms)
+✔ learning rejects changed manifest, missing official contribution and double registration; JSON preserves remainder and plan (2.96ms)
+✔ native high-school season closes first learning quarter from12 actual registered games before the first focus event (27551.8841ms)
+✔ US first camp updates four focus and seals plan once without games, money, population or growth (4532.8617ms)
+✔ US first camp focus event dispatch is atomic, stale/invalid/fake-origin changes fail (4068.4464ms)
+✔ US pitcher reuses repertoire allocation and learning reservation without inflating abilities or salary (10180.6004ms)
+✔ all five US schedules publish atomically, use shared international rest and preserve JSON identities (12325.2952ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33545.3996

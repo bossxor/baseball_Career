@@ -1,0 +1,13 @@
+{
+  "pass": "old vs new complete native date and event identical; no original clock/record/player edits",
+  "fromStateSha": "290fe7c87af714e771daa024e26237b57bcc067e59a5c04b464629a190589e2c",
+  "fromCalls": 1640,
+  "toCalls": 1676,
+  "chunks": 35,
+  "oldMs": 74984.8129999999,
+  "newMs": 37751.287400000045,
+  "closedDays": 78,
+  "nativeGames": 3675,
+  "target": "C:\\Users\\N-052\\AppData\\Local\\Temp/baseball-M2DI-compatible-state.json.gz",
+  "stateSha": "052fe72f971a22dcae3d613d2158eb63685042160471ecd6e0fabd9991c0fd51"
+}

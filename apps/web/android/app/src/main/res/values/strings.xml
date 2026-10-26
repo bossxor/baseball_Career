@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">다시플레이볼</string>
+    <string name="title_activity_main">다시플레이볼</string>
+    <string name="package_name">kr.againplayball.app</string>
+    <string name="custom_url_scheme">kr.againplayball.app</string>
+</resources>

@@ -1,3 +1,4 @@
+import {settleRegisteredPitchLearning} from './pitch-learning-progress.js';
 import {prepareHighSchoolGame,advanceHighSchoolGame,commitHighSchoolGame} from './high-school-game.js';
 import {closeHighSchoolDay} from './high-school-day.js';
 import {reconcileSchoolEmergency} from './high-school-emergency.js';
@@ -67,6 +68,7 @@ export function advanceSchoolCareer(source:HighSchoolCareer,expectedRevision:num
    if(career.world.schedule.some(g=>g.worldDay===day && !Object.hasOwn(career.records.games,g.simulationKey)))continue;
   }
   const closed=closeHighSchoolDay(career.world,career.records,career.health,career.days,day);career.world=closed.world;career.health=closed.health;career.days=closed.days;progress.nextWorldDay=day+1;career.ownAssessment=refreshOwnCareerAssessment(career);career.traits=refreshCareerTraits(career,day);if(career.relationships)career.relationships=refreshRelationMilestones(career)!;
+  for(const [key,book]of Object.entries(career.world.repertoires))if(book.learning){const team=career.world.schools.find(t=>t.roster.includes(key));if(!team)continue;const count=career.world.schedule.filter(g=>g.homeTeamKey===team.id||g.awayTeamKey===team.id).length;career.world.repertoires[key]=settleRegisteredPitchLearning({worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,playerKey:key,repertoire:book,records:career.records,health:career.health,scheduledGames:book.learning.registration?.scheduledGames??count,numerator:key===career.world.protagonistKey?(career.difficulty==='SECRET_CHEAT'?15:5):career.difficulty==='REALISTIC'?6:5});}
   const notices=queueRelationFormationNotices(career,day);if(notices!==undefined)career.relationNotices=notices;
   const player=career.world.players[career.world.protagonistKey]!,count=teamGames(career);
   const healthChanges={injured:closed.result.injured.includes(player.simulationKey),recovered:closed.result.recovered.includes(player.simulationKey)};
@@ -78,6 +80,7 @@ export function advanceSchoolCareer(source:HighSchoolCareer,expectedRevision:num
    const event=createWorldEvent({definitionId,worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,evidence:{version:1,type:definition.evidenceDomain,fields:start?{careerSimulationKey:player.simulationKey}:{playerOrTeamSimulationKey:player.simulationKey,worldSeasonId:career.world.seasonKey,windowType:definitionId==='E43'?'TRAINING':'MID'}},resume:{worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,phase:'SEASON_PROGRESS',competitionKey:career.world.leagueKey??'HS',registrationKey:career.world.protagonistSchoolId,sourceRevision:career.revision+1},sourceSequence:career.events.length+1,worldDay:day});
    career.events=[...career.events,event];career.phaseContext={phase:'EVENT_DECISION',eventKey:event.eventKey,resume:structuredClone(progress)};return finish('MAJOR_EVENT',healthChanges);
   }
+
   const notice=raiseHiddenTraitNotice(career,day,progress);
   if(notice){progress.advancePlan=null;Object.assign(career,notice,{phaseContext:{...notice.phaseContext,resume:structuredClone(progress)}});return finish('MAJOR_EVENT',healthChanges);}
   if(healthChanges.injured || healthChanges.recovered)return finish('HEALTH_CHANGE',healthChanges);

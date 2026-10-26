@@ -1,3 +1,5 @@
+import {US_SEASON_GAMES} from './us-schedule.js';
+import {registerPitchLearning} from './pitch-learning-progress.js';
 import {assertFocus,PITCH_IDS} from '@playball/rules';
 import type {PitchId} from '@playball/rules';
 import type {UsCareer} from './us-career-entry.js';
@@ -51,7 +53,7 @@ export function setUsPreseasonPitchWeights(s:UsCareer,revision:number,weights:Pi
  assertSource(s,revision);const key=s.protagonistKey;if(s.world.players[key]!.kind!=='PITCHER')throw new RangeError('PITCHER_REQUIRED');const next=structuredClone(s);next.world.repertoires[key]=setPitchWeights(s.world.repertoires[key]!,weights,windowKey(s),true);return written(next);
 }
 export function beginUsPreseasonPitchLearning(s:UsCareer,revision:number,pitchId:PitchId,replacedPitchId?:PitchId):UsCareer {
- assertSource(s,revision);const key=s.protagonistKey;if(s.world.players[key]!.kind!=='PITCHER')throw new RangeError('PITCHER_REQUIRED');const next=structuredClone(s);next.world.repertoires[key]=beginPitchLearning(s.world.repertoires[key]!,pitchId,true,replacedPitchId?{pitchId:replacedPitchId,windowId:windowKey(s)}:undefined);return written(next);
+ assertSource(s,revision);const key=s.protagonistKey;if(s.world.players[key]!.kind!=='PITCHER')throw new RangeError('PITCHER_REQUIRED');const next=structuredClone(s);next.world.repertoires[key]=beginPitchLearning(s.world.repertoires[key]!,pitchId,true,replacedPitchId?{pitchId:replacedPitchId,windowId:windowKey(s)}:undefined);next.world.repertoires[key]=registerPitchLearning(next.world.repertoires[key]!,s.world.worldKey,key,US_SEASON_GAMES[s.registration.level],Object.hasOwn(s.health.injuries,key));return written(next);
 }
 export function unreadUsFirstCampNotices(s:UsCareer){
  assertSource(s,s.revision,true);const notices=s.campNotices??[];if(notices.length>1)throw new RangeError('DUPLICATE_US_FIRST_CAMP');return notices.flatMap(e=>{campSource(s,e);if(e.status!=='OPEN')return [];const d=eventDefinition('E58');return [{eventKey:e.eventKey,eventVersion:e.version,definitionId:'E58' as const,title:d.title,body:d.body,offeredCommands:s.preseasonPlan?['ACK_EVENT']:['CHOOSE_FOCUS','ACK_EVENT']}];});
