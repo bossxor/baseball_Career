@@ -1,5 +1,21 @@
 # 다음 환경 구현 인계 — 2026-10-26
 
+## 최신 검증 완료 — M2-DH (2026-10-26)
+
+미국 준비/일정/실제 경기/공통 급여/부상 대체/승강/옵션/성장과 특성 성능 개선을 묶어 구현했다. 전체 check 엔진/API663·웹20 통과·실패0·Neon2환경 미설정 건너뜀. 테스트748933ms. [DH 상세](M2-DH-US-FIRST-SEASON.md). 원본332개를 고정해 검사했다. user 요청대로 전체검사는 묶음당1회; 타입 검사에서 발견한2개 테스트의 readonly 대입은 수정 후 정식 결과를 다시 검증했고 superseded 로그로 보존했다.
+
+미국 native 실주행은 별도이며 최신 저장 58일·2400경기·AA다. V:/.local-verification/M2-DH-US-native/latest.json과코드zip을 사용한다. 첫 복무 DD는 기존부분상태 그대로이며완료로 표시하지 않는다. 다음 DI 초안은 C:/Users/N-052/AppData/Local/Temp/baseball-M2-DI-us-lifecycle에 격리했다. 구종 학습분기 실제 연결, 다일 청크 메타데이터 수정, 미국 연도 전환/FA/은퇴 등을 이어간다. 현재 M2 전체 완료 아님. main은 병렬 6eda98e까지 달라져 자동 덮어쓰지 않고 M2 브랜치를 보존한다.
+
+
+## 이전 작업 — M2 미국 시즌 묶음 (2026-10-26)
+
+사용자 요청: 작은 기능마다 전체 검사를 반복하지 않고, 관련 기능을 묶어 집중 검사 후 전체 check1회. 작업은 baseball-career-m2 / codex/m2-career-engine. origin/main82a5f8d의 M3/M4/M5/M7을 merge --no-commit으로 통합 중이며, 문서 충돌을 양쪽 보존해 정리했다. 통합 최종 검사는 아직이다. V:/.git 금지.
+
+이전 DG314939b /637개 통과는 별도 원본의 증거다. 현재 DH 프리시즌/일정 패치를 실제 반영했고, us-season/us-roster-repair/us-growth/us-windows를 작성 중이다. 초기 집중8/8(실제75경기/JSON/급여)과 후속 시즌6/6(부상 대체·성장 미완료 거부) 통과. 새 전체 결과는 아직 없다. 실제 연간 성장 긍정/승강/연도 전환/MLB PS·국제대회·24통합 경로는 남아 있다. 전체 M2 완료라고 표시하지 않는다.
+
+추가 사용자 확정: 미국 연봉은 공통 정규시즌 기간 분할·마지막 정수 오차 정산. 부상은 조직 내 건강 선수 보충을 우선하고 불가하면 낮은 능력 임시 최소 충원. 강화/스타일은 현재 레벨 경기 수의1/3·절반에 개방하고 승격해도 시즌 사용 횟수 유지.14/13과 구현 문서에 최종 기록한다.
+
+
 M2-DG는 codex/m2-career-engine 브랜치로 이어간다. 병렬 M4가 main a63d3e7에 올라와 main은 덮어쓰지 않았다. M2 전체637개는 이 브랜치 원본의 증거이며 M3/M4 병합 후 재검증은 별도다.
 
 ## 최신 완료 — M2-DG (2026-10-26)
@@ -12,16 +28,19 @@ M2-DG 미국 계약 후 아마추어 정산/다음 시즌 실제 등록을 정�
 
 > **M4(웹 UI)는 별도 트랙**: `apps/web`에서 S01/S02/S03를 구현했다. 이어가려면 [M4-WEB-UI.md](https://github.com/bossxor/baseball_Career/blob/a63d3e71d2e1c75cccf87d9d2fccb530c3c23ae2/docs/implementation/M4-WEB-UI.md)를 읽고 `npm run test:web`로 확인한다. M2(엔진)·M3(DB/API)와 파일이 겹치지 않으며, 서버 연동은 `apps/web/src/api.ts`의 `PlayballApi`만 교체하면 된다.
 
+> **M3 완료**: `m3/save-command-pipeline` → main 병합. [M3-COMPLETE](M3-COMPLETE.md). engine 미수정. 메일 재설정 실발송은 후속.
+
+> **M4(웹 UI)**: `apps/web` S01/S02/S03. 이어가려면 [M4-WEB-UI.md](M4-WEB-UI.md) · `npm run test:web`. 서버 연동은 `PlayballApi`만 교체.
+
 ## 최신 완료 — M2-DF 연말 계약 비교 (2026-10-26)
 
-origin/main df65ec2로 로컬을 fast-forward하고 STATUS부터 갱신했다. V:는837ce74/df65ec2 중 일치하는 파일만 보호 비교해 원격 변경79개를 최신화했다. 사용자 확정: 다음 해 원구단이 재계약할 재원이 없으면 보유권 해제 후 타 구단1년 제안 비교. [DF](M2-DF-OFFSEASON-EXIT.md)는 신규7개·집중12/12·전체632/632·실패0·취소0·종료0, lint/타입/build/골든/이벤트/설계10종 통과. duration_ms2330706.9176. 다음은 미국 커리어 실제 활성화/진행이며 [M2 전체 계획](M2-COMPLETION-PLAN.md)을 따른다. 다른 환경 M3 작업은 [연동 주의](M2-M3-INTEGRATION-NOTES.md)를 먼저 읽는다. 아래 DE/DC의 연말 질문 대기는26일 사용자 선택으로 해결된 이전 이력이다.
+origin/main df65ec2로 로컬을 fast-forward하고 STATUS부터 갱신했다. V:는837ce74/df65ec2 중 일치하는 파일만 보호 비교해 원격 변경79개를 최신화했다. 사용자 확정: 다음 해 원구단이 재계약할 재원이 없으면 보유권 해제 후 타 구단1년 제안 비교. [DF](M2-DF-OFFSEASON-EXIT.md)는 신규7개·집중12/12·전체632/632·실패0·취소0·종료0, lint/타입/build/골든/이벤트/설계10종 통과. duration_ms2330706.9176. 다음은 미국 커리어 실제 활성화/진행이며 [M2 전체 계획](M2-COMPLETION-PLAN.md)을 따른다. M3는 위 완료 블록. 아래 DE/DC의 연말 질문 대기는26일 사용자 선택으로 해결된 이전 이력이다.
 
 현재 환경은 C:/Users/N-052/.codex/visualizations/2026/10/16/01a142f8-66ea-7782-ba3e-b52df94ae1be/baseball-career-repo에서 작업/Git/빌드, V: 보호 미러다. V:/.git 생성 금지. E:/AI/Game 환경은 다른 PC의 이력이다. 옛 DD 실행기/상태는 복구하지 못했지만 새 고정 DC 실행기를 작성해3일 저장→2일 재개·손상 체크섬 거부를 확인했다. 새 실행은2030 day60·마감30일·60정규 경기이며, 원본/코드/실행기는 V: 비공개 보관과 [새 DD 안내](evidence/M2-DD-full-service-checkpoint-notes.md)를 따른다. 원래 부분 상태와 동일 실행으로 주장하지 않는다. 아래의 DD day110/부분 실행은 이전 인계의 보고이며 여기서 재실행/완료한 증거가 아니다.
 
 재개 실제 단기 사용5%/잔여95%, 주간 사용1%/잔여99%로 새 구간임을 확인했다. 과거5% 경계와 혼동하지 않는다. 기존 사용량 잔여5% 정리·커밋/푸시 뒤 정상 종료 요청은 실제 조회 경계에서만 수행한다. 리셋 크레딧 미사용.
 
 ## 이전 완료 — M2-DE AI 영입 공동 등록 E96
-
 2026-10-25 · 최종 전체 npm run check625/625·실패0·취소0, lint·타입·build·엔진 골든·이벤트·설계10종·HTTP 골격 smoke 통과. 테스트 duration_ms400562.5889·종료0. 신규 집중6/6에서 실제 Y02 AI FA 수락·재계약, 양 관계 종류, 공식 공동 등록·벤치 부상·JSON/control 불변·변조 거부·소속/계약 변경 후 조회/ACK·중복/구 저장을 검증했다.
 
 실제 수락/갱신 영수증과 현재 계약이 일치하는 선수만 같은 KBO/FUTURES 정규 경기 건강 명단으로 재회한다. AI 영수증·계약 키·공식 경기·정렬 등록 신원을 봉인하며 과거 읽기는 현재 계약/소속에서 추정하지 않는다. 기존 군팀·이적·군 복귀 E96, 관계 종류와 이력, 게임/RNG/돈/성장을 보존한다. [DE 상세](M2-DE-AI-TEAM-REUNIONS.md) · [전체](evidence/M2-DE-check.log) · [동결](evidence/M2-DE-source-freeze.json). 이전 DC3064193도619/619·원격 해시 일치를 확인했다.

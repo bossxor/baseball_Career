@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "date": "2026-10-20",
-  "status": "DESIGN_HANDOFF_WITH_OPEN_EXECUTION_GATES",
-  "basedOnCommit": "497b170",
-  "implementationAuthorized": false,
+  "date": "2026-10-26",
+  "status": "IMPLEMENTATION_IN_PROGRESS_OPEN_GATES",
+  "basedOnCommit": "95c7c98",
+  "implementationAuthorized": true,
   "newGameRulesAdded": false,
   "counts": {
     "screens": 45,
@@ -122,12 +122,13 @@
     {
       "id": "PRE10",
       "area": "게임·API·DB·인증·빌드·APK",
-      "status": "NOT_IMPLEMENTED_NOT_AUTHORIZED",
+      "status": "PARTIAL_M0_M1_M3_M2_IN_PROGRESS",
       "sources": [
         "120-IMPLEMENTATION-ROADMAP.md",
-        "92-DESIGN-CLOSURE-HANDOFF.md"
+        "92-DESIGN-CLOSURE-HANDOFF.md",
+        "../implementation/M3-COMPLETE.md"
       ],
-      "meaning": "사용자 구현 착수 지시 전 시작하지 않음. V01~V12 실행 증거는 구현 단계에서 별도."
+      "meaning": "M0/M1/M3(V02·V03) 진행·부분 완료. M2 엔진 병렬 진행 중. UI/APK/나머지 게이트 미완."
     }
   ],
   "reviewMatrix": {
@@ -159,13 +160,13 @@
     },
     {
       "id": "V02",
-      "status": "NOT_EXECUTED",
-      "runtimePassed": false
+      "status": "EXECUTED",
+      "runtimePassed": true
     },
     {
       "id": "V03",
-      "status": "NOT_EXECUTED",
-      "runtimePassed": false
+      "status": "EXECUTED",
+      "runtimePassed": true
     },
     {
       "id": "V04",
@@ -189,8 +190,8 @@
     },
     {
       "id": "V08",
-      "status": "NOT_EXECUTED",
-      "runtimePassed": false
+      "status": "PARTIAL",
+      "runtimePassed": true
     },
     {
       "id": "V09",

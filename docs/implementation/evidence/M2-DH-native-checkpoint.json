@@ -1,0 +1,18 @@
+{
+  "identity": {
+    "sourceSha": "ec080d7f45421a65dcc0f73266cc806189f1a3640239a07305909fd2cca5bb18",
+    "node": "v24.19.0",
+    "runnerSha": "f4715779aa0475377a15b36d70539e8b98d7c90e71df27577cb7f0b543f6c080"
+  },
+  "file": "7907a14b-b2ca-45e7-81d6-fa5ce7f305a0.json.gz",
+  "gzipSha": "6bc76a24f88f70ed23f8790feaf081a61be4324f4a4f660b734d0f4e0b881cd4",
+  "stateSha": "19508b7893f56fcdbf9a79d1a8fd53592027d720654c20570fab43a22e417474",
+  "reason": "PARTIAL_PROGRESS",
+  "calls": 1096,
+  "seasonKey": "2030",
+  "level": "AA",
+  "phase": "SEASON_PROGRESS",
+  "closedDays": 58,
+  "nativeGames": 2400,
+  "revision": 1107
+}

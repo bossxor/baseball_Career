@@ -1,0 +1,6 @@
+{
+  "archive": "V:\\.local-verification\\M2-DH-US-native\\frozen-source-v1.zip",
+  "sha256": "096c13f0611bb2b55eb2a0fe9f7f57b53c4c9412d185b4dfee2cd3314fa83734",
+  "meaning": "Native run frozen before TypeScript-only corrections in two test files; runtime engine/rules unchanged",
+  "sourceFiles": 332
+}

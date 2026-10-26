@@ -1,5 +1,12 @@
 # 구현 진행·다른 환경 이어가기
 
+## 최신 검증 완료 — M2-DH (2026-10-26)
+
+미국 준비/일정/실제 경기/공통 급여/부상 대체/승강/옵션/성장과 특성 성능 개선을 묶어 구현했다. 전체 check 엔진/API663·웹20 통과·실패0·Neon2환경 미설정 건너뜀. 테스트748933ms. [DH 상세](M2-DH-US-FIRST-SEASON.md). 원본332개를 고정해 검사했다. user 요청대로 전체검사는 묶음당1회; 타입 검사에서 발견한2개 테스트의 readonly 대입은 수정 후 정식 결과를 다시 검증했고 superseded 로그로 보존했다.
+
+미국 native 실주행은 별도이며 최신 저장 58일·2400경기·AA다. V:/.local-verification/M2-DH-US-native/latest.json과코드zip을 사용한다. 첫 복무 DD는 기존부분상태 그대로이며완료로 표시하지 않는다. 다음 DI 초안은 C:/Users/N-052/AppData/Local/Temp/baseball-M2-DI-us-lifecycle에 격리했다. 구종 학습분기 실제 연결, 다일 청크 메타데이터 수정, 미국 연도 전환/FA/은퇴 등을 이어간다. 현재 M2 전체 완료 아님. main은 병렬 6eda98e까지 달라져 자동 덮어쓰지 않고 M2 브랜치를 보존한다.
+
+
 M2-DG는 codex/m2-career-engine 브랜치로 이어간다. 병렬 M4가 main a63d3e7에 올라와 main은 덮어쓰지 않았다. M2 전체637개는 이 브랜치 원본의 증거이며 M3/M4 병합 후 재검증은 별도다.
 
 ## 2026-10-26 M2-DG 완료
@@ -12,10 +19,45 @@ M2-DG 미국 계약 후 아마추어 정산/다음 시즌 실제 등록을 정�
 
 M2/M3와 겹치지 않는 `apps/web`: 뼈대+S01 홈·S02 생성·S03 커리어, `PlayballApi`+fixture, 웹 테스트 11개(`test:web`, check 포함). 실제 API 연동·나머지 9화면은 다음. [M4](https://github.com/bossxor/baseball_Career/blob/a63d3e71d2e1c75cccf87d9d2fccb530c3c23ae2/docs/implementation/M4-WEB-UI.md).
 
+
+## 병렬 환경 작업 기록
+
+
+`/restores/preview`·`/restores` 새 saveId, 원본 백업무변경, hash 불일치 거부. [M7](M7-FILES.md).
+## M7 private 파일·백업 V04 슬라이스 (2026-10-26)
+
+`private_files` + backups API + owner 403/hash 다운로드. 복원·PNG·연대기·중계는 후속. [M7](M7-FILES.md).
+## M5 마일스톤 마감 (2026-10-26)
+
+33화면 셸·STATUS M5 100%(기여5). 픽셀·SR 실기·엔진/구단 연동은 후속. [COMPLETE](M5-COMPLETE.md).
+## M5 나머지 화면 셸 (2026-10-26)
+
+S10–S21·S24–S27·S29–S45 Decision 스텁 + 라우트·fixture/API ui-shell 동기. 홈 설정→S21, S28 college→S34. 엔진/M6/픽셀·SR 제외. [M5](M5-WEB-UI.md).
+## M4 마일스톤 마감 (2026-10-26)
+
+IME 조합 게이트·V08 정적(터치/포커스/16px/reduced-motion)·STATUS M4 100%. 픽셀·SR 실기·풀 엔진은 후속. [COMPLETE](M4-COMPLETE.md).
+## M3/M4 마감 (2026-10-26)
+
+M3 V02/V03 완료·메일 실발송 M9 보류. M4 핵심12+HTTP+로그인/충돌. CI typecheck에 engine build 추가. [M3](M3-COMPLETE.md) · [M4](M4-COMPLETE.md).
+# 구현 진행·다른 환경 이어가기
+
+## 병렬 완료 — M3 계정·DB·명령 파이프라인 (2026-10-26)
+
+브랜치 `m3/save-command-pipeline`을 main에 병합. Neon `m3-dev` + Managed Better Auth JWT·allowlist·owner 격리·행 잠금/receipt/F08·셸 game-creations/saves. api 테스트7/7. 메일 재설정 실발송·전 커리어 명령 매핑은 미완(의도). [완료](M3-COMPLETE.md) · [증거](evidence/M3-COMPLETE-check.log).
+
+## M4-B HTTP PlayballApi + API UI 셸 (2026-10-26)
+
+`createHttpApi` · `UI_SEED/ADVANCE/CHOOSE` · career/screen GET. 웹14·API m4-ui-shell 통과. 풀 커리어 엔진 연결은 후속. [M4](M4-WEB-UI.md).
+## M4 웹 UI 핵심 12화면 (2026-10-26)
+
+S01–S03에 이어 S04–S09·S22·S23·S28을 공통 `Decision` + `#/play/:id/Sxx`로 추가. fixture `decision`/`choose` 멱등. 웹 테스트13. 실 HTTP API·접근성 실기는 다음. [M4](M4-WEB-UI.md).
+## M4 웹 UI 핵심 화면 — 시작 (2026-10-26, 이전)
+
+M2/M3와 겹치지 않는 `apps/web`: 뼈대+S01 홈·S02 생성·S03 커리어, `PlayballApi`+fixture, 웹 테스트 11개. 실제 API 연동·나머지 9화면은 다음. [M4](M4-WEB-UI.md).
+
 ## 2026-10-26 M2-DF 완료
 
 STATUS를 먼저 갱신한 뒤 원구단 예산 부족의 다음 해 권리 해제/타 구단1년 비교를 사용자 선택대로 연결했다. 신규7개·집중12/12·전체632/632·실패0·취소0·종료0, lint/타입/build/골든/이벤트/설계10종 통과, duration_ms2330706.9176. 별도 JSON 비교/수락/Y02 재개 결과도 동일했다. [DF 범위/호환](M2-DF-OFFSEASON-EXIT.md). 기존 DE625/625는 이전 코드의 증거다. 실제 V:의 원격 변경79개를 보호 최신화했고 옛 DD 상태는 복구하지 못했으며 새 고정 DC 원본 저장/재개 실행기로2030 day60·마감30일·60정규 경기까지 진행했다. 아직18개월 완료가 아니다. [DD 보관/재개](evidence/M2-DD-full-service-checkpoint-notes.md) · [M2 전체 계획](M2-COMPLETION-PLAN.md).
-
 
 ## 최신 완료 — M2-DE AI 영입 공동 등록 E96
 

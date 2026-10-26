@@ -32,13 +32,13 @@
 | ID | 필요한 실행 증거 | 현재 |
 |---|---|---|
 | V01 | 선택 런타임·패키지/lockfile·호환 버전·실제 npm run build | NOT_EXECUTED |
-| V02 | 관리형 인증 사용가능성·이메일 확인/재설정·허용목록·owner격리 | NOT_EXECUTED |
-| V03 | 개발 Neon DB/행잠금/unique/rollback/receipt·2기기 경합 | NOT_EXECUTED |
+| V02 | 관리형 인증 사용가능성·이메일 확인/재설정·허용목록·owner격리 | EXECUTED(2026-10-26 M3·Neon Auth JWT/allowlist/owner; 메일 재설정 실발송은 공유 SMTP 의존으로 미실증) |
+| V03 | 개발 Neon DB/행잠금/unique/rollback/receipt·2기기 경합 | EXECUTED(2026-10-26 M3·Neon m3-dev) |
 | V04 | private 파일 업/다운/hash·권한 거부·보존 청소 | NOT_EXECUTED |
 | V05 |24통합 경로의 초기 fixture/명령/결과 hash/불변조건 | NOT_EXECUTED |
 | V06 |웹·PWA·APK 강제종료/응답유실/저널/복원·서버 job | NOT_EXECUTED |
 | V07 |6플랫폼×8필수 흐름의 실제OS/브라우저/기기 증거 | NOT_EXECUTED |
-| V08 |대표 화면 픽셀·글자 확대·키보드·터치·접근성·한글 PNG | NOT_EXECUTED |
+| V08 |대표 화면 픽셀·글자 확대·키보드·터치·접근성·한글 PNG | PARTIAL(2026-10-26 M4 핵심12 정적·IME·터치/포커스; 픽셀·200%·SR 실기=M5) |
 | V09 |12장기실험·성장/XP·하드/치트·시장/리그 균형 | NOT_EXECUTED |
 | V10 |Android 서명 release APK·로그인복귀·업데이트 설치 | NOT_EXECUTED |
 | V11 |운영 계정/호스트/도메인·예산·로그/복구·배포/롤백 | NOT_EXECUTED |

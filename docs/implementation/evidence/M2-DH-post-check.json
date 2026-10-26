@@ -1,0 +1,14 @@
+{
+  "pass": 663,
+  "webPass": 20,
+  "fail": 0,
+  "skipped": 2,
+  "skippedReason": "Neon DB/Auth environment absent in isolated checkout",
+  "testDurationMs": 748933.3533,
+  "sourceFilesUnchanged": 332,
+  "nativeRuntimeSame": true,
+  "nativeTestOnlyDifferences": [
+    "packages/engine/test/us-growth.test.ts",
+    "packages/engine/test/us-levels-windows.test.ts"
+  ]
+}

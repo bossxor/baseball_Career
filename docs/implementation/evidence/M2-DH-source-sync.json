@@ -1,0 +1,352 @@
+{
+  "runtimeFilesUnchanged": 332,
+  "head": "314939be38a2e1966a6599e3c589ab552c039fa2",
+  "mergedMain": "82a5f8d9d43e0f4fbe04932285163f42eb7c6f1a",
+  "parallelMainReport": "6eda98e6650aa4d0c23619831f726bd063d30521",
+  "scope": "Only M2 changed files and verified stale design files mirrored; parallel application source not overwritten",
+  "files": [
+    {
+      "path": "docs/design/13-MLB-CAREER.md",
+      "beforeV": "271999ae53c5aaa3983542236e9a5c3373ba76d1b010cc3a5281a88ff1935599",
+      "sha256": "c1688974aadcb8089f8909d136198292b8634f4dd43ada9c6ef3b235d82407f4",
+      "index": "76ce09cfcb824995d7429b95ecece0c350cef679",
+      "worktree": "76ce09cfcb824995d7429b95ecece0c350cef679"
+    },
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "beforeV": "19c58da11880f6f404a0ec113b5c8d790ff9032ede52f82ca6fe4aa9bc794ad6",
+      "sha256": "7ae728e67a384f93ca40a61cb6f2e9c16ce6a95798e89c535219416c68577594",
+      "index": "24054b0127cda5168c2867c9b82045500802c3ae",
+      "worktree": "24054b0127cda5168c2867c9b82045500802c3ae"
+    },
+    {
+      "path": "docs/design/91-CURRENT-CONTRACT-INDEX.md",
+      "beforeV": "3440b69258c2b8eef0d9d67caaa888ade5fa16dd0b91b554dd9faccdf3224b2e",
+      "sha256": "cb0c0a862fc60dee457b69292dc6decbc64233d14f580ddbd4d8f416e3b64017",
+      "index": "cbf16d41643c510872a17bddd0f460fd67d064b6",
+      "worktree": "cbf16d41643c510872a17bddd0f460fd67d064b6"
+    },
+    {
+      "path": "docs/design/92-DESIGN-CLOSURE-HANDOFF.md",
+      "beforeV": "3a9578668b3f3b274000c2abb9e921173bf1a4fe166f4de2d96861b6d96e49da",
+      "sha256": "040aa301f0b390fde089fc4c3b160c92b5001baf74a1a65760fe2f43e0d21466",
+      "index": "7c75df5e642b692b4ccad4f1826c3c6df257f3a7",
+      "worktree": "7c75df5e642b692b4ccad4f1826c3c6df257f3a7"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "beforeV": "cdf41e0a75e60d5cb6134540b1f2ded0e4bc0121daaefa3096805805cddf2929",
+      "sha256": "e6c7e3ea05a38472b533065b8ee09b4c498db9df4d2491258944b7f50f40d6f9",
+      "index": "c0bc516ca01e2557d92b631868a61a69b921388e",
+      "worktree": "c0bc516ca01e2557d92b631868a61a69b921388e"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "beforeV": "0767db38df2c8e27f06048aee0adbef6f86f3cb57b2b266e67834aff7bc6b5d8",
+      "sha256": "c7abcb65a72901e74d7011f60fab87628dce6d11ddef81235faeb646759dc975",
+      "index": "a25bd3f48e6b5183c152e4c00b4248fc4f25bdb0",
+      "worktree": "a25bd3f48e6b5183c152e4c00b4248fc4f25bdb0"
+    },
+    {
+      "path": "docs/design/README.md",
+      "beforeV": "1bc8d520026941124b652b6933b284a41e77a8b353840c4f3146565f87525ef6",
+      "sha256": "4221d360c722dac3f7809946cc5f7d6b84183004e8b6fa585baae22f92cceb86",
+      "index": "404669f42afc23b222906df385f886a2fc038ed1",
+      "worktree": "404669f42afc23b222906df385f886a2fc038ed1"
+    },
+    {
+      "path": "docs/design/START-HERE.md",
+      "beforeV": "6de3721d1e607c1b2e46a11f491533a0f9be0a7ad13baeeeaadebbe885d20dac",
+      "sha256": "85c093580a9896e7fc291216c2dd0c82dce5430a40813605400b4a25774fd9ec",
+      "index": "83f57f7ee79d93b351c0fb2401c8f36feac08de6",
+      "worktree": "83f57f7ee79d93b351c0fb2401c8f36feac08de6"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "beforeV": "6c0fbccadc1aa47b4cf911b2e53d3374ce4a8e4cf7e024bd2d21ec09583341d8",
+      "sha256": "82144a45a9bb3d4d4c2324eeb4bca0727793c441607500a8b2a1feb42f334084",
+      "index": "4905af78bf0c5fd91981add1dcf74ee00642b6d2",
+      "worktree": "4905af78bf0c5fd91981add1dcf74ee00642b6d2"
+    },
+    {
+      "path": "docs/design/current-contract-index.json",
+      "beforeV": "a485ca3e5871d68af307b9549b40943b21f8e0a4721f9ff282d1dac76ef6f134",
+      "sha256": "eb660b852c686bb06518321e6cea1a1b6b070614ee2e407e20752e3cb26c44f6",
+      "index": "65176e4d7478a6e66929a8c4275f518b38e7b46c",
+      "worktree": "65176e4d7478a6e66929a8c4275f518b38e7b46c"
+    },
+    {
+      "path": "docs/design/design-closure-register.json",
+      "beforeV": "03d55c5ccc09a8c1b1365011b508c9a00cc41b8bce10477e9b00ca504edada5f",
+      "sha256": "67224b7455e53a1e3d5998284392f63f446f0323c8e603be136d891cc2010071",
+      "index": "3d220956ba70d9090db911076adca895ff107c74",
+      "worktree": "3d220956ba70d9090db911076adca895ff107c74"
+    },
+    {
+      "path": "docs/design/preimplementation-readiness.json",
+      "beforeV": "e728102b3204163952d422479667eded457ccb53466b7aa036e5841d8bfccc17",
+      "sha256": "4f645a834f74e94cf015cee10a9bfe62acaa56faf6b17e8b9adebd57885e128a",
+      "index": "b4d85903fa4e9910334ea029f1285d5f2ad0de33",
+      "worktree": "b4d85903fa4e9910334ea029f1285d5f2ad0de33"
+    },
+    {
+      "path": "docs/design/verify-design.mjs",
+      "beforeV": "9d62dd62565918a54b411005635f5951d48b0ba629b48aef76c3bd2f2532e2eb",
+      "sha256": "2dbc9b87d10717d3b300731ffe4b2a6221ebcc9d825625fb4400c2da15bb5173",
+      "index": "53c3d3ef63d7c1fad936335178b5b220b8286226",
+      "worktree": "53c3d3ef63d7c1fad936335178b5b220b8286226"
+    },
+    {
+      "path": "docs/implementation/M2-COMPLETION-PLAN.md",
+      "beforeV": "dd26b5d216624de3d817ddffebfcb177cd9922f8903007ef7841eb287bfbae9b",
+      "sha256": "6fc8514e0a81c0e44fd8cf5cab06f38f3aec126827ee02850f406f64171aab45",
+      "index": "6e40c158f3668edcc4ce0c290fe0fa63638d245e",
+      "worktree": "6e40c158f3668edcc4ce0c290fe0fa63638d245e"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "beforeV": "78cf7eaa275c978eb8ec518bebfb3bb8d75c076b510adc15e24320320671002e",
+      "sha256": "dcea9b52363817dcdc72edca02c43a83269457e9eb7c47728c8b05d3071ed188",
+      "index": "b749fbfb27157a688c1999a80836db07c839070d",
+      "worktree": "b749fbfb27157a688c1999a80836db07c839070d"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "beforeV": "e2c51194343d45f69373386c7cba66de34b1d39a73b20f79a3b9832fabf40de9",
+      "sha256": "97e9a6f22d1c51f908997dd75af45642a2ade15c989119024a30e2a9f2f3c24a",
+      "index": "084ff56ad576408d3d1d6d3369893ec898849610",
+      "worktree": "084ff56ad576408d3d1d6d3369893ec898849610"
+    },
+    {
+      "path": "packages/engine/src/high-school-traits.ts",
+      "beforeV": "88929390a85a2336cabac1d968b0eb5d9330e394b7b3997fd38a5e5eaf514b31",
+      "sha256": "eae2f2cc922d18c035715fd0070f620c00905bc7dde49322ee54623975856749",
+      "index": "840cd80938f9c051d07df67992700cc71c9fbdd7",
+      "worktree": "840cd80938f9c051d07df67992700cc71c9fbdd7"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "beforeV": "805d1e24e2a88f8230cc601a4c5bf50024365e8325a8b0cdd3656a2ff8fbd187",
+      "sha256": "e13813ab9cc561d9049b687d10111007092f426512672b284c2ddf5c19e81514",
+      "index": "8ee959d2667f6b8359ba6cea2b5a25866b4cd350",
+      "worktree": "8ee959d2667f6b8359ba6cea2b5a25866b4cd350"
+    },
+    {
+      "path": "packages/engine/src/us-career-entry.ts",
+      "beforeV": "ef0b1d6819e4f517657795ea2cc4814f6507886ed6b1e92271dd83ff979d0fa8",
+      "sha256": "8229c5b3dbe78f42ac2d8028021a9f6357a43ee9919fdf0f7f26bea860baab50",
+      "index": "310064881789aec19803e4bdcf97aac9901ef22c",
+      "worktree": "310064881789aec19803e4bdcf97aac9901ef22c"
+    },
+    {
+      "path": "docs/implementation/M2-DH-US-FIRST-SEASON.md",
+      "beforeV": null,
+      "sha256": "b6dcb943fee8d0a4b261facc454b7eb588fa7c5428f70f9edc7c0e22a1c2bc91",
+      "index": "2ebfdfcb7cd9511b58629f23d050a34bcf29d0f3",
+      "worktree": "2ebfdfcb7cd9511b58629f23d050a34bcf29d0f3"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-check-exit.txt",
+      "beforeV": null,
+      "sha256": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+      "index": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56",
+      "worktree": "573541ac9702dd3969c9bc859d2b91ec1f7e6e56"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-check.log",
+      "beforeV": null,
+      "sha256": "d6a2f96c5791c33d205b4e2606f9a45d2a3f52ed47012332859a70a00f09210d",
+      "index": "8d6b2b2ea7af408a6e8a9460188dfada1bbcd49c",
+      "worktree": "8d6b2b2ea7af408a6e8a9460188dfada1bbcd49c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-focused31.log",
+      "beforeV": null,
+      "sha256": "fee49bef07b47c4040e784ce1d1fb6d07f52607370523400c7903c9069fb1fee",
+      "index": "bdd0585a0ea75d9e79f6fa2f175db86be5e32761",
+      "worktree": "bdd0585a0ea75d9e79f6fa2f175db86be5e32761"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-native-checkpoint.json",
+      "beforeV": null,
+      "sha256": "3d4e6c393774d3379929fd6b4b171ae4acaad437b46778bac7c7986713321ad5",
+      "index": "f7dd9e0973ade6f5de2f55b6ded96b3479529876",
+      "worktree": "f7dd9e0973ade6f5de2f55b6ded96b3479529876"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-native-runner.mjs.txt",
+      "beforeV": null,
+      "sha256": "e75248287a37f1e90264da76b33b2a0fae28fbcd44dd4f05065e43c649996cba",
+      "index": "455d2bfc47febad179635df9063f4844ff131fc8",
+      "worktree": "455d2bfc47febad179635df9063f4844ff131fc8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-native-source-archive.json",
+      "beforeV": null,
+      "sha256": "f250e7397009dcec017010e74ddff4ad7128019986a46a2c21e310dd9938d9c3",
+      "index": "32110ab731cbcb290245a6a4cc11a64d7af1acf5",
+      "worktree": "32110ab731cbcb290245a6a4cc11a64d7af1acf5"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-native-source-freeze.json",
+      "beforeV": null,
+      "sha256": "410daa339077261ae89f7ff1f7270c28983668db9407864c5451a2c870f3ab10",
+      "index": "40c035060e4705c393ccebbc6f7229224e8778d5",
+      "worktree": "40c035060e4705c393ccebbc6f7229224e8778d5"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-owned-mirror.json",
+      "beforeV": null,
+      "sha256": "cbe71b798201e1637492550235605d8e68d7b842bfac48c6f7dce3f41f1a54ce",
+      "index": "2d966863d5b426feeca967ba58e1bd3241b7de4e",
+      "worktree": "2d966863d5b426feeca967ba58e1bd3241b7de4e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-parallel-status.md.txt",
+      "beforeV": null,
+      "sha256": "6c0fbccadc1aa47b4cf911b2e53d3374ce4a8e4cf7e024bd2d21ec09583341d8",
+      "index": "da8bcb886b42d1cd4a6984a8508f13f6ca8bea79",
+      "worktree": "da8bcb886b42d1cd4a6984a8508f13f6ca8bea79"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-post-check.json",
+      "beforeV": null,
+      "sha256": "a0dbed021faf7336ca247684dbaf4e7422041285bea03f394fbdcc75174cfa9d",
+      "index": "924a686cee1289df3aa79cc526560dc5e9da95d2",
+      "worktree": "924a686cee1289df3aa79cc526560dc5e9da95d2"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-post-design.log",
+      "beforeV": null,
+      "sha256": "6be797ddcaf4040a4c45de55d013646596204e7a0ed931e3e49ee0ee78cac3a0",
+      "index": "1bcfdfcc06e0ef6900dffa466860cd0727b8c830",
+      "worktree": "1bcfdfcc06e0ef6900dffa466860cd0727b8c830"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-review7.log",
+      "beforeV": null,
+      "sha256": "5e75aa810794c4153059d21ecf8f63767966d5d3967bee653dd7a2d06e68f5d7",
+      "index": "99422471c2e3780693359a6ea3c535349d70d5ac",
+      "worktree": "99422471c2e3780693359a6ea3c535349d70d5ac"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-smoke.log",
+      "beforeV": null,
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8",
+      "index": "44c3710ebb95acc2bae3c2ee24697eb90b52ce06",
+      "worktree": "44c3710ebb95acc2bae3c2ee24697eb90b52ce06"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-source-freeze.json",
+      "beforeV": null,
+      "sha256": "e30e40f129ad684b7dd0936984b2b8cd835ec5f6769b882b7437e905e084b4bb",
+      "index": "41776401ebf3caa6b75a84f16e3cf2ee18f56a9d",
+      "worktree": "41776401ebf3caa6b75a84f16e3cf2ee18f56a9d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-superseded-typecheck.log",
+      "beforeV": null,
+      "sha256": "e9e9b92849287ec674c1f9917637d41d04d7a7a790aa96d97503e203cddf92e6",
+      "index": "c6f5f673df09739fee5d76dcfda21000f7fc7cfe",
+      "worktree": "c6f5f673df09739fee5d76dcfda21000f7fc7cfe"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-trait-cache-equivalence.log",
+      "beforeV": null,
+      "sha256": "80b051e8bd60ec9ca5028503c41bbb14924f60db1806205b5adc153248e05ea9",
+      "index": "394ae0a06a16c4a05faea71e5d5c6f500dd31aab",
+      "worktree": "394ae0a06a16c4a05faea71e5d5c6f500dd31aab"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DH-worker-equivalence.log",
+      "beforeV": null,
+      "sha256": "b162f1dbfca590f9c1c06680eaf50259a784c261edeb6f21d8255d39b2a475fa",
+      "index": "e5fe7cf63877320e27106fc2670f8869bb651192",
+      "worktree": "e5fe7cf63877320e27106fc2670f8869bb651192"
+    },
+    {
+      "path": "packages/engine/src/us-growth.ts",
+      "beforeV": null,
+      "sha256": "46b88062e2277c6050eb4de42afd44bb7feb40f488bf5d3e36a7cd8a93ce81f4",
+      "index": "cf09d538a90c3b2e1bd2ceb46ffbb712720d3edd",
+      "worktree": "cf09d538a90c3b2e1bd2ceb46ffbb712720d3edd"
+    },
+    {
+      "path": "packages/engine/src/us-levels.ts",
+      "beforeV": null,
+      "sha256": "f57efece57d56803785e09a116bdafe4f034f118b6091ebfcdec0501c85efc02",
+      "index": "668e6167ae85915d8a895f1fe899b3cde70269e0",
+      "worktree": "668e6167ae85915d8a895f1fe899b3cde70269e0"
+    },
+    {
+      "path": "packages/engine/src/us-preseason.ts",
+      "beforeV": null,
+      "sha256": "c80e88f5c6b7b3c58474d676830de15277eee8763f7dea8d8c5b9a9a93e38038",
+      "index": "2e64f28c0345821a112a9bdc5c0a5446b8a9452d",
+      "worktree": "2e64f28c0345821a112a9bdc5c0a5446b8a9452d"
+    },
+    {
+      "path": "packages/engine/src/us-roster-repair.ts",
+      "beforeV": null,
+      "sha256": "a11d2ee94d954a93a7c8eebcaaccd86f4f289dcb046361dab8e46855438c5f97",
+      "index": "45778305ce6ed49745ee97b065a746efe706f51d",
+      "worktree": "45778305ce6ed49745ee97b065a746efe706f51d"
+    },
+    {
+      "path": "packages/engine/src/us-schedule.ts",
+      "beforeV": null,
+      "sha256": "1427bcc3d75b1381c3222d00a7f3e337e9117b58b6991fa8545798fde881a46c",
+      "index": "70a13b54698f446f553d3f9975293cb0154a72a7",
+      "worktree": "70a13b54698f446f553d3f9975293cb0154a72a7"
+    },
+    {
+      "path": "packages/engine/src/us-season.ts",
+      "beforeV": null,
+      "sha256": "5d92cfe18b16d727c28b62af87d2d13a7ff04b814cac49feefce90969fb32da1",
+      "index": "753ee93846c29febefa731feaa4d8292bfe2c16a",
+      "worktree": "753ee93846c29febefa731feaa4d8292bfe2c16a"
+    },
+    {
+      "path": "packages/engine/src/us-windows.ts",
+      "beforeV": null,
+      "sha256": "edc55ade10907bbd6960c1834eed2c375629e02b7ff64d2a1e1f247a6cdc3908",
+      "index": "66067c1ee792dfdad1ae6d6f6b946c5b79330f87",
+      "worktree": "66067c1ee792dfdad1ae6d6f6b946c5b79330f87"
+    },
+    {
+      "path": "packages/engine/test/us-fixtures.ts",
+      "beforeV": null,
+      "sha256": "95a741f8dab09f200c188c9217305cc6c07fee2918fe7ca5e6d02b577af5b3ad",
+      "index": "d1ea3cf4ef5f706df2bbdb8092ffe1bbd3abe93c",
+      "worktree": "d1ea3cf4ef5f706df2bbdb8092ffe1bbd3abe93c"
+    },
+    {
+      "path": "packages/engine/test/us-growth.test.ts",
+      "beforeV": null,
+      "sha256": "14ac5096f147c4b8f490dd34d562783afaad5d8b1acf3155a3d12cd301719d81",
+      "index": "b6054d94e3133092c347aed79892b20e0a8a5795",
+      "worktree": "b6054d94e3133092c347aed79892b20e0a8a5795"
+    },
+    {
+      "path": "packages/engine/test/us-levels-windows.test.ts",
+      "beforeV": null,
+      "sha256": "85acb89c2320cd8e244b25d7a9c424ba83388044b06e75b8bd0e41b837e639d5",
+      "index": "bb9e71c53bb2a398ae276d3f77fbc2d04b7b509d",
+      "worktree": "bb9e71c53bb2a398ae276d3f77fbc2d04b7b509d"
+    },
+    {
+      "path": "packages/engine/test/us-preseason.test.ts",
+      "beforeV": null,
+      "sha256": "20277b20d5ce5677ab6a2f92eb04e3a5e942d05e4db05f421b7ecacb9ac9677f",
+      "index": "53e60dc496a45301880912f74a6cec723186772f",
+      "worktree": "53e60dc496a45301880912f74a6cec723186772f"
+    },
+    {
+      "path": "packages/engine/test/us-season.test.ts",
+      "beforeV": null,
+      "sha256": "bf5a7a531c3af204e2abb123127cf977be1ae0a195c4a68eb5a771326e337234",
+      "index": "2527645b50fe4dc3b6753063205974e3fd869c3a",
+      "worktree": "2527645b50fe4dc3b6753063205974e3fd869c3a"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+✔ fresh hitter sees six exact-progress general traits and two name/hint-only hidden cards (694.7671ms)
+✔ pitcher sees pitcher traits only; unlocked hidden trait reveals condition, effects and evidence (188.0482ms)
+✔ day close records the evaluated day and unlocks nothing without evidence (9412.4234ms)
+✔ crossing BB30 unlocks T02 once with a receipt; replay and older days are no-ops (7217.9446ms)
+✔ owned traits survive a later correction and pitcher-only traits never reach a hitter (7251.6161ms)
+✔ unlocked traits feed the next game context and the career keeps advancing (5479.7872ms)
+✔ 3×G boundary uses starter outs only and ignores postseason (9.5438ms)
+✔ five consecutive qualified seasons unlock T16 once at the fifth season close (16.6852ms)
+✔ a missed season resets the streak and owned T16 survives a later miss (15.0078ms)
+✔ hidden unlock raises one E84 stop; general unlock does not (200.7017ms)
+✔ OPEN_TRAITS resolves E84, navigates to S38 and restores the saved phase once (383.1274ms)
+✔ general unlocks collect in the unread summary until acknowledged (332.4011ms)
+✔ season progress stops at the day close with MAJOR_EVENT when a hidden unlock is pending (13127.312ms)
+✔ US full-date annual settlement pays one PRO budget, all opening NPCs and one aging; explicit forfeiture and replay keep receipts (64568.3494ms)
+✔ US annual audit refuses changed FINAL totals and incomplete date receipts before awarding growth (13696.8666ms)
+✔ US level review waits24 actual level games and minimum samples; defer consumes review without registration or salary changes (24920.0119ms)
+✔ US promotion swaps two existing registrations atomically, keeps records, shared identity and no immediate major appearance (3499.6728ms)
+✔ first MLB call-up preserves old minor salary basis and bonus; new800000 rate starts next day and budget is reserved once (2038.2462ms)
+✔ US protected40 and incompatible seats produce explicit NO_SLOT instead of silently registering27 MLB players (656.3065ms)
+✔ US training and style windows use level thirds/halves and cannot reset season uses by moving levels (4647.6902ms)
+✔ US option year consumes once only after20 minor registered games, with replayed dates ignored (508.3636ms)
+✔ US first camp updates four focus and seals plan once without games, money, population or growth (24111.8587ms)
+✔ US first camp focus event dispatch is atomic, stale/invalid/fake-origin changes fail (8999.0518ms)
+✔ US pitcher reuses repertoire allocation and learning reservation without inflating abilities or salary (30043.1412ms)
+✔ all five US schedules publish atomically, use shared international rest and preserve JSON identities (25032.7291ms)
+✔ US live startup projects only participating teams and keeps registrations, contracts and source immutable (23047.0761ms)
+✔ US first date plays all75 real games, pays one common-calendar salary and publishes records/XP only at FINAL (134103.1545ms)
+✔ US partial-game JSON resume equals continuous chunks, rejects stale revisions and corrupted pending provenance (44536.9303ms)
+✔ US injury repair first borrows inside the organization without fabricating players or changing26 MLB seats (20610.4629ms)
+✔ US exhausted organization uses minimum low-ability replacements, reserves injured identities and restores them after recovery (14273.6749ms)
+✔ US growth refuses unfinished seasons, and payroll mutations cannot mint future or duplicate salary (20983.9042ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 266782.1064

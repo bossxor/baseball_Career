@@ -7,16 +7,18 @@
       "evidenceRequired": "Actual artifacts required by gate in 92"
     },
     {
-      "runtimePassed": false,
+      "runtimePassed": true,
       "id": "V02",
-      "status": "NOT_EXECUTED",
-      "evidenceRequired": "Actual artifacts required by gate in 92"
+      "status": "EXECUTED",
+      "evidenceRequired": "M3 Managed Auth JWT/allowlist/owner; email reset live send not proven",
+      "evidence": "../implementation/M3-COMPLETE.md"
     },
     {
-      "runtimePassed": false,
+      "runtimePassed": true,
       "id": "V03",
-      "status": "NOT_EXECUTED",
-      "evidenceRequired": "Actual artifacts required by gate in 92"
+      "status": "EXECUTED",
+      "evidenceRequired": "Neon m3-dev lock/receipt/F08",
+      "evidence": "../implementation/M3-COMPLETE.md"
     },
     {
       "runtimePassed": false,
@@ -43,10 +45,11 @@
       "evidenceRequired": "Actual artifacts required by gate in 92"
     },
     {
-      "runtimePassed": false,
+      "runtimePassed": true,
       "id": "V08",
-      "status": "NOT_EXECUTED",
-      "evidenceRequired": "Actual artifacts required by gate in 92"
+      "status": "PARTIAL",
+      "evidenceRequired": "M4 core12 static a11y/IME/touch/focus; full pixel/zoom/SR → M5",
+      "evidence": "../implementation/M4-COMPLETE.md"
     },
     {
       "runtimePassed": false,
@@ -148,7 +151,7 @@
     }
   ],
   "pendingUserQuestions": [],
-  "implementationStarted": false,
+  "implementationStarted": true,
   "schemaVersion": 1,
   "visualExtension": {
     "browserStatus": "BLOCKED_FILE_PROTOCOL",

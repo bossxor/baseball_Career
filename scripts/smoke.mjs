@@ -27,7 +27,11 @@ try {
   for (const asset of assets) assert.equal((await fetch(new URL(asset, webUrl))).status, 200);
   const health = await fetch(new URL('/api/health', webUrl));
   assert.equal(health.status, 200);
-  assert.deepEqual(await health.json(), { status: 'ok', service: 'playball-api', rulesVersion: '1.0.0' });
+  const body = await health.json();
+  assert.equal(body.status, 'ok');
+  assert.equal(body.service, 'playball-api');
+  assert.equal(body.rulesVersion, '1.0.0');
+  assert.ok(['none', 'dev', 'neon'].includes(body.auth));
   console.log(`PASS: built web HTML + ${assets.length} JS/CSS entry assets served over HTTP; web proxy → running API → rulesVersion 1.0.0.`);
   console.log('NOT TESTED: browser rendering, game simulation, authentication, database, storage or APK.');
 } finally {

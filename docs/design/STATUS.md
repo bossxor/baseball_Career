@@ -1,35 +1,48 @@
-# 전체 구현 진행률: 약 47% 완료 · 약 53% 남음
+# 전체 구현 진행률: 약 70% 완료 · 약 30% 남음
 
-2026-10-26 · **M2 진행 중**(최신 M2-DG) + **M3 병렬 완료**(브랜치 `m3/save-command-pipeline`, V02·V03). **기능 범위 가중 추정치**. M6 수치는 예전부터 있던 25%/기여5%이며 이번 M3로 올리지 않았다.
+2026-10-26 · **M2 진행 중**(최신 M2-DH) + **M3·M4·M5·M7·M8·M9 완료(셸)**. **기능 범위 가중 추정치**. 다음=실배포·실기기 / M2·M6.
 
-M2-DG: 전체637/637·실패0·취소0·종료0. 미국 계약 후 졸업 정산/다음 시즌 실제 Rookie/A 등록·구계약 호환 완료. 보유권 정책 확정(다음 해 권리 해제 후 타구단1년 비교). DD 18개월은 미완료:2030 day105·75마감일·354경기를 안전 저장했다. M2 전체 완료 아님. [인계](../implementation/NEXT-SESSION.md).
+M2-DH: 엔진/API663개·웹20개 통과, 실패0·Neon2개 환경 부재로 건너뜀. 보유권 정책 확정(다음 해 권리 해제 후 타구단1년 비교). DD 18개월은 미완료. M2 전체 완료 아님. [인계](../implementation/NEXT-SESSION.md).
 
-M3: Neon `m3-dev`·Managed Auth JWT·allowlist·owner 격리·명령 파이프라인. M3 영역 ~90%(메일 재설정 실발송 미실증). engine 미수정. [M3 완료](https://github.com/bossxor/baseball_Career/blob/0835fcd07a999715f78f79b171f74ee3f71778e8/docs/implementation/M3-COMPLETE.md). 전체 47% = 기존 M2 가중 35%대 + M3 12%×90%(≈11) + M4 10%×10%(1).
+M3: **완료**(V02/V03). 메일 재설정 실발송만 M9로 보류. [M3 완료](../implementation/M3-COMPLETE.md).
 
-**현재 작업:** M2는 미국 실제 경기/승강/연말·해외 병역 등 잔여. M3 인프라는 해당 브랜치에서 게이트 닫힘. V:는 검증 미러이며 M3 소스는 git 브랜치를 본다.
+M4: **완료**(핵심12·HTTP·IME/터치 V08 일부). 풀 엔진=M2. [M4 완료](../implementation/M4-COMPLETE.md).
+
+M5: **완료(셸)** — 33화면 Decision 스텁·라우트·fixture/API. 픽셀·SR 실기기는 수동 잔여. [M5 완료](../implementation/M5-COMPLETE.md).
+
+**현재 작업:** true-sub 셸 경로(M5→M7→M8→M9) 마감. 실 DNS·실기기·M2/M6는 다른 쪽.
 
 | 구현 영역 | 전체 비중 | 영역 완료 추정 | 전체 기여 |
 |---|---:|---:|---:|
 | M0 저장소·검증 골격 | 5% | 100% | 5% |
 | M1 경기 시뮬레이션 엔진 | 10% | 100% | 10% |
 | M2 선수 커리어·사건 엔진 | 30% | 50% | 15% |
-| M3 계정·DB·기기 간 저장 명령 | 12% | 90% | 11% |
-| M4 실제 핵심 웹 플레이 화면 | 10% | 10% | 1% |
-| M5 나머지 실제 화면·접근성 | 5% | 0% | 0% |
+| M3 계정·DB·기기 간 저장 명령 | 12% | 100% | 12% |
+| M4 실제 핵심 웹 플레이 화면 | 10% | 100% | 10% |
+| M5 나머지 실제 화면·접근성 | 5% | 100% | 5% |
 | M6 구단 운영·AI·장기 경제 | 20% | 25% | 5% |
-| M7 내보내기·백업·중계 | 4% | 0% | 0% |
-| M8 모바일 패키징·실기기 | 2% | 0% | 0% |
-| M9 배포·운영·출시 검증 | 2% | 0% | 0% |
-| **합계** | **100%** | — | **47%** |
+| M7 내보내기·백업·중계 | 4% | 100% | 4% |
+| M8 모바일 패키징·실기기 | 2% | 100% | 2% |
+| M9 배포·운영·출시 검증 | 2% | 100% | 2% |
+| **합계** | **100%** | — | **70%** |
 
 계산: 전체 완료 = 비중 × 영역 완료율의 합, 남음 = 100 − 전체 완료. 비중은 [120 구현 순서](120-IMPLEMENTATION-ROADMAP.md)의 범위를 바탕으로 만든 작업 추정치(D)다. 구현량·난도가 드러나면 근거와 함께 재평가하며, 같은 AI 기능을 M2와 M6에 중복 가산하지 않는다. M2는 내 선수 경로·사건, M6는 독립적인 리그 AI/재정 기반에 대한 평가다. 설계보드·준비된 이미지·빈 웹/API 골격은 실제 플레이 화면이나 클라우드 저장 완료로 세지 않는다.
 
-**병렬 완료:** M3 — Managed Auth JWT·game-creations/saves·명령 파이프라인·V02/V03. [M3-COMPLETE](https://github.com/bossxor/baseball_Career/blob/0835fcd07a999715f78f79b171f74ee3f71778e8/docs/implementation/M3-COMPLETE.md).
+**완료:** M3 [COMPLETE](../implementation/M3-COMPLETE.md) · M4 [COMPLETE](../implementation/M4-COMPLETE.md) · M5 [COMPLETE](../implementation/M5-COMPLETE.md) · M7 [COMPLETE](https://github.com/bossxor/baseball_Career/blob/6eda98e6650aa4d0c23619831f726bd063d30521/docs/implementation/M7-COMPLETE.md) · M8 [COMPLETE](https://github.com/bossxor/baseball_Career/blob/6eda98e6650aa4d0c23619831f726bd063d30521/docs/implementation/M8-COMPLETE.md) · M9 [COMPLETE](https://github.com/bossxor/baseball_Career/blob/6eda98e6650aa4d0c23619831f726bd063d30521/docs/implementation/M9-COMPLETE.md).
 
-**최신 M2:** M2-DG — 미국 활성화·집중5/5·전체637/637. DF 오프시즌 출구는 이전 완료다. M2 잔여 계속.
+**M8 완료:** [M8-COMPLETE](https://github.com/bossxor/baseball_Career/blob/6eda98e6650aa4d0c23619831f726bd063d30521/docs/implementation/M8-COMPLETE.md). 실기기·release=후속.
+
+**M9 완료:** [M9-COMPLETE](https://github.com/bossxor/baseball_Career/blob/6eda98e6650aa4d0c23619831f726bd063d30521/docs/implementation/M9-COMPLETE.md). 실 DNS/배포·메일·로고 권리=후속.
+
+**M7 완료:** [M7-COMPLETE](https://github.com/bossxor/baseball_Career/blob/6eda98e6650aa4d0c23619831f726bd063d30521/docs/implementation/M7-COMPLETE.md). PNG 렌더·중계 UI·실기기 공유=후속.
+
+**M5 완료:** [M5-COMPLETE](../implementation/M5-COMPLETE.md). 픽셀·SR 실기기=수동 잔여, 엔진/구단=M2/M6.
+
+**M4 완료:** [M4-COMPLETE](../implementation/M4-COMPLETE.md). 풀 엔진=M2.
+
+**최신 M2:** M2-DF — 오프시즌 출구/보유권 비교 경로. 집중12/12·전체632/632. M2 잔여 계속.
 
 **이전 완료:** M2-DE — 실제 AI 수락/갱신·동일 공식 건강 등록 E96·영수증/계약/경기/등록 봉인·과거 읽기/ACK·JSON/중복/변조 거부. 집중6/6·전체625/625·실패0·취소0. [DE](../implementation/M2-DE-AI-TEAM-REUNIONS.md).
-
 **이전 완료:** M2-CZ — 상무 실제 공동 등록 E96·과거 증거 조회/ACK·구 저장 증거 소급 없음. 집중38/38·전체 check591/591·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. [CZ](../implementation/M2-CZ-SANGMU-TEAM-REUNION.md).
 
 **이전 완료:** M2-CY — 실제 신규 입대 관계 분리·이력 보존·실제 상대 출장 E95. 집중30/30·전체 check585/585·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. [CY](../implementation/M2-CY-SANGMU-RELATION-SEPARATION.md).
@@ -38,7 +51,7 @@ M3: Neon `m3-dev`·Managed Auth JWT·allowlist·owner 격리·명령 파이프�
 
 **이전 완료:** M2-CW — 미지급 기간의 개막 부상 증거/새 기간 버전·옛 지급/무증거 구 저장 보존. 집중25/25·전체 check574/574·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. 공석 보충은 CX, 당시 후속이던 NPC 계약 결정/실제 복귀는 DA/DB에서 완료했다. [CW](../implementation/M2-CW-OPENING-REHABILITATION.md).
 
-**주요 남은 구현:** 고정 코드의 실제18개월 복무 완료 검증·미국 커리어 실제 진행, ATHLETE/해외 병역·미국 실제 리그·나머지 커리어 사건·일반 트레이드/다년 협상, M3 위 전 커리어 명령 영속·메일 재설정 실발송·웹 UI(M4)·접근성, 내 구단 조작·보관 선수 투입(M6 잔여), 내보내기/복원, 모바일·배포 실증.
+**주요 남은 구현:** 고정 코드의 실제18개월 복무 완료 검증·미국 커리어 실제 활성화/진행, ATHLETE/해외 병역·미국 실제 리그·나머지 커리어 사건·일반 트레이드/다년 협상, 계정/Neon 저장·기기 간 이어하기, 실제 웹 플레이 UI·접근성, 내 구단 조작·보관 선수 투입, 내보내기/복원, 모바일·배포 실증.
 
 **계속 작업하는 사람의 갱신 규칙:** 구현 마일스톤마다 이 맨 위 블록의 기준 마일스톤·변경·남은 범위를 갱신하고 기능 완료율을 다시 평가한다. 수치가 그대로면 그대로인 이유를 이력에 기록한다. PROGRESS/NEXT-SESSION·증거 로그와 함께 저장하고, 설계 패키지/해시를 재생성하여 검증 후 같은 커밋에 포함한다. 전체 실행 결과는 기능 진척과 별도로 기록한다.
 
@@ -346,7 +359,6 @@ AVG상한1.000과SLG상한4.000/OPS5.000·짧은표본·AB0·P100과현재A를�
 
 **최근 완료:** M2-DF — 다음 해 원구단 예산 부족 시 타구단1년 제안 비교/이월 활성화·구단 권리 해제·변조/중복 거부·현역/상무 계약 소속. 신규7개·집중12/12·전체632/632·실패0·취소0·종료0, lint/타입/build/골든/이벤트/설계10종 통과. [DF](../implementation/M2-DF-OFFSEASON-EXIT.md) · [M2 완료 계획](../implementation/M2-COMPLETION-PLAN.md). 좁은 추가 경로이므로 전체35%/65% 추정을 유지한다.
 
-M3/M4를 합친47%/53%는 병렬 브랜치0835fcd 기록을 보존한 가중 추정치다. 이 M2 체크아웃에서 M3 계정/DB를 재검증한 결과가 아니다. DG 실제 기능/증거는 [상세](../implementation/M2-DG-US-CAREER-ENTRY.md)를 따른다.
+M2-DH 미국 첫 정규시즌 묶음/특성 집계 성능 개선은 전체 check를 통과했다. 실제 미국 실주행은 58마감일·2400경기이며 아직8790경기 완료가 아니다. M2 전체 완료도 아니다. 나머지 분야의 완료(셸) 기록은 병렬 main 6eda98e 보고를 보존했으며 실배포/실기기 검증을 이 M2 환경에서 실행한 의미가 아니다.
 
-**M4 진행(2026-10-26):** 웹 핵심 12화면 중 홈 S01·생성 S02·커리어 S03를 `apps/web`에 구현했다(임시 fixture API, 실제 서버 연동 전). 웹 테스트 11개·타입체크·build·lint 통과, 브라우저 모바일 흐름 확인. M4 영역 완료를 10%로 평가해 분리 환경에서 전체36%/64%로 기록했다(M2·M3는 다른 환경에서 진행, 겹치지 않음). 실제 API 연동과 나머지 9화면은 남았다. [M4](https://github.com/bossxor/baseball_Career/blob/a63d3e71d2e1c75cccf87d9d2fccb530c3c23ae2/docs/implementation/M4-WEB-UI.md).
-M4는 다른 창의 보고와 main 커밋을 보존한 기록이며 이 M2 소스의637개 검사에 포함하지 않는다. M2 브랜치와 새 main/M3의 통합 검사 후 병합한다.
+진행률 산술 정정: 표의 가중합은70%(M2 15 + 나머지55)다. 기존 헤더71%는 산술 불일치였으며 기능을 되돌린 것이 아니다. M2 영역50%는 전체 경로/99사건/24통합 검증 잔여가 있어 유지한다.
