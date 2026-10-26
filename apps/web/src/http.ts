@@ -1,7 +1,7 @@
 import type { PlayballApi } from './api.js';
 import { ApiError } from './errors.js';
 import type {
-  CareerView, ChooseReceipt, CreationReceipt, CreationRequest, DecisionView, HomeData, PlayScreenId, ProgressMode, SaveSummary,
+  CareerView, ChooseReceipt, ClubCreateRequest, ClubScreen, ClubScreenId, CreationReceipt, CreationRequest, DecisionView, HomeData, PlayScreenId, ProgressMode, SaveSummary,
 } from './model.js';
 
 export type HttpApiOptions = {
@@ -23,11 +23,13 @@ function relativeTime(iso: string): string {
 }
 
 function toSummary(row: SaveListItem): SaveSummary {
-  const title = typeof row.summary.name === 'string' ? row.summary.name
+  const title = typeof row.summary.clubId === 'string' ? String(row.summary.clubId)
+    : typeof row.summary.name === 'string' ? row.summary.name
     : typeof row.summary.creationId === 'string' ? String(row.summary.creationId)
     : row.id;
+  const seasonLabel = typeof row.summary.seasonKey === 'string' ? row.summary.seasonKey : row.mode === 'CLUB' ? '구단' : '고교 3학년';
   return {
-    saveId: row.id, mode: row.mode, title, seasonLabel: '고교 3학년', phaseLabel: row.phase,
+    saveId: row.id, mode: row.mode, title, seasonLabel, phaseLabel: row.phase,
     savedAtLabel: relativeTime(row.updatedAt), revision: Number(row.revision),
   };
 }
@@ -115,6 +117,28 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
     async choose(saveId: string, screenId: PlayScreenId, optionId: string, commandId: string): Promise<ChooseReceipt> {
       const result = await command(saveId, commandId, 'UI_CHOOSE', { screenId, optionId });
       return { next: result.next ?? { kind: 'career' } };
+    },
+    async createClub(request: ClubCreateRequest): Promise<CreationReceipt> {
+      const created = await req('/api/game-creations', {
+        method: 'POST', headers: await headers(),
+        body: JSON.stringify({ creationId: request.commandId, mode: 'CLUB' }),
+      }) as { saveId: string; revision: string };
+      revisions.set(created.saveId, Number(created.revision));
+      await command(created.saveId, `${request.commandId}:club`, 'CLUB_CREATE', {
+        worldKey: 'kbo-club', seed: request.commandId, difficulty: 'REALISTIC', clubId: request.clubId,
+      });
+      return { saveId: created.saveId };
+    },
+    async club(saveId: string, screenId: ClubScreenId, query: { playerKey?: string; gameKey?: string } = {}): Promise<ClubScreen> {
+      const params = new URLSearchParams();
+      if (query.playerKey) params.set('playerKey', query.playerKey);
+      if (query.gameKey) params.set('gameKey', query.gameKey);
+      const suffix = params.size ? `?${params}` : '';
+      return req(`/api/saves/${encodeURIComponent(saveId)}/screens/${screenId}${suffix}`, { headers: await headers(false) }) as Promise<ClubScreen>;
+    },
+    async clubCommand(saveId: string, commandId: string, type: string, payload: Record<string, unknown>): Promise<ClubScreen> {
+      await command(saveId, commandId, type, payload);
+      return this.club(saveId, 'S13');
     },
   };
 }

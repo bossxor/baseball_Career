@@ -10,13 +10,13 @@
 
 ## 코드 위치 (packages/engine/src)
 
-kbo-club-game.ts(뿌리·읽기·라인업 검사/적용) · kbo-club-import.ts(보관 투입) · kbo-club-progress.ts(시즌 진행·승강 정지/뉴스) · kbo-club-postseason.ts · kbo-club-year.ts(연말 마감/다음 시즌·재정 재건·로스터 계획 적용) · kbo-club-manage.ts(1군 편성·FA 제안·재계약/방출/트레이드·불펜). 테스트: test/kbo-club-*.test.ts. 공유 코드를 건드린 곳은 추가만: `high-school-game.ts`(`lineupOverrides`), `kbo-game-world.ts`(빈 주인공 키), `kbo-year-end.ts`(`closeKboNpcSeasons` export), `kbo-roster-repair.ts`, `kbo-fa-market.ts`(`userClub`).
+kbo-club-game.ts(뿌리·읽기·라인업 검사/적용) · kbo-club-import.ts(보관 투입) · kbo-club-progress.ts(시즌 진행·승강 정지/뉴스) · kbo-club-postseason.ts · kbo-club-year.ts(연말 마감/다음 시즌·재정 재건·로스터 계획 적용) · kbo-club-manage.ts(1군 편성·FA 제안·재계약/방출/트레이드·불펜) · kbo-club-command.ts(저장 명령·S13–S19 읽기). API `apps/api/src/club-shell.ts`. 웹 `PlayballApi`의 `createClub`/`club`/`clubCommand`. 테스트: test/kbo-club-*.test.ts, apps/api/test/m6-club-shell.test.ts. 공유 코드를 건드린 곳은 추가만: `high-school-game.ts`(`lineupOverrides`), `kbo-game-world.ts`(빈 주인공 키), `kbo-year-end.ts`(`closeKboNpcSeasons` export), `kbo-roster-repair.ts`, `kbo-fa-market.ts`(`userClub`).
 
 ## 남은 M6 작업 (권장 순서, 가까운 것끼리 묶어서 구현한 뒤 한 번에 검증)
 
 1~4는 [M6-E](M6-E-CLUB-OPS.md)에서 끝냈다(재정 재건 보조금, 재계약/방출/트레이드, 불펜 슬롯, 콜업 추천·뉴스).
 
-5. **구단 모드 저장/API/화면 연결(S12~S19)**: M3(저장 명령 파이프라인)·M4/M5(화면)와 만나는 지점. `apps/web`는 `PlayballApi` 경계만 보고, 새 명령은 `commandId` 멱등을 지켜야 한다. 서버 쪽은 M3 문서(`M3-COMPLETE.md`)를 따른다.
+5. **구단 모드 저장/API/화면**: [M6-F](M6-F-CLUB-SHELL.md)에서 생성·시작·라인업·1군·1일 진행과 S13–S19 읽기를 세이브에 연결했다. 남은 화면 명령은 제안·재계약/방출/트레이드·불펜이다. 픽셀 배치는 M5와 만난다.
 6. **12개 장기 시뮬레이션 계획과 균형 판정(M6 게이트)**: 실제 경기를 치르는 장기 실행은 시즌당 약 10분이므로 백그라운드 실행기와 중간 저장/재개(예: M2 DD 실행기 패턴)를 먼저 만든다. 통제 상태(경기 없음) 결과를 균형 근거로 쓰지 않는다.
 7. 그 외: 구단 모드 병역(상무/현역) 연결, 구단 모드 국제대회, 구단 AI 전략 라벨(68).
 

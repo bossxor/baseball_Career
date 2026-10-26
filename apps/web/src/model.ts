@@ -44,3 +44,14 @@ export type ChooseNext =
   | { kind: 'home' }
   | { kind: 'screen'; screenId: PlayScreenId };
 export interface ChooseReceipt { next: ChooseNext }
+
+/** S13–S19 club shell. The server fills lines, links and commands; the web does not import the engine. */
+export type ClubScreenId = 'S13' | 'S14' | 'S15' | 'S16' | 'S17' | 'S18' | 'S19';
+export interface ClubScreen {
+  screenId: ClubScreenId;
+  title: string;
+  lines: readonly { label: string; value: string }[];
+  links: readonly { screenId: ClubScreenId; label: string }[];
+  commands: readonly { id: string; label: string; type: string; payload: Record<string, unknown> }[];
+}
+export interface ClubCreateRequest { commandId: string; clubId: string }
