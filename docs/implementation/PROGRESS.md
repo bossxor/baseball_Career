@@ -1,3 +1,6 @@
+## M5 마일스톤 마감 (2026-10-26)
+
+33화면 셸·STATUS M5 100%(기여5). 픽셀·SR 실기·엔진/구단 연동은 후속. [COMPLETE](M5-COMPLETE.md).
 ## M5 나머지 화면 셸 (2026-10-26)
 
 S10–S21·S24–S27·S29–S45 Decision 스텁 + 라우트·fixture/API ui-shell 동기. 홈 설정→S21, S28 college→S34. 엔진/M6/픽셀·SR 제외. [M5](M5-WEB-UI.md).
