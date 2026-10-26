@@ -1,5 +1,9 @@
 ## M4 마일스톤 마감 (2026-10-26)
 
+## M6-A 독립 구단 새 게임 뿌리·시즌 진행 — 시작 (2026-10-26)
+
+`createKboClubGame`·S13/S14 읽기·S15 라인업 검사·`advanceKboClubGame`(전 리그 날짜 진행, 내 구단 건강 정지). 별도 작업 폴더/브랜치 `m6/club-mode`. [M6-A](M6-A-CLUB-GAME.md).
+
 IME 조합 게이트·V08 정적(터치/포커스/16px/reduced-motion)·STATUS M4 100%. 픽셀·SR 실기·풀 엔진은 후속. [COMPLETE](M4-COMPLETE.md).
 ## M3/M4 마감 (2026-10-26)
 

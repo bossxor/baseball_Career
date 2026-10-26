@@ -115,3 +115,5 @@ export * from './kbo-remainder-transfer.js';
 export * from './kbo-transfer-registration.js';
 
 export * from './kbo-offseason-exit.js';
+export * from './kbo-club-game.js';
+export * from './kbo-club-progress.js';
