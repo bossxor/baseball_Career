@@ -59,7 +59,7 @@ legend{font-weight:800;padding:0 6px}
 
 @media(min-width:768px){
   .screen{padding:24px;grid-template-columns:1fr 1fr;align-items:start}
-  .screen>.topbar,.screen>.screen-title,.screen>.banner,.screen>.lead,.screen>.stepper,.screen>.actions,.screen>.mode-nav,.screen>.notice-card{grid-column:1 / -1}
+  .screen>.topbar,.screen>.screen-title,.screen>.banner,.screen>.lead,.screen>.stepper,.screen>.actions,.screen>.mode-nav,.screen>.notice-card,.screen>fieldset{grid-column:1 / -1}
   .actions,.mode-nav{grid-template-columns:repeat(auto-fit,minmax(200px,max-content))}
 }
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}

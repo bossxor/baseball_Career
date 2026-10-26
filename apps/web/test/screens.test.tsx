@@ -7,10 +7,11 @@ import type { ScreenId } from '../src/screen-states.js';
 import { Home } from '../src/screens/Home.js';
 import { Create } from '../src/screens/Create.js';
 import { Career } from '../src/screens/Career.js';
+import { Decision } from '../src/screens/Decision.js';
 import { emptyDraft, validateStep } from '../src/creation.js';
 import { createFixtureApi } from '../src/fixtures.js';
 import { parseRoute } from '../src/App.js';
-import type { CareerView, HomeData } from '../src/model.js';
+import type { CareerView, DecisionView, HomeData } from '../src/model.js';
 
 const catalog = JSON.parse(readFileSync(new URL('../../../docs/design/screen-state-catalog.json', import.meta.url), 'utf8')) as { screens: Record<string, string>[] };
 
@@ -90,10 +91,49 @@ test('fixture api: a retried creation or action with the same command id changes
   await assert.rejects(api.career('missing'), /NOT_FOUND/);
 });
 
-test('routes: unknown or incomplete addresses fall back to home', () => {
+test('routes: unknown or incomplete addresses fall back to home; play screens parse', () => {
   assert.deepEqual(parseRoute(''), { name: 'home' });
   assert.deepEqual(parseRoute('#/create'), { name: 'create' });
   assert.deepEqual(parseRoute('#/career/fixture-1'), { name: 'career', saveId: 'fixture-1' });
   assert.deepEqual(parseRoute('#/career'), { name: 'home' });
   assert.deepEqual(parseRoute('#/nope/x'), { name: 'home' });
+  assert.deepEqual(parseRoute('#/play/fixture-1/S06'), { name: 'play', saveId: 'fixture-1', screenId: 'S06' });
+  assert.deepEqual(parseRoute('#/play/fixture-1/S99'), { name: 'home' });
+});
+
+const decision = (patch: Partial<DecisionView> = {}): DecisionView => ({
+  screenId: 'S06', saveId: 'a', summary: [{ label: '사건', value: '테스트' }],
+  options: [{ id: 'a', label: '선택 A', primary: true }, { id: 'b', label: '선택 B', disabledReason: '조건 미충족' }],
+  notice: null, ...patch,
+});
+
+test('S06 Decision: empty text, option disabilities linked, confirm needs selection', () => {
+  assert.match(renderToStaticMarkup(<Decision view={null} screenId="S06" />), /지금 선택할 사건이 없습니다/);
+  const html = renderToStaticMarkup(<Decision view={decision()} screenId="S06" selectedId="a" />);
+  assert.match(html, /data-screen="S06"/);
+  assert.match(html, /checked=""[^>]*value="a"/);
+  assert.match(html, /disabled=""[^>]*value="b"/);
+  assert.match(html, /aria-describedby="why-b"/);
+  assert.match(html, />확정<\/button>/);
+  const busy = renderToStaticMarkup(<Decision view={decision()} screenId="S06" selectedId="a" state="saving" />);
+  assert.match(busy, /같은 선택을 다시 실행하지 않고 결과를 확인합니다/);
+  assert.match(busy, /disabled=""[^>]*>확정<\/button>/);
+});
+
+test('fixture decision/choose: same commandId is idempotent; S04→S28 chain', async () => {
+  const api = createFixtureApi();
+  const { saveId } = await api.create({ commandId: 'c2', name: '박민수', kind: 'HITTER', position: 'CF', throws: 'R', bats: 'R', pitchForm: null, archetype: 'BALANCED', focus: ['CONTACT', 'POWER', 'DISCIPLINE', 'RUNNING'] });
+  for (let i = 0; i < 8; i++) await api.act(saveId, 'advance', 'ONE_WEEK', `adv-${i}`);
+  const career = await api.career(saveId);
+  assert.ok(career.nextActions.some(a => a.id === 'open:S04'));
+  const d4 = await api.decision(saveId, 'S04');
+  assert.equal(d4.screenId, 'S04');
+  const once = await api.choose(saveId, 'S04', 'to-path', 'ch-1');
+  const twice = await api.choose(saveId, 'S04', 'to-path', 'ch-1');
+  assert.deepEqual(twice, once);
+  assert.deepEqual(once.next, { kind: 'screen', screenId: 'S28' });
+  const emptyStyle = await api.decision(saveId, 'S22');
+  assert.ok(emptyStyle.options.length > 0);
+  await api.choose(saveId, 'S22', 'keep', 'style-1');
+  assert.equal((await api.decision(saveId, 'S22')).options.length, 0);
 });
