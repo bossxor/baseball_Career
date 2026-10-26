@@ -6,6 +6,7 @@ import {
 } from './kbo-club-game.js';
 import { advanceKboClubGame, startKboClubSeason } from './kbo-club-progress.js';
 import { startNextKboClubSeason } from './kbo-club-year.js';
+import { clubInternationalWindows, clubMilitaryWatch, clubStrategyReport } from './kbo-club-labels.js';
 import {
   autoClubBullpen, kboClubFreeAgents, planKboClubOffers, planKboClubRoster, setKboClubBullpen, setKboClubFirstTeam,
 } from './kbo-club-manage.js';
@@ -77,6 +78,9 @@ function linesFor(game: KboClubGame, home: ReturnType<typeof kboClubHome>, scree
       { label: '순위', value: mine ? `${mine.rank}위 ${mine.W}승 ${mine.L}패` : '순위 없음' },
       { label: '가용 예산', value: won(home.budget.availableWon) },
       { label: '다음 경기', value: home.nextGame ? `${home.nextGame.opponentName} · ${home.nextGame.worldDay}일` : '남은 경기 없음' },
+      { label: '전략', value: clubStrategyReport(game.world).find(row => row.clubId === game.userClubId)?.strategy ?? 'BALANCED' },
+      { label: '상무', value: `${clubMilitaryWatch(game).mine.length}명` },
+      { label: '국제', value: clubInternationalWindows(game).map(window => window.type).join(',') || '없음' },
       ...home.todos.map(todo => ({ label: '할 일', value: todo.code })),
     ];
   }
