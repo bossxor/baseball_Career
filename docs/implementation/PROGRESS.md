@@ -1,3 +1,9 @@
+## M9 운영 셸 (2026-10-26)
+
+`/api/ready`·`/api/version` · `verify:assets`/provenance · STATUS 70%. 실 DNS·배포는 후속. [M9](M9-OPS.md).
+## M8 마일스톤 마감 (2026-10-26)
+
+Capacitor debug 셸·`kr.againplayball.app`·HTTPS API 게이트·STATUS M8 100%(기여2). 실기기/release=후속. [COMPLETE](M8-COMPLETE.md).
 ## M8 Capacitor Android 셸 (2026-10-26)
 
 `kr.againplayball.app` · debug APK · `VITE_API_BASE` https 비로컬 강제. JDK21. 실기기/release는 후속. [M8](M8-ANDROID.md).

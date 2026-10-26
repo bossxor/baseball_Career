@@ -17,7 +17,7 @@
     "lint": "eslint packages apps scripts",
     "test": "npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/db && tsx --test packages/rules/test/*.test.ts packages/engine/test/*.test.ts apps/api/test/*.test.ts",
     "verify:design": "node scripts/verify-design.mjs",
-    "check": "npm run lint && npm run typecheck && npm test && npm run test:web && npm run build && npm run verify:engine && npm run verify:events && npm run verify:design && npm run verify:android",
+    "check": "npm run lint && npm run typecheck && npm test && npm run test:web && npm run build && npm run verify:engine && npm run verify:events && npm run verify:design && npm run verify:android && npm run verify:assets",
     "start": "node apps/api/dist/server.js",
     "smoke": "node scripts/smoke.mjs",
     "verify:engine": "node --import tsx scripts/verify-engine.mjs",
@@ -25,6 +25,7 @@
     "test:web": "tsx --tsconfig apps/web/tsconfig.json --test apps/web/test/*.test.ts apps/web/test/*.test.tsx",
     "assert:android-api": "node scripts/assert-android-api-base.mjs",
     "verify:android": "node scripts/verify-android-shell.mjs",
+    "verify:assets": "node scripts/verify-release-assets.mjs",
     "build:android": "node scripts/build-android.mjs"
   },
   "devDependencies": {

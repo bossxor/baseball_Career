@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-10-26",
+  "fonts": [
+    {
+      "file": "docs/design/assets/fonts/NotoSansKR-Variable.ttf",
+      "licenseFile": "docs/design/assets/fonts/NotoSansKR-OFL.txt",
+      "license": "OFL-1.1",
+      "source": "Google Fonts / Adobe Source Han Sans KR lineage"
+    },
+    {
+      "file": "docs/design/assets/fonts/BlackHanSans-Regular.ttf",
+      "licenseFile": "docs/design/assets/fonts/BlackHanSans-OFL.txt",
+      "license": "OFL-1.1",
+      "source": "Google Fonts Black Han Sans"
+    }
+  ],
+  "logos": [
+    {
+      "note": "Team logos — design review only until V12 rights confirmed; do not ship official marks in public APK without clearance."
+    }
+  ],
+  "apkSigning": {
+    "debug": "Android default debug keystore (local assembleDebug)",
+    "release": "store outside git; external backup required"
+  }
+}
