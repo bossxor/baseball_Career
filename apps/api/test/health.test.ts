@@ -5,7 +5,11 @@ import { app } from '../src/app.js';
 test('liveness exposes no save, secret or database readiness claim', async () => {
   const response = await app.request('/api/health');
   assert.equal(response.status, 200);
-  assert.deepEqual(await response.json(), { status: 'ok', service: 'playball-api', rulesVersion: '1.0.0' });
+  const json = await response.json();
+  assert.equal(json.status, 'ok');
+  assert.equal(json.service, 'playball-api');
+  assert.equal(json.rulesVersion, '1.0.0');
+  assert.ok(['none', 'dev', 'neon'].includes(json.auth));
 });
 
 test('game writes without db stay unavailable', async () => {

@@ -49,7 +49,7 @@ test('Neon V03 unique/rollback/F08 on m3-dev', { skip: !neonReady }, async () =>
       state: { schemaVersion: 1, stampCount: 0 },
     });
 
-    const app = createApp({ db });
+    const app = createApp({ db, auth: { allowDevBearer: true } });
     const auth = { Authorization: `Bearer dev:${subject}`, 'Content-Type': 'application/json' };
     const body = (commandId: string, expectedRevision: number, total = 3) => ({
       commandId,

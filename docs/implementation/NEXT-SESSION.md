@@ -1,6 +1,6 @@
 # 다음 환경 구현 인계 — 2026-10-23
 
-M3 병렬: 브랜치 `m3/save-command-pipeline` · [M3-A](M3-A-SAVE-COMMAND-PIPELINE.md). 이 브랜치에서 `packages/engine`·M2 문서는 수정하지 않는다.
+M3 완료: 브랜치 `m3/save-command-pipeline` · [M3-COMPLETE](M3-COMPLETE.md). 이 브랜치에서 `packages/engine` 수정 없음. 다음은 M4 UI 또는 M2 잔여.
 
 ## 최신 완료 — M2-DE AI 영입 공동 등록 E96
 

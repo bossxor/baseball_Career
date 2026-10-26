@@ -19,7 +19,7 @@ function demoBody(commandId: string, expectedRevision: number, total = 3) {
 test('V02 reject missing auth and non-allowlisted subject', async () => {
   const { db, client } = await createTestDb();
   await seedAllowedSubject(db, SUBJECT);
-  const app = createApp({ db });
+  const app = createApp({ db, auth: { allowDevBearer: true } });
   const noAuth = await app.request(`/api/saves/${SAVE}/commands`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -39,7 +39,7 @@ test('V03 unique receipt, idempotent replay, rollback on bad payload', async () 
   const { db, client } = await createTestDb();
   await seedAllowedSubject(db, SUBJECT);
   await seedSave(db, { id: SAVE, ownerId: SUBJECT });
-  const app = createApp({ db });
+  const app = createApp({ db, auth: { allowDevBearer: true } });
 
   const ok = await app.request(`/api/saves/${SAVE}/commands`, {
     method: 'POST',
@@ -96,7 +96,7 @@ test('F08 two devices same expectedRevision — one wins, other 409', async () =
   const { db, client } = await createTestDb();
   await seedAllowedSubject(db, SUBJECT);
   await seedSave(db, { id: SAVE, ownerId: SUBJECT, revision: 0n });
-  const app = createApp({ db });
+  const app = createApp({ db, auth: { allowDevBearer: true } });
 
   const [a, b] = await Promise.all([
     app.request(`/api/saves/${SAVE}/commands`, {

@@ -14,6 +14,7 @@
     "@playball/engine": "0.1.0",
     "@playball/rules": "0.1.0",
     "drizzle-orm": "^0.44.7",
-    "hono": "^4.13.13"
+    "hono": "^4.13.13",
+    "jose": "^6.2.13"
   }
 }
