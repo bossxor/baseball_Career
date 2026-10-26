@@ -122,3 +122,4 @@ export * from './kbo-club-year.js';
 export * from './kbo-club-manage.js';
 export * from './kbo-club-postseason.js';
 export * from './kbo-club-command.js';
+export * from './kbo-club-long-run.js';
