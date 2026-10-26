@@ -16,8 +16,8 @@ function eligible(c:KboCareer):string|null {
  return remainingKboMilitaryContractDays(c)>0?null:'CONTRACT_DECISION_REQUIRED';
 }
 function programFor(c:KboCareer){
- const r=acceptedRenewal(c),current=c.world.contracts[c.protagonistKey]!,contract=r?{...current,contractKey:r.offerKey,seasonKey:r.seasonKey,years:r.years,annualSalaryWon:r.annualSalaryWon}:current;
- return enlistInActiveService({worldKey:c.world.worldKey,playerKey:c.protagonistKey,clubId:c.protagonistClubId,selectionSeasonKey:c.world.seasonKey,contract,remainingPaidGameDays:remainingKboMilitaryContractDays(c)});
+ const r=acceptedRenewal(c),current=c.world.contracts[c.protagonistKey]!,contract=r?{...current,contractKey:r.offerKey,clubId:r.clubId,seasonKey:r.seasonKey,years:r.years,annualSalaryWon:r.annualSalaryWon}:current;
+ return enlistInActiveService({worldKey:c.world.worldKey,playerKey:c.protagonistKey,clubId:contract.clubId,selectionSeasonKey:c.world.seasonKey,contract,remainingPaidGameDays:remainingKboMilitaryContractDays(c)});
 }
 /** S26 review only. No enlistment, loan, contract mutation, RNG or future game is published by reading. */
 export function kboActiveServicePreview(c:KboCareer){

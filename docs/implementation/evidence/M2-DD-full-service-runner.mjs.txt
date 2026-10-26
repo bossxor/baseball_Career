@@ -1,0 +1,91 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import zlib from 'node:zlib';
+import assert from 'node:assert/strict';
+import {fileURLToPath} from 'node:url';
+import {enteredKboCareer} from './packages/engine/test/fixtures.ts';
+import {startSangmuCohort} from './packages/engine/src/kbo-sangmu-start.ts';
+import {confirmKboPreseasonPlan} from './packages/engine/src/kbo-preseason.ts';
+import {confirmKboOpeningRoster} from './packages/engine/src/kbo-opening-roster.ts';
+import {confirmKboSeasonSchedule} from './packages/engine/src/kbo-schedule.ts';
+import {startKboRegularSeason,advanceKboCareer} from './packages/engine/src/kbo-progress.ts';
+import {resolveKboCallup} from './packages/engine/src/kbo-callup.ts';
+import {resolveKboWindowEvent} from './packages/engine/src/kbo-windows.ts';
+import {startKboPostseason,advanceKboPostseason} from './packages/engine/src/kbo-postseason-progress.ts';
+import {settleKboSeasonGrowth} from './packages/engine/src/kbo-season-growth.ts';
+import {closeKboSeason} from './packages/engine/src/kbo-year-end.ts';
+import {kboContractDecisionRequired,offerKboRenewal,acceptKboRenewal} from './packages/engine/src/kbo-renewal.ts';
+import {startNextKboSeason} from './packages/engine/src/kbo-year-transition.ts';
+import {kboMilitaryCompletionDays} from './packages/engine/src/kbo-military-events.ts';
+import {assertKboRecruitmentWorld} from './packages/engine/src/kbo-draft.ts';
+import {assertSangmuUnit} from './packages/engine/src/kbo-sangmu-unit.ts';
+
+const root=path.dirname(fileURLToPath(import.meta.url)),storage=path.join(root,'native-checkpoints');fs.mkdirSync(storage,{recursive:true});
+const hash=b=>crypto.createHash('sha256').update(b).digest('hex'),commit='30641936cc3c8d8cc056beb5945789e701b7bd78';
+function tree(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?tree(path.join(dir,e.name)):[path.join(dir,e.name)]).sort();}
+const names=[...tree(path.join(root,'packages')),...['package.json','package-lock.json','tsconfig.base.json','tsconfig.tests.json'].map(p=>path.join(root,p))],sourceFiles=Object.fromEntries(names.map(p=>[path.relative(root,p).replaceAll('\\','/'),hash(fs.readFileSync(p))]));
+const identity={commit,sourceSha:hash(JSON.stringify(sourceFiles)),harnessSha:hash(fs.readFileSync(fileURLToPath(import.meta.url))),node:process.version,lockSha:hash(fs.readFileSync(path.join(root,'package-lock.json'))),rulesDistSha:hash(JSON.stringify(tree(path.join(root,'node_modules/@playball/rules/dist')).map(p=>[path.basename(p),hash(fs.readFileSync(p))])))};
+const input=process.argv[2]??'new',slice=process.argv[3]===undefined?Infinity:Number(process.argv[3]);assert.ok(slice===Infinity || Number.isSafeInteger(slice)&&slice>0);
+let run;
+if(input==='new'){
+ const entry=enteredKboCareer(),career=startSangmuCohort(entry,entry.revision),targets=Object.keys(career.world.suspendedContracts);assert.equal(targets.length,20);
+ run={schemaVersion:1,identity,stage:'OPEN_1',career,targets,initialPrograms:Object.fromEntries(targets.map(k=>[k,structuredClone(career.sangmu.members[k].program)])),calls:0,closedDays:0,generation:0,yearOne:null};
+ fs.writeFileSync(path.join(storage,'source-files.json'),JSON.stringify(sourceFiles,null,2)+'\n');
+}else{
+ const pointer=JSON.parse(fs.readFileSync(path.resolve(input),'utf8')),compressed=fs.readFileSync(path.join(path.dirname(path.resolve(input)),pointer.file));assert.equal(hash(compressed),pointer.sha256);
+ const raw=zlib.gunzipSync(compressed);assert.equal(hash(raw),pointer.nativeSha256);run=JSON.parse(raw);assert.deepEqual(run.identity,identity,'Source, harness, dependency or Node identity changed; do not resume');
+}
+const startDays=run.closedDays;let lastSaved=run.closedDays;
+function summary(reason){const c=run.career;return {reason,stage:run.stage,seasonKey:c.world.seasonKey,lastClosedDay:c.days?.days.at(-1)?.day??null,closedDays:run.closedDays,calls:run.calls,regularGames:Object.values(c.records.games).filter(g=>['KBO','FUTURES'].includes(g.scope.leagueKey)&&g.scope.phase==='REGULAR').length,tracked:run.targets.length,commit};}
+function save(reason){
+ run.generation++;const raw=Buffer.from(JSON.stringify(run)),compressed=zlib.gzipSync(raw,{level:1}),file=`native-${run.generation}-${crypto.randomUUID()}.json.gz`,temp=path.join(storage,file+'.tmp');fs.writeFileSync(temp,compressed);fs.renameSync(temp,path.join(storage,file));
+ const pointer={file,sha256:hash(compressed),nativeSha256:hash(raw),identity,summary:summary(reason)};fs.writeFileSync(path.join(storage,'latest.json.tmp'),JSON.stringify(pointer,null,2)+'\n');fs.renameSync(path.join(storage,'latest.json.tmp'),path.join(storage,'latest.json'));lastSaved=run.closedDays;console.log(JSON.stringify(pointer.summary));
+}
+function call(fn){const old=run.career,season=old.world.seasonKey,count=old.days?.days.length??0;run.career=fn(old);run.calls++;if(season===run.career.world.seasonKey)run.closedDays+=Math.max(0,(run.career.days?.days.length??0)-count);}
+function open(c){const p=confirmKboPreseasonPlan(c,c.revision),o=confirmKboOpeningRoster(p,p.revision),s=confirmKboSeasonSchedule(o,o.revision);return startKboRegularSeason(s,s.revision);}
+function resolve(c){
+ const e=c.events.find(e=>e.eventKey===c.phaseContext.eventKey);assert.ok(e,'Unknown blocking event');const input={eventKey:e.eventKey,eventVersion:e.version};
+ if(e.definitionId==='E09')return resolveKboCallup(c,c.revision,{...input,command:'DEFER_CALLUP'});
+ if(e.definitionId==='E41'||e.definitionId==='E43')return resolveKboWindowEvent(c,c.revision,{...input,command:e.definitionId==='E41'?'ACK_EVENT':'FORFEIT_TRAINING'}).career;
+ throw Error('Unreviewed required choice '+e.definitionId);
+}
+try{
+ while(run.stage!=='COMPLETE'){
+  if(run.closedDays-startDays>=slice || fs.existsSync(path.join(storage,'STOP'))){save('PARTIAL_SAFE_STOP');break;}
+  let c=run.career;
+  if(run.stage==='OPEN_1'){call(open);run.stage='REGULAR_1';save('FIRST_SEASON_OPEN');continue;}
+  if(run.stage.startsWith('REGULAR')){
+   if(c.phaseContext.phase==='EVENT_DECISION'){call(resolve);continue;}
+   if(c.phaseContext.phase==='SEASON_REVIEW'){assert.equal(run.stage,'REGULAR_1','Second regular season ended before required returned pay');run.stage='POST_1';save('FIRST_REGULAR_COMPLETE');continue;}
+   assert.equal(c.phaseContext.phase,'SEASON_PROGRESS');const r=advanceKboCareer(c,c.revision,1);assert.notEqual(r.stopReason,'ENGINE_LIMIT');assert.notEqual(r.stopReason,'CONTRACT_DECISION_REQUIRED');call(()=>r.career);c=run.career;
+   if(run.stage==='REGULAR_2'){
+    const due=kboMilitaryCompletionDays(run.initialPrograms[run.targets[0]])[1];
+    if(c.days.days.at(-1)?.day>=due.worldDay){
+     for(const key of run.targets){const program=c.sangmu.members[key]?.program??Object.values(c.sangmu.npcReturns).find(r=>r.program.playerKey===key)?.program;assert.ok(program);assert.equal(program.completedBlocks,2);assert.equal(program.blocks[1].completedWorldDay,due.worldDay);}
+     const paid=run.targets.filter(k=>c.world.contracts[k]?.servicePay?.ledger.receipts.length>0);
+     if(paid.length){
+      assertKboRecruitmentWorld(c.world);assertSangmuUnit(c.sangmu,c.world);
+      for(const key of paid)for(const receipt of c.world.contracts[key].servicePay.ledger.receipts){assert.equal(receipt.seasonKey,due.seasonKey);assert.ok(receipt.worldDay>due.worldDay);assert.ok(c.health.games.some(h=>h.evidence.seasonKey===receipt.seasonKey && h.evidence.day===receipt.worldDay && h.evidence.roster.includes(key) && h.evidence.teamKey.endsWith(':'+c.world.contracts[key].clubId)));}
+      run.result={paidReturnedPlayers:paid.length,firstReturnPayDay:Math.min(...paid.flatMap(k=>c.world.contracts[k].servicePay.ledger.receipts.map(r=>r.worldDay))),due,allBlocksComplete:20,yearOneGrowthVerified:true};run.stage='COMPLETE';save('PASS_FULL_PRO_SERVICE_TO_FIRST_RETURN_PAY');break;
+     }
+    }
+   }
+  }else if(run.stage==='POST_1'){
+   if(c.phaseContext.phase==='SEASON_REVIEW'&&!c.postseason){call(s=>startKboPostseason(s,s.revision));continue;}
+   if(c.phaseContext.phase==='POSTSEASON_PROGRESS'){const r=advanceKboPostseason(c,c.revision);assert.notEqual(r.stopReason,'ENGINE_LIMIT');call(()=>r.career);continue;}
+   assert.ok(c.postseason.championKey);run.stage='CLOSE_1';save('FIRST_POSTSEASON_COMPLETE');
+  }else if(run.stage==='CLOSE_1'){
+   if(!c.seasonClose){call(s=>settleKboSeasonGrowth(s,s.revision).career);call(s=>closeKboSeason(s,s.revision,true));}
+   c=run.career;for(const key of run.targets){assert.equal(c.sangmu.members[key].program.completedBlocks,1);assert.ok(c.seasonClose.npcGrowth[key]);}
+   run.yearOne={seasonKey:c.world.seasonKey,players:Object.fromEntries(run.targets.map(k=>[k,structuredClone(c.sangmu.members[k].player)])),growth:structuredClone(c.seasonClose.npcGrowth)};
+   if(kboContractDecisionRequired(c)){call(s=>offerKboRenewal(s,s.revision));call(s=>acceptKboRenewal(s,s.revision,{eventKey:s.renewal.eventKey,eventVersion:s.events.find(e=>e.eventKey===s.renewal.eventKey).version}));}
+   run.stage='YEAR_2';save('FIRST_ANNUAL_SETTLEMENT_COMPLETE');
+  }else if(run.stage==='YEAR_2'){
+   call(s=>startNextKboSeason(s,s.revision));c=run.career;
+   for(const key of run.targets){assert.equal(c.sangmu.members[key].player.age,run.yearOne.players[key].age+1);assert.deepEqual(c.sangmu.members[key].player.abilities,run.yearOne.players[key].abilities);assert.deepEqual(c.sangmu.members[key].program.contract,run.initialPrograms[key].contract);}
+   call(s=>startSangmuCohort(s,s.revision));call(open);run.stage='REGULAR_2';save('SECOND_SEASON_OPEN_NATIVE_Y02');
+  }else throw Error('Unknown harness stage '+run.stage);
+  if(run.closedDays-lastSaved>=5)save('PARTIAL_PROGRESS');
+ }
+}catch(error){save('FAIL_NATIVE_EXECUTION');console.error(error);process.exitCode=1;}

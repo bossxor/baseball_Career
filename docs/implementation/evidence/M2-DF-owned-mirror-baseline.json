@@ -1,0 +1,8 @@
+{
+  "source": "Owned first STATUS update and protected latest mirror",
+  "files": {
+    "docs/design/STATUS.md": "b350c01b36632d60d0f5dcc68f4999aca8094bbe067d12af4086b13a49aea79f",
+    "docs/design/DESIGN-ALL.md": "64028bbc5b638f604a9e1640c9ba48e6e74c2441207661e1a8631e693fb103c0",
+    "docs/design/MANIFEST-SHA256.csv": "16e00cb9aa23fb4586a556c6fd39adb7bcb5c3aa567b59976ac4a7331bda26eb"
+  }
+}

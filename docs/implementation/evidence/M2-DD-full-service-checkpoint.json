@@ -1,0 +1,51 @@
+{
+  "savedAt": "2026-10-26T00:23:43.001Z",
+  "location": "V:/.local-verification/M2-DD-3064193-20261026/74011046f59c",
+  "summary": {
+    "reason": "PARTIAL_SAFE_STOP",
+    "stage": "REGULAR_1",
+    "seasonKey": "2030",
+    "lastClosedDay": 60,
+    "closedDays": 30,
+    "calls": 55,
+    "regularGames": 60,
+    "tracked": 20,
+    "commit": "30641936cc3c8d8cc056beb5945789e701b7bd78"
+  },
+  "identity": {
+    "commit": "30641936cc3c8d8cc056beb5945789e701b7bd78",
+    "sourceSha": "7d667538e5ae284453127eae0859a0bf6d72da5d516fbb929131d1637ab674e7",
+    "harnessSha": "6072660dd5f2c232848d76fdb1a80ca168c2f5fcbb0ee0c8800a023e60d09305",
+    "node": "v24.19.0",
+    "lockSha": "d1737b440cbcbad9aae9ade7af516aef9b2883c851e27b70e2e17b622185624e",
+    "rulesDistSha": "584d2bc5f6cab687fd59a0430f5dc0e58a92de3f9f58ea8a7e2443c1886bfc09"
+  },
+  "files": [
+    {
+      "name": "native-9-0613ec59-af0a-46bc-80d0-2730c2b8b9ab.json.gz",
+      "bytes": 1084763,
+      "sha256": "08d0e92a07a7fde7437bd17045a2e06406a1ed98851ccc7c08784deda4717a05"
+    },
+    {
+      "name": "latest.json",
+      "bytes": 950,
+      "sha256": "bdb60e3054a356743a0d0bf09d7f2d13b4835cbd53a2602dd554448931542ea4"
+    },
+    {
+      "name": "dd-full-service.mjs",
+      "bytes": 9788,
+      "sha256": "6072660dd5f2c232848d76fdb1a80ca168c2f5fcbb0ee0c8800a023e60d09305"
+    },
+    {
+      "name": "source-files.json",
+      "bytes": 27723,
+      "sha256": "3a21bcd470d6e3de139ef4ef5795007c6bdc5d9fa171a7d3d889508951244ad4"
+    },
+    {
+      "name": "source-3064193.tar",
+      "bytes": 1976320,
+      "sha256": "0727aa23e6dd6558d97b6cbd2f7ca12b10e63bbcf5dcbd425ae949fb1975d196"
+    }
+  ],
+  "scope": "New fixed-DC native run; earlier external checkpoint was unavailable; not complete18months"
+}

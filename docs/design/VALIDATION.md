@@ -416,3 +416,8 @@ M1 순수 경기 코어를 추가했고 단위67/67·린트·타입·rules/engin
 ## 2026-10-23 구현 검증 참조 — M2-CZ
 
 상무 실제 공동 등록 E96은 집중38/38·전체 npm run check591/591·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. [CZ](../implementation/M2-CZ-SANGMU-TEAM-REUNION.md) · [전체](../implementation/evidence/M2-CZ-check.log). NPC 실제18개월 복귀/급여·연간 성장/미래 채무·UI/계정/Neon/APK의 완료를 뜻하지 않는다.
+
+
+## 2026-10-26 구현 검증 참조 — M2-DF
+
+연말 재원 부족의 타구단1년 제안/다음 해 보유권 해제는 신규7개·집중12/12·전체632/632·실패0·취소0·종료0, lint/타입/build/골든/이벤트/설계10종 통과. [DF](../implementation/M2-DF-OFFSEASON-EXIT.md). 동결265개 실제 소스에서 실행했고, 별도 JSON 비교/수락/Y02 재개도 동일했다. 미진행 정규 시계가 포함된 fixture이며18개월 전체·US 실제 리그·전체 M2 완료 증거가 아니다.

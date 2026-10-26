@@ -26,7 +26,7 @@ export function activateKboNpcMilitaryContracts(source:KboCareer,c:KboCareer):vo
   const contract=structuredClone(original);contract.servicePay=createKboServicePayroll(contract,m.program,kboMilitaryCompletionDays(m.program)[1]!);
   c.world.suspendedContracts[key]=contract;c.world.clubs.find(t=>t.id===contract.clubId)!.reservedSalaryWon+=kboContractSeasonCharge(contract);
  }
- c.schemaVersion=6;
+ if(c.schemaVersion<6)c.schemaVersion=6;
 }
 
 /** A full original club keeps ownership and the completed member off army registration until a real slot opens. */

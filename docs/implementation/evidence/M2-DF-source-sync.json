@@ -1,0 +1,262 @@
+{
+  "baseCommit": "df65ec2dd7faf7fe32bf2618d3e269cfb03b8a76",
+  "runtimeSourcesUnchanged": 265,
+  "transportOnlyEofNormalization": [
+    "M2-DF-json-replay-generator.cjs.txt",
+    "M2-DF-lint.log"
+  ],
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "02d09c825bbb52347d462b23c994deb65b0aef9c4fb989e1a975e10f91ba1d61",
+      "indexBlob": "7e277af2ebe3b80c6fddcecdf8b73c5bec58f2da",
+      "sourceBlob": "7e277af2ebe3b80c6fddcecdf8b73c5bec58f2da"
+    },
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "19c58da11880f6f404a0ec113b5c8d790ff9032ede52f82ca6fe4aa9bc794ad6",
+      "indexBlob": "630dab72ee35a75d02654f78146e7ead50cac90f",
+      "sourceBlob": "630dab72ee35a75d02654f78146e7ead50cac90f"
+    },
+    {
+      "path": "docs/design/21-MILITARY-CONTRACT-RETURN.md",
+      "sha256": "5920bd4b60d0da66a5c64f3e597e2e98a39b5c62a662813d490086678c248aab",
+      "indexBlob": "530cb1d6bf5159a80cb5dbdba5d9efd100746d9d",
+      "sourceBlob": "530cb1d6bf5159a80cb5dbdba5d9efd100746d9d"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "dc563224f038738718afddfb9cc049736c6cab9ccd1716c5aa7f8210dbe52b3b",
+      "indexBlob": "6efd77ecd68a80aa2f50412ba1d6091aaeae2e21",
+      "sourceBlob": "6efd77ecd68a80aa2f50412ba1d6091aaeae2e21"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "8210e6831acd0601928944c70f35309c3b9992435b76f3b9ecaa3b010d2fb5f6",
+      "indexBlob": "90a2d56b79fa04128605be09e836cc5811e354d9",
+      "sourceBlob": "90a2d56b79fa04128605be09e836cc5811e354d9"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "62612666278931ec8dc45d9af259a7b18f86c5a91ab3ca4d0208e07ee0626154",
+      "indexBlob": "08721ee458270a22977b2751e86adee79e77d78e",
+      "sourceBlob": "08721ee458270a22977b2751e86adee79e77d78e"
+    },
+    {
+      "path": "docs/design/VALIDATION.md",
+      "sha256": "acee455cc0aad6006c261eb283ba3404263f360a21eeb5dd8419cf47bbb6b2d8",
+      "indexBlob": "486b6bf6b3d9399af656603bea029e07554673e6",
+      "sourceBlob": "486b6bf6b3d9399af656603bea029e07554673e6"
+    },
+    {
+      "path": "docs/implementation/M2-COMPLETION-PLAN.md",
+      "sha256": "0d2e0a5fe751ee3e21473d3c23493ccd7a2e3370f43c88698ee6a6330c8cf4f8",
+      "indexBlob": "7e5c3c280c9347beac6a7b3ece8570866d72a9da",
+      "sourceBlob": "7e5c3c280c9347beac6a7b3ece8570866d72a9da"
+    },
+    {
+      "path": "docs/implementation/M2-DF-OFFSEASON-EXIT.md",
+      "sha256": "5637e0c5582745057c695f6c3acf30acd1731ce512270a1a0f6ca31317ba5c2b",
+      "indexBlob": "b6460863fb8768713934cf7cb99312441eeb51d5",
+      "sourceBlob": "b6460863fb8768713934cf7cb99312441eeb51d5"
+    },
+    {
+      "path": "docs/implementation/M2-M3-INTEGRATION-NOTES.md",
+      "sha256": "065cefaa91857c2e455a0a20ecb2b0a125965cc323559377a9a569aa843cbd05",
+      "indexBlob": "0777cd21a156b8ab10817c98e6c0642d74c83739",
+      "sourceBlob": "0777cd21a156b8ab10817c98e6c0642d74c83739"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "a64a11c767c42e3164e8723ea18c093638a480679aaf0a41eadba297b5755f9f",
+      "indexBlob": "790bff9fd77477b6d0bb057049d8de46b2b44a0b",
+      "sourceBlob": "790bff9fd77477b6d0bb057049d8de46b2b44a0b"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "bdcad9c08783f42a43285fe3641bc1cbeea4deac26fc9e29ac04579633eb5800",
+      "indexBlob": "e9d3e8fc2fe00d48fbdb92b5471dfcaa99a4c954",
+      "sourceBlob": "e9d3e8fc2fe00d48fbdb92b5471dfcaa99a4c954"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DD-corrupt-checksum-rejected.log",
+      "sha256": "f16eec5cf4182ab077bb190eb09041e9cc7ccdf2e8a65c200f1010de001ae323",
+      "indexBlob": "ef79c456857338fd06e1d866da836bd7f16bf114",
+      "sourceBlob": "ef79c456857338fd06e1d866da836bd7f16bf114"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DD-first3.log",
+      "sha256": "0b60b65eca00d7915d9bf27eb9920e7526c5b5090a66545b6465df3ece55945d",
+      "indexBlob": "cf0504279b3eacbc7bebdfa1ae49c7787c8571fb",
+      "sourceBlob": "cf0504279b3eacbc7bebdfa1ae49c7787c8571fb"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DD-full-service-checkpoint-notes.md",
+      "sha256": "18d8a0e52e9cacf7c1e7f4818aa5bae583bae2c917237d5342056a1674b6a55d",
+      "indexBlob": "7179f68e31b2e8f8c7261456024b4220e1c4e780",
+      "sourceBlob": "7179f68e31b2e8f8c7261456024b4220e1c4e780"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DD-full-service-checkpoint.json",
+      "sha256": "7c1538c54655b2f09d82b2953b8c763a8634a9162c77ab0c3512709b0a2ebf3f",
+      "indexBlob": "ea66fa211be18418dfdf57d6019053ce1a2042b5",
+      "sourceBlob": "ea66fa211be18418dfdf57d6019053ce1a2042b5"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DD-full-service-runner.mjs.txt",
+      "sha256": "6072660dd5f2c232848d76fdb1a80ca168c2f5fcbb0ee0c8800a023e60d09305",
+      "indexBlob": "575256c3336bdb08fa21878c007408963bac80fe",
+      "sourceBlob": "575256c3336bdb08fa21878c007408963bac80fe"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DD-resume2.log",
+      "sha256": "3962954dda3856d70b581b99ba140892d873bf11062f7da14818ebda358125f3",
+      "indexBlob": "e3ccbc69eec1b31cb6647fa8c6125941b88caab7",
+      "sourceBlob": "e3ccbc69eec1b31cb6647fa8c6125941b88caab7"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DF-check-exit.txt",
+      "sha256": "5feceb66ffc86f38d952786c6d696c79c2dbc239dd4e91b46729d73a27fb57e9",
+      "indexBlob": "c227083464fb9af8955c90d2924774ee50abb547",
+      "sourceBlob": "c227083464fb9af8955c90d2924774ee50abb547"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DF-check.log",
+      "sha256": "550d11365857b4e1d83ea23a4db2ca80fa6f3f383cdba38ba562995ea41471d1",
+      "indexBlob": "35793d8937ee29392dfd05c0441093469310f6ac",
+      "sourceBlob": "35793d8937ee29392dfd05c0441093469310f6ac"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DF-design-final.log",
+      "sha256": "53d79590149b9f0dff40f3c68d22bbff727cdd90131223cd0921021fda200090",
+      "indexBlob": "3dbeafbf5c570526f3080073cffb213824255b29",
+      "sourceBlob": "3dbeafbf5c570526f3080073cffb213824255b29"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DF-focused.log",
+      "sha256": "5916af8d64e5c3904b81a874db9a82ac34dc2ebb59d869c0859395d959879a5a",
+      "indexBlob": "8cf2df9f1fc2893072832c764ca17ec76bcd4ed8",
+      "sourceBlob": "8cf2df9f1fc2893072832c764ca17ec76bcd4ed8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DF-json-replay-generator.cjs.txt",
+      "sha256": "cd9dd08401f66c3124fb0d0875499a51d044c770149a8ead5c105b7b9ee292ed",
+      "indexBlob": "b47d378565ace18575cedbca5f02b26a958de827",
+      "sourceBlob": "b47d378565ace18575cedbca5f02b26a958de827"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DF-json-replay.log",
+      "sha256": "da90bdde9093054151a680c8c6b1ab1766ab2076dce31957e3ff22b7bfe44da9",
+      "indexBlob": "b0a40e1e0f2d7ab68411a3f7bb2b7f224b9f8264",
+      "sourceBlob": "b0a40e1e0f2d7ab68411a3f7bb2b7f224b9f8264"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DF-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f",
+      "indexBlob": "f61cd1e9f5eb3902a8bad2bb1881bc2b55805d70",
+      "sourceBlob": "f61cd1e9f5eb3902a8bad2bb1881bc2b55805d70"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DF-owned-mirror-baseline.json",
+      "sha256": "d35cb04071d9d3b33e36372c5298b22f1e5ee027a40a08ef9f594e4555a39983",
+      "indexBlob": "402ab1bf50b2971976e83f41b7704b2d5495ec0b",
+      "sourceBlob": "402ab1bf50b2971976e83f41b7704b2d5495ec0b"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DF-post-docs.json",
+      "sha256": "6f50b7be90f12e89680dab51bee7b1d33cd48e3c3d6018f31b1a4b9e6bfbd092",
+      "indexBlob": "da39a7d465785021e4337ceb736f7c8504753e1d",
+      "sourceBlob": "da39a7d465785021e4337ceb736f7c8504753e1d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DF-smoke.log",
+      "sha256": "c7bbeafbacfdbe360bfda2d7c28eaf9f16a5ba094e7854c02a71571e446dbb74",
+      "indexBlob": "79c2bc89d6581e269f32fbd2141bdf07a96f45b0",
+      "sourceBlob": "79c2bc89d6581e269f32fbd2141bdf07a96f45b0"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DF-source-freeze.json",
+      "sha256": "ce0d15a8794f4977815db13f666a7f5fcde16d0be24b26f978a8b60d53728323",
+      "indexBlob": "da4993f352db2136ed16eee5ebac0ca7c12f090b",
+      "sourceBlob": "da4993f352db2136ed16eee5ebac0ca7c12f090b"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DF-types.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "indexBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "sourceBlob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "1058ac3d298092a54eb52ee5708b02dbadce65102ac46c7cd7fde3195978b4e4",
+      "indexBlob": "cb618d986793f63851d30f13bb72f3c43046eff8",
+      "sourceBlob": "cb618d986793f63851d30f13bb72f3c43046eff8"
+    },
+    {
+      "path": "packages/engine/src/kbo-active-service.ts",
+      "sha256": "b98c69dc03019eaf58f6962fe4b00eb290b0871c3e4303e6cf1d211691901f05",
+      "indexBlob": "dfff3d0baaa72db31f4c0dcf71ed1eb59bd2b2ce",
+      "sourceBlob": "dfff3d0baaa72db31f4c0dcf71ed1eb59bd2b2ce"
+    },
+    {
+      "path": "packages/engine/src/kbo-archive-view.ts",
+      "sha256": "39711db29b60eeac3822f9173748c70e3364b84c11f721390a90d0e85803eec4",
+      "indexBlob": "a8680df2d140abf14564a78d079c3ec91c08eabd",
+      "sourceBlob": "a8680df2d140abf14564a78d079c3ec91c08eabd"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "sha256": "a1375c25ec0b1fbb5c1179aa6f6d25a7aaabdc770ffd54ab64a1d7736b92ecb6",
+      "indexBlob": "2124db99b03ec9728425979fb7bf2fc2bb742a2e",
+      "sourceBlob": "2124db99b03ec9728425979fb7bf2fc2bb742a2e"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-version.ts",
+      "sha256": "c779690711465415d3e2107339fd9b425884b487ce4e0d709febd2a81901b1f7",
+      "indexBlob": "9e01c0f0b5807f6a5930472af35fbd4a17f2b730",
+      "sourceBlob": "9e01c0f0b5807f6a5930472af35fbd4a17f2b730"
+    },
+    {
+      "path": "packages/engine/src/kbo-military-state.ts",
+      "sha256": "99c7d193c2627c3fb2330d896b690ac5f312060c0c879c63687608048888ced3",
+      "indexBlob": "bf5e208bf1dc037ce3c92d8315249f423fb36215",
+      "sourceBlob": "bf5e208bf1dc037ce3c92d8315249f423fb36215"
+    },
+    {
+      "path": "packages/engine/src/kbo-npc-military.ts",
+      "sha256": "1350cf058a90e25a95ac36c76f966de2f77f39d6cdfde6a35258eedd36aa6cc8",
+      "indexBlob": "97fef34cf49eed296bc145ae147227c6961d52b8",
+      "sourceBlob": "97fef34cf49eed296bc145ae147227c6961d52b8"
+    },
+    {
+      "path": "packages/engine/src/kbo-offseason-exit.ts",
+      "sha256": "092dfbf13eba1d29f91fa94e021826cbbbbf17eac3a6a73041a541d607ae8bcd",
+      "indexBlob": "c005ea030eee4ce3eb961b60521d4f2a8f2a02bc",
+      "sourceBlob": "c005ea030eee4ce3eb961b60521d4f2a8f2a02bc"
+    },
+    {
+      "path": "packages/engine/src/kbo-renewal.ts",
+      "sha256": "81685841c5010a1778e991a3aba3efc77ce7efa4ae8105a4a580afc46380dead",
+      "indexBlob": "01a8a0074ff851f973a6f037f36e96599848f8f2",
+      "sourceBlob": "01a8a0074ff851f973a6f037f36e96599848f8f2"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "751cd698e7d867689aadf245f97314276ca95bf327770cc0488af965cd721b0d",
+      "indexBlob": "fe9e6b29176bd2c28dcd8013879a26cf57880e45",
+      "sourceBlob": "fe9e6b29176bd2c28dcd8013879a26cf57880e45"
+    },
+    {
+      "path": "packages/engine/test/kbo-offseason-exit.test.ts",
+      "sha256": "2136bffb446aee15c98c833ead16eef1008bdfd9e01ff8e8229778bcc1783d4b",
+      "indexBlob": "1fc04ab13e4d24010d44d5235c2f8894131c2372",
+      "sourceBlob": "1fc04ab13e4d24010d44d5235c2f8894131c2372"
+    },
+    {
+      "path": "packages/engine/test/kbo-service-budget.test.ts",
+      "sha256": "4e199a6a9d610d40e0b27c1e40a3f7dae03683b21cc58221a739bf3ac7bc1efd",
+      "indexBlob": "9abe73e76bbc5caffe117fb36785a383304bf5f5",
+      "sourceBlob": "9abe73e76bbc5caffe117fb36785a383304bf5f5"
+    }
+  ]
+}

@@ -113,3 +113,5 @@ export * from './kbo-military-planning.js';
 export * from './kbo-return-condition.js';
 export * from './kbo-remainder-transfer.js';
 export * from './kbo-transfer-registration.js';
+
+export * from './kbo-offseason-exit.js';

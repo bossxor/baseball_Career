@@ -1,3 +1,4 @@
+import {activateKboOffseasonExit,settleKboOffseasonEntryRelations} from './kbo-offseason-exit.js';
 import {returnKboNpcMilitaryPlayers} from './kbo-npc-military.js';
 import {createKboServicePayroll,carryKboServicePayroll} from './kbo-service-payroll.js';
 import {kboContractPaymentBalance} from './kbo-contract-payments.js';
@@ -91,7 +92,7 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
   world.players[k]={...world.players[k]!,age:s.age,fatigue:0};
   const c=world.contracts[k]!;
   // Temporary expired placeholders stay private until the AI renewal stage resolves them.
-  world.contracts[k]=k===key && renewal?{...c,contractKey:renewal.offerKey,seasonKey:target,years:1,annualSalaryWon:renewal.annualSalaryWon}:{...c,seasonKey:target,years:s.contract!.expired?1:c.years-(s.contract!.contractYear-1)};
+  world.contracts[k]=k===key && renewal?{...c,contractKey:renewal.offerKey,clubId:renewal.clubId,seasonKey:target,years:1,annualSalaryWon:renewal.annualSalaryWon}:{...c,seasonKey:target,years:s.contract!.expired?1:c.years-(s.contract!.contractYear-1)};
   const activated=world.contracts[k]!;
   if(k===key && renewal){
    if(c.servicePay || c.remainderPay){if(c.remainderPay && !c.remainderPay.settlement)throw new RangeError('KBO_REMAINDER_NOT_FINALIZED');if(career.contractHistory?.some(h=>h.contractKey===c.contractKey))throw new RangeError('DUPLICATE_CONTRACT_HISTORY');career.contractHistory=[...(career.contractHistory??[]),structuredClone(c)];}
@@ -103,6 +104,7 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
   const book=schoolYearEndRepertoire(source,k);if(book)world.repertoires[k]={...structuredClone(book),seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};
  }
  for(const [k,c] of Object.entries(world.suspendedContracts??{})){const carried={...c,seasonKey:target,servicePay:carryKboServicePayroll(c,target)};carried.years=Math.max(1,Math.ceil(kboContractPaymentBalance(carried.servicePay.ledger).remainingPaidGameDays/144));world.suspendedContracts![k]=carried;}
+ activateKboOffseasonExit(source,career);
  for(const club of world.clubs){club.paidSalaryWon=0;club.reservedSalaryWon=kboRosterSeasonCharge(world,club.id);}
  world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target));
 // Military unit carries over: members age and reset their books like everyone else, the block of the season just played is
@@ -140,5 +142,5 @@ if(career.sangmu){
  for(const field of ['days','seasonClose','postseason','preseasonPlan','openingRoster','competitionSchedule','callupReviews'] as const)delete career[field];
  // New unplayed season can adopt registration-aware growth without rewriting any prior receipts or plan boundaries.
  if(career.military?.completionDays && career.military.program?.blocks.some(b=>b.seasonKey===target))career.military.growthPolicyVersion=1;
- if(career.schemaVersion<3)career.schemaVersion=3;career.phaseContext={phase:'PRESEASON_SETUP'};career.revision++;queueKboMilitaryFirstBlock(career);return career;
+ if(career.schemaVersion<3)career.schemaVersion=3;career.phaseContext={phase:'PRESEASON_SETUP'};settleKboOffseasonEntryRelations(source,career);career.revision++;queueKboMilitaryFirstBlock(career);return career;
 }

@@ -93,7 +93,7 @@ test('annual renewal checks its target year, preserves fundable choice after a c
  let room=target.budgetWon*.9-kboFutureCommitmentWon(blocked.world,target.id,1);
  for(const key of target.roster){if(key===c.protagonistKey)continue;const contract=blocked.world.contracts[key]!,n=Math.min(KBO_MONEY.maximumSalaryWon-contract.annualSalaryWon,room);contract.annualSalaryWon+=n;target.reservedSalaryWon+=n;room-=n;}
  assert.equal(room,0);assert.equal(kboFutureCommitmentWon(blocked.world,target.id,1),target.budgetWon*.9);
- assert.throws(()=>offerKboRenewal(blocked,blocked.revision),/KBO_RENEWAL_NOT_AVAILABLE/);
+ assert.equal(offerKboRenewal(blocked,blocked.revision).offseasonExit!.status,'OPEN');
  const changed=structuredClone(offered);changed.world=blocked.world;
  assert.throws(()=>acceptKboRenewal(changed,changed.revision,{eventKey:event.eventKey,eventVersion:event.version}),/INVALID_KBO_RENEWAL/);
 });

@@ -10,3 +10,6 @@ coverage/
 *.keystore
 Thumbs.db
 .DS_Store
+
+# Large native verification snapshots are preserved locally, outside Git.
+/.local-verification/

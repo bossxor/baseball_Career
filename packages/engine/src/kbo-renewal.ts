@@ -1,3 +1,4 @@
+import {assertKboOffseasonExit,compareKboOffseasonOffers} from './kbo-offseason-exit.js';
 import {kboFutureCommitmentWon} from './kbo-finance.js';
 import {kboContractPaymentBalance} from './kbo-contract-payments.js';
 import {kboPlayerContractValue,kboRenewalSalaryWon} from './kbo-contract-value.js';
@@ -18,25 +19,25 @@ export function kboRenewalValueWon(source:KboCareer):{valueWon:number;basis:KboR
  const key=source.protagonistKey,totals=recordTotals(source.records,{leagueKey:'KBO',phase:'REGULAR',seasonKey:source.world.seasonKey});
  return kboPlayerContractValue(source.world.players[key]!,totals.batting[key],totals.pitching[key]);
 }
-function expiresAfterSeason(source:KboCareer):boolean {
+export function kboContractExpiresAfterSeason(source:KboCareer):boolean {
  const c=source.world.contracts[source.protagonistKey]!;if(c.servicePay)return kboContractPaymentBalance(c.servicePay.ledger).remainingPaidGameDays===0;return Number(source.world.seasonKey)-Number(c.seasonKey)+1>=c.years;
 }
 /** The accepted renewal that covers the season after the current one, if any. */
 export function acceptedRenewal(source:KboCareer):KboRenewal|null {
- const r=source.renewal;return r?.status==='ACCEPTED' && r.seasonKey===String(Number(source.world.seasonKey)+1)?r:null;
+ const r=source.renewal;if(r?.status==='ACCEPTED' && r.seasonKey===String(Number(source.world.seasonKey)+1) && r.clubId!==source.protagonistClubId)assertKboOffseasonExit(source);return r?.status==='ACCEPTED' && r.seasonKey===String(Number(source.world.seasonKey)+1)?r:null;
 }
 /** True when my contract ends with this season and no accepted renewal covers the next one (72 Y01 blocker). */
 export function kboContractDecisionRequired(source:KboCareer):boolean {
- return expiresAfterSeason(source) && !acceptedRenewal(source);
+ return kboContractExpiresAfterSeason(source) && !acceptedRenewal(source);
 }
 /** After season close: fix the offer once and open blocking E30 (S08 compare / S09 retire). Phase stays SEASON_REVIEW. */
 export function offerKboRenewal(source:KboCareer,expectedRevision:number):KboCareer {
  assertCareerRevision(source,expectedRevision);
  const season=source.world.seasonKey,close=source.seasonClose;
- if(source.phaseContext.phase!=='SEASON_REVIEW' || !close || close.seasonKey!==season || source.renewal?.seasonKey===String(Number(season)+1) || !expiresAfterSeason(source) || source.events.some(e=>e.status==='OPEN' && e.definitionId!=='E50') || source.world.players[source.protagonistKey]!.age>=45)throw new RangeError('KBO_RENEWAL_NOT_AVAILABLE');
+ if(source.phaseContext.phase!=='SEASON_REVIEW' || !close || close.seasonKey!==season || source.renewal?.seasonKey===String(Number(season)+1) || !kboContractExpiresAfterSeason(source) || source.events.some(e=>e.status==='OPEN' && e.definitionId!=='E50') || source.world.players[source.protagonistKey]!.age>=45)throw new RangeError('KBO_RENEWAL_NOT_AVAILABLE');
  const key=source.protagonistKey,previous=source.world.contracts[key]!.annualSalaryWon,{valueWon,basis}=kboRenewalValueWon(source);
  const annualSalaryWon=kboRenewalSalaryWon(previous,valueWon),club=source.world.clubs.find(c=>c.id===source.protagonistClubId)!;
- if(kboFutureCommitmentWon(source.world,club.id,1)+annualSalaryWon>club.budgetWon*.9)throw new RangeError('KBO_RENEWAL_NOT_AVAILABLE');
+ if(kboFutureCommitmentWon(source.world,club.id,1)+annualSalaryWon>club.budgetWon*.9)return compareKboOffseasonOffers(source,expectedRevision);
  const target=String(Number(season)+1),offerKey=JSON.stringify(['kbo-renewal',source.world.worldKey,target,key]);
  const day=source.days!.days.at(-1)!.day,definition=eventDefinition('E30');
  const event=createWorldEvent({definitionId:'E30',worldKey:source.world.worldKey,seasonKey:season,evidence:{version:1,type:definition.evidenceDomain,fields:{playerSimulationKey:key,contractWindowId:offerKey,sourceReceiptId:close.receiptKey}},

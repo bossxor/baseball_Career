@@ -1,0 +1,16 @@
+{
+  "completedAt": "2026-10-26T00:28:56.937Z",
+  "tests": 632,
+  "pass": 632,
+  "fail": 0,
+  "cancelled": 0,
+  "exit": 0,
+  "durationMs": 2330706.9176,
+  "focused": 12,
+  "sourceFilesUnchanged": 265,
+  "staticDesignValidators": 10,
+  "manifestEntries": 359,
+  "jsonReplay": "pending comparison, accepted signing, Y02 identical; source unchanged",
+  "httpSmoke": "skeleton only",
+  "DD": "separate fixed DC run;30 closed days/60 games; not complete18months"
+}
