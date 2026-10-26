@@ -423,5 +423,14 @@
     "after": "3660ae377a651b39afaae9acd5fd97d8e27200f28ab08efac75e2e57f590328d",
     "proof": "final-guard1/1, lint0, typecheck0; full recheck pending"
   },
-  "fullCheckStatus": "FAILED_BEFORE_FINAL_CORRECTION; RECHECK_REQUIRED"
+  "fullCheckStatus": "PASS",
+  "finalCheck": {
+    "tests": 695,
+    "pass": 693,
+    "skip": 2,
+    "fail": 0,
+    "webPass": 20,
+    "durationMs": 562628.2466,
+    "runtimeFilesUnchanged": 406
+  }
 }
