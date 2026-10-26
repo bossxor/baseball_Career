@@ -10,7 +10,7 @@
 
 ## 코드 위치 (packages/engine/src)
 
-kbo-club-game.ts(뿌리·읽기·라인업 검사/적용) · kbo-club-import.ts(보관 투입) · kbo-club-progress.ts(시즌 진행·승강 정지/뉴스) · kbo-club-postseason.ts · kbo-club-year.ts(연말 마감/다음 시즌·재정 재건·로스터 계획 적용) · kbo-club-manage.ts(1군 편성·FA 제안·재계약/방출/트레이드·불펜) · kbo-club-command.ts(저장 명령·S13–S19 읽기) · kbo-club-long-run.ts(L04 체크포인트) · kbo-club-labels.ts(전략·상무 관찰·국제 창). API `apps/api/src/club-shell.ts`. 웹 `PlayballApi`의 `createClub`/`club`/`clubCommand`. 테스트: test/kbo-club-*.test.ts, apps/api/test/m6-club-shell.test.ts. 공유 코드를 건드린 곳은 추가만: `high-school-game.ts`(`lineupOverrides`), `kbo-game-world.ts`(빈 주인공 키), `kbo-year-end.ts`(`closeKboNpcSeasons` export), `kbo-roster-repair.ts`, `kbo-fa-market.ts`(`userClub`).
+kbo-club-game.ts(뿌리·읽기·라인업 검사/적용) · kbo-club-import.ts(보관 투입) · kbo-club-progress.ts(시즌 진행·승강 정지/뉴스) · kbo-club-postseason.ts · kbo-club-year.ts(연말 마감/다음 시즌·재정 재건·로스터 계획 적용) · kbo-club-manage.ts(1군 편성·FA 제안·재계약/방출/트레이드·불펜) · kbo-club-command.ts(저장 명령·S13–S19 읽기) · kbo-club-long-run.ts(L04 체크포인트) · kbo-club-labels.ts(전략·상무 관찰·국제 창) · kbo-club-national.ts(국가대표 28명). API `apps/api/src/club-shell.ts`. 웹 `PlayballApi`의 `createClub`/`club`/`clubCommand`. 테스트: test/kbo-club-*.test.ts, apps/api/test/m6-club-shell.test.ts. 공유 코드를 건드린 곳은 추가만: `high-school-game.ts`(`lineupOverrides`), `kbo-game-world.ts`(빈 주인공 키), `kbo-year-end.ts`(`closeKboNpcSeasons` export), `kbo-roster-repair.ts`, `kbo-fa-market.ts`(`userClub`).
 
 ## 남은 M6 작업 (권장 순서, 가까운 것끼리 묶어서 구현한 뒤 한 번에 검증)
 
@@ -18,7 +18,7 @@ kbo-club-game.ts(뿌리·읽기·라인업 검사/적용) · kbo-club-import.ts(
 
 5. **구단 모드 저장/API/화면**: [M6-F](M6-F-CLUB-SHELL.md)가 생성·시작·라인업·1군·1일 진행과 S13–S19 읽기를, [M6-G](M6-G-CLUB-DECISIONS.md)가 제안·재계약/방출·불펜·다음 시즌 명령을 세이브에 연결했다. 픽셀 배치는 M5와 만난다. 트레이드 상대 고르기 버튼은 없다(D).
 6. **12개 장기 시뮬레이션**: [M6-H](M6-H-CLUB-LONG-RUN.md)가 L01~L12 목록과 L04 체크포인트 재개를 만든다. 50시즌 실주행과 균형 판정은 아직이다. 경기 0을 통과로 적지 않는다.
-7. **전략·상무·국제**: [M6-I](M6-I-CLUB-LABELS.md) 라벨·창, [M6-J](M6-J-CLUB-SANGMU.md) 입대, [M6-K](M6-K-CLUB-SANGMU-RETURN.md) 복귀. 국제 창 경기는 아직이다.
+7. **전략·상무·국제**: [M6-I](M6-I-CLUB-LABELS.md) 라벨·창, [M6-J](M6-J-CLUB-SANGMU.md) 입대, [M6-K](M6-K-CLUB-SANGMU-RETURN.md) 복귀, [M6-L](M6-L-CLUB-NATIONAL.md) 28명 선발. 국제 창의 실제 경기는 아직이다.
 
 ## 작업 규칙(이번 세션에서 확인된 방식)
 

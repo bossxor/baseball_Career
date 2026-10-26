@@ -42,6 +42,7 @@ export interface KboClubGame {
  bullpen?:{slots:Readonly<Record<string,'CP'|'SU'|'MR'|'LR'>>};
  notices?:readonly {day:number;code:'OTHER_CLUB_HEALTH'|'CALLUP_RECOMMENDED';clubId?:string;playerKey?:string;candidateKey?:string}[];
  sangmu?:KboSangmuUnit;
+ national?:readonly {seasonKey:string;type:'WBC'|'OLY'|'AG'|'P12';playerKeys:readonly string[]}[];
  postseason?:KboPostseason;postseasonProgress?:{postseason:KboPostseason;nextWorldDay:number;pendingGame:KboPendingGame|null};
  days?:SchoolDayLedger;progress?:{nextWorldDay:number;pendingGame:KboPendingGame|null};
 }

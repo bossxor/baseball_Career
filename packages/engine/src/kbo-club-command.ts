@@ -7,6 +7,7 @@ import {
 import { advanceKboClubGame, startKboClubSeason } from './kbo-club-progress.js';
 import { startNextKboClubSeason } from './kbo-club-year.js';
 import { clubInternationalWindows, clubMilitaryWatch, clubStrategyReport, enlistClubMilitary, returnClubMilitary } from './kbo-club-labels.js';
+import { saveClubNationalRoster, type NationalEvent } from './kbo-club-national.js';
 import {
   autoClubBullpen, kboClubFreeAgents, planKboClubOffers, planKboClubRoster, setKboClubBullpen, setKboClubFirstTeam,
 } from './kbo-club-manage.js';
@@ -47,6 +48,9 @@ export function kboClubScreen(game: KboClubGame, screenId: string, query: { play
   if (screenId === 'S13' && Object.values(game.sangmu?.members ?? {}).some(member => member.program.completedBlocks >= member.program.scheduledBlocks)) commands.push({ id: 'sangmu-return', label: '상무 복귀', type: 'CLUB_SANGMU_RETURN', payload: {} });
   if (screenId === 'S13' && game.phase === 'SEASON_PROGRESS') commands.push({ id: 'day', label: '1일 진행', type: 'CLUB_ADVANCE', payload: { maxDays: 1 } });
   if (screenId === 'S13' && game.phase === 'SEASON_REVIEW') commands.push({ id: 'next', label: '다음 시즌', type: 'CLUB_NEXT', payload: {} });
+  for (const window of screenId === 'S13' ? clubInternationalWindows(game) : []) {
+    if (!game.national?.some(roster => roster.seasonKey === game.world.seasonKey && roster.type === window.type)) commands.push({ id: `nat-${window.type}`, label: `${window.type} 선발`, type: 'CLUB_NATIONAL', payload: { type: window.type } });
+  }
   if (screenId === 'S15') {
     commands.push({ id: 'auto', label: '자동 편성', type: 'CLUB_LINEUP', payload: { auto: true } });
     if (game.lineup) commands.push({ id: 'clear', label: '라인업 해제', type: 'CLUB_LINEUP', payload: { clear: true } });
@@ -174,6 +178,11 @@ export function applyKboClubCommand(game: KboClubGame | null, command: { type: s
   if (command.type === 'CLUB_NEXT') return startNextKboClubSeason(game, revision);
   if (command.type === 'CLUB_SANGMU') return enlistClubMilitary(game, revision);
   if (command.type === 'CLUB_SANGMU_RETURN') return returnClubMilitary(game, revision);
+  if (command.type === 'CLUB_NATIONAL') {
+    const type = (command.payload as { type?: unknown } | null)?.type;
+    if (type !== 'WBC' && type !== 'OLY' && type !== 'AG' && type !== 'P12') fail('UNKNOWN_NATIONAL_EVENT');
+    return saveClubNationalRoster(game, revision, type as NationalEvent);
+  }
   fail('UNSUPPORTED_COMMAND');
 }
 
