@@ -1,8 +1,16 @@
-/** Screen state texts of the core M4 screens, copied from docs/design/screen-state-catalog.json (a test compares them
- * with the catalog so they cannot drift). `ready` has no catalog text. */
-export type ScreenId = 'S01' | 'S02' | 'S03' | 'S04' | 'S05' | 'S06' | 'S07' | 'S08' | 'S09' | 'S22' | 'S23' | 'S28';
+/** Screen state texts from docs/design/screen-state-catalog.json (tests compare — no drift). */
+import m5 from './m5-screens.json';
+
+export type M4ScreenId = 'S01' | 'S02' | 'S03' | 'S04' | 'S05' | 'S06' | 'S07' | 'S08' | 'S09' | 'S22' | 'S23' | 'S28';
+export type M5ScreenId =
+  | 'S10' | 'S11' | 'S12' | 'S13' | 'S14' | 'S15' | 'S16' | 'S17' | 'S18' | 'S19' | 'S20' | 'S21'
+  | 'S24' | 'S25' | 'S26' | 'S27' | 'S29' | 'S30' | 'S31' | 'S32' | 'S33' | 'S34' | 'S35' | 'S36'
+  | 'S37' | 'S38' | 'S39' | 'S40' | 'S41' | 'S42' | 'S43' | 'S44' | 'S45';
+export type ScreenId = M4ScreenId | M5ScreenId;
 export type ScreenState = 'ready' | 'empty' | 'error' | 'saving' | 'conflict' | 'loading';
+export type PlayableScreenId = Exclude<ScreenId, 'S01' | 'S02' | 'S03'>;
 type Texts = Readonly<Record<Exclude<ScreenState, 'ready'>, string>>;
+
 const COMMON = {
   saving: '처리 중입니다. 같은 선택을 다시 실행하지 않고 결과를 확인합니다.',
   conflict: '다른 기기의 진행 내용이 있습니다. 최신 저장을 불러온 뒤 선택하세요.',
@@ -11,11 +19,16 @@ const COMMON = {
 const err = (conditions: string) => `처리할 수 없습니다. ${conditions} 조건과 최신 상태를 확인하세요. 입력은 유지합니다.`;
 const t = (empty: string, conditions: string): Texts => ({ empty, error: err(conditions), ...COMMON });
 
-export const SCREEN_TITLES: Readonly<Record<ScreenId, string>> = {
+const M4_PLAY = ['S04', 'S05', 'S06', 'S07', 'S08', 'S09', 'S22', 'S23', 'S28'] as const satisfies readonly PlayableScreenId[];
+export const M5_IDS = m5.ids as readonly M5ScreenId[];
+export const PLAY_SCREEN_IDS: ReadonlySet<string> = new Set<string>([...M4_PLAY, ...M5_IDS]);
+export const isPlayScreen = (id: string): id is PlayableScreenId => PLAY_SCREEN_IDS.has(id);
+
+const M4_TITLES: Readonly<Record<M4ScreenId, string>> = {
   S01: '홈', S02: '생성', S03: '커리어', S04: '고교결산', S05: '드래프트', S06: '사건',
   S07: '결산', S08: '계약', S09: '은퇴', S22: '스타일', S23: '강화', S28: '졸업진로',
 };
-export const SCREEN_STATES: Readonly<Record<ScreenId, Texts>> = {
+const M4_STATES: Readonly<Record<M4ScreenId, Texts>> = {
   S01: {
     empty: '최근 세이브가 없습니다. 새 커리어나 구단으로 시작하세요.',
     error: '진행을 확인하지 못했습니다. 새로 시작하지 않고 연결과 저장 결과를 다시 확인하세요.',
@@ -34,5 +47,14 @@ export const SCREEN_STATES: Readonly<Record<ScreenId, Texts>> = {
   S22: t('유형 변경 기회가 없습니다. 현재 계획은 확인할 수 있습니다.', '부상/횟수/투타종류'),
   S23: t('강화 기회를 이미 사용했습니다. 사용 내역을 확인하세요.', '실패재추첨금지'),
   S28: t('진로 정보를 다시 불러오세요. 미국은 유효 제안이 있을 때만 표시됩니다.', '조회만으로진로고정안함'),
+};
+
+export const SCREEN_TITLES: Readonly<Record<ScreenId, string>> = {
+  ...M4_TITLES,
+  ...(m5.titles as Record<M5ScreenId, string>),
+};
+export const SCREEN_STATES: Readonly<Record<ScreenId, Texts>> = {
+  ...M4_STATES,
+  ...(m5.states as Record<M5ScreenId, Texts>),
 };
 export const stateText = (id: ScreenId, state: ScreenState): string | null => (state === 'ready' ? null : SCREEN_STATES[id][state]);

@@ -9,9 +9,9 @@ import { Decision } from './screens/Decision.js';
 import { CREATION_STEPS, emptyDraft, firstInvalidStep, toCreationRequest, validateStep } from './creation.js';
 import type { CreationDraft, CreationStep, FieldErrors } from './creation.js';
 import type { CareerView, DecisionView, HomeData, PlayScreenId, ProgressMode } from './model.js';
+import { isPlayScreen } from './screen-states.js';
 import type { ScreenState } from './screen-states.js';
 
-const PLAY = new Set<string>(['S04', 'S05', 'S06', 'S07', 'S08', 'S09', 'S22', 'S23', 'S28']);
 type Route =
   | { name: 'home' }
   | { name: 'create' }
@@ -20,7 +20,7 @@ type Route =
 
 export function parseRoute(hash: string): Route {
   const play = /^#\/play\/([^/]+)\/(S\d{2})$/.exec(hash);
-  if (play && PLAY.has(play[2]!)) return { name: 'play', saveId: decodeURIComponent(play[1]!), screenId: play[2] as PlayScreenId };
+  if (play && isPlayScreen(play[2]!)) return { name: 'play', saveId: decodeURIComponent(play[1]!), screenId: play[2] };
   const m = /^#\/?([a-z]*)\/?(.*)$/.exec(hash);
   const name = m?.[1], id = m?.[2];
   return name === 'create' ? { name: 'create' } : name === 'career' && id ? { name: 'career', saveId: decodeURIComponent(id) } : { name: 'home' };
@@ -29,7 +29,7 @@ const go = (path: string) => { location.hash = path; };
 const openPlay = (saveId: string, screenId: PlayScreenId) => go(`#/play/${encodeURIComponent(saveId)}/${screenId}`);
 const screenFromAction = (actionId: string): PlayScreenId | null => {
   const m = /^open:(S\d{2})$/.exec(actionId);
-  return m && PLAY.has(m[1]!) ? m[1] as PlayScreenId : null;
+  return m && isPlayScreen(m[1]!) ? m[1] : null;
 };
 const newId = () => crypto.randomUUID();
 
@@ -107,5 +107,6 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
   }
   return <Home {...(logo ? { logo } : {})} data={home} state={state} showSaves={showSaves} onToggleSaves={() => setShowSaves(v => !v)} onReload={reload}
     onResume={id => go(`#/career/${encodeURIComponent(id)}`)} onSelect={id => go(`#/career/${encodeURIComponent(id)}`)}
-    onNew={m => { if (m === 'CAREER') { setDraft(emptyDraft()); setStep('NAME'); setErrors({}); go('#/create'); } }} />;
+    onNew={m => { if (m === 'CAREER') { setDraft(emptyDraft()); setStep('NAME'); setErrors({}); go('#/create'); } }}
+    {...(home?.resume ? { onSettings: () => openPlay(home.resume!.saveId, 'S21') } : {})} />;
 }

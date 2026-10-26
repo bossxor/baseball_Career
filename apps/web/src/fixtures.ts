@@ -3,15 +3,17 @@ import type {
   CareerView, ChooseReceipt, CreationReceipt, CreationRequest, DecisionView, HomeData, NextAction, PlayScreenId, ProgressMode, SaveSummary,
 } from './model.js';
 import { POSITION_LABELS } from './creation.js';
+import { M5_IDS, PLAY_SCREEN_IDS, SCREEN_TITLES } from './screen-states.js';
 
 type Phase = 'season' | 'settle' | 'path' | 'draft' | 'contract' | 'retired';
 interface FixtureSave {
   summary: SaveSummary; request: CreationRequest; day: number; phase: Phase;
   pendingEvent: boolean; styleLeft: number; boostLeft: number; lastChoice?: string;
 }
-const PLAY: readonly PlayScreenId[] = ['S04', 'S05', 'S06', 'S07', 'S08', 'S09', 'S22', 'S23', 'S28'];
 
-const catalogs: Record<PlayScreenId, { summary: DecisionView['summary']; options: DecisionView['options']; notice?: string }> = {
+type Catalog = { summary: DecisionView['summary']; options: DecisionView['options']; notice?: string };
+
+const m4Catalogs: Partial<Record<PlayScreenId, Catalog>> = {
   S04: {
     summary: [{ label: '타율', value: '.312' }, { label: '평가', value: '드래프트 후보' }],
     options: [{ id: 'to-path', label: '졸업 진로로', primary: true }],
@@ -75,6 +77,14 @@ const catalogs: Record<PlayScreenId, { summary: DecisionView['summary']; options
   },
 };
 
+const stub = (screenId: PlayScreenId): Catalog => ({
+  summary: [{ label: '화면', value: SCREEN_TITLES[screenId] }],
+  options: [{ id: 'back', label: '돌아가기', primary: true }],
+  notice: 'M5 셸 — 엔진·구단 연동 전 스텁',
+});
+
+const catalog = (screenId: PlayScreenId): Catalog => m4Catalogs[screenId] ?? stub(screenId);
+
 /** In-memory stand-in for the server (not persisted, no accounts). Same commandId → same result. */
 export function createFixtureApi(): PlayballApi {
   const saves = new Map<string, FixtureSave>(), created = new Map<string, string>();
@@ -100,6 +110,9 @@ export function createFixtureApi(): PlayballApi {
       nextActions.push({ id: 'advance', label: '진행', kind: 'ADVANCE', primary: true });
       if (s.styleLeft > 0) nextActions.push({ id: 'open:S22', label: '유형 변경', kind: 'PLAN' });
       if (s.boostLeft > 0) nextActions.push({ id: 'open:S23', label: '강화', kind: 'PLAN' });
+      nextActions.push({ id: 'open:S10', label: '보관함', kind: 'OPEN_SCREEN' });
+      nextActions.push({ id: 'open:S20', label: '저장', kind: 'OPEN_SCREEN' });
+      nextActions.push({ id: 'open:S21', label: '설정', kind: 'OPEN_SCREEN' });
       nextActions.push({ id: 'records', label: '기록 보기', kind: 'RECORDS' });
     }
     return {
@@ -152,8 +165,8 @@ export function createFixtureApi(): PlayballApi {
     async decision(saveId: string, screenId: PlayScreenId): Promise<DecisionView> {
       const s = saves.get(saveId);
       if (!s) throw new Error('NOT_FOUND');
-      if (!PLAY.includes(screenId)) throw new Error('NOT_FOUND');
-      const base = catalogs[screenId];
+      if (!PLAY_SCREEN_IDS.has(screenId)) throw new Error('NOT_FOUND');
+      const base = catalog(screenId);
       let options = base.options;
       if (screenId === 'S22' && s.styleLeft <= 0) options = [];
       if (screenId === 'S23' && s.boostLeft <= 0) options = [];
@@ -170,15 +183,17 @@ export function createFixtureApi(): PlayballApi {
       if (screenId === 'S06') { s.pendingEvent = false; s.day += 1; }
       else if (screenId === 'S04' && optionId === 'to-path') { s.phase = 'path'; next = { kind: 'screen', screenId: 'S28' }; }
       else if (screenId === 'S28' && optionId === 'to-draft') { s.phase = 'draft'; next = { kind: 'screen', screenId: 'S05' }; }
+      else if (screenId === 'S28' && optionId === 'college') { next = { kind: 'screen', screenId: 'S34' }; }
       else if (screenId === 'S28') { s.phase = 'season'; }
       else if (screenId === 'S05' && optionId === 'accept') { s.phase = 'contract'; }
       else if (screenId === 'S05' && optionId === 'end') { s.phase = 'retired'; next = { kind: 'screen', screenId: 'S09' }; }
       else if (screenId === 'S08' && optionId === 'retire') { s.phase = 'retired'; next = { kind: 'screen', screenId: 'S09' }; }
       else if (screenId === 'S08' && optionId === 'accept') { s.phase = 'season'; s.pendingEvent = false; }
+      else if (screenId === 'S09' && optionId === 'archive') { next = { kind: 'screen', screenId: 'S10' }; }
       else if (screenId === 'S09' && optionId === 'new') next = { kind: 'home' };
       else if (screenId === 'S22') { s.styleLeft = Math.max(0, s.styleLeft - 1); }
       else if (screenId === 'S23') { s.boostLeft = Math.max(0, s.boostLeft - 1); }
-      else if (screenId === 'S07') { /* stay */ }
+      else if ((M5_IDS as readonly string[]).includes(screenId) && optionId === 'back') { next = { kind: 'career' }; }
       const receipt = { next };
       chosen.set(commandId, receipt);
       return receipt;
