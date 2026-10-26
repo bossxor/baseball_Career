@@ -8,7 +8,7 @@ import {canonicalJson} from './game.js';
 import {validateSeasonGrowthLedger,finalizeSeasonGrowth,createSeasonGrowthLedger} from './growth-ledger.js';
 import type {SeasonGrowthLedger} from './growth-ledger.js';
 import {closeSeasonHealth} from './health.js';
-import {pitchMastery,validatePitchWeights} from './repertoire.js';
+import {validatePitchWeights} from './repertoire.js';
 import type {Repertoire} from './repertoire.js';
 import {validatePitchXpLedger,emptyPitchXpLedger} from './pitch-xp.js';
 import {createCollegeWorld} from './college-world.js';
@@ -26,7 +26,7 @@ export function schoolYearEndRepertoire(source:{world:Pick<HighSchoolCareer['wor
  const repertoire=source.world.repertoires[player.simulationKey];
  if(!repertoire || repertoire.seasonId!==source.world.seasonKey)throw new RangeError('MISSING_YEAR_END_REPERTOIRE');
  validatePitchWeights(repertoire.book,repertoire.weights);validatePitchXpLedger(repertoire.ledger);
- if(repertoire.learning && (repertoire.learning.quarters.length!==4 || repertoire.ledger.baseReservedUnits!==0 || pitchMastery(repertoire.book[repertoire.learning.pitchId]??0)<1))throw new RangeError('PITCH_LEARNING_SETTLEMENT_REQUIRED');
+ if(repertoire.learning && (repertoire.learning.quarters.length!==4 || repertoire.ledger.baseReservedUnits!==0))throw new RangeError('PITCH_LEARNING_SETTLEMENT_REQUIRED');
  return repertoire;
 }
 /** The caller already cloned the career; subsequent activation replaces these objects, never mutates them. */

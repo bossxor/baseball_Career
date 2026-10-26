@@ -1,3 +1,4 @@
+import type {MlbPostseason,MlbLeague} from './us-postseason.js';
 import type {UsSeasonState,UsPhase} from './us-season.js';
 import type {UsSeasonSchedule} from './us-schedule.js';
 import type {UsPreseasonPlan} from './us-preseason.js';
@@ -24,7 +25,7 @@ import {queueRelationFormationNotices} from './relation-notices.js';
 export interface ActiveUsRosterWorld extends UsRosterWorld {status:'ACTIVE';calendar:SeasonCalendar;reserves?:Record<string,string[]>}
 export interface UsCareer {
  schemaVersion:1|2;mode:'US_CAREER';revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveUsRosterWorld;protagonistKey:string;protagonistOrganizationId:string;
- phaseContext:UsPhase;season?:UsSeasonState;seasonSchedule?:UsSeasonSchedule;preseasonPlan?:UsPreseasonPlan;campNotices?:readonly EventInstance[];
+ phaseContext:UsPhase;postseason?:{bracket:MlbPostseason;conferences:Record<MlbLeague,string[]>;gameEvidence:string[]};season?:UsSeasonState;seasonSchedule?:UsSeasonSchedule;preseasonPlan?:UsPreseasonPlan;campNotices?:readonly EventInstance[];
  activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string;populationBasis:'INITIAL_INVENTORY'|'LEGACY_BOOTSTRAP'};
  registration:{playerKey:string;clubId:string;level:UsLevel;seasonKey:string;status:'ACTIVE'|'INJURED'};
  rights:UsDirectSigning['rights'];contract:Omit<UsDirectSigning['contract'],'status'|'type'> & {type:'US_MINOR'|'US_MAJOR';status:'ACTIVE';seasonKey:string;nationalReleaseAllowed:boolean;militaryReturnOption:boolean};
@@ -65,7 +66,7 @@ export function startSignedUsCareer(source:HighSchoolCareer,expectedRevision:num
 
 export function usCareerView(c:UsCareer){
  const p=c.world.players[c.protagonistKey],org=c.world.organizations.find(o=>o.id===c.protagonistOrganizationId),r=c.registration;
- if(![1,2].includes(c.schemaVersion) || c.mode!=='US_CAREER' || !['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW','EVENT_DECISION'].includes(c.phaseContext.phase) || !p || !org || r.playerKey!==p.simulationKey || r.clubId!==org.id || r.seasonKey!==c.world.seasonKey || !['ACTIVE','INJURED'].includes(r.status) || (r.status==='ACTIVE'?!org.levels[r.level]?.includes(p.simulationKey):!c.world.reserves?.[org.id]?.includes(p.simulationKey)) || c.rights.holderOrgId!==org.id || c.contract.status!=='ACTIVE' || c.contract.contractKey!==(c.season?.majorActivation?.contractKey??c.activation.contractKey))throw new RangeError('INVALID_US_ENTRY_VIEW');assertUsRecruitmentWorld(c.inventory);
+ if(![1,2].includes(c.schemaVersion) || c.mode!=='US_CAREER' || !['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW','EVENT_DECISION','POSTSEASON_PROGRESS'].includes(c.phaseContext.phase) || !p || !org || r.playerKey!==p.simulationKey || r.clubId!==org.id || r.seasonKey!==c.world.seasonKey || !['ACTIVE','INJURED'].includes(r.status) || (r.status==='ACTIVE'?!org.levels[r.level]?.includes(p.simulationKey):!c.world.reserves?.[org.id]?.includes(p.simulationKey)) || c.rights.holderOrgId!==org.id || c.contract.status!=='ACTIVE' || c.contract.contractKey!==(c.season?.majorActivation?.contractKey??c.activation.contractKey))throw new RangeError('INVALID_US_ENTRY_VIEW');assertUsRecruitmentWorld(c.inventory);
  const ready=assertUsAmateurYearEnd(c.amateurHistory),signing=c.amateurHistory.usRecruitment!.program.signing!;
  const major=c.season?.majorActivation,expectedInventory=structuredClone(c.amateurHistory.usRecruitment!.reservations.currentWorld);if(major){const expectedKey=JSON.stringify(['us-major-entry',signing.contract.contractKey,c.world.seasonKey]);if(major.contractKey!==expectedKey||major.fromContractKey!==signing.contract.contractKey||major.annualSalaryUsd!==800000||!Number.isSafeInteger(major.effectiveDay)||major.effectiveDay<=c.season!.firstDay||major.effectiveDay>c.season!.lastDay||major.reservedAdditionalUsd!==Math.floor((30000*(major.effectiveDay-c.season!.firstDay)+800000*(c.season!.lastDay-major.effectiveDay+1))/(c.season!.lastDay-c.season!.firstDay+1))-30000)throw new RangeError('INVALID_US_MAJOR_ACTIVATION');expectedInventory.clubs.find(o=>o.id===c.protagonistOrganizationId)!.availableBudgetUsd-=major.reservedAdditionalUsd;}
 

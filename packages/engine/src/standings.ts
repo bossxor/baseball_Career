@@ -9,14 +9,15 @@ function comparePercentage(a:Results,b:Results):number {
  return ad===0 || bd===0?(ad===0?bd===0?0:1:-1):b.W*ad-a.W*bd;
 }
 /** 01: winning percentage, tied-group head-to-head, run difference, preseason seeded lot. */
-export function leagueStandings(records:RecordLedger,scope:RecordScope,teamKeys:readonly string[],seed:string,worldKey:string):TeamStanding[] {
+export function leagueStandings(records:RecordLedger,scope:RecordScope,teamKeys:readonly string[],seed:string,worldKey:string,registeredTeamKeys:readonly string[]=teamKeys):TeamStanding[] {
  if(!scope.seasonKey || !worldKey)throw new RangeError('INVALID_STANDINGS_SCOPE');
  if(teamKeys.length<2 || new Set(teamKeys).size!==teamKeys.length || teamKeys.some(k=>!k))throw new RangeError('INVALID_STANDINGS_TEAMS');
+ if(new Set(registeredTeamKeys).size!==registeredTeamKeys.length || registeredTeamKeys.some(k=>!k) || teamKeys.some(k=>!registeredTeamKeys.includes(k)))throw new RangeError('INVALID_STANDINGS_TEAMS');
  const totals=recordTotals(records,scope),lots=[...teamKeys].sort();
  let rng=createStreams(seed,JSON.stringify(['standings-1',worldKey,scope.seasonKey,scope.leagueKey,scope.phase])).worldCreation;
  for(let i=lots.length-1;i>0;i--){const draw=nextInteger(rng,i+1);rng=draw.state;[lots[i],lots[draw.value]]=[lots[draw.value]!,lots[i]!];}
  const rows=teamKeys.map(teamKey=>({teamKey,...(totals.teams[teamKey]??{games:0,W:0,L:0,T:0,R:0,RA:0})}));
- if(Object.keys(totals.teams).some(k=>!teamKeys.includes(k)))throw new RangeError('UNREGISTERED_STANDINGS_TEAM');
+ if(Object.keys(totals.teams).some(k=>!registeredTeamKeys.includes(k)))throw new RangeError('UNREGISTERED_STANDINGS_TEAM');
  rows.sort(comparePercentage);
  for(let start=0;start<rows.length;){
   let end=start+1;while(end<rows.length && comparePercentage(rows[start]!,rows[end]!)===0)end++;

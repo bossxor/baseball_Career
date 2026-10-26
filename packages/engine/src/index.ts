@@ -133,3 +133,6 @@ export {usCompetitionScore,resolveUsLevelEvent} from './us-levels.js';
 export * from './pitch-learning-progress.js';
 
 export * from './school-repertoire.js';
+
+export * from './us-postseason.js';
+export * from './us-postseason-progress.js';

@@ -66,7 +66,7 @@ export function setPitchWeights(source: Repertoire, weights: PitchWeights, windo
 export function beginPitchLearning(source: Repertoire, id: PitchId, preseasonOpen: boolean, replacement?: {pitchId:PitchId; windowId:string}): Repertoire {
   pitch(id); validatePitchWeights(source.book,source.weights);
   if (!preseasonOpen || source.learning) throw new RangeError('WINDOW_CLOSED');
-  if (Object.hasOwn(source.book,id)) throw new RangeError('ALREADY_LEARNED');
+  if (Object.hasOwn(source.book,id) && pitchMastery(source.book[id]!)>=1) throw new RangeError('ALREADY_LEARNED');
   if (replacement && (Object.keys(source.weights).length!==4 || !Object.hasOwn(source.weights,replacement.pitchId) || !replacement.windowId || source.usedWindows.includes(replacement.windowId))) throw new RangeError('INVALID_REPLACEMENT');
   if (Object.keys(source.weights).length >= 4 && !replacement) throw new RangeError('SLOT_CONFLICT');
   if (source.ledger.baseSpentUnits+source.ledger.baseReservedUnits+100_000 > 200_000) throw new RangeError('INSUFFICIENT_BUDGET');
@@ -82,7 +82,8 @@ export function beginPitchLearning(source: Repertoire, id: PitchId, preseasonOpe
     for(const share of shares) normalized[share.key]=share.whole+(extra-- > 0?1:0);
     validatePitchWeights(next.book,normalized);next.weights=normalized;next.usedWindows.push(replacement.windowId);
   }
-  next.book[id]=0; next.ledger.baseReservedUnits+=100_000;
+  // A new annual plan keeps unfinished XP earned before injury (user decision 2026-10-26).
+  next.book[id]??=0; next.ledger.baseReservedUnits+=100_000;
   next.learning={pitchId:id,quarters:[],carryNumerator:'0',carryDenominator:'1'};
   return next;
 }

@@ -1,0 +1,16 @@
+✔ conference standings retain interleague wins while tie-breaks use only the tied conference clubs (4.4112ms)
+✔ standings use exact winning percentage then tied-group head-to-head, before run difference (1.7855ms)
+✔ multi-team mini-league ties use overall run difference and deterministic independent seeded lots (3.1887ms)
+✔ US full-date annual settlement pays one PRO budget, all opening NPCs and one aging; explicit forfeiture and replay keep receipts (12813.7392ms)
+✔ US annual audit refuses changed FINAL totals and incomplete date receipts before awarding growth (2334.6151ms)
+✔ MLB fixed 12-team bracket gives two byes per league, preserves WC upsets and plays all four rounds (71.0307ms)
+✔ MLB all decisive games reach exactly53; JSON replays and edited wins, winners or seeds reject (141.0143ms)
+✔ US native postseason follows controlled completed regular records, resumes a real partial PA and closes one champion without extra salary (53648.2502ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 55231.4488

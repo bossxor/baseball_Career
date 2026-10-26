@@ -1,3 +1,4 @@
+import {beginSchoolPreseasonPitchLearning} from '../src/school-repertoire.js';
 import {acknowledgeTraitSummary,unreadTraitSummary} from '../src/trait-notices.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -7,7 +8,7 @@ import {closeHighSchoolSeasonForCollege,startAdmittedCollegeSeason} from '../src
 import {createCollegeWorld,assertCollegeWorld} from '../src/college-world.js';
 import {confirmCareerPreseason,setPreseasonCareerFocus} from '../src/high-school-career.js';
 import {advanceHighSchoolCareer} from '../src/high-school-progress.js';
-import {beginPitchLearning,grantPracticePitchXp} from '../src/repertoire.js';
+import {beginPitchLearning,grantPracticePitchXp,settlePitchLearning,pitchMastery} from '../src/repertoire.js';
 import {canonicalJson} from '../src/game.js';
 import {COLLEGES,abilityKeys,overall} from '@playball/rules';
 
@@ -87,4 +88,16 @@ test('reading general trait summary after college year-end reseals metadata and 
  const closed=closeHighSchoolSeasonForCollege(source,source.revision,true),read=acknowledgeTraitSummary(closed,closed.revision),next=startAdmittedCollegeSeason(read,read.revision);
  assert.equal(unreadTraitSummary(read).length,0);assert.equal(read.collegeYearEnd!.receiptKey,closed.collegeYearEnd!.receiptKey);assert.equal(next.collegeAdmission!.status,'ENROLLED');assert.equal(next.world.players.own!.age,19);assert.equal(canonicalJson(read.world),canonicalJson(closed.world));
  const bad=structuredClone(closed);bad.collegeYearEnd!.sourceBasis='bad';assert.throws(()=>acknowledgeTraitSummary(bad,bad.revision),/YEAR_END/);
+});
+
+
+test('completed injury-reduced learning carries grade0 XP through college entry and can be selected next PRE without a free grant',()=>{
+ const source=admitted('PITCHER');let book=beginPitchLearning(source.world.repertoires.own!,'P04',true);
+ for(const quarter of [1,2,3,4] as const)book=settlePitchLearning(book,{quarter,healthyDays:6,registeredDays:12,numerator:5,completedGames:quarter*12,scheduledGames:48});
+ assert.equal(book.book.P04,50000);assert.equal(pitchMastery(book.book.P04!),0);assert.equal(book.ledger.baseReservedUnits,0);source.world.repertoires.own=book;
+ const before=canonicalJson(source),closed=closeHighSchoolSeasonForCollege(source,source.revision,true),college=startAdmittedCollegeSeason(closed,closed.revision);
+ assert.equal(canonicalJson(source),before);assert.equal(college.world.repertoires.own!.book.P04,50000);assert.equal(college.world.repertoires.own!.learning,null);assert.equal(college.world.repertoires.own!.ledger.baseSpentUnits,0);
+ const raw=canonicalJson(college),next=beginSchoolPreseasonPitchLearning(college,college.revision,'P04'),plan=next.world.repertoires.own!;
+ assert.equal(canonicalJson(college),raw);assert.equal(plan.book.P04,50000);assert.equal(plan.ledger.baseReservedUnits,100000);assert.equal(plan.ledger.baseSpentUnits,0);assert.equal(Object.hasOwn(plan.weights,'P04'),false);assert.equal(plan.learning!.quarters.length,0);
+ assert.throws(()=>beginSchoolPreseasonPitchLearning(next,next.revision,'P04'),/WINDOW_CLOSED/);assert.throws(()=>beginPitchLearning(college.world.repertoires.own!,'P01',true),/ALREADY_LEARNED/);
 });

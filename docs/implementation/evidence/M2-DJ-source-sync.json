@@ -1,0 +1,153 @@
+{
+  "utc": "2026-10-26T07:48:52.100Z",
+  "head": "230897f4fcbef7053377611cc1528084a0d8df50",
+  "runtimeFilesUnchanged": 399,
+  "scope": "Only M2 changes and merged progress docs; parallel M6 code untouched.",
+  "files": [
+    {
+      "path": "docs/design/13-MLB-CAREER.md",
+      "beforeV": "2b11de3bfa76529ceef7fdaafd38ed1f3c86e9644d181602d44d7c6d7c3c2b3a",
+      "sha256": "2b11de3bfa76529ceef7fdaafd38ed1f3c86e9644d181602d44d7c6d7c3c2b3a"
+    },
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "beforeV": "72200db6555d12d8f52c9df2cc7464716d18ea1fa192794f7945f0f7ef6b4763",
+      "sha256": "72200db6555d12d8f52c9df2cc7464716d18ea1fa192794f7945f0f7ef6b4763"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "beforeV": "0369dc29185f6f9be852ec9b6536979b2eb0858bd40275d5ac6357f198053d0b",
+      "sha256": "47e88232271a6ca835c988cf7d084c9d815cb7ec27c61243d54a946dfa22d00e"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "beforeV": "48d7f7d3182f51773e1abd8fba14691491c4a35fe086b79dc9d900c1e0b5a9a2",
+      "sha256": "4058b77897b294f8f61aabbd89a99161bc2287392e5e405726575902a86ad0fd"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "beforeV": "2c4bac92f36a75ed3136f5e91e13cb269297c1b56faac0d2657deb4195e159ef",
+      "sha256": "a3c219e5d2430b0c1150ef61051bcbea298992e51f69a04fee46e5216c303591"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "beforeV": "01a69d41f84f21cb67127f5cfdb0b5fe28f2df1fe8371a5293c23bf3afeb2b49",
+      "sha256": "1823a4900f2ea97cad29a5531dcad1cf8e7e61acf4c75ba592c7a11e7d980cb2"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "beforeV": "58558e9f6a1d1161709e0e2a6e9a81503dbd14f25537ec6a5f64369866a20ab0",
+      "sha256": "666a85043a5ce371d5bffad8de3c2b5c7caa368965d8bc6a171f008498c34749"
+    },
+    {
+      "path": "packages/engine/src/college-entry.ts",
+      "beforeV": "35400bebe651e91ac76c04ac8c73a55ae4ce24f8bb629635ce50b99675d0dad3",
+      "sha256": "35400bebe651e91ac76c04ac8c73a55ae4ce24f8bb629635ce50b99675d0dad3"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "beforeV": "9869258283972620c0708e4f681a0f619bef5fe287a4c3c4b76a052ade911e79",
+      "sha256": "9869258283972620c0708e4f681a0f619bef5fe287a4c3c4b76a052ade911e79"
+    },
+    {
+      "path": "packages/engine/src/repertoire.ts",
+      "beforeV": "cbc28e65f5dcd53dcd27c9a66fc48c3c09104d9c3637088ae76e54d971093478",
+      "sha256": "cbc28e65f5dcd53dcd27c9a66fc48c3c09104d9c3637088ae76e54d971093478"
+    },
+    {
+      "path": "packages/engine/src/standings.ts",
+      "beforeV": "1471f346bf31c1db8dcb90814b0689f08519c6c443910255c0204ba7dcd03124",
+      "sha256": "1471f346bf31c1db8dcb90814b0689f08519c6c443910255c0204ba7dcd03124"
+    },
+    {
+      "path": "packages/engine/src/us-career-entry.ts",
+      "beforeV": "e20f4127f2dcc47269283553bfb062ef122c4c8ca65f96aa4e81981d9273a170",
+      "sha256": "e20f4127f2dcc47269283553bfb062ef122c4c8ca65f96aa4e81981d9273a170"
+    },
+    {
+      "path": "packages/engine/src/us-growth.ts",
+      "beforeV": "33e5c78aa15f13a6489061a3b871d5b75f4a1e4a0a2228591578729f5c971a54",
+      "sha256": "33e5c78aa15f13a6489061a3b871d5b75f4a1e4a0a2228591578729f5c971a54"
+    },
+    {
+      "path": "packages/engine/src/us-season.ts",
+      "beforeV": "b1068a34a61c8e0afe3994f29c93cabf1429f8f5980e08f033e12d7e2dd8b8be",
+      "sha256": "b1068a34a61c8e0afe3994f29c93cabf1429f8f5980e08f033e12d7e2dd8b8be"
+    },
+    {
+      "path": "packages/engine/test/college-entry.test.ts",
+      "beforeV": "d85f56be080a00705f10f2855f20bc31a8c6fed4cfc6392ca53be161a38c76ca",
+      "sha256": "d85f56be080a00705f10f2855f20bc31a8c6fed4cfc6392ca53be161a38c76ca"
+    },
+    {
+      "path": "packages/engine/test/standings.test.ts",
+      "beforeV": "10bba08b9fbc51a84feadcb06aaa7b22d86c9c98ec375789cb378475c8f6208f",
+      "sha256": "10bba08b9fbc51a84feadcb06aaa7b22d86c9c98ec375789cb378475c8f6208f"
+    },
+    {
+      "path": "packages/engine/test/us-growth.test.ts",
+      "beforeV": "cf9702f6713211e7a1429920aecd908eabdb539715cfc7c3790bcc245d61ae9a",
+      "sha256": "cf9702f6713211e7a1429920aecd908eabdb539715cfc7c3790bcc245d61ae9a"
+    },
+    {
+      "path": "docs/implementation/M2-DJ-RELEARNING-AND-MLB-POSTSEASON.md",
+      "beforeV": "9959993c23e73858e43f02e2aaf7dad9a262e567d7697aabfa6cebb0ec8e1563",
+      "sha256": "988a013df6bcc99a3caaf4672918b65917199dad0f51624e97f2c2589702657b"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DJ-carry-focused.log",
+      "beforeV": "63c87a6b825bdb0d3054b422c9f90ffa4679d90379e347dbd12f9dac7451171d",
+      "sha256": "63c87a6b825bdb0d3054b422c9f90ffa4679d90379e347dbd12f9dac7451171d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DJ-check.log",
+      "beforeV": null,
+      "sha256": "9dffc1acd3060469337231b9842109f02616a22057b51a9254362239d70f7ec2"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DJ-mirror.json",
+      "beforeV": null,
+      "sha256": "c75137191f28c142c1679dbd255d81241cd472b22adacee5d970f969b256aec5"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DJ-parallel-status.json",
+      "beforeV": null,
+      "sha256": "51b0b052ea75a5d8325f2183c15d7162e68107713882e9f9a057a5b6a17e46ad"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DJ-postseason-focused.log",
+      "beforeV": "387ac3311ccc6eec3905e13c5f810f394654c4a6e8bc0a52c9301b2cc45375b5",
+      "sha256": "387ac3311ccc6eec3905e13c5f810f394654c4a6e8bc0a52c9301b2cc45375b5"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DJ-smoke.log",
+      "beforeV": null,
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DJ-source-freeze.json",
+      "beforeV": "993333523a0997c7e9413f6f94042f8e04cc59a37787a61354e161916d425ca0",
+      "sha256": "993333523a0997c7e9413f6f94042f8e04cc59a37787a61354e161916d425ca0"
+    },
+    {
+      "path": "packages/engine/src/us-postseason-progress.ts",
+      "beforeV": "06c1fa318a6183c35b347453b7139f8b52074c997dc9b91a569f68801f00b0a9",
+      "sha256": "06c1fa318a6183c35b347453b7139f8b52074c997dc9b91a569f68801f00b0a9"
+    },
+    {
+      "path": "packages/engine/src/us-postseason.ts",
+      "beforeV": "5775bab7bd461ebf53af34de0fc0697f0575f0e01710c1b75ee5c87cceb6c874",
+      "sha256": "5775bab7bd461ebf53af34de0fc0697f0575f0e01710c1b75ee5c87cceb6c874"
+    },
+    {
+      "path": "packages/engine/test/us-postseason.test.ts",
+      "beforeV": "263ab17b57fd1e593a02d6306395c67bd0537ed9043646e1a781990b08e1db01",
+      "sha256": "263ab17b57fd1e593a02d6306395c67bd0537ed9043646e1a781990b08e1db01"
+    },
+    {
+      "path": "packages/engine/test/us-reviewed-fixture.ts",
+      "beforeV": "b185f55517d4e99a3323f2fa87648afe0982aa45a4b1f594f3283062cedea5f9",
+      "sha256": "b185f55517d4e99a3323f2fa87648afe0982aa45a4b1f594f3283062cedea5f9"
+    }
+  ]
+}
