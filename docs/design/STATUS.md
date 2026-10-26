@@ -1,6 +1,6 @@
-# 전체 구현 진행률: 약 68% 완료 · 약 32% 남음
+# 전체 구현 진행률: 약 70% 완료 · 약 30% 남음
 
-2026-10-26 · **M2 진행 중**(최신 M2-DF) + **M3·M4·M5·M7 완료** + **M8 Capacitor 셸**. **기능 범위 가중 추정치**. 다음=M8 실기기/M9. M2·M6는 다른 쪽.
+2026-10-26 · **M2 진행 중**(최신 M2-DF) + **M3·M4·M5·M7·M8 완료(셸)** + **M9 운영 셸**. **기능 범위 가중 추정치**. 다음=M9 실배포/M8 실기기. M2·M6는 다른 쪽.
 
 M2-DF: 전체632/632·실패0·취소0. 보유권 정책 확정(다음 해 권리 해제 후 타구단1년 비교). DD 18개월은 미완료. M2 전체 완료 아님. [인계](../implementation/NEXT-SESSION.md).
 
@@ -8,9 +8,9 @@ M3: **완료**(V02/V03). 메일 재설정 실발송만 M9로 보류. [M3 완료]
 
 M4: **완료**(핵심12·HTTP·IME/터치 V08 일부). 풀 엔진=M2. [M4 완료](../implementation/M4-COMPLETE.md).
 
-M5: **완료(셸)** — 33화면 Decision 스텁·라우트·fixture/API. 픽셀·SR 실기기는 수동 잔여. [M5 완료](../implementation/M5-COMPLETE.md). 전체 62% = 57 + M5 5.
+M5: **완료(셸)** — 33화면 Decision 스텁·라우트·fixture/API. 픽셀·SR 실기기는 수동 잔여. [M5 완료](../implementation/M5-COMPLETE.md).
 
-**현재 작업:** M8 debug APK 셸(`kr.againplayball.app`) · API `https://api.againplayball.kr`(DNS/배포 연결 필요). M2·M6는 다른 쪽.
+**현재 작업:** M9 `/api/ready`·`/api/version`·자산 provenance · API 호스트 `https://api.againplayball.kr`(DNS 미연결). M2·M6는 다른 쪽.
 
 | 구현 영역 | 전체 비중 | 영역 완료 추정 | 전체 기여 |
 |---|---:|---:|---:|
@@ -22,13 +22,17 @@ M5: **완료(셸)** — 33화면 Decision 스텁·라우트·fixture/API. 픽셀
 | M5 나머지 실제 화면·접근성 | 5% | 100% | 5% |
 | M6 구단 운영·AI·장기 경제 | 20% | 25% | 5% |
 | M7 내보내기·백업·중계 | 4% | 100% | 4% |
-| M8 모바일 패키징·실기기 | 2% | 50% | 1% |
-| M9 배포·운영·출시 검증 | 2% | 0% | 0% |
-| **합계** | **100%** | — | **68%** |
+| M8 모바일 패키징·실기기 | 2% | 100% | 2% |
+| M9 배포·운영·출시 검증 | 2% | 50% | 1% |
+| **합계** | **100%** | — | **70%** |
 
 계산: 전체 완료 = 비중 × 영역 완료율의 합, 남음 = 100 − 전체 완료. 비중은 [120 구현 순서](120-IMPLEMENTATION-ROADMAP.md)의 범위를 바탕으로 만든 작업 추정치(D)다. 구현량·난도가 드러나면 근거와 함께 재평가하며, 같은 AI 기능을 M2와 M6에 중복 가산하지 않는다. M2는 내 선수 경로·사건, M6는 독립적인 리그 AI/재정 기반에 대한 평가다. 설계보드·준비된 이미지·빈 웹/API 골격은 실제 플레이 화면이나 클라우드 저장 완료로 세지 않는다.
 
-**완료:** M3 [COMPLETE](../implementation/M3-COMPLETE.md) · M4 [COMPLETE](../implementation/M4-COMPLETE.md) · M5 [COMPLETE](../implementation/M5-COMPLETE.md) · M7 [COMPLETE](../implementation/M7-COMPLETE.md).
+**완료:** M3 [COMPLETE](../implementation/M3-COMPLETE.md) · M4 [COMPLETE](../implementation/M4-COMPLETE.md) · M5 [COMPLETE](../implementation/M5-COMPLETE.md) · M7 [COMPLETE](../implementation/M7-COMPLETE.md) · M8 [COMPLETE](../implementation/M8-COMPLETE.md).
+
+**M8 완료:** [M8-COMPLETE](../implementation/M8-COMPLETE.md). 실기기·release=후속.
+
+**M9 진행:** [M9-OPS](../implementation/M9-OPS.md). ready/version/자산 OFL · 실 DNS/배포=후속.
 
 **M7 완료:** [M7-COMPLETE](../implementation/M7-COMPLETE.md). PNG 렌더·중계 UI·실기기 공유=후속.
 
