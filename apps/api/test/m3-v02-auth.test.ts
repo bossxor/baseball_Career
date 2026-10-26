@@ -12,6 +12,7 @@ import {
   profiles,
 } from '@playball/db';
 import { createApp } from '../src/app.js';
+import { json } from './json.js';
 import { neonFetchJwt, neonSignUp } from '../src/neon-auth-client.js';
 
 function loadEnvFile(): void {
@@ -76,7 +77,7 @@ test('V02 Managed Auth JWT + allowlist + owner isolation', { skip: !ready }, asy
       headers: { Authorization: `Bearer ${jwtX}` },
     });
     assert.equal(forbidden.status, 401);
-    assert.equal((await forbidden.json()).code, 'AUTH_REQUIRED');
+    assert.equal((await json(forbidden)).code, 'AUTH_REQUIRED');
 
     const createA = await app.request('/api/game-creations', {
       method: 'POST',
@@ -84,14 +85,14 @@ test('V02 Managed Auth JWT + allowlist + owner isolation', { skip: !ready }, asy
       body: JSON.stringify({ creationId: `c-${randomUUID()}`, mode: 'CAREER' }),
     });
     assert.equal(createA.status, 200);
-    const created = await createA.json();
+    const created = await json<{ saveId: string }>(createA);
     assert.ok(created.saveId);
 
     const steal = await app.request(`/api/saves/${created.saveId}`, {
       headers: { Authorization: `Bearer ${jwtB}` },
     });
     assert.equal(steal.status, 404);
-    assert.equal((await steal.json()).code, 'SAVE_NOT_FOUND');
+    assert.equal((await json(steal)).code, 'SAVE_NOT_FOUND');
 
     const own = await app.request(`/api/saves/${created.saveId}`, {
       headers: { Authorization: `Bearer ${jwtA}` },

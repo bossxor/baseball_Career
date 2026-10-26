@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createTestDb, seedAllowedSubject } from '@playball/db';
 import { createApp } from '../src/app.js';
+import { json } from './json.js';
 
 const SUBJECT = 'm4-user';
 const auth = { Authorization: `Bearer dev:${SUBJECT}`, 'Content-Type': 'application/json' };
@@ -16,7 +17,7 @@ test('M4 UI shell: create → seed → advance → settle → choose S04→S28',
     body: JSON.stringify({ creationId: 'create-1', mode: 'CAREER' }),
   });
   assert.equal(created.status, 200);
-  const { saveId } = await created.json() as { saveId: string };
+  const { saveId } = await json<{ saveId: string }>(created);
 
   const seed = await app.request(`/api/saves/${saveId}/commands`, {
     method: 'POST', headers: auth,
@@ -26,13 +27,13 @@ test('M4 UI shell: create → seed → advance → settle → choose S04→S28',
     }),
   });
   assert.equal(seed.status, 200);
-  assert.equal((await seed.json()).revision, '1');
+  assert.equal((await json<{ revision: string }>(seed)).revision, '1');
 
   const career0 = await app.request(`/api/saves/${saveId}/career`, { headers: auth });
   assert.equal(career0.status, 200);
-  const c0 = await career0.json();
+  const c0 = await json<{ protagonist: { name: string }; nextActions: { id: string }[] }>(career0);
   assert.equal(c0.protagonist.name, '김테스트');
-  assert.ok(c0.nextActions.some((a: { id: string }) => a.id === 'advance'));
+  assert.ok(c0.nextActions.some(a => a.id === 'advance'));
 
   for (let i = 0; i < 8; i++) {
     const adv = await app.request(`/api/saves/${saveId}/commands`, {
@@ -43,12 +44,12 @@ test('M4 UI shell: create → seed → advance → settle → choose S04→S28',
   }
 
   const career = await app.request(`/api/saves/${saveId}/career`, { headers: auth });
-  const c = await career.json();
-  assert.ok(c.nextActions.some((a: { id: string }) => a.id === 'open:S04'), JSON.stringify(c.nextActions));
+  const c = await json<{ nextActions: { id: string }[] }>(career);
+  assert.ok(c.nextActions.some(a => a.id === 'open:S04'), JSON.stringify(c.nextActions));
 
   const screen = await app.request(`/api/saves/${saveId}/screens/S04`, { headers: auth });
   assert.equal(screen.status, 200);
-  assert.equal((await screen.json()).screenId, 'S04');
+  assert.equal((await json<{ screenId: string }>(screen)).screenId, 'S04');
 
   const choose = await app.request(`/api/saves/${saveId}/commands`, {
     method: 'POST', headers: auth,
@@ -58,7 +59,7 @@ test('M4 UI shell: create → seed → advance → settle → choose S04→S28',
     }),
   });
   assert.equal(choose.status, 200);
-  const ch = await choose.json();
+  const ch = await json<{ next: unknown }>(choose);
   assert.deepEqual(ch.next, { kind: 'screen', screenId: 'S28' });
 
   const replay = await app.request(`/api/saves/${saveId}/commands`, {
@@ -69,7 +70,7 @@ test('M4 UI shell: create → seed → advance → settle → choose S04→S28',
     }),
   });
   assert.equal(replay.status, 200);
-  assert.deepEqual(await replay.json(), ch);
+  assert.deepEqual(await json(replay), ch);
 
   await client.close();
 });
