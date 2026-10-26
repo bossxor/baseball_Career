@@ -6,7 +6,7 @@ import { getCommand, postCommand } from './commands.js';
 import { postGameCreation } from './game-creations.js';
 import { getCareer, getScreen } from './career-views.js';
 import { getSaveSummary, listSaves } from './saves.js';
-import { downloadFile, getFileMeta, listBackups, postBackup } from './private-files.js';
+import { downloadFile, getFileMeta, listBackups, postBackup, postChronicleExport } from './private-files.js';
 import { postRestore, previewRestore } from './restores.js';
 
 export type CreateAppOptions = {
@@ -58,6 +58,7 @@ export function createApp(options: CreateAppOptions = {}) {
   protectedRoutes.get('/saves/:id/commands/:commandId', getCommand);
   protectedRoutes.post('/saves/:id/backups', postBackup);
   protectedRoutes.get('/saves/:id/backups', listBackups);
+  protectedRoutes.post('/saves/:id/exports/chronicle', postChronicleExport);
   protectedRoutes.get('/files/:fileId', getFileMeta);
   protectedRoutes.get('/files/:fileId/content', downloadFile);
   protectedRoutes.post('/restores/preview', previewRestore);
