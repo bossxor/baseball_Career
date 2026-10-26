@@ -1,5 +1,7 @@
 # 다음 환경 구현 인계 — 2026-10-23
 
+M3 병렬: 브랜치 `m3/save-command-pipeline` · [M3-A](M3-A-SAVE-COMMAND-PIPELINE.md). 이 브랜치에서 `packages/engine`·M2 문서는 수정하지 않는다.
+
 ## 최신 완료 — M2-DE AI 영입 공동 등록 E96
 
 2026-10-25 · 최종 전체 npm run check625/625·실패0·취소0, lint·타입·build·엔진 골든·이벤트·설계10종·HTTP 골격 smoke 통과. 테스트 duration_ms400562.5889·종료0. 신규 집중6/6에서 실제 Y02 AI FA 수락·재계약, 양 관계 종류, 공식 공동 등록·벤치 부상·JSON/control 불변·변조 거부·소속/계약 변경 후 조회/ACK·중복/구 저장을 검증했다.
