@@ -1,13 +1,25 @@
+## M3/M4 마감 (2026-10-26)
+
+M3 V02/V03 완료·메일 실발송 M9 보류. M4 핵심12+HTTP+로그인/충돌. CI typecheck에 engine build 추가. [M3](M3-COMPLETE.md) · [M4](M4-COMPLETE.md).
 # 구현 진행·다른 환경 이어가기
 
-## M4 웹 UI 핵심 화면 — 시작 (2026-10-26)
+## 병렬 완료 — M3 계정·DB·명령 파이프라인 (2026-10-26)
 
-M2/M3와 겹치지 않는 `apps/web`: 뼈대+S01 홈·S02 생성·S03 커리어, `PlayballApi`+fixture, 웹 테스트 11개(`test:web`, check 포함). 실제 API 연동·나머지 9화면은 다음. [M4](M4-WEB-UI.md).
+브랜치 `m3/save-command-pipeline`을 main에 병합. Neon `m3-dev` + Managed Better Auth JWT·allowlist·owner 격리·행 잠금/receipt/F08·셸 game-creations/saves. api 테스트7/7. 메일 재설정 실발송·전 커리어 명령 매핑은 미완(의도). [완료](M3-COMPLETE.md) · [증거](evidence/M3-COMPLETE-check.log).
+
+## M4-B HTTP PlayballApi + API UI 셸 (2026-10-26)
+
+`createHttpApi` · `UI_SEED/ADVANCE/CHOOSE` · career/screen GET. 웹14·API m4-ui-shell 통과. 풀 커리어 엔진 연결은 후속. [M4](M4-WEB-UI.md).
+## M4 웹 UI 핵심 12화면 (2026-10-26)
+
+S01–S03에 이어 S04–S09·S22·S23·S28을 공통 `Decision` + `#/play/:id/Sxx`로 추가. fixture `decision`/`choose` 멱등. 웹 테스트13. 실 HTTP API·접근성 실기는 다음. [M4](M4-WEB-UI.md).
+## M4 웹 UI 핵심 화면 — 시작 (2026-10-26, 이전)
+
+M2/M3와 겹치지 않는 `apps/web`: 뼈대+S01 홈·S02 생성·S03 커리어, `PlayballApi`+fixture, 웹 테스트 11개. 실제 API 연동·나머지 9화면은 다음. [M4](M4-WEB-UI.md).
 
 ## 2026-10-26 M2-DF 완료
 
 STATUS를 먼저 갱신한 뒤 원구단 예산 부족의 다음 해 권리 해제/타 구단1년 비교를 사용자 선택대로 연결했다. 신규7개·집중12/12·전체632/632·실패0·취소0·종료0, lint/타입/build/골든/이벤트/설계10종 통과, duration_ms2330706.9176. 별도 JSON 비교/수락/Y02 재개 결과도 동일했다. [DF 범위/호환](M2-DF-OFFSEASON-EXIT.md). 기존 DE625/625는 이전 코드의 증거다. 실제 V:의 원격 변경79개를 보호 최신화했고 옛 DD 상태는 복구하지 못했으며 새 고정 DC 원본 저장/재개 실행기로2030 day60·마감30일·60정규 경기까지 진행했다. 아직18개월 완료가 아니다. [DD 보관/재개](evidence/M2-DD-full-service-checkpoint-notes.md) · [M2 전체 계획](M2-COMPLETION-PLAN.md).
-
 
 ## 최신 완료 — M2-DE AI 영입 공동 등록 E96
 

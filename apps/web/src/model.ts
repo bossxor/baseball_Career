@@ -29,3 +29,18 @@ export interface CreationRequest {
   pitchForm: string | null; archetype: string; focus: readonly string[];
 }
 export interface CreationReceipt { saveId: string }
+
+/** Decision screens of the M4 core 12 (everything except home/create/career). Server fills lines + options. */
+export type PlayScreenId = 'S04' | 'S05' | 'S06' | 'S07' | 'S08' | 'S09' | 'S22' | 'S23' | 'S28';
+export interface DecisionOption { id: string; label: string; primary?: boolean; disabledReason?: string }
+export interface DecisionView {
+  screenId: PlayScreenId; saveId: string;
+  summary: readonly { label: string; value: string }[];
+  options: readonly DecisionOption[];
+  notice?: string | null;
+}
+export type ChooseNext =
+  | { kind: 'career' }
+  | { kind: 'home' }
+  | { kind: 'screen'; screenId: PlayScreenId };
+export interface ChooseReceipt { next: ChooseNext }
