@@ -1,5 +1,7 @@
 # 다음 환경 구현 인계 — 2026-10-23
 
+> **M4(웹 UI)는 별도 트랙**: `apps/web`에서 S01/S02/S03를 구현했다. 이어가려면 [M4-WEB-UI.md](M4-WEB-UI.md)를 읽고 `npm run test:web`로 확인한다. M2(엔진)·M3(DB/API)와 파일이 겹치지 않으며, 서버 연동은 `apps/web/src/api.ts`의 `PlayballApi`만 교체하면 된다.
+
 ## 최신 완료 — M2-DF 연말 계약 비교 (2026-10-26)
 
 origin/main df65ec2로 로컬을 fast-forward하고 STATUS부터 갱신했다. V:는837ce74/df65ec2 중 일치하는 파일만 보호 비교해 원격 변경79개를 최신화했다. 사용자 확정: 다음 해 원구단이 재계약할 재원이 없으면 보유권 해제 후 타 구단1년 제안 비교. [DF](M2-DF-OFFSEASON-EXIT.md)는 신규7개·집중12/12·전체632/632·실패0·취소0·종료0, lint/타입/build/골든/이벤트/설계10종 통과. duration_ms2330706.9176. 다음은 미국 커리어 실제 활성화/진행이며 [M2 전체 계획](M2-COMPLETION-PLAN.md)을 따른다. 다른 환경 M3 작업은 [연동 주의](M2-M3-INTEGRATION-NOTES.md)를 먼저 읽는다. 아래 DE/DC의 연말 질문 대기는26일 사용자 선택으로 해결된 이전 이력이다.
