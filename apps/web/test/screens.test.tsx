@@ -118,6 +118,9 @@ test('S06 Decision: empty text, option disabilities linked, confirm needs select
   const busy = renderToStaticMarkup(<Decision view={decision()} screenId="S06" selectedId="a" state="saving" />);
   assert.match(busy, /같은 선택을 다시 실행하지 않고 결과를 확인합니다/);
   assert.match(busy, /disabled=""[^>]*>확정<\/button>/);
+  const conflict = renderToStaticMarkup(<Decision view={decision()} screenId="S06" state="conflict" onReload={() => undefined} />);
+  assert.match(conflict, /다른 기기의 진행 내용이 있습니다/);
+  assert.match(conflict, />최신 저장 불러오기<\/button>/);
 });
 
 test('fixture decision/choose: same commandId is idempotent; S04→S28 chain', async () => {

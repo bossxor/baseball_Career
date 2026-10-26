@@ -13,9 +13,9 @@
   "scripts": {
     "dev": "node scripts/dev.mjs",
     "build": "npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/db && npm run build --workspace @playball/api && npm run build --workspace @playball/web",
-    "typecheck": "npm run build --workspace @playball/rules && npm run build --workspace @playball/db && npm run typecheck --workspaces --if-present && tsc -p tsconfig.tests.json",
+    "typecheck": "npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/db && npm run typecheck --workspaces --if-present && tsc -p tsconfig.tests.json",
     "lint": "eslint packages apps scripts",
-    "test": "npm run build --workspace @playball/rules && npm run build --workspace @playball/db && tsx --test packages/rules/test/*.test.ts packages/engine/test/*.test.ts apps/api/test/*.test.ts",
+    "test": "npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/db && tsx --test packages/rules/test/*.test.ts packages/engine/test/*.test.ts apps/api/test/*.test.ts",
     "verify:design": "node scripts/verify-design.mjs",
     "check": "npm run lint && npm run typecheck && npm test && npm run test:web && npm run build && npm run verify:engine && npm run verify:events && npm run verify:design",
     "start": "node apps/api/dist/server.js",

@@ -1,4 +1,5 @@
 import type { PlayballApi } from './api.js';
+import { ApiError } from './errors.js';
 import type {
   CareerView, ChooseReceipt, CreationReceipt, CreationRequest, DecisionView, HomeData, PlayScreenId, ProgressMode, SaveSummary,
 } from './model.js';
@@ -26,13 +27,8 @@ function toSummary(row: SaveListItem): SaveSummary {
     : typeof row.summary.creationId === 'string' ? String(row.summary.creationId)
     : row.id;
   return {
-    saveId: row.id,
-    mode: row.mode,
-    title,
-    seasonLabel: '고교 3학년',
-    phaseLabel: row.phase,
-    savedAtLabel: relativeTime(row.updatedAt),
-    revision: Number(row.revision),
+    saveId: row.id, mode: row.mode, title, seasonLabel: '고교 3학년', phaseLabel: row.phase,
+    savedAtLabel: relativeTime(row.updatedAt), revision: Number(row.revision),
   };
 }
 
@@ -48,23 +44,35 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
   };
 
   const req = async (path: string, init: RequestInit = {}) => {
-    const res = await fetch(`${base}${path}`, init);
+    if (typeof navigator !== 'undefined' && navigator.onLine === false) throw new ApiError('OFFLINE');
+    const res = await fetch(`${base}${path}`, init).catch(() => { throw new ApiError('OFFLINE'); });
     if (!res.ok) {
-      const body = await res.json().catch(() => ({})) as { code?: string };
-      throw new Error(body.code ?? `HTTP_${res.status}`);
+      const body = await res.json().catch(() => ({})) as { code?: string; currentRevision?: string };
+      if (body.code === 'REVISION_CONFLICT') {
+        const rev = body.currentRevision !== undefined ? Number(body.currentRevision) : undefined;
+        throw new ApiError('REVISION_CONFLICT', Number.isFinite(rev) ? rev : undefined);
+      }
+      throw new ApiError(body.code ?? `HTTP_${res.status}`);
     }
     return res.json();
   };
 
   const command = async (saveId: string, commandId: string, type: string, payload: unknown) => {
     const expectedRevision = revisions.get(saveId) ?? 0;
-    const result = await req(`/api/saves/${encodeURIComponent(saveId)}/commands`, {
-      method: 'POST',
-      headers: await headers(),
-      body: JSON.stringify({ commandId, expectedRevision, type, payload }),
-    }) as { revision: string; next?: ChooseReceipt['next'] };
-    revisions.set(saveId, Number(result.revision));
-    return result;
+    try {
+      const result = await req(`/api/saves/${encodeURIComponent(saveId)}/commands`, {
+        method: 'POST',
+        headers: await headers(),
+        body: JSON.stringify({ commandId, expectedRevision, type, payload }),
+      }) as { revision: string; next?: ChooseReceipt['next'] };
+      revisions.set(saveId, Number(result.revision));
+      return result;
+    } catch (err) {
+      if (err instanceof ApiError && err.code === 'REVISION_CONFLICT' && err.currentRevision !== undefined) {
+        revisions.set(saveId, err.currentRevision);
+      }
+      throw err;
+    }
   };
 
   return {
@@ -73,8 +81,7 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
       const saves = data.items.map(toSummary);
       for (const s of saves) revisions.set(s.saveId, s.revision);
       return {
-        saves,
-        archiveCount: 0,
+        saves, archiveCount: 0,
         resume: saves[0] ? { saveId: saves[0].saveId, label: saves[0].phaseLabel } : null,
       };
     },
@@ -85,8 +92,7 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
     },
     async create(request: CreationRequest): Promise<CreationReceipt> {
       const created = await req('/api/game-creations', {
-        method: 'POST',
-        headers: await headers(),
+        method: 'POST', headers: await headers(),
         body: JSON.stringify({ creationId: request.commandId, mode: 'CAREER' }),
       }) as { saveId: string; revision: string };
       revisions.set(created.saveId, Number(created.revision));

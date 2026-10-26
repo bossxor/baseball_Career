@@ -31,6 +31,30 @@ export async function neonSignUp(input: {
   return { user: json.user, cookie };
 }
 
+export async function neonSignIn(input: {
+  baseUrl: string;
+  email: string;
+  password: string;
+  origin?: string;
+}): Promise<{ user: NeonAuthUser; cookie: string }> {
+  const origin = input.origin ?? 'http://localhost:5173';
+  const response = await fetch(`${input.baseUrl.replace(/\/$/, '')}/sign-in/email`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Origin: origin },
+    body: JSON.stringify({ email: input.email, password: input.password }),
+  });
+  if (!response.ok) {
+    throw new Error(`sign-in failed: ${response.status} ${await response.text()}`);
+  }
+  const json = (await response.json()) as { user: NeonAuthUser };
+  const setCookie = response.headers.getSetCookie?.() ?? [];
+  const cookie =
+    setCookie.find(v => v.startsWith('__Secure-neon-auth.session_token='))?.split(';')[0] ??
+    response.headers.get('set-cookie')?.split(';')[0];
+  if (!cookie) throw new Error('sign-in missing session cookie');
+  return { user: json.user, cookie };
+}
+
 export async function neonFetchJwt(input: {
   baseUrl: string;
   cookie: string;

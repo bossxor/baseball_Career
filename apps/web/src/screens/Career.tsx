@@ -6,18 +6,19 @@ import type { CareerView, ProgressMode } from '../model.js';
 
 export interface CareerProps {
   view: CareerView | null; state?: ScreenState; mode?: ProgressMode;
-  onMode?: (mode: ProgressMode) => void; onAction?: (actionId: string, mode: ProgressMode) => void; onBack?: () => void;
+  onMode?: (mode: ProgressMode) => void; onAction?: (actionId: string, mode: ProgressMode) => void; onBack?: () => void; onReload?: () => void;
 }
 /** S03 커리어. Buttons come only from `nextActions`; the progress mode defaults to "다음 주요 사건까지". A pending event
  * leaves the event action as the only primary one (no advance past it). */
-export function Career({ view, state = 'ready', mode, onMode, onAction, onBack }: CareerProps) {
+export function Career({ view, state = 'ready', mode, onMode, onAction, onBack, onReload }: CareerProps) {
   const busy = isBusy(state);
+  const frame = { ...(onBack ? { onBack } : {}), ...(onReload ? { onReload } : {}) };
   if (!view) {
-    return <ScreenFrame id="S03" state={state} {...(onBack ? { onBack } : {})}><p className="empty">{stateText('S03', 'empty')}</p></ScreenFrame>;
+    return <ScreenFrame id="S03" state={state} {...frame}><p className="empty">{stateText('S03', 'empty')}</p></ScreenFrame>;
   }
   const current = mode ?? view.progress.mode, modes: readonly ProgressMode[] = [view.progress.mode, ...view.progress.alternatives];
   return (
-    <ScreenFrame id="S03" state={state} {...(onBack ? { onBack } : {})}>
+    <ScreenFrame id="S03" state={state} {...frame}>
       <section className="panel" aria-label="선수">
         <h2>{view.protagonist.name}</h2>
         <p>{view.protagonist.kindLabel} · {view.protagonist.positionLabel} · {view.protagonist.ageLabel}</p>

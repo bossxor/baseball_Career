@@ -7,10 +7,13 @@ const HIDDEN_BANNERS: Readonly<Partial<Record<ScreenId, readonly ScreenState[]>>
 export const bannerFor = (id: ScreenId, state: ScreenState): string | null => (HIDDEN_BANNERS[id]?.includes(state) ? null : state === 'empty' ? null : stateText(id, state));
 export const isBusy = (state: ScreenState) => state === 'loading' || state === 'saving';
 
-export interface FrameProps { id: ScreenId; state?: ScreenState; saveLabel?: string; onBack?: (() => void) | undefined; children: ReactNode }
+export interface FrameProps {
+  id: ScreenId; state?: ScreenState; saveLabel?: string;
+  onBack?: (() => void) | undefined; onReload?: (() => void) | undefined; children: ReactNode;
+}
 /** Common structure (17): top bar (back / save state) → title → state banner → content. Content is kept while loading;
  * only confirming controls are disabled by the screens through `isBusy`. */
-export function ScreenFrame({ id, state = 'ready', saveLabel, onBack, children }: FrameProps) {
+export function ScreenFrame({ id, state = 'ready', saveLabel, onBack, onReload, children }: FrameProps) {
   const banner = bannerFor(id, state), busy = isBusy(state), titleId = `${id}-title`;
   return (
     <main className="screen" aria-labelledby={titleId} aria-busy={busy} data-screen={id} data-state={state}>
@@ -20,6 +23,7 @@ export function ScreenFrame({ id, state = 'ready', saveLabel, onBack, children }
       </header>
       <h1 id={titleId} className="screen-title">{SCREEN_TITLES[id]}</h1>
       {banner ? <p className={`banner banner-${state}`} role={state === 'error' || state === 'conflict' ? 'alert' : 'status'}>{banner}</p> : null}
+      {state === 'conflict' && onReload ? <Button primary onClick={onReload}>최신 저장 불러오기</Button> : null}
       {children}
     </main>
   );

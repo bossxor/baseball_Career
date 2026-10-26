@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { PlayballApi } from './api.js';
 import { createFixtureApi } from './fixtures.js';
+import { stateFromError } from './errors.js';
 import { Home } from './screens/Home.js';
 import { Create } from './screens/Create.js';
 import { Career } from './screens/Career.js';
@@ -30,13 +31,13 @@ const screenFromAction = (actionId: string): PlayScreenId | null => {
   const m = /^open:(S\d{2})$/.exec(actionId);
   return m && PLAY.has(m[1]!) ? m[1] as PlayScreenId : null;
 };
-// ponytail: one random id per user intent ("same commandId, same result" is the server contract); persist it across reloads when M3 lands.
 const newId = () => crypto.randomUUID();
 
-/** Hash-routed shell over `PlayballApi`. A failed call keeps the input and shows the screen's error text. */
+/** Hash-routed shell over `PlayballApi`. Failed calls map to error/conflict; conflict offers reload. */
 export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string }) {
   const api = useMemo(() => injected ?? createFixtureApi(), [injected]);
   const [route, setRoute] = useState<Route>(() => parseRoute(location.hash));
+  const [tick, setTick] = useState(0);
   useEffect(() => { const on = () => setRoute(parseRoute(location.hash)); addEventListener('hashchange', on); return () => removeEventListener('hashchange', on); }, []);
 
   const [state, setState] = useState<ScreenState>('loading');
@@ -45,8 +46,13 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
   const [decision, setDecision] = useState<DecisionView | null>(null), [selected, setSelected] = useState<string | null>(null);
   const [draft, setDraft] = useState<CreationDraft>(emptyDraft), [step, setStep] = useState<CreationStep>('NAME'), [errors, setErrors] = useState<FieldErrors>({});
   const creationId = useRef(newId());
+  const reload = () => setTick(t => t + 1);
 
-  const run = async (work: () => Promise<void>) => { setState('saving'); try { await work(); setState('ready'); } catch { setState('error'); } };
+  const run = async (work: () => Promise<void>) => {
+    setState('saving');
+    try { await work(); setState('ready'); }
+    catch (err) { setState(stateFromError(err)); }
+  };
   useEffect(() => {
     let alive = true;
     setState('loading');
@@ -57,10 +63,10 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
         else if (route.name === 'career') { const c = await api.career(route.saveId); if (alive) { setCareer(c); setMode(c.progress.mode); setState('ready'); } }
         else if (route.name === 'play') { const d = await api.decision(route.saveId, route.screenId); if (alive) { setDecision(d); setState(d.options.length ? 'ready' : 'empty'); } }
         else setState('ready');
-      } catch { if (alive) setState('error'); }
+      } catch (err) { if (alive) setState(stateFromError(err)); }
     })();
     return () => { alive = false; };
-  }, [route, api]);
+  }, [route, api, tick]);
 
   if (route.name === 'create') {
     const toStep = (next: CreationStep) => {
@@ -78,7 +84,7 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
   }
   if (route.name === 'play') {
     const saveId = route.saveId, screenId = route.screenId;
-    return <Decision view={decision} screenId={screenId} state={state} selectedId={selected}
+    return <Decision view={decision} screenId={screenId} state={state} selectedId={selected} onReload={reload}
       onSelect={setSelected} onBack={() => go(`#/career/${encodeURIComponent(saveId)}`)}
       onConfirm={() => {
         if (!selected) return;
@@ -92,14 +98,14 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
   }
   if (route.name === 'career') {
     const saveId = route.saveId;
-    return <Career view={career} state={state} mode={mode} onMode={setMode} onBack={() => go('#/')}
+    return <Career view={career} state={state} mode={mode} onMode={setMode} onBack={() => go('#/')} onReload={reload}
       onAction={(actionId, m) => {
         const screen = screenFromAction(actionId);
         if (screen) { openPlay(saveId, screen); return; }
         void run(async () => { setCareer(await api.act(saveId, actionId, m, newId())); });
       }} />;
   }
-  return <Home {...(logo ? { logo } : {})} data={home} state={state} showSaves={showSaves} onToggleSaves={() => setShowSaves(v => !v)}
+  return <Home {...(logo ? { logo } : {})} data={home} state={state} showSaves={showSaves} onToggleSaves={() => setShowSaves(v => !v)} onReload={reload}
     onResume={id => go(`#/career/${encodeURIComponent(id)}`)} onSelect={id => go(`#/career/${encodeURIComponent(id)}`)}
     onNew={m => { if (m === 'CAREER') { setDraft(emptyDraft()); setStep('NAME'); setErrors({}); go('#/create'); } }} />;
 }

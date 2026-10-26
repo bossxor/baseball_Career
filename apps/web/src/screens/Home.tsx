@@ -6,14 +6,14 @@ import type { HomeData } from '../model.js';
 export interface HomeProps {
   data: HomeData | null; state?: ScreenState; showSaves?: boolean; logo?: string;
   onResume?: (saveId: string) => void; onSelect?: (saveId: string) => void; onToggleSaves?: () => void;
-  onNew?: (mode: 'CAREER' | 'CLUB') => void; onSettings?: () => void;
+  onNew?: (mode: 'CAREER' | 'CLUB') => void; onSettings?: () => void; onReload?: () => void;
 }
 /** S01 홈. The resume button keeps its label while loading (disabled + aria-busy); interruption/recovery status is never shown.
  * A mode button appears only when its handler exists, so unbuilt modes (구단, 설정) are not dead buttons. */
-export function Home({ data, state = 'ready', showSaves = false, logo, onResume, onSelect, onToggleSaves, onNew, onSettings }: HomeProps) {
+export function Home({ data, state = 'ready', showSaves = false, logo, onResume, onSelect, onToggleSaves, onNew, onSettings, onReload }: HomeProps) {
   const busy = isBusy(state), empty = !data || data.saves.length === 0, resume = data?.resume ?? null;
   return (
-    <ScreenFrame id="S01" state={state}>
+    <ScreenFrame id="S01" state={state} {...(onReload ? { onReload } : {})}>
       <p className="lead">{logo ? <img src={logo} alt="" width="40" height="40" /> : null}<span>당신의 야구는, 다시 시작된다.</span></p>
       {empty ? (
         <section aria-label="시작"><p className="empty">{stateText('S01', 'empty')}</p></section>

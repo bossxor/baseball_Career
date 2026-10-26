@@ -1,3 +1,6 @@
+## M3/M4 마감 (2026-10-26)
+
+M3 V02/V03 완료·메일 실발송 M9 보류. M4 핵심12+HTTP+로그인/충돌. CI typecheck에 engine build 추가. [M3](M3-COMPLETE.md) · [M4](M4-COMPLETE.md).
 # 구현 진행·다른 환경 이어가기
 
 ## 병렬 완료 — M3 계정·DB·명령 파이프라인 (2026-10-26)
