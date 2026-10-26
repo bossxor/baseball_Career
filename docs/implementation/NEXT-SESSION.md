@@ -1,17 +1,18 @@
 # 다음 환경 구현 인계 — 2026-10-23
 
-> **M4(웹 UI)는 별도 트랙**: `apps/web`에서 S01/S02/S03를 구현했다. 이어가려면 [M4-WEB-UI.md](M4-WEB-UI.md)를 읽고 `npm run test:web`로 확인한다. M2(엔진)·M3(DB/API)와 파일이 겹치지 않으며, 서버 연동은 `apps/web/src/api.ts`의 `PlayballApi`만 교체하면 된다.
+> **M3 완료**: `m3/save-command-pipeline` → main 병합. [M3-COMPLETE](M3-COMPLETE.md). engine 미수정. 메일 재설정 실발송은 후속.
+
+> **M4(웹 UI)**: `apps/web` S01/S02/S03. 이어가려면 [M4-WEB-UI.md](M4-WEB-UI.md) · `npm run test:web`. 서버 연동은 `PlayballApi`만 교체.
 
 ## 최신 완료 — M2-DF 연말 계약 비교 (2026-10-26)
 
-origin/main df65ec2로 로컬을 fast-forward하고 STATUS부터 갱신했다. V:는837ce74/df65ec2 중 일치하는 파일만 보호 비교해 원격 변경79개를 최신화했다. 사용자 확정: 다음 해 원구단이 재계약할 재원이 없으면 보유권 해제 후 타 구단1년 제안 비교. [DF](M2-DF-OFFSEASON-EXIT.md)는 신규7개·집중12/12·전체632/632·실패0·취소0·종료0, lint/타입/build/골든/이벤트/설계10종 통과. duration_ms2330706.9176. 다음은 미국 커리어 실제 활성화/진행이며 [M2 전체 계획](M2-COMPLETION-PLAN.md)을 따른다. 다른 환경 M3 작업은 [연동 주의](M2-M3-INTEGRATION-NOTES.md)를 먼저 읽는다. 아래 DE/DC의 연말 질문 대기는26일 사용자 선택으로 해결된 이전 이력이다.
+origin/main df65ec2로 로컬을 fast-forward하고 STATUS부터 갱신했다. V:는837ce74/df65ec2 중 일치하는 파일만 보호 비교해 원격 변경79개를 최신화했다. 사용자 확정: 다음 해 원구단이 재계약할 재원이 없으면 보유권 해제 후 타 구단1년 제안 비교. [DF](M2-DF-OFFSEASON-EXIT.md)는 신규7개·집중12/12·전체632/632·실패0·취소0·종료0, lint/타입/build/골든/이벤트/설계10종 통과. duration_ms2330706.9176. 다음은 미국 커리어 실제 활성화/진행이며 [M2 전체 계획](M2-COMPLETION-PLAN.md)을 따른다. M3는 위 완료 블록. 아래 DE/DC의 연말 질문 대기는26일 사용자 선택으로 해결된 이전 이력이다.
 
 현재 환경은 C:/Users/N-052/.codex/visualizations/2026/10/16/01a142f8-66ea-7782-ba3e-b52df94ae1be/baseball-career-repo에서 작업/Git/빌드, V: 보호 미러다. V:/.git 생성 금지. E:/AI/Game 환경은 다른 PC의 이력이다. 옛 DD 실행기/상태는 복구하지 못했지만 새 고정 DC 실행기를 작성해3일 저장→2일 재개·손상 체크섬 거부를 확인했다. 새 실행은2030 day60·마감30일·60정규 경기이며, 원본/코드/실행기는 V: 비공개 보관과 [새 DD 안내](evidence/M2-DD-full-service-checkpoint-notes.md)를 따른다. 원래 부분 상태와 동일 실행으로 주장하지 않는다. 아래의 DD day110/부분 실행은 이전 인계의 보고이며 여기서 재실행/완료한 증거가 아니다.
 
 재개 실제 단기 사용5%/잔여95%, 주간 사용1%/잔여99%로 새 구간임을 확인했다. 과거5% 경계와 혼동하지 않는다. 기존 사용량 잔여5% 정리·커밋/푸시 뒤 정상 종료 요청은 실제 조회 경계에서만 수행한다. 리셋 크레딧 미사용.
 
 ## 이전 완료 — M2-DE AI 영입 공동 등록 E96
-
 2026-10-25 · 최종 전체 npm run check625/625·실패0·취소0, lint·타입·build·엔진 골든·이벤트·설계10종·HTTP 골격 smoke 통과. 테스트 duration_ms400562.5889·종료0. 신규 집중6/6에서 실제 Y02 AI FA 수락·재계약, 양 관계 종류, 공식 공동 등록·벤치 부상·JSON/control 불변·변조 거부·소속/계약 변경 후 조회/ACK·중복/구 저장을 검증했다.
 
 실제 수락/갱신 영수증과 현재 계약이 일치하는 선수만 같은 KBO/FUTURES 정규 경기 건강 명단으로 재회한다. AI 영수증·계약 키·공식 경기·정렬 등록 신원을 봉인하며 과거 읽기는 현재 계약/소속에서 추정하지 않는다. 기존 군팀·이적·군 복귀 E96, 관계 종류와 이력, 게임/RNG/돈/성장을 보존한다. [DE 상세](M2-DE-AI-TEAM-REUNIONS.md) · [전체](evidence/M2-DE-check.log) · [동결](evidence/M2-DE-source-freeze.json). 이전 DC3064193도619/619·원격 해시 일치를 확인했다.

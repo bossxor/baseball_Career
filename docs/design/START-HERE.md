@@ -1,6 +1,6 @@
-# 구현 진행 안내 — 2026-10-20
+# 구현 진행 안내 — 2026-10-26
 
-M0/M1 완료 후 M2 커리어 구현 중이며 M2-A 선수 육성 기반을 검증했습니다. 다음은 구종 학습/NPC·세계 생성·고교 시즌 연결입니다. 최신 실행 증거·미완료 범위는 [구현 진행 문서](../implementation/PROGRESS.md)를 우선합니다. 아래 설계 인계/NOT_EXECUTED는 구현 전 이력이며 커리어·DB·인증·APK 전체 완료를 뜻하지 않습니다.
+M0/M1 완료. **M2 커리어는 계속 진행 중**(main/엔진 쪽). **M3 계정·DB·명령 인프라는** 브랜치 `m3/save-command-pipeline`에서 V02/V03까지 완료 — [M3-COMPLETE](../implementation/M3-COMPLETE.md). M2와 병렬이며 engine 미수정. 최신 증거는 [PROGRESS](../implementation/PROGRESS.md)·[STATUS](STATUS.md) 우선. 아래 옛 NOT_EXECUTED/설계 인계는 이력이다.
 
 ---
 

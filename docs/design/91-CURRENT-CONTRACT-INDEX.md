@@ -1,5 +1,7 @@
 # 91. 현재 적용 계약 지도 — 설계 기준본1.0
 
+M3 병렬(2026-10-26): C15/C17/C22는 `PARTIAL`(명령 receipt·JWT allowlist·owner 격리·셸 생성). C16 백업/연도 복원·전 명령 타입·웹 UI는 미완. M2 엔진 계약은 이 갱신으로 완료 처리하지 않는다. 증거 [M3-COMPLETE](../implementation/M3-COMPLETE.md).
+
 M2-CQ 구현 후속:14/21의 시즌 중 잔여 계약 비교·타 구단 수락은 [CQ](../implementation/M2-CQ-KBO-REMAINDER-TRANSFER.md)를 따른다. 기존 지급 구단 귀속·실제 등록일 급여·성장/강화1회·v4 호환 경계를 보존하며 실제 웹/API/DB 구현과 분리한다.
 
 2026-10-20 성장 달력 후속:14의 최신 사용자 확정인 세계2~10월·고교2~6월·국제창 제외와 `calendar-1` 날짜를42의 기간 정규화에 적용한다. 실제 구현/수치 충돌은 `../implementation/M2-T-GROWTH-CALENDAR.md`를 따른다.

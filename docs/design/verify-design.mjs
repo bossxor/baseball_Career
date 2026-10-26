@@ -337,11 +337,13 @@ assert.equal(currentIndex.status, 'DESIGN_BASELINE');
 assert.equal(currentIndex.baselineVersion, '1.0');
 assert.equal(currentIndex.topics.length, 25);
 unique(currentIndex.topics.map(row => row.id));
+const partialContractIds = new Set(['C15', 'C17', 'C22']);
 for (const row of currentIndex.topics) {
   assert.ok(row.topic && row.scope && row.currentSources.length);
   unique(row.currentSources);
   for (const file of row.currentSources) assert.ok(existsSync(path.join(root, file)), `Missing current contract ${file}`);
-  assert.equal(row.implementationStatus, 'NOT_IMPLEMENTED');
+  if (partialContractIds.has(row.id)) assert.equal(row.implementationStatus, 'PARTIAL');
+  else assert.equal(row.implementationStatus, 'NOT_IMPLEMENTED');
 }
 const stateUi = JSON.parse(read('state-ui-expectations.json'));
 assert.equal(stateUi.expectationStatus, 'NOT_IMPLEMENTED');
@@ -463,15 +465,22 @@ assert.equal(closure.baselineVersion, '1.0');
 assert.equal(closure.designClosures.length, 10);
 assert.equal(closure.executionGates.length, 12);
 assert.deepEqual(closure.pendingUserQuestions, []);
-assert.equal(closure.implementationStarted, false);
+assert.equal(closure.implementationStarted, true);
 for (const row of closure.designClosures) {
   assert.equal(row.status, 'SPECIFIED');
   assert.equal(row.runtimePassed, false);
   assert.ok(existsSync(path.join(root, row.evidence)));
 }
+const executedGates = new Set(['V02', 'V03']);
 for (const row of closure.executionGates) {
-  assert.equal(row.status, 'NOT_EXECUTED');
-  assert.equal(row.runtimePassed, false);
+  if (executedGates.has(row.id)) {
+    assert.equal(row.status, 'EXECUTED');
+    assert.equal(row.runtimePassed, true);
+    if (row.evidence) assert.ok(existsSync(path.join(root, row.evidence)), row.id);
+  } else {
+    assert.equal(row.status, 'NOT_EXECUTED');
+    assert.equal(row.runtimePassed, false);
+  }
 }
 unique([...closure.designClosures,...closure.executionGates].map(row => row.id));
 assert.deepEqual(closure.counts, {screens:45,events:99,expectations:298,integrationPaths:24,platformTargets:6,flowsPerPlatform:8,longRunPlans:12,contractTopics:25});
@@ -505,7 +514,7 @@ assert.equal(importedUnits(1000000),500000);
 assert.equal(importedUnits(10000),10000);
 assert.ok(Math.abs(importedUnits(912501)/10000 - 91.2501/2) <= .0000500001);
 for (const id of ['R41','R42','R43','R44','R45','R46','R47','R48','R49']) assert.ok(read('14-CANONICAL-DECISIONS.md').includes(`| ${id} |`));
-console.log('PASS: baseline 1.0 has 25 source topics, 10 specified closures and 12 NOT_EXECUTED gates; XP double-budget/cap-loss/remainder and import rounding examples. These are static/document arithmetic checks only.');
+console.log('PASS: baseline 1.0 has 25 source topics, 10 specified closures, V02/V03 EXECUTED and 10 remaining NOT_EXECUTED gates; XP double-budget/cap-loss/remainder and import rounding examples. These are static/document arithmetic checks only.');
 await import('./verify-art-direction.mjs');
 await import('./verify-state-ui.mjs');
 await import('./verify-finish-board.mjs');
@@ -535,9 +544,9 @@ await import('./verify-latecareer-continuity.mjs');
 }
 {
  const handoff=JSON.parse(read('preimplementation-readiness.json'));const registry=JSON.parse(read('image-production-register.json'));const sets=JSON.parse(read('expectation-sets-index.json'));const gates=JSON.parse(read('design-closure-register.json')).executionGates;
- assert.equal(handoff.implementationAuthorized,false);assert.equal(handoff.newGameRulesAdded,false);assert.equal(handoff.status,'DESIGN_HANDOFF_WITH_OPEN_EXECUTION_GATES');assert.equal(handoff.counts.screens,screens.screens.length);assert.equal(handoff.counts.events,catalog.events.length);assert.equal(handoff.counts.coreDesignExpectations,sets.core298);assert.equal(handoff.counts.expectationSets,sets.sets.length);assert.ok(sets.sets.every(s=>s.status==='NOT_EXECUTED'));
- for(const [field,status] of [['imageExists','EXISTS'],['imageTodo','TODO'],['codeDisplayGroups','CODE_ONLY'],['legacyReferences','LEGACY_REFERENCE']])assert.equal(handoff.counts[field],registry.items.filter(i=>i.status===status).length);assert.deepEqual(handoff.executionGates,gates.map(({id,status,runtimePassed})=>({id,status,runtimePassed})));assert.ok(handoff.executionGates.every(g=>g.runtimePassed===false));assert.equal(handoff.counts.executedBrowserViews,0);assert.equal(handoff.reviewMatrix.executionStatus,'NOT_EXECUTED');unique(handoff.areas.map(a=>a.id));for(const a of handoff.areas)for(const f of a.sources)assert.ok(existsSync(path.join(root,f)),f);
- console.log('PASS: final preimplementation handoff matches current counts and 12 open runtime gates; no implementation authorization or executed visual checks inferred.');
+ assert.equal(handoff.implementationAuthorized,true);assert.equal(handoff.newGameRulesAdded,false);assert.equal(handoff.status,'IMPLEMENTATION_IN_PROGRESS_OPEN_GATES');assert.equal(handoff.counts.screens,screens.screens.length);assert.equal(handoff.counts.events,catalog.events.length);assert.equal(handoff.counts.coreDesignExpectations,sets.core298);assert.equal(handoff.counts.expectationSets,sets.sets.length);assert.ok(sets.sets.every(s=>s.status==='NOT_EXECUTED'));
+ for(const [field,status] of [['imageExists','EXISTS'],['imageTodo','TODO'],['codeDisplayGroups','CODE_ONLY'],['legacyReferences','LEGACY_REFERENCE']])assert.equal(handoff.counts[field],registry.items.filter(i=>i.status===status).length);assert.deepEqual(handoff.executionGates,gates.map(({id,status,runtimePassed})=>({id,status,runtimePassed})));assert.ok(handoff.executionGates.filter(g=>!['V02','V03'].includes(g.id)).every(g=>g.runtimePassed===false));assert.ok(handoff.executionGates.filter(g=>['V02','V03'].includes(g.id)).every(g=>g.runtimePassed===true));assert.equal(handoff.counts.executedBrowserViews,0);assert.equal(handoff.reviewMatrix.executionStatus,'NOT_EXECUTED');unique(handoff.areas.map(a=>a.id));for(const a of handoff.areas)for(const f of a.sources)assert.ok(existsSync(path.join(root,f)),f);
+ console.log('PASS: handoff counts match; V02/V03 runtimePassed, 10 gates still open; browser visual checks remain NOT_EXECUTED.');
 }
 {
  const tech=read('06-TECH.md'),create=read('78-NEW-GAME-CREATION-RECOVERY.md'),game=read('24-GAME-ENGINE-SCORING.md');

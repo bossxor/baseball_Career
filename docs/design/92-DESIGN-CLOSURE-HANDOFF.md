@@ -32,8 +32,8 @@
 | ID | 필요한 실행 증거 | 현재 |
 |---|---|---|
 | V01 | 선택 런타임·패키지/lockfile·호환 버전·실제 npm run build | NOT_EXECUTED |
-| V02 | 관리형 인증 사용가능성·이메일 확인/재설정·허용목록·owner격리 | NOT_EXECUTED |
-| V03 | 개발 Neon DB/행잠금/unique/rollback/receipt·2기기 경합 | NOT_EXECUTED |
+| V02 | 관리형 인증 사용가능성·이메일 확인/재설정·허용목록·owner격리 | EXECUTED(2026-10-26 M3·Neon Auth JWT/allowlist/owner; 메일 재설정 실발송은 공유 SMTP 의존으로 미실증) |
+| V03 | 개발 Neon DB/행잠금/unique/rollback/receipt·2기기 경합 | EXECUTED(2026-10-26 M3·Neon m3-dev) |
 | V04 | private 파일 업/다운/hash·권한 거부·보존 청소 | NOT_EXECUTED |
 | V05 |24통합 경로의 초기 fixture/명령/결과 hash/불변조건 | NOT_EXECUTED |
 | V06 |웹·PWA·APK 강제종료/응답유실/저널/복원·서버 job | NOT_EXECUTED |
