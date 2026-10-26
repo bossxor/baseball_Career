@@ -1,5 +1,7 @@
 # 전체 구현 진행률: 약 83% 완료 · 약 17% 남음
 
+**M2-DL 검증 완료:** 미국 수동/45세 은퇴·실제 레벨별 공개 보관·기록/수입 보존. 전체 npm run check 종료0: 총699개 중697통과·실패0·Neon환경 부재2건 건너뜀, 웹20/20. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. 엔진/API duration_ms496580.9465, 동결410파일 변경0. 실제 브라우저/Neon/실기기 검증은 아니다. [DL](../implementation/M2-DL-US-RETIREMENT-ARCHIVE.md). 전체83%/남음17%와 M2영역50%는 남은 핵심 경로가 있어 유지하며 기능 범위 가중 추정이다. PC 종료 금지 지시 유지.
+
 **M2-DK 검증 완료:** 전체 npm run check 종료0: 총695개 중693통과·실패0·Neon환경 부재2개 건너뜀, 웹20/20. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. 엔진/API duration_ms562628.2466, 동결406파일 변경0. 실제 브라우저/Neon/실기기 검증은 아니다. [DK](../implementation/M2-DK-US-YEARS-LEARNING-SUPPLY.md). M2 영역50%는 유지하며 전체83%/남음17%는 병렬 보고 포함 추정치다. PC 종료 지시는 철회됐다.
 
 **M2-DJ 검증 완료:** 숙련0 XP 이월/다음 PRE 재학습과 실제 MLB PS 연결. 집중23/23·8/8, 전체 check 종료0: 엔진/API676·웹20 통과·실패0·Neon2환경 부재 건너뜀. 실제 PS46경기 우승을 확인했다. 이전 DI230897f는 main/작업 브랜치 푸시 완료. M2 영역50%는 미국 다음 해/FA/해외 병역·국제·24경로 잔여가 있어 유지한다. [DJ](../implementation/M2-DJ-RELEARNING-AND-MLB-POSTSEASON.md).

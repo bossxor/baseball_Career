@@ -1,0 +1,44 @@
+✔ US retirement confirmation/cancellation preserves source, all league records, income and contract without another payment (9160.504ms)
+✖ US archive separates school/minor/MLB and zero MLB debut, returns public six-stat peaks without hidden state (2302.6347ms)
+✔ US maximum-age retirement closes at45 with unresolved overseas deadline preserved, not erased or treated as exemption (2608.2174ms)
+✔ US retirement rejects unfinished seasons, stale/version mismatch and changed final evidence atomically (6217.5292ms)
+M2-DK year continuation proof: {"from":"2030","to":"2031","nativeNewSeasonGames":75,"oldRecords":9038,"schema":3,"signingBonuses":1}
+M2-DK controlled minor term proof: {"seasons":6,"lastYear":"2035","age":24,"salaryUsd":180000,"signingBonuses":1,"seventhYear":"CONTRACT_DECISION_REQUIRED","native":false}
+✔ annual stage ages survivors once, retires45 NPCs through Rookie supply, preserves history and has no active/root or salary write (7545.3559ms)
+✔ readiness is private-state-free and blocks unfinished seasons, pitch reservations and age28 military deadline (2827.8583ms)
+✔ stale revisions and altered final playoff records fail before changing the source or producing a new world (2805.6144ms)
+✔ an already-closed health year is not mutated while an injured retiring NPC leaves the staged world (1911.4828ms)
+✔ minor year activation preserves legacy input, every official record and one signing bonus; the new season plays a native first date (22027.0387ms)
+✔ annual funding and new history tampering fail without a second budget credit or source mutation (4709.4723ms)
+✔ six controlled minor seasons preserve the history chain and stop before a seventh unapproved contract year (34069.467ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 76753.6932
+
+✖ failing tests:
+
+test at packages\engine\test\us-retirement.test.ts:26:1
+✖ US archive separates school/minor/MLB and zero MLB debut, returns public six-stat peaks without hidden state (2302.6347ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok(view.records.some(r=>r.leagueKey!=='MLB'&&r.leagueKey!==c.registration.level))
+
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-retirement.test.ts:29:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

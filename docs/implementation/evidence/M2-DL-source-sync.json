@@ -1,0 +1,92 @@
+{
+  "utc": "2026-10-26T22:56:18.412Z",
+  "head": "21fb82e4d69f3e7fca3f261031fd77d68bcfb01a",
+  "fullCheck": "PASS",
+  "runtimeUnchanged": 410,
+  "files": [
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "6aee47edb46c0c81ea2bb0e3804ca0d9c2a9836aad30e253ed0a88bddc39084a"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "c7ac45c11e7e627b69807cf8d202e71571096a5d51d3eef71a59d1d9013d3afd"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "446100795804c9f448d0b7fc0ea0d24c726a2c70778f3750a7f2df020c5d8f87"
+    },
+    {
+      "path": "docs/implementation/M2-COMPLETION-PLAN.md",
+      "sha256": "9e96f5a31fa639f063c0e28b38098fac744dfd7478e9439970bcef3973583c70"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "d44dbca9ecd126685c03516669b895a84636acc54c6366897e6fd0bfa702e107"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "1cb316b85461f6d6594ec973195ef06c86f83e8ac5fde87e30f3564713edd4b1"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "df7acdd31d6f16025311490a68eb5b844a1a13ae5be6d026bfd8e79dbdf20bba"
+    },
+    {
+      "path": "packages/engine/src/us-career-entry.ts",
+      "sha256": "7019968bc7de57da280dd49c0ff78aac983cb17cc6ec70a74fd0b891d0b86f2a"
+    },
+    {
+      "path": "packages/engine/src/us-season.ts",
+      "sha256": "c1a48fe3adf365a21c786b64c76b12691766c4f146add663f7151a145b41bf40"
+    },
+    {
+      "path": "packages/engine/test/us-year-transition.test.ts",
+      "sha256": "cb97abe0520452268096fc041eea7ffe5b48d7261691c937f92c73e7e655dcc4"
+    },
+    {
+      "path": "docs/implementation/M2-DL-US-RETIREMENT-ARCHIVE.md",
+      "sha256": "dd5bf45154cbfb37dd9e152ff4fa76eeead0e0f502f17748859ebc3b2519c182"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DL-mirror.json",
+      "sha256": "042b2acb146dee39126c46247c01f9b4411d88709167f984cf068f0b1460405d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DL-retirement-focused.log",
+      "sha256": "aac1ac330f33a8c2d22a0a2e6662919b2e7872320a349197ac565cbcba883437"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DL-source-freeze.json",
+      "sha256": "e29f737405b3dc3ecdedc99660d43626588ac367a9b0482d71694e5bb8f77f86"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DL-superseded-focused.log",
+      "sha256": "533cb3b20aedfb6a23f0dc97f4dac9e253536fb864b3de8af0169bd32f697951"
+    },
+    {
+      "path": "packages/engine/src/us-archive-view.ts",
+      "sha256": "8b27b39c2d5e218b1a809d7cbf4ed3515d98d9dd505f57885d9fbad9a9de5e34"
+    },
+    {
+      "path": "packages/engine/src/us-retirement.ts",
+      "sha256": "eeec803679d6a79b7453815b6786e1bd3cc0be875dbdb5e9041d686c868784c0"
+    },
+    {
+      "path": "packages/engine/test/us-finished-fixture.ts",
+      "sha256": "1eb1402d1a79729be9f99da210da9cc0527b7e7aefc35a0f91ef741d66520333"
+    },
+    {
+      "path": "packages/engine/test/us-retirement.test.ts",
+      "sha256": "c9640482be6255d7cb1bfee1fa83aef430501eef5681426e1bfa1a5c2714be9c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DL-check.log",
+      "sha256": "94aa9e141a6aa09ab96226c00f69173231c1de6cf9ff3a6184aaa1ac863ebc73"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DL-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    }
+  ]
+}

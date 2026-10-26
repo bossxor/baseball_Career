@@ -143,3 +143,7 @@ export * from './us-year-transition.js';
 export type {UsAnnualFunding,UsMinorYearArchive} from './us-minor-history.js';
 
 export * from './us-service-time.js';
+
+export * from './us-retirement.js';
+
+export * from './us-archive-view.js';

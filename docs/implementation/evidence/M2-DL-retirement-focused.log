@@ -1,0 +1,12 @@
+✔ US retirement confirmation/cancellation preserves source, all league records, income and contract without another payment (6859.5324ms)
+✔ US archive separates school/minor/MLB and zero MLB debut, returns public six-stat peaks without hidden state (2135.7063ms)
+✔ US maximum-age retirement closes at45 with unresolved overseas deadline preserved, not erased or treated as exemption (1844.2509ms)
+✔ US retirement rejects unfinished seasons, stale/version mismatch and changed final evidence atomically (4816.3129ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16255.8107

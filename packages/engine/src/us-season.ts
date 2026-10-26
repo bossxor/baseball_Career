@@ -24,7 +24,7 @@ import type {BattingLine} from './types.js';
 export const US_LEVELS:readonly UsLevel[]=['ROOKIE','A','AA','AAA','MLB'];
 export interface UsPendingGame {level:UsLevel;job:HighSchoolGameJob}
 export interface UsProgress {phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:UsPendingGame|null}
-export type UsPhase={phase:'PRESEASON_SETUP'}|UsProgress|{phase:'SEASON_REVIEW'}|{phase:'EVENT_DECISION';eventKey:string;resume:UsProgress}|UsPostseasonPhase;
+export type UsPhase={phase:'PRESEASON_SETUP'}|UsProgress|{phase:'SEASON_REVIEW'}|{phase:'EVENT_DECISION';eventKey:string;resume:UsProgress}|UsPostseasonPhase|{phase:'RETIRE_CONFIRM';eventKey:string}|{phase:'ARCHIVED'};
 export interface UsClosedDay {day:number;evidence:string;level:UsLevel;appearances:number;rehabilitating:boolean;injured:string[];recovered:string[]}
 export interface UsSeasonState {
  receiptKey:string;firstDay:number;lastDay:number;openingPlayers:Record<string,DevelopmentPlayer>;openingInjuries:string[];

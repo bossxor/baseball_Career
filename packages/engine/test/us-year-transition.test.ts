@@ -1,14 +1,10 @@
+import {finishedUsCareerFixture as finished} from './us-finished-fixture.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {reviewedUsCareerFixture} from './us-reviewed-fixture.js';
 import {preparedUsCareer} from './us-fixtures.js';
-import {startUsPostseason} from '../src/us-postseason-progress.js';
-import {nextMlbPostseasonGame,recordMlbPostseasonGame} from '../src/us-postseason.js';
 import {canonicalJson} from '../src/game.js';
-import {settleUsSeasonGrowth} from '../src/us-growth.js';
 import {stageUsAgeAndRosters,usYearTransitionReadiness,startNextUsMinorSeason} from '../src/us-year-transition.js';
-import type {UsCareer} from '../src/us-career-entry.js';
 import {beginPitchLearning} from '../src/repertoire.js';
 import {closeSeasonHealth} from '../src/health.js';
 import {usCareerView} from '../src/us-career-entry.js';
@@ -17,16 +13,7 @@ import {publishUsSeasonSchedule} from '../src/us-schedule.js';
 import {startUsRegularSeason,advanceUsCareer,usSalaryEntitlement} from '../src/us-season.js';
 import {fundUsMinorYear} from '../src/us-minor-history.js';
 const digest=(x:unknown)=>createHash('sha256').update(canonicalJson(x)).digest('hex');
-let cached:UsCareer|undefined;
-/** Controlled official regular/PS contribution fixture, not a native full-career simulation. */
-function finished(prepared?:UsCareer){
- if(!prepared&&cached)return structuredClone(cached);const regular=reviewedUsCareerFixture(prepared),ids=regular.world.organizations.map(o=>o.id),c=startUsPostseason(regular,regular.revision,{AL:ids.slice(0,15),NL:ids.slice(15)});if(c.phaseContext.phase!=='POSTSEASON_PROGRESS')throw Error('phase');const p=c.phaseContext;
- for(let g=nextMlbPostseasonGame(p.bracket);g;g=nextMlbPostseasonGame(p.bracket)){
-  const s=p.bracket.series.find(s=>s.id===g!.seriesId)!,winner=s.higherSeed,key=JSON.stringify([c.world.seasonKey,'MLB','POSTSEASON',g.seriesId,g.gameNumber]),other=winner===g.homeTeamKey?g.awayTeamKey:g.homeTeamKey;
-  c.records.games[key]={gameKey:key,worldDay:p.nextWorldDay,scope:{seasonKey:c.world.seasonKey,leagueKey:'MLB',phase:'POSTSEASON'},teams:{[winner]:{games:1,W:1,L:0,T:0,R:1,RA:0},[other]:{games:1,W:0,L:1,T:0,R:0,RA:1}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}};c.records.revision++;p.gameEvidence.push(canonicalJson(c.records.games[key]));p.bracket=recordMlbPostseasonGame(p.bracket,winner);p.nextWorldDay++;
- }
- c.postseason={bracket:p.bracket,conferences:p.conferences,gameEvidence:p.gameEvidence};c.phaseContext={phase:'SEASON_REVIEW'};const closed=settleUsSeasonGrowth(c,c.revision,true);if(!prepared)cached=closed;return prepared?closed:structuredClone(closed);
-}
+
 test('annual stage ages survivors once, retires45 NPCs through Rookie supply, preserves history and has no active/root or salary write',()=>{
  const c=finished(),club=c.world.organizations.find(o=>o.id!==c.protagonistOrganizationId)!,old=club.levels.MLB[0]!;c.world.players[old]!.age=45;const before=digest(c),ready=usYearTransitionReadiness(c);assert.equal(ready.ready,true);assert.equal(ready.remainingMinorControlSeasons,5);const stage=stageUsAgeAndRosters(c,c.revision),again=stageUsAgeAndRosters(JSON.parse(JSON.stringify(c)),c.revision);
  assert.equal(digest(stage),digest(again));assert.equal(digest(c),before);assert.equal(stage.targetSeasonKey,'2031');assert.equal(stage.world.players[c.protagonistKey]!.age,c.world.players[c.protagonistKey]!.age+1);assert.deepEqual(stage.world.players[c.protagonistKey]!.abilities,c.world.players[c.protagonistKey]!.abilities);assert.ok(!stage.world.players[old]);assert.equal(stage.supply.retired[0]!.player.age,45);assert.equal(stage.supply.arrivals.length,1);assert.ok(stage.world.organizations.find(o=>o.id===club.id)!.levels.ROOKIE.includes(stage.supply.arrivals[0]!.playerKey));assert.ok(stage.health.closedSeasons.includes('2030'));assert.equal(stage.sourceRecordRevision,c.records.revision);assert.equal(Object.hasOwn(stage,'records'),false);
