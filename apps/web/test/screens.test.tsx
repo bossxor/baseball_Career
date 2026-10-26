@@ -20,7 +20,7 @@ test('state texts equal the design catalog (no drift)', () => {
     const entry = catalog.screens.find(s => s.id === id)!;
     for (const [state, text] of Object.entries(texts)) assert.equal(entry[state], text, `${id}.${state}`);
   }
-  assert.equal(Object.keys(SCREEN_STATES).length, 12);
+  assert.equal(Object.keys(SCREEN_STATES).length, 45);
   assert.ok((Object.keys(SCREEN_STATES) as ScreenId[]).every(id => catalog.screens.some(s => s.id === id)));
 });
 
@@ -98,6 +98,8 @@ test('routes: unknown or incomplete addresses fall back to home; play screens pa
   assert.deepEqual(parseRoute('#/career'), { name: 'home' });
   assert.deepEqual(parseRoute('#/nope/x'), { name: 'home' });
   assert.deepEqual(parseRoute('#/play/fixture-1/S06'), { name: 'play', saveId: 'fixture-1', screenId: 'S06' });
+  assert.deepEqual(parseRoute('#/play/fixture-1/S21'), { name: 'play', saveId: 'fixture-1', screenId: 'S21' });
+  assert.deepEqual(parseRoute('#/play/fixture-1/S45'), { name: 'play', saveId: 'fixture-1', screenId: 'S45' });
   assert.deepEqual(parseRoute('#/play/fixture-1/S99'), { name: 'home' });
 });
 
@@ -139,4 +141,23 @@ test('fixture decision/choose: same commandId is idempotent; S04→S28 chain', a
   assert.ok(emptyStyle.options.length > 0);
   await api.choose(saveId, 'S22', 'keep', 'style-1');
   assert.equal((await api.decision(saveId, 'S22')).options.length, 0);
+});
+
+test('M5 stub screens: routeable Decision shell; college → S34; back returns career', async () => {
+  const api = createFixtureApi();
+  const { saveId } = await api.create({
+    commandId: 'm5-1', name: '최민호', kind: 'PITCHER', position: 'SP', throws: 'R', bats: 'R',
+    pitchForm: 'OVER', archetype: 'BALANCED', focus: ['VELOCITY', 'CONTROL', 'STAMINA', 'BREAK'],
+  });
+  const season = await api.career(saveId);
+  assert.ok(season.nextActions.some(a => a.id === 'open:S21'));
+  const settings = await api.decision(saveId, 'S21');
+  assert.equal(settings.screenId, 'S21');
+  assert.match(settings.summary[0]!.value, /설정/);
+  assert.equal((await api.choose(saveId, 'S21', 'back', 'm5-back')).next.kind, 'career');
+  assert.ok((await api.decision(saveId, 'S28')).options.some(o => o.id === 'college'));
+  assert.deepEqual((await api.choose(saveId, 'S28', 'college', 'm5-college')).next, { kind: 'screen', screenId: 'S34' });
+  const college = await api.decision(saveId, 'S34');
+  assert.equal(college.screenId, 'S34');
+  assert.match(college.notice ?? '', /M5 셸/);
 });
