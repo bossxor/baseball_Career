@@ -1,3 +1,6 @@
+## M7 private 파일·백업 V04 슬라이스 (2026-10-26)
+
+`private_files` + backups API + owner 403/hash 다운로드. 복원·PNG·연대기·중계는 후속. [M7](M7-FILES.md).
 ## M5 마일스톤 마감 (2026-10-26)
 
 33화면 셸·STATUS M5 100%(기여5). 픽셀·SR 실기·엔진/구단 연동은 후속. [COMPLETE](M5-COMPLETE.md).
