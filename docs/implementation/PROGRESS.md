@@ -1,3 +1,6 @@
+## M9 마일스톤 마감 (2026-10-26)
+
+ready/version/자산 OFL·STATUS M9 100%(기여2). 실 DNS/배포=후속. [COMPLETE](M9-COMPLETE.md).
 ## M9 운영 셸 (2026-10-26)
 
 `/api/ready`·`/api/version` · `verify:assets`/provenance · STATUS 70%. 실 DNS·배포는 후속. [M9](M9-OPS.md).
