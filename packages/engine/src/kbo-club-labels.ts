@@ -1,6 +1,8 @@
 import type { ActiveKboRosterWorld } from './kbo-career-entry.js';
 import type { KboClubGame } from './kbo-club-game.js';
 import { selectSangmuCohort } from './kbo-sangmu.js';
+import { emptySangmuUnit, enlistSangmuCohort } from './kbo-sangmu-unit.js';
+import { validateClubLineup } from './kbo-club-game.js';
 
 /** 68 weights. They do not change ability or the shared free-agent accept odds. */
 export const CLUB_STRATEGY_WEIGHTS = {
@@ -51,13 +53,29 @@ export function clubStrategyReport(world: Pick<ActiveKboRosterWorld, 'seed' | 'w
   });
 }
 
-/** Existing yearly intake. This watch does not take the players off the club roster. */
-export function clubMilitaryWatch(game: Pick<KboClubGame, 'world' | 'records' | 'health' | 'userClubId'>) {
+/** After enlistment, the watch reads the unit. Before that it previews the existing intake and moves nobody. */
+export function clubMilitaryWatch(game: Pick<KboClubGame, 'world' | 'records' | 'health' | 'userClubId' | 'sangmu'>) {
+  const seasonKey = game.world.seasonKey;
+  if (game.sangmu?.enlistedSeasons.includes(seasonKey)) {
+    return {
+      seasonKey, enlisted: true,
+      mine: Object.values(game.sangmu.members).filter(member => member.program.originalClubId === game.userClubId).map(member => member.program.playerKey).sort(),
+    };
+  }
+  const selection = selectSangmuCohort({ world: game.world, records: game.records, health: game.health, seasonKey });
+  return { seasonKey, enlisted: false, mine: selection.selected.filter(player => player.clubId === game.userClubId).map(player => player.playerKey).sort() };
+}
+
+/** One intake per season, via the career enlistment. Serving players leave the club roster. Return after two blocks stays on that unit. */
+export function enlistClubMilitary(source: KboClubGame, expectedRevision: number): KboClubGame {
+  if (source.schemaVersion !== 1 || source.revision !== expectedRevision) throw new RangeError('CLUB_GAME_REVISION_CHANGED');
+  if (source.phase === 'SEASON_PROGRESS' || source.phase === 'POSTSEASON_PROGRESS') throw new RangeError('SANGMU_SEASON_LOCKED');
+  const game = structuredClone(source);
   const selection = selectSangmuCohort({ world: game.world, records: game.records, health: game.health, seasonKey: game.world.seasonKey });
-  return {
-    seasonKey: selection.seasonKey,
-    mine: selection.selected.filter(player => player.clubId === game.userClubId).map(player => player.playerKey),
-  };
+  game.sangmu = enlistSangmuCohort(game.world, game.sangmu ?? emptySangmuUnit(), selection);
+  if (game.lineup && validateClubLineup(game, game.lineup.draft).length) delete game.lineup;
+  game.revision++;
+  return game;
 }
 
 /** Windows already on the season calendar. Club games are not played inside them here. */

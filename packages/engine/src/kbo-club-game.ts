@@ -26,6 +26,7 @@ import {importArchivedPlayers} from './kbo-club-import.js';
 import type {ClubImportReceipt,ClubImportRequest} from './kbo-club-import.js';
 import type {SchoolDayLedger} from './high-school-day.js';
 import type {KboPendingGame} from './kbo-progress.js';
+import type {KboSangmuUnit} from './kbo-sangmu-unit.js';
 
 /** 05 독립 구단 새 게임의 뿌리. 내 선수 없이 한 구단을 맡는다(내 선수 사용 OFF가 기본이며 보관 투입은 별도 단계).
  * 선수/구단 규칙·일정·재정은 프로 커리어와 같은 세계를 쓰고, 주인공 키는 없다. */
@@ -40,6 +41,7 @@ export interface KboClubGame {
  rosterPlan?:readonly ({playerKey:string;action:'RENEW'|'RELEASE'}|{playerKey:string;action:'TRADE';counterClubId:string;counterPlayerKey:string})[];
  bullpen?:{slots:Readonly<Record<string,'CP'|'SU'|'MR'|'LR'>>};
  notices?:readonly {day:number;code:'OTHER_CLUB_HEALTH'|'CALLUP_RECOMMENDED';clubId?:string;playerKey?:string;candidateKey?:string}[];
+ sangmu?:KboSangmuUnit;
  postseason?:KboPostseason;postseasonProgress?:{postseason:KboPostseason;nextWorldDay:number;pendingGame:KboPendingGame|null};
  days?:SchoolDayLedger;progress?:{nextWorldDay:number;pendingGame:KboPendingGame|null};
 }

@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createKboClubGame } from '../src/kbo-club-game.js';
-import { clubEraLabel, clubInternationalWindows, clubMilitaryWatch, clubStrategyReport, initialClubStrategy, nextClubStrategy } from '../src/kbo-club-labels.js';
+import { clubEraLabel, clubInternationalWindows, clubMilitaryWatch, clubStrategyReport, enlistClubMilitary, initialClubStrategy, nextClubStrategy } from '../src/kbo-club-labels.js';
+import { kboClubRosterIssues } from '../src/kbo-club-game.js';
 
-test('strategy labels, sangmu watch and international windows do not move the roster', () => {
+test('strategy labels, sangmu enlistment and international windows', () => {
   assert.equal(nextClubStrategy('BALANCED', [], null), 'BALANCED');
   assert.equal(nextClubStrategy('BALANCED', [1], 30), 'CONTEND');
   assert.equal(nextClubStrategy('CONTEND', [8, 9], 28), 'DEVELOPMENT');
@@ -21,4 +22,11 @@ test('strategy labels, sangmu watch and international windows do not move the ro
   assert.ok(watch.mine.length <= 3);
   assert.equal(game.world.clubs.find(club => club.id === 'LG')!.roster.length, before);
   assert.deepEqual(clubInternationalWindows(game), game.world.calendar.international.map(window => ({ type: window.type, startDay: window.startDay, endDay: window.endDay })));
+  const enlisted = enlistClubMilitary(game, game.revision);
+  assert.equal(enlisted.sangmu?.enlistedSeasons[0], game.world.seasonKey);
+  assert.ok(Object.keys(enlisted.sangmu?.members ?? {}).length > 0);
+  for (const key of Object.keys(enlisted.sangmu?.members ?? {})) assert.equal(enlisted.world.players[key], undefined);
+  assert.equal(kboClubRosterIssues(enlisted).filter(issue => issue !== 'FIRST_TEAM_INJURED').length, 0);
+  assert.equal(clubMilitaryWatch(enlisted).enlisted, true);
+  assert.throws(() => enlistClubMilitary(enlisted, enlisted.revision), /SANGMU_COHORT_ALREADY_ENLISTED/);
 });
