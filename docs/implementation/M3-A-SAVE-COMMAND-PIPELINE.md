@@ -11,18 +11,23 @@
 
 ## 검증
 
-PGlite 통합: apps/api/test/m3-pipeline.test.ts · [로그](evidence/M3-A-pipeline-test.log)
+PGlite: apps/api/test/m3-pipeline.test.ts · [로그](evidence/M3-A-pipeline-test.log)
+
+Neon `m3-dev` 브랜치(project baseball_career): apps/api/test/m3-neon.test.ts · [로그](evidence/M3-A-neon-test.log)
 
 - V02 미인증/비허용 401
 - V03 멱등 재시도, COMMAND_ID_REUSED, 실패 payload 후 revision 유지
 - F08 동시 expectedRevision → 200 + 409(+currentRevision)
+- Neon 실 DB에서 unique/rollback/경합 동일 통과
+
+스키마 적용: `node scripts/m3-apply-schema.mjs` (`.env`의 `DATABASE_URL_DIRECT` 사용)
 
 ## 한계
 
-- Neon Managed Auth / 실 Neon 브랜치 미연결. `DATABASE_URL` + `.env.example` 준비만.
+- 인증은 아직 Bearer `dev:<subject>` + allowlist. Neon Managed Auth 교체 전.
 - 게임 생성·전 명령 타입·공개 DTO·쿠키 세션 미구현.
-- `packages/engine` 소스 변경 없음.
+- `packages/engine` 소스 변경 없음. `.env`는 Git 제외.
 
 ## 다음
 
-Neon `DATABASE_URL` 연결 후 같은 테스트를 실 DB에서 재실행. 관리형 인증으로 `dev:` 스텁 교체.
+Managed Auth로 `dev:` 스텁 교체. 커리어 명령 타입 추가 연결은 M2와 병행.
