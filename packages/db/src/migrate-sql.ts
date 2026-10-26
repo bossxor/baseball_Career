@@ -48,4 +48,37 @@ CREATE TABLE IF NOT EXISTS command_receipts (
   created_at timestamptz NOT NULL DEFAULT now(),
   PRIMARY KEY (save_id, command_id)
 );
+
+DO $$ BEGIN
+  CREATE TYPE private_file_kind AS ENUM ('BACKUP', 'CHRONICLE_JSON', 'CARD_PNG');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+DO $$ BEGIN
+  CREATE TYPE private_file_status AS ENUM ('READY', 'FAILED', 'EXPIRED');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+CREATE TABLE IF NOT EXISTS private_files (
+  id text PRIMARY KEY,
+  owner_id text NOT NULL REFERENCES profiles(id),
+  save_id text REFERENCES game_saves(id) ON DELETE SET NULL,
+  kind private_file_kind NOT NULL,
+  status private_file_status NOT NULL DEFAULT 'READY',
+  mime text NOT NULL,
+  byte_size integer NOT NULL CHECK (byte_size >= 0),
+  content_hash text NOT NULL,
+  body text NOT NULL,
+  file_name text NOT NULL,
+  request_id text NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT now(),
+  expires_at timestamptz,
+  UNIQUE (owner_id, request_id)
+);
+
+CREATE INDEX IF NOT EXISTS private_files_owner_created_idx
+  ON private_files (owner_id, created_at DESC);
+
+CREATE INDEX IF NOT EXISTS private_files_save_idx
+  ON private_files (save_id, created_at DESC);
 `;

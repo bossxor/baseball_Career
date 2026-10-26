@@ -8,10 +8,13 @@ import {
   primaryKey,
   text,
   timestamp,
+  uniqueIndex,
 } from 'drizzle-orm/pg-core';
 
 export const saveModeEnum = pgEnum('save_mode', ['CAREER', 'CLUB']);
 export const allowlistStatusEnum = pgEnum('allowlist_status', ['ACTIVE', 'REVOKED']);
+export const privateFileKindEnum = pgEnum('private_file_kind', ['BACKUP', 'CHRONICLE_JSON', 'CARD_PNG']);
+export const privateFileStatusEnum = pgEnum('private_file_status', ['READY', 'FAILED', 'EXPIRED']);
 
 export const profiles = pgTable('profiles', {
   id: text('id').primaryKey(),
@@ -58,4 +61,31 @@ export const commandReceipts = pgTable(
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   },
   table => [primaryKey({ columns: [table.saveId, table.commandId] })],
+);
+
+/** Owner-private export objects (backup / chronicle / card). Body is UTF-8 text for M7 JSON backups. */
+export const privateFiles = pgTable(
+  'private_files',
+  {
+    id: text('id').primaryKey(),
+    ownerId: text('owner_id')
+      .notNull()
+      .references(() => profiles.id),
+    saveId: text('save_id').references(() => gameSaves.id, { onDelete: 'set null' }),
+    kind: privateFileKindEnum('kind').notNull(),
+    status: privateFileStatusEnum('status').notNull().default('READY'),
+    mime: text('mime').notNull(),
+    byteSize: integer('byte_size').notNull(),
+    contentHash: text('content_hash').notNull(),
+    body: text('body').notNull(),
+    fileName: text('file_name').notNull(),
+    requestId: text('request_id').notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+    expiresAt: timestamp('expires_at', { withTimezone: true }),
+  },
+  table => [
+    uniqueIndex('private_files_owner_request_uidx').on(table.ownerId, table.requestId),
+    index('private_files_owner_created_idx').on(table.ownerId, table.createdAt),
+    index('private_files_save_idx').on(table.saveId, table.createdAt),
+  ],
 );
