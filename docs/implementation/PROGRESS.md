@@ -1,3 +1,6 @@
+## M7 마일스톤 마감 (2026-10-26)
+
+백업·복원·연대기JSON 셸·STATUS M7 100%(기여4). PNG/중계/APK공유는 후속. [COMPLETE](M7-COMPLETE.md).
 ## M7 연대기 JSON export (2026-10-26)
 
 `POST /exports/chronicle` → CHRONICLE_JSON private file, 24h TTL, 비밀값 제외, 게임백업 아님 표시. [M7](M7-FILES.md).
