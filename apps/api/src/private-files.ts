@@ -22,8 +22,15 @@ function sha256Hex(body: string): string {
 }
 
 function safeFileName(raw: string): string {
-  const nfc = raw.normalize('NFC').replace(/[\\/:*?"<>|\u0000-\u001f]/g, '_').trim();
-  const base = nfc.length ? nfc.slice(0, 80) : 'backup';
+  const cleaned = [...raw.normalize('NFC')]
+    .map(ch => {
+      const code = ch.codePointAt(0) ?? 0;
+      if (code < 32 || '\\/:*?"<>|'.includes(ch)) return '_';
+      return ch;
+    })
+    .join('')
+    .trim();
+  const base = cleaned.length ? cleaned.slice(0, 80) : 'backup';
   return base.endsWith('.json') ? base : `${base}.json`;
 }
 
