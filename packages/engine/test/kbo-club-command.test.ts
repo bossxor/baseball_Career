@@ -34,4 +34,14 @@ test('club save commands and S13-S19 reads', () => {
   const started = applyKboClubCommand(kept, { type: 'CLUB_START', payload: {} });
   assert.equal(started.phase, 'SEASON_PROGRESS');
   assert.equal(kboClubScreen(started, 'S13').commands[0]?.type, 'CLUB_ADVANCE');
+
+  const pen = applyKboClubCommand(created, { type: 'CLUB_BULLPEN', payload: { auto: true } });
+  const roles = Object.values(pen.bullpen?.slots ?? {});
+  assert.deepEqual(roles.filter(role => role === 'CP').length, 1);
+  assert.equal(roles.length, 8);
+  assert.ok(kboClubScreen(pen, 'S15').commands.some(command => command.type === 'CLUB_BULLPEN'));
+  assert.throws(() => applyKboClubCommand(pen, { type: 'CLUB_OFFERS', payload: { offers: [] } }), /CLUB_OFFERS_NOT_OPEN/);
+  assert.throws(() => applyKboClubCommand(pen, { type: 'CLUB_ROSTER', payload: { actions: [] } }), /CLUB_ROSTER_PLAN_NOT_OPEN/);
+  assert.throws(() => applyKboClubCommand(pen, { type: 'CLUB_NEXT', payload: {} }), /CLUB_SEASON_NOT_CLOSED/);
+  assert.throws(() => applyKboClubCommand(pen, { type: 'CLUB_OFFERS', payload: {} }), /INVALID_CLUB_OFFERS/);
 });

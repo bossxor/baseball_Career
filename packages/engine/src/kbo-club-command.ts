@@ -5,9 +5,13 @@ import {
   applyKboClubLineup, autoClubLineup, clearKboClubLineup, createKboClubGame, kboClubHome, kboClubRoster,
 } from './kbo-club-game.js';
 import { advanceKboClubGame, startKboClubSeason } from './kbo-club-progress.js';
-import { kboClubFreeAgents, setKboClubFirstTeam } from './kbo-club-manage.js';
+import { startNextKboClubSeason } from './kbo-club-year.js';
+import {
+  autoClubBullpen, kboClubFreeAgents, planKboClubOffers, planKboClubRoster, setKboClubBullpen, setKboClubFirstTeam,
+} from './kbo-club-manage.js';
+import type { BullpenRole, ClubOffer, ClubRosterAction } from './kbo-club-manage.js';
 
-/** S13–S19 read models and the five save commands that change a club game. The save pipeline checks its own revision;
+/** S13–S19 read models and the club save commands. The save pipeline checks its own revision;
  * these calls use the game revision already stored on the game. */
 export const CLUB_SCREEN_IDS = ['S13', 'S14', 'S15', 'S16', 'S17', 'S18', 'S19'] as const;
 export type ClubScreenId = (typeof CLUB_SCREEN_IDS)[number];
@@ -39,9 +43,27 @@ export function kboClubScreen(game: KboClubGame, screenId: string, query: { play
   const commands: ClubScreenCommand[] = [];
   if (screenId === 'S13' && game.phase === 'PRESEASON_SETUP') commands.push({ id: 'start', label: '시즌 시작', type: 'CLUB_START', payload: {} });
   if (screenId === 'S13' && game.phase === 'SEASON_PROGRESS') commands.push({ id: 'day', label: '1일 진행', type: 'CLUB_ADVANCE', payload: { maxDays: 1 } });
+  if (screenId === 'S13' && game.phase === 'SEASON_REVIEW') commands.push({ id: 'next', label: '다음 시즌', type: 'CLUB_NEXT', payload: {} });
   if (screenId === 'S15') {
     commands.push({ id: 'auto', label: '자동 편성', type: 'CLUB_LINEUP', payload: { auto: true } });
     if (game.lineup) commands.push({ id: 'clear', label: '라인업 해제', type: 'CLUB_LINEUP', payload: { clear: true } });
+    if (game.phase !== 'SEASON_REVIEW') {
+      commands.push({ id: 'pen', label: '불펜 자동', type: 'CLUB_BULLPEN', payload: { auto: true } });
+      if (game.bullpen) commands.push({ id: 'pen-clear', label: '불펜 해제', type: 'CLUB_BULLPEN', payload: { clear: true } });
+    }
+  }
+  if (screenId === 'S17' && game.phase === 'SEASON_REVIEW' && game.seasonClose) {
+    commands.push({ id: 'offers-clear', label: '제안 지우기', type: 'CLUB_OFFERS', payload: { offers: [] } });
+    for (const agent of kboClubFreeAgents(game).slice(0, 3)) {
+      commands.push({ id: `offer-${agent.playerKey}`, label: `${agent.name} 희망 조건`, type: 'CLUB_OFFERS', payload: { offers: [{ playerKey: agent.playerKey, annualSalaryWon: agent.desiredAnnualSalaryWon, years: agent.desiredYears }] } });
+    }
+  }
+  if (screenId === 'S14' && game.phase === 'SEASON_REVIEW' && game.seasonClose) {
+    commands.push({ id: 'roster-clear', label: '재계약 계획 지우기', type: 'CLUB_ROSTER', payload: { actions: [] } });
+    for (const player of kboClubRoster(game).filter(row => row.contract.years === 1).slice(0, 8)) {
+      commands.push({ id: `renew-${player.playerKey}`, label: `${player.name} 재계약`, type: 'CLUB_ROSTER', payload: { actions: [{ playerKey: player.playerKey, action: 'RENEW' }] } });
+      commands.push({ id: `release-${player.playerKey}`, label: `${player.name} 방출`, type: 'CLUB_ROSTER', payload: { actions: [{ playerKey: player.playerKey, action: 'RELEASE' }] } });
+    }
   }
   return { screenId, title: TITLES[screenId], lines: linesFor(game, home, screenId, query), links, commands };
 }
@@ -64,6 +86,7 @@ function linesFor(game: KboClubGame, home: ReturnType<typeof kboClubHome>, scree
     return [
       { label: game.lineup ? '저장된 선발' : '자동 선발', value: nameOf(game, draft.startingPitcher) },
       { label: '타순', value: draft.battingOrder.map(key => nameOf(game, key)).join(', ') },
+      { label: '불펜', value: game.bullpen ? Object.values(game.bullpen.slots).join(',') : '없음' },
     ];
   }
   if (screenId === 'S16') return playerLines(game, query.playerKey);
@@ -139,5 +162,48 @@ export function applyKboClubCommand(game: KboClubGame | null, command: { type: s
     if (typeof maxDays !== 'number') fail('INVALID_ADVANCE_DAYS');
     return advanceKboClubGame(game, revision, maxDays).game;
   }
+  if (command.type === 'CLUB_BULLPEN') return applyBullpen(game, revision, command.payload);
+  if (command.type === 'CLUB_OFFERS') return planKboClubOffers(game, revision, parseOffers(command.payload));
+  if (command.type === 'CLUB_ROSTER') return planKboClubRoster(game, revision, parseRoster(command.payload));
+  if (command.type === 'CLUB_NEXT') return startNextKboClubSeason(game, revision);
   fail('UNSUPPORTED_COMMAND');
+}
+
+const ROLES = new Set<BullpenRole>(['CP', 'SU', 'MR', 'LR']);
+
+function applyBullpen(game: KboClubGame, revision: number, payload: unknown): KboClubGame {
+  const body = payload as { auto?: unknown; clear?: unknown; slots?: unknown } | null;
+  if (body?.clear === true) return setKboClubBullpen(game, revision, null);
+  if (body?.auto === true) return setKboClubBullpen(game, revision, autoClubBullpen(game));
+  if (!body?.slots || typeof body.slots !== 'object' || Array.isArray(body.slots)) fail('CLUB_BULLPEN_INVALID');
+  const slots: Record<string, BullpenRole> = {};
+  for (const [key, role] of Object.entries(body.slots)) {
+    if (!ROLES.has(role as BullpenRole)) fail('CLUB_BULLPEN_INVALID');
+    slots[key] = role as BullpenRole;
+  }
+  return setKboClubBullpen(game, revision, slots);
+}
+
+function parseOffers(payload: unknown): ClubOffer[] {
+  const offers = (payload as { offers?: unknown } | null)?.offers;
+  if (!Array.isArray(offers)) fail('INVALID_CLUB_OFFERS');
+  return offers.map(row => {
+    const offer = row as { playerKey?: unknown; annualSalaryWon?: unknown; years?: unknown };
+    if (typeof offer.playerKey !== 'string' || typeof offer.annualSalaryWon !== 'number' || typeof offer.years !== 'number') fail('INVALID_CLUB_OFFERS');
+    return { playerKey: offer.playerKey, annualSalaryWon: offer.annualSalaryWon, years: offer.years };
+  });
+}
+
+function parseRoster(payload: unknown): ClubRosterAction[] {
+  const actions = (payload as { actions?: unknown } | null)?.actions;
+  if (!Array.isArray(actions)) fail('INVALID_CLUB_ROSTER_PLAN');
+  return actions.map(row => {
+    const action = row as { playerKey?: unknown; action?: unknown; counterClubId?: unknown; counterPlayerKey?: unknown };
+    if (typeof action.playerKey !== 'string') fail('INVALID_CLUB_ROSTER_PLAN');
+    if (action.action === 'RENEW' || action.action === 'RELEASE') return { playerKey: action.playerKey, action: action.action };
+    if (action.action === 'TRADE' && typeof action.counterClubId === 'string' && typeof action.counterPlayerKey === 'string') {
+      return { playerKey: action.playerKey, action: 'TRADE', counterClubId: action.counterClubId, counterPlayerKey: action.counterPlayerKey };
+    }
+    fail('INVALID_CLUB_ROSTER_PLAN');
+  });
 }
