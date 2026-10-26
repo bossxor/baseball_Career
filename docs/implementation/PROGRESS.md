@@ -1,3 +1,6 @@
+## M4 마일스톤 마감 (2026-10-26)
+
+IME 조합 게이트·V08 정적(터치/포커스/16px/reduced-motion)·STATUS M4 100%. 픽셀·SR 실기·풀 엔진은 후속. [COMPLETE](M4-COMPLETE.md).
 ## M3/M4 마감 (2026-10-26)
 
 M3 V02/V03 완료·메일 실발송 M9 보류. M4 핵심12+HTTP+로그인/충돌. CI typecheck에 engine build 추가. [M3](M3-COMPLETE.md) · [M4](M4-COMPLETE.md).

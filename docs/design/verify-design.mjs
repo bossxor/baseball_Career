@@ -472,9 +472,14 @@ for (const row of closure.designClosures) {
   assert.ok(existsSync(path.join(root, row.evidence)));
 }
 const executedGates = new Set(['V02', 'V03']);
+const partialGates = new Set(['V08']);
 for (const row of closure.executionGates) {
   if (executedGates.has(row.id)) {
     assert.equal(row.status, 'EXECUTED');
+    assert.equal(row.runtimePassed, true);
+    if (row.evidence) assert.ok(existsSync(path.join(root, row.evidence)), row.id);
+  } else if (partialGates.has(row.id)) {
+    assert.equal(row.status, 'PARTIAL');
     assert.equal(row.runtimePassed, true);
     if (row.evidence) assert.ok(existsSync(path.join(root, row.evidence)), row.id);
   } else {
@@ -514,7 +519,7 @@ assert.equal(importedUnits(1000000),500000);
 assert.equal(importedUnits(10000),10000);
 assert.ok(Math.abs(importedUnits(912501)/10000 - 91.2501/2) <= .0000500001);
 for (const id of ['R41','R42','R43','R44','R45','R46','R47','R48','R49']) assert.ok(read('14-CANONICAL-DECISIONS.md').includes(`| ${id} |`));
-console.log('PASS: baseline 1.0 has 25 source topics, 10 specified closures, V02/V03 EXECUTED and 10 remaining NOT_EXECUTED gates; XP double-budget/cap-loss/remainder and import rounding examples. These are static/document arithmetic checks only.');
+console.log('PASS: baseline 1.0 has 25 source topics, 10 specified closures, V02/V03 EXECUTED, V08 PARTIAL, 9 remaining NOT_EXECUTED gates; XP double-budget/cap-loss/remainder and import rounding examples. These are static/document arithmetic checks only.');
 await import('./verify-art-direction.mjs');
 await import('./verify-state-ui.mjs');
 await import('./verify-finish-board.mjs');
@@ -545,8 +550,8 @@ await import('./verify-latecareer-continuity.mjs');
 {
  const handoff=JSON.parse(read('preimplementation-readiness.json'));const registry=JSON.parse(read('image-production-register.json'));const sets=JSON.parse(read('expectation-sets-index.json'));const gates=JSON.parse(read('design-closure-register.json')).executionGates;
  assert.equal(handoff.implementationAuthorized,true);assert.equal(handoff.newGameRulesAdded,false);assert.equal(handoff.status,'IMPLEMENTATION_IN_PROGRESS_OPEN_GATES');assert.equal(handoff.counts.screens,screens.screens.length);assert.equal(handoff.counts.events,catalog.events.length);assert.equal(handoff.counts.coreDesignExpectations,sets.core298);assert.equal(handoff.counts.expectationSets,sets.sets.length);assert.ok(sets.sets.every(s=>s.status==='NOT_EXECUTED'));
- for(const [field,status] of [['imageExists','EXISTS'],['imageTodo','TODO'],['codeDisplayGroups','CODE_ONLY'],['legacyReferences','LEGACY_REFERENCE']])assert.equal(handoff.counts[field],registry.items.filter(i=>i.status===status).length);assert.deepEqual(handoff.executionGates,gates.map(({id,status,runtimePassed})=>({id,status,runtimePassed})));assert.ok(handoff.executionGates.filter(g=>!['V02','V03'].includes(g.id)).every(g=>g.runtimePassed===false));assert.ok(handoff.executionGates.filter(g=>['V02','V03'].includes(g.id)).every(g=>g.runtimePassed===true));assert.equal(handoff.counts.executedBrowserViews,0);assert.equal(handoff.reviewMatrix.executionStatus,'NOT_EXECUTED');unique(handoff.areas.map(a=>a.id));for(const a of handoff.areas)for(const f of a.sources)assert.ok(existsSync(path.join(root,f)),f);
- console.log('PASS: handoff counts match; V02/V03 runtimePassed, 10 gates still open; browser visual checks remain NOT_EXECUTED.');
+ for(const [field,status] of [['imageExists','EXISTS'],['imageTodo','TODO'],['codeDisplayGroups','CODE_ONLY'],['legacyReferences','LEGACY_REFERENCE']])assert.equal(handoff.counts[field],registry.items.filter(i=>i.status===status).length);assert.deepEqual(handoff.executionGates,gates.map(({id,status,runtimePassed})=>({id,status,runtimePassed})));assert.ok(handoff.executionGates.filter(g=>!['V02','V03','V08'].includes(g.id)).every(g=>g.runtimePassed===false));assert.ok(handoff.executionGates.filter(g=>['V02','V03','V08'].includes(g.id)).every(g=>g.runtimePassed===true));assert.equal(handoff.counts.executedBrowserViews,0);assert.equal(handoff.reviewMatrix.executionStatus,'NOT_EXECUTED');unique(handoff.areas.map(a=>a.id));for(const a of handoff.areas)for(const f of a.sources)assert.ok(existsSync(path.join(root,f)),f);
+ console.log('PASS: handoff counts match; V02/V03/V08 runtimePassed, 9 gates still open; full browser visual checks remain NOT_EXECUTED.');
 }
 {
  const tech=read('06-TECH.md'),create=read('78-NEW-GAME-CREATION-RECOVERY.md'),game=read('24-GAME-ENGINE-SCORING.md');
