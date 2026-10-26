@@ -16,6 +16,10 @@ import {kboClubBalance} from './kbo-finance.js';
 import {automaticFieldLineup,initialPositionFits,FIELD_POSITIONS} from './lineup.js';
 import type {FieldPosition} from './lineup.js';
 import {emptyBatting} from './stats.js';
+import {nextKboFreeAgentYear} from './kbo-free-agents.js';
+import type {KboFreeAgentPool} from './kbo-free-agents.js';
+import {importArchivedPlayers} from './kbo-club-import.js';
+import type {ClubImportReceipt,ClubImportRequest} from './kbo-club-import.js';
 import type {SchoolDayLedger} from './high-school-day.js';
 import type {KboPendingGame} from './kbo-progress.js';
 
@@ -24,21 +28,29 @@ import type {KboPendingGame} from './kbo-progress.js';
 export interface KboClubGame {
  schemaVersion:1;revision:number;difficulty:Difficulty;world:ActiveKboRosterWorld;userClubId:string;startYear:number;
  creationKey:string;phase:'PRESEASON_SETUP'|'SEASON_PROGRESS'|'SEASON_REVIEW';records:RecordLedger;health:HealthLedger;schedule:KboSeasonSchedule['leagues'];
+ freeAgents:KboFreeAgentPool;imports:readonly ClubImportReceipt[];
  days?:SchoolDayLedger;progress?:{nextWorldDay:number;pendingGame:KboPendingGame|null};
 }
 export const KBO_CLUB_DEFAULT_START_YEAR=2027;
 
 /** One atomic creation: the whole league is generated from the seed, no club gets a favorable distribution, and no
  * redraw exists (the creation key is derived from the inputs, so a retry returns the same game). */
-export function createKboClubGame(input:{worldKey:string;seed:string;difficulty:Difficulty;clubId:string;startYear?:number}):KboClubGame {
+export function createKboClubGame(input:{worldKey:string;seed:string;difficulty:Difficulty;clubId:string;startYear?:number;imports?:readonly ClubImportRequest[]}):KboClubGame {
  const startYear=input.startYear??KBO_CLUB_DEFAULT_START_YEAR;
  if(!Number.isSafeInteger(startYear) || !KBO_CLUBS.some(c=>c.id===input.clubId))throw new RangeError('INVALID_KBO_CLUB_GAME');
  const calendar=createSeasonCalendar(startYear),created=createKboRosterWorld({worldKey:input.worldKey,seasonKey:String(startYear),seed:input.seed,difficulty:input.difficulty});
  const world:ActiveKboRosterWorld={...created,status:'ACTIVE',calendar};assertKboRecruitmentWorld(world);
  const ids=world.clubs.map(c=>c.id);
- return {schemaVersion:1,revision:0,difficulty:input.difficulty,world,userClubId:input.clubId,startYear,phase:'PRESEASON_SETUP',
-  creationKey:JSON.stringify(['kbo-club-game',input.worldKey,input.seed,input.difficulty,input.clubId,startYear]),records:emptyRecordLedger(),
-  health:createHealthLedger(createStreams(input.seed,JSON.stringify(['kbo-club-health',input.worldKey])).injury),schedule:createKboSeasonSchedules(ids,String(startYear),calendar)};
+ // The free-agent pool (floor 80) exists from day one; imports replace same-position players of my club and release them into it.
+ const pool=nextKboFreeAgentYear({worldKey:input.worldKey,seed:input.seed,seasonKey:String(startYear),difficulty:input.difficulty,registeredKeys:Object.keys(world.players)});
+ const imported=importArchivedPlayers(world,pool,input.clubId,input.imports??[],input.seed);
+ const game:KboClubGame={schemaVersion:1,revision:0,difficulty:input.difficulty,world,userClubId:input.clubId,startYear,phase:'PRESEASON_SETUP',
+  creationKey:JSON.stringify(['kbo-club-game',input.worldKey,input.seed,input.difficulty,input.clubId,startYear,(input.imports??[]).map(r=>[r.importDraftId,r.archive.archiveId,r.replaceKey])]),records:emptyRecordLedger(),
+  health:createHealthLedger(createStreams(input.seed,JSON.stringify(['kbo-club-health',input.worldKey])).injury),schedule:createKboSeasonSchedules(ids,String(startYear),calendar),freeAgents:imported.pool,imports:imported.receipts};
+ assertKboRecruitmentWorld(game.world);
+ // 05: a pick that leaves the club unable to field a legal first team is refused, never silently repaired.
+ if(imported.receipts.length && kboClubRosterIssues(game).length)throw new RangeError('IMPORT_COMPOSITION_INVALID');
+ return game;
 }
 
 export type RosterIssue='ROSTER_TOO_SMALL'|'ROSTER_TOO_LARGE'|'FIRST_TEAM_SIZE'|'FIRST_TEAM_PITCHERS'|'FIRST_TEAM_CATCHERS'|'FIRST_TEAM_POSITION_GAP'|'FIRST_TEAM_INJURED';
