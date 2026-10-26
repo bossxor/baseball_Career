@@ -4,6 +4,7 @@ import type { AuthDb, AppVariables, AuthOptions } from './auth.js';
 import { createRequireAuth } from './auth.js';
 import { getCommand, postCommand } from './commands.js';
 import { postGameCreation } from './game-creations.js';
+import { getCareer, getScreen } from './career-views.js';
 import { getSaveSummary, listSaves } from './saves.js';
 
 export type CreateAppOptions = {
@@ -48,6 +49,8 @@ export function createApp(options: CreateAppOptions = {}) {
   });
   protectedRoutes.post('/game-creations', postGameCreation);
   protectedRoutes.get('/saves', listSaves);
+  protectedRoutes.get('/saves/:id/career', getCareer);
+  protectedRoutes.get('/saves/:id/screens/:screenId', getScreen);
   protectedRoutes.get('/saves/:id', getSaveSummary);
   protectedRoutes.post('/saves/:id/commands', postCommand);
   protectedRoutes.get('/saves/:id/commands/:commandId', getCommand);

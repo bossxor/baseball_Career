@@ -1,12 +1,9 @@
 import { allocateCapped, ENGINE_VERSION } from '@playball/engine';
+import {
+  applyUiAdvance, applyUiChoose, applyUiSeed, phaseOf, type ChooseNext, type UiShellState,
+} from './ui-shell.js';
 
-export type SaveState = {
-  schemaVersion?: number;
-  stampCount?: number;
-  lastAllocation?: { gains: number[]; discarded: number };
-  engineVersion?: string;
-  [key: string]: unknown;
-};
+export type SaveState = UiShellState;
 
 export type CommandBody = {
   commandId: string;
@@ -15,11 +12,28 @@ export type CommandBody = {
   payload: unknown;
 };
 
-/** One engine path for M3 E2E: allocateCapped demo stamp. */
-export function applyEngineCommand(
-  state: SaveState,
-  command: CommandBody,
-): { nextState: SaveState; summary: Record<string, unknown>; eventIds: string[] } {
+export type AppliedCommand = {
+  nextState: SaveState;
+  summary: Record<string, unknown>;
+  eventIds: string[];
+  phase: string;
+  next?: ChooseNext;
+};
+
+/** ALLOCATE_DEMO (M3 E2E) + UI_SEED/ADVANCE/CHOOSE (M4 shell over the same pipeline). */
+export function applyEngineCommand(state: SaveState, command: CommandBody): AppliedCommand {
+  if (command.type === 'UI_SEED') {
+    const applied = applyUiSeed(state, command.payload);
+    return { ...applied, eventIds: [], phase: phaseOf(applied.nextState) };
+  }
+  if (command.type === 'UI_ADVANCE') {
+    const applied = applyUiAdvance(state, command.payload);
+    return { ...applied, eventIds: [], phase: phaseOf(applied.nextState) };
+  }
+  if (command.type === 'UI_CHOOSE') {
+    const applied = applyUiChoose(state, command.payload);
+    return { ...applied, eventIds: [], phase: phaseOf(applied.nextState) };
+  }
   if (command.type !== 'ALLOCATE_DEMO') {
     throw Object.assign(new Error('UNSUPPORTED_COMMAND'), { code: 'INVALID_REQUEST' });
   }
@@ -50,5 +64,6 @@ export function applyEngineCommand(
     nextState,
     summary: { type: 'ALLOCATE_DEMO', stampCount, gains: result.gains, discarded: result.discarded },
     eventIds: [],
+    phase: phaseOf(nextState),
   };
 }

@@ -99,10 +99,11 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
       const result = {
         commandId: body.commandId,
         revision: nextRevision.toString(),
-        phase: 'BOOT',
+        phase: applied.phase,
         summary: applied.summary,
         eventIds: applied.eventIds,
         nextActions: [] as string[],
+        ...(applied.next ? { next: applied.next } : {}),
         result: { gains: applied.summary.gains, discarded: applied.summary.discarded },
       };
 
@@ -110,6 +111,7 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
         .update(gameSaves)
         .set({
           revision: nextRevision,
+          phase: applied.phase,
           state: applied.nextState,
           summary: applied.summary,
           updatedAt: new Date(),

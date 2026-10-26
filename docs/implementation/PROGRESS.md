@@ -4,6 +4,9 @@
 
 브랜치 `m3/save-command-pipeline`을 main에 병합. Neon `m3-dev` + Managed Better Auth JWT·allowlist·owner 격리·행 잠금/receipt/F08·셸 game-creations/saves. api 테스트7/7. 메일 재설정 실발송·전 커리어 명령 매핑은 미완(의도). [완료](M3-COMPLETE.md) · [증거](evidence/M3-COMPLETE-check.log).
 
+## M4-B HTTP PlayballApi + API UI 셸 (2026-10-26)
+
+`createHttpApi` · `UI_SEED/ADVANCE/CHOOSE` · career/screen GET. 웹14·API m4-ui-shell 통과. 풀 커리어 엔진 연결은 후속. [M4](M4-WEB-UI.md).
 ## M4 웹 UI 핵심 12화면 (2026-10-26)
 
 S01–S03에 이어 S04–S09·S22·S23·S28을 공통 `Decision` + `#/play/:id/Sxx`로 추가. fixture `decision`/`choose` 멱등. 웹 테스트13. 실 HTTP API·접근성 실기는 다음. [M4](M4-WEB-UI.md).
