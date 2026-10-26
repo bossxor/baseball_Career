@@ -1,5 +1,5 @@
 import type { KboClubGame } from './kbo-club-game.js';
-import { kboClubRosterIssues } from './kbo-club-game.js';
+import { kboClubRosterIssues, validateClubLineup } from './kbo-club-game.js';
 import type { HighSchoolGameContext } from './high-school-game.js';
 import { prepareSchoolCompetitionGame, advanceHighSchoolGame, commitSchoolCompetitionGame } from './high-school-game.js';
 import { createKboCompetitionGameWorld } from './kbo-game-world.js';
@@ -8,7 +8,7 @@ import type { KboLeagueKey } from './kbo-day.js';
 import type { ScheduledGame } from './schedule.js';
 import { recordTotals } from './records.js';
 
-export type KboClubProgressStop = 'CHUNK_LIMIT' | 'ENGINE_LIMIT' | 'DAY_CLOSED' | 'HEALTH_CHANGE' | 'SEASON_REVIEW';
+export type KboClubProgressStop = 'CHUNK_LIMIT' | 'ENGINE_LIMIT' | 'DAY_CLOSED' | 'HEALTH_CHANGE' | 'SEASON_REVIEW' | 'LINEUP_INVALID';
 export interface KboClubProgressResult { game: KboClubGame; stopReason: KboClubProgressStop; plateAppearances: number; completedInnings: number; daysClosed: number }
 const LEAGUES: readonly KboLeagueKey[] = ['KBO', 'FUTURES'];
 const allDays = (g: KboClubGame) => LEAGUES.flatMap(l => g.schedule[l].map(x => x.worldDay));
@@ -33,7 +33,11 @@ function contextOf(g: KboClubGame, leagueKey: KboLeagueKey): HighSchoolGameConte
     if (pool.length === 0) throw new RangeError('NO_HEALTHY_KBO_PITCHER');
     starters[club.id] = pool[(season.teams[club.id]?.games ?? 0) % pool.length]!;
   }
+  // A stored lineup is used for my club's first-team (KBO) games only.
+  const manual = leagueKey === 'KBO' && g.lineup ? g.lineup.draft : null;
+  if (manual) starters[g.userClubId] = manual.startingPitcher;
   return {
+    ...(manual ? { lineupOverrides: { [g.userClubId]: { battingOrder: manual.battingOrder, fielders: manual.fielders, dhKey: manual.dhKey } } } : {}),
     difficulty: g.difficulty, unavailableKeys: Object.keys(g.health.injuries).filter(k => Object.hasOwn(world.players, k)), starters, recentBatting: {},
     recentPitchingOuts: Object.fromEntries(Object.entries(season.pitching).map(([k, p]) => [k, p.outs])), traits: {}, approaches: {},
   };
@@ -57,6 +61,8 @@ export function advanceKboClubGame(source: KboClubGame, expectedRevision: number
     if (day > last) return review();
     if (!progress.pendingGame) {
       const next = queue(game, day)[0];
+      // 05: validate before every game; an invalid hand-made lineup stops here instead of being replaced silently.
+      if (next && next.leagueKey === 'KBO' && game.lineup && (next.game.homeTeamKey === game.userClubId || next.game.awayTeamKey === game.userClubId) && validateClubLineup(game, game.lineup.draft).length) return finish('LINEUP_INVALID');
       if (next) progress.pendingGame = { leagueKey: next.leagueKey, job: prepareSchoolCompetitionGame(createKboCompetitionGameWorld(game.world, next.leagueKey, ''), game.records, next.game, contextOf(game, next.leagueKey)) };
     }
     if (progress.pendingGame) {

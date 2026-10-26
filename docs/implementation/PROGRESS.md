@@ -1,5 +1,9 @@
 ## M4 마일스톤 마감 (2026-10-26)
 
+## M6-C 손으로 만든 라인업 적용 (2026-10-26)
+
+`lineupOverrides`(엔진 추가)·`applyKboClubLineup`/`clearKboClubLineup`·경기 전 검증 `LINEUP_INVALID` 정지. [M6-C](M6-C-CLUB-LINEUP.md).
+
 ## M6-B 내 선수 사용(보관 투입) — 구현 (2026-10-26)
 
 보관 스냅샷→19세 복사본(최고값 절반·새 잠재력)·대체 후보·FA 풀 이동·합법 1군 검사. [M6-B](M6-B-CLUB-IMPORT.md).

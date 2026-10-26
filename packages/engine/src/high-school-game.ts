@@ -1,7 +1,7 @@
 import { RULES_VERSION } from '@playball/rules';
 import type { Difficulty, Approach, PitchId } from '@playball/rules';
 import type { HighSchoolWorld } from './high-school-world.js';
-import { automaticFieldLineup, initialPositionFits } from './lineup.js';
+import { automaticFieldLineup, initialPositionFits, FIELD_POSITIONS } from './lineup.js';
 import { emptyBatting } from './stats.js';
 import { validateDevelopmentPlayer } from './player.js';
 import type { DevelopmentPlayer } from './player.js';
@@ -26,12 +26,22 @@ export interface HighSchoolGameContext {
   approaches:Readonly<Record<string,Approach>>;
   /** Internal current-condition factor; frozen into the existing effective multiplier of each game snapshot. */
   conditionMultipliers?:Readonly<Record<string,number>>;
+  /** A hand-made lineup for one team (club mode): nine distinct available hitters, one per fielding position plus DH. Invalid → INVALID_GAME_CONTEXT. */
+  lineupOverrides?:Readonly<Record<string,{battingOrder:readonly string[];fielders:Readonly<Record<string,string>>;dhKey:string}>>;
 }
 export interface HighSchoolGameJob {
   schemaVersion:1; worldKey:string; seasonKey:string; worldDay:number;
   basisWorld:string; basisRecordRevision:number;
   game:GameState;
   stopReason:'READY'|'FINAL'|'CHUNK_LIMIT'|'ENGINE_LIMIT';
+}
+/** Same shape as the automatic assignment: natural position keeps fit 100, any other position is fit 0 (the 0.5 defense multiplier). */
+function manualAssignment(m:{battingOrder:readonly string[];fielders:Readonly<Record<string,string>>;dhKey:string},hitters:readonly DevelopmentPlayer[],available:(p:DevelopmentPlayer)=>boolean){
+  const by=new Map(hitters.map(p=>[p.simulationKey,p])),slots:[string,string][]=[...FIELD_POSITIONS.map(p=>[p,m.fielders[p] as string] as [string,string]),['DH',m.dhKey]];
+  const keys=slots.map(([,k])=>k);
+  if(new Set(keys).size!==9 || keys.some(k=>!by.has(k) || !available(by.get(k)!)) || m.battingOrder.length!==9 || new Set(m.battingOrder).size!==9 || m.battingOrder.some(k=>!keys.includes(k)))throw new RangeError('INVALID_GAME_CONTEXT');
+  for(const [position,key] of slots)if(by.get(key)!.throws==='L' && ['C','2B','3B','SS'].includes(position))throw new RangeError('INVALID_GAME_CONTEXT');
+  return {lineup:[...m.battingOrder],fielders:FIELD_POSITIONS.map(position=>({position,simulationKey:m.fielders[position]!,fit:initialPositionFits(by.get(m.fielders[position]!)!.position)[position]})),dhKey:m.dhKey};
 }
 const lookup=<T>(values:Readonly<Record<string,T>>,key:string):T|undefined=>Object.hasOwn(values,key)?values[key]:undefined;
 /** Internal server adapter only. The career command must authorize phase, queue and date first. */
@@ -53,7 +63,8 @@ export function prepareSchoolCompetitionGame(world:CompetitionGameWorld,records:
     const players=school.roster.map(k=>{const p=Object.hasOwn(world.players,k)?world.players[k]:undefined;if(!p || p.simulationKey!==k)throw new RangeError('MISSING_ROSTER_PLAYER');validateDevelopmentPlayer(p);return p;});
     const available=(p:DevelopmentPlayer)=>!context.unavailableKeys.includes(p.simulationKey);
     const hitters=players.filter(p=>p.kind==='HITTER');
-    const assignment=automaticFieldLineup(hitters.map(player=>({player,available:available(player),fits:initialPositionFits(player.position),recent:lookup(context.recentBatting,player.simulationKey)??emptyBatting()})));
+    const manual=lookup(context.lineupOverrides??{},teamKey);
+    const assignment=manual?manualAssignment(manual,hitters,available):automaticFieldLineup(hitters.map(player=>({player,available:available(player),fits:initialPositionFits(player.position),recent:lookup(context.recentBatting,player.simulationKey)??emptyBatting()})));
     const starters=players.filter(p=>p.kind==='PITCHER' && p.position==='SP' && available(p));
     const selected=players.find(p=>p.simulationKey===lookup(context.starters,teamKey));
     if(!selected || selected.kind!=='PITCHER' || !available(selected) || starters.length>0 && selected.position!=='SP')throw new RangeError('INVALID_SCHOOL_STARTER');

@@ -28,7 +28,7 @@ import type {KboPendingGame} from './kbo-progress.js';
 export interface KboClubGame {
  schemaVersion:1;revision:number;difficulty:Difficulty;world:ActiveKboRosterWorld;userClubId:string;startYear:number;
  creationKey:string;phase:'PRESEASON_SETUP'|'SEASON_PROGRESS'|'SEASON_REVIEW';records:RecordLedger;health:HealthLedger;schedule:KboSeasonSchedule['leagues'];
- freeAgents:KboFreeAgentPool;imports:readonly ClubImportReceipt[];
+ freeAgents:KboFreeAgentPool;imports:readonly ClubImportReceipt[];lineup?:{draft:ClubLineupDraft};
  days?:SchoolDayLedger;progress?:{nextWorldDay:number;pendingGame:KboPendingGame|null};
 }
 export const KBO_CLUB_DEFAULT_START_YEAR=2027;
@@ -94,7 +94,7 @@ export function kboClubRoster(game:Pick<KboClubGame,'world'|'userClubId'|'health
 }
 
 export interface ClubLineupDraft {battingOrder:readonly string[];fielders:Readonly<Record<FieldPosition,string>>;dhKey:string;startingPitcher:string}
-export type LineupIssue={code:'DUPLICATE_PLAYER'|'NOT_FIRST_TEAM'|'INJURED'|'LEFT_THROW_BLOCKED'|'BATTING_ORDER_MISMATCH'|'STARTER_NOT_PITCHER';playerKey?:string;position?:string};
+export type LineupIssue={code:'DUPLICATE_PLAYER'|'NOT_FIRST_TEAM'|'INJURED'|'LEFT_THROW_BLOCKED'|'BATTING_ORDER_MISMATCH'|'STARTER_NOT_PITCHER'|'STARTER_MUST_BE_SP';playerKey?:string;position?:string};
 /** 05: position fit is 100 at the registered position; other positions carry a 0.5..1.0 defense multiplier (shown as a penalty). */
 export const fitMultiplier=(fit:number)=>.5+.5*Math.min(100,Math.max(0,fit))/100;
 
@@ -120,6 +120,22 @@ export function validateClubLineup(game:Pick<KboClubGame,'world'|'userClubId'|'h
  if(draft.battingOrder.length!==9 || new Set(draft.battingOrder).size!==9 || draft.battingOrder.some(k=>!seen.has(k)))issues.push({code:'BATTING_ORDER_MISMATCH'});
  const sp=game.world.players[draft.startingPitcher];
  if(!sp || sp.kind!=='PITCHER' || !first.has(sp.simulationKey))issues.push({code:'STARTER_NOT_PITCHER',playerKey:draft.startingPitcher});
- else if(Object.hasOwn(game.health.injuries,sp.simulationKey))issues.push({code:'INJURED',playerKey:sp.simulationKey,position:'SP'});
+ else {
+  if(Object.hasOwn(game.health.injuries,sp.simulationKey))issues.push({code:'INJURED',playerKey:sp.simulationKey,position:'SP'});
+  // The game takes a non-SP starter only when no healthy SP exists.
+  if(sp.position!=='SP' && club.firstTeam.some(k=>{const p=game.world.players[k]!;return p.kind==='PITCHER' && p.position==='SP' && !Object.hasOwn(game.health.injuries,k);}))issues.push({code:'STARTER_MUST_BE_SP',playerKey:sp.simulationKey});
+ }
  return issues;
+}
+
+/** S15 적용: a lineup is stored only when it has no issue; it then plays every first-team game of my club until it is
+ * cleared or becomes invalid (an injury), when the advance stops at the game instead of silently changing it. */
+export function applyKboClubLineup(source:KboClubGame,expectedRevision:number,draft:ClubLineupDraft):KboClubGame {
+ if(source.schemaVersion!==1 || source.revision!==expectedRevision)throw new RangeError('CLUB_GAME_REVISION_CHANGED');
+ if(validateClubLineup(source,draft).length)throw new RangeError('CLUB_LINEUP_INVALID');
+ return {...structuredClone(source),lineup:{draft:structuredClone(draft)},revision:source.revision+1};
+}
+export function clearKboClubLineup(source:KboClubGame,expectedRevision:number):KboClubGame {
+ if(source.schemaVersion!==1 || source.revision!==expectedRevision)throw new RangeError('CLUB_GAME_REVISION_CHANGED');
+ const next=structuredClone(source);delete next.lineup;next.revision++;return next;
 }
