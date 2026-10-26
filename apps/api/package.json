@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "@hono/node-server": "^2.1.5",
+    "@playball/db": "0.1.0",
+    "@playball/engine": "0.1.0",
     "@playball/rules": "0.1.0",
+    "drizzle-orm": "^0.44.7",
     "hono": "^4.13.13"
   }
 }

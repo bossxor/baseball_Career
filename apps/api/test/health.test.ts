@@ -8,8 +8,12 @@ test('liveness exposes no save, secret or database readiness claim', async () =>
   assert.deepEqual(await response.json(), { status: 'ok', service: 'playball-api', rulesVersion: '1.0.0' });
 });
 
-test('game writes are unavailable until their authenticated pipeline exists', async () => {
-  const response = await app.request('/api/game-creations', { method: 'POST' });
-  assert.equal(response.status, 404);
-  assert.deepEqual(await response.json(), { code: 'NOT_FOUND' });
+test('game writes without db stay unavailable', async () => {
+  const response = await app.request('/api/saves/x/commands', {
+    method: 'POST',
+    headers: { Authorization: 'Bearer dev:nobody', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ commandId: 'c1', expectedRevision: 0, type: 'ALLOCATE_DEMO', payload: {} }),
+  });
+  assert.equal(response.status, 503);
+  assert.equal((await response.json()).code, 'SERVICE_UNAVAILABLE');
 });
