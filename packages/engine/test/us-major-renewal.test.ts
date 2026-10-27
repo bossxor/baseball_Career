@@ -6,7 +6,8 @@ import {createHash} from 'node:crypto';
 import {closedUsMajorFixture,finishControlledMajorSeason} from './us-major-fixture.js';
 import {preparedUsCareer} from './us-fixtures.js';
 import {usMajorContractValue,usMlbOfferYears} from '../src/us-contract-value.js';
-import {usMajorRenewalPreview,startNextUsMajorSeason} from '../src/us-major-renewal.js';
+import {usMajorRenewalPreview,startNextUsMajorSeason,usMajorFreeAgencyPreview,acceptUsMajorFreeAgency} from '../src/us-major-renewal.js';
+import {recordUsMinorOptionChoice} from '../src/us-levels.js';
 import {usCareerView} from '../src/us-career-entry.js';
 import type {UsCareer} from '../src/us-career-entry.js';
 import {setUsPreseasonFocus,confirmUsPreseasonPlan,unreadUsFirstCampNotices} from '../src/us-preseason.js';
@@ -49,6 +50,9 @@ test('controlled seven MLB seasons retain partial first-year noncredit and stop 
  let c=closedUsMajorFixture(),paid=c.season!.paidUsd;assert.equal(mlbServiceTime(c.records,c.health,c.protagonistKey).creditedSeasons,0);
  for(let i=0;i<6;i++){const next=startNextUsMajorSeason(c,c.revision,funding(c));c=finishControlledMajorSeason(opening(next));paid+=c.season!.paidUsd;assert.equal(c.schemaVersion,4);assert.equal(c.contract.years,1);assert.equal(mlbServiceTime(c.records,c.health,c.protagonistKey).creditedSeasons,i+1);}
  assert.equal(c.income.filter(i=>i.kind==='SALARY').reduce((n,i)=>n+i.amount,0),paid);assert.equal(c.income.filter(i=>i.kind==='SIGNING_BONUS').length,1);assert.equal(c.majorYears!.length,6);assert.throws(()=>usMajorRenewalPreview(c),/NOT_AVAILABLE/);assert.throws(()=>startNextUsMajorSeason(c,c.revision,funding(c)),/NOT_AVAILABLE/);
+ const raw=digest(c);assert.throws(()=>acceptUsMajorFreeAgency(c,c.revision-1,funding(c)),/REVISION/);assert.equal(digest(c),raw);
+ const preview=usMajorFreeAgencyPreview(c,funding(c));assert.equal(preview.offers.length,1);assert.equal(preview.offers[0]!.organizationId,c.protagonistOrganizationId);const signed=acceptUsMajorFreeAgency(c,c.revision,funding(c));assert.equal(digest(c),raw);assert.equal(signed.contract.years,preview.offers[0]!.years);assert.equal(signed.contract.annualSalaryUsd,preview.offers[0]!.annualSalaryUsd);assert.equal(signed.contract.signingBonusUsd,0);assert.equal(signed.income.filter(i=>i.kind==='SIGNING_BONUS').length,1);assert.equal(signed.records,c.records);assert.equal(signed.protagonistOrganizationId,c.protagonistOrganizationId);
+ const closedFa=finishControlledMajorSeason(opening(signed)),continued=startNextUsMajorSeason(closedFa,closedFa.revision,funding(closedFa));assert.equal(continued.contract.annualSalaryUsd,signed.contract.annualSalaryUsd);assert.equal(continued.contract.years,signed.contract.years!-1);assert.equal(continued.income.filter(i=>i.kind==='SIGNING_BONUS').length,1);
  console.log('Controlled major-years proof (not native seven seasons):',JSON.stringify({lastYear:c.world.seasonKey,yearsArchived:c.majorYears!.length,creditedSeasons:6,paidUsd:paid,signingBonuses:1}));
 });
 
@@ -61,4 +65,9 @@ test('annual major contract survives an actual call-up command after controlled 
  c.records.revision+=games.length;const day=games.at(-1)!.worldDay;c.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:day+1,pendingGame:null};
  const offered=reviewUsLevel(c,day,c.phaseContext)!;assert.equal(offered.season!.levelReviews!.at(-1)!.outcome,'OFFERED');const e=offered.events.at(-1)!,next=resolveUsLevelEvent(offered,offered.revision,{eventKey:e.eventKey,eventVersion:e.version,command:'CONFIRM_CALLUP'});
  assert.deepEqual(next.contract,c.contract);assert.deepEqual(next.inventory,c.inventory);assert.deepEqual(next.income,c.income);assert.equal(next.season!.majorActivation,undefined);assert.equal(next.registration.level,'MLB');
+});
+
+test('three spent option seasons need one explicit stay or FA choice and do not move the player',()=>{
+ const c=closedUsMajorFixture();c.season!.options![c.protagonistKey]={used:2,seasons:['2030'],minorGames:0};const raw=digest(c);assert.throws(()=>recordUsMinorOptionChoice(c,c.revision,'STAY'),/NOT_REQUIRED/);assert.equal(digest(c),raw);
+ c.season!.options![c.protagonistKey]!.used=3;const stay=recordUsMinorOptionChoice(c,c.revision,'STAY');assert.equal(stay.season!.options![c.protagonistKey]!.consent,'STAY');assert.equal(stay.revision,c.revision+1);assert.equal(recordUsMinorOptionChoice(stay,stay.revision,'STAY'),stay);assert.throws(()=>recordUsMinorOptionChoice(stay,stay.revision,'FA'),/CONFLICT/);assert.equal(stay.registration.level,'MLB');assert.equal(c.registration.level,'MLB');
 });

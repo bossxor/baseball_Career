@@ -41,8 +41,8 @@ function restoreEmergencyRegistrations(c:UsCareer,world:ActiveUsRosterWorld):voi
 }
 /** Expand/stage only: no new root, salary, contract or active year is committed. Discarding the stage is rollback.
  * Historical official games are not copied into the stage; the later activation must preserve the source ledger. */
-function stageUsYear(c:UsCareer,revision:number,majorRenewal:boolean):UsAgeRosterStage {
- assertUsCareerRevision(c,revision);const ready=usYearTransitionReadiness(c);if(ready.blockers.some(b=>!majorRenewal||b!=='CONTRACT_DECISION_REQUIRED')||majorRenewal&&(c.contract.type!=='US_MAJOR'||ready.mlbService.freeAgentEligible))throw new RangeError('US_YEAR_TRANSITION_NOT_READY');assertUsSeason(c,revision);auditUsClosedDays(c);auditUsCompletedPostseason(c);
+function stageUsYear(c:UsCareer,revision:number,majorRenewal:boolean,allowFreeAgent=false):UsAgeRosterStage {
+ assertUsCareerRevision(c,revision);const ready=usYearTransitionReadiness(c),guaranteed=(c.contract.years??1)>1;if(ready.blockers.some(b=>!majorRenewal||b!=='CONTRACT_DECISION_REQUIRED')||majorRenewal&&c.contract.type!=='US_MAJOR'||majorRenewal&&ready.mlbService.freeAgentEligible&&!guaranteed&&!allowFreeAgent)throw new RangeError('US_YEAR_TRANSITION_NOT_READY');assertUsSeason(c,revision);auditUsClosedDays(c);auditUsCompletedPostseason(c);
  if(Object.values(c.records.games).some(g=>g.scope.seasonKey===ready.targetSeasonKey))throw new RangeError('NEXT_SEASON_RECORDS_ALREADY_EXIST');
  const world=structuredClone(c.world);restoreEmergencyRegistrations(c,world);
  const retiring=Object.keys(world.players).filter(key=>key!==c.protagonistKey&&world.players[key]!.age===45),supply=retireAndSupplyUsNpcs(world,retiring,ready.targetSeasonKey,c.protagonistKey);
@@ -57,7 +57,7 @@ function stageUsYear(c:UsCareer,revision:number,majorRenewal:boolean):UsAgeRoste
 
 export function stageUsAgeAndRosters(c:UsCareer,revision:number):UsAgeRosterStage {return stageUsYear(c,revision,false);}
 /** Server-only stage: contract commit still requires the controlled-major annual writer. */
-export function stageUsControlledMajorYear(c:UsCareer,revision:number):UsAgeRosterStage {return stageUsYear(c,revision,true);}
+export function stageUsControlledMajorYear(c:UsCareer,revision:number,allowFreeAgent=false):UsAgeRosterStage {return stageUsYear(c,revision,true,allowFreeAgent);}
 
 /** Atomic continuation of the original six-season minor contract. Major renewals/FA remain explicit decisions. */
 export function startNextUsMinorSeason(c:UsCareer,revision:number,funding:readonly UsAnnualFunding[]):UsCareer {
