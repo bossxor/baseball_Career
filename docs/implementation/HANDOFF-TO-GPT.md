@@ -1,6 +1,6 @@
 # 최신 인계 — M2-DZ 해외 18개월 병역 달력 (2026-10-27)
 
-[DZ 상세](M2-DZ-US-MILITARY-18MO.md). 브랜치 `codex/m2-career-engine`. DY 기능 `198eede` 위 DZ 커밋(푸시 후 `git log -3` 확인).  
+[DZ 상세](M2-DZ-US-MILITARY-18MO.md). 브랜치 `codex/m2-career-engine`. 기능 팁 **`3de576a`**(DY `198eede` 위).  
 `chooseUsMilitaryPlan`→`service` 2블록 봉인→시즌별 `settleUsMilitaryServiceBlock`→둘 다 끝난 뒤에만 `completeUsMilitaryService`. 즉시 COMPLETED 불가.  
 전체 check 765/763·Neon2·웹22/22·스모크 duration_ms 710245. fixture 시즌 identity 이동≠native 2시즌 E2E.  
 다음: 국제 일마감/초청기한, 99도메인, 24경로/PF-D. M6 병합·PC종료 금지. V: 문서만 Copy-Item.
