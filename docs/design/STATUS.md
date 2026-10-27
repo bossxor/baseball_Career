@@ -1,6 +1,8 @@
 # 전체 구현 진행률: 약 84% 완료 · 약 16% 남음
 
-**M2 기준: 약55% 완료 · 약45% 남음.** 범위 가중 보수적 추정이며 위84%는 프로젝트 전체다. EC까지 국제 기한·날짜 피로. 부상 잔여/정규 일마감 감사/미국풀/99잔여/24는 잔여.
+**M2 기준: 약55% 완료 · 약45% 남음.** 범위 가중 보수적 추정이며 위84%는 프로젝트 전체다. ED까지 국제 기한·피로·부상 잔여. 정규 일마감 감사/미국풀/99잔여/24는 잔여.
+
+**M2-ED 검증 완료 (2026-10-27):** 한국 FINAL당 부상 remainingTeamGames 소모. 전체 npm run check 종료0: 767/765·Neon2·웹22/22. duration_ms 745981. [ED](../implementation/M2-ED-NATIONAL-INJURY-TICK.md). 증거 `evidence/M2-ED-check.log`.
 
 **M2-EC 검증 완료 (2026-10-27):** 초청 7/2/1 봉인·날짜당 한국 피로 1회. 전체 npm run check 종료0: 767/765·Neon2·웹22/22. duration_ms 1103862. [EC](../implementation/M2-EC-NATIONAL-DAY-CLOSE.md). 증거 `evidence/M2-EC-check.log`.
 

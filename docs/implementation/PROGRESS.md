@@ -1,3 +1,7 @@
+## 최신 작업 — M2-ED 검증 완료
+
+[ED 상세](M2-ED-NATIONAL-INJURY-TICK.md). closeCareerNationalDay→한국 FINAL health settle. 전체 check 767/765·Neon2·웹22/22. duration_ms 745981. 증거 `evidence/M2-ED-check.log`. M2≈55%. PC 종료 금지.
+
 ## 최신 작업 — M2-EC 검증 완료
 
 [EC 상세](M2-EC-NATIONAL-DAY-CLOSE.md). 초청 기한 봉인·closeCareerNationalDay. 전체 check 767/765·Neon2·웹22/22. duration_ms 1103862. 증거 `evidence/M2-EC-check.log`. M2≈55%. PC 종료 금지.

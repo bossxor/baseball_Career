@@ -1,9 +1,37 @@
+# 최신 인계 — M2-ED 국제 부상 잔여 소모 (2026-10-27)
+
+[ED 상세](M2-ED-NATIONAL-INJURY-TICK.md). 브랜치 `codex/m2-career-engine`. 기능 팁은 이 커밋(EC `5b51579` 위).  
+`closeCareerNationalDay`가 한국 FINAL마다 `settleTeamGameHealth`(teamKey=`{tournament}:KOR`)로 remainingTeamGames 차감. KBO closer 미호출.  
+전체 check 767/765·Neon2·웹22/22. duration_ms 745981. 증거 `evidence/M2-ED-check.log`.  
+미연결: 정규 일마감 감사 확장·INTERNATIONAL phase·부상 교체 worker·미국 풀·99잔여(~대부분 NOT_AUDITED)·24경로/PF-D. M6·PC종료 금지. V: 문서만 Copy-Item.
+
+## 호출 흐름 (국제)
+
+`openKboNationalSelection`→응답→`startNationalTournament`→(`prepare`/`advance`)*→날짜마다 `closeCareerNationalDay`→완료 시 seal.  
+초청 미응답(INVITED)이면 start 거절(자동 사양 없음).
+
+## 원장
+
+| 원장 | 변경 | 중복 키 |
+| --- | --- | --- |
+| `national.invitations` | 7/2/1 기한 봉인 | selectionId |
+| `national.brackets.fatigueSettledDays` | 날짜 1회 | competitionId+day |
+| `health.games` | 한국 FINAL마다 | gameKey+`{T}:KOR` |
+| `records`/`repertoires` | FINAL만 | gameKey / 등록 playerKey |
+
+## fixture vs 실제
+
+- AG 커리어 28·DX 전경기·날짜 피로/health: 집중 테스트.
+- DX 107 통제55: 커리어 증거 아님.
+- 정규 day closer에 WBC/P12 날짜 넣지 말 것.
+
+## GPT 집중 검수
+
+동기화: fatigueSettledDays↔health chronologic; INVITED 블록; P12 window 재봉인. 메모리: pending만. 경계: 한국 없는 날 부상 미차감·탈락 후 국내 재개.
+
 # 최신 인계 — M2-EC 국제 초청 기한·날짜 피로 (2026-10-27)
 
-[EC 상세](M2-EC-NATIONAL-DAY-CLOSE.md). 브랜치 `codex/m2-career-engine`. 기능 팁은 이 커밋(EB `c5cf395` 위).  
-`nationalInviteDeadlines` 7/2/1 봉인, INVITED면 대회 시작 거절, `closeCareerNationalDay` 한국 28 피로 1회(KBO closer 미호출).  
-전체 check 767/765·Neon2·웹22/22. duration_ms 1103862. 증거 `evidence/M2-EC-check.log`.  
-미연결: 부상 잔여경기 소모·정규 일마감 감사·INTERNATIONAL phase·미국 풀·99잔여·24/PF-D. M6·PC종료 금지. V: 문서만 Copy-Item.
+[EC 상세](M2-EC-NATIONAL-DAY-CLOSE.md). 기능 팁 **`5b51579`**. 초청 7/2/1·피로 1회. 전체 check 767/765·duration_ms 1103862.
 
 # 최신 인계 — M2-EB 포스팅 E62·E64 도메인 재개 (2026-10-27)
 

@@ -77,5 +77,6 @@ test('invite deadlines seal 7/2/1 before start and national day fatigue settles 
  }
  const settled=closeCareerNationalDay(c,c.revision,firstDay);
  assert.ok(settled.national!.brackets![0]!.fatigueSettledDays!.includes(firstDay));
+ assert.ok(settled.health.games.some(g=>g.evidence.teamKey==='AG:KOR'&&g.evidence.day===firstDay));
  assert.throws(()=>closeCareerNationalDay(settled,settled.revision,firstDay),/ALREADY_SETTLED/);
 });

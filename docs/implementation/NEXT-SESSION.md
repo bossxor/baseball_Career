@@ -1,6 +1,10 @@
+## 최신 작업 — M2-ED 검증 완료
+
+[ED 상세](M2-ED-NATIONAL-INJURY-TICK.md). 국제 한국 FINAL당 부상 잔여 소모. 전체 check 767/765·duration_ms 745981. M2≈55%. 다음=정규 일마감 감사·INTERNATIONAL phase·99잔여·24/PF-D. M6 금지. PC 종료 금지.
+
 ## 최신 작업 — M2-EC 검증 완료
 
-[EC 상세](M2-EC-NATIONAL-DAY-CLOSE.md). 초청 7/2/1·날짜 피로 1회. 전체 check 767/765·duration_ms 1103862. M2≈55%. 다음=부상 잔여·정규 일마감 감사·99잔여·24/PF-D. M6 금지. PC 종료 금지.
+[EC 상세](M2-EC-NATIONAL-DAY-CLOSE.md). 초청 7/2/1·날짜 피로 1회. 전체 check 767/765·duration_ms 1103862. M2≈55%.
 
 ## 최신 작업 — M2-EB 검증 완료
 
