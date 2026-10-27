@@ -9,7 +9,7 @@ import {emptyRecordLedger} from '../src/records.js';
 import {createHealthLedger} from '../src/health.js';
 import {createWorldStream} from '../src/rng.js';
 import {UNITS_PER_POINT} from '@playball/rules';
-import {kboPostingEligibility,requestKboPosting,resolveKboPostingClub,openKboPostingOffers,expireOrRejectKboPosting,acceptKboPostingOffer,kboPostingFeeWon} from '../src/kbo-posting.js';
+import {kboPostingEligibility,requestKboPosting,openKboPostingInvite,resolveKboPostingInvite,resolveKboPostingClub,openKboPostingOffers,expireOrRejectKboPosting,acceptKboPostingOffer,resolveKboPostingOfferEvent,kboPostingFeeWon} from '../src/kbo-posting.js';
 
 type PostingFixture=ReturnType<typeof stagedKboOffseason> & {proSeasons:KboSeasonArchive[];seasonClose?:KboSeasonClose;records:ReturnType<typeof emptyRecordLedger>;health:ReturnType<typeof createHealthLedger>;protagonistKey:string;world:ReturnType<typeof stagedKboOffseason>['world']};
 function season(s:PostingFixture,year:string,count:number){
@@ -61,5 +61,24 @@ test('accept pays the club fee once, seals return rights, removes the player and
  assert.equal(signed.world.contracts[key],undefined);assert.equal(signed.world.players[key],undefined);assert.ok(!signed.world.clubs.find(x=>x.id===clubId)!.roster.includes(key));
  assert.deepEqual(signed.posting!.windows[0]!.returnRights,{holderClubId:clubId,territory:'KR',sourceType:'POSTING',seasonKey:'2040',contractKey:contract.contractKey,annualSalaryWon:contract.annualSalaryWon,years:contract.years,snapshotRevision:c.revision});
  assert.equal(signed.posting!.windows[0]!.sealedContract!.contractKey,contract.contractKey);assert.equal(signed.posting!.windows[0]!.sealedPlayer!.simulationKey,key);
+ assert.equal(signed.events.find(e=>e.definitionId==='E64')!.status,'RESOLVED');assert.equal(signed.events.find(e=>e.definitionId==='E64')!.resolution?.command,'ACCEPT_CAREER_OFFER');
  assert.doesNotMatch(JSON.stringify(signed),/"kind":"SIGNING_BONUS"|"kind":"SALARY"/);
+});
+
+test('E62 invite can request or ACK, and E64 remain keeps the contract',()=>{
+ let declined=postingCareer({ovr:80});declined=openKboPostingInvite(declined,declined.revision);const invite=declined.events.find(e=>e.definitionId==='E62'&&e.status==='OPEN')!;assert.ok(invite);
+ assert.throws(()=>requestKboPosting(declined,declined.revision),/NOT_ELIGIBLE/);
+ declined=resolveKboPostingInvite(declined,declined.revision,{eventKey:invite.eventKey,eventVersion:invite.version,command:'ACK_EVENT'});
+ assert.equal(declined.events.find(e=>e.eventKey===invite.eventKey)!.status,'RESOLVED');assert.equal(declined.posting,undefined);
+ assert.throws(()=>openKboPostingInvite(declined,declined.revision),/INVITE_OPEN|NOT_ELIGIBLE|POSTING/);
+ let c=postingCareer({ovr:80});c=openKboPostingInvite(c,c.revision);const again=c.events.find(e=>e.definitionId==='E62'&&e.status==='OPEN')!;
+ c=resolveKboPostingInvite(c,c.revision,{eventKey:again.eventKey,eventVersion:again.version,command:'REQUEST_POSTING'});
+ assert.equal(c.posting!.windows[0]!.status,'REQUESTED');assert.equal(c.events.find(e=>e.eventKey===again.eventKey)!.status,'RESOLVED');
+ c=resolveKboPostingClub(c,c.revision);c=openKboPostingOffers(c,c.revision,1);const e64=c.events.find(e=>e.definitionId==='E64'&&e.status==='OPEN')!;const before=canonicalJson(c.world.contracts[c.protagonistKey]);
+ const remain=resolveKboPostingOfferEvent(c,c.revision,{eventKey:e64.eventKey,eventVersion:e64.version,command:'REMAIN_ORIGINAL'});
+ assert.equal(remain.posting!.windows[0]!.status,'REJECTED');assert.equal(remain.events.find(e=>e.eventKey===e64.eventKey)!.resolution?.command,'REMAIN_ORIGINAL');assert.equal(canonicalJson(remain.world.contracts[remain.protagonistKey]),before);
+ let signedPath=postingCareer({ovr:80});signedPath=requestKboPosting(signedPath,signedPath.revision);signedPath=resolveKboPostingClub(signedPath,signedPath.revision);signedPath=openKboPostingOffers(signedPath,signedPath.revision,1);
+ const offer=signedPath.posting!.windows[0]!.offers![0]!,card=signedPath.events.find(e=>e.definitionId==='E64'&&e.status==='OPEN')!;
+ const accepted=resolveKboPostingOfferEvent(signedPath,signedPath.revision,{eventKey:card.eventKey,eventVersion:card.version,command:'ACCEPT_CAREER_OFFER',offerKey:offer.offerKey,worldDay:1});
+ assert.equal(accepted.posting!.windows[0]!.status,'SIGNED');assert.equal(accepted.events.find(e=>e.eventKey===card.eventKey)!.resolution?.command,'ACCEPT_CAREER_OFFER');
 });

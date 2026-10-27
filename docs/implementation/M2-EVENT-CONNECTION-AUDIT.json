@@ -1726,9 +1726,14 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
-      "references": [],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "verification": "FOCUSED_VERIFIED_EB",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "kind": "DOMAIN"
+        }
+      ],
+      "note": "openKboPostingInvite queues one E62 per season; REQUEST_POSTING opens the window and completes domain; ACK declines. Direct requestKboPosting remains for non-UI paths."
     },
     {
       "id": "E63",
@@ -1752,7 +1757,7 @@
           "kind": "DOMAIN"
         }
       ],
-      "note": "resolveKboPostingClub queues E63 with sealed postingDecision; openKboPostingOffers completes blocking E63 and queues E64; accept cancels open posting events."
+      "note": "resolveKboPostingClub queues E63 with sealed postingDecision; openKboPostingOffers completes blocking E63 and queues E64; accept completes E64 or cancels leftover E63."
     },
     {
       "id": "E64",
@@ -1769,14 +1774,14 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "FOCUSED_VERIFIED_EA",
+      "verification": "FOCUSED_VERIFIED_EB",
       "references": [
         {
           "path": "packages/engine/src/kbo-posting.ts",
           "kind": "DOMAIN"
         }
       ],
-      "note": "resolveKboPostingClub queues E63 with sealed postingDecision; openKboPostingOffers completes blocking E63 and queues E64; accept cancels open posting events."
+      "note": "resolveKboPostingOfferEvent ACCEPT_CAREER_OFFER→acceptKboPostingOffer (E64 DOMAIN complete); REMAIN_ORIGINAL→REJECTED + DOMAIN complete. expire/reject cancels open cards."
     },
     {
       "id": "E65",

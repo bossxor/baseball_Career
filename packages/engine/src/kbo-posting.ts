@@ -11,7 +11,7 @@ import {createWorldStream,nextInteger} from './rng.js';
 import {selectKboFirstTeamRoster} from './kbo-world.js';
 import type {DevelopmentPlayer} from './player.js';
 import type {KboInitialContract} from './kbo-world.js';
-import {createWorldEvent,eventDefinition,resolveEventChoice,completeBlockingEvent,cancelInvalidEvent,validateEvent} from './events.js';
+import {createWorldEvent,eventDefinition,resolveEventChoice,completeBlockingEvent,completeEventDomain,cancelInvalidEvent,validateEvent} from './events.js';
 import type {EventInstance} from './events.js';
 
 export const KBO_POSTING_APPROVAL_SCORE=65;
@@ -60,16 +60,45 @@ export function kboPostingEligibility(c:KboCareer){
  return {eligible:reasons.length===0,reasons,service,military,postingReached:service.registrationThresholds.posting.reached,window:open??null};
 }
 
-/** Once per closed season. Deferred windows wait for the next season key. */
-export function requestKboPosting(c:KboCareer,revision:number):KboCareer {
- assertKboCareerRevision(c,revision);offseason(c);const gate=kboPostingEligibility(c);if(!gate.eligible)throw new RangeError('KBO_POSTING_NOT_ELIGIBLE');
+function openPostingWindow(c:KboCareer,revision:number):KboCareer {
  activeContract(c);const next=structuredClone(c),postingId=windowId(c);
  next.posting={windows:[...(next.posting?.windows??[]).filter(w=>w.postingId!==postingId),{postingId,seasonKey:c.world.seasonKey,requestedRevision:revision,clubId:c.protagonistClubId,status:'REQUESTED'}]};next.revision++;return next;
 }
 
-function postingEvent(c:KboCareer,id:'E63'|'E64',postingId:string,stage:string,postingDecision?:'APPROVED'|'DEFERRED'):EventInstance {
+/** Once per closed season. Deferred windows wait for the next season key. */
+export function requestKboPosting(c:KboCareer,revision:number):KboCareer {
+ assertKboCareerRevision(c,revision);offseason(c);const gate=kboPostingEligibility(c);if(!gate.eligible)throw new RangeError('KBO_POSTING_NOT_ELIGIBLE');
+ return openPostingWindow(c,revision);
+}
+
+function postingEvent(c:KboCareer,id:'E62'|'E63'|'E64',postingId:string,stage:string,postingDecision?:'APPROVED'|'DEFERRED'):EventInstance {
  const d=eventDefinition(id),day=c.days?.seasonKey===c.world.seasonKey?c.days.days.at(-1)?.day??0:0;
  return createWorldEvent({definitionId:id,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:d.evidenceDomain,fields:{playerSimulationKey:c.protagonistKey,postingWindowId:postingId,stage}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'SEASON_REVIEW',competitionKey:null,registrationKey:c.protagonistClubId,sourceRevision:c.revision+1},sourceSequence:c.events.length+1,worldDay:day,...(postingDecision?{postingDecision}:{})});
+}
+
+/** Offseason invite card when eligibility is clear. One E62 evidence key per season; direct requestKboPosting remains for non-UI paths. */
+export function openKboPostingInvite(c:KboCareer,revision:number):KboCareer {
+ assertKboCareerRevision(c,revision);offseason(c);const gate=kboPostingEligibility(c);if(!gate.eligible)throw new RangeError('KBO_POSTING_NOT_ELIGIBLE');
+ const postingId=windowId(c);if(c.events.some(e=>e.definitionId==='E62'&&e.evidence.fields.postingWindowId===postingId))throw new RangeError('KBO_POSTING_INVITE_OPEN');
+ const next=structuredClone(c),event=postingEvent(next,'E62',postingId,'INVITE');next.events=[...next.events,event];next.revision++;return next;
+}
+
+/** E62: REQUEST_POSTING opens the window; ACK declines without a window. */
+export function resolveKboPostingInvite(c:KboCareer,revision:number,input:{eventKey:string;eventVersion:number;command:string}):KboCareer {
+ assertKboCareerRevision(c,revision);offseason(c);const e=c.events.find(x=>x.eventKey===input.eventKey);
+ if(!e||e.definitionId!=='E62'||e.evidence.fields.playerSimulationKey!==c.protagonistKey||e.seasonKey!==c.world.seasonKey||e.evidence.fields.postingWindowId!==windowId(c))throw new RangeError('INVALID_KBO_POSTING_EVENT');
+ validateEvent(e);const ctx={worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:e.offeredChoices};
+ const picked=resolveEventChoice(e,input.eventVersion,input.command,null,ctx);
+ if(picked.domain){
+  if(input.command!=='REQUEST_POSTING')throw new RangeError('INVALID_CHOICE');
+  const gate=kboPostingEligibility({...c,events:c.events.filter(x=>x.eventKey!==e.eventKey)});
+  if(!gate.eligible)throw new RangeError('KBO_POSTING_NOT_ELIGIBLE');
+  const next=openPostingWindow(c,revision),live=next.events.find(x=>x.eventKey===e.eventKey)!;
+  const closed=completeEventDomain(live,picked.domain,JSON.stringify(['kbo-posting-request',windowId(c)]),ctx);
+  return {...next,events:next.events.map(x=>x.eventKey===e.eventKey?closed:x)};
+ }
+ if(!picked.event||picked.event.status==='OPEN')throw new RangeError('INVALID_CHOICE');
+ const next={...c,events:c.events.map(x=>x.eventKey===e.eventKey?picked.event:x)};next.revision++;return next;
 }
 
 /** Score = recent×0.6 + role×0.4. No redraw. Below 65 defers; the contract stays. Queues E63 with the sealed club decision. */
@@ -114,8 +143,36 @@ export function openKboPostingOffers(c:KboCareer,revision:number,issuedWorldDay:
 
 export function expireOrRejectKboPosting(c:KboCareer,revision:number,reason:'EXPIRED'|'REJECTED'):KboCareer {
  assertKboCareerRevision(c,revision);const open=current(c);if(!open||open.status!=='APPROVED'||!open.offers)throw new RangeError('KBO_POSTING_CANCEL_NOT_AVAILABLE');
- const before=JSON.stringify(c.world.contracts[c.protagonistKey]),next=structuredClone(c),w=next.posting!.windows.find(x=>x.postingId===open.postingId)!;w.status=reason;next.revision++;
+ const before=JSON.stringify(c.world.contracts[c.protagonistKey]),next=structuredClone(c),w=next.posting!.windows.find(x=>x.postingId===open.postingId)!;w.status=reason;
+ for(const e of next.events.filter(x=>x.status==='OPEN'&&['E63','E64'].includes(x.definitionId)&&x.evidence.fields.postingWindowId===open.postingId)){
+  const ctx={worldKey:next.world.worldKey,seasonKey:next.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:e.offeredChoices};
+  next.events=next.events.map(x=>x.eventKey===e.eventKey?cancelInvalidEvent(e,e.version,'POSTING_'+reason,ctx):x);
+ }
+ next.revision++;
  if(JSON.stringify(next.world.contracts[c.protagonistKey])!==before)throw new RangeError('KBO_POSTING_CONTRACT_MUTATED');return next;
+}
+
+/** E64 domain resume: ACCEPT_CAREER_OFFER seals one offer; REMAIN_ORIGINAL rejects the window. */
+export function resolveKboPostingOfferEvent(c:KboCareer,revision:number,input:{eventKey:string;eventVersion:number;command:string;offerKey?:string;worldDay?:number}):KboCareer {
+ assertKboCareerRevision(c,revision);offseason(c);const e=c.events.find(x=>x.eventKey===input.eventKey);
+ if(!e||e.definitionId!=='E64'||e.evidence.fields.playerSimulationKey!==c.protagonistKey||e.seasonKey!==c.world.seasonKey)throw new RangeError('INVALID_KBO_POSTING_EVENT');
+ validateEvent(e);const open=current(c);if(!open||open.postingId!==e.evidence.fields.postingWindowId||open.status!=='APPROVED'||!open.offers)throw new RangeError('KBO_POSTING_OFFERS_NOT_AVAILABLE');
+ const ctx={worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:e.offeredChoices};
+ const picked=resolveEventChoice(e,input.eventVersion,input.command,input.offerKey??null,ctx);if(!picked.domain)throw new RangeError('INVALID_CHOICE');
+ if(input.command==='ACCEPT_CAREER_OFFER'){
+  if(!input.offerKey||input.worldDay===undefined)throw new RangeError('KBO_POSTING_OFFER_REQUIRED');
+  const signed=acceptKboPostingOffer(c,revision,input.offerKey,input.worldDay);
+  const live=signed.events.find(x=>x.eventKey===e.eventKey);if(!live||live.status!=='RESOLVED'||live.resolution?.command!=='ACCEPT_CAREER_OFFER')throw new RangeError('KBO_POSTING_EVENT_NOT_CLOSED');
+  return signed;
+ }
+ if(input.command!=='REMAIN_ORIGINAL')throw new RangeError('INVALID_CHOICE');
+ const before=JSON.stringify(c.world.contracts[c.protagonistKey]),next=structuredClone(c),w=next.posting!.windows.find(x=>x.postingId===open.postingId)!;w.status='REJECTED';
+ const closed=completeBlockingEvent(e,input.eventVersion,{sourceEvidenceKey:e.evidenceKey,receiptKey:JSON.stringify(['kbo-posting-remain',open.postingId]),command:'REMAIN_ORIGINAL'},ctx);
+ next.events=next.events.map(x=>x.eventKey===e.eventKey?closed:x);
+ for(const leftover of next.events.filter(x=>x.status==='OPEN'&&x.definitionId==='E63'&&x.evidence.fields.postingWindowId===open.postingId)){
+  next.events=next.events.map(x=>x.eventKey===leftover.eventKey?cancelInvalidEvent(leftover,leftover.version,'POSTING_REJECTED',ctx):x);
+ }
+ next.revision++;if(JSON.stringify(next.world.contracts[c.protagonistKey])!==before)throw new RangeError('KBO_POSTING_CONTRACT_MUTATED');return next;
 }
 
 export function kboPostingFeeWon(offer:Pick<KboPostingOffer,'annualSalaryUsd'|'years'>){
@@ -139,7 +196,7 @@ export function acceptKboPostingOffer(c:KboCareer,revision:number,offerKey:strin
  const w=next.posting!.windows.find(x=>x.postingId===open.postingId)!;w.status='SIGNED';w.signedOfferKey=offerKey;w.compensationWon=compensationWon;w.returnRights=returnRights;w.sealedPlayer=sealedPlayer;w.sealedContract=sealedContract;w.offers=open.offers;
  for(const e of next.events.filter(x=>x.status==='OPEN'&&['E63','E64'].includes(x.definitionId)&&x.evidence.fields.postingWindowId===open.postingId)){
   const ctx={worldKey:next.world.worldKey,seasonKey:next.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:e.offeredChoices};
-  next.events=next.events.map(x=>x.eventKey===e.eventKey?cancelInvalidEvent(e,e.version,'POSTING_SIGNED',ctx):x);
+  next.events=next.events.map(x=>x.eventKey===e.eventKey?(e.definitionId==='E64'?completeBlockingEvent(e,e.version,{sourceEvidenceKey:e.evidenceKey,receiptKey:JSON.stringify(['kbo-posting-accept',open.postingId,offerKey]),command:'ACCEPT_CAREER_OFFER'},ctx):cancelInvalidEvent(e,e.version,'POSTING_SIGNED',ctx)):x);
  }
  next.phaseContext={phase:'ARCHIVED'};next.revision++;return next;
 }

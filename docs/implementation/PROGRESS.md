@@ -1,6 +1,10 @@
+## 최신 작업 — M2-EB 검증 완료
+
+[EB 상세](M2-EB-POSTING-EVENT-RESUME.md). E62 invite·E64 ACCEPT/REMAIN 도메인 재개. 집중 posting 4/4. 전체 check 766/764·Neon2·웹22/22. duration_ms 1011454. 증거 `evidence/M2-EB-check.log`. M2≈54%. PC 종료 금지.
+
 ## 최신 작업 — M2-EA 검증 완료
 
-[EA 상세](M2-EA-POSTING-EVENTS.md). E63 sealed decision 큐·E64 오픈·체결 시 취소. 집중 posting 6/6. 전체 check 765/763·Neon2·웹22/22·스모크. duration_ms 624903. 증거 `evidence/M2-EA-check.log`. M2≈53%(E62·ACCEPT/REMAIN·99잔여 미완). PC 종료 금지.
+[EA 상세](M2-EA-POSTING-EVENTS.md). E63 sealed decision 큐·E64 오픈·체결 시 취소. 전체 check 765/763·duration_ms 624903. 증거 `evidence/M2-EA-check.log`.
 
 ## 최신 작업 — M2-DZ 검증 완료
 
