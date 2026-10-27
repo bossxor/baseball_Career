@@ -1,0 +1,25 @@
+apps/api/src/auth.ts(4,67): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/src/career-views.ts(3,27): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/src/career-views.ts(5,10): error TS2305: Module '"@playball/engine"' has no exported member 'CLUB_SCREEN_IDS'.
+apps/api/src/club-shell.ts(1,10): error TS2305: Module '"@playball/engine"' has no exported member 'applyKboClubCommand'.
+apps/api/src/club-shell.ts(1,31): error TS2305: Module '"@playball/engine"' has no exported member 'kboClubScreen'.
+apps/api/src/club-shell.ts(1,51): error TS2305: Module '"@playball/engine"' has no exported member 'ClubScreenView'.
+apps/api/src/club-shell.ts(2,15): error TS2305: Module '"@playball/engine"' has no exported member 'KboClubGame'.
+apps/api/src/commands.ts(3,44): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/src/commands.ts(66,39): error TS7006: Parameter 'tx' implicitly has an 'any' type.
+apps/api/src/game-creations.ts(4,37): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/src/private-files.ts(5,41): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/src/restores.ts(5,51): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/src/saves.ts(3,27): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/src/saves.ts(55,21): error TS7006: Parameter 'row' implicitly has an 'any' type.
+apps/api/test/health.test.ts(3,30): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/test/m3-m9-fixes.test.ts(4,50): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/test/m3-neon.test.ts(14,8): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/test/m3-pipeline.test.ts(3,60): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/test/m3-v02-auth.test.ts(13,8): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/test/m4-ui-shell.test.ts(3,50): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/test/m5-ui-shell.test.ts(3,50): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/test/m6-club-shell.test.ts(3,50): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/test/m7-chronicle-export.test.ts(4,50): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/test/m7-private-files.test.ts(4,50): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
+apps/api/test/m7-restore.test.ts(3,50): error TS2307: Cannot find module '@playball/db' or its corresponding type declarations.
