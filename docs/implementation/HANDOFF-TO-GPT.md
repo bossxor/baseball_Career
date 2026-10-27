@@ -1,3 +1,9 @@
+# 최신 인계 — M2-DX 순수 국제 대진 reducer 검증 완료 (2026-10-27)
+
+[DX 상세](M2-DX-INTERNATIONAL-BRACKET.md). 전체 npm run check 종료0: 엔진/API 762개 중760통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1089016.2584, 원본443파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다. 집중10/10. 승인 참가국·균등 조편성·실제107경기·pendingGame/JSON/20회 동점21회 재개. 한국을 포함한 테스트 스냅샷은 통제55 fixture다. 실제28명/커리어 달력·건강·XP·혜택/복귀 원자 연결의 완료 증거가 아니다. DW39af8e3는 실제28명을 기존 AG batch에 연결한 상태다. P12 날짜는 max(11/15, 양 리그 PS 종료 다음날)·14일로 사용자 확정했다. 새 시간축 연결에 적용하고 기존 날짜는 보존한다. [다음 실제 연결](M2-INTERNATIONAL-INTEGRATION-PLAN.md)을 읽는다.
+
+사용자 최신 지시: 현재 변경까지만 커밋·푸시하고 이번 작업을 마친다. 새 기능은 시작하지 않는다. 다음 재개 후보: 공통 국제 시간축과 KBO/미국 후보/실제28명·부상/피로/XP 연결→해외18개월 DS보강→99도메인 감사/24경로/PF-D. world의 미국NPC 국적을 임의로 KOR로 처리하지 않는다. WBC/P12를 정규 day closer에 넣으면 정규 구간 밖 날짜라 실패하므로 날짜/시즌마감 선후를 함께 고친다. 기존 저장·seed/돈/등록/서비스 보존. 체크아웃 baseball-career-m2, own codex/m2-career-engine에만 커밋·푸시. fetch에서 main f7526c7을 확인했지만 M6/다른 브랜치 작업을 이 브랜치에 임의 병합하지 않았다. M2 완료/M6수정/PC종료 금지, V: 문서만 Copy-Item.
+
 # 최신 인계 — M2-DW 검증 완료 (2026-10-27)
 
 [DW 상세](M2-DW-NATIONAL-SELECTION.md). 전체 npm run check 종료0: 엔진/API 757개 중755통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1168717.4243, 원본441파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다. 집중25/25. 실제28명 점수/표본/봉인·E44/E45·한자리 충원·AG 실제기용과 E65 첫 MLB PA/BF를 연결했다. 사용자 결정: 당해 충분표본 최고리그, 없으면전년, WBC전년만. 국대 달력/worker/부상/피로/XP·WBC/OLY/P12·미국공통풀·99도메인·24경로·PF 잔여다. DS는 FREEZE/TERMINATE 플래그와 즉시완료 helper만 있고 실제18개월 해외복무 연결은 미완료임을 추가 점검했다. 완료선언 금지. M6 수정/PC 종료 금지. V: 문서만 Copy-Item.

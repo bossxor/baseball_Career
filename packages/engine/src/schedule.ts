@@ -29,6 +29,13 @@ export function createRoundRobinSchedule(input:ScheduleInput,repetitions:number)
   for(let cycle=0;cycle<repetitions;cycle++) for(const pairs of base) rounds.push(pairs.map(([a,b],i)=>((cycle+i)%2?[b,a]:[a,b]) as [string,string]));
   return materialize(input,rounds);
 }
+/** One meeting per pair, balanced venues; a virtual edge closes odd degrees without adding a matchday. */
+export function createSingleRoundRobinSchedule(input:ScheduleInput):ScheduledGame[] {
+ const ids=teams(input),base=pairRounds(ids);
+ if(ids.length%2)return materialize(input,balanceVenues(ids,base));
+ const virtual='__venue_balance__';if(ids.includes(virtual))throw new RangeError('INVALID_SCHEDULE_INPUT');
+ return materialize(input,balanceVenues([...ids,virtual],[...base,ids.map(id=>[id,virtual] as [string,string])]).slice(0,base.length));
+}
 /** Orient an even-degree multigraph along Euler circuits: in/out degrees are exactly equal. */
 function balanceVenues(ids:readonly string[],rounds:[string,string][][]):[string,string][][] {
   const edges=rounds.flat(),adj=new Map(ids.map(id=>[id,[] as number[]]));

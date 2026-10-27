@@ -1,0 +1,18 @@
+✔ national single round robin keeps one meeting, no double bookings and balanced venues for3/4/5/6 teams (2.3741ms)
+✔ approved presets and seed-balanced groups are fixed, unique and do not mutate the caller (23.8132ms)
+✔ all four brackets play actual international games through FINAL, including after Korean elimination; WBC has no bronze (1271.88ms)
+✔ midgame JSON resume equals continuous play; stale match input/results cannot advance a bracket (26.2945ms)
+✔ INT12 engine: prescribed international strikeouts preserve20-inning tie and resume inning21 without advancing the draw (181.8605ms)
+✔ 01: KBO720/team144/home72 and pair16/home8, no double booking or >6 consecutive (11.4923ms)
+✔ 43/HS: nine-team216/team48/home24, 54 rounds with one bye each (1.3886ms)
+✔ 13: MLB2430/team162/home81, every opponent5 plus exactly17 distinct extra opponents (32.3626ms)
+✔ 13: minor60/100/120/144 exact games and equal venues, fixed JSON schedule (43.3148ms)
+✔ schedule rejects duplicate/odd degree and validator catches count/venue/date corruption (6.4487ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2597.1143

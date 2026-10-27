@@ -167,3 +167,5 @@ export {resolveUsMajorDebut} from './us-debut.js';
 export {openKboNationalSelection,kboNationalSelectionView} from './kbo-national-selection.js';
 export {createNationalSelection} from './national-selection.js';
 export type {NationalCandidate,NationalSelectionSnapshot} from './national-selection.js';
+export {nationalNationPreset,createNationalBracket,nextNationalMatch,prepareNationalMatch,advanceNationalMatch,assertNationalBracket} from './national-bracket.js';
+export type {NationalBracket,NationalMatch,NationalMatchResult} from './national-bracket.js';

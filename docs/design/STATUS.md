@@ -2,6 +2,8 @@
 
 **M2 기준: 약50% 완료 · 약50% 남음.** 범위 가중 보수적 추정이며 위83%는 프로젝트 전체다.
 
+**M2-DX 검증 완료 (2026-10-27):** 4대회 대진 reducer·실제107경기 통제 fixture·pendingGame/21회 재개. 집중10/10. 전체 npm run check 종료0: 엔진/API 762개 중760통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1089016.2584, 원본443파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다. 커리어 시간축/실제28명·건강/XP 연결은 후속이며 M2 전체 약50% 유지. [DX](../implementation/M2-DX-INTERNATIONAL-BRACKET.md).
+
 **M2-DW 검증 완료 (2026-10-27):** 국가대표 실제28명·E44/E45·한자리 충원·AG 실제 기용·MLB 실제 데뷔E65. 집중25/25. 전체 npm run check 종료0: 엔진/API 757개 중755통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1168717.4243, 원본441파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다. [DW](../implementation/M2-DW-NATIONAL-SELECTION.md). 국제 달력/중단/부상/XP·99/24/PF 잔여, M2 완료 아님.
 
 **M2-DV 검증 완료 (2026-10-27):** 국가대표 사건5종·AG 공식 기록·투수 출장·체육요원 시즌 중복 정산 방지. 전체 npm run check 종료0: 엔진/API 741개 중739통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 804191.6272, 원본434파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다. [DV](../implementation/M2-DV-NATIONAL-INTEGRITY.md). E45/28명 AI·달력/중단 worker·국제 부상/XP와24경로·PF-D08~15 잔여. M2 전체 약50% 추정 유지.

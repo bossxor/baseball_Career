@@ -1,0 +1,89 @@
+{
+  "utc": "2026-10-27T06:43:57.492Z",
+  "head": "39af8e328542e1054010e2d47882286ee4992754",
+  "fullCheck": "PASS",
+  "result": {
+    "tests": 762,
+    "pass": 760,
+    "skip": 2,
+    "fail": 0,
+    "durationMs": 1089016.2584,
+    "webPass": 22,
+    "unchangedFiles": 443
+  },
+  "policy": "V documents only via Copy-Item; no V .git or runtime sync",
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "c9af3ad1cf7a572662c311c7cef602cfa56c8e4d6096429efd7e88df0613b800"
+    },
+    {
+      "path": "docs/design/20-INTERNATIONAL-COMPETITIONS.md",
+      "sha256": "0f079699f821e1ffba300c3e53764e3d5a30488d10761f8e1f53db3e5dcf7263"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "22205b9e7081e1171796a4eebd61b7b8f4346c1817e31b82b54b0760f6a82ae5"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "1f52f670fbf6f785661ae4a7e158f4a6ed3aaff939c83245c7ce013cae47cd7f"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "0e2bf9e037ecc6db3c2b9df3f40d1d13c753984fc04841b29208b75d9051e938"
+    },
+    {
+      "path": "docs/implementation/HANDOFF-TO-GPT.md",
+      "sha256": "1990b43a198534c96ae6dbfa38d0ed6359be3e36fd48aa7ea71b9ac03a03c948"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "0d51f72e8f56a834eab5cad1d60263624e3458b71e760cf9b53726bf6dec9cac"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "b0fef0a34dfc7563f76f8c9faa5f5858591ccc3ec775e3cd735011b6128c8465"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "ef3ad6303c69b22e29acd4fc6399df0037c08d8bfeb53f8172adb5f92b5717a9"
+    },
+    {
+      "path": "packages/engine/src/schedule.ts",
+      "sha256": "1521d3109405c0f90e826d955bd36b4b45dc4f4bdd7ac271ee29991b3b0a656b"
+    },
+    {
+      "path": "docs/implementation/M2-DX-INTERNATIONAL-BRACKET.md",
+      "sha256": "f8c1b439c1678ddfbf113112a998e53dca22f3236e5523bbce90e5389c12265d"
+    },
+    {
+      "path": "docs/implementation/M2-INTERNATIONAL-INTEGRATION-PLAN.md",
+      "sha256": "1f1b9b9134ad72520e2965d51adf1d1e47f7debb04846110ebe8b2bd1b96812d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DX-check.log",
+      "sha256": "a54581c38ef40e6ff669c9b4586ba3f897b9201315c600d65fd96210fc0e43df"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DX-focused.log",
+      "sha256": "4149e9f9d421038826d0c173faabb16cc90be6538fec7e2c60f18db49cb1ba38"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DX-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DX-source-freeze.json",
+      "sha256": "0a50f0fb628718e42b41904ac4c8d7bdd80146ac5ca15b48a4d7169232640a4d"
+    },
+    {
+      "path": "packages/engine/src/national-bracket.ts",
+      "sha256": "d0317a32600d91d8155815f98eccc60ef0d75e398b748fa70e1769a7671a5db0"
+    },
+    {
+      "path": "packages/engine/test/national-bracket.test.ts",
+      "sha256": "cbfe094f10f3b528fe170bcf4b45a750c627406f37a8aa02d4b5d9dbe1ed988d"
+    }
+  ]
+}
