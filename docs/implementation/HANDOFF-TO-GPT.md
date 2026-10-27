@@ -2,16 +2,18 @@
 
 작업 트리: `C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2`
 브랜치: `codex/m2-career-engine`
-이 문서의 직전 구현 커밋: `26f355714f8e65f1a208b1244497664f4946758b`
-이 문서를 넣은 커밋이 그 다음 팁이다. 푸시 뒤 `git rev-parse HEAD`와 `git status --short`로 확인할 것. 강제 푸시 없음. `V:\.git` 없음.
+구현 커밋: `26f355714f8e65f1a208b1244497664f4946758b`
+인계 본문 커밋: `ed7c17372ad491a90e567b42fc92bca456fa6acb`
+이 해시를 본문에 적은 커밋이 그 다음 팁이다. `git rev-parse HEAD`와 `git status --short`로 확인할 것. 강제 푸시 없음. `V:\.git` 없음.
 
 ## 1. 브랜치·커밋·푸시·작업 트리
 
 - 기준이었던 DN: `c95f2518409e5463e76331768d57725a656adf39`
 - main 병합: `25c7905` Merge remote-tracking branch `origin/main` into `codex/m2-career-engine`
-- DO 구현: `26f355714f8e65f1a208b1244497664f4946758b`
-- 원격: `origin/codex/m2-career-engine` 에 푸시한다. main에는 푸시하지 않는다.
-- 구현 커밋 시점 작업 트리는 깨끗했다. 인계 커밋 후 다시 확인한다.
+- DO 구현: `26f355714f8e65f1a208b1244497664f4946758b` 푸시됨
+- 인계 본문: `ed7c17372ad491a90e567b42fc92bca456fa6acb` 푸시됨
+- 원격: `origin/codex/m2-career-engine`. main에는 푸시하지 않았다.
+- 구현 커밋과 인계 본문 커밋의 작업 트리는 깨끗했다.
 
 ## 2. 병합한 main과 충돌
 
