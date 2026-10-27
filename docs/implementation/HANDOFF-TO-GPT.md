@@ -1,6 +1,6 @@
 # 최신 인계 — M2-ED 국제 부상 잔여 소모 (2026-10-27)
 
-[ED 상세](M2-ED-NATIONAL-INJURY-TICK.md). 브랜치 `codex/m2-career-engine`. 기능 팁은 이 커밋(EC `5b51579` 위).  
+[ED 상세](M2-ED-NATIONAL-INJURY-TICK.md). 브랜치 `codex/m2-career-engine`. 기능 팁 **`d9a48b6`**(EC `5b51579` 위).  
 `closeCareerNationalDay`가 한국 FINAL마다 `settleTeamGameHealth`(teamKey=`{tournament}:KOR`)로 remainingTeamGames 차감. KBO closer 미호출.  
 전체 check 767/765·Neon2·웹22/22. duration_ms 745981. 증거 `evidence/M2-ED-check.log`.  
 미연결: 정규 일마감 감사 확장·INTERNATIONAL phase·부상 교체 worker·미국 풀·99잔여(~대부분 NOT_AUDITED)·24경로/PF-D. M6·PC종료 금지. V: 문서만 Copy-Item.
