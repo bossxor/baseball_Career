@@ -1,3 +1,7 @@
+# 최신 상태 — M2-EG 검증 완료 (2026-10-27)
+
+[EG 상세](M2-EG-OVERSEAS-ENTRY-CONTINUITY.md). KBO→미국 병역 완료/비대상 보존·동일 세계/seed/다음 시즌 검사·연말 조회의 없는 고교 미국계약 접근 수정. 포스팅→캠프→실제 미국75경기·지급·JSON 재개 검사(과거7시즌은 통제 fixture). 전체 npm run check 종료0: 엔진/API 775개 중773통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 663675.2997, 동결 대상455파일 변경0(비문서 파일·기존 root/evidence 포함). 실제 Neon/브라우저/APK 검증은 아니다. M2약56% 유지·전체 미완료. 마이너 계약 만료 정책 질문 답변 대기.
+
 # 최신 상태 — M2-EF 검증 완료 (2026-10-27)
 
 [EF 상세](M2-EF-WBC-PROFESSIONAL-CALENDAR.md). 사용자 WBC 결정 반영: 신규 프로 calendar-2는 WBC 종료 뒤 개막, 구 calendar-1/고정해시/원장 보존. WBC47경기·21일→캠프→실제 KBO10경기, 신규 미국75경기와 legacy75 해시 별도 검사, E46 첫 FINAL 알림. 전체 npm run check 종료0: 엔진/API 774개 중772통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 672040.6242, 동결 대상455파일 변경0(비문서 파일·기존 root/evidence 포함). 실제 Neon/브라우저/APK 검증은 아니다. M2 전체 미완료. EE의 날짜 답변 대기 문구는 아래 과거 이력이다.

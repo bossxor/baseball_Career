@@ -54,12 +54,12 @@ DV의5개는 집중 검사16개에 포함된 도메인/자격·복귀/의무 알
 | E46 첫 국제무대 | REGISTRATION | ACK:ACK_EVENT | FOCUSED_VERIFIED_DV | [kbo-national.ts:72](../../packages/engine/src/kbo-national.ts) |
 | E47 메달과 다음 의무 | REGISTRATION | NAVIGATE:OPEN_SERVICE_ELIGIBILITY | FOCUSED_VERIFIED_DV | [kbo-national.ts:73](../../packages/engine/src/kbo-national.ts)<br>[kbo-progress.ts:92](../../packages/engine/src/kbo-progress.ts) |
 | E48 돌아오는 비행기 | REGISTRATION | DOMAIN:CONFIRM_NATIONAL_RETURN | FOCUSED_VERIFIED_DV | [kbo-national.ts:74](../../packages/engine/src/kbo-national.ts)<br>[kbo-progress.ts:92](../../packages/engine/src/kbo-progress.ts) |
-| E49 겨울의 병역계획 | DEADLINE | DOMAIN:APPLY_MILITARY_TEAM<br>DOMAIN:START_SERVICE<br>DOMAIN:DEFER_SERVICE | NOT_AUDITED | [kbo-military-planning.ts:15](../../packages/engine/src/kbo-military-planning.ts)<br>[kbo-national.ts:86](../../packages/engine/src/kbo-national.ts) |
-| E50 상무 선발 발표 | DEADLINE | DOMAIN:CONFIRM_MILITARY_RESULT | NOT_AUDITED | [kbo-military-state.ts:48](../../packages/engine/src/kbo-military-state.ts)<br>[kbo-offseason-exit.ts:45](../../packages/engine/src/kbo-offseason-exit.ts)<br>[kbo-renewal.ts:37](../../packages/engine/src/kbo-renewal.ts) |
-| E51 잠시 내려놓는 배트 | DEADLINE | DOMAIN:ADVANCE_SERVICE | NOT_AUDITED | [kbo-military-events.ts:20](../../packages/engine/src/kbo-military-events.ts) |
-| E52 부대의 그라운드 | DEADLINE | DOMAIN:CHOOSE_FOCUS<br>DOMAIN:ADVANCE_SERVICE | NOT_AUDITED | [kbo-military-events.ts:20](../../packages/engine/src/kbo-military-events.ts) |
-| E53 다시 받는 유니폼 | DEADLINE | DOMAIN:CONFIRM_SERVICE_RETURN | NOT_AUDITED | [kbo-military-events.ts:20](../../packages/engine/src/kbo-military-events.ts) |
-| E54 남은 마지막 겨울 | DEADLINE | DOMAIN:APPLY_MILITARY_TEAM<br>DOMAIN:START_SERVICE | NOT_AUDITED | [kbo-military-planning.ts:15](../../packages/engine/src/kbo-military-planning.ts)<br>[kbo-national.ts:86](../../packages/engine/src/kbo-national.ts) |
+| E49 겨울의 병역계획 | DEADLINE | DOMAIN:APPLY_MILITARY_TEAM<br>DOMAIN:START_SERVICE<br>DOMAIN:DEFER_SERVICE | PARTIAL_ENGINE_DOMAIN_REVIEWED_EG | [kbo-military-planning.ts:15](../../packages/engine/src/kbo-military-planning.ts)<br>[kbo-national.ts:86](../../packages/engine/src/kbo-national.ts) |
+| E50 상무 선발 발표 | DEADLINE | DOMAIN:CONFIRM_MILITARY_RESULT | PARTIAL_ENGINE_DOMAIN_REVIEWED_EG | [kbo-military-state.ts:48](../../packages/engine/src/kbo-military-state.ts)<br>[kbo-offseason-exit.ts:45](../../packages/engine/src/kbo-offseason-exit.ts)<br>[kbo-renewal.ts:37](../../packages/engine/src/kbo-renewal.ts) |
+| E51 잠시 내려놓는 배트 | DEADLINE | DOMAIN:ADVANCE_SERVICE | PARTIAL_ENGINE_DOMAIN_REVIEWED_EG | [kbo-military-events.ts:20](../../packages/engine/src/kbo-military-events.ts) |
+| E52 부대의 그라운드 | DEADLINE | DOMAIN:CHOOSE_FOCUS<br>DOMAIN:ADVANCE_SERVICE | PARTIAL_ENGINE_DOMAIN_REVIEWED_EG | [kbo-military-events.ts:20](../../packages/engine/src/kbo-military-events.ts) |
+| E53 다시 받는 유니폼 | DEADLINE | DOMAIN:CONFIRM_SERVICE_RETURN | PARTIAL_ENGINE_DOMAIN_REVIEWED_EG | [kbo-military-events.ts:20](../../packages/engine/src/kbo-military-events.ts) |
+| E54 남은 마지막 겨울 | DEADLINE | DOMAIN:APPLY_MILITARY_TEAM<br>DOMAIN:START_SERVICE | PARTIAL_ENGINE_DOMAIN_REVIEWED_EG | [kbo-military-planning.ts:15](../../packages/engine/src/kbo-military-planning.ts)<br>[kbo-national.ts:86](../../packages/engine/src/kbo-national.ts) |
 | E55 계속되는 활동의무 | DEADLINE | ACK:ACK_SERVICE_OBLIGATION | FOCUSED_VERIFIED_DV | [kbo-national.ts:125](../../packages/engine/src/kbo-national.ts) |
 | E56 졸업 뒤 다음 무대 | ROUTE | NAVIGATE:OPEN_ROUTE | NOT_AUDITED |  |
 | E57 바다 건너의 계약서 | ROUTE | DOMAIN:ACCEPT_CAREER_OFFER<br>NAVIGATE:BACK_TO_ROUTE | NOT_AUDITED |  |
@@ -105,3 +105,7 @@ DV의5개는 집중 검사16개에 포함된 도메인/자격·복귀/의무 알
 | E97 그라운드 곁의 두 번째 삶 | FORM | DOMAIN:HIRE_RETIRED_STAFF<br>ACK:ACK_EVENT | NOT_AUDITED |  |
 | E98 한 타석씩 남길 경기 | PRESENTATION | NAVIGATE:WATCH_IMPORTANT_GAME<br>ACK:SKIP_COMMENTARY | NOT_AUDITED |  |
 | E99 한 장에 남긴 시간 | NOTICE | NAVIGATE:OPEN_CHRONICLE<br>ACK:ACK_EVENT | NOT_AUDITED |  |
+
+## EG 추가 검수 — E49~E54 (전체 EG gate 통과)
+
+기존 소스/호출자/테스트를 직접 대조했다. 문자열 탐색·ACK만으로 완료 처리하지 않는다. E49/E54는 명시 오프시즌 입구이며 자동 초청/UI 증거가 아니다. E50은 실제 고정 선발·지원→상무 프로그램/대여를 처리한다. E51/E52는 이미 등록된 복무 블록을 확인하고 E52의4집중 변경은 기존 명령을 사용한다. E53은 실제6월30일 일마감에서 원구단2군·미지급 원금을 복원하고 선택 후 다음 날 진행한다. 상세 trigger/effect/testPaths/limits는 JSON domainReview다. 해당6행은 PARTIAL_ENGINE_DOMAIN_REVIEWED_EG로 구분한다. 이 검수로 native18개월/UI 완료로 승격하지 않는다.

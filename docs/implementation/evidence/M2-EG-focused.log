@@ -1,0 +1,26 @@
+✔ overseas FA needs nine seasons, pays no club fee, and releases domestic rights (927.5768ms)
+✔ posted player can return to the original club without paying a second posting fee (645.8018ms)
+✔ posting needs seven closed registered seasons, completed military and an offseason contract (737.058ms)
+✔ club score defers below 65 without touching the contract, and approval opens a fixed offer set (392.2313ms)
+✔ accept pays the club fee once, seals return rights, removes the player and never credits player income (367.1561ms)
+✔ E62 invite can request or ACK, and E64 remain keeps the contract (496.1526ms)
+M2-EG actual US opening (prior KBO service rows controlled): {"source":"KBO_TRANSFER","military":"COMPLETED","year":"2043","games":75,"paidUsd":38297}
+✔ sealed posting activates a US root once, funds one salary, and keeps return rights without a signing bonus (11403.1368ms)
+✔ KBO overseas activation keeps nonapplicable service and refuses unresolved status without touching source or budgets (2359.6183ms)
+M2-DK year continuation proof: {"from":"2030","to":"2031","nativeNewSeasonGames":75,"oldRecords":9038,"schema":3,"signingBonuses":1}
+M2-DK controlled minor term proof: {"seasons":6,"lastYear":"2035","age":24,"salaryUsd":180000,"signingBonuses":1,"seventhYear":"CONTRACT_DECISION_REQUIRED","native":false}
+✔ annual stage ages survivors once, retires45 NPCs through Rookie supply, preserves history and has no active/root or salary write (8016.213ms)
+✔ readiness is private-state-free and blocks unfinished seasons, pitch reservations and age28 military deadline (3212.5655ms)
+✔ stale revisions and altered final playoff records fail before changing the source or producing a new world (2610.9414ms)
+✔ an already-closed health year is not mutated while an injured retiring NPC leaves the staged world (1413.6025ms)
+✔ minor year activation preserves legacy input, every official record and one signing bonus; the new season plays a native first date (16422.0363ms)
+✔ annual funding and new history tampering fail without a second budget credit or source mutation (2440.0674ms)
+✔ six controlled minor seasons preserve the history chain and stop before a seventh unapproved contract year (22285.4898ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57232.2744

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "INCOMPLETE_IMPLEMENTATION_AUDIT",
-  "baseline": "088597d + M2-EF verified worktree",
+  "baseline": "5433f78 + M2-EG verified worktree",
   "items": [
     {
       "id": "E01",
@@ -1313,8 +1313,8 @@
           "dispatchClass": "DOMAIN"
         }
       ],
-      "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "scope": "ENGINE_REVIEWED_WITH_DECLARED_LIMITS",
+      "verification": "PARTIAL_ENGINE_DOMAIN_REVIEWED_EG",
       "references": [
         {
           "path": "packages/engine/src/kbo-active-service.ts",
@@ -1341,7 +1341,20 @@
           "line": 91
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent.",
+      "domainReview": {
+        "status": "SOURCE_AND_EXISTING_TESTS_REVIEWED_FULL_EG_PASS",
+        "trigger": "Explicit openKboMilitaryPlan at closed offseason, unresolved age19..26; not automatic UI",
+        "effect": "APPLY calls applyToSangmu and creates fixed E50; START_SERVICE completes planning and navigates S26, does NOT enlist; DEFER keeps unresolved and year guard",
+        "tests": [
+          "kbo-military-planning.test.ts"
+        ],
+        "limits": "Controlled reviewed-season source. No automatic offseason clock/UI proof.",
+        "testPaths": [
+          "packages/engine/test/kbo-military-planning.test.ts"
+        ],
+        "evidence": "docs/implementation/evidence/M2-EG-check.log"
+      }
     },
     {
       "id": "E50",
@@ -1353,8 +1366,8 @@
           "dispatchClass": "DOMAIN"
         }
       ],
-      "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "scope": "ENGINE_REVIEWED_WITH_DECLARED_LIMITS",
+      "verification": "PARTIAL_ENGINE_DOMAIN_REVIEWED_EG",
       "references": [
         {
           "path": "packages/engine/src/kbo-military-state.ts",
@@ -1373,7 +1386,22 @@
           "line": 37
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent.",
+      "domainReview": {
+        "status": "SOURCE_AND_EXISTING_TESTS_REVIEWED_FULL_EG_PASS",
+        "trigger": "applyToSangmu seals actual selected cohort and one application per year",
+        "effect": "resolveSangmuApplication validates accepted/declined/rejected answers; ENLIST builds18-month SPORTS program and loan; other answers unresolved. Actual contract answer required.",
+        "tests": [
+          "kbo-military-state.test.ts",
+          "kbo-military-planning.test.ts"
+        ],
+        "limits": "Worker/domain tested with controlled annual history; not native18-month career.",
+        "testPaths": [
+          "packages/engine/test/kbo-military-state.test.ts",
+          "packages/engine/test/kbo-military-planning.test.ts"
+        ],
+        "evidence": "docs/implementation/evidence/M2-EG-check.log"
+      }
     },
     {
       "id": "E51",
@@ -1385,8 +1413,8 @@
           "dispatchClass": "DOMAIN"
         }
       ],
-      "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "scope": "ENGINE_REVIEWED_WITH_DECLARED_LIMITS",
+      "verification": "PARTIAL_ENGINE_DOMAIN_REVIEWED_EG",
       "references": [
         {
           "path": "packages/engine/src/kbo-military-events.ts",
@@ -1413,7 +1441,20 @@
           "line": 79
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent.",
+      "domainReview": {
+        "status": "SOURCE_AND_EXISTING_TESTS_REVIEWED_FULL_EG_PASS",
+        "trigger": "startNextKboSeason -> queueKboMilitaryFirstBlock for SERVING_ACTIVE first block",
+        "effect": "First-block notice confirms existing ACTIVE program; actual enlistment is confirmKboActiveService, not the notice ACK. Actual calendar keeps zero official registration/pay/growth.",
+        "tests": [
+          "kbo-active-service.test.ts"
+        ],
+        "limits": "Controlled closed-season prefix; actual opening and June30 worker segments only, not native two full seasons.",
+        "testPaths": [
+          "packages/engine/test/kbo-active-service.test.ts"
+        ],
+        "evidence": "docs/implementation/evidence/M2-EG-check.log"
+      }
     },
     {
       "id": "E52",
@@ -1429,8 +1470,8 @@
           "dispatchClass": "DOMAIN"
         }
       ],
-      "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "scope": "ENGINE_REVIEWED_WITH_DECLARED_LIMITS",
+      "verification": "PARTIAL_ENGINE_DOMAIN_REVIEWED_EG",
       "references": [
         {
           "path": "packages/engine/src/kbo-military-events.ts",
@@ -1457,7 +1498,22 @@
           "line": 79
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent.",
+      "domainReview": {
+        "status": "SOURCE_AND_EXISTING_TESTS_REVIEWED_FULL_EG_PASS",
+        "trigger": "startNextKboSeason -> queueKboMilitaryFirstBlock for SERVING_SPORTS first block",
+        "effect": "CHOOSE_FOCUS uses setKboPreseasonFocus (four abilities) without instant growth; ADVANCE confirms existing program. Military Futures registration/games use actual cohort worker.",
+        "tests": [
+          "kbo-military-events.test.ts",
+          "kbo-military-state.test.ts"
+        ],
+        "limits": "Controlled earlier season rows; full native18-month continuation not certified.",
+        "testPaths": [
+          "packages/engine/test/kbo-military-events.test.ts",
+          "packages/engine/test/kbo-military-state.test.ts"
+        ],
+        "evidence": "docs/implementation/evidence/M2-EG-check.log"
+      }
     },
     {
       "id": "E53",
@@ -1469,8 +1525,8 @@
           "dispatchClass": "DOMAIN"
         }
       ],
-      "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "scope": "ENGINE_REVIEWED_WITH_DECLARED_LIMITS",
+      "verification": "PARTIAL_ENGINE_DOMAIN_REVIEWED_EG",
       "references": [
         {
           "path": "packages/engine/src/kbo-military-events.ts",
@@ -1501,7 +1557,22 @@
           "line": 79
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent.",
+      "domainReview": {
+        "status": "SOURCE_AND_EXISTING_TESTS_REVIEWED_FULL_EG_PASS",
+        "trigger": "advanceKboCareer day-close -> closeKboMilitaryCalendarDay at sealed June30 after actual daily FINAL",
+        "effect": "Completes second block once, resumes same unpaid principal, restores original club Futures registration, queues blocking E53; CONFIRM_SERVICE_RETURN validates restored rights/slot before resume.",
+        "tests": [
+          "kbo-military-events.test.ts",
+          "kbo-active-service.test.ts"
+        ],
+        "limits": "Earlier dates controlled-prior-date; actual June30 and following worker games are tested. No native2-season certificate.",
+        "testPaths": [
+          "packages/engine/test/kbo-military-events.test.ts",
+          "packages/engine/test/kbo-active-service.test.ts"
+        ],
+        "evidence": "docs/implementation/evidence/M2-EG-check.log"
+      }
     },
     {
       "id": "E54",
@@ -1517,8 +1588,8 @@
           "dispatchClass": "DOMAIN"
         }
       ],
-      "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "scope": "ENGINE_REVIEWED_WITH_DECLARED_LIMITS",
+      "verification": "PARTIAL_ENGINE_DOMAIN_REVIEWED_EG",
       "references": [
         {
           "path": "packages/engine/src/kbo-military-planning.ts",
@@ -1541,7 +1612,20 @@
           "line": 91
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent.",
+      "domainReview": {
+        "status": "SOURCE_AND_EXISTING_TESTS_REVIEWED_FULL_EG_PASS",
+        "trigger": "Explicit openKboMilitaryPlan at unresolved age27+, same offseason identity",
+        "effect": "No DEFER option; over-age Sangmu disabled; START_SERVICE navigates review only, mandatory next-year guard remains until explicit enlistment.",
+        "tests": [
+          "kbo-military-planning.test.ts"
+        ],
+        "limits": "Controlled reviewed-season source; not automatic event clock/UI proof.",
+        "testPaths": [
+          "packages/engine/test/kbo-military-planning.test.ts"
+        ],
+        "evidence": "docs/implementation/evidence/M2-EG-check.log"
+      }
     },
     {
       "id": "E55",

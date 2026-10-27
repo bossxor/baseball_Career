@@ -1,0 +1,56 @@
+✖ sealed posting activates a US root once, funds one salary, and keeps return rights without a signing bonus (535.9529ms)
+✖ KBO overseas activation keeps nonapplicable service and refuses unresolved status without touching source or budgets (468.0045ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1717.8486
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-us-activation.test.ts:44:1
+✖ sealed posting activates a US root once, funds one salary, and keeps return rights without a signing bonus (535.9529ms)
+  AssertionError [ERR_ASSERTION]: resolved military status must survive overseas activation
+  + actual - expected
+  
+  + 'UNRESOLVED'
+  - 'COMPLETED'
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\kbo-us-activation.test.ts:50:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'UNRESOLVED',
+    expected: 'COMPLETED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\kbo-us-activation.test.ts:57:1
+✖ KBO overseas activation keeps nonapplicable service and refuses unresolved status without touching source or budgets (468.0045ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'UNRESOLVED'
+  - 'NOT_APPLICABLE'
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\kbo-us-activation.test.ts:61:81)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'UNRESOLVED',
+    expected: 'NOT_APPLICABLE',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

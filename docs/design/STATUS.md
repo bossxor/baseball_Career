@@ -2,6 +2,8 @@
 
 **M2 기준: 약56% 완료 · 약44% 남음.** 범위 가중 보수적 추정이며 위84%는 프로젝트 전체다. EE 국제 단계 뒤 EF의 WBC 새 시간축·첫 FINAL을 검증했다. 전체 정규·PS 감사/미국풀/99잔여/24는 남아 범위 가중 추정이며 실행 경로 전체 완료를 뜻하지 않는다.
 
+**M2-EG 검증 완료 (2026-10-27):** 해외 진입의 병역 초기화·세계 경계·연말 조회 오류 수정, 실제 미국75경기/지급 검사. 전체 npm run check 종료0: 엔진/API 775개 중773통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 663675.2997, 동결 대상455파일 변경0(비문서 파일·기존 root/evidence 포함). 실제 Neon/브라우저/APK 검증은 아니다. [EG](../implementation/M2-EG-OVERSEAS-ENTRY-CONTINUITY.md). 계약 만료 정책 답변 대기·완전 연도 이행은 후속.
+
 **M2-EF 검증 완료 (2026-10-27):** WBC 종료 뒤 새 프로 개막·calendar-1 보존·복귀 급여 예측 버전·E46 첫 FINAL. 전체 npm run check 종료0: 엔진/API 774개 중772통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 672040.6242, 동결 대상455파일 변경0(비문서 파일·기존 root/evidence 포함). 실제 Neon/브라우저/APK 검증은 아니다. [EF](../implementation/M2-EF-WBC-PROFESSIONAL-CALENDAR.md). 아래 EE의 WBC 답변 대기는 당시 이력이다.
 
 **M2-EE 검증 완료 (2026-10-27):** 국제 단계·연속 날짜/건강/정규 복귀 감사·XP 참조 공유 수정. 전체 npm run check 종료0: 엔진/API 769개 중767통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 633942.4905, 동결 대상454파일 변경0(비문서 파일·기존 root/evidence 포함). 실제 Neon/브라우저/APK 검증은 아니다. [EE](../implementation/M2-EE-NATIONAL-PHASE-DAY-AUDIT.md). WBC 날짜 질문 대기·국제/미국풀/99/24 잔여.

@@ -30,7 +30,9 @@ export function usYearTransitionReadiness(c:UsCareer){
  if(Object.values(c.world.repertoires).some(b=>b.ledger.baseReservedUnits!==0||b.learning&&b.learning.quarters.length!==4))blockers.push('PITCH_LEARNING_NOT_SETTLED');
  if(nextAge>=c.military.deadlineAge&&c.military.status==='UNRESOLVED')blockers.push('MILITARY_PLAN_REQUIRED');
  if(nextAge>45)blockers.push('MAX_AGE_REACHED');
- const signing=c.amateurHistory.usRecruitment!.program.signing!,controlSeasonsUsed=Number(c.world.seasonKey)-Number(signing.seasonKey)+1;
+ const originSeason=c.kboTransfer?String(Number(c.kboTransfer.kboSeasonKey)+1):c.amateurHistory.usRecruitment?.program.signing?.seasonKey;
+ if(!originSeason||!/^\d{4}$/.test(originSeason)||Number(originSeason)>Number(c.world.seasonKey))throw new RangeError('INVALID_US_CONTRACT_ORIGIN');
+ const controlSeasonsUsed=Number(c.world.seasonKey)-Number(originSeason)+1;
  if(c.contract.type==='US_MAJOR'||controlSeasonsUsed>=c.contract.controlSeasons)blockers.push('CONTRACT_DECISION_REQUIRED');
  return {ready:blockers.length===0,blockers,targetSeasonKey,nextAge,mlbService:mlbServiceTime(c.records,c.health,c.protagonistKey),controlSeasonsUsed,remainingMinorControlSeasons:Math.max(0,c.contract.controlSeasons-controlSeasonsUsed)};
 }

@@ -1,0 +1,105 @@
+{
+  "utc": "2026-10-27T11:29:40.116Z",
+  "head": "5433f780e3d508e1cb6b5661e2b6b93e9bc0ae2c",
+  "fullCheck": "PASS",
+  "result": {
+    "tests": 775,
+    "pass": 773,
+    "skip": 2,
+    "fail": 0,
+    "durationMs": 663675.2997,
+    "webPass": 22,
+    "unchangedFiles": 455
+  },
+  "policy": "V documents only via Copy-Item; no V .git or runtime sync",
+  "files": [
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "d8052d94b36a08712c86a7c24c38d46346ccce0797290b4e63b031d1ad495ba2"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "f7239a7131da385e986ecaa2d883aed481843360653318204ba56fe8bfebc7b0"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "b34bb9f138f4346ddea341cfa656a51b0842b41104cabb9abf43817d36dabdf6"
+    },
+    {
+      "path": "docs/implementation/HANDOFF-TO-GPT.md",
+      "sha256": "329be56bed9b9bc27b9438256c1287e7978b88ebe77606d9b4538c299282393f"
+    },
+    {
+      "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.json",
+      "sha256": "f79ccf4665a1c4446762a3ec92c116615411ff91c5b1820d1accdfc0b6424be0"
+    },
+    {
+      "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.md",
+      "sha256": "e1f8838706b4d55e13b7afef785560883fd24793d23eeee7d1d333e8d6773d06"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "28ca7268c5e0fa32b2c785b6040ad251afaf1725a3b0512bf425689b71d5378b"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "f86fbbc767f29d17f32f67b52078cc1791a92379aff1e65b1b2384d6dd303432"
+    },
+    {
+      "path": "packages/engine/src/kbo-us-activation.ts",
+      "sha256": "64aec1c195ff778ad283472376fd7d1e0d87faac6f1dd08bb739c61f60598aa7"
+    },
+    {
+      "path": "packages/engine/src/us-year-transition.ts",
+      "sha256": "e4b9912ea7eb4a4dd59f593d02651a38b0f8c11c4ee02ed21f64f473886cf8b5"
+    },
+    {
+      "path": "packages/engine/test/kbo-us-activation.test.ts",
+      "sha256": "f84d83af6b19fe1d044db6cc2df4e0ff08cb8eb38c30858cffc0c75240e0d89f"
+    },
+    {
+      "path": "docs/implementation/M2-EG-OVERSEAS-ENTRY-CONTINUITY.md",
+      "sha256": "fdee7ba93e58ffa47c04e8e500bc3d5ec5b1486eaeb6b7c7785e14f885563023"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EG-check.log",
+      "sha256": "a99c117550fe82bf6b6da0a106992a8102812a7f809c2ad13e2cbe38620ce1f6"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EG-fixture-before-failure.log",
+      "sha256": "1a0780d6474a9750eb58bb90f1dad175ed4b5ae6d813cabc0981f774d5f0388d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EG-fixture-offers-failure.log",
+      "sha256": "5e93f4d63dedec08410d69d9a2e547e9102ed252d6f9b3c081efa48f17a42c29"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EG-focused.log",
+      "sha256": "95f91fd64a4d6e561a78d0f920422635ac29071d4a72c8381a4d669716f2e1d9"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EG-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EG-military-before-failure.log",
+      "sha256": "60940bd727cfd3823b1489fa63e052ce614a661b047a514cac49c8233e4a0434"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EG-origin-before-failure.log",
+      "sha256": "a7336fa1d4707f94b6eb443bf558aa031aab447b4c84a650f6d694979ee1302b"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EG-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EG-source-freeze.json",
+      "sha256": "c6edda426a186985834edd88ac5fdbeeabf92d95828647128bdde7d1b0f4b04d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EG-types.log",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    }
+  ]
+}
