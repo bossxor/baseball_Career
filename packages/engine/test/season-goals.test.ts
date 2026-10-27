@@ -77,6 +77,12 @@ test('school goal expiry is committed before sealing the year-end receipt and su
  assertKboAmateurYearEnd(c.amateurHistory);assert.equal(c.goals!.seasons[c.amateurHistory.world.seasonKey]!.slots[0]!.status,'EXPIRED');assert.deepEqual(c.goals,c.amateurHistory.goals);assert.equal(c.goals!.rewards.length,0);
 });
 
+test('serving Sports goal registration seals SANGMU/Futures instead of the original club; Active has no playable goal choices',()=>{
+ const c=enteredKboCareer();c.military={status:'SERVING_SPORTS',applications:[]};const sports=setCareerSeasonGoals(c,c.revision,['G01']),s=sports.goals!.seasons[c.world.seasonKey]!;
+ assert.equal(s.teamKey,'SANGMU');assert.equal(s.leagueKey,'FUTURES');assert.equal(s.slots[0]!.teamKey,'SANGMU');assert.equal(s.slots[0]!.scope.leagueKey,'FUTURES');assert.equal(careerSeasonGoalsView(sports).availabilityReason,null);
+ const active=structuredClone(c);active.military={status:'SERVING_ACTIVE',applications:[]};assert.deepEqual(careerSeasonGoalsView(active).definitions,[]);assert.equal(careerSeasonGoalsView(active).availabilityReason,'SERVING_ACTIVE');assert.throws(()=>setCareerSeasonGoals(active,active.revision,['G01']),/NOT_ELIGIBLE/);assert.equal(setCareerSeasonGoals(active,active.revision,[]).goals!.rewards.length,0);
+});
+
 test('G08 requires evidenced injury, actual recovery and a later official appearance, not a return button',()=>{
  const base=prepared(),key=base.protagonistKey,old=Object.values(base.records.games)[0]!;base.health.games=[...base.health.games,{evidence:{gameKey:old.gameKey,teamKey:Object.keys(old.teams)[0]!,seasonKey:old.scope.seasonKey,day:old.worldDay,roster:[key],appearances:[]},result:{injured:[key],recovered:[]}}];base.health.injuries[key]={severity:'MILD',remainingTeamGames:1,diagnosedGameKey:old.gameKey,seasonKey:old.scope.seasonKey};const selected=setCareerSeasonGoals(base,base.revision,['G08']);let c=startUsRegularSeason(selected,selected.revision);delete c.health.injuries[key];c=refreshCareerSeasonGoals(c);assert.equal(c.goals!.rewards.length,0);
  const recovery=row(c,80);delete recovery.batting[key];delete recovery.batterSplits[key];c.health.games=[...c.health.games,{evidence:{gameKey:recovery.gameKey,teamKey:c.registration.level+':'+c.protagonistOrganizationId,seasonKey:c.world.seasonKey,day:80,roster:[key],appearances:[]},result:{injured:[],recovered:[key]}}];c=refreshCareerSeasonGoals(c);assert.equal(c.goals!.rewards.length,0);row(c,81,{BB:1});c=refreshCareerSeasonGoals(c);assert.equal(c.goals!.seasons[c.world.seasonKey]!.slots[0]!.status,'COMPLETED');

@@ -1,0 +1,111 @@
+{
+  "utc": "2026-10-27T01:06:03.218Z",
+  "status": "CHECK_RUNNING",
+  "preserved": "V status M6-M report, no M6 runtime imported",
+  "files": [
+    {
+      "path": "docs/design/13-MLB-CAREER.md",
+      "after": "050ab2966c37be88f437fa3ed062418612d34f025d73f3d1270300bf34d050ce"
+    },
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "after": "c228bdbe93ec2d3bcda900ae28aaf802aeb529e0d09873d401bc4fea7c2f121c"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "after": "5feedeac6bc07a588bdea5626401e3db455f65aa0aa747480b6998778d181313"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "after": "58342f6de56a1be469283a16757a47118c3e585b8f96059b598c2720faca970d"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "after": "9627e36572a9713cdc025df87ae0bf75f42dc8bc61cf12986f0062673a12fe2b"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "after": "55d3e80ce67d5fb2f42af09e0dbd632fcca51f5dc4aeacc09ce56c5b9659ee07"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "after": "b8fc5fe6666efc8205a37074de84fd20cbb58d1115a5941a910734847902985b"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "after": "e354ceb909dee379ec470c0c8bf01bd968dd382991a394ddb44a6a26cb802a34"
+    },
+    {
+      "path": "packages/engine/src/season-goals.ts",
+      "after": "52ce0a506206598d77d377ed7b785453ec7defc727d27f13e1f396b63e1da199"
+    },
+    {
+      "path": "packages/engine/src/us-career-entry.ts",
+      "after": "83be366a4f74759a9fb4fcb0c0253ee611dc6ae0687572382324feab5920c45a"
+    },
+    {
+      "path": "packages/engine/src/us-levels.ts",
+      "after": "a1f711258febaa25cad4d9419d2b337ab9f3f269db34569b3b171dac7dc994d5"
+    },
+    {
+      "path": "packages/engine/src/us-preseason.ts",
+      "after": "3db59a738527ce9650f8c4e8c0b6cbaac9de2010e534181982cab960a9e96d63"
+    },
+    {
+      "path": "packages/engine/src/us-season.ts",
+      "after": "de07dfadb3e6b38788bdfe3586c7cca98c90295525662fcb19371268cabeedad"
+    },
+    {
+      "path": "packages/engine/src/us-year-transition.ts",
+      "after": "c9e4bb9f1cdf789e3125bb564f17d00477becdf78ba1e858f1a3c6ad22b5ef88"
+    },
+    {
+      "path": "packages/engine/test/season-goals.test.ts",
+      "after": "faef506175f41f22632ac812362f1ff25f9ddb79b2f563434d88545a270aa2e3"
+    },
+    {
+      "path": "packages/engine/test/us-finished-fixture.ts",
+      "after": "7337dbe1a8ef88f747fd4d60b1430109d440abb8c4b766ff0024e1cc20fc458e"
+    },
+    {
+      "path": "packages/engine/test/us-levels-windows.test.ts",
+      "after": "b48d02cc0ad7c9f96f4029c0a601ef4c07095ab31a82a268c293fca66ae27c7b"
+    },
+    {
+      "path": "packages/engine/test/us-reviewed-fixture.ts",
+      "after": "f8fc4d7b304465d53767f7e9f959c666e19d4f56bfa7237128584ad00dedd943"
+    },
+    {
+      "path": "docs/implementation/M2-DN-MAJOR-RENEWAL.md",
+      "after": "03e55443ff2c04aa869c1e2fa8a86a228632cd33f4332d9554e6d36002f1ac6c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DN-source-freeze.json",
+      "after": "932e74e9add0079782b76e3142cb7598d09cfe4c99832c74c37d63e1d7cc9398"
+    },
+    {
+      "path": "packages/engine/src/us-contract-value.ts",
+      "after": "8586fc058d071c4dea5692259722984d784a81cfd7273b38e6eed0471661d0c0"
+    },
+    {
+      "path": "packages/engine/src/us-major-history.ts",
+      "after": "dfc4963fd64009d6b61e91ad25b4fc24bd26a7346ce51b0fbf97c7512d19609a"
+    },
+    {
+      "path": "packages/engine/src/us-major-renewal.ts",
+      "after": "07f6a7f8f9f1a81f7deb4a51e60c35c7fac178f60b6481be18f71fe81095caac"
+    },
+    {
+      "path": "packages/engine/test/us-level-fixture.ts",
+      "after": "a7ba1348c17b77a920426ec307e321e449dd6c9446aa29ce185b428310b7f2a9"
+    },
+    {
+      "path": "packages/engine/test/us-major-fixture.ts",
+      "after": "bb0a1f50345898c400b9bc1a95fc308863403d2483a1fde9f43d27783f971bf2"
+    },
+    {
+      "path": "packages/engine/test/us-major-renewal.test.ts",
+      "after": "904a3b055a7b5ac2fd5acc607132e0162dc7ee55c818a95ddfa9076bc6f89dad"
+    }
+  ]
+}

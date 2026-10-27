@@ -1,0 +1,46 @@
+✔ call-up never moves an active injury replacement out of its restoration slot (2539.6924ms)
+✔ US level review waits24 actual level games and minimum samples; defer consumes review without registration or salary changes (1544.7336ms)
+✔ US promotion swaps two existing registrations atomically, keeps records, shared identity and no immediate major appearance (1267.3422ms)
+✔ first MLB call-up preserves old minor salary basis and bonus; new800000 rate starts next day and budget is reserved once (788.2078ms)
+✔ US protected40 and incompatible seats produce explicit NO_SLOT instead of silently registering27 MLB players (259.6127ms)
+✔ US training and style windows use level thirds/halves and cannot reset season uses by moving levels (1286.4351ms)
+✔ US option year consumes once only after20 minor registered games, with replayed dates ignored (152.5214ms)
+✔ a second low Rookie review cannot accidentally promote, and changed offered evidence cannot move a player (937.5633ms)
+Controlled major-years proof (not native seven seasons): {"lastYear":"2036","yearsArchived":6,"creditedSeasons":6,"paidUsd":46331368,"signingBonuses":1}
+✔ US final salary floor survives poor performance and market periods use contract-start age, without hidden-P price effects (1811.8737ms)
+✖ controlled annual major renewal creates root4, funds one salary once, preserves source/records/service/options and pays its first native date (8492.4319ms)
+✔ major renewal rejects stale source, insufficient funds and changed financial quote history without losing the old root (5036.5807ms)
+✔ controlled seven MLB seasons retain partial first-year noncredit and stop automatic renewal at six credited seasons (51658.3778ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 67937.273
+
+✖ failing tests:
+
+test at packages\engine\test\us-major-renewal.test.ts:28:1
+✖ controlled annual major renewal creates root4, funds one salary once, preserves source/records/service/options and pays its first native date (8492.4319ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 5680000
+  - 4800000
+
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-major-renewal.test.ts:30:119)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 5680000,
+    expected: 4800000,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

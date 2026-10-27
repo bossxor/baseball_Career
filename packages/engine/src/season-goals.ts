@@ -24,9 +24,9 @@ export interface CareerGoalLedger {schemaVersion:1;worldKey:string;playerKey:str
 const isUs=(c:GoalCareer):c is UsCareer=>'mode'in c&&c.mode==='US_CAREER';
 const isKbo=(c:GoalCareer):c is KboCareer=>'protagonistClubId'in c;
 function registration(c:GoalCareer){
- if(isUs(c))return {key:c.protagonistKey,team:c.protagonistOrganizationId,league:c.registration.level,games:US_SEASON_GAMES[c.registration.level]};
- if(isKbo(c))return {key:c.protagonistKey,team:c.protagonistClubId,league:c.registration.competitionKey??(c.registration.firstTeam?'KBO':'FUTURES'),games:144};
- return {key:c.world.protagonistKey,team:c.world.protagonistSchoolId,league:c.world.leagueKey??'HS',games:c.world.schedule.filter(g=>g.homeTeamKey===c.world.protagonistSchoolId||g.awayTeamKey===c.world.protagonistSchoolId).length};
+ if(isUs(c))return {key:c.protagonistKey,team:c.protagonistOrganizationId,league:c.registration.level,games:US_SEASON_GAMES[c.registration.level],available:true};
+ if(isKbo(c)){const p=c.military?.program,currentService=!p||p.completedBlocks<p.scheduledBlocks&&p.blocks.some(b=>b.seasonKey===c.world.seasonKey),sports=c.sangmu?.loaned?.includes(c.protagonistKey)||currentService&&c.military?.status==='SERVING_SPORTS';return {key:c.protagonistKey,team:sports?'SANGMU':c.protagonistClubId,league:sports?'FUTURES':c.registration.competitionKey??(c.registration.firstTeam?'KBO':'FUTURES'),games:144,available:!(currentService&&c.military?.status==='SERVING_ACTIVE')};}
+ return {key:c.world.protagonistKey,team:c.world.protagonistSchoolId,league:c.world.leagueKey??'HS',games:c.world.schedule.filter(g=>g.homeTeamKey===c.world.protagonistSchoolId||g.awayTeamKey===c.world.protagonistSchoolId).length,available:true};
 }
 function assertRevision(c:GoalCareer,revision:number){if(isUs(c))assertUsCareerRevision(c,revision);else if(isKbo(c))assertKboCareerRevision(c,revision);else assertCareerRevision(c,revision);}
 function empty(c:GoalCareer):CareerGoalLedger {return {schemaVersion:1,worldKey:c.world.worldKey,playerKey:registration(c).key,seasons:{},notices:[],rewards:[]};}
@@ -42,7 +42,7 @@ function validate(c:GoalCareer):void {
  for(const r of l.rewards){const id=r.rewardId.slice(2) as SeasonGoalId;if(!r.rewardId.startsWith('R-')||!Object.hasOwn(SEASON_GOAL_DEFINITIONS,id)||r.type!==SEASON_GOAL_DEFINITIONS[id].rewardType||!r.firstReceipt||!r.sources.includes(r.firstReceipt)||new Set(r.sources).size!==r.sources.length)throw new RangeError('INVALID_GOAL_REWARD');}
 }
 function qualifiedTeams(c:GoalCareer,year:string,league:string):readonly string[]{
- if(isUs(c)){const b=year===c.world.seasonKey?(c.phaseContext.phase==='POSTSEASON_PROGRESS'?c.phaseContext.bracket:c.postseason?.bracket):c.minorYears?.find(y=>y.seasonKey===year)?.postseason.bracket;return b?(league==='MLB'?[...b.seeds.AL,...b.seeds.NL]:[]):qualifiedTeams(c.amateurHistory,year,league);}
+ if(isUs(c)){const b=year===c.world.seasonKey?(c.phaseContext.phase==='POSTSEASON_PROGRESS'?c.phaseContext.bracket:c.postseason?.bracket):[...(c.minorYears??[]),...(c.majorYears??[])].find(y=>y.seasonKey===year)?.postseason.bracket;return b?(league==='MLB'?[...b.seeds.AL,...b.seeds.NL]:[]):qualifiedTeams(c.amateurHistory,year,league);}
  if(isKbo(c)){const b=year===c.world.seasonKey?c.postseason:c.proSeasons?.find(y=>y.seasonKey===year)?.postseason;return b?(league==='KBO'?b.seeds:[]):qualifiedTeams(c.amateurHistory,year,league);}
  const cup=year===c.world.seasonKey?c.collegeCup:c.previousSeasons?.find(y=>y.world.seasonKey===year)?.collegeCup;return league==='COLLEGE'?cup?.seeds??[]:[];
 }
@@ -68,7 +68,7 @@ function progress(c:GoalCareer,g:SeasonGoalSlot):number {
 }
 function eligible(c:GoalCareer,id:SeasonGoalId):boolean {
  const r=registration(c),p=c.world.players[r.key]!,d=SEASON_GOAL_DEFINITIONS[id];
- return (d.kind==='BOTH'||d.kind===p.kind)&&(id!=='G08'||!!c.health.injuries[r.key]&&c.health.games.some(h=>h.evidence.gameKey===c.health.injuries[r.key]!.diagnosedGameKey&&h.result.injured.includes(r.key)))&&(id!=='G09'||['KBO','MLB','COLLEGE'].includes(r.league))&&(id!=='G10'||r.league==='COLLEGE');
+ return r.available&&(d.kind==='BOTH'||d.kind===p.kind)&&(id!=='G08'||!!c.health.injuries[r.key]&&c.health.games.some(h=>h.evidence.gameKey===c.health.injuries[r.key]!.diagnosedGameKey&&h.result.injured.includes(r.key)))&&(id!=='G09'||['KBO','MLB','COLLEGE'].includes(r.league))&&(id!=='G10'||r.league==='COLLEGE');
 }
 function slot(c:GoalCareer,id:SeasonGoalId,index:number):SeasonGoalSlot {
  if(!Object.hasOwn(SEASON_GOAL_DEFINITIONS,id)||!eligible(c,id))throw new RangeError('GOAL_NOT_ELIGIBLE');const r=registration(c),injury=c.health.injuries[r.key];
@@ -104,7 +104,7 @@ export function refreshCareerSeasonGoals<T extends GoalCareer>(c:T):T {
 }
 export function careerSeasonGoalsView(c:GoalCareer){
  assertRevision(c,c.revision);validate(c);const r=registration(c),s=c.goals?.seasons[c.world.seasonKey],definitions=(Object.keys(SEASON_GOAL_DEFINITIONS) as SeasonGoalId[]).filter(id=>eligible(c,id)).map(id=>({goalId:id,...SEASON_GOAL_DEFINITIONS[id],rewardId:'R-'+id}));
- return {seasonKey:c.world.seasonKey,playerKey:r.key,sourceDifficulty:c.difficulty,definitions,recommendedIds:recommend(c,definitions.map(d=>d.goalId)),noticeDelivery:'OUTBOX' as const,notices:(c.goals?.notices??[]).map(n=>({eventKey:n.eventKey,version:n.version,status:n.status,goalId:n.evidence.fields.goalId,stage:n.evidence.fields.stage,title:eventDefinition(n.definitionId).title})),history:(s?.history??[]).map(g=>({...g,scope:{...g.scope}})),slots:(s?.slots??[]).map(g=>({...g,scope:{...g.scope},progress:progress(c,g),target:SEASON_GOAL_DEFINITIONS[g.goalId].target,previousLeague:g.scope.leagueKey!==r.league})),replacement:{used:s?.replacementUsed??false,open:!!s&&!s.replacementUsed&&c.phaseContext.phase==='SEASON_PROGRESS'&&!c.phaseContext.pendingGame&&s.slots.some(g=>g.status==='ACTIVE'&&progress(c,g)<SEASON_GOAL_DEFINITIONS[g.goalId].target)&&teamGames(c,s)>=Math.ceil(s.scheduledGames/2)},rewards:c.goals?.rewards.map(reward=>({...reward,sources:[...reward.sources]}))??[],gameplayRewardDelta:0 as const};
+ return {seasonKey:c.world.seasonKey,playerKey:r.key,sourceDifficulty:c.difficulty,availabilityReason:r.available?null:'SERVING_ACTIVE' as const,definitions,recommendedIds:recommend(c,definitions.map(d=>d.goalId)),noticeDelivery:'OUTBOX' as const,notices:(c.goals?.notices??[]).map(n=>({eventKey:n.eventKey,version:n.version,status:n.status,goalId:n.evidence.fields.goalId,stage:n.evidence.fields.stage,title:eventDefinition(n.definitionId).title})),history:(s?.history??[]).map(g=>({...g,scope:{...g.scope}})),slots:(s?.slots??[]).map(g=>({...g,scope:{...g.scope},progress:progress(c,g),target:SEASON_GOAL_DEFINITIONS[g.goalId].target,previousLeague:g.scope.leagueKey!==r.league})),replacement:{used:s?.replacementUsed??false,open:r.available&&!!s&&!s.replacementUsed&&c.phaseContext.phase==='SEASON_PROGRESS'&&!c.phaseContext.pendingGame&&s.slots.some(g=>g.status==='ACTIVE'&&progress(c,g)<SEASON_GOAL_DEFINITIONS[g.goalId].target)&&teamGames(c,s)>=Math.ceil(s.scheduledGames/2)},rewards:c.goals?.rewards.map(reward=>({...reward,sources:[...reward.sources]}))??[],gameplayRewardDelta:0 as const};
 }
 
 function recommend(c:GoalCareer,ids:SeasonGoalId[]):SeasonGoalId[]{

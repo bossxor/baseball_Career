@@ -1,0 +1,15 @@
+Major annual native proof: {"from":"2030","to":"2031","schema":4,"salary":5680000,"paid":30212,"nativeNewYearGames":75,"oldRecords":9038,"signingBonuses":1}
+Controlled major-years proof (not native seven seasons): {"lastYear":"2036","yearsArchived":6,"creditedSeasons":6,"paidUsd":46331368,"signingBonuses":1}
+✔ US final salary floor survives poor performance and market periods use contract-start age, without hidden-P price effects (3277.0277ms)
+✔ controlled annual major renewal creates root4, funds one salary once, preserves source/records/service/options and pays its first native date (67474.2029ms)
+✔ major renewal rejects stale source, insufficient funds and changed financial quote history without losing the old root (11530.6528ms)
+✔ controlled seven MLB seasons retain partial first-year noncredit and stop automatic renewal at six credited seasons (60034.0179ms)
+✔ annual major contract survives an actual call-up command after controlled AAA registration without a second reservation (5296.0806ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 149077.4327

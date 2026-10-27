@@ -1,19 +1,16 @@
+import {usLevelFixture as fixture} from './us-level-fixture.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {HITTER_TYPES} from '@playball/rules';
-import {preparedUsCareer} from './us-fixtures.js';
-import {startUsRegularSeason,usSalaryEntitlement} from '../src/us-season.js';
+import {usSalaryEntitlement} from '../src/us-season.js';
 import type {UsProgress} from '../src/us-season.js';
 import {reviewUsLevel,resolveUsLevelEvent,settleUsMinorOptions} from '../src/us-levels.js';
 import {raiseUsWindowEvent,resolveUsWindowEvent,trainUsCareer,previewUsTraining,changeUsMidseasonArchetype} from '../src/us-windows.js';
 import {assertActiveUsRosterWorld,usCareerView} from '../src/us-career-entry.js';
-import {emptyBatting} from '../src/stats.js';
 import {canonicalJson} from '../src/game.js';
 import {prepareUsRosters} from '../src/us-roster-repair.js';
 import type {UsCareer} from '../src/us-career-entry.js';
-import type {UsLevel} from '../src/us-world.js';
-const cache=new Map<string,UsCareer>();
-function fixture(level:UsLevel='A',count=24,units=800000){if(!cache.has('base')){const p=preparedUsCareer();cache.set('base',startUsRegularSeason(p,p.revision));}const c=structuredClone(cache.get('base')!),org=c.world.organizations.find(o=>o.id===c.protagonistOrganizationId)!,key=c.protagonistKey;if(c.registration.level!==level){org.levels[c.registration.level]=org.levels[c.registration.level].filter(k=>k!==key);org.levels[level].push(key);c.registration.level=level;}const player=c.world.players[key]!;player.abilities=Object.fromEntries(Object.keys(player.abilities).map(k=>[k,units]));player.potential={...player.abilities};player.careerPeaks={...player.abilities};const games=c.seasonSchedule!.leagues[level].filter(g=>g.homeTeamKey===org.id||g.awayTeamKey===org.id).slice(0,count);for(const g of games)c.records.games[g.simulationKey]={gameKey:g.simulationKey,worldDay:g.worldDay,scope:{seasonKey:c.world.seasonKey,leagueKey:level,phase:'REGULAR'},teams:{[g.homeTeamKey]:{games:1,W:1,L:0,T:0,R:1,RA:0},[g.awayTeamKey]:{games:1,W:0,L:1,T:0,R:0,RA:1}},batting:{[key]:{...emptyBatting(),PA:4,AB:4,H:2,TB:3,twoB:1,threeB:0,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0}},pitching:{},batterSplits:{[key]:{L:{PA:0,AB:0,H:0,BB:0,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0},R:{PA:4,AB:4,H:2,BB:0,HBP:0,K:0,TB:3,HR:0,twoB:1,threeB:0,RBI:0}}},pitcherSplits:{},matchups:{}};const day=games.at(-1)?.worldDay??c.season!.firstDay;c.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:day+1,pendingGame:null};return c;}
+
 const phase=(c:UsCareer)=>c.phaseContext as UsProgress;
 const day=(c:UsCareer)=>phase(c).nextWorldDay-1;
 function offered(c:UsCareer){const r=reviewUsLevel(c,day(c),phase(c));assert.ok(r);assert.equal(r.season!.levelReviews!.at(-1)!.outcome,'OFFERED');return r;}

@@ -150,3 +150,7 @@ export * from './us-archive-view.js';
 
 export {SEASON_GOAL_DEFINITIONS,setCareerSeasonGoals,replaceCareerSeasonGoal,careerSeasonGoalsView} from './season-goals.js';
 export type {GoalCareer,SeasonGoalId,SeasonGoalSlot,SeasonGoals,CareerGoalLedger} from './season-goals.js';
+
+export * from './us-contract-value.js';
+export * from './us-major-renewal.js';
+export type {UsMajorYearArchive} from './us-major-history.js';
