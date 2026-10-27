@@ -96,6 +96,7 @@ export * from './kbo-posting.js';
 export * from './kbo-overseas-fa.js';
 export * from './kbo-return.js';
 export * from './kbo-us-activation.js';
+export * from './us-military-plan.js';
 export * from './kbo-archive-view.js';
 export * from './kbo-futures-schedule.js';
 export * from './kbo-sangmu.js';

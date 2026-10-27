@@ -1,3 +1,7 @@
+# M2-DS 최신 작업 — 해외 병역 기한 계획
+
+2026-10-27 · [상세](M2-DS-US-MILITARY-PLAN.md). FREEZE/TERMINATE·완료. 전체 npm run check 종료 0: 732개 중 730 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 726746.4544. 증거 `evidence/M2-DS-check.log`. M2 추정 50% 유지. 다음=국가대표·99사건·24경로.
+
 # M2-DR 최신 작업 — 포스팅→미국 루트
 
 2026-10-27 · [상세](M2-DR-US-ACTIVATION.md). 전체 npm run check 종료 0: 731개 중 729 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 694977.322. 증거 `evidence/M2-DR-check.log`. M2 추정 50% 유지.
