@@ -1,10 +1,10 @@
+## 인계 — 2026-10-27 DT까지 푸시, GPT 이어감
+
+푸시 팁 `86f068b`(DT). [HANDOFF-TO-GPT](HANDOFF-TO-GPT.md). WIP: AG `national-tournament.ts` 미커밋·DU check 진행 가능. 다음=DU 마감→E44–48/E55→99잔여→24경로·PF-D. M2 미완료·약50%. PC 종료 금지.
+
 ## 최신 상태 — M2-DT 국가대표 혜택 · 전체 검사 통과
 
-[DT 상세](M2-DT-NATIONAL-BENEFIT.md). 초청/결과 봉인·ATHLETE_ELIGIBLE·체육요원. 전체 npm run check 종료 0: 735개 중 733 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 619230.9032. 증거 `evidence/M2-DT-check.log`. 다음은 선발대진·국제경기·99사건·24경로·PF-D. M2 영역 약 50% 유지. PC 종료 금지. M2 싹 다할 때까지 중단하지 않는다.
-
-## 최신 상태 — M2-DT 국가대표 혜택 · 전체 검사 통과
-
-[DT 상세](M2-DT-NATIONAL-BENEFIT.md). 초청/결과 봉인·ATHLETE_ELIGIBLE·체육요원. 전체 npm run check 종료 0: 735개 중 733 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 619230.9032. 증거 `evidence/M2-DT-check.log`. 다음은 선발대진·국제경기·99사건·24경로·PF-D. M2 영역 약 50% 유지. PC 종료 금지. M2 싹 다할 때까지 중단하지 않는다.
+[DT 상세](M2-DT-NATIONAL-BENEFIT.md). 초청/결과 봉인·ATHLETE_ELIGIBLE·체육요원. 전체 npm run check 종료 0: 735개 중 733 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 619230.9032. 증거 `evidence/M2-DT-check.log`.
 
 ## 최신 상태 — M2-DS 해외 병역 계획 · 전체 검사 통과
 
