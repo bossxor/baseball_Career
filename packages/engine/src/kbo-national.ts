@@ -87,7 +87,7 @@ export function sealNationalCompetitionResult(c:KboCareer,revision:number,result
   next.military={...(next.military??{applications:[]}),status:'ATHLETE_ELIGIBLE',applications:next.military?.applications??[]};
  }
  next.national={...cur,invitations:cur.invitations,competitions:[...cur.competitions,structuredClone(result)],benefits,...(cur.athleteDutySeasonsRemaining!==undefined?{athleteDutySeasonsRemaining:cur.athleteDutySeasonsRemaining}:{})};
- if(result.officialAppearance&&!cur.competitions.some(x=>x.officialAppearance))queueNationalEvent(next,'E46',result.competitionId,'FIRST_APPEARANCE');
+ if(!live&&result.officialAppearance&&!cur.competitions.some(x=>x.officialAppearance))queueNationalEvent(next,'E46',result.competitionId,'FIRST_APPEARANCE');
  if(benefits.length>cur.benefits.length)queueNationalEvent(next,'E47',result.competitionId,'BENEFIT');
  queueNationalEvent(next,'E48',result.competitionId,'RETURN');next.revision++;return next;
 }
@@ -136,8 +136,18 @@ export function assertNationalLedger(n:NationalLedger|undefined,worldKey?:string
  if(n.athleteDutyStartSeasonKey!==undefined&&(!/^\d{4}$/.test(n.athleteDutyStartSeasonKey)||!Array.isArray(n.athleteDutySettledSeasons)||left===undefined||n.athleteDutySettledSeasons.length!==3-left||n.athleteDutySettledSeasons.some((y,i)=>y!==String(Number(n.athleteDutyStartSeasonKey)+i))))throw new RangeError('INVALID_ATHLETE_DUTY');
  for(const ids of [n.returnedCompetitions,n.eligibilityReviews])if(ids!==undefined&&(!Array.isArray(ids)||new Set(ids).size!==ids.length||ids.some(id=>!n.competitions.some(r=>r.competitionId===id))))throw new RangeError('INVALID_NATIONAL_RECEIPTS');
 }
-function queueNationalEvent(c:KboCareer,id:string,competitionId:string,stage:string):void {
- const d=eventDefinition(id),day=c.phaseContext.phase==='INTERNATIONAL_REVIEW'?c.phaseContext.nextWorldDay-1:c.days?.seasonKey===c.world.seasonKey?c.days.days.at(-1)?.day??0:0;
+/** Internal FINAL hook; caller owns the new root. No retroactive debut for legacy earlier appearances. */
+export function queueNationalFirstAppearance(c:KboCareer,competitionId:string,gameKey:string):void {
+ const key=c.protagonistKey,row=c.records.games[gameKey];
+ if(!row||row.scope.phase!=='INTERNATIONAL'||!Object.hasOwn(row.teams,'KOR')||(row.batting[key]?.PA??0)+(row.pitching[key]?.BF??0)===0||c.events.some(e=>e.definitionId==='E46'&&e.evidence.fields.playerSimulationKey===key)||c.national?.competitions.some(r=>r.officialAppearance))return;
+ const b=c.national?.brackets?.find(b=>b.competitionId===competitionId&&b.worldKey===c.world.worldKey&&b.seasonKey===row.scope.seasonKey&&b.tournament===row.scope.leagueKey&&b.results.some(r=>r.gameKey===gameKey));
+ if(!b)throw new RangeError('INVALID_NATIONAL_APPEARANCE');
+ if(Object.values(c.records.games).some(g=>g.gameKey!==gameKey&&g.scope.phase==='INTERNATIONAL'&&(g.batting[key]?.PA??0)+(g.pitching[key]?.BF??0)>0&&(Number(g.scope.seasonKey)<Number(row.scope.seasonKey)||g.scope.seasonKey===row.scope.seasonKey&&g.worldDay<row.worldDay)))return;
+ queueNationalEvent(c,'E46',competitionId,'FIRST_APPEARANCE',row.worldDay);
+}
+function queueNationalEvent(c:KboCareer,id:string,competitionId:string,stage:string,worldDay?:number):void {
+ if(id==='E46'&&c.events.some(e=>e.definitionId==='E46'&&e.evidence.fields.playerSimulationKey===c.protagonistKey))return;
+ const d=eventDefinition(id),day=worldDay??(c.phaseContext.phase==='INTERNATIONAL_REVIEW'?c.phaseContext.nextWorldDay-1:c.days?.seasonKey===c.world.seasonKey?c.days.days.at(-1)?.day??0:0);
  const event=createWorldEvent({definitionId:id,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:d.evidenceDomain,fields:{playerSimulationKey:c.protagonistKey,competitionId,selectionOrAppearanceStage:stage}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:c.phaseContext.phase,competitionKey:null,registrationKey:c.protagonistClubId,sourceRevision:c.revision+1},sourceSequence:c.events.length+1,worldDay:day});
  if(!c.events.some(e=>e.eventKey===event.eventKey))c.events=[...c.events,event];
 }

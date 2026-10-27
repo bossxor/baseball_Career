@@ -51,7 +51,7 @@ function stageUsYear(c:UsCareer,revision:number,majorRenewal:boolean,allowFreeAg
   const book=schoolYearEndRepertoire({world:c.world},key);if(book)world.repertoires[key]={...structuredClone(book),seasonId:ready.targetSeasonKey,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};
  }
  const ended=closeSeasonHealth(c.health,c.world.seasonKey).ledger,health:HealthLedger={...ended,rng:{...ended.rng},injuries:structuredClone(ended.injuries)};for(const r of supply.retired)delete health.injuries[r.playerKey];
- world.seasonKey=ready.targetSeasonKey;world.calendar=createSeasonCalendar(Number(ready.targetSeasonKey));assertActiveUsRosterWorld(world);
+ world.seasonKey=ready.targetSeasonKey;world.calendar=createSeasonCalendar(Number(ready.targetSeasonKey),'calendar-2');assertActiveUsRosterWorld(world);
  return {receiptKey:JSON.stringify(['us-age-roster-stage',c.world.worldKey,c.world.seasonKey,ready.targetSeasonKey,c.revision]),sourceRevision:c.revision,sourceSeasonKey:c.world.seasonKey,sourceRecordRevision:c.records.revision,targetSeasonKey:ready.targetSeasonKey,world,health,supply};
 }
 

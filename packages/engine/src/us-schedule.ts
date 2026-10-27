@@ -1,3 +1,4 @@
+import {professionalGameDays} from './season-calendar.js';
 import type {UsCareer} from './us-career-entry.js';
 import {assertUsCareerRevision} from './us-career-entry.js';
 import {usPreseasonPlanView} from './us-preseason.js';
@@ -12,7 +13,7 @@ const key=(s:UsCareer)=>JSON.stringify(['us-season-schedule',s.preseasonPlan!.re
 const basis=(s:UsCareer)=>canonicalJson({calendar:s.world.calendar,organizations:s.world.organizations.map(o=>({id:o.id})),preseasonPlan:s.preseasonPlan});
 function assertSource(s:ScheduledUsCareer,revision:number){assertUsCareerRevision(s,revision);if(usPreseasonPlanView(s).status!=='CONFIRMED' || (s.campNotices??[]).some(e=>e.status==='OPEN'))throw new RangeError('US_PRESEASON_UNCONFIRMED');}
 function leagues(s:UsCareer):UsSeasonSchedule['leagues'] {
- const ids=s.world.organizations.map(o=>o.id),days=s.world.calendar.growthDays;
+ const ids=s.world.organizations.map(o=>o.id),days=professionalGameDays(s.world.calendar);
  const result:UsSeasonSchedule['leagues']={ROOKIE:[],A:[],AA:[],AAA:[],MLB:[]};for(const level of Object.keys(US_SEASON_GAMES) as UsLevel[]){
  const games=US_SEASON_GAMES[level],schedule=createEvenLeagueSchedule({teamKeys:ids,leagueKey:level,seasonKey:s.world.seasonKey,startDay:0},games).map(g=>{const day=days[g.worldDay];if(day===undefined)throw new RangeError('US_SCHEDULE_EXCEEDS_CALENDAR');return {...g,worldDay:day};});assertSchedule(schedule,ids,games,games/2);result[level]=schedule;
  }return result;

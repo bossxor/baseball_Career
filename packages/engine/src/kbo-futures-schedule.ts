@@ -1,4 +1,4 @@
-import {assertSeasonCalendar} from './season-calendar.js';
+import {assertSeasonCalendar,professionalGameDays} from './season-calendar.js';
 import type {SeasonCalendar} from './season-calendar.js';
 import {createRoundRobinSchedule,assertSchedule} from './schedule.js';
 import type {ScheduledGame} from './schedule.js';
@@ -26,7 +26,7 @@ export function createKboFutures11Schedule(teamKeys:readonly string[],seasonKey:
   if(r<0){rounds.push([]);r=rounds.length-1;}
   rounds[r]!.push(edge);
  }
- const total=base+rounds.length,days=calendar.growthDays;
+ const total=base+rounds.length,days=professionalGameDays(calendar);
  if(days.length<total)throw new RangeError('INSUFFICIENT_KBO_CALENDAR');
  const dayOf=(round:number)=>days[Math.floor(round*(days.length-1)/(total-1))]!;
  const result:ScheduledGame[]=[

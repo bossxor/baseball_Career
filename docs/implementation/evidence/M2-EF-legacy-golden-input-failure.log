@@ -1,0 +1,61 @@
+✔ 11-team Futures calendar: 144 games, 14 or 15 per pair, 72 home / 72 away, rest days, deterministic (31.285ms)
+✔ service payroll reserves zero in the full service year, actual return-year Futures capacity and residual future principal (8.5496ms)
+✔ service payroll rejects changed contract identity, principal version, wrong completion date and excessive reservation (0.9801ms)
+✔ public service contract view reports suspended/returned money and exact days without exposing receipts or mutating source (0.6577ms)
+✔ career entry adds payment details only for a service contract, keeping ordinary view shape and private state intact (932.6468ms)
+✔ last service-contract payment stops a multi-day worker at the closed date before any following games are published (2873.4884ms)
+M2-EE AG/return proof: {"preWindow":"CONTROLLED_PREFIX","internationalGames":16,"nationalDays":14,"resumedDay":257,"actualDomesticGames":10}
+✔ p12ActualWindow uses max(nominal 11/15, both PS end+1) and keeps 14 days without rewriting calendar-1 (6.3274ms)
+✔ career AG bracket uses the sealed actual28 Korean identities and seals records after FINAL (10025.7257ms)
+✔ mid-tournament JSON resume keeps pendingGame and does not duplicate contributions (10195.986ms)
+✔ invite deadlines seal 7/2/1 before start and national day fatigue settles once (1043.8301ms)
+✔ international phase closes every date once, audits shared pro days and resumes actual next domestic game after E48 (11850.7606ms)
+✔ international rest days include nonparticipants once, refuse skipped days and preserve original world/records (1230.6656ms)
+✔ E46 queues at the first actual Korean FINAL before competition sealing and never duplicates after ACK or later games (7831.342ms)
+M2-EF WBC/opening proof: {"entry":"PRO_ENTRY_FIXTURE","internationalGames":47,"nationalDays":21,"openingDay":59,"actualDomesticGames":10,"calendar":"calendar-2"}
+✔ calendar2 shifts only professional WBC-year fixtures; old schedules, identities, school days and growth budget survive mixed reads (135.5603ms)
+✔ all five actual US schedule publications open after WBC with unchanged game counts and annual salary (4998.4116ms)
+✔ calendar-versioned service reservation follows actual return-year dates without repricing principal or contaminating legacy forecast cache (6.4185ms)
+✔ WBC actual47 games and21 dates return to camp then actual KBO opening date without rewriting international history (17594.2102ms)
+✔ fixed annual calendar includes weekly rest, excludes actual tournament windows and handles leap years (6.3674ms)
+✔ calendar-backed school season spreads all216 games over Feb-Jun without international collisions (85.5166ms)
+✔ baseline growth stays average: perfect school appearances and +2 still below52; US entry uses a separate scout score (16.1321ms)
+✔ US live startup projects only participating teams and keeps registrations, contracts and source immutable (3437.911ms)
+✖ US first date plays all75 real games, pays one common-calendar salary and publishes records/XP only at FINAL (17411.3169ms)
+✔ US partial-game JSON resume equals continuous chunks, rejects stale revisions and corrupted pending provenance (5950.9428ms)
+✔ US injury repair first borrows inside the organization without fabricating players or changing26 MLB seats (3960.3255ms)
+✔ US exhausted organization uses minimum low-ability replacements, reserves injured identities and restores them after recovery (3524.871ms)
+✔ US growth refuses unfinished seasons, and payroll mutations cannot mint future or duplicate salary (4175.2969ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 25
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43018.1136
+
+✖ failing tests:
+
+test at packages\engine\test\us-season.test.ts:17:1
+✖ US first date plays all75 real games, pays one common-calendar salary and publishes records/XP only at FINAL (17411.3169ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + '770e3eade00d8375536e6406821fab6c8eac8b7fbb7cf7ff56757943459c6ce6'
+  - '9b234e56f6009e5319c9c34403eb15e5c8ff21fc748574360221444f29fab492'
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-season.test.ts:20:372)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '770e3eade00d8375536e6406821fab6c8eac8b7fbb7cf7ff56757943459c6ce6',
+    expected: '9b234e56f6009e5319c9c34403eb15e5c8ff21fc748574360221444f29fab492',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

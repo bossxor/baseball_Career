@@ -2,7 +2,7 @@ import {kboActiveContractSuspended} from './kbo-service-payroll.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {assertKboOpeningRoster} from './kbo-opening-roster.js';
-import {assertSeasonCalendar} from './season-calendar.js';
+import {assertSeasonCalendar,professionalGameDays} from './season-calendar.js';
 import type {SeasonCalendar} from './season-calendar.js';
 import {createRoundRobinSchedule,assertSchedule} from './schedule.js';
 import type {ScheduledGame} from './schedule.js';
@@ -22,7 +22,7 @@ export function createKboSeasonSchedules(teamKeys:readonly string[],seasonKey:st
  assertSeasonCalendar(calendar);
  if(teamKeys.length!==10 || seasonKey!==String(calendar.year))throw new RangeError('INVALID_KBO_SCHEDULE_INPUT');
  const generate=(leagueKey:'KBO'|'FUTURES')=>{
-  const raw=createRoundRobinSchedule({teamKeys,leagueKey,seasonKey,startDay:0},16),days=calendar.growthDays;
+  const raw=createRoundRobinSchedule({teamKeys,leagueKey,seasonKey,startDay:0},16),days=professionalGameDays(calendar);
   if(days.length<144)throw new RangeError('INSUFFICIENT_KBO_CALENDAR');
   const result=raw.map(g=>({...g,worldDay:days[Math.floor(g.round*(days.length-1)/143)]!}));
   assertSchedule(result,teamKeys,144,72);return result;

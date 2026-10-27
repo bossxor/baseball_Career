@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "INCOMPLETE_IMPLEMENTATION_AUDIT",
-  "baseline": "f46f1ec + M2-EE worktree",
+  "baseline": "088597d + M2-EF verified worktree",
   "items": [
     {
       "id": "E01",
@@ -1206,9 +1206,10 @@
       "evidence": "evidence/M2-DV-focused.log",
       "note": "DV controlled domain assertions; not full calendar/28-player worker",
       "timingReview": {
-        "status": "FIRST_FINAL_TRIGGER_NOT_CONNECTED",
-        "source": "packages/engine/src/kbo-national.ts:sealNationalCompetitionResult",
-        "note": "Actual positive PA/BF is required, but the current hook queues E46 only when the whole competition is sealed. Direct first-FINAL timing is not proven by prior result-seal tests."
+        "status": "FIRST_FINAL_FOCUSED_26_AND_FULL_EF_PASS",
+        "source": "packages/engine/src/national-progress.ts:advanceCareerNationalMatch -> queueNationalFirstAppearance",
+        "evidence": "docs/implementation/evidence/M2-EF-focused.log",
+        "note": "Actual first Korean FINAL positive PA/BF queues before competition sealing; no partial-game notice, ACK/later games/result seal do not duplicate. Legacy manual result-seal fallback retained. Not automatic invitation/UI evidence."
       }
     },
     {

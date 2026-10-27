@@ -1,3 +1,7 @@
+# 최신 상태 — M2-EF 검증 완료 (2026-10-27)
+
+[EF 상세](M2-EF-WBC-PROFESSIONAL-CALENDAR.md). 사용자 WBC 결정 반영: 신규 프로 calendar-2는 WBC 종료 뒤 개막, 구 calendar-1/고정해시/원장 보존. WBC47경기·21일→캠프→실제 KBO10경기, 신규 미국75경기와 legacy75 해시 별도 검사, E46 첫 FINAL 알림. 전체 npm run check 종료0: 엔진/API 774개 중772통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 672040.6242, 동결 대상455파일 변경0(비문서 파일·기존 root/evidence 포함). 실제 Neon/브라우저/APK 검증은 아니다. M2 전체 미완료. EE의 날짜 답변 대기 문구는 아래 과거 이력이다.
+
 # 최신 기능 체크포인트 — M2-EE (2026-10-27)
 
 기능 **fa61a6e319df58ab452ca024664d30d782195b68** (`fa61a6e`)를 `origin/codex/m2-career-engine`에 푸시하고 원격 해시 일치를 확인했다. 실행 코드 미커밋 WIP 없음. 이 인계 핀은 문서만 변경한다. 전체769/767·실패0·Neon2·웹22/22, 집중22/22. 실제28 AG16경기/14일 및 복귀 후 실제 국내10경기이며, 대회 전 정규 구간은 CONTROLLED_PREFIX다. M2 전체 완료 아님.

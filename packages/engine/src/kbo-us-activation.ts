@@ -30,7 +30,7 @@ export function activateKboUsCareer(source:KboCareer,revision:number,roster:UsRo
  const offer=signed.offer,org=roster.organizations.find(o=>o.id===offer.organizationId);if(!org)throw new RangeError('KBO_US_ORG_MISSING');
  const club=inventory.clubs.find(c=>c.id===offer.organizationId);if(!club||club.availableBudgetUsd<offer.annualSalaryUsd)throw new RangeError('KBO_US_BUDGET_REQUIRED');
  const level:UsLevel=offer.initialLevel==='MLB'?'MLB':offer.initialLevel==='AAA'||offer.kind==='MILB'?'AAA':'ROOKIE';
- const calendar=createSeasonCalendar(Number(roster.seasonKey)),world:ActiveUsRosterWorld={...structuredClone(roster),status:'ACTIVE',calendar},nextPlayer={...structuredClone(signed.player),fatigue:0},live=world.organizations.find(o=>o.id===org.id)!;
+ const calendar=createSeasonCalendar(Number(roster.seasonKey),'calendar-2'),world:ActiveUsRosterWorld={...structuredClone(roster),status:'ACTIVE',calendar},nextPlayer={...structuredClone(signed.player),fatigue:0},live=world.organizations.find(o=>o.id===org.id)!;
  if(level==='MLB'){
   const other=live.levels.MLB.find(k=>world.players[k]!.kind===nextPlayer.kind&&world.players[k]!.position===nextPlayer.position);if(!other)throw new RangeError('KBO_US_MLB_SLOT');
   live.levels.MLB=live.levels.MLB.filter(k=>k!==other).concat(key).sort();live.levels.AAA=[...live.levels.AAA,other].sort();

@@ -117,3 +117,15 @@ test('international rest days include nonparticipants once, refuse skipped days 
  assert.throws(()=>closeCareerNationalDay(c,c.revision,day+1),/OUT_OF_ORDER/);const raw=canonicalJson(c),next=closeCareerNationalDay(c,c.revision,day);assert.equal(canonicalJson(c),raw);assert.equal(next.records,c.records);assert.equal(next.world.players[other.simulationKey]!.fatigue,appearanceFatigue(other,'NONE').fatigue);
  assert.throws(()=>prepareCareerNationalMatch(next,next.revision),/DAY_CLOSE_REQUIRED/);assert.throws(()=>closeCareerNationalDay(next,next.revision,day),/ALREADY_SETTLED/);
 });
+test('E46 queues at the first actual Korean FINAL before competition sealing and never duplicates after ACK or later games',()=>{
+ const accepted=acceptAg(enteredKboCareer());let c=startNationalTournament(accepted,accepted.revision,'AG');assert.ok(!c.events.some(e=>e.definitionId==='E46'));
+ let actual:string|undefined;
+ for(let i=0;i<12&&!actual;i++){
+  const b=c.national!.brackets![0]!,phase=c.phaseContext;if(phase.phase!=='INTERNATIONAL_PROGRESS')throw Error('not progressing');const m=nextNationalMatch(b)!;
+  if(m.day>phase.nextWorldDay){c=closeCareerNationalDay(c,c.revision,phase.nextWorldDay);continue;}
+  c=prepareCareerNationalMatch(c,c.revision);const partial=advanceCareerNationalMatch(c,c.revision,1);assert.ok(!partial.career.events.some(e=>e.definitionId==='E46'));c=advanceCareerNationalMatch(partial.career,partial.career.revision).career;
+  actual=Object.values(c.records.games).find(g=>g.scope.phase==='INTERNATIONAL'&&(g.batting[c.protagonistKey]?.PA??0)+(g.pitching[c.protagonistKey]?.BF??0)>0)?.gameKey;
+ }
+ assert.ok(actual);const event=c.events.find(e=>e.definitionId==='E46')!;assert.ok(event,'first appearance must not wait for tournament result sealing');assert.equal(c.national!.competitions.length,0);assert.equal(event.occurredWorldDay,c.records.games[actual]!.worldDay);
+ const ack=resolveKboNationalEvent(c,c.revision,{eventKey:event.eventKey,eventVersion:event.version,command:'ACK_EVENT'}).career;assert.equal(ack.world,c.world);assert.equal(ack.records,c.records);const done=finishTournament(ack);assert.equal(done.events.filter(e=>e.definitionId==='E46').length,1);
+});

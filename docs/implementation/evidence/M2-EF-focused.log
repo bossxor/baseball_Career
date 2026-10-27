@@ -1,0 +1,37 @@
+✔ 11-team Futures calendar: 144 games, 14 or 15 per pair, 72 home / 72 away, rest days, deterministic (39.9656ms)
+✔ service payroll reserves zero in the full service year, actual return-year Futures capacity and residual future principal (12.3777ms)
+✔ service payroll rejects changed contract identity, principal version, wrong completion date and excessive reservation (1.0758ms)
+✔ public service contract view reports suspended/returned money and exact days without exposing receipts or mutating source (0.7269ms)
+✔ career entry adds payment details only for a service contract, keeping ordinary view shape and private state intact (1000.9978ms)
+✔ last service-contract payment stops a multi-day worker at the closed date before any following games are published (2945.264ms)
+M2-EE AG/return proof: {"preWindow":"CONTROLLED_PREFIX","internationalGames":16,"nationalDays":14,"resumedDay":257,"actualDomesticGames":10}
+✔ p12ActualWindow uses max(nominal 11/15, both PS end+1) and keeps 14 days without rewriting calendar-1 (6.7212ms)
+✔ career AG bracket uses the sealed actual28 Korean identities and seals records after FINAL (13546.2326ms)
+✔ mid-tournament JSON resume keeps pendingGame and does not duplicate contributions (14303.2177ms)
+✔ invite deadlines seal 7/2/1 before start and national day fatigue settles once (1675.6773ms)
+✔ international phase closes every date once, audits shared pro days and resumes actual next domestic game after E48 (16711.5833ms)
+✔ international rest days include nonparticipants once, refuse skipped days and preserve original world/records (1698.0616ms)
+✔ E46 queues at the first actual Korean FINAL before competition sealing and never duplicates after ACK or later games (7646.715ms)
+M2-EF US/opening proof: {"calendar":"calendar-2","openingDay":59,"actualGames":75,"annualSalaryUsd":30000,"paidUsd":148}
+M2-EF WBC/opening proof: {"entry":"PRO_ENTRY_FIXTURE","internationalGames":47,"nationalDays":21,"openingDay":59,"actualDomesticGames":10,"calendar":"calendar-2"}
+✔ calendar2 shifts only professional WBC-year fixtures; old schedules, identities, school days and growth budget survive mixed reads (144.3435ms)
+✔ all five actual US schedule publications open after WBC with unchanged game counts and annual salary (24696.4422ms)
+✔ calendar-versioned service reservation follows actual return-year dates without repricing principal or contaminating legacy forecast cache (12.3856ms)
+✔ WBC actual47 games and21 dates return to camp then actual KBO opening date without rewriting international history (24059.0254ms)
+✔ fixed annual calendar includes weekly rest, excludes actual tournament windows and handles leap years (9.1436ms)
+✔ calendar-backed school season spreads all216 games over Feb-Jun without international collisions (109.9954ms)
+✔ baseline growth stays average: perfect school appearances and +2 still below52; US entry uses a separate scout score (17.8454ms)
+✔ US live startup projects only participating teams and keeps registrations, contracts and source immutable (3620.3472ms)
+✔ legacy calendar1 first date keeps all75 real games, salary and original pre-cache trait golden hashes (22807.6044ms)
+✔ US partial-game JSON resume equals continuous chunks, rejects stale revisions and corrupted pending provenance (8726.034ms)
+✔ US injury repair first borrows inside the organization without fabricating players or changing26 MLB seats (5483.976ms)
+✔ US exhausted organization uses minimum low-ability replacements, reserves injured identities and restores them after recovery (4769.2403ms)
+✔ US growth refuses unfinished seasons, and payroll mutations cannot mint future or duplicate salary (5253.0854ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 56471.0985

@@ -100,15 +100,15 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
    if(c.servicePay || c.remainderPay){if(c.remainderPay && !c.remainderPay.settlement)throw new RangeError('KBO_REMAINDER_NOT_FINALIZED');if(career.contractHistory?.some(h=>h.contractKey===c.contractKey))throw new RangeError('DUPLICATE_CONTRACT_HISTORY');career.contractHistory=[...(career.contractHistory??[]),structuredClone(c)];}
    delete activated.servicePay;delete activated.remainderPay;activated.status='ACTIVE';
   }
-  else if(c.servicePay){activated.servicePay=carryKboServicePayroll(c,target);activated.years=Math.max(1,Math.ceil(kboContractPaymentBalance(activated.servicePay.ledger).remainingPaidGameDays/144));}
+  else if(c.servicePay){activated.servicePay=carryKboServicePayroll(c,target,'calendar-2');activated.years=Math.max(1,Math.ceil(kboContractPaymentBalance(activated.servicePay.ledger).remainingPaidGameDays/144));}
   const service=career.military,program=service?.program;
-  if(k===key && !activated.servicePay && service?.contractPaymentVersion===1 && ['SERVING_SPORTS','SERVING_ACTIVE'].includes(service.status) && program?.blocks[0]?.seasonKey===target && service.completionDays){activated.servicePay=createKboServicePayroll(activated,program,service.completionDays[1]!);activated.years=Math.ceil(program.contract.remainingPaidGameDays/144);}
+  if(k===key && !activated.servicePay && service?.contractPaymentVersion===1 && ['SERVING_SPORTS','SERVING_ACTIVE'].includes(service.status) && program?.blocks[0]?.seasonKey===target && service.completionDays){activated.servicePay=createKboServicePayroll(activated,program,service.completionDays[1]!,'calendar-2');activated.years=Math.ceil(program.contract.remainingPaidGameDays/144);}
   const book=schoolYearEndRepertoire(source,k);if(book)world.repertoires[k]={...structuredClone(book),seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};
  }
- for(const [k,c] of Object.entries(world.suspendedContracts??{})){const carried={...c,seasonKey:target,servicePay:carryKboServicePayroll(c,target)};carried.years=Math.max(1,Math.ceil(kboContractPaymentBalance(carried.servicePay.ledger).remainingPaidGameDays/144));world.suspendedContracts![k]=carried;}
+ for(const [k,c] of Object.entries(world.suspendedContracts??{})){const carried={...c,seasonKey:target,servicePay:carryKboServicePayroll(c,target,'calendar-2')};carried.years=Math.max(1,Math.ceil(kboContractPaymentBalance(carried.servicePay.ledger).remainingPaidGameDays/144));world.suspendedContracts![k]=carried;}
  activateKboOffseasonExit(source,career);
  for(const club of world.clubs){club.paidSalaryWon=0;club.reservedSalaryWon=kboRosterSeasonCharge(world,club.id);}
- world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target));
+ world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target),'calendar-2');
 // Military unit carries over: members age and reset their books like everyone else, the block of the season just played is
 // recorded complete on its last day, and finished programs rejoin their club's Futures squad (full clubs wait in the unit).
 // Legacy/NPC unit members still complete at year close; versioned protagonist programs use their actual completion-day ledger.

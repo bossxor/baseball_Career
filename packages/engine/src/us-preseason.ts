@@ -7,7 +7,7 @@ import {usCareerEntryView} from './us-career-entry.js';
 import {assertUsCareerRevision as assertCareerRevision} from './us-career-entry.js';
 import {archetypeFor,validateDevelopmentPlayer} from './player.js';
 import {canonicalJson} from './game.js';
-import {assertSeasonCalendar} from './season-calendar.js';
+import {assertSeasonCalendar,professionalGameDays} from './season-calendar.js';
 import {validateSeasonGrowthLedger} from './growth-ledger.js';
 import {setPitchWeights,beginPitchLearning,validatePitchWeights,pitchMastery} from './repertoire.js';
 import type {PitchWeights} from './repertoire.js';
@@ -34,13 +34,13 @@ function updatePlan(s:UsCareer,focus:readonly string[],archetype:string){
 }
 function campSource(s:UsCareer,e:EventInstance){
  enqueueWorldEvent([],e);
- if(e.definitionId!=='E58' || e.worldKey!==s.world.worldKey || e.seasonKey!==s.world.seasonKey || canonicalJson(e.evidence.fields)!==canonicalJson({playerSimulationKey:s.protagonistKey,routeDecisionIdOrContractId:s.contract.contractKey,stage:'FIRST_CAMP'}) || e.resume.competitionKey!==s.registration.level || e.resume.registrationKey!==s.protagonistOrganizationId || e.resume.phase!=='PRESEASON_SETUP' || e.occurredWorldDay!==s.world.calendar.growthDays[0])throw new RangeError('INVALID_US_FIRST_CAMP_SOURCE');
+ if(e.definitionId!=='E58' || e.worldKey!==s.world.worldKey || e.seasonKey!==s.world.seasonKey || canonicalJson(e.evidence.fields)!==canonicalJson({playerSimulationKey:s.protagonistKey,routeDecisionIdOrContractId:s.contract.contractKey,stage:'FIRST_CAMP'}) || e.resume.competitionKey!==s.registration.level || e.resume.registrationKey!==s.protagonistOrganizationId || e.resume.phase!=='PRESEASON_SETUP' || e.occurredWorldDay!==professionalGameDays(s.world.calendar)[0])throw new RangeError('INVALID_US_FIRST_CAMP_SOURCE');
 }
 /** E58 is queued only on writes; confirming the plan does not simulate a game or add a bonus. */
 export function queueUsFirstCampNotices(s:UsCareer):readonly EventInstance[]{
  if(s.minorYears?.length||s.majorYears?.length)return s.campNotices??[];
  assertSource(s,s.revision,true);const notices=s.campNotices??[];if(notices.length>1)throw new RangeError('DUPLICATE_US_FIRST_CAMP');for(const e of notices)campSource(s,e);if(notices.length || s.preseasonPlan)return structuredClone(notices);
- const event=createWorldEvent({definitionId:'E58',worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,evidence:{version:1,type:'DIRECT_US_ROUTE',fields:{playerSimulationKey:s.protagonistKey,routeDecisionIdOrContractId:s.contract.contractKey,stage:'FIRST_CAMP'}},resume:{worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,phase:'PRESEASON_SETUP',competitionKey:s.registration.level,registrationKey:s.protagonistOrganizationId,sourceRevision:s.revision},sourceSequence:s.events.length+1,worldDay:s.world.calendar.growthDays[0]!});return enqueueWorldEvent(notices,event).events;
+ const event=createWorldEvent({definitionId:'E58',worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,evidence:{version:1,type:'DIRECT_US_ROUTE',fields:{playerSimulationKey:s.protagonistKey,routeDecisionIdOrContractId:s.contract.contractKey,stage:'FIRST_CAMP'}},resume:{worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,phase:'PRESEASON_SETUP',competitionKey:s.registration.level,registrationKey:s.protagonistOrganizationId,sourceRevision:s.revision},sourceSequence:s.events.length+1,worldDay:professionalGameDays(s.world.calendar)[0]!});return enqueueWorldEvent(notices,event).events;
 }
 function written(s:UsCareer){s.revision++;s.campNotices=queueUsFirstCampNotices(s);return s;}
 export function setUsPreseasonFocus(s:UsCareer,revision:number,focus:readonly string[]):UsCareer {

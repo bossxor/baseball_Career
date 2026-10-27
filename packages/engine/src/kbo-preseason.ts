@@ -1,3 +1,4 @@
+import {auditCareerNationalDays} from './national-day-audit.js';
 import {registerPitchLearning} from './pitch-learning-progress.js';
 import {kboActiveContractSuspended} from './kbo-service-payroll.js';
 import {assertFocus,PITCH_IDS} from '@playball/rules';
@@ -7,7 +8,7 @@ import {kboCareerEntryView} from './kbo-career-entry.js';
 import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {archetypeFor,validateDevelopmentPlayer} from './player.js';
 import {canonicalJson} from './game.js';
-import {assertSeasonCalendar} from './season-calendar.js';
+import {assertSeasonCalendar,professionalGameDays} from './season-calendar.js';
 import {validateSeasonGrowthLedger} from './growth-ledger.js';
 import {setPitchWeights,beginPitchLearning,validatePitchWeights,pitchMastery} from './repertoire.js';
 import type {PitchWeights} from './repertoire.js';
@@ -21,8 +22,10 @@ const planKey=(s:KboCareer)=>JSON.stringify(['kbo-preseason-plan',s.activation.r
 function basis(s:KboCareer){return canonicalJson({player:s.world.players[s.protagonistKey],repertoire:s.world.repertoires[s.protagonistKey]??null,styleUsedWindows:s.styleUsedWindows,planHistory:s.planHistory});}
 function assertSource(s:KboCareer,revision:number,allowConfirmed=false){
  assertCareerRevision(s,revision);kboCareerEntryView(s);assertSeasonCalendar(s.world.calendar);validateSeasonGrowthLedger(s.seasonGrowth);
+ auditCareerNationalDays(s);
+ const allowedWbcGames=new Set((s.national?.brackets??[]).filter(b=>b.tournament==='WBC'&&b.seasonKey===s.world.seasonKey&&b.dayCloseVersion===1&&b.dayReceipts?.length===b.window.endDay-b.window.startDay&&s.national?.returnedCompetitions?.includes(b.competitionId)).flatMap(b=>b.results.map(r=>r.gameKey)));
  const p=s.world.players[s.protagonistKey]!,start=s.seasonGrowth.seasonStart,old=s.amateurHistory;
- if(s.world.worldKey!==old.world.worldKey || s.world.seed!==old.world.seed || s.difficulty!==old.difficulty || s.protagonistKey!==old.world.protagonistKey || s.world.seasonKey!==String(s.world.calendar.year) || s.seasonGrowth.seasonKey!==s.world.seasonKey || s.seasonGrowth.playerKey!==p.simulationKey || s.seasonGrowth.worldGrowthDays!==s.world.calendar.growthDays.length || s.seasonGrowth.finalized || s.seasonGrowth.entries.length || s.seasonGrowth.totalBudgetUnits!==0 || s.events.some(e=>e.status==='OPEN') || Object.values(s.records.games).some(g=>g.scope.seasonKey===s.world.seasonKey) || s.development.trainingUsedSeasons.includes(s.world.seasonKey))throw new RangeError('INVALID_KBO_PRESEASON_SOURCE');
+ if(s.world.worldKey!==old.world.worldKey || s.world.seed!==old.world.seed || s.difficulty!==old.difficulty || s.protagonistKey!==old.world.protagonistKey || s.world.seasonKey!==String(s.world.calendar.year) || s.seasonGrowth.seasonKey!==s.world.seasonKey || s.seasonGrowth.playerKey!==p.simulationKey || s.seasonGrowth.worldGrowthDays!==s.world.calendar.growthDays.length || s.seasonGrowth.finalized || s.seasonGrowth.entries.length || s.seasonGrowth.totalBudgetUnits!==0 || s.events.some(e=>e.status==='OPEN') || Object.values(s.records.games).some(g=>g.scope.seasonKey===s.world.seasonKey&&!allowedWbcGames.has(g.gameKey)) || s.development.trainingUsedSeasons.includes(s.world.seasonKey))throw new RangeError('INVALID_KBO_PRESEASON_SOURCE');
  validateDevelopmentPlayer(p);
  for(const key of ['simulationKey','name','kind','age','position','throws','bats','pitchForm','abilities','potential','careerPeaks','fatigue'] as const)if(canonicalJson(p[key])!==canonicalJson(start[key]))throw new RangeError('KBO_PRESEASON_PLAYER_CHANGED');
  const book=s.world.repertoires[p.simulationKey];if(p.kind==='PITCHER'){if(!book || book.seasonId!==s.world.seasonKey)throw new RangeError('INVALID_KBO_PRESEASON_REPERTOIRE');validatePitchWeights(book.book,book.weights);validatePitchXpLedger(book.ledger);}else if(book)throw new RangeError('INVALID_KBO_PRESEASON_REPERTOIRE');
@@ -34,12 +37,12 @@ function updatePlan(s:KboCareer,focus:readonly string[],archetype:string){
 }
 function campSource(s:KboCareer,e:EventInstance){
  enqueueWorldEvent([],e);
- if(e.definitionId!=='E08' || e.worldKey!==s.world.worldKey || e.seasonKey!==s.world.seasonKey || canonicalJson(e.evidence.fields)!==canonicalJson({playerSimulationKey:s.protagonistKey,milestoneKey:s.activation.receiptKey}) || e.resume.competitionKey!=='KBO' || e.resume.registrationKey!==s.protagonistClubId || e.resume.phase!=='PRESEASON_SETUP' || e.occurredWorldDay!==s.world.calendar.growthDays[0])throw new RangeError('INVALID_KBO_FIRST_CAMP_SOURCE');
+ if(e.definitionId!=='E08' || e.worldKey!==s.world.worldKey || e.seasonKey!==s.world.seasonKey || canonicalJson(e.evidence.fields)!==canonicalJson({playerSimulationKey:s.protagonistKey,milestoneKey:s.activation.receiptKey}) || e.resume.competitionKey!=='KBO' || e.resume.registrationKey!==s.protagonistClubId || e.resume.phase!=='PRESEASON_SETUP' || e.occurredWorldDay!==professionalGameDays(s.world.calendar)[0])throw new RangeError('INVALID_KBO_FIRST_CAMP_SOURCE');
 }
 /** Nonblocking E08; old AP saves catch up on a write, never on a read. First pro season only: later seasons keep the old notice as history. */
 export function queueKboFirstCampNotices(s:KboCareer):readonly EventInstance[]{
  assertSource(s,s.revision,true);if(s.proSeasons?.length)return structuredClone(s.campNotices??[]);const notices=s.campNotices??[];if(notices.length>1)throw new RangeError('DUPLICATE_KBO_FIRST_CAMP');for(const e of notices)campSource(s,e);if(notices.length || s.preseasonPlan)return structuredClone(notices);
- const event=createWorldEvent({definitionId:'E08',worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,evidence:{version:1,type:'FIRST_PRO_MILESTONE',fields:{playerSimulationKey:s.protagonistKey,milestoneKey:s.activation.receiptKey}},resume:{worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,phase:'PRESEASON_SETUP',competitionKey:'KBO',registrationKey:s.protagonistClubId,sourceRevision:s.revision},sourceSequence:s.events.length+1,worldDay:s.world.calendar.growthDays[0]!});return enqueueWorldEvent(notices,event).events;
+ const event=createWorldEvent({definitionId:'E08',worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,evidence:{version:1,type:'FIRST_PRO_MILESTONE',fields:{playerSimulationKey:s.protagonistKey,milestoneKey:s.activation.receiptKey}},resume:{worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,phase:'PRESEASON_SETUP',competitionKey:'KBO',registrationKey:s.protagonistClubId,sourceRevision:s.revision},sourceSequence:s.events.length+1,worldDay:professionalGameDays(s.world.calendar)[0]!});return enqueueWorldEvent(notices,event).events;
 }
 function written(s:KboCareer){s.revision++;s.campNotices=queueKboFirstCampNotices(s);return s;}
 export function setKboPreseasonFocus(s:KboCareer,revision:number,focus:readonly string[]):KboCareer {

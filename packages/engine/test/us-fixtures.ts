@@ -1,3 +1,5 @@
+import {createSeasonCalendar} from '../src/season-calendar.js';
+import type {CalendarVersion} from '../src/season-calendar.js';
 import assert from 'node:assert/strict';
 import {completedHighSchoolCareer} from './fixtures.js';
 import {acknowledgeHighSchoolSeasonReview,openHighSchoolCareerRoute} from '../src/high-school-route.js';
@@ -18,6 +20,6 @@ function ready(kind:'HITTER'|'PITCHER'){if(!cache.has(kind))cache.set(kind,fixtu
 
 export function activeUsCareer(kind:'HITTER'|'PITCHER'){const {signed,world}=ready(kind),closed=closeSchoolSeasonForUs(signed,signed.revision,true);return startSignedUsCareer(closed,closed.revision,world);}
 
-export function preparedUsCareer(kind:'HITTER'|'PITCHER'='HITTER'){
- let c=activeUsCareer(kind);c=setUsPreseasonArchetype(c,c.revision,c.world.players[c.protagonistKey]!.archetype);const e=unreadUsFirstCampNotices(c)[0]!;c=resolveUsFirstCampNotice(c,c.revision,{eventKey:e.eventKey,eventVersion:e.eventVersion,command:'ACK_EVENT'});c=confirmUsPreseasonPlan(c,c.revision);return publishUsSeasonSchedule(c,c.revision);
+export function preparedUsCareer(kind:'HITTER'|'PITCHER'='HITTER',calendarVersion?:CalendarVersion){
+ let c=activeUsCareer(kind);if(calendarVersion)c.world.calendar=createSeasonCalendar(Number(c.world.seasonKey),calendarVersion);c=setUsPreseasonArchetype(c,c.revision,c.world.players[c.protagonistKey]!.archetype);const e=unreadUsFirstCampNotices(c)[0]!;c=resolveUsFirstCampNotice(c,c.revision,{eventKey:e.eventKey,eventVersion:e.eventVersion,command:'ACK_EVENT'});c=confirmUsPreseasonPlan(c,c.revision);return publishUsSeasonSchedule(c,c.revision);
 }

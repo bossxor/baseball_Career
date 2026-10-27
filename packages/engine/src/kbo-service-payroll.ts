@@ -1,3 +1,4 @@
+import type {CalendarVersion} from './season-calendar.js';
 import {kboClubBalance,protectKboServiceBudget} from './kbo-finance.js';
 import {kboRemainderSeasonCharge,settleKboPlayerRemainderPayrollDay} from './kbo-remainder-pay.js';
 import {createKboSeasonSchedules} from './kbo-schedule.js';
@@ -12,21 +13,23 @@ import {createKboFutures11Schedule} from './kbo-futures-schedule.js';
 
 /** Optional extension. Original annual salary stays immutable; this is the current-year reservation, not a new deal. */
 export interface KboServicePayroll {
+ calendarVersion?:CalendarVersion;
  schemaVersion:1;kind:'SPORTS'|'ACTIVE';ledger:KboContractPaymentLedger;seasonKey:string;reservedGameDays:number;
  returnDate:{seasonKey:string;worldDay:number};
 }
 const june30=(year:number)=>year%4===0 && (year%100!==0 || year%400===0)?181:180;
 const forecastCache=new Map<string,number>();
 /** Pure calendar forecast, memoized off the serialized state; reloads produce exactly the same value without RNG. */
-function returnCapacity(clubId:string,year:string,day:number):number {
- const key=JSON.stringify([clubId,year,day]),old=forecastCache.get(key);if(old!==undefined)return old;
- const schedule=createKboFutures11Schedule([...KBO_CLUBS.map(c=>c.id),'SANGMU'],year,createSeasonCalendar(Number(year)));
+function returnCapacity(clubId:string,year:string,day:number,version:CalendarVersion):number {
+ const key=JSON.stringify([clubId,year,day,version]),old=forecastCache.get(key);if(old!==undefined)return old;
+ const schedule=createKboFutures11Schedule([...KBO_CLUBS.map(c=>c.id),'SANGMU'],year,createSeasonCalendar(Number(year),version));
  const n=schedule.filter(g=>g.worldDay>day && (g.homeTeamKey===clubId || g.awayTeamKey===clubId)).length;forecastCache.set(key,n);return n;
 }
 export function assertKboServicePayroll(contract:KboInitialContract):void {
  const p=contract.servicePay;if(!p)return;assertKboContractPaymentLedger(p.ledger);
  const s=p.ledger.contract,b=kboContractPaymentBalance(p.ledger);
  if(p.ledger.resume && (p.ledger.resume.completedSeasonKey!==p.returnDate.seasonKey || p.ledger.resume.completedWorldDay!==p.returnDate.worldDay))throw new RangeError('INVALID_KBO_SERVICE_PAYROLL');
+ if(p.calendarVersion!==undefined&&!['calendar-1','calendar-2'].includes(p.calendarVersion))throw new RangeError('INVALID_KBO_PAYROLL_CALENDAR');
  if(p.schemaVersion!==1 || !['SPORTS','ACTIVE'].includes(p.kind) || p.ledger.schemaVersion!==2 || p.seasonKey!==contract.seasonKey || !/^\d{4}$/.test(p.returnDate.seasonKey) || Number(p.returnDate.seasonKey)<2027 || p.returnDate.worldDay!==june30(Number(p.returnDate.seasonKey)) || s.contractKey!==contract.contractKey || s.playerKey!==contract.playerKey || s.clubId!==contract.clubId || s.annualSalaryWon!==contract.annualSalaryWon || !Number.isSafeInteger(p.reservedGameDays) || p.reservedGameDays<0 || p.reservedGameDays>b.remainingPaidGameDays || p.reservedGameDays>144)throw new RangeError('INVALID_KBO_SERVICE_PAYROLL');
 }
 export const kboContractSuspended=(c:KboInitialContract)=>!!c.servicePay && c.servicePay.ledger.resume===null;
@@ -41,19 +44,21 @@ export function kboContractSeasonCharge(contract:KboInitialContract):number {
 function capacity(p:KboServicePayroll,clubId:string,seasonKey:string):number {
  if(Number(seasonKey)<Number(p.returnDate.seasonKey))return 0;
  if(seasonKey!==p.returnDate.seasonKey)return 144;
- const futures=returnCapacity(clubId,seasonKey,p.returnDate.worldDay);if(p.kind==='SPORTS')return futures;
- const schedules=createKboSeasonSchedules(KBO_CLUBS.map(c=>c.id),seasonKey,createSeasonCalendar(Number(seasonKey)));
+ const version=p.calendarVersion??'calendar-1',futures=returnCapacity(clubId,seasonKey,p.returnDate.worldDay,version);if(p.kind==='SPORTS')return futures;
+ const schedules=createKboSeasonSchedules(KBO_CLUBS.map(c=>c.id),seasonKey,createSeasonCalendar(Number(seasonKey),version));
  return Math.max(futures,...Object.values(schedules).map(games=>games.filter(g=>g.worldDay>p.returnDate.worldDay && (g.homeTeamKey===clubId || g.awayTeamKey===clubId)).length));
 }
-export function createKboServicePayroll(contract:KboInitialContract,program:KboMilitaryProgram,returnDate:{seasonKey:string;worldDay:number}):KboServicePayroll {
+export function createKboServicePayroll(contract:KboInitialContract,program:KboMilitaryProgram,returnDate:{seasonKey:string;worldDay:number},calendarVersion:CalendarVersion='calendar-1'):KboServicePayroll {
+ if(!['calendar-1','calendar-2'].includes(calendarVersion))throw new RangeError('INVALID_KBO_PAYROLL_CALENDAR');
  if(program.blocks[1]?.seasonKey!==returnDate.seasonKey)throw new RangeError('INVALID_KBO_SERVICE_PAYROLL');
- const p:KboServicePayroll={schemaVersion:1,kind:program.kind,ledger:createKboContractPaymentLedger(program),seasonKey:contract.seasonKey,reservedGameDays:0,returnDate:{...returnDate}};
+ const p:KboServicePayroll={schemaVersion:1,...(calendarVersion==='calendar-2'?{calendarVersion}:{}),kind:program.kind,ledger:createKboContractPaymentLedger(program),seasonKey:contract.seasonKey,reservedGameDays:0,returnDate:{...returnDate}};
  p.reservedGameDays=Math.min(p.ledger.contract.remainingPaidGameDays,capacity(p,contract.clubId,contract.seasonKey));assertKboServicePayroll({...contract,servicePay:p});return p;
 }
 /** Called only during actual Y02 activation. Past receipts and frozen principal never reset. */
-export function carryKboServicePayroll(contract:KboInitialContract,targetSeasonKey:string):KboServicePayroll {
+export function carryKboServicePayroll(contract:KboInitialContract,targetSeasonKey:string,calendarVersion:CalendarVersion=contract.servicePay?.calendarVersion??'calendar-1'):KboServicePayroll {
+ if(!['calendar-1','calendar-2'].includes(calendarVersion))throw new RangeError('INVALID_KBO_PAYROLL_CALENDAR');
  assertKboServicePayroll(contract);if(!contract.servicePay || !/^\d{4}$/.test(targetSeasonKey) || Number(targetSeasonKey)!==Number(contract.seasonKey)+1)throw new RangeError('INVALID_KBO_PAYROLL_CARRY');
- const p=structuredClone(contract.servicePay);p.seasonKey=targetSeasonKey;
+ const p=structuredClone(contract.servicePay);p.seasonKey=targetSeasonKey;if(calendarVersion==='calendar-2')p.calendarVersion=calendarVersion;else delete p.calendarVersion;
  p.reservedGameDays=Math.min(kboContractPaymentBalance(p.ledger).remainingPaidGameDays,capacity(p,contract.clubId,targetSeasonKey));return p;
 }
 /** Project residual paid days after this year's reserved portion into later seasons; never calendar-years +1. */

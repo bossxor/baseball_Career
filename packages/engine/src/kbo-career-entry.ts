@@ -75,7 +75,7 @@ function entryKey(ready:KboAmateurYearEnd){return JSON.stringify(['kbo-season-en
 export function startSignedKboCareer(source:HighSchoolCareer,expectedRevision:number):KboCareer {
  assertCareerRevision(source,expectedRevision);const ready=assertKboAmateurYearEnd(source),recruitment=assertCareerKboSigning(source),signing=recruitment.program.signing!;
  if(source.events.some(e=>e.status==='OPEN') || !source.development)throw new RangeError('KBO_ENTRY_NOT_READY');
- const year=Number(signing.registration.seasonKey),calendar=createSeasonCalendar(year),key=source.world.protagonistKey;
+ const year=Number(signing.registration.seasonKey),calendar=createSeasonCalendar(year,'calendar-2'),key=source.world.protagonistKey;
  if(signing.registration.seasonKey!==String(year) || year!==source.world.calendar!.year+1 || signing.registration.playerKey!==key || Object.values(source.records.games).some(g=>g.scope.seasonKey===String(year)))throw new RangeError('KBO_ENTRY_SEASON_CONFLICT');
  const player={...structuredClone(source.world.players[key]!),age:source.world.players[key]!.age+1,fatigue:0};
  const world:ActiveKboRosterWorld={...structuredClone(recruitment.world),status:'ACTIVE',calendar};

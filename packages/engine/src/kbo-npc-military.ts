@@ -23,7 +23,7 @@ export function activateKboNpcMilitaryContracts(source:KboCareer,c:KboCareer):vo
  for(const [key,m] of added){
   const original=source.world.contracts[key];
   if(key===c.protagonistKey || !original || m.program.startedSeason!==c.world.seasonKey || Object.hasOwn(c.world.suspendedContracts,key) || original.contractKey!==m.program.contract.contractKey)throw new RangeError('INVALID_NPC_SERVICE_ACTIVATION');
-  const contract=structuredClone(original);contract.servicePay=createKboServicePayroll(contract,m.program,kboMilitaryCompletionDays(m.program)[1]!);
+  const contract=structuredClone(original);contract.servicePay=createKboServicePayroll(contract,m.program,kboMilitaryCompletionDays(m.program)[1]!,c.world.calendar.version);
   c.world.suspendedContracts[key]=contract;c.world.clubs.find(t=>t.id===contract.clubId)!.reservedSalaryWon+=kboContractSeasonCharge(contract);
  }
  if(c.schemaVersion<6)c.schemaVersion=6;

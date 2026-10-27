@@ -6,7 +6,7 @@ import {putGameContribution} from './records.js';
 import type {KboCareer,KboNationalResume} from './kbo-career-entry.js';
 import {assertKboCareerRevision} from './kbo-career-version.js';
 import type {NationalLedger,NationalMedal,NationalTournament} from './kbo-national.js';
-import {sealNationalCompetitionResult} from './kbo-national.js';
+import {sealNationalCompetitionResult,queueNationalFirstAppearance} from './kbo-national.js';
 import {assertNationalSelectionSnapshot,nationalLineupBatting} from './national-selection.js';
 import {assertNationalBracket,createNationalBracket,nextNationalMatch,prepareNationalMatch,advanceNationalMatch,nationalNationPreset,nationalInviteDeadlines,nationalMatchesOnDay} from './national-bracket.js';
 import type {NationalBracket,NationalTournamentWindow} from './national-bracket.js';
@@ -194,6 +194,7 @@ export function advanceCareerNationalMatch(c:KboCareer,revision:number,maxPlateA
  next.records=putGameContribution(next.records,out.contribution).ledger;
  commitPitchXp(next,out.finalGame);
  replaceBracket(next,out.bracket);
+ if(bracket.dayCloseVersion===1)queueNationalFirstAppearance(next,bracket.competitionId,out.contribution.gameKey);
  if(out.stopReason!=='TOURNAMENT_COMPLETE'||bracket.dayCloseVersion===1){next.revision++;return {career:next,stopReason:'GAME_FINAL'};}
  return {career:sealCareerTournament(next,revision,out.bracket),stopReason:'TOURNAMENT_COMPLETE'};
 }

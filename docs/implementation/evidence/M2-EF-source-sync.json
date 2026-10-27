@@ -1,0 +1,177 @@
+{
+  "utc": "2026-10-27T11:10:12.665Z",
+  "head": "088597db7086154cd1816c04b19c6e15d566108e",
+  "fullCheck": "PASS",
+  "result": {
+    "tests": 774,
+    "pass": 772,
+    "skip": 2,
+    "fail": 0,
+    "durationMs": 672040.6242,
+    "webPass": 22,
+    "unchangedFiles": 455
+  },
+  "policy": "V documents only via Copy-Item; no V .git or runtime sync",
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "a0dc60779bee2eae551531e03453bee65fc679578e68a958edeb82cd6490e2e1"
+    },
+    {
+      "path": "docs/design/20-INTERNATIONAL-COMPETITIONS.md",
+      "sha256": "3ece3b67a59299ce2db5c87e5f64e0b8bb8b17dd919d42d15df8f14e526afda8"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "f48fdb1468e51964dbb5cbfff7d83a68e31266f64e777fa856d32f45e5f63d26"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "eb739b7b7913ca2afd8942a267122ce5a6526a16beb25fa1ad207b4279ee5419"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "3fc407c87a6618f1d104a0e66354571fa3e4793861ad3c694119247699bebd55"
+    },
+    {
+      "path": "docs/implementation/HANDOFF-TO-GPT.md",
+      "sha256": "7ffa7900cd831200d6b29958ca812d8be39d2726e5979e740cb47daf97c10b1e"
+    },
+    {
+      "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.json",
+      "sha256": "eca776d7cedd9886817e04750b727a17bdd6f53e4031c54b2d175f7ce7b02663"
+    },
+    {
+      "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.md",
+      "sha256": "ba335d0da1795ad20c62c859fd20aba38a8a3f41dcf9e9b91d8f97763e02bfd6"
+    },
+    {
+      "path": "docs/implementation/M2-INTERNATIONAL-INTEGRATION-PLAN.md",
+      "sha256": "5a1c68359aa355d81d5e9392ffd4e4fa80482313f56912b381d442a081ec9c31"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "efb3bbf0a7a10285416ee3ab875505c5931f4f8f21166ab332915b1438db2c1c"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "70135388cec708d9545e61926db378f91a9aa5ef0502287d8f58ae477c177d00"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "sha256": "b9cbc196c6e2301ecd803697c0c339e689d5413e3a9a41c8b73b0ff4efea558b"
+    },
+    {
+      "path": "packages/engine/src/kbo-futures-schedule.ts",
+      "sha256": "d49bdd55e065cfaf935d72d36d5c7b7ca2a0974473e9084d5397dfbafc51b7d0"
+    },
+    {
+      "path": "packages/engine/src/kbo-national.ts",
+      "sha256": "ea9c757a034c70503292977480ca341be75622da2733b6bbd2a8d3c4a101893a"
+    },
+    {
+      "path": "packages/engine/src/kbo-npc-military.ts",
+      "sha256": "87c23be6360799a20bd3568486f0b757777920ceb1d534e5f46cedeef85591cd"
+    },
+    {
+      "path": "packages/engine/src/kbo-preseason.ts",
+      "sha256": "ec9f88572e3a6b9eb57e60325f3ff0a0f63b48aa84ab23b4b8e42a59f00a863a"
+    },
+    {
+      "path": "packages/engine/src/kbo-schedule.ts",
+      "sha256": "75328dcda0e72f65a6ce729e88511ee1d85b973eede139c2eefd9a6f5271e256"
+    },
+    {
+      "path": "packages/engine/src/kbo-service-payroll.ts",
+      "sha256": "168766b437872f4cc1e4a429c666dac8d3db151a259dabf21d7d9648eb11499a"
+    },
+    {
+      "path": "packages/engine/src/kbo-us-activation.ts",
+      "sha256": "04e1b8b7114ce9156a4d6f70f01dd09577290d12c9a973bf5298ba88b772ab70"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "9cf2f3c38f470d9b9308cc398a9177699cfa8d1028d5c936c811b8803c177589"
+    },
+    {
+      "path": "packages/engine/src/national-progress.ts",
+      "sha256": "e2d0f8b46642ebeefbf862efd9b61b6be4316dbfb2775c0525f2ceb54dc57c6c"
+    },
+    {
+      "path": "packages/engine/src/season-calendar.ts",
+      "sha256": "fbe0a50fff5c29a7843cfeb7cd32f0af583e99cb3d9b122ac4766cd52d843f12"
+    },
+    {
+      "path": "packages/engine/src/us-career-entry.ts",
+      "sha256": "049b025c70f15a493b6e4732816c2650e2f961bbc6ba46eb3d9c762fbb7c5259"
+    },
+    {
+      "path": "packages/engine/src/us-preseason.ts",
+      "sha256": "c84c78823d08cae03406d231465066a363eda130319771c80b348e031930100d"
+    },
+    {
+      "path": "packages/engine/src/us-schedule.ts",
+      "sha256": "2e49534ccd999ff8852237f81e6882aa8af0024ea5658c1d37e0147f2881d406"
+    },
+    {
+      "path": "packages/engine/src/us-year-transition.ts",
+      "sha256": "372c983cacac8e5eeb836fdb79c35b8dda52c927906c46678facef6f927e9966"
+    },
+    {
+      "path": "packages/engine/test/national-progress.test.ts",
+      "sha256": "18dbdf144bfee251b32dd6709ddc3fa6b56de26a3e98e86ce3797aa5d6e2720e"
+    },
+    {
+      "path": "packages/engine/test/us-fixtures.ts",
+      "sha256": "bfe6b741047d257a5e5b68e1537425b191531fbbcdf004376b169f74308b1c42"
+    },
+    {
+      "path": "packages/engine/test/us-season.test.ts",
+      "sha256": "afdc062fe1f85374ac0743f7073452a540f817c1409d32b3e7f204190a28b38a"
+    },
+    {
+      "path": "docs/implementation/M2-EF-WBC-PROFESSIONAL-CALENDAR.md",
+      "sha256": "83eecab929aab9f60941b8cdf3d900da105e727b45cc3e35af7af8c920f92960"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EF-E46-after.log",
+      "sha256": "759bad05e4f9e0911dfbcb5350e4ca32f8486a624499d09cd7930c780fc33531"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EF-E46-before-failure.log",
+      "sha256": "6e7b9aa33028c5ee3b5df773e59aefce13f45bff4d76ee0ee1195d6ea9318b6b"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EF-check.log",
+      "sha256": "e9e8404838bcef5db06a9adb73061c94d23bc06c8593bfbb39324f6976347968"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EF-focused.log",
+      "sha256": "555bb6ca1ea3e4feb1d7977cfb6e2b48e7dbb3c333c6b3673aa6fc1700f7b713"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EF-legacy-golden-input-failure.log",
+      "sha256": "a813b0d14ad5c89a940730b64e7dc4373680854bd67de4cd2991c87e58057de6"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EF-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EF-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EF-source-freeze.json",
+      "sha256": "7889130a871fde727fa798635f488933562ec4f37744c2fefb28af5e3ac3e778"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EF-types.log",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "packages/engine/test/professional-calendar.test.ts",
+      "sha256": "fcfad9390f5fee6370bbeb78b4c000b7bf6b8d525bbe2eb6e6fb001771242a28"
+    }
+  ]
+}
