@@ -1,3 +1,4 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
 import type {UsCareer} from './us-career-entry.js';
 import {assertUsCareerRevision} from './us-career-entry.js';
 import type {UsPendingGame} from './us-season.js';
@@ -28,7 +29,7 @@ function seeding(c:UsCareer,conferences:Record<MlbLeague,readonly string[]>){
 /** Internal server registry supplies the fixed AL/NL membership; no user-selected bracket or playoff reroll. */
 export function startUsPostseason(c:UsCareer,revision:number,conferences:Record<MlbLeague,readonly string[]>):UsCareer {
  assertUsSeason(c,revision);if(c.phaseContext.phase!=='SEASON_REVIEW'||c.postseason||c.season!.days.length!==c.season!.lastDay-c.season!.firstDay+1||c.events.some(e=>e.status==='OPEN'))throw new RangeError('US_POSTSEASON_NOT_READY');auditUsClosedDays(c);
- const {seeds,priority}=seeding(c,conferences),next:UsCareer={...c};next.phaseContext={phase:'POSTSEASON_PROGRESS',bracket:createMlbPostseason(c.world.seasonKey,seeds,priority),conferences:{AL:[...conferences.AL],NL:[...conferences.NL]},nextWorldDay:c.season!.lastDay+1,gameEvidence:[],pendingGame:null};next.revision++;return next;
+ const {seeds,priority}=seeding(c,conferences),next:UsCareer={...c};next.phaseContext={phase:'POSTSEASON_PROGRESS',bracket:createMlbPostseason(c.world.seasonKey,seeds,priority),conferences:{AL:[...conferences.AL],NL:[...conferences.NL]},nextWorldDay:c.season!.lastDay+1,gameEvidence:[],pendingGame:null};next.revision++;return refreshCareerSeasonGoals(next);
 }
 function assertProgress(c:UsCareer,p:UsPostseasonPhase){
  assertMlbPostseason(p.bracket);const {seeds,priority}=seeding(c,p.conferences);
@@ -48,7 +49,7 @@ function closeGameDay(c:UsCareer,g:ScheduledGame){
 /** One official playoff game per date, bounded to the existing worker limit; regular payroll/growth is not paid twice. */
 export function advanceUsPostseason(c:UsCareer,revision:number):{career:UsCareer;stopReason:UsPostseasonStop} {
  assertUsSeason(c,revision);if(c.phaseContext.phase!=='POSTSEASON_PROGRESS'||c.postseason)throw new RangeError('INVALID_CAREER_PHASE');assertProgress(c,c.phaseContext);
- const next=cloneUsCareerForGames(c),phase=next.phaseContext as UsPostseasonPhase,game=nextMlbPostseasonGame(phase.bracket),finish=(stopReason:UsPostseasonStop)=>{next.revision++;return {career:next,stopReason};};
+ const next=cloneUsCareerForGames(c),phase=next.phaseContext as UsPostseasonPhase,game=nextMlbPostseasonGame(phase.bracket),finish=(stopReason:UsPostseasonStop)=>{next.revision++;return {career:refreshCareerSeasonGoals(next),stopReason};};
  if(!game){next.postseason={bracket:phase.bracket,conferences:phase.conferences,gameEvidence:phase.gameEvidence};next.phaseContext={phase:'SEASON_REVIEW'};return finish('POSTSEASON_COMPLETE');}
  const scheduled:ScheduledGame={simulationKey:gameKey(next.world.seasonKey,game.seriesId,game.gameNumber),leagueKey:'MLB',seasonKey:next.world.seasonKey,phase:'POSTSEASON',round:phase.bracket.results.length,worldDay:phase.nextWorldDay,homeTeamKey:game.homeTeamKey,awayTeamKey:game.awayTeamKey};
  if(!phase.pendingGame){prepareUsRosters(next,phase.nextWorldDay);const world=usCompetitionGameWorld(next,'MLB',scheduled);for(const club of world.schools){const needs=planEmergencyRoster(club.roster.map(key=>({player:world.players[key]!,available:!Object.hasOwn(next.health.injuries,key),temporary:false})));if(needs.requiredHitters||needs.requiredPitchers)return finish('ROSTER_DECISION_REQUIRED');}phase.pendingGame={level:'MLB',job:prepareSchoolCompetitionGame(world,next.records,scheduled,usGameContext(next,world))};}

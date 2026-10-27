@@ -1,3 +1,4 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
 import {formRegisteredTeamTeammate} from './team-teammates.js';
 import {queueRelationFormationNotices} from './relation-notices.js';
 import type {HighSchoolCareer} from './high-school-career.js';
@@ -46,7 +47,7 @@ export function closeHighSchoolSeasonForCollege(source:HighSchoolCareer,expected
  const key=source.world.protagonistKey,closed=finalizeSeasonGrowth(career.world.players[key]!,career.seasonGrowth!,source.world.calendar!.growthDays.length);
  career.world.players[key]=closed.player;career.seasonGrowth=closed.ledger;career.health=closeSeasonHealth(career.health,source.world.seasonKey).ledger;career.revision++;
  const receiptKey=JSON.stringify(['college-year-end',admission.admissionKey,source.world.seasonKey]);
- career.collegeYearEnd={receiptKey,admissionKey:admission.admissionKey,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};return career;
+ Object.assign(career,refreshCareerSeasonGoals(career));career.collegeYearEnd={receiptKey,admissionKey:admission.admissionKey,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};return refreshCareerSeasonGoals(career);
 }
 /** Pure atomic activation. Repeating the same source reproduces the same world; old state stays intact on failure. */
 export function startAdmittedCollegeSeason(source:HighSchoolCareer,expectedRevision:number):HighSchoolCareer {
@@ -70,5 +71,5 @@ export function startAdmittedCollegeSeason(source:HighSchoolCareer,expectedRevis
  career.planHistory=[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}];
  career.collegeAdmission={...admission,status:'ENROLLED'};career.phaseContext={phase:'PRESEASON_SETUP'};delete career.collegeYearEnd;career.revision++;
  const entryDay=world.calendar.growthDays[0]!;career.relationships=formRegisteredTeamTeammate(career.relationships,world,admission.admissionKey,entryDay);
- const notices=queueRelationFormationNotices(career,entryDay);if(notices)career.relationNotices=notices;return career;
+ const notices=queueRelationFormationNotices(career,entryDay);if(notices)career.relationNotices=notices;return refreshCareerSeasonGoals(career);
 }

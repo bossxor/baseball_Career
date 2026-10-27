@@ -1,3 +1,4 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
 import {auditUsCompletedPostseason} from './us-postseason-progress.js';
 import {applyUsSeasonTraining} from './us-windows.js';
 import type {ClosedGrowthPeriod} from './growth-ledger.js';
@@ -20,7 +21,7 @@ export function settleUsSeasonGrowth(c:UsCareer,revision:number,forfeitUnusedTra
  if(!c.development.trainingUsedSeasons.includes(c.world.seasonKey)){if(!forfeitUnusedTraining)throw new RangeError('TRAINING_DECISION_REQUIRED');c=applyUsSeasonTraining(c,{type:'SKIP'});}
  const next:UsCareer={...c,world:{...c.world,players:{...c.world.players}},season:{...c.season!}},s=next.season!,W=c.world.calendar.growthDays.length,totals=US_LEVELS.map(leagueKey=>recordTotals(c.records,{seasonKey:c.world.seasonKey,leagueKey,phase:'REGULAR'})),npcs:NonNullable<NonNullable<UsCareer['season']>['growthFinalized']>['npcs']={};
  for(const key of Object.keys(s.openingPlayers).sort()){const start=s.openingPlayers[key]!,current=next.world.players[key];if(!current)throw new RangeError('MISSING_US_GROWTH_PLAYER');const own=key===c.protagonistKey,appearances=totals.reduce((n,t)=>n+(start.kind==='HITTER'?(t.batting[key]?.PA??0):(t.pitching[key]?.outs??0)),0),ledger=own?c.seasonGrowth:createSeasonGrowthLedger(start,c.world.seasonKey,W),periods=usGrowthPeriods(c,key,start,appearances),growth=settleClosedGrowthPeriods(current,ledger,periods),closed=finalizeSeasonGrowth(growth.player,growth.ledger,W);next.world.players[key]=closed.player;if(own)next.seasonGrowth=closed.ledger;else npcs[key]={budgetUnits:growth.newBudgetUnits,gainedUnits:growth.newGainedUnits,agingLossUnits:closed.lossUnits};}
- s.growthFinalized={receiptKey:JSON.stringify(['us-season-growth-final',s.receiptKey]),npcs};next.revision++;return next;
+ s.growthFinalized={receiptKey:JSON.stringify(['us-season-growth-final',s.receiptKey]),npcs};next.revision++;return refreshCareerSeasonGoals(next);
 }
 
 function usGrowthPeriods(c:UsCareer,key:string,start:DevelopmentPlayer,appearances:number):ClosedGrowthPeriod[]{

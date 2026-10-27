@@ -1,3 +1,4 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCollegeCareerRevision} from './high-school-career.js';
 import {schoolYearEndBasis,schoolYearEndRepertoire,archiveSchoolSeason} from './college-entry.js';
@@ -57,7 +58,7 @@ export function closeCollegeSeasonForNextYear(source:HighSchoolCareer,expectedRe
  career.collegeNpcGrowth={seasonKey:base.seasonKey,results};
  const closed=finalizeSeasonGrowth(career.world.players[base.protagonistKey]!,career.seasonGrowth!,base.calendar.growthDays.length);career.world.players[base.protagonistKey]=closed.player;career.seasonGrowth=closed.ledger;
  career.health=closeSeasonHealth(career.health,base.seasonKey).ledger;career.phaseContext={phase:'NEXT_SEASON_READY',route:'COLLEGE',admissionKey:source.collegeAdmission!.admissionKey};career.revision++;
- career.collegeYearEnd={receiptKey:receiptKey(source),admissionKey:source.collegeAdmission!.admissionKey,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};return career;
+ Object.assign(career,refreshCareerSeasonGoals(career));career.collegeYearEnd={receiptKey:receiptKey(source),admissionKey:source.collegeAdmission!.admissionKey,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};return refreshCareerSeasonGoals(career);
 }
 function nextWorld(source:HighSchoolCareer):CollegeWorld {
  const base=permanentWorld(source),year=base.calendar.year+1,seasonKey=String(year),calendar=createSeasonCalendar(year),players:Record<string,DevelopmentPlayer>={},repertoires:Record<string,Repertoire>={};
@@ -89,5 +90,5 @@ export function startNextCollegeSeason(source:HighSchoolCareer,expectedRevision:
  career.development={...career.development!,seasonStartPlayer:structuredClone(player)};career.planHistory=[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}];
  career.collegeAdmission={...admission,academicYear:admission.academicYear===1?2:admission.academicYear===2?3:4};
  if(career.traits)career.traits={...career.traits,lastClosedDay:null,lastSeasonKey:world.seasonKey};
- delete career.collegeYearEnd;delete career.collegeCup;delete career.collegeResult;delete career.collegeNpcGrowth;career.phaseContext={phase:'PRESEASON_SETUP'};career.revision++;return career;
+ delete career.collegeYearEnd;delete career.collegeCup;delete career.collegeResult;delete career.collegeNpcGrowth;career.phaseContext={phase:'PRESEASON_SETUP'};career.revision++;return refreshCareerSeasonGoals(career);
 }

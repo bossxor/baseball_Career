@@ -1,3 +1,4 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
 import {settleRegisteredPitchLearning} from './pitch-learning-progress.js';
 import {prepareHighSchoolGame,advanceHighSchoolGame,commitHighSchoolGame} from './high-school-game.js';
 import {closeHighSchoolDay} from './high-school-day.js';
@@ -48,7 +49,7 @@ export function advanceSchoolCareer(source:HighSchoolCareer,expectedRevision:num
  if(progress.pendingGame && (progress.pendingGame.worldKey!==career.world.worldKey || progress.pendingGame.seasonKey!==career.world.seasonKey || progress.pendingGame.worldDay!==progress.nextWorldDay))throw new RangeError('PENDING_GAME_CONTEXT_CHANGED');
  const plan=current??{mode:mode??'NEXT_MAJOR_EVENT',startWorldDay:progress.nextWorldDay,startTeamGames:teamGames(career)};progress.advancePlan=plan;
  let plateAppearances=0,completedInnings=0;const initialTeamGames=teamGames(career),lastDay=Math.max(...career.world.schedule.map(g=>g.worldDay));
- const finish=(stopReason:SchoolProgressStop,healthChanges:SchoolProgressResult['healthChanges']=null):SchoolProgressResult=>{if(stopReason!=='CHUNK_LIMIT' && stopReason!=='ENGINE_LIMIT')progress.advancePlan=null;career.revision++;return {career,stopReason,plateAppearances,completedInnings,healthChanges};};
+ const finish=(stopReason:SchoolProgressStop,healthChanges:SchoolProgressResult['healthChanges']=null):SchoolProgressResult=>{if(stopReason!=='CHUNK_LIMIT' && stopReason!=='ENGINE_LIMIT')progress.advancePlan=null;career.revision++;return {career:refreshCareerSeasonGoals(career),stopReason,plateAppearances,completedInnings,healthChanges};};
  while(plateAppearances<1000 && completedInnings<20 && teamGames(career)-initialTeamGames<6){
   const day=progress.nextWorldDay;
   if(day>lastDay){career.traits=settleStarterSeasonTraits(career,lastDay);career.phaseContext={phase:'SEASON_REVIEW'};const seasonNotice=raiseHiddenTraitNotice(career,lastDay,{phase:'SEASON_REVIEW'});if(seasonNotice){Object.assign(career,seasonNotice);return finish('MAJOR_EVENT');}return finish('SEASON_REVIEW');}

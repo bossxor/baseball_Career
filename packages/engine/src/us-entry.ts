@@ -1,3 +1,4 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {assertCareerUsSigning} from './career-us.js';
@@ -27,5 +28,5 @@ export function closeSchoolSeasonForUs(source:HighSchoolCareer,expectedRevision:
  if(!source.development.trainingUsedSeasons.includes(source.world.seasonKey)){if(forfeitUnusedTraining!==true)throw new RangeError('TRAINING_FORFEIT_REQUIRED');c=applyCareerSeasonTraining(source,{type:'SKIP'});}
  const playerKey=c.world.protagonistKey,closed=finalizeSeasonGrowth(c.world.players[playerKey]!,c.seasonGrowth!,c.world.calendar!.growthDays.length);c.world.players[playerKey]=closed.player;c.seasonGrowth=closed.ledger;c.health=closeSeasonHealth(c.health,c.world.seasonKey).ledger;c.revision++;
  if(canonicalJson(c.world.players[playerKey])!==canonicalJson(r.program.input.player))throw new RangeError('US_YEAR_END_PLAYER_CHANGED');
- c.usYearEnd={receiptKey:key(c,signing.contract.contractKey),contractKey:signing.contract.contractKey,signingReceiptKey:signing.receiptKey,recruitmentSourceBasis:r.sourceBasis,sourceRevision:c.revision,sourceBasis:schoolYearEndBasis(c)};assertUsAmateurYearEnd(c);return c;
+ Object.assign(c,refreshCareerSeasonGoals(c));c.usYearEnd={receiptKey:key(c,signing.contract.contractKey),contractKey:signing.contract.contractKey,signingReceiptKey:signing.receiptKey,recruitmentSourceBasis:r.sourceBasis,sourceRevision:c.revision,sourceBasis:schoolYearEndBasis(c)};assertUsAmateurYearEnd(c);return refreshCareerSeasonGoals(c);
 }

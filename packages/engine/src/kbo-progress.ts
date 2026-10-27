@@ -1,3 +1,4 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
 import {settleRegisteredPitchLearning,registerPitchLearning,registerPitchLearningCalendar} from './pitch-learning-progress.js';
 import {closeKboNpcMilitaryCalendarDay,settleKboNpcMilitaryPayrollDay} from './kbo-npc-military.js';
 import {kboReturnConditionMultiplier,settleKboReturnConditionDay} from './kbo-return-condition.js';
@@ -95,7 +96,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
  if(!Number.isSafeInteger(progress.nextWorldDay) || progress.nextWorldDay<firstDay(career))throw new RangeError('INVALID_KBO_PROGRESS');
  if(progress.pendingGame && (progress.pendingGame.job.worldDay!==progress.nextWorldDay || progress.pendingGame.job.worldKey!==career.world.worldKey || progress.pendingGame.job.seasonKey!==career.world.seasonKey))throw new RangeError('PENDING_GAME_CONTEXT_CHANGED');
  let plateAppearances=0,completedInnings=0,daysClosed=0;
- const finish=(stopReason:KboProgressStop):KboProgressResult=>{career.revision++;return {career,stopReason,plateAppearances,completedInnings,daysClosed};};
+ const finish=(stopReason:KboProgressStop):KboProgressResult=>{career.revision++;return {career:refreshCareerSeasonGoals(career),stopReason,plateAppearances,completedInnings,daysClosed};};
  // Regular-season close: T16 starter streaks settle once per season (107 §7), then the season review phase.
  const review=():KboProgressResult=>{career.traits=settleStarterSeasonTraits(career,last);career.phaseContext={phase:'SEASON_REVIEW'};return finish('SEASON_REVIEW');};
  while(plateAppearances<1000 && completedInnings<20 && daysClosed<maxDays){

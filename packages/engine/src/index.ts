@@ -147,3 +147,6 @@ export * from './us-service-time.js';
 export * from './us-retirement.js';
 
 export * from './us-archive-view.js';
+
+export {SEASON_GOAL_DEFINITIONS,setCareerSeasonGoals,replaceCareerSeasonGoal,careerSeasonGoalsView} from './season-goals.js';
+export type {GoalCareer,SeasonGoalId,SeasonGoalSlot,SeasonGoals,CareerGoalLedger} from './season-goals.js';

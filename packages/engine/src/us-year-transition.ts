@@ -1,3 +1,4 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
 import {mlbServiceTime} from './us-service-time.js';
 import type {UsCareer,ActiveUsRosterWorld} from './us-career-entry.js';
 import {assertUsCareerRevision,assertActiveUsRosterWorld} from './us-career-entry.js';
@@ -62,5 +63,5 @@ export function startNextUsMinorSeason(c:UsCareer,revision:number,funding:readon
  const next:UsCareer={...c,schemaVersion:3,revision:c.revision+1,world:stage.world,health:stage.health,minorYears:[...(c.minorYears??[]),archive],inventory,contract:{...c.contract,seasonKey:stage.targetSeasonKey},registration:{...c.registration,seasonKey:stage.targetSeasonKey,status:'ACTIVE'},phaseContext:{phase:'PRESEASON_SETUP'},seasonGrowth:createSeasonGrowthLedger(player,stage.targetSeasonKey,stage.world.calendar.growthDays.length),development:{...c.development,seasonStartPlayer:structuredClone(player)},planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
  if(c.traits)next.traits={...c.traits,lastClosedDay:null,lastSeasonKey:stage.targetSeasonKey};
  delete next.season;delete next.seasonSchedule;delete next.preseasonPlan;delete next.campNotices;delete next.postseason;
- assertUsCareerRevision(next,next.revision);return next;
+ assertUsCareerRevision(next,next.revision);return refreshCareerSeasonGoals(next);
 }

@@ -1,3 +1,4 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
 import {closeKboNpcMilitaryGrowth} from './kbo-npc-military-growth.js';
 import {settleKboFreeAgentSeason} from './kbo-free-agents.js';
 import type {KboCareer} from './kbo-career-entry.js';
@@ -64,5 +65,5 @@ export function closeKboSeason(source:KboCareer,expectedRevision:number,forfeitU
  }
  career.revision++;
  career.seasonClose={receiptKey:JSON.stringify(['kbo-season-close',career.world.worldKey,season]),seasonKey:season,sourceRevision:career.revision,agingLossUnits:closed.lossUnits,trainingForfeited:forfeited,npcGrowth:npc.results};
- return career;
+ return refreshCareerSeasonGoals(career);
 }

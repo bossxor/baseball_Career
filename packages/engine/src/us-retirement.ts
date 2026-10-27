@@ -1,3 +1,4 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
 import type {UsCareer} from './us-career-entry.js';
 import {assertUsCareerRevision} from './us-career-entry.js';
 import {usYearTransitionReadiness} from './us-year-transition.js';
@@ -23,7 +24,7 @@ function ready(c:UsCareer):void {
 function notice(c:UsCareer,id:'E36'|'E37',revision:number){return createWorldEvent({definitionId:id,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:eventDefinition(id).evidenceDomain,fields:{playerSimulationKey:c.protagonistKey,retirementTaskOrReceiptId:taskKey(c)}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'SEASON_REVIEW',competitionKey:null,registrationKey:c.protagonistOrganizationId,sourceRevision:revision},sourceSequence:c.events.length+1,worldDay:Object.values(c.records.games).reduce((day,g)=>g.scope.seasonKey===c.world.seasonKey?Math.max(day,g.worldDay):day,c.season!.lastDay)});}
 function finish(c:UsCareer,reason:UsCareerRetirement['reason']):UsCareer {
  const revision=c.revision+1,retirement:UsCareerRetirement={receiptKey:taskKey(c),reason,seasonKey:c.world.seasonKey,age:c.world.players[c.protagonistKey]!.age,clubId:c.protagonistOrganizationId,endedContractKey:c.contract.contractKey,sourceRevision:revision};
- const next:UsCareer={...c,revision,retirement,phaseContext:{phase:'ARCHIVED'},events:[...c.events,notice(c,'E37',revision)]};assertUsCareerRevision(next,revision);return next;
+ const next:UsCareer={...c,revision,retirement,phaseContext:{phase:'ARCHIVED'},events:[...c.events,notice(c,'E37',revision)]};assertUsCareerRevision(next,revision);return refreshCareerSeasonGoals(next);
 }
 export function requestUsRetirement(c:UsCareer,revision:number):UsCareer {
  assertUsCareerRevision(c,revision);ready(c);const event=notice(c,'E36',revision+1);

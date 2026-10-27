@@ -1,3 +1,4 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
 import {kboServiceContractView} from './kbo-service-payroll.js';
 import {KBO_CONTRACT_GAME_DAYS} from './kbo-military-program.js';
 import {reserveKboOffseasonGuarantee} from './kbo-finance.js';
@@ -50,7 +51,7 @@ function retire(source:KboCareer,career:KboCareer,reason:KboCareerRetirement['re
  const c=source.world.contracts[source.protagonistKey]!,days=c.servicePay?kboServiceContractView(c)!.remainingPaidGameDays:undefined;career.revision++;
  career.retirement={receiptKey:taskKey(source),reason,seasonKey:source.world.seasonKey,age:source.world.players[source.protagonistKey]!.age,clubId:source.protagonistClubId,...(days===undefined?{}:{remainingPaidGameDays:days}),remainingContractYears:days===undefined?Math.max(0,c.years-(Number(source.world.seasonKey)-Number(c.seasonKey)+1)):Math.ceil(days/KBO_CONTRACT_GAME_DAYS),sourceRevision:career.revision};
  const farewell=retirementEvent(career,'E37',career.revision);career.events=[...career.events,farewell];
- career.phaseContext={phase:'ARCHIVED'};return career;
+ career.phaseContext={phase:'ARCHIVED'};return refreshCareerSeasonGoals(career);
 }
 /** S09 / E30 REQUEST_RETIRE: manual retirement opens blocking E36 in the offseason after any finished pro season. */
 export function requestKboRetirement(source:KboCareer,expectedRevision:number):KboCareer {

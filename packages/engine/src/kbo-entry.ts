@@ -1,3 +1,4 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {assertCareerKboSigning} from './career-kbo.js';
@@ -32,6 +33,6 @@ export function closeSchoolSeasonForKbo(source:HighSchoolCareer,expectedRevision
  career.world.players[key]=closed.player;career.seasonGrowth=closed.ledger;career.health=closeSeasonHealth(career.health,source.world.seasonKey).ledger;career.revision++;
  // These amateur contracts were evaluated before annual closure. Never silently replace their player snapshot.
  if(canonicalJson(career.world.players[key])!==canonicalJson(recruitment.program.input.player))throw new RangeError('KBO_YEAR_END_PLAYER_CHANGED');
- career.kboYearEnd={receiptKey:yearEndKey(career,signing.contract.contractKey),contractKey:signing.contract.contractKey,signingReceiptKey:signing.receiptKey,recruitmentSourceBasis:recruitment.sourceBasis,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};
- assertKboAmateurYearEnd(career);return career;
+ Object.assign(career,refreshCareerSeasonGoals(career));career.kboYearEnd={receiptKey:yearEndKey(career,signing.contract.contractKey),contractKey:signing.contract.contractKey,signingReceiptKey:signing.receiptKey,recruitmentSourceBasis:recruitment.sourceBasis,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};
+ assertKboAmateurYearEnd(career);return refreshCareerSeasonGoals(career);
 }
