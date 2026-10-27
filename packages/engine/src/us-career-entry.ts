@@ -44,7 +44,7 @@ export interface UsCareer {
  rights:UsDirectSigning['rights'];contract:Omit<UsDirectSigning['contract'],'status'|'type'> & {type:'US_MINOR'|'US_MAJOR';years?:number;status:'ACTIVE';seasonKey:string;nationalReleaseAllowed:boolean;militaryReturnOption:boolean};
  income:readonly (UsDirectSigning['income'] | {entryKey:string;currency:'USD';amount:number;kind:'SALARY';seasonKey:string;day:number})[];inventory:UsRecruitmentWorld;amateurHistory:HighSchoolCareer;
  records:HighSchoolCareer['records'];health:HighSchoolCareer['health'];seasonGrowth:ReturnType<typeof createSeasonGrowthLedger>;development:NonNullable<HighSchoolCareer['development']>;traits?:NonNullable<HighSchoolCareer['traits']>;relationships:NonNullable<HighSchoolCareer['relationships']>;events:HighSchoolCareer['events'];relationNotices:NonNullable<HighSchoolCareer['relationNotices']>;styleUsedWindows:HighSchoolCareer['styleUsedWindows'];planHistory:HighSchoolCareer['planHistory'];
- military:{status:'UNRESOLVED'|'FROZEN_SERVICE'|'TERMINATED_SERVICE'|'COMPLETED'|'NOT_APPLICABLE';deadlineAge:28;planSeasonKey?:string;frozenContractKey?:string;terminatedContractKey?:string};kboTransfer?:KboUsTransfer;
+ military:{status:'UNRESOLVED'|'FROZEN_SERVICE'|'TERMINATED_SERVICE'|'COMPLETED'|'NOT_APPLICABLE';deadlineAge:28;planSeasonKey?:string;frozenContractKey?:string;terminatedContractKey?:string;service?:import('./us-military-plan.js').UsMilitaryServiceProgram};kboTransfer?:KboUsTransfer;
 }
 
 /** Live rosters may change abilities/age/level; the initial distribution guard is only for seed-world admission. */

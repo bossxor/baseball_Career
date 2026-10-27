@@ -1,6 +1,10 @@
+## 최신 작업 — M2-DZ 검증 완료
+
+[DZ 상세](M2-DZ-US-MILITARY-18MO.md). 해외 18개월 2블록·즉시 COMPLETED 거절. 집중1/1. 전체 check 765/763·Neon2·웹22/22·스모크. duration_ms 710245. M2≈53%. 다음=국제 일마감/99/24/PF. PC 종료 금지.
+
 ## 최신 작업 — M2-DY 검증 완료
 
-[DY 상세](M2-DY-INTERNATIONAL-TIMELINE.md). DX 대진↔실제28·기록·구종XP·봉인, P12 actualWindow. 집중24/24. 전체 npm run check 종료0: 엔진/API 765개 중763통과·실패0·Neon2건너뜀, 웹22/22. duration_ms 1044505. HTTP 스모크 통과. M2 약52%. 다음=국제 일마감/기한·해외18개월·99/24/PF. PC 종료 금지.
+[DY 상세](M2-DY-INTERNATIONAL-TIMELINE.md). DX 대진↔실제28·기록·구종XP·봉인, P12 actualWindow. 집중24/24. 전체 npm run check 종료0: 엔진/API 765개 중763통과·실패0·Neon2건너뜀, 웹22/22. duration_ms 1044505. HTTP 스모크 통과. PC 종료 금지.
 
 ## 최신 작업 — M2-DX 검증 완료
 

@@ -1,6 +1,10 @@
+## 최신 작업 — M2-DZ 검증 완료
+
+[DZ 상세](M2-DZ-US-MILITARY-18MO.md). 해외18개월 2블록. 전체 check 765/763. M2≈53%. 다음=국제 일마감/기한·99사건·24경로/PF-D. M6 금지. PC 종료 금지.
+
 ## 최신 작업 — M2-DY 검증 완료
 
-[DY 상세](M2-DY-INTERNATIONAL-TIMELINE.md). 커리어 AG↔DX bracket·실제28·FINAL 기록/XP·P12 window. 전체 check 765/763·Neon2·웹22/22·스모크. M2≈52%. 다음=INTERNATIONAL 일마감·초청기한·부상/피로, 해외18개월 DS보강, 99사건, 24경로/PF-D. M6 금지. PC 종료 금지.
+[DY 상세](M2-DY-INTERNATIONAL-TIMELINE.md). 커리어 AG↔DX bracket·실제28·FINAL 기록/XP·P12 window. 전체 check 765/763·Neon2·웹22/22·스모크. PC 종료 금지.
 
 ## 최신 작업 — M2-DX 검증 완료
 
