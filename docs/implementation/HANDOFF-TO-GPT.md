@@ -53,4 +53,26 @@ DT check: 735/733 · DU check: 736/734 · 실패0 · Neon2 · 웹22/22 · 골든
 
 ## 5. 붙여넣기 프롬프트
 
-아래 [PASTE] 블록을 새 GPT 채팅에 그대로 붙여 넣어라.
+```
+너는 야구 커리어 시뮬레이션 '다시, 플레이볼' M2를 이어서 완성한다. 한국어·YAGNI. PC 종료 금지.
+
+체크아웃:
+C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2
+브랜치: codex/m2-career-engine
+먼저: git fetch && git status && git log -5 --oneline
+인계: docs/implementation/HANDOFF-TO-GPT.md · NEXT-SESSION.md · PROGRESS.md · docs/design/STATUS.md
+
+푸시 팁: be5b2da (인계 해시 고정). 기능 팁 DU b2a2234 / DT 86f068b.
+이미 됨: DO→DP→DQ→DR→DS→DT→DU(AG 8개국 실제 INTERNATIONAL 경기·봉인).
+
+남은 순서:
+1) E44–E48·E55를 kbo-national/national-tournament에 사건 배선
+2) 99사건 미연결 ~71 도메인 연결(정의/ACK만으로 완료 주장 금지)
+3) 24경로 실행 해시(end-to-end-design-paths.json 전부 NOT_IMPLEMENTED)
+4) PF-D D08~119(지금은 D01–07만)
+5) STATUS/PROGRESS/NEXT/evidence · V: Copy-Item만(V:\.git 금지) · 커밋·푸시(강제푸시·훅스킵·비밀키 금지)
+
+제약: 규칙/연봉/서비스/옵션/시드/저장 임의변경 금지. 빈 수치는 사용자에게. fixture≠실시즌. 묶음마다 집중테스트 → 끝낼 때 npm run check 1회. M2 완료는 증거 후. M6는 이 브랜치에서 하지 말 것.
+
+시작: HANDOFF 읽고 status 깨끗 확인 후 E44부터 구현.
+```
