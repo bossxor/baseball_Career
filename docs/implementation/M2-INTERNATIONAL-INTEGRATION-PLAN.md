@@ -1,6 +1,6 @@
 # M2 국제 시간축 — 다음 실제 연결 체크리스트
 
-2026-10-27. DW39af8e3의 실제28명/AG batch와 DX의 순수 대진 reducer 사이 연결 계획이다. 구현 완료/새 게임 규칙이 아니다. 원문20/21 및14의 사용자 결정이 우선한다.
+2026-10-27. DW39af8e3의 실제28명/AG batch와 DX의 순수 대진 reducer 사이 연결 계획이다. **DY 1차**: P12 window helper·`national-progress` AG 커리어↔DX·FINAL 기록/XP·봉인까지 구현·검증됨([M2-DY](M2-DY-INTERNATIONAL-TIMELINE.md)). 아래 2·3·7·8항의 phase/일마감/기한·피로와 WBC/OLY/P12 E2E·미국 풀은 미완. 원문20/21 및14의 사용자 결정이 우선한다.
 
 1. P12 actualWindow는 max(명목11월15일, 양 리그 실제 PS 종료 다음날),14일. 고정 calendar-1·진행된 대진/경기는 읽기 보존한다. 새 윈도에는 양 리그 종료 근거와 버전을 봉인한다. 단순 달력 조회로 PS 결과를 예측하거나 fixture 종료일을 실제 종료로 쓰지 않는다.
 2. KBO/US의 세이브 공통 날짜와 단계에 NATIONAL_SELECTION/INTERNATIONAL_PROGRESS/INTERNATIONAL_REVIEW를 연결한다. 원래 등록/단계/다음 날짜를 resume 증거에 보존한다. 정규·PS·연말·계약 명령이 진행 중 대표 경기를 우회하지 못하게 각 호출자를 검사한다.

@@ -19,7 +19,7 @@ import {sealNationalCompetitionResult} from './kbo-national.js';
 export type NationStrength=65|55|45;
 const AG_NATIONS=[{id:'KOR',strength:65 as NationStrength},{id:'JPN',strength:65},{id:'TWN',strength:55},{id:'CHN',strength:55},{id:'HKG',strength:55},{id:'PHI',strength:45},{id:'THA',strength:45},{id:'PAK',strength:45}] as const;
 
-function nationTeam(id:string,value:number,protagonist?:{key:string;hitter?:HitterSnapshot;pitcher?:PitcherSnapshot}|null):TeamSnapshot {
+export function nationalControlTeam(id:string,value:number,protagonist?:{key:string;hitter?:HitterSnapshot;pitcher?:PitcherSnapshot}|null):TeamSnapshot {
  const lineup:HitterSnapshot[]=Array.from({length:9},(_,i)=>({simulationKey:`${id}-h${i}`,abilities:Object.fromEntries(HITTER_ABILITIES.map(a=>[a,value*10_000])),fatigue:0,morale:1,temporary:{},traitLogits:[],available:true,bats:i%3===0?'L':i%3===1?'R':'S',approach:'BALANCED'}));
  if(protagonist?.hitter&&id==='KOR')lineup[0]={...protagonist.hitter,simulationKey:protagonist.key,available:true};
  const pitchers:PitcherSnapshot[]=Array.from({length:4},(_,i)=>({simulationKey:`${id}-p${i}`,abilities:Object.fromEntries(PITCHER_ABILITIES.map(a=>[a,value*10_000])),fatigue:0,morale:1,temporary:{},traitLogits:[],throws:'R',pitchForm:'OVERHAND',role:i===0?'SP':i===3?'CP':'RP',available:true,recentOuts:0,repertoire:[{pitchId:'P01',mastery:2,weight:60},{pitchId:'P03',mastery:1,weight:40}]}));
@@ -28,7 +28,7 @@ function nationTeam(id:string,value:number,protagonist?:{key:string;hitter?:Hitt
 }
 
 /** The selected15/13 and actual player books supply game inputs; registration alone never guarantees an appearance. */
-function koreaTeam(c:KboCareer,selection:NationalSelectionSnapshot,gameNumber:number,recent:ReadonlyMap<string,BattingLine>):TeamSnapshot {
+export function koreaNationalTeam(c:KboCareer,selection:NationalSelectionSnapshot,gameNumber:number,recent:ReadonlyMap<string,BattingLine>):TeamSnapshot {
  const players={...c.world.players,...Object.fromEntries(Object.entries(c.sangmu?.members??{}).map(([k,m])=>[k,m.player]))},chosen=selection.roster.slots.map(s=>{const p=players[s.playerKey];if(!p)throw new RangeError('NATIONAL_ROSTER_CHANGED');return {player:p,role:s.role};}),healthy=(k:string)=>!Object.hasOwn(c.health.injuries,k);
  const hitters=chosen.filter(s=>s.player.kind==='HITTER'),lineup=automaticFieldLineup(hitters.map(s=>({player:s.player,available:healthy(s.player.simulationKey),fits:initialPositionFits(s.player.position),recent:recent.get(s.player.simulationKey)??emptyBatting()})),60);
  const starters=chosen.filter(s=>s.role==='SP'&&healthy(s.player.simulationKey)&&s.player.fatigue<60),starter=starters[gameNumber%Math.max(1,starters.length)]??chosen.find(s=>s.player.kind==='PITCHER'&&s.role==='RP'&&healthy(s.player.simulationKey));if(!starter)throw new RangeError('NATIONAL_STARTER_REQUIRED');
@@ -83,9 +83,9 @@ export function playAsianGamesTournament(c:KboCareer,revision:number):KboCareer 
  const recent=selection?nationalLineupBatting(c.records,selection):new Map<string,BattingLine>();let koreaGames=0;
  const player=c.world.players[c.protagonistKey]!;
  const protagonist=player.kind==='HITTER'?{key:c.protagonistKey,hitter:{simulationKey:c.protagonistKey,abilities:{...player.abilities},fatigue:player.fatigue,morale:1,temporary:{},traitLogits:[],available:true,bats:player.bats??'R',approach:'BALANCED' as const}}:{key:c.protagonistKey,pitcher:(()=>{const r=c.world.repertoires[c.protagonistKey];if(!r)throw new RangeError('MISSING_NATIONAL_REPERTOIRE');validatePitchWeights(r.book,r.weights);return {simulationKey:c.protagonistKey,abilities:{...player.abilities},fatigue:player.fatigue,morale:1,temporary:{},traitLogits:[],throws:player.throws,pitchForm:player.pitchForm!,role:'SP' as const,available:true,recentOuts:0,repertoire:Object.keys(r.weights).sort().map(id=>({pitchId:id as PitchId,weight:r.weights[id as PitchId]!,mastery:pitchMastery(r.book[id as PitchId]!)}))};})()};
- const teams=Object.fromEntries(AG_NATIONS.map(n=>[n.id,nationTeam(n.id,n.strength,protagonist)]));
+ const teams=Object.fromEntries(AG_NATIONS.map(n=>[n.id,nationalControlTeam(n.id,n.strength,protagonist)]));
  const contributions:GameContribution[]=[];
- const match=(seed:string,a:TeamSnapshot,b:TeamSnapshot,key:string,offset:number)=>{const away=a.simulationKey==='KOR'&&selection?koreaTeam(c,selection,koreaGames++,recent):a,home=b.simulationKey==='KOR'&&selection?koreaTeam(c,selection,koreaGames++,recent):b,r=play(seed,away,home,key,c.world.seasonKey,slot.startDay+offset);contributions.push(r.contribution);return r;};
+ const match=(seed:string,a:TeamSnapshot,b:TeamSnapshot,key:string,offset:number)=>{const away=a.simulationKey==='KOR'&&selection?koreaNationalTeam(c,selection,koreaGames++,recent):a,home=b.simulationKey==='KOR'&&selection?koreaNationalTeam(c,selection,koreaGames++,recent):b,r=play(seed,away,home,key,c.world.seasonKey,slot.startDay+offset);contributions.push(r.contribution);return r;};
  const seed=`${c.world.seed}:ag:${c.world.seasonKey}`,groupA=['KOR','TWN','HKG','THA'] as const,groupB=['JPN','CHN','PHI','PAK'] as const;
  const groupGames=(ids:readonly string[])=>{
   const out:{a:string;b:string;winner:string;appeared:readonly string[];contribution:GameContribution}[]=[];

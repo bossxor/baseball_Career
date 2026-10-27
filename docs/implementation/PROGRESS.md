@@ -1,6 +1,10 @@
+## 최신 작업 — M2-DY 검증 완료
+
+[DY 상세](M2-DY-INTERNATIONAL-TIMELINE.md). DX 대진↔실제28·기록·구종XP·봉인, P12 actualWindow. 집중24/24. 전체 npm run check 종료0: 엔진/API 765개 중763통과·실패0·Neon2건너뜀, 웹22/22. duration_ms 1044505. HTTP 스모크 통과. M2 약52%. 다음=국제 일마감/기한·해외18개월·99/24/PF. PC 종료 금지.
+
 ## 최신 작업 — M2-DX 검증 완료
 
-[DX 상세](M2-DX-INTERNATIONAL-BRACKET.md). 승인4대회 프리셋·균등 조편성·홈원정 균형·실제107경기·단일 pendingGame/JSON/20회 동점21회 재개. 집중10/10. 순수 reducer fixture이며 실제28명/달력/건강/XP/커리어 root 연결은 후속이다. 전체 npm run check 종료0: 엔진/API 762개 중760통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1089016.2584, 원본443파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다. M2 완료 아님. 사용자 요청으로 여기까지 저장하고 작업 종료, 다음 구현은 재개 요청 후 진행. PC 종료 금지.
+[DX 상세](M2-DX-INTERNATIONAL-BRACKET.md). 승인4대회 프리셋·균등 조편성·홈원정 균형·실제107경기·단일 pendingGame/JSON/20회 동점21회 재개. 집중10/10. 순수 reducer fixture. 커리어 연결은 DY. 전체 npm run check 종료0: 엔진/API 762개 중760통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. duration_ms 1089016.2584. PC 종료 금지.
 
 ## 최신 작업 — M2-DW 검증 완료
 

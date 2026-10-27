@@ -5,6 +5,7 @@ import type {EventInstance} from './events.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision} from './kbo-career-version.js';
 import type {KboMilitaryStatus} from './kbo-military-state.js';
+import type {NationalBracket} from './national-bracket.js';
 
 export type NationalTournament='WBC'|'OLY'|'AG'|'P12';
 export type NationalMedal='GOLD'|'SILVER'|'BRONZE'|null;
@@ -21,6 +22,7 @@ export interface NationalCallup {
 }
 export interface NationalLedger {
  selections?:readonly NationalSelectionSnapshot[];
+ brackets?:readonly NationalBracket[];
  invitations:readonly NationalCallup[];competitions:readonly NationalCompetitionResult[];benefits:readonly NationalBenefitReceipt[];
  athleteDutySeasonsRemaining?:number;
  athleteDutyStartSeasonKey?:string;athleteDutySettledSeasons?:readonly string[];
@@ -117,6 +119,7 @@ export function assertNationalLedger(n:NationalLedger|undefined,worldKey?:string
  if(n.invitations.some(i=>!i||!i.selectionId||!TOURNAMENTS.includes(i.tournament)||!/^\d{4}$/.test(i.seasonKey)||i.invitationVersion!==1||!['INVITED','ACCEPTED','DECLINED'].includes(i.status)||i.militaryEffect!==(i.tournament==='AG'||i.tournament==='OLY'))||new Set(n.invitations.map(i=>i.selectionId)).size!==n.invitations.length)throw new RangeError('INVALID_NATIONAL_INVITATION');
  if(n.benefits.some(b=>!b||b.benefitType!=='ATHLETE_ELIGIBLE'||b.resultVersion!==1||!Number.isSafeInteger(b.appliedRevision)||b.appliedRevision<1||b.benefitKey!==JSON.stringify(['national-benefit',b.competitionId,'ATHLETE_ELIGIBLE'])||!n.competitions.some(r=>r.competitionId===b.competitionId&&nationalAthleteEligible(r,'UNRESOLVED')))||new Set(n.benefits.map(b=>b.benefitKey)).size!==n.benefits.length)throw new RangeError('INVALID_NATIONAL_BENEFIT');
  if(n.selections!==undefined&&(!Array.isArray(n.selections)||n.selections.some(s=>!s||s.schemaVersion!==1||s.modelVersion!=='national-selection-1'||!s.worldKey||worldKey!==undefined&&s.worldKey!==worldKey||!s.seasonKey||!Array.isArray(s.scores)||!s.roster||!Array.isArray(s.roster.slots)||s.roster.slots.length!==28)||new Set(n.selections.map(s=>s.selectionId)).size!==n.selections.length))throw new RangeError('INVALID_NATIONAL_SELECTION');
+ if(n.brackets!==undefined&&(!Array.isArray(n.brackets)||new Set(n.brackets.map(b=>b.competitionId)).size!==n.brackets.length||n.brackets.some(b=>!b||b.schemaVersion!==1||b.modelVersion!=='national-bracket-1'||!b.competitionId||!b.window||worldKey!==undefined&&b.worldKey!==worldKey||!TOURNAMENTS.includes(b.tournament))))throw new RangeError('INVALID_NATIONAL_BRACKET');
  const left=n.athleteDutySeasonsRemaining;
  if(left!==undefined&&(!Number.isSafeInteger(left)||left<0||left>3||n.benefits.length===0))throw new RangeError('INVALID_ATHLETE_DUTY');
  if(n.athleteDutyStartSeasonKey!==undefined&&(!/^\d{4}$/.test(n.athleteDutyStartSeasonKey)||!Array.isArray(n.athleteDutySettledSeasons)||left===undefined||n.athleteDutySettledSeasons.length!==3-left||n.athleteDutySettledSeasons.some((y,i)=>y!==String(Number(n.athleteDutyStartSeasonKey)+i))))throw new RangeError('INVALID_ATHLETE_DUTY');

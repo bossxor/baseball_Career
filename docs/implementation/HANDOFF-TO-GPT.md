@@ -1,8 +1,41 @@
+# 최신 인계 — M2-DY 국제 시간축 1차 연결 검증 완료 (2026-10-27)
+
+[DY 상세](M2-DY-INTERNATIONAL-TIMELINE.md). 브랜치 `codex/m2-career-engine`. 기능 팁은 이 인계 커밋(또는 직전 feat 커밋) — `git fetch && git log -3 --oneline`으로 확인. 전체 npm run check 종료0: 엔진/API 765개 중763통과·실패0·Neon2건너뜀, 웹22/22. duration_ms 1044505. HTTP 스모크 통과. 검증 중 실행 소스 미편집. 실제 Neon/브라우저/APK 아님.
+
+## 이번 구현 호출 흐름
+
+`openKboNationalSelection` → 수락 → `startNationalTournament` → (`prepareCareerNationalMatch`/`advanceCareerNationalMatch`)* → FINAL마다 records+구종XP → 완료 시 `sealNationalCompetitionResult`.  
+한국 팀: `koreaNationalTeam`(DW 28). 상대: `nationalControlTeam`(65/55/45).  
+P12: `p12ActualWindow({kboPostseasonEndDay,usPostseasonEndDay})`를 create/start에 넘기면 bracket.window에 봉인. calendar-1 불변.
+
+## 원장
+
+| 원장 | 소유/변경 | 중복 키 |
+| --- | --- | --- |
+| `national.brackets` | national-progress | competitionId |
+| `records.games` | FINAL contribution | gameKey |
+| repertoires | FINAL pitchDevelopment | 등록 playerKey만 |
+| `national.competitions` | seal | competitionId |
+
+저장/재개: pendingGame JSON 동등. 구버전 brackets 없음 → optional 필드. 레거시 `playAsianGamesTournament` 유지.
+
+## fixture vs 실제
+
+- 실제 커리어 AG: enteredKboCareer+선발28+DX 전경기 봉인(집중).
+- P12 window: helper+bracket 날짜(양 리그 PS worker 자동 수집 E2E는 후속).
+- DX 107: 통제55, 커리어 증거 아님.
+
+## 미연결·위험
+
+INTERNATIONAL phase/일마감·초청기한·부상/피로 날짜마감, WBC/OLY/P12 커리어 E2E, 미국 공통풀(국적 추정 금지), DS 18개월 경과, 99/24/PF-D. KBO day closer에 WBC/P12 날짜를 넣지 말 것. M6 병합 금지. PC 종료 금지. V: 문서만 Copy-Item.
+
+## GPT 집중 검수
+
+동기화: bracket.window ↔ groupMatches.day; FINAL XP와 records 원자성; revision stale; P12_POSTSEASON evidence 재생성. 메모리: 완료 GameState를 brackets에 쌓지 않음(pending만). 경계: 미선발/사양 후에도 세계 대회 완료 가능 여부·E48 남발.
+
 # 최신 인계 — M2-DX 순수 국제 대진 reducer 검증 완료 (2026-10-27)
 
-[DX 상세](M2-DX-INTERNATIONAL-BRACKET.md). 전체 npm run check 종료0: 엔진/API 762개 중760통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1089016.2584, 원본443파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다. 집중10/10. 승인 참가국·균등 조편성·실제107경기·pendingGame/JSON/20회 동점21회 재개. 한국을 포함한 테스트 스냅샷은 통제55 fixture다. 실제28명/커리어 달력·건강·XP·혜택/복귀 원자 연결의 완료 증거가 아니다. DW39af8e3는 실제28명을 기존 AG batch에 연결한 상태다. P12 날짜는 max(11/15, 양 리그 PS 종료 다음날)·14일로 사용자 확정했다. 새 시간축 연결에 적용하고 기존 날짜는 보존한다. [다음 실제 연결](M2-INTERNATIONAL-INTEGRATION-PLAN.md)을 읽는다.
-
-사용자 최신 지시: 현재 변경까지만 커밋·푸시하고 이번 작업을 마친다. 새 기능은 시작하지 않는다. 다음 재개 후보: 공통 국제 시간축과 KBO/미국 후보/실제28명·부상/피로/XP 연결→해외18개월 DS보강→99도메인 감사/24경로/PF-D. world의 미국NPC 국적을 임의로 KOR로 처리하지 않는다. WBC/P12를 정규 day closer에 넣으면 정규 구간 밖 날짜라 실패하므로 날짜/시즌마감 선후를 함께 고친다. 기존 저장·seed/돈/등록/서비스 보존. 체크아웃 baseball-career-m2, own codex/m2-career-engine에만 커밋·푸시. fetch에서 main f7526c7을 확인했지만 M6/다른 브랜치 작업을 이 브랜치에 임의 병합하지 않았다. M2 완료/M6수정/PC종료 금지, V: 문서만 Copy-Item.
+[DX 상세](M2-DX-INTERNATIONAL-BRACKET.md). 순수 reducer. 커리어 1차 연결은 DY. PC 종료 금지.
 
 # 최신 인계 — M2-DW 검증 완료 (2026-10-27)
 

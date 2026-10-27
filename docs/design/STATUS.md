@@ -1,8 +1,10 @@
 # 전체 구현 진행률: 약 83% 완료 · 약 17% 남음
 
-**M2 기준: 약50% 완료 · 약50% 남음.** 범위 가중 보수적 추정이며 위83%는 프로젝트 전체다.
+**M2 기준: 약52% 완료 · 약48% 남음.** 범위 가중 보수적 추정이며 위83%는 프로젝트 전체다. DY는 AG 커리어↔DX 대진·P12 window helper까지이며 일마감/미국풀/18개월/99/24는 잔여.
 
-**M2-DX 검증 완료 (2026-10-27):** 4대회 대진 reducer·실제107경기 통제 fixture·pendingGame/21회 재개. 집중10/10. 전체 npm run check 종료0: 엔진/API 762개 중760통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1089016.2584, 원본443파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다. 커리어 시간축/실제28명·건강/XP 연결은 후속이며 M2 전체 약50% 유지. [DX](../implementation/M2-DX-INTERNATIONAL-BRACKET.md).
+**M2-DY 검증 완료 (2026-10-27):** DX bracket을 실제 선발28·기록·구종XP·봉인에 연결, P12 `max(11/15, 양PS종료+1)` window 봉인. 집중24/24. 전체 npm run check 종료0: 엔진/API 765개 중763통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1044505. 검증 중 실행 소스 미편집. 실제 Neon/브라우저/APK 아님. [DY](../implementation/M2-DY-INTERNATIONAL-TIMELINE.md). 일마감·초청기한·부상교체·WBC/OLY/P12 E2E·해외18개월·99/24/PF 잔여.
+
+**M2-DX 검증 완료 (2026-10-27):** 4대회 대진 reducer·실제107경기 통제 fixture·pendingGame/21회 재개. 집중10/10. 전체 npm run check 종료0: 엔진/API 762개 중760통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1089016.2584, 원본443파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다. 커리어 시간축 1차는 DY. [DX](../implementation/M2-DX-INTERNATIONAL-BRACKET.md).
 
 **M2-DW 검증 완료 (2026-10-27):** 국가대표 실제28명·E44/E45·한자리 충원·AG 실제 기용·MLB 실제 데뷔E65. 집중25/25. 전체 npm run check 종료0: 엔진/API 757개 중755통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1168717.4243, 원본441파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다. [DW](../implementation/M2-DW-NATIONAL-SELECTION.md). 국제 달력/중단/부상/XP·99/24/PF 잔여, M2 완료 아님.
 
@@ -52,7 +54,7 @@ M5: **완료(셸)** — 33화면 Decision 스텁·라우트·fixture/API. 픽셀
 |---|---:|---:|---:|
 | M0 저장소·검증 골격 | 5% | 100% | 5% |
 | M1 경기 시뮬레이션 엔진 | 10% | 100% | 10% |
-| M2 선수 커리어·사건 엔진 | 30% | 50% | 15% |
+| M2 선수 커리어·사건 엔진 | 30% | 52% | 15% |
 | M3 계정·DB·기기 간 저장 명령 | 12% | 100% | 12% |
 | M4 실제 핵심 웹 플레이 화면 | 10% | 100% | 10% |
 | M5 나머지 실제 화면·접근성 | 5% | 100% | 5% |
