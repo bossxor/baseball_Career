@@ -1,3 +1,7 @@
+# M2-DP 최신 작업 — KBO 포스팅
+
+2026-10-27 · [상세](M2-DP-POSTING.md). 자격·요청·승인/보류·제안·체결(복귀권·구단 보상금). 미국 루트·해외 FA·귀국은 다음. 전체 npm run check 종료 0: 728개 중 726 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 774374.7154. 증거 `evidence/M2-DP-check.log`. M2 추정 50% 유지.
+
 # M2-DO 최신 작업 — 원소속 MLB FA·옵션 선택
 
 2026-10-27 · [상세](M2-DO-MAJOR-FA.md). main f087e00 병합 후 원소속 FA 체결과 보장 연차 동결, 옵션 소진 선택을 넣었다. 다른 구단·포스팅·귀국·API/화면은 없다. 전체 npm run check 종료 0: 엔진/API 725개 중 723 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 917911.8787. 증거 `evidence/M2-DO-check.log`. 브라우저/Neon/실기기 아님. M2 추정 50%는 유지한다.

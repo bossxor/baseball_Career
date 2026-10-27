@@ -10,7 +10,7 @@ import {acceptedRenewal} from './kbo-renewal.js';
 import {createWorldEvent,completeBlockingEvent,eventDefinition} from './events.js';
 
 /** SPORTS and ACTIVE use fixed service-calendar blocks, retained original rights and suspended game-day pay. ATHLETE service remains a separate future path. */
-export type KboMilitaryStatus='UNRESOLVED'|'APPLICATION_PENDING'|'SERVING_SPORTS'|'SERVING_ACTIVE'|'COMPLETED';
+export type KboMilitaryStatus='NOT_APPLICABLE'|'UNRESOLVED'|'APPLICATION_PENDING'|'SERVING_SPORTS'|'SERVING_ACTIVE'|'COMPLETED';
 export interface KboSangmuApplication {
  applicationId:string;eventKey:string;selectionSeasonKey:string;score:number;accepted:boolean;slotKind:'HITTER'|'PITCHER';
  decision:'PENDING'|'ENLISTED'|'DECLINED'|'REJECTION_ACKNOWLEDGED';
