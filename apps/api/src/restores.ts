@@ -1,11 +1,12 @@
 /** M7 restore preview + activate (70 shell). New saveId; source backup unchanged. */
 import { createHash, randomUUID } from 'node:crypto';
-import { and, count, eq, isNull } from 'drizzle-orm';
+import { and, eq } from 'drizzle-orm';
 import type { Context } from 'hono';
 import { gameSaves, privateFiles, profiles } from '@playball/db';
 import type { AppVariables } from './auth.js';
+import { ACTIVE_SAVE_CAP, activeSaveCount, ownerTag } from './game-creations.js';
+import { cleanId } from './private-files.js';
 
-const ACTIVE_SAVE_CAP = 10;
 const SUPPORTED_SCHEMA = 1;
 
 function errorBody(
@@ -28,6 +29,7 @@ type BackupPayload = {
   schemaVersion?: number;
   kind?: string;
   saveId?: string;
+  mode?: string;
   revision?: string;
   phase?: string;
   summary?: unknown;
@@ -51,20 +53,10 @@ async function loadOwnedBackup(c: Context<{ Variables: AppVariables }>, backupId
   return { row, parsed };
 }
 
-async function activeSaveCount(c: Context<{ Variables: AppVariables }>): Promise<number> {
-  const db = c.get('db');
-  const subject = c.get('subject');
-  const [row] = await db
-    .select({ n: count() })
-    .from(gameSaves)
-    .where(and(eq(gameSaves.ownerId, subject), isNull(gameSaves.deletedAt)));
-  return Number(row?.n ?? 0);
-}
-
 /** POST /api/restores/preview */
 export async function previewRestore(c: Context<{ Variables: AppVariables }>) {
   const body = (await c.req.json().catch(() => null)) as { backupId?: string } | null;
-  const backupId = body?.backupId?.trim();
+  const backupId = cleanId(body?.backupId);
   if (!backupId) return errorBody(c, 'INVALID_REQUEST', 400);
 
   const found = await loadOwnedBackup(c, backupId);
@@ -101,9 +93,10 @@ export async function postRestore(c: Context<{ Variables: AppVariables }>) {
     backupHash?: string;
     displayName?: string;
   } | null;
-  const restoreRequestId = body?.restoreRequestId?.trim();
-  const backupId = body?.backupId?.trim();
-  const backupHash = body?.backupHash?.trim();
+  const restoreRequestId = cleanId(body?.restoreRequestId);
+  const backupId = cleanId(body?.backupId);
+  const backupHash = cleanId(body?.backupHash, 64);
+  const displayName = typeof body?.displayName === 'string' ? body.displayName.slice(0, 200) : null;
   if (!restoreRequestId || !backupId || !backupHash) return errorBody(c, 'INVALID_REQUEST', 400);
 
   const found = await loadOwnedBackup(c, backupId);
@@ -117,15 +110,15 @@ export async function postRestore(c: Context<{ Variables: AppVariables }>) {
     return errorBody(c, 'UNSUPPORTED_BACKUP_VERSION', 422);
   }
 
-  const used = await activeSaveCount(c);
-  if (used >= ACTIVE_SAVE_CAP) return errorBody(c, 'SAVE_SLOT_REQUIRED', 422);
-
   const db = c.get('db');
   const subject = c.get('subject');
-  const targetSaveId = `save_restore_${restoreRequestId}`;
+  // Owner-scoped: another user's request id can never name this save.
+  const targetSaveId = `save_restore_${ownerTag(subject)}_${restoreRequestId}`;
 
-  const [existing] = await db.select({ id: gameSaves.id }).from(gameSaves).where(eq(gameSaves.id, targetSaveId)).limit(1);
+  const [existing] = await db.select({ id: gameSaves.id, state: gameSaves.state }).from(gameSaves).where(and(eq(gameSaves.id, targetSaveId), eq(gameSaves.ownerId, subject))).limit(1);
   if (existing) {
+    // The same request id must mean the same restore.
+    if ((existing.state as { restoredFromBackupId?: string } | null)?.restoredFromBackupId !== backupId) return errorBody(c, 'REQUEST_ID_CONFLICT', 400);
     return c.json({
       restoreRequestId,
       status: 'ACTIVATED',
@@ -134,14 +127,21 @@ export async function postRestore(c: Context<{ Variables: AppVariables }>) {
     });
   }
 
+  const used = await activeSaveCount(c);
+  if (used >= ACTIVE_SAVE_CAP) return errorBody(c, 'SAVE_SLOT_REQUIRED', 422);
+
   await db.insert(profiles).values({ id: subject, displayName: subject }).onConflictDoNothing();
 
   const phase = typeof found.parsed.phase === 'string' ? found.parsed.phase : 'BOOT';
-  const revision = BigInt(found.parsed.revision ?? '0');
+  const rawRevision = found.parsed.revision ?? '0';
+  if (typeof rawRevision !== 'string' || !/^\d{1,18}$/.test(rawRevision)) return errorBody(c, 'BACKUP_INTEGRITY_ERROR', 400);
+  const revision = BigInt(rawRevision);
+  // Backups made before the mode field existed restore as career saves.
+  const mode = found.parsed.mode === 'CLUB' ? 'CLUB' : 'CAREER';
   const summary =
     found.parsed.summary && typeof found.parsed.summary === 'object'
-      ? { ...(found.parsed.summary as Record<string, unknown>), restoredFrom: backupId, displayName: body?.displayName ?? null }
-      : { restoredFrom: backupId, displayName: body?.displayName ?? null };
+      ? { ...(found.parsed.summary as Record<string, unknown>), restoredFrom: backupId, displayName }
+      : { restoredFrom: backupId, displayName };
   const state =
     found.parsed.state && typeof found.parsed.state === 'object'
       ? { ...(found.parsed.state as Record<string, unknown>), restoredFromBackupId: backupId, restoreRequestId }
@@ -150,12 +150,12 @@ export async function postRestore(c: Context<{ Variables: AppVariables }>) {
   await db.insert(gameSaves).values({
     id: targetSaveId,
     ownerId: subject,
-    mode: 'CAREER',
+    mode,
     revision,
     phase,
     summary,
     state,
-  });
+  }).onConflictDoNothing();
 
   return c.json({
     restoreRequestId,

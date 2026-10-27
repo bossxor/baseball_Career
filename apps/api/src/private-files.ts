@@ -17,6 +17,16 @@ function errorBody(
   );
 }
 
+/** Client strings are never trusted: wrong type, empty or too long → null (the handler answers 400, never 500). */
+export function cleanId(value: unknown, max = 128): string | null {
+  if (typeof value !== 'string') return null;
+  const v = value.trim();
+  return v.length >= 1 && v.length <= max && /^[A-Za-z0-9._:-]+$/.test(v) ? v : null;
+}
+function cleanName(value: unknown): string | undefined {
+  return typeof value === 'string' ? value.slice(0, 200) : undefined;
+}
+
 function sha256Hex(body: string): string {
   return createHash('sha256').update(body, 'utf8').digest('hex');
 }
@@ -40,6 +50,7 @@ async function loadOwnedSave(c: Context<{ Variables: AppVariables }>, saveId: st
   const [row] = await db
     .select({
       id: gameSaves.id,
+      mode: gameSaves.mode,
       ownerId: gameSaves.ownerId,
       deletedAt: gameSaves.deletedAt,
       revision: gameSaves.revision,
@@ -75,8 +86,8 @@ export async function postBackup(c: Context<{ Variables: AppVariables }>) {
   const saveId = c.req.param('id');
   if (!saveId) return errorBody(c, 'INVALID_REQUEST', 400);
   const body = (await c.req.json().catch(() => null)) as { requestId?: string; displayName?: string } | null;
-  const requestId = body?.requestId?.trim();
-  if (!requestId || requestId.length > 128) return errorBody(c, 'INVALID_REQUEST', 400);
+  const requestId = cleanId(body?.requestId);
+  if (!requestId) return errorBody(c, 'INVALID_REQUEST', 400);
 
   const save = await loadOwnedSave(c, saveId);
   if (!save) return errorBody(c, 'SAVE_NOT_FOUND', 404);
@@ -97,6 +108,7 @@ export async function postBackup(c: Context<{ Variables: AppVariables }>) {
     schemaVersion: 1,
     kind: 'BACKUP' as const,
     saveId: save.id,
+    mode: save.mode,
     revision: save.revision.toString(),
     phase: save.phase,
     summary: save.summary,
@@ -105,7 +117,7 @@ export async function postBackup(c: Context<{ Variables: AppVariables }>) {
   };
   const payload = `${JSON.stringify(snapshot)}\n`;
   const contentHash = sha256Hex(payload);
-  const fileName = safeFileName(body?.displayName ?? `다시플레이볼_백업_${saveId.slice(0, 8)}`);
+  const fileName = safeFileName(cleanName(body?.displayName) ?? `다시플레이볼_백업_${saveId.slice(0, 8)}`);
   const id = randomUUID();
   const [row] = await db
     .insert(privateFiles)
@@ -122,8 +134,15 @@ export async function postBackup(c: Context<{ Variables: AppVariables }>) {
       fileName,
       requestId,
     })
+    .onConflictDoNothing()
     .returning();
-  return c.json(metaOf(row!), 201);
+  if (!row) {
+    // A concurrent identical request inserted first: answer with that file, like a replay.
+    const [won] = await db.select().from(privateFiles).where(and(eq(privateFiles.ownerId, subject), eq(privateFiles.requestId, requestId))).limit(1);
+    if (!won || won.saveId !== saveId || won.kind !== 'BACKUP') return errorBody(c, 'REQUEST_ID_CONFLICT', 400);
+    return c.json(metaOf(won));
+  }
+  return c.json(metaOf(row), 201);
 }
 
 /** GET /api/saves/:id/backups */
@@ -163,8 +182,8 @@ export async function postChronicleExport(c: Context<{ Variables: AppVariables }
     format?: string;
     displayName?: string;
   } | null;
-  const exportRequestId = body?.exportRequestId?.trim();
-  if (!exportRequestId || exportRequestId.length > 128) return errorBody(c, 'INVALID_REQUEST', 400);
+  const exportRequestId = cleanId(body?.exportRequestId);
+  if (!exportRequestId) return errorBody(c, 'INVALID_REQUEST', 400);
   if (body?.format && body.format !== 'JSON') return errorBody(c, 'INVALID_REQUEST', 400);
 
   const save = await loadOwnedSave(c, saveId);
@@ -211,7 +230,7 @@ export async function postChronicleExport(c: Context<{ Variables: AppVariables }
   const payload = `${JSON.stringify(exportDoc)}\n`;
   const contentHash = sha256Hex(payload);
   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
-  const fileName = safeFileName(body?.displayName ?? `다시플레이볼_${playerName}_연대기`);
+  const fileName = safeFileName(cleanName(body?.displayName) ?? `다시플레이볼_${playerName}_연대기`);
   const id = randomUUID();
   const [row] = await db
     .insert(privateFiles)
@@ -229,8 +248,14 @@ export async function postChronicleExport(c: Context<{ Variables: AppVariables }
       requestId: exportRequestId,
       expiresAt,
     })
+    .onConflictDoNothing()
     .returning();
-  return c.json(metaOf(row!), 201);
+  if (!row) {
+    const [won] = await db.select().from(privateFiles).where(and(eq(privateFiles.ownerId, subject), eq(privateFiles.requestId, exportRequestId))).limit(1);
+    if (!won || won.saveId !== saveId || won.kind !== 'CHRONICLE_JSON') return errorBody(c, 'REQUEST_ID_CONFLICT', 400);
+    return c.json(metaOf(won));
+  }
+  return c.json(metaOf(row), 201);
 }
 
 async function loadOwnedFile(c: Context<{ Variables: AppVariables }>, fileId: string) {

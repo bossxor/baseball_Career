@@ -2,7 +2,7 @@ import { StrictMode, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import logo from '../../../docs/design/assets/brand/logo-mark.svg';
 import { App } from './App.js';
-import { readToken, signInForJwt, writeToken } from './auth-session.js';
+import { clearToken, readToken, signInForJwt, writeToken } from './auth-session.js';
 import { createHttpApi } from './http.js';
 import { Login } from './screens/Login.js';
 import './styles.css';
@@ -21,7 +21,7 @@ function Root() {
 
   const api = useMemo(() => {
     if (!apiBase || !token) return undefined;
-    return createHttpApi({ baseUrl: apiBase, getToken: () => token });
+    return createHttpApi({ baseUrl: apiBase, getToken: () => token, onUnauthorized: () => { clearToken(); setToken(null); } });
   }, [token]);
 
   if (apiBase && !token) {
