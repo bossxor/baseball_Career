@@ -19,3 +19,10 @@ test('assert-android-api-base rejects local and accepts https remote', () => {
   assert.equal(ok.status, 0, ok.stderr);
   assert.match(ok.stdout, /OK Android API base/);
 });
+
+test('assert-android-api-base also rejects IPv6 loopback, private ranges and .localhost', () => {
+  for (const base of ['https://[::1]', 'https://[fd00::1]', 'https://0.0.0.0', 'https://10.0.0.5', 'https://172.20.1.1', 'https://192.168.0.5', 'https://169.254.1.1', 'https://app.localhost', 'https://intranet', 'https://[::ffff:127.0.0.1]']) {
+    assert.notEqual(run({ VITE_API_BASE: base }).status, 0, base);
+  }
+  assert.equal(run({ VITE_API_BASE: 'https://172.32.0.1' }).status, 0, 'only 172.16-31 is private');
+});

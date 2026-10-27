@@ -1,5 +1,6 @@
 import { sql } from 'drizzle-orm';
 import { Hono } from 'hono';
+import { cors } from 'hono/cors';
 import { RULES_VERSION } from '@playball/rules';
 import type { AuthDb, AppVariables, AuthOptions } from './auth.js';
 import { createRequireAuth } from './auth.js';
@@ -18,7 +19,12 @@ export const MIN_CLIENT_VERSION = '0.1.0';
 export type CreateAppOptions = {
   db?: AuthDb;
   auth?: AuthOptions;
+  /** Extra browser origins allowed to call the API (comma list in CORS_ORIGINS). */
+  corsOrigins?: readonly string[];
 };
+
+/** The Android shell serves the app from these origins (Capacitor androidScheme https / capacitor scheme). */
+const NATIVE_ORIGINS = ['https://localhost', 'capacitor://localhost'];
 
 export function createApp(options: CreateAppOptions = {}) {
   const authOptions: AuthOptions = {
@@ -29,6 +35,19 @@ export function createApp(options: CreateAppOptions = {}) {
   const requireAuth = createRequireAuth(authOptions);
 
   const app = new Hono<{ Variables: AppVariables }>();
+
+  const allowed = new Set([
+    ...NATIVE_ORIGINS,
+    ...(options.corsOrigins ?? (process.env.CORS_ORIGINS ?? '').split(',').map(s => s.trim()).filter(Boolean)),
+  ]);
+  // Before auth: a preflight carries no credentials. Unknown origins get no CORS headers at all.
+  app.use('/api/*', cors({
+    origin: origin => (allowed.has(origin) ? origin : null),
+    allowMethods: ['GET', 'POST', 'OPTIONS'],
+    allowHeaders: ['Authorization', 'Content-Type', 'Request-ID'],
+    exposeHeaders: ['X-Content-SHA256', 'Content-Disposition', 'Request-ID'],
+    maxAge: 600,
+  }));
 
   app.use('*', async (c, next) => {
     c.set('requestId', c.req.header('Request-ID') ?? crypto.randomUUID());
@@ -96,7 +115,11 @@ export function createApp(options: CreateAppOptions = {}) {
   app.route('/api', protectedRoutes);
 
   app.notFound(c => c.json({ code: 'NOT_FOUND' }, 404));
-  app.onError((_error, c) => c.json({ code: 'INTERNAL_ERROR' }, 500));
+  app.onError((error, c) => {
+    // Operators need the cause; the client only gets the request id (no message, no stack).
+    console.error(JSON.stringify({ level: 'error', requestId: c.get('requestId'), message: error instanceof Error ? error.message : String(error) }));
+    return c.json({ code: 'INTERNAL_ERROR', requestId: c.get('requestId') }, 500);
+  });
   return app;
 }
 

@@ -48,10 +48,23 @@ test('M5 UI shell: S21 stub GET + CHOICE back; S34 via college', async () => {
   assert.equal(choose.status, 200);
   assert.deepEqual((await json<{ next: unknown }>(choose)).next, { kind: 'career' });
 
+  for (let i = 0; i < 3; i++) {
+    const adv = await app.request(`/api/saves/${saveId}/commands`, {
+      method: 'POST', headers: auth,
+      body: JSON.stringify({ commandId: `m5-adv-${i}`, expectedRevision: 2 + i, type: 'UI_ADVANCE', payload: { mode: 'ONE_WEEK' } }),
+    });
+    assert.equal(adv.status, 200, await adv.text());
+  }
+  const toPath = await app.request(`/api/saves/${saveId}/commands`, {
+    method: 'POST', headers: auth,
+    body: JSON.stringify({ commandId: 'm5-path', expectedRevision: 5, type: 'UI_CHOOSE', payload: { screenId: 'S04', optionId: 'to-path' } }),
+  });
+  assert.equal(toPath.status, 200);
+
   const college = await app.request(`/api/saves/${saveId}/commands`, {
     method: 'POST', headers: auth,
     body: JSON.stringify({
-      commandId: 'm5-college', expectedRevision: 2, type: 'UI_CHOOSE',
+      commandId: 'm5-college', expectedRevision: 6, type: 'UI_CHOOSE',
       payload: { screenId: 'S28', optionId: 'college' },
     }),
   });
