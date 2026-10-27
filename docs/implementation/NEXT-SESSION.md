@@ -1,3 +1,7 @@
+## 최신 상태 — M2-DV 국가대표 연결 검증 완료
+
+[DV 상세](M2-DV-NATIONAL-INTEGRITY.md). E44/E46/E47/E48/E55·실제 AG 기록·투수 출장·체육요원 시즌 중복 차감 방지. E45/28명 AI·부상/XP·중단 worker는 후속이며 M2 완료 아님. 집중16/16. 전체 npm run check 종료0: 엔진/API 741개 중739통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 804191.6272, 원본434파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다.
+
 ## 인계 — 2026-10-27 DU까지 푸시, GPT 이어감
 
 DT `86f068b` + DU(AG 실경기) 푸시. [HANDOFF-TO-GPT](HANDOFF-TO-GPT.md). 다음=E44–48/E55→99잔여→24경로·PF-D. M2 미완료·약50%. PC 종료 금지.

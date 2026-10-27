@@ -1,0 +1,52 @@
+✔ global age28 guard covers legacy careers without a military record and preserves source until explicit enlistment (6839.6625ms)
+✔ E49 opens once, defers only within the deadline and START_SERVICE only navigates to review (1612.4913ms)
+✔ E54 forbids indefinite defer and overdue Sangmu application, with stale/forged requests rejected atomically (2649.6104ms)
+✔ E49 application closes the planning task and creates one fixed E50 result; injury leaves original plan untouched (1617.394ms)
+✔ 25/26 reminders expose future grace seasons; max-age retirement remains possible without faking military completion (4298.5945ms)
+✔ Sangmu application: fixed result, retry returns the same application, wrong answers rejected, decline burns the recruitment (8445.5147ms)
+✔ an enlisted protagonist serves two seasons as a loan to the military team and then completes (10144.8684ms)
+✔ national callup accept and decline keep revision atomic (484.6115ms)
+✔ INT13 AG silver or WBC gold does not change military status (408.9478ms)
+✔ INT14 OLY bronze with appearance becomes ATHLETE_ELIGIBLE once; INT15 completed stays put (489.2137ms)
+✔ AG tournament plays real INTERNATIONAL games and can grant ATHLETE_ELIGIBLE on gold+appearance (476.0868ms)
+✔ E44 domain response, E47 navigation/review and E48 return preserve benefit and original club (392.7568ms)
+✔ national boundaries reject forged decisions, inconsistent medals, duplicate invitations and changed game evidence (344.491ms)
+✔ a pitcher protagonist has real international BF and persisted contributions with deterministic JSON replay (741.0058ms)
+✖ international cyclic ties use head-to-head differential and seeded lots, with malformed groups rejected (4.7098ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 14
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20556.291
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-national.test.ts:89:1
+✖ international cyclic ties use head-to-head differential and seeded lots, with malformed groups rejected (4.7098ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+      'A',
+  +   'C',
+      'B',
+  -   'C'
+    ]
+
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\kbo-national.test.ts:91:73)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'A', 'C', 'B' ],
+    expected: [ 'A', 'B', 'C' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

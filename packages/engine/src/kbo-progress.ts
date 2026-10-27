@@ -89,6 +89,7 @@ function pendingQueue(career:KboCareer,day:number):{leagueKey:KboLeagueKey;game:
  * touched, and closes the day for both leagues at once. A pending game survives chunk limits and JSON round trips. */
 export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDays=1):KboProgressResult {
  assertCareerRevision(source,expectedRevision);
+ if(source.events.some(e=>e.status==='OPEN'&&['E44','E47','E48'].includes(e.definitionId)))throw new RangeError('NATIONAL_DECISION_REQUIRED');
  if(source.phaseContext.phase!=='SEASON_PROGRESS' || !source.days || !source.competitionSchedule)throw new RangeError('INVALID_CAREER_PHASE');
  if(!Number.isSafeInteger(maxDays) || maxDays<1 || maxDays>7)throw new RangeError('INVALID_ADVANCE_DAYS');
  if(contractDecisionRequired(source) && source.phaseContext.nextWorldDay<=lastDay(source))throw new RangeError('CONTRACT_DECISION_REQUIRED');

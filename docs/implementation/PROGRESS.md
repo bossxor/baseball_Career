@@ -1,3 +1,7 @@
+# M2-DV 최신 작업 — 국가대표 사건·국제 기록
+
+[DV 상세](M2-DV-NATIONAL-INTEGRITY.md). E44/E46/E47/E48/E55·실제 AG 기록·투수 출장·체육요원 시즌 중복 차감 방지. E45/28명 AI·부상/XP·중단 worker는 후속이며 M2 완료 아님. 집중16/16. 전체 npm run check 종료0: 엔진/API 741개 중739통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 804191.6272, 원본434파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다.
+
 # M2-DU 최신 작업 — 아시안게임 실제 대진
 
 2026-10-27 · [상세](M2-DU-ASIAN-GAMES.md). AG 8개국 INTERNATIONAL 실경기·봉인. 전체 npm run check 종료 0: 736개 중 734 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 776919.0793. 증거 `evidence/M2-DU-check.log`. M2 추정 50% 유지. 다음=E44–48/E55·99·24·PF-D.

@@ -1,3 +1,5 @@
+import {createWorldEvent,eventDefinition,resolveEventChoice,completeBlockingEvent,validateEvent,cancelInvalidEvent} from './events.js';
+import type {EventInstance} from './events.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision} from './kbo-career-version.js';
 import type {KboMilitaryStatus} from './kbo-military-state.js';
@@ -6,7 +8,7 @@ export type NationalTournament='WBC'|'OLY'|'AG'|'P12';
 export type NationalMedal='GOLD'|'SILVER'|'BRONZE'|null;
 export interface NationalCompetitionResult {
  competitionId:string;tournament:NationalTournament;seasonKey:string;medal:NationalMedal;finalRank:number;
- officialAppearance:boolean;registered:boolean;resultVersion:1;
+ officialAppearance:boolean;registered:boolean;resultVersion:1;gameKeys?:readonly string[];
 }
 export interface NationalBenefitReceipt {
  benefitKey:string;competitionId:string;benefitType:'ATHLETE_ELIGIBLE';appliedRevision:number;resultVersion:1;
@@ -18,10 +20,13 @@ export interface NationalCallup {
 export interface NationalLedger {
  invitations:readonly NationalCallup[];competitions:readonly NationalCompetitionResult[];benefits:readonly NationalBenefitReceipt[];
  athleteDutySeasonsRemaining?:number;
+ athleteDutyStartSeasonKey?:string;athleteDutySettledSeasons?:readonly string[];
+ returnedCompetitions?:readonly string[];eligibilityReviews?:readonly string[];
 }
 
 /** AG gold or any OLY medal qualifies only with a real appearance while still unresolved/pending. WBC/P12 never qualify. */
 export function nationalAthleteEligible(result:NationalCompetitionResult,status:KboMilitaryStatus):boolean {
+ if(!validNationalResult(result))throw new RangeError('INVALID_NATIONAL_RESULT');
  if(!result.registered||!result.officialAppearance)return false;
  if(!['UNRESOLVED','APPLICATION_PENDING'].includes(status))return false;
  if(result.tournament==='AG')return result.medal==='GOLD';
@@ -37,21 +42,23 @@ function ledger(c:KboCareer):NationalLedger {
 export function openNationalCallup(c:KboCareer,revision:number,tournament:NationalTournament):KboCareer {
  assertKboCareerRevision(c,revision);
  const selectionId=JSON.stringify(['national-callup',c.world.worldKey,c.world.seasonKey,tournament,c.protagonistKey]);
- const cur=ledger(c);if(cur.invitations.some(i=>i.selectionId===selectionId&&i.status!=='DECLINED'))throw new RangeError('NATIONAL_CALLUP_OPEN');
- if(Object.hasOwn(c.health.injuries,c.protagonistKey)||['SERVING_ACTIVE'].includes(c.military?.status??''))throw new RangeError('NATIONAL_CALLUP_INELIGIBLE');
- const next=structuredClone(c);next.national={...cur,invitations:[...cur.invitations,{selectionId,tournament,seasonKey:c.world.seasonKey,invitationVersion:1,status:'INVITED',militaryEffect:tournament==='AG'||tournament==='OLY'}]};next.revision++;return next;
+ if(!['WBC','OLY','AG','P12'].includes(tournament))throw new RangeError('INVALID_NATIONAL_TOURNAMENT');
+ const cur=ledger(c);if(cur.invitations.some(i=>i.selectionId===selectionId))throw new RangeError('NATIONAL_CALLUP_OPEN');
+ if(c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame||Object.hasOwn(c.health.injuries,c.protagonistKey)||['SERVING_ACTIVE'].includes(c.military?.status??'')||['ARCHIVED','RETIRE_CONFIRM'].includes(c.phaseContext.phase))throw new RangeError('NATIONAL_CALLUP_INELIGIBLE');
+ const next=structuredClone(c);next.national={...cur,invitations:[...cur.invitations,{selectionId,tournament,seasonKey:c.world.seasonKey,invitationVersion:1,status:'INVITED',militaryEffect:tournament==='AG'||tournament==='OLY'}]};queueNationalEvent(next,'E44',selectionId,'INVITATION');next.revision++;return next;
 }
 
 export function respondNationalCallup(c:KboCareer,revision:number,selectionId:string,decision:'ACCEPT'|'DECLINE'):KboCareer {
- assertKboCareerRevision(c,revision);const cur=ledger(c),invite=cur.invitations.find(i=>i.selectionId===selectionId);
- if(!invite||invite.status!=='INVITED')throw new RangeError('NATIONAL_CALLUP_NOT_OPEN');
- const next=structuredClone(c);next.national={...cur,invitations:cur.invitations.map(i=>i.selectionId===selectionId?{...i,status:decision==='ACCEPT'?'ACCEPTED':'DECLINED'}:i)};next.revision++;return next;
+ assertKboCareerRevision(c,revision);if(!['ACCEPT','DECLINE'].includes(decision))throw new RangeError('INVALID_NATIONAL_DECISION');const cur=ledger(c),invite=cur.invitations.find(i=>i.selectionId===selectionId);
+ if(!invite||invite.status!=='INVITED'||invite.seasonKey!==c.world.seasonKey)throw new RangeError('NATIONAL_CALLUP_NOT_OPEN');
+ const next=structuredClone(c);next.national={...cur,invitations:cur.invitations.map(i=>i.selectionId===selectionId?{...i,status:decision==='ACCEPT'?'ACCEPTED':'DECLINED'}:i)};const event=next.events.find(e=>e.definitionId==='E44'&&e.evidence.fields.competitionId===selectionId&&e.status==='OPEN');if(event)closeNationalTask(next,event,decision==='ACCEPT'?'ACCEPT_NATIONAL':'DECLINE_NATIONAL',selectionId);next.revision++;return next;
 }
 
-/** Seals one competition result. ATHLETE_ELIGIBLE at most once per competition; never COMPLETED here. */
+/** Server-only adapter for trusted competition reducers, never accept a client-provided medal. Seals one competition result. ATHLETE_ELIGIBLE at most once per competition; never COMPLETED here. */
 export function sealNationalCompetitionResult(c:KboCareer,revision:number,result:NationalCompetitionResult):KboCareer {
  assertKboCareerRevision(c,revision);
- if(result.resultVersion!==1||!result.competitionId||result.seasonKey!==c.world.seasonKey)throw new RangeError('INVALID_NATIONAL_RESULT');
+ if(!validNationalResult(result)||result.seasonKey!==c.world.seasonKey)throw new RangeError('INVALID_NATIONAL_RESULT');
+ if(result.gameKeys!==undefined){if(result.competitionId!==JSON.stringify(['national-'+result.tournament.toLowerCase(),c.world.worldKey,c.world.seasonKey])||!Array.isArray(result.gameKeys)||!result.gameKeys.length||new Set(result.gameKeys).size!==result.gameKeys.length||result.gameKeys.some(k=>!c.records.games[k]||c.records.games[k]!.scope.phase!=='INTERNATIONAL'||c.records.games[k]!.scope.leagueKey!==result.tournament||c.records.games[k]!.scope.seasonKey!==result.seasonKey)||result.officialAppearance!==result.gameKeys.some(k=>(c.records.games[k]!.batting[c.protagonistKey]?.PA??0)+(c.records.games[k]!.pitching[c.protagonistKey]?.BF??0)>0))throw new RangeError('INVALID_NATIONAL_GAME_EVIDENCE');}
  const cur=ledger(c);if(cur.competitions.some(x=>x.competitionId===result.competitionId))throw new RangeError('NATIONAL_RESULT_ALREADY_SEALED');
  const next=structuredClone(c);const status=(next.military?.status??'UNRESOLVED') as KboMilitaryStatus;
  const benefits=[...cur.benefits];
@@ -61,8 +68,10 @@ export function sealNationalCompetitionResult(c:KboCareer,revision:number,result
   benefits.push({benefitKey,competitionId:result.competitionId,benefitType:'ATHLETE_ELIGIBLE',appliedRevision:revision+1,resultVersion:1});
   next.military={...(next.military??{applications:[]}),status:'ATHLETE_ELIGIBLE',applications:next.military?.applications??[]};
  }
- next.national={invitations:cur.invitations,competitions:[...cur.competitions,structuredClone(result)],benefits,...(cur.athleteDutySeasonsRemaining!==undefined?{athleteDutySeasonsRemaining:cur.athleteDutySeasonsRemaining}:{})};
- next.revision++;return next;
+ next.national={...cur,invitations:cur.invitations,competitions:[...cur.competitions,structuredClone(result)],benefits,...(cur.athleteDutySeasonsRemaining!==undefined?{athleteDutySeasonsRemaining:cur.athleteDutySeasonsRemaining}:{})};
+ if(result.officialAppearance&&!cur.competitions.some(x=>x.officialAppearance))queueNationalEvent(next,'E46',result.competitionId,'FIRST_APPEARANCE');
+ if(benefits.length>cur.benefits.length)queueNationalEvent(next,'E47',result.competitionId,'BENEFIT');
+ queueNationalEvent(next,'E48',result.competitionId,'RETURN');next.revision++;return next;
 }
 
 /** Offseason: enter the 3-season athlete duty block. Domestic play stays allowed. */
@@ -71,14 +80,72 @@ export function confirmAthleteService(c:KboCareer,revision:number):KboCareer {
  if(c.phaseContext.phase!=='SEASON_REVIEW')throw new RangeError('ATHLETE_SERVICE_NOT_AVAILABLE');
  if((c.military?.status??'UNRESOLVED')!=='ATHLETE_ELIGIBLE')throw new RangeError('ATHLETE_SERVICE_NOT_AVAILABLE');
  if((c.national?.benefits??[]).every(b=>b.benefitType!=='ATHLETE_ELIGIBLE'))throw new RangeError('ATHLETE_SERVICE_NOT_AVAILABLE');
- const next=structuredClone(c);next.military={...next.military!,status:'ATHLETE_SERVICE'};next.national={invitations:next.national?.invitations??[],competitions:next.national?.competitions??[],benefits:next.national?.benefits??[],athleteDutySeasonsRemaining:3};next.revision++;return next;
+ if(c.events.some(e=>e.definitionId==='E47'&&e.status==='OPEN'))throw new RangeError('NATIONAL_ELIGIBILITY_REVIEW_REQUIRED');
+ if(c.events.some(e=>e.definitionId==='E48'&&e.status==='OPEN'))throw new RangeError('NATIONAL_RETURN_REQUIRED');
+ const next=structuredClone(c);next.military={...next.military!,status:'ATHLETE_SERVICE',applications:next.military!.applications.map(a=>a.decision==='PENDING'?{...a,decision:'DECLINED'}:a)};
+ const superseded=new Set(next.military.applications.filter(a=>a.decision==='DECLINED').map(a=>a.eventKey));next.events=next.events.map(e=>e.status==='OPEN'&&(superseded.has(e.eventKey)||['E49','E54'].includes(e.definitionId)&&e.evidence.fields.playerSimulationKey===c.protagonistKey)?cancelInvalidEvent(e,e.version,'ATHLETE_SERVICE_CONFIRMED',{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:[]}):e);
+next.national={...next.national!,athleteDutySeasonsRemaining:3,athleteDutyStartSeasonKey:String(Number(c.world.seasonKey)+1),athleteDutySettledSeasons:[]};queueDutyNotice(next);next.revision++;return next;
 }
 
-/** Year boundary: one duty season consumed. After 3 → COMPLETED. */
-export function advanceAthleteDutySeason(c:KboCareer):void {
+/** Close a played full season once. Offseason admission starts with the next full season (21). */
+export function advanceAthleteDutySeason(c:KboCareer,playedSeasonKey=c.world.seasonKey):void {
  if(c.military?.status!=='ATHLETE_SERVICE'||!c.national||c.national.athleteDutySeasonsRemaining===undefined)return;
- const left=c.national.athleteDutySeasonsRemaining-1;
- if(left<0)throw new RangeError('ATHLETE_DUTY_EXHAUSTED');
- c.national={...c.national,athleteDutySeasonsRemaining:left};
- if(left===0){c.military={...c.military,status:'COMPLETED',completedSeasonKey:c.world.seasonKey};}
+ assertNationalLedger(c.national);
+ const n=c.national,left=n.athleteDutySeasonsRemaining!,benefitSeasons=n.benefits.map(b=>n.competitions.find(r=>r.competitionId===b.competitionId)!.seasonKey);
+ const start=n.athleteDutyStartSeasonKey??String(Math.min(...benefitSeasons.map(Number))+1),settled=n.athleteDutySettledSeasons??Array.from({length:3-left},(_,i)=>String(Number(start)+i));
+ if(!/^\d{4}$/.test(playedSeasonKey))throw new RangeError('INVALID_ATHLETE_DUTY_SEASON');
+ if(Number(playedSeasonKey)<Number(start)||settled.includes(playedSeasonKey))return;
+ if(c.seasonClose?.seasonKey!==playedSeasonKey||![Number(playedSeasonKey),Number(playedSeasonKey)+1].includes(Number(c.world.seasonKey)))throw new RangeError('ATHLETE_DUTY_SEASON_NOT_CLOSED');
+ if(left<1||Number(playedSeasonKey)!==Number(start)+settled.length)throw new RangeError('ATHLETE_DUTY_SEASON_GAP');
+ c.national={...n,athleteDutySeasonsRemaining:left-1,athleteDutyStartSeasonKey:start,athleteDutySettledSeasons:[...settled,playedSeasonKey]};
+ if(left===1)c.military={...c.military,status:'COMPLETED',completedSeasonKey:playedSeasonKey};
+ else queueDutyNotice(c);
+}
+
+const TOURNAMENTS=['WBC','OLY','AG','P12'];
+function validNationalResult(r:NationalCompetitionResult):boolean {
+ return !!r&&r.resultVersion===1&&typeof r.competitionId==='string'&&r.competitionId.length>0&&/^\d{4}$/.test(r.seasonKey)&&TOURNAMENTS.includes(r.tournament)&&typeof r.registered==='boolean'&&typeof r.officialAppearance==='boolean'&&(!r.officialAppearance||r.registered)&&Number.isSafeInteger(r.finalRank)&&r.finalRank>=1&&r.finalRank<=({WBC:20,OLY:6,AG:8,P12:12}[r.tournament])&&(r.medal===null||r.medal==='GOLD'&&r.finalRank===1||r.medal==='SILVER'&&r.finalRank===2||r.medal==='BRONZE'&&r.finalRank===3);
+}
+export function assertNationalLedger(n:NationalLedger|undefined):void {
+ if(n===undefined)return;
+ if(!n||!Array.isArray(n.invitations)||!Array.isArray(n.competitions)||!Array.isArray(n.benefits)||n.competitions.some(r=>!validNationalResult(r))||new Set(n.competitions.map(r=>r.competitionId)).size!==n.competitions.length)throw new RangeError('INVALID_NATIONAL_LEDGER');
+ if(n.invitations.some(i=>!i||!i.selectionId||!TOURNAMENTS.includes(i.tournament)||!/^\d{4}$/.test(i.seasonKey)||i.invitationVersion!==1||!['INVITED','ACCEPTED','DECLINED'].includes(i.status)||i.militaryEffect!==(i.tournament==='AG'||i.tournament==='OLY'))||new Set(n.invitations.map(i=>i.selectionId)).size!==n.invitations.length)throw new RangeError('INVALID_NATIONAL_INVITATION');
+ if(n.benefits.some(b=>!b||b.benefitType!=='ATHLETE_ELIGIBLE'||b.resultVersion!==1||!Number.isSafeInteger(b.appliedRevision)||b.appliedRevision<1||b.benefitKey!==JSON.stringify(['national-benefit',b.competitionId,'ATHLETE_ELIGIBLE'])||!n.competitions.some(r=>r.competitionId===b.competitionId&&nationalAthleteEligible(r,'UNRESOLVED')))||new Set(n.benefits.map(b=>b.benefitKey)).size!==n.benefits.length)throw new RangeError('INVALID_NATIONAL_BENEFIT');
+ const left=n.athleteDutySeasonsRemaining;
+ if(left!==undefined&&(!Number.isSafeInteger(left)||left<0||left>3||n.benefits.length===0))throw new RangeError('INVALID_ATHLETE_DUTY');
+ if(n.athleteDutyStartSeasonKey!==undefined&&(!/^\d{4}$/.test(n.athleteDutyStartSeasonKey)||!Array.isArray(n.athleteDutySettledSeasons)||left===undefined||n.athleteDutySettledSeasons.length!==3-left||n.athleteDutySettledSeasons.some((y,i)=>y!==String(Number(n.athleteDutyStartSeasonKey)+i))))throw new RangeError('INVALID_ATHLETE_DUTY');
+ for(const ids of [n.returnedCompetitions,n.eligibilityReviews])if(ids!==undefined&&(!Array.isArray(ids)||new Set(ids).size!==ids.length||ids.some(id=>!n.competitions.some(r=>r.competitionId===id))))throw new RangeError('INVALID_NATIONAL_RECEIPTS');
+}
+function queueNationalEvent(c:KboCareer,id:string,competitionId:string,stage:string):void {
+ const d=eventDefinition(id),day=c.days?.seasonKey===c.world.seasonKey?c.days.days.at(-1)?.day??0:0;
+ const event=createWorldEvent({definitionId:id,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:d.evidenceDomain,fields:{playerSimulationKey:c.protagonistKey,competitionId,selectionOrAppearanceStage:stage}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:c.phaseContext.phase,competitionKey:null,registrationKey:c.protagonistClubId,sourceRevision:c.revision+1},sourceSequence:c.events.length+1,worldDay:day});
+ if(!c.events.some(e=>e.eventKey===event.eventKey))c.events=[...c.events,event];
+}
+function queueDutyNotice(c:KboCareer):void {
+ const n=c.national!,d=eventDefinition('E55'),task=JSON.stringify(['athlete-duty',c.protagonistKey,n.athleteDutyStartSeasonKey,n.athleteDutySeasonsRemaining]);
+ const event=createWorldEvent({definitionId:'E55',worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:d.evidenceDomain,fields:{playerSimulationKey:c.protagonistKey,serviceTaskIdOrServicePeriodId:task,stage:'DUTY'}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:c.phaseContext.phase,competitionKey:null,registrationKey:c.protagonistClubId,sourceRevision:c.revision+1},sourceSequence:c.events.length+1,worldDay:c.days?.seasonKey===c.world.seasonKey?c.days.days.at(-1)?.day??0:0});
+ if(!c.events.some(e=>e.eventKey===event.eventKey))c.events=[...c.events,event];
+}
+function closeNationalTask(c:KboCareer,e:EventInstance,command:string,receiptKey:string):void {
+ const closed=completeBlockingEvent(e,e.version,{sourceEvidenceKey:e.evidenceKey,receiptKey,command},{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:[command]});c.events=c.events.map(x=>x.eventKey===e.eventKey?closed:x);
+}
+/** Navigation does not confirm athlete service or consume a season. */
+export function resolveKboNationalEvent(c:KboCareer,revision:number,input:{eventKey:string;eventVersion:number;command:string}) {
+ assertKboCareerRevision(c,revision);const e=c.events.find(e=>e.eventKey===input.eventKey);
+ if(!e||!['E44','E46','E47','E48','E55'].includes(e.definitionId)||e.evidence.fields.playerSimulationKey!==c.protagonistKey||e.seasonKey!==c.world.seasonKey)throw new RangeError('INVALID_NATIONAL_EVENT');
+ validateEvent(e);const picked=resolveEventChoice(e,input.eventVersion,input.command,null,{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:e.offeredChoices});
+ if(e.definitionId==='E44')return {career:respondNationalCallup(c,revision,String(e.evidence.fields.competitionId),input.command==='ACCEPT_NATIONAL'?'ACCEPT':'DECLINE'),navigation:null};
+ if(picked.navigation)return {career:c,navigation:picked.navigation};
+ const next={...c,events:c.events.map(x=>x.eventKey===e.eventKey?picked.event:x)};
+ if(e.definitionId==='E48'){
+  const id=String(e.evidence.fields.competitionId);if(!c.national?.competitions.some(r=>r.competitionId===id)||c.events.some(x=>x.definitionId==='E47'&&x.status==='OPEN'&&x.evidence.fields.competitionId===id))throw new RangeError('NATIONAL_RETURN_NOT_READY');
+  next.national={...c.national,returnedCompetitions:[...(c.national.returnedCompetitions??[]),id]};closeNationalTask(next,e,input.command,JSON.stringify(['national-return',id]));
+ }
+ next.revision++;return {career:next,navigation:null};
+}
+/** S26 eligibility review commits the already-evidenced benefit, independently of offseason duty admission. */
+export function confirmNationalEligibility(c:KboCareer,revision:number,competitionId:string):KboCareer {
+ assertKboCareerRevision(c,revision);const benefit=c.national?.benefits.find(b=>b.competitionId===competitionId),e=c.events.find(e=>e.definitionId==='E47'&&e.evidence.fields.competitionId===competitionId&&e.status==='OPEN');
+ if(!benefit||!e||(c.national?.eligibilityReviews??[]).includes(competitionId))throw new RangeError('NATIONAL_ELIGIBILITY_NOT_OPEN');
+ const next={...c,national:{...c.national!,eligibilityReviews:[...(c.national?.eligibilityReviews??[]),competitionId]}};closeNationalTask(next,e,'CONFIRM_SERVICE_ELIGIBILITY',benefit.benefitKey);next.revision++;return next;
 }

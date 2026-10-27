@@ -1,0 +1,24 @@
+✔ global age28 guard covers legacy careers without a military record and preserves source until explicit enlistment (7494.4413ms)
+✔ E49 opens once, defers only within the deadline and START_SERVICE only navigates to review (1548.3984ms)
+✔ E54 forbids indefinite defer and overdue Sangmu application, with stale/forged requests rejected atomically (2626.0329ms)
+✔ E49 application closes the planning task and creates one fixed E50 result; injury leaves original plan untouched (1603.0008ms)
+✔ 25/26 reminders expose future grace seasons; max-age retirement remains possible without faking military completion (5282.3186ms)
+✔ Sangmu application: fixed result, retry returns the same application, wrong answers rejected, decline burns the recruitment (9001.4675ms)
+✔ an enlisted protagonist serves two seasons as a loan to the military team and then completes (11458.8823ms)
+✔ national callup accept and decline keep revision atomic (621.4022ms)
+✔ INT13 AG silver or WBC gold does not change military status (360.1847ms)
+✔ INT14 OLY bronze with appearance becomes ATHLETE_ELIGIBLE once; INT15 completed stays put (554.119ms)
+✔ AG tournament plays real INTERNATIONAL games and can grant ATHLETE_ELIGIBLE on gold+appearance (578.5541ms)
+✔ E44 domain response, E47 navigation/review and E48 return preserve benefit and original club (376.9541ms)
+✔ national boundaries reject forged decisions, inconsistent medals, duplicate invitations and changed game evidence (409.3274ms)
+✔ a pitcher protagonist has real international BF and persisted contributions with deterministic JSON replay (840.236ms)
+✔ international cyclic ties use head-to-head differential and seeded lots, with malformed groups rejected (3.7481ms)
+✔ athlete admission cancels competing pending Sangmu application without enlisting or charging salary (329.5769ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22126.676

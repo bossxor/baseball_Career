@@ -1,0 +1,2013 @@
+{
+  "schemaVersion": 1,
+  "status": "INCOMPLETE_IMPLEMENTATION_AUDIT",
+  "baseline": "1cbba1b + M2-DV worktree",
+  "items": [
+    {
+      "id": "E01",
+      "title": "마지막 고교의 겨울",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "KEEP_FOCUS",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/high-school-career.ts",
+          "line": 116
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E02",
+      "title": "타격 자세의 갈림길",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "KEEP_FOCUS",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/high-school-career.ts",
+          "line": 123
+        },
+        {
+          "path": "packages/engine/src/high-school-progress.ts",
+          "line": 77
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E03",
+      "title": "마운드의 과제",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "KEEP_FOCUS",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/high-school-career.ts",
+          "line": 123
+        },
+        {
+          "path": "packages/engine/src/high-school-progress.ts",
+          "line": 77
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E04",
+      "title": "스카우트의 질문",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "OPEN_ROUTE",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/high-school-route.ts",
+          "line": 41
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E05",
+      "title": "지명을 기다리는 날",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "ACCEPT_CAREER_OFFER",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "DECLINE_DRAFT",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E06",
+      "title": "이름이 불리지 않았다",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "OPEN_UNDRAFTED_ROUTES",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "REQUEST_RETIRE",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E07",
+      "title": "다시 받은 기회",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "ACCEPT_CAREER_OFFER",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "REQUEST_RETIRE",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E08",
+      "title": "프로의 첫 캠프",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "KEEP_FOCUS",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-preseason.ts",
+          "line": 37
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E09",
+      "title": "첫 1군 호출",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "ACCEPT_CALLUP",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "DEFER_CALLUP",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-callup.ts",
+          "line": 36
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E10",
+      "title": "짧은 기회의 무게",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "REQUEST_ROLE_REVIEW",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E11",
+      "title": "두 번째 숙제",
+      "queueClass": "OPTIONAL",
+      "commands": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "KEEP_FOCUS",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E12",
+      "title": "주전과 백업 사이",
+      "queueClass": "OPTIONAL",
+      "commands": [
+        {
+          "command": "START_POSITION_PLAN",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E13",
+      "title": "낯선 수비 자리",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "CONFIRM_POSITION",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "CANCEL_POSITION_PLAN",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E14",
+      "title": "선발의 문",
+      "queueClass": "OPTIONAL",
+      "commands": [
+        {
+          "command": "REQUEST_SP_REVIEW",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E15",
+      "title": "마지막 아웃의 자리",
+      "queueClass": "OPTIONAL",
+      "commands": [
+        {
+          "command": "REQUEST_CP_REVIEW",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E16",
+      "title": "구속보다 안정",
+      "queueClass": "OPTIONAL",
+      "commands": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "KEEP_FOCUS",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E17",
+      "title": "긴 무안타",
+      "queueClass": "OPTIONAL",
+      "commands": [
+        {
+          "command": "OPEN_STYLE",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E18",
+      "title": "장타가 필요한 때",
+      "queueClass": "OPTIONAL",
+      "commands": [
+        {
+          "command": "OPEN_STYLE",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E19",
+      "title": "흔들린 두 경기",
+      "queueClass": "OPTIONAL",
+      "commands": [
+        {
+          "command": "REQUEST_REST",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E20",
+      "title": "코치의 조언",
+      "queueClass": "OPTIONAL",
+      "commands": [
+        {
+          "command": "OPEN_DEVELOPMENT",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E21",
+      "title": "작은 통증",
+      "queueClass": "HEALTH",
+      "commands": [
+        {
+          "command": "ACK_INJURY",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E22",
+      "title": "긴 재활",
+      "queueClass": "HEALTH",
+      "commands": [
+        {
+          "command": "ACK_INJURY",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E23",
+      "title": "돌아온 그라운드",
+      "queueClass": "HEALTH",
+      "commands": [
+        {
+          "command": "CONFIRM_RETURN",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E24",
+      "title": "처음 받은 박수",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E25",
+      "title": "올스타의 초대",
+      "queueClass": "SEASON",
+      "commands": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E26",
+      "title": "라이벌의 등장",
+      "queueClass": "OPTIONAL",
+      "commands": [
+        {
+          "command": "OPEN_COMPETITION",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E27",
+      "title": "포스트시즌의 긴장",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E28",
+      "title": "우승 뒤의 겨울",
+      "queueClass": "SEASON",
+      "commands": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E29",
+      "title": "첫 개인상",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E30",
+      "title": "재계약 제안",
+      "queueClass": "CONTRACT",
+      "commands": [
+        {
+          "command": "OPEN_CAREER_OFFERS",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "REQUEST_RETIRE",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-military-planning.ts",
+          "line": 31
+        },
+        {
+          "path": "packages/engine/src/kbo-military-state.ts",
+          "line": 44
+        },
+        {
+          "path": "packages/engine/src/kbo-offseason-exit.ts",
+          "line": 32
+        },
+        {
+          "path": "packages/engine/src/kbo-remainder-renewal.ts",
+          "line": 26
+        },
+        {
+          "path": "packages/engine/src/kbo-renewal.ts",
+          "line": 42
+        },
+        {
+          "path": "packages/engine/src/kbo-retirement.ts",
+          "line": 59
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E31",
+      "title": "FA 시장의 문",
+      "queueClass": "CONTRACT",
+      "commands": [
+        {
+          "command": "OPEN_CAREER_OFFERS",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "OPEN_RETURN",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E32",
+      "title": "익숙한 유니폼",
+      "queueClass": "CONTRACT",
+      "commands": [
+        {
+          "command": "ACCEPT_CAREER_OFFER",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "BACK_TO_OFFERS",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E33",
+      "title": "베테랑의 역할",
+      "queueClass": "CONTRACT",
+      "commands": [
+        {
+          "command": "ACCEPT_ROLE",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "OPEN_CAREER_OFFERS",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E34",
+      "title": "전력 외 통보",
+      "queueClass": "CONTRACT",
+      "commands": [
+        {
+          "command": "OPEN_UNCONTRACTED_ROUTES",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "REQUEST_RETIRE",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E35",
+      "title": "마지막 테스트 결과",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "CONFIRM_RETIRE",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E36",
+      "title": "떠날 시기를 고르다",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "CONFIRM_RETIRE",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "CANCEL_RETIRE",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-retirement.ts",
+          "line": 46
+        },
+        {
+          "path": "packages/engine/src/us-retirement.ts",
+          "line": 24
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E37",
+      "title": "마지막 인사",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "OPEN_ARCHIVE",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-retirement.ts",
+          "line": 46
+        },
+        {
+          "path": "packages/engine/src/us-retirement.ts",
+          "line": 24
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E38",
+      "title": "장기집권의 부담",
+      "queueClass": "SEASON",
+      "commands": [
+        {
+          "command": "OPEN_CLUB_REVIEW",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_SCOPE_REVIEW_M6",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E39",
+      "title": "기회를 원하는 유망주",
+      "queueClass": "SEASON",
+      "commands": [
+        {
+          "command": "OPEN_LINEUP",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_SCOPE_REVIEW_M6",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E40",
+      "title": "한정된 겨울 예산",
+      "queueClass": "SEASON",
+      "commands": [
+        {
+          "command": "OPEN_BUDGET",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "OPEN_REBUILD",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_SCOPE_REVIEW_M6",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E41",
+      "title": "새 시즌의 유형",
+      "queueClass": "SEASON",
+      "commands": [
+        {
+          "command": "OPEN_STYLE",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_SCOPE_REVIEW_M6",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/high-school-progress.ts",
+          "line": 77
+        },
+        {
+          "path": "packages/engine/src/kbo-windows.ts",
+          "line": 72
+        },
+        {
+          "path": "packages/engine/src/us-windows.ts",
+          "line": 53
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E42",
+      "title": "다른 이름의 선수",
+      "queueClass": "SEASON",
+      "commands": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_SCOPE_REVIEW_M6",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E43",
+      "title": "한 번의 특별훈련",
+      "queueClass": "SEASON",
+      "commands": [
+        {
+          "command": "OPEN_TRAINING",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "DEFER_TRAINING",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "FORFEIT_TRAINING",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/high-school-progress.ts",
+          "line": 77
+        },
+        {
+          "path": "packages/engine/src/high-school-training.ts",
+          "line": 52
+        },
+        {
+          "path": "packages/engine/src/kbo-windows.ts",
+          "line": 72
+        },
+        {
+          "path": "packages/engine/src/us-windows.ts",
+          "line": 53
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E44",
+      "title": "국가의 부름",
+      "queueClass": "REGISTRATION",
+      "commands": [
+        {
+          "command": "ACCEPT_NATIONAL",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "DECLINE_NATIONAL",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "FOCUSED_VERIFIED_DV",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 48
+        },
+        {
+          "path": "packages/engine/src/kbo-progress.ts",
+          "line": 92
+        }
+      ],
+      "evidence": "evidence/M2-DV-focused.log",
+      "note": "DV controlled domain assertions; not full calendar/28-player worker"
+    },
+    {
+      "id": "E45",
+      "title": "대표팀 밖에서",
+      "queueClass": "REGISTRATION",
+      "commands": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E46",
+      "title": "첫 국제무대",
+      "queueClass": "REGISTRATION",
+      "commands": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "FOCUSED_VERIFIED_DV",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 72
+        }
+      ],
+      "evidence": "evidence/M2-DV-focused.log",
+      "note": "DV controlled domain assertions; not full calendar/28-player worker"
+    },
+    {
+      "id": "E47",
+      "title": "메달과 다음 의무",
+      "queueClass": "REGISTRATION",
+      "commands": [
+        {
+          "command": "OPEN_SERVICE_ELIGIBILITY",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "FOCUSED_VERIFIED_DV",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 73
+        },
+        {
+          "path": "packages/engine/src/kbo-progress.ts",
+          "line": 92
+        }
+      ],
+      "evidence": "evidence/M2-DV-focused.log",
+      "note": "DV controlled domain assertions; not full calendar/28-player worker"
+    },
+    {
+      "id": "E48",
+      "title": "돌아오는 비행기",
+      "queueClass": "REGISTRATION",
+      "commands": [
+        {
+          "command": "CONFIRM_NATIONAL_RETURN",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "FOCUSED_VERIFIED_DV",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 74
+        },
+        {
+          "path": "packages/engine/src/kbo-progress.ts",
+          "line": 92
+        }
+      ],
+      "evidence": "evidence/M2-DV-focused.log",
+      "note": "DV controlled domain assertions; not full calendar/28-player worker"
+    },
+    {
+      "id": "E49",
+      "title": "겨울의 병역계획",
+      "queueClass": "DEADLINE",
+      "commands": [
+        {
+          "command": "APPLY_MILITARY_TEAM",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "START_SERVICE",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "DEFER_SERVICE",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-military-planning.ts",
+          "line": 15
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 86
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E50",
+      "title": "상무 선발 발표",
+      "queueClass": "DEADLINE",
+      "commands": [
+        {
+          "command": "CONFIRM_MILITARY_RESULT",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-military-state.ts",
+          "line": 48
+        },
+        {
+          "path": "packages/engine/src/kbo-offseason-exit.ts",
+          "line": 45
+        },
+        {
+          "path": "packages/engine/src/kbo-renewal.ts",
+          "line": 37
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E51",
+      "title": "잠시 내려놓는 배트",
+      "queueClass": "DEADLINE",
+      "commands": [
+        {
+          "command": "ADVANCE_SERVICE",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 20
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E52",
+      "title": "부대의 그라운드",
+      "queueClass": "DEADLINE",
+      "commands": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ADVANCE_SERVICE",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 20
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E53",
+      "title": "다시 받는 유니폼",
+      "queueClass": "DEADLINE",
+      "commands": [
+        {
+          "command": "CONFIRM_SERVICE_RETURN",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 20
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E54",
+      "title": "남은 마지막 겨울",
+      "queueClass": "DEADLINE",
+      "commands": [
+        {
+          "command": "APPLY_MILITARY_TEAM",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "START_SERVICE",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-military-planning.ts",
+          "line": 15
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 86
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E55",
+      "title": "계속되는 활동의무",
+      "queueClass": "DEADLINE",
+      "commands": [
+        {
+          "command": "ACK_SERVICE_OBLIGATION",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "FOCUSED_VERIFIED_DV",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 125
+        }
+      ],
+      "evidence": "evidence/M2-DV-focused.log",
+      "note": "DV controlled domain assertions; not full calendar/28-player worker"
+    },
+    {
+      "id": "E56",
+      "title": "졸업 뒤 다음 무대",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "OPEN_ROUTE",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E57",
+      "title": "바다 건너의 계약서",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "ACCEPT_CAREER_OFFER",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "BACK_TO_ROUTE",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E58",
+      "title": "낯선 클럽하우스",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/us-preseason.ts",
+          "line": 37
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E59",
+      "title": "다음 레벨의 문",
+      "queueClass": "REGISTRATION",
+      "commands": [
+        {
+          "command": "CONFIRM_PROMOTION",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "DEFER_PROMOTION",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/us-levels.ts",
+          "line": 26
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E60",
+      "title": "메이저리그의 전화",
+      "queueClass": "REGISTRATION",
+      "commands": [
+        {
+          "command": "CONFIRM_CALLUP",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/us-levels.ts",
+          "line": 26
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E61",
+      "title": "다시 내려가는 길",
+      "queueClass": "REGISTRATION",
+      "commands": [
+        {
+          "command": "CONFIRM_DEMOTION",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "OPEN_RIGHTS",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/us-levels.ts",
+          "line": 26
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E62",
+      "title": "포스팅을 요청하다",
+      "queueClass": "CONTRACT",
+      "commands": [
+        {
+          "command": "REQUEST_POSTING",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E63",
+      "title": "구단의 대답",
+      "queueClass": "CONTRACT",
+      "commands": [
+        {
+          "command": "OPEN_POSTING_OFFERS",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E64",
+      "title": "협상의 끝",
+      "queueClass": "CONTRACT",
+      "commands": [
+        {
+          "command": "ACCEPT_CAREER_OFFER",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "REMAIN_ORIGINAL",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E65",
+      "title": "처음 선 빅리그",
+      "queueClass": "REGISTRATION",
+      "commands": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E66",
+      "title": "미국에서 맞는 FA",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "OPEN_CAREER_OFFERS",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "OPEN_RETURN",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E67",
+      "title": "돌아갈 그라운드",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "CONFIRM_DOMESTIC_RETURN",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "CANCEL_RETURN",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E68",
+      "title": "기다림도 커리어",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "ADVANCE_RETURN_PROGRAM",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E69",
+      "title": "두 리그의 마지막 인사",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "OPEN_ARCHIVE",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E70",
+      "title": "졸업 뒤의 캠퍼스",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "OPEN_COLLEGES",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "BACK_TO_ROUTE",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E71",
+      "title": "대학의 첫 유니폼",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E72",
+      "title": "대학선수권의 초대",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E73",
+      "title": "두 번째 봄 다음의 선택",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "ENTER_EARLY_DRAFT",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ADVANCE_ACADEMIC_YEAR",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "OPEN_US_IF_VALID",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E74",
+      "title": "다시 학교 그라운드로",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "ADVANCE_ACADEMIC_YEAR",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "REQUEST_RETIRE",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E75",
+      "title": "졸업과 다음 무대",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "GRADUATE_COLLEGE",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/college-graduation.ts",
+          "line": 24
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E76",
+      "title": "미뤄 둔 학년",
+      "queueClass": "ROUTE",
+      "commands": [
+        {
+          "command": "RESUME_COLLEGE",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E77",
+      "title": "새로운 관찰 보고서",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "OPEN_SCOUT_REPORT",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E78",
+      "title": "이번 탐색의 빈자리",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "OPEN_SEARCH",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "OPEN_MARKET",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_SCOPE_REVIEW_M6",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E79",
+      "title": "제안서를 보내기 전에",
+      "queueClass": "FORM",
+      "commands": [
+        {
+          "command": "SUBMIT_OFFER",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "CANCEL_DRAFT_OFFER",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_SCOPE_REVIEW_M6",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E80",
+      "title": "협상 라운드의 마감",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "OPEN_OFFER_RESULTS",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_SCOPE_REVIEW_M6",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E81",
+      "title": "그라운드를 지키는 예산",
+      "queueClass": "SEASON",
+      "commands": [
+        {
+          "command": "CONFIRM_REBUILD",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "BACK_TO_BUDGET",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_SCOPE_REVIEW_M6",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E82",
+      "title": "다시 시작하는 선수",
+      "queueClass": "FORM",
+      "commands": [
+        {
+          "command": "CONFIRM_IMPORT",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "CANCEL_IMPORT",
+          "dispatchClass": "DOMAIN"
+        }
+      ],
+      "scope": "REQUIRES_SCOPE_REVIEW_M6",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E83",
+      "title": "숨겨진 난이도의 약속",
+      "queueClass": "FORM",
+      "commands": [
+        {
+          "command": "CONFIRM_DIFFICULTY",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "BACK_TO_DIFFICULTY",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_SCOPE_REVIEW_M6",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E84",
+      "title": "나만의 무기를 얻다",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "OPEN_TRAITS",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_SCOPE_REVIEW_M6",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/trait-notices.ts",
+          "line": 13
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E85",
+      "title": "쌓아 온 나만의 무기",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "OPEN_TRAITS",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E86",
+      "title": "새로운 공의 연습",
+      "queueClass": "OPTIONAL",
+      "commands": [
+        {
+          "command": "SET_PITCH_TRAINING",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E87",
+      "title": "손끝에 익은 구종",
+      "queueClass": "OPTIONAL",
+      "commands": [
+        {
+          "command": "OPEN_REPERTOIRE",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E88",
+      "title": "타구를 만드는 접근",
+      "queueClass": "OPTIONAL",
+      "commands": [
+        {
+          "command": "SET_BATTING_APPROACH",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E89",
+      "title": "이번 시즌의 약속",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "SET_GOALS",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E90",
+      "title": "숫자 너머의 한 걸음",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "OPEN_ACHIEVEMENTS",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/season-goals.ts",
+          "line": 37
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E91",
+      "title": "함께 볼 계약서",
+      "queueClass": "CONTRACT",
+      "commands": [
+        {
+          "command": "HIRE_AGENT",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E92",
+      "title": "한 번의 역제안",
+      "queueClass": "CONTRACT",
+      "commands": [
+        {
+          "command": "REQUEST_SALARY_COUNTER",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E93",
+      "title": "내 역할을 묻다",
+      "queueClass": "CONTRACT",
+      "commands": [
+        {
+          "command": "REQUEST_ROLE_REVIEW",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E94",
+      "title": "같은 출발선의 이름",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "OPEN_RELATIONS",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-relations.ts",
+          "line": 61
+        },
+        {
+          "path": "packages/engine/src/relation-notices.ts",
+          "line": 38
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E95",
+      "title": "다시 마주한 유니폼",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "OPEN_RELATIONS",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-relations.ts",
+          "line": 61
+        },
+        {
+          "path": "packages/engine/src/kbo-reunion-events.ts",
+          "line": 34
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E96",
+      "title": "이번에는 같은 편",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "OPEN_RELATIONS",
+          "dispatchClass": "NAVIGATE"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-relations.ts",
+          "line": 61
+        },
+        {
+          "path": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 68
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E97",
+      "title": "그라운드 곁의 두 번째 삶",
+      "queueClass": "FORM",
+      "commands": [
+        {
+          "command": "HIRE_RETIRED_STAFF",
+          "dispatchClass": "DOMAIN"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E98",
+      "title": "한 타석씩 남길 경기",
+      "queueClass": "PRESENTATION",
+      "commands": [
+        {
+          "command": "WATCH_IMPORTANT_GAME",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "SKIP_COMMENTARY",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    },
+    {
+      "id": "E99",
+      "title": "한 장에 남긴 시간",
+      "queueClass": "NOTICE",
+      "commands": [
+        {
+          "command": "OPEN_CHRONICLE",
+          "dispatchClass": "NAVIGATE"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK"
+        }
+      ],
+      "scope": "REQUIRES_DOMAIN_REVIEW",
+      "verification": "NOT_AUDITED",
+      "references": [],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+    }
+  ]
+}

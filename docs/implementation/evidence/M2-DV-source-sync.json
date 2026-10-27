@@ -1,0 +1,109 @@
+{
+  "utc": "2026-10-27T04:38:42.432Z",
+  "head": "1cbba1be7947e96a0ae707bf9222552b76c785f3",
+  "fullCheck": "PASS",
+  "result": {
+    "tests": 741,
+    "pass": 739,
+    "skip": 2,
+    "fail": 0,
+    "durationMs": 804191.6272,
+    "webPass": 22,
+    "unchangedFiles": 434
+  },
+  "policy": "V documents only via Copy-Item; no V .git or runtime sync",
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "bad478ca7b26a68175a6dfde98bb083eb7ec138ae8f1438e70e0b20488855cd9"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "4c0116da6a21e781f4232dd7f47ad0ce09b2be6e6de4ece8666d4cb2cbec6c2e"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "8157a27de394b7da93b23aa62f254fb1bec235cde87778f6addcdd3f9aed6d15"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "b49dde4e2f6a1cb6f73476547a8738254a74ca305d257efe0f5479a3aea99ba4"
+    },
+    {
+      "path": "docs/implementation/HANDOFF-TO-GPT.md",
+      "sha256": "1a72af6ffa5d22883bef6027ecb69a3e2fc990b5bb006399625c524a0c66ee22"
+    },
+    {
+      "path": "docs/implementation/M2-COMPLETION-PLAN.md",
+      "sha256": "cd4abbcc6df83260c909dc8abf22c2d2acc9bcee11f38c5f467ba612c1112d2b"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "24990306eeb6b4c5f912f861aed9c0738b9dae5429c6f36118a95e953af21df4"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "9ebc5559e077030676ad8404996340be48b638d6353df0681fa3c1efc49e8d48"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-version.ts",
+      "sha256": "776774a3299b2357b5a6ff0c5a3cd22821c292f96bb860308fd36bb4b8ecbecf"
+    },
+    {
+      "path": "packages/engine/src/kbo-national.ts",
+      "sha256": "0513e3f445f6354a1977ea3d0c127379079c7e0dca9fcc95558c72035e02f87d"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "sha256": "c0fe7f8cc27c5911f4a975c9dc69c60ffb23c5a9bdca26a38db8343e2315e77d"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "ac480afc5cab6cc53a52633a23b2b61ed82496e8d93c9147a4aa66fde0192ec0"
+    },
+    {
+      "path": "packages/engine/src/national-tournament.ts",
+      "sha256": "885ecd3bc97d844a855ca8d23c68944faf5d01f2d4e5693e83d55e128ca15484"
+    },
+    {
+      "path": "packages/engine/test/kbo-national.test.ts",
+      "sha256": "3937acf09d2c4f1477656e46fd1a12de53e1b93583cae83a8900a7870c8a747d"
+    },
+    {
+      "path": "docs/implementation/M2-DV-NATIONAL-INTEGRITY.md",
+      "sha256": "5d0e68c9ac42c5cd215cd5f2bd8403b8cb1238d8776c81903647704f14f7e51f"
+    },
+    {
+      "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.json",
+      "sha256": "435891bb709732d3b5a04f081e1ece31903741fa8ac96bd5388b3bbb4beeb90d"
+    },
+    {
+      "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.md",
+      "sha256": "a3e3b29d053cf922d8e9e455b3d29fe314355be7400ab03d227d3f573f5314a4"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DV-check.log",
+      "sha256": "249590831cc53b941a59300892451869ef64e73cb13ec8feb365992250e4c21c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DV-focused-first-failure.log",
+      "sha256": "eed9cda5a6e66c98370ae975e6c78a5fe61dab1081a9d3eb97c9c1871b110c34"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DV-focused.log",
+      "sha256": "ddc0aa2f5ba8e93c007d55a968d93f47c8277de551f9f76677012bf38f0b96e0"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DV-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DV-source-freeze.json",
+      "sha256": "ca3214240ed9b6f5c5a1d9d803cbbb71cf597e64e8ee7aa6aa39bebf23b0e96f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DV-final-design.log",
+      "sha256": "6be797ddcaf4040a4c45de55d013646596204e7a0ed931e3e49ee0ee78cac3a0"
+    }
+  ]
+}
