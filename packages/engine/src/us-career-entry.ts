@@ -29,18 +29,22 @@ import {emptyPitchXpLedger,validatePitchXpLedger} from './pitch-xp.js';
 import {canonicalJson} from './game.js';
 import {formRegisteredTeamTeammate} from './team-teammates.js';
 import {queueRelationFormationNotices} from './relation-notices.js';
+import type {KboPostingOffer,KboPostingReturnRights} from './kbo-posting.js';
 
+export interface KboUsTransfer {
+ source:'POSTING'|'OVERSEAS_FA';postingId?:string;windowId?:string;offer:KboPostingOffer;returnRights:KboPostingReturnRights|null;kboSeasonKey:string;sourceRevision:number;
+}
 export interface ActiveUsRosterWorld extends UsRosterWorld {status:'ACTIVE';calendar:SeasonCalendar;reserves?:Record<string,string[]>}
 export interface UsCareer {
  goals?:CareerGoalLedger;
  retirement?:UsCareerRetirement;schemaVersion:1|2|3|4;majorYears?:readonly UsMajorYearArchive[];minorYears?:readonly UsMinorYearArchive[];mode:'US_CAREER';revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveUsRosterWorld;protagonistKey:string;protagonistOrganizationId:string;
  phaseContext:UsPhase;postseason?:{bracket:MlbPostseason;conferences:Record<MlbLeague,string[]>;gameEvidence:string[]};season?:UsSeasonState;seasonSchedule?:UsSeasonSchedule;preseasonPlan?:UsPreseasonPlan;campNotices?:readonly EventInstance[];
- activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string;populationBasis:'INITIAL_INVENTORY'|'LEGACY_BOOTSTRAP'};
+ activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string;populationBasis:'INITIAL_INVENTORY'|'LEGACY_BOOTSTRAP'|'KBO_TRANSFER'};
  registration:{playerKey:string;clubId:string;level:UsLevel;seasonKey:string;status:'ACTIVE'|'INJURED'};
  rights:UsDirectSigning['rights'];contract:Omit<UsDirectSigning['contract'],'status'|'type'> & {type:'US_MINOR'|'US_MAJOR';years?:number;status:'ACTIVE';seasonKey:string;nationalReleaseAllowed:boolean;militaryReturnOption:boolean};
  income:readonly (UsDirectSigning['income'] | {entryKey:string;currency:'USD';amount:number;kind:'SALARY';seasonKey:string;day:number})[];inventory:UsRecruitmentWorld;amateurHistory:HighSchoolCareer;
  records:HighSchoolCareer['records'];health:HighSchoolCareer['health'];seasonGrowth:ReturnType<typeof createSeasonGrowthLedger>;development:NonNullable<HighSchoolCareer['development']>;traits?:NonNullable<HighSchoolCareer['traits']>;relationships:NonNullable<HighSchoolCareer['relationships']>;events:HighSchoolCareer['events'];relationNotices:NonNullable<HighSchoolCareer['relationNotices']>;styleUsedWindows:HighSchoolCareer['styleUsedWindows'];planHistory:HighSchoolCareer['planHistory'];
- military:{status:'UNRESOLVED';deadlineAge:28};
+ military:{status:'UNRESOLVED';deadlineAge:28};kboTransfer?:KboUsTransfer;
 }
 
 /** Live rosters may change abilities/age/level; the initial distribution guard is only for seed-world admission. */
@@ -77,6 +81,10 @@ export function usCareerView(c:UsCareer){
  assertUsRetirementState(c);
  const p=c.world.players[c.protagonistKey],org=c.world.organizations.find(o=>o.id===c.protagonistOrganizationId),r=c.registration;
  if(![1,2,3,4].includes(c.schemaVersion) || c.mode!=='US_CAREER' || !['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW','EVENT_DECISION','POSTSEASON_PROGRESS','RETIRE_CONFIRM','ARCHIVED'].includes(c.phaseContext.phase) || !p || !org || r.playerKey!==p.simulationKey || r.clubId!==org.id || r.seasonKey!==c.world.seasonKey || !['ACTIVE','INJURED'].includes(r.status) || (r.status==='ACTIVE'?!org.levels[r.level]?.includes(p.simulationKey):!c.world.reserves?.[org.id]?.includes(p.simulationKey)) || c.rights.holderOrgId!==org.id || c.contract.status!=='ACTIVE' || c.contract.contractKey!==(c.schemaVersion===4?(Array.isArray(c.majorYears)?c.majorYears.at(-1)?.nextContract?.contractKey:undefined):(c.season?.majorActivation?.contractKey??c.activation.contractKey)))throw new RangeError('INVALID_US_ENTRY_VIEW');assertUsRecruitmentWorld(c.inventory);
+ if(c.activation.populationBasis==='KBO_TRANSFER'){
+  const t=c.kboTransfer;if(!t||t.offer.organizationId!==c.protagonistOrganizationId||c.contract.annualSalaryUsd!==t.offer.annualSalaryUsd||c.contract.years!==t.offer.years||c.income.some(e=>e.kind==='SIGNING_BONUS')||c.activation.receiptKey!==JSON.stringify(['kbo-us-activation',t.postingId??t.windowId])||c.activation.contractKey!==c.contract.contractKey)throw new RangeError('INVALID_US_ENTRY_VIEW');
+  return {seasonKey:c.world.seasonKey,player:{name:p.name,age:p.age,kind:p.kind,position:p.position},club:{id:org.id,name:org.name},registration:{status:r.status,level:r.level},contract:{type:c.contract.type,currency:c.contract.currency,annualSalaryUsd:c.contract.annualSalaryUsd,signingBonusUsd:c.contract.signingBonusUsd,controlSeasons:c.contract.controlSeasons,...(c.contract.years===undefined?{}:{years:c.contract.years}),nationalReleaseAllowed:c.contract.nationalReleaseAllowed,militaryReturnOption:c.contract.militaryReturnOption},phase:c.phaseContext.phase};
+ }
  const ready=assertUsAmateurYearEnd(c.amateurHistory),signing=c.amateurHistory.usRecruitment!.program.signing!;
  const professional=c.schemaVersion===4?openingUsMajorYear(c):null,major=c.season?.majorActivation,expectedInventory=professional?.inventory??openingUsMinorInventory(c);if(professional&&major)throw new RangeError('UNEXPECTED_US_MAJOR_REACTIVATION');if(major){const expectedKey=JSON.stringify(['us-major-entry',signing.contract.contractKey,c.world.seasonKey]);if(major.contractKey!==expectedKey||major.fromContractKey!==signing.contract.contractKey||major.annualSalaryUsd!==800000||!Number.isSafeInteger(major.effectiveDay)||major.effectiveDay<=c.season!.firstDay||major.effectiveDay>c.season!.lastDay||major.reservedAdditionalUsd!==Math.floor((30000*(major.effectiveDay-c.season!.firstDay)+800000*(c.season!.lastDay-major.effectiveDay+1))/(c.season!.lastDay-c.season!.firstDay+1))-30000)throw new RangeError('INVALID_US_MAJOR_ACTIVATION');expectedInventory.clubs.find(o=>o.id===c.protagonistOrganizationId)!.availableBudgetUsd-=major.reservedAdditionalUsd;}
 

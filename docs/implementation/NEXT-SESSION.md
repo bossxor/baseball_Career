@@ -1,3 +1,7 @@
+## 최신 상태 — M2-DR 미국 루트 활성화 · 전체 검사 통과
+
+[DR 상세](M2-DR-US-ACTIVATION.md). 포스팅/해외FA → `activateKboUsCareer`. 전체 npm run check 종료 0: 731개 중 729 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 694977.322. 증거 `evidence/M2-DR-check.log`. 다음은 해외 병역·국가대표·99사건·24경로. M2 영역 약 50% 유지. PC 종료 금지.
+
 ## 최신 상태 — M2-DQ 해외 FA·귀국 · 전체 검사 통과
 
 [DQ 상세](M2-DQ-OVERSEAS-FA-RETURN.md). 해외 FA 9시즌·보상금 없음·국내권 RELEASED, 포스팅 귀국 원구단 협상. 전체 npm run check 종료 0: 730개 중 728 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 825735.1666. 증거 `evidence/M2-DQ-check.log`. 다음은 미국 루트 활성화·해외 병역·99사건·24경로. M2 영역 약 50% 유지. PC 종료 금지.

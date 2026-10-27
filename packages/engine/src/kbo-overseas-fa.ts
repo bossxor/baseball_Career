@@ -9,7 +9,7 @@ import {recentBattingPerformance,recentPitchingPerformance} from './lineup.js';
 import {usMajorContractValue,usMlbOfferYears} from './us-contract-value.js';
 import {createWorldStream,nextInteger} from './rng.js';
 import {selectKboFirstTeamRoster} from './kbo-world.js';
-import type {KboPostingOffer,KboPostingWindow} from './kbo-posting.js';
+import type {KboPostingOffer} from './kbo-posting.js';
 import type {DevelopmentPlayer} from './player.js';
 import type {KboInitialContract} from './kbo-world.js';
 
@@ -84,6 +84,3 @@ export function acceptKboOverseasFaOffer(c:KboCareer,revision:number,offerKey:st
  next.phaseContext={phase:'ARCHIVED'};next.revision++;
  if(club.budgetWon!==budget)throw new RangeError('KBO_OVERSEAS_FA_FEE_FORBIDDEN');return next;
 }
-
-/** Type re-export for career field typing without importing posting windows. */
-export type {KboPostingWindow};
