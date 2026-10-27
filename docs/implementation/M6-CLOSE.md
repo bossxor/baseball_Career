@@ -15,7 +15,8 @@
 - [M6-I](M6-I-CLUB-LABELS.md) 전략 라벨, 상무 관찰, 국제 창
 - [M6-J](M6-J-CLUB-SANGMU.md) 상무 입대
 - [M6-K](M6-K-CLUB-SANGMU-RETURN.md) 상무 복귀
-- [M6-L](M6-L-CLUB-NATIONAL.md) 국가대표 28명. 최신 코드 `a093d2f`, 전체 666개 중 664 통과
+- [M6-L](M6-L-CLUB-NATIONAL.md) 국가대표 28명
+- [M6-M](M6-M-CLUB-OPPONENTS.md) 상대 명단 강 65, 중 55, 약 45. 전체 667개 중 665 통과
 
 리그 일정은 이미 국제 창 날짜를 비운다. 픽셀 배치와 트레이드 상대 고르기 버튼은 M5 쪽이다.
 

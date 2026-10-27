@@ -1,9 +1,13 @@
-import { roleScore } from '@playball/rules';
+import { UNITS_PER_POINT, abilityKeys, roleScore } from '@playball/rules';
 import type { AbilityUnits, PlayerKind } from '@playball/rules';
 import type { KboClubGame } from './kbo-club-game.js';
 import { recordTotals } from './records.js';
 
-/** 12: 28 Korean players. WBC/OLY/P12 need a first-team game. AG may use Futures and Sangmu. No foreign roster is generated. */
+/** 12: 28 Korean players. WBC/OLY/P12 need a first-team game. AG may use Futures and Sangmu. */
+/** 2026-10-27 U: other countries use these overalls. All six abilities equal that value. */
+export const NATIONAL_PRESET_OVERALL = { STRONG: 65, MID: 55, WEAK: 45 } as const;
+export type NationalPreset = keyof typeof NATIONAL_PRESET_OVERALL;
+const PRESET_ORDER = ['STRONG', 'MID', 'WEAK'] as const;
 export type NationalEvent = 'WBC' | 'OLY' | 'AG' | 'P12';
 const EVENTS = new Set<NationalEvent>(['WBC', 'OLY', 'AG', 'P12']);
 const FIELD = ['C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF'] as const;
@@ -48,4 +52,34 @@ export function saveClubNationalRoster(source: KboClubGame, expectedRevision: nu
   game.national = [...(game.national ?? []), roster];
   game.revision++;
   return game;
+}
+
+function fnv(text: string): number {
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < text.length; i++) { hash ^= text.charCodeAt(i); hash = Math.imul(hash, 0x01000193) >>> 0; }
+  return hash;
+}
+
+/** 20: spread 강/중/약 as evenly as the country count allows. The seed order is fixed. */
+export function assignNationalPresets(seed: string, countryIds: readonly string[]) {
+  const order = [...countryIds].sort((a, b) => fnv(JSON.stringify(['national-preset', seed, a])) - fnv(JSON.stringify(['national-preset', seed, b])) || (a < b ? -1 : 1));
+  return order.map((countryId, index) => {
+    const preset = PRESET_ORDER[index % 3]!;
+    return { countryId, preset, overall: NATIONAL_PRESET_OVERALL[preset] };
+  });
+}
+
+const HITTER_SLOTS = ['C', 'C', '1B', '2B', '3B', 'SS', 'LF', 'CF', 'RF', 'DH', '1B', '2B', 'LF', 'CF', 'RF'] as const;
+const PITCHER_SLOTS = ['SP', 'SP', 'SP', 'SP', 'SP', 'RP', 'RP', 'RP', 'RP', 'RP', 'RP', 'CP', 'CP'] as const;
+
+export function nationalPresetAbilities(kind: PlayerKind, overall: number): AbilityUnits {
+  const units = overall * UNITS_PER_POINT;
+  return Object.fromEntries(abilityKeys(kind).map(key => [key, units])) as AbilityUnits;
+}
+
+/** One foreign national team at a single preset. Korea is not generated here. */
+export function nationalOpponentRoster(countryId: string, overall: number) {
+  const hitters = HITTER_SLOTS.map((position, index) => ({ key: `${countryId}:H:${index}`, kind: 'HITTER' as const, position, abilities: nationalPresetAbilities('HITTER', overall) }));
+  const pitchers = PITCHER_SLOTS.map((position, index) => ({ key: `${countryId}:P:${index}`, kind: 'PITCHER' as const, position, abilities: nationalPresetAbilities('PITCHER', overall) }));
+  return [...hitters, ...pitchers];
 }
