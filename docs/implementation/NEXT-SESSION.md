@@ -1,6 +1,10 @@
+## 최신 작업 — M2-EC 검증 완료
+
+[EC 상세](M2-EC-NATIONAL-DAY-CLOSE.md). 초청 7/2/1·날짜 피로 1회. 전체 check 767/765·duration_ms 1103862. M2≈55%. 다음=부상 잔여·정규 일마감 감사·99잔여·24/PF-D. M6 금지. PC 종료 금지.
+
 ## 최신 작업 — M2-EB 검증 완료
 
-[EB 상세](M2-EB-POSTING-EVENT-RESUME.md). E62·E64 ACCEPT/REMAIN. 전체 check 766/764·duration_ms 1011454. M2≈54%. 다음=국제 일마감/기한·99잔여·24/PF-D. M6 금지. PC 종료 금지.
+[EB 상세](M2-EB-POSTING-EVENT-RESUME.md). E62·E64 ACCEPT/REMAIN. 전체 check 766/764·duration_ms 1011454. M2≈54%.
 
 ## 최신 작업 — M2-EA 검증 완료
 

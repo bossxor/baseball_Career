@@ -1,9 +1,13 @@
+# 최신 인계 — M2-EC 국제 초청 기한·날짜 피로 (2026-10-27)
+
+[EC 상세](M2-EC-NATIONAL-DAY-CLOSE.md). 브랜치 `codex/m2-career-engine`. 기능 팁은 이 커밋(EB `c5cf395` 위).  
+`nationalInviteDeadlines` 7/2/1 봉인, INVITED면 대회 시작 거절, `closeCareerNationalDay` 한국 28 피로 1회(KBO closer 미호출).  
+전체 check 767/765·Neon2·웹22/22. duration_ms 1103862. 증거 `evidence/M2-EC-check.log`.  
+미연결: 부상 잔여경기 소모·정규 일마감 감사·INTERNATIONAL phase·미국 풀·99잔여·24/PF-D. M6·PC종료 금지. V: 문서만 Copy-Item.
+
 # 최신 인계 — M2-EB 포스팅 E62·E64 도메인 재개 (2026-10-27)
 
-[EB 상세](M2-EB-POSTING-EVENT-RESUME.md). 브랜치 `codex/m2-career-engine`. EA `046f39e` 위.  
-`openKboPostingInvite`→E62 REQUEST/ACK, `resolveKboPostingOfferEvent` ACCEPT/REMAIN. 시즌당 E62 1회.  
-전체 check 766/764·Neon2·웹22/22·스모크. duration_ms 1011454. 증거 `evidence/M2-EB-check.log`.  
-미연결: 국제 일마감/초청기한/피로, 99잔여, 24경로/PF-D. M6·PC종료 금지. V: 문서만 Copy-Item.
+[EB 상세](M2-EB-POSTING-EVENT-RESUME.md). 기능 팁 **`c5cf395`**. E62–E64 재개. 전체 check 766/764·duration_ms 1011454.
 
 # 최신 인계 — M2-EA 포스팅 E63/E64 큐 (2026-10-27)
 

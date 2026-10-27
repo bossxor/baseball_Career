@@ -7,9 +7,10 @@ import {assertKboCareerRevision} from './kbo-career-version.js';
 import type {NationalLedger,NationalMedal,NationalTournament} from './kbo-national.js';
 import {sealNationalCompetitionResult} from './kbo-national.js';
 import {assertNationalSelectionSnapshot,nationalLineupBatting} from './national-selection.js';
-import {assertNationalBracket,createNationalBracket,nextNationalMatch,prepareNationalMatch,advanceNationalMatch,nationalNationPreset} from './national-bracket.js';
+import {assertNationalBracket,createNationalBracket,nextNationalMatch,prepareNationalMatch,advanceNationalMatch,nationalNationPreset,nationalInviteDeadlines,nationalMatchesOnDay} from './national-bracket.js';
 import type {NationalBracket,NationalTournamentWindow} from './national-bracket.js';
 import {koreaNationalTeam,nationalControlTeam} from './national-tournament.js';
+import {appearanceFatigue} from './lineup.js';
 
 const MASTERY_XP=[0,100_000,300_000,600_000,1_000_000,1_500_000] as const;
 function ledger(c:KboCareer):NationalLedger {
@@ -74,11 +75,46 @@ export function startNationalTournament(c:KboCareer,revision:number,tournament:N
  if(['ARCHIVED','RETIRE_CONFIRM'].includes(c.phaseContext.phase)||c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame||c.phaseContext.phase==='POSTSEASON_PROGRESS'&&c.phaseContext.pendingGame)throw new RangeError('NATIONAL_TOURNAMENT_NOT_AVAILABLE');
  const selection=ledger(c).selections?.find(s=>s.seasonKey===c.world.seasonKey&&s.tournament===tournament);if(!selection)throw new RangeError('NATIONAL_SELECTION_REQUIRED');
  assertNationalSelectionSnapshot(selection);
+ const openInvite=ledger(c).invitations.find(i=>i.tournament===tournament&&i.seasonKey===c.world.seasonKey&&i.status==='INVITED');
+ if(openInvite)throw new RangeError('NATIONAL_INVITE_RESPONSE_REQUIRED');
  const competitionId=JSON.stringify(['national-'+tournament.toLowerCase(),c.world.worldKey,c.world.seasonKey]);
  if(ledger(c).competitions.some(x=>x.competitionId===competitionId)||openBracket(c,tournament))throw new RangeError('NATIONAL_TOURNAMENT_ALREADY_STARTED');
  const bracket=createNationalBracket({worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,tournament,seed:`${c.world.seed}:national:${tournament}:${c.world.seasonKey}`,...(window?{window}:{})});
  assertNationalBracket(bracket);
- const next:KboCareer={...c,national:{...ledger(c),brackets:[...(ledger(c).brackets??[]),bracket]}};next.revision++;return next;
+ const deadlines=nationalInviteDeadlines(bracket.window);
+ const invitations=ledger(c).invitations.map(i=>i.tournament===tournament&&i.seasonKey===c.world.seasonKey&&(i.inviteDay===undefined||window?.basis==='P12_POSTSEASON')?{...i,...deadlines}:i);
+ const next:KboCareer={...c,national:{...ledger(c),invitations,brackets:[...(ledger(c).brackets??[]),bracket]}};next.revision++;return next;
+}
+
+/** After every FINAL match on a world day, settle Korea roster fatigue/rest once. Does not call KBO day closer. */
+export function closeCareerNationalDay(c:KboCareer,revision:number,day:number):KboCareer {
+ assertKboCareerRevision(c,revision);if(!Number.isSafeInteger(day)||day<0)throw new RangeError('INVALID_NATIONAL_DAY');
+ const bracket=(ledger(c).brackets??[]).find(b=>{
+  if(b.seasonKey!==c.world.seasonKey||b.worldKey!==c.world.worldKey)return false;
+  if(b.fatigueSettledDays?.includes(day))return true;
+  const row=nationalMatchesOnDay(b,day);return row.completed.length>0||row.blocked;
+ });
+ if(!bracket)throw new RangeError('NATIONAL_DAY_NOT_OPEN');
+ assertNationalBracket(bracket);if(bracket.fatigueSettledDays?.includes(day))throw new RangeError('NATIONAL_DAY_ALREADY_SETTLED');
+ const {completed,blocked}=nationalMatchesOnDay(bracket,day);if(blocked)throw new RangeError('NATIONAL_DAY_GAMES_PENDING');if(!completed.length)throw new RangeError('NATIONAL_DAY_NO_GAMES');
+ const koreaGames=completed.filter(m=>m.away==='KOR'||m.home==='KOR');
+ const selection=ledger(c).selections?.find(s=>s.seasonKey===c.world.seasonKey&&s.tournament===bracket.tournament);if(!selection)throw new RangeError('NATIONAL_SELECTION_REQUIRED');
+ assertNationalSelectionSnapshot(selection);
+ const next:KboCareer={...c,world:structuredClone(c.world),...(c.sangmu?{sangmu:structuredClone(c.sangmu)}:{})};
+ const rank=(kind:'NONE'|'HITTER'|'STARTER'|'RELIEF')=>({NONE:0,HITTER:1,RELIEF:2,STARTER:3}[kind]);
+ for(const slot of selection.roster.slots){
+  const key=slot.playerKey,player=next.world.players[key]??next.sangmu?.members[key]?.player;if(!player)continue;
+  let appearance:'NONE'|'HITTER'|'STARTER'|'RELIEF'='NONE';
+  for(const m of koreaGames){
+   const g=next.records.games[m.gameKey];if(!g)throw new RangeError('NATIONAL_GAME_RECORD_MISSING');
+   if(player.kind==='HITTER'&&(g.batting[key]?.PA??0)>0){if(rank('HITTER')>rank(appearance))appearance='HITTER';}
+   else if(player.kind==='PITCHER'&&(g.pitching[key]?.BF??0)>0){const kind=(g.pitching[key]!.starts??0)>0?'STARTER':'RELIEF';if(rank(kind)>rank(appearance))appearance=kind;}
+  }
+  const refreshed=appearanceFatigue(player,appearance);
+  if(next.sangmu?.members[key])next.sangmu={...next.sangmu,members:{...next.sangmu.members,[key]:{...next.sangmu.members[key]!,player:refreshed}}};
+  else next.world.players[key]=refreshed;
+ }
+ replaceBracket(next,{...bracket,fatigueSettledDays:[...(bracket.fatigueSettledDays??[]),day].sort((a,b)=>a-b)});next.revision++;return next;
 }
 
 export function prepareCareerNationalMatch(c:KboCareer,revision:number):KboCareer {

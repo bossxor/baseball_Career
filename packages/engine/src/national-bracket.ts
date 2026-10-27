@@ -22,6 +22,13 @@ export interface NationalTournamentWindow {startDay:number;endDay:number;basis:'
 export interface NationalBracket {
  schemaVersion:1;modelVersion:'national-bracket-1';competitionId:string;worldKey:string;seasonKey:string;tournament:NationalTournament;seed:string;
  window:NationalTournamentWindow;groups:readonly (readonly string[])[];groupMatches:readonly NationalMatch[];results:readonly NationalMatchResult[];pendingGame:GameState|null;
+ /** World days whose Korea fatigue/rest already settled once. Not part of the draw fingerprint. */
+ fatigueSettledDays?:readonly number[];
+}
+/** Invite 7 days before start; response due 2 days before; final roster 1 day before. No auto-decline. */
+export function nationalInviteDeadlines(window:NationalTournamentWindow):{inviteDay:number;responseDeadlineDay:number;finalRosterDay:number} {
+ if(![window.startDay,window.endDay].every(d=>Number.isSafeInteger(d)&&d>=0)||window.endDay<window.startDay)throw new RangeError('INVALID_NATIONAL_WINDOW');
+ return {inviteDay:window.startDay-7,responseDeadlineDay:window.startDay-2,finalRosterDay:window.startDay-1};
 }
 const competitionId=(world:string,year:string,type:NationalTournament)=>JSON.stringify(['national-'+type.toLowerCase(),world,year]);
 export function nationalCalendarWindow(year:number,tournament:NationalTournament):NationalTournamentWindow {
@@ -86,6 +93,17 @@ export function assertNationalBracket(s:NationalBracket):void {
  let replay=base;
  for(const r of s.results){const m=nextNationalMatch(replay);if(!m||!r||r.gameKey!==m.gameKey||![r.awayRuns,r.homeRuns].every(n=>Number.isSafeInteger(n)&&n>=0)||r.awayRuns===r.homeRuns||r.winner!==(r.awayRuns>r.homeRuns?m.away:m.home))throw new RangeError('INVALID_NATIONAL_MATCH_RESULT');replay={...replay,results:[...replay.results,r]};}
  if(s.pendingGame){const m=nextNationalMatch(replay),g=s.pendingGame;if(!m||g.input.simulationKey!==m.gameKey||g.input.competition!=='INTERNATIONAL'||g.input.rulesVersion!==RULES_VERSION||g.input.seed!==s.seed+':'+m.gameKey||g.input.teams[0].simulationKey!==m.away||g.input.teams[1].simulationKey!==m.home||g.status!=='LIVE')throw new RangeError('CHANGED_NATIONAL_PENDING_GAME');}
+ if(s.fatigueSettledDays!==undefined){
+  if(!Array.isArray(s.fatigueSettledDays)||s.fatigueSettledDays.some(d=>!Number.isSafeInteger(d)||d<s.window.startDay||d>s.window.endDay)||new Set(s.fatigueSettledDays).size!==s.fatigueSettledDays.length)throw new RangeError('INVALID_NATIONAL_FATIGUE_DAY');
+ }
+}
+/** FINAL matches already on the ledger for one world day; open pending/next match on that day blocks settlement. */
+export function nationalMatchesOnDay(s:NationalBracket,day:number):{completed:NationalMatch[];blocked:boolean} {
+ assertNationalBracket(s);if(!Number.isSafeInteger(day))throw new RangeError('INVALID_NATIONAL_DAY');
+ let replay:NationalBracket={...createNationalBracket({worldKey:s.worldKey,seasonKey:s.seasonKey,tournament:s.tournament,seed:s.seed,...(s.window.basis==='P12_POSTSEASON'?{window:s.window}:{})}),results:[],pendingGame:null};
+ const completed:NationalMatch[]=[];
+ for(const r of s.results){const m=nextNationalMatch(replay)!;if(m.day===day)completed.push(m);replay={...replay,results:[...replay.results,r]};}
+ const next=nextNationalMatch(replay);return {completed,blocked:!!(next&&next.day===day)||!!(s.pendingGame&&next&&next.day===day)};
 }
 export function prepareNationalMatch(source:NationalBracket,teams:readonly [TeamSnapshot,TeamSnapshot],pitchDevelopment?:GamePitchDevelopment):NationalBracket {
  assertNationalBracket(source);if(source.pendingGame)throw new RangeError('NATIONAL_GAME_ALREADY_PENDING');const m=nextNationalMatch(source);if(!m)throw new RangeError('NATIONAL_TOURNAMENT_COMPLETE');

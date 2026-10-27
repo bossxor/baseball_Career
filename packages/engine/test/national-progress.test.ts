@@ -5,8 +5,8 @@ import {enteredKboCareer} from './fixtures.js';
 import {abilityKeys} from '@playball/rules';
 import {openKboNationalSelection} from '../src/kbo-national-selection.js';
 import {resolveKboNationalEvent} from '../src/kbo-national.js';
-import {createNationalBracket,nationalCalendarWindow,p12ActualWindow,assertNationalBracket,nextNationalMatch} from '../src/national-bracket.js';
-import {startNationalTournament,prepareCareerNationalMatch,advanceCareerNationalMatch} from '../src/national-progress.js';
+import {createNationalBracket,nationalCalendarWindow,p12ActualWindow,assertNationalBracket,nextNationalMatch,nationalInviteDeadlines} from '../src/national-bracket.js';
+import {startNationalTournament,prepareCareerNationalMatch,advanceCareerNationalMatch,closeCareerNationalDay} from '../src/national-progress.js';
 import type {KboCareer} from '../src/kbo-career-entry.js';
 
 function acceptAg(c:KboCareer):KboCareer {
@@ -60,4 +60,22 @@ test('mid-tournament JSON resume keeps pendingGame and does not duplicate contri
  assert.equal(finished.national!.competitions.length,1);
  assert.equal(new Set(finished.national!.competitions[0]!.gameKeys).size,finished.national!.competitions[0]!.gameKeys!.length);
  assert.equal(finished.records.revision,accepted.records.revision+finished.national!.competitions[0]!.gameKeys!.length);
+});
+
+test('invite deadlines seal 7/2/1 before start and national day fatigue settles once',()=>{
+ const base=enteredKboCareer(),window=nationalCalendarWindow(Number(base.world.seasonKey),'AG'),deadlines=nationalInviteDeadlines(window);
+ assert.deepEqual(deadlines,{inviteDay:window.startDay-7,responseDeadlineDay:window.startDay-2,finalRosterDay:window.startDay-1});
+ const accepted=acceptAg(base),invite=accepted.national!.invitations.find(i=>i.tournament==='AG')!;
+ assert.equal(invite.inviteDay,deadlines.inviteDay);assert.equal(invite.responseDeadlineDay,deadlines.responseDeadlineDay);
+ let c=startNationalTournament(accepted,accepted.revision,'AG');const firstDay=c.national!.brackets![0]!.groupMatches[0]!.day;
+ c=prepareCareerNationalMatch(c,c.revision);assert.throws(()=>closeCareerNationalDay(c,c.revision,firstDay),/PENDING/);
+ for(;;){
+  const b=c.national!.brackets![0]!,next=nextNationalMatch(b);
+  if(b.pendingGame){c=advanceCareerNationalMatch(c,c.revision).career;continue;}
+  if(!next||next.day!==firstDay)break;
+  c=prepareCareerNationalMatch(c,c.revision);
+ }
+ const settled=closeCareerNationalDay(c,c.revision,firstDay);
+ assert.ok(settled.national!.brackets![0]!.fatigueSettledDays!.includes(firstDay));
+ assert.throws(()=>closeCareerNationalDay(settled,settled.revision,firstDay),/ALREADY_SETTLED/);
 });

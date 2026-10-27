@@ -5,6 +5,7 @@ import type {EventInstance} from './events.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision} from './kbo-career-version.js';
 import type {KboMilitaryStatus} from './kbo-military-state.js';
+import {nationalCalendarWindow,nationalInviteDeadlines} from './national-bracket.js';
 import type {NationalBracket} from './national-bracket.js';
 
 export type NationalTournament='WBC'|'OLY'|'AG'|'P12';
@@ -19,6 +20,8 @@ export interface NationalBenefitReceipt {
 export interface NationalCallup {
  selectionId:string;tournament:NationalTournament;seasonKey:string;invitationVersion:1;status:'INVITED'|'ACCEPTED'|'DECLINED';
  militaryEffect:boolean;selectionSnapshotId?:string;
+ /** Optional sealed schedule from nationalInviteDeadlines; legacy invites omit these. */
+ inviteDay?:number;responseDeadlineDay?:number;finalRosterDay?:number;
 }
 export interface NationalLedger {
  selections?:readonly NationalSelectionSnapshot[];
@@ -50,7 +53,8 @@ export function openNationalCallup(c:KboCareer,revision:number,tournament:Nation
  if(!['WBC','OLY','AG','P12'].includes(tournament))throw new RangeError('INVALID_NATIONAL_TOURNAMENT');
  const cur=ledger(c);if(cur.invitations.some(i=>i.selectionId===selectionId))throw new RangeError('NATIONAL_CALLUP_OPEN');
  if(c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame||Object.hasOwn(c.health.injuries,c.protagonistKey)||['SERVING_ACTIVE'].includes(c.military?.status??'')||['ARCHIVED','RETIRE_CONFIRM'].includes(c.phaseContext.phase))throw new RangeError('NATIONAL_CALLUP_INELIGIBLE');
- const next:KboCareer={...c};next.national={...cur,invitations:[...cur.invitations,{selectionId,tournament,seasonKey:c.world.seasonKey,invitationVersion:1,status:'INVITED',militaryEffect:tournament==='AG'||tournament==='OLY'}]};queueNationalEvent(next,'E44',selectionId,'INVITATION');next.revision++;return next;
+ const deadlines=nationalInviteDeadlines(nationalCalendarWindow(Number(c.world.seasonKey),tournament));
+ const next:KboCareer={...c};next.national={...cur,invitations:[...cur.invitations,{selectionId,tournament,seasonKey:c.world.seasonKey,invitationVersion:1,status:'INVITED',militaryEffect:tournament==='AG'||tournament==='OLY',...deadlines}]};queueNationalEvent(next,'E44',selectionId,'INVITATION');next.revision++;return next;
 }
 
 export function respondNationalCallup(c:KboCareer,revision:number,selectionId:string,decision:'ACCEPT'|'DECLINE'):KboCareer {
@@ -116,7 +120,7 @@ function validNationalResult(r:NationalCompetitionResult):boolean {
 export function assertNationalLedger(n:NationalLedger|undefined,worldKey?:string):void {
  if(n===undefined)return;
  if(!n||!Array.isArray(n.invitations)||!Array.isArray(n.competitions)||!Array.isArray(n.benefits)||n.competitions.some(r=>!validNationalResult(r))||new Set(n.competitions.map(r=>r.competitionId)).size!==n.competitions.length)throw new RangeError('INVALID_NATIONAL_LEDGER');
- if(n.invitations.some(i=>!i||!i.selectionId||!TOURNAMENTS.includes(i.tournament)||!/^\d{4}$/.test(i.seasonKey)||i.invitationVersion!==1||!['INVITED','ACCEPTED','DECLINED'].includes(i.status)||i.militaryEffect!==(i.tournament==='AG'||i.tournament==='OLY'))||new Set(n.invitations.map(i=>i.selectionId)).size!==n.invitations.length)throw new RangeError('INVALID_NATIONAL_INVITATION');
+ if(n.invitations.some(i=>!i||!i.selectionId||!TOURNAMENTS.includes(i.tournament)||!/^\d{4}$/.test(i.seasonKey)||i.invitationVersion!==1||!['INVITED','ACCEPTED','DECLINED'].includes(i.status)||i.militaryEffect!==(i.tournament==='AG'||i.tournament==='OLY')||[i.inviteDay,i.responseDeadlineDay,i.finalRosterDay].some(v=>v!==undefined&&!Number.isSafeInteger(v)))||new Set(n.invitations.map(i=>i.selectionId)).size!==n.invitations.length)throw new RangeError('INVALID_NATIONAL_INVITATION');
  if(n.benefits.some(b=>!b||b.benefitType!=='ATHLETE_ELIGIBLE'||b.resultVersion!==1||!Number.isSafeInteger(b.appliedRevision)||b.appliedRevision<1||b.benefitKey!==JSON.stringify(['national-benefit',b.competitionId,'ATHLETE_ELIGIBLE'])||!n.competitions.some(r=>r.competitionId===b.competitionId&&nationalAthleteEligible(r,'UNRESOLVED')))||new Set(n.benefits.map(b=>b.benefitKey)).size!==n.benefits.length)throw new RangeError('INVALID_NATIONAL_BENEFIT');
  if(n.selections!==undefined&&(!Array.isArray(n.selections)||n.selections.some(s=>!s||s.schemaVersion!==1||s.modelVersion!=='national-selection-1'||!s.worldKey||worldKey!==undefined&&s.worldKey!==worldKey||!s.seasonKey||!Array.isArray(s.scores)||!s.roster||!Array.isArray(s.roster.slots)||s.roster.slots.length!==28)||new Set(n.selections.map(s=>s.selectionId)).size!==n.selections.length))throw new RangeError('INVALID_NATIONAL_SELECTION');
  if(n.brackets!==undefined&&(!Array.isArray(n.brackets)||new Set(n.brackets.map(b=>b.competitionId)).size!==n.brackets.length||n.brackets.some(b=>!b||b.schemaVersion!==1||b.modelVersion!=='national-bracket-1'||!b.competitionId||!b.window||worldKey!==undefined&&b.worldKey!==worldKey||!TOURNAMENTS.includes(b.tournament))))throw new RangeError('INVALID_NATIONAL_BRACKET');

@@ -1,3 +1,7 @@
+## 최신 작업 — M2-EC 검증 완료
+
+[EC 상세](M2-EC-NATIONAL-DAY-CLOSE.md). 초청 기한 봉인·closeCareerNationalDay. 전체 check 767/765·Neon2·웹22/22. duration_ms 1103862. 증거 `evidence/M2-EC-check.log`. M2≈55%. PC 종료 금지.
+
 ## 최신 작업 — M2-EB 검증 완료
 
 [EB 상세](M2-EB-POSTING-EVENT-RESUME.md). E62 invite·E64 ACCEPT/REMAIN 도메인 재개. 집중 posting 4/4. 전체 check 766/764·Neon2·웹22/22. duration_ms 1011454. 증거 `evidence/M2-EB-check.log`. M2≈54%. PC 종료 금지.
