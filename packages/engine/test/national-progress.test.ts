@@ -129,3 +129,48 @@ test('E46 queues at the first actual Korean FINAL before competition sealing and
  assert.ok(actual);const event=c.events.find(e=>e.definitionId==='E46')!;assert.ok(event,'first appearance must not wait for tournament result sealing');assert.equal(c.national!.competitions.length,0);assert.equal(event.occurredWorldDay,c.records.games[actual]!.worldDay);
  const ack=resolveKboNationalEvent(c,c.revision,{eventKey:event.eventKey,eventVersion:event.version,command:'ACK_EVENT'}).career;assert.equal(ack.world,c.world);assert.equal(ack.records,c.records);const done=finishTournament(ack);assert.equal(done.events.filter(e=>e.definitionId==='E46').length,1);
 });
+
+function nextKoreaGame(source:KboCareer,stage?:'GROUP'|'SF'):KboCareer {
+ let c=source;
+ for(let i=0;i<100;i++){
+  if(c.phaseContext.phase!=='INTERNATIONAL_PROGRESS')throw Error('Korea did not reach requested stage');
+  const b=c.national!.brackets![0]!,m=nextNationalMatch(b);
+  if(!m||m.day>c.phaseContext.nextWorldDay){c=closeCareerNationalDay(c,c.revision,c.phaseContext.nextWorldDay);continue;}
+  if((m.away==='KOR'||m.home==='KOR')&&(!stage||stage===m.stage))return c;
+  c=advanceCareerNationalMatch(prepareCareerNationalMatch(c,c.revision),c.revision+1).career;
+ }
+ throw Error('Korea game limit');
+}
+test('first-game injury replaces one sealed roster slot before preparing Korea without rewriting draw, records or source',()=>{
+ let c=acceptAg(enteredKboCareer());const key=c.protagonistKey;c=medicalNationalFixture(c,key,nationalCalendarWindow(Number(c.world.seasonKey),'AG').startDay-1);c=nextKoreaGame(startNationalTournament(c,c.revision,'AG'));
+ const raw=canonicalJson(c),draw=canonicalJson(c.national!.brackets![0]!.groupMatches),scores=canonicalJson(c.national!.selections![0]!.scores),next=prepareCareerNationalMatch(c,c.revision),s=next.national!.selections![0]!;
+ assert.ok(!s.roster.slots.some(s=>s.playerKey===key),'injured player must leave the actual registered roster');assert.equal(s.replacements.at(-1)!.from,key);assert.equal(s.replacements.at(-1)!.reason,'INJURED');assert.ok(next.world.players[s.replacements.at(-1)!.to]);assert.equal(canonicalJson(s.scores),scores);assert.equal(canonicalJson(next.national!.brackets![0]!.groupMatches),draw);assert.equal(next.records,c.records);assert.equal(canonicalJson(c),raw);
+ const pending=canonicalJson(next);assert.throws(()=>prepareCareerNationalMatch(next,next.revision),/ALREADY_PENDING/);assert.equal(canonicalJson(next),pending);
+ const done=finishTournament(next);assert.equal(done.national!.competitions[0]!.officialAppearance,false);assert.equal(done.military?.status??'UNRESOLVED','UNRESOLVED');auditCareerNationalDays(done);
+});
+
+/** Controlled medical snapshot with its required evidence; not a claim that RNG diagnosed this injury. */
+function medicalNationalFixture(c:KboCareer,key:string,day:number):KboCareer {
+ const gameKey='controlled-medical-'+day+'-'+key;
+ return {...c,health:{...c.health,injuries:{...c.health.injuries,[key]:{severity:'MEDIUM',remainingTeamGames:30,diagnosedGameKey:gameKey,seasonKey:c.world.seasonKey}},games:[...c.health.games,{evidence:{gameKey,teamKey:'TEST:MEDICAL',seasonKey:c.world.seasonKey,day,roster:[key],appearances:[]},result:{injured:[key],recovered:[]}}]}};
+}
+test('injury cannot reshuffle an ongoing group; next round replaces once and preserves prior official appearance and JSON pending resume',()=>{
+ let c=acceptAg(enteredKboCareer());const key=c.protagonistKey;
+ // Controlled team strength ensures this fixed medical-boundary scenario reaches SF; results are actual games.
+ for(const slot of c.national!.selections![0]!.roster.slots){const p=c.world.players[slot.playerKey]!;p.abilities=Object.fromEntries(abilityKeys(p.kind).map(k=>[k,slot.playerKey===key?1000000:900000]));p.potential={...p.abilities};p.careerPeaks={...p.abilities};}
+ c=nextKoreaGame(startNationalTournament(c,c.revision,'AG'),'GROUP');c=advanceCareerNationalMatch(prepareCareerNationalMatch(c,c.revision),c.revision+1).career;
+ const first=Object.values(c.records.games).find(g=>g.scope.phase==='INTERNATIONAL'&&(g.batting[key]?.PA??0)>0)!;assert.ok(first);const oldRecord=canonicalJson(first);
+ while(c.phaseContext.phase==='INTERNATIONAL_PROGRESS'&&c.phaseContext.nextWorldDay<=first.worldDay){const m=nextNationalMatch(c.national!.brackets![0]!);if(!m||m.day>c.phaseContext.nextWorldDay)c=closeCareerNationalDay(c,c.revision,c.phaseContext.nextWorldDay);else c=advanceCareerNationalMatch(prepareCareerNationalMatch(c,c.revision),c.revision+1).career;}
+ c=medicalNationalFixture(c,key,first.worldDay);
+ c=nextKoreaGame(c,'GROUP');const before=c.national!.selections![0]!,sameGroup=prepareCareerNationalMatch(c,c.revision);assert.equal(sameGroup.national!.selections![0],before);assert.ok(before.roster.slots.some(s=>s.playerKey===key));c=advanceCareerNationalMatch(sameGroup,sameGroup.revision).career;
+ c=nextKoreaGame(c,'SF');const raw=canonicalJson(c),prepared=prepareCareerNationalMatch(c,c.revision),selection=prepared.national!.selections![0]!;assert.ok(!selection.roster.slots.some(s=>s.playerKey===key));assert.equal(selection.replacements.filter(r=>r.from===key).length,1);assert.equal(canonicalJson(c),raw);
+ const chunk=advanceCareerNationalMatch(prepared,prepared.revision,1).career,restored=JSON.parse(canonicalJson(chunk)) as KboCareer,full=advanceCareerNationalMatch(prepared,prepared.revision).career,resumed=advanceCareerNationalMatch(restored,restored.revision).career;assert.equal(canonicalJson(resumed.records),canonicalJson(full.records));
+ const done=finishTournament(resumed);assert.equal(canonicalJson(done.records.games[first.gameKey]),oldRecord);assert.equal(done.national!.competitions[0]!.officialAppearance,true);assert.equal(done.national!.competitions[0]!.registered,true);assert.equal(done.events.filter(e=>e.definitionId==='E46').length,1);auditCareerNationalDays(done);
+ console.log('M2-EH medical-boundary proof:',JSON.stringify({medical:'CONTROLLED',strength:'CONTROLLED_90_100',games:done.national!.brackets![0]!.results.length,withdrawn:selection.withdrawnKeys.includes(key),priorAppearance:true}));
+});
+
+test('exhausted healthy catcher pool rejects the whole replacement preparation without partial roster changes or invented players',()=>{
+ let c=acceptAg(enteredKboCareer());const selection=c.national!.selections![0]!,selected=new Set(selection.roster.slots.map(s=>s.playerKey)),reserve=selection.scores.find(s=>s.position==='C'&&!selected.has(s.playerKey))!.playerKey,day=nationalCalendarWindow(Number(c.world.seasonKey),'AG').startDay-1;
+ for(const row of selection.scores.filter(s=>s.position==='C'&&s.playerKey!==reserve))c=medicalNationalFixture(c,row.playerKey,day);
+ c=nextKoreaGame(startNationalTournament(c,c.revision,'AG'));const raw=canonicalJson(c);assert.throws(()=>prepareCareerNationalMatch(c,c.revision),/NATIONAL_ROSTER_IMPOSSIBLE/);assert.equal(canonicalJson(c),raw);assert.equal(c.national!.selections![0]!.replacements.length,0);assert.equal(c.national!.brackets![0]!.pendingGame,null);
+});

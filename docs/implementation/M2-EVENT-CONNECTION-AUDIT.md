@@ -13,7 +13,7 @@ DV의5개는 집중 검사16개에 포함된 도메인/자격·복귀/의무 알
 | E05 지명을 기다리는 날 | ROUTE | DOMAIN:ACCEPT_CAREER_OFFER<br>DOMAIN:DECLINE_DRAFT | NOT_AUDITED |  |
 | E06 이름이 불리지 않았다 | ROUTE | NAVIGATE:OPEN_UNDRAFTED_ROUTES<br>NAVIGATE:REQUEST_RETIRE | NOT_AUDITED |  |
 | E07 다시 받은 기회 | ROUTE | DOMAIN:ACCEPT_CAREER_OFFER<br>NAVIGATE:REQUEST_RETIRE | NOT_AUDITED |  |
-| E08 프로의 첫 캠프 | NOTICE | DOMAIN:CHOOSE_FOCUS<br>ACK:KEEP_FOCUS | NOT_AUDITED | [kbo-preseason.ts:37](../../packages/engine/src/kbo-preseason.ts) |
+| E08 프로의 첫 캠프 | NOTICE | DOMAIN:CHOOSE_FOCUS<br>ACK:KEEP_FOCUS | PARTIAL_ENGINE_DOMAIN_REVIEWED_EH | [kbo-preseason.ts:37](../../packages/engine/src/kbo-preseason.ts) |
 | E09 첫 1군 호출 | NOTICE | DOMAIN:ACCEPT_CALLUP<br>DOMAIN:DEFER_CALLUP | NOT_AUDITED | [kbo-callup.ts:36](../../packages/engine/src/kbo-callup.ts) |
 | E10 짧은 기회의 무게 | NOTICE | DOMAIN:REQUEST_ROLE_REVIEW<br>ACK:ACK_EVENT | NOT_AUDITED |  |
 | E11 두 번째 숙제 | OPTIONAL | DOMAIN:CHOOSE_FOCUS<br>ACK:KEEP_FOCUS | NOT_AUDITED |  |
@@ -63,9 +63,9 @@ DV의5개는 집중 검사16개에 포함된 도메인/자격·복귀/의무 알
 | E55 계속되는 활동의무 | DEADLINE | ACK:ACK_SERVICE_OBLIGATION | FOCUSED_VERIFIED_DV | [kbo-national.ts:125](../../packages/engine/src/kbo-national.ts) |
 | E56 졸업 뒤 다음 무대 | ROUTE | NAVIGATE:OPEN_ROUTE | NOT_AUDITED |  |
 | E57 바다 건너의 계약서 | ROUTE | DOMAIN:ACCEPT_CAREER_OFFER<br>NAVIGATE:BACK_TO_ROUTE | NOT_AUDITED |  |
-| E58 낯선 클럽하우스 | ROUTE | DOMAIN:CHOOSE_FOCUS<br>ACK:ACK_EVENT | NOT_AUDITED | [us-preseason.ts:37](../../packages/engine/src/us-preseason.ts) |
-| E59 다음 레벨의 문 | REGISTRATION | DOMAIN:CONFIRM_PROMOTION<br>DOMAIN:DEFER_PROMOTION | NOT_AUDITED | [us-levels.ts:26](../../packages/engine/src/us-levels.ts) |
-| E60 메이저리그의 전화 | REGISTRATION | DOMAIN:CONFIRM_CALLUP | NOT_AUDITED | [us-levels.ts:26](../../packages/engine/src/us-levels.ts) |
+| E58 낯선 클럽하우스 | ROUTE | DOMAIN:CHOOSE_FOCUS<br>ACK:ACK_EVENT | PARTIAL_ENGINE_DOMAIN_REVIEWED_EH | [us-preseason.ts:37](../../packages/engine/src/us-preseason.ts) |
+| E59 다음 레벨의 문 | REGISTRATION | DOMAIN:CONFIRM_PROMOTION<br>DOMAIN:DEFER_PROMOTION | PARTIAL_ENGINE_DOMAIN_REVIEWED_EH | [us-levels.ts:26](../../packages/engine/src/us-levels.ts) |
+| E60 메이저리그의 전화 | REGISTRATION | DOMAIN:CONFIRM_CALLUP | PARTIAL_ENGINE_DOMAIN_REVIEWED_EH | [us-levels.ts:26](../../packages/engine/src/us-levels.ts) |
 | E61 다시 내려가는 길 | REGISTRATION | DOMAIN:CONFIRM_DEMOTION<br>NAVIGATE:OPEN_RIGHTS | NOT_AUDITED | [us-levels.ts:26](../../packages/engine/src/us-levels.ts) |
 | E62 포스팅을 요청하다 | CONTRACT | DOMAIN:REQUEST_POSTING<br>ACK:ACK_EVENT | FOCUSED_VERIFIED_EB | openKboPostingInvite→resolve REQUEST/ACK |
 | E63 구단의 대답 | CONTRACT | NAVIGATE:OPEN_POSTING_OFFERS<br>ACK:ACK_EVENT | FOCUSED_VERIFIED_EA | [kbo-posting.ts](../../packages/engine/src/kbo-posting.ts) resolveKboPostingClub 봉인 decision |
@@ -109,3 +109,7 @@ DV의5개는 집중 검사16개에 포함된 도메인/자격·복귀/의무 알
 ## EG 추가 검수 — E49~E54 (전체 EG gate 통과)
 
 기존 소스/호출자/테스트를 직접 대조했다. 문자열 탐색·ACK만으로 완료 처리하지 않는다. E49/E54는 명시 오프시즌 입구이며 자동 초청/UI 증거가 아니다. E50은 실제 고정 선발·지원→상무 프로그램/대여를 처리한다. E51/E52는 이미 등록된 복무 블록을 확인하고 E52의4집중 변경은 기존 명령을 사용한다. E53은 실제6월30일 일마감에서 원구단2군·미지급 원금을 복원하고 선택 후 다음 날 진행한다. 상세 trigger/effect/testPaths/limits는 JSON domainReview다. 해당6행은 PARTIAL_ENGINE_DOMAIN_REVIEWED_EG로 구분한다. 이 검수로 native18개월/UI 완료로 승격하지 않는다.
+
+## EH 추가 검수 — 캠프·미국 승격 (전체 EH gate 통과)
+
+E08/E58은 실제4집중 변경과 확인 단순 ACK를 구분했고 E59/E60은 일마감 호출자·명단 교환·계약/다음날 급여·과거 기록 보존과 테스트를 대조했다. 전체 gate 뒤에도 엔진 부분 증거로만 기록한다. E61은 두 번 저조한 성적의 source는 있으나 성공 CONFIRM_DEMOTION 테스트가 없고 OPEN_RIGHTS의 navigation 반환 계약도 검수가 필요해 gap으로 남겼다. 세부 source/testPaths/limits는 JSON domainReview.

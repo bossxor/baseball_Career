@@ -1,3 +1,7 @@
+## EH 검증 완료 — 부상 교체 경계
+
+KBO prepare의 첫 한국 경기 전/라운드 경계에서 봉인 후보를 재사용하는 교체를 연결했다. 이전 day roster/출장은 보존한다. 최초 선발에서 빠진 하위리그 긴급 합류와 미국 공통 풀은 아직 남았다. [EH](M2-EH-NATIONAL-INJURY-BOUNDARY.md)의 의료/전력 통제 범위를 읽을 것.
+
 ## 현재 연결 상태 — EF 검증 완료
 
 EE는 KBO INTERNATIONAL_PROGRESS/REVIEW·연속 날짜·E48 복귀를 연결했다. EF는 사용자 결정에 따라 새 프로 정규를 WBC 뒤로 배치하며 구 calendar-1은 보존한다. 실제 WBC47경기·21일→캠프→개막10경로 및 전체 EF gate를 통과했다. 프로 진입 이전은 fixture다. NATIONAL_SELECTION 자동 시계/US 공유 후보/부상 교체/전체 정규·PS 감사는 남았다. 아래 항목은 완료 주장 대신 잔여 범위를 대조하는 체크리스트다.

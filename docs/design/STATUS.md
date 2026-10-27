@@ -2,6 +2,12 @@
 
 **M2 기준: 약56% 완료 · 약44% 남음.** 범위 가중 보수적 추정이며 위84%는 프로젝트 전체다. EE 국제 단계 뒤 EF의 WBC 새 시간축·첫 FINAL을 검증했다. 전체 정규·PS 감사/미국풀/99잔여/24는 남아 범위 가중 추정이며 실행 경로 전체 완료를 뜻하지 않는다.
 
+**세션 마감 (2026-10-27):** 5시간 잔여4%에서 EH까지 정리·커밋/푸시. 전체778/776·Neon환경2·웹22/22·실패0. [인계](../implementation/NEXT-SESSION.md) · [다음 계획](../implementation/M2-POST-EH-IMPLEMENTATION-PLAN.md). 새 기능 구현은 이 체크포인트 뒤 이어간다. PC 종료 안 함.
+
+**새 사용자 결정 — 후속 구현 (2026-10-27):** KBO 출신 MiLB는 서명 기간 만료 후 미국 재계약/FA/국내 복귀 비교, 대표 RP/CP는2일 연속 실제 등판 후 다음 날 휴식.14/20/23에 기록했다. 이 결정의 실행 구현은 EH 동결 코드 이후이며 [연결 계획](../implementation/M2-POST-EH-IMPLEMENTATION-PLAN.md)에 호출자·남은 검사를 정리했다. 아래 과거 답변 대기는 당시 이력이다.
+
+**M2-EH 검증 완료 (2026-10-27):** 대표 부상 교체의 첫 경기 전/라운드 경계를 실제 경기 준비에 연결. 과거 출장·부분 저장 재개·후보 고갈 원본 보존 검사. 의료/전력은 통제 fixture. 전체 npm run check 종료0: 엔진/API 778개 중776통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 716580.0985, 동결 대상455파일 변경0(비문서 파일·기존 root/evidence 포함). 실제 Neon/브라우저/APK 검증은 아니다. [EH](../implementation/M2-EH-NATIONAL-INJURY-BOUNDARY.md). 긴급 하위리그/US 공통 후보 등 잔여로 M2 추정 유지.
+
 **M2-EG 검증 완료 (2026-10-27):** 해외 진입의 병역 초기화·세계 경계·연말 조회 오류 수정, 실제 미국75경기/지급 검사. 전체 npm run check 종료0: 엔진/API 775개 중773통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 663675.2997, 동결 대상455파일 변경0(비문서 파일·기존 root/evidence 포함). 실제 Neon/브라우저/APK 검증은 아니다. [EG](../implementation/M2-EG-OVERSEAS-ENTRY-CONTINUITY.md). 계약 만료 정책 답변 대기·완전 연도 이행은 후속.
 
 **M2-EF 검증 완료 (2026-10-27):** WBC 종료 뒤 새 프로 개막·calendar-1 보존·복귀 급여 예측 버전·E46 첫 FINAL. 전체 npm run check 종료0: 엔진/API 774개 중772통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 672040.6242, 동결 대상455파일 변경0(비문서 파일·기존 root/evidence 포함). 실제 Neon/브라우저/APK 검증은 아니다. [EF](../implementation/M2-EF-WBC-PROFESSIONAL-CALENDAR.md). 아래 EE의 WBC 답변 대기는 당시 이력이다.

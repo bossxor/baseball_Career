@@ -1,0 +1,129 @@
+{
+  "utc": "2026-10-27T11:48:40.194Z",
+  "head": "910447ca3b8e00070b73cd7e8fc3a4989ca2f265",
+  "fullCheck": "PASS",
+  "result": {
+    "tests": 778,
+    "pass": 776,
+    "skip": 2,
+    "fail": 0,
+    "durationMs": 716580.0985,
+    "webPass": 22,
+    "unchangedFiles": 455
+  },
+  "policy": "V documents only via Copy-Item; no V .git or runtime sync",
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "baedadd998b470ff3095c968b81cbe4e7abedd79a9c7bf71f613ab5884f6b5e8"
+    },
+    {
+      "path": "docs/design/20-INTERNATIONAL-COMPETITIONS.md",
+      "sha256": "834ec9842d10500eb38016fedc325a9fbda2a86dfd65149801eb18e31dd076d9"
+    },
+    {
+      "path": "docs/design/23-US-CONTRACTS-RIGHTS.md",
+      "sha256": "d2113ffa5a54d94a6a7f24e1d8db1ec5ad8b522d9332472a7ee1f5247a54e127"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "51137356413dc88eddf4e8b2d3c8e6f45f48f7ba1402e2b73f11607ed5f8e7c7"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "48a1c25b58ff69445a286d57c1ee2bbc310cf079e3808aa0af85691805c48126"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "ad236e5c66aaedbfd17ce0c8374b3ed787908885ef1e76a63f3be7a7fab9c054"
+    },
+    {
+      "path": "docs/implementation/HANDOFF-TO-GPT.md",
+      "sha256": "ac750c4e86c108192c2a949d88a4e18e6246a7d3b81ab55d9943a3efeba716d6"
+    },
+    {
+      "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.json",
+      "sha256": "f45f9a0b2c9a8fc5ad407896475287a4e036ab5b0555264f9067dddadd6dd1ad"
+    },
+    {
+      "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.md",
+      "sha256": "9216a5a7bada4521e19156c7bb7b2e2681e1624f253c56a39825bb9e5cfb4488"
+    },
+    {
+      "path": "docs/implementation/M2-INTERNATIONAL-INTEGRATION-PLAN.md",
+      "sha256": "21d6c7ec7fa15ddb23d2ac16df6e91e5640f515ebe3e3200a14b4af49b0f5d64"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "276be45f020fe7869048352b12980ee8a50bd2bbf86ddff25badd67a753189d1"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "0fa99a8fd467750c585a0396100ba6e4d3e0b18b924780bd850506c7cae79107"
+    },
+    {
+      "path": "packages/engine/src/national-progress.ts",
+      "sha256": "eef5482b828033fe3a52fb6042f51bbc42ca1c2db80b6e7bf15498e96df9dc08"
+    },
+    {
+      "path": "packages/engine/test/national-progress.test.ts",
+      "sha256": "0687f6f75c2ed4153bb8eac024ace45e7c598e1f62e4d10c0fd227413a2a5bae"
+    },
+    {
+      "path": "docs/implementation/M2-EH-NATIONAL-INJURY-BOUNDARY.md",
+      "sha256": "fba01b5d43a680b36391aef2e4f99fefc993ebd9efab4e72ee3410f52a994c27"
+    },
+    {
+      "path": "docs/implementation/M2-POST-EH-IMPLEMENTATION-PLAN.md",
+      "sha256": "bcb303fc77b1031579a90f3ad50caed737d4094a49fc38f3c2a5c29e48d29b0c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EH-before-failure.log",
+      "sha256": "6679a526b7ca2506835cc15e7b20a701b17c9e71cc43108247d265ffa4afa882"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EH-check.log",
+      "sha256": "411c201d64cb05fc580feac53c5813ed37fba2eb0ab0ccb960025acbe4e2fdc0"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EH-fixture-evidence-failure.log",
+      "sha256": "909f261561c7939ac2ed3929bbfdb6831f93fe44199c4d0e425eb3a9c9294136"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EH-fixture-order-failure.log",
+      "sha256": "22c2d97c4c8b624bc3e1f77a5527171a44d1845365b92c3d6586eb8c990ae852"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EH-focused.log",
+      "sha256": "e044f5d9e55ff6def63a97a545e10064ca34342ad6a58994e7c912e7bd3f10a8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EH-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EH-medical-boundary.log",
+      "sha256": "af9087af3325250426a9d0d82b9d1a2555506b7b4a50677bc52a50bbc8b097ed"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EH-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EH-source-freeze.json",
+      "sha256": "6c25b1842204a93b3d81d3e3bd3fefb3027887826de3d9403d367bfee12c9146"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EH-types.log",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EH-usage-checkpoint.json",
+      "sha256": "182e114097c196cc5d05d54bee73925e86b4dd6fd395042c18ca000a4a1ab7cc"
+    }
+  ],
+  "cutoff": {
+    "usedPercent": 96,
+    "remainingPercent": 4
+  }
+}

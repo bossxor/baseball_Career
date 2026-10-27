@@ -1,0 +1,26 @@
+✔ first-game injury replaces one sealed roster slot before preparing Korea without rewriting draw, records or source (6656.5756ms)
+✖ injury cannot reshuffle an ongoing group; next round replaces once and preserves prior official appearance and JSON pending resume (706.1322ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8022.0164
+
+✖ failing tests:
+
+test at packages\engine\test\national-progress.test.ts:157:1
+✖ injury cannot reshuffle an ongoing group; next round replaces once and preserves prior official appearance and JSON pending resume (706.1322ms)
+  RangeError: NON_CHRONOLOGICAL_PLAYER_TEAM_GAME
+      at settleTeamGameHealth (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\health.ts:47:109)
+      at closeCareerNationalDay (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\national-progress.ts:150:17)
+      at nextKoreaGame (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\national-progress.test.ts:138:47)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\national-progress.test.ts:163:4)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

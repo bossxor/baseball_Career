@@ -1,0 +1,14 @@
+{
+  "checkedAtUtc": "2026-10-27T11:49:22.913Z",
+  "windowDurationMins": 300,
+  "usedPercent": 96,
+  "remainingPercent": 4,
+  "requestedStopRemainingPercent": 5,
+  "action": "Finish current EH batch only; update docs, commit and push. No shutdown.",
+  "fullCheck": "PASS",
+  "tests": 778,
+  "pass": 776,
+  "skipped": 2,
+  "fail": 0,
+  "webPass": 22
+}

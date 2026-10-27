@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "INCOMPLETE_IMPLEMENTATION_AUDIT",
-  "baseline": "5433f78 + M2-EG verified worktree",
+  "baseline": "910447c + M2-EH verified worktree",
   "items": [
     {
       "id": "E01",
@@ -210,8 +210,8 @@
           "dispatchClass": "ACK"
         }
       ],
-      "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "scope": "ENGINE_REVIEWED_WITH_DECLARED_LIMITS",
+      "verification": "PARTIAL_ENGINE_DOMAIN_REVIEWED_EH",
       "references": [
         {
           "path": "packages/engine/src/kbo-preseason.ts",
@@ -230,7 +230,23 @@
           "line": 59
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent.",
+      "domainReview": {
+        "status": "SOURCE_AND_EXISTING_TESTS_REVIEWED_FULL_EH_PASS",
+        "trigger": "startSignedKboCareer -> queueKboFirstCampNotices, later writes catch up legacy notice once",
+        "effect": "resolveKboFirstCampNotice CHOOSE_FOCUS validates4 and writes planHistory; KEEP_FOCUS ACK changes no abilities/RNG/plan; preseason confirmation independently required",
+        "source": "packages/engine/src/kbo-preseason.ts",
+        "tests": [
+          "kbo-preseason.test.ts",
+          "professional-calendar.test.ts"
+        ],
+        "limits": "Engine notice/plan source and WBC return/opening only; no screen/browser proof or whole native pro season.",
+        "testPaths": [
+          "packages/engine/test/kbo-preseason.test.ts",
+          "packages/engine/test/professional-calendar.test.ts"
+        ],
+        "evidence": "docs/implementation/evidence/M2-EH-check.log"
+      }
     },
     {
       "id": "E09",
@@ -1704,8 +1720,8 @@
           "dispatchClass": "ACK"
         }
       ],
-      "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "scope": "ENGINE_REVIEWED_WITH_DECLARED_LIMITS",
+      "verification": "PARTIAL_ENGINE_DOMAIN_REVIEWED_EH",
       "references": [
         {
           "path": "packages/engine/src/us-preseason.ts",
@@ -1724,7 +1740,23 @@
           "line": 60
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent.",
+      "domainReview": {
+        "status": "SOURCE_AND_EXISTING_TESTS_REVIEWED_FULL_EH_PASS",
+        "trigger": "US preseason write/confirm -> queueUsFirstCampNotices, not query RNG or automatic gameplay",
+        "effect": "CHOOSE_FOCUS writes actual4-focus plan and domain receipt, ACK alone no growth/salary; confirmation and publication separately gate first games",
+        "source": "packages/engine/src/us-preseason.ts",
+        "tests": [
+          "us-preseason.test.ts",
+          "kbo-us-activation.test.ts"
+        ],
+        "limits": "Actual first75 games after controlled pro-entry service history; KBO transferred full annual renewal/callup still incomplete.",
+        "testPaths": [
+          "packages/engine/test/us-preseason.test.ts",
+          "packages/engine/test/kbo-us-activation.test.ts"
+        ],
+        "evidence": "docs/implementation/evidence/M2-EH-check.log"
+      }
     },
     {
       "id": "E59",
@@ -1740,8 +1772,8 @@
           "dispatchClass": "DOMAIN"
         }
       ],
-      "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "scope": "ENGINE_REVIEWED_WITH_DECLARED_LIMITS",
+      "verification": "PARTIAL_ENGINE_DOMAIN_REVIEWED_EH",
       "references": [
         {
           "path": "packages/engine/src/us-levels.ts",
@@ -1752,7 +1784,21 @@
           "line": 29
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent.",
+      "domainReview": {
+        "status": "SOURCE_AND_EXISTING_TESTS_REVIEWED_FULL_EH_PASS",
+        "trigger": "advanceUsCareer day-close -> reviewUsLevel after24 current-level games and7-day review cooldown",
+        "effect": "CONFIRM_PROMOTION atomically swaps existing compatible player slots; DEFER consumes review without changing contract/registration; stale quote is replay-validated",
+        "source": "packages/engine/src/us-levels.ts",
+        "tests": [
+          "us-levels-windows.test.ts"
+        ],
+        "limits": "Promotion inputs use controlled regular records; no whole native multi-level climb or UI evidence.",
+        "testPaths": [
+          "packages/engine/test/us-levels-windows.test.ts"
+        ],
+        "evidence": "docs/implementation/evidence/M2-EH-check.log"
+      }
     },
     {
       "id": "E60",
@@ -1764,8 +1810,8 @@
           "dispatchClass": "DOMAIN"
         }
       ],
-      "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "scope": "ENGINE_REVIEWED_WITH_DECLARED_LIMITS",
+      "verification": "PARTIAL_ENGINE_DOMAIN_REVIEWED_EH",
       "references": [
         {
           "path": "packages/engine/src/us-levels.ts",
@@ -1776,7 +1822,23 @@
           "line": 29
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent.",
+      "domainReview": {
+        "status": "SOURCE_AND_EXISTING_TESTS_REVIEWED_FULL_EH_PASS",
+        "trigger": "same daily level worker at eligible AAA sample/score and compatible MLB26/protected40 seat",
+        "effect": "CONFIRM_CALLUP commits same identity/slot swap plus major contract reservation; $800000 rate starts following day, old minor receipts/signing bonus remain once; first appearance separately tracked",
+        "source": "packages/engine/src/us-levels.ts",
+        "tests": [
+          "us-levels-windows.test.ts",
+          "us-major-renewal.test.ts"
+        ],
+        "limits": "Controlled eligibility/source, native next-year first date separate. KBO transfer callup reader still has incompatible high-school origin assumption.",
+        "testPaths": [
+          "packages/engine/test/us-levels-windows.test.ts",
+          "packages/engine/test/us-major-renewal.test.ts"
+        ],
+        "evidence": "docs/implementation/evidence/M2-EH-check.log"
+      }
     },
     {
       "id": "E61",
@@ -1804,7 +1866,14 @@
           "line": 29
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent.",
+      "domainReview": {
+        "status": "SOURCE_REVIEW_TEST_GAP_EH",
+        "trigger": "reviewUsLevel two low reviews -> E61, source present",
+        "gap": "No successful CONFIRM_DEMOTION test call found under packages/engine/test. Existing second-low Rookie test verifies floor, not a completed demotion. OPEN_RIGHTS navigation currently hits !choice.domain -> US_RIGHTS_VIEW_ONLY in resolveUsLevelEvent; caller navigation contract needs review.",
+        "source": "packages/engine/src/us-levels.ts",
+        "limits": "No completion claim; no new gameplay rule chosen."
+      }
     },
     {
       "id": "E62",

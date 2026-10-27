@@ -1,0 +1,38 @@
+✔ national callup accept and decline keep revision atomic (221.1126ms)
+✔ INT13 AG silver or WBC gold does not change military status (143.0424ms)
+✔ INT14 OLY bronze with appearance becomes ATHLETE_ELIGIBLE once; INT15 completed stays put (270.2112ms)
+✔ AG tournament plays real INTERNATIONAL games and can grant ATHLETE_ELIGIBLE on gold+appearance (215.9152ms)
+✔ E44 domain response, E47 navigation/review and E48 return preserve benefit and original club (170.5505ms)
+✔ national boundaries reject forged decisions, inconsistent medals, duplicate invitations and changed game evidence (122.1742ms)
+✔ a pitcher protagonist has real international BF and persisted contributions with deterministic JSON replay (319.4118ms)
+✔ international cyclic ties use head-to-head differential and seeded lots, with malformed groups rejected (1.0459ms)
+✔ athlete admission cancels competing pending Sangmu application without enlisting or charging salary (112.4725ms)
+M2-EE AG/return proof: {"preWindow":"CONTROLLED_PREFIX","internationalGames":16,"nationalDays":14,"resumedDay":257,"actualDomesticGames":10}
+M2-EH medical-boundary proof: {"medical":"CONTROLLED","strength":"CONTROLLED_90_100","games":16,"withdrawn":true,"priorAppearance":true}
+✔ p12ActualWindow uses max(nominal 11/15, both PS end+1) and keeps 14 days without rewriting calendar-1 (12.0037ms)
+✔ career AG bracket uses the sealed actual28 Korean identities and seals records after FINAL (8817.8294ms)
+✔ mid-tournament JSON resume keeps pendingGame and does not duplicate contributions (8964.5743ms)
+✔ invite deadlines seal 7/2/1 before start and national day fatigue settles once (980.5684ms)
+✔ international phase closes every date once, audits shared pro days and resumes actual next domestic game after E48 (11640.3728ms)
+✔ international rest days include nonparticipants once, refuse skipped days and preserve original world/records (1084.2617ms)
+✔ E46 queues at the first actual Korean FINAL before competition sealing and never duplicates after ACK or later games (6471.0579ms)
+✔ first-game injury replaces one sealed roster slot before preparing Korea without rewriting draw, records or source (6475.5391ms)
+✔ injury cannot reshuffle an ongoing group; next round replaces once and preserves prior official appearance and JSON pending resume (3276.0685ms)
+✔ exhausted healthy catcher pool rejects the whole replacement preparation without partial roster changes or invented players (790.1282ms)
+✔ national roster has exactly28 unique players, required hitter slots and5/7/1 pitchers without changing identities (184.6782ms)
+✔ national eligibility distinguishes AG, recent top-league evidence, military status, injury and contract refusal (142.3397ms)
+✔ missing roles fail atomically, CP fallback uses remaining RP composure and duplicate candidates are rejected (170.2421ms)
+M2-EF US/opening proof: {"calendar":"calendar-2","openingDay":59,"actualGames":75,"annualSalaryUsd":30000,"paidUsd":148}
+M2-EF WBC/opening proof: {"entry":"PRO_ENTRY_FIXTURE","internationalGames":47,"nationalDays":21,"openingDay":59,"actualDomesticGames":10,"calendar":"calendar-2"}
+✔ calendar2 shifts only professional WBC-year fixtures; old schedules, identities, school days and growth budget survive mixed reads (110.2845ms)
+✔ all five actual US schedule publications open after WBC with unchanged game counts and annual salary (15792.5409ms)
+✔ calendar-versioned service reservation follows actual return-year dates without repricing principal or contaminating legacy forecast cache (6.1558ms)
+✔ WBC actual47 games and21 dates return to camp then actual KBO opening date without rewriting international history (15997.8948ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 49453.2326

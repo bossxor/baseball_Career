@@ -7,9 +7,9 @@ import type {KboCareer,KboNationalResume} from './kbo-career-entry.js';
 import {assertKboCareerRevision} from './kbo-career-version.js';
 import type {NationalLedger,NationalMedal,NationalTournament} from './kbo-national.js';
 import {sealNationalCompetitionResult,queueNationalFirstAppearance} from './kbo-national.js';
-import {assertNationalSelectionSnapshot,nationalLineupBatting} from './national-selection.js';
+import {replaceNationalSelectionPlayer,assertNationalSelectionSnapshot,nationalLineupBatting} from './national-selection.js';
 import {assertNationalBracket,createNationalBracket,nextNationalMatch,prepareNationalMatch,advanceNationalMatch,nationalNationPreset,nationalInviteDeadlines,nationalMatchesOnDay} from './national-bracket.js';
-import type {NationalBracket,NationalTournamentWindow} from './national-bracket.js';
+import type {NationalBracket,NationalTournamentWindow,NationalMatch} from './national-bracket.js';
 import {koreaNationalTeam,nationalControlTeam} from './national-tournament.js';
 import {appearanceFatigue} from './lineup.js';
 import {settleTeamGameHealth} from './health.js';
@@ -46,10 +46,10 @@ function teamFor(c:KboCareer,id:string,bracket:NationalBracket,koreaGames:number
  assertNationalSelectionSnapshot(selection);
  return koreaNationalTeam(c,selection,koreaGames,nationalLineupBatting(c.records,selection));
 }
-function koreaGameCount(bracket:NationalBracket):number {
- let replay:NationalBracket={...createNationalBracket({worldKey:bracket.worldKey,seasonKey:bracket.seasonKey,tournament:bracket.tournament,seed:bracket.seed,...(bracket.window.basis==='P12_POSTSEASON'?{window:bracket.window}:{})}),results:[],pendingGame:null},n=0;
- for(const r of bracket.results){const m=nextNationalMatch(replay);if(!m)break;if(m.away==='KOR'||m.home==='KOR')n++;replay={...replay,results:[...replay.results,r]};}
- return n;
+function koreaGameProgress(bracket:NationalBracket):{count:number;lastStage:NationalMatch['stage']|null} {
+ let replay:NationalBracket={...createNationalBracket({worldKey:bracket.worldKey,seasonKey:bracket.seasonKey,tournament:bracket.tournament,seed:bracket.seed,...(bracket.window.basis==='P12_POSTSEASON'?{window:bracket.window}:{})}),results:[],pendingGame:null},n=0,lastStage:NationalMatch['stage']|null=null;
+ for(const r of bracket.results){const m=nextNationalMatch(replay);if(!m)break;if(m.away==='KOR'||m.home==='KOR'){n++;lastStage=m.stage;}replay={...replay,results:[...replay.results,r]};}
+ return {count:n,lastStage};
 }
 function koreaOutcome(bracket:NationalBracket):{medal:NationalMedal;finalRank:number} {
  let replay:NationalBracket={...createNationalBracket({worldKey:bracket.worldKey,seasonKey:bracket.seasonKey,tournament:bracket.tournament,seed:bracket.seed,...(bracket.window.basis==='P12_POSTSEASON'?{window:bracket.window}:{})}),results:[],pendingGame:null};
@@ -176,9 +176,16 @@ export function prepareCareerNationalMatch(c:KboCareer,revision:number):KboCaree
  assertNationalBracket(bracket);if(bracket.pendingGame)throw new RangeError('NATIONAL_GAME_ALREADY_PENDING');
  const m=nextNationalMatch(bracket)!;
  if(bracket.dayCloseVersion===1&&(c.phaseContext.phase!=='INTERNATIONAL_PROGRESS'||c.phaseContext.competitionId!==bracket.competitionId||c.phaseContext.nextWorldDay!==m.day))throw new RangeError('NATIONAL_DAY_CLOSE_REQUIRED');
- const koreaGames=koreaGameCount(bracket);
- const teams:[TeamSnapshot,TeamSnapshot]=[teamFor(c,m.away,bracket,koreaGames),teamFor(c,m.home,bracket,koreaGames+(m.away==='KOR'?1:0))];
- const next:KboCareer={...c};replaceBracket(next,prepareNationalMatch(bracket,teams,pitchDevelopment(c,teams)));next.revision++;return next;
+ const progress=koreaGameProgress(bracket);let staged=c;
+ if(bracket.dayCloseVersion===1&&(m.away==='KOR'||m.home==='KOR')&&(progress.count===0||progress.lastStage!==m.stage)){
+  const selection=ledger(c).selections?.find(s=>s.seasonKey===c.world.seasonKey&&s.tournament===bracket.tournament);if(!selection)throw new RangeError('NATIONAL_SELECTION_REQUIRED');
+  const unavailable=new Set(Object.keys(c.health.injuries));let repaired=selection;
+  // shortcut: sealed candidate pool only; exhausted roles still need emergency lower-league admission.
+  for(const slot of selection.roster.slots)if(unavailable.has(slot.playerKey))repaired=replaceNationalSelectionPlayer(repaired,slot.playerKey,unavailable,'INJURED');
+  if(repaired!==selection)staged={...c,national:{...ledger(c),selections:ledger(c).selections!.map(s=>s.selectionId===selection.selectionId?repaired:s)}};
+ }
+ const teams:[TeamSnapshot,TeamSnapshot]=[teamFor(staged,m.away,bracket,progress.count),teamFor(staged,m.home,bracket,progress.count+(m.away==='KOR'?1:0))];
+ const next:KboCareer={...staged};replaceBracket(next,prepareNationalMatch(bracket,teams,pitchDevelopment(staged,teams)));next.revision++;return next;
 }
 
 export type NationalProgressStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'GAME_FINAL'|'TOURNAMENT_COMPLETE';

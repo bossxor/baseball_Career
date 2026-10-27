@@ -1,0 +1,11 @@
+M2-EH medical-boundary proof: {"medical":"CONTROLLED","strength":"CONTROLLED_90_100","games":16,"withdrawn":true,"priorAppearance":true}
+✔ first-game injury replaces one sealed roster slot before preparing Korea without rewriting draw, records or source (6540.2084ms)
+✔ injury cannot reshuffle an ongoing group; next round replaces once and preserves prior official appearance and JSON pending resume (3222.5842ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 10420.4345
