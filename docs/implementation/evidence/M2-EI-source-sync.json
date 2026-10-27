@@ -1,0 +1,113 @@
+{
+  "utc": "2026-10-27T23:57:00.786Z",
+  "head": "c5d070e97c3ea7004efe9c4ca386486cb16b4c6f",
+  "fullCheck": "PASS",
+  "result": {
+    "tests": 781,
+    "pass": 779,
+    "skip": 2,
+    "fail": 0,
+    "durationMs": 1179771.366,
+    "webPass": 22,
+    "unchangedFiles": 456
+  },
+  "policy": "V documents only via Copy-Item; no V .git or runtime sync",
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "0571e4ea144d0b05414ecbff181dcefc5cd237b4889f65be6293f54e90d91b26"
+    },
+    {
+      "path": "docs/design/23-US-CONTRACTS-RIGHTS.md",
+      "sha256": "a3404c39bbea175f51512370b7cea4d49df889fd18e86bda2c459873982f9678"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "08839d33775873013103d2a1e3eea4731dd939536c7de2de7d0c4298421e0ae7"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "2b0573de1dfe03f78ebc95833248acae2c593cd03852e3b718aa87299c86771b"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "87273ecd299dc85f6ace7b78229914a8cf6e66153839684406310cc1595149fb"
+    },
+    {
+      "path": "docs/implementation/HANDOFF-TO-GPT.md",
+      "sha256": "9e4d73a7637d7efc092aaaa30c77139ce7a10da104f604aa2970cfb34768b590"
+    },
+    {
+      "path": "docs/implementation/M2-EI-NATIONAL-PITCHER-REST.md",
+      "sha256": "c1581bd92479dec147a5d53fb85de4c3e91a425c60b440b7d349ff58dd28087c"
+    },
+    {
+      "path": "docs/implementation/M2-EJ-US-ORIGIN-PLAN.md",
+      "sha256": "f34b112f294c5b34abca7667b4ec6a7efe561e2f7cb99defb9c4934390990c9a"
+    },
+    {
+      "path": "docs/implementation/M2-INTERNATIONAL-INTEGRATION-PLAN.md",
+      "sha256": "621a06912de92f90e2faf82fda48a7bfeb2389cc2b5216eb5341e0faf503f3bf"
+    },
+    {
+      "path": "docs/implementation/M2-POST-EH-IMPLEMENTATION-PLAN.md",
+      "sha256": "5a6a317d7d60edd40a858821c86dc67d45dd325bd5772cb7ee8051faa64cc34a"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "30d037f4645d3bdea6d5df016bbd00a979b6316d1cb6452b0b4aac22d812ab36"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "22a4cff69d4e5fbf78d33f77d3325a2c06ef66f1400d2f8f316c80517d17560d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EI-before-failure.log",
+      "sha256": "33287a76d502f585867b979da7ae5d90b01c46b4693afb1b124fc70c9b80871d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EI-check.log",
+      "sha256": "1cd8a581bd4fcf76cb6b6adb4656b687f6822561c8c8ec6447f59981a74f5617"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EI-final-rest.log",
+      "sha256": "621dfd03a3244f55584e1486f36fb48603938aa21ffef96c5b2513c8c9df1376"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EI-fixture-types-failure.log",
+      "sha256": "bfbec98f4190affa3a5a085ff0dbb8958ad4f66763f4c66fc3cf473dffe3b3b1"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EI-focused.log",
+      "sha256": "2d8ab7b92b468edbf2a92d4a9601fd4e4367022ec40a5d0f2923b584ebfadacf"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EI-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EI-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EI-source-freeze.json",
+      "sha256": "f3f4473070990361fa70e740234ef5c919e01b8125959b686b513475418539c3"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EI-types.log",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "packages/engine/src/national-progress.ts",
+      "sha256": "11ed5cb72c90bdc7d688c6ea72b0901975c3ec423beaeef44529e693f1365ae5"
+    },
+    {
+      "path": "packages/engine/src/national-tournament.ts",
+      "sha256": "d1460ebdfe32ab0dc1c5d69cf38b65c0ad5a599ead648300e30d2390030d9adf"
+    },
+    {
+      "path": "packages/engine/test/national-rest.test.ts",
+      "sha256": "f307a91bb5a592140ffae88c82b8180c553cab8623d7e1b494b15ddc94cd595d"
+    }
+  ]
+}

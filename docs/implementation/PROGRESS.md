@@ -1,8 +1,12 @@
+# 최신 상태 — M2-EI 검증 완료 (2026-10-28)
+
+[EI 상세](M2-EI-NATIONAL-PITCHER-REST.md). 대표 SP3세계일 휴식·RP/CP2일 연속 실제 등판 뒤 휴식을 날짜 기반 실제 준비에 연결. 국내 등판 포함·당일/미래/전년/벤치 제외·legacy/준비된 경기 보존. 집중17/17+최종3/3, 전체 npm run check 종료0: 엔진/API 781개 중779통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1179771.366, 동결 대상456파일 재개 기준점 이후 변경0(이전 중단 기준과4파일 바이트 차이는 freeze.resumed 기록). 실제 Neon/브라우저/APK 검증은 아니다. M2약57%·전체 미완료. 다음은 미국 계약 원점/서명기간 연결 등. fetch한main/M6는 미병합.
+
 # 세션 마감 체크포인트 — M2-EH (2026-10-27)
 
 5시간 한도 사용96%·잔여4% 확인으로 사용자5% 마감 기준 도달. 새 묶음 중지, EH까지 검증/정리해 own branch에 커밋·푸시한다. 전체778/776·실패0·Neon환경2·웹22/22·집중26/26·스모크 통과. PC 종료 안 함. 기능 해시는 푸시 뒤 최종 인계 핀에서 확정한다.
 
-[EH 상세](M2-EH-NATIONAL-INJURY-BOUNDARY.md) · [다음 연결 계획](M2-POST-EH-IMPLEMENTATION-PLAN.md) · [사용량 체크포인트](evidence/M2-EH-usage-checkpoint.json). 최신 사용자 결정2개는14/20/23에 기록했으나 미국 MiLB 만료 비교/대표 불펜2연투 휴식의 추가 runtime 구현은 아직 하지 않았다. E61 성공 강등/OPEN_RIGHTS도 남았다. 이 답변을 다시 물어보지 말 것. M2약56%·전체 미완료. 실행 코드/테스트는 full gate 이후 변경0이며 추가 변경은 문서/증거뿐이다. V: 문서 Copy-Item만.
+[EH 상세](M2-EH-NATIONAL-INJURY-BOUNDARY.md) · [다음 연결 계획](M2-POST-EH-IMPLEMENTATION-PLAN.md) · [사용량 체크포인트](evidence/M2-EH-usage-checkpoint.json). 최신 사용자 결정2개는14/20/23에 기록했으나 미국 MiLB 만료 비교/대표 불펜2연투 휴식의 추가 runtime 구현은 아직 하지 않았다. E61 성공 강등/OPEN_RIGHTS도 남았다. 이 답변을 다시 물어보지 말 것. M2약57%·전체 미완료. 실행 코드/테스트는 full gate 이후 변경0이며 추가 변경은 문서/증거뿐이다. V: 문서 Copy-Item만.
 
 ## 신규 확정 결정 (2026-10-27, 구현 후속)
 

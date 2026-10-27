@@ -44,7 +44,7 @@ function teamFor(c:KboCareer,id:string,bracket:NationalBracket,koreaGames:number
  const selection=ledger(c).selections?.find(s=>s.seasonKey===c.world.seasonKey&&s.tournament===bracket.tournament);
  if(!selection)throw new RangeError('NATIONAL_SELECTION_REQUIRED');
  assertNationalSelectionSnapshot(selection);
- return koreaNationalTeam(c,selection,koreaGames,nationalLineupBatting(c.records,selection));
+ return koreaNationalTeam(c,selection,koreaGames,nationalLineupBatting(c.records,selection),bracket.dayCloseVersion===1&&c.phaseContext.phase==='INTERNATIONAL_PROGRESS'?c.phaseContext.nextWorldDay:undefined);
 }
 function koreaGameProgress(bracket:NationalBracket):{count:number;lastStage:NationalMatch['stage']|null} {
  let replay:NationalBracket={...createNationalBracket({worldKey:bracket.worldKey,seasonKey:bracket.seasonKey,tournament:bracket.tournament,seed:bracket.seed,...(bracket.window.basis==='P12_POSTSEASON'?{window:bracket.window}:{})}),results:[],pendingGame:null},n=0,lastStage:NationalMatch['stage']|null=null;

@@ -28,12 +28,19 @@ export function nationalControlTeam(id:string,value:number,protagonist?:{key:str
 }
 
 /** The selected15/13 and actual player books supply game inputs; registration alone never guarantees an appearance. */
-export function koreaNationalTeam(c:KboCareer,selection:NationalSelectionSnapshot,gameNumber:number,recent:ReadonlyMap<string,BattingLine>):TeamSnapshot {
+export function koreaNationalTeam(c:KboCareer,selection:NationalSelectionSnapshot,gameNumber:number,recent:ReadonlyMap<string,BattingLine>,worldDay?:number):TeamSnapshot {
+ if(worldDay!==undefined&&(!Number.isSafeInteger(worldDay)||worldDay<0))throw new RangeError('INVALID_NATIONAL_GAME_DAY');
+ const used=new Map<string,Set<number>>();
+ if(worldDay!==undefined)for(const g of Object.values(c.records.games)){
+  if(g.scope.seasonKey!==c.world.seasonKey||g.worldDay<worldDay-3||g.worldDay>=worldDay)continue;
+  for(const [key,p]of Object.entries(g.pitching))if(p.BF>0){if(!used.has(key))used.set(key,new Set());used.get(key)!.add(g.worldDay);}
+ }
+ const rested=(key:string,starter:boolean)=>worldDay===undefined|| (starter?!used.has(key):!(used.get(key)?.has(worldDay-1)&&used.get(key)?.has(worldDay-2)));
  const players={...c.world.players,...Object.fromEntries(Object.entries(c.sangmu?.members??{}).map(([k,m])=>[k,m.player]))},chosen=selection.roster.slots.map(s=>{const p=players[s.playerKey];if(!p)throw new RangeError('NATIONAL_ROSTER_CHANGED');return {player:p,role:s.role};}),healthy=(k:string)=>!Object.hasOwn(c.health.injuries,k);
  const hitters=chosen.filter(s=>s.player.kind==='HITTER'),lineup=automaticFieldLineup(hitters.map(s=>({player:s.player,available:healthy(s.player.simulationKey),fits:initialPositionFits(s.player.position),recent:recent.get(s.player.simulationKey)??emptyBatting()})),60);
- const starters=chosen.filter(s=>s.role==='SP'&&healthy(s.player.simulationKey)&&s.player.fatigue<60),starter=starters[gameNumber%Math.max(1,starters.length)]??chosen.find(s=>s.player.kind==='PITCHER'&&s.role==='RP'&&healthy(s.player.simulationKey));if(!starter)throw new RangeError('NATIONAL_STARTER_REQUIRED');
+ const starters=chosen.filter(s=>s.role==='SP'&&healthy(s.player.simulationKey)&&s.player.fatigue<60&&rested(s.player.simulationKey,true)),starter=starters[gameNumber%Math.max(1,starters.length)]??chosen.find(s=>s.player.kind==='PITCHER'&&s.role==='RP'&&healthy(s.player.simulationKey)&&(worldDay===undefined||s.player.fatigue<60)&&rested(s.player.simulationKey,false));if(!starter)throw new RangeError('NATIONAL_STARTER_REQUIRED');
  const snapshot=(key:string)=>{const p=players[key]!;return {simulationKey:key,abilities:{...p.abilities},fatigue:p.fatigue,morale:1,temporary:{},traitLogits:[]};};
- const pitchers=chosen.filter(s=>s.player.kind==='PITCHER').sort((a,b)=>a===starter?-1:b===starter?1:a.player.simulationKey<b.player.simulationKey?-1:1).map(s=>{const p=s.player,r=c.world.repertoires[p.simulationKey]??c.sangmu?.members[p.simulationKey]?.repertoire;if(!r||r.seasonId!==c.world.seasonKey)throw new RangeError('MISSING_NATIONAL_REPERTOIRE');validatePitchWeights(r.book,r.weights);return {...snapshot(p.simulationKey),throws:p.throws,pitchForm:p.pitchForm!,role:s===starter?'SP' as const:s.role==='CP'?'CP' as const:s.role==='SP'?'SP' as const:'RP' as const,available:healthy(p.simulationKey)&&(s.role!=='SP'||s===starter),recentOuts:0,repertoire:Object.keys(r.weights).sort().map(id=>({pitchId:id as PitchId,weight:r.weights[id as PitchId]!,mastery:pitchMastery(r.book[id as PitchId]!)}))};});
+ const pitchers=chosen.filter(s=>s.player.kind==='PITCHER').sort((a,b)=>a===starter?-1:b===starter?1:a.player.simulationKey<b.player.simulationKey?-1:1).map(s=>{const p=s.player,r=c.world.repertoires[p.simulationKey]??c.sangmu?.members[p.simulationKey]?.repertoire;if(!r||r.seasonId!==c.world.seasonKey)throw new RangeError('MISSING_NATIONAL_REPERTOIRE');validatePitchWeights(r.book,r.weights);return {...snapshot(p.simulationKey),throws:p.throws,pitchForm:p.pitchForm!,role:s===starter?'SP' as const:s.role==='CP'?'CP' as const:s.role==='SP'?'SP' as const:'RP' as const,available:healthy(p.simulationKey)&&(s.role==='SP'?s===starter:rested(p.simulationKey,false)),recentOuts:0,repertoire:Object.keys(r.weights).sort().map(id=>({pitchId:id as PitchId,weight:r.weights[id as PitchId]!,mastery:pitchMastery(r.book[id as PitchId]!)}))};});
  return {simulationKey:'KOR',fielders:lineup.fielders,lineup:lineup.lineup.map(key=>({...snapshot(key),bats:players[key]!.bats,approach:'BALANCED',available:true})),pitchers};
 }
 

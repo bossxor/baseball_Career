@@ -1,0 +1,11 @@
+✔ national SP rests three full world days after an actual BF, including domestic use, without changing legacy projection or source (1209.132ms)
+✔ national RP and CP rest only after consecutive world-day BF appearances; bench, gap and future rows give no extra rest (615.5852ms)
+✔ a rested RP opener keeps permanent position; exhausted or fatigued starting choices reject without partial writes (993.9011ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3636.7152

@@ -1,0 +1,8 @@
+packages/engine/test/national-rest.test.ts(14,54): error TS2322: Type '{ [x: string]: GameContribution | { gameKey: string; worldDay: number; scope: { seasonKey: string; leagueKey: string; phase: "REGULAR"; }; teams: { A: { games: number; W: number; L: number; T: number; R: number; RA: number; }; B: { ...; }; }; ... 4 more ...; matchups: {}; }; }' is not assignable to type 'Record<string, GameContribution>'.
+  'string' index signatures are incompatible.
+    Type 'GameContribution | { gameKey: string; worldDay: number; scope: { seasonKey: string; leagueKey: string; phase: "REGULAR"; }; teams: { A: { games: number; W: number; L: number; T: number; R: number; RA: number; }; B: { ...; }; }; ... 4 more ...; matchups: {}; }' is not assignable to type 'GameContribution'.
+      Type '{ gameKey: string; worldDay: number; scope: { seasonKey: string; leagueKey: string; phase: "REGULAR"; }; teams: { A: { games: number; W: number; L: number; T: number; R: number; RA: number; }; B: { games: number; ... 4 more ...; RA: number; }; }; ... 4 more ...; matchups: {}; }' is not assignable to type 'GameContribution'.
+        Types of property 'pitching' are incompatible.
+          Type '{ [x: string]: { BF: number; BB: number; pitches: number; games: number; outs: number; H: number; HR: number; HBP: number; K: number; R: number; ER: number; }; }' is not assignable to type 'Record<string, PitchingTotals>'.
+            'string' index signatures are incompatible.
+              Type '{ BF: number; BB: number; pitches: number; games: number; outs: number; H: number; HR: number; HBP: number; K: number; R: number; ER: number; }' is missing the following properties from type 'PitchingTotals': starts, starterOuts, loadedBF, W, and 5 more.

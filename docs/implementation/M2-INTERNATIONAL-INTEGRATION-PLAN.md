@@ -1,3 +1,7 @@
+## EI 검증 완료 — 대표 투수 휴식
+
+검증된 실제 경기 날짜와 국내/국제 최근3일 BF를 사용해 SP 휴식·RP/CP2연투 제한을 연결했다. 기존 수동 경로와 저장된 pending은 보존한다. [EI](M2-EI-NATIONAL-PITCHER-REST.md).
+
 ## EH 검증 완료 — 부상 교체 경계
 
 KBO prepare의 첫 한국 경기 전/라운드 경계에서 봉인 후보를 재사용하는 교체를 연결했다. 이전 day roster/출장은 보존한다. 최초 선발에서 빠진 하위리그 긴급 합류와 미국 공통 풀은 아직 남았다. [EH](M2-EH-NATIONAL-INJURY-BOUNDARY.md)의 의료/전력 통제 범위를 읽을 것.
