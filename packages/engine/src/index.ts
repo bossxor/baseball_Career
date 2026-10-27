@@ -115,6 +115,17 @@ export * from './kbo-remainder-transfer.js';
 export * from './kbo-transfer-registration.js';
 
 export * from './kbo-offseason-exit.js';
+export * from './kbo-club-game.js';
+export * from './kbo-club-progress.js';
+export * from './kbo-club-import.js';
+export * from './kbo-club-year.js';
+export * from './kbo-club-manage.js';
+export * from './kbo-club-postseason.js';
+export * from './kbo-club-command.js';
+export * from './kbo-club-long-run.js';
+export * from './kbo-club-labels.js';
+export * from './kbo-club-national.js';
+
 
 export * from './us-entry.js';
 export * from './us-career-entry.js';

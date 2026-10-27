@@ -22,9 +22,9 @@ M4: **완료**(핵심12·HTTP·IME/터치 V08 일부). 풀 엔진=M2. [M4 완료
 
 M5: **완료(셸)** — 33화면 Decision 스텁·라우트·fixture/API. 픽셀·SR 실기기는 수동 잔여. [M5 완료](../implementation/M5-COMPLETE.md).
 
-**M6 기능 마감(2026-10-27, `m6/club-mode`):** A~L. 구단 90%(기여 18), 전체 83%를 유지한다. 국제 대회 경기와 L01–L12 실주행은 통과가 아니다. [마감](https://github.com/bossxor/baseball_Career/blob/m6/club-mode/docs/implementation/M6-CLOSE.md).
+**M6 기능 마감(2026-10-27):** A~M. M6-M은 상대 명단(강 65, 중 55, 약 45)이다. 대회 경기를 치르지 않아 구단 90%(기여 18), 전체 83%를 유지한다. 국제 대회 경기와 L01–L12 실주행은 통과가 아니다. [마감](../implementation/M6-CLOSE.md) · [M6-M](../implementation/M6-M-CLUB-OPPONENTS.md).
 
-**현재 작업:** M2는 DK 전체 검사 재실행이 먼저다. 구단 기능 마감은 `3cb2421`이다. 실 DNS·실기기는 후속.
+**현재 작업:** M2는 DK 전체 검사 재실행이 먼저다. 다음 M6은 국제 경기 한 대회 또는 L04 실주행. 실 DNS·실기기는 후속.
 
 | 구현 영역 | 전체 비중 | 영역 완료 추정 | 전체 기여 |
 |---|---:|---:|---:|

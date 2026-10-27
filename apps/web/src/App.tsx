@@ -6,19 +6,30 @@ import { Home } from './screens/Home.js';
 import { Create } from './screens/Create.js';
 import { Career } from './screens/Career.js';
 import { Decision } from './screens/Decision.js';
+import { ClubNew, ClubView } from './screens/Club.js';
 import { CREATION_STEPS, emptyDraft, firstInvalidStep, toCreationRequest, validateStep } from './creation.js';
 import type { CreationDraft, CreationStep, FieldErrors } from './creation.js';
-import type { CareerView, DecisionView, HomeData, PlayScreenId, ProgressMode } from './model.js';
+import type { CareerView, ClubScreen, ClubScreenId, DecisionView, HomeData, PlayScreenId, ProgressMode } from './model.js';
 import { isPlayScreen } from './screen-states.js';
 import type { ScreenState } from './screen-states.js';
 
+const CLUB_SCREENS = new Set<string>(['S13', 'S14', 'S15', 'S16', 'S17', 'S18', 'S19']);
 type Route =
   | { name: 'home' }
   | { name: 'create' }
   | { name: 'career'; saveId: string }
-  | { name: 'play'; saveId: string; screenId: PlayScreenId };
+  | { name: 'play'; saveId: string; screenId: PlayScreenId }
+  | { name: 'club-new' }
+  | { name: 'club'; saveId: string; screenId: ClubScreenId };
 
 export function parseRoute(hash: string): Route {
+  const club = /^#\/club\/([^/]+)(?:\/(S1[3-9]))?$/.exec(hash);
+  if (club) {
+    const id = decodeURIComponent(club[1]!);
+    if (id === 'new') return { name: 'club-new' };
+    const screenId = club[2] && CLUB_SCREENS.has(club[2]) ? club[2] as ClubScreenId : 'S13';
+    return { name: 'club', saveId: id, screenId };
+  }
   const play = /^#\/play\/([^/]+)\/(S\d{2})$/.exec(hash);
   if (play && isPlayScreen(play[2]!)) return { name: 'play', saveId: decodeURIComponent(play[1]!), screenId: play[2] };
   const m = /^#\/?([a-z]*)\/?(.*)$/.exec(hash);
@@ -53,6 +64,7 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
   const [home, setHome] = useState<HomeData | null>(null), [showSaves, setShowSaves] = useState(false);
   const [career, setCareer] = useState<CareerView | null>(null), [mode, setMode] = useState<ProgressMode>('NEXT_MAJOR_EVENT');
   const [decision, setDecision] = useState<DecisionView | null>(null), [selected, setSelected] = useState<string | null>(null);
+  const [clubView, setClubView] = useState<ClubScreen | null>(null);
   const [draft, setDraft] = useState<CreationDraft>(emptyDraft), [step, setStep] = useState<CreationStep>('NAME'), [errors, setErrors] = useState<FieldErrors>({});
   const creationId = useRef(newId());
   const intents = useIntentIds();
@@ -72,6 +84,7 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
         if (route.name === 'home') { const d = await api.home(); if (alive) { setHome(d); setState('ready'); } }
         else if (route.name === 'career') { const c = await api.career(route.saveId); if (alive) { setCareer(c); setMode(c.progress.mode); setState('ready'); } }
         else if (route.name === 'play') { const d = await api.decision(route.saveId, route.screenId); if (alive) { setDecision(d); setState(d.options.length ? 'ready' : 'empty'); } }
+        else if (route.name === 'club') { const view = await api.club(route.saveId, route.screenId); if (alive) { setClubView(view); setState(view.lines.length ? 'ready' : 'empty'); } }
         else setState('ready');
       } catch (err) { if (alive) setState(stateFromError(err)); }
     })();
@@ -108,6 +121,27 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
         });
       }} />;
   }
+  const openSave = (id: string) => {
+    const mode = home?.saves.find(save => save.saveId === id)?.mode;
+    go(mode === 'CLUB' ? `#/club/${encodeURIComponent(id)}/S13` : `#/career/${encodeURIComponent(id)}`);
+  };
+  if (route.name === 'club-new') {
+    return <ClubNew state={state === 'loading' ? 'ready' : state} onBack={() => go('#/')} onPick={clubId => {
+      void run(async () => {
+        const { saveId } = await api.createClub({ commandId: creationId.current, clubId });
+        creationId.current = newId();
+        go(`#/club/${encodeURIComponent(saveId)}/S13`);
+      });
+    }} />;
+  }
+  if (route.name === 'club') {
+    const saveId = route.saveId, screenId = route.screenId;
+    return <ClubView view={clubView} state={state} onBack={() => go('#/')} onReload={reload}
+      onOpen={next => go(`#/club/${encodeURIComponent(saveId)}/${next}`)}
+      onCommand={(type, payload) => {
+        void run(async () => { await api.clubCommand(saveId, newId(), type, payload); setClubView(await api.club(saveId, screenId)); });
+      }} />;
+  }
   if (route.name === 'career') {
     const saveId = route.saveId;
     return <Career view={career} state={state} mode={mode} onMode={setMode} onBack={() => go('#/')} onReload={reload}
@@ -119,7 +153,7 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
       }} />;
   }
   return <Home {...(logo ? { logo } : {})} data={home} state={state} showSaves={showSaves} onToggleSaves={() => setShowSaves(v => !v)} onReload={reload}
-    onResume={id => go(`#/career/${encodeURIComponent(id)}`)} onSelect={id => go(`#/career/${encodeURIComponent(id)}`)}
-    onNew={m => { if (m === 'CAREER') { setDraft(emptyDraft()); setStep('NAME'); setErrors({}); go('#/create'); } }}
+    onResume={openSave} onSelect={openSave}
+    onNew={m => { if (m === 'CAREER') { setDraft(emptyDraft()); setStep('NAME'); setErrors({}); go('#/create'); } else go('#/club/new'); }}
     {...(home?.resume ? { onSettings: () => openPlay(home.resume!.saveId, 'S21') } : {})} />;
 }
