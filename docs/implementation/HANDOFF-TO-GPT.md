@@ -1,6 +1,6 @@
 # 최신 인계 — M2-DY 국제 시간축 1차 연결 검증 완료 (2026-10-27)
 
-[DY 상세](M2-DY-INTERNATIONAL-TIMELINE.md). 브랜치 `codex/m2-career-engine`. 기능 팁은 이 인계 커밋(또는 직전 feat 커밋) — `git fetch && git log -3 --oneline`으로 확인. 전체 npm run check 종료0: 엔진/API 765개 중763통과·실패0·Neon2건너뜀, 웹22/22. duration_ms 1044505. HTTP 스모크 통과. 검증 중 실행 소스 미편집. 실제 Neon/브라우저/APK 아님.
+[DY 상세](M2-DY-INTERNATIONAL-TIMELINE.md). 브랜치 `codex/m2-career-engine`. 기능 팁 **`198eede`** (원격 푸시됨). 전체 npm run check 종료0: 엔진/API 765개 중763통과·실패0·Neon2건너뜀, 웹22/22. duration_ms 1044505. HTTP 스모크 통과. 검증 중 실행 소스 미편집. 실제 Neon/브라우저/APK 아님.
 
 ## 이번 구현 호출 흐름
 
