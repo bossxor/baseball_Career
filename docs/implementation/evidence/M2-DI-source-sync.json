@@ -1,0 +1,199 @@
+{
+  "utc": "2026-10-26T07:05:05.590Z",
+  "runtimeFilesUnchanged": 395,
+  "head": "21ac6e54b309dcac8ee246cff0d229bbea6e3d07",
+  "mergedMain": "6eda98e6650aa4d0c23619831f726bd063d30521",
+  "scope": "Only M2 source/doc/evidence and merged design status mirrored; parallel app and M6 source untouched.",
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "beforeV": "7ae728e67a384f93ca40a61cb6f2e9c16ce6a95798e89c535219416c68577594",
+      "sha256": "9a044d4017b74ab366c9945ed5c8bbd04bb58cf65d0d3251f5f6bd39b6421fa4"
+    },
+    {
+      "path": "docs/design/57-REPERTOIRE-DETAILED-CONTRACT.md",
+      "beforeV": "587e05deb05d11fc6ace69a2cd9a84dbd44bb8cbed517fee8e9add2b2c9bf127",
+      "sha256": "95deee91d4ef25f58fadf4c4b9e2cc6fb0f2394584d36b2c6e1fd304608b9646"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "beforeV": "1ed8d99eff3a760e35df2bab895ca4ec0be4bed98c830c8a7b31e55fa187bdb4",
+      "sha256": "f3d94612d8906ac813f07860dbd37c267b60d1a357a7221621f4c19454db3ec9"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "beforeV": "dc3bfdc36c37631ae17936111b0257749086c2f0a0ad55e5866a2eaf90cccb78",
+      "sha256": "be43f33bc1fe03ffbe7859cbcc3e1bdaf26f84431749a160b4296c89df7bc046"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "beforeV": "d95149ef52a077ac775f4e87d528481ac94a653344e3eb1a16cb4ca443b9cdb2",
+      "sha256": "8b7903301afea562ca8b0bb5c6e985801b8b34271662a8da4b5f2fbf48ac80a9"
+    },
+    {
+      "path": "docs/implementation/M2-COMPLETION-PLAN.md",
+      "beforeV": "f740f4c241701a87436c81edc29a7c0ebfce4e4eb2084d0f42f17de3eff4156c",
+      "sha256": "f740f4c241701a87436c81edc29a7c0ebfce4e4eb2084d0f42f17de3eff4156c"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "beforeV": "811d83e1ae2f4a45dc47003ab53f2c24be0971c3d885a2015231fb3146f3180d",
+      "sha256": "50b7668d5adadcfcf40df863d9537667fdb0e5c56247d40d399336d69e4d798d"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "beforeV": "fb87aa826ad4312485da439dc202f1747d544cbf455055997bece661a95e13dc",
+      "sha256": "33da20e41a0858321b9ae9595e7140e6419c75e1461de482d55b13834ac12776"
+    },
+    {
+      "path": "packages/engine/src/health.ts",
+      "beforeV": "ee1c0f89741e8a7517b0a28460fd0087563eb2fe7174dbdb39962c892dafa71a",
+      "sha256": "ee1c0f89741e8a7517b0a28460fd0087563eb2fe7174dbdb39962c892dafa71a"
+    },
+    {
+      "path": "packages/engine/src/high-school-progress.ts",
+      "beforeV": "e327e0b892f0afe843a5aa2cdc03bfca0d541e6acbc4981ddbca04aa913685da",
+      "sha256": "e327e0b892f0afe843a5aa2cdc03bfca0d541e6acbc4981ddbca04aa913685da"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "beforeV": "2a2f9076c58ab828f54a380d52e588f463f93cf7953598c409e1da53911a38ff",
+      "sha256": "2a2f9076c58ab828f54a380d52e588f463f93cf7953598c409e1da53911a38ff"
+    },
+    {
+      "path": "packages/engine/src/kbo-preseason.ts",
+      "beforeV": "ff39efec32a158f23244e94801dd68fe70c8477c928ab77afcfd4aa6c9dae0ca",
+      "sha256": "ff39efec32a158f23244e94801dd68fe70c8477c928ab77afcfd4aa6c9dae0ca"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "beforeV": "fe1c3bdee17d65b773ee022772874e7f61bddbcf6b557561ab92caa2b0524cd6",
+      "sha256": "fe1c3bdee17d65b773ee022772874e7f61bddbcf6b557561ab92caa2b0524cd6"
+    },
+    {
+      "path": "packages/engine/src/repertoire.ts",
+      "beforeV": "e81bd394ba2c9166dc3188010411da016bed829d07bbfab5eab0f762d6a62d5e",
+      "sha256": "e81bd394ba2c9166dc3188010411da016bed829d07bbfab5eab0f762d6a62d5e"
+    },
+    {
+      "path": "packages/engine/src/us-preseason.ts",
+      "beforeV": "f18ad2c3deb801a996eb7ee89124e93ffe01abfb7eb231e9760c24135eb4d085",
+      "sha256": "f18ad2c3deb801a996eb7ee89124e93ffe01abfb7eb231e9760c24135eb4d085"
+    },
+    {
+      "path": "packages/engine/src/us-season.ts",
+      "beforeV": "e676f8edbf8313ffecb7b55a0241e69b5d4a39161cdc205445f535d003f3042a",
+      "sha256": "e676f8edbf8313ffecb7b55a0241e69b5d4a39161cdc205445f535d003f3042a"
+    },
+    {
+      "path": "packages/engine/test/kbo-sangmu-unit.test.ts",
+      "beforeV": "2f59378a3c4d9835c8c1dfce2f20e6ed20ee3da4eb8c96f3b6377b1a5c729c2b",
+      "sha256": "2f59378a3c4d9835c8c1dfce2f20e6ed20ee3da4eb8c96f3b6377b1a5c729c2b"
+    },
+    {
+      "path": "docs/implementation/M2-DI-PITCH-LEARNING.md",
+      "beforeV": "1eb97847b78cc50a22bffbae5d618eb7e71c3a9ea99950fcbe3e755ec5de3510",
+      "sha256": "462d0c50ddfd456a0849f0b240e943dc8c2159da85da3e10e589d3d36df8c1fd"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-admission.json",
+      "beforeV": "2f738307451532d4c7f2d228337448fcf7c2339c96cd1de44e4cf42f83b43074",
+      "sha256": "2f738307451532d4c7f2d228337448fcf7c2339c96cd1de44e4cf42f83b43074"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-check.log",
+      "beforeV": null,
+      "sha256": "7551a5e38832de7423c0c53c194ab85060d75f6e8e1a7124d0c1fc31d9d09e14"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-final-design.log",
+      "beforeV": null,
+      "sha256": "1fb2f98e25d89304a9e3445e004b18d0fd02c87b070cc5851e61cc03346b737c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-focused27.log",
+      "beforeV": "852fb8c6cdd13d496066959950932a9bad65794f961a4aa2d3f85dabaa122f80",
+      "sha256": "852fb8c6cdd13d496066959950932a9bad65794f961a4aa2d3f85dabaa122f80"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-focused8.log",
+      "beforeV": "6294d64b2551f7aaecf2d8f50be3a2653d8551a76546e020f95d28166c345683",
+      "sha256": "6294d64b2551f7aaecf2d8f50be3a2653d8551a76546e020f95d28166c345683"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-mirror.json",
+      "beforeV": null,
+      "sha256": "9675928078a8901f802e1f5514a1f80e647dd35634c5a2638f9616efe7777b6b"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-native-checkpoint-notes.md",
+      "beforeV": "3f70d0780d70777d872f3c623942ac71e66aa15735c13e052867e99e414a14f6",
+      "sha256": "3f70d0780d70777d872f3c623942ac71e66aa15735c13e052867e99e414a14f6"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-native-checkpoint.json",
+      "beforeV": "7fc9303a9a2b24ccda31cfaf965d6a370853f9b5767a3b7e0445d58773949e32",
+      "sha256": "7fc9303a9a2b24ccda31cfaf965d6a370853f9b5767a3b7e0445d58773949e32"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-native-equivalence.log",
+      "beforeV": "476e2fa6e9c6efe4e71c6a39083d53ab3d4d0fe76c93c53bf20ba2359b5099dc",
+      "sha256": "476e2fa6e9c6efe4e71c6a39083d53ab3d4d0fe76c93c53bf20ba2359b5099dc"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-native-equivalence.mts.txt",
+      "beforeV": "7e3341b8531b1bb777d920c6b74ae52a27c32fe00f0241edde85dade376dc560",
+      "sha256": "7e3341b8531b1bb777d920c6b74ae52a27c32fe00f0241edde85dade376dc560"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-native-migration.json",
+      "beforeV": "d788b75baa22e278b5013e14793f72bc562446c21f38b90fc80980201c489cfa",
+      "sha256": "d788b75baa22e278b5013e14793f72bc562446c21f38b90fc80980201c489cfa"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-native-runner.mjs.txt",
+      "beforeV": "64f961e6fb3f51161d19648ee301f6079af6a87bc085ad0c0d381587018fbd93",
+      "sha256": "64f961e6fb3f51161d19648ee301f6079af6a87bc085ad0c0d381587018fbd93"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-native.log",
+      "beforeV": "818df473db7c82ea1b74639c3f025d571705aa98cea9ab10a2e5f57dc382587a",
+      "sha256": "818df473db7c82ea1b74639c3f025d571705aa98cea9ab10a2e5f57dc382587a"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-parallel-status.json",
+      "beforeV": null,
+      "sha256": "57c4ea16944a39fc0f96db9ba5562472bc632955414016467bd768881c736e36"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-smoke.log",
+      "beforeV": null,
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-source-freeze.json",
+      "beforeV": "78205b38cb426277c3d983baf66a80fa7012da1bc9297ccb0c8eeb65cd42ddc8",
+      "sha256": "78205b38cb426277c3d983baf66a80fa7012da1bc9297ccb0c8eeb65cd42ddc8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DI-superseded-typecheck.log",
+      "beforeV": "cac9c3a4839ea2b2990dbb2b4bc2cda23c8527f0e9b03d7c433c07ed7c1c7dee",
+      "sha256": "cac9c3a4839ea2b2990dbb2b4bc2cda23c8527f0e9b03d7c433c07ed7c1c7dee"
+    },
+    {
+      "path": "packages/engine/src/pitch-learning-progress.ts",
+      "beforeV": "55b0319657ff7d23a1fc4e333b6d6b3d5d12ed0e54756f45a62ff73e8233c4aa",
+      "sha256": "55b0319657ff7d23a1fc4e333b6d6b3d5d12ed0e54756f45a62ff73e8233c4aa"
+    },
+    {
+      "path": "packages/engine/src/school-repertoire.ts",
+      "beforeV": "476e1cc16f0aefd2a726f40cfb9420d7aae77012ce816f251dc648fa7f3ee9e8",
+      "sha256": "476e1cc16f0aefd2a726f40cfb9420d7aae77012ce816f251dc648fa7f3ee9e8"
+    },
+    {
+      "path": "packages/engine/test/pitch-learning-progress.test.ts",
+      "beforeV": "dcae1b5b7718f67fd1daa4cd2944de9a4f0041c0273e7a0287f3e9ef2d662f00",
+      "sha256": "dcae1b5b7718f67fd1daa4cd2944de9a4f0041c0273e7a0287f3e9ef2d662f00"
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "utc": "2026-10-26T14:53:38.824Z",
+  "head": "10dbf94b69858888eb06798ca4061bc5305f45dd",
+  "meaning": "Only M2 batch mirrored; unknown V edits preserved. Overall check still running.",
+  "files": [
+    {
+      "path": "docs/design/13-MLB-CAREER.md",
+      "before": "2b11de3bfa76529ceef7fdaafd38ed1f3c86e9644d181602d44d7c6d7c3c2b3a",
+      "after": "8ed9420bf5b7513593642721a430e9b22ae82058b981a5d4392fe9f65c73c2d7"
+    },
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "before": "72200db6555d12d8f52c9df2cc7464716d18ea1fa192794f7945f0f7ef6b4763",
+      "after": "b306acd9c51600c1be7b3caa3d1a66a781b975b79f9587620a079e1ab29de40a"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "before": "1823a4900f2ea97cad29a5531dcad1cf8e7e61acf4c75ba592c7a11e7d980cb2",
+      "after": "a5bef3a40275e0f0c3819362a5cd9ebdf24f10a9741d9495b01f101a003ce2fa"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "before": "666a85043a5ce371d5bffad8de3c2b5c7caa368965d8bc6a171f008498c34749",
+      "after": "eb1fc2b10bf716282fc38adcfbd8135f4da40418e34191684d3930066298e0d9"
+    },
+    {
+      "path": "packages/engine/src/health.ts",
+      "before": "ee1c0f89741e8a7517b0a28460fd0087563eb2fe7174dbdb39962c892dafa71a",
+      "after": "53a8d32d17855d560e957490c8dbc50627b8f2f66464f9d04ab13c64eb9dbfe4"
+    },
+    {
+      "path": "packages/engine/src/high-school-progress.ts",
+      "before": "e327e0b892f0afe843a5aa2cdc03bfca0d541e6acbc4981ddbca04aa913685da",
+      "after": "3d5556becb28522272e22b259396e323c01a44c78e7e1a0cbd860d031dc80822"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "before": "9869258283972620c0708e4f681a0f619bef5fe287a4c3c4b76a052ade911e79",
+      "after": "c9fa085bdb0beb2d28f404c41f3e95786afcb0065f87b513a1fd7ab922fe2232"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "before": "fe1c3bdee17d65b773ee022772874e7f61bddbcf6b557561ab92caa2b0524cd6",
+      "after": "d4fbd0be1af86fd29e0cea40233286220ace0c4baea32d75204c37d25ac4dfd4"
+    },
+    {
+      "path": "packages/engine/src/pitch-learning-progress.ts",
+      "before": "55b0319657ff7d23a1fc4e333b6d6b3d5d12ed0e54756f45a62ff73e8233c4aa",
+      "after": "01d394ac85ec3b76d1bc6ba4966cd9145f94a0fc3a850411c064bde6cde0cb51"
+    },
+    {
+      "path": "packages/engine/src/repertoire.ts",
+      "before": "cbc28e65f5dcd53dcd27c9a66fc48c3c09104d9c3637088ae76e54d971093478",
+      "after": "8e858ec414c56acfa7bc5b4229d01ac95ed9055519baec89cdd506dafaa77cc6"
+    },
+    {
+      "path": "packages/engine/src/school-repertoire.ts",
+      "before": "476e1cc16f0aefd2a726f40cfb9420d7aae77012ce816f251dc648fa7f3ee9e8",
+      "after": "8d53fe93fa6fcd19b41aa3798e3f2028718af81dc4bdc654b712ac3bba4e6dfc"
+    },
+    {
+      "path": "packages/engine/src/us-career-entry.ts",
+      "before": "e20f4127f2dcc47269283553bfb062ef122c4c8ca65f96aa4e81981d9273a170",
+      "after": "764c48fd1267e94586cf087875fcbe492eb15ee1680f0c16cdcdb178abf7c578"
+    },
+    {
+      "path": "packages/engine/src/us-growth.ts",
+      "before": "33e5c78aa15f13a6489061a3b871d5b75f4a1e4a0a2228591578729f5c971a54",
+      "after": "e9b4b734da6912ed01cbe6decc1edb88d89f43f072e2bc92e535f592c1839916"
+    },
+    {
+      "path": "packages/engine/src/us-levels.ts",
+      "before": "f57efece57d56803785e09a116bdafe4f034f118b6091ebfcdec0501c85efc02",
+      "after": "5db4583ffd544245bfa30ae35ccc0428ff49bc644e6833be3ea7275dbfe34080"
+    },
+    {
+      "path": "packages/engine/src/us-postseason-progress.ts",
+      "before": "06c1fa318a6183c35b347453b7139f8b52074c997dc9b91a569f68801f00b0a9",
+      "after": "7aa2002cdfd3f97e052af0c0579dbcb08ae9fcc98cff543a83ac9c4e4e8e481b"
+    },
+    {
+      "path": "packages/engine/src/us-preseason.ts",
+      "before": "f18ad2c3deb801a996eb7ee89124e93ffe01abfb7eb231e9760c24135eb4d085",
+      "after": "1255d93f3eea03e5527967cb0ec7630c6aea6364bc484f73ffcef8a77974df88"
+    },
+    {
+      "path": "packages/engine/src/us-season.ts",
+      "before": "b1068a34a61c8e0afe3994f29c93cabf1429f8f5980e08f033e12d7e2dd8b8be",
+      "after": "ecef4ce48189abd5aad73a2f284fcce88fd37fa96e0eea3c4a2ce68931c0017b"
+    },
+    {
+      "path": "packages/engine/test/kbo-sangmu-unit.test.ts",
+      "before": "2f59378a3c4d9835c8c1dfce2f20e6ed20ee3da4eb8c96f3b6377b1a5c729c2b",
+      "after": "82e24e4df7f2e0ead02313505be85c2861150b3aace1c3bdae7c41580db0d2e8"
+    },
+    {
+      "path": "packages/engine/test/pitch-learning-progress.test.ts",
+      "before": "dcae1b5b7718f67fd1daa4cd2944de9a4f0041c0273e7a0287f3e9ef2d662f00",
+      "after": "81d1f2790aa0869ce8929e9c964763f72d8279bef4750e826ec9324d900bc013"
+    },
+    {
+      "path": "packages/engine/test/us-levels-windows.test.ts",
+      "before": "85acb89c2320cd8e244b25d7a9c424ba83388044b06e75b8bd0e41b837e639d5",
+      "after": "6de1ed159191037e626f05fcc4f5fe94e135b289624ecaebc578caf703e67d9a"
+    },
+    {
+      "path": "packages/engine/test/us-preseason.test.ts",
+      "before": "20277b20d5ce5677ab6a2f92eb04e3a5e942d05e4db05f421b7ecacb9ac9677f",
+      "after": "9fd606c2ae17ad2f9aab2c1491df683e44ed1f762318e65e55df48a65b71e03d"
+    },
+    {
+      "path": "packages/engine/test/us-reviewed-fixture.ts",
+      "before": "b185f55517d4e99a3323f2fa87648afe0982aa45a4b1f594f3283062cedea5f9",
+      "after": "173621184fec71c2e418f61462584f2c5cafdd3f47ee60e5712e84bcd303550b"
+    },
+    {
+      "path": "docs/implementation/M2-DK-US-YEARS-LEARNING-SUPPLY.md",
+      "before": null,
+      "after": "ac5e8adb02e0a9c6fa1279f439923f9e1b0b04efe2a7517d217ad3a6fb294f46"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-calendar-focused.log",
+      "before": null,
+      "after": "f4a232aed55f826d1a05b47442ced31b857aaf4a6f79b7a972f4340d13e9a3a1"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-service-focused.log",
+      "before": null,
+      "after": "f8560eecbb78e0f9019316cf6249c2c75034fa7cab663be9e98bee1b200c964d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-source-freeze.json",
+      "before": null,
+      "after": "879fb27a80096b7eaf07a37c53c17cff453aa1b4c380e0c724d4ad866fa6eac0"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-supply-review-focused.log",
+      "before": null,
+      "after": "8315e36ac1c91f46b8caf88b3cd0af2966e0a99d3301975cb7dcbe785ad26737"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-worker-focused.log",
+      "before": null,
+      "after": "ed33f24a25efe2d8cbc5f8c76f71710612267431f01ce15bb2de31cda86a3aff"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DK-year-focused.log",
+      "before": null,
+      "after": "3f8d601c6d69c31d67eb0b52fcbdd32a0a0e14b92e67229aee453ec285e2ab5a"
+    },
+    {
+      "path": "packages/engine/src/us-minor-history.ts",
+      "before": null,
+      "after": "06b5066855705ba5c58a413a3ca19fd0a9e88f6903bcb9486b088d8ad88c0764"
+    },
+    {
+      "path": "packages/engine/src/us-service-time.ts",
+      "before": null,
+      "after": "83b992646e027e60c57bca4a6ea53cb08e52668c59930b80e7c80e379e453f76"
+    },
+    {
+      "path": "packages/engine/src/us-supply.ts",
+      "before": null,
+      "after": "d8d1b27b649b202ad30827cc05d910148ff82cea13c916b9ca5a37f7f036a83c"
+    },
+    {
+      "path": "packages/engine/src/us-year-transition.ts",
+      "before": null,
+      "after": "a4f476da9d2e979d4bd6ea03b51cf58bbdd898aa88f694767dfcb6ea1ffa3a08"
+    },
+    {
+      "path": "packages/engine/test/us-service-time.test.ts",
+      "before": null,
+      "after": "0929d769e637929632603e570943a226e69bc9c35ae8cc5084973d75066c6586"
+    },
+    {
+      "path": "packages/engine/test/us-supply.test.ts",
+      "before": null,
+      "after": "159ebff86c27d9a516fa4a3f1337f27e0980d290c93258cb8c3b0c671a6f31ec"
+    },
+    {
+      "path": "packages/engine/test/us-year-transition.test.ts",
+      "before": null,
+      "after": "e16c9eb21e579d31897719fa829fc7675291a67343d2693edfee8999169c9526"
+    }
+  ],
+  "conflicts": [
+    "docs/design/DESIGN-ALL.md",
+    "docs/design/MANIFEST-SHA256.csv",
+    "docs/design/STATUS.md"
+  ]
+}

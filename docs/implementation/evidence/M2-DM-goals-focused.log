@@ -1,0 +1,21 @@
+Native goal school proof: {"officialGames":8,"ownPA":5,"ownStarts":1,"recordsEqualWithoutGoals":true,"worldEqualWithoutGoals":true}
+Native goal college proof: {"controlledRegularGames":216,"nativeCupGames":2,"goals":[{"id":"G01","progress":0,"status":"ACTIVE"},{"id":"G09","progress":1,"status":"COMPLETED"},{"id":"G10","progress":1,"status":"COMPLETED"}],"cosmetics":2}
+✔ goals are optional, max3, kind-filtered, PRE-only and source-safe without RNG or gameplay rewards (19941.5438ms)
+✔ goal HR scope never adds another league or postseason; completion/news/reward replay and correction are idempotent (8150.7727ms)
+✔ malformed persisted goal arrays, changed scope and unknown reward are rejected without editing the save (8674.6248ms)
+✔ MID replacement uses sealed half-season, carries BB22 progress, rejects BB33 and cannot reset through moving levels (10312.3193ms)
+✔ pitcher goals use raw K, saves and starterOuts, never all relief outs (23978.0162ms)
+✔ G01/G02/G04 count exact PA, fixed-lineup starts and walks with three cosmetic grants only (2940.6313ms)
+✔ US year continuation preserves earned cosmetics and goal outbox without blocking the finalized contract path (25667.3121ms)
+✔ school goal expiry is committed before sealing the year-end receipt and survives the actual KBO entry command (6080.5634ms)
+✔ G08 requires evidenced injury, actual recovery and a later official appearance, not a return button (1696.1855ms)
+✔ native school game updates selected goals automatically and leaves gameplay identical to no-goal play (13656.7277ms)
+✔ college qualification goal settles at final seeding; native championship appearance counts G10 and never regular G01 (11671.2657ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 139864.1747

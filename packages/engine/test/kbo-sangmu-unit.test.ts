@@ -1,3 +1,5 @@
+import {beginPitchLearning} from '../src/repertoire.js';
+import {registerPitchLearning} from '../src/pitch-learning-progress.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {selectSangmuCohort} from '../src/kbo-sangmu.js';
@@ -80,7 +82,14 @@ test('a career with a Sangmu cohort plays the 11-team Futures calendar through t
  const futures=s.competitionSchedule!.leagues.FUTURES;assert.equal(new Set(futures.flatMap(g=>[g.homeTeamKey,g.awayTeamKey])).size,11);
  assert.equal(s.competitionSchedule!.leagues.KBO.length,720);assert.equal(futures.length,792);
  if(s.registration.competitionKey==='FUTURES')assert.ok(kboSeasonScheduleView(s).fixtures.length===144);
+ // The actual144-game military calendar seals the plan before its first native game.
+ const learner=Object.values(s.sangmu!.members).find(m=>m.repertoire)!;
+ const learnerKey=learner.player.simulationKey,book=learner.repertoire!;
+ const pitch=(['P01','P02','P03','P04','P05','P06','P07'] as const).find(id=>!Object.hasOwn(book.book,id))!;
+ learner.repertoire=registerPitchLearning(beginPitchLearning(book,pitch,true),s.world.worldKey,learnerKey,144,false);
+ const changed=structuredClone(s);changed.sangmu!.members[learnerKey]!.repertoire!.learning!.registration!.scheduledGames=4;assert.throws(()=>startKboRegularSeason(changed,changed.revision),/REGISTRATION_REUSED/);
  let g=startKboRegularSeason(s,s.revision);
+ assert.equal(g.sangmu!.members[learnerKey]!.repertoire!.learning!.registration!.calendar!.length,144);
  for(let i=0;i<14;i++){const out=advanceKboCareer(JSON.parse(JSON.stringify(g)) as typeof g,g.revision,1);g=out.career;}
  const games=Object.values(g.records.games).filter(x=>x.scope.leagueKey==='FUTURES');
  assert.ok(games.length>0);
@@ -90,4 +99,7 @@ test('a career with a Sangmu cohort plays the 11-team Futures calendar through t
  // Members rest/tire in the unit, not in world.players; the rest of the world stays valid.
  assert.ok(Object.values(g.sangmu!.members).some(m=>m.player.fatigue>0));assert.equal(g.health.games.filter(x=>x.evidence.teamKey==='FUTURES:SANGMU').length,sangmuGames.length);
  assert.ok(Object.keys(g.sangmu!.members).every(k=>!Object.hasOwn(g.world.players,k)));
+ assert.equal(g.sangmu!.members[learnerKey]!.repertoire!.learning!.quarters.length,0);
+ assert.equal(g.sangmu!.members[learnerKey]!.repertoire!.book[pitch],0);
+ assert.equal(g.sangmu!.members[learnerKey]!.repertoire!.ledger.baseReservedUnits,100000);
 });

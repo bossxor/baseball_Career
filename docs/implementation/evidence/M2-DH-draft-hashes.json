@@ -1,0 +1,10 @@
+{
+  "scope": "DRAFT ONLY; not applied to active DG637 source",
+  "files": {
+    "packages/engine/src/us-career-entry.ts": "770ba9c826bac6839b6f51bf0bd97d3783be52d033a30ad6de510d812274e084",
+    "packages/engine/src/index.ts": "ac714ee9ec01ab8fb7c7609c61c869132e7ec542b1f6c038a65d8c188105a4fe",
+    "packages/engine/src/us-preseason.ts": "c80e88f5c6b7b3c58474d676830de15277eee8763f7dea8d8c5b9a9a93e38038",
+    "packages/engine/src/us-schedule.ts": "f11c610e8dc16bd2e30f22d108a5a7240c5cbdd639bb5b500c6f4deada1eb3b1",
+    "packages/engine/test/us-preseason.test.ts": "5932bf949982599f1c9efd9a6cc8cdefbeaa91415d5d3b6ef36ea78e0223bfc1"
+  }
+}

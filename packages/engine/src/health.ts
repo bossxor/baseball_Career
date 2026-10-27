@@ -47,7 +47,7 @@ export function settleTeamGameHealth(source:HealthLedger,input:HealthGame):{ledg
     if(previous.evidence.day>=input.day && previous.evidence.roster.some(p=>input.roster.includes(p)))throw new RangeError('NON_CHRONOLOGICAL_PLAYER_TEAM_GAME');
   }
   for(const p of evidence.appearances)if(Object.hasOwn(source.injuries,p.playerKey))throw new RangeError('INJURED_APPEARANCE');
-  const ledger=structuredClone(source),injuries=Object.assign(Object.create(null) as Record<string,Injury>,ledger.injuries);ledger.injuries=injuries;
+  const ledger:HealthLedger={...source,rng:{...source.rng},injuries:structuredClone(source.injuries)},injuries=Object.assign(Object.create(null) as Record<string,Injury>,ledger.injuries);ledger.injuries=injuries;
   const result:HealthResult={injured:[],recovered:[]};
   // Existing injuries tick first. The diagnosis game never consumes its own recovery period.
   for(const player of evidence.roster){const injury=Object.hasOwn(injuries,player)?injuries[player]:undefined;if(!injury || injury.remainingTeamGames===null)continue;
@@ -67,7 +67,7 @@ export function closeSeasonHealth(source:HealthLedger,seasonKey:string):{ledger:
   validateHealthLedger(source);
   if(!key(seasonKey))throw new RangeError('INVALID_SEASON_KEY');
   if(source.closedSeasons.includes(seasonKey))return {ledger:source,recovered:[]};
-  const ledger=structuredClone(source),recovered:string[]=[];
+  const ledger:HealthLedger={...source,rng:{...source.rng},injuries:structuredClone(source.injuries)},recovered:string[]=[];
   for(const player of Object.keys(ledger.injuries).sort()){const injury=ledger.injuries[player]!;if(injury.severity==='MAJOR' && injury.seasonKey===seasonKey){delete ledger.injuries[player];recovered.push(player);}}
   ledger.closedSeasons=[...ledger.closedSeasons,seasonKey];return {ledger,recovered};
 }

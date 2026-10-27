@@ -1,0 +1,15 @@
+✔ US level review waits24 actual level games and minimum samples; defer consumes review without registration or salary changes (18139.8265ms)
+✔ US promotion swaps two existing registrations atomically, keeps records, shared identity and no immediate major appearance (4053.1856ms)
+✔ first MLB call-up preserves old minor salary basis and bonus; new800000 rate starts next day and budget is reserved once (2444.9104ms)
+✔ US protected40 and incompatible seats produce explicit NO_SLOT instead of silently registering27 MLB players (897.2581ms)
+✔ US training and style windows use level thirds/halves and cannot reset season uses by moving levels (4755.9664ms)
+✔ US option year consumes once only after20 minor registered games, with replayed dates ignored (868.6491ms)
+✔ a second low Rookie review cannot accidentally promote, and changed offered evidence cannot move a player (3458.1919ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 39179.1557

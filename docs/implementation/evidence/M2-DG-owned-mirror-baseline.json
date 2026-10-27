@@ -1,0 +1,14 @@
+{
+  "reason": "Preserve parallel M3 progress from V STATUS; merge only M2 text after full check",
+  "m3Branch": "m3/save-command-pipeline",
+  "m3Commit": "0835fcd07a999715f78f79b171f74ee3f71778e8",
+  "files": {
+    "docs/design/STATUS.md": "2e8d1e45a34c17e76e6c564017a4ed067be6aca43cbc40db8e32bfad519ea79b",
+    "docs/design/DESIGN-ALL.md": "f42e9a9a50c7ee337712633e186654f9762907cb7c281a3854a4e252557f210a",
+    "docs/design/MANIFEST-SHA256.csv": "1457602ef4b9b3a2543317fe1fa0cd4349f198d651462cebfb5fca4efd73cac9",
+    "docs/implementation/NEXT-SESSION.md": "ac91ab2f5890f6497c0137007a649c3190bf23cee46b9ee201d536d641199690",
+    "docs/implementation/PROGRESS.md": "e295787b1afc4a6093040482b3c5636a09b1d2fad82e60991e19b60b23897ddf"
+  },
+  "generatedProof": "V package exactly base plus preserved parallel STATUS; all other design files unchanged and359 V manifest rows valid.",
+  "m4MainCommit": "a63d3e71d2e1c75cccf87d9d2fccb530c3c23ae2"
+}

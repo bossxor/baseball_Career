@@ -28,7 +28,7 @@ function branch(definition:EventDefinition,decision:EventInstance['postingDecisi
  return {resolutionPolicy:definition.resolutionPolicy,choiceCommands:definition.choices.map(c=>c.command)};
 }
 export function eventResolutionPolicy(instance:EventInstance):EventResolutionPolicy {return branch(eventDefinition(instance.definitionId),instance.postingDecision).resolutionPolicy;}
-function validateEvent(instance:EventInstance):void {
+export function validateEvent(instance:EventInstance):void {
  const definition=eventDefinition(instance.definitionId);if(['FORM','PRESENTATION'].includes(definition.queueClass))throw new RangeError('NOT_A_WORLD_EVENT');
  const key=evidenceKey(definition,instance.evidence),policy=branch(definition,instance.postingDecision);
  if(key!==instance.evidenceKey || instance.eventKey!==JSON.stringify(['event-1',instance.worldKey,instance.definitionId,key]) || instance.definitionVersion!==1 || !instance.worldKey || !instance.seasonKey || instance.resume.worldKey!==instance.worldKey || instance.resume.seasonKey!==instance.seasonKey || !CAREER_PHASES.includes(instance.resume.phase))throw new RangeError('INVALID_EVENT_INSTANCE');

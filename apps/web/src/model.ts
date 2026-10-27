@@ -1,5 +1,7 @@
 /** View models the web app reads. They are the app's own DTOs: the web bundle never imports the engine, API or DB
  * packages (lint-enforced); the server fills these from its views, and fixtures stand in until the API is connected. */
+import type { PlayableScreenId } from './screen-states.js';
+
 export interface SaveSummary {
   saveId: string; mode: 'CAREER' | 'CLUB'; title: string; seasonLabel: string; phaseLabel: string; savedAtLabel: string; revision: number;
 }
@@ -30,8 +32,8 @@ export interface CreationRequest {
 }
 export interface CreationReceipt { saveId: string }
 
-/** Decision screens of the M4 core 12 (everything except home/create/career). Server fills lines + options. */
-export type PlayScreenId = 'S04' | 'S05' | 'S06' | 'S07' | 'S08' | 'S09' | 'S22' | 'S23' | 'S28';
+/** Decision screens: M4 play set + M5 remainder (not home/create/career). */
+export type PlayScreenId = PlayableScreenId;
 export interface DecisionOption { id: string; label: string; primary?: boolean; disabledReason?: string }
 export interface DecisionView {
   screenId: PlayScreenId; saveId: string;

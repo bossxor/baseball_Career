@@ -1,3 +1,4 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
 import {settleKboReturnConditionDay} from './kbo-return-condition.js';
 import {settleKboOpponentReunions} from './kbo-reunion-events.js';
 import type {KboCareer} from './kbo-career-entry.js';
@@ -25,7 +26,7 @@ export function startKboPostseason(source:KboCareer,expectedRevision:number):Kbo
  const standings=leagueStandings(source.records,{seasonKey:season,leagueKey:'KBO',phase:'REGULAR'},clubs,source.world.seed,source.world.worldKey);
  const career=structuredClone(source),last=source.days.days.at(-1)!.day;
  career.phaseContext={phase:'POSTSEASON_PROGRESS',postseason:createKboPostseason(season,standings.slice(0,5).map(s=>s.teamKey)),nextWorldDay:last+1,pendingGame:null};
- career.revision++;return career;
+ career.revision++;return refreshCareerSeasonGoals(career);
 }
 function scheduledFor(career:KboCareer,phase:KboPostseasonPhase):ScheduledGame {
  const next=nextKboPostseasonGame(phase.postseason)!,round=ROUNDS.indexOf(next.round);
@@ -37,7 +38,7 @@ export function advanceKboPostseason(source:KboCareer,expectedRevision:number):{
  assertCareerRevision(source,expectedRevision);
  if(source.phaseContext.phase!=='POSTSEASON_PROGRESS' || !source.days)throw new RangeError('INVALID_CAREER_PHASE');
  const career=structuredClone(source),phase=career.phaseContext as KboPostseasonPhase;
- const finish=(stopReason:KboPostseasonStop)=>{career.revision++;return {career,stopReason};};
+ const finish=(stopReason:KboPostseasonStop)=>{career.revision++;return {career:refreshCareerSeasonGoals(career),stopReason};};
  if(!nextKboPostseasonGame(phase.postseason)){career.postseason=phase.postseason;career.phaseContext={phase:'SEASON_REVIEW'};return finish('POSTSEASON_COMPLETE');}
  const scheduled=scheduledFor(career,phase);
  if(!phase.pendingGame){

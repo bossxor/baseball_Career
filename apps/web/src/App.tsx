@@ -10,9 +10,9 @@ import { ClubNew, ClubView } from './screens/Club.js';
 import { CREATION_STEPS, emptyDraft, firstInvalidStep, toCreationRequest, validateStep } from './creation.js';
 import type { CreationDraft, CreationStep, FieldErrors } from './creation.js';
 import type { CareerView, ClubScreen, ClubScreenId, DecisionView, HomeData, PlayScreenId, ProgressMode } from './model.js';
+import { isPlayScreen } from './screen-states.js';
 import type { ScreenState } from './screen-states.js';
 
-const PLAY = new Set<string>(['S04', 'S05', 'S06', 'S07', 'S08', 'S09', 'S22', 'S23', 'S28']);
 const CLUB_SCREENS = new Set<string>(['S13', 'S14', 'S15', 'S16', 'S17', 'S18', 'S19']);
 type Route =
   | { name: 'home' }
@@ -31,7 +31,7 @@ export function parseRoute(hash: string): Route {
     return { name: 'club', saveId: id, screenId };
   }
   const play = /^#\/play\/([^/]+)\/(S\d{2})$/.exec(hash);
-  if (play && PLAY.has(play[2]!)) return { name: 'play', saveId: decodeURIComponent(play[1]!), screenId: play[2] as PlayScreenId };
+  if (play && isPlayScreen(play[2]!)) return { name: 'play', saveId: decodeURIComponent(play[1]!), screenId: play[2] };
   const m = /^#\/?([a-z]*)\/?(.*)$/.exec(hash);
   const name = m?.[1], id = m?.[2];
   return name === 'create' ? { name: 'create' } : name === 'career' && id ? { name: 'career', saveId: decodeURIComponent(id) } : { name: 'home' };
@@ -40,9 +40,18 @@ const go = (path: string) => { location.hash = path; };
 const openPlay = (saveId: string, screenId: PlayScreenId) => go(`#/play/${encodeURIComponent(saveId)}/${screenId}`);
 const screenFromAction = (actionId: string): PlayScreenId | null => {
   const m = /^open:(S\d{2})$/.exec(actionId);
-  return m && PLAY.has(m[1]!) ? m[1] as PlayScreenId : null;
+  return m && isPlayScreen(m[1]!) ? m[1] : null;
 };
 const newId = () => crypto.randomUUID();
+
+/** A retry after a lost response must reuse the id of the same intent; the id is dropped once the call succeeds. */
+function useIntentIds() {
+  const ids = useRef(new Map<string, string>());
+  return {
+    of: (key: string) => { let id = ids.current.get(key); if (!id) { id = newId(); ids.current.set(key, id); } return id; },
+    done: (key: string) => { ids.current.delete(key); },
+  };
+}
 
 /** Hash-routed shell over `PlayballApi`. Failed calls map to error/conflict; conflict offers reload. */
 export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string }) {
@@ -58,6 +67,7 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
   const [clubView, setClubView] = useState<ClubScreen | null>(null);
   const [draft, setDraft] = useState<CreationDraft>(emptyDraft), [step, setStep] = useState<CreationStep>('NAME'), [errors, setErrors] = useState<FieldErrors>({});
   const creationId = useRef(newId());
+  const intents = useIntentIds();
   const reload = () => setTick(t => t + 1);
 
   const run = async (work: () => Promise<void>) => {
@@ -102,7 +112,9 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
       onConfirm={() => {
         if (!selected) return;
         void run(async () => {
-          const { next } = await api.choose(saveId, screenId, selected, newId());
+          const key = `choose|${saveId}|${screenId}|${selected}`;
+          const { next } = await api.choose(saveId, screenId, selected, intents.of(key));
+          intents.done(key);
           if (next.kind === 'home') go('#/');
           else if (next.kind === 'screen') openPlay(saveId, next.screenId);
           else go(`#/career/${encodeURIComponent(saveId)}`);
@@ -136,10 +148,12 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
       onAction={(actionId, m) => {
         const screen = screenFromAction(actionId);
         if (screen) { openPlay(saveId, screen); return; }
-        void run(async () => { setCareer(await api.act(saveId, actionId, m, newId())); });
+        const key = `act|${saveId}|${actionId}|${m}`;
+        void run(async () => { setCareer(await api.act(saveId, actionId, m, intents.of(key))); intents.done(key); });
       }} />;
   }
   return <Home {...(logo ? { logo } : {})} data={home} state={state} showSaves={showSaves} onToggleSaves={() => setShowSaves(v => !v)} onReload={reload}
     onResume={openSave} onSelect={openSave}
-    onNew={m => { if (m === 'CAREER') { setDraft(emptyDraft()); setStep('NAME'); setErrors({}); go('#/create'); } else go('#/club/new'); }} />;
+    onNew={m => { if (m === 'CAREER') { setDraft(emptyDraft()); setStep('NAME'); setErrors({}); go('#/create'); } else go('#/club/new'); }}
+    {...(home?.resume ? { onSettings: () => openPlay(home.resume!.saveId, 'S21') } : {})} />;
 }

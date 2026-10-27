@@ -20,7 +20,7 @@ try {
   const r = await pool.query(
     `SELECT tablename FROM pg_tables
      WHERE schemaname='public'
-       AND tablename IN ('profiles','game_saves','command_receipts','auth_allowed_subjects')
+       AND tablename IN ('profiles','game_saves','command_receipts','auth_allowed_subjects','private_files')
      ORDER BY 1`,
   );
   console.log(r.rows.map(x => x.tablename).join(','));

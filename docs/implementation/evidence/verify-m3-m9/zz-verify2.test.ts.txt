@@ -1,0 +1,99 @@
+import test from 'node:test';
+import { createTestDb, seedAllowedSubject } from '@playball/db';
+import { createApp } from '../src/app.js';
+import { json } from './json.js';
+
+const hdr = (s: string) => ({ Authorization: `Bearer dev:${s}`, 'Content-Type': 'application/json' });
+type App = ReturnType<typeof createApp>;
+const post = (app: App, who: string, path: string, body: unknown) => app.request(path, { method: 'POST', headers: hdr(who), body: JSON.stringify(body) });
+const cmd = (app: App, who: string, saveId: string, commandId: string, expectedRevision: number, type: string, payload: unknown) => post(app, who, `/api/saves/${saveId}/commands`, { commandId, expectedRevision, type, payload });
+const seedBody = { name: 'N'.repeat(500), kind: 'HITTER', position: 'SP', throws: 'X', bats: 'Y', pitchForm: null, archetype: 'NOPE', focus: ['a'] };
+
+async function fresh(who = 'user-a') {
+  const { db, client } = await createTestDb();
+  await seedAllowedSubject(db, who);
+  const app = createApp({ db, auth: { allowDevBearer: true } });
+  return { app, client, db };
+}
+
+test('V4 CORS: no Access-Control headers on preflight or normal responses', async () => {
+  const { app, client } = await fresh();
+  const pre = await app.request('/api/saves', { method: 'OPTIONS', headers: { Origin: 'https://localhost', 'Access-Control-Request-Method': 'GET', 'Access-Control-Request-Headers': 'authorization,content-type' } });
+  const get = await app.request('/api/health', { headers: { Origin: 'https://localhost' } });
+  console.log('V4 preflight', pre.status, 'allow-origin=', pre.headers.get('access-control-allow-origin'), '| health allow-origin=', get.headers.get('access-control-allow-origin'));
+  await client.close();
+});
+
+test('V5 lost-response retry of creation: second seed with the same commandId but the new revision', async () => {
+  const { app, client } = await fresh();
+  const c = await json<{ saveId: string; revision: string }>(await post(app, 'user-a', '/api/game-creations', { creationId: 'cr-1', mode: 'CAREER' }));
+  const seed = { name: '김철수', kind: 'HITTER', position: 'CF', throws: 'R', bats: 'R', pitchForm: null, archetype: 'BALANCED', focus: ['CONTACT'] };
+  const first = await cmd(app, 'user-a', c.saveId, 'cr-1:seed', 0, 'UI_SEED', seed);
+  // response lost → client calls create again (returns revision 1) and re-sends the seed with expectedRevision 1
+  const again = await post(app, 'user-a', '/api/game-creations', { creationId: 'cr-1', mode: 'CAREER' });
+  const rev = Number((await json<{ revision: string }>(again)).revision);
+  const retry = await cmd(app, 'user-a', c.saveId, 'cr-1:seed', rev, 'UI_SEED', seed);
+  const sameRev = await cmd(app, 'user-a', c.saveId, 'cr-1:seed', 0, 'UI_SEED', seed);
+  console.log('V5 first', first.status, 'retry(rev now)', retry.status, JSON.stringify(await json(retry)), 'retry(rev 0)', sameRev.status);
+  await client.close();
+});
+
+test('V6-8 server shell rules: invalid seed accepted, re-seed resets chances, advance ignores phase/event, choose ignores phase', async () => {
+  const { app, client } = await fresh();
+  const c = await json<{ saveId: string }>(await post(app, 'user-a', '/api/game-creations', { creationId: 'cr-2', mode: 'CAREER' }));
+  const s1 = await cmd(app, 'user-a', c.saveId, 's1', 0, 'UI_SEED', seedBody);
+  console.log('V6 seed with 500-char name, SP hitter, bogus archetype ->', s1.status);
+  // use the style chance (S22 "keep")
+  const keep = await cmd(app, 'user-a', c.saveId, 'k1', 1, 'UI_CHOOSE', { screenId: 'S22', optionId: 'keep' });
+  let career = await json<{ nextActions: { id: string }[] }>(await app.request(`/api/saves/${c.saveId}/career`, { headers: hdr('user-a') }));
+  console.log('V8 after choosing 유지 on S22:', keep.status, 'style action still offered =', career.nextActions.some(a => a.id === 'open:S22'));
+  const re = await cmd(app, 'user-a', c.saveId, 's2', 2, 'UI_SEED', { ...seedBody, name: 'again', position: 'CF' });
+  career = await json(await app.request(`/api/saves/${c.saveId}/career`, { headers: hdr('user-a') }));
+  console.log('V6 re-seed', re.status, 'style action offered again =', career.nextActions.some(a => a.id === 'open:S22'));
+  let rev = 3;
+  for (let i = 0; i < 1; i++) { await cmd(app, 'user-a', c.saveId, `a${rev}`, rev++, 'UI_ADVANCE', { mode: 'NEXT_MAJOR_EVENT' }); }
+  career = await json(await app.request(`/api/saves/${c.saveId}/career`, { headers: hdr('user-a') }));
+  const pending = (career as unknown as { pendingEventTitle: string | null }).pendingEventTitle;
+  const adv = await cmd(app, 'user-a', c.saveId, `a${rev}`, rev++, 'UI_ADVANCE', { mode: 'ONE_WEEK' });
+  console.log('V7 pending event =', pending, '| advance while pending ->', adv.status);
+  const jump = await cmd(app, 'user-a', c.saveId, `j${rev}`, rev++, 'UI_CHOOSE', { screenId: 'S05', optionId: 'accept' });
+  career = await json(await app.request(`/api/saves/${c.saveId}/career`, { headers: hdr('user-a') }));
+  console.log('V8 choose S05 accept during season ->', jump.status, 'phase now', (career as unknown as { stage: { phaseLabel: string } }).stage.phaseLabel);
+  const retire = await cmd(app, 'user-a', c.saveId, `r${rev}`, rev++, 'UI_CHOOSE', { screenId: 'S08', optionId: 'retire' });
+  const back = await cmd(app, 'user-a', c.saveId, `b${rev}`, rev++, 'UI_ADVANCE', { mode: 'ONE_WEEK' });
+  const back2 = await cmd(app, 'user-a', c.saveId, `b${rev}`, rev++, 'UI_ADVANCE', { mode: 'ONE_WEEK' });
+  const back3 = await cmd(app, 'user-a', c.saveId, `b${rev}`, rev++, 'UI_ADVANCE', { mode: 'ONE_WEEK' });
+  career = await json(await app.request(`/api/saves/${c.saveId}/career`, { headers: hdr('user-a') }));
+  console.log('V7 retired then advance x3 ->', retire.status, back.status, back2.status, back3.status, 'phase', (career as unknown as { stage: { phaseLabel: string } }).stage.phaseLabel);
+  await client.close();
+});
+
+test('V9 type confusion returns 500 instead of 400', async () => {
+  const { app, client } = await fresh();
+  const c = await json<{ saveId: string }>(await post(app, 'user-a', '/api/game-creations', { creationId: 'cr-3', mode: 'CAREER' }));
+  const r1 = await post(app, 'user-a', `/api/saves/${c.saveId}/backups`, { requestId: 123 });
+  const r2 = await post(app, 'user-a', `/api/saves/${c.saveId}/backups`, { requestId: 'ok-1', displayName: 123 });
+  const r3 = await post(app, 'user-a', '/api/restores/preview', { backupId: 5 });
+  const r4 = await post(app, 'user-a', '/api/restores', { restoreRequestId: 7, backupId: 'x', backupHash: 'y' });
+  console.log('V9 statuses', r1.status, r2.status, r3.status, r4.status);
+  await client.close();
+});
+
+test('V10 restore: club mode lost, cross-owner restoreRequestId collision, cap asymmetry', async () => {
+  const { app, client, db } = await fresh();
+  await seedAllowedSubject(db, 'user-b');
+  const club = await json<{ saveId: string }>(await post(app, 'user-a', '/api/game-creations', { creationId: 'club-1', mode: 'CLUB' }));
+  const bk = await json<{ fileId: string; contentHash: string }>(await post(app, 'user-a', `/api/saves/${club.saveId}/backups`, { requestId: 'bk-1' }));
+  const r = await json<{ targetSaveId: string }>(await post(app, 'user-a', '/api/restores', { restoreRequestId: 'rr-1', backupId: bk.fileId, backupHash: bk.contentHash }));
+  const got = await json<{ mode: string }>(await app.request(`/api/saves/${r.targetSaveId}`, { headers: hdr('user-a') }));
+  console.log('V10 CLUB backup restored as mode =', got.mode);
+  const bB = await json<{ fileId: string; contentHash: string }>(await (async () => { const c = await json<{ saveId: string }>(await post(app, 'user-b', '/api/game-creations', { creationId: 'b-1', mode: 'CAREER' })); return post(app, 'user-b', `/api/saves/${c.saveId}/backups`, { requestId: 'bk-b' }); })());
+  const collide = await post(app, 'user-b', '/api/restores', { restoreRequestId: 'rr-1', backupId: bB.fileId, backupHash: bB.contentHash });
+  const cj = await json<{ status?: string; targetSaveId?: string }>(collide);
+  const mine = await app.request(`/api/saves/${cj.targetSaveId}`, { headers: hdr('user-b') });
+  console.log('V10 user-b reused user-a restoreRequestId ->', collide.status, cj.status, cj.targetSaveId, '| user-b can read it:', mine.status);
+  for (let i = 0; i < 11; i++) await post(app, 'user-a', '/api/game-creations', { creationId: `many-${i}`, mode: 'CAREER' });
+  const list = await json<{ items: unknown[] }>(await app.request('/api/saves', { headers: hdr('user-a') }));
+  console.log('V10 saves after unlimited creations (first page) =', list.items.length);
+  await client.close();
+});

@@ -1,0 +1,17 @@
+M2-DK year continuation proof: {"from":"2030","to":"2031","nativeNewSeasonGames":75,"oldRecords":9038,"schema":3,"signingBonuses":1}
+M2-DK controlled minor term proof: {"seasons":6,"lastYear":"2035","age":24,"salaryUsd":180000,"signingBonuses":1,"seventhYear":"CONTRACT_DECISION_REQUIRED","native":false}
+✔ annual stage ages survivors once, retires45 NPCs through Rookie supply, preserves history and has no active/root or salary write (22204.5792ms)
+✔ readiness is private-state-free and blocks unfinished seasons, pitch reservations and age28 military deadline (7305.1631ms)
+✔ stale revisions and altered final playoff records fail before changing the source or producing a new world (7087.9241ms)
+✔ an already-closed health year is not mutated while an injured retiring NPC leaves the staged world (5335.4052ms)
+✔ minor year activation preserves legacy input, every official record and one signing bonus; the new season plays a native first date (60297.232ms)
+✔ annual funding and new history tampering fail without a second budget credit or source mutation (8964.6379ms)
+✔ six controlled minor seasons preserve the history chain and stop before a seventh unapproved contract year (79867.3179ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 196798.0371

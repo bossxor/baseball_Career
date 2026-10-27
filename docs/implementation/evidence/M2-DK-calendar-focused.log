@@ -1,0 +1,15 @@
+✔ sealed league progress closes empty-registration quarters with zero XP and releases every reservation (67.0373ms)
+✔ quarter intervals stay on the sealed calendar despite missed registrations; future FINAL rows cannot close an unclosed date (10.4829ms)
+✔ changed calendar and incompatible old receipts reject without retroactive XP or source mutation (24.4826ms)
+✔ actual registration receipts open quarter12/24/36/48, release100000 base reservation once and preserve replay (9.7824ms)
+✔ quarter learning pays only healthy registered dates; cheat applies3x and PAs/refresh cannot create a second budget (7.5595ms)
+✔ learning rejects changed manifest, missing official contribution and double registration; JSON preserves remainder and plan (9.1513ms)
+✔ native high-school season closes first learning quarter from12 actual registered games before the first focus event (50986.1744ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 60545.4719

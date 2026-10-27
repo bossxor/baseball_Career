@@ -1,0 +1,18 @@
+{
+  "identity": {
+    "sourceSha": "e86ac5d675e9eeae3c42599c6a02d5ee12aa235bdb5217fc797ee48d41270cd5",
+    "node": "v24.19.0",
+    "runnerSha": "64f961e6fb3f51161d19648ee301f6079af6a87bc085ad0c0d381587018fbd93"
+  },
+  "gzipSha": "33284c0b2806ea1a7258546c3ab3ffb050db612305ed66372e1451c8602ec8db",
+  "stateSha": "d3c7ad8929d47ec7d5ee6aacd87c97617c9b5abd1841ba3c2d333f9f8ebb5dfd",
+  "reason": "PARTIAL_SAFE_STOP",
+  "calls": 1757,
+  "seasonKey": "2030",
+  "level": "AAA",
+  "phase": "SEASON_PROGRESS",
+  "closedDays": 80,
+  "nativeGames": 3857,
+  "revision": 1768,
+  "meaning": "PARTIAL real US season; may contain FINAL games of an unclosed date. Not 8790-game completion."
+}

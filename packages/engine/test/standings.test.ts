@@ -10,6 +10,12 @@ function score(records:RecordLedger,a:string,b:string,ar:number,br:number){
  const gameKey=String(records.revision++);
  records.games[gameKey]={gameKey,worldDay:records.revision,scope,teams:{[a]:{games:1,W:Number(ar>br),L:Number(ar<br),T:Number(ar===br),R:ar,RA:br},[b]:{games:1,W:Number(br>ar),L:Number(br<ar),T:Number(ar===br),R:br,RA:ar}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}};
 }
+
+test('conference standings retain interleague wins while tie-breaks use only the tied conference clubs',()=>{
+ const records=emptyRecordLedger();score(records,'A','X',3,0);score(records,'B','X',0,2);score(records,'B','A',1,0);
+ const rows=leagueStandings(records,scope,['A','B'],'seed','world',['A','B','X']);assert.equal(rows[0]!.teamKey,'B');assert.equal(rows.find(r=>r.teamKey==='A')!.W,1);assert.equal(rows.find(r=>r.teamKey==='A')!.games,2);assert.equal(rows.find(r=>r.teamKey==='B')!.games,2);
+ assert.throws(()=>leagueStandings(records,scope,['A','B'],'seed','world',['A','B','Y']),/UNREGISTERED/);
+});
 test('standings use exact winning percentage then tied-group head-to-head, before run difference',()=>{
  const records=emptyRecordLedger();score(records,'A','B',1,0);score(records,'A','C',0,9);score(records,'B','C',1,0);score(records,'C','D',1,0);
  const rows=leagueStandings(records,scope,['A','B','C','D'],'seed','world');assert.deepEqual(rows.map(r=>r.teamKey),['C','A','B','D']);

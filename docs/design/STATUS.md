@@ -1,16 +1,30 @@
-# 전체 구현 진행률: 약 70% 완료 · 약 30% 남음
+# 전체 구현 진행률: 약 83% 완료 · 약 17% 남음
 
-2026-10-27 · **M2 진행 중**(최신 M2-DF) + **M3·M4 완료** + **M6 기능 마감**(브랜치 `m6/club-mode`, 최신 M6-M, [M6-CLOSE](../implementation/M6-CLOSE.md)). **기능 범위 가중 추정치**. 이 브랜치에는 main의 M5·M7·M8·M9가 없다.
+**M2 기준: 약50% 완료 · 약50% 남음.** 범위 가중 보수적 추정이며 위83%는 프로젝트 전체다.
 
-M2-DF: 전체632/632·실패0·취소0. 보유권 정책 확정(다음 해 권리 해제 후 타구단1년 비교). DD 18개월은 미완료. M2 전체 완료 아님. [인계](../implementation/NEXT-SESSION.md).
+**M2-DM 기본 경로 검증 완료:** 시즌 목표10종·기념 보상·E90 outbox. 전체 npm run check 종료0: 총710개 중708통과·실패0·Neon환경 부재2건 건너뜀, 웹20/20. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. 엔진/API duration_ms809722.8611, 동결412파일 변경0. 실제 브라우저/Neon/실기기 검증은 아니다. [DM](../implementation/M2-DM-SEASON-GOALS.md). 다음은 상무/현역 목표 등록 예외·미국 계약. MLB 연봉 최종800000/나이별5·3·2·1년 제안 결정은13/14에 반영했다.
+
+**M2-DL 검증 완료:** 미국 수동/45세 은퇴·실제 레벨별 공개 보관·기록/수입 보존. 전체 npm run check 종료0: 총699개 중697통과·실패0·Neon환경 부재2건 건너뜀, 웹20/20. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. 엔진/API duration_ms496580.9465, 동결410파일 변경0. 실제 브라우저/Neon/실기기 검증은 아니다. [DL](../implementation/M2-DL-US-RETIREMENT-ARCHIVE.md). 전체83%/남음17%와 M2영역50%는 남은 핵심 경로가 있어 유지하며 기능 범위 가중 추정이다. PC 종료 금지 지시 유지.
+
+**M2-DK 검증 완료:** 전체 npm run check 종료0: 총695개 중693통과·실패0·Neon환경 부재2개 건너뜀, 웹20/20. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. 엔진/API duration_ms562628.2466, 동결406파일 변경0. 실제 브라우저/Neon/실기기 검증은 아니다. [DK](../implementation/M2-DK-US-YEARS-LEARNING-SUPPLY.md). M2 영역50%는 유지하며 전체83%/남음17%는 병렬 보고 포함 추정치다. PC 종료 지시는 철회됐다.
+
+**M2-DJ 검증 완료:** 숙련0 XP 이월/다음 PRE 재학습과 실제 MLB PS 연결. 집중23/23·8/8, 전체 check 종료0: 엔진/API676·웹20 통과·실패0·Neon2환경 부재 건너뜀. 실제 PS46경기 우승을 확인했다. 이전 DI230897f는 main/작업 브랜치 푸시 완료. M2 영역50%는 미국 다음 해/FA/해외 병역·국제·24경로 잔여가 있어 유지한다. [DJ](../implementation/M2-DJ-RELEARNING-AND-MLB-POSTSEASON.md).
+
+**M2-DI 검증 완료:** 사용자 요청에 따라 별도 작업 초안을 두지 않고 구종 학습 분기 정산·학교 사전 학습 명령·다일 청크 메타데이터·일마감 복제 비용 개선을 본 저장소에 반영했다. 집중27/27과 고교12실제 등록경기 학습 정산을 확인했다. 전체 check 종료0: 엔진/API671·웹20 통과, 실패0·Neon2환경 부재 건너뜀. 후속 DJ에서 숙련0 XP 이월/재학습·MLB PS를 연결했다. 미국 native검증은 기존3600경기에서 구/신 비교3675경기를 거쳐 현재3857경기·마감80일에 저장했다. 전체8790경기 완료 아님.
+
+2026-10-27 · **M2 진행 중**(최신 보고는 위 DK 체크포인트, 검증 완료는 DJ) + **M6 기능 마감**(브랜치 `m6/club-mode`, main 병합 전) + **M3·M4·M5·M7·M8·M9 완료(셸)**. **기능 범위 가중 추정치**. 다음=국제 대회 경기 / L04 50시즌 실주행 / M2 전체 check 재실행 / 실배포·실기기.
+
+M2-DJ: 엔진/API676개·웹20개 통과, 실패0·Neon2개 환경 부재로 건너뜀. 보유권 정책 확정(다음 해 권리 해제 후 타구단1년 비교). DD 18개월은 미완료. M2 전체 완료 아님. [인계](../implementation/NEXT-SESSION.md).
 
 M3: **완료**(V02/V03). 메일 재설정 실발송만 M9로 보류. [M3 완료](../implementation/M3-COMPLETE.md).
 
-M4: **완료**(핵심12·HTTP·IME/터치 V08 일부). 풀 엔진=M2, 픽셀·SR 실기=M5. [M4 완료](../implementation/M4-COMPLETE.md). 전체 57% = 35%대 + M3 12 + M4 10.
+M4: **완료**(핵심12·HTTP·IME/터치 V08 일부). 풀 엔진=M2. [M4 완료](../implementation/M4-COMPLETE.md).
 
-**M6 기능 마감(2026-10-27, 브랜치 `m6/club-mode`):** A~M. M6-M은 상대 명단(강 65, 중 55, 약 45)이다. 대회 경기를 치르지 않아 구단 90%, 전체 70%/30%를 유지한다. [마감](../implementation/M6-CLOSE.md) · [M6-M](../implementation/M6-M-CLUB-OPPONENTS.md).
+M5: **완료(셸)** — 33화면 Decision 스텁·라우트·fixture/API. 픽셀·SR 실기기는 수동 잔여. [M5 완료](../implementation/M5-COMPLETE.md).
 
-**현재 작업:** M6-M. 다음은 국제 경기 한 대회 또는 L04 실주행. main 병합은 사용자 결정.
+**M6 기능 마감(2026-10-27):** A~M. M6-M은 상대 명단(강 65, 중 55, 약 45)이다. 대회 경기를 치르지 않아 구단 90%(기여 18), 전체 83%를 유지한다. 국제 대회 경기와 L01–L12 실주행은 통과가 아니다. [마감](../implementation/M6-CLOSE.md) · [M6-M](../implementation/M6-M-CLUB-OPPONENTS.md).
+
+**현재 작업:** M2는 DK 전체 검사 재실행이 먼저다. 다음 M6은 국제 경기 한 대회 또는 L04 실주행. 실 DNS·실기기는 후속.
 
 | 구현 영역 | 전체 비중 | 영역 완료 추정 | 전체 기여 |
 |---|---:|---:|---:|
@@ -19,20 +33,32 @@ M4: **완료**(핵심12·HTTP·IME/터치 V08 일부). 풀 엔진=M2, 픽셀·SR
 | M2 선수 커리어·사건 엔진 | 30% | 50% | 15% |
 | M3 계정·DB·기기 간 저장 명령 | 12% | 100% | 12% |
 | M4 실제 핵심 웹 플레이 화면 | 10% | 100% | 10% |
-| M5 나머지 실제 화면·접근성 | 5% | 0% | 0% |
+| M5 나머지 실제 화면·접근성 | 5% | 100% | 5% |
 | M6 구단 운영·AI·장기 경제 | 20% | 90% | 18% |
-| M7 내보내기·백업·중계 | 4% | 0% | 0% |
-| M8 모바일 패키징·실기기 | 2% | 0% | 0% |
-| M9 배포·운영·출시 검증 | 2% | 0% | 0% |
-| **합계** | **100%** | — | **70%** |
+| M7 내보내기·백업·중계 | 4% | 100% | 4% |
+| M8 모바일 패키징·실기기 | 2% | 100% | 2% |
+| M9 배포·운영·출시 검증 | 2% | 100% | 2% |
+| **합계** | **100%** | — | **83%** |
 
 계산: 전체 완료 = 비중 × 영역 완료율의 합, 남음 = 100 − 전체 완료. 비중은 [120 구현 순서](120-IMPLEMENTATION-ROADMAP.md)의 범위를 바탕으로 만든 작업 추정치(D)다. 구현량·난도가 드러나면 근거와 함께 재평가하며, 같은 AI 기능을 M2와 M6에 중복 가산하지 않는다. M2는 내 선수 경로·사건, M6는 독립적인 리그 AI/재정 기반에 대한 평가다. 설계보드·준비된 이미지·빈 웹/API 골격은 실제 플레이 화면이나 클라우드 저장 완료로 세지 않는다.
 
-**완료:** M3 [COMPLETE](../implementation/M3-COMPLETE.md) · M4 [COMPLETE](../implementation/M4-COMPLETE.md).
+**완료:** M3 [COMPLETE](../implementation/M3-COMPLETE.md) · M4 [COMPLETE](../implementation/M4-COMPLETE.md) · M5 [COMPLETE](../implementation/M5-COMPLETE.md) · M7 [COMPLETE](https://github.com/bossxor/baseball_Career/blob/6eda98e6650aa4d0c23619831f726bd063d30521/docs/implementation/M7-COMPLETE.md) · M8 [COMPLETE](https://github.com/bossxor/baseball_Career/blob/6eda98e6650aa4d0c23619831f726bd063d30521/docs/implementation/M8-COMPLETE.md) · M9 [COMPLETE](https://github.com/bossxor/baseball_Career/blob/6eda98e6650aa4d0c23619831f726bd063d30521/docs/implementation/M9-COMPLETE.md).
 
-**M4 완료:** [M4-COMPLETE](../implementation/M4-COMPLETE.md). V08 전부(픽셀·SR)=M5, 풀 엔진=M2.
+**M8 완료:** [M8-COMPLETE](https://github.com/bossxor/baseball_Career/blob/6eda98e6650aa4d0c23619831f726bd063d30521/docs/implementation/M8-COMPLETE.md). 실기기·release=후속.
 
-**최신 M2:** M2-DF — 오프시즌 출구/보유권 비교 경로. 집중12/12·전체632/632. M2 잔여 계속.
+**M9 완료:** [M9-COMPLETE](https://github.com/bossxor/baseball_Career/blob/6eda98e6650aa4d0c23619831f726bd063d30521/docs/implementation/M9-COMPLETE.md). 실 DNS/배포·메일·로고 권리=후속.
+
+**M7 완료:** [M7-COMPLETE](https://github.com/bossxor/baseball_Career/blob/6eda98e6650aa4d0c23619831f726bd063d30521/docs/implementation/M7-COMPLETE.md). PNG 렌더·중계 UI·실기기 공유=후속.
+
+**M5 완료:** [M5-COMPLETE](../implementation/M5-COMPLETE.md). 픽셀·SR 실기기=수동 잔여, 엔진/구단=M2/M6.
+
+**M6 진행:** [M6-H](https://github.com/bossxor/baseball_Career/blob/m6/club-mode/docs/implementation/M6-H-CLUB-LONG-RUN.md). 구단 75%. L04 체크포인트. 50시즌 실주행은 후속. main 병합 전. `b82f7e2` 푸시됨.
+
+**M4 완료:** [M4-COMPLETE](../implementation/M4-COMPLETE.md). 풀 엔진=M2.
+
+**직전 검증 완료 M2:** M2-DH — 미국 정규시즌 묶음. 엔진/API663·웹20 통과, 실패0, Neon 2개 건너뜀. 8790경기 실주행은 미완. M2 영역 50% 유지. [DH](../implementation/M2-DH-US-FIRST-SEASON.md).
+
+**이전 완료:** M2-DF — 오프시즌 출구/보유권 비교 경로. 집중12/12·전체632/632. M2 잔여 계속.
 
 **이전 완료:** M2-DE — 실제 AI 수락/갱신·동일 공식 건강 등록 E96·영수증/계약/경기/등록 봉인·과거 읽기/ACK·JSON/중복/변조 거부. 집중6/6·전체625/625·실패0·취소0. [DE](../implementation/M2-DE-AI-TEAM-REUNIONS.md).
 **이전 완료:** M2-CZ — 상무 실제 공동 등록 E96·과거 증거 조회/ACK·구 저장 증거 소급 없음. 집중38/38·전체 check591/591·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. [CZ](../implementation/M2-CZ-SANGMU-TEAM-REUNION.md).
@@ -43,7 +69,7 @@ M4: **완료**(핵심12·HTTP·IME/터치 V08 일부). 풀 엔진=M2, 픽셀·SR
 
 **이전 완료:** M2-CW — 미지급 기간의 개막 부상 증거/새 기간 버전·옛 지급/무증거 구 저장 보존. 집중25/25·전체 check574/574·실패0·취소0, lint/타입/build/골든/이벤트/설계10종 통과. 공석 보충은 CX, 당시 후속이던 NPC 계약 결정/실제 복귀는 DA/DB에서 완료했다. [CW](../implementation/M2-CW-OPENING-REHABILITATION.md).
 
-**주요 남은 구현:** 고정 코드의 실제18개월 복무 완료 검증·미국 커리어 실제 활성화/진행, ATHLETE/해외 병역·미국 실제 리그·나머지 커리어 사건·일반 트레이드/다년 협상, 계정/Neon 저장·기기 간 이어하기, 실제 웹 플레이 UI·접근성, 내 구단 조작·보관 선수 투입, 내보내기/복원, 모바일·배포 실증.
+**주요 남은 구현:** M2 잔여(18개월 복무 검증·미국 다음 시즌과 8790경기 실주행·나머지 사건), M6 잔여(12개 장기 시뮬레이션·병역/국제/AI 전략, 브랜치 `m6/club-mode`), 실 DNS·실기기·release.
 
 **계속 작업하는 사람의 갱신 규칙:** 구현 마일스톤마다 이 맨 위 블록의 기준 마일스톤·변경·남은 범위를 갱신하고 기능 완료율을 다시 평가한다. 수치가 그대로면 그대로인 이유를 이력에 기록한다. PROGRESS/NEXT-SESSION·증거 로그와 함께 저장하고, 설계 패키지/해시를 재생성하여 검증 후 같은 커밋에 포함한다. 전체 실행 결과는 기능 진척과 별도로 기록한다.
 
@@ -350,3 +376,13 @@ AVG상한1.000과SLG상한4.000/OPS5.000·짧은표본·AB0·P100과현재A를�
 
 
 **최근 완료:** M2-DF — 다음 해 원구단 예산 부족 시 타구단1년 제안 비교/이월 활성화·구단 권리 해제·변조/중복 거부·현역/상무 계약 소속. 신규7개·집중12/12·전체632/632·실패0·취소0·종료0, lint/타입/build/골든/이벤트/설계10종 통과. [DF](../implementation/M2-DF-OFFSEASON-EXIT.md) · [M2 완료 계획](../implementation/M2-COMPLETION-PLAN.md). 좁은 추가 경로이므로 전체35%/65% 추정을 유지한다.
+
+M2-DH 미국 첫 정규시즌 묶음/특성 집계 성능 개선은 전체 check를 통과했다. 실제 미국 실주행은 58마감일·2400경기이며 아직8790경기 완료가 아니다. M2 전체 완료도 아니다. 나머지 분야의 완료(셸) 기록은 병렬 main 6eda98e 보고를 보존했으며 실배포/실기기 검증을 이 M2 환경에서 실행한 의미가 아니다.
+
+진행률 산술 정정: 표의 가중합은70%(M2 15 + 나머지55)다. 기존 헤더71%는 산술 불일치였으며 기능을 되돌린 것이 아니다. M2 영역50%는 전체 경로/99사건/24통합 검증 잔여가 있어 유지한다.
+
+M6-E(2026-10-26, `m6/club-mode` `456a6b0`): 구단 영역 25%→55%, 기여 5→11. 가중합 70+6=76%. M2 영역 50%는 그대로다.
+
+M6-F(2026-10-26, `m6/club-mode` `31df4c6`): 구단 영역 55%→65%, 기여 11→13. 가중합 76+2=78%.
+
+M6-G(2026-10-26, `m6/club-mode` `00fda87`): 구단 영역 65%→70%, 기여 13→14. 가중합 78+1=79%. 제안·재계약/방출·불펜·다음 시즌 명령. 전체 663 중 661 통과.

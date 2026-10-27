@@ -1,0 +1,48 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { sql } from 'drizzle-orm';
+import { createTestDb, seedAllowedSubject } from '@playball/db';
+import { createApp } from '../src/app.js';
+import { json } from './json.js';
+
+const hdr = (s: string) => ({ Authorization: `Bearer dev:${s}`, 'Content-Type': 'application/json' });
+const create = (app: ReturnType<typeof createApp>, who: string, creationId: string, mode = 'CAREER') =>
+  app.request('/api/game-creations', { method: 'POST', headers: hdr(who), body: JSON.stringify({ creationId, mode }) });
+
+test('VERIFY-1 a second owner posting the same creationId sees the first owner\'s save', async () => {
+  const { db, client } = await createTestDb();
+  await seedAllowedSubject(db, 'user-a'); await seedAllowedSubject(db, 'user-b');
+  const app = createApp({ db, auth: { allowDevBearer: true } });
+  const a = await create(app, 'user-a', 'shared-id'), b = await create(app, 'user-b', 'shared-id');
+  const aj = await json<{ saveId: string; revision: string }>(a), bj = await json<{ saveId: string; revision: string; code?: string }>(b);
+  console.log('A', a.status, JSON.stringify(aj), 'B', b.status, JSON.stringify(bj));
+  const list = await json<{ items: unknown[] }>(await app.request('/api/saves', { headers: hdr('user-b') }));
+  console.log('B list size', list.items.length);
+  await client.close();
+});
+
+test('VERIFY-2 concurrent identical creations from one owner', async () => {
+  const { db, client } = await createTestDb();
+  await seedAllowedSubject(db, 'user-a');
+  const app = createApp({ db, auth: { allowDevBearer: true } });
+  const results = await Promise.all([create(app, 'user-a', 'race-1'), create(app, 'user-a', 'race-1'), create(app, 'user-a', 'race-1')]);
+  console.log('statuses', results.map(r => r.status).join(','));
+  await client.close();
+});
+
+test('VERIFY-3 cursor pagination over microsecond timestamps', async () => {
+  const { db, client } = await createTestDb();
+  await seedAllowedSubject(db, 'user-a');
+  const app = createApp({ db, auth: { allowDevBearer: true } });
+  await db.execute(sql`INSERT INTO profiles (id, display_name) VALUES ('user-a','a') ON CONFLICT DO NOTHING`);
+  // 22 saves; rows 20 and 21 share one millisecond but differ by microseconds.
+  for (let i = 0; i < 22; i++) {
+    const ts = i < 19 ? `2026-10-26 10:00:${String(59 - i).padStart(2, '0')}.000000+00` : i === 19 ? '2026-10-26 09:00:00.123900+00' : i === 20 ? '2026-10-26 09:00:00.123400+00' : '2026-10-26 08:00:00.000000+00';
+    await db.execute(sql`INSERT INTO game_saves (id, owner_id, mode, revision, phase, summary, state, updated_at, created_at) VALUES (${`s${String(i).padStart(2, '0')}`}, 'user-a', 'CAREER', 0, 'BOOT', '{}'::jsonb, '{}'::jsonb, ${ts}::timestamptz, ${ts}::timestamptz)`);
+  }
+  const first = await json<{ items: { id: string }[]; nextCursor: string | null }>(await app.request('/api/saves', { headers: hdr('user-a') }));
+  const second = await json<{ items: { id: string }[]; nextCursor: string | null }>(await app.request(`/api/saves?cursor=${encodeURIComponent(first.nextCursor!)}`, { headers: hdr('user-a') }));
+  const seen = [...first.items, ...second.items].map(x => x.id);
+  console.log('first', first.items.length, 'second', second.items.length, 'cursor', first.nextCursor, 'missing', Array.from({ length: 22 }, (_, i) => `s${String(i).padStart(2, '0')}`).filter(id => !seen.includes(id)).join(','));
+  await client.close();
+});

@@ -1,3 +1,5 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
+import type {CareerGoalLedger} from './season-goals.js';
 import type {KboOffseasonExit} from './kbo-offseason-exit.js';
 import {assertKboCareerRevision} from './kbo-career-version.js';
 import type {KboSeasonTransfer} from './kbo-transfer-registration.js';
@@ -48,6 +50,7 @@ import {queueRelationFormationNotices} from './relation-notices.js';
 export interface ActiveKboRosterWorld extends Omit<KboRosterWorld,'status'> {status:'ACTIVE';calendar:SeasonCalendar}
 /** New pro root: never pass this world to HS/COLLEGE commands. Scheduling and games follow separately. */
 export interface KboCareer {
+ goals?:CareerGoalLedger;
  schemaVersion:1|2|3|4|5|6|7;revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveKboRosterWorld;
  protagonistKey:string;protagonistClubId:string;phaseContext:{phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase:'SEASON_REVIEW'}|{phase:'EVENT_DECISION';eventKey:string;resume:KboSeasonProgress}|KboPostseasonPhase|{phase:'RETIRE_CONFIRM';eventKey:string}|{phase:'ARCHIVED'};
  activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string};
@@ -76,9 +79,9 @@ export function startSignedKboCareer(source:HighSchoolCareer,expectedRevision:nu
  assertKboRecruitmentWorld(world);
  const registration={...structuredClone(signing.registration),status:'ACTIVE' as const},teamWorld={worldKey:world.worldKey,seasonKey:world.seasonKey,leagueKey:'KBO',protagonistKey:key,protagonistSchoolId:club.id,schools:world.clubs,players:world.players};
  const day=calendar.growthDays[0]!,relationships=formRegisteredTeamTeammate(source.relationships,teamWorld,signing.receiptKey,day);
- const career:KboCareer={schemaVersion:1,revision:source.revision+1,difficulty:source.difficulty,world,protagonistKey:key,protagonistClubId:club.id,phaseContext:{phase:'PRESEASON_SETUP'},activation:{receiptKey:entryKey(ready),sourceYearEndReceiptKey:ready.receiptKey,sourceRevision:source.revision,contractKey:signing.contract.contractKey},registration,rights:structuredClone(signing.rights),amateurHistory:structuredClone(source),records:structuredClone(source.records),health:{...structuredClone(source.health),injuries:Object.hasOwn(source.health.injuries,key)?{[key]:structuredClone(source.health.injuries[key]!)}:{}},seasonGrowth:createSeasonGrowthLedger(player,world.seasonKey,calendar.growthDays.length),development:{...structuredClone(source.development),seasonStartPlayer:structuredClone(player)},...(source.traits?{traits:{...structuredClone(source.traits),lastClosedDay:null,lastSeasonKey:world.seasonKey}}:{}),relationships,events:structuredClone(source.events),relationNotices:structuredClone(source.relationNotices??[]),styleUsedWindows:[...source.styleUsedWindows],planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
+ const career:KboCareer={schemaVersion:1,revision:source.revision+1,difficulty:source.difficulty,world,protagonistKey:key,protagonistClubId:club.id,phaseContext:{phase:'PRESEASON_SETUP'},activation:{receiptKey:entryKey(ready),sourceYearEndReceiptKey:ready.receiptKey,sourceRevision:source.revision,contractKey:signing.contract.contractKey},registration,rights:structuredClone(signing.rights),amateurHistory:structuredClone(source),records:structuredClone(source.records),health:{...structuredClone(source.health),injuries:Object.hasOwn(source.health.injuries,key)?{[key]:structuredClone(source.health.injuries[key]!)}:{}},seasonGrowth:createSeasonGrowthLedger(player,world.seasonKey,calendar.growthDays.length),development:{...structuredClone(source.development),seasonStartPlayer:structuredClone(player)},...(source.traits?{traits:{...structuredClone(source.traits),lastClosedDay:null,lastSeasonKey:world.seasonKey}}:{}),relationships,events:structuredClone(source.events),...(source.goals?{goals:source.goals}:{}),relationNotices:structuredClone(source.relationNotices??[]),styleUsedWindows:[...source.styleUsedWindows],planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
  career.relationNotices=queueRelationFormationNotices({...career,world:teamWorld,previousSeasons:[...(source.previousSeasons??[]),{world:source.world}]},day)??[];
- career.campNotices=queueKboFirstCampNotices(career);return career;
+ career.campNotices=queueKboFirstCampNotices(career);return refreshCareerSeasonGoals(career);
 }
 
 /** Public entry receipt, not the raw pro root containing P, RNG and the full sealed amateur history. */

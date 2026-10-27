@@ -1,3 +1,4 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
 import {formRegisteredTeamTeammate} from './team-teammates.js';
 import {queueRelationFormationNotices} from './relation-notices.js';
 import type {HighSchoolCareer} from './high-school-career.js';
@@ -8,7 +9,7 @@ import {canonicalJson} from './game.js';
 import {validateSeasonGrowthLedger,finalizeSeasonGrowth,createSeasonGrowthLedger} from './growth-ledger.js';
 import type {SeasonGrowthLedger} from './growth-ledger.js';
 import {closeSeasonHealth} from './health.js';
-import {pitchMastery,validatePitchWeights} from './repertoire.js';
+import {validatePitchWeights} from './repertoire.js';
 import type {Repertoire} from './repertoire.js';
 import {validatePitchXpLedger,emptyPitchXpLedger} from './pitch-xp.js';
 import {createCollegeWorld} from './college-world.js';
@@ -18,7 +19,7 @@ import {createSchoolEmergencyRegistry} from './high-school-emergency.js';
 export interface CollegeYearEnd {receiptKey:string;admissionKey:string;sourceRevision:number;sourceBasis:string}
 export type SchoolSeasonArchive=Pick<HighSchoolCareer,'world'|'health'|'days'|'emergency'|'development'|'planHistory'|'collegeCup'|'collegeResult'|'collegeNpcGrowth'|'collegeGraduation'> & {seasonGrowth:SeasonGrowthLedger;yearEndReceiptKey:string};
 export function schoolYearEndBasis(source:HighSchoolCareer):string {
- const snapshot={...source};delete snapshot.collegeYearEnd;delete snapshot.kboYearEnd;return canonicalJson(snapshot);
+ const snapshot={...source};delete snapshot.collegeYearEnd;delete snapshot.kboYearEnd;delete snapshot.usYearEnd;return canonicalJson(snapshot);
 }
 export function schoolYearEndRepertoire(source:{world:Pick<HighSchoolCareer['world'],'players'|'repertoires'|'seasonKey'>},playerKey:string):Repertoire|undefined {
  const player=source.world.players[playerKey]!;
@@ -26,7 +27,7 @@ export function schoolYearEndRepertoire(source:{world:Pick<HighSchoolCareer['wor
  const repertoire=source.world.repertoires[player.simulationKey];
  if(!repertoire || repertoire.seasonId!==source.world.seasonKey)throw new RangeError('MISSING_YEAR_END_REPERTOIRE');
  validatePitchWeights(repertoire.book,repertoire.weights);validatePitchXpLedger(repertoire.ledger);
- if(repertoire.learning && (repertoire.learning.quarters.length!==4 || repertoire.ledger.baseReservedUnits!==0 || pitchMastery(repertoire.book[repertoire.learning.pitchId]??0)<1))throw new RangeError('PITCH_LEARNING_SETTLEMENT_REQUIRED');
+ if(repertoire.learning && (repertoire.learning.quarters.length!==4 || repertoire.ledger.baseReservedUnits!==0))throw new RangeError('PITCH_LEARNING_SETTLEMENT_REQUIRED');
  return repertoire;
 }
 /** The caller already cloned the career; subsequent activation replaces these objects, never mutates them. */
@@ -46,7 +47,7 @@ export function closeHighSchoolSeasonForCollege(source:HighSchoolCareer,expected
  const key=source.world.protagonistKey,closed=finalizeSeasonGrowth(career.world.players[key]!,career.seasonGrowth!,source.world.calendar!.growthDays.length);
  career.world.players[key]=closed.player;career.seasonGrowth=closed.ledger;career.health=closeSeasonHealth(career.health,source.world.seasonKey).ledger;career.revision++;
  const receiptKey=JSON.stringify(['college-year-end',admission.admissionKey,source.world.seasonKey]);
- career.collegeYearEnd={receiptKey,admissionKey:admission.admissionKey,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};return career;
+ Object.assign(career,refreshCareerSeasonGoals(career));career.collegeYearEnd={receiptKey,admissionKey:admission.admissionKey,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};return refreshCareerSeasonGoals(career);
 }
 /** Pure atomic activation. Repeating the same source reproduces the same world; old state stays intact on failure. */
 export function startAdmittedCollegeSeason(source:HighSchoolCareer,expectedRevision:number):HighSchoolCareer {
@@ -70,5 +71,5 @@ export function startAdmittedCollegeSeason(source:HighSchoolCareer,expectedRevis
  career.planHistory=[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}];
  career.collegeAdmission={...admission,status:'ENROLLED'};career.phaseContext={phase:'PRESEASON_SETUP'};delete career.collegeYearEnd;career.revision++;
  const entryDay=world.calendar.growthDays[0]!;career.relationships=formRegisteredTeamTeammate(career.relationships,world,admission.admissionKey,entryDay);
- const notices=queueRelationFormationNotices(career,entryDay);if(notices)career.relationNotices=notices;return career;
+ const notices=queueRelationFormationNotices(career,entryDay);if(notices)career.relationNotices=notices;return refreshCareerSeasonGoals(career);
 }

@@ -1,0 +1,26 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import {pathToFileURL,fileURLToPath} from 'node:url';
+import {createHash,randomUUID} from 'node:crypto';
+import {gzipSync,gunzipSync} from 'node:zlib';
+import assert from 'node:assert/strict';
+const root=process.cwd(),directory=path.resolve(process.argv[2]??'.local-verification/M2-DH-US-native');fs.mkdirSync(directory,{recursive:true});
+const sha=b=>createHash('sha256').update(b).digest('hex'),freeze=JSON.parse(fs.readFileSync(path.join(root,'docs/implementation/evidence/M2-DH-source-freeze.json'),'utf8'));
+for(const [p,h]of Object.entries(freeze.files))if(sha(fs.readFileSync(path.join(root,p)))!==h)throw Error('FROZEN_SOURCE_CHANGED '+p);
+const identity={sourceSha:sha(JSON.stringify(freeze.files)),node:process.version,runnerSha:sha(fs.readFileSync(fileURLToPath(import.meta.url)))};
+const engine=await import(pathToFileURL(path.join(root,'packages/engine/src/index.ts')).href),{preparedUsCareer}=await import(pathToFileURL(path.join(root,'packages/engine/test/us-fixtures.ts')).href);
+const pointer=path.join(directory,'latest.json');let calls=0,career;
+if(fs.existsSync(pointer)){const p=JSON.parse(fs.readFileSync(pointer,'utf8'));assert.deepEqual(p.identity,identity);if(!/^[a-f0-9-]+\.json\.gz$/.test(p.file))throw Error('INVALID_CHECKPOINT_PATH');const b=fs.readFileSync(path.join(directory,p.file));assert.equal(sha(b),p.gzipSha);const raw=gunzipSync(b);assert.equal(sha(raw),p.stateSha);({calls,career}=JSON.parse(raw.toString()));engine.assertUsSeason(career,career.revision);}else{const p=preparedUsCareer('HITTER');career=engine.startUsRegularSeason(p,p.revision);}
+let previous=fs.existsSync(pointer)?JSON.parse(fs.readFileSync(pointer,'utf8')).file:null,previousPrevious=null;
+function save(reason){const raw=Buffer.from(JSON.stringify({calls,career})),b=gzipSync(raw,{level:1}),name=randomUUID()+'.json.gz',target=path.join(directory,name);fs.writeFileSync(target,b);assert.equal(sha(fs.readFileSync(target)),sha(b));const info={identity,file:name,gzipSha:sha(b),stateSha:sha(raw),reason,calls,seasonKey:career.world.seasonKey,level:career.registration.level,phase:career.phaseContext.phase,closedDays:career.season.days.length,nativeGames:Object.values(career.records.games).filter(g=>g.scope.seasonKey===career.world.seasonKey&&['ROOKIE','A','AA','AAA','MLB'].includes(g.scope.leagueKey)).length,revision:career.revision};fs.writeFileSync(pointer+'.tmp',JSON.stringify(info,null,2)+'\n');fs.renameSync(pointer+'.tmp',pointer);if(previousPrevious){const old=path.resolve(directory,previousPrevious);if(!old.startsWith(directory+path.sep))throw Error('CHECKPOINT_PATH_ESCAPE');fs.unlinkSync(old);}previousPrevious=previous;previous=name;console.log(JSON.stringify({...info,identity:undefined,file:undefined,gzipSha:undefined,stateSha:undefined}));}
+save('START_OR_RESUME');let lastSaved=career.season.days.length;
+while(career.phaseContext.phase!=='SEASON_REVIEW'){
+ if(fs.existsSync(path.join(directory,'STOP'))){save('PARTIAL_SAFE_STOP');process.exit(0);}
+ if(career.phaseContext.phase==='EVENT_DECISION'){
+ const event=career.events.find(e=>e.eventKey===career.phaseContext.eventKey);if(!event)throw Error('MISSING_EVENT');
+ if(event.definitionId==='E43'||event.definitionId==='E41')career=engine.resolveUsWindowEvent(career,career.revision,{eventKey:event.eventKey,eventVersion:event.version,command:event.definitionId==='E43'?'FORFEIT_TRAINING':'ACK_EVENT'}).career;
+ else if(['E59','E60','E61'].includes(event.definitionId))career=engine.resolveUsLevelEvent(career,career.revision,{eventKey:event.eventKey,eventVersion:event.version,command:event.definitionId==='E59'?'CONFIRM_PROMOTION':event.definitionId==='E60'?'CONFIRM_CALLUP':'CONFIRM_DEMOTION'});
+ else {save('UNHANDLED_EVENT');throw Error('UNHANDLED_EVENT '+event.definitionId);}calls++;save('EVENT_RESOLVED');lastSaved=career.season.days.length;continue;}
+ const r=engine.advanceUsCareer(career,career.revision);career=r.career;calls++;if(['ENGINE_LIMIT','ROSTER_DECISION_REQUIRED'].includes(r.stopReason)){save('PARTIAL_'+r.stopReason);process.exit(2);}if(career.season.days.length-lastSaved>=5||r.stopReason==='MAJOR_EVENT'){save('PARTIAL_PROGRESS');lastSaved=career.season.days.length;}
+}
+career=engine.settleUsSeasonGrowth(career,career.revision,true);assert.equal(Object.values(career.records.games).filter(g=>g.scope.seasonKey===career.world.seasonKey&&['ROOKIE','A','AA','AAA','MLB'].includes(g.scope.leagueKey)).length,8790);assert.equal(career.season.paidUsd,engine.usSalaryEntitlement(career,career.season.lastDay-career.season.firstDay+1));assert.equal(career.income.filter(e=>e.kind==='SIGNING_BONUS').length,1);assert.equal(career.seasonGrowth.finalized,true);save('US_REGULAR_COMPLETE');

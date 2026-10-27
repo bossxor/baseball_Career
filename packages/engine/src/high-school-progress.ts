@@ -1,3 +1,5 @@
+import {refreshCareerSeasonGoals} from './season-goals.js';
+import {settleRegisteredPitchLearning} from './pitch-learning-progress.js';
 import {prepareHighSchoolGame,advanceHighSchoolGame,commitHighSchoolGame} from './high-school-game.js';
 import {closeHighSchoolDay} from './high-school-day.js';
 import {reconcileSchoolEmergency} from './high-school-emergency.js';
@@ -47,7 +49,7 @@ export function advanceSchoolCareer(source:HighSchoolCareer,expectedRevision:num
  if(progress.pendingGame && (progress.pendingGame.worldKey!==career.world.worldKey || progress.pendingGame.seasonKey!==career.world.seasonKey || progress.pendingGame.worldDay!==progress.nextWorldDay))throw new RangeError('PENDING_GAME_CONTEXT_CHANGED');
  const plan=current??{mode:mode??'NEXT_MAJOR_EVENT',startWorldDay:progress.nextWorldDay,startTeamGames:teamGames(career)};progress.advancePlan=plan;
  let plateAppearances=0,completedInnings=0;const initialTeamGames=teamGames(career),lastDay=Math.max(...career.world.schedule.map(g=>g.worldDay));
- const finish=(stopReason:SchoolProgressStop,healthChanges:SchoolProgressResult['healthChanges']=null):SchoolProgressResult=>{if(stopReason!=='CHUNK_LIMIT' && stopReason!=='ENGINE_LIMIT')progress.advancePlan=null;career.revision++;return {career,stopReason,plateAppearances,completedInnings,healthChanges};};
+ const finish=(stopReason:SchoolProgressStop,healthChanges:SchoolProgressResult['healthChanges']=null):SchoolProgressResult=>{if(stopReason!=='CHUNK_LIMIT' && stopReason!=='ENGINE_LIMIT')progress.advancePlan=null;career.revision++;return {career:refreshCareerSeasonGoals(career),stopReason,plateAppearances,completedInnings,healthChanges};};
  while(plateAppearances<1000 && completedInnings<20 && teamGames(career)-initialTeamGames<6){
   const day=progress.nextWorldDay;
   if(day>lastDay){career.traits=settleStarterSeasonTraits(career,lastDay);career.phaseContext={phase:'SEASON_REVIEW'};const seasonNotice=raiseHiddenTraitNotice(career,lastDay,{phase:'SEASON_REVIEW'});if(seasonNotice){Object.assign(career,seasonNotice);return finish('MAJOR_EVENT');}return finish('SEASON_REVIEW');}
@@ -67,6 +69,7 @@ export function advanceSchoolCareer(source:HighSchoolCareer,expectedRevision:num
    if(career.world.schedule.some(g=>g.worldDay===day && !Object.hasOwn(career.records.games,g.simulationKey)))continue;
   }
   const closed=closeHighSchoolDay(career.world,career.records,career.health,career.days,day);career.world=closed.world;career.health=closed.health;career.days=closed.days;progress.nextWorldDay=day+1;career.ownAssessment=refreshOwnCareerAssessment(career);career.traits=refreshCareerTraits(career,day);if(career.relationships)career.relationships=refreshRelationMilestones(career)!;
+  for(const [key,book]of Object.entries(career.world.repertoires))if(book.learning){const team=career.world.schools.find(t=>t.roster.includes(key));if(!team)continue;const count=career.world.schedule.filter(g=>g.homeTeamKey===team.id||g.awayTeamKey===team.id).length;career.world.repertoires[key]=settleRegisteredPitchLearning({worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,playerKey:key,repertoire:book,records:career.records,health:career.health,schedule:career.world.schedule,scheduledGames:book.learning.registration?.scheduledGames??count,numerator:key===career.world.protagonistKey?(career.difficulty==='SECRET_CHEAT'?15:5):career.difficulty==='REALISTIC'?6:5});}
   const notices=queueRelationFormationNotices(career,day);if(notices!==undefined)career.relationNotices=notices;
   const player=career.world.players[career.world.protagonistKey]!,count=teamGames(career);
   const healthChanges={injured:closed.result.injured.includes(player.simulationKey),recovered:closed.result.recovered.includes(player.simulationKey)};
@@ -78,6 +81,7 @@ export function advanceSchoolCareer(source:HighSchoolCareer,expectedRevision:num
    const event=createWorldEvent({definitionId,worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,evidence:{version:1,type:definition.evidenceDomain,fields:start?{careerSimulationKey:player.simulationKey}:{playerOrTeamSimulationKey:player.simulationKey,worldSeasonId:career.world.seasonKey,windowType:definitionId==='E43'?'TRAINING':'MID'}},resume:{worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,phase:'SEASON_PROGRESS',competitionKey:career.world.leagueKey??'HS',registrationKey:career.world.protagonistSchoolId,sourceRevision:career.revision+1},sourceSequence:career.events.length+1,worldDay:day});
    career.events=[...career.events,event];career.phaseContext={phase:'EVENT_DECISION',eventKey:event.eventKey,resume:structuredClone(progress)};return finish('MAJOR_EVENT',healthChanges);
   }
+
   const notice=raiseHiddenTraitNotice(career,day,progress);
   if(notice){progress.advancePlan=null;Object.assign(career,notice,{phaseContext:{...notice.phaseContext,resume:structuredClone(progress)}});return finish('MAJOR_EVENT',healthChanges);}
   if(healthChanges.injured || healthChanges.recovered)return finish('HEALTH_CHANGE',healthChanges);

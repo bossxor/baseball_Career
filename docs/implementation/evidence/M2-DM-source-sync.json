@@ -1,0 +1,161 @@
+{
+  "utc": "2026-10-27T00:10:11.826Z",
+  "head": "7489497767b4270c64c3e61b11752747cfd31024",
+  "fullCheck": "PASS",
+  "runtimeUnchanged": 412,
+  "scope": "M2 goals and merged approved design decisions; military goal registration remains next slice.",
+  "files": [
+    {
+      "path": "docs/design/12-STYLE-INTERNATIONAL-MILITARY.md",
+      "sha256": "f4f86265647309cf15dcbde3bfb8873df84f9b7625449dbdc3fdb78880024270"
+    },
+    {
+      "path": "docs/design/13-MLB-CAREER.md",
+      "sha256": "85dac5668351f55e43fca66c9d2298ccf95f26d96ded46ff67939ed6c4d023e8"
+    },
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "60b0d5c16e4d09a7668e138c2ad70780d16d80d8ef7590c954d34b1c4c2de33d"
+    },
+    {
+      "path": "docs/design/20-INTERNATIONAL-COMPETITIONS.md",
+      "sha256": "01c8fc63ec2096dcc6129a972957890dad62e2570b6d6c1f5f214a0b1a597154"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "51bb1d2bf580e90438b28ee351040d7c1f9dc2066e4290d0e676c5c8ff358696"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "c5c5cc7cbf95222921acec05682c5131f090dd2d61afd1b8b589c6c55437fddd"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "7d8f290be70b923cc5d12a30252f69c28c659d434641c7810c0d6659da9147eb"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "8f1e25cc1dc144f3491be239764fee259add0f8cf1e7d62832f4b283246a2407"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "1932ad2879186090108d32dc386a491ca9861dc2fc8e580cd8c35b04ccca4674"
+    },
+    {
+      "path": "packages/engine/src/college-cup.ts",
+      "sha256": "b6bbc37486a155953c53312087eaa05fa89e2aea330172b505ac57a9789156be"
+    },
+    {
+      "path": "packages/engine/src/college-entry.ts",
+      "sha256": "d723bb9f7571b972f6aee8f84c3471a5286521a89961b57314edf98ce0265b69"
+    },
+    {
+      "path": "packages/engine/src/college-year.ts",
+      "sha256": "ddec8a6010f6a2d05f2bf57562fcc0ddd6a8db165ce69a883041c381c1ef3a48"
+    },
+    {
+      "path": "packages/engine/src/events.ts",
+      "sha256": "3058e1a8f49b14f317cc1ca1075bf8a9de964cbd32916f42ea5a230eecccb971"
+    },
+    {
+      "path": "packages/engine/src/high-school-career.ts",
+      "sha256": "96a408fd59be83e9664bc306a0af6ddd0900f8423654e0f21a1ff0a424b4611c"
+    },
+    {
+      "path": "packages/engine/src/high-school-progress.ts",
+      "sha256": "788db3eae3b751189ed6b81ef1bf33fe049da18fe5b3dd4fb6b7bd3403194bab"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "4eaf33eb5986b2589f6f3156c3546c9d49a9f633be4f021664b4702eab56a95c"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "sha256": "5c1bf5002ff54aeef085554e597937ab0170d407fff9007f070aab11e2fe7b7c"
+    },
+    {
+      "path": "packages/engine/src/kbo-entry.ts",
+      "sha256": "875efa548fcd04667445ae56e7561f6313a4088b2cb33296a92e059adcaca994"
+    },
+    {
+      "path": "packages/engine/src/kbo-postseason-progress.ts",
+      "sha256": "6355724e0c14f8d911573ed6a1a414984fbb1b208374af615649264884af3e6e"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "sha256": "232e715425e957b661dc042e46322d2629c4c4e7ce1e23109e043025faa8fabb"
+    },
+    {
+      "path": "packages/engine/src/kbo-retirement.ts",
+      "sha256": "95e537cfd6b0a074052892f40765c2ea7f53ee552e038955b6e9879f4c298e63"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-end.ts",
+      "sha256": "fa1b062ec29aeef1a69c1d1914717869669146645a5dff23d361505de38bb218"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "sha256": "a1a2f9ce43dff0a815130fb006aae2ed67083b6a05154bd6a9831296eb6736ad"
+    },
+    {
+      "path": "packages/engine/src/us-career-entry.ts",
+      "sha256": "d16227272adbf0c53a6b96311b885ae1a791d30113fe5eeb194a74110d7523a0"
+    },
+    {
+      "path": "packages/engine/src/us-entry.ts",
+      "sha256": "db8901d2bb3d1a67cd83a40c89c6bf6f82148bbda0c5e8d06f4f27d6b0a81472"
+    },
+    {
+      "path": "packages/engine/src/us-growth.ts",
+      "sha256": "ea87c45f1c1857620656be3bf50028d8bd3e63acd93e6edbeb0696fec3a71952"
+    },
+    {
+      "path": "packages/engine/src/us-postseason-progress.ts",
+      "sha256": "b0d046f305d1886473b7a9a2b4f954dde6039b6b7bbb3bcffb8bf1a8fade0146"
+    },
+    {
+      "path": "packages/engine/src/us-retirement.ts",
+      "sha256": "82a936e372fb6f8bc9cde4d2261842dcffb049137f7c7f7f37508a11889bb884"
+    },
+    {
+      "path": "packages/engine/src/us-season.ts",
+      "sha256": "b28538d23a3c340d4499cc8452a896ca37814c07a6d0e7945e3897bc1ef8368f"
+    },
+    {
+      "path": "packages/engine/src/us-year-transition.ts",
+      "sha256": "b22ff1b6b8b1b0906373c61d8f7fa1556bc30d67782c7071048b57359e24a3c4"
+    },
+    {
+      "path": "docs/implementation/M2-DM-SEASON-GOALS.md",
+      "sha256": "65b49e42e0d760441e87a8cbce20eeff832d09f94a06d1b0c0a6b33a959a11ea"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DM-goals-focused.log",
+      "sha256": "c0827fd0d2ca3530faf312b165447979b40f3b4d2506b29c3e324e77492f010c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DM-mirror.json",
+      "sha256": "ceefe6c4437d17e366d3f05196ade8925ea68dc38ca0de961166271148b27b45"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DM-source-freeze.json",
+      "sha256": "98ecc012b70bf1a35198fef4a97288de21ebfc03e67df8c41876a937a3d16ad0"
+    },
+    {
+      "path": "packages/engine/src/season-goals.ts",
+      "sha256": "5ac824877f8e6eeeed5936a253803e306eafffd73faa92b1a8808a2954d1c274"
+    },
+    {
+      "path": "packages/engine/test/season-goals.test.ts",
+      "sha256": "496024a684718cc6aa66bd3a13310b15083eed8665404939f6a56103809026d9"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DM-check.log",
+      "sha256": "a8e8c998faa5e9390536610e781bfaef607d3843d85b8751b7e040b57150329f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DM-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    }
+  ]
+}

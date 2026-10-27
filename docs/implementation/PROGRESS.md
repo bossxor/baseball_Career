@@ -1,3 +1,77 @@
+# M2-DM 최신 작업 — 시즌 목표10종
+
+2026-10-27 · [상세](M2-DM-SEASON-GOALS.md). 집중11/11, 실제 고교8경기에서 목표 전후 world/기록 동일·대학 선수권2경기에서G09/G10 달성과 정규 분리. 전체 npm run check 종료0: 총710개 중708통과·실패0·Neon환경 부재2건 건너뜀, 웹20/20. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. 엔진/API duration_ms809722.8611, 동결412파일 변경0. 실제 브라우저/Neon/실기기 검증은 아니다. 미국 연봉 최종800000 보장 결정은13/14 갱신, 다음 계약 묶음 적용. 직전 DL7489497 main/작업 브랜치 푸시 완료. M2 전체 추정50%는 남은 핵심 경로와 통합 검수가 있어 유지한다.
+
+# M2-DL 최신 작업 — 미국 은퇴·보관
+
+2026-10-27 · E36 확인/취소·확정/E37,45세 은퇴·마이너 포함 공개 기록 보관을 연결했다. 집중4/4, 기존 연도7건 통과. 전체 npm run check 종료0: 총699개 중697통과·실패0·Neon환경 부재2건 건너뜀, 웹20/20. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. 엔진/API duration_ms496580.9465, 동결410파일 변경0. 실제 브라우저/Neon/실기기 검증은 아니다. M2 전체 완료 선언 아님. [상세](M2-DL-US-RETIREMENT-ARCHIVE.md). DK21fb82e는 main/작업 브랜치 모두 푸시·원격 일치. 종료 지시 철회.
+
+# M2-DK 최신 작업 — 미국 마이너 연도 이월·학습 일정·공급
+
+2026-10-26 · 원래 마이너6시즌 실제 다음 해 개막/루트3·기존 저장 보존, 승격 우선 Rookie 공급, 구종 공식 일정 분기, 부상 대체 콜업 보호, MLB100등록/6시즌 서비스를 연결했다. 집중 구종7/7·공급/승강11/11·서비스2/2·연도7/7. 통제6시즌과 실제 새해75경기/PS46경기는 별도 증거. 2026-10-27 사용량97%사용/3%남음 확인으로 사용자5%중단 기준에 따라 보존. DK 전체 첫 검사는695개 중692통과·1실패·Neon환경2건 건너뜀. 레거시 잘못된 저장 입력의 오류 코드/누락 주인공 검증을 수정했고 해당 회귀1/1·lint·typecheck는 종료0. 수정 후 전체 npm run check 재실행은 미완료이며 DK를 전체 검증 완료로 표시하지 않는다. 위 내용은946bd4e 보존 시점 기록이며 이후 최종 재검증이 통과했다. 전체 npm run check 종료0: 총695개 중693통과·실패0·Neon환경 부재2개 건너뜀, 웹20/20. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. 엔진/API duration_ms562628.2466, 동결406파일 변경0. 실제 브라우저/Neon/실기기 검증은 아니다. M2 전체 미완료. [DK 상세](M2-DK-US-YEARS-LEARNING-SUPPLY.md). 직전 DJ10dbf94 main/작업 브랜치 푸시 완료.
+
+# M2-DJ 최신 완료 — 구종 이월·실제 MLB 포스트시즌
+
+2026-10-26 · 사용자 확정 숙련0 구종의 기존 XP 보존/다음 PRE 재학습, AL/NL 부분 순위·12팀 브래킷·실제 PS 경기/건강/XP/특성·봉인 기록·JSON 재개를 연결했다. 집중23/23 및8/8. 전체 npm run check 종료0: 엔진/API676·웹20 통과, 실패0·Neon2환경 부재 건너뜀. lint/타입/build/골든/이벤트/설계10종/Android·자산 검사·HTTP 스모크 통과. duration_ms1008130.2884. 실제PS46경기 우승US25/급여30000유지. 직전 DI230897f는 main/작업 브랜치 모두 푸시·원격 해시 일치. [DJ 상세](M2-DJ-RELEARNING-AND-MLB-POSTSEASON.md).
+
+# M2-DI 최신 완료 — 구종 학습 실제 연결
+
+2026-10-26 · 기존 M2 체크아웃에 직접 구현. 학교·KBO·상무·미국 학습 분기, 불변 건강 영수증 복제 개선, 미국 다일 검토 참조를 연결했다. 집중27/27과 추가8/8(중복 합산하지 않음), native 구/신 대조35청크 완전 일치. 미국 native 현재3857경기/마감80일로 안전 저장. 전체 npm run check 종료0: 엔진/API671통과·Neon2환경 부재 건너뜀·실패0, 웹20/20. lint/타입/build/골든/이벤트/설계10종/Android·자산 검사 및 HTTP 스모크 통과. duration_ms1381930.2751. 후속 DJ는 사용자 확정 숙련0 XP 이월/재학습 처리. 초기 테스트 RNG 태그 타입오류는 수정했고 superseded 로그로 구분한다. M2 완료 아님. [상세](M2-DI-PITCH-LEARNING.md) · [전체 완료 범위](M2-COMPLETION-PLAN.md).
+
+# 구현 진행·다른 환경 이어가기
+
+## 최신 검증 완료 — M2-DH (2026-10-26)
+
+미국 준비/일정/실제 경기/공통 급여/부상 대체/승강/옵션/성장과 특성 성능 개선을 묶어 구현했다. 전체 check 엔진/API663·웹20 통과·실패0·Neon2환경 미설정 건너뜀. 테스트748933ms. [DH 상세](M2-DH-US-FIRST-SEASON.md). 원본332개를 고정해 검사했다. user 요청대로 전체검사는 묶음당1회; 타입 검사에서 발견한2개 테스트의 readonly 대입은 수정 후 정식 결과를 다시 검증했고 superseded 로그로 보존했다.
+
+미국 native 실주행은 별도이며 최신 저장 58일·2400경기·AA다. V:/.local-verification/M2-DH-US-native/latest.json과코드zip을 사용한다. 첫 복무 DD는 기존부분상태 그대로이며완료로 표시하지 않는다. 다음 DI 초안은 C:/Users/N-052/AppData/Local/Temp/baseball-M2-DI-us-lifecycle에 격리했다. 구종 학습분기 실제 연결, 다일 청크 메타데이터 수정, 미국 연도 전환/FA/은퇴 등을 이어간다. 현재 M2 전체 완료 아님. main은 병렬 6eda98e까지 달라져 자동 덮어쓰지 않고 M2 브랜치를 보존한다.
+
+
+M2-DG는 codex/m2-career-engine 브랜치로 이어간다. 병렬 M4가 main a63d3e7에 올라와 main은 덮어쓰지 않았다. M2 전체637개는 이 브랜치 원본의 증거이며 M3/M4 병합 후 재검증은 별도다.
+
+## 2026-10-26 M2-DG 완료
+
+M2-DG 미국 계약 후 아마추어 정산/다음 시즌 실제 등록을 정식 반영했다. 신규 집중5/5·정식 전체637/637·실패0·취소0·종료0, lint/타입/build/골든/이벤트/설계10종 통과. duration_ms1905122.3771. 직전 DF337911e·632/632도 보존한다. M2 전체 완료가 아니다. [DG 상세](M2-DG-US-CAREER-ENTRY.md).
+
+작업/Git/빌드는 C:/Users/N-052/.codex/visualizations/2026/10/16/01a142f8-66ea-7782-ba3e-b52df94ae1be/baseball-career-m2 (codex/m2-career-engine)에서 진행한다. 원래 baseball-career-repo 체크아웃에는 다른 창의 웹 화면 변경이 있어 그대로 보존했다. 그 작업을 덮어쓰거나 함께 stage하지 않는다. V:는 M2 변경 파일만 보호 동기화하고 V:/.git을 생성하지 않는다. 이전 문서의 원래 체크아웃 경로는 이력이다. [분담/연동](M2-M3-INTEGRATION-NOTES.md).
+
+## M4 웹 UI 핵심 화면 — 시작 (2026-10-26)
+
+M2/M3와 겹치지 않는 `apps/web`: 뼈대+S01 홈·S02 생성·S03 커리어, `PlayballApi`+fixture, 웹 테스트 11개(`test:web`, check 포함). 실제 API 연동·나머지 9화면은 다음. [M4](https://github.com/bossxor/baseball_Career/blob/a63d3e71d2e1c75cccf87d9d2fccb530c3c23ae2/docs/implementation/M4-WEB-UI.md).
+
+
+## 병렬 환경 작업 기록
+
+
+ready/version/자산 OFL·STATUS M9 100%(기여2). 실 DNS/배포=후속. [COMPLETE](M9-COMPLETE.md).
+## M9 운영 셸 (2026-10-26)
+
+`/api/ready`·`/api/version` · `verify:assets`/provenance · STATUS 70%. 실 DNS·배포는 후속. [M9](M9-OPS.md).
+## M8 마일스톤 마감 (2026-10-26)
+
+Capacitor debug 셸·`kr.againplayball.app`·HTTPS API 게이트·STATUS M8 100%(기여2). 실기기/release=후속. [COMPLETE](M8-COMPLETE.md).
+## M8 Capacitor Android 셸 (2026-10-26)
+
+`kr.againplayball.app` · debug APK · `VITE_API_BASE` https 비로컬 강제. JDK21. 실기기/release는 후속. [M8](M8-ANDROID.md).
+## M7 마일스톤 마감 (2026-10-26)
+
+백업·복원·연대기JSON 셸·STATUS M7 100%(기여4). PNG/중계/APK공유는 후속. [COMPLETE](M7-COMPLETE.md).
+## M7 연대기 JSON export (2026-10-26)
+
+`POST /exports/chronicle` → CHRONICLE_JSON private file, 24h TTL, 비밀값 제외, 게임백업 아님 표시. [M7](M7-FILES.md).
+## M7 복원 preview·activate (2026-10-26)
+
+`/restores/preview`·`/restores` 새 saveId, 원본 백업무변경, hash 불일치 거부. [M7](M7-FILES.md).
+## M7 private 파일·백업 V04 슬라이스 (2026-10-26)
+
+`private_files` + backups API + owner 403/hash 다운로드. 복원·PNG·연대기·중계는 후속. [M7](M7-FILES.md).
+## M5 마일스톤 마감 (2026-10-26)
+
+33화면 셸·STATUS M5 100%(기여5). 픽셀·SR 실기·엔진/구단 연동은 후속. [COMPLETE](M5-COMPLETE.md).
+## M5 나머지 화면 셸 (2026-10-26)
+
+S10–S21·S24–S27·S29–S45 Decision 스텁 + 라우트·fixture/API ui-shell 동기. 홈 설정→S21, S28 college→S34. 엔진/M6/픽셀·SR 제외. [M5](M5-WEB-UI.md).
+
 ## M6-M 국제대회 상대 명단 (2026-10-27)
 
 강 65, 중 55, 약 45. 28명 명단. 경기는 없음. 구단 90% 유지. [M6-M](M6-M-CLUB-OPPONENTS.md).
@@ -647,3 +721,7 @@ FINAL contribution과 같은 경기 중복0/공식 정정 원자 교체, 리그/
 ## 경로·Git 방식
 
 현재 공유 복사본은 `V:\`(동일 UNC 공유 폴더)이며 `V:\.git`은 사용하지 않습니다. 정상 체크아웃은 `C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-repo`입니다. 2026-10-22 최신 지시대로 정상 체크아웃에서 수정·검증·커밋·푸시하고 검증된 변경을 V:에 동기화합니다. node_modules/dist/비밀값은 복사·커밋하지 않습니다. 다른 PC는 이 특수 경로를 만들 필요 없이 정상 로컬 clone에서 작업합니다.
+
+## 2026-10-27 DK 최종 검증
+
+전체 npm run check 종료0: 총695개 중693통과·실패0·Neon환경 부재2개 건너뜀, 웹20/20. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. 엔진/API duration_ms562628.2466, 동결406파일 변경0. 실제 브라우저/Neon/실기기 검증은 아니다. 사용자 최신 지시대로 PC를 종료하지 않고 M2 잔여 구현을 계속한다. 미국 메이저 재계약/FA·옵션소진, 해외복무·국제·장기저장·24경로는 미완료다.

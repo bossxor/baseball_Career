@@ -1,0 +1,152 @@
+{
+  "utc": "2026-10-26T23:42:06.924Z",
+  "head": "7489497767b4270c64c3e61b11752747cfd31024",
+  "status": "CHECK_RUNNING",
+  "parallelDesignPreserved": [
+    "docs/design/12-STYLE-INTERNATIONAL-MILITARY.md",
+    "docs/design/20-INTERNATIONAL-COMPETITIONS.md",
+    "docs/design/14-CANONICAL-DECISIONS.md"
+  ],
+  "files": [
+    {
+      "path": "docs/design/12-STYLE-INTERNATIONAL-MILITARY.md",
+      "after": "f4f86265647309cf15dcbde3bfb8873df84f9b7625449dbdc3fdb78880024270"
+    },
+    {
+      "path": "docs/design/13-MLB-CAREER.md",
+      "after": "85dac5668351f55e43fca66c9d2298ccf95f26d96ded46ff67939ed6c4d023e8"
+    },
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "after": "60b0d5c16e4d09a7668e138c2ad70780d16d80d8ef7590c954d34b1c4c2de33d"
+    },
+    {
+      "path": "docs/design/20-INTERNATIONAL-COMPETITIONS.md",
+      "after": "01c8fc63ec2096dcc6129a972957890dad62e2570b6d6c1f5f214a0b1a597154"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "after": "1e38af94b8bc7ab356b825ceaf4ad1913334db8dfa42eb2479a5165f050c3bca"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "after": "92eb8c5dc0514989e6ff6b8f4e2cab8147e1c7f737fca3061c3c2fe9ebc5b9b7"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "after": "bbc0ae41ccf965caf962e49326bbec4a0f8948ea5d26f42043a7ae9fa8b7bc43"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "after": "1e2c265b3e7ca1957e6c8c18ae1f5f0ec876061256fcea4715b11cdc272a3c93"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "after": "c8c4e97deb78ec358140e31257b2a41c31c6f2bb8709a3f1b50dcd849c9f8a31"
+    },
+    {
+      "path": "packages/engine/src/college-cup.ts",
+      "after": "b6bbc37486a155953c53312087eaa05fa89e2aea330172b505ac57a9789156be"
+    },
+    {
+      "path": "packages/engine/src/college-entry.ts",
+      "after": "d723bb9f7571b972f6aee8f84c3471a5286521a89961b57314edf98ce0265b69"
+    },
+    {
+      "path": "packages/engine/src/college-year.ts",
+      "after": "ddec8a6010f6a2d05f2bf57562fcc0ddd6a8db165ce69a883041c381c1ef3a48"
+    },
+    {
+      "path": "packages/engine/src/events.ts",
+      "after": "3058e1a8f49b14f317cc1ca1075bf8a9de964cbd32916f42ea5a230eecccb971"
+    },
+    {
+      "path": "packages/engine/src/high-school-career.ts",
+      "after": "96a408fd59be83e9664bc306a0af6ddd0900f8423654e0f21a1ff0a424b4611c"
+    },
+    {
+      "path": "packages/engine/src/high-school-progress.ts",
+      "after": "788db3eae3b751189ed6b81ef1bf33fe049da18fe5b3dd4fb6b7bd3403194bab"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "after": "4eaf33eb5986b2589f6f3156c3546c9d49a9f633be4f021664b4702eab56a95c"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "after": "5c1bf5002ff54aeef085554e597937ab0170d407fff9007f070aab11e2fe7b7c"
+    },
+    {
+      "path": "packages/engine/src/kbo-entry.ts",
+      "after": "875efa548fcd04667445ae56e7561f6313a4088b2cb33296a92e059adcaca994"
+    },
+    {
+      "path": "packages/engine/src/kbo-postseason-progress.ts",
+      "after": "6355724e0c14f8d911573ed6a1a414984fbb1b208374af615649264884af3e6e"
+    },
+    {
+      "path": "packages/engine/src/kbo-progress.ts",
+      "after": "232e715425e957b661dc042e46322d2629c4c4e7ce1e23109e043025faa8fabb"
+    },
+    {
+      "path": "packages/engine/src/kbo-retirement.ts",
+      "after": "95e537cfd6b0a074052892f40765c2ea7f53ee552e038955b6e9879f4c298e63"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-end.ts",
+      "after": "fa1b062ec29aeef1a69c1d1914717869669146645a5dff23d361505de38bb218"
+    },
+    {
+      "path": "packages/engine/src/kbo-year-transition.ts",
+      "after": "a1a2f9ce43dff0a815130fb006aae2ed67083b6a05154bd6a9831296eb6736ad"
+    },
+    {
+      "path": "packages/engine/src/us-career-entry.ts",
+      "after": "d16227272adbf0c53a6b96311b885ae1a791d30113fe5eeb194a74110d7523a0"
+    },
+    {
+      "path": "packages/engine/src/us-entry.ts",
+      "after": "db8901d2bb3d1a67cd83a40c89c6bf6f82148bbda0c5e8d06f4f27d6b0a81472"
+    },
+    {
+      "path": "packages/engine/src/us-growth.ts",
+      "after": "ea87c45f1c1857620656be3bf50028d8bd3e63acd93e6edbeb0696fec3a71952"
+    },
+    {
+      "path": "packages/engine/src/us-postseason-progress.ts",
+      "after": "b0d046f305d1886473b7a9a2b4f954dde6039b6b7bbb3bcffb8bf1a8fade0146"
+    },
+    {
+      "path": "packages/engine/src/us-retirement.ts",
+      "after": "82a936e372fb6f8bc9cde4d2261842dcffb049137f7c7f7f37508a11889bb884"
+    },
+    {
+      "path": "packages/engine/src/us-season.ts",
+      "after": "b28538d23a3c340d4499cc8452a896ca37814c07a6d0e7945e3897bc1ef8368f"
+    },
+    {
+      "path": "packages/engine/src/us-year-transition.ts",
+      "after": "b22ff1b6b8b1b0906373c61d8f7fa1556bc30d67782c7071048b57359e24a3c4"
+    },
+    {
+      "path": "docs/implementation/M2-DM-SEASON-GOALS.md",
+      "after": "53ca4a1571f22c1f69b0f96f9699fb5c9076a90a885176a9b93dbf73b7960d5d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DM-goals-focused.log",
+      "after": "c0827fd0d2ca3530faf312b165447979b40f3b4d2506b29c3e324e77492f010c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DM-source-freeze.json",
+      "after": "641cd2eb1d1dddddcd0065c3e93622af22dbf9eb0c8eab0322617f3c4c7eaaf3"
+    },
+    {
+      "path": "packages/engine/src/season-goals.ts",
+      "after": "5ac824877f8e6eeeed5936a253803e306eafffd73faa92b1a8808a2954d1c274"
+    },
+    {
+      "path": "packages/engine/test/season-goals.test.ts",
+      "after": "496024a684718cc6aa66bd3a13310b15083eed8665404939f6a56103809026d9"
+    }
+  ]
+}

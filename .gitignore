@@ -13,3 +13,12 @@ Thumbs.db
 
 # Large native verification snapshots are preserved locally, outside Git.
 /.local-verification/
+
+# Capacitor / Android build outputs (keep project sources)
+apps/web/android/app/build/
+apps/web/android/.gradle/
+apps/web/android/build/
+apps/web/android/local.properties
+apps/web/android/app/src/main/assets/public/
+*.apk
+*.aab

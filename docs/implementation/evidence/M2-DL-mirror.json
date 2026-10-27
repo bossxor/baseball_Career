@@ -1,0 +1,78 @@
+{
+  "utc": "2026-10-26T22:47:20.030Z",
+  "status": "CHECK_RUNNING",
+  "files": [
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "after": "f5a6bc2bbd33fdc49e0c30ea166ca65f1c5e2661a8754f2aac7ea807c5002160"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "after": "fccf7c87a8b012b87a6da6c4039149f9f1da90ec70278158a6b2c382313b3fda"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "after": "e07f6739fe5e5e354261aac82d8b8a9e1cbd6007968d94b77fefa95423e818ed"
+    },
+    {
+      "path": "docs/implementation/M2-COMPLETION-PLAN.md",
+      "after": "2854363e1c97462857b75eb9e10ac874410525b798db15be02a2cb892ce03082"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "after": "2c938c58a05d3ca4401f8abe53d9a23359b10b72ccaeff9b1e029d1d3442ef04"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "after": "b40a42598e6f8ac6594300c4246cf2f0ea55db41e4d5fd92b375a4a042b401dd"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "after": "df7acdd31d6f16025311490a68eb5b844a1a13ae5be6d026bfd8e79dbdf20bba"
+    },
+    {
+      "path": "packages/engine/src/us-career-entry.ts",
+      "after": "7019968bc7de57da280dd49c0ff78aac983cb17cc6ec70a74fd0b891d0b86f2a"
+    },
+    {
+      "path": "packages/engine/src/us-season.ts",
+      "after": "c1a48fe3adf365a21c786b64c76b12691766c4f146add663f7151a145b41bf40"
+    },
+    {
+      "path": "packages/engine/test/us-year-transition.test.ts",
+      "after": "cb97abe0520452268096fc041eea7ffe5b48d7261691c937f92c73e7e655dcc4"
+    },
+    {
+      "path": "docs/implementation/M2-DL-US-RETIREMENT-ARCHIVE.md",
+      "after": "4097124b9d5e5efd3f02173d9a58e8b966dc2f1bb8449a547ff004c4b26492af"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DL-retirement-focused.log",
+      "after": "aac1ac330f33a8c2d22a0a2e6662919b2e7872320a349197ac565cbcba883437"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DL-source-freeze.json",
+      "after": "b5930f7e16097e65e91d99d1b612a9cd2870677525e864b07ee87d504c506bf0"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DL-superseded-focused.log",
+      "after": "533cb3b20aedfb6a23f0dc97f4dac9e253536fb864b3de8af0169bd32f697951"
+    },
+    {
+      "path": "packages/engine/src/us-archive-view.ts",
+      "after": "8b27b39c2d5e218b1a809d7cbf4ed3515d98d9dd505f57885d9fbad9a9de5e34"
+    },
+    {
+      "path": "packages/engine/src/us-retirement.ts",
+      "after": "eeec803679d6a79b7453815b6786e1bd3cc0be875dbdb5e9041d686c868784c0"
+    },
+    {
+      "path": "packages/engine/test/us-finished-fixture.ts",
+      "after": "1eb1402d1a79729be9f99da210da9cc0527b7e7aefc35a0f91ef741d66520333"
+    },
+    {
+      "path": "packages/engine/test/us-retirement.test.ts",
+      "after": "c9640482be6255d7cb1bfee1fa83aef430501eef5681426e1bfa1a5c2714be9c"
+    }
+  ]
+}

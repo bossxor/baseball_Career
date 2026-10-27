@@ -1,0 +1,21 @@
+✔ US full-date annual settlement pays one PRO budget, all opening NPCs and one aging; explicit forfeiture and replay keep receipts (36893.7692ms)
+✔ US annual audit refuses changed FINAL totals and incomplete date receipts before awarding growth (5391.8832ms)
+M2-DJ native postseason proof: {"regularFixture":"controlled8790","nativePostseasonGames":46,"champion":"US25","firstDay":240,"lastDay":285,"paidUsd":30000}
+✔ MLB fixed 12-team bracket gives two byes per league, preserves WC upsets and plays all four rounds (476.879ms)
+✔ MLB all decisive games reach exactly53; JSON replays and edited wins, winners or seeds reject (567.6593ms)
+✔ US native postseason follows controlled completed regular records, resumes a real partial PA and closes one champion without extra salary (117676.3337ms)
+M2-DK year continuation proof: {"from":"2030","to":"2031","nativeNewSeasonGames":75,"oldRecords":9038,"schema":3,"signingBonuses":1}
+✔ annual stage ages survivors once, retires45 NPCs through Rookie supply, preserves history and has no active/root or salary write (39270.357ms)
+✔ readiness is private-state-free and blocks unfinished seasons, pitch reservations and age28 military deadline (10140.0049ms)
+✔ stale revisions and altered final playoff records fail before changing the source or producing a new world (9561.4027ms)
+✔ an already-closed health year is not mutated while an injured retiring NPC leaves the staged world (6994.3492ms)
+✔ minor year activation preserves legacy input, every official record and one signing bonus; the new season plays a native first date (73601.9385ms)
+✔ annual funding and new history tampering fail without a second budget credit or source mutation (9930.6603ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 154410.6837

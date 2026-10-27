@@ -1,0 +1,6 @@
+{
+  "utc": "2026-10-26T06:52:47.536Z",
+  "meaning": "Merge parallel M6-F reported progress into M2 status. Preserve M6 branch status and overall weighted78%; no M6 runtime admitted or tested in M2 gate.",
+  "otherDesignDifferences": [],
+  "originalVsha": "49065732b257467f26481ac64dd779705f456510d3ed6862254faf5eb4516ea0"
+}
