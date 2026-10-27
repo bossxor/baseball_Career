@@ -1,6 +1,6 @@
 ## 최신 작업 — M2-EE 검증 완료
 
-[EE 상세](M2-EE-NATIONAL-PHASE-DAY-AUDIT.md). 새 국제 단계·14일 연속 날짜/건강 감사·E48 정규 복귀, FINAL XP 원본 참조 공유 수정. 집중22/22. 전체 npm run check 종료0: 엔진/API 769개 중767통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 633942.4905, 동결 대상454파일 변경0(비문서 파일·기존 root/evidence 포함). 실제 Neon/브라우저/APK 검증은 아니다. AG 전 정규 구간은 통제 prefix이며 전체 시즌 아님. WBC 개막 날짜 충돌 사용자 답변 대기. M2약55% 유지·완료 아님. PC 종료 금지.
+기능 `fa61a6e319df58ab452ca024664d30d782195b68` 원격 푸시 확인. [EE 상세](M2-EE-NATIONAL-PHASE-DAY-AUDIT.md). 새 국제 단계·14일 연속 날짜/건강 감사·E48 정규 복귀, FINAL XP 원본 참조 공유 수정. 집중22/22. 전체 npm run check 종료0: 엔진/API 769개 중767통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 633942.4905, 동결 대상454파일 변경0(비문서 파일·기존 root/evidence 포함). 실제 Neon/브라우저/APK 검증은 아니다. AG 전 정규 구간은 통제 prefix이며 전체 시즌 아님. WBC 개막 날짜 충돌 사용자 답변 대기. M2약55% 유지·완료 아님. PC 종료 금지.
 
 ## 최신 작업 — M2-ED 검증 완료
 

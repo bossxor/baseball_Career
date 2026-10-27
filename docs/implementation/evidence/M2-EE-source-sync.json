@@ -15,19 +15,19 @@
   "files": [
     {
       "path": "docs/design/DESIGN-ALL.md",
-      "sha256": "c1c0540727547c0a7ca274a9ae1a002fca339bf7baf3170802c948e32ff6c6db"
+      "sha256": "a5f9b10dc79b4a5d12466c762b116b412deb2d56f5fc7a10379bd0af46e7398e"
     },
     {
       "path": "docs/design/MANIFEST-SHA256.csv",
-      "sha256": "b4455ef5e909b1cd4d04112e894337ebb91ce44849a75e566adf94e419e33de0"
+      "sha256": "56e1cfc62f44fde290c7db075828099f7f8cc55b36856224e604ef88118da0d3"
     },
     {
       "path": "docs/design/STATUS.md",
-      "sha256": "f124e28efc259f25012523b853acbbb3221b5f7855ded528c7d11a1e911e22b2"
+      "sha256": "6b37471a68657302105ef579fb5ccdd3cb48ac5d58c0965d6651e8b6736d3917"
     },
     {
       "path": "docs/implementation/HANDOFF-TO-GPT.md",
-      "sha256": "980f52ea93a41ec94a45b9f77d2498a16657f93e6066ce42860656a61008d186"
+      "sha256": "23cf36ef82c14c507a7c8abb339b0897f4b284f9340bb9f32ddaedf16a4a8bdb"
     },
     {
       "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.json",
@@ -39,11 +39,11 @@
     },
     {
       "path": "docs/implementation/NEXT-SESSION.md",
-      "sha256": "e44e6a25b792804ef0c678ac223e469f2a85d958c84e77c9ba0056ce9a702d92"
+      "sha256": "57193f14c6637218822be43244872094d5707c67222123e1cd8fd4e333c6b943"
     },
     {
       "path": "docs/implementation/PROGRESS.md",
-      "sha256": "5f9206e9e77128bfe7c2f88b6b1491bb111d682ee6c938da5262b8548e2fc4a1"
+      "sha256": "4ae6b02499bd7a8f26efead7dea5cf8694fe235219e5a5e4fc88c7c1bd7cab85"
     },
     {
       "path": "packages/engine/src/index.ts",
@@ -117,5 +117,7 @@
       "path": "packages/engine/src/national-day-audit.ts",
       "sha256": "ec467cedda59f31bb41e4f875e34fa9604fdf9e01e9de6bb62551566a4e9d65a"
     }
-  ]
+  ],
+  "featureCommit": "fa61a6e319df58ab452ca024664d30d782195b68",
+  "pinNote": "Follow-up documentation pin only; original full-check source-freeze preserved."
 }
