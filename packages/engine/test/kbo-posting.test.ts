@@ -44,8 +44,11 @@ test('posting needs seven closed registered seasons, completed military and an o
 
 test('club score defers below 65 without touching the contract, and approval opens a fixed offer set',()=>{
  const weak=postingCareer({ovr:40,poorForm:true});let c=requestKboPosting(weak,weak.revision);const before=canonicalJson(c.world.contracts[c.protagonistKey]);c=resolveKboPostingClub(c,c.revision);assert.equal(c.posting!.windows[0]!.status,'DEFERRED');assert.ok((c.posting!.windows[0]!.approvalScore??0)<65);assert.equal(canonicalJson(c.world.contracts[c.protagonistKey]),before);assert.throws(()=>requestKboPosting(c,c.revision),/NOT_ELIGIBLE/);
+ const deferred=c.events.find(e=>e.definitionId==='E63'&&e.status==='OPEN');assert.ok(deferred);assert.equal(deferred!.postingDecision,'DEFERRED');
  const strong=postingCareer({ovr:80});let s=requestKboPosting(strong,strong.revision);s=resolveKboPostingClub(s,s.revision);assert.equal(s.posting!.windows[0]!.status,'APPROVED');assert.ok((s.posting!.windows[0]!.approvalScore??0)>=65);
+ assert.equal(s.events.find(e=>e.definitionId==='E63'&&e.status==='OPEN')!.postingDecision,'APPROVED');
  s=openKboPostingOffers(s,s.revision,10);const first=canonicalJson(s.posting!.windows[0]!.offers);assert.throws(()=>openKboPostingOffers(s,s.revision,10),/OFFERS_NOT_AVAILABLE/);assert.equal(canonicalJson(s.posting!.windows[0]!.offers),first);assert.ok((s.posting!.windows[0]!.offers?.length??0)<=3);
+ assert.equal(s.events.find(e=>e.definitionId==='E63')!.status,'RESOLVED');assert.ok(s.events.some(e=>e.definitionId==='E64'&&e.status==='OPEN'));
  const rejected=expireOrRejectKboPosting(s,s.revision,'REJECTED');assert.equal(rejected.posting!.windows[0]!.status,'REJECTED');assert.equal(canonicalJson(rejected.world.contracts[rejected.protagonistKey]),canonicalJson(s.world.contracts[s.protagonistKey]));
 });
 

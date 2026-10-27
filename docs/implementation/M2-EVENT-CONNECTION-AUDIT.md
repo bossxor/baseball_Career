@@ -68,8 +68,8 @@ DV의5개는 집중 검사16개에 포함된 도메인/자격·복귀/의무 알
 | E60 메이저리그의 전화 | REGISTRATION | DOMAIN:CONFIRM_CALLUP | NOT_AUDITED | [us-levels.ts:26](../../packages/engine/src/us-levels.ts) |
 | E61 다시 내려가는 길 | REGISTRATION | DOMAIN:CONFIRM_DEMOTION<br>NAVIGATE:OPEN_RIGHTS | NOT_AUDITED | [us-levels.ts:26](../../packages/engine/src/us-levels.ts) |
 | E62 포스팅을 요청하다 | CONTRACT | DOMAIN:REQUEST_POSTING<br>ACK:ACK_EVENT | NOT_AUDITED |  |
-| E63 구단의 대답 | CONTRACT | NAVIGATE:OPEN_POSTING_OFFERS<br>ACK:ACK_EVENT | NOT_AUDITED |  |
-| E64 협상의 끝 | CONTRACT | DOMAIN:ACCEPT_CAREER_OFFER<br>DOMAIN:REMAIN_ORIGINAL | NOT_AUDITED |  |
+| E63 구단의 대답 | CONTRACT | NAVIGATE:OPEN_POSTING_OFFERS<br>ACK:ACK_EVENT | FOCUSED_VERIFIED_EA | [kbo-posting.ts](../../packages/engine/src/kbo-posting.ts) resolveKboPostingClub 봉인 decision |
+| E64 협상의 끝 | CONTRACT | DOMAIN:ACCEPT_CAREER_OFFER<br>DOMAIN:REMAIN_ORIGINAL | FOCUSED_VERIFIED_EA | openKboPostingOffers 후 큐; 체결 시 오픈 사건 취소. ACCEPT/REMAIN 도메인 재개는 후속 |
 | E65 처음 선 빅리그 | REGISTRATION | ACK:ACK_EVENT | FOCUSED_AND_FULL_DW_PASS |  |
 | E66 미국에서 맞는 FA | ROUTE | NAVIGATE:OPEN_CAREER_OFFERS<br>NAVIGATE:OPEN_RETURN | NOT_AUDITED |  |
 | E67 돌아갈 그라운드 | ROUTE | DOMAIN:CONFIRM_DOMESTIC_RETURN<br>DOMAIN:CANCEL_RETURN | NOT_AUDITED |  |

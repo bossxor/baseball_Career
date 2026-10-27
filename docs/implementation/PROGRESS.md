@@ -1,3 +1,7 @@
+## 최신 작업 — M2-EA 검증 완료
+
+[EA 상세](M2-EA-POSTING-EVENTS.md). E63 sealed decision 큐·E64 오픈·체결 시 취소. 집중 posting 6/6. 전체 check 765/763·Neon2·웹22/22·스모크. duration_ms 624903. 증거 `evidence/M2-EA-check.log`. M2≈53%(E62·ACCEPT/REMAIN·99잔여 미완). PC 종료 금지.
+
 ## 최신 작업 — M2-DZ 검증 완료
 
 [DZ 상세](M2-DZ-US-MILITARY-18MO.md). 해외 18개월 2블록·즉시 COMPLETED 거절. 집중1/1. 전체 check 765/763·Neon2·웹22/22·스모크. duration_ms 710245. M2≈53%. 다음=국제 일마감/99/24/PF. PC 종료 금지.

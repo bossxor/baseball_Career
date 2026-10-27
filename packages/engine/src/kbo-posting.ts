@@ -11,6 +11,8 @@ import {createWorldStream,nextInteger} from './rng.js';
 import {selectKboFirstTeamRoster} from './kbo-world.js';
 import type {DevelopmentPlayer} from './player.js';
 import type {KboInitialContract} from './kbo-world.js';
+import {createWorldEvent,eventDefinition,resolveEventChoice,completeBlockingEvent,cancelInvalidEvent,validateEvent} from './events.js';
+import type {EventInstance} from './events.js';
 
 export const KBO_POSTING_APPROVAL_SCORE=65;
 export const KBO_POSTING_WINDOW_DAYS=30;
@@ -65,11 +67,29 @@ export function requestKboPosting(c:KboCareer,revision:number):KboCareer {
  next.posting={windows:[...(next.posting?.windows??[]).filter(w=>w.postingId!==postingId),{postingId,seasonKey:c.world.seasonKey,requestedRevision:revision,clubId:c.protagonistClubId,status:'REQUESTED'}]};next.revision++;return next;
 }
 
-/** Score = recent×0.6 + role×0.4. No redraw. Below 65 defers; the contract stays. */
+function postingEvent(c:KboCareer,id:'E63'|'E64',postingId:string,stage:string,postingDecision?:'APPROVED'|'DEFERRED'):EventInstance {
+ const d=eventDefinition(id),day=c.days?.seasonKey===c.world.seasonKey?c.days.days.at(-1)?.day??0:0;
+ return createWorldEvent({definitionId:id,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:d.evidenceDomain,fields:{playerSimulationKey:c.protagonistKey,postingWindowId:postingId,stage}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'SEASON_REVIEW',competitionKey:null,registrationKey:c.protagonistClubId,sourceRevision:c.revision+1},sourceSequence:c.events.length+1,worldDay:day,...(postingDecision?{postingDecision}:{})});
+}
+
+/** Score = recent×0.6 + role×0.4. No redraw. Below 65 defers; the contract stays. Queues E63 with the sealed club decision. */
 export function resolveKboPostingClub(c:KboCareer,revision:number):KboCareer {
  assertKboCareerRevision(c,revision);offseason(c);const open=current(c);if(!open||open.status!=='REQUESTED')throw new RangeError('KBO_POSTING_REQUEST_REQUIRED');
  const p=performance(c),score=p.recent*.6+p.role*.4,decision:'APPROVED'|'DEFERRED'=score>=KBO_POSTING_APPROVAL_SCORE?'APPROVED':'DEFERRED';
- const next=structuredClone(c),w=next.posting!.windows.find(x=>x.postingId===open.postingId)!;w.approvalScore=score;w.decision=decision;w.status=decision;next.revision++;return next;
+ const next=structuredClone(c),w=next.posting!.windows.find(x=>x.postingId===open.postingId)!;w.approvalScore=score;w.decision=decision;w.status=decision;
+ const event=postingEvent(next,'E63',open.postingId,decision,decision);if(!next.events.some(e=>e.eventKey===event.eventKey))next.events=[...next.events,event];
+ next.revision++;return next;
+}
+
+/** ACK deferred E63 or navigate-approved path after the sealed club decision. */
+export function resolveKboPostingEvent(c:KboCareer,revision:number,input:{eventKey:string;eventVersion:number;command:string}) {
+ assertKboCareerRevision(c,revision);const e=c.events.find(x=>x.eventKey===input.eventKey);
+ if(!e||e.definitionId!=='E63'||e.evidence.fields.playerSimulationKey!==c.protagonistKey||e.seasonKey!==c.world.seasonKey)throw new RangeError('INVALID_KBO_POSTING_EVENT');
+ validateEvent(e);const open=current(c);if(!open||open.postingId!==e.evidence.fields.postingWindowId||open.decision!==e.postingDecision)throw new RangeError('KBO_POSTING_DECISION_CHANGED');
+ const ctx={worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:e.offeredChoices};
+ const picked=resolveEventChoice(e,input.eventVersion,input.command,null,ctx);
+ if(picked.navigation)return {career:c,navigation:picked.navigation};
+ const next={...c,events:c.events.map(x=>x.eventKey===e.eventKey?picked.event:x)};next.revision++;return {career:next,navigation:null};
 }
 
 function buildOffers(c:KboCareer,postingId:string):KboPostingOffer[] {
@@ -81,11 +101,15 @@ function buildOffers(c:KboCareer,postingId:string):KboPostingOffer[] {
  return offers.sort((a,b)=>a.organizationId<b.organizationId?-1:1);
 }
 
-/** Fixed offer set for the approved window. Refresh does not redraw. */
+/** Fixed offer set for the approved window. Refresh does not redraw. Closes blocking E63 and queues E64. */
 export function openKboPostingOffers(c:KboCareer,revision:number,issuedWorldDay:number):KboCareer {
  assertKboCareerRevision(c,revision);offseason(c);const open=current(c);if(!open||open.status!=='APPROVED'||open.offers)throw new RangeError('KBO_POSTING_OFFERS_NOT_AVAILABLE');
  if(!Number.isSafeInteger(issuedWorldDay)||issuedWorldDay<0)throw new RangeError('INVALID_KBO_POSTING_DAY');
- const next=structuredClone(c),w=next.posting!.windows.find(x=>x.postingId===open.postingId)!;w.offers=buildOffers(c,open.postingId);w.issuedWorldDay=issuedWorldDay;w.expiresWorldDay=issuedWorldDay+KBO_POSTING_WINDOW_DAYS;next.revision++;return next;
+ const next=structuredClone(c),w=next.posting!.windows.find(x=>x.postingId===open.postingId)!;w.offers=buildOffers(c,open.postingId);w.issuedWorldDay=issuedWorldDay;w.expiresWorldDay=issuedWorldDay+KBO_POSTING_WINDOW_DAYS;
+ const e63=next.events.find(e=>e.definitionId==='E63'&&e.status==='OPEN'&&e.evidence.fields.postingWindowId===open.postingId&&e.postingDecision==='APPROVED');
+ if(e63){const ctx={worldKey:next.world.worldKey,seasonKey:next.world.seasonKey,worldDay:e63.occurredWorldDay,eligibleCommands:e63.offeredChoices};const closed=completeBlockingEvent(e63,e63.version,{sourceEvidenceKey:e63.evidenceKey,receiptKey:JSON.stringify(['kbo-posting-offers',open.postingId]),command:'OPEN_POSTING_OFFERS'},ctx);next.events=next.events.map(e=>e.eventKey===e63.eventKey?closed:e);}
+ const e64=postingEvent(next,'E64',open.postingId,'OFFERS');if(!next.events.some(e=>e.eventKey===e64.eventKey))next.events=[...next.events,e64];
+ next.revision++;return next;
 }
 
 export function expireOrRejectKboPosting(c:KboCareer,revision:number,reason:'EXPIRED'|'REJECTED'):KboCareer {
@@ -113,5 +137,9 @@ export function acceptKboPostingOffer(c:KboCareer,revision:number,offerKey:strin
  if(club.reservedSalaryWon<contract.annualSalaryWon)throw new RangeError('KBO_POSTING_PAYROLL_CHANGED');club.reservedSalaryWon-=contract.annualSalaryWon;club.budgetWon+=compensationWon;
  if(club.roster.length>=KBO_ROSTER_LIMITS.firstTeam){const first=selectKboFirstTeamRoster(club.roster.map(k=>next.world.players[k]!));if(first.length===KBO_ROSTER_LIMITS.firstTeam)club.firstTeam=first;}
  const w=next.posting!.windows.find(x=>x.postingId===open.postingId)!;w.status='SIGNED';w.signedOfferKey=offerKey;w.compensationWon=compensationWon;w.returnRights=returnRights;w.sealedPlayer=sealedPlayer;w.sealedContract=sealedContract;w.offers=open.offers;
+ for(const e of next.events.filter(x=>x.status==='OPEN'&&['E63','E64'].includes(x.definitionId)&&x.evidence.fields.postingWindowId===open.postingId)){
+  const ctx={worldKey:next.world.worldKey,seasonKey:next.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:e.offeredChoices};
+  next.events=next.events.map(x=>x.eventKey===e.eventKey?cancelInvalidEvent(e,e.version,'POSTING_SIGNED',ctx):x);
+ }
  next.phaseContext={phase:'ARCHIVED'};next.revision++;return next;
 }

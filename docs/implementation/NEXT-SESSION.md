@@ -1,3 +1,7 @@
+## 최신 작업 — M2-EA 검증 완료
+
+[EA 상세](M2-EA-POSTING-EVENTS.md). E63/E64 포스팅 큐·완료/취소. 전체 check 765/763·Neon2·웹22/22. duration_ms 624903. M2≈53%. 다음=E62·E64 ACCEPT/REMAIN·99잔여·국제 일마감·24/PF-D. M6 금지. PC 종료 금지.
+
 ## 최신 작업 — M2-DZ 검증 완료
 
 [DZ 상세](M2-DZ-US-MILITARY-18MO.md). 해외18개월 2블록. 전체 check 765/763. M2≈53%. 다음=국제 일마감/기한·99사건·24경로/PF-D. M6 금지. PC 종료 금지.

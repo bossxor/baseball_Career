@@ -1,3 +1,10 @@
+# 최신 인계 — M2-EA 포스팅 E63/E64 큐 (2026-10-27)
+
+[EA 상세](M2-EA-POSTING-EVENTS.md). 브랜치 `codex/m2-career-engine`. 기능 팁은 이 커밋(DZ `3de576a` 위).  
+`resolveKboPostingClub`→E63(+`postingDecision`)·`openKboPostingOffers`→blocking E63 완료+E64·체결 시 오픈 E63/E64 취소.  
+전체 check 765/763·Neon2·웹22/22·스모크. duration_ms 624903. 증거 `evidence/M2-EA-check.log`.  
+미연결: E62 초청 큐, E64 ACCEPT/REMAIN 도메인 재개, 국제 일마감/기한, 99잔여, 24경로/PF-D. M6·PC종료 금지. V: 문서만 Copy-Item.
+
 # 최신 인계 — M2-DZ 해외 18개월 병역 달력 (2026-10-27)
 
 [DZ 상세](M2-DZ-US-MILITARY-18MO.md). 브랜치 `codex/m2-career-engine`. 기능 팁 **`3de576a`**(DY `198eede` 위).  

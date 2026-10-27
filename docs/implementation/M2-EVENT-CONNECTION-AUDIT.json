@@ -1745,9 +1745,14 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
-      "references": [],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "verification": "FOCUSED_VERIFIED_EA",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "kind": "DOMAIN"
+        }
+      ],
+      "note": "resolveKboPostingClub queues E63 with sealed postingDecision; openKboPostingOffers completes blocking E63 and queues E64; accept cancels open posting events."
     },
     {
       "id": "E64",
@@ -1764,9 +1769,14 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
-      "references": [],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "verification": "FOCUSED_VERIFIED_EA",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "kind": "DOMAIN"
+        }
+      ],
+      "note": "resolveKboPostingClub queues E63 with sealed postingDecision; openKboPostingOffers completes blocking E63 and queues E64; accept cancels open posting events."
     },
     {
       "id": "E65",

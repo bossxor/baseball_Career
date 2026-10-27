@@ -1,6 +1,8 @@
 # 전체 구현 진행률: 약 83% 완료 · 약 17% 남음
 
-**M2 기준: 약53% 완료 · 약47% 남음.** 범위 가중 보수적 추정이며 위83%는 프로젝트 전체다. DZ는 해외18개월 블록 경과 강제까지. 국제 일마감/미국풀/99/24는 잔여.
+**M2 기준: 약53% 완료 · 약47% 남음.** 범위 가중 보수적 추정이며 위83%는 프로젝트 전체다. EA는 포스팅 E63/E64 큐만. E62·ACCEPT/REMAIN·국제 일마감/미국풀/99잔여/24는 잔여.
+
+**M2-EA 검증 완료 (2026-10-27):** 포스팅 구단결정 E63·오퍼 E64 큐/완료/취소. 전체 npm run check 종료0: 765/763·Neon2·웹22/22·스모크. duration_ms 624903. [EA](../implementation/M2-EA-POSTING-EVENTS.md).
 
 **M2-DZ 검증 완료 (2026-10-27):** 미국 FREEZE/TERMINATE에 18개월 2블록 봉인·정산 전 COMPLETED 거절. 집중1/1. 전체 npm run check 종료0: 765/763·Neon2·웹22/22·스모크. duration_ms 710245. native 2시즌 E2E 아님. [DZ](../implementation/M2-DZ-US-MILITARY-18MO.md).
 
