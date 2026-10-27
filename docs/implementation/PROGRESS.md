@@ -1,10 +1,10 @@
+# M2-DU 최신 작업 — 아시안게임 실제 대진
+
+2026-10-27 · [상세](M2-DU-ASIAN-GAMES.md). AG 8개국 INTERNATIONAL 실경기·봉인. 전체 npm run check 종료 0: 736개 중 734 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 776919.0793. 증거 `evidence/M2-DU-check.log`. M2 추정 50% 유지. 다음=E44–48/E55·99·24·PF-D.
+
 # M2-DT 최신 작업 — 국가대표 차출·병역 혜택
 
-2026-10-27 · [상세](M2-DT-NATIONAL-BENEFIT.md). 초청/결과 봉인·ATHLETE_ELIGIBLE·체육요원3시즌. 선발대진·국제경기는 다음. 전체 npm run check 종료 0: 735개 중 733 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 619230.9032. 증거 `evidence/M2-DT-check.log`. M2 추정 50% 유지.
-
-# M2-DT 최신 작업 — 국가대표 차출·병역 혜택
-
-2026-10-27 · [상세](M2-DT-NATIONAL-BENEFIT.md). 초청/결과 봉인·ATHLETE_ELIGIBLE·체육요원3시즌. 선발대진·국제경기는 다음. 전체 npm run check 종료 0: 735개 중 733 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 619230.9032. 증거 `evidence/M2-DT-check.log`. M2 추정 50% 유지.
+2026-10-27 · [상세](M2-DT-NATIONAL-BENEFIT.md). 초청/결과 봉인·ATHLETE_ELIGIBLE·체육요원3시즌. 전체 npm run check 종료 0: 735개 중 733 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 619230.9032. 증거 `evidence/M2-DT-check.log`. M2 추정 50% 유지.
 
 # M2-DS 최신 작업 — 해외 병역 기한 계획
 

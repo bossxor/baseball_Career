@@ -2,7 +2,9 @@
 
 **M2 기준: 약50% 완료 · 약50% 남음.** 범위 가중 보수적 추정이며 위83%는 프로젝트 전체다.
 
-**M2-DT 구현 (2026-10-27):** 국가대표 초청/결과 봉인·ATHLETE_ELIGIBLE·체육요원 3시즌. 선발대진·국제경기는 다음. [DT](../implementation/M2-DT-NATIONAL-BENEFIT.md). M2 영역 약 50% 유지.
+**M2-DU 구현 (2026-10-27):** AG 8개국 실제 INTERNATIONAL 대진·경기·결과 봉인. [DU](../implementation/M2-DU-ASIAN-GAMES.md). M2 영역 약 50% 유지.
+
+**M2-DT 구현 (2026-10-27):** 국가대표 초청/결과 봉인·ATHLETE_ELIGIBLE·체육요원 3시즌. [DT](../implementation/M2-DT-NATIONAL-BENEFIT.md). M2 영역 약 50% 유지.
 
 **M2-DS 구현 (2026-10-27):** 미국 28세 병역 기한 FREEZE/TERMINATE·완료. 한국 등록 미생성. [DS](../implementation/M2-DS-US-MILITARY-PLAN.md). M2 영역 약 50% 유지(국가대표·99·24경로 잔여).
 
@@ -38,7 +40,7 @@ M5: **완료(셸)** — 33화면 Decision 스텁·라우트·fixture/API. 픽셀
 
 **M6 기능 마감(2026-10-27, `m6/club-mode`):** A~M. M6-M은 상대 명단 강 65, 중 55, 약 45다. 대회 경기를 치르지 않아 구단 90%(기여 18), 전체 83%를 유지한다. [마감](https://github.com/bossxor/baseball_Career/blob/m6/club-mode/docs/implementation/M6-CLOSE.md).
 
-**현재 작업:** M2는 DT 국가대표 혜택까지다. 선발대진·국제경기·99사건·24경로·PF-D는 남았다. 구단은 상대 명단까지이며 대회 경기와 L04 실주행은 아직이다. 실 DNS·실기기는 후속.
+**현재 작업:** M2는 DU 아시안게임까지다. E44–48/E55·99사건·24경로·PF-D·WBC/OLY는 남았다. 구단은 상대 명단까지이며 L04 실주행은 아직이다. 실 DNS·실기기는 후속.
 
 | 구현 영역 | 전체 비중 | 영역 완료 추정 | 전체 기여 |
 |---|---:|---:|---:|

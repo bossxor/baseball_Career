@@ -1,6 +1,6 @@
-## 인계 — 2026-10-27 DT까지 푸시, GPT 이어감
+## 인계 — 2026-10-27 DU까지 푸시, GPT 이어감
 
-푸시 팁 `86f068b`(DT). [HANDOFF-TO-GPT](HANDOFF-TO-GPT.md). WIP: AG `national-tournament.ts` 미커밋·DU check 진행 가능. 다음=DU 마감→E44–48/E55→99잔여→24경로·PF-D. M2 미완료·약50%. PC 종료 금지.
+DT `86f068b` + DU(AG 실경기) 푸시. [HANDOFF-TO-GPT](HANDOFF-TO-GPT.md). 다음=E44–48/E55→99잔여→24경로·PF-D. M2 미완료·약50%. PC 종료 금지.
 
 ## 최신 상태 — M2-DT 국가대표 혜택 · 전체 검사 통과
 

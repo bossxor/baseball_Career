@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import {stagedKboOffseason} from './kbo-offseason-fixtures.js';
 import {canonicalJson} from '../src/game.js';
 import {sealNationalCompetitionResult,confirmAthleteService,advanceAthleteDutySeason,nationalAthleteEligible,openNationalCallup,respondNationalCallup} from '../src/kbo-national.js';
+import {playAsianGamesTournament,asianGamesNationPreset} from '../src/national-tournament.js';
 import type {KboCareer} from '../src/kbo-career-entry.js';
+import {HITTER_ABILITIES} from '@playball/rules';
 
 function base():KboCareer {
  const s=stagedKboOffseason(0);
@@ -38,4 +40,15 @@ test('INT14 OLY bronze with appearance becomes ATHLETE_ELIGIBLE once; INT15 comp
  const done=base();done.military={status:'COMPLETED',applications:[]};
  const honor=sealNationalCompetitionResult(done,done.revision,{competitionId:'ag-gold-done',tournament:'AG',seasonKey:done.world.seasonKey,medal:'GOLD',finalRank:1,officialAppearance:true,registered:true,resultVersion:1});
  assert.equal(honor.military!.status,'COMPLETED');assert.equal(honor.national!.benefits.length,0);
+});
+
+test('AG tournament plays real INTERNATIONAL games and can grant ATHLETE_ELIGIBLE on gold+appearance',()=>{
+ assert.equal(asianGamesNationPreset().length,8);
+ const c=base();const p=c.world.players[c.protagonistKey]!;p.kind='HITTER';p.position='CF';p.bats='R';p.abilities=Object.fromEntries(HITTER_ABILITIES.map(a=>[a,650_000]));
+ const invited=openNationalCallup(c,c.revision,'AG'),accepted=respondNationalCallup(invited,invited.revision,invited.national!.invitations[0]!.selectionId,'ACCEPT');
+ assert.throws(()=>playAsianGamesTournament(c,c.revision),/CALLUP_REQUIRED/);
+ const done=playAsianGamesTournament(accepted,accepted.revision);
+ assert.equal(done.national!.competitions[0]!.tournament,'AG');assert.ok(done.national!.competitions[0]!.finalRank>=1);
+ if(done.national!.competitions[0]!.medal==='GOLD'&&done.national!.competitions[0]!.officialAppearance)assert.equal(done.military!.status,'ATHLETE_ELIGIBLE');
+ assert.throws(()=>playAsianGamesTournament(done,done.revision),/ALREADY_PLAYED|ALREADY_SEALED/);
 });
