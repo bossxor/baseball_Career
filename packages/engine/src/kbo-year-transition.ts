@@ -21,6 +21,7 @@ import {retireKboOverAgeNpcs} from './kbo-retirement.js';
 import {draftKboRookieClass} from './kbo-supply.js';
 import {completeSangmuBlock} from './kbo-military-program.js';
 import {kboMilitaryStatus,kboMilitaryPlan,advanceKboMilitaryService} from './kbo-military-state.js';
+import {advanceAthleteDutySeason} from './kbo-national.js';
 import {returnSangmuPlayers} from './kbo-sangmu-unit.js';
 import {leagueStandings} from './standings.js';
 
@@ -111,7 +112,7 @@ export function startNextKboSeason(source:KboCareer,expectedRevision:number):Kbo
 // Military unit carries over: members age and reset their books like everyone else, the block of the season just played is
 // recorded complete on its last day, and finished programs rejoin their club's Futures squad (full clubs wait in the unit).
 // Legacy/NPC unit members still complete at year close; versioned protagonist programs use their actual completion-day ledger.
-advanceKboMilitaryService(career,source.world.seasonKey,source.days!.days.at(-1)!.day);
+advanceKboMilitaryService(career,source.world.seasonKey,source.days!.days.at(-1)!.day);advanceAthleteDutySeason(career);
 if(career.sangmu){
  for(const e of Object.values(career.sangmu.emergency?.entries??{}))if(e.released===null)e.released={seasonKey:source.world.seasonKey,worldDay:source.days!.days.at(-1)!.day};
  const lastDay=source.days!.days.at(-1)!.day,members=Object.fromEntries(Object.entries(career.sangmu.members).map(([k,m])=>{

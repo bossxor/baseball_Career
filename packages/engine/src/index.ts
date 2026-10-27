@@ -115,6 +115,7 @@ export * from './kbo-military-events.js';
 export * from './kbo-active-service.js';
 
 export * from './kbo-military-planning.js';
+export * from './kbo-national.js';
 export * from './kbo-return-condition.js';
 export * from './kbo-remainder-transfer.js';
 export * from './kbo-transfer-registration.js';
