@@ -18,7 +18,7 @@ export function kboNationalCandidates(c:KboCareer):NationalCandidate[] {
 export function openKboNationalSelection(c:KboCareer,revision:number,tournament:NationalTournament):KboCareer {
  if(!c.protagonistClubId||!Array.isArray(c.world?.clubs))throw new RangeError('NATIONAL_CAREER_MODE_MISMATCH');
  assertKboCareerRevision(c,revision);
- if(['ARCHIVED','RETIRE_CONFIRM','EVENT_DECISION'].includes(c.phaseContext.phase)||c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame)throw new RangeError('NATIONAL_SELECTION_NOT_AVAILABLE');
+ if(['ARCHIVED','RETIRE_CONFIRM','EVENT_DECISION','INTERNATIONAL_PROGRESS','INTERNATIONAL_REVIEW'].includes(c.phaseContext.phase)||c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame)throw new RangeError('NATIONAL_SELECTION_NOT_AVAILABLE');
  if(!c.world.calendar.international.some(w=>w.type===tournament))throw new RangeError('NATIONAL_NOT_SCHEDULED');
  const id=JSON.stringify(['national-selection',c.world.worldKey,c.world.seasonKey,tournament]),old=c.national?.selections?.find(s=>s.selectionId===id);
  if(old){assertNationalSelectionSnapshot(old);return c;}

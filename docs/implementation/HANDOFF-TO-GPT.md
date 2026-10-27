@@ -1,3 +1,21 @@
+# 최신 인계 — M2-EE 국제 단계/날짜 감사 검증 완료 (2026-10-27)
+
+[EE 상세](M2-EE-NATIONAL-PHASE-DAY-AUDIT.md). 전체 npm run check 종료0: 엔진/API 769개 중767통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 633942.4905, 동결 대상454파일 변경0(비문서 파일·기존 root/evidence 포함). 실제 Neon/브라우저/APK 검증은 아니다. 집중22/22. 기능 커밋은 이 문서가 포함된 EE 커밋이며 아래 인계 핀에서 확정한다. 검증 기준 f46f1ec, own branch codex/m2-career-engine. main/M6 병합 없음.
+
+## 호출·소유권·중복 키
+
+startNationalTournament가 dayCloseVersion1과 INTERNATIONAL_PROGRESS/원래 resume을 봉인. prepare/advance의 FINAL만 records+구종XP를 소유 복사해 커밋. closeCareerNationalDay는 게임 없는 날도 연속 처리하고 모든 선수 피로1회·실제 한국 예정경기 health1회. 마지막 창 날짜를 마감해야 INTERNATIONAL_REVIEW와 결과 봉인. E48에서 auditCareerNationalDays를 통과해야 원래 단계·정규 endDay로 복귀한다. 국제창은 KBO closer를 호출하지 않고 REG 내부 날짜만 같은 days 원장에 전용 증거를 연결한다.
+
+키: competitionId+day(dayReceipts/fatigueSettledDays), gameKey(records/XP), gameKey+대회:KOR(health), competitionId(E48 복귀). FINAL의 world.repertoires/Sangmu 원본 참조 공유를 수정했고 매 FINAL/날짜 마감 원본 canonical equality를 검사한다. 날짜 마감은 과거 health/world 전체를 깊게 복사하지 않는다. dayCloseVersion 없는 ED 대진은 기존 수동 경로를 읽기/진행하며 과거 seed/경기/정산을 소급 재생성하지 않는다. phase만 일반 단계로 되돌린 불완전 저장은 거부한다.
+
+## 증거/위험/다음
+
+대회 전 정규구간은 CONTROLLED_PREFIX이며 실제 전체 시즌 증거 아님. 이후 실제28명 AG16경기·14일 마감·E48·실제 다음 국내 경기까지 실행했다. DX107 통제55는 별도 reducer 검사다. E62~64는 EA/EB 소스/테스트/root evidence 로그를 대조해 감사 목록에 수동 입구 도메인 검사로 기록했다. 자동 오프시즌/UI/실제7시즌 완료 증거가 아니다. 이전 Grok 로그는 root evidence/M2-EA~ED-check.log이며 docs/implementation/evidence에 있다고 오해하지 말 것.
+
+WBC 날짜 충돌 질문 답변을 먼저 확인한다: 정규2월1일/WBC2월8일과 개막전 WBC 조건이 충돌. 새 정규를 WBC 뒤로 배치할지/WBC를1월11~31일로 옮길지 아직 답변 전이면 임의 적용 금지. 신규 WBC start는 충돌 시 원본 변경 없이 거부한다. P12는 양PS actualWindow와 로컬 실제 PS 말일을 대조하지만 미국 공통 세계 근거는 후속. 정규/PS 전체 일마감 감사·새 WBC 시간축·군복무 공유 날짜·부상 교체/미국 풀·99실제도메인·24경로/PF-D 잔여. M2약55% 보수적 추정 유지.
+
+GPT 검수: 새 단계가 정규/연말/다른 초청을 우회하지 않는지, 국제 건강이 정규 재활/말일 역산에 반영되는지, rest/벤치0출장/경기 날짜를 혼동하지 않는지, XP map/Sangmu 소유 복사, legacy 수동 대진의 읽기·재개 보존. 새 source-freeze는454개 비문서 파일을 검사하며 root/evidence 로그도 포함한다. M6수정/강제푸시/훅스킵/비밀키/PC종료 금지. V: 문서만 Copy-Item.
+
 # 최신 인계 — M2-ED 국제 부상 잔여 소모 (2026-10-27)
 
 [ED 상세](M2-ED-NATIONAL-INJURY-TICK.md). 브랜치 `codex/m2-career-engine`. 기능 팁 **`d9a48b6`**(EC `5b51579` 위).  

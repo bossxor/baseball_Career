@@ -7,6 +7,7 @@ import {assertKboCareerRevision} from './kbo-career-version.js';
 import type {KboMilitaryStatus} from './kbo-military-state.js';
 import {nationalCalendarWindow,nationalInviteDeadlines} from './national-bracket.js';
 import type {NationalBracket} from './national-bracket.js';
+import {auditCareerNationalDays} from './national-day-audit.js';
 
 export type NationalTournament='WBC'|'OLY'|'AG'|'P12';
 export type NationalMedal='GOLD'|'SILVER'|'BRONZE'|null;
@@ -49,6 +50,7 @@ function ledger(c:KboCareer):NationalLedger {
 /** Server-only legacy invitation adapter; new selection UI uses openKboNationalSelection. Opens one S24 invitation. WBC/P12 have no military effect flag. */
 export function openNationalCallup(c:KboCareer,revision:number,tournament:NationalTournament):KboCareer {
  assertKboCareerRevision(c,revision);
+ if(c.phaseContext.phase==='INTERNATIONAL_PROGRESS'||c.phaseContext.phase==='INTERNATIONAL_REVIEW')throw new RangeError('NATIONAL_CALLUP_INELIGIBLE');
  const selectionId=JSON.stringify(['national-callup',c.world.worldKey,c.world.seasonKey,tournament,c.protagonistKey]);
  if(!['WBC','OLY','AG','P12'].includes(tournament))throw new RangeError('INVALID_NATIONAL_TOURNAMENT');
  const cur=ledger(c);if(cur.invitations.some(i=>i.selectionId===selectionId))throw new RangeError('NATIONAL_CALLUP_OPEN');
@@ -68,6 +70,11 @@ export function respondNationalCallup(c:KboCareer,revision:number,selectionId:st
 /** Server-only adapter for trusted competition reducers, never accept a client-provided medal. Seals one competition result. ATHLETE_ELIGIBLE at most once per competition; never COMPLETED here. */
 export function sealNationalCompetitionResult(c:KboCareer,revision:number,result:NationalCompetitionResult):KboCareer {
  assertKboCareerRevision(c,revision);
+ const live=c.national?.brackets?.find(b=>b.competitionId===result.competitionId&&b.dayCloseVersion===1);
+ if(live){
+  if(c.phaseContext.phase!=='INTERNATIONAL_REVIEW'||c.phaseContext.competitionId!==live.competitionId||live.dayReceipts?.length!==live.window.endDay-live.window.startDay)throw new RangeError('NATIONAL_RESULT_NOT_READY');
+  auditCareerNationalDays(c);
+ }
  if(!validNationalResult(result)||result.seasonKey!==c.world.seasonKey)throw new RangeError('INVALID_NATIONAL_RESULT');
  if(result.gameKeys!==undefined){if(result.competitionId!==JSON.stringify(['national-'+result.tournament.toLowerCase(),c.world.worldKey,c.world.seasonKey])||!Array.isArray(result.gameKeys)||!result.gameKeys.length||new Set(result.gameKeys).size!==result.gameKeys.length||result.gameKeys.some(k=>!c.records.games[k]||c.records.games[k]!.scope.phase!=='INTERNATIONAL'||c.records.games[k]!.scope.leagueKey!==result.tournament||c.records.games[k]!.scope.seasonKey!==result.seasonKey)||result.officialAppearance!==result.gameKeys.some(k=>(c.records.games[k]!.batting[c.protagonistKey]?.PA??0)+(c.records.games[k]!.pitching[c.protagonistKey]?.BF??0)>0))throw new RangeError('INVALID_NATIONAL_GAME_EVIDENCE');}
  const cur=ledger(c);if(cur.competitions.some(x=>x.competitionId===result.competitionId))throw new RangeError('NATIONAL_RESULT_ALREADY_SEALED');
@@ -130,7 +137,7 @@ export function assertNationalLedger(n:NationalLedger|undefined,worldKey?:string
  for(const ids of [n.returnedCompetitions,n.eligibilityReviews])if(ids!==undefined&&(!Array.isArray(ids)||new Set(ids).size!==ids.length||ids.some(id=>!n.competitions.some(r=>r.competitionId===id))))throw new RangeError('INVALID_NATIONAL_RECEIPTS');
 }
 function queueNationalEvent(c:KboCareer,id:string,competitionId:string,stage:string):void {
- const d=eventDefinition(id),day=c.days?.seasonKey===c.world.seasonKey?c.days.days.at(-1)?.day??0:0;
+ const d=eventDefinition(id),day=c.phaseContext.phase==='INTERNATIONAL_REVIEW'?c.phaseContext.nextWorldDay-1:c.days?.seasonKey===c.world.seasonKey?c.days.days.at(-1)?.day??0:0;
  const event=createWorldEvent({definitionId:id,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:d.evidenceDomain,fields:{playerSimulationKey:c.protagonistKey,competitionId,selectionOrAppearanceStage:stage}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:c.phaseContext.phase,competitionKey:null,registrationKey:c.protagonistClubId,sourceRevision:c.revision+1},sourceSequence:c.events.length+1,worldDay:day});
  if(!c.events.some(e=>e.eventKey===event.eventKey))c.events=[...c.events,event];
 }
@@ -153,6 +160,17 @@ export function resolveKboNationalEvent(c:KboCareer,revision:number,input:{event
  const next={...c,events:c.events.map(x=>x.eventKey===e.eventKey?picked.event:x)};
  if(e.definitionId==='E48'){
   const id=String(e.evidence.fields.competitionId);if(!c.national?.competitions.some(r=>r.competitionId===id)||c.events.some(x=>x.definitionId==='E47'&&x.status==='OPEN'&&x.evidence.fields.competitionId===id))throw new RangeError('NATIONAL_RETURN_NOT_READY');
+  if(c.phaseContext.phase==='INTERNATIONAL_REVIEW'){
+   const phase=c.phaseContext,b=c.national.brackets?.find(b=>b.competitionId===id);
+   auditCareerNationalDays(c);
+   if(phase.competitionId!==id||!b||b.dayReceipts?.length!==b.window.endDay-b.window.startDay||phase.nextWorldDay!==b.window.endDay)throw new RangeError('NATIONAL_RETURN_NOT_READY');
+   next.phaseContext=phase.resume.phase==='SEASON_PROGRESS'?{...phase.resume,nextWorldDay:b.window.endDay}:structuredClone(phase.resume);
+   if(phase.resume.phase==='PRESEASON_SETUP'){
+    const fatigue=c.world.players[c.protagonistKey]!.fatigue;
+    next.seasonGrowth={...c.seasonGrowth,seasonStart:{...c.seasonGrowth.seasonStart,fatigue}};
+    next.development={...c.development,seasonStartPlayer:{...c.development.seasonStartPlayer,fatigue}};
+   }
+  }
   next.national={...c.national,returnedCompetitions:[...(c.national.returnedCompetitions??[]),id]};closeNationalTask(next,e,input.command,JSON.stringify(['national-return',id]));
  }
  next.revision++;return {career:next,navigation:null};

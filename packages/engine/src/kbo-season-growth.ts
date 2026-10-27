@@ -1,4 +1,5 @@
 import {kboRegularEndInjured,kboOpeningGrowthState} from './kbo-growth-health.js';
+import {auditCareerNationalDays} from './national-day-audit.js';
 import {kboMilitaryGrowthPeriods,kboMilitaryRegisteredGames} from './kbo-military-growth.js';
 import {kboRegistrationPlanBoundaryDays,currentKboSeasonTransfers} from './kbo-transfer-registration.js';
 import type {KboCareer} from './kbo-career-entry.js';
@@ -19,6 +20,7 @@ export function captureKboTransferPlanBoundaryDays(source:KboCareer):readonly nu
  * and the rehabilitation ratio from the closed pro day receipts. Paid once; a replay adds nothing. */
 export function settleKboSeasonGrowth(source:KboCareer,expectedRevision:number) {
  assertCareerRevision(source,expectedRevision);
+ auditCareerNationalDays(source);
  if(source.phaseContext.phase!=='SEASON_REVIEW' || !source.days || !source.competitionSchedule)throw new RangeError('INVALID_CAREER_PHASE');
  const calendar=source.world.calendar;assertSeasonCalendar(calendar);validateSeasonGrowthLedger(source.seasonGrowth);
  const key=source.protagonistKey,season=source.world.seasonKey,W=calendar.growthDays.length;

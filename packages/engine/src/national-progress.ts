@@ -1,8 +1,9 @@
+import {auditCareerNationalDays,nationalDayEvidence} from './national-day-audit.js';
 import {emptyPitchXpLedger} from './pitch-xp.js';
 import type {Repertoire} from './repertoire.js';
 import type {GamePitchDevelopment,GameState,PitchEntry,TeamSnapshot} from './types.js';
 import {putGameContribution} from './records.js';
-import type {KboCareer} from './kbo-career-entry.js';
+import type {KboCareer,KboNationalResume} from './kbo-career-entry.js';
 import {assertKboCareerRevision} from './kbo-career-version.js';
 import type {NationalLedger,NationalMedal,NationalTournament} from './kbo-national.js';
 import {sealNationalCompetitionResult} from './kbo-national.js';
@@ -12,6 +13,7 @@ import type {NationalBracket,NationalTournamentWindow} from './national-bracket.
 import {koreaNationalTeam,nationalControlTeam} from './national-tournament.js';
 import {appearanceFatigue} from './lineup.js';
 import {settleTeamGameHealth} from './health.js';
+import {createKboSeasonSchedules} from './kbo-schedule.js';
 
 const MASTERY_XP=[0,100_000,300_000,600_000,1_000_000,1_500_000] as const;
 function ledger(c:KboCareer):NationalLedger {
@@ -63,9 +65,11 @@ function koreaOutcome(bracket:NationalBracket):{medal:NationalMedal;finalRank:nu
 }
 function commitPitchXp(c:KboCareer,game:GameState):void {
  if(!game.pitchDevelopment)return;
+ c.world={...c.world,repertoires:{...c.world.repertoires}};
+ if(c.sangmu)c.sangmu={...c.sangmu,members:{...c.sangmu.members}};
  for(const [key,entry] of Object.entries(game.pitchDevelopment.players)){
   const member=c.sangmu?.members[key];
-  if(member?.repertoire){member.repertoire=structuredClone(entry.repertoire);continue;}
+  if(member?.repertoire){c.sangmu={...c.sangmu!,members:{...c.sangmu!.members,[key]:{...member,repertoire:structuredClone(entry.repertoire)}}};continue;}
   if(Object.hasOwn(c.world.repertoires,key))c.world.repertoires[key]=structuredClone(entry.repertoire);
  }
 }
@@ -82,48 +86,87 @@ export function startNationalTournament(c:KboCareer,revision:number,tournament:N
  if(ledger(c).competitions.some(x=>x.competitionId===competitionId)||openBracket(c,tournament))throw new RangeError('NATIONAL_TOURNAMENT_ALREADY_STARTED');
  const bracket=createNationalBracket({worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,tournament,seed:`${c.world.seed}:national:${tournament}:${c.world.seasonKey}`,...(window?{window}:{})});
  assertNationalBracket(bracket);
+ if(!['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW'].includes(c.phaseContext.phase))throw new RangeError('NATIONAL_TOURNAMENT_NOT_AVAILABLE');
+ if(c.seasonClose||c.health.closedSeasons.includes(c.world.seasonKey))throw new RangeError('NATIONAL_SEASON_ALREADY_CLOSED');
+ if(c.phaseContext.phase==='PRESEASON_SETUP'&&(tournament!=='WBC'||c.openingRoster||c.preseasonPlan))throw new RangeError('NATIONAL_CALENDAR_NOT_READY');
+ if(tournament==='WBC'&&createKboSeasonSchedules(c.world.clubs.map(t=>t.id),c.world.seasonKey,c.world.calendar).KBO.some(g=>g.worldDay<bracket.window.endDay))throw new RangeError('NATIONAL_PRESEASON_DATE_CONFLICT');
+ if(c.phaseContext.phase==='SEASON_PROGRESS'&&(c.phaseContext.nextWorldDay!==bracket.window.startDay||!c.days||c.days.days.at(-1)?.day!==bracket.window.startDay-1))throw new RangeError('NATIONAL_CALENDAR_NOT_READY');
+ if(c.phaseContext.phase==='SEASON_REVIEW'&&(tournament!=='P12'||!c.postseason?.championKey||c.days?.days.at(-1)?.day===undefined||c.days.days.at(-1)!.day>=bracket.window.startDay))throw new RangeError('NATIONAL_CALENDAR_NOT_READY');
+ if(tournament==='P12'){
+  if(bracket.window.basis!=='P12_POSTSEASON'||!bracket.window.evidence)throw new RangeError('NATIONAL_PS_END_REQUIRED');
+  const evidence=JSON.parse(bracket.window.evidence) as unknown[],last=Math.max(-1,...Object.values(c.records.games).filter(g=>g.scope.seasonKey===c.world.seasonKey&&g.scope.leagueKey==='KBO'&&g.scope.phase==='POSTSEASON').map(g=>g.worldDay));
+  if(last<0||evidence[2]!==last||c.days?.days.at(-1)?.day!==last)throw new RangeError('NATIONAL_PS_END_CHANGED');
+ }
+ if(c.competitionSchedule&&Object.values(c.competitionSchedule.leagues).flat().some(g=>g.worldDay>=bracket.window.startDay&&g.worldDay<bracket.window.endDay))throw new RangeError('NATIONAL_DOMESTIC_COLLISION');
+ if(c.health.games.some(g=>g.evidence.seasonKey===c.world.seasonKey&&g.evidence.day>=bracket.window.startDay))throw new RangeError('NATIONAL_HEALTH_CLOCK_AHEAD');
+ bracket.dayCloseVersion=1;bracket.dayReceipts=[];bracket.fatigueSettledDays=[];
  const deadlines=nationalInviteDeadlines(bracket.window);
  const invitations=ledger(c).invitations.map(i=>i.tournament===tournament&&i.seasonKey===c.world.seasonKey&&(i.inviteDay===undefined||window?.basis==='P12_POSTSEASON')?{...i,...deadlines}:i);
- const next:KboCareer={...c,national:{...ledger(c),invitations,brackets:[...(ledger(c).brackets??[]),bracket]}};next.revision++;return next;
+ const next:KboCareer={...c,phaseContext:{phase:'INTERNATIONAL_PROGRESS',competitionId:bracket.competitionId,nextWorldDay:bracket.window.startDay,resume:structuredClone(c.phaseContext as KboNationalResume)},national:{...ledger(c),invitations,brackets:[...(ledger(c).brackets??[]),bracket]}};next.revision++;return next;
 }
 
 /** After every FINAL match on a world day, settle Korea roster fatigue once, then tick injury remainingTeamGames only for each completed Korea national game. Does not call KBO day closer. */
 export function closeCareerNationalDay(c:KboCareer,revision:number,day:number):KboCareer {
  assertKboCareerRevision(c,revision);if(!Number.isSafeInteger(day)||day<0)throw new RangeError('INVALID_NATIONAL_DAY');
+ const phase=c.phaseContext.phase==='INTERNATIONAL_PROGRESS'?c.phaseContext:null;
  const bracket=(ledger(c).brackets??[]).find(b=>{
+  if(phase)return b.competitionId===phase.competitionId;
   if(b.seasonKey!==c.world.seasonKey||b.worldKey!==c.world.worldKey)return false;
   if(b.fatigueSettledDays?.includes(day))return true;
   const row=nationalMatchesOnDay(b,day);return row.completed.length>0||row.blocked;
  });
  if(!bracket)throw new RangeError('NATIONAL_DAY_NOT_OPEN');
  assertNationalBracket(bracket);if(bracket.fatigueSettledDays?.includes(day))throw new RangeError('NATIONAL_DAY_ALREADY_SETTLED');
- const {completed,blocked}=nationalMatchesOnDay(bracket,day);if(blocked)throw new RangeError('NATIONAL_DAY_GAMES_PENDING');if(!completed.length)throw new RangeError('NATIONAL_DAY_NO_GAMES');
+ if(bracket.dayCloseVersion===1&&(!phase||phase.nextWorldDay!==day||day<bracket.window.startDay||day>=bracket.window.endDay))throw new RangeError('NATIONAL_DAY_OUT_OF_ORDER');
+ if(bracket.dayCloseVersion===1)auditCareerNationalDays(c);
+ if(bracket.fatigueSettledDays?.includes(day))throw new RangeError('NATIONAL_DAY_ALREADY_SETTLED');
+ const {completed,blocked}=nationalMatchesOnDay(bracket,day);if(blocked)throw new RangeError('NATIONAL_DAY_GAMES_PENDING');if(!completed.length&&bracket.dayCloseVersion!==1)throw new RangeError('NATIONAL_DAY_NO_GAMES');
  const koreaGames=completed.filter(m=>m.away==='KOR'||m.home==='KOR');
  const selection=ledger(c).selections?.find(s=>s.seasonKey===c.world.seasonKey&&s.tournament===bracket.tournament);if(!selection)throw new RangeError('NATIONAL_SELECTION_REQUIRED');
  assertNationalSelectionSnapshot(selection);
- const next:KboCareer={...c,world:structuredClone(c.world),health:structuredClone(c.health),...(c.sangmu?{sangmu:structuredClone(c.sangmu)}:{})};
+ const next:KboCareer={...c,world:{...c.world,players:{...c.world.players}},...(c.sangmu?{sangmu:{...c.sangmu,...(c.sangmu.emergency?{emergency:{...c.sangmu.emergency,entries:{...c.sangmu.emergency.entries}}}:{})}}:{})};
  const playerOf=(key:string)=>next.world.players[key]??next.sangmu?.members[key]?.player;
  const rank=(kind:'NONE'|'HITTER'|'STARTER'|'RELIEF')=>({NONE:0,HITTER:1,RELIEF:2,STARTER:3}[kind]);
- for(const slot of selection.roster.slots){
-  const key=slot.playerKey,player=playerOf(key);if(!player)continue;
+ const selected=new Set(selection.roster.slots.map(s=>s.playerKey));
+ const keys=bracket.dayCloseVersion===1?[...new Set([...Object.keys(next.world.players),...Object.keys(next.sangmu?.members??{}),...Object.keys(next.sangmu?.emergency?.entries??{})])]:[...selected];
+ for(const key of keys){
+  const temporary=next.sangmu?.emergency?.entries[key],player=playerOf(key)??temporary?.player;if(!player)throw new RangeError('NATIONAL_ROSTER_CHANGED');
   let appearance:'NONE'|'HITTER'|'STARTER'|'RELIEF'='NONE';
-  for(const m of koreaGames){
+  for(const m of selected.has(key)?koreaGames:[]){
    const g=next.records.games[m.gameKey];if(!g)throw new RangeError('NATIONAL_GAME_RECORD_MISSING');
    if(player.kind==='HITTER'&&(g.batting[key]?.PA??0)>0){if(rank('HITTER')>rank(appearance))appearance='HITTER';}
    else if(player.kind==='PITCHER'&&(g.pitching[key]?.BF??0)>0){const kind=(g.pitching[key]!.starts??0)>0?'STARTER':'RELIEF';if(rank(kind)>rank(appearance))appearance=kind;}
   }
   const refreshed=appearanceFatigue(player,appearance);
   if(next.sangmu?.members[key])next.sangmu={...next.sangmu,members:{...next.sangmu.members,[key]:{...next.sangmu.members[key]!,player:refreshed}}};
+  else if(temporary)next.sangmu!.emergency!.entries[key]={...temporary,player:refreshed};
   else next.world.players[key]=refreshed;
  }
- const roster=selection.roster.slots.map(s=>s.playerKey).filter(k=>!!playerOf(k)).sort();
+ const roster=selection.roster.slots.map(s=>s.playerKey).sort();if(roster.some(k=>!playerOf(k)))throw new RangeError('NATIONAL_ROSTER_CHANGED');
+ const result={injured:[] as string[],recovered:[] as string[]};
  for(const m of koreaGames){
   const g=next.records.games[m.gameKey]!;
   const appearances=roster.filter(k=>(g.batting[k]?.PA??0)+(g.pitching[k]?.BF??0)>0).map(playerKey=>({playerKey,riskFatigue:playerOf(playerKey)!.fatigue}));
   const settled=settleTeamGameHealth(next.health,{gameKey:m.gameKey,teamKey:`${bracket.tournament}:KOR`,seasonKey:next.world.seasonKey,day,roster,appearances});
-  next.health=settled.ledger;
+  next.health=settled.ledger;result.injured.push(...settled.result.injured);result.recovered.push(...settled.result.recovered);
  }
- replaceBracket(next,{...bracket,fatigueSettledDays:[...(bracket.fatigueSettledDays??[]),day].sort((a,b)=>a-b)});next.revision++;return next;
+ result.injured.sort();result.recovered.sort();
+ const gameKeys=completed.map(m=>m.gameKey),receipt={day,gameKeys,rosterKeys:roster,result};
+ replaceBracket(next,{...bracket,fatigueSettledDays:[...(bracket.fatigueSettledDays??[]),day].sort((a,b)=>a-b),...(bracket.dayCloseVersion===1?{dayReceipts:[...(bracket.dayReceipts??[]),receipt]}:{})});
+ if(phase){
+  next.phaseContext={...phase,nextWorldDay:day+1};
+  if(phase.resume.phase==='SEASON_PROGRESS'){
+   if(!c.days||c.days.days.at(-1)?.day!==day-1)throw new RangeError('NON_CHRONOLOGICAL_PRO_DAY');
+   next.days={...c.days,days:[...c.days.days,{day,evidence:nationalDayEvidence(bracket,day,gameKeys,roster),result}]};
+  }
+  auditCareerNationalDays(next);
+  if(day+1===bracket.window.endDay){
+   if(nextNationalMatch(bracket)||bracket.pendingGame)throw new RangeError('NATIONAL_DAY_GAMES_PENDING');
+   next.phaseContext={...phase,phase:'INTERNATIONAL_REVIEW',nextWorldDay:day+1};
+   return sealCareerTournament(next,revision,bracket);
+  }
+ }
+ next.revision++;return next;
 }
 
 export function prepareCareerNationalMatch(c:KboCareer,revision:number):KboCareer {
@@ -131,7 +174,9 @@ export function prepareCareerNationalMatch(c:KboCareer,revision:number):KboCaree
  const bracket=(ledger(c).brackets??[]).find(b=>b.seasonKey===c.world.seasonKey&&b.worldKey===c.world.worldKey&&(b.pendingGame||nextNationalMatch(b)));
  if(!bracket)throw new RangeError('NATIONAL_TOURNAMENT_NOT_OPEN');
  assertNationalBracket(bracket);if(bracket.pendingGame)throw new RangeError('NATIONAL_GAME_ALREADY_PENDING');
- const m=nextNationalMatch(bracket)!;const koreaGames=koreaGameCount(bracket);
+ const m=nextNationalMatch(bracket)!;
+ if(bracket.dayCloseVersion===1&&(c.phaseContext.phase!=='INTERNATIONAL_PROGRESS'||c.phaseContext.competitionId!==bracket.competitionId||c.phaseContext.nextWorldDay!==m.day))throw new RangeError('NATIONAL_DAY_CLOSE_REQUIRED');
+ const koreaGames=koreaGameCount(bracket);
  const teams:[TeamSnapshot,TeamSnapshot]=[teamFor(c,m.away,bracket,koreaGames),teamFor(c,m.home,bracket,koreaGames+(m.away==='KOR'?1:0))];
  const next:KboCareer={...c};replaceBracket(next,prepareNationalMatch(bracket,teams,pitchDevelopment(c,teams)));next.revision++;return next;
 }
@@ -142,16 +187,20 @@ export function advanceCareerNationalMatch(c:KboCareer,revision:number,maxPlateA
  const bracket=(ledger(c).brackets??[]).find(b=>b.pendingGame&&b.seasonKey===c.world.seasonKey&&b.worldKey===c.world.worldKey);
  if(!bracket?.pendingGame)throw new RangeError('NATIONAL_GAME_NOT_PENDING');
  assertNationalBracket(bracket);
+ if(bracket.dayCloseVersion===1&&(c.phaseContext.phase!=='INTERNATIONAL_PROGRESS'||c.phaseContext.competitionId!==bracket.competitionId||c.phaseContext.nextWorldDay!==nextNationalMatch(bracket)?.day))throw new RangeError('NATIONAL_DAY_CLOSE_REQUIRED');
  const out=advanceNationalMatch(bracket,maxPlateAppearances),next:KboCareer={...c};
  if(!out.contribution||!out.finalGame){replaceBracket(next,out.bracket);next.revision++;return {career:next,stopReason:out.stopReason==='ENGINE_LIMIT'?'ENGINE_LIMIT':'CHUNK_LIMIT'};}
  if(Object.hasOwn(next.records.games,out.contribution.gameKey))throw new RangeError('NATIONAL_GAME_ALREADY_RECORDED');
  next.records=putGameContribution(next.records,out.contribution).ledger;
  commitPitchXp(next,out.finalGame);
  replaceBracket(next,out.bracket);
- if(out.stopReason!=='TOURNAMENT_COMPLETE'){next.revision++;return {career:next,stopReason:'GAME_FINAL'};}
- const invite=ledger(next).invitations.find(i=>i.tournament===out.bracket.tournament&&i.seasonKey===next.world.seasonKey),selection=ledger(next).selections?.find(s=>s.seasonKey===next.world.seasonKey&&s.tournament===out.bracket.tournament);
+ if(out.stopReason!=='TOURNAMENT_COMPLETE'||bracket.dayCloseVersion===1){next.revision++;return {career:next,stopReason:'GAME_FINAL'};}
+ return {career:sealCareerTournament(next,revision,out.bracket),stopReason:'TOURNAMENT_COMPLETE'};
+}
+function sealCareerTournament(next:KboCareer,revision:number,bracket:NationalBracket):KboCareer {
+ const invite=ledger(next).invitations.find(i=>i.tournament===bracket.tournament&&i.seasonKey===next.world.seasonKey),selection=ledger(next).selections?.find(s=>s.seasonKey===next.world.seasonKey&&s.tournament===bracket.tournament);
  const registered=invite?.status==='ACCEPTED'||!!selection?.roster.slots.some(s=>s.playerKey===next.protagonistKey);
- const gameKeys=out.bracket.results.map(r=>r.gameKey),appeared=registered&&gameKeys.some(k=>{const g=next.records.games[k]!;return (g.batting[next.protagonistKey]?.PA??0)+(g.pitching[next.protagonistKey]?.BF??0)>0;});
- const {medal,finalRank}=koreaOutcome(out.bracket);
- return {career:sealNationalCompetitionResult(next,revision,{competitionId:out.bracket.competitionId,tournament:out.bracket.tournament,seasonKey:next.world.seasonKey,medal,finalRank,officialAppearance:appeared,registered,resultVersion:1,gameKeys}),stopReason:'TOURNAMENT_COMPLETE'};
+ const gameKeys=bracket.results.map(r=>r.gameKey),appeared=registered&&gameKeys.some(k=>{const g=next.records.games[k]!;return (g.batting[next.protagonistKey]?.PA??0)+(g.pitching[next.protagonistKey]?.BF??0)>0;});
+ const {medal,finalRank}=koreaOutcome(bracket);
+ return sealNationalCompetitionResult(next,revision,{competitionId:bracket.competitionId,tournament:bracket.tournament,seasonKey:next.world.seasonKey,medal,finalRank,officialAppearance:appeared,registered,resultVersion:1,gameKeys});
 }

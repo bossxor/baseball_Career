@@ -1,3 +1,7 @@
+## 최신 작업 — M2-EE 검증 완료
+
+[EE 상세](M2-EE-NATIONAL-PHASE-DAY-AUDIT.md). 새 국제 단계·14일 연속 날짜/건강 감사·E48 정규 복귀, FINAL XP 원본 참조 공유 수정. 집중22/22. 전체 npm run check 종료0: 엔진/API 769개 중767통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 633942.4905, 동결 대상454파일 변경0(비문서 파일·기존 root/evidence 포함). 실제 Neon/브라우저/APK 검증은 아니다. AG 전 정규 구간은 통제 prefix이며 전체 시즌 아님. WBC 개막 날짜 충돌 사용자 답변 대기. M2약55% 유지·완료 아님. PC 종료 금지.
+
 ## 최신 작업 — M2-ED 검증 완료
 
 [ED 상세](M2-ED-NATIONAL-INJURY-TICK.md). 국제 한국 FINAL당 부상 잔여 소모. 전체 check 767/765·duration_ms 745981. M2≈55%. 다음=정규 일마감 감사·INTERNATIONAL phase·99잔여·24/PF-D. M6 금지. PC 종료 금지.

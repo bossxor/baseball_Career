@@ -1,0 +1,31 @@
+✔ national callup accept and decline keep revision atomic (280.1696ms)
+✔ INT13 AG silver or WBC gold does not change military status (183.0436ms)
+✔ INT14 OLY bronze with appearance becomes ATHLETE_ELIGIBLE once; INT15 completed stays put (275.9956ms)
+✔ AG tournament plays real INTERNATIONAL games and can grant ATHLETE_ELIGIBLE on gold+appearance (282.5858ms)
+✔ E44 domain response, E47 navigation/review and E48 return preserve benefit and original club (240.9878ms)
+✔ national boundaries reject forged decisions, inconsistent medals, duplicate invitations and changed game evidence (170.9485ms)
+✔ a pitcher protagonist has real international BF and persisted contributions with deterministic JSON replay (379.3053ms)
+✔ international cyclic ties use head-to-head differential and seeded lots, with malformed groups rejected (1.8016ms)
+✔ athlete admission cancels competing pending Sangmu application without enlisting or charging salary (169.5838ms)
+M2-EE AG/return proof: {"preWindow":"CONTROLLED_PREFIX","internationalGames":16,"nationalDays":14,"resumedDay":258,"actualDomesticGames":10}
+✔ p12ActualWindow uses max(nominal 11/15, both PS end+1) and keeps 14 days without rewriting calendar-1 (9.5587ms)
+✔ career AG bracket uses the sealed actual28 Korean identities and seals records after FINAL (8787.0951ms)
+✔ mid-tournament JSON resume keeps pendingGame and does not duplicate contributions (8143.9994ms)
+✔ invite deadlines seal 7/2/1 before start and national day fatigue settles once (752.631ms)
+✔ international phase closes every date once, audits shared pro days and resumes actual next domestic game after E48 (9531.4915ms)
+✔ international rest days include nonparticipants once, refuse skipped days and preserve original world/records (928.2573ms)
+✔ national source U: adequate current highest league wins, insufficient49PA is ignored, prior is fallback and WBC ignores current (944.8639ms)
+✔ national evaluations exclude international/PS lines, apply AG bonus only and never use hidden potential (819.2265ms)
+✔ actual sealed28-roster absence triggers E45; repeated opening preserves the snapshot even when records change (895.42ms)
+✔ selected protagonist decline replaces only one slot with the next sealed eligible candidate and cannot reroll back in (879.7988ms)
+✔ selected actual28 roster supplies Korean game identities; registered bench players are not fabricated appearances (992.8084ms)
+✔ national pitcher sample uses30 actual outs, applies the selected league adjustment and rejects invalid counters atomically (810.074ms)
+✔ canonical sorted-key save restores the same selection; a foreign-world snapshot with identical player IDs is rejected (1036.9967ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29270.2653

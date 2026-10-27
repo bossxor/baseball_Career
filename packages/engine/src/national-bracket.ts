@@ -24,6 +24,9 @@ export interface NationalBracket {
  window:NationalTournamentWindow;groups:readonly (readonly string[])[];groupMatches:readonly NationalMatch[];results:readonly NationalMatchResult[];pendingGame:GameState|null;
  /** World days whose Korea fatigue/rest already settled once. Not part of the draw fingerprint. */
  fatigueSettledDays?:readonly number[];
+ /** Absent on DY/ED saves; their original manual day contract remains readable. */
+ dayCloseVersion?:1;
+ dayReceipts?:readonly {day:number;gameKeys:readonly string[];rosterKeys:readonly string[];result:{injured:string[];recovered:string[]}}[];
 }
 /** Invite 7 days before start; response due 2 days before; final roster 1 day before. No auto-decline. */
 export function nationalInviteDeadlines(window:NationalTournamentWindow):{inviteDay:number;responseDeadlineDay:number;finalRosterDay:number} {

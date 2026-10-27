@@ -178,11 +178,25 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 
 <!-- SOURCE: STATUS.md -->
 
-# 전체 구현 진행률: 약 83% 완료 · 약 17% 남음
+# 전체 구현 진행률: 약 84% 완료 · 약 16% 남음
 
-**M2 기준: 약50% 완료 · 약50% 남음.** 범위 가중 보수적 추정이며 위83%는 프로젝트 전체다.
+**M2 기준: 약55% 완료 · 약45% 남음.** 범위 가중 보수적 추정이며 위84%는 프로젝트 전체다. ED까지 국제 기한·피로·부상 잔여. 정규 일마감 감사/미국풀/99잔여/24는 잔여.
 
-**M2-DX 검증 완료 (2026-10-27):** 4대회 대진 reducer·실제107경기 통제 fixture·pendingGame/21회 재개. 집중10/10. 전체 npm run check 종료0: 엔진/API 762개 중760통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1089016.2584, 원본443파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다. 커리어 시간축/실제28명·건강/XP 연결은 후속이며 M2 전체 약50% 유지. [DX](../implementation/M2-DX-INTERNATIONAL-BRACKET.md).
+**M2-EE 검증 완료 (2026-10-27):** 국제 단계·연속 날짜/건강/정규 복귀 감사·XP 참조 공유 수정. 전체 npm run check 종료0: 엔진/API 769개 중767통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 633942.4905, 동결 대상454파일 변경0(비문서 파일·기존 root/evidence 포함). 실제 Neon/브라우저/APK 검증은 아니다. [EE](../implementation/M2-EE-NATIONAL-PHASE-DAY-AUDIT.md). WBC 날짜 질문 대기·국제/미국풀/99/24 잔여.
+
+**M2-ED 검증 완료 (2026-10-27):** 한국 FINAL당 부상 remainingTeamGames 소모. 전체 npm run check 종료0: 767/765·Neon2·웹22/22. duration_ms 745981. [ED](../implementation/M2-ED-NATIONAL-INJURY-TICK.md). 증거 `evidence/M2-ED-check.log`.
+
+**M2-EC 검증 완료 (2026-10-27):** 초청 7/2/1 봉인·날짜당 한국 피로 1회. 전체 npm run check 종료0: 767/765·Neon2·웹22/22. duration_ms 1103862. [EC](../implementation/M2-EC-NATIONAL-DAY-CLOSE.md). 증거 `evidence/M2-EC-check.log`.
+
+**M2-EB 검증 완료 (2026-10-27):** E62 초청·E64 ACCEPT/REMAIN 도메인 재개. 전체 npm run check 종료0: 766/764·Neon2·웹22/22. duration_ms 1011454. [EB](../implementation/M2-EB-POSTING-EVENT-RESUME.md). 증거 `evidence/M2-EB-check.log`.
+
+**M2-EA 검증 완료 (2026-10-27):** 포스팅 구단결정 E63·오퍼 E64 큐/완료/취소. 전체 npm run check 종료0: 765/763·Neon2·웹22/22·스모크. duration_ms 624903. [EA](../implementation/M2-EA-POSTING-EVENTS.md).
+
+**M2-DZ 검증 완료 (2026-10-27):** 미국 FREEZE/TERMINATE에 18개월 2블록 봉인·정산 전 COMPLETED 거절. 집중1/1. 전체 npm run check 종료0: 765/763·Neon2·웹22/22·스모크. duration_ms 710245. native 2시즌 E2E 아님. [DZ](../implementation/M2-DZ-US-MILITARY-18MO.md).
+
+**M2-DY 검증 완료 (2026-10-27):** DX bracket을 실제 선발28·기록·구종XP·봉인에 연결, P12 `max(11/15, 양PS종료+1)` window 봉인. 집중24/24. 전체 npm run check 종료0: 엔진/API 765개 중763통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1044505. 검증 중 실행 소스 미편집. 실제 Neon/브라우저/APK 아님. [DY](../implementation/M2-DY-INTERNATIONAL-TIMELINE.md). 일마감·초청기한·부상교체·WBC/OLY/P12 E2E·해외18개월·99/24/PF 잔여.
+
+**M2-DX 검증 완료 (2026-10-27):** 4대회 대진 reducer·실제107경기 통제 fixture·pendingGame/21회 재개. 집중10/10. 전체 npm run check 종료0: 엔진/API 762개 중760통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1089016.2584, 원본443파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다. 커리어 시간축 1차는 DY. [DX](../implementation/M2-DX-INTERNATIONAL-BRACKET.md).
 
 **M2-DW 검증 완료 (2026-10-27):** 국가대표 실제28명·E44/E45·한자리 충원·AG 실제 기용·MLB 실제 데뷔E65. 집중25/25. 전체 npm run check 종료0: 엔진/API 757개 중755통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 1168717.4243, 원본441파일 변경0. 실제 Neon/브라우저/APK 검증은 아니다. [DW](../implementation/M2-DW-NATIONAL-SELECTION.md). 국제 달력/중단/부상/XP·99/24/PF 잔여, M2 완료 아님.
 
@@ -232,7 +246,7 @@ M5: **완료(셸)** — 33화면 Decision 스텁·라우트·fixture/API. 픽셀
 |---|---:|---:|---:|
 | M0 저장소·검증 골격 | 5% | 100% | 5% |
 | M1 경기 시뮬레이션 엔진 | 10% | 100% | 10% |
-| M2 선수 커리어·사건 엔진 | 30% | 50% | 15% |
+| M2 선수 커리어·사건 엔진 | 30% | 55% | 16% |
 | M3 계정·DB·기기 간 저장 명령 | 12% | 100% | 12% |
 | M4 실제 핵심 웹 플레이 화면 | 10% | 100% | 10% |
 | M5 나머지 실제 화면·접근성 | 5% | 100% | 5% |
@@ -240,7 +254,7 @@ M5: **완료(셸)** — 33화면 Decision 스텁·라우트·fixture/API. 픽셀
 | M7 내보내기·백업·중계 | 4% | 100% | 4% |
 | M8 모바일 패키징·실기기 | 2% | 100% | 2% |
 | M9 배포·운영·출시 검증 | 2% | 100% | 2% |
-| **합계** | **100%** | — | **83%** |
+| **합계** | **100%** | — | **84%** |
 
 계산: 전체 완료 = 비중 × 영역 완료율의 합, 남음 = 100 − 전체 완료. 비중은 [120 구현 순서](120-IMPLEMENTATION-ROADMAP.md)의 범위를 바탕으로 만든 작업 추정치(D)다. 구현량·난도가 드러나면 근거와 함께 재평가하며, 같은 AI 기능을 M2와 M6에 중복 가산하지 않는다. M2는 내 선수 경로·사건, M6는 독립적인 리그 AI/재정 기반에 대한 평가다. 설계보드·준비된 이미지·빈 웹/API 골격은 실제 플레이 화면이나 클라우드 저장 완료로 세지 않는다.
 

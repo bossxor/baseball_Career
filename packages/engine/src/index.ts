@@ -169,5 +169,5 @@ export {createNationalSelection} from './national-selection.js';
 export type {NationalCandidate,NationalSelectionSnapshot} from './national-selection.js';
 export {nationalNationPreset,createNationalBracket,nextNationalMatch,prepareNationalMatch,advanceNationalMatch,assertNationalBracket,nationalCalendarWindow,p12ActualWindow} from './national-bracket.js';
 export type {NationalBracket,NationalMatch,NationalMatchResult,NationalTournamentWindow} from './national-bracket.js';
-export {startNationalTournament,prepareCareerNationalMatch,advanceCareerNationalMatch} from './national-progress.js';
+export {startNationalTournament,prepareCareerNationalMatch,advanceCareerNationalMatch,closeCareerNationalDay} from './national-progress.js';
 export type {NationalProgressStop} from './national-progress.js';

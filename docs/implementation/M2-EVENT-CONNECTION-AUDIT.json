@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "INCOMPLETE_IMPLEMENTATION_AUDIT",
-  "baseline": "16a5f51 + M2-DW worktree",
+  "baseline": "f46f1ec + M2-EE worktree",
   "items": [
     {
       "id": "E01",
@@ -1204,7 +1204,12 @@
         }
       ],
       "evidence": "evidence/M2-DV-focused.log",
-      "note": "DV controlled domain assertions; not full calendar/28-player worker"
+      "note": "DV controlled domain assertions; not full calendar/28-player worker",
+      "timingReview": {
+        "status": "FIRST_FINAL_TRIGGER_NOT_CONNECTED",
+        "source": "packages/engine/src/kbo-national.ts:sealNationalCompetitionResult",
+        "note": "Actual positive PA/BF is required, but the current hook queues E46 only when the whole competition is sealed. Direct first-FINAL timing is not proven by prior result-seal tests."
+      }
     },
     {
       "id": "E47",
@@ -1282,7 +1287,12 @@
         }
       ],
       "evidence": "evidence/M2-DV-focused.log",
-      "note": "DV controlled domain assertions; not full calendar/28-player worker"
+      "note": "DV controlled domain assertions; not full calendar/28-player worker",
+      "extensionReview": {
+        "milestone": "M2-EE",
+        "status": "FOCUSED_22_AND_FULL_EE_PASS",
+        "note": "New dayCloseVersion1 returns only from INTERNATIONAL_REVIEW after all contiguous day/health receipts; REG resumes at window.endDay. Pre-window domestic prefix is controlled; subsequent domestic game is actually played."
+      }
     },
     {
       "id": "E49",
@@ -1726,14 +1736,38 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "FOCUSED_VERIFIED_EB",
+      "verification": "MANUAL_ENTRY_DOMAIN_TESTED_EB",
       "references": [
         {
           "path": "packages/engine/src/kbo-posting.ts",
-          "kind": "DOMAIN"
+          "line": 74
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 79
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 82
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 83
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 86
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 89
         }
       ],
-      "note": "openKboPostingInvite queues one E62 per season; REQUEST_POSTING opens the window and completes domain; ACK declines. Direct requestKboPosting remains for non-UI paths."
+      "note": "Manual eligible offseason invite; REQUEST creates a real posting window and ACK declines without a window. Automatic offseason trigger/UI not proven. Seven service seasons are controlled records, not a native7-season career.",
+      "evidence": "evidence/M2-EB-check.log",
+      "tests": [
+        "packages/engine/test/kbo-posting.test.ts"
+      ]
     },
     {
       "id": "E63",
@@ -1750,14 +1784,54 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "FOCUSED_VERIFIED_EA",
+      "verification": "MANUAL_ENTRY_DOMAIN_TESTED_EB",
       "references": [
         {
           "path": "packages/engine/src/kbo-posting.ts",
-          "kind": "DOMAIN"
+          "line": 74
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 104
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 109
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 113
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 116
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 133
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 138
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 147
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 172
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 197
         }
       ],
-      "note": "resolveKboPostingClub queues E63 with sealed postingDecision; openKboPostingOffers completes blocking E63 and queues E64; accept completes E64 or cancels leftover E63."
+      "note": "Club approval/defer decision is sealed before notice; approved navigation alone does not complete offers. Opening real fixed offers closes blocking E63. Manual-domain unit tests and prior EB full gate; not native season/UI proof.",
+      "evidence": "evidence/M2-EB-check.log",
+      "tests": [
+        "packages/engine/test/kbo-posting.test.ts"
+      ]
     },
     {
       "id": "E64",
@@ -1774,14 +1848,46 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "FOCUSED_VERIFIED_EB",
+      "verification": "MANUAL_ENTRY_DOMAIN_TESTED_EB",
       "references": [
         {
           "path": "packages/engine/src/kbo-posting.ts",
-          "kind": "DOMAIN"
+          "line": 74
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 133
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 140
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 147
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 155
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 158
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 197
+        },
+        {
+          "path": "packages/engine/src/kbo-posting.ts",
+          "line": 199
         }
       ],
-      "note": "resolveKboPostingOfferEvent ACCEPT_CAREER_OFFER→acceptKboPostingOffer (E64 DOMAIN complete); REMAIN_ORIGINAL→REJECTED + DOMAIN complete. expire/reject cancels open cards."
+      "note": "ACCEPT seals one fee/return-rights/KBO exit and resolves its event; REMAIN rejects with original contract preserved. US root activation and UI are separate from this tested event flow.",
+      "evidence": "evidence/M2-EB-check.log",
+      "tests": [
+        "packages/engine/test/kbo-posting.test.ts"
+      ]
     },
     {
       "id": "E65",

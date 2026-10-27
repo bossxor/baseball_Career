@@ -1,0 +1,56 @@
+✔ p12ActualWindow uses max(nominal 11/15, both PS end+1) and keeps 14 days without rewriting calendar-1 (8.3922ms)
+✖ career AG bracket uses the sealed actual28 Korean identities and seals records after FINAL (510.7622ms)
+✖ mid-tournament JSON resume keeps pendingGame and does not duplicate contributions (459.7581ms)
+✖ invite deadlines seal 7/2/1 before start and national day fatigue settles once (422.5467ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2090.1236
+
+✖ failing tests:
+
+test at packages\engine\test\national-progress.test.ts:50:1
+✖ career AG bracket uses the sealed actual28 Korean identities and seals records after FINAL (510.7622ms)
+  RangeError: KBO_PRESEASON_PLAYER_CHANGED
+      at assertSource (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\kbo-preseason.ts:27:212)
+      at confirmKboPreseasonPlan (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\kbo-preseason.ts:70:2)
+      at acceptAg (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\national-progress.test.ts:18:16)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\national-progress.test.ts:51:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at packages\engine\test\national-progress.test.ts:62:1
+✖ mid-tournament JSON resume keeps pendingGame and does not duplicate contributions (459.7581ms)
+  RangeError: KBO_PRESEASON_PLAYER_CHANGED
+      at assertSource (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\kbo-preseason.ts:27:212)
+      at confirmKboPreseasonPlan (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\kbo-preseason.ts:70:2)
+      at acceptAg (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\national-progress.test.ts:18:16)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\national-progress.test.ts:63:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at packages\engine\test\national-progress.test.ts:74:1
+✖ invite deadlines seal 7/2/1 before start and national day fatigue settles once (422.5467ms)
+  RangeError: KBO_PRESEASON_PLAYER_CHANGED
+      at assertSource (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\kbo-preseason.ts:27:212)
+      at confirmKboPreseasonPlan (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\kbo-preseason.ts:70:2)
+      at acceptAg (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\national-progress.test.ts:18:16)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\national-progress.test.ts:77:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

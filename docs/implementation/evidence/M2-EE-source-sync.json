@@ -1,0 +1,121 @@
+{
+  "utc": "2026-10-27T09:44:49.457Z",
+  "head": "f46f1ec268843acc86d0df5853eeedbe00561fdf",
+  "fullCheck": "PASS",
+  "result": {
+    "tests": 769,
+    "pass": 767,
+    "skip": 2,
+    "fail": 0,
+    "durationMs": 633942.4905,
+    "webPass": 22,
+    "unchangedFiles": 454
+  },
+  "policy": "V documents only via Copy-Item; no V .git or runtime sync",
+  "files": [
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "c1c0540727547c0a7ca274a9ae1a002fca339bf7baf3170802c948e32ff6c6db"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "b4455ef5e909b1cd4d04112e894337ebb91ce44849a75e566adf94e419e33de0"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "f124e28efc259f25012523b853acbbb3221b5f7855ded528c7d11a1e911e22b2"
+    },
+    {
+      "path": "docs/implementation/HANDOFF-TO-GPT.md",
+      "sha256": "980f52ea93a41ec94a45b9f77d2498a16657f93e6066ce42860656a61008d186"
+    },
+    {
+      "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.json",
+      "sha256": "ee3515ff092361781fddbe291f842f4f8a0edd33102cbfc8a549f833053b0d7e"
+    },
+    {
+      "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.md",
+      "sha256": "07407cc2c1122752ae8ce1bdcf15e2402e8fb291cab43cc6fc86ff2d20bdb60e"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "e44e6a25b792804ef0c678ac223e469f2a85d958c84e77c9ba0056ce9a702d92"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "5f9206e9e77128bfe7c2f88b6b1491bb111d682ee6c938da5262b8548e2fc4a1"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "c7526060e714d9d0a1359fde285c58434b964f3e6420f08ac75b2e8200e542ae"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-entry.ts",
+      "sha256": "c4bb2ba3b6e36cc5c2bbe524da154e468da7566bccf26ef922b002380a4b7e77"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-version.ts",
+      "sha256": "bacc25bb78176dd40ed0ecf32aa657183253d078b86dcba4423508c0af121aca"
+    },
+    {
+      "path": "packages/engine/src/kbo-growth-health.ts",
+      "sha256": "58c909e4b1f4ce23752c90ac92c55132a10032b6d50ebba153dde60e059cd6b0"
+    },
+    {
+      "path": "packages/engine/src/kbo-national-selection.ts",
+      "sha256": "7e117572d7d563d8da7d0603e0b42fcf18c202d5407181f7ed3d6ea5cdf61fae"
+    },
+    {
+      "path": "packages/engine/src/kbo-national.ts",
+      "sha256": "9224f94acc0e584a4697f1f1a5c237e6b2c208c6de078c3346b232b88acb4f2e"
+    },
+    {
+      "path": "packages/engine/src/kbo-season-growth.ts",
+      "sha256": "833f0df1f25cc206b1ee1b81d1134ceda509a9621ce445e4552e777cab5c7218"
+    },
+    {
+      "path": "packages/engine/src/national-bracket.ts",
+      "sha256": "77901619a42a1ef1b31f1c71c74ffbb2cc9dfd62d270f107be6b3b0839c4ee54"
+    },
+    {
+      "path": "packages/engine/src/national-progress.ts",
+      "sha256": "95f7f75d86ccbb892e46762eb855f23bbfe1ed75d4300fe329699a76e612892f"
+    },
+    {
+      "path": "packages/engine/test/national-progress.test.ts",
+      "sha256": "c3ce15ab65d583d95ec82d3ceb7251bfa813c34e1faf75517c4688d400b05bb9"
+    },
+    {
+      "path": "docs/implementation/M2-EE-NATIONAL-PHASE-DAY-AUDIT.md",
+      "sha256": "38c4847ce9cea90a919af44c19cc499b5a95014c96c7be4603a818dc8a972ddc"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EE-check.log",
+      "sha256": "92f09a7255930e487f94a7f17cabab995d62a3514c185f1d9f9a2109359a851c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EE-fixture-finance-failure.log",
+      "sha256": "4addf05bb007be80d7459e1d517d1b136cbf50dda80b694c2f4b97a3e9f98317"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EE-fixture-first-failure.log",
+      "sha256": "49b06e9374f465c97c0d16b0e9a013eed0047e6a3acdb3d7fa0fc60e729dc03d"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EE-focused.log",
+      "sha256": "1a2aa63da3ece7a7ec24c8c89e34240cfe32c32cac9a0652d9148329b36172cd"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EE-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EE-source-freeze.json",
+      "sha256": "c294e788a9a836aea1e54fa126de02ab5bce46cfa59416d06e2c1cd002268724"
+    },
+    {
+      "path": "packages/engine/src/national-day-audit.ts",
+      "sha256": "ec467cedda59f31bb41e4f875e34fa9604fdf9e01e9de6bb62551566a4e9d65a"
+    }
+  ]
+}

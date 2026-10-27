@@ -1,0 +1,28 @@
+✔ p12ActualWindow uses max(nominal 11/15, both PS end+1) and keeps 14 days without rewriting calendar-1 (4.893ms)
+✔ career AG bracket uses the sealed actual28 Korean identities and seals records after FINAL (6531.8661ms)
+✔ mid-tournament JSON resume keeps pendingGame and does not duplicate contributions (7121.4084ms)
+✔ invite deadlines seal 7/2/1 before start and national day fatigue settles once (713.3141ms)
+✖ international phase closes every date once, audits shared pro days and resumes actual next domestic game after E48 (6718.0146ms)
+✔ international rest days include nonparticipants once, refuse skipped days and preserve original world/records (904.3974ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 22667.18
+
+✖ failing tests:
+
+test at packages\engine\test\national-progress.test.ts:97:1
+✖ international phase closes every date once, audits shared pro days and resumes actual next domestic game after E48 (6718.0146ms)
+  TypeError: Unsupported canonical value
+      at canonicalJson (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\game.ts:270:9)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\national-progress.test.ts:107:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
