@@ -35,7 +35,7 @@ test('M4 UI shell: create → seed → advance → settle → choose S04→S28',
   assert.equal(c0.protagonist.name, '김테스트');
   assert.ok(c0.nextActions.some(a => a.id === 'advance'));
 
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 3; i++) {
     const adv = await app.request(`/api/saves/${saveId}/commands`, {
       method: 'POST', headers: auth,
       body: JSON.stringify({ commandId: `adv-${i}`, expectedRevision: 1 + i, type: 'UI_ADVANCE', payload: { mode: 'ONE_WEEK' } }),
@@ -54,18 +54,23 @@ test('M4 UI shell: create → seed → advance → settle → choose S04→S28',
   const choose = await app.request(`/api/saves/${saveId}/commands`, {
     method: 'POST', headers: auth,
     body: JSON.stringify({
-      commandId: 'ch-1', expectedRevision: 9, type: 'UI_CHOOSE',
+      commandId: 'ch-1', expectedRevision: 4, type: 'UI_CHOOSE',
       payload: { screenId: 'S04', optionId: 'to-path' },
     }),
   });
   assert.equal(choose.status, 200);
+  const early = await app.request(`/api/saves/${saveId}/commands`, {
+    method: 'POST', headers: auth,
+    body: JSON.stringify({ commandId: 'adv-late', expectedRevision: 5, type: 'UI_ADVANCE', payload: { mode: 'ONE_WEEK' } }),
+  });
+  assert.equal(early.status, 400, 'no progress once the season is settled');
   const ch = await json<{ next: unknown }>(choose);
   assert.deepEqual(ch.next, { kind: 'screen', screenId: 'S28' });
 
   const replay = await app.request(`/api/saves/${saveId}/commands`, {
     method: 'POST', headers: auth,
     body: JSON.stringify({
-      commandId: 'ch-1', expectedRevision: 9, type: 'UI_CHOOSE',
+      commandId: 'ch-1', expectedRevision: 4, type: 'UI_CHOOSE',
       payload: { screenId: 'S04', optionId: 'to-path' },
     }),
   });

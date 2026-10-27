@@ -1,4 +1,4 @@
-import { and, desc, eq, isNull, lt, or } from 'drizzle-orm';
+import { and, desc, eq, isNull, sql } from 'drizzle-orm';
 import type { Context } from 'hono';
 import { gameSaves } from '@playball/db';
 import type { AppVariables } from './auth.js';
@@ -16,61 +16,40 @@ function errorBody(
 }
 
 /** List owner saves — summary only, cursor page size 20 (06). */
+/** Postgres keeps microseconds; the cursor carries them as text so no row sharing a millisecond is skipped. */
+const CURSOR = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{6}Z)\|(.{1,200})$/;
+
 export async function listSaves(c: Context<{ Variables: AppVariables }>) {
   const db = c.get('db');
   const subject = c.get('subject');
   const limit = 20;
   const cursor = c.req.query('cursor');
+  const stamp = sql<string>`to_char(${gameSaves.updatedAt} AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"')`;
 
-  const baseWhere = and(eq(gameSaves.ownerId, subject), isNull(gameSaves.deletedAt));
-
-  let rows;
+  let where = and(eq(gameSaves.ownerId, subject), isNull(gameSaves.deletedAt));
   if (cursor) {
-    const [updatedAtRaw, id] = cursor.split('|');
-    if (!updatedAtRaw || !id) return errorBody(c, 'INVALID_REQUEST', 400);
-    const updatedAt = new Date(updatedAtRaw);
-    if (Number.isNaN(updatedAt.getTime())) return errorBody(c, 'INVALID_REQUEST', 400);
-    rows = await db
-      .select({
-        id: gameSaves.id,
-        mode: gameSaves.mode,
-        revision: gameSaves.revision,
-        phase: gameSaves.phase,
-        summary: gameSaves.summary,
-        updatedAt: gameSaves.updatedAt,
-      })
-      .from(gameSaves)
-      .where(
-        and(
-          baseWhere,
-          or(
-            lt(gameSaves.updatedAt, updatedAt),
-            and(eq(gameSaves.updatedAt, updatedAt), lt(gameSaves.id, id)),
-          ),
-        ),
-      )
-      .orderBy(desc(gameSaves.updatedAt), desc(gameSaves.id))
-      .limit(limit + 1);
-  } else {
-    rows = await db
-      .select({
-        id: gameSaves.id,
-        mode: gameSaves.mode,
-        revision: gameSaves.revision,
-        phase: gameSaves.phase,
-        summary: gameSaves.summary,
-        updatedAt: gameSaves.updatedAt,
-      })
-      .from(gameSaves)
-      .where(baseWhere)
-      .orderBy(desc(gameSaves.updatedAt), desc(gameSaves.id))
-      .limit(limit + 1);
+    const m = CURSOR.exec(cursor);
+    if (!m) return errorBody(c, 'INVALID_REQUEST', 400);
+    where = and(where, sql`(${gameSaves.updatedAt}, ${gameSaves.id}) < (${m[1]}::timestamptz, ${m[2]})`);
   }
+  const rows = await db
+    .select({
+      id: gameSaves.id,
+      mode: gameSaves.mode,
+      revision: gameSaves.revision,
+      phase: gameSaves.phase,
+      summary: gameSaves.summary,
+      updatedAt: gameSaves.updatedAt,
+      stamp,
+    })
+    .from(gameSaves)
+    .where(where)
+    .orderBy(desc(gameSaves.updatedAt), desc(gameSaves.id))
+    .limit(limit + 1);
 
   const page = rows.slice(0, limit);
   const last = page.at(-1);
-  const nextCursor =
-    rows.length > limit && last ? `${last.updatedAt.toISOString()}|${last.id}` : null;
+  const nextCursor = rows.length > limit && last ? `${last.stamp}|${last.id}` : null;
 
   return c.json({
     items: page.map(row => ({

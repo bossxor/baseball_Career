@@ -19,4 +19,7 @@ assert.match(g, /applicationId\s+"kr\.againplayball\.app"/);
 const activity = join(web, 'android', 'app', 'src', 'main', 'java', 'kr', 'againplayball', 'app', 'MainActivity.java');
 assert.ok(existsSync(activity), 'MainActivity missing');
 
+const manifest = readFileSync(join(web, 'android', 'app', 'src', 'main', 'AndroidManifest.xml'), 'utf8');
+assert.match(manifest, /android:allowBackup="false"/, 'auto-backup must stay off (tokens and saves are server-owned)');
+
 console.log('PASS: M8 Android shell — appId kr.againplayball.app, Cap project present.');

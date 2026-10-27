@@ -7,6 +7,8 @@ import type {
 export type HttpApiOptions = {
   baseUrl: string;
   getToken: () => string | Promise<string>;
+  /** Called once per 401 so the shell can drop the expired token and show the login screen. */
+  onUnauthorized?: () => void;
 };
 
 type SaveListItem = {
@@ -36,6 +38,8 @@ function toSummary(row: SaveListItem): SaveSummary {
 export function createHttpApi(opts: HttpApiOptions): PlayballApi {
   const base = opts.baseUrl.replace(/\/$/, '');
   const revisions = new Map<string, number>();
+  // 28: the receipt hash includes expectedRevision, so a retry after a lost response must resend the first value.
+  const sentRevision = new Map<string, number>();
 
   const headers = async (json = true): Promise<HeadersInit> => {
     const h: Record<string, string> = { Authorization: `Bearer ${await opts.getToken()}` };
@@ -46,6 +50,7 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
   const req = async (path: string, init: RequestInit = {}) => {
     if (typeof navigator !== 'undefined' && navigator.onLine === false) throw new ApiError('OFFLINE');
     const res = await fetch(`${base}${path}`, init).catch(() => { throw new ApiError('OFFLINE'); });
+    if (res.status === 401) { opts.onUnauthorized?.(); throw new ApiError('AUTH_REQUIRED'); }
     if (!res.ok) {
       const body = await res.json().catch(() => ({})) as { code?: string; currentRevision?: string };
       if (body.code === 'REVISION_CONFLICT') {
@@ -58,7 +63,8 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
   };
 
   const command = async (saveId: string, commandId: string, type: string, payload: unknown) => {
-    const expectedRevision = revisions.get(saveId) ?? 0;
+    const expectedRevision = sentRevision.get(commandId) ?? revisions.get(saveId) ?? 0;
+    sentRevision.set(commandId, expectedRevision);
     try {
       const result = await req(`/api/saves/${encodeURIComponent(saveId)}/commands`, {
         method: 'POST',
@@ -66,10 +72,13 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
         body: JSON.stringify({ commandId, expectedRevision, type, payload }),
       }) as { revision: string; next?: ChooseReceipt['next'] };
       revisions.set(saveId, Number(result.revision));
+      sentRevision.delete(commandId);
       return result;
     } catch (err) {
-      if (err instanceof ApiError && err.code === 'REVISION_CONFLICT' && err.currentRevision !== undefined) {
-        revisions.set(saveId, err.currentRevision);
+      if (err instanceof ApiError && err.code === 'REVISION_CONFLICT') {
+        // Not applied: the next attempt may use the fresh revision.
+        sentRevision.delete(commandId);
+        if (err.currentRevision !== undefined) revisions.set(saveId, err.currentRevision);
       }
       throw err;
     }

@@ -33,6 +33,15 @@ const screenFromAction = (actionId: string): PlayScreenId | null => {
 };
 const newId = () => crypto.randomUUID();
 
+/** A retry after a lost response must reuse the id of the same intent; the id is dropped once the call succeeds. */
+function useIntentIds() {
+  const ids = useRef(new Map<string, string>());
+  return {
+    of: (key: string) => { let id = ids.current.get(key); if (!id) { id = newId(); ids.current.set(key, id); } return id; },
+    done: (key: string) => { ids.current.delete(key); },
+  };
+}
+
 /** Hash-routed shell over `PlayballApi`. Failed calls map to error/conflict; conflict offers reload. */
 export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string }) {
   const api = useMemo(() => injected ?? createFixtureApi(), [injected]);
@@ -46,6 +55,7 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
   const [decision, setDecision] = useState<DecisionView | null>(null), [selected, setSelected] = useState<string | null>(null);
   const [draft, setDraft] = useState<CreationDraft>(emptyDraft), [step, setStep] = useState<CreationStep>('NAME'), [errors, setErrors] = useState<FieldErrors>({});
   const creationId = useRef(newId());
+  const intents = useIntentIds();
   const reload = () => setTick(t => t + 1);
 
   const run = async (work: () => Promise<void>) => {
@@ -89,7 +99,9 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
       onConfirm={() => {
         if (!selected) return;
         void run(async () => {
-          const { next } = await api.choose(saveId, screenId, selected, newId());
+          const key = `choose|${saveId}|${screenId}|${selected}`;
+          const { next } = await api.choose(saveId, screenId, selected, intents.of(key));
+          intents.done(key);
           if (next.kind === 'home') go('#/');
           else if (next.kind === 'screen') openPlay(saveId, next.screenId);
           else go(`#/career/${encodeURIComponent(saveId)}`);
@@ -102,7 +114,8 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
       onAction={(actionId, m) => {
         const screen = screenFromAction(actionId);
         if (screen) { openPlay(saveId, screen); return; }
-        void run(async () => { setCareer(await api.act(saveId, actionId, m, newId())); });
+        const key = `act|${saveId}|${actionId}|${m}`;
+        void run(async () => { setCareer(await api.act(saveId, actionId, m, intents.of(key))); intents.done(key); });
       }} />;
   }
   return <Home {...(logo ? { logo } : {})} data={home} state={state} showSaves={showSaves} onToggleSaves={() => setShowSaves(v => !v)} onReload={reload}
