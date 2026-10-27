@@ -1,3 +1,7 @@
+# M2-DQ 최신 작업 — 해외 FA·포스팅 귀국
+
+2026-10-27 · [상세](M2-DQ-OVERSEAS-FA-RETURN.md). 전체 npm run check 종료 0: 730개 중 728 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 825735.1666. 증거 `evidence/M2-DQ-check.log`. M2 추정 50% 유지.
+
 # M2-DP 최신 작업 — KBO 포스팅
 
 2026-10-27 · [상세](M2-DP-POSTING.md). 자격·요청·승인/보류·제안·체결(복귀권·구단 보상금). 미국 루트·해외 FA·귀국은 다음. 전체 npm run check 종료 0: 728개 중 726 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 774374.7154. 증거 `evidence/M2-DP-check.log`. M2 추정 50% 유지.

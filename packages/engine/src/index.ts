@@ -93,6 +93,8 @@ export * from './recruitment.js';
 export * from './kbo-finance.js';
 export * from './kbo-service-time.js';
 export * from './kbo-posting.js';
+export * from './kbo-overseas-fa.js';
+export * from './kbo-return.js';
 export * from './kbo-archive-view.js';
 export * from './kbo-futures-schedule.js';
 export * from './kbo-sangmu.js';

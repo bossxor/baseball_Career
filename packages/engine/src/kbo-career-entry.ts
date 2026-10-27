@@ -19,6 +19,8 @@ import type {KboRookieDraftReceipt} from './kbo-supply.js';
 import type {KboSangmuUnit} from './kbo-sangmu-unit.js';
 import type {KboMilitaryRecord} from './kbo-military-state.js';
 import type {KboPostingWindow} from './kbo-posting.js';
+import type {KboOverseasFaWindow} from './kbo-overseas-fa.js';
+import type {KboReturnNegotiation} from './kbo-return.js';
 import type {KboCallupReview} from './kbo-callup.js';
 import type {KboSeasonProgress} from './kbo-progress.js';
 import type {SchoolDayLedger} from './high-school-day.js';
@@ -62,7 +64,7 @@ export interface KboCareer {
  styleUsedWindows:readonly string[];planHistory:HighSchoolCareer['planHistory'];
  transferHistory?:readonly KboSeasonTransfer[];remainderRenewal?:KboRemainderRenewal;contractHistory?:readonly KboInitialContract[];
  aiAssessments?:KboAiAssessments;aiOffseasons?:readonly {seasonKey:string;renewal:KboAiRenewalReceipt;repair:KboRosterRepairReceipt;rounds:readonly KboAiFaRound[]}[];
- freeAgents?:KboFreeAgentPool;days?:SchoolDayLedger;callupReviews?:readonly KboCallupReview[];aiRosterReviews?:readonly string[];offseasonExit?:KboOffseasonExit;seasonClose?:KboSeasonClose;renewal?:KboRenewal;proSeasons?:readonly KboSeasonArchive[];retiredPlayers?:readonly KboRetiredPlayer[];retirement?:KboCareerRetirement;sangmu?:KboSangmuUnit;military?:KboMilitaryRecord;rookieDrafts?:readonly KboRookieDraftReceipt[];postseason?:KboPostseason;campNotices?:readonly EventInstance[];preseasonPlan?:KboPreseasonPlan;openingRoster?:KboOpeningRoster;competitionSchedule?:KboSeasonSchedule;posting?:{windows:readonly KboPostingWindow[]};
+ freeAgents?:KboFreeAgentPool;days?:SchoolDayLedger;callupReviews?:readonly KboCallupReview[];aiRosterReviews?:readonly string[];offseasonExit?:KboOffseasonExit;seasonClose?:KboSeasonClose;renewal?:KboRenewal;proSeasons?:readonly KboSeasonArchive[];retiredPlayers?:readonly KboRetiredPlayer[];retirement?:KboCareerRetirement;sangmu?:KboSangmuUnit;military?:KboMilitaryRecord;rookieDrafts?:readonly KboRookieDraftReceipt[];postseason?:KboPostseason;campNotices?:readonly EventInstance[];preseasonPlan?:KboPreseasonPlan;openingRoster?:KboOpeningRoster;competitionSchedule?:KboSeasonSchedule;posting?:{windows:readonly KboPostingWindow[]};overseasFa?:{windows:readonly KboOverseasFaWindow[]};returnHome?:{negotiations:readonly KboReturnNegotiation[]};
 }
 function entryKey(ready:KboAmateurYearEnd){return JSON.stringify(['kbo-season-entry',ready.receiptKey]);}
 /** One atomic result consumes the frozen reservation once. Replaying the same old source is deterministic;

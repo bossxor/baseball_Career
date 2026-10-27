@@ -1,3 +1,7 @@
+## 최신 상태 — M2-DQ 해외 FA·귀국 · 전체 검사 통과
+
+[DQ 상세](M2-DQ-OVERSEAS-FA-RETURN.md). 해외 FA 9시즌·보상금 없음·국내권 RELEASED, 포스팅 귀국 원구단 협상. 전체 npm run check 종료 0: 730개 중 728 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 825735.1666. 증거 `evidence/M2-DQ-check.log`. 다음은 미국 루트 활성화·해외 병역·99사건·24경로. M2 영역 약 50% 유지. PC 종료 금지.
+
 ## 최신 상태 — M2-DP 포스팅 · 전체 검사 통과
 
 [DP 상세](M2-DP-POSTING.md). 7시즌 등록·병역 COMPLETED/NOT_APPLICABLE·오프시즌 포스팅 요청, 구단 점수 승인/보류, 고정 제안, 체결 시 복귀권·구단 보상금. 미국 커리어 루트는 만들지 않았다. 전체 npm run check 종료 0: 엔진/API 728개 중 726 통과, 실패 0, Neon 2건 건너뜀, 웹 22/22. duration_ms 774374.7154. 증거 `evidence/M2-DP-check.log`. 다음은 해외 FA·국내 복귀·미국 루트 활성화. M2 영역 약 50% 유지. PC 종료 금지.
