@@ -9,7 +9,7 @@ C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94a
 ```
 
 - 브랜치: `codex/m2-career-engine`
-- 원격 푸시 팁(검증 기준): DU 커밋 후 `git fetch && git rev-parse HEAD`로 확인. DT=`86f068b`, 인계문서=`803a898`, DU는 이어진 feat 커밋.
+- 원격 푸시 팁(검증 기준): **`b2a2234`** (DU). DT=`86f068b`, 인계문서=`803a898`.
 - `git fetch && git rev-parse HEAD origin/codex/m2-career-engine` 로 확인.
 - 강제 푸시 금지. `V:\.git` 건드리지 말 것(문서만 Copy-Item 동기화).
 - PC 종료 금지(사용자 지시 이력).
@@ -24,7 +24,7 @@ C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94a
 | DR | `9538f18` | `activateKboUsCareer` KBO_TRANSFER | `evidence/M2-DR-check.log` |
 | DS | `1b0458e` | 미국 28세 FREEZE/TERMINATE·완료 | `evidence/M2-DS-check.log` |
 | DT | **`86f068b`** | 국대 초청/결과 봉인·ATHLETE_ELIGIBLE·체육요원 3시즌 | `evidence/M2-DT-check.log` |
-| DU | (이 세션 feat 커밋) | AG 8개국 실제 INTERNATIONAL 대진·경기·봉인 | `evidence/M2-DU-check.log` |
+| DU | **`b2a2234`** | AG 8개국 실제 INTERNATIONAL 대진·경기·봉인 | `evidence/M2-DU-check.log` |
 
 DT check: 735/733 · DU check: 736/734 · 실패0 · Neon2 · 웹22/22 · 골든 `113761f605145c79179c912841754bf060e25d42856822f847074317288d5c92`.
 
