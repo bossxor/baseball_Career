@@ -2,7 +2,7 @@
 
 99개 설계 사건을 실제 도메인 검수 대상으로 기록한다. 아래 참조는 문자열 탐색 결과이며 실행 완료 증거가 아니다. 동적 ID는 누락될 수 있고 guard/목록에서 ID를 참조하는 것만으로 트리거가 구현된 것은 아니다. 기존 구현을 NOT_IMPLEMENTED로 단정하거나 ACK/이동을 실제 도메인 완료로 세지 않는다.
 
-DV의5개는 집중 검사16개에 포함된 도메인/자격·복귀/의무 알림 처리만 검증했다. 전체 국제 달력·선발 완료를 뜻하지 않는다. 나머지는 실행 소스와 테스트를 직접 읽어 분류해야 한다. [기계 목록](M2-EVENT-CONNECTION-AUDIT.json).
+DV의5개는 집중 검사16개에 포함된 도메인/자격·복귀/의무 알림 처리만 검증했다. 전체 국제 달력·선발 완료를 뜻하지 않는다. DW의 E45(실제28명 탈락)·E65(실제 MLB 출장)도 집중25개에 포함해 검증했다. 전체 DW 검사도 통과했다. 전체 국제 달력 완료를 뜻하지 않는다. 나머지는 실행 소스와 테스트를 직접 읽어 분류해야 한다. [기계 목록](M2-EVENT-CONNECTION-AUDIT.json).
 
 | 사건 | 종류 | 선택 처리 | 검수 상태 | 소스 탐색 참조 |
 |---|---|---|---|---|
@@ -50,7 +50,7 @@ DV의5개는 집중 검사16개에 포함된 도메인/자격·복귀/의무 알
 | E42 다른 이름의 선수 | SEASON | ACK:ACK_EVENT | NOT_AUDITED |  |
 | E43 한 번의 특별훈련 | SEASON | NAVIGATE:OPEN_TRAINING<br>DOMAIN:DEFER_TRAINING<br>DOMAIN:FORFEIT_TRAINING | NOT_AUDITED | [high-school-progress.ts:77](../../packages/engine/src/high-school-progress.ts)<br>[high-school-training.ts:52](../../packages/engine/src/high-school-training.ts)<br>[kbo-windows.ts:72](../../packages/engine/src/kbo-windows.ts)<br>[us-windows.ts:53](../../packages/engine/src/us-windows.ts) |
 | E44 국가의 부름 | REGISTRATION | DOMAIN:ACCEPT_NATIONAL<br>DOMAIN:DECLINE_NATIONAL | FOCUSED_VERIFIED_DV | [kbo-national.ts:48](../../packages/engine/src/kbo-national.ts)<br>[kbo-progress.ts:92](../../packages/engine/src/kbo-progress.ts) |
-| E45 대표팀 밖에서 | REGISTRATION | ACK:ACK_EVENT | NOT_AUDITED |  |
+| E45 대표팀 밖에서 | REGISTRATION | ACK:ACK_EVENT | FOCUSED_AND_FULL_DW_PASS |  |
 | E46 첫 국제무대 | REGISTRATION | ACK:ACK_EVENT | FOCUSED_VERIFIED_DV | [kbo-national.ts:72](../../packages/engine/src/kbo-national.ts) |
 | E47 메달과 다음 의무 | REGISTRATION | NAVIGATE:OPEN_SERVICE_ELIGIBILITY | FOCUSED_VERIFIED_DV | [kbo-national.ts:73](../../packages/engine/src/kbo-national.ts)<br>[kbo-progress.ts:92](../../packages/engine/src/kbo-progress.ts) |
 | E48 돌아오는 비행기 | REGISTRATION | DOMAIN:CONFIRM_NATIONAL_RETURN | FOCUSED_VERIFIED_DV | [kbo-national.ts:74](../../packages/engine/src/kbo-national.ts)<br>[kbo-progress.ts:92](../../packages/engine/src/kbo-progress.ts) |
@@ -70,7 +70,7 @@ DV의5개는 집중 검사16개에 포함된 도메인/자격·복귀/의무 알
 | E62 포스팅을 요청하다 | CONTRACT | DOMAIN:REQUEST_POSTING<br>ACK:ACK_EVENT | NOT_AUDITED |  |
 | E63 구단의 대답 | CONTRACT | NAVIGATE:OPEN_POSTING_OFFERS<br>ACK:ACK_EVENT | NOT_AUDITED |  |
 | E64 협상의 끝 | CONTRACT | DOMAIN:ACCEPT_CAREER_OFFER<br>DOMAIN:REMAIN_ORIGINAL | NOT_AUDITED |  |
-| E65 처음 선 빅리그 | REGISTRATION | ACK:ACK_EVENT | NOT_AUDITED |  |
+| E65 처음 선 빅리그 | REGISTRATION | ACK:ACK_EVENT | FOCUSED_AND_FULL_DW_PASS |  |
 | E66 미국에서 맞는 FA | ROUTE | NAVIGATE:OPEN_CAREER_OFFERS<br>NAVIGATE:OPEN_RETURN | NOT_AUDITED |  |
 | E67 돌아갈 그라운드 | ROUTE | DOMAIN:CONFIRM_DOMESTIC_RETURN<br>DOMAIN:CANCEL_RETURN | NOT_AUDITED |  |
 | E68 기다림도 커리어 | ROUTE | DOMAIN:ADVANCE_RETURN_PROGRAM | NOT_AUDITED |  |

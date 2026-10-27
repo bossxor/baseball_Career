@@ -9,6 +9,6 @@ export function assertKboCareerRevision(source:Pick<KboCareer,'schemaVersion'|'r
  if(source.schemaVersion<4 && ((source.transferHistory?.length??0)>0 || Object.values(source.world?.contracts??{}).some(c=>c.remainderPay?.schemaVersion===2)))throw new RangeError('CAREER_REVISION_CHANGED');
  if(source.schemaVersion<6 && (source.world?.suspendedContracts!==undefined || source.sangmu?.npcReturns!==undefined || source.world?.finance?.closedContracts!==undefined))throw new RangeError('CAREER_REVISION_CHANGED');
  if(source.sangmu?.emergency && source.schemaVersion<5)throw new RangeError('CAREER_REVISION_CHANGED');
- assertNationalLedger(source.national);
+ assertNationalLedger(source.national,source.world?.worldKey);
  assertCareerRevision({schemaVersion:1,revision:source.revision},expectedRevision);
 }

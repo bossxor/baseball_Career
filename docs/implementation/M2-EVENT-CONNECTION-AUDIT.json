@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "INCOMPLETE_IMPLEMENTATION_AUDIT",
-  "baseline": "1cbba1b + M2-DV worktree",
+  "baseline": "16a5f51 + M2-DW worktree",
   "items": [
     {
       "id": "E01",
@@ -23,6 +23,14 @@
         {
           "path": "packages/engine/src/high-school-career.ts",
           "line": 116
+        },
+        {
+          "path": "packages/engine/src/high-school-career.ts",
+          "line": 123
+        },
+        {
+          "path": "packages/engine/src/relation-notices.ts",
+          "line": 28
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -51,6 +59,14 @@
         {
           "path": "packages/engine/src/high-school-progress.ts",
           "line": 77
+        },
+        {
+          "path": "packages/engine/src/high-school-progress.ts",
+          "line": 80
+        },
+        {
+          "path": "packages/engine/src/relation-notices.ts",
+          "line": 28
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -79,6 +95,10 @@
         {
           "path": "packages/engine/src/high-school-progress.ts",
           "line": 77
+        },
+        {
+          "path": "packages/engine/src/high-school-progress.ts",
+          "line": 80
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -99,6 +119,22 @@
         {
           "path": "packages/engine/src/high-school-route.ts",
           "line": 41
+        },
+        {
+          "path": "packages/engine/src/high-school-route.ts",
+          "line": 44
+        },
+        {
+          "path": "packages/engine/src/high-school-route.ts",
+          "line": 47
+        },
+        {
+          "path": "packages/engine/src/high-school-route.ts",
+          "line": 49
+        },
+        {
+          "path": "packages/engine/src/high-school-route.ts",
+          "line": 59
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -180,6 +216,18 @@
         {
           "path": "packages/engine/src/kbo-preseason.ts",
           "line": 37
+        },
+        {
+          "path": "packages/engine/src/kbo-preseason.ts",
+          "line": 39
+        },
+        {
+          "path": "packages/engine/src/kbo-preseason.ts",
+          "line": 42
+        },
+        {
+          "path": "packages/engine/src/kbo-preseason.ts",
+          "line": 59
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -203,7 +251,27 @@
       "references": [
         {
           "path": "packages/engine/src/kbo-callup.ts",
+          "line": 31
+        },
+        {
+          "path": "packages/engine/src/kbo-callup.ts",
           "line": 36
+        },
+        {
+          "path": "packages/engine/src/kbo-callup.ts",
+          "line": 50
+        },
+        {
+          "path": "packages/engine/src/kbo-callup.ts",
+          "line": 51
+        },
+        {
+          "path": "packages/engine/src/kbo-callup.ts",
+          "line": 62
+        },
+        {
+          "path": "packages/engine/src/kbo-callup.ts",
+          "line": 80
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -575,6 +643,10 @@
       "references": [
         {
           "path": "packages/engine/src/kbo-military-planning.ts",
+          "line": 26
+        },
+        {
+          "path": "packages/engine/src/kbo-military-planning.ts",
           "line": 31
         },
         {
@@ -586,16 +658,56 @@
           "line": 32
         },
         {
+          "path": "packages/engine/src/kbo-offseason-exit.ts",
+          "line": 46
+        },
+        {
           "path": "packages/engine/src/kbo-remainder-renewal.ts",
           "line": 26
+        },
+        {
+          "path": "packages/engine/src/kbo-remainder-renewal.ts",
+          "line": 33
+        },
+        {
+          "path": "packages/engine/src/kbo-remainder-renewal.ts",
+          "line": 42
+        },
+        {
+          "path": "packages/engine/src/kbo-renewal.ts",
+          "line": 33
         },
         {
           "path": "packages/engine/src/kbo-renewal.ts",
           "line": 42
         },
         {
+          "path": "packages/engine/src/kbo-renewal.ts",
+          "line": 43
+        },
+        {
+          "path": "packages/engine/src/kbo-renewal.ts",
+          "line": 49
+        },
+        {
+          "path": "packages/engine/src/kbo-renewal.ts",
+          "line": 53
+        },
+        {
+          "path": "packages/engine/src/kbo-retirement.ts",
+          "line": 56
+        },
+        {
           "path": "packages/engine/src/kbo-retirement.ts",
           "line": 59
+        },
+        {
+          "path": "packages/engine/src/kbo-retirement.ts",
+          "line": 63
+        },
+        {
+          "path": "packages/engine/src/kbo-retirement.ts",
+          "line": 72
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -713,8 +825,28 @@
           "line": 46
         },
         {
+          "path": "packages/engine/src/kbo-retirement.ts",
+          "line": 56
+        },
+        {
+          "path": "packages/engine/src/kbo-retirement.ts",
+          "line": 60
+        },
+        {
+          "path": "packages/engine/src/kbo-retirement.ts",
+          "line": 63
+        },
+        {
           "path": "packages/engine/src/us-retirement.ts",
           "line": 24
+        },
+        {
+          "path": "packages/engine/src/us-retirement.ts",
+          "line": 30
+        },
+        {
+          "path": "packages/engine/src/us-retirement.ts",
+          "line": 35
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -737,8 +869,16 @@
           "line": 46
         },
         {
+          "path": "packages/engine/src/kbo-retirement.ts",
+          "line": 53
+        },
+        {
           "path": "packages/engine/src/us-retirement.ts",
           "line": 24
+        },
+        {
+          "path": "packages/engine/src/us-retirement.ts",
+          "line": 27
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -822,12 +962,52 @@
           "line": 77
         },
         {
+          "path": "packages/engine/src/high-school-progress.ts",
+          "line": 106
+        },
+        {
+          "path": "packages/engine/src/high-school-progress.ts",
+          "line": 108
+        },
+        {
+          "path": "packages/engine/src/kbo-windows.ts",
+          "line": 68
+        },
+        {
           "path": "packages/engine/src/kbo-windows.ts",
           "line": 72
         },
         {
+          "path": "packages/engine/src/kbo-windows.ts",
+          "line": 81
+        },
+        {
+          "path": "packages/engine/src/kbo-windows.ts",
+          "line": 85
+        },
+        {
+          "path": "packages/engine/src/kbo-windows.ts",
+          "line": 86
+        },
+        {
+          "path": "packages/engine/src/us-windows.ts",
+          "line": 49
+        },
+        {
           "path": "packages/engine/src/us-windows.ts",
           "line": 53
+        },
+        {
+          "path": "packages/engine/src/us-windows.ts",
+          "line": 62
+        },
+        {
+          "path": "packages/engine/src/us-windows.ts",
+          "line": 66
+        },
+        {
+          "path": "packages/engine/src/us-windows.ts",
+          "line": 67
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -873,16 +1053,60 @@
           "line": 77
         },
         {
+          "path": "packages/engine/src/high-school-progress.ts",
+          "line": 81
+        },
+        {
+          "path": "packages/engine/src/high-school-progress.ts",
+          "line": 106
+        },
+        {
+          "path": "packages/engine/src/high-school-progress.ts",
+          "line": 107
+        },
+        {
           "path": "packages/engine/src/high-school-training.ts",
           "line": 52
+        },
+        {
+          "path": "packages/engine/src/kbo-windows.ts",
+          "line": 68
         },
         {
           "path": "packages/engine/src/kbo-windows.ts",
           "line": 72
         },
         {
+          "path": "packages/engine/src/kbo-windows.ts",
+          "line": 75
+        },
+        {
+          "path": "packages/engine/src/kbo-windows.ts",
+          "line": 81
+        },
+        {
+          "path": "packages/engine/src/kbo-windows.ts",
+          "line": 85
+        },
+        {
+          "path": "packages/engine/src/us-windows.ts",
+          "line": 49
+        },
+        {
           "path": "packages/engine/src/us-windows.ts",
           "line": 53
+        },
+        {
+          "path": "packages/engine/src/us-windows.ts",
+          "line": 56
+        },
+        {
+          "path": "packages/engine/src/us-windows.ts",
+          "line": 62
+        },
+        {
+          "path": "packages/engine/src/us-windows.ts",
+          "line": 66
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -906,7 +1130,19 @@
       "references": [
         {
           "path": "packages/engine/src/kbo-national.ts",
-          "line": 48
+          "line": 51
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 59
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 141
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 144
         },
         {
           "path": "packages/engine/src/kbo-progress.ts",
@@ -927,9 +1163,23 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
-      "references": [],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "verification": "FOCUSED_AND_FULL_DW_PASS",
+      "references": [
+        {
+          "path": "packages/engine/src/kbo-national-selection.ts",
+          "line": 31
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 141
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 142
+        }
+      ],
+      "note": "Actual frozen28 selection absence; resolve requires snapshot evidence. No calendar automation claim.",
+      "evidence": "docs/implementation/evidence/M2-DW-check.log"
     },
     {
       "id": "E46",
@@ -946,7 +1196,11 @@
       "references": [
         {
           "path": "packages/engine/src/kbo-national.ts",
-          "line": 72
+          "line": 77
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 141
         }
       ],
       "evidence": "evidence/M2-DV-focused.log",
@@ -967,7 +1221,23 @@
       "references": [
         {
           "path": "packages/engine/src/kbo-national.ts",
-          "line": 73
+          "line": 78
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 88
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 141
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 148
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 155
         },
         {
           "path": "packages/engine/src/kbo-progress.ts",
@@ -992,7 +1262,19 @@
       "references": [
         {
           "path": "packages/engine/src/kbo-national.ts",
-          "line": 74
+          "line": 79
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 89
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 141
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 147
         },
         {
           "path": "packages/engine/src/kbo-progress.ts",
@@ -1024,12 +1306,28 @@
       "verification": "NOT_AUDITED",
       "references": [
         {
+          "path": "packages/engine/src/kbo-active-service.ts",
+          "line": 28
+        },
+        {
           "path": "packages/engine/src/kbo-military-planning.ts",
           "line": 15
         },
         {
+          "path": "packages/engine/src/kbo-military-planning.ts",
+          "line": 28
+        },
+        {
+          "path": "packages/engine/src/kbo-military-planning.ts",
+          "line": 29
+        },
+        {
+          "path": "packages/engine/src/kbo-military-planning.ts",
+          "line": 47
+        },
+        {
           "path": "packages/engine/src/kbo-national.ts",
-          "line": 86
+          "line": 91
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -1047,6 +1345,10 @@
       "scope": "REQUIRES_DOMAIN_REVIEW",
       "verification": "NOT_AUDITED",
       "references": [
+        {
+          "path": "packages/engine/src/kbo-military-state.ts",
+          "line": 47
+        },
         {
           "path": "packages/engine/src/kbo-military-state.ts",
           "line": 48
@@ -1078,6 +1380,26 @@
         {
           "path": "packages/engine/src/kbo-military-events.ts",
           "line": 20
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 28
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 58
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 59
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 60
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 79
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -1102,6 +1424,26 @@
         {
           "path": "packages/engine/src/kbo-military-events.ts",
           "line": 20
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 28
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 54
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 58
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 59
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 79
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -1122,6 +1464,30 @@
         {
           "path": "packages/engine/src/kbo-military-events.ts",
           "line": 20
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 21
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 51
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 54
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 58
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 74
+        },
+        {
+          "path": "packages/engine/src/kbo-military-events.ts",
+          "line": 79
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -1148,8 +1514,20 @@
           "line": 15
         },
         {
+          "path": "packages/engine/src/kbo-military-planning.ts",
+          "line": 28
+        },
+        {
+          "path": "packages/engine/src/kbo-military-planning.ts",
+          "line": 29
+        },
+        {
+          "path": "packages/engine/src/kbo-military-planning.ts",
+          "line": 47
+        },
+        {
           "path": "packages/engine/src/kbo-national.ts",
-          "line": 86
+          "line": 91
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -1169,7 +1547,15 @@
       "references": [
         {
           "path": "packages/engine/src/kbo-national.ts",
-          "line": 125
+          "line": 131
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 132
+        },
+        {
+          "path": "packages/engine/src/kbo-national.ts",
+          "line": 141
         }
       ],
       "evidence": "evidence/M2-DV-focused.log",
@@ -1229,6 +1615,18 @@
         {
           "path": "packages/engine/src/us-preseason.ts",
           "line": 37
+        },
+        {
+          "path": "packages/engine/src/us-preseason.ts",
+          "line": 39
+        },
+        {
+          "path": "packages/engine/src/us-preseason.ts",
+          "line": 43
+        },
+        {
+          "path": "packages/engine/src/us-preseason.ts",
+          "line": 60
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -1253,6 +1651,10 @@
         {
           "path": "packages/engine/src/us-levels.ts",
           "line": 26
+        },
+        {
+          "path": "packages/engine/src/us-levels.ts",
+          "line": 29
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -1273,6 +1675,10 @@
         {
           "path": "packages/engine/src/us-levels.ts",
           "line": 26
+        },
+        {
+          "path": "packages/engine/src/us-levels.ts",
+          "line": 29
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -1297,6 +1703,10 @@
         {
           "path": "packages/engine/src/us-levels.ts",
           "line": 26
+        },
+        {
+          "path": "packages/engine/src/us-levels.ts",
+          "line": 29
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -1369,9 +1779,27 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
-      "references": [],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "verification": "FOCUSED_AND_FULL_DW_PASS",
+      "references": [
+        {
+          "path": "packages/engine/src/us-debut.ts",
+          "line": 10
+        },
+        {
+          "path": "packages/engine/src/us-debut.ts",
+          "line": 11
+        },
+        {
+          "path": "packages/engine/src/us-debut.ts",
+          "line": 15
+        },
+        {
+          "path": "packages/engine/src/us-debut.ts",
+          "line": 20
+        }
+      ],
+      "note": "Actual first positive MLB PA/BF in REG/PS commit; callup alone and zero listings do not trigger. Legacy prior debut prevents duplicate notice.",
+      "evidence": "docs/implementation/evidence/M2-DW-check.log"
     },
     {
       "id": "E66",
@@ -1552,6 +1980,22 @@
         {
           "path": "packages/engine/src/college-graduation.ts",
           "line": 24
+        },
+        {
+          "path": "packages/engine/src/college-graduation.ts",
+          "line": 26
+        },
+        {
+          "path": "packages/engine/src/college-graduation.ts",
+          "line": 30
+        },
+        {
+          "path": "packages/engine/src/college-graduation.ts",
+          "line": 37
+        },
+        {
+          "path": "packages/engine/src/college-graduation.ts",
+          "line": 40
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -1710,8 +2154,32 @@
       "verification": "NOT_AUDITED",
       "references": [
         {
+          "path": "packages/engine/src/relation-notices.ts",
+          "line": 28
+        },
+        {
+          "path": "packages/engine/src/trait-notices.ts",
+          "line": 11
+        },
+        {
           "path": "packages/engine/src/trait-notices.ts",
           "line": 13
+        },
+        {
+          "path": "packages/engine/src/trait-notices.ts",
+          "line": 16
+        },
+        {
+          "path": "packages/engine/src/trait-notices.ts",
+          "line": 17
+        },
+        {
+          "path": "packages/engine/src/trait-notices.ts",
+          "line": 26
+        },
+        {
+          "path": "packages/engine/src/trait-notices.ts",
+          "line": 30
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -1728,7 +2196,12 @@
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
       "verification": "NOT_AUDITED",
-      "references": [],
+      "references": [
+        {
+          "path": "packages/engine/src/trait-notices.ts",
+          "line": 36
+        }
+      ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
     },
     {
@@ -1819,6 +2292,10 @@
         {
           "path": "packages/engine/src/season-goals.ts",
           "line": 37
+        },
+        {
+          "path": "packages/engine/src/season-goals.ts",
+          "line": 101
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -1898,8 +2375,24 @@
           "line": 61
         },
         {
+          "path": "packages/engine/src/kbo-relations.ts",
+          "line": 62
+        },
+        {
+          "path": "packages/engine/src/relation-notices.ts",
+          "line": 28
+        },
+        {
           "path": "packages/engine/src/relation-notices.ts",
           "line": 38
+        },
+        {
+          "path": "packages/engine/src/relation-notices.ts",
+          "line": 53
+        },
+        {
+          "path": "packages/engine/src/relation-notices.ts",
+          "line": 65
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -1922,8 +2415,20 @@
           "line": 61
         },
         {
+          "path": "packages/engine/src/kbo-relations.ts",
+          "line": 71
+        },
+        {
           "path": "packages/engine/src/kbo-reunion-events.ts",
           "line": 34
+        },
+        {
+          "path": "packages/engine/src/kbo-reunion-events.ts",
+          "line": 43
+        },
+        {
+          "path": "packages/engine/src/kbo-reunion-events.ts",
+          "line": 49
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
@@ -1946,8 +2451,56 @@
           "line": 61
         },
         {
+          "path": "packages/engine/src/kbo-relations.ts",
+          "line": 71
+        },
+        {
+          "path": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 42
+        },
+        {
           "path": "packages/engine/src/kbo-team-reunions.ts",
           "line": 68
+        },
+        {
+          "path": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 98
+        },
+        {
+          "path": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 104
+        },
+        {
+          "path": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 112
+        },
+        {
+          "path": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 122
+        },
+        {
+          "path": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 133
+        },
+        {
+          "path": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 144
+        },
+        {
+          "path": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 154
+        },
+        {
+          "path": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 166
+        },
+        {
+          "path": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 173
+        },
+        {
+          "path": "packages/engine/src/kbo-transfer-registration.ts",
+          "line": 9
         }
       ],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."

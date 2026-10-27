@@ -1,3 +1,8 @@
+import {automaticFieldLineup,initialPositionFits} from './lineup.js';
+import {emptyBatting} from './stats.js';
+import {assertNationalSelectionSnapshot,nationalLineupBatting} from './national-selection.js';
+import type {NationalSelectionSnapshot} from './national-selection.js';
+import type {BattingLine} from './types.js';
 import {createStreams,nextInteger} from './rng.js';
 import {buildGameContribution} from './records.js';
 import type {GameContribution} from './records.js';
@@ -20,6 +25,16 @@ function nationTeam(id:string,value:number,protagonist?:{key:string;hitter?:Hitt
  const pitchers:PitcherSnapshot[]=Array.from({length:4},(_,i)=>({simulationKey:`${id}-p${i}`,abilities:Object.fromEntries(PITCHER_ABILITIES.map(a=>[a,value*10_000])),fatigue:0,morale:1,temporary:{},traitLogits:[],throws:'R',pitchForm:'OVERHAND',role:i===0?'SP':i===3?'CP':'RP',available:true,recentOuts:0,repertoire:[{pitchId:'P01',mastery:2,weight:60},{pitchId:'P03',mastery:1,weight:40}]}));
  if(protagonist?.pitcher&&id==='KOR')pitchers[0]={...protagonist.pitcher,simulationKey:protagonist.key};
  return {simulationKey:id,lineup,fielders:lineup.slice(0,8).map(p=>({simulationKey:p.simulationKey,fit:100})),pitchers};
+}
+
+/** The selected15/13 and actual player books supply game inputs; registration alone never guarantees an appearance. */
+function koreaTeam(c:KboCareer,selection:NationalSelectionSnapshot,gameNumber:number,recent:ReadonlyMap<string,BattingLine>):TeamSnapshot {
+ const players={...c.world.players,...Object.fromEntries(Object.entries(c.sangmu?.members??{}).map(([k,m])=>[k,m.player]))},chosen=selection.roster.slots.map(s=>{const p=players[s.playerKey];if(!p)throw new RangeError('NATIONAL_ROSTER_CHANGED');return {player:p,role:s.role};}),healthy=(k:string)=>!Object.hasOwn(c.health.injuries,k);
+ const hitters=chosen.filter(s=>s.player.kind==='HITTER'),lineup=automaticFieldLineup(hitters.map(s=>({player:s.player,available:healthy(s.player.simulationKey),fits:initialPositionFits(s.player.position),recent:recent.get(s.player.simulationKey)??emptyBatting()})),60);
+ const starters=chosen.filter(s=>s.role==='SP'&&healthy(s.player.simulationKey)&&s.player.fatigue<60),starter=starters[gameNumber%Math.max(1,starters.length)]??chosen.find(s=>s.player.kind==='PITCHER'&&s.role==='RP'&&healthy(s.player.simulationKey));if(!starter)throw new RangeError('NATIONAL_STARTER_REQUIRED');
+ const snapshot=(key:string)=>{const p=players[key]!;return {simulationKey:key,abilities:{...p.abilities},fatigue:p.fatigue,morale:1,temporary:{},traitLogits:[]};};
+ const pitchers=chosen.filter(s=>s.player.kind==='PITCHER').sort((a,b)=>a===starter?-1:b===starter?1:a.player.simulationKey<b.player.simulationKey?-1:1).map(s=>{const p=s.player,r=c.world.repertoires[p.simulationKey]??c.sangmu?.members[p.simulationKey]?.repertoire;if(!r||r.seasonId!==c.world.seasonKey)throw new RangeError('MISSING_NATIONAL_REPERTOIRE');validatePitchWeights(r.book,r.weights);return {...snapshot(p.simulationKey),throws:p.throws,pitchForm:p.pitchForm!,role:s===starter?'SP' as const:s.role==='CP'?'CP' as const:s.role==='SP'?'SP' as const:'RP' as const,available:healthy(p.simulationKey)&&(s.role!=='SP'||s===starter),recentOuts:0,repertoire:Object.keys(r.weights).sort().map(id=>({pitchId:id as PitchId,weight:r.weights[id as PitchId]!,mastery:pitchMastery(r.book[id as PitchId]!)}))};});
+ return {simulationKey:'KOR',fielders:lineup.fielders,lineup:lineup.lineup.map(key=>({...snapshot(key),bats:players[key]!.bats,approach:'BALANCED',available:true})),pitchers};
 }
 
 function finish(state:GameState):GameState {
@@ -64,11 +79,13 @@ export function playAsianGamesTournament(c:KboCareer,revision:number):KboCareer 
  if((c.national?.competitions??[]).some(x=>x.competitionId===competitionId))throw new RangeError('NATIONAL_TOURNAMENT_ALREADY_PLAYED');
  const slot=c.world.calendar.international.find(w=>w.type==='AG');if(!slot)throw new RangeError('NATIONAL_NOT_SCHEDULED');
  if(Object.hasOwn(c.health.injuries,c.protagonistKey)||c.military?.status==='SERVING_ACTIVE')throw new RangeError('NATIONAL_PLAYER_UNAVAILABLE');
+ const selection=invite.selectionSnapshotId?c.national?.selections?.find(s=>s.selectionId===invite.selectionSnapshotId):undefined;if(invite.selectionSnapshotId&&!selection)throw new RangeError('NATIONAL_SELECTION_CHANGED');if(selection){assertNationalSelectionSnapshot(selection);if(!selection.roster.slots.some(s=>s.playerKey===c.protagonistKey))throw new RangeError('NATIONAL_PLAYER_NOT_REGISTERED');}
+ const recent=selection?nationalLineupBatting(c.records,selection):new Map<string,BattingLine>();let koreaGames=0;
  const player=c.world.players[c.protagonistKey]!;
  const protagonist=player.kind==='HITTER'?{key:c.protagonistKey,hitter:{simulationKey:c.protagonistKey,abilities:{...player.abilities},fatigue:player.fatigue,morale:1,temporary:{},traitLogits:[],available:true,bats:player.bats??'R',approach:'BALANCED' as const}}:{key:c.protagonistKey,pitcher:(()=>{const r=c.world.repertoires[c.protagonistKey];if(!r)throw new RangeError('MISSING_NATIONAL_REPERTOIRE');validatePitchWeights(r.book,r.weights);return {simulationKey:c.protagonistKey,abilities:{...player.abilities},fatigue:player.fatigue,morale:1,temporary:{},traitLogits:[],throws:player.throws,pitchForm:player.pitchForm!,role:'SP' as const,available:true,recentOuts:0,repertoire:Object.keys(r.weights).sort().map(id=>({pitchId:id as PitchId,weight:r.weights[id as PitchId]!,mastery:pitchMastery(r.book[id as PitchId]!)}))};})()};
  const teams=Object.fromEntries(AG_NATIONS.map(n=>[n.id,nationTeam(n.id,n.strength,protagonist)]));
  const contributions:GameContribution[]=[];
- const match=(seed:string,a:TeamSnapshot,b:TeamSnapshot,key:string,offset:number)=>{const r=play(seed,a,b,key,c.world.seasonKey,slot.startDay+offset);contributions.push(r.contribution);return r;};
+ const match=(seed:string,a:TeamSnapshot,b:TeamSnapshot,key:string,offset:number)=>{const away=a.simulationKey==='KOR'&&selection?koreaTeam(c,selection,koreaGames++,recent):a,home=b.simulationKey==='KOR'&&selection?koreaTeam(c,selection,koreaGames++,recent):b,r=play(seed,away,home,key,c.world.seasonKey,slot.startDay+offset);contributions.push(r.contribution);return r;};
  const seed=`${c.world.seed}:ag:${c.world.seasonKey}`,groupA=['KOR','TWN','HKG','THA'] as const,groupB=['JPN','CHN','PHI','PAK'] as const;
  const groupGames=(ids:readonly string[])=>{
   const out:{a:string;b:string;winner:string;appeared:readonly string[];contribution:GameContribution}[]=[];

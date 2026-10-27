@@ -1,0 +1,23 @@
+✖ national source U: adequate current highest league wins, insufficient49PA is ignored, prior is fallback and WBC ignores current (783.0417ms)
+✔ national evaluations exclude international/PS lines, apply AG bonus only and never use hidden potential (757.49ms)
+✔ actual sealed28-roster absence triggers E45; repeated opening preserves the snapshot even when records change (860.7186ms)
+✔ selected protagonist decline replaces only one slot with the next sealed eligible candidate and cannot reroll back in (951.0201ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4246.7919
+
+✖ failing tests:
+
+test at packages\engine\test\national-selection-scoring.test.ts:17:1
+✖ national source U: adequate current highest league wins, insufficient49PA is ignored, prior is fallback and WBC ignores current (783.0417ms)
+  TypeError: Cannot read properties of undefined (reading 'performanceLeague')
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\national-selection-scoring.test.ts:23:117)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

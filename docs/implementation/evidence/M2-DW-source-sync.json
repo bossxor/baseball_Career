@@ -1,0 +1,145 @@
+{
+  "utc": "2026-10-27T06:12:30.515Z",
+  "head": "16a5f51ef3d29c64b124a0b88645af9c077dbae9",
+  "fullCheck": "PASS",
+  "result": {
+    "tests": 757,
+    "pass": 755,
+    "skip": 2,
+    "fail": 0,
+    "durationMs": 1168717.4243,
+    "webPass": 22,
+    "unchangedFiles": 441
+  },
+  "policy": "V documents only via Copy-Item; no V .git or runtime sync",
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "9ebd98e2d32825f0240d23e2ec873fa9773bfc26d6ea946840ebdf185b732889"
+    },
+    {
+      "path": "docs/design/20-INTERNATIONAL-COMPETITIONS.md",
+      "sha256": "2540389123de21c437d8156e5a4252f3602f42326eef54e42eeb253adaf85ffe"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "910a23b8dbc59d3f11deb78fb7cc524429117d581e1d620a2d8d7ab587d77414"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "8c3dac6bd0d58d5e67a1e181b8e9e86f5f38dc4f29aa4778f55566fcbaefbe51"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "195514dff2e2e95686fe7c4482b145c2e2ca9860214d0cfbd01e7bec81f6aac2"
+    },
+    {
+      "path": "docs/implementation/HANDOFF-TO-GPT.md",
+      "sha256": "58f622942845a2cc73df5c0c37d1919608c35c5a425dfe5ec68074cb53606936"
+    },
+    {
+      "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.json",
+      "sha256": "fa874dd07fe910c0c5d6ea4678c6ab977b14b7df40ac3356c60cb97f2a9f1722"
+    },
+    {
+      "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.md",
+      "sha256": "5e8552d12757dae3e9681449dd4d5a3d9ae569fb33f018401c1a3e6638fd1416"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "ac9448b2f3b04f578a53bc2bdb70f80cbbdb6e09b936a227c06ce2d13b80ef81"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "c7cd60cefaaba424bf644ed60f4cbe7954d7cb4467529b1f7819fbaf88b3fbca"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "748c8b418be8132c605bbcd2ddca07e389f61251de5faf6cbc4818614d3d2fc0"
+    },
+    {
+      "path": "packages/engine/src/kbo-career-version.ts",
+      "sha256": "2ea38cab6da31ffb114254704e8caa3b4ca4df84e0d074913bea5bbf283a4531"
+    },
+    {
+      "path": "packages/engine/src/kbo-national.ts",
+      "sha256": "a27463551e2edf803fe7b184f360752019c5e7a968a10492cd4444d5624a0226"
+    },
+    {
+      "path": "packages/engine/src/national-tournament.ts",
+      "sha256": "2a0d8e138c7c504c8a30a17b5b8130abb2ecb29c906ee64126209f55d9ef337e"
+    },
+    {
+      "path": "packages/engine/src/us-postseason-progress.ts",
+      "sha256": "acbb567ac2b5c61b8ac0006dc50739265d9ce58dd0d35ed4f683aa2b71ff29f3"
+    },
+    {
+      "path": "packages/engine/src/us-season.ts",
+      "sha256": "68d096849dd87c6bac270e30a555e1c7c3ae4f3aa4fe33cbd742f1fb510e1923"
+    },
+    {
+      "path": "packages/engine/test/kbo-national.test.ts",
+      "sha256": "e8ac915b19eb46011c8ff4721cb7b50ae57507a9e8942b8bce0f23ad21b1cc56"
+    },
+    {
+      "path": "docs/implementation/M2-DW-NATIONAL-SELECTION.md",
+      "sha256": "7ef9f4eb43d93d5a47f284485a878fb730dffb79b100846f4014aa821e909a5e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DW-cap-first-failure.log",
+      "sha256": "aed5a4bf35fd94659973b86d3b603cc61ddf83a73753727a213e5d450e9d27ed"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DW-check.log",
+      "sha256": "aade34d64924f204e0bbe284bb72734d77221fbece95bd1345407348e85d7ad0"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DW-focused.log",
+      "sha256": "24a379b8233930a4d4c831c94d92b57508dc997678455e4f86bdbebbad940d4b"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DW-prototype-first-failure.log",
+      "sha256": "9b74403f2d7f7adb111e9b059c63c2d010eb1357cf29c3c1dfc1328be0a144ca"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DW-scoring-first-failure.log",
+      "sha256": "82fdffd0011288ec3c3072d2abaa9fc289379e2b52b498519fbfb2e71f1e2aae"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DW-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-DW-source-freeze.json",
+      "sha256": "831937bbbd6ad97757deecc3cad8c7f43be1c3cc659ff2cd418ad10db6ac0024"
+    },
+    {
+      "path": "packages/engine/src/kbo-national-selection.ts",
+      "sha256": "7338d6bb88a740eee81b0b74ef9916bea6bdc6c143601ca667ff510af1bb2128"
+    },
+    {
+      "path": "packages/engine/src/national-selection.ts",
+      "sha256": "b365259d5ea70f60700388473e4377cb5639f5f250456bf7beaaf299c4d6a1c4"
+    },
+    {
+      "path": "packages/engine/src/us-debut.ts",
+      "sha256": "2f4701c8deb3c9c121518655c0aec0710a7f30e14e760f69b4e503db1902445c"
+    },
+    {
+      "path": "packages/engine/test/national-selection-scoring.test.ts",
+      "sha256": "4579d9965232378f4ac7f9445bf79efb9109b6ae1032bc729d828fcedf1910da"
+    },
+    {
+      "path": "packages/engine/test/national-selection.test.ts",
+      "sha256": "6194f9eea859e59cde7c31b5bfdedb6525f646a7cc8e39b62c9adf263ca38e6a"
+    },
+    {
+      "path": "packages/engine/test/player-display-contract.test.ts",
+      "sha256": "d022550a500fabad1a92b20f8402aef1a63f97297f3c6f17fc6546f3653fd4c7"
+    },
+    {
+      "path": "packages/engine/test/us-debut.test.ts",
+      "sha256": "4af47b3c6eb5a38447376921be9ac43de8b6d9ee161560422fec5434a3e49622"
+    }
+  ]
+}

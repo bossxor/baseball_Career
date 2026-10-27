@@ -17,7 +17,7 @@ function base():KboCareer {
 }
 
 test('national callup accept and decline keep revision atomic',()=>{
- const c=base(),invited=openNationalCallup(c,c.revision,'AG');assert.equal(invited.national!.invitations[0]!.status,'INVITED');assert.equal(invited.national!.invitations[0]!.militaryEffect,true);
+ const c=base(),invited=openNationalCallup(c,c.revision,'AG');assert.equal(invited.national!.invitations[0]!.status,'INVITED');assert.equal(invited.world,c.world);assert.equal(invited.records,c.records);assert.equal(invited.health,c.health);assert.equal(invited.national!.invitations[0]!.militaryEffect,true);
  const id=invited.national!.invitations[0]!.selectionId,accepted=respondNationalCallup(invited,invited.revision,id,'ACCEPT');assert.equal(accepted.national!.invitations[0]!.status,'ACCEPTED');
  assert.throws(()=>respondNationalCallup(accepted,accepted.revision,id,'DECLINE'),/NOT_OPEN/);
  const wbc=openNationalCallup(c,c.revision,'WBC');assert.equal(wbc.national!.invitations[0]!.militaryEffect,false);
@@ -36,7 +36,7 @@ test('INT13 AG silver or WBC gold does not change military status',()=>{
 test('INT14 OLY bronze with appearance becomes ATHLETE_ELIGIBLE once; INT15 completed stays put',()=>{
  const c=base();
  const elig=sealNationalCompetitionResult(c,c.revision,{competitionId:'oly-bronze',tournament:'OLY',seasonKey:c.world.seasonKey,medal:'BRONZE',finalRank:3,officialAppearance:true,registered:true,resultVersion:1});
- assert.equal(elig.military!.status,'ATHLETE_ELIGIBLE');assert.equal(elig.national!.benefits.length,1);
+ assert.equal(elig.world,c.world);assert.equal(elig.records,c.records);assert.equal(elig.health,c.health);assert.equal(elig.military!.status,'ATHLETE_ELIGIBLE');assert.equal(elig.national!.benefits.length,1);
  assert.throws(()=>sealNationalCompetitionResult(elig,elig.revision,{competitionId:'oly-bronze',tournament:'OLY',seasonKey:c.world.seasonKey,medal:'BRONZE',finalRank:3,officialAppearance:true,registered:true,resultVersion:1}),/ALREADY_SEALED/);
  const reviewed=confirmNationalEligibility(elig,elig.revision,'oly-bronze');const back=event(reviewed,'E48'),returned=resolveKboNationalEvent(reviewed,reviewed.revision,{eventKey:back.eventKey,eventVersion:back.version,command:'CONFIRM_NATIONAL_RETURN'}).career;const duty=confirmAthleteService(returned,returned.revision);assert.equal(duty.military!.status,'ATHLETE_SERVICE');assert.equal(duty.national!.athleteDutySeasonsRemaining,3);
  const mid=structuredClone(duty);advanceAthleteDutySeason(mid,'2030');assert.equal(mid.national!.athleteDutySeasonsRemaining,3);
@@ -84,7 +84,7 @@ test('national boundaries reject forged decisions, inconsistent medals, duplicat
 test('a pitcher protagonist has real international BF and persisted contributions with deterministic JSON replay',()=>{
  const c=base(),club=c.world.clubs[0]!,key=club.roster.find(k=>c.world.players[k]!.kind==='PITCHER'&&c.world.players[k]!.position==='SP')!;c.protagonistKey=key;const raw=canonicalJson(c),invited=openNationalCallup(c,c.revision,'AG'),accepted=respondNationalCallup(invited,invited.revision,invited.national!.invitations[0]!.selectionId,'ACCEPT');
  const done=playAsianGamesTournament(accepted,accepted.revision),t=recordTotals(done.records,{seasonKey:c.world.seasonKey,leagueKey:'AG',phase:'INTERNATIONAL'});assert.ok(t.pitching[key]!.BF>0);assert.equal(done.national!.competitions[0]!.officialAppearance,true);assert.equal(canonicalJson(c),raw);
- assert.deepEqual(playAsianGamesTournament(JSON.parse(JSON.stringify(accepted)),accepted.revision),done);
+ const replayed=playAsianGamesTournament(JSON.parse(JSON.stringify(accepted)),accepted.revision);assert.equal(canonicalJson(replayed),canonicalJson(done));assert.deepEqual(replayed.records,done.records);assert.deepEqual(replayed.national,done.national);assert.deepEqual(replayed.events,done.events);
  const days=Object.values(done.records.games).filter(g=>(g.pitching[key]?.BF??0)>0).map(g=>g.worldDay).sort((a,b)=>a-b);for(let i=1;i<days.length;i++)assert.ok(days[i]!-days[i-1]!>=3);
 });
 

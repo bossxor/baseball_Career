@@ -161,3 +161,9 @@ export type {GoalCareer,SeasonGoalId,SeasonGoalSlot,SeasonGoals,CareerGoalLedger
 export * from './us-contract-value.js';
 export * from './us-major-renewal.js';
 export type {UsMajorYearArchive} from './us-major-history.js';
+
+export {resolveUsMajorDebut} from './us-debut.js';
+
+export {openKboNationalSelection,kboNationalSelectionView} from './kbo-national-selection.js';
+export {createNationalSelection} from './national-selection.js';
+export type {NationalCandidate,NationalSelectionSnapshot} from './national-selection.js';

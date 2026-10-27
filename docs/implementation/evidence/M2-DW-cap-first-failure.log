@@ -1,0 +1,36 @@
+✔ national roster has exactly28 unique players, required hitter slots and5/7/1 pitchers without changing identities (431.6794ms)
+✔ national eligibility distinguishes AG, recent top-league evidence, military status, injury and contract refusal (232.3955ms)
+✔ missing roles fail atomically, CP fallback uses remaining RP composure and duplicate candidates are rejected (224.6677ms)
+✖ 119/PF-D08 engine: raw combined form/platoon/trait/pitch effects retain provenance while applied totals cap at both signs (20.546ms)
+✔ 119/PF-D09 engine: hitter null and pitcher non-null forms survive JSON; malformed loaded identities reject (8.9369ms)
+✔ 119/PF-D11 engine: left-throwing catcher cannot be created, while legitimate right catcher and left pitcher remain valid (2.4235ms)
+✔ 119/PF-D13 engine: hands, batting side and pitch form never change six-ability overall or initial growth draws (18.3332ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1371.383
+
+✖ failing tests:
+
+test at packages\engine\test\player-display-contract.test.ts:11:1
+✖ 119/PF-D08 engine: raw combined form/platoon/trait/pitch effects retain provenance while applied totals cap at both signs (20.546ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+    assert.ok(Math.abs(negative.raw.OUT!+.12)<1e-12)
+
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\player-display-contract.test.ts:15:66)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
