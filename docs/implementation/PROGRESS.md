@@ -1,3 +1,7 @@
+# 최신 상태 — M2-EL 검증 완료 (2026-10-28)
+
+[상세](M2-EL-MINOR-MARKET-ACCEPT.md). 마이너 만료 제안 수락·E66 DOMAIN 닫기·1년/$30k·원/타 구단 이동·재무 재생. 집중9/9, 전체 npm run check 종료0: 엔진/API 796개 중794통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산 통과. duration_ms 962830. 실제 Neon/브라우저/APK 검증은 아니다. 국내 복귀 실행은 후속. 다음은 [EL 이후 구현 인계](M2-POST-EL-IMPLEMENTATION-PLAN.md). 원점 없는 legacy KBO 저장을 현재 예산으로 자동 복원하지 않는다. M6/main 임의 병합·강제푸시·훅 스킵 금지, V는 문서 Copy-Item만. M2약60%·전체 미완료.
+
 # 세션 마감 — M2-EK 푸시 확인 (2026-10-28)
 
 사용자가 잔여9% 시점에 커밋/푸시 마감을 요청해 새 구현을 멈췄다. 기능 c8c73b2fb5e6670f6f19e826512d687304bcb69c를 own branch origin/codex/m2-career-engine에 푸시하고 동일 해시를 확인했다. 전체794/792·실패0·Neon환경2·웹22/22·HTTP 스모크 통과. 마지막 중복 CR1개 정리는 TypeScript emit 동일을 검증했다. 소스 WIP 없음. M2약59%·전체 미완료. PC 종료 안 함.

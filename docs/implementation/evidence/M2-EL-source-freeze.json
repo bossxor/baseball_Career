@@ -1,0 +1,8 @@
+﻿{
+    "packages/engine/test/kbo-us-activation.test.ts":  "d15b077c250d432e540e029b90c6edd4ef486f59b7a81b41a04b33d14c9af1a2",
+    "packages/engine/src/us-minor-market.ts":  "0ca786e17bb7f99881561249ba6499cafe38cb966ead63fa538b705807ecc08c",
+    "packages/engine/src/us-career-entry.ts":  "a609afb6a82e3f13837fdfcba9d2ba685c69658bce718e5de5d448a71acc2732",
+    "packages/engine/src/us-contract-origin.ts":  "0ad78a927b1ecaa382fe9742bb9efa2520a2994ed2ae672f3a3d78906ba0c15e",
+    "packages/engine/src/index.ts":  "a8ba5d29a6021cd102e823b51ead646b505303ae2d91346513b71a85cf9efb95",
+    "packages/engine/src/us-minor-history.ts":  "96189c857b4c0463cc550bcfe3b77a6956045ecafb6644d5bf08361dc1e5f6c0"
+}

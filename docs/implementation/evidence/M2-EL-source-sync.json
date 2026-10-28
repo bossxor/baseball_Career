@@ -1,0 +1,44 @@
+﻿{
+    "fullCheck":  "PASS",
+    "result":  {
+                   "fail":  0,
+                   "pass":  794,
+                   "tests":  796,
+                   "skip":  2,
+                   "durationMs":  962830,
+                   "webPass":  22
+               },
+    "head":  "1b63ad580908fb3773d8171aac85a3b60dacf85c",
+    "files":  [
+                  {
+                      "path":  "docs/design/STATUS.md",
+                      "sha256":  "cdf23a2e397d8121265af2b01957383edcee45cd031fa71533a291f41ed3555f",
+                      "vPath":  "V:\\design\\STATUS.md"
+                  },
+                  {
+                      "path":  "docs/implementation/NEXT-SESSION.md",
+                      "sha256":  "46fdd88331864584032cdf00e01da089412fadf7e813218ab7a9647dbd1acdf4",
+                      "vPath":  "V:\\implementation\\NEXT-SESSION.md"
+                  },
+                  {
+                      "path":  "docs/implementation/HANDOFF-TO-GPT.md",
+                      "sha256":  "727caa4cb150f4bca54898705c3748736e9a952c73422c560222ee077cd252e6",
+                      "vPath":  "V:\\implementation\\HANDOFF-TO-GPT.md"
+                  },
+                  {
+                      "path":  "docs/implementation/PROGRESS.md",
+                      "sha256":  "bb54917c2a0dfd594af258e650068cf94f6bc850c169dee41629f967589b93b9",
+                      "vPath":  "V:\\implementation\\PROGRESS.md"
+                  },
+                  {
+                      "path":  "docs/implementation/M2-EL-MINOR-MARKET-ACCEPT.md",
+                      "sha256":  "a8be11ff39858fa39865b704ee66062fc1a98dd840fb7ea92ccb18ea6f7a9dcd",
+                      "vPath":  "V:\\implementation\\M2-EL-MINOR-MARKET-ACCEPT.md"
+                  },
+                  {
+                      "path":  "docs/implementation/M2-POST-EL-IMPLEMENTATION-PLAN.md",
+                      "sha256":  "c73f6de1a227cd538f4110accb992931678f86ddb21849127fd52c270b4d1867",
+                      "vPath":  "V:\\implementation\\M2-POST-EL-IMPLEMENTATION-PLAN.md"
+                  }
+              ]
+}
