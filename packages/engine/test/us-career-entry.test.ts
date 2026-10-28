@@ -1,5 +1,4 @@
-import {enrolledCollegeCareer,completedCollegeAcademicYear} from './fixtures.js';
-import {closeCollegeSeasonForNextYear,startNextCollegeSeason} from '../src/college-year.js';
+import {enrolledCollegeCareer,completedCollegeAcademicYear,nextCollegeYear} from './fixtures.js';
 import {graduateCollegeCareer} from '../src/college-graduation.js';
 import {createOwnCareerAssessment} from '../src/high-school-assessment.js';
 import test from 'node:test';
@@ -45,7 +44,7 @@ test('four-year graduate activates US at23 without repeating degree, college gro
  let source=enrolledCollegeCareer();const p=source.world.players.own!;
  // Controlled high-ability fixture reaches the existing US threshold; not a natural-growth claim.
  p.abilities=Object.fromEntries(Object.keys(p.abilities).map(k=>[k,950_000]));p.potential={...p.abilities};p.careerPeaks={...p.abilities};source.development!.seasonStartPlayer=structuredClone(p);source.seasonGrowth!.seasonStart=structuredClone(p);source.ownAssessment=createOwnCareerAssessment(source.world);
- for(let year=1;year<=4;year++){source=completedCollegeAcademicYear(source);if(year<4){source=closeCollegeSeasonForNextYear(source,source.revision,true);source=startNextCollegeSeason(source,source.revision);}}
+ for(let year=1;year<=4;year++){source=completedCollegeAcademicYear(source);if(year<4)source=nextCollegeYear(source);}
  const degree=graduateCollegeCareer(source,source.revision,source.events.at(-1)!.version),world=createUsRosterWorld({worldKey:degree.world.worldKey,seasonKey:String(degree.world.calendar!.year+1),seed:degree.world.seed,difficulty:degree.difficulty,organizations:Array.from({length:30},(_,i)=>({id:'US'+String(i+1).padStart(2,'0'),name:'가상미국조직'+(i+1)}))}),inventory=initialUsRecruitmentInventory(world,world.organizations.map(o=>({organizationId:o.id,rookieCapacity:23,aCapacity:23,availableBudgetUsd:3_000_000,nationalReleaseAllowed:false,militaryReturnOption:true}))),prepared=prepareCareerUsDirect(degree,degree.revision,inventory),offer=careerUsDirectView(prepared).offers[0]!;assert.ok(offer);
  const signed=decideCareerUsDirect(prepared,prepared.revision,{programVersion:1,decision:{type:'SIGN',offerKey:offer.offerKey}}),before=canonicalJson(signed),closed=closeSchoolSeasonForUs(signed,signed.revision,true),career=startSignedUsCareer(closed,closed.revision,world);assert.equal(canonicalJson(signed),before);assert.equal(career.world.players.own!.age,23);assert.deepEqual(career.world.players.own!.abilities,signed.world.players.own!.abilities);assert.deepEqual(career.records,signed.records);assert.equal(career.amateurHistory.collegeAdmission!.status,'GRADUATED');assert.equal(career.events.filter(e=>e.definitionId==='E75').length,signed.events.filter(e=>e.definitionId==='E75').length);assert.equal(career.contract.nationalReleaseAllowed,false);assert.equal(career.contract.militaryReturnOption,true);assert.equal(career.income.length,1);assert.equal(career.seasonGrowth.entries.length,0);assert.equal(career.seasonGrowth.finalized,false);assertActiveUsRosterWorld(career.world);
 });

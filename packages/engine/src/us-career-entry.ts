@@ -34,6 +34,7 @@ import type {KboPostingOffer,KboPostingReturnRights} from './kbo-posting.js';
 import type {UsContractOrigin} from './us-contract-origin.js';
 import type {UsMinorMarket,UsMinorRenewal} from './us-minor-market.js';
 import {assertUsMinorMarket} from './us-minor-market.js';
+import {usMilitaryHistoricalView} from './us-military-plan.js';
 
 export interface KboUsTransfer {
  source:'POSTING'|'OVERSEAS_FA';postingId?:string;windowId?:string;offer:KboPostingOffer;returnRights:KboPostingReturnRights|null;kboSeasonKey:string;sourceRevision:number;origin?:UsContractOrigin;
@@ -45,7 +46,7 @@ export interface UsCareer {
  phaseContext:UsPhase;postseason?:{bracket:MlbPostseason;conferences:Record<MlbLeague,string[]>;gameEvidence:string[]};season?:UsSeasonState;seasonSchedule?:UsSeasonSchedule;preseasonPlan?:UsPreseasonPlan;campNotices?:readonly EventInstance[];
  activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string;populationBasis:'INITIAL_INVENTORY'|'LEGACY_BOOTSTRAP'|'KBO_TRANSFER'};
  registration:{playerKey:string;clubId:string;level:UsLevel;seasonKey:string;status:'ACTIVE'|'INJURED'};
- rights:UsDirectSigning['rights'];contract:Omit<UsDirectSigning['contract'],'status'|'type'> & {type:'US_MINOR'|'US_MAJOR';years?:number;status:'ACTIVE';seasonKey:string;nationalReleaseAllowed:boolean;militaryReturnOption:boolean};
+ rights:UsDirectSigning['rights'];contract:Omit<UsDirectSigning['contract'],'status'|'type'> & {type:'US_MINOR'|'US_MAJOR';years?:number;status:'ACTIVE'|'FROZEN'|'TERMINATED';seasonKey:string;nationalReleaseAllowed:boolean;militaryReturnOption:boolean};
  income:readonly (UsDirectSigning['income'] | {entryKey:string;currency:'USD';amount:number;kind:'SALARY';seasonKey:string;day:number})[];inventory:UsRecruitmentWorld;amateurHistory:HighSchoolCareer;
  records:HighSchoolCareer['records'];health:HighSchoolCareer['health'];seasonGrowth:ReturnType<typeof createSeasonGrowthLedger>;development:NonNullable<HighSchoolCareer['development']>;traits?:NonNullable<HighSchoolCareer['traits']>;relationships:NonNullable<HighSchoolCareer['relationships']>;events:HighSchoolCareer['events'];relationNotices:NonNullable<HighSchoolCareer['relationNotices']>;styleUsedWindows:HighSchoolCareer['styleUsedWindows'];planHistory:HighSchoolCareer['planHistory'];
  military:{status:'UNRESOLVED'|'FROZEN_SERVICE'|'TERMINATED_SERVICE'|'COMPLETED'|'NOT_APPLICABLE';deadlineAge:28;planSeasonKey?:string;frozenContractKey?:string;terminatedContractKey?:string;service?:import('./us-military-plan.js').UsMilitaryServiceProgram};kboTransfer?:KboUsTransfer;
@@ -81,7 +82,12 @@ export function startSignedUsCareer(source:HighSchoolCareer,expectedRevision:num
  c.relationNotices=queueRelationFormationNotices({...c,world:teamWorld,previousSeasons:[...(source.previousSeasons??[]),{world:source.world}]},day)??[];return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(c));
 }
 
-export function usCareerView(c:UsCareer){
+export interface UsCareerPublicView {
+ seasonKey:string;player:{name:string;age:number;kind:'HITTER'|'PITCHER';position:string};club:{id:string;name:string};registration:{status:UsCareer['registration']['status'];level:UsLevel};
+ contract:Pick<UsCareer['contract'],'type'|'currency'|'annualSalaryUsd'|'signingBonusUsd'|'controlSeasons'|'nationalReleaseAllowed'|'militaryReturnOption'> & {years?:number;status?:UsCareer['contract']['status']};phase:UsPhase['phase'];
+}
+export function usCareerView(c:UsCareer):UsCareerPublicView {
+ if(c.military.service?.version===2)return usMilitaryHistoricalView(c);
  if(c.domesticReturn!==undefined)assertUsKboReturnQuote(c);
  if(c.domesticReturn?.status!=='ACCEPTED')assertUsRetirementState(c);
  const p=c.world.players[c.protagonistKey],org=c.world.organizations.find(o=>o.id===c.protagonistOrganizationId),r=c.registration;

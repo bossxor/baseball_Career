@@ -9,7 +9,9 @@ import {canonicalJson} from '../src/game.js';
 import {completedHighSchoolCareer} from './fixtures.js';
 import {formHighSchoolRelations} from '../src/relationships.js';
 import {acknowledgeHighSchoolSeasonReview,openHighSchoolCareerRoute,highSchoolCareerRouteView,enrollHighSchoolCollege} from '../src/high-school-route.js';
-import {closeHighSchoolSeasonForCollege,startAdmittedCollegeSeason} from '../src/college-entry.js';
+import {closeHighSchoolSeasonForCollege,startAdmittedCollegeSeason,schoolYearEndBasis} from '../src/college-entry.js';
+import {activeUsCareer} from './us-fixtures.js';
+import {assertUsAmateurYearEnd} from '../src/us-entry.js';
 function fixture(noRival=false){
  const world=createHighSchoolWorld({worldKey:'relation-notices',seasonKey:'2032',seasonYear:2032,seed:'relation-notices-fixture',schoolId:'H01',player:{simulationKey:'me',name:'알림선수',kind:'HITTER',position:'CF',throws:'R',bats:'R',pitchForm:null,archetype:'BALANCED',focus:['CONTACT','POWER','DISCIPLINE','DEFENSE'],difficulty:'GROWTH'}});
  if(noRival){const p=world.players.me!;p.abilities=Object.fromEntries(Object.keys(p.abilities).map(k=>[k,900_000]));p.potential={...p.abilities};p.careerPeaks={...p.abilities};}
@@ -71,4 +73,14 @@ test('acknowledging a notice after sealed year end preserves the valid seal and 
  const input={eventKey:n.eventKey,eventVersion:1,command:'OPEN_RELATIONS'},read=resolveCareerRelationNotice(ready,ready.revision,input).career,a=startAdmittedCollegeSeason(ready,ready.revision),b=startAdmittedCollegeSeason(read,read.revision);
  assert.equal(read.collegeYearEnd!.receiptKey,ready.collegeYearEnd!.receiptKey);for(const key of ['world','records','health','days','phaseContext','seasonGrowth','relationships'] as const)assert.deepEqual(a[key],b[key]);assert.equal(b.world.players.own!.age,19);assert.equal(unreadRelationNotices(b).length,unreadRelationNotices(a).length-1);
  const bad=structuredClone(ready);bad.world.players.own!.fatigue++;assert.throws(()=>resolveCareerRelationNotice(bad,bad.revision,input),/YEAR_END/);
+});
+
+test('school relation reads validate and reseal a signed US year end after JSON resume',()=>{
+ const ready=activeUsCareer('HITTER').amateurHistory;ready.relationships=formHighSchoolRelations(ready.world,Math.min(...ready.world.schedule.map(g=>g.worldDay)));ready.relationNotices=queueRelationFormationNotices(ready,ready.days.days.at(-1)!.day)??[];ready.usYearEnd={...ready.usYearEnd!,sourceBasis:schoolYearEndBasis(ready)};
+ const n=unreadRelationNotices(ready)[0]!;assert.ok(n);assertUsAmateurYearEnd(ready);
+ const restored=JSON.parse(JSON.stringify(ready)) as HighSchoolCareer,raw=canonicalJson(restored),input={eventKey:n.eventKey,eventVersion:n.eventVersion,command:'OPEN_RELATIONS'},read=resolveCareerRelationNotice(restored,restored.revision,input).career;
+ assertUsAmateurYearEnd(read);assert.equal(read.usYearEnd!.receiptKey,ready.usYearEnd!.receiptKey);assert.equal(read.usYearEnd!.sourceRevision,read.revision);assert.equal(canonicalJson(restored),raw);
+ for(const key of ['world','records','health','days','phaseContext','seasonGrowth','relationships'] as const)assert.deepEqual(read[key],ready[key]);
+ const changed=structuredClone(ready);changed.world.players[changed.world.protagonistKey]!.fatigue++;
+ assert.throws(()=>resolveCareerRelationNotice(changed,changed.revision,input),/YEAR_END/);
 });

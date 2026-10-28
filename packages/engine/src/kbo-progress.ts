@@ -2,6 +2,7 @@ import {formPitcherRivalFromGame} from './pitcher-rival.js';
 import {raiseProHiddenTraitNotice} from './pro-trait-notices.js';
 import {settleRelationshipDirectDuels} from './relationships.js';
 import {refreshCareerSeasonGoals} from './season-goals.js';
+import {consumeCareerRoleReview} from './career-agent.js';
 import {settleRegisteredPitchLearning,registerPitchLearning,registerPitchLearningCalendar} from './pitch-learning-progress.js';
 import {closeKboNpcMilitaryCalendarDay,settleKboNpcMilitaryPayrollDay} from './kbo-npc-military.js';
 import {kboReturnConditionMultiplier,settleKboReturnConditionDay} from './kbo-return-condition.js';
@@ -113,7 +114,8 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
    const next=pendingQueue(career,day)[0];
    if(next){
     const world=createKboCompetitionGameWorld(career.world,next.leagueKey,career.protagonistKey,career.sangmu);
-    progress.pendingGame={leagueKey:next.leagueKey,job:prepareSchoolCompetitionGame(world,career.records,next.game,kboGameContext(career,next.leagueKey))};
+    const reviewed=consumeCareerRoleReview(career,world,next.game,kboGameContext(career,next.leagueKey));Object.assign(career,reviewed.career);
+    progress.pendingGame={leagueKey:next.leagueKey,job:prepareSchoolCompetitionGame(world,career.records,next.game,reviewed.context)};
    }
   }
   if(progress.pendingGame){

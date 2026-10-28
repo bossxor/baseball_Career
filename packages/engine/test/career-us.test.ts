@@ -1,12 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {completedHighSchoolCareer,enrolledCollegeCareer,completedCollegeAcademicYear} from './fixtures.js';
+import {completedHighSchoolCareer,enrolledCollegeCareer,completedCollegeAcademicYear,nextCollegeYear} from './fixtures.js';
 import {acknowledgeHighSchoolSeasonReview,openHighSchoolCareerRoute,highSchoolCareerRouteView,enrollHighSchoolCollege} from '../src/high-school-route.js';
 import {prepareCareerUsDirect,careerUsDirectView,decideCareerUsDirect,advanceCareerUsNegotiation} from '../src/career-us.js';
 import type {UsRecruitmentWorld} from '../src/us-direct.js';
 import {prepareUsDirect} from '../src/us-direct.js';
 import {prepareCareerKboDraft,resolveCareerKboDraft,decideCareerKboDraft} from '../src/career-kbo.js';
-import {closeCollegeSeasonForNextYear,startNextCollegeSeason} from '../src/college-year.js';
 import {graduateCollegeCareer,collegeGraduationRouteView} from '../src/college-graduation.js';
 import {createOwnCareerAssessment} from '../src/high-school-assessment.js';
 import {canonicalJson} from '../src/game.js';
@@ -43,7 +42,7 @@ test('college graduation US comparison uses adjusted college performance and nev
  let s=enrolledCollegeCareer();
  // Controlled high-ability fixture exercises the legal college-signing branch; this is not natural growth.
  const player=s.world.players.own!;player.abilities=Object.fromEntries(Object.keys(player.abilities).map(key=>[key,950_000]));player.potential={...player.abilities};player.careerPeaks={...player.abilities};s.development!.seasonStartPlayer=structuredClone(player);assert.equal(s.seasonGrowth!.entries.length,0);s.seasonGrowth!.seasonStart=structuredClone(player);s.ownAssessment=createOwnCareerAssessment(s.world);
- for(let year=1;year<=4;year++){s=completedCollegeAcademicYear(s);if(year<4){s=closeCollegeSeasonForNextYear(s,s.revision,true);s=startNextCollegeSeason(s,s.revision);}}
+ for(let year=1;year<=4;year++){s=completedCollegeAcademicYear(s);if(year<4)s=nextCollegeYear(s);}
  const degree=graduateCollegeCareer(s,s.revision,s.events.at(-1)!.version),before=canonicalJson(degree),p=prepareCareerUsDirect(degree,degree.revision,inventory(degree)),v=careerUsDirectView(p);assert.equal(p.usRecruitment!.program.input.adjustedPerformance,32);assert.equal(p.collegeAdmission!.status,'GRADUATED');assert.ok(v.visible);const signed=decideCareerUsDirect(p,p.revision,{programVersion:1,decision:{type:'SIGN',offerKey:v.offers[0]!.offerKey}});assert.equal(signed.phaseContext.phase,'NEXT_SEASON_READY');assert.equal(signed.collegeAdmission!.status,'GRADUATED');assert.equal(signed.events.at(-1)!.status,'RESOLVED');assert.deepEqual(signed.records,degree.records);assert.equal(p.world.players.own!.age,22);assert.equal(Boolean(collegeGraduationRouteView(p).us),v.visible);assert.equal(canonicalJson(degree),before);
  const declined=decideCareerUsDirect(p,p.revision,{programVersion:1,decision:{type:'DECLINE'}});assert.equal(declined.phaseContext.phase,'CAREER_ROUTE');assert.equal(collegeGraduationRouteView(declined).us,undefined);assert.equal(declined.events.at(-1)!.definitionId,'E75');assert.equal(declined.events.at(-1)!.status,'RESOLVED');
 });

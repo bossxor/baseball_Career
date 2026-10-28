@@ -1,0 +1,45 @@
+✖ service world runs actual NPC opening games with zero own appearances or salary and blocks ordinary play (11728.6763ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12833.4845
+
+✖ failing tests:
+
+test at packages\engine\test\us-service-world.test.ts:1:299
+✖ service world runs actual NPC opening games with zero own appearances or salary and blocks ordinary play (11728.6763ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    {
+      career: {
+        activation: {
+          contractKey: '["us-direct-signing","[\\"amateur-us\\",\\"route-world\\",\\"2029\\",\\"own\\"]"]',
+          populationBasis: 'INITIAL_INVENTORY',
+  ...
+          ],
+  +       injuries: {
+  -       injuries: [Object: null prototype] {
+            '["us-npc","route-world","2030","US02","A","HITTER",11]': {
+              diagnosedGameKey: '["2031","A",0,1]',
+              remainingTeamGames: 6,
+              seasonKey: '2031',
+              severity: 'MILD'
+  
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-service-world.test.ts:16:101)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { career: { schemaVersion: 2, mode: 'US_CAREER', revision: 54, difficulty: 'GROWTH', world: [Object], protagonistKey: 'own', protagonistOrganizationId: 'US15', phaseContext: [Object], activation: [Object], registration: [Object], rights: [Object], contract: [Object], income: [Array], inventory: [Object], amateurHistory: [Object], records: [Object], health: [Object], seasonGrowth: [Object], development: [Object], traits: [Object], relationships: [Object], events: [Array], relationNotices: [Array], styleUsedWindows: [], planHistory: [Array], military: [Object], goals: [Object], campNotices: [], preseasonPlan: [Object], seasonSchedule: [Object], season: [Object] }, stopReason: 'CHUNK_LIMIT', plateAppearances: 149, completedInnings: 20, daysClosed: 0 },
+    expected: { career: { schemaVersion: 2, mode: 'US_CAREER', revision: 54, difficulty: 'GROWTH', world: [Object], protagonistKey: 'own', protagonistOrganizationId: 'US15', phaseContext: [Object], activation: [Object], registration: [Object], rights: [Object], contract: [Object], income: [Array], inventory: [Object], amateurHistory: [Object], records: [Object], health: [Object], seasonGrowth: [Object], development: [Object], traits: [Object], relationships: [Object], events: [Array], relationNotices: [Array], styleUsedWindows: [], planHistory: [Array], military: [Object], goals: [Object], campNotices: [], preseasonPlan: [Object], seasonSchedule: [Object], season: [Object] }, stopReason: 'CHUNK_LIMIT', plateAppearances: 149, completedInnings: 20, daysClosed: 0 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

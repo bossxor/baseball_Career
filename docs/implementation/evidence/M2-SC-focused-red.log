@@ -1,0 +1,139 @@
+✔ P15 first pro hire is immediate; changes and direct negotiation become effective next season once (890.6863ms)
+✔ P15 cumulative fee has exact2% with tiny splits, duplicate receipt and no signing-bonus or inactive-agent fee (2022.5123ms)
+✖ P15 real renewal preview .60/.68 never draws; success reserves only delta, supersedes base and actual accept uses raised salary (694.547ms)
+✔ P15 rejection keeps original offer and no reserved delta; changed budget, forged raise and stale preview never consume RNG (812.9279ms)
+✔ E91/E92/E93 are actual source-bound optional notices; domain choices and ACK close exactly once (1076.7091ms)
+✔ accepted role review is consumed by next real lineup once, preserves bucket and never promises an appearance (1796.6032ms)
+✖ second completed college year attaches one E73; entering early draft is versioned, immutable and once per enrollment (2673.9016ms)
+✖ real undrafted second-year result opens E74 and preserves third-year enrollment plus independent graduation draft (2275.8544ms)
+✖ declining a real early offer permits school return; signing ends enrollment and activates the existing pro contract (1871.3079ms)
+✔ KBO native closed postseason date raises E84 and restores its exact continuation (1686.0615ms)
+✔ KBO native closed postseason championship raises E84 and restores its exact continuation (1251.1718ms)
+✔ US native closed postseason date raises E84 and restores its exact continuation (4826.7023ms)
+✔ US native closed postseason championship raises E84 and restores its exact continuation (2456.9222ms)
+✔ KBO first hidden notice stops at a closed day with real registration, structural sharing and no general trait stop (1309.5178ms)
+✔ US top-level identity and actual level navigate to S38 once after JSON restoration (2274.8614ms)
+✔ resolver rejects stale revision, version, command, foreign world, altered owner and changed resume without mutation (776.1533ms)
+✔ only same-source owned receipts qualify; pending games and unclosed days are rejected (539.825ms)
+✔ backlog and same-day hidden traits resume one at a time, including season-close T16 before review (421.5313ms)
+✔ preseason confirmation persists two E94 notices for pinned rival/teammate without blocking progress (49.2541ms)
+✔ opening a notice acknowledges only that notice and navigates to its relation; gameplay phase and RNG stay unchanged (65.2972ms)
+✔ stale revision/version, wrong command, foreign or rewritten relation evidence reject atomically (53.908ms)
+✔ unread notices do not stop real games; acknowledging both does not alter first-day results/health/trait evidence (1283.4494ms)
+✔ legacy HS saves catch up once at day close; absence of relations and college worlds creates no fictitious notice (550.2566ms)
+✔ notice acknowledgment during a pending task leaves that task and its saved resume untouched (27.391ms)
+✔ notice acknowledgment during a real pending game preserves the exact cursor/RNG and resumed game result (897.5023ms)
+✔ approved25-player rule: no eligible rival produces no rival notice or extra NPC, while the teammate notice remains (22.1959ms)
+✔ acknowledging a notice after sealed year end preserves the valid seal and college activation; corrupt seals never get repaired (170.0703ms)
+✔ school relation reads validate and reseal a signed US year end after JSON resume (908.716ms)
+✔ call-up never moves an active injury replacement out of its restoration slot (2401.0045ms)
+✔ US level review waits24 actual level games and minimum samples; defer consumes review without registration or salary changes (1088.1771ms)
+✔ US promotion swaps two existing registrations atomically, keeps records, shared identity and no immediate major appearance (857.7501ms)
+✔ first MLB call-up preserves old minor salary basis and bonus; new800000 rate starts next day and budget is reserved once (483.9297ms)
+✔ US protected40 and incompatible seats produce explicit NO_SLOT instead of silently registering27 MLB players (147.7246ms)
+✔ US training and style windows use level thirds/halves and cannot reset season uses by moving levels (774.4991ms)
+✔ US option year consumes once only after20 minor registered games, with replayed dates ignored (86.9164ms)
+✔ a second low Rookie review cannot accidentally promote, and changed offered evidence cannot move a player (550.0982ms)
+✔ two actual low review calls offer E61 and its domain command swaps AAA/AA without changing pay or identity (893.0668ms)
+✔ E61 OPEN_RIGHTS navigates to S08 with the event, registration and money unchanged (1091.8938ms)
+✔ E61 navigation and demotion reject stale or changed review, event and resume input without writes (1889.0779ms)
+✔ MLB E61 still requires exhausted-option consent and preserves the MLB contract on successful demotion (850.9866ms)
+✔ termination stops the active US contract and rejects fabricated service-season identity (5850.7249ms)
+✔ service annual owner ages and supplies the real roster without paying or rewriting history (1933.6241ms)
+✔ freeze parks the pitcher under the already signed option and preserves original USD and pitch history (3065.3323ms)
+✔ controlled calendar discharge opens only the existing option and confirms through day29 without retroactive salary (8124.362ms)
+✔ controlled30day expiry terminates the frozen contract without manufacturing another option (1036.3761ms)
+✔ return preserves existing unique field positions when selecting a legal roster slot (5587.7065ms)
+✖ service world runs actual NPC opening games with zero own appearances or salary and blocks ordinary play (31388.3885ms)
+ℹ tests 47
+ℹ suites 0
+ℹ pass 42
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 32023.2749
+
+✖ failing tests:
+
+test at packages\engine\test\career-agent.test.ts:40:1
+✖ P15 real renewal preview .60/.68 never draws; success reserves only delta, supersedes base and actual accept uses raised salary (694.547ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 0.6799999999999999
+  - 0.68
+       ^
+  
+      at TestContext.<anonymous> (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\career-agent.test.ts:42:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0.6799999999999999,
+    expected: 0.68,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\college-route.test.ts:17:1
+✖ second completed college year attaches one E73; entering early draft is versioned, immutable and once per enrollment (2673.9016ms)
+  RangeError: ASSESSMENT_INCONSISTENT
+      at potentialRange (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\src\assessment.ts:19:220)
+      at <anonymous> (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\src\assessment.ts:28:67)
+      at Array.map (<anonymous>)
+      at reconcileAssessment (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\src\assessment.ts:28:53)
+      at refreshOwnCareerAssessment (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\src\high-school-assessment.ts:18:16)
+      at completedCollegeRegularSeason (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\fixtures.ts:83:22)
+      at completedCollegeAcademicYear (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\fixtures.ts:87:12)
+      at secondYear (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\college-route.test.ts:15:9)
+      at TestContext.<anonymous> (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\college-route.test.ts:18:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+
+test at packages\engine\test\college-route.test.ts:26:1
+✖ real undrafted second-year result opens E74 and preserves third-year enrollment plus independent graduation draft (2275.8544ms)
+  RangeError: ASSESSMENT_INCONSISTENT
+      at potentialRange (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\src\assessment.ts:19:220)
+      at <anonymous> (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\src\assessment.ts:28:67)
+      at Array.map (<anonymous>)
+      at reconcileAssessment (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\src\assessment.ts:28:53)
+      at refreshOwnCareerAssessment (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\src\high-school-assessment.ts:18:16)
+      at completedCollegeRegularSeason (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\fixtures.ts:83:22)
+      at completedCollegeAcademicYear (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\fixtures.ts:87:12)
+      at secondYear (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\college-route.test.ts:15:9)
+      at TestContext.<anonymous> (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\college-route.test.ts:27:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+
+test at packages\engine\test\college-route.test.ts:34:1
+✖ declining a real early offer permits school return; signing ends enrollment and activates the existing pro contract (1871.3079ms)
+  RangeError: ASSESSMENT_INCONSISTENT
+      at potentialRange (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\src\assessment.ts:19:220)
+      at <anonymous> (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\src\assessment.ts:28:67)
+      at Array.map (<anonymous>)
+      at reconcileAssessment (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\src\assessment.ts:28:53)
+      at refreshOwnCareerAssessment (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\src\high-school-assessment.ts:18:16)
+      at completedCollegeRegularSeason (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\fixtures.ts:83:22)
+      at completedCollegeAcademicYear (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\fixtures.ts:87:12)
+      at secondYear (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\college-route.test.ts:15:9)
+      at TestContext.<anonymous> (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\college-route.test.ts:35:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+
+test at packages\engine\test\us-service-world.test.ts:8:1
+✖ service world runs actual NPC opening games with zero own appearances or salary and blocks ordinary play (31388.3885ms)
+  AssertionError [ERR_ASSERTION]: closed military day mutated its source
+      at TestContext.<anonymous> (C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\us-service-world.test.ts:14:242)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

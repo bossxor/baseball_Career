@@ -3,6 +3,7 @@ import {assertCollegeCareerRevision} from './high-school-career.js';
 import {collegeCupSchedule} from './college-cup.js';
 import {settleSchoolCareerGrowth} from './high-school-growth.js';
 import {attachCollegeGraduationTask} from './college-graduation.js';
+import {attachCollegeEarlyTask} from './college-route.js';
 
 export interface CollegeSeasonResult {receiptKey:string;seasonKey:string;academicYear:1|2|3|4;recordRevision:number;championKey:string}
 export function assertCollegeYearResult(source:HighSchoolCareer):CollegeSeasonResult {
@@ -35,5 +36,5 @@ export function acknowledgeCollegeSeasonReview(source:HighSchoolCareer,expectedR
  const career=settleCollegeCareerGrowth(source,expectedRevision).career;
  career.collegeAdmission={...admission,yearsCompleted:admission.academicYear};
  career.collegeResult={receiptKey:JSON.stringify(['college-result',source.world.worldKey,source.world.seasonKey,admission.academicYear,source.world.protagonistKey]),seasonKey:source.world.seasonKey,academicYear:admission.academicYear,recordRevision:source.records.revision,championKey:source.collegeCup!.championKey!};
- career.phaseContext={phase:'OFFSEASON_REVIEW'};return admission.academicYear===4?attachCollegeGraduationTask(career):career;
+ career.phaseContext={phase:'OFFSEASON_REVIEW'};return admission.academicYear===4?attachCollegeGraduationTask(career):admission.academicYear===2&&!admission.earlyDraftAttempted?attachCollegeEarlyTask(career,'E73'):career;
 }

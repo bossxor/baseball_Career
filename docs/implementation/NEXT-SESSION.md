@@ -1,3 +1,7 @@
+# 최신 상태 — M2-SC 검증 통과 (2026-10-28)
+
+[상세](M2-SC-SERVICE-AGENT-COLLEGE-EARLY.md). 브랜치 codex/m2-service-closure(기준 ef03ff9). 메인 체크아웃 미커밋 작업(PS E84·해외 복무/복귀·에이전트 P15)을 이어받아 실패 원인 수정, 대학 2학년 조기 드래프트 E73/E74 구현. 전체 npm run check 종료0: 엔진/API864개 중862통과·실패0·Neon2건 건너뜀, 웹22/22, smoke 통과. 메인 체크아웃 E:/AI/Game/baseball_career의 미커밋 파일은 이 브랜치에 복사됐으므로 정리 전 diff 확인. 다음: P16 독립 준비/재도전 → P10 → P12 → 도전 A01~12 → E12~15 → 국제 handoff. M2 전체 미완료.
+
 # 최신 상태 — M2 BULK 통합 검증 통과 (2026-10-28)
 
 원격 e26271b의 일괄 구현을 최신화하고 저장/사건 열람 경계를 수정했다. **전체 npm run check 종료0: 엔진/API844개 중842통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22.** lint·타입·build·엔진골든·이벤트·설계10종·Android셸·자산·HTTP 스모크 통과. 엔진/API duration_ms171601.1983, 소스 동결463파일 변경0. 실제 브라우저/Neon/Android 기기·전체24경로 통과는 아니다.

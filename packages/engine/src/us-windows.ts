@@ -1,3 +1,4 @@
+import {assertUsMilitaryPlayable} from './us-military-plan.js';
 import type {UsCareer} from './us-career-entry.js';
 import type {UsProgress} from './us-season.js';
 import {assertUsCareerRevision as assertCareerRevision} from './us-career-entry.js';
@@ -23,6 +24,7 @@ export function previewUsTraining(source:UsCareer,choice:TrainingChoice) {
  idle(source);return trainingPreview(source.world.players[source.protagonistKey]!,source.development.trainingUsedSeasons,choice,trainingContext(source));
 }
 export function applyUsSeasonTraining(source:UsCareer,choice:TrainingChoice):UsCareer {
+ assertUsMilitaryPlayable(source);
  const ledger=source.development,before=source.world.players[source.protagonistKey]!;
  const result=applySeasonTraining(before,ledger.trainingUsedSeasons,choice,trainingContext(source),ledger.trainingRng),career=structuredClone(source);
  career.world.players[career.protagonistKey]=result.player;
@@ -31,11 +33,13 @@ export function applyUsSeasonTraining(source:UsCareer,choice:TrainingChoice):UsC
 }
 /** Once per world season; availability and the current level one-third window come only from saved state (training.ts). */
 export function trainUsCareer(source:UsCareer,expectedRevision:number,choice:TrainingChoice):UsCareer {
+ assertUsMilitaryPlayable(source);
  assertCareerRevision(source,expectedRevision);idle(source);
  const career=applyUsSeasonTraining(source,choice);career.revision++;return career;
 }
 /** MID style change: one change per world season after 72 team games while healthy; ability values do not change. */
 export function changeUsMidseasonArchetype(source:UsCareer,expectedRevision:number,archetype:string):UsCareer {
+ assertUsMilitaryPlayable(source);
  assertCareerRevision(source,expectedRevision);idle(source);
  if(source.phaseContext.phase!=='SEASON_PROGRESS' || usTeamGames(source)<Math.ceil(scheduledTeamGames(source)/2) || Object.hasOwn(source.health.injuries,source.protagonistKey))throw new RangeError('STYLE_WINDOW_CLOSED');
  const player=source.world.players[source.protagonistKey]!;archetypeFor(player.kind,archetype);const window=JSON.stringify([source.world.seasonKey,'MID']);
@@ -62,7 +66,7 @@ export function raiseUsWindowEvent(source:UsCareer,day:number,progress:UsProgres
 /** E41: OPEN_STYLE (S22) or ACK_EVENT. E43: OPEN_TRAINING (S23), DEFER_TRAINING, or FORFEIT_TRAINING (uses the season chance with no gain). */
 export function resolveUsWindowEvent(source:UsCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number;command:string}) {
  assertCareerRevision(source,expectedRevision);const phase=source.phaseContext;
- if(phase.phase!=='EVENT_DECISION' || phase.eventKey!==input.eventKey)throw new RangeError('INVALID_CAREER_PHASE');
+ if(phase.phase!=='EVENT_DECISION' || phase.resume.phase!=='SEASON_PROGRESS' || phase.eventKey!==input.eventKey)throw new RangeError('INVALID_CAREER_PHASE');
  const event=source.events.find(e=>e.eventKey===input.eventKey);if(!event || !['E41','E43'].includes(event.definitionId))throw new RangeError('INVALID_CAREER_WINDOW');
  const eligible=event.definitionId==='E41'?['OPEN_STYLE','ACK_EVENT']:['OPEN_TRAINING','DEFER_TRAINING','FORFEIT_TRAINING'];
  const context={worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:eligible};

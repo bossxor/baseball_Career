@@ -1,18 +1,30 @@
 import type {UsCareer} from './us-career-entry.js';
-import {assertUsCareerRevision} from './us-career-entry.js';
+import {assertUsCareerRevision,assertActiveUsRosterWorld,usCareerView} from './us-career-entry.js';
 import type {UsLevel} from './us-world.js';
 import {usYearTransitionReadiness} from './us-year-transition.js';
 import {createSeasonCalendar} from './season-calendar.js';
 import {canonicalJson} from './game.js';
+import {retireAndSupplyUsNpcs} from './us-supply.js';
+import type {UsSupplyReceipt} from './us-supply.js';
+import {emptyPitchXpLedger} from './pitch-xp.js';
+import {createSeasonGrowthLedger} from './growth-ledger.js';
 
 export type UsMilitaryStatus='UNRESOLVED'|'FROZEN_SERVICE'|'TERMINATED_SERVICE'|'COMPLETED'|'NOT_APPLICABLE';
 export type UsMilitaryPlanChoice='FREEZE'|'TERMINATE';
 export type UsMilitaryServiceBlockKind='FULL_DOMESTIC_SEASON'|'FIRST_HALF_SEASON';
 export interface UsMilitaryServiceBlock {seasonKey:string;kind:UsMilitaryServiceBlockKind;completedWorldDay:number|null}
+export interface UsMilitaryYearArchive {
+ seasonKey:string;season:NonNullable<UsCareer['season']>;seasonSchedule:NonNullable<UsCareer['seasonSchedule']>;seasonGrowth:UsCareer['seasonGrowth'];
+ preseasonPlan?:UsCareer['preseasonPlan'];campNotices?:UsCareer['campNotices'];postseason?:UsCareer['postseason'];
+}
 /** Same 18 game-month calendar as domestic service: next full season, then June 30 of the season after (14 U). */
 export interface UsMilitaryServiceProgram {
  programId:string;planSeasonKey:string;scheduledBlocks:2;blocks:readonly UsMilitaryServiceBlock[];completedBlocks:number;
  completionDays:readonly {seasonKey:string;worldDay:number}[];
+ version?:2;sourceContract?:UsCareer['contract'];sourceSeason?:UsCareer['season'];sourceAge?:number;sourceRegistration?:UsCareer['registration'];
+ cursor?:{seasonKey:string;worldDay:number};closedDays?:readonly {seasonKey:string;worldDay:number}[];supply?:readonly UsSupplyReceipt[];
+ years?:readonly UsMilitaryYearArchive[];
+ returnOption?:{optionId:string;organizationId:string;level:UsLevel;issuedSeasonKey:string;issuedWorldDay:number;expiresWorldDay:number;status:'OPEN'|'CONFIRMED'|'EXPIRED'|'DECLINED';effectiveWorldDay?:number};
 }
 
 const LEVELS:readonly UsLevel[]=['ROOKIE','A','AA','AAA','MLB'];
@@ -22,7 +34,8 @@ function assertMilitaryRevision(c:UsCareer,revision:number):void {
 }
 function gate(c:UsCareer){
  assertUsCareerRevision(c,c.revision);const ready=usYearTransitionReadiness(c);
- if(!ready.blockers.includes('MILITARY_PLAN_REQUIRED')||c.military.status!=='UNRESOLVED')throw new RangeError('US_MILITARY_PLAN_NOT_REQUIRED');
+ if(c.phaseContext.phase!=='SEASON_REVIEW'||c.world.players[c.protagonistKey]!.age<19||c.military.status!=='UNRESOLVED')throw new RangeError('US_MILITARY_PLAN_NOT_REQUIRED');
+ if(ready.blockers.some(b=>b!=='MILITARY_PLAN_REQUIRED'&&b!=='CONTRACT_DECISION_REQUIRED'))throw new RangeError('US_MILITARY_PLAN_NOT_READY');
  return ready;
 }
 
@@ -37,6 +50,9 @@ function legalAfterRemove(next:UsCareer,orgId:string,level:UsLevel,removeKey:str
 function parkForTerminate(next:UsCareer,key:string):void {
  const org=next.world.organizations.find(o=>o.id===next.protagonistOrganizationId)!,level=next.registration.level,kind=next.world.players[key]!.kind;
  next.world.reserves??={};
+ if(legalAfterRemove(next,org.id,level,key)){
+  org.levels[level]=org.levels[level].filter(k=>k!==key);next.world.reserves[org.id]=[...(next.world.reserves[org.id]??[]).filter(k=>k!==key),key].sort();next.registration={...next.registration,status:'INJURED'};return;
+ }
  let fill=(next.world.reserves[org.id]??[]).filter(k=>k!==key&&next.world.players[k]!.kind===kind).sort()[0];
  if(fill)next.world.reserves[org.id]=(next.world.reserves[org.id]??[]).filter(k=>k!==fill);
  else{
@@ -85,9 +101,11 @@ export function chooseUsMilitaryPlan(c:UsCareer,revision:number,choice:UsMilitar
  assertUsCareerRevision(c,revision);const preview=usMilitaryPlanPreview(c);if(!preview.choices.includes(choice))throw new RangeError('US_MILITARY_PLAN_REFUSED');
  if(choice==='FREEZE'&&!c.contract.militaryReturnOption)throw new RangeError('US_MILITARY_FREEZE_UNAVAILABLE');
  const next=structuredClone(c);next.revision++;
- const service=openProgram(c.world.worldKey,c.protagonistKey,c.world.seasonKey);
+ const service:UsMilitaryServiceProgram={...openProgram(c.world.worldKey,c.protagonistKey,c.world.seasonKey),version:2,sourceContract:structuredClone(c.contract),...(c.season?{sourceSeason:structuredClone(c.season)}:{}),sourceAge:c.world.players[c.protagonistKey]!.age,sourceRegistration:structuredClone(c.registration),cursor:{seasonKey:c.world.seasonKey,worldDay:daysInYear(Number(c.world.seasonKey))-1},closedDays:[],supply:[]};
  if(choice==='FREEZE')next.military={status:'FROZEN_SERVICE',deadlineAge:c.military.deadlineAge,frozenContractKey:c.contract.contractKey,planSeasonKey:c.world.seasonKey,service};
- else{next.military={status:'TERMINATED_SERVICE',deadlineAge:c.military.deadlineAge,planSeasonKey:c.world.seasonKey,terminatedContractKey:c.contract.contractKey,service};parkForTerminate(next,c.protagonistKey);}
+ else next.military={status:'TERMINATED_SERVICE',deadlineAge:c.military.deadlineAge,planSeasonKey:c.world.seasonKey,terminatedContractKey:c.contract.contractKey,service};
+ if(next.registration.status==='ACTIVE')parkForTerminate(next,c.protagonistKey);
+ next.contract={...next.contract,status:choice==='FREEZE'?'FROZEN':'TERMINATED'};
  assertUsCareerRevision(next,next.revision);return next;
 }
 
@@ -100,6 +118,7 @@ export function settleUsMilitaryServiceBlock(c:UsCareer,revision:number):UsCaree
  assertMilitaryRevision(c,revision);
  if(c.military.status!=='FROZEN_SERVICE'&&c.military.status!=='TERMINATED_SERVICE')throw new RangeError('US_MILITARY_SERVICE_NOT_ACTIVE');
  const service=c.military.service;if(!service)throw new RangeError('US_MILITARY_SERVICE_PROGRAM_REQUIRED');
+ if(service.version!==2||!service.cursor||service.cursor.seasonKey!==c.world.seasonKey||!service.closedDays?.some(d=>d.seasonKey===c.world.seasonKey&&d.worldDay===service.completionDays.find(d=>d.seasonKey===c.world.seasonKey)?.worldDay))throw new RangeError('US_MILITARY_DAY_EVIDENCE_REQUIRED');
  if(canonicalJson(service.completionDays)!==canonicalJson(usMilitaryCompletionDays(service.planSeasonKey)))throw new RangeError('INVALID_US_SERVICE_CALENDAR');
  if(c.phaseContext.phase!=='SEASON_REVIEW')throw new RangeError('US_MILITARY_BLOCK_NOT_READY');
  const open=service.blocks.find(b=>b.seasonKey===c.world.seasonKey&&b.completedWorldDay===null);
@@ -111,8 +130,87 @@ export function settleUsMilitaryServiceBlock(c:UsCareer,revision:number):UsCaree
 
 /** Completes only after both sealed 18-month blocks. Instant COMPLETED without settlement is rejected. */
 export function completeUsMilitaryService(c:UsCareer,revision:number):UsCareer {
- assertMilitaryRevision(c,revision);if(c.military.status!=='FROZEN_SERVICE'&&c.military.status!=='TERMINATED_SERVICE')throw new RangeError('US_MILITARY_SERVICE_NOT_ACTIVE');
+ assertUsCareerRevision(c,revision);if(c.military.status!=='FROZEN_SERVICE'&&c.military.status!=='TERMINATED_SERVICE')throw new RangeError('US_MILITARY_SERVICE_NOT_ACTIVE');
  const service=c.military.service;if(!service||service.completedBlocks!==service.scheduledBlocks||service.blocks.some(b=>b.completedWorldDay===null))throw new RangeError('US_MILITARY_SERVICE_INCOMPLETE');
  const next=structuredClone(c);next.revision++;next.military={status:'COMPLETED',deadlineAge:c.military.deadlineAge,...(c.military.planSeasonKey?{planSeasonKey:c.military.planSeasonKey}:{}),...(c.military.frozenContractKey?{frozenContractKey:c.military.frozenContractKey}:{}),...(c.military.terminatedContractKey?{terminatedContractKey:c.military.terminatedContractKey}:{}),service:structuredClone(service)};
+ if(c.military.frozenContractKey&&service.sourceContract?.militaryReturnOption&&service.cursor){const date=service.cursor;next.military.service!.returnOption={optionId:JSON.stringify(['us-military-return',service.programId,c.military.frozenContractKey]),organizationId:c.protagonistOrganizationId,level:service.sourceRegistration!.level,issuedSeasonKey:date.seasonKey,issuedWorldDay:date.worldDay,expiresWorldDay:date.worldDay+30,status:'OPEN'};}
  return next;
+}
+
+const daysInYear=(year:number)=>year%4===0&&(year%100!==0||year%400===0)?366:365;
+const serving=(c:UsCareer)=>c.military.status==='FROZEN_SERVICE'||c.military.status==='TERMINATED_SERVICE';
+
+/** Ordinary US play cannot use a frozen contract or an unconfirmed/expired option. */
+export function assertUsMilitaryPlayable(c:UsCareer):void {
+ if(serving(c)||c.contract.status!=='ACTIVE'||c.military.service?.version===2&&c.military.service.returnOption?.status!=='CONFIRMED')throw new RangeError('US_MILITARY_CONTRACT_NOT_PLAYABLE');
+}
+
+/** Service roots retain the original active contract as history, separately from its live disposition. */
+export function usMilitaryHistoricalView(c:UsCareer):ReturnType<typeof usCareerView> {
+ const s=c.military.service,source=s?.sourceContract,cursor=s?.cursor;
+ if(!s||s.version!==2||!source||source.status!=='ACTIVE'||!s.sourceRegistration||!Number.isSafeInteger(s.sourceAge)||!cursor||s.planSeasonKey!==c.military.planSeasonKey||s.programId!==JSON.stringify(['us-military-service',c.world.worldKey,s.planSeasonKey,c.protagonistKey])||canonicalJson(s.completionDays)!==canonicalJson(usMilitaryCompletionDays(s.planSeasonKey))||s.scheduledBlocks!==2||s.blocks.length!==2||!Number.isSafeInteger(s.completedBlocks)||s.completedBlocks<0||s.completedBlocks>2||!Array.isArray(s.closedDays)||!Array.isArray(s.supply))throw new RangeError('INVALID_US_MILITARY_STATE');
+ if(cursor.seasonKey!==c.world.seasonKey||!Number.isSafeInteger(cursor.worldDay)||cursor.worldDay<0||cursor.worldDay>=daysInYear(Number(cursor.seasonKey))||c.world.players[c.protagonistKey]!.age!==s.sourceAge!+Number(c.world.seasonKey)-Number(s.planSeasonKey))throw new RangeError('INVALID_US_SERVICE_CALENDAR');
+ const expectedStatus=c.military.frozenContractKey?'FROZEN':'TERMINATED',option=s.returnOption,confirmed=option?.status==='CONFIRMED';
+ if(!['FROZEN_SERVICE','TERMINATED_SERVICE','COMPLETED'].includes(c.military.status)||c.military.frozenContractKey&&c.military.terminatedContractKey||c.military.frozenContractKey&&!source.militaryReturnOption||c.military.frozenContractKey!==undefined&&c.military.frozenContractKey!==source.contractKey||c.military.terminatedContractKey!==undefined&&c.military.terminatedContractKey!==source.contractKey||canonicalJson(c.contract)!==canonicalJson({...source,seasonKey:c.world.seasonKey,status:confirmed?'ACTIVE':option?.status==='EXPIRED'||option?.status==='DECLINED'?'TERMINATED':expectedStatus}))throw new RangeError('INVALID_US_MILITARY_CONTRACT');
+ if(!confirmed&&(c.registration.status!=='INJURED'||!c.world.reserves?.[c.protagonistOrganizationId]?.includes(c.protagonistKey)))throw new RangeError('INVALID_US_SERVICE_REGISTRATION');
+ let completed=0;
+ for(const [i,b]of s.blocks.entries()){
+  const due=s.completionDays[i]!;
+  if(b.seasonKey!==due.seasonKey||b.kind!==(i===0?'FULL_DOMESTIC_SEASON':'FIRST_HALF_SEASON')||b.completedWorldDay!==null&&(b.completedWorldDay!==due.worldDay||i!==completed++||!s.closedDays.some(d=>d.seasonKey===due.seasonKey&&d.worldDay===due.worldDay)))throw new RangeError('INVALID_US_SERVICE_BLOCK');
+ }
+ if(completed!==s.completedBlocks||c.military.status==='COMPLETED'&&completed!==2)throw new RangeError('INVALID_US_SERVICE_BLOCK');
+ if(option){const due=s.completionDays[1]!;if(c.military.status!=='COMPLETED'||!c.military.frozenContractKey||!source.militaryReturnOption||option.optionId!==JSON.stringify(['us-military-return',s.programId,source.contractKey])||option.organizationId!==s.sourceRegistration.clubId||option.level!==s.sourceRegistration.level||option.issuedSeasonKey!==due.seasonKey||option.issuedWorldDay!==due.worldDay||option.expiresWorldDay!==due.worldDay+30||!['OPEN','CONFIRMED','EXPIRED','DECLINED'].includes(option.status)||option.status==='OPEN'&&cursor.worldDay>=option.expiresWorldDay||confirmed&&(!Number.isSafeInteger(option.effectiveWorldDay)||option.effectiveWorldDay!<=option.issuedWorldDay||option.effectiveWorldDay!>option.expiresWorldDay))throw new RangeError('INVALID_US_MILITARY_RETURN_OPTION');}
+ const projected:UsCareer={...c,military:{status:'UNRESOLVED',deadlineAge:28},world:{...c.world,seasonKey:s.planSeasonKey,calendar:createSeasonCalendar(Number(s.planSeasonKey),c.world.calendar.version),players:{...c.world.players,[c.protagonistKey]:{...c.world.players[c.protagonistKey]!,age:s.sourceAge!}}},contract:source,registration:{...c.registration,seasonKey:s.planSeasonKey}};
+ if(s.sourceSeason)projected.season=s.sourceSeason;else delete projected.season;
+ const view=usCareerView(projected);
+ return {...view,seasonKey:c.world.seasonKey,player:{...view.player,age:c.world.players[c.protagonistKey]!.age},registration:{status:c.registration.status,level:c.registration.level},phase:c.phaseContext.phase,contract:{...view.contract,status:c.contract.status}};
+}
+
+/** Annual world aging/supply only. The shared US worker publishes and plays the real service-season schedule. */
+export function startUsMilitaryServiceSeason(c:UsCareer,revision:number):UsCareer {
+ assertUsCareerRevision(c,revision);const s=c.military.service;
+ if(!serving(c)||s?.version!==2||!s.cursor||c.phaseContext.phase!=='SEASON_REVIEW'||c.world.seasonKey!==s.planSeasonKey&&s.blocks.find(b=>b.seasonKey===c.world.seasonKey)?.completedWorldDay===null||Number(c.world.seasonKey)>=Number(s.planSeasonKey)+2)throw new RangeError('US_MILITARY_YEAR_NOT_READY');
+ const next=structuredClone(c),world=next.world,target=String(Number(world.seasonKey)+1),oldPlayers=new Set(Object.keys(world.players)),retiring=Object.keys(world.players).filter(k=>k!==c.protagonistKey&&world.players[k]!.age===45),supply=retireAndSupplyUsNpcs(world,retiring,target,c.protagonistKey);
+ if(c.season&&c.seasonSchedule)next.military.service!.years=[...(s.years??[]),{seasonKey:c.world.seasonKey,season:structuredClone(c.season),seasonSchedule:structuredClone(c.seasonSchedule),seasonGrowth:structuredClone(c.seasonGrowth),...(c.preseasonPlan?{preseasonPlan:structuredClone(c.preseasonPlan)}:{}),...(c.campNotices?{campNotices:structuredClone(c.campNotices)}:{}),...(c.postseason?{postseason:structuredClone(c.postseason)}:{})}];
+ for(const [key,p]of Object.entries(world.players)){if(oldPlayers.has(key))world.players[key]={...p,age:p.age+1,fatigue:0};const book=world.repertoires[key];if(book)world.repertoires[key]={...book,seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};}
+ for(const r of supply.retired)delete next.health.injuries[r.playerKey];
+ world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target),'calendar-2');next.registration={...next.registration,seasonKey:target};next.contract={...next.contract,seasonKey:target};
+ next.military.service!.cursor={seasonKey:target,worldDay:world.calendar.growthDays[0]!-1};next.military.service!.supply=[...s.supply!,supply];
+ next.seasonGrowth=createSeasonGrowthLedger(world.players[c.protagonistKey]!,target,world.calendar.growthDays.length);next.development={...next.development,seasonStartPlayer:structuredClone(world.players[c.protagonistKey]!)};
+ next.phaseContext={phase:'PRESEASON_SETUP'};next.revision++;delete next.season;delete next.seasonSchedule;delete next.preseasonPlan;delete next.campNotices;delete next.postseason;
+ assertActiveUsRosterWorld(world);assertUsCareerRevision(next,next.revision);return next;
+}
+
+/** Internal shared-day hook: only a real closed native US date advances service; no separate salary/XP writer. */
+export function recordUsMilitaryClosedDay(c:UsCareer,day:number):void {
+ const s=c.military.service;if(s?.version!==2||!s.cursor||!s.closedDays||(!serving(c)&&c.military.status!=='COMPLETED')||s.returnOption?.status==='CONFIRMED')throw new RangeError('US_MILITARY_SERVICE_NOT_ACTIVE');
+ if(!Number.isSafeInteger(day)||s.cursor.seasonKey!==c.world.seasonKey||day!==s.cursor.worldDay+1||c.season?.days.at(-1)?.day!==day||!c.seasonSchedule)throw new RangeError('US_MILITARY_DAY_EVIDENCE_REQUIRED');
+ const scheduled=Object.values(c.seasonSchedule.leagues).flat().filter(g=>g.worldDay===day),key=c.protagonistKey;
+ if(scheduled.some(g=>{const row=c.records.games[g.simulationKey];return !row||row.worldDay!==day||row.scope.seasonKey!==c.world.seasonKey||row.scope.leagueKey!==g.leagueKey||Object.hasOwn(row.batting,key)||Object.hasOwn(row.pitching,key);})||c.income.some(e=>e.kind==='SALARY'&&e.seasonKey===c.world.seasonKey&&e.day===day&&e.amount!==0)||c.season.days.at(-1)!.appearances!==0||c.health.games.some(g=>g.evidence.seasonKey===c.world.seasonKey&&g.evidence.day===day&&g.evidence.roster.includes(key)))throw new RangeError('US_MILITARY_NATIVE_DAY_NOT_SETTLED');
+ s.cursor={seasonKey:c.world.seasonKey,worldDay:day};s.closedDays=[...s.closedDays,{...s.cursor}];
+ if(serving(c)){const due=s.completionDays[s.completedBlocks];if(due?.seasonKey===c.world.seasonKey&&due.worldDay===day)c.military.service=completeBlock(s,c.world.seasonKey,day);}
+ const option=c.military.service!.returnOption;if(option?.status==='OPEN'&&day>=option.expiresWorldDay){option.status='EXPIRED';c.contract={...c.contract,status:'TERMINATED'};}
+}
+
+export function usMilitaryServiceView(c:UsCareer){
+ assertUsCareerRevision(c,c.revision);const s=c.military.service;if(s?.version!==2)throw new RangeError('US_MILITARY_SERVICE_PROGRAM_REQUIRED');
+ return {status:c.military.status,contractStatus:c.contract.status,completedBlocks:s.completedBlocks,scheduledBlocks:s.scheduledBlocks,cursor:structuredClone(s.cursor),returnOption:s.returnOption?structuredClone(s.returnOption):null};
+}
+
+/** Confirmation reuses the existing option and resumes on the next real date; no new contract or payment. */
+export function confirmUsMilitaryReturn(c:UsCareer,revision:number):UsCareer {
+ assertUsCareerRevision(c,revision);const s=c.military.service,option=s?.returnOption;
+ if(c.military.status!=='COMPLETED'||!s?.cursor||option?.status!=='OPEN'||s.cursor.seasonKey!==option.issuedSeasonKey||s.cursor.worldDay<option.issuedWorldDay||s.cursor.worldDay>=option.expiresWorldDay||!s.sourceContract?.militaryReturnOption)throw new RangeError('US_MILITARY_RETURN_NOT_AVAILABLE');
+ const next=structuredClone(c),key=c.protagonistKey,org=next.world.organizations.find(o=>o.id===option.organizationId)!;
+ if(!Object.hasOwn(next.health.injuries,key)){
+  const player=next.world.players[key]!,roster=org.levels[option.level],right=roster.filter(k=>next.world.players[k]!.kind==='HITTER'&&next.world.players[k]!.throws==='R').length;
+  const displaced=roster.filter(k=>next.world.players[k]!.kind===player.kind).sort((a,b)=>Number(next.world.players[b]!.position===player.position)-Number(next.world.players[a]!.position===player.position)||(a<b?-1:1)).find(k=>{const p=next.world.players[k]!;return (p.position===player.position||roster.some(other=>other!==k&&next.world.players[other]!.position===p.position))&&(player.kind!=='HITTER'||player.throws==='R'||p.throws==='L'||right>4);});
+  if(!displaced)throw new RangeError('US_MILITARY_RETURN_NO_LEGAL_SLOT');org.levels[option.level]=roster.map(k=>k===displaced?key:k).sort();next.world.reserves![org.id]=[...next.world.reserves![org.id]!.filter(k=>k!==key),displaced].sort();next.registration={...next.registration,level:option.level,status:'ACTIVE'};
+ }
+ next.contract={...next.contract,status:'ACTIVE'};next.military.service!.returnOption={...option,status:'CONFIRMED',effectiveWorldDay:s.cursor.worldDay+1};next.revision++;assertUsCareerRevision(next,next.revision);return next;
+}
+
+export function declineUsMilitaryReturn(c:UsCareer,revision:number):UsCareer {
+ assertUsCareerRevision(c,revision);const option=c.military.service?.returnOption;if(c.military.status!=='COMPLETED'||option?.status!=='OPEN')throw new RangeError('US_MILITARY_RETURN_NOT_AVAILABLE');
+ const next=structuredClone(c);next.military.service!.returnOption={...option,status:'DECLINED'};next.contract={...next.contract,status:'TERMINATED'};next.revision++;return next;
 }

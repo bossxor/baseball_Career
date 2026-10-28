@@ -19,6 +19,7 @@ export function game(seed = 'test-42', competition: GameInput['competition'] = '
 
 import {createHighSchoolWorld} from '../src/high-school-world.js';
 import {createHighSchoolCareer} from '../src/high-school-career.js';
+import type {HighSchoolCareer} from '../src/high-school-career.js';
 import {canonicalJson} from '../src/game.js';
 import type {GameContribution} from '../src/records.js';
 import {abilityKeys} from '@playball/rules';
@@ -29,6 +30,13 @@ import {closeHighSchoolSeasonForCollege,startAdmittedCollegeSeason} from '../src
 import {closeHighSchoolDay} from '../src/high-school-day.js';
 import {startCollegeCup,advanceCollegeCup} from '../src/college-cup.js';
 import {acknowledgeCollegeSeasonReview} from '../src/college-result.js';
+import {closeCollegeSeasonForNextYear,startNextCollegeSeason} from '../src/college-year.js';
+import {returnUnsignedCollegeCareer} from '../src/college-route.js';
+/** Continues enrollment; after year2 this is the explicit E73 ADVANCE_ACADEMIC_YEAR choice. */
+export function nextCollegeYear(source:HighSchoolCareer):HighSchoolCareer {
+ const e73=source.events.find(e=>e.definitionId==='E73'&&e.status==='OPEN'),stayed=e73?returnUnsignedCollegeCareer(source,source.revision,e73.version):source;
+ const ready=closeCollegeSeasonForNextYear(stayed,stayed.revision,true);return startNextCollegeSeason(ready,ready.revision);
+}
 
 // Controlled no-appearance receipts isolate transitions. The progress test covers real216-game play.
 export function completedHighSchoolCareer(capAt?:number,kind:'HITTER'|'PITCHER'='HITTER'){

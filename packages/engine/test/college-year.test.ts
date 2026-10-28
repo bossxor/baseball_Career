@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {completedCollegeAcademicYear,enrolledCollegeCareer} from './fixtures.js';
+import {completedCollegeAcademicYear,enrolledCollegeCareer,nextCollegeYear} from './fixtures.js';
 import {closeCollegeSeasonForNextYear,startNextCollegeSeason} from '../src/college-year.js';
 import {assertCollegeWorld} from '../src/college-world.js';
 import type {CollegeWorld} from '../src/college-world.js';
@@ -60,7 +60,7 @@ test('continuing enrollment advances1→2→3→4 with persistent students and b
  for(let year=1;year<=4;year++){
   state=completedCollegeAcademicYear(state);assert.equal(state.collegeAdmission!.academicYear,year);assert.equal(state.collegeAdmission!.yearsCompleted,year);assert.equal(state.world.players.own!.age,18+year);
   if(year===4){assert.throws(()=>closeCollegeSeasonForNextYear(state,state.revision,true),/GRADUATION_ROUTE_REQUIRED/);break;}
-  const ready=closeCollegeSeasonForNextYear(state,state.revision,true);state=startNextCollegeSeason(ready,ready.revision);assert.equal(state.previousSeasons!.length,year+1);assertCollegeWorld(state.world as CollegeWorld);
+  state=nextCollegeYear(state);assert.equal(state.previousSeasons!.length,year+1);assertCollegeWorld(state.world as CollegeWorld);
  }
  assert.equal(state.world.seasonKey,'2033');assert.equal(state.collegeAdmission!.yearsCompleted,4);assert.equal(state.phaseContext.phase,'EVENT_DECISION');assert.equal(state.events.at(-1)!.definitionId,'E75');
 });

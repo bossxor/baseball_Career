@@ -1,0 +1,25 @@
+
+> again-playball@0.1.0 check
+> npm run lint && npm run typecheck && npm test && npm run test:web && npm run build && npm run verify:engine && npm run verify:events && npm run verify:design && npm run verify:android && npm run verify:assets
+
+
+> again-playball@0.1.0 lint
+> eslint packages apps scripts
+
+
+C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\src\career-agent.ts
+  75:102  error  '_a' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\career-agent.test.ts
+  45:58  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  73:87  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  74:16  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\college-route.test.ts
+  3:38  error  'enrolledCollegeCareer' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\OJT\.codex\worktrees\dd-full-service\baseball_career\packages\engine\test\us-military-plan.test.ts
+  14:30  error  'advanceUsCareer' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 6 problems (6 errors, 0 warnings)
+

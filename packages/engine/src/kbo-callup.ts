@@ -58,7 +58,7 @@ export function reviewKboCallup(source:KboCareer,day:number,progress:KboSeasonPr
 /** ACCEPT_CALLUP swaps me into the first team with the reviewed player moving to futures; DEFER_CALLUP keeps both. */
 export function resolveKboCallup(source:KboCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number;command:'ACCEPT_CALLUP'|'DEFER_CALLUP'}):KboCareer {
  assertCareerRevision(source,expectedRevision);const phase=source.phaseContext;
- if(phase.phase!=='EVENT_DECISION' || phase.eventKey!==input.eventKey)throw new RangeError('INVALID_CAREER_PHASE');
+ if(phase.phase!=='EVENT_DECISION' || phase.resume.phase!=='SEASON_PROGRESS' || phase.eventKey!==input.eventKey)throw new RangeError('INVALID_CAREER_PHASE');
  const event=source.events.find(e=>e.eventKey===input.eventKey);if(!event || event.definitionId!=='E09')throw new RangeError('INVALID_CALLUP_EVENT');
  const review=(source.callupReviews??[]).at(-1);if(!review || review.outcome!=='OFFERED' || !review.comparedKey)throw new RangeError('INVALID_CALLUP_EVENT');
  const context={worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['ACCEPT_CALLUP','DEFER_CALLUP']};

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {completedCollegeAcademicYear,enrolledCollegeCareer} from './fixtures.js';
-import {closeCollegeSeasonForNextYear,startNextCollegeSeason} from '../src/college-year.js';
+import {completedCollegeAcademicYear,enrolledCollegeCareer,nextCollegeYear} from './fixtures.js';
+import {closeCollegeSeasonForNextYear} from '../src/college-year.js';
 import {prepareCollegeGraduation,graduateCollegeCareer,collegeGraduationRouteView} from '../src/college-graduation.js';
 import {advanceCollegeCareer} from '../src/college-career.js';
 import {canonicalJson} from '../src/game.js';
@@ -10,7 +10,7 @@ test('four-year college journey ends in blocking E75 and an evidence-bound gradu
  let source=enrolledCollegeCareer();
  for(let year=1;year<=4;year++){
   source=completedCollegeAcademicYear(source);
-  if(year<4){const ready=closeCollegeSeasonForNextYear(source,source.revision,true);source=startNextCollegeSeason(ready,ready.revision);}
+  if(year<4)source=nextCollegeYear(source);
  }
  const before=canonicalJson(source),event=source.events.at(-1)!;
  await t.test('only the fourth completed year attaches one E75 with current enrollment/year/result evidence',()=>{

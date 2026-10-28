@@ -17,8 +17,8 @@ export interface HighSchoolGraduation {
  version:1;eventKey:string;offerSetKey:string;sourceBasis:string;
 }
 export interface CollegeAdmission {
- admissionKey:string;collegeId:string;status:'ADMITTED'|'ENROLLED'|'GRADUATED';entryYear:number;
- academicYear:1|2|3|4;yearsCompleted:0|1|2|3|4;playerKey:string;position:string;
+ admissionKey:string;collegeId:string;status:'ADMITTED'|'ENROLLED'|'GRADUATED'|'LEFT_FOR_PRO';entryYear:number;
+ academicYear:1|2|3|4;yearsCompleted:0|1|2|3|4;playerKey:string;position:string;earlyDraftAttempted?:true;
 }
 function evaluation(source:HighSchoolCareer){
  const player=source.world.players[source.world.protagonistKey]!;validateDevelopmentPlayer(player);

@@ -81,7 +81,7 @@ export function raiseKboWindowEvent(source:KboCareer,day:number,progress:KboSeas
 /** E41: OPEN_STYLE (S22) or ACK_EVENT. E43: OPEN_TRAINING (S23), DEFER_TRAINING, or FORFEIT_TRAINING (uses the season chance with no gain). */
 export function resolveKboWindowEvent(source:KboCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number;command:string}) {
  assertCareerRevision(source,expectedRevision);const phase=source.phaseContext;
- if(phase.phase!=='EVENT_DECISION' || phase.eventKey!==input.eventKey)throw new RangeError('INVALID_CAREER_PHASE');
+ if(phase.phase!=='EVENT_DECISION' || phase.resume.phase!=='SEASON_PROGRESS' || phase.eventKey!==input.eventKey)throw new RangeError('INVALID_CAREER_PHASE');
  const event=source.events.find(e=>e.eventKey===input.eventKey);if(!event || !['E41','E43'].includes(event.definitionId))throw new RangeError('INVALID_CAREER_WINDOW');
  const eligible=event.definitionId==='E41'?['OPEN_STYLE','ACK_EVENT']:['OPEN_TRAINING','DEFER_TRAINING','FORFEIT_TRAINING'];
  const context={worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:eligible};
