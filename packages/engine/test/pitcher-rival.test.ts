@@ -80,3 +80,12 @@ test('top-level pro actor and registration are supported without school identity
  assert.equal(formed.relationNotices[0]!.resume.registrationKey,'actual-club');
  assert.equal(unreadPitcherRivalNotices({...pro,...formed}).length,1);
 });
+
+
+test('generic pitcher rival notice refuses sealed school roots before changing read metadata',()=>{
+ const source=fixture(),formed=formPitcherRivalFromGame(source,'formation')!;
+ for(const seal of ['kboYearEnd','collegeYearEnd','usYearEnd'] as const){
+  const sealed={...source,...formed,[seal]:{sourceRevision:source.revision}},raw=canonicalJson(sealed),event=sealed.relationNotices[0]!;
+  assert.throws(()=>resolvePitcherRivalNotice(sealed,sealed.revision,{eventKey:event.eventKey,eventVersion:event.version,command:'OPEN_RELATIONS'}),/PITCHER_RIVAL_ROOT_WRAPPER_REQUIRED/);assert.equal(canonicalJson(sealed),raw);
+ }
+});

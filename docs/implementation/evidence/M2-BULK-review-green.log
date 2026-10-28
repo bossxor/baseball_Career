@@ -1,0 +1,70 @@
+✔ pitcher rival preserves same-kind relations, binds E94 and excludes its formation game from a duel (22.9308ms)
+✔ one slot is shared by all competitions in a world season; prior rivals persist into the next season (7.711ms)
+✔ no actual decided regular matchup means no formation; actor and source tampering is rejected (13.1793ms)
+✔ simultaneous candidates use actual matchup PA then stable pitcher key, without RNG (10.8597ms)
+✔ top-level pro actor and registration are supported without school identity fields (4.3575ms)
+✔ generic pitcher rival notice refuses sealed school roots before changing read metadata (21.3004ms)
+Native goal school proof: {"officialGames":8,"ownPA":5,"ownStarts":1,"recordsEqualWithoutGoals":true,"worldEqualWithoutGoals":true}
+Native goal college proof: {"controlledRegularGames":216,"nativeCupGames":2,"goals":[{"id":"G01","progress":0,"status":"ACTIVE"},{"id":"G09","progress":1,"status":"COMPLETED"},{"id":"G10","progress":1,"status":"COMPLETED"}],"cosmetics":2}
+✔ native preseason entry opens one non-blocking E89 in its committed revision without selecting goals (2153.7781ms)
+✔ optional E89 selects real goals, skips without goals, and rejects stale or duplicate choices (637.4768ms)
+✔ E90 navigation consumes the existing source-bound outbox once without granting another reward (430.8255ms)
+✔ goals are optional, max3, kind-filtered, PRE-only and source-safe without RNG or gameplay rewards (522.5853ms)
+✔ goal HR scope never adds another league or postseason; completion/news/reward replay and correction are idempotent (444.5944ms)
+✔ malformed persisted goal arrays, changed scope and unknown reward are rejected without editing the save (579.2876ms)
+✔ MID replacement uses sealed half-season, carries BB22 progress, rejects BB33 and cannot reset through moving levels (471.729ms)
+✔ pitcher goals use raw K, saves and starterOuts, never all relief outs (1023.8989ms)
+✔ G01/G02/G04 count exact PA, fixed-lineup starts and walks with three cosmetic grants only (171.8157ms)
+✔ US year continuation preserves earned cosmetics and goal outbox without blocking the finalized contract path (1426.4222ms)
+✔ school goal expiry is committed before sealing the year-end receipt and survives the actual KBO entry command (282.9749ms)
+✔ serving Sports goal registration seals SANGMU/Futures instead of the original club; Active has no playable goal choices (263.4362ms)
+✔ G08 requires evidenced injury, actual recovery and a later official appearance, not a return button (153.948ms)
+✔ native school game updates selected goals automatically and leaves gameplay identical to no-goal play (629.0185ms)
+✔ college qualification goal settles at final seeding; native championship appearance counts G10 and never regular G01 (551.8161ms)
+✖ ignored E89 can be acknowledged after starting without selecting goals or restoring the preseason phase (674.1435ms)
+✔ historical goal acknowledgement validates and preserves a sealed school year end (406.8026ms)
+✔ posting return uses current US identity and a caller-owned latest domestic host; quote alone changes no money (4652.2113ms)
+✔ released overseas FA quotes current domestic FA terms and preserves a pitcher repertoire and injury evidence (2961.721ms)
+✔ return requires unchanged authoritative US history, next domestic season and both source revisions (4628.763ms)
+✔ continuing US cancels only the competing return event; malformed and consumed ownership cannot replay (3034.0722ms)
+✔ domestic return preserves goal history when the authority revision is below the US career revision (3175.5865ms)
+✔ accepted return ownership remains valid after actual achievement outbox reads on the US archive (3084.5595ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 28
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21950.3125
+
+✖ failing tests:
+
+test at packages\engine\test\season-goals.test.ts:1:22379
+✖ ignored E89 can be acknowledged after starting without selecting goals or restoring the preseason phase (674.1435ms)
+  AssertionError [ERR_ASSERTION]: Got unwanted exception.
+  Actual message: "INVALID_US_ENTRY_VIEW"
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\season-goals.test.ts:149:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: RangeError: INVALID_US_ENTRY_VIEW
+        at openingUsMinorState (E:\AI\Game\baseball_career\packages\engine\src\us-minor-history.ts:42:197)
+        at openingUsMinorInventory (E:\AI\Game\baseball_career\packages\engine\src\us-minor-history.ts:57:80)
+        at usCareerView (E:\AI\Game\baseball_career\packages\engine\src\us-career-entry.ts:103:143)
+        at assertUsCareerRevision (E:\AI\Game\baseball_career\packages\engine\src\us-career-entry.ts:109:236)
+        at assertRevision (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:34:66)
+        at resolveCareerGoalEvent (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:113:2)
+        at <anonymous> (E:\AI\Game\baseball_career\packages\engine\test\season-goals.test.ts:149:26)
+        at getActual (node:assert:611:5)
+        at strict.doesNotThrow (node:assert:779:32)
+        at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\season-goals.test.ts:149:9),
+    expected: undefined,
+    operator: 'doesNotThrow',
+    diff: 'simple'
+  }

@@ -1,0 +1,23 @@
+✖ sealed posting activates a US root once, funds one salary, and keeps return rights without a signing bonus (558.687ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 850.221
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:5810
+✖ sealed posting activates a US root once, funds one salary, and keeps return rights without a signing bonus (558.687ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:62:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

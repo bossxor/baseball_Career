@@ -40,11 +40,13 @@ test('stale revision/version, wrong command, foreign or rewritten relation evide
 test('unread notices do not stop real games; acknowledging both does not alter first-day results/health/trait evidence',()=>{
  const unread=confirmCareerPreseason(fixture(),fixture().revision);let read=structuredClone(unread);
  for(const n of unreadRelationNotices(read))read=resolveCareerRelationNotice(read,read.revision,{eventKey:n.eventKey,eventVersion:n.eventVersion,command:'OPEN_RELATIONS'}).career;
- const a=playedDay(unread),b=playedDay(read);assert.ok(Object.keys(a.records.games).length>0);assert.equal(unreadRelationNotices(a).length,2);assert.equal(unreadRelationNotices(b).length,0);
+ const original=unreadRelationNotices(unread),a=playedDay(unread),b=playedDay(read),afterA=unreadRelationNotices(a),afterB=unreadRelationNotices(b);assert.ok(Object.keys(a.records.games).length>0);
+ assert.ok(original.every(n=>afterA.some(v=>v.eventKey===n.eventKey)));assert.ok(original.every(n=>!afterB.some(v=>v.eventKey===n.eventKey)));
+ const newA=afterA.filter(n=>!original.some(v=>v.eventKey===n.eventKey));assert.equal(newA.length,1);assert.deepEqual(newA,afterB);assert.equal(a.world.players[newA[0]!.otherPlayerKey]!.kind,'PITCHER');
  for(const key of ['world','records','health','days','traits','relationships'] as const)assert.deepEqual(a[key],b[key]);
 });
 test('legacy HS saves catch up once at day close; absence of relations and college worlds creates no fictitious notice',()=>{
- const legacy=confirmCareerPreseason(fixture(),fixture().revision);delete legacy.relationNotices;const result=playedDay(legacy);assert.equal(unreadRelationNotices(result).length,2);assert.deepEqual(queueRelationFormationNotices(result,result.days.days.at(-1)!.day),result.relationNotices);
+ const legacy=confirmCareerPreseason(fixture(),fixture().revision),original=unreadRelationNotices(legacy);delete legacy.relationNotices;const result=playedDay(legacy),notices=unreadRelationNotices(result);assert.ok(original.every(n=>notices.some(v=>v.relationKey===n.relationKey)));assert.equal(notices.filter(n=>!original.some(v=>v.relationKey===n.relationKey)).length,1);assert.deepEqual(queueRelationFormationNotices(result,result.days.days.at(-1)!.day),result.relationNotices);
  const absent=structuredClone(legacy);delete absent.relationships;assert.equal(queueRelationFormationNotices(absent,100),undefined);assert.deepEqual(unreadRelationNotices(absent),[]);
  const college=structuredClone(legacy);college.world.leagueKey='COLLEGE';assert.equal(queueRelationFormationNotices(college,100),undefined);
 });

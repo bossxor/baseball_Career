@@ -1,0 +1,23 @@
+✖ sealed posting activates a US root once, funds one salary, and keeps return rights without a signing bonus (909.3853ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1258.4269
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:5822
+✖ sealed posting activates a US root once, funds one salary, and keeps return rights without a signing bonus (909.3853ms)
+  RangeError: INVALID_DIRECT_DUEL_RECEIPT
+      at validateDirectDuelReceipts (E:\AI\Game\baseball_career\packages\engine\src\relationships.ts:45:74)
+      at settleRelationshipDirectDuels (E:\AI\Game\baseball_career\packages\engine\src\relationships.ts:66:2)
+      at advanceUsCareer (E:\AI\Game\baseball_career\packages\engine\src\us-season.ts:82:1171)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:69:62)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

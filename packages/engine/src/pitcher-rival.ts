@@ -81,9 +81,10 @@ export function preparePitcherRivalNoticeRead(source:PitcherRivalSource,input:{e
  const event=matches[0]!,r=noticeReceipt(source,event),selected=resolveEventChoice(event,input.eventVersion,input.command,null,{worldKey:source.world.worldKey,seasonKey:r.seasonKey,worldDay:r.worldDay,eligibleCommands:['OPEN_RELATIONS']});
  return {notices:source.relationNotices!.map(e=>e.eventKey===event.eventKey?selected.event:e),navigation:{...selected.navigation!,relationKey:r.relationKey}};
 }
-/** Root wrappers with year-end seals should use preparePitcherRivalNoticeRead and reseal their read-only commit. */
+/** School roots with year-end seals must use a validating, resealing wrapper around preparePitcherRivalNoticeRead. */
 export function resolvePitcherRivalNotice<T extends PitcherRivalSource>(source:T,expectedRevision:number,input:{eventKey:string;eventVersion:number;command:string}) {
  if(source.revision!==expectedRevision)throw new RangeError('CAREER_REVISION_CHANGED');
+ if(('kboYearEnd' in source&&source.kboYearEnd!==undefined)||('collegeYearEnd' in source&&source.collegeYearEnd!==undefined)||('usYearEnd' in source&&source.usYearEnd!==undefined))throw new RangeError('PITCHER_RIVAL_ROOT_WRAPPER_REQUIRED');
  const read=preparePitcherRivalNoticeRead(source,input);
  return {career:{...source,relationNotices:read.notices,revision:source.revision+1},navigation:read.navigation};
 }

@@ -1,0 +1,49 @@
+M2-EG actual US opening (prior KBO service rows controlled): {"source":"KBO_TRANSFER","military":"COMPLETED","year":"2043","games":75,"paidUsd":38297}
+✔ sealed posting activates a US root once, funds one salary, and keeps return rights without a signing bonus (4794.4278ms)
+✔ KBO overseas activation keeps nonapplicable service and refuses unresolved status without touching source or budgets (1072.5184ms)
+✔ new KBO US origin uses contract-start age and preserves initial MLB guarantee through controlled annual replay (2552.7793ms)
+✔ KBO minor signed period controls expiry and valid annual histories without adding amateur six-season rights (2061.2535ms)
+✔ legacy KBO US root remains read-only compatible without manufacturing an initial budget or age (596.4771ms)
+✔ KBO minor first MLB callup ends the minor term and replays next-day salary and the next annual contract (2434.8583ms)
+✔ present null and partial KBO contract origins cannot bypass validation as legacy saves (1582.3682ms)
+✔ new overseas quotes cannot start a season after the existing age45 career limit (294.5247ms)
+✔ expired KBO minor market seals real budget/demand offers at the current level once and survives JSON (2213.3741ms)
+✔ E66 offers and domestic-return navigation expose the sealed comparison without resolving, signing or paying (727.37ms)
+✔ minor market rejects early entry, stale input, funding drift and forged quotes without partial writes (1127.1827ms)
+✔ unfunded KBO minor market still exposes domestic return, never invents an offer or resets level (1631.3577ms)
+✔ minor market malformed rows and unrelated E66 evidence fail with a controlled boundary error (1636.6884ms)
+✔ minor market saved competitor identities cannot be foreign, unrelated or null (526.7016ms)
+✔ minor market absent comparators cannot create other-club demand (288.2264ms)
+✔ accepting the sealed original-club minor offer archives the year, closes E66 and starts a 1yr $30000 term (1363.6609ms)
+✔ accepting another club offer moves the player, keeps level, and preserves the sealed quote under JSON (575.0488ms)
+✔ repeated minor renewals replay every signed year without replacing the original US financial origin (9550.8589ms)
+✔ a renewed away-club minor contract supports a real callup command and next major-year financial replay (9325.2015ms)
+✔ historical renewal E66 must retain expiry stage and review phase even when its event identity is rebuilt (1871.205ms)
+✔ posting return uses current US identity and a caller-owned latest domestic host; quote alone changes no money (4573.0574ms)
+✖ released overseas FA quotes current domestic FA terms and preserves a pitcher repertoire and injury evidence (2321.9149ms)
+✔ return requires unchanged authoritative US history, next domestic season and both source revisions (4441.5439ms)
+✔ continuing US cancels only the competing return event; malformed and consumed ownership cannot replay (3249.9528ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 23
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 46720.946
+
+✖ failing tests:
+
+test at packages\engine\test\us-kbo-return.test.ts:1:6293
+✖ released overseas FA quotes current domestic FA terms and preserves a pitcher repertoire and injury evidence (2321.9149ms)
+  RangeError: MISSING_MLB_SERVICE_GAME
+      at mlbServiceTime (E:\AI\Game\baseball_career\packages\engine\src\us-service-time.ts:7:215)
+      at usYearTransitionReadiness (E:\AI\Game\baseball_career\packages\engine\src\us-year-transition.ts:38:80)
+      at eligible (E:\AI\Game\baseball_career\packages\engine\src\us-kbo-return.ts:57:14)
+      at openUsKboReturn (E:\AI\Game\baseball_career\packages\engine\src\us-kbo-return.ts:77:37)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-kbo-return.test.ts:38:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)

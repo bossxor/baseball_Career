@@ -47,3 +47,13 @@ acceptUsKboReturn 반환값은 archivedUs/kbo/ownership이다. persistence owner
 ## 이번 체크포인트 정적 검사
 
 엔진 타입·테스트 타입 검사 종료0, 변경 TypeScript41파일 lint에서 테스트 미사용변수1건을 발견해 수정한 뒤 해당 lint 종료0, git diff --check 종료0. 실패/수정 로그는 evidence/M2-BULK-static.log에 함께 보존했다. 런타임·전체 npm run check·HTTP/DB/기기 검사는 아직 실행하지 않았다.
+
+## 2026-10-28 최신화 후 경계 수정·검증 중
+
+국내 복귀 KBO 목적 루트 revision은 max(미국 source revision, 국내 authority revision)+1이다. ownership의 authoritySourceRevision은 실제 국내 CAS 원본을 보존하고 authorityNextRevision은 합쳐진 목적 루트 revision을 가리킨다. 과거 목표의 selectedRevision/사건 sourceRevision은 재작성하지 않는다. US archive의 usArchivedRevision은 소유권 이동 당시 고정 영수증이며 이후 읽기 메타데이터 revision 증가로 재작성하지 않는다. source+1 인접 관계와 현재 revision 이하를 검증한다. 이 계약의 atomic transport는 계속 미구현이다.
+
+E89 SET_GOALS만 현 PRE/등록/현재 시즌을 요구한다. 과거 ACK는 사건을 닫되 저장된 phase를 되살리지 않는다. 학교 목표 outbox 열람은 기존 year-end seal을 먼저 검증한 뒤 메타데이터 변경분을 재봉인한다. 일반 투수 숙적 resolver는 학교 year-end seal이 있으면 wrapper-required로 거절하며 학교용 검증·재봉인 wrapper를 사용한다.
+
+## 최종 통합 검증 — 재개 묶음
+
+이 문서의 위쪽 실행 대기/정적 검사 표기는 e26271b 당시 이력이다. 재개 수정 뒤 전체 check 종료0: 엔진/API844개 중842통과·실패0·Neon환경2건 건너뜀, 웹22/22·HTTP smoke 통과. 동결463파일 변경0, duration_ms171601.1983. 현재 엔진 경계 회귀 통과이며 실제 국내 세계 owner transaction·US 국제 owner·PS E84·99/24/PF-D 전체는 계속 남아 있다. 상세는 M2-RESUME-20261028.md와 evidence/M2-BULK-resume-check-final.log를 따른다.

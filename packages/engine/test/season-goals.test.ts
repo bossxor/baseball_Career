@@ -138,3 +138,24 @@ test('college qualification goal settles at final seeding; native championship a
  for(let i=0;i<70&&c.goals!.seasons[c.world.seasonKey]!.slots[2]!.status!=='COMPLETED';i++){if(c.phaseContext.phase!=='POSTSEASON_PROGRESS')break;c=advanceCollegeCup(c,c.revision).career;}
  assert.equal(c.goals!.seasons[c.world.seasonKey]!.slots[2]!.status,'COMPLETED');assert.equal(c.goals!.seasons[c.world.seasonKey]!.slots[0]!.progress,0);assert.equal(c.goals!.rewards.length,2);console.log('Native goal college proof:',JSON.stringify({controlledRegularGames:216,nativeCupGames:Object.values(c.records.games).filter(g=>g.scope.seasonKey===c.world.seasonKey&&g.scope.leagueKey==='COLLEGE'&&g.scope.phase==='POSTSEASON').length,goals:c.goals!.seasons[c.world.seasonKey]!.slots.map(g=>({id:g.goalId,progress:g.progress,status:g.status})),cosmetics:2}));
 });
+
+
+test('ignored E89 can be acknowledged after starting without selecting goals or restoring the preseason phase',()=>{
+ const c=prepared(),event=c.goals!.notices.find(n=>n.definitionId==='E89')!,started=startUsRegularSeason(c,c.revision),raw=canonicalJson(started),input={eventKey:event.eventKey,eventVersion:event.version,command:'ACK_EVENT' as const};
+ const read=resolveCareerGoalEvent(JSON.parse(JSON.stringify(started)) as UsCareer,started.revision,input).career;
+ assert.equal(canonicalJson(started),raw);assert.deepEqual(read.phaseContext,started.phaseContext);assert.deepEqual(read.world,started.world);assert.deepEqual(read.records,started.records);assert.deepEqual(read.goals!.seasons,started.goals!.seasons);assert.equal(read.goals!.notices.find(n=>n.eventKey===event.eventKey)!.status,'RESOLVED');assert.throws(()=>resolveCareerGoalEvent(read,read.revision,input),/ALREADY_RESOLVED|VERSION_CHANGED/);
+ const selected=setCareerSeasonGoals(c,c.revision,['G01']),playing=startUsRegularSeason(selected,selected.revision),ack=resolveCareerGoalEvent(playing,playing.revision,input).career;assert.deepEqual(ack.goals!.seasons,playing.goals!.seasons);assert.deepEqual(ack.phaseContext,playing.phaseContext);
+ const closed=finishedUsCareerFixture(),historical=startNextUsMinorSeason(closed,closed.revision,closed.world.organizations.map(o=>({organizationId:o.id,addedBudgetUsd:0}))),prior=historical.goals!.notices.find(n=>n.definitionId==='E89'&&n.seasonKey===closed.world.seasonKey)!;
+ assert.doesNotThrow(()=>resolveCareerGoalEvent(historical,historical.revision,{eventKey:prior.eventKey,eventVersion:prior.version,command:'ACK_EVENT'}));assert.throws(()=>resolveCareerGoalEvent(playing,playing.revision,{...input,command:'SET_GOALS',goalIds:['G03']}),/GOALS_LOCKED/);
+});
+
+
+test('historical goal acknowledgement validates and preserves a sealed school year end',()=>{
+ const school=enteredKboCareer('HITTER',s=>{
+  // Controlled past notice: the actual writer creates it before the signing/year-end commands seal the root.
+  const opened=openCareerSeasonGoalSelection({...s,phaseContext:{phase:'PRESEASON_SETUP'},records:{revision:0,games:{}}},s.revision);s.revision=opened.revision;s.goals=opened.goals!;
+ }).amateurHistory;
+ assertKboAmateurYearEnd(school);const event=school.goals!.notices.find(n=>n.definitionId==='E89')!,raw=canonicalJson(school),read=resolveCareerGoalEvent(school,school.revision,{eventKey:event.eventKey,eventVersion:event.version,command:'ACK_EVENT'}).career;
+ assert.equal(canonicalJson(school),raw);assert.deepEqual(read.records,school.records);assert.deepEqual(read.phaseContext,school.phaseContext);assertKboAmateurYearEnd(read);
+ const forged=structuredClone(school);forged.kboYearEnd!.sourceBasis='forged';assert.throws(()=>resolveCareerGoalEvent(forged,forged.revision,{eventKey:event.eventKey,eventVersion:event.version,command:'ACK_EVENT'}),/STALE_KBO_AMATEUR_YEAR_END/);
+});

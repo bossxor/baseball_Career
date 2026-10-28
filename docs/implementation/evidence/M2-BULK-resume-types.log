@@ -1,0 +1,6 @@
+packages/engine/test/season-goals.test.ts(156,161): error TS2412: Type 'CareerGoalLedger | undefined' is not assignable to type 'CareerGoalLedger' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.
+  Type 'undefined' is not assignable to type 'CareerGoalLedger'.
+packages/engine/test/us-kbo-return.test.ts(57,154): error TS2741: Property 'teamKey' is missing in type '{ slot: number; goalId: "G03"; scope: { seasonKey: string; leagueKey: "MLB" | "AAA" | "AA" | "A" | "ROOKIE"; phase: "REGULAR"; }; status: "EXPIRED"; progress: number; selectedRevision: number; }' but required in type 'SeasonGoalSlot'.
+packages/engine/test/us-reviewed-fixture.ts(10,762): error TS2322: Type '{ [x: string]: { BF: number; outs: number; K: number; games: number; starts: number; starterOuts: number; H: number; HR: number; BB: number; HBP: number; R: number; ER: number; pitches: number; }; }' is not assignable to type 'Record<string, PitchingTotals>'.
+  'string' index signatures are incompatible.
+    Type '{ BF: number; outs: number; K: number; games: number; starts: number; starterOuts: number; H: number; HR: number; BB: number; HBP: number; R: number; ER: number; pitches: number; }' is missing the following properties from type 'PitchingTotals': loadedBF, W, L, SV, and 3 more.

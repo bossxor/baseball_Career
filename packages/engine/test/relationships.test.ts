@@ -51,7 +51,8 @@ function playedWeek():HighSchoolCareer {
 
 test('same-kind detail compares own lines only in games both played; leagues and phases stay separate',()=>{
  const state=playedWeek(),before=canonicalJson(state),scope={leagueKey:'HS',phase:'REGULAR' as const,seasonKey:'2032'};
- for(const r of state.relationships!.relations){
+ const sameKind=state.relationships!.relations.filter(r=>state.world.players[r.primaryPlayerKey]!.kind===state.world.players[r.otherPlayerKey]!.kind);assert.equal(sameKind.length,2);
+ for(const r of sameKind){
   const view=relationDetailView(state,r.relationKey,scope);
   assert.equal(view.mode,'COMPARISON');if(view.mode!=='COMPARISON')continue;
   const shared=Object.values(state.records.games).filter(g=>[r.primaryPlayerKey,r.otherPlayerKey].every(k=>Object.hasOwn(g.batting,k)||Object.hasOwn(g.pitching,k)));

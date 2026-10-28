@@ -1,0 +1,49 @@
+✖ historical goal acknowledgement validates and preserves a sealed school year end (381.8001ms)
+✖ accepted return ownership remains valid after actual achievement outbox reads on the US archive (3355.2177ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3707.3422
+
+✖ failing tests:
+
+test at packages\engine\test\season-goals.test.ts:1:24098
+✖ historical goal acknowledgement validates and preserves a sealed school year end (381.8001ms)
+  RangeError: GOALS_LOCKED
+      at resolveCareerGoalEvent (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:116:159)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\season-goals.test.ts:158:132)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at packages\engine\test\us-kbo-return.test.ts:1:12659
+✖ accepted return ownership remains valid after actual achievement outbox reads on the US archive (3355.2177ms)
+  AssertionError [ERR_ASSERTION]: Got unwanted exception.
+  Actual message: "INVALID_US_KBO_RETURN"
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-kbo-return.test.ts:67:313)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: RangeError: INVALID_US_KBO_RETURN
+        at assertUsKboReturnQuote (E:\AI\Game\baseball_career\packages\engine\src\us-kbo-return.ts:53:1083)
+        at usCareerView (E:\AI\Game\baseball_career\packages\engine\src\us-career-entry.ts:85:34)
+        at <anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-kbo-return.test.ts:67:330)
+        at getActual (node:assert:611:5)
+        at strict.doesNotThrow (node:assert:779:32)
+        at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-kbo-return.test.ts:67:313)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1397:25)
+        at Test.start (node:internal/test_runner/test:1257:17)
+        at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17),
+    expected: undefined,
+    operator: 'doesNotThrow',
+    diff: 'simple'
+  }

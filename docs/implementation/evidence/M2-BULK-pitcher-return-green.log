@@ -1,0 +1,18 @@
+✔ US full-date annual settlement pays one PRO budget, all opening NPCs and one aging; explicit forfeiture and replay keep receipts (3749.9654ms)
+✔ US annual audit refuses changed FINAL totals and incomplete date receipts before awarding growth (723.3867ms)
+✔ posting return uses current US identity and a caller-owned latest domestic host; quote alone changes no money (4940.7958ms)
+✔ released overseas FA quotes current domestic FA terms and preserves a pitcher repertoire and injury evidence (2878.7821ms)
+✔ return requires unchanged authoritative US history, next domestic season and both source revisions (4622.8225ms)
+✔ continuing US cancels only the competing return event; malformed and consumed ownership cannot replay (3196.5714ms)
+M2-DJ native postseason proof: {"regularFixture":"controlled8790","nativePostseasonGames":46,"champion":"US25","firstDay":261,"lastDay":306,"paidUsd":30000}
+✔ MLB fixed 12-team bracket gives two byes per league, preserves WC upsets and plays all four rounds (18.2709ms)
+✔ MLB all decisive games reach exactly53; JSON replays and edited wins, winners or seeds reject (31.2985ms)
+✔ US native postseason follows controlled completed regular records, resumes a real partial PA and closes one champion without extra salary (14426.7433ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16029.2007

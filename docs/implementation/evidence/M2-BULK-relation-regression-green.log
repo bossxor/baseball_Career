@@ -1,0 +1,23 @@
+✔ preseason confirmation persists two E94 notices for pinned rival/teammate without blocking progress (30.2499ms)
+✔ opening a notice acknowledges only that notice and navigates to its relation; gameplay phase and RNG stay unchanged (31.8709ms)
+✔ stale revision/version, wrong command, foreign or rewritten relation evidence reject atomically (29.3799ms)
+✔ unread notices do not stop real games; acknowledging both does not alter first-day results/health/trait evidence (638.9408ms)
+✔ legacy HS saves catch up once at day close; absence of relations and college worlds creates no fictitious notice (304.8769ms)
+✔ notice acknowledgment during a pending task leaves that task and its saved resume untouched (19.2237ms)
+✔ notice acknowledgment during a real pending game preserves the exact cursor/RNG and resumed game result (477.696ms)
+✔ approved25-player rule: no eligible rival produces no rival notice or extra NPC, while the teammate notice remains (11.3766ms)
+✔ acknowledging a notice after sealed year end preserves the valid seal and college activation; corrupt seals never get repaired (88.9311ms)
+✔ career start forms one same-team teammate and one eligible rival, distinct and deterministic (11.8195ms)
+✔ no eligible rival is a normal empty state; teammate still forms (6.4997ms)
+✔ confirmCareerPlayer stores relations once; list view shows identity only (10.2678ms)
+✔ same-kind detail compares own lines only in games both played; leagues and phases stay separate (1135.5131ms)
+✔ cross-kind detail sums only real batter-vs-pitcher plate appearances (991.776ms)
+✔ teammate gets one COEXIST_20 milestone on the 20th shared team game day only (9.3654ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2542.7733

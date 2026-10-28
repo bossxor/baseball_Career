@@ -1,3 +1,6 @@
+import {assertKboAmateurYearEnd} from './kbo-entry.js';
+import {assertUsAmateurYearEnd} from './us-entry.js';
+import {schoolYearEndBasis} from './college-entry.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCareerRevision} from './high-school-career.js';
 import type {KboCareer} from './kbo-career-entry.js';
@@ -112,13 +115,20 @@ export function resolveCareerGoalEvent<T extends GoalCareer>(c:T,revision:number
  const f=event.evidence.fields;
  if(event.definitionId==='E89'){
   const r=registration(c);
-  if(event.seasonKey!==c.world.seasonKey||f.goalId!=='SELECTION'||f.stage!=='PRESEASON'||event.resume.phase!=='PRESEASON_SETUP'||event.resume.competitionKey!==r.league||event.resume.registrationKey!==r.team)throw new RangeError('GOAL_EVENT_SOURCE_CHANGED');
-  if(c.phaseContext.phase!=='PRESEASON_SETUP'||Object.values(c.records.games).some(g=>g.scope.seasonKey===c.world.seasonKey&&g.scope.phase==='REGULAR'))throw new RangeError('GOALS_LOCKED');
+  if(f.goalId!=='SELECTION'||f.stage!=='PRESEASON'||event.resume.phase!=='PRESEASON_SETUP'||!['HS','COLLEGE','KBO','FUTURES','ROOKIE','A','AA','AAA','MLB'].includes(event.resume.competitionKey??'')||!event.resume.registrationKey)throw new RangeError('GOAL_EVENT_SOURCE_CHANGED');
+  if(input.command==='SET_GOALS'){
+   if(event.seasonKey!==c.world.seasonKey||event.resume.competitionKey!==r.league||event.resume.registrationKey!==r.team)throw new RangeError('GOAL_EVENT_SOURCE_CHANGED');
+   if(c.phaseContext.phase!=='PRESEASON_SETUP'||Object.values(c.records.games).some(g=>g.scope.seasonKey===c.world.seasonKey&&g.scope.phase==='REGULAR'))throw new RangeError('GOALS_LOCKED');
+  }
  }else{
   const season=c.goals!.seasons[event.seasonKey],slot=season&&[...season.slots,...season.history].find(g=>g.goalId===f.goalId&&g.completionReceipt&&['COMPLETED','CORRECTED','REPLACED'].includes(g.status));
   if(!slot||!['COMPLETED','CORRECTED'].includes(String(f.stage))||!c.goals!.rewards.some(r=>r.rewardId==='R-'+slot.goalId&&r.sources.includes(slot.completionReceipt!)))throw new RangeError('GOAL_EVENT_SOURCE_CHANGED');
  }
  const context={worldKey:c.world.worldKey,seasonKey:event.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:event.definitionId==='E89'?['SET_GOALS','ACK_EVENT']:['OPEN_ACHIEVEMENTS']};
+ if(!isUs(c)&&!isKbo(c)){
+  if(c.kboYearEnd)assertKboAmateurYearEnd(c);if(c.usYearEnd)assertUsAmateurYearEnd(c);
+  if(c.collegeYearEnd&&(c.collegeYearEnd.sourceRevision!==c.revision||c.collegeYearEnd.sourceBasis!==schoolYearEndBasis(c)))throw new RangeError('STALE_GOAL_NOTICE_YEAR_END');
+ }
  const selected=resolveEventChoice(event,input.eventVersion,input.command,input.goalIds??null,context);
  let next=c;
  if(selected.domain){
@@ -127,6 +137,13 @@ export function resolveCareerGoalEvent<T extends GoalCareer>(c:T,revision:number
  }
  const resolved=selected.domain?completeEventDomain(event,selected.domain,JSON.stringify(['season-goal-selection',event.eventKey,revision+1]),context):selected.event;
  const career:T={...next,revision:revision+1,goals:{...next.goals!,notices:next.goals!.notices.map(n=>n.eventKey===event.eventKey?resolved:n)}};
+ if(!isUs(career)&&!isKbo(career)){
+  // Read metadata is part of the year-end seal; validate before carrying it across this commit.
+  const basis=career.kboYearEnd||career.usYearEnd||career.collegeYearEnd?schoolYearEndBasis(career):null;
+  if(career.kboYearEnd)career.kboYearEnd={...career.kboYearEnd,sourceRevision:career.revision,sourceBasis:basis!};
+  if(career.usYearEnd)career.usYearEnd={...career.usYearEnd,sourceRevision:career.revision,sourceBasis:basis!};
+  if(career.collegeYearEnd)career.collegeYearEnd={...career.collegeYearEnd,sourceRevision:career.revision,sourceBasis:basis!};
+ }
  return {career,navigation:selected.navigation};
 }
 export function replaceCareerSeasonGoal<T extends GoalCareer>(c:T,revision:number,index:number,id:SeasonGoalId):T {

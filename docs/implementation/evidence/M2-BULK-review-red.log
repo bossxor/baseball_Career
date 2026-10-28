@@ -1,0 +1,51 @@
+✖ generic pitcher rival notice refuses sealed school roots before changing read metadata (17.6775ms)
+✖ ignored E89 can be acknowledged after starting without selecting goals or restoring the preseason phase (1317.9818ms)
+✖ domestic return preserves goal history when the authority revision is below the US career revision (3294.4299ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3692.9735
+
+✖ failing tests:
+
+test at packages\engine\test\pitcher-rival.test.ts:1:8034
+✖ generic pitcher rival notice refuses sealed school roots before changing read metadata (17.6775ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\pitcher-rival.test.ts:89:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /PITCHER_RIVAL_ROOT_WRAPPER_REQUIRED/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\season-goals.test.ts:1:22379
+✖ ignored E89 can be acknowledged after starting without selecting goals or restoring the preseason phase (1317.9818ms)
+  RangeError: GOALS_LOCKED
+      at resolveCareerGoalEvent (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:116:159)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\season-goals.test.ts:145:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at packages\engine\test\us-kbo-return.test.ts:1:11134
+✖ domestic return preserves goal history when the authority revision is below the US career revision (3294.4299ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at acceptUsKboReturn (E:\AI\Game\baseball_career\packages\engine\src\us-kbo-return.ts:112:85)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-kbo-return.test.ts:58:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

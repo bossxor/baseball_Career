@@ -1,0 +1,444 @@
+✔ 107: actual post-formation direct duel is stored once, immutable and JSON resumable; preformation stats count toward T14 (34.9175ms)
+✔ 107: no retroactive formation-game victory, absent contribution, same-kind or teammate win (15.3174ms)
+✔ 107: scoped losses and no-decisions stay recorded, never become a T14 win (33.9488ms)
+✔ 107: tampered pair, revision, outcome, impossible counts or duplicate receipt is rejected (8.4357ms)
+✔ 107: corrected current stats stop new unlock evidence while stored duel and owned target survive (7.2967ms)
+✔ 107: other competition and season WINs never substitute for regular KBO season evidence (24.1555ms)
+✔ 107: another qualified pitcher extends owned T14 targets without a second unlock receipt (6.607ms)
+✔ day close records the evaluated day and unlocks nothing without evidence (810.2071ms)
+✔ crossing BB30 unlocks T02 once with a receipt; replay and older days are no-ops (648.7639ms)
+✔ owned traits survive a later correction and pitcher-only traits never reach a hitter (610.1816ms)
+✔ unlocked traits feed the next game context and the career keeps advancing (868.896ms)
+✔ T14 stays locked without a committed relationship WIN even with a rival and PA20/OPS .900 (27.7868ms)
+✖ sealed posting activates a US root once, funds one salary, and keeps return rights without a signing bonus (1217.0358ms)
+✖ KBO overseas activation keeps nonapplicable service and refuses unresolved status without touching source or budgets (1011.3428ms)
+✖ new KBO US origin uses contract-start age and preserves initial MLB guarantee through controlled annual replay (842.4913ms)
+✖ KBO minor signed period controls expiry and valid annual histories without adding amateur six-season rights (724.682ms)
+✖ legacy KBO US root remains read-only compatible without manufacturing an initial budget or age (655.0828ms)
+✖ KBO minor first MLB callup ends the minor term and replays next-day salary and the next annual contract (671.0357ms)
+✖ present null and partial KBO contract origins cannot bypass validation as legacy saves (616.5972ms)
+✔ new overseas quotes cannot start a season after the existing age45 career limit (379.4508ms)
+✖ expired KBO minor market seals real budget/demand offers at the current level once and survives JSON (586.1049ms)
+✖ E66 offers and domestic-return navigation expose the sealed comparison without resolving, signing or paying (600.2461ms)
+✖ minor market rejects early entry, stale input, funding drift and forged quotes without partial writes (645.226ms)
+✖ unfunded KBO minor market still exposes domestic return, never invents an offer or resets level (648.561ms)
+✖ minor market malformed rows and unrelated E66 evidence fail with a controlled boundary error (567.0751ms)
+✖ minor market saved competitor identities cannot be foreign, unrelated or null (615.8597ms)
+✖ minor market absent comparators cannot create other-club demand (597.866ms)
+✖ accepting the sealed original-club minor offer archives the year, closes E66 and starts a 1yr $30000 term (557.1503ms)
+✖ accepting another club offer moves the player, keeps level, and preserves the sealed quote under JSON (645.5067ms)
+✖ repeated minor renewals replay every signed year without replacing the original US financial origin (537.4811ms)
+✖ a renewed away-club minor contract supports a real callup command and next major-year financial replay (543.131ms)
+✖ historical renewal E66 must retain expiry stage and review phase even when its event identity is rebuilt (560.7088ms)
+✔ injury emergency admits existing healthy lower-league players, seals a separate lottery and preserves original scores (196.9414ms)
+✔ sealed candidates are used before emergency admission and legacy snapshots still replay unchanged (142.361ms)
+✔ later injuries reuse the sealed emergency pool without rescoring, reranking or creating another admission batch (118.4692ms)
+✔ emergency eligibility excludes foreign, injured, retired, active/sports service and refused releases without inferring nationality (131.0922ms)
+✔ impossible emergency roles and foreign-world inputs fail without modifying the source (219.6827ms)
+✔ saved emergency admission rejects altered replacement timing, reused ranks and admission disguised as decline (150.5928ms)
+M2-EE AG/return proof: {"preWindow":"CONTROLLED_PREFIX","internationalGames":16,"nationalDays":14,"resumedDay":257,"actualDomesticGames":10}
+M2-EH medical-boundary proof: {"medical":"CONTROLLED","strength":"CONTROLLED_90_100","games":16,"withdrawn":true,"priorAppearance":true}
+✔ p12ActualWindow uses max(nominal 11/15, both PS end+1) and keeps 14 days without rewriting calendar-1 (6.1901ms)
+✔ career AG bracket uses the sealed actual28 Korean identities and seals records after FINAL (6616.7751ms)
+✔ mid-tournament JSON resume keeps pendingGame and does not duplicate contributions (5341.5346ms)
+✔ invite deadlines seal 7/2/1 before start and national day fatigue settles once (476.8435ms)
+✔ international phase closes every date once, audits shared pro days and resumes actual next domestic game after E48 (4973.8328ms)
+✔ international rest days include nonparticipants once, refuse skipped days and preserve original world/records (476.1069ms)
+✔ E46 queues at the first actual Korean FINAL before competition sealing and never duplicates after ACK or later games (3565.8191ms)
+✔ first-game injury replaces one sealed roster slot before preparing Korea without rewriting draw, records or source (3767.4604ms)
+✔ injury cannot reshuffle an ongoing group; next round replaces once and preserves prior official appearance and JSON pending resume (1818.9711ms)
+✔ exhausted healthy catcher pool rejects the whole replacement preparation without partial roster changes or invented players (477.2217ms)
+✔ EH boundary admits a current lower-league emergency candidate after sealed exhaustion and protects its prepared pending game (590.822ms)
+✔ common selection receives KBO plus verified US protagonist, uses actual MLB records and leaves both roots unchanged (1186.4753ms)
+✔ US candidate reads current release, injury, military and retirement facts through existing eligibility rules (652.7898ms)
+✔ foreign or stale roots, origin mismatch, duplicate owners and record conflicts fail without overwrites (1009.5762ms)
+✔ unverified origin is excluded; a same-world Korean school archive can prove college graduate origin (482.3224ms)
+✔ pitcher rival preserves same-kind relations, binds E94 and excludes its formation game from a duel (33.3699ms)
+✔ one slot is shared by all competitions in a world season; prior rivals persist into the next season (10.336ms)
+✔ no actual decided regular matchup means no formation; actor and source tampering is rejected (19.6113ms)
+✔ simultaneous candidates use actual matchup PA then stable pitcher key, without RNG (21.4366ms)
+✔ top-level pro actor and registration are supported without school identity fields (7.9569ms)
+✔ KBO first hidden notice stops at a closed day with real registration, structural sharing and no general trait stop (1372.4155ms)
+✔ US top-level identity and actual level navigate to S38 once after JSON restoration (2280.8689ms)
+✔ resolver rejects stale revision, version, command, foreign world, altered owner and changed resume without mutation (599.5943ms)
+✔ only same-source owned receipts qualify; pending games and unclosed days are rejected (448.8191ms)
+✔ backlog and same-day hidden traits resume one at a time, including season-close T16 before review (388.0534ms)
+Native goal school proof: {"officialGames":8,"ownPA":5,"ownStarts":1,"recordsEqualWithoutGoals":true,"worldEqualWithoutGoals":true}
+Native goal college proof: {"controlledRegularGames":216,"nativeCupGames":2,"goals":[{"id":"G01","progress":0,"status":"ACTIVE"},{"id":"G09","progress":1,"status":"COMPLETED"},{"id":"G10","progress":1,"status":"COMPLETED"}],"cosmetics":2}
+✔ native preseason entry opens one non-blocking E89 in its committed revision without selecting goals (3880.2074ms)
+✔ optional E89 selects real goals, skips without goals, and rejects stale or duplicate choices (861.3451ms)
+✔ E90 navigation consumes the existing source-bound outbox once without granting another reward (589.9031ms)
+✔ goals are optional, max3, kind-filtered, PRE-only and source-safe without RNG or gameplay rewards (768.7302ms)
+✔ goal HR scope never adds another league or postseason; completion/news/reward replay and correction are idempotent (550.4612ms)
+✔ malformed persisted goal arrays, changed scope and unknown reward are rejected without editing the save (777.5076ms)
+✔ MID replacement uses sealed half-season, carries BB22 progress, rejects BB33 and cannot reset through moving levels (693.6619ms)
+✔ pitcher goals use raw K, saves and starterOuts, never all relief outs (1341.2079ms)
+✔ G01/G02/G04 count exact PA, fixed-lineup starts and walks with three cosmetic grants only (248.9771ms)
+✔ US year continuation preserves earned cosmetics and goal outbox without blocking the finalized contract path (1992.5033ms)
+✔ school goal expiry is committed before sealing the year-end receipt and survives the actual KBO entry command (322.2821ms)
+✔ serving Sports goal registration seals SANGMU/Futures instead of the original club; Active has no playable goal choices (289.2559ms)
+✔ G08 requires evidenced injury, actual recovery and a later official appearance, not a return button (228.9097ms)
+✔ native school game updates selected goals automatically and leaves gameplay identical to no-goal play (700.8509ms)
+✔ college qualification goal settles at final seeding; native championship appearance counts G10 and never regular G01 (616.2002ms)
+✖ posting return uses current US identity and a caller-owned latest domestic host; quote alone changes no money (5132.2429ms)
+✖ released overseas FA quotes current domestic FA terms and preserves a pitcher repertoire and injury evidence (1921.5077ms)
+✖ return requires unchanged authoritative US history, next domestic season and both source revisions (4214.5793ms)
+✖ continuing US cancels only the competing return event; malformed and consumed ownership cannot replay (2739.4783ms)
+✔ call-up never moves an active injury replacement out of its restoration slot (2507.2713ms)
+✔ US level review waits24 actual level games and minimum samples; defer consumes review without registration or salary changes (1102.1728ms)
+✔ US promotion swaps two existing registrations atomically, keeps records, shared identity and no immediate major appearance (744.2926ms)
+✔ first MLB call-up preserves old minor salary basis and bonus; new800000 rate starts next day and budget is reserved once (446.9024ms)
+✔ US protected40 and incompatible seats produce explicit NO_SLOT instead of silently registering27 MLB players (137.6527ms)
+✔ US training and style windows use level thirds/halves and cannot reset season uses by moving levels (777.8785ms)
+✔ US option year consumes once only after20 minor registered games, with replayed dates ignored (70.5444ms)
+✔ a second low Rookie review cannot accidentally promote, and changed offered evidence cannot move a player (439.3873ms)
+✔ two actual low review calls offer E61 and its domain command swaps AAA/AA without changing pay or identity (852.63ms)
+✔ E61 OPEN_RIGHTS navigates to S08 with the event, registration and money unchanged (1303.0489ms)
+✔ E61 navigation and demotion reject stale or changed review, event and resume input without writes (2091.7322ms)
+✔ MLB E61 still requires exhausted-option consent and preserves the MLB contract on successful demotion (1005.4153ms)
+ℹ tests 94
+ℹ suites 0
+ℹ pass 71
+ℹ fail 23
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30146.5862
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:5810
+✖ sealed posting activates a US root once, funds one salary, and keeps return rights without a signing bonus (1217.0358ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:62:11)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:8810
+✖ KBO overseas activation keeps nonapplicable service and refuses unresolved status without touching source or budgets (1011.3428ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:78:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:11681
+✖ new KBO US origin uses contract-start age and preserves initial MLB guarantee through controlled annual replay (842.4913ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:91:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:12844
+✖ KBO minor signed period controls expiry and valid annual histories without adding amateur six-season rights (724.682ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:98:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:13656
+✖ legacy KBO US root remains read-only compatible without manufacturing an initial budget or age (655.0828ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:103:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:13924
+✖ KBO minor first MLB callup ends the minor term and replays next-day salary and the next annual contract (671.0357ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:107:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:16035
+✖ present null and partial KBO contract origins cannot bypass validation as legacy saves (616.5972ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:117:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:17504
+✖ expired KBO minor market seals real budget/demand offers at the current level once and survives JSON (586.1049ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at expiredMinor (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:127:87)
+      at minorDemandSource (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:130:10)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:136:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:18469
+✖ E66 offers and domestic-return navigation expose the sealed comparison without resolving, signing or paying (600.2461ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at expiredMinor (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:127:87)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:140:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:19211
+✖ minor market rejects early entry, stale input, funding drift and forged quotes without partial writes (645.226ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at expiredMinor (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:127:87)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:144:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:19945
+✖ unfunded KBO minor market still exposes domestic return, never invents an offer or resets level (648.561ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:147:57)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:20411
+✖ minor market malformed rows and unrelated E66 evidence fail with a controlled boundary error (567.0751ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at expiredMinor (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:127:87)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:151:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:21197
+✖ minor market saved competitor identities cannot be foreign, unrelated or null (615.8597ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at expiredMinor (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:127:87)
+      at minorDemandSource (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:130:10)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:155:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:21819
+✖ minor market absent comparators cannot create other-club demand (597.866ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at expiredMinor (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:127:87)
+      at minorDemandSource (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:130:10)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:158:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:22422
+✖ accepting the sealed original-club minor offer archives the year, closes E66 and starts a 1yr $30000 term (557.1503ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at expiredMinor (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:127:87)
+      at minorDemandSource (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:130:10)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:162:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:23561
+✖ accepting another club offer moves the player, keeps level, and preserves the sealed quote under JSON (645.5067ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at expiredMinor (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:127:87)
+      at minorDemandSource (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:130:10)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:172:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:24609
+✖ repeated minor renewals replay every signed year without replacing the original US financial origin (537.4811ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at expiredMinor (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:127:87)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:182:8)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:26265
+✖ a renewed away-club minor contract supports a real callup command and next major-year financial replay (543.131ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at expiredMinor (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:127:87)
+      at minorDemandSource (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:130:10)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:190:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:29503
+✖ historical renewal E66 must retain expiry stage and review phase even when its event identity is rebuilt (560.7088ms)
+  RangeError: INVALID_GOAL_NOTICES
+      at validate (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:37:392)
+      at refreshCareerSeasonGoals (E:\AI\Game\baseball_career\packages\engine\src\season-goals.ts:142:23)
+      at activateKboUsCareer (E:\AI\Game\baseball_career\packages\engine\src\kbo-us-activation.ts:51:84)
+      at transferred (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:85:20)
+      at expiredMinor (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:127:87)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-us-activation.test.ts:201:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+
+test at packages\engine\test\us-kbo-return.test.ts:1:4075
+✖ posting return uses current US identity and a caller-owned latest domestic host; quote alone changes no money (5132.2429ms)
+  TypeError: Unsupported canonical value
+      at canonicalJson (E:\AI\Game\baseball_career\packages\engine\src\game.ts:270:9)
+      at same (E:\AI\Game\baseball_career\packages\engine\src\us-kbo-return.ts:38:35)
+      at authority (E:\AI\Game\baseball_career\packages\engine\src\us-kbo-return.ts:68:176)
+      at openUsKboReturn (E:\AI\Game\baseball_career\packages\engine\src\us-kbo-return.ts:77:49)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-kbo-return.test.ts:32:86)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at packages\engine\test\us-kbo-return.test.ts:1:6293
+✖ released overseas FA quotes current domestic FA terms and preserves a pitcher repertoire and injury evidence (1921.5077ms)
+  RangeError: US_GROWTH_EVIDENCE_CHANGED
+      at auditUsClosedDays (E:\AI\Game\baseball_career\packages\engine\src\us-growth.ts:16:851)
+      at startUsPostseason (E:\AI\Game\baseball_career\packages\engine\src\us-postseason-progress.ts:32:234)
+      at finishedUsCareerFixture (E:\AI\Game\baseball_career\packages\engine\test\us-finished-fixture.ts:10:222)
+      at finishControlledMajorSeason (E:\AI\Game\baseball_career\packages\engine\test\us-major-fixture.ts:17:9)
+      at fixture (E:\AI\Game\baseball_career\packages\engine\test\us-kbo-return.test.ts:27:15)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-kbo-return.test.ts:37:29)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+
+test at packages\engine\test\us-kbo-return.test.ts:1:7786
+✖ return requires unchanged authoritative US history, next domestic season and both source revisions (4214.5793ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /RECORD_CONFLICT/. Input:
+
+  'TypeError: Unsupported canonical value'
+
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-kbo-return.test.ts:44:128)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: Unsupported canonical value
+        at canonicalJson (E:\AI\Game\baseball_career\packages\engine\src\game.ts:270:9)
+        at same (E:\AI\Game\baseball_career\packages\engine\src\us-kbo-return.ts:38:35)
+        at authority (E:\AI\Game\baseball_career\packages\engine\src\us-kbo-return.ts:68:176)
+        at openUsKboReturn (E:\AI\Game\baseball_career\packages\engine\src\us-kbo-return.ts:77:49)
+        at <anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-kbo-return.test.ts:44:139)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-kbo-return.test.ts:44:128)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1397:25),
+    expected: /RECORD_CONFLICT/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\us-kbo-return.test.ts:1:9486
+✖ continuing US cancels only the competing return event; malformed and consumed ownership cannot replay (2739.4783ms)
+  TypeError: Unsupported canonical value
+      at canonicalJson (E:\AI\Game\baseball_career\packages\engine\src\game.ts:270:9)
+      at same (E:\AI\Game\baseball_career\packages\engine\src\us-kbo-return.ts:38:35)
+      at authority (E:\AI\Game\baseball_career\packages\engine\src\us-kbo-return.ts:68:176)
+      at openUsKboReturn (E:\AI\Game\baseball_career\packages\engine\src\us-kbo-return.ts:77:49)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-kbo-return.test.ts:49:46)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
