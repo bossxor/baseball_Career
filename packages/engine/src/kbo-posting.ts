@@ -122,7 +122,8 @@ export function resolveKboPostingEvent(c:KboCareer,revision:number,input:{eventK
 }
 
 function buildOffers(c:KboCareer,postingId:string):KboPostingOffer[] {
- const p=performance(c),years=usMlbOfferYears(p.player.age),value=usMajorContractValue(p.player,p.bat,p.pit),kind:KboPostingOfferKind|null=p.ovr>=75?'MLB':p.ovr>=65?'MILB':null;if(!kind)return [];
+ const p=performance(c);if(p.player.age>=45)return [];
+ const years=usMlbOfferYears(p.player.age+1),value=usMajorContractValue(p.player,p.bat,p.pit),kind:KboPostingOfferKind|null=p.ovr>=75?'MLB':p.ovr>=65?'MILB':null;if(!kind)return [];
  let rng=createWorldStream(c.world.seed,JSON.stringify(['kbo-posting-offers',postingId]),'roster');const pool=[...MLB_ORGS],offers:KboPostingOffer[]=[];
  const countDraw=nextInteger(rng,4);rng=countDraw.state;const count=Math.min(3,countDraw.value);if(!count)return [];
  while(pool.length&&offers.length<count){const pick=nextInteger(rng,pool.length);rng=pick.state;const org=pool.splice(pick.value,1)[0]!;

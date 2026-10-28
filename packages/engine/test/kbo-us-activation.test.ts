@@ -19,6 +19,13 @@ import {publishUsSeasonSchedule} from '../src/us-schedule.js';
 import {startUsRegularSeason,advanceUsCareer} from '../src/us-season.js';
 import {usYearTransitionReadiness} from '../src/us-year-transition.js';
 import {enteredKboCareer} from './fixtures.js';
+import type {UsCareer} from '../src/us-career-entry.js';
+import {finishControlledMajorSeason} from './us-major-fixture.js';
+import {startNextUsMajorSeason} from '../src/us-major-renewal.js';
+import {startNextUsMinorSeason} from '../src/us-year-transition.js';
+import {reviewUsLevel,resolveUsLevelEvent} from '../src/us-levels.js';
+import {usSalaryEntitlement} from '../src/us-season.js';
+import {emptyBatting} from '../src/stats.js';
 
 type Fixture=Pick<KboCareer,'world'|'protagonistKey'> & {proSeasons:KboSeasonArchive[];seasonClose?:KboSeasonClose;records:ReturnType<typeof emptyRecordLedger>;health:ReturnType<typeof createHealthLedger>};
 function season(s:Fixture,year:string,count:number){
@@ -30,9 +37,9 @@ function season(s:Fixture,year:string,count:number){
  }
  if(year===s.world.seasonKey)s.seasonClose={seasonKey:year} as KboSeasonClose;else s.proSeasons.push({seasonKey:year} as KboSeasonArchive);
 }
-function postedCareer():KboCareer {
+function postedCareer(ability=80,age?:number,sign=true):KboCareer {
  const base=enteredKboCareer(),hs=base.amateurHistory;base.world.seasonKey='2042';base.world.calendar=createSeasonCalendar(2042,'calendar-2');
- const key=base.protagonistKey,player=base.world.players[key]!,units=80*UNITS_PER_POINT;
+ const key=base.protagonistKey,player=base.world.players[key]!,units=ability*UNITS_PER_POINT;if(age!==undefined)player.age=age;
  player.abilities=Object.fromEntries(Object.keys(player.abilities).map(k=>[k,units]));player.careerPeaks={...player.abilities};player.potential=Object.fromEntries(Object.keys(player.abilities).map(k=>[k,Math.max(player.potential[k]!,units)]));
  const contract=base.world.contracts[key]!;contract.years=2;contract.seasonKey='2042';contract.status='ACTIVE';contract.clubId=base.protagonistClubId;
  const club=base.world.clubs.find(c=>c.id===base.protagonistClubId)!;if(!club.roster.includes(key))club.roster.push(key);if(!club.firstTeam.includes(key))club.firstTeam=[key,...club.firstTeam].slice(0,28);
@@ -41,7 +48,7 @@ function postedCareer():KboCareer {
  const split={PA:100,AB:90,H:40,BB:10,HBP:0,K:10,TB:70,HR:5,twoB:5,threeB:0,RBI:20},pitch={BF:120,outs:90,AB:90,H:20,HR:2,BB:10,HBP:0,K:40,TB:30},batKey=JSON.stringify(['act-bat',fixture.world.seasonKey]);
  fixture.records.games[batKey]={gameKey:batKey,worldDay:1,scope:{seasonKey:fixture.world.seasonKey,leagueKey:'KBO',phase:'REGULAR'},teams:{[club.id]:{games:1,W:1,L:0,T:0,R:1,RA:0},[base.world.clubs.find(c=>c.id!==club.id)!.id]:{games:1,W:0,L:1,T:0,R:0,RA:1}},batting:player.kind==='HITTER'?{[key]:{PA:split.PA,AB:split.AB,H:split.H,TB:split.TB,HR:split.HR,R:20,RBI:split.RBI,BB:split.BB,HBP:0,K:split.K,twoB:split.twoB,threeB:split.threeB,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0}}:{ },pitching:player.kind==='PITCHER'?{[key]:{BF:pitch.BF,outs:pitch.outs,H:pitch.H,HR:pitch.HR,BB:pitch.BB,HBP:0,K:pitch.K,R:10,ER:8,pitches:400,games:1,starts:1,starterOuts:pitch.outs,loadedBF:0,W:0,L:0,SV:0,HLD:0,BS:0,shutouts:0}}:{},batterSplits:player.kind==='HITTER'?{[key]:{L:{...split,PA:0,AB:0,H:0,BB:0,K:0,TB:0,HR:0,RBI:0},R:split}}:{},pitcherSplits:player.kind==='PITCHER'?{[key]:{L:{...pitch,BF:0,outs:0,AB:0,K:0},R:pitch}}:{},matchups:{}};
  let c={...fixture,schemaVersion:6,revision:1,difficulty:'GROWTH',protagonistClubId:club.id,phaseContext:{phase:'SEASON_REVIEW'},activation:{receiptKey:'act',sourceYearEndReceiptKey:'y',sourceRevision:0,contractKey:contract.contractKey},registration:{playerKey:key,clubId:club.id,seasonKey:'2042',status:'ACTIVE',firstTeam:true},rights:{sourceType:'DRAFT',holderOrgId:club.id,territory:'KR'},amateurHistory:hs,seasonGrowth:{seasonKey:'2042',days:0,finalized:true},development:{...structuredClone(hs.development!),seasonStartPlayer:structuredClone(player)},relationships:hs.relationships??{},events:[],relationNotices:[],styleUsedWindows:[],planHistory:[],military:{status:'COMPLETED',applications:[]}} as unknown as KboCareer;
- c=requestKboPosting(c,c.revision);c=resolveKboPostingClub(c,c.revision);c=openKboPostingOffers(c,c.revision,1);return acceptKboPostingOffer(c,c.revision,c.posting!.windows[0]!.offers![0]!.offerKey,1);
+ c=requestKboPosting(c,c.revision);c=resolveKboPostingClub(c,c.revision);c=openKboPostingOffers(c,c.revision,1);return sign?acceptKboPostingOffer(c,c.revision,c.posting!.windows[0]!.offers![0]!.offerKey,1):c;
 }
 
 test('sealed posting activates a US root once, funds one salary, and keeps return rights without a signing bonus',()=>{
@@ -68,4 +75,47 @@ test('KBO overseas activation keeps nonapplicable service and refuses unresolved
  const next=activateKboUsCareer(source,source.revision,roster,inventory);assert.equal(next.military.status,'NOT_APPLICABLE');assert.equal(usYearTransitionReadiness(next).controlSeasonsUsed,1);assert.equal(canonicalJson({source,roster,inventory}),raw);
  for(const drift of [{worldKey:'foreign-world'},{seed:'foreign-seed'},{seasonKey:'2042'}]){const wrong={...roster,...drift};assert.throws(()=>activateKboUsCareer(source,source.revision,wrong,inventory),/KBO_US_WORLD_MISMATCH/);assert.equal(canonicalJson({source,roster,inventory}),raw);}
  const bad=structuredClone(source);bad.military!.status='UNRESOLVED';const before=canonicalJson(bad);assert.throws(()=>activateKboUsCareer(bad,bad.revision,roster,inventory),/KBO_US_MILITARY_BLOCKED/);assert.equal(canonicalJson(bad),before);assert.equal(canonicalJson({source,roster,inventory}),raw);
+});
+
+function transferred(ability=80,age=29){
+ const source=postedCareer(ability,age),roster=createUsRosterWorld({worldKey:source.world.worldKey,seasonKey:'2043',seed:source.world.seed,difficulty:source.difficulty,organizations:Array.from({length:30},(_,i)=>({id:'US'+String(i+1).padStart(2,'0'),name:'US Club '+String(i+1).padStart(2,'0')}))}),inventory=initialUsRecruitmentInventory(roster,roster.organizations.map(o=>({organizationId:o.id,rookieCapacity:23,aCapacity:23,availableBudgetUsd:40_000_000,nationalReleaseAllowed:true,militaryReturnOption:true})));
+ return {source,us:activateKboUsCareer(source,source.revision,roster,inventory)};
+}
+function openingTransferred(c:UsCareer){let n=confirmUsPreseasonPlan(c,c.revision);for(const e of unreadUsFirstCampNotices(n))n=resolveUsFirstCampNotice(n,n.revision,{eventKey:e.eventKey,eventVersion:e.eventVersion,command:'ACK_EVENT'});n=publishUsSeasonSchedule(n,n.revision);return startUsRegularSeason(n,n.revision);}
+const annualFunding=(c:UsCareer)=>c.world.organizations.map(o=>({organizationId:o.id,addedBudgetUsd:20_000_000}));
+
+test('new KBO US origin uses contract-start age and preserves initial MLB guarantee through controlled annual replay',()=>{
+ const {source,us}=transferred();assert.equal(us.world.players[us.protagonistKey]!.age,30);assert.equal(us.contract.years,3);assert.equal(source.posting!.windows[0]!.sealedPlayer!.age,29);
+ const origin=us.kboTransfer!.origin;assert.ok(origin);assert.equal(origin.playerAge,30);assert.deepEqual(origin.contract,us.contract);assert.deepEqual(origin.inventory,us.inventory);
+ const closed=finishControlledMajorSeason(openingTransferred(us)),raw=canonicalJson(closed),next=startNextUsMajorSeason(closed,closed.revision,annualFunding(closed));assert.equal(next.world.players[next.protagonistKey]!.age,31);assert.equal(next.contract.years,2);assert.equal(next.contract.annualSalaryUsd,us.contract.annualSalaryUsd);assert.equal(canonicalJson(closed),raw);assert.deepEqual(usCareerView(JSON.parse(JSON.stringify(next))),usCareerView(next));assert.deepEqual(next.kboTransfer!.origin,origin);
+ const forged=structuredClone(next);forged.majorYears![0]!.inventory.clubs[0]!.availableBudgetUsd++;assert.throws(()=>usCareerView(forged),/INVALID_US_MAJOR_YEAR_HISTORY/);
+});
+
+test('KBO minor signed period controls expiry and valid annual histories without adding amateur six-season rights',()=>{
+ const {us}=transferred(70,33);assert.equal(us.contract.type,'US_MINOR');assert.equal(us.contract.years,2);assert.equal(usYearTransitionReadiness(us).remainingMinorControlSeasons,1);
+ const closed=finishControlledMajorSeason(openingTransferred(us)),next=startNextUsMinorSeason(closed,closed.revision,annualFunding(closed));assert.equal(usYearTransitionReadiness(next).remainingMinorControlSeasons,0);assert.ok(usYearTransitionReadiness(next).blockers.includes('CONTRACT_DECISION_REQUIRED'));assert.equal(next.contract.annualSalaryUsd,30_000);assert.equal(next.income.filter(e=>e.kind==='SIGNING_BONUS').length,0);assert.deepEqual(usCareerView(JSON.parse(JSON.stringify(next))),usCareerView(next));
+});
+
+test('legacy KBO US root remains read-only compatible without manufacturing an initial budget or age',()=>{
+ const {us}=transferred();delete us.kboTransfer!.origin;const raw=canonicalJson(us);assert.doesNotThrow(()=>usCareerView(us));assert.equal(canonicalJson(us),raw);
+});
+
+test('KBO minor first MLB callup ends the minor term and replays next-day salary and the next annual contract',()=>{
+ const {us}=transferred(70,33),c=openingTransferred(us),key=c.protagonistKey,club=c.protagonistOrganizationId,games=c.seasonSchedule!.leagues.AAA.filter(g=>g.homeTeamKey===club||g.awayTeamKey===club).slice(0,24);
+ // Controlled performance prefix, not24 actually simulated games.
+ for(const g of games)c.records.games[g.simulationKey]={gameKey:g.simulationKey,worldDay:g.worldDay,scope:{seasonKey:c.world.seasonKey,leagueKey:'AAA',phase:'REGULAR'},teams:{[g.homeTeamKey]:{games:1,W:1,L:0,T:0,R:1,RA:0},[g.awayTeamKey]:{games:1,W:0,L:1,T:0,R:0,RA:1}},batting:{[key]:{...emptyBatting(),PA:4,AB:4,H:4,TB:16,HR:4,twoB:0,threeB:0,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0}},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}};
+ const zero={PA:0,AB:0,H:0,BB:0,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0};for(const g of games)c.records.games[g.simulationKey]!.batterSplits[key]={L:{...zero},R:{...zero,PA:4,AB:4,H:4,TB:16,HR:4}};
+ c.records.revision=Object.keys(c.records.games).length;const day=games.at(-1)!.worldDay;c.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:day+1,pendingGame:null};const offered=reviewUsLevel(c,day,c.phaseContext)!;assert.equal(offered.phaseContext.phase,'EVENT_DECISION');const e=offered.events.at(-1)!,major=resolveUsLevelEvent(offered,offered.revision,{eventKey:e.eventKey,eventVersion:e.version,command:'CONFIRM_CALLUP'});assert.equal(major.contract.years,1);assert.equal(major.contract.annualSalaryUsd,800_000);assert.deepEqual(usCareerView(JSON.parse(JSON.stringify(major))),usCareerView(major));
+ const s=major.season!,minorDays=s.majorActivation!.effectiveDay-s.firstDay,span=s.lastDay-s.firstDay+1;assert.equal(usSalaryEntitlement(major,minorDays),Math.floor(30_000*minorDays/span));assert.equal(usSalaryEntitlement(major,span),30_000+s.majorActivation!.reservedAdditionalUsd);
+ const closed=finishControlledMajorSeason(major),next=startNextUsMajorSeason(closed,closed.revision,annualFunding(closed));assert.equal(next.contract.years,1);assert.deepEqual(usCareerView(JSON.parse(JSON.stringify(next))),usCareerView(next));
+});
+
+test('present null and partial KBO contract origins cannot bypass validation as legacy saves',()=>{
+ const {us}=transferred();for(const origin of [null,false,0,{}, {contract:null,inventory:null}, {...us.kboTransfer!.origin,inventory:{}}]){
+  const forged=JSON.parse(JSON.stringify(us));forged.kboTransfer.origin=origin;forged.world.players[forged.protagonistKey].age++;forged.inventory.clubs[0].availableBudgetUsd++;const raw=canonicalJson(forged);assert.throws(()=>usCareerView(forged),/INVALID_US_CONTRACT_ORIGIN/);assert.equal(canonicalJson(forged),raw);
+ }
+});
+
+test('new overseas quotes cannot start a season after the existing age45 career limit',()=>{
+ const c=postedCareer(80,45,false);assert.deepEqual(c.posting!.windows[0]!.offers,[]);
 });

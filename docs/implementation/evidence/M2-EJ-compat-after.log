@@ -1,0 +1,10 @@
+✔ present null and partial KBO contract origins cannot bypass validation as legacy saves (3346.7135ms)
+✔ US live registration guard rejects duplicate slots, orphan identities/books and organization capacity drift (1532.9183ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4166.4018

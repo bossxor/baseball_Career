@@ -1,0 +1,157 @@
+{
+  "utc": "2026-10-28T00:36:52.864Z",
+  "head": "d819f517d78a513aa4d6a4e93443fb65312df31b",
+  "fullCheck": "PASS",
+  "result": {
+    "tests": 787,
+    "pass": 785,
+    "skip": 2,
+    "fail": 0,
+    "durationMs": 810442.1035,
+    "webPass": 22,
+    "unchangedFiles": 460
+  },
+  "policy": "V documents only via Copy-Item; no V .git or runtime sync",
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "6edfbd8502869cb6277341aa105a290dfd895f1e15c749ed592e81fc23cae96f"
+    },
+    {
+      "path": "docs/design/23-US-CONTRACTS-RIGHTS.md",
+      "sha256": "065d03234885ab2bd2a2920c8cce57f7514c7ec450f220402fbfa7bb2f0ca687"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "ab91d5faf869820a7b3fc980721408f0b7f17e4ec6877fb819dd59e878cfe246"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "4b67599ecf2254a2b0f58011ea35bdfbafa6c14b636bbf6cc605b1cb3779a666"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "24a22a0595c75dd6b3292b112537806fe7a7a9ea7ca21e1aa5e1edcccb1f5b22"
+    },
+    {
+      "path": "docs/implementation/HANDOFF-TO-GPT.md",
+      "sha256": "43c2110e2bbfa59a839cbbe4f2776c68cce6644800766b068b50c7a1613ad32b"
+    },
+    {
+      "path": "docs/implementation/M2-EJ-US-ORIGIN-PLAN.md",
+      "sha256": "c9f0bb7e968f6a0d01574acebe6174e78a7beadd243c0159d8d8c670ca2df4cd"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "aa69d3f7f7bb85e6a7ee7d9632d94c306bb3a751c26ce443b04ba31687041b6d"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "894dd4dc9531527c44ebb98945b84c0a7f9cdb6329ae448837e984e2055169c2"
+    },
+    {
+      "path": "packages/engine/src/kbo-overseas-fa.ts",
+      "sha256": "1c648591ff2580504ef15ed62a73dac8223adf1edb9adb76c902af5588d34847"
+    },
+    {
+      "path": "packages/engine/src/kbo-posting.ts",
+      "sha256": "61bbc0900c3bc3bda8f2e78a4e93f2856e6e8b498684d503339ef1519599b742"
+    },
+    {
+      "path": "packages/engine/src/kbo-us-activation.ts",
+      "sha256": "07e67a01740ed099eaea6d95897216372e9dcee13d6cdb13aa76e9c688c388dc"
+    },
+    {
+      "path": "packages/engine/src/us-career-entry.ts",
+      "sha256": "3c1238915c6962ba5ab98c07f8b4bb063c7d99fd1f63c903fd6348009b94ecef"
+    },
+    {
+      "path": "packages/engine/src/us-levels.ts",
+      "sha256": "3552008ea5928911c7d372f51fd45071eae3b5b4cf6fefa36fe497cd037e08d4"
+    },
+    {
+      "path": "packages/engine/src/us-major-history.ts",
+      "sha256": "80e9ecaa3cc740e37814bf5257a9d97b5f0a3a86b446182f5f8c8114bd00a76e"
+    },
+    {
+      "path": "packages/engine/src/us-minor-history.ts",
+      "sha256": "9e3247cff676596985c79b8d771b731da3b64e8858d63011523c1c9ece2a0ffa"
+    },
+    {
+      "path": "packages/engine/src/us-season.ts",
+      "sha256": "e49cee69c1637535d2285e516340438831566d28c1a13b331bc4bf64e074fcb9"
+    },
+    {
+      "path": "packages/engine/src/us-year-transition.ts",
+      "sha256": "0ea54d2d1f6c2c11c9251dd235bff55e141a2a2e85168984ac6bc1aa5ab7f7dc"
+    },
+    {
+      "path": "packages/engine/test/kbo-us-activation.test.ts",
+      "sha256": "dc28f6e26cfff347515a7f72278873690ef1ead88ac4ad6a9799aa963484b728"
+    },
+    {
+      "path": "docs/implementation/M2-EJ-KBO-US-CONTRACT-ORIGIN.md",
+      "sha256": "47d5cbfa4cd067d17e83f5a84f9199275c5d0bae048373ce094220ef2e158ed2"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EJ-age-before.log",
+      "sha256": "3dfa9e67567fdf22189ff065654cbc2ddb8f9184fdd774ebd0542c453c1aca2c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EJ-before.log",
+      "sha256": "0baf988ec8247c4959de8fae88dd6a1559fb06306d3ac0ebc7bd5f17ba813037"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EJ-boundaries.log",
+      "sha256": "d17c49b4edfd0245656671ef7eb7154da529c985071dc67c22b2764de9cb6192"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EJ-callup-before.log",
+      "sha256": "146e251560f351f1e9f2476cd5840abf9cf83333c4f60f8825edd1ae8f1190e1"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EJ-check.log",
+      "sha256": "6dc81a57d0877d15360efa9bbdc770f1891ca07da809467e45d265f457feb714"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EJ-compat-after.log",
+      "sha256": "928d5fe6198711d81f89273045a4a4af7191dd0da0c8e4d65c888c94fe8f417e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EJ-failed-check.log",
+      "sha256": "74b271c3cfb2f30e398d5ee21077056af79a63e78033a03e9ee9e2184c332dc4"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EJ-failed-source-freeze.json",
+      "sha256": "50ae1def28f27871a19a029e717477d97344569a0894db88115141cfa9f662f5"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EJ-focused.log",
+      "sha256": "b34109d29be7578ffcea5239be4a749173f5e73fe67f059eb2cd1d4de7d4188a"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EJ-initial-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EJ-initial-types.log",
+      "sha256": "66c92ff76b98acd40406928ef24ab00309a9ff46fe55adfe3a59feed2f7cb6be"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EJ-null-before.log",
+      "sha256": "44420064b9f330c12a1e003d9cf4f9611e79307f2154ae3d8c1b29fffbb5a259"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EJ-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EJ-source-freeze.json",
+      "sha256": "04caac7a6008d77acaa908594bbf594649a6505f8779fb9b73f13069d107d929"
+    },
+    {
+      "path": "packages/engine/src/us-contract-origin.ts",
+      "sha256": "2d31321152ac236fd0969bb60d39402d4f345aec5b0dce1686fc19a8ba7e2bf0"
+    }
+  ]
+}

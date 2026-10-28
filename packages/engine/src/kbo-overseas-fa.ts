@@ -33,7 +33,8 @@ function windowId(c:KboCareer){return JSON.stringify(['kbo-overseas-fa',c.world.
 function current(c:KboCareer){return c.overseasFa?.windows.find(w=>w.seasonKey===c.world.seasonKey);}
 
 function buildOffers(c:KboCareer,id:string):KboPostingOffer[] {
- const p=performance(c),years=usMlbOfferYears(p.player.age),value=usMajorContractValue(p.player,p.bat,p.pit),kind=p.ovr>=75?'MLB' as const:p.ovr>=65?'MILB' as const:null;if(!kind)return [];
+ const p=performance(c);if(p.player.age>=45)return [];
+ const years=usMlbOfferYears(p.player.age+1),value=usMajorContractValue(p.player,p.bat,p.pit),kind=p.ovr>=75?'MLB' as const:p.ovr>=65?'MILB' as const:null;if(!kind)return [];
  let rng=createWorldStream(c.world.seed,JSON.stringify(['kbo-overseas-fa-offers',id]),'roster');const pool=[...MLB_ORGS],offers:KboPostingOffer[]=[];
  const countDraw=nextInteger(rng,4);rng=countDraw.state;const count=Math.min(3,countDraw.value);if(!count)return [];
  while(pool.length&&offers.length<count){const pick=nextInteger(rng,pool.length);rng=pick.state;const org=pool.splice(pick.value,1)[0]!;
