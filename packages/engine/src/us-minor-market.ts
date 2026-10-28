@@ -1,3 +1,4 @@
+import {cancelUsKboReturnQuote} from './us-kbo-return.js';
 import type {UsCareer,ActiveUsRosterWorld} from './us-career-entry.js';
 import {assertUsCareerRevision,assertActiveUsRosterWorld} from './us-career-entry.js';
 import {usYearTransitionReadiness} from './us-year-transition.js';
@@ -17,7 +18,7 @@ import {createSeasonCalendar} from './season-calendar.js';
 import {schoolYearEndRepertoire} from './college-entry.js';
 import {emptyPitchXpLedger} from './pitch-xp.js';
 import {createSeasonGrowthLedger} from './growth-ledger.js';
-import {refreshCareerSeasonGoals} from './season-goals.js';
+import {refreshCareerSeasonGoals,refreshCareerPreseasonGoalSelection} from './season-goals.js';
 import {formRegisteredTeamTeammate} from './team-teammates.js';
 import {queueRelationFormationNotices} from './relation-notices.js';
 import {HITTER_TYPES,PITCHER_TYPES,PITCH_IDS,abilityKeys} from '@playball/rules';
@@ -112,7 +113,7 @@ function moveToOffer(world:ActiveUsRosterWorld,key:string,level:Exclude<UsLevel,
 
 /** Accept one sealed minor offer, archive the expired control year, and open the next season on the new 1-year contract. */
 export function acceptUsMinorMarketOffer(c:UsCareer,revision:number,offerKey:string):UsCareer {
- assertUsCareerRevision(c,revision);assertUsMinorMarket(c);const m=c.minorMarket!,offer=m.offers.find(o=>o.offerKey===offerKey);if(!offer)throw new RangeError('US_MINOR_OFFER_NOT_FOUND');
+ assertUsCareerRevision(c,revision);c=cancelUsKboReturnQuote(c);assertUsMinorMarket(c);const m=c.minorMarket!,offer=m.offers.find(o=>o.offerKey===offerKey);if(!offer)throw new RangeError('US_MINOR_OFFER_NOT_FOUND');
  const sealed=canonicalJson(offer),ready=usYearTransitionReadiness(c);if(ready.blockers.some(b=>b!=='CONTRACT_DECISION_REQUIRED'&&b!=='OPEN_EVENT')||!ready.blockers.includes('CONTRACT_DECISION_REQUIRED'))throw new RangeError('US_MINOR_MARKET_NOT_AVAILABLE');
  assertUsSeason(c,revision);auditUsClosedDays(c);auditUsCompletedPostseason(c);
  if(Object.values(c.records.games).some(g=>g.scope.seasonKey===ready.targetSeasonKey))throw new RangeError('NEXT_SEASON_RECORDS_ALREADY_EXIST');
@@ -130,8 +131,10 @@ export function acceptUsMinorMarketOffer(c:UsCareer,revision:number,offerKey:str
  const ctx={worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:event.offeredChoices};
  const closed=completeBlockingEvent(event,event.version,{sourceEvidenceKey:event.evidenceKey,receiptKey:archive.receiptKey,command:'ACCEPT_CAREER_OFFER'},ctx);
  const renewal:UsMinorRenewal={marketId:m.marketId,offerKey:offer.offerKey,organizationId:offer.organizationId,signedFromSeasonKey:c.world.seasonKey,sourceRevision:c.revision,contract:{...contract},funding,displacedCompetitorKey:displaced};
+ archive.minorRenewal=structuredClone(renewal);
+ const history=(c.minorYears??[]).map(y=>!y.minorRenewal&&c.minorRenewal?.signedFromSeasonKey===y.seasonKey?{...y,minorRenewal:structuredClone(c.minorRenewal)}:y);
  const day=world.calendar.growthDays[0]!,teamWorld={worldKey:world.worldKey,seasonKey:world.seasonKey,leagueKey:m.initialLevel,protagonistKey:c.protagonistKey,protagonistSchoolId:offer.organizationId,schools:world.organizations.map(o=>({id:o.id,name:o.name,roster:o.levels[m.initialLevel]})),players:world.players};
- const next:UsCareer={...c,schemaVersion:3,revision:c.revision+1,world,health,minorYears:[...(c.minorYears??[]),archive],inventory,contract,protagonistOrganizationId:offer.organizationId,rights:{...c.rights,holderOrgId:offer.organizationId},registration:{playerKey:c.protagonistKey,clubId:offer.organizationId,level:m.initialLevel,seasonKey:ready.targetSeasonKey,status:'ACTIVE'},phaseContext:{phase:'PRESEASON_SETUP'},seasonGrowth:createSeasonGrowthLedger(player,ready.targetSeasonKey,world.calendar.growthDays.length),development:{...c.development,seasonStartPlayer:structuredClone(player)},planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}],events:c.events.map(e=>e.eventKey===event.eventKey?closed:e),minorRenewal:renewal};
+ const next:UsCareer={...c,schemaVersion:3,revision:c.revision+1,world,health,minorYears:[...history,archive],inventory,contract,protagonistOrganizationId:offer.organizationId,rights:{...c.rights,holderOrgId:offer.organizationId},registration:{playerKey:c.protagonistKey,clubId:offer.organizationId,level:m.initialLevel,seasonKey:ready.targetSeasonKey,status:'ACTIVE'},phaseContext:{phase:'PRESEASON_SETUP'},seasonGrowth:createSeasonGrowthLedger(player,ready.targetSeasonKey,world.calendar.growthDays.length),development:{...c.development,seasonStartPlayer:structuredClone(player)},planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}],events:c.events.map(e=>e.eventKey===event.eventKey?closed:e),minorRenewal:renewal};
  delete next.minorMarket;delete next.season;delete next.seasonSchedule;delete next.preseasonPlan;delete next.campNotices;delete next.postseason;
  if(c.traits)next.traits={...c.traits,lastClosedDay:null,lastSeasonKey:ready.targetSeasonKey};
  if(offer.organizationId!==c.protagonistOrganizationId){
@@ -139,5 +142,5 @@ export function acceptUsMinorMarketOffer(c:UsCareer,revision:number,offerKey:str
   next.relationships=formRegisteredTeamTeammate(ledger,teamWorld,archive.receiptKey,day);
   const notices=queueRelationFormationNotices({...next,world:teamWorld},day);if(notices)next.relationNotices=notices;
  }
- assertUsCareerRevision(next,next.revision);return refreshCareerSeasonGoals(next);
+ assertUsCareerRevision(next,next.revision);return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(next));
 }

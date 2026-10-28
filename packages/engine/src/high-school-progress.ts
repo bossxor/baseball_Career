@@ -1,3 +1,5 @@
+import {formPitcherRivalFromGame} from './pitcher-rival.js';
+import {settleRelationshipDirectDuels} from './relationships.js';
 import {refreshCareerSeasonGoals} from './season-goals.js';
 import {settleRegisteredPitchLearning} from './pitch-learning-progress.js';
 import {prepareHighSchoolGame,advanceHighSchoolGame,commitHighSchoolGame} from './high-school-game.js';
@@ -65,7 +67,7 @@ export function advanceSchoolCareer(source:HighSchoolCareer,expectedRevision:num
    plateAppearances+=job.game.playCursor-before.playCursor;completedInnings+=job.game.completedInnings-before.completedInnings;
    if(job.stopReason==='ENGINE_LIMIT')return finish('ENGINE_LIMIT');
    if(job.game.status!=='FINAL')return finish('CHUNK_LIMIT');
-   const committed=commitHighSchoolGame(career.world,career.records,job);career.world=committed.world;career.records=committed.records;progress.pendingGame=null;
+   const committed=commitHighSchoolGame(career.world,career.records,job);career.world=committed.world;career.records=committed.records;const duelRelations=settleRelationshipDirectDuels(career,job.game.input.simulationKey);if(duelRelations)career.relationships=duelRelations;const pitcherFormation=formPitcherRivalFromGame(career,job.game.input.simulationKey);if(pitcherFormation)Object.assign(career,pitcherFormation);progress.pendingGame=null;
    if(career.world.schedule.some(g=>g.worldDay===day && !Object.hasOwn(career.records.games,g.simulationKey)))continue;
   }
   const closed=closeHighSchoolDay(career.world,career.records,career.health,career.days,day);career.world=closed.world;career.health=closed.health;career.days=closed.days;progress.nextWorldDay=day+1;career.ownAssessment=refreshOwnCareerAssessment(career);career.traits=refreshCareerTraits(career,day);if(career.relationships)career.relationships=refreshRelationMilestones(career)!;

@@ -2859,5 +2859,18 @@
       "references": [],
       "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
     }
-  ]
+  ],
+  "bulkCheckpoint": {
+    "document": "M2-BULK-CHECKPOINT.md",
+    "status": "IMPLEMENTED_RUNTIME_PENDING",
+    "eventIds": [
+      "E61",
+      "E67",
+      "E84",
+      "E89",
+      "E90",
+      "E94"
+    ],
+    "note": "Actual entry/final/day-close writers and domain/read adapters added; US national source and domestic atomic persistence remain partial. Prior verified rows are not promoted by this metadata."
+  }
 }

@@ -25,10 +25,14 @@ export interface NationalEvaluation extends NationalCandidateScore {
 }
 export interface NationalRosterSlot {playerKey:string;role:NationalRole}
 export interface NationalRoster {slots:NationalRosterSlot[];reserves:Partial<Record<NationalRole,string[]>>}
+export interface NationalEmergencyAdmission {
+ beforeReplacement:number;sourceRecordRevision:number;playerKeys:string[];
+}
 export interface NationalSelectionSnapshot {
  schemaVersion:1;modelVersion:'national-selection-1';selectionId:string;worldKey:string;seasonKey:string;tournament:NationalTournament;
  sourceRecordRevision:number;scores:NationalEvaluation[];roster:NationalRoster;withdrawnKeys:string[];
  replacements:{from:string;to:string;role:NationalRole;reason:'DECLINED'|'INJURED';unavailableKeys:string[]}[];
+ emergencyAdmissions?:NationalEmergencyAdmission[];
 }
 const TOURNAMENTS=['AG','OLY','WBC','P12'];
 export function nationalCandidateEligible(c:NationalCandidate,tournament:NationalTournament):boolean {
@@ -84,16 +88,19 @@ export function nationalLineupBatting(records:RecordLedger,selection:NationalSel
  return out;
 }
 /** Source-choice U2026-10-27: adequate current highest league, otherwise prior highest; WBC uses prior only. */
-export function createNationalSelection(input:{worldKey:string;seasonKey:string;seed:string;tournament:NationalTournament;candidates:readonly NationalCandidate[];records:RecordLedger}):NationalSelectionSnapshot {
+interface NationalEvaluationInput {worldKey:string;seasonKey:string;seed:string;tournament:NationalTournament;candidates:readonly NationalCandidate[];records:RecordLedger}
+/** Emergency batches use the existing evaluation and shuffle, in a separate stream after the sealed ranks. */
+export function evaluateNationalCandidates(input:NationalEvaluationInput,emergency?:{selectionId:string;batch:number;lotRankOffset:number}):NationalEvaluation[] {
  const {worldKey,seasonKey,seed,tournament,records}=input;
  if(!worldKey||!seed||!/^\d{4}$/.test(seasonKey)||!TOURNAMENTS.includes(tournament)||!Number.isSafeInteger(records.revision)||records.revision<0||!Array.isArray(input.candidates)||input.candidates.some(c=>!c||!c.player)||new Set(input.candidates.map(c=>c.player.simulationKey)).size!==input.candidates.length)throw new RangeError('INVALID_NATIONAL_SELECTION');
+ if(emergency&&(!emergency.selectionId||!Number.isSafeInteger(emergency.batch)||emergency.batch<0||!Number.isSafeInteger(emergency.lotRankOffset)||emergency.lotRankOffset<0))throw new RangeError('INVALID_NATIONAL_EMERGENCY');
  const leagues=(Object.keys(NATIONAL_LEAGUE_ADJUSTMENTS) as NationalLeague[]).sort((a,b)=>NATIONAL_LEAGUE_ADJUSTMENTS[b]-NATIONAL_LEAGUE_ADJUSTMENTS[a]),years=tournament==='WBC'?[String(Number(seasonKey)-1)]:[seasonKey,String(Number(seasonKey)-1)],samples=nationalSamples(records,years);
  const line=(year:string,league:NationalLeague,key:string)=>samples.get(year+':'+league)?.get(key);
  // Eligibility reads the same authoritative record snapshot, never a stale caller's top-league flag.
- const eligible=input.candidates.filter(c=>nationalCandidateEligible({...c,recentTopLeagueRecord:years.some(year=>(['KBO','MLB'] as const).some(league=>{return (line(year,league,c.player.simulationKey)?.games??0)>0;}))},tournament)),lots=eligible.map(c=>c.player.simulationKey).sort();
- let rng=createStreams(seed,JSON.stringify(['national-selection-lots',worldKey,seasonKey,tournament])).worldCreation;
+ const eligible=input.candidates.filter(c=>nationalCandidateEligible({...c,recentTopLeagueRecord:!!emergency||years.some(year=>(['KBO','MLB'] as const).some(league=>{return (line(year,league,c.player.simulationKey)?.games??0)>0;}))},tournament)&&(!emergency||!['KBO','MLB'].includes(c.league))),lots=eligible.map(c=>c.player.simulationKey).sort();
+ let rng=createStreams(seed,JSON.stringify(emergency?['national-emergency-lots',worldKey,seasonKey,tournament,emergency.selectionId,emergency.batch]:['national-selection-lots',worldKey,seasonKey,tournament])).worldCreation;
  for(let i=lots.length-1;i>0;i--){const draw=nextInteger(rng,i+1);rng=draw.state;[lots[i],lots[draw.value]]=[lots[draw.value]!,lots[i]!];}
- const lotRank=new Map(lots.map((k,i)=>[k,i]));
+ const lotRank=new Map(lots.map((k,i)=>[k,i+(emergency?.lotRankOffset??0)]));
  const scores:NationalEvaluation[]=eligible.map(c=>{
   const p=c.player;let sample=0,performanceIndex=50,performanceLeague:NationalLeague|null=null,performanceSeason:string|null=null;
   outer:for(const year of years)for(const league of leagues){const t=line(year,league,p.simulationKey),b=t?.batting,q=t?.pitching,denominator=p.kind==='HITTER'?(b?.PA??0):(q?.outs??0);if(denominator<(p.kind==='HITTER'?50:30))continue;
@@ -103,21 +110,39 @@ export function createNationalSelection(input:{worldKey:string;seasonKey:string;
   const ovr=roleScore(p.kind,p.abilities,p.position);const bonus:0|3=tournament==='AG'&&c.militaryUnresolved?3:0;
   return {playerKey:p.simulationKey,name:p.name,kind:p.kind,position:p.position,throws:p.throws,stamina:(p.abilities.STAMINA??0)/10000,composure:(p.abilities.COMPOSURE??0)/10000,score:Math.min(100,.6*ovr+.4*performanceIndex+bonus),sample,lotRank:lotRank.get(p.simulationKey)!,roleOVR:ovr,performanceIndex,performanceLeague,performanceSeason,militaryBonus:bonus};
  }).sort(compare);
+ return scores;
+}
+export function createNationalSelection(input:NationalEvaluationInput):NationalSelectionSnapshot {
+ const scores=evaluateNationalCandidates(input),{worldKey,seasonKey,tournament,records}=input;
  return {schemaVersion:1,modelVersion:'national-selection-1',selectionId:JSON.stringify(['national-selection',worldKey,seasonKey,tournament]),worldKey,seasonKey,tournament,sourceRecordRevision:records.revision,scores,roster:chooseNationalRoster(scores),withdrawnKeys:[],replacements:[]};
 }
 /** Replaces only the vacated slot using sealed scores; no rescore or whole-roster reshuffle. */
-export function replaceNationalSelectionPlayer(source:NationalSelectionSnapshot,playerKey:string,unavailableKeys:ReadonlySet<string>,reason:'DECLINED'|'INJURED'):NationalSelectionSnapshot {
+export function replaceNationalSelectionPlayer(source:NationalSelectionSnapshot,playerKey:string,unavailableKeys:ReadonlySet<string>,reason:'DECLINED'|'INJURED',emergency?:{scores:NationalEvaluation[];sourceRecordRevision:number}):NationalSelectionSnapshot {
  const index=source.roster.slots.findIndex(s=>s.playerKey===playerKey);if(index<0)throw new RangeError('NATIONAL_PLAYER_NOT_SELECTED');
  const role=source.roster.slots[index]!.role,used=new Set(source.roster.slots.map(s=>s.playerKey)),banned=new Set([...source.withdrawnKeys,...unavailableKeys,playerKey]),replacement=roleCandidates(source.scores.filter(s=>!used.has(s.playerKey)&&!banned.has(s.playerKey)),role)[0];
+ if(emergency){
+  if(replacement||reason!=='INJURED'||!unavailableKeys.has(playerKey)||!Number.isSafeInteger(emergency.sourceRecordRevision)||emergency.sourceRecordRevision<(source.emergencyAdmissions?.at(-1)?.sourceRecordRevision??source.sourceRecordRevision)||!emergency.scores.length)throw new RangeError('INVALID_NATIONAL_EMERGENCY');
+  validateScores([...source.scores,...emergency.scores]);
+  const lastRank=Math.max(-1,...source.scores.map(s=>s.lotRank));
+  if(emergency.scores.some(s=>s.lotRank<=lastRank||banned.has(s.playerKey))||new Set(emergency.scores.map(s=>s.lotRank)).size!==emergency.scores.length)throw new RangeError('INVALID_NATIONAL_EMERGENCY');
+  const admitted:NationalSelectionSnapshot={...source,scores:[...source.scores,...emergency.scores],emergencyAdmissions:[...(source.emergencyAdmissions??[]),{beforeReplacement:source.replacements.length,sourceRecordRevision:emergency.sourceRecordRevision,playerKeys:emergency.scores.map(s=>s.playerKey)}]};
+  return replaceNationalSelectionPlayer(admitted,playerKey,unavailableKeys,reason);
+ }
  if(!replacement)throw new RangeError('NATIONAL_ROSTER_IMPOSSIBLE');const slots=source.roster.slots.map((s,i)=>i===index?{playerKey:replacement.playerKey,role}:s);
  return {...source,withdrawnKeys:[...source.withdrawnKeys,playerKey],replacements:[...source.replacements,{from:playerKey,to:replacement.playerKey,role,reason,unavailableKeys:[...unavailableKeys].sort()}],roster:{slots,reserves:reserves(source.scores.filter(s=>!banned.has(s.playerKey)),slots)}};
 }
 export function assertNationalSelectionSnapshot(s:NationalSelectionSnapshot):void {
  if(!s||s.schemaVersion!==1||s.modelVersion!=='national-selection-1'||!s.worldKey||!/^\d{4}$/.test(s.seasonKey)||!TOURNAMENTS.includes(s.tournament)||s.selectionId!==JSON.stringify(['national-selection',s.worldKey,s.seasonKey,s.tournament])||!Number.isSafeInteger(s.sourceRecordRevision)||s.sourceRecordRevision<0||!Array.isArray(s.scores)||!s.roster||!Array.isArray(s.roster.slots)||!Array.isArray(s.withdrawnKeys)||!Array.isArray(s.replacements))throw new RangeError('INVALID_NATIONAL_SELECTION');
- validateScores(s.scores);const replay=chooseNationalRoster(s.scores);let current:NationalSelectionSnapshot={...s,roster:replay,withdrawnKeys:[],replacements:[]};
- for(const r of s.replacements){
+ validateScores(s.scores);
+ const admissions=s.emergencyAdmissions===undefined?[]:s.emergencyAdmissions;
+ if(!Array.isArray(admissions)||admissions.some((a,i)=>!a||!Number.isSafeInteger(a.beforeReplacement)||a.beforeReplacement<0||a.beforeReplacement>=s.replacements.length||i>0&&a.beforeReplacement<=admissions[i-1]!.beforeReplacement||!Array.isArray(a.playerKeys)||!a.playerKeys.length||a.playerKeys.some(k=>typeof k!=='string'))||new Set(admissions.flatMap(a=>a.playerKeys)).size!==admissions.flatMap(a=>a.playerKeys).length)throw new RangeError('INVALID_NATIONAL_EMERGENCY');
+ const admittedKeys=new Set(admissions.flatMap(a=>a.playerKeys)),initial=s.scores.filter(row=>!admittedKeys.has(row.playerKey));
+ if([...admittedKeys].some(k=>!s.scores.some(row=>row.playerKey===k)))throw new RangeError('INVALID_NATIONAL_EMERGENCY');
+ const replay=chooseNationalRoster(initial);let current:NationalSelectionSnapshot={...s,scores:initial,roster:replay,withdrawnKeys:[],replacements:[]};delete current.emergencyAdmissions;
+ for(const [index,r] of s.replacements.entries()){
   if(!r||!['DECLINED','INJURED'].includes(r.reason)||!Array.isArray(r.unavailableKeys)||r.unavailableKeys.some(k=>typeof k!=='string')||new Set(r.unavailableKeys).size!==r.unavailableKeys.length)throw new RangeError('INVALID_NATIONAL_REPLACEMENT');
-  current=replaceNationalSelectionPlayer(current,r.from,new Set(r.unavailableKeys),r.reason);const expected=current.replacements.at(-1)!;if(canonicalJson(expected)!==canonicalJson(r))throw new RangeError('INVALID_NATIONAL_REPLACEMENT');
+  const admission=admissions.find(a=>a.beforeReplacement===index),emergency=admission?{sourceRecordRevision:admission.sourceRecordRevision,scores:admission.playerKeys.map(k=>s.scores.find(row=>row.playerKey===k)!)}:undefined;
+  current=replaceNationalSelectionPlayer(current,r.from,new Set(r.unavailableKeys),r.reason,emergency);const expected=current.replacements.at(-1)!;if(canonicalJson(expected)!==canonicalJson(r))throw new RangeError('INVALID_NATIONAL_REPLACEMENT');
  }
- if(canonicalJson(current.roster)!==canonicalJson(s.roster)||canonicalJson(current.withdrawnKeys)!==canonicalJson(s.withdrawnKeys)||s.scores.some(r=>r.performanceLeague!==null&&!Object.hasOwn(NATIONAL_LEAGUE_ADJUSTMENTS,r.performanceLeague)||r.performanceSeason!==null&&!/^\d{4}$/.test(r.performanceSeason)||![r.roleOVR,r.performanceIndex].every(n=>Number.isFinite(n)&&n>=0&&n<=100)||![0,3].includes(r.militaryBonus)||r.militaryBonus===3&&s.tournament!=='AG'||r.score!==Math.min(100,.6*r.roleOVR+.4*r.performanceIndex+r.militaryBonus)))throw new RangeError('INVALID_NATIONAL_SELECTION');
+ if(canonicalJson(current.scores)!==canonicalJson(s.scores)||canonicalJson(current.roster)!==canonicalJson(s.roster)||canonicalJson(current.withdrawnKeys)!==canonicalJson(s.withdrawnKeys)||s.scores.some(r=>r.performanceLeague!==null&&!Object.hasOwn(NATIONAL_LEAGUE_ADJUSTMENTS,r.performanceLeague)||r.performanceSeason!==null&&!/^\d{4}$/.test(r.performanceSeason)||![r.roleOVR,r.performanceIndex].every(n=>Number.isFinite(n)&&n>=0&&n<=100)||![0,3].includes(r.militaryBonus)||r.militaryBonus===3&&s.tournament!=='AG'||r.score!==Math.min(100,.6*r.roleOVR+.4*r.performanceIndex+r.militaryBonus)))throw new RangeError('INVALID_NATIONAL_SELECTION');
 }

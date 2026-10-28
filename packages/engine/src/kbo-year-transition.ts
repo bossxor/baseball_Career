@@ -1,4 +1,4 @@
-import {refreshCareerSeasonGoals} from './season-goals.js';
+import {refreshCareerSeasonGoals,refreshCareerPreseasonGoalSelection} from './season-goals.js';
 import {activateKboOffseasonExit,settleKboOffseasonEntryRelations} from './kbo-offseason-exit.js';
 import {returnKboNpcMilitaryPlayers} from './kbo-npc-military.js';
 import {createKboServicePayroll,carryKboServicePayroll} from './kbo-service-payroll.js';
@@ -144,5 +144,5 @@ if(career.sangmu){
  for(const field of ['days','seasonClose','postseason','preseasonPlan','openingRoster','competitionSchedule','callupReviews'] as const)delete career[field];
  // New unplayed season can adopt registration-aware growth without rewriting any prior receipts or plan boundaries.
  if(career.military?.completionDays && career.military.program?.blocks.some(b=>b.seasonKey===target))career.military.growthPolicyVersion=1;
- if(career.schemaVersion<3)career.schemaVersion=3;career.phaseContext={phase:'PRESEASON_SETUP'};settleKboOffseasonEntryRelations(source,career);career.revision++;queueKboMilitaryFirstBlock(career);return refreshCareerSeasonGoals(career);
+ if(career.schemaVersion<3)career.schemaVersion=3;career.phaseContext={phase:'PRESEASON_SETUP'};settleKboOffseasonEntryRelations(source,career);career.revision++;queueKboMilitaryFirstBlock(career);return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(career));
 }

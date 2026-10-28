@@ -9,7 +9,7 @@ import {assertUsRecruitmentWorld} from './us-direct.js';
 import {createSeasonCalendar} from './season-calendar.js';
 import {createSeasonGrowthLedger} from './growth-ledger.js';
 import {emptyPitchXpLedger,validatePitchXpLedger} from './pitch-xp.js';
-import {refreshCareerSeasonGoals} from './season-goals.js';
+import {refreshCareerSeasonGoals,refreshCareerPreseasonGoalSelection} from './season-goals.js';
 import {validatePitchWeights} from './repertoire.js';
 
 function signedOffer(c:KboCareer){
@@ -48,5 +48,5 @@ export function activateKboUsCareer(source:KboCareer,revision:number,roster:UsRo
  const transfer:KboUsTransfer={source:signed.kind,...(signed.kind==='POSTING'?{postingId:signed.id}:{windowId:signed.id}),offer:structuredClone(offer),returnRights:signed.returnRights?structuredClone(signed.returnRights):null,kboSeasonKey:source.world.seasonKey,sourceRevision:revision,origin:{playerAge:nextPlayer.age,contract:structuredClone(contract),inventory:structuredClone(nextInventory)}};
  const us:UsCareer={schemaVersion:1,mode:'US_CAREER',revision:revision+1,difficulty:source.difficulty,world,protagonistKey:key,protagonistOrganizationId:offer.organizationId,phaseContext:{phase:'PRESEASON_SETUP'},activation:{receiptKey:JSON.stringify(['kbo-us-activation',signed.id]),sourceYearEndReceiptKey:signed.id,sourceRevision:revision,contractKey,populationBasis:'KBO_TRANSFER'},registration:{playerKey:key,clubId:offer.organizationId,level,seasonKey:world.seasonKey,status:'ACTIVE'},rights:{territory:'US',holderOrgId:offer.organizationId,sourceType:'AMATEUR',playerKey:key},contract,income:[],inventory:nextInventory,amateurHistory:structuredClone(source.amateurHistory),records:structuredClone(source.records),health:structuredClone(source.health),seasonGrowth:createSeasonGrowthLedger(nextPlayer,world.seasonKey,calendar.growthDays.length),development:{...structuredClone(source.development!),seasonStartPlayer:structuredClone(nextPlayer)},relationships:structuredClone(source.relationships),events:structuredClone(source.events),relationNotices:structuredClone(source.relationNotices??[]),styleUsedWindows:[...source.styleUsedWindows],planHistory:[{completedTeamGames:0,focus:[...nextPlayer.focus],archetype:nextPlayer.archetype}],military:{status:military,deadlineAge:28},kboTransfer:transfer};
  if(source.traits)us.traits={...structuredClone(source.traits),lastClosedDay:null,lastSeasonKey:world.seasonKey};if(source.goals)us.goals=source.goals;
- assertUsCareerRevision(us,us.revision);return refreshCareerSeasonGoals(us);
+ assertUsCareerRevision(us,us.revision);return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(us));
 }

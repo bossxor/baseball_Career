@@ -8,7 +8,7 @@ import {US_SEASON_GAMES} from './us-schedule.js';
 import {recordTotals} from './records.js';
 import type {RecordScope} from './records.js';
 import {canonicalJson} from './game.js';
-import {createWorldEvent,eventDefinition,validateEvent} from './events.js';
+import {createWorldEvent,eventDefinition,validateEvent,resolveEventChoice,completeEventDomain} from './events.js';
 import type {EventInstance} from './events.js';
 
 export type GoalCareer=HighSchoolCareer|KboCareer|UsCareer;
@@ -34,7 +34,7 @@ function validate(c:GoalCareer):void {
  const l=c.goals;if(!l)return;
  if(!Array.isArray(l.rewards)||!Array.isArray(l.notices)||!l.seasons||typeof l.seasons!=='object'||Array.isArray(l.seasons)||l.rewards.some(r=>!r||typeof r.rewardId!=='string'||!Array.isArray(r.sources)))throw new RangeError('INVALID_GOAL_LEDGER');
  if(l.schemaVersion!==1||l.worldKey!==c.world.worldKey||l.playerKey!==registration(c).key||new Set(l.rewards.map(r=>r.rewardId)).size!==l.rewards.length)throw new RangeError('INVALID_GOAL_LEDGER');
- if(new Set(l.notices.map(n=>n.eventKey)).size!==l.notices.length)throw new RangeError('INVALID_GOAL_NOTICES');for(const n of l.notices){validateEvent(n);if(n.definitionId!=='E90'||n.worldKey!==l.worldKey||n.evidence.fields.playerSimulationKey!==l.playerKey)throw new RangeError('INVALID_GOAL_NOTICES');}
+ if(new Set(l.notices.map(n=>n.eventKey)).size!==l.notices.length)throw new RangeError('INVALID_GOAL_NOTICES');for(const n of l.notices){validateEvent(n);if(!['E89','E90'].includes(n.definitionId)||n.worldKey!==l.worldKey||n.evidence.fields.playerSimulationKey!==l.playerKey||n.evidence.fields.worldSeasonId!==n.seasonKey||n.resume.sourceRevision<1||n.resume.sourceRevision>c.revision)throw new RangeError('INVALID_GOAL_NOTICES');}
  for(const [year,s]of Object.entries(l.seasons)){
   if(!s||!Array.isArray(s.slots)||!Array.isArray(s.history)||!year||!s.leagueKey||!s.teamKey||!Number.isSafeInteger(s.scheduledGames)||s.scheduledGames<1||typeof s.replacementUsed!=='boolean'||s.slots.length>3||new Set(s.slots.map(g=>g.slot)).size!==s.slots.length||new Set(s.slots.map(g=>g.goalId)).size!==s.slots.length)throw new RangeError('INVALID_GOAL_LEDGER');
   for(const g of [...s.slots,...s.history])if(!g||!g.scope||!Object.hasOwn(SEASON_GOAL_DEFINITIONS,g.goalId)||!Number.isSafeInteger(g.slot)||g.slot<0||g.slot>2||g.scope.seasonKey!==year||g.scope.phase!==(g.goalId==='G10'?'POSTSEASON':'REGULAR')||!['HS','COLLEGE','KBO','FUTURES','ROOKIE','A','AA','AAA','MLB'].includes(g.scope.leagueKey)||!['ACTIVE','COMPLETED','REPLACED','EXPIRED','CORRECTED'].includes(g.status)||!Number.isSafeInteger(g.progress)||g.progress<0||!Number.isSafeInteger(g.selectedRevision)||g.selectedRevision<1||g.selectedRevision>c.revision||(['COMPLETED','CORRECTED'].includes(g.status)&&!g.completionReceipt))throw new RangeError('INVALID_GOAL_LEDGER');
@@ -82,6 +82,53 @@ export function setCareerSeasonGoals<T extends GoalCareer>(c:T,revision:number,i
  const l=structuredClone(c.goals??empty(c)),old=l.seasons[c.world.seasonKey];l.seasons[c.world.seasonKey]={leagueKey:r.league,teamKey:r.team,scheduledGames:r.games,replacementUsed:false,slots:ids.map((id,i)=>slot(c,id,i)),history:[...(old?.history??[]),...(old?.slots.map(g=>({...g,status:'REPLACED' as const}))??[])]};
  return {...c,revision:revision+1,goals:l};
 }
+
+/** Optional preseason outbox card; it never blocks season progress or changes the selected goals. */
+export function openCareerSeasonGoalSelection<T extends GoalCareer>(c:T,revision:number):T {
+ assertRevision(c,revision);validate(c);
+ if(c.phaseContext.phase!=='PRESEASON_SETUP'||Object.values(c.records.games).some(g=>g.scope.seasonKey===c.world.seasonKey&&g.scope.phase==='REGULAR'))throw new RangeError('GOALS_LOCKED');
+ return appendPreseasonGoalSelection(c,revision+1);
+}
+
+/** SERVER ONLY: call on a committed preseason entry, without adding a second revision. */
+export function refreshCareerPreseasonGoalSelection<T extends GoalCareer>(c:T):T {
+ validate(c);
+ if(c.phaseContext.phase!=='PRESEASON_SETUP'||Object.values(c.records.games).some(g=>g.scope.seasonKey===c.world.seasonKey&&g.scope.phase==='REGULAR'))return c;
+ return appendPreseasonGoalSelection(c,c.revision);
+}
+
+function appendPreseasonGoalSelection<T extends GoalCareer>(c:T,sourceRevision:number):T {
+ if(c.goals?.seasons[c.world.seasonKey]||c.goals?.notices.some(n=>n.definitionId==='E89'&&n.seasonKey===c.world.seasonKey))return c;
+ const r=registration(c);if(!r.available)return c;
+ const l=structuredClone(c.goals??empty(c)),d=eventDefinition('E89');
+ const event=createWorldEvent({definitionId:'E89',worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:d.evidenceDomain,fields:{playerSimulationKey:r.key,worldSeasonId:c.world.seasonKey,goalId:'SELECTION',stage:'PRESEASON'}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'PRESEASON_SETUP',competitionKey:r.league,registrationKey:r.team,sourceRevision},sourceSequence:l.notices.length+1,worldDay:0});
+ return {...c,revision:sourceRevision,goals:{...l,notices:[...l.notices,event]}};
+}
+
+/** Resolves only goal-owned outbox events; SET_GOALS commits the existing goal command first. */
+export function resolveCareerGoalEvent<T extends GoalCareer>(c:T,revision:number,input:{eventKey:string;eventVersion:number;command:'SET_GOALS'|'ACK_EVENT'|'OPEN_ACHIEVEMENTS';goalIds?:readonly SeasonGoalId[]}) {
+ assertRevision(c,revision);validate(c);const event=c.goals?.notices.find(n=>n.eventKey===input.eventKey);
+ if(!event)throw new RangeError('GOAL_EVENT_NOT_FOUND');
+ const f=event.evidence.fields;
+ if(event.definitionId==='E89'){
+  const r=registration(c);
+  if(event.seasonKey!==c.world.seasonKey||f.goalId!=='SELECTION'||f.stage!=='PRESEASON'||event.resume.phase!=='PRESEASON_SETUP'||event.resume.competitionKey!==r.league||event.resume.registrationKey!==r.team)throw new RangeError('GOAL_EVENT_SOURCE_CHANGED');
+  if(c.phaseContext.phase!=='PRESEASON_SETUP'||Object.values(c.records.games).some(g=>g.scope.seasonKey===c.world.seasonKey&&g.scope.phase==='REGULAR'))throw new RangeError('GOALS_LOCKED');
+ }else{
+  const season=c.goals!.seasons[event.seasonKey],slot=season&&[...season.slots,...season.history].find(g=>g.goalId===f.goalId&&g.completionReceipt&&['COMPLETED','CORRECTED','REPLACED'].includes(g.status));
+  if(!slot||!['COMPLETED','CORRECTED'].includes(String(f.stage))||!c.goals!.rewards.some(r=>r.rewardId==='R-'+slot.goalId&&r.sources.includes(slot.completionReceipt!)))throw new RangeError('GOAL_EVENT_SOURCE_CHANGED');
+ }
+ const context={worldKey:c.world.worldKey,seasonKey:event.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:event.definitionId==='E89'?['SET_GOALS','ACK_EVENT']:['OPEN_ACHIEVEMENTS']};
+ const selected=resolveEventChoice(event,input.eventVersion,input.command,input.goalIds??null,context);
+ let next=c;
+ if(selected.domain){
+  if(!input.goalIds)throw new RangeError('GOAL_SELECTION_REQUIRED');
+  next=setCareerSeasonGoals(c,revision,input.goalIds);
+ }
+ const resolved=selected.domain?completeEventDomain(event,selected.domain,JSON.stringify(['season-goal-selection',event.eventKey,revision+1]),context):selected.event;
+ const career:T={...next,revision:revision+1,goals:{...next.goals!,notices:next.goals!.notices.map(n=>n.eventKey===event.eventKey?resolved:n)}};
+ return {career,navigation:selected.navigation};
+}
 export function replaceCareerSeasonGoal<T extends GoalCareer>(c:T,revision:number,index:number,id:SeasonGoalId):T {
  assertRevision(c,revision);validate(c);const s=c.goals?.seasons[c.world.seasonKey],old=s?.slots.find(g=>g.slot===index);
  if(c.phaseContext.phase!=='SEASON_PROGRESS'||c.phaseContext.pendingGame||!s||!old||old.status!=='ACTIVE')throw new RangeError('GOAL_REPLACEMENT_NOT_ELIGIBLE');
@@ -104,7 +151,7 @@ export function refreshCareerSeasonGoals<T extends GoalCareer>(c:T):T {
 }
 export function careerSeasonGoalsView(c:GoalCareer){
  assertRevision(c,c.revision);validate(c);const r=registration(c),s=c.goals?.seasons[c.world.seasonKey],definitions=(Object.keys(SEASON_GOAL_DEFINITIONS) as SeasonGoalId[]).filter(id=>eligible(c,id)).map(id=>({goalId:id,...SEASON_GOAL_DEFINITIONS[id],rewardId:'R-'+id}));
- return {seasonKey:c.world.seasonKey,playerKey:r.key,sourceDifficulty:c.difficulty,availabilityReason:r.available?null:'SERVING_ACTIVE' as const,definitions,recommendedIds:recommend(c,definitions.map(d=>d.goalId)),noticeDelivery:'OUTBOX' as const,notices:(c.goals?.notices??[]).map(n=>({eventKey:n.eventKey,version:n.version,status:n.status,goalId:n.evidence.fields.goalId,stage:n.evidence.fields.stage,title:eventDefinition(n.definitionId).title})),history:(s?.history??[]).map(g=>({...g,scope:{...g.scope}})),slots:(s?.slots??[]).map(g=>({...g,scope:{...g.scope},progress:progress(c,g),target:SEASON_GOAL_DEFINITIONS[g.goalId].target,previousLeague:g.scope.leagueKey!==r.league})),replacement:{used:s?.replacementUsed??false,open:r.available&&!!s&&!s.replacementUsed&&c.phaseContext.phase==='SEASON_PROGRESS'&&!c.phaseContext.pendingGame&&s.slots.some(g=>g.status==='ACTIVE'&&progress(c,g)<SEASON_GOAL_DEFINITIONS[g.goalId].target)&&teamGames(c,s)>=Math.ceil(s.scheduledGames/2)},rewards:c.goals?.rewards.map(reward=>({...reward,sources:[...reward.sources]}))??[],gameplayRewardDelta:0 as const};
+ return {seasonKey:c.world.seasonKey,playerKey:r.key,sourceDifficulty:c.difficulty,availabilityReason:r.available?null:'SERVING_ACTIVE' as const,definitions,recommendedIds:recommend(c,definitions.map(d=>d.goalId)),noticeDelivery:'OUTBOX' as const,notices:(c.goals?.notices??[]).map(n=>({eventKey:n.eventKey,definitionId:n.definitionId,version:n.version,status:n.status,commands:[...n.offeredChoices],goalId:n.evidence.fields.goalId,stage:n.evidence.fields.stage,title:eventDefinition(n.definitionId).title})),history:(s?.history??[]).map(g=>({...g,scope:{...g.scope}})),slots:(s?.slots??[]).map(g=>({...g,scope:{...g.scope},progress:progress(c,g),target:SEASON_GOAL_DEFINITIONS[g.goalId].target,previousLeague:g.scope.leagueKey!==r.league})),replacement:{used:s?.replacementUsed??false,open:r.available&&!!s&&!s.replacementUsed&&c.phaseContext.phase==='SEASON_PROGRESS'&&!c.phaseContext.pendingGame&&s.slots.some(g=>g.status==='ACTIVE'&&progress(c,g)<SEASON_GOAL_DEFINITIONS[g.goalId].target)&&teamGames(c,s)>=Math.ceil(s.scheduledGames/2)},rewards:c.goals?.rewards.map(reward=>({...reward,sources:[...reward.sources]}))??[],gameplayRewardDelta:0 as const};
 }
 
 function recommend(c:GoalCareer,ids:SeasonGoalId[]):SeasonGoalId[]{

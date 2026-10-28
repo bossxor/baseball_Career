@@ -1,3 +1,4 @@
+import {refreshCareerPreseasonGoalSelection} from './season-goals.js';
 import type {CareerGoalLedger} from './season-goals.js';
 import type {UsAmateurYearEnd} from './us-entry.js';
 import type {KboAmateurYearEnd} from './kbo-entry.js';
@@ -130,7 +131,7 @@ export function resolveCareerFocusEvent(source:HighSchoolCareer,expectedRevision
   updated=updateCareerPlan(source,input.focus,player.archetype);
   resolved=completeEventDomain(event,prepared.domain,JSON.stringify(['career-domain',source.world.worldKey,source.revision+1,event.eventKey,input.command]),context);
  }
- updated.events=updated.events.map(e=>e.eventKey===event.eventKey?resolved:e);updated.phaseContext=structuredClone(phase.resume);updated.revision++;return updated;
+ updated.events=updated.events.map(e=>e.eventKey===event.eventKey?resolved:e);updated.phaseContext=structuredClone(phase.resume);updated.revision++;return refreshCareerPreseasonGoalSelection(updated);
 }
 export const resolveInitialCareerEvent=resolveCareerFocusEvent;
 export function setPreseasonCareerFocus(source:HighSchoolCareer,expectedRevision:number,focus:readonly string[]):HighSchoolCareer {

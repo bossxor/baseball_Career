@@ -1,4 +1,4 @@
-import {refreshCareerSeasonGoals} from './season-goals.js';
+import {refreshCareerSeasonGoals,refreshCareerPreseasonGoalSelection} from './season-goals.js';
 import {formRegisteredTeamTeammate} from './team-teammates.js';
 import {queueRelationFormationNotices} from './relation-notices.js';
 import type {HighSchoolCareer} from './high-school-career.js';
@@ -71,5 +71,5 @@ export function startAdmittedCollegeSeason(source:HighSchoolCareer,expectedRevis
  career.planHistory=[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}];
  career.collegeAdmission={...admission,status:'ENROLLED'};career.phaseContext={phase:'PRESEASON_SETUP'};delete career.collegeYearEnd;career.revision++;
  const entryDay=world.calendar.growthDays[0]!;career.relationships=formRegisteredTeamTeammate(career.relationships,world,admission.admissionKey,entryDay);
- const notices=queueRelationFormationNotices(career,entryDay);if(notices)career.relationNotices=notices;return refreshCareerSeasonGoals(career);
+ const notices=queueRelationFormationNotices(career,entryDay);if(notices)career.relationNotices=notices;return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(career));
 }

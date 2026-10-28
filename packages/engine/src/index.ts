@@ -135,7 +135,7 @@ export * from './us-growth.js';
 
 export {usTeamGames,usProtagonistLeague,previewUsTraining,trainUsCareer,changeUsMidseasonArchetype,resolveUsWindowEvent} from './us-windows.js';
 
-export {usCompetitionScore,resolveUsLevelEvent} from './us-levels.js';
+export {usCompetitionScore,resolveUsLevelEvent,resolveUsLevelEventResult} from './us-levels.js';
 
 export * from './pitch-learning-progress.js';
 
@@ -155,7 +155,7 @@ export * from './us-retirement.js';
 
 export * from './us-archive-view.js';
 
-export {SEASON_GOAL_DEFINITIONS,setCareerSeasonGoals,replaceCareerSeasonGoal,careerSeasonGoalsView} from './season-goals.js';
+export {SEASON_GOAL_DEFINITIONS,openCareerSeasonGoalSelection,resolveCareerGoalEvent,setCareerSeasonGoals,replaceCareerSeasonGoal,careerSeasonGoalsView} from './season-goals.js';
 export type {GoalCareer,SeasonGoalId,SeasonGoalSlot,SeasonGoals,CareerGoalLedger} from './season-goals.js';
 
 export * from './us-contract-value.js';
@@ -173,3 +173,13 @@ export {startNationalTournament,prepareCareerNationalMatch,advanceCareerNational
 export type {NationalProgressStop} from './national-progress.js';
 export {openUsMinorMarket,usMinorMarketView,resolveUsMinorMarketEvent,acceptUsMinorMarketOffer} from './us-minor-market.js';
 export type {UsMinorMarket,UsMinorOffer,UsMinorRenewal} from './us-minor-market.js';
+
+export {openUsKboReturn,usKboReturnView,acceptUsKboReturn} from './us-kbo-return.js';
+export type {UsKboReturnAuthority,UsKboReturnOffer,UsKboOwnershipReceipt,UsKboReturnQuote} from './us-kbo-return.js';
+
+export {nationalUsCandidates} from './national-us-candidates.js';
+export type {NationalCareerSources,NationalCandidateProjection} from './national-us-candidates.js';
+
+export {resolveProHiddenTraitNotice} from './pro-trait-notices.js';
+
+export {unreadPitcherRivalNotices,resolvePitcherRivalNotice} from './pitcher-rival.js';

@@ -11,11 +11,12 @@ import assert from 'node:assert/strict';
 import {canonicalJson} from '../src/game.js';
 import {enteredKboCareer} from './fixtures.js';
 import {abilityKeys} from '@playball/rules';
-import {openKboNationalSelection} from '../src/kbo-national-selection.js';
+import {openKboNationalSelection,kboNationalSelectionView} from '../src/kbo-national-selection.js';
 import {resolveKboNationalEvent} from '../src/kbo-national.js';
 import {createNationalBracket,nationalCalendarWindow,p12ActualWindow,assertNationalBracket,nextNationalMatch,nationalInviteDeadlines} from '../src/national-bracket.js';
 import {startNationalTournament,prepareCareerNationalMatch,advanceCareerNationalMatch,closeCareerNationalDay} from '../src/national-progress.js';
 import type {KboCareer} from '../src/kbo-career-entry.js';
+import {chooseNationalRoster,assertNationalSelectionSnapshot} from '../src/national-selection.js';
 
 function acceptAg(c:KboCareer):KboCareer {
 
@@ -173,4 +174,22 @@ test('exhausted healthy catcher pool rejects the whole replacement preparation w
  let c=acceptAg(enteredKboCareer());const selection=c.national!.selections![0]!,selected=new Set(selection.roster.slots.map(s=>s.playerKey)),reserve=selection.scores.find(s=>s.position==='C'&&!selected.has(s.playerKey))!.playerKey,day=nationalCalendarWindow(Number(c.world.seasonKey),'AG').startDay-1;
  for(const row of selection.scores.filter(s=>s.position==='C'&&s.playerKey!==reserve))c=medicalNationalFixture(c,row.playerKey,day);
  c=nextKoreaGame(startNationalTournament(c,c.revision,'AG'));const raw=canonicalJson(c);assert.throws(()=>prepareCareerNationalMatch(c,c.revision),/NATIONAL_ROSTER_IMPOSSIBLE/);assert.equal(canonicalJson(c),raw);assert.equal(c.national!.selections![0]!.replacements.length,0);assert.equal(c.national!.brackets![0]!.pendingGame,null);
+});
+
+test('EH boundary admits a current lower-league emergency candidate after sealed exhaustion and protects its prepared pending game',()=>{
+ let c=acceptAg(enteredKboCareer()),selection=c.national!.selections![0]!;
+ // Controlled sealed-pool exhaustion and medical evidence, not a played domestic season or balance sample.
+ const selected=new Set(selection.roster.slots.map(s=>s.playerKey)),scores=selection.scores.filter(s=>selected.has(s.playerKey));
+ selection={...selection,scores,roster:chooseNationalRoster(scores)};c={...c,national:{...c.national!,selections:c.national!.selections!.map((row,i)=>i===0?selection:row)}};
+ const key=selection.roster.slots.find(s=>s.role==='C')!.playerKey;
+ c=medicalNationalFixture(c,key,nationalCalendarWindow(Number(c.world.seasonKey),'AG').startDay-1);
+ c=nextKoreaGame(startNationalTournament(c,c.revision,'AG'));
+ const raw=canonicalJson(c),bracket=c.national!.brackets![0]!,past=canonicalJson(bracket.results),players=canonicalJson(c.world.players),prepared=prepareCareerNationalMatch(c,c.revision),next=prepared.national!.selections![0]!;
+ assert.equal(canonicalJson(c),raw);assert.equal(canonicalJson(prepared.world.players),players);assert.equal(prepared.records,c.records);
+ assert.deepEqual(next.scores.slice(0,scores.length),scores);assert.equal(next.emergencyAdmissions!.length,1);assert.equal(next.replacements.length,1);
+ const replacement=next.replacements[0]!.to;assert.ok(c.world.players[replacement]);assert.ok(!c.world.clubs.some(club=>club.firstTeam.includes(replacement)));
+ const view=kboNationalSelectionView(prepared,'AG')!;assert.equal(view.roster.find(row=>row.playerKey===replacement)!.emergency,true);assert.ok(view.roster.filter(row=>row.playerKey!==replacement).every(row=>!row.emergency));
+ assert.equal(canonicalJson(prepared.national!.brackets![0]!.results),past);assert.deepEqual(prepared.national!.brackets![0]!.groupMatches,bracket.groupMatches);
+ const restored=JSON.parse(canonicalJson(prepared)) as KboCareer;assertNationalSelectionSnapshot(restored.national!.selections![0]!);
+ const pending=canonicalJson(restored);assert.throws(()=>prepareCareerNationalMatch(restored,restored.revision),/ALREADY_PENDING/);assert.equal(canonicalJson(restored),pending);
 });

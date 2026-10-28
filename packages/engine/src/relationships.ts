@@ -4,19 +4,82 @@ import {createStreams,nextInteger} from './rng.js';
 import type {HighSchoolWorld} from './high-school-world.js';
 import type {DevelopmentPlayer} from './player.js';
 import type {RecordLedger,GameContribution} from './records.js';
+import {assertContributionSplits,directDuelOutcome} from './records.js';
 
 export type RelationType='RIVAL'|'TEAMMATE';
 export type RelationStage='FORMED'|'SEPARATED'|'REUNITED_OPPONENT'|'REUNITED_TEAM'|'RETIRED';
 export interface RelationMilestone {stage:RelationStage;evidenceKey:string;worldDay:number;kind?:'FORMATION'|'COEXIST_20'}
 export interface PlayerRelationship {relationKey:string;type:RelationType;normalPairKey:string;primaryPlayerKey:string;otherPlayerKey:string;stage:RelationStage;milestones:readonly RelationMilestone[]}
+export interface DirectDuelReceipt {
+ kind:'DIRECT_DUEL_RESOLVED';evidenceKey:string;relationKey:string;gameKey:string;worldDay:number;
+ batterKey:string;pitcherKey:string;seasonKey:string;leagueKey:string;phase:GameContribution['scope']['phase'];
+ recordRevision:number;PA:number;H:number;TB:number;outcome:ReturnType<typeof directDuelOutcome>;
+}
+export interface PitcherRivalFormationReceipt {
+ formationKey:string;worldKey:string;seasonKey:string;primaryPlayerKey:string;otherPlayerKey:string;relationKey:string;
+ gameKey:string;worldDay:number;leagueKey:string;recordRevision:number;PA:number;H:number;TB:number;outcome:'WIN'|'LOSS';registrationKey:string|null;
+}
 export interface RelationshipLedger {
  schemaVersion:1;relations:readonly PlayerRelationship[];
  teamEntries?:readonly TeamEntryRelationReceipt[];
+ directDuels?:readonly DirectDuelReceipt[];
+ pitcherRivalFormations?:readonly PitcherRivalFormationReceipt[];
  /** Why a role is empty. Empty is a normal state and never blocks the career. */
  formation:{rival:'FORMED'|'NO_CANDIDATE';teammate:'FORMED'|'NO_CANDIDATE'};
 }
 const sum=(p:DevelopmentPlayer)=>abilityKeys(p.kind).reduce((s,k)=>s+p.abilities[k]!,0);
 const pairKey=(a:string,b:string)=>JSON.stringify([a,b].sort());
+
+export interface DirectDuelSource {world:{players:Readonly<Record<string,DevelopmentPlayer>>};records:RecordLedger;relationships?:RelationshipLedger}
+const duelKey=(relationKey:string,gameKey:string)=>JSON.stringify([relationKey,gameKey,'DIRECT_DUEL_RESOLVED']);
+function formedBefore(relation:PlayerRelationship,game:GameContribution,ledger:RelationshipLedger,records:RecordLedger):boolean {
+ const formation=ledger.pitcherRivalFormations?.find(r=>r.relationKey===relation.relationKey);
+ if(formation){const original=records.games[formation.gameKey],key=JSON.stringify([formation.formationKey,formation.gameKey,formation.otherPlayerKey]);
+  if(!original || original.scope.phase!=='REGULAR' || original.scope.seasonKey!==formation.seasonKey || original.scope.leagueKey!==formation.leagueKey || original.worldDay!==formation.worldDay || relation.primaryPlayerKey!==formation.primaryPlayerKey || relation.otherPlayerKey!==formation.otherPlayerKey || !relation.milestones.some(m=>m.stage==='FORMED' && m.kind==='FORMATION' && m.evidenceKey===key && m.worldDay===formation.worldDay))throw new RangeError('INVALID_DIRECT_DUEL_RECEIPT');
+ }
+ if(formation && formation.seasonKey!==game.scope.seasonKey)return Number.isSafeInteger(Number(formation.seasonKey)) && Number.isSafeInteger(Number(game.scope.seasonKey)) && Number(formation.seasonKey)<Number(game.scope.seasonKey);
+ return relation.milestones.some(m=>m.stage==='FORMED' && (m.kind===undefined || m.kind==='FORMATION') && Number.isSafeInteger(m.worldDay) && m.worldDay>=0 && m.worldDay<game.worldDay);
+}
+/** Stored receipt structure is stable across official corrections; changed current stats cease to be new unlock evidence. */
+export function validateDirectDuelReceipts(source:DirectDuelSource):void {
+ if(source.relationships && source.relationships.schemaVersion!==1)throw new RangeError('INVALID_DIRECT_DUEL_RECEIPT');
+ const seen=new Set<string>();
+ for(const r of source.relationships?.directDuels??[]) {
+  const relation=source.relationships?.relations.find(v=>v.relationKey===r.relationKey),game=source.records.games[r.gameKey];
+  if(!relation || relation.type!=='RIVAL' || relation.normalPairKey!==pairKey(r.batterKey,r.pitcherKey) || pairKey(relation.primaryPlayerKey,relation.otherPlayerKey)!==relation.normalPairKey || r.batterKey===r.pitcherKey ||
+   r.kind!=='DIRECT_DUEL_RESOLVED' || r.evidenceKey!==duelKey(r.relationKey,r.gameKey) || seen.has(r.evidenceKey) || !game || game.gameKey!==r.gameKey ||
+   !Number.isSafeInteger(r.worldDay) || r.worldDay<0 || r.worldDay!==game.worldDay || !formedBefore(relation,game,source.relationships!,source.records) || r.seasonKey!==game.scope.seasonKey || r.leagueKey!==game.scope.leagueKey || r.phase!==game.scope.phase ||
+   !Number.isSafeInteger(source.records.revision) || !Number.isSafeInteger(r.recordRevision) || r.recordRevision<1 || r.recordRevision>source.records.revision ||
+   [r.PA,r.H,r.TB].some(n=>!Number.isSafeInteger(n) || n<0) || r.PA<1 || r.H>r.PA || r.TB<r.H || r.TB>4*r.H || r.outcome!==directDuelOutcome(r) ||
+   source.world.players[r.batterKey]?.kind==='PITCHER' || source.world.players[r.pitcherKey]?.kind==='HITTER')throw new RangeError('INVALID_DIRECT_DUEL_RECEIPT');
+  seen.add(r.evidenceKey);
+ }
+}
+/** A correction never rewrites the original duel or removes ownership; only matching current official evidence qualifies. */
+export function directDuelMatchesRecords(source:DirectDuelSource,r:DirectDuelReceipt):boolean {
+ const game=source.records.games[r.gameKey],matchup=game?.matchups[JSON.stringify([r.batterKey,r.pitcherKey])],stats=matchup?.stats;
+ return !!matchup && matchup.batterKey===r.batterKey && matchup.pitcherKey===r.pitcherKey && !!stats && stats.PA===r.PA && stats.H===r.H && stats.TB===r.TB && directDuelOutcome(stats)===r.outcome;
+}
+/** Call immediately after a FINAL contribution is committed, before creating any new relation for that game. */
+export function settleRelationshipDirectDuels(source:DirectDuelSource,gameKey:string):RelationshipLedger|undefined {
+ if(!source.relationships)return undefined;
+ validateDirectDuelReceipts(source);
+ const game=source.records.games[gameKey];if(!game || game.gameKey!==gameKey)throw new RangeError('UNKNOWN_DUEL_GAME');
+ if(!Number.isSafeInteger(source.records.revision) || source.records.revision<1)throw new RangeError('INVALID_DIRECT_DUEL_RECEIPT');
+ assertContributionSplits(game);
+ const ledger=source.relationships,additions:DirectDuelReceipt[]=[];
+ for(const relation of ledger.relations) {
+  if(relation.type!=='RIVAL' || !formedBefore(relation,game,ledger,source.records))continue;
+  const primary=source.world.players[relation.primaryPlayerKey],other=source.world.players[relation.otherPlayerKey];
+  if(!primary || !other || primary.kind===other.kind || primary.simulationKey===other.simulationKey)continue;
+  const [batter,pitcher]=primary.kind==='HITTER'?[primary,other]:[other,primary],stats=game.matchups[JSON.stringify([batter.simulationKey,pitcher.simulationKey])]?.stats;
+  if(!stats || stats.PA===0)continue;
+  const evidenceKey=duelKey(relation.relationKey,gameKey);if(ledger.directDuels?.some(r=>r.evidenceKey===evidenceKey) || additions.some(r=>r.evidenceKey===evidenceKey))continue;
+  additions.push({kind:'DIRECT_DUEL_RESOLVED',evidenceKey,relationKey:relation.relationKey,gameKey,worldDay:game.worldDay,batterKey:batter.simulationKey,pitcherKey:pitcher.simulationKey,...game.scope,recordRevision:source.records.revision,PA:stats.PA,H:stats.H,TB:stats.TB,outcome:directDuelOutcome(stats)});
+ }
+ if(additions.length===0)return ledger;
+ const next={...ledger,directDuels:[...(ledger.directDuels??[]),...additions]};validateDirectDuelReceipts({...source,relationships:next});return next;
+}
 
 /** 60/51 high-school start: one same-team teammate first, then one rival from the eligible pool excluding that teammate.
  * Overall gap uses exact ability units (5 display points = 300,000 units over six abilities). Uses its own seed stream. */

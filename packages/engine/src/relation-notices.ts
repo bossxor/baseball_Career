@@ -1,3 +1,5 @@
+import {pitcherRivalFormationKey,validatePitcherRivalFormations} from './pitcher-rival.js';
+import type {RecordLedger} from './records.js';
 import type {CareerPhase} from '@playball/rules';
 import type {RelationshipHistorySource} from './relationship-history.js';
 import {assertKboAmateurYearEnd} from './kbo-entry.js';
@@ -13,12 +15,14 @@ import {schoolYearEndBasis} from './college-entry.js';
 import {careerRelationshipListView} from './relationship-history.js';
 
 export interface RelationFormationNoticeSource {
- world:RegisteredTeamRelationWorld;relationships?:HighSchoolCareer['relationships'];relationNotices?:HighSchoolCareer['relationNotices'];
+ world:RegisteredTeamRelationWorld;records?:RecordLedger;relationships?:HighSchoolCareer['relationships'];relationNotices?:HighSchoolCareer['relationNotices'];
  previousSeasons?:readonly {world:RegisteredTeamRelationWorld}[];events:readonly EventInstance[];revision:number;phaseContext:{phase:CareerPhase};
 }
 
 function formationContext(source:RelationFormationNoticeSource,relation:PlayerRelationship,formation:RelationMilestone){
  if(formation.evidenceKey===JSON.stringify(['hs-formation',source.world.worldKey,relation.type]))return {competitionKey:'HS',seasonKey:source.previousSeasons?.find(a=>(a.world.leagueKey??'HS')==='HS')?.world.seasonKey??source.world.seasonKey,registrationKey:source.previousSeasons?.find(a=>(a.world.leagueKey??'HS')==='HS')?.world.protagonistSchoolId??source.world.protagonistSchoolId};
+ const pitcher=(source.relationships?.pitcherRivalFormations??[]).filter(r=>r.relationKey===relation.relationKey&&pitcherRivalFormationKey(r)===formation.evidenceKey);
+ if(pitcher.length){if(pitcher.length!==1||!source.records)throw new RangeError('INVALID_RELATION_FORMATION_NOTICE');validatePitcherRivalFormations({...source,relationships:source.relationships!,relationNotices:source.relationNotices??[],records:source.records});const r=pitcher[0]!;return {competitionKey:r.leagueKey,seasonKey:r.seasonKey,registrationKey:r.registrationKey};}
  const matches=(source.relationships?.teamEntries??[]).filter(r=>r.relationKey===relation.relationKey && teamEntryFormationKey(r)===formation.evidenceKey);
  if(matches.length!==1)return null;const entry=matches[0]!;assertTeamEntryRelationReceipt(entry);
  if(entry.worldKey!==source.world.worldKey || entry.primaryPlayerKey!==relation.primaryPlayerKey || entry.otherPlayerKey!==relation.otherPlayerKey || relation.type!=='TEAMMATE' || entry.worldDay!==formation.worldDay)throw new RangeError('INVALID_RELATION_FORMATION_NOTICE');

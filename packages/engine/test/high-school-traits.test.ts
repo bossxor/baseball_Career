@@ -6,6 +6,10 @@ import type {HighSchoolCareer} from '../src/high-school-career.js';
 import {advanceHighSchoolCareer,highSchoolGameContext} from '../src/high-school-progress.js';
 import {refreshCareerTraits,validateCareerTraitLedger} from '../src/high-school-traits.js';
 import {canonicalJson} from '../src/game.js';
+import {emptyBatting,emptyPitching} from '../src/stats.js';
+import type {GameContribution} from '../src/records.js';
+import {assertContributionSplits} from '../src/records.js';
+import type {RelationshipLedger} from '../src/relationships.js';
 
 const fixture=()=>{
  let state=createHighSchoolCareer(createHighSchoolWorld({worldKey:'traits-world',seasonKey:'2032',seed:'traits-fixture',schoolId:'H01',startDay:31,player:{simulationKey:'my-hitter',name:'내타자',kind:'HITTER',position:'CF',throws:'R',bats:'R',pitchForm:null,archetype:'BALANCED',focus:['CONTACT','POWER','DISCIPLINE','DEFENSE'],difficulty:'GROWTH'}}),'GROWTH');
@@ -54,4 +58,27 @@ test('unlocked traits feed the next game context and the career keeps advancing'
  const next=oneGame(state);
  assert.deepEqual(next.traits!.owned['my-hitter']!.unlocked,['T02']);
  assert.ok(next.records.revision>state.records.revision);
+});
+
+test('T14 stays locked without a committed relationship WIN even with a rival and PA20/OPS .900',()=>{
+ const base=fixture(),batterKey='my-hitter',pitcherKey=Object.values(base.world.players).find(p=>p.kind==='PITCHER')!.simulationKey;
+ const stats={PA:20,AB:20,H:9,BB:0,HBP:0,K:11,TB:9,HR:0,twoB:0,threeB:0,RBI:0};
+ const zero={PA:0,AB:0,H:0,BB:0,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0};
+ const pitchZero={BF:0,outs:0,AB:0,H:0,TB:0,HR:0,BB:0,HBP:0,K:0};
+ const game:GameContribution={gameKey:'rival-no-win',worldDay:5,scope:{seasonKey:base.world.seasonKey,leagueKey:'KBO',phase:'REGULAR'},
+  teams:{},batting:{[batterKey]:{...emptyBatting(),...stats,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0}},
+  pitching:{[pitcherKey]:{...emptyPitching(),BF:20,H:9,K:11,outs:11,games:1,starts:1,starterOuts:11,loadedBF:0,W:0,L:0,SV:0,HLD:0,BS:0,shutouts:0}},
+  batterSplits:{[batterKey]:{L:{...zero},R:{...stats}}},pitcherSplits:{[pitcherKey]:{L:{...pitchZero},R:{...pitchZero,BF:20,AB:20,H:9,TB:9,K:11,outs:11}}},
+  matchups:{[JSON.stringify([batterKey,pitcherKey])]:{batterKey,pitcherKey,stats}}};
+ assertContributionSplits(game);
+ const normalPairKey=JSON.stringify([batterKey,pitcherKey].sort());
+ const relationships:RelationshipLedger={schemaVersion:1,formation:{rival:'FORMED',teammate:'NO_CANDIDATE'},relations:[{
+  relationKey:JSON.stringify(['RIVAL',normalPairKey]),normalPairKey,type:'RIVAL',primaryPlayerKey:batterKey,otherPlayerKey:pitcherKey,stage:'FORMED',
+  milestones:[{stage:'FORMED',kind:'FORMATION',evidenceKey:'actual-pair-formation',worldDay:1}],
+ }]};
+ const source={...base,world:{...base.world,leagueKey:'KBO'},relationships,records:{revision:1,games:{[game.gameKey]:game}}},before=canonicalJson(source);
+ const ledger=refreshCareerTraits(source,5,['KBO']);
+ assert.equal(ledger.owned[batterKey]?.unlocked.includes('T14')??false,false);
+ assert.deepEqual(ledger.owned[batterKey]?.qualifiedRivalPitcherKeys??[],[]);
+ assert.equal(canonicalJson(source),before);
 });

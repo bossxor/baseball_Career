@@ -1,0 +1,13 @@
+✔ accepting the sealed original-club minor offer archives the year, closes E66 and starts a 1yr $30000 term (11614.2785ms)
+✔ accepting another club offer moves the player, keeps level, and preserves the sealed quote under JSON (2227.4956ms)
+✔ repeated minor renewals replay every signed year without replacing the original US financial origin (33616.9142ms)
+✔ a renewed away-club minor contract supports a real callup command and next major-year financial replay (20799.3346ms)
+✔ legacy calendar1 first date keeps all75 real games, salary and original pre-cache trait golden hashes (22604.1763ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 69266.1309

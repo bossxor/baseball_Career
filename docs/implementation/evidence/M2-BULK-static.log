@@ -1,0 +1,29 @@
+2026-10-28 M2 bulk final static snapshot. Runtime/full check PENDING.
+
+> node node_modules/typescript/bin/tsc -p packages/engine/tsconfig.json --noEmit
+exit=0
+
+> node node_modules/typescript/bin/tsc -p tsconfig.tests.json --noEmit
+exit=0
+
+> eslint 41 changed TypeScript files
+
+C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\pitcher-rival.test.ts
+  76:61  error  '_schoolId' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+✖ 1 problem (1 error, 0 warnings)
+
+exit=1
+
+> git diff --check
+exit=0
+
+Follow-up: removed unused test destructuring; no gameplay change.
+
+> node node_modules/typescript/bin/tsc -p tsconfig.tests.json --noEmit
+exit=0
+
+> node node_modules/eslint/bin/eslint.js packages/engine/test/pitcher-rival.test.ts
+exit=0
+
+Staged diff check found 3 extra EOF blank lines in newly tracked files; removed without changing TypeScript tokens. Final staged diff check recorded by Git before commit.

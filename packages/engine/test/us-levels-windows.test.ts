@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import {HITTER_TYPES} from '@playball/rules';
 import {usSalaryEntitlement} from '../src/us-season.js';
 import type {UsProgress} from '../src/us-season.js';
-import {reviewUsLevel,resolveUsLevelEvent,settleUsMinorOptions} from '../src/us-levels.js';
+import {reviewUsLevel,resolveUsLevelEvent,resolveUsLevelEventResult,recordUsMinorOptionChoice,settleUsMinorOptions} from '../src/us-levels.js';
 import {raiseUsWindowEvent,resolveUsWindowEvent,trainUsCareer,previewUsTraining,changeUsMidseasonArchetype} from '../src/us-windows.js';
 import {assertActiveUsRosterWorld,usCareerView} from '../src/us-career-entry.js';
 import {canonicalJson} from '../src/game.js';
@@ -46,4 +46,35 @@ test('US option year consumes once only after20 minor registered games, with rep
 
 test('a second low Rookie review cannot accidentally promote, and changed offered evidence cannot move a player',()=>{
  const c=fixture('ROOKIE',48,10000);c.season!.levelReviews=[{receiptKey:'prior-low',registrationKey:c.season!.receiptKey,level:'ROOKIE',teamGames:24,day:day(c)-28,score:20,sample:96,to:null,otherKey:null,outcome:'BELOW'}];const low=reviewUsLevel(c,day(c),phase(c))!;assert.equal(low.season!.levelReviews!.at(-1)!.outcome,'BELOW');assert.equal(low.phaseContext.phase,'SEASON_PROGRESS');const r=offered(fixture()),bad=structuredClone(r);bad.season!.levelReviews!.at(-1)!.score++;assert.throws(()=>decide(bad,'CONFIRM_PROMOTION'),/REVIEW_CHANGED/);
+});
+
+function demotionReview(){
+ const c=fixture('AAA',48,10000),firstDay=c.seasonSchedule!.leagues.AAA.filter(g=>g.homeTeamKey===c.protagonistOrganizationId||g.awayTeamKey===c.protagonistOrganizationId)[23]!.worldDay;
+ const first=reviewUsLevel(c,firstDay,{...phase(c),nextWorldDay:firstDay+1})!;assert.equal(first.season!.levelReviews!.at(-1)!.outcome,'BELOW');return offered(first);
+}
+test('two actual low review calls offer E61 and its domain command swaps AAA/AA without changing pay or identity',()=>{
+ const c=demotionReview(),e=c.events.at(-1)!,review=c.season!.levelReviews!.at(-1)!,raw=canonicalJson(c),next=decide(c,'CONFIRM_DEMOTION'),org=next.world.organizations.find(o=>o.id===c.protagonistOrganizationId)!;
+ assert.equal(e.definitionId,'E61');assert.equal(review.teamGames,48);assert.equal(next.registration.level,'AA');assert.ok(org.levels.AA.includes(c.protagonistKey));assert.ok(org.levels.AAA.includes(review.otherKey!));assertActiveUsRosterWorld(next.world);
+ assert.deepEqual(next.contract,c.contract);assert.deepEqual(next.inventory,c.inventory);assert.deepEqual(next.income,c.income);assert.deepEqual(next.records,c.records);assert.deepEqual(next.seasonGrowth,c.seasonGrowth);assert.deepEqual(next.world.players,c.world.players);assert.equal(next.season!.levelMoves!.at(-1)!.from,'AAA');assert.equal(next.events.at(-1)!.status,'RESOLVED');assert.equal(next.phaseContext.phase,'SEASON_PROGRESS');assert.equal(next.revision,c.revision+1);assert.equal(canonicalJson(c),raw);assert.deepEqual(usCareerView(JSON.parse(JSON.stringify(next))),usCareerView(next));assert.throws(()=>decide(next,'CONFIRM_DEMOTION'),/INVALID_US_LEVEL_EVENT/);
+});
+test('E61 OPEN_RIGHTS navigates to S08 with the event, registration and money unchanged',()=>{
+ const c=demotionReview(),e=c.events.at(-1)!,raw=canonicalJson(c),out=resolveUsLevelEventResult(c,c.revision,{eventKey:e.eventKey,eventVersion:e.version,command:'OPEN_RIGHTS'});
+ assert.equal(out.career,c);assert.equal(out.navigation!.targetScreen,'S08');assert.equal(out.navigation!.sourceEventKey,e.eventKey);assert.equal(c.events.at(-1)!.status,'OPEN');assert.equal(canonicalJson(c),raw);assert.throws(()=>decide(c,'OPEN_RIGHTS'),/US_RIGHTS_VIEW_ONLY/);assert.equal(canonicalJson(c),raw);
+ const published=structuredClone(c);published.revision++;assert.equal(resolveUsLevelEventResult(published,published.revision,{eventKey:e.eventKey,eventVersion:e.version,command:'OPEN_RIGHTS'}).career,published);assert.equal(decide(published,'CONFIRM_DEMOTION').registration.level,'AA');
+});
+test('E61 navigation and demotion reject stale or changed review, event and resume input without writes',()=>{
+ const c=demotionReview(),e=c.events.at(-1)!,input={eventKey:e.eventKey,eventVersion:e.version,command:'OPEN_RIGHTS'},raw=canonicalJson(c);
+ assert.throws(()=>resolveUsLevelEventResult(c,c.revision-1,input),/REVISION/);assert.throws(()=>resolveUsLevelEventResult(c,c.revision,{...input,eventVersion:e.version+1}),/EVENT_VERSION_CHANGED/);assert.throws(()=>resolveUsLevelEventResult(c,c.revision,{...input,command:'CONFIRM_PROMOTION'}),/INVALID_CHOICE/);
+ for(const change of [(x:UsCareer)=>{x.season!.levelReviews!.at(-1)!.score++;},(x:UsCareer)=>{x.events.at(-1)!.resume.registrationKey='foreign-club';},(x:UsCareer)=>{if(x.phaseContext.phase==='EVENT_DECISION')x.phaseContext.resume.nextWorldDay++;}]){const bad=structuredClone(c);change(bad);const before=canonicalJson(bad);assert.throws(()=>resolveUsLevelEventResult(bad,bad.revision,input),/REVIEW_CHANGED/);assert.equal(canonicalJson(bad),before);}
+ assert.equal(canonicalJson(c),raw);
+});
+test('MLB E61 still requires exhausted-option consent and preserves the MLB contract on successful demotion',()=>{
+ const c=decide(offered(fixture('AAA')),'CONFIRM_CALLUP'),s=c.season!,key=c.protagonistKey,club=c.protagonistOrganizationId,last=s.levelMoves!.at(-1)!.day,games=c.seasonSchedule!.leagues.MLB.filter(g=>g.worldDay>last&&(g.homeTeamKey===club||g.awayTeamKey===club)).slice(0,48);
+ // Controlled team-game rows exercise review/option rules; these are not48 simulated MLB games.
+ c.world.players[key]!.abilities=Object.fromEntries(Object.keys(c.world.players[key]!.abilities).map(k=>[k,10000]));
+ for(const g of games)c.records.games[g.simulationKey]={gameKey:g.simulationKey,worldDay:g.worldDay,scope:{seasonKey:c.world.seasonKey,leagueKey:'MLB',phase:'REGULAR'},teams:{[g.homeTeamKey]:{games:1,W:1,L:0,T:0,R:1,RA:0},[g.awayTeamKey]:{games:1,W:0,L:1,T:0,R:0,RA:1}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}};
+ c.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:games.at(-1)!.worldDay+1,pendingGame:null};s.options={[key]:{used:3,seasons:[],minorGames:0}};
+ const first=reviewUsLevel(c,games[23]!.worldDay,{...phase(c),nextWorldDay:games[23]!.worldDay+1})!,blocked=reviewUsLevel(first,day(first),phase(first))!;assert.equal(blocked.season!.levelReviews!.at(-1)!.reason,'MINOR_CONSENT_REQUIRED');assert.equal(blocked.phaseContext.phase,'SEASON_PROGRESS');
+ const fa=recordUsMinorOptionChoice(first,first.revision,'FA'),refused=reviewUsLevel(fa,day(fa),phase(fa))!;assert.equal(refused.season!.levelReviews!.at(-1)!.reason,'OPTION_FA_ELECTED');
+ const stayed=recordUsMinorOptionChoice(first,first.revision,'STAY'),r=offered(stayed),moved=decide(r,'CONFIRM_DEMOTION');assert.equal(r.events.at(-1)!.definitionId,'E61');assert.equal(moved.registration.level,'AAA');assert.equal(moved.contract.type,'US_MAJOR');assert.deepEqual(moved.contract,r.contract);assert.deepEqual(moved.inventory,r.inventory);assert.deepEqual(moved.income,r.income);assert.equal(moved.season!.options![key]!.used,3);assert.ok(moved.season!.protectedRoster![club]!.includes(key));assertActiveUsRosterWorld(moved.world);
 });

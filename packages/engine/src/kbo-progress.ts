@@ -1,3 +1,6 @@
+import {formPitcherRivalFromGame} from './pitcher-rival.js';
+import {raiseProHiddenTraitNotice} from './pro-trait-notices.js';
+import {settleRelationshipDirectDuels} from './relationships.js';
 import {refreshCareerSeasonGoals} from './season-goals.js';
 import {settleRegisteredPitchLearning,registerPitchLearning,registerPitchLearningCalendar} from './pitch-learning-progress.js';
 import {closeKboNpcMilitaryCalendarDay,settleKboNpcMilitaryPayrollDay} from './kbo-npc-military.js';
@@ -99,9 +102,11 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
  let plateAppearances=0,completedInnings=0,daysClosed=0;
  const finish=(stopReason:KboProgressStop):KboProgressResult=>{career.revision++;return {career:refreshCareerSeasonGoals(career),stopReason,plateAppearances,completedInnings,daysClosed};};
  // Regular-season close: T16 starter streaks settle once per season (107 §7), then the season review phase.
- const review=():KboProgressResult=>{career.traits=settleStarterSeasonTraits(career,last);career.phaseContext={phase:'SEASON_REVIEW'};return finish('SEASON_REVIEW');};
+ const interruptHidden=(day:number)=>{const notice=raiseProHiddenTraitNotice(career,day,progress);if(!notice)return false;Object.assign(career,notice);return true;};
+ const review=():KboProgressResult=>{career.traits=settleStarterSeasonTraits(career,last);if(interruptHidden(last))return finish('MAJOR_EVENT');career.phaseContext={phase:'SEASON_REVIEW'};return finish('SEASON_REVIEW');};
  while(plateAppearances<1000 && completedInnings<20 && daysClosed<maxDays){
   const day=progress.nextWorldDay;
+  if(!progress.pendingGame&&interruptHidden(day-1))return finish('MAJOR_EVENT');
   if(day>last){return review();}
   if(!progress.pendingGame){
    if(career.sangmu?.emergency && schedulesOf(career).FUTURES.some(g=>g.homeTeamKey==='SANGMU' || g.awayTeamKey==='SANGMU'))career.sangmu=reconcileSangmuEmergency(career.world,career.sangmu,career.health,day);
@@ -128,7 +133,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
     if(!Object.hasOwn(career.world.repertoires,key))throw new RangeError('UNREGISTERED_GAME_PITCHER');
     career.world.repertoires[key]=structuredClone(committed.world.repertoires[key]!);
    }
-   career.records=committed.records;progress.pendingGame=null;
+   career.records=committed.records;const duelRelations=settleRelationshipDirectDuels(career,scheduled.simulationKey);if(duelRelations)career.relationships=duelRelations;const pitcherFormation=formPitcherRivalFromGame(career,scheduled.simulationKey);if(pitcherFormation)Object.assign(career,pitcherFormation);progress.pendingGame=null;
    if(pendingQueue(career,day).length>0)continue;
   }
   const closed=closeKboCompetitionDay(career.world,schedulesOf(career),career.protagonistKey,career.records,career.health,career.days!,day,career.sangmu);
@@ -147,6 +152,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   if(callup){Object.assign(career,callup);if(career.phaseContext.phase==='EVENT_DECISION')return finish('MAJOR_EVENT');}
   const windowEvent=progress.nextWorldDay>last?null:raiseKboWindowEvent(career,day,progress);
   if(windowEvent){Object.assign(career,windowEvent);return finish('MAJOR_EVENT');}
+  if(interruptHidden(day))return finish('MAJOR_EVENT');
   // Like school careers, a change to my own player's health stops progress so the player can react before the next day.
   if(closed.result.injured.includes(career.protagonistKey) || closed.result.recovered.includes(career.protagonistKey)){
    if(progress.nextWorldDay>last){return review();}
