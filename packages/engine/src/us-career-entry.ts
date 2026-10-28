@@ -32,13 +32,15 @@ import {queueRelationFormationNotices} from './relation-notices.js';
 import type {KboPostingOffer,KboPostingReturnRights} from './kbo-posting.js';
 import {usContractOrigin} from './us-contract-origin.js';
 import type {UsContractOrigin} from './us-contract-origin.js';
+import type {UsMinorMarket} from './us-minor-market.js';
+import {assertUsMinorMarket} from './us-minor-market.js';
 
 export interface KboUsTransfer {
  source:'POSTING'|'OVERSEAS_FA';postingId?:string;windowId?:string;offer:KboPostingOffer;returnRights:KboPostingReturnRights|null;kboSeasonKey:string;sourceRevision:number;origin?:UsContractOrigin;
 }
 export interface ActiveUsRosterWorld extends UsRosterWorld {status:'ACTIVE';calendar:SeasonCalendar;reserves?:Record<string,string[]>}
 export interface UsCareer {
- goals?:CareerGoalLedger;
+ goals?:CareerGoalLedger;minorMarket?:UsMinorMarket;
  retirement?:UsCareerRetirement;schemaVersion:1|2|3|4;majorYears?:readonly UsMajorYearArchive[];minorYears?:readonly UsMinorYearArchive[];mode:'US_CAREER';revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveUsRosterWorld;protagonistKey:string;protagonistOrganizationId:string;
  phaseContext:UsPhase;postseason?:{bracket:MlbPostseason;conferences:Record<MlbLeague,string[]>;gameEvidence:string[]};season?:UsSeasonState;seasonSchedule?:UsSeasonSchedule;preseasonPlan?:UsPreseasonPlan;campNotices?:readonly EventInstance[];
  activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string;populationBasis:'INITIAL_INVENTORY'|'LEGACY_BOOTSTRAP'|'KBO_TRANSFER'};
@@ -83,6 +85,7 @@ export function usCareerView(c:UsCareer){
  assertUsRetirementState(c);
  const p=c.world.players[c.protagonistKey],org=c.world.organizations.find(o=>o.id===c.protagonistOrganizationId),r=c.registration;
  if(![1,2,3,4].includes(c.schemaVersion) || c.mode!=='US_CAREER' || !['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW','EVENT_DECISION','POSTSEASON_PROGRESS','RETIRE_CONFIRM','ARCHIVED'].includes(c.phaseContext.phase) || !p || !org || r.playerKey!==p.simulationKey || r.clubId!==org.id || r.seasonKey!==c.world.seasonKey || !['ACTIVE','INJURED'].includes(r.status) || (r.status==='ACTIVE'?!org.levels[r.level]?.includes(p.simulationKey):!c.world.reserves?.[org.id]?.includes(p.simulationKey)) || c.rights.holderOrgId!==org.id || c.contract.status!=='ACTIVE' || c.contract.contractKey!==(c.schemaVersion===4?(Array.isArray(c.majorYears)?c.majorYears.at(-1)?.nextContract?.contractKey:undefined):(c.season?.majorActivation?.contractKey??c.activation.contractKey)))throw new RangeError('INVALID_US_ENTRY_VIEW');assertUsRecruitmentWorld(c.inventory);
+ if(c.minorMarket!==undefined)assertUsMinorMarket(c);
  if(c.activation.populationBasis==='KBO_TRANSFER'){
   const t=c.kboTransfer;if(!t||t.offer.organizationId!==c.protagonistOrganizationId||c.income.some(e=>e.kind==='SIGNING_BONUS')||c.activation.receiptKey!==JSON.stringify(['kbo-us-activation',t.postingId??t.windowId]))throw new RangeError('INVALID_US_ENTRY_VIEW');
   if(t.origin===undefined){if(c.contract.annualSalaryUsd!==t.offer.annualSalaryUsd||c.contract.years!==t.offer.years||c.activation.contractKey!==c.contract.contractKey)throw new RangeError('INVALID_US_ENTRY_VIEW');}

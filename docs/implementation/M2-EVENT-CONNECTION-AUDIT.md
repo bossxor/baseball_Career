@@ -71,7 +71,7 @@ DV의5개는 집중 검사16개에 포함된 도메인/자격·복귀/의무 알
 | E63 구단의 대답 | CONTRACT | NAVIGATE:OPEN_POSTING_OFFERS<br>ACK:ACK_EVENT | FOCUSED_VERIFIED_EA | [kbo-posting.ts](../../packages/engine/src/kbo-posting.ts) resolveKboPostingClub 봉인 decision |
 | E64 협상의 끝 | CONTRACT | DOMAIN:ACCEPT_CAREER_OFFER<br>DOMAIN:REMAIN_ORIGINAL | FOCUSED_VERIFIED_EB | resolveKboPostingOfferEvent ACCEPT/REMAIN |
 | E65 처음 선 빅리그 | REGISTRATION | ACK:ACK_EVENT | FOCUSED_AND_FULL_DW_PASS |  |
-| E66 미국에서 맞는 FA | ROUTE | NAVIGATE:OPEN_CAREER_OFFERS<br>NAVIGATE:OPEN_RETURN | NOT_AUDITED |  |
+| E66 미국에서 맞는 FA | ROUTE | NAVIGATE:OPEN_CAREER_OFFERS<br>NAVIGATE:OPEN_RETURN | PARTIAL_ENGINE_NAV_REVIEWED_EK | [us-minor-market.ts](../../packages/engine/src/us-minor-market.ts) |
 | E67 돌아갈 그라운드 | ROUTE | DOMAIN:CONFIRM_DOMESTIC_RETURN<br>DOMAIN:CANCEL_RETURN | NOT_AUDITED |  |
 | E68 기다림도 커리어 | ROUTE | DOMAIN:ADVANCE_RETURN_PROGRAM | NOT_AUDITED |  |
 | E69 두 리그의 마지막 인사 | ROUTE | NAVIGATE:OPEN_ARCHIVE | NOT_AUDITED |  |

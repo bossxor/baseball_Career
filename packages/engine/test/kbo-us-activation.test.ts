@@ -26,6 +26,7 @@ import {startNextUsMinorSeason} from '../src/us-year-transition.js';
 import {reviewUsLevel,resolveUsLevelEvent} from '../src/us-levels.js';
 import {usSalaryEntitlement} from '../src/us-season.js';
 import {emptyBatting} from '../src/stats.js';
+import {openUsMinorMarket,usMinorMarketView,resolveUsMinorMarketEvent} from '../src/us-minor-market.js';
 
 type Fixture=Pick<KboCareer,'world'|'protagonistKey'> & {proSeasons:KboSeasonArchive[];seasonClose?:KboSeasonClose;records:ReturnType<typeof emptyRecordLedger>;health:ReturnType<typeof createHealthLedger>};
 function season(s:Fixture,year:string,count:number){
@@ -77,8 +78,8 @@ test('KBO overseas activation keeps nonapplicable service and refuses unresolved
  const bad=structuredClone(source);bad.military!.status='UNRESOLVED';const before=canonicalJson(bad);assert.throws(()=>activateKboUsCareer(bad,bad.revision,roster,inventory),/KBO_US_MILITARY_BLOCKED/);assert.equal(canonicalJson(bad),before);assert.equal(canonicalJson({source,roster,inventory}),raw);
 });
 
-function transferred(ability=80,age=29){
- const source=postedCareer(ability,age),roster=createUsRosterWorld({worldKey:source.world.worldKey,seasonKey:'2043',seed:source.world.seed,difficulty:source.difficulty,organizations:Array.from({length:30},(_,i)=>({id:'US'+String(i+1).padStart(2,'0'),name:'US Club '+String(i+1).padStart(2,'0')}))}),inventory=initialUsRecruitmentInventory(roster,roster.organizations.map(o=>({organizationId:o.id,rookieCapacity:23,aCapacity:23,availableBudgetUsd:40_000_000,nationalReleaseAllowed:true,militaryReturnOption:true})));
+function transferred(ability=80,age=29,budget=40_000_000,otherBudget=budget){
+ const source=postedCareer(ability,age),holder=source.posting!.windows[0]!.offers!.find(o=>o.offerKey===source.posting!.windows[0]!.signedOfferKey)!.organizationId,roster=createUsRosterWorld({worldKey:source.world.worldKey,seasonKey:'2043',seed:source.world.seed,difficulty:source.difficulty,organizations:Array.from({length:30},(_,i)=>({id:'US'+String(i+1).padStart(2,'0'),name:'US Club '+String(i+1).padStart(2,'0')}))}),inventory=initialUsRecruitmentInventory(roster,roster.organizations.map(o=>({organizationId:o.id,rookieCapacity:23,aCapacity:23,availableBudgetUsd:o.id===holder?budget:otherBudget,nationalReleaseAllowed:true,militaryReturnOption:true})));
  return {source,us:activateKboUsCareer(source,source.revision,roster,inventory)};
 }
 function openingTransferred(c:UsCareer){let n=confirmUsPreseasonPlan(c,c.revision);for(const e of unreadUsFirstCampNotices(n))n=resolveUsFirstCampNotice(n,n.revision,{eventKey:e.eventKey,eventVersion:e.eventVersion,command:'ACK_EVENT'});n=publishUsSeasonSchedule(n,n.revision);return startUsRegularSeason(n,n.revision);}
@@ -118,4 +119,39 @@ test('present null and partial KBO contract origins cannot bypass validation as 
 
 test('new overseas quotes cannot start a season after the existing age45 career limit',()=>{
  const c=postedCareer(80,45,false);assert.deepEqual(c.posting!.windows[0]!.offers,[]);
+});
+
+let marketSource:UsCareer|undefined;
+function expiredMinor(){marketSource??=finishControlledMajorSeason(openingTransferred(transferred(70,35).us));return structuredClone(marketSource);}
+const zeroFunding=(c:UsCareer)=>c.world.organizations.map(o=>({organizationId:o.id,addedBudgetUsd:0}));
+function minorDemandSource(){
+ const c=expiredMinor(),me=c.world.players[c.protagonistKey]!;
+ // Controlled weak same-position competitors isolate demand admission; this is not native NPC growth evidence.
+ for(const org of c.world.organizations.filter(o=>o.id!==c.protagonistOrganizationId))for(const key of org.levels[c.registration.level]){const p=c.world.players[key]!;if(p.kind===me.kind&&p.position===me.position)p.abilities=Object.fromEntries(Object.keys(p.abilities).map(k=>[k,100_000]));}
+ return c;
+}
+test('expired KBO minor market seals real budget/demand offers at the current level once and survives JSON',()=>{
+ const c=minorDemandSource();
+ const raw=canonicalJson(c),opened=openUsMinorMarket(c,c.revision,zeroFunding(c)),view=usMinorMarketView(opened);assert.equal(canonicalJson(c),raw);assert.equal(view.offers.length,4);assert.equal(view.offers.filter(o=>o.organizationId!==c.protagonistOrganizationId).length,3);for(const o of view.offers){assert.equal(o.years,1);assert.equal(o.annualSalaryUsd,30_000);assert.equal(o.initialLevel,c.registration.level);if(o.organizationId!==c.protagonistOrganizationId&&o.competitorScore!==null)assert.ok(view.playerScore>o.competitorScore);}assert.equal(view.returnHome.route,'ORIGINAL_CLUB_PRIORITY');assert.deepEqual(usMinorMarketView(JSON.parse(JSON.stringify(opened))),view);assert.equal(openUsMinorMarket(opened,opened.revision,zeroFunding(c)),opened);assert.equal(opened.events.filter(e=>e.definitionId==='E66').length,1);
+});
+test('E66 offers and domestic-return navigation expose the sealed comparison without resolving, signing or paying',()=>{
+ const c=expiredMinor(),opened=openUsMinorMarket(c,c.revision,zeroFunding(c)),e=opened.events.at(-1)!,raw=canonicalJson(opened);for(const [command,screen]of [['OPEN_CAREER_OFFERS','S08'],['OPEN_RETURN','S33']]){const out=resolveUsMinorMarketEvent(opened,opened.revision,{eventKey:e.eventKey,eventVersion:e.version,command:command!});assert.equal(out.navigation.targetScreen,screen);assert.equal(out.career,opened);assert.equal(canonicalJson(opened),raw);assert.equal(e.status,'OPEN');}
+ assert.throws(()=>resolveUsMinorMarketEvent(opened,opened.revision-1,{eventKey:e.eventKey,eventVersion:e.version,command:'OPEN_RETURN'}),/REVISION/);
+});
+test('minor market rejects early entry, stale input, funding drift and forged quotes without partial writes',()=>{
+ const c=expiredMinor(),opened=openUsMinorMarket(c,c.revision,zeroFunding(c)),raw=canonicalJson(opened);assert.throws(()=>openUsMinorMarket(c,c.revision-1,zeroFunding(c)),/REVISION/);assert.throws(()=>openUsMinorMarket(transferred(70,33).us,1,[]),/REVISION|NOT_AVAILABLE/);const funding=zeroFunding(c);funding[0]!.addedBudgetUsd=1;assert.throws(()=>openUsMinorMarket(opened,opened.revision,funding),/US_MINOR_MARKET_FUNDING_CHANGED/);const bad=structuredClone(opened);bad.minorMarket!.offers[0]!.annualSalaryUsd++;assert.throws(()=>usMinorMarketView(bad),/INVALID_US_MINOR_MARKET/);assert.equal(canonicalJson(opened),raw);
+});
+test('unfunded KBO minor market still exposes domestic return, never invents an offer or resets level',()=>{
+ const c=finishControlledMajorSeason(openingTransferred(transferred(70,35,30_000,0).us)),opened=openUsMinorMarket(c,c.revision,zeroFunding(c)),view=usMinorMarketView(opened);assert.deepEqual(view.offers,[]);assert.equal(view.returnHome.available,true);assert.equal(opened.registration.level,c.registration.level);assert.deepEqual(opened.inventory,c.inventory);
+});
+
+test('minor market malformed rows and unrelated E66 evidence fail with a controlled boundary error',()=>{
+ const c=expiredMinor(),opened=openUsMinorMarket(c,c.revision,zeroFunding(c));for(const market of [null,{...opened.minorMarket,offers:[null]},{...opened.minorMarket,funding:[null]}]){const bad=JSON.parse(JSON.stringify(opened));bad.minorMarket=market;const raw=canonicalJson(bad);assert.throws(()=>usMinorMarketView(bad),/INVALID_US_MINOR_MARKET/);assert.equal(canonicalJson(bad),raw);}const wrong=structuredClone(opened);wrong.events.find(e=>e.eventKey===wrong.minorMarket!.eventKey)!.evidence.fields={playerSimulationKey:c.protagonistKey,contractWindowIdOrReturnProgramId:'foreign-window',stage:'MINOR_EXPIRED'};assert.throws(()=>usMinorMarketView(wrong),/INVALID_US_MINOR_MARKET/);
+});
+
+test('minor market saved competitor identities cannot be foreign, unrelated or null',()=>{
+ const c=minorDemandSource(),opened=openUsMinorMarket(c,c.revision,zeroFunding(c)),wrongClub=c.world.organizations.find(o=>o.id===c.protagonistOrganizationId)!.levels[c.registration.level].find(k=>k!==c.protagonistKey)!;for(const key of ['foreign-player',wrongClub,null]){const forged=structuredClone(opened),offer=forged.minorMarket!.offers.find(o=>o.organizationId!==c.protagonistOrganizationId)!;offer.competitorKey=key;if(key===null)offer.competitorScore=null;assert.throws(()=>usMinorMarketView(forged),/INVALID_US_MINOR_MARKET/);}
+});
+test('minor market absent comparators cannot create other-club demand',()=>{
+ const absent=minorDemandSource(),me=absent.world.players[absent.protagonistKey]!;for(const org of absent.world.organizations.filter(o=>o.id!==absent.protagonistOrganizationId))for(const key of org.levels[absent.registration.level]){const p=absent.world.players[key]!;if(p.kind===me.kind&&p.position===me.position)p.position=me.position==='LF'?'RF':'LF';}assert.equal(usMinorMarketView(openUsMinorMarket(absent,absent.revision,zeroFunding(absent))).offers.filter(o=>o.organizationId!==absent.protagonistOrganizationId).length,0);
 });

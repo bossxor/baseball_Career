@@ -1,0 +1,40 @@
+✖ minor market malformed rows and unrelated E66 evidence fail with a controlled boundary error (7262.7011ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8132.897
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-us-activation.test.ts:1:20143
+✖ minor market malformed rows and unrelated E66 evidence fail with a controlled boundary error (7262.7011ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /INVALID_US_MINOR_MARKET/. Input:
+
+  "TypeError: Cannot read properties of null (reading 'organizationId')"
+
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\kbo-us-activation.test.ts:145:288)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: Cannot read properties of null (reading 'organizationId')
+        at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-minor-market.ts:26:959)
+        at Array.filter (<anonymous>)
+        at assertUsMinorMarket (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-minor-market.ts:26:947)
+        at usCareerView (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-career-entry.ts:86:31)
+        at assertUsCareerRevision (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-career-entry.ts:107:236)
+        at usMinorMarketView (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-minor-market.ts:51:2)
+        at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\kbo-us-activation.test.ts:145:299)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\kbo-us-activation.test.ts:145:288),
+    expected: /INVALID_US_MINOR_MARKET/,
+    operator: 'throws',
+    diff: 'simple'
+  }

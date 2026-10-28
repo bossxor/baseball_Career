@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "INCOMPLETE_IMPLEMENTATION_AUDIT",
-  "baseline": "910447c + M2-EH verified worktree",
+  "baseline": "910447c + M2-EH verified worktree; E66 M2-EK verified",
   "items": [
     {
       "id": "E01",
@@ -2090,10 +2090,32 @@
           "dispatchClass": "NAVIGATE"
         }
       ],
-      "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
-      "references": [],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "scope": "ENGINE_REVIEWED_WITH_DECLARED_LIMITS",
+      "verification": "PARTIAL_ENGINE_NAV_REVIEWED_EK",
+      "references": [
+        {
+          "path": "packages/engine/src/us-minor-market.ts",
+          "line": 33
+        },
+        {
+          "path": "packages/engine/src/us-minor-market.ts",
+          "line": 54
+        }
+      ],
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent.",
+      "domainReview": {
+        "status": "SOURCE_AND_TESTS_REVIEWED_FULL_EK_PASS",
+        "trigger": "Explicit openUsMinorMarket on closed expired signed KBO minor term; real budget and competition inputs",
+        "effect": "Frozen original/up to3 other offers; E66 OPEN_CAREER_OFFERS and OPEN_RETURN are pure navigation, do not close event or sign/pay",
+        "tests": [
+          "kbo-us-activation.test.ts"
+        ],
+        "testPaths": [
+          "packages/engine/test/kbo-us-activation.test.ts"
+        ],
+        "limits": "Controlled year-end/performance/weak-comparator fixtures; no signing, roster transfer, native full year, current domestic-world handoff or frontend proof",
+        "evidence": "docs/implementation/evidence/M2-EK-check.log"
+      }
     },
     {
       "id": "E67",

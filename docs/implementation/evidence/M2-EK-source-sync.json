@@ -1,0 +1,134 @@
+{
+  "head": "f5b16adac5300d7ccd17f3f34040fb01fa977c0c",
+  "fullCheck": "PASS",
+  "result": {
+    "tests": 794,
+    "pass": 792,
+    "skip": 2,
+    "fail": 0,
+    "durationMs": 998088.3797,
+    "webPass": 22,
+    "unchangedFiles": 461
+  },
+  "postCheckFormatting": {
+    "path": "packages/engine/src/us-career-entry.ts",
+    "beforeSha256": "85fca37e70acc0d20fd7478ad909ebae14e3b5f9d830ec4be95af4f17d5736d5",
+    "afterSha256": "ff3b3360981f12fd89c8e54c1825bceea67b188ad8854202d8bf3cb032df6d85",
+    "change": "One duplicate CR removed",
+    "proof": "TypeScript emitted ES2022/ESNext JavaScript exactly identical"
+  },
+  "files": [
+    {
+      "path": "docs/design/14-CANONICAL-DECISIONS.md",
+      "sha256": "73068df0e189331e1b16bc8c06812ab9eb7ab0d4e0f8cc26cc72a3bf8a498f64"
+    },
+    {
+      "path": "docs/design/23-US-CONTRACTS-RIGHTS.md",
+      "sha256": "c6c37b4ae8963bcebd532ca8f121ae29a5356328c9dabf04e1a3b743fb409809"
+    },
+    {
+      "path": "docs/design/DESIGN-ALL.md",
+      "sha256": "0bde56916f2039810e757817650cad6e8bdc87f401023742f9b5484bc3f24eef"
+    },
+    {
+      "path": "docs/design/MANIFEST-SHA256.csv",
+      "sha256": "c3c4d679931f858bb4a3fe36f7962d7fb9f01edfd22c47945e9e3e71c80f9892"
+    },
+    {
+      "path": "docs/design/STATUS.md",
+      "sha256": "7cf67bd7c84ee369f3b5305353c36088a051ab9412c3955fd22aa2697393e7c2"
+    },
+    {
+      "path": "docs/implementation/HANDOFF-TO-GPT.md",
+      "sha256": "3fa9bbce2a5136dac9dc399131e9399fdae27dc41f96e6c859c1440f1feff615"
+    },
+    {
+      "path": "docs/implementation/M2-EK-MINOR-MARKET-COMPARISON.md",
+      "sha256": "4b85c11bccd5dbd50761a425fbb05cacfc76f97bf8775dda39d28d323cd12b2f"
+    },
+    {
+      "path": "docs/implementation/M2-EK-MINOR-MARKET-PLAN.md",
+      "sha256": "276f049518f818d18de1e5ca1cd23cb94037bd3fe1be1a815d157cb425615a9a"
+    },
+    {
+      "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.json",
+      "sha256": "e30d96352ab7b2b1b7f90842b13138667fb51276031ee08ab6adb41f1d81a011"
+    },
+    {
+      "path": "docs/implementation/M2-EVENT-CONNECTION-AUDIT.md",
+      "sha256": "06433d665a283a37e0a0c2d82a3886fbc7e8a8ce302bea2da2be9d6ef179f59f"
+    },
+    {
+      "path": "docs/implementation/M2-POST-EK-IMPLEMENTATION-PLAN.md",
+      "sha256": "6581156eb3e7ad4ea10f8d89be9ce54373081b353654ecc2a3339ba391a92c84"
+    },
+    {
+      "path": "docs/implementation/NEXT-SESSION.md",
+      "sha256": "2fd117e721346798ef5fc786482b16596e795ae5d2f8880fc184b09b75efe063"
+    },
+    {
+      "path": "docs/implementation/PROGRESS.md",
+      "sha256": "16d469e7f929a035f267bfe8229975acb1f0e6eb7432953b1ebd7b8509754059"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EK-absent-before.log",
+      "sha256": "6bfc5af240f9fd731270becdb0851149be11b19efd2f495fae22e8345a6ff334"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EK-before.log",
+      "sha256": "ad9c7251834fa748e1df2490be225fabc75801ec9d08e5a56e404fa5532a03a4"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EK-check.log",
+      "sha256": "424e240a3cbf8c8b6f6daa1ceb51e501cdc0afaabd3c4863911040d704554cfd"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EK-focused.log",
+      "sha256": "99f123a9c4d328f3dc595df48ba9343be2831bb81efc29aca0c5f2fdc0838d9e"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EK-identity-before.log",
+      "sha256": "0be261debbbfd5bf756fc3c1dc9e2250f79cfddec1d90200a4011b211f21d8e4"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EK-initial-lint.log",
+      "sha256": "faa1f0b4beb44d1c5cfaf0e4855b22a0fa1355c2e96c2ae162cd0d03c645ba6f"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EK-initial-types.log",
+      "sha256": "66c92ff76b98acd40406928ef24ab00309a9ff46fe55adfe3a59feed2f7cb6be"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EK-null-before.log",
+      "sha256": "98d0f34a95d6398b94c2ffe7d8ce3cf755b447ff601cf2b044c0f3c578a7185c"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EK-smoke.log",
+      "sha256": "2f7bee60e25820c0ab22b707d59591fac29d2a96e97d8fb5a7199a7fa03b6de8"
+    },
+    {
+      "path": "docs/implementation/evidence/M2-EK-source-freeze.json",
+      "sha256": "2433eb1ed8d9008a09580114b5370c6fa650c045dca466a62ed85840261eb774"
+    },
+    {
+      "path": "packages/engine/src/index.ts",
+      "sha256": "35e4e119b7bea4d39813b889dbc2043d429719ca254fc63aeaa51195341b5007"
+    },
+    {
+      "path": "packages/engine/src/us-career-entry.ts",
+      "sha256": "ff3b3360981f12fd89c8e54c1825bceea67b188ad8854202d8bf3cb032df6d85"
+    },
+    {
+      "path": "packages/engine/src/us-levels.ts",
+      "sha256": "bf4c0957b2b129a1a830756859b8300327db3814aca8a6f4304440c0a884e262"
+    },
+    {
+      "path": "packages/engine/src/us-minor-market.ts",
+      "sha256": "2cd8765dced1936713af0de898eea2db816b4b403a20365b5751e7329361a714"
+    },
+    {
+      "path": "packages/engine/test/kbo-us-activation.test.ts",
+      "sha256": "cc810194d1d0a7054f0a05b416657bb9348bdbb26abe7169a4448593cd58702c"
+    }
+  ]
+}

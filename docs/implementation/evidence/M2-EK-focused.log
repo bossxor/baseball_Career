@@ -1,0 +1,15 @@
+✔ expired KBO minor market seals real budget/demand offers at the current level once and survives JSON (12571.389ms)
+✔ E66 offers and domestic-return navigation expose the sealed comparison without resolving, signing or paying (3368.4461ms)
+✔ minor market rejects early entry, stale input, funding drift and forged quotes without partial writes (7438.6706ms)
+✔ unfunded KBO minor market still exposes domestic return, never invents an offer or resets level (7569.46ms)
+✔ minor market malformed rows and unrelated E66 evidence fail with a controlled boundary error (8143.179ms)
+✔ minor market saved competitor identities cannot be foreign, unrelated or null (2345.2622ms)
+✔ minor market absent comparators cannot create other-club demand (750.66ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 43611.1917
