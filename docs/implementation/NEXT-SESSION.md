@@ -1,3 +1,9 @@
+# 세션 마감 — M2-EK 푸시 확인 (2026-10-28)
+
+사용자가 잔여9% 시점에 커밋/푸시 마감을 요청해 새 구현을 멈췄다. 기능 c8c73b2fb5e6670f6f19e826512d687304bcb69c를 own branch origin/codex/m2-career-engine에 푸시하고 동일 해시를 확인했다. 전체794/792·실패0·Neon환경2·웹22/22·HTTP 스모크 통과. 마지막 중복 CR1개 정리는 TypeScript emit 동일을 검증했다. 소스 WIP 없음. M2약59%·전체 미완료. PC 종료 안 함.
+
+다음은 [EK 이후 구현 인계](M2-POST-EK-IMPLEMENTATION-PLAN.md)를 읽는다. 현재 EK는 실제 봉인 제안/예산·포지션 수요 비교와 E66 두 조회까지다. 계약 수락/새해 재무 재생/조직 이동/실제 US→KBO 최신 세계 인계는 아직 없다. 원점 없는 legacy KBO 저장을 현재 예산으로 자동 복원하지 않는다. M6/main 임의 병합·강제푸시·훅 스킵 금지, V는 문서 Copy-Item만.
+
 # 최신 상태 — M2-EK 검증 완료 (2026-10-28)
 
 [상세](M2-EK-MINOR-MARKET-COMPARISON.md). 만료 마이너 실제 제안/예산·수요 비교 창과 E66 두 조회 연결. 집중7/7, 전체 npm run check 종료0: 엔진/API 794개 중792통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. duration_ms 998088.3797, 동결 대상461파일 실행 동결 확인. 이후 중복 CR1개만 정리했고 TypeScript emit은 동일하다. 실제 Neon/브라우저/APK 검증은 아니다. 조회만이며 계약 수락·이적·국내 복귀 실행은 후속이다. 이전 EJ 기능12af4ff/핀f5b16ad 푸시 확인. M2약59%·전체 미완료.
