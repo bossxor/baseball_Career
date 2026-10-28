@@ -1,0 +1,32 @@
+✖ A01 is committed by actual contract acceptance before annual closure or pro activation (188.3655ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 474.7243
+
+✖ failing tests:
+
+test at packages\engine\test\career-achievements-integration.test.ts:1:1119
+✖ A01 is committed by actual contract acceptance before annual closure or pro activation (188.3655ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'LOCKED'
+  - 'COMPLETED'
+  
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\career-achievements-integration.test.ts:25:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'LOCKED',
+    expected: 'COMPLETED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

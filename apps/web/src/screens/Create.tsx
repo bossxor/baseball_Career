@@ -5,7 +5,7 @@ import { ScreenFrame, Button, FieldError, isBusy } from '../ui.js';
 import { stateText } from '../screen-states.js';
 import type { ScreenState } from '../screen-states.js';
 import {
-  CREATION_STEPS, STEP_LABELS, POSITIONS, POSITION_LABELS, FORM_LABELS, PITCH_FORM_LIST, typesFor, abilitiesFor,
+  CREATION_STEPS, STEP_LABELS, POSITIONS, POSITION_LABELS, FORM_LABELS, PITCH_FORM_LIST, SECONDARY_PITCHES, typesFor, abilitiesFor,
   previewOf, toggleFocus, setKind,
 } from '../creation.js';
 import type { CreationDraft, CreationStep, FieldErrors, PitchForm } from '../creation.js';
@@ -80,10 +80,17 @@ export function Create({ draft, step, state = 'ready', errors, onDraft, onStep, 
               <FieldError id="bats-error" message={err.bats} />
             </fieldset>
             {kind === 'PITCHER' ? (
+              <>
               <fieldset><legend>투구폼</legend>
                 {PITCH_FORM_LIST.map((f: PitchForm) => <Radio key={f} name="form" value={f} current={draft.pitchForm} label={FORM_LABELS[f]} onPick={x => set({ pitchForm: x })} />)}
                 <FieldError id="form-error" message={err.pitchForm} />
               </fieldset>
+              <fieldset><legend>보조 구종</legend>
+                <p>포심과 함께 사용할 구종 1개를 선택하세요.</p>
+                {Object.entries(SECONDARY_PITCHES).map(([id, label]) => <Radio key={id} name="secondaryPitch" value={id} current={draft.secondaryPitch ?? null} label={label} onPick={secondaryPitch => set({ secondaryPitch })} describedBy="secondary-pitch-error" />)}
+                <FieldError id="secondary-pitch-error" message={err.secondaryPitch} />
+              </fieldset>
+              </>
             ) : null}
           </>
         ) : null}
@@ -107,6 +114,7 @@ export function Create({ draft, step, state = 'ready', errors, onDraft, onStep, 
         {step === 'CONFIRM' ? (
           <section aria-label="생성 확인">
             <p>{draft.name} · {kind === 'HITTER' ? '타자' : '투수'} · {draft.position ? POSITION_LABELS[draft.position] : ''} · {draft.throws ? hand(draft.throws) : ''}투 {draft.bats ? (draft.bats === 'S' ? '양타' : `${hand(draft.bats)}타`) : ''}{draft.pitchForm ? ` · ${FORM_LABELS[draft.pitchForm]}` : ''}</p>
+            {kind === 'PITCHER' && draft.secondaryPitch ? <p>시작 구종: 포심 · {SECONDARY_PITCHES[draft.secondaryPitch]}</p> : null}
           </section>
         ) : null}
         <div className="actions">

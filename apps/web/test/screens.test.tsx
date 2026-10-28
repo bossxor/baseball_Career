@@ -26,6 +26,16 @@ test('state texts equal the design catalog (no drift)', () => {
 
 const saves: HomeData = { saves: [{ saveId: 'a', mode: 'CAREER', title: '김철수', seasonLabel: '고교 3학년', phaseLabel: '3주차', savedAtLabel: '방금', revision: 2 }, { saveId: 'b', mode: 'CAREER', title: '이영희', seasonLabel: 'KBO', phaseLabel: '개막', savedAtLabel: '어제', revision: 9 }], archiveCount: 2, resume: { saveId: 'a', label: '3주차' } };
 
+test('S02 pitcher secondary pitch is a named radio group with linked validation and a confirmation summary', () => {
+  const draft = { ...emptyDraft(), kind: 'PITCHER' as const, secondaryPitch: 'P04' };
+  const html = renderToStaticMarkup(<Create draft={draft} step="HANDS" errors={{ secondaryPitch: '보조 구종을 선택하세요.' }} />);
+  assert.match(html, /<legend>보조 구종<\/legend>/);
+  assert.equal((html.match(/name="secondaryPitch"/g) ?? []).length, 6);
+  assert.match(html, /aria-describedby="secondary-pitch-error"/);
+  assert.match(html, /name="secondaryPitch" checked="" value="P04"/);
+  assert.match(renderToStaticMarkup(<Create draft={draft} step="CONFIRM" />), /시작 구종: 포심 · 커브/);
+});
+
 test('S01: empty start, resume label kept while loading, internal states never shown, errors announced', () => {
   const empty = renderToStaticMarkup(<Home data={{ saves: [], archiveCount: 0, resume: null }} onNew={() => undefined} />);
   assert.match(empty, /최근 세이브가 없습니다/);

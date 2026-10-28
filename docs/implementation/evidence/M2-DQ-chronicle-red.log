@@ -1,0 +1,30 @@
+✖ M2 HTTP creation resolves E01 and PRE, plays a native game, and reads real records without exposing the save (1345.4929ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2050.4233
+
+✖ failing tests:
+
+test at apps\web\test\native-career.test.ts:1:428
+✖ M2 HTTP creation resolves E01 and PRE, plays a native game, and reads real records without exposing the save (1345.4929ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'season'
+  - 'SEASON_PROGRESS'
+  
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\apps\web\test\native-career.test.ts:76:12)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'season',
+    expected: 'SEASON_PROGRESS',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

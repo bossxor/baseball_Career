@@ -1,0 +1,34 @@
+✔ liveness exposes no save, secret or database readiness claim (41.8666ms)
+✔ version is public and secret-free (3.9002ms)
+✔ ready without db is 503 (0.9687ms)
+✔ ready with db reports schemaCompatible (2460.7782ms)
+✔ game writes without db stay unavailable (3.5687ms)
+✔ native pitcher creation requires a chosen secondary pitch; normal difficulty stays the approved default (50.2145ms)
+✔ M2 creation marker is persisted, validated and owner scoped; a replay cannot switch the engine (2371.7385ms)
+✔ CORS: allowed origins get headers on preflight and responses, unknown origins get none (2818.3793ms)
+✔ creation ids are owner-scoped: another user never sees or collides with a save (728.8462ms)
+✔ concurrent identical creations all return the one save; the active-save cap applies to creation too (784.1888ms)
+✔ list cursor keeps microsecond precision: no row sharing a millisecond is skipped (615.8796ms)
+✔ UI shell: the server validates the seed and refuses a second one (400.2106ms)
+✔ UI shell: advance and choose follow the phase, the pending event, the offered options and the chances (616.9275ms)
+✔ M7 input: wrong types answer 400, never 500; a club backup restores as a club save (462.1388ms)
+✔ M7 ids: concurrent identical backups resolve to one file; restore ids are owner-scoped and bound to one backup (465.4034ms)
+﹣ Neon V03 unique/rollback/F08 on m3-dev (0.5392ms) # SKIP
+✔ V02 reject missing auth and non-allowlisted subject (2555.2519ms)
+✔ V03 unique receipt, idempotent replay, rollback on bad payload (879.6996ms)
+✔ F08 two devices same expectedRevision — one wins, other 409 (657.2558ms)
+﹣ V02 Managed Auth JWT + allowlist + owner isolation (0.6443ms) # SKIP
+✔ M4 UI shell: create → seed → advance → settle → choose S04→S28 (2427.6193ms)
+✔ M5 UI shell: S21 stub GET + CHOICE back; S34 via college (2522.6ms)
+✔ club creation is stored once and S13/S15 read that save (2852.9389ms)
+✔ M7 chronicle JSON export: idempotent, no secrets, not a restore file, foreign 403 (2413.7349ms)
+✔ M7 V04: backup create idempotent, hash download, other owner 403 (2402.0786ms)
+✔ M7 restore: preview + activate new save; source backup intact; foreign 403 (917.3906ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 2
+ℹ todo 0
+ℹ duration_ms 8880.0486

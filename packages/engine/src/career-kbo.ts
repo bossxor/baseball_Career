@@ -1,3 +1,4 @@
+import {refreshCareerAchievements} from './career-achievements.js';
 import {assertKboAmateurYearEnd} from './kbo-entry.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCareerRevision} from './high-school-career.js';
@@ -51,7 +52,7 @@ export function decideCareerKboDraft(source:HighSchoolCareer,expectedRevision:nu
   career.phaseContext={phase:'NEXT_SEASON_READY',route:'KBO',contractKey:receipt.contract.contractKey};
   if(career.usRecruitment){career.previousUsRecruitments=[...(career.previousUsRecruitments??[]),{...career.usRecruitment,closedBy:'KBO'}];delete career.usRecruitment;}
  }
- career.revision++;return career;
+ career.revision++;return refreshCareerAchievements(career);
 }
 
 /** Signed route boundary shared by year-end and future activation commands. */

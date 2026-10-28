@@ -1,0 +1,28 @@
+✖ native career saves reject club commands before and after seeding without changing saved state or revision (702.3951ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1402.8681
+
+✖ failing tests:
+
+test at apps\api\test\m2-native-career.test.ts:10:1
+✖ native career saves reject club commands before and after seeding without changing saved state or revision (702.3951ms)
+  AssertionError [ERR_ASSERTION]: a native career cannot acquire a club root
+  
+  200 !== 400
+  
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\apps\api\test\m2-native-career.test.ts:23:14)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 200,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

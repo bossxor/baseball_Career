@@ -161,3 +161,9 @@ export * from './us-archive-view.js';
 
 export {SEASON_GOAL_DEFINITIONS,setCareerSeasonGoals,replaceCareerSeasonGoal,careerSeasonGoalsView} from './season-goals.js';
 export type {GoalCareer,SeasonGoalId,SeasonGoalSlot,SeasonGoals,CareerGoalLedger} from './season-goals.js';
+
+export {usMajorContractTerms,prepareUsContractMarket,usContractMarketView,acceptUsContractOffer,declineUsContractOffers} from './us-contracts.js';
+export type {UsContractOffer,UsContractMarket} from './us-contracts.js';
+
+export {CAREER_ACHIEVEMENT_DEFINITIONS,refreshCareerAchievements,careerAchievementsView} from './career-achievements.js';
+export type {CareerAchievementLedger,CareerAchievementId} from './career-achievements.js';

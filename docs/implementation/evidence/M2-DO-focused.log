@@ -1,0 +1,29 @@
+US contract native date: {"year":"2036","age":25,"level":"MLB","games":75,"firstSalary":44768,"guaranteeReservedOnce":true,"jsonEqual":true}
+✔ MLB terms enforce the final salary floor and starting-age term boundaries (1.5366ms)
+✔ unexpired original minor control cannot be replaced by an unsolicited offseason market (3544.3681ms)
+✔ expired control fixes at most three real offers without changing current affiliation, money, RNG or records (20495.1069ms)
+✔ accepted external offer activates once next year, reserves guarantee once and pays the first actual date identically after JSON (33866.0137ms)
+✔ tampered offers and incomplete funding cannot commit; a missing offer never auto-signs (2779.5886ms)
+✔ funded multi-year carry preserves the guarantee and USD history without requesting another contract or reservation (8840.1077ms)
+✔ declining the fixed market closes its blocking event without signing, budget writes or automatic retirement (2572.8433ms)
+✔ US retirement confirmation/cancellation preserves source, all league records, income and contract without another payment (5701.039ms)
+✔ US archive separates school/minor/MLB and zero MLB debut, returns public six-stat peaks without hidden state (1746.1938ms)
+✔ US maximum-age retirement closes at45 with unresolved overseas deadline preserved, not erased or treated as exemption (1420.5335ms)
+✔ US retirement rejects unfinished seasons, stale/version mismatch and changed final evidence atomically (3513.9356ms)
+M2-DK year continuation proof: {"from":"2030","to":"2031","nativeNewSeasonGames":75,"oldRecords":9038,"schema":3,"signingBonuses":1}
+M2-DK controlled minor term proof: {"seasons":6,"lastYear":"2035","age":24,"salaryUsd":180000,"signingBonuses":1,"seventhYear":"CONTRACT_DECISION_REQUIRED","native":false}
+✔ annual stage ages survivors once, retires45 NPCs through Rookie supply, preserves history and has no active/root or salary write (4728.3925ms)
+✔ readiness is private-state-free and blocks unfinished seasons, pitch reservations and age28 military deadline (1821.3125ms)
+✔ stale revisions and altered final playoff records fail before changing the source or producing a new world (1607.5261ms)
+✔ an already-closed health year is not mutated while an injured retiring NPC leaves the staged world (1134.8289ms)
+✔ minor year activation preserves legacy input, every official record and one signing bonus; the new season plays a native first date (11471.2115ms)
+✔ annual funding and new history tampering fail without a second budget credit or source mutation (1618.6518ms)
+✔ six controlled minor seasons preserve the history chain and stop before a seventh unapproved contract year (14175.9572ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 72624.0021

@@ -4,6 +4,7 @@ import { and, desc, eq } from 'drizzle-orm';
 import type { Context } from 'hono';
 import { gameSaves, privateFiles } from '@playball/db';
 import type { AppVariables } from './auth.js';
+import type { NativeCareerState } from './native-career.js';
 
 function errorBody(
   c: Context<{ Variables: AppVariables }>,
@@ -202,8 +203,9 @@ export async function postChronicleExport(c: Context<{ Variables: AppVariables }
   }
 
   const ui = (save.state as UiState | null)?.ui;
-  const playerName = ui?.protagonist?.name?.trim() || '선수';
-  const day = typeof ui?.day === 'number' ? ui.day : 0;
+  const career = (save.state as NativeCareerState | null)?.career;
+  const playerName = career ? career.world.players[career.world.protagonistKey]!.name : ui?.protagonist?.name?.trim() || '선수';
+  const day = career ? career.days.days.at(-1)?.day ?? 0 : typeof ui?.day === 'number' ? ui.day : 0;
   const momentRef = `moment_${saveId}_d${day}`;
   const exportDoc = {
     exportSchemaVersion: 1,
@@ -220,7 +222,7 @@ export async function postChronicleExport(c: Context<{ Variables: AppVariables }
         gameInstant: new Date().toISOString(),
         age: null,
         scope: 'CAREER',
-        rawStats: { day, phase: ui?.phase ?? save.phase, revision: save.revision.toString() },
+        rawStats: { day, phase: career?.phaseContext.phase ?? ui?.phase ?? save.phase, revision: save.revision.toString() },
         publicEvidenceRef: momentRef,
         userTitle: null,
         userCaption: null,

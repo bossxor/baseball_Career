@@ -1,0 +1,39 @@
+
+> again-playball@0.1.0 test:web
+> tsx --tsconfig apps/web/tsconfig.json --test apps/web/test/*.test.ts apps/web/test/*.test.tsx
+
+✔ fixture club creation is idempotent and the picker lists a club (8.786ms)
+✔ http createClub posts a club creation and CLUB_CREATE (16.392ms)
+✔ name: NFC, trimmed, 1..12 graphemes, no control characters (2.0665ms)
+✔ left-handed throwers cannot take C/2B/3B/SS; pitchers need a pitch form; steps block only their own errors (0.2112ms)
+✔ focus is exactly four distinct abilities of the chosen kind; a fifth pick is refused, kind change resets dependents (0.4887ms)
+✔ preview exists only with a type and four focus picks and shows the type start values (0.6031ms)
+✔ request is built only from a complete draft; the same command id travels with it (0.3815ms)
+✔ http api maps saves list and create→seed→career against a stub fetch (26.8546ms)
+✔ http api: native preseason confirmation is a persisted UI_ADVANCE intent (2.2246ms)
+✔ http api: a 401 calls onUnauthorized once and surfaces AUTH_REQUIRED (0.8992ms)
+✔ http api: a retried command keeps the revision it was first sent with (lost response), and a conflict clears it (5.0675ms)
+✔ Login: fields, submit disabled until filled, error announced, optional dev path (7.9387ms)
+✔ ApiError maps revision conflict to conflict state (0.2277ms)
+✔ M2 HTTP creation resolves E01 and PRE, plays a native game, and reads real records without exposing the save (4524.9443ms)
+✔ state texts equal the design catalog (no drift) (1.1006ms)
+✔ S02 pitcher secondary pitch is a named radio group with linked validation and a confirmation summary (13.2252ms)
+✔ S01: empty start, resume label kept while loading, internal states never shown, errors announced (3.214ms)
+✔ S02: one step at a time with its error next to the input, stepper marks the current step, preview empty text (5.9061ms)
+✔ S03: buttons come only from nextActions, default progress mode, disabled reason is linked, pending event locks progress (3.3239ms)
+✔ fixture api: a retried creation or action with the same command id changes nothing twice (1.2895ms)
+✔ routes: unknown or incomplete addresses fall back to home; play screens parse (0.3466ms)
+✔ S06 Decision: empty text, option disabilities linked, confirm needs selection (2.2199ms)
+✔ fixture decision/choose: same commandId is idempotent; S04→S28 chain (0.5162ms)
+✔ M5 stub screens: routeable Decision shell; college → S34; back returns career (0.3367ms)
+✔ V08-M4: touch targets ≥44px, focus ring, 16px body, reduced-motion (0.9433ms)
+✔ V08-M4: Hangul IME composition is gated on S02 name submit (0.1418ms)
+✔ V08-M4: Korean webfonts declared with font-display swap (0.1419ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5858.1397

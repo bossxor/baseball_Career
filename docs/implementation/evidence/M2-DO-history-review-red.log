@@ -1,0 +1,27 @@
+✖ funded multi-year carry preserves the guarantee and USD history without requesting another contract or reservation (22921.0995ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23448.0772
+
+✖ failing tests:
+
+test at packages\engine\test\us-contracts.test.ts:1:6565
+✖ funded multi-year carry preserves the guarantee and USD history without requesting another contract or reservation (22921.0995ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception: archived market source must stay authenticated
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-contracts.test.ts:107:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /CONTRACT_HISTORY|CONTRACT_MARKET/,
+    operator: 'throws',
+    diff: 'simple'
+  }

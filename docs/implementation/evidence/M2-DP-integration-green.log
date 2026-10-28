@@ -1,0 +1,33 @@
+✔ native KBO and US signing/entry commits carry A01 without requiring season goal selection (1019.1136ms)
+✔ A01 is committed by actual contract acceptance before annual closure or pro activation (199.5452ms)
+✔ actual KBO/MiLB signing gives one immutable A01 receipt, cosmetic and E90, read/replay/JSON mutate nothing (1875.7332ms)
+✔ first appearances require actual PA/BF; career milestone totals never combine leagues or postseason (53.3012ms)
+✔ career W100 and SV200 use one league across years; correction keeps first evidence and cosmetics (40.1834ms)
+✔ international/posting and archive alone cannot invent milestones; A12 needs both actual leagues plus retirement receipt (38.2539ms)
+✔ malformed unlock identity, duplicate reward, forged receipt and unsupported awards are rejected (881.796ms)
+✔ college graduation requires resolved E75, not four completed years or an enrollment status toggle (4232.1785ms)
+✔ military COMPLETED needs both actual completed service blocks and return receipt, not status alone (37.9191ms)
+✔ A11 needs the original high-school rival plus an actual reunion game and evidenced registrations (56.4476ms)
+✔ career aggregation ignores NPC-only rows and reads no NPC statistics while preserving milestone results (87.7158ms)
+✔ unchanged refresh validates its sources without cloning an already earned achievement ledger (34.1793ms)
+Native goal school proof: {"officialGames":8,"ownPA":5,"ownStarts":1,"recordsEqualWithoutGoals":true,"worldEqualWithoutGoals":true}
+Native goal college proof: {"controlledRegularGames":216,"nativeCupGames":2,"goals":[{"id":"G01","progress":0,"status":"ACTIVE"},{"id":"G09","progress":1,"status":"COMPLETED"},{"id":"G10","progress":1,"status":"COMPLETED"}],"cosmetics":2}
+✔ goals are optional, max3, kind-filtered, PRE-only and source-safe without RNG or gameplay rewards (1683.2428ms)
+✔ goal HR scope never adds another league or postseason; completion/news/reward replay and correction are idempotent (495.5153ms)
+✔ malformed persisted goal arrays, changed scope and unknown reward are rejected without editing the save (612.1233ms)
+✔ MID replacement uses sealed half-season, carries BB22 progress, rejects BB33 and cannot reset through moving levels (493.594ms)
+✔ pitcher goals use raw K, saves and starterOuts, never all relief outs (1022.805ms)
+✔ G01/G02/G04 count exact PA, fixed-lineup starts and walks with three cosmetic grants only (184.7476ms)
+✔ US year continuation preserves earned cosmetics and goal outbox without blocking the finalized contract path (1493.9496ms)
+✔ school goal expiry is committed before sealing the year-end receipt and survives the actual KBO entry command (325.9989ms)
+✔ G08 requires evidenced injury, actual recovery and a later official appearance, not a return button (153.6765ms)
+✔ native school game updates selected goals automatically and leaves gameplay identical to no-goal play (652.8826ms)
+✔ college qualification goal settles at final seeding; native championship appearance counts G10 and never regular G01 (554.7534ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8027.7708

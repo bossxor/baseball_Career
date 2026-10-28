@@ -29,6 +29,7 @@ export const PROGRESS_LABELS: Readonly<Record<ProgressMode, string>> = {
 export interface CreationRequest {
   commandId: string; name: string; kind: 'HITTER' | 'PITCHER'; position: string; throws: 'R' | 'L'; bats: 'R' | 'L' | 'S';
   pitchForm: string | null; archetype: string; focus: readonly string[];
+  secondaryPitch?: string;
 }
 export interface CreationReceipt { saveId: string }
 

@@ -6,7 +6,7 @@ import type { CreationRequest } from './model.js';
 export type PitchForm = (typeof PITCH_FORMS)[number];
 export interface CreationDraft {
   name: string; kind: PlayerKind | null; position: string | null; throws: 'R' | 'L' | null; bats: 'R' | 'L' | 'S' | null;
-  pitchForm: PitchForm | null; archetype: string | null; focus: readonly string[];
+  pitchForm: PitchForm | null; archetype: string | null; focus: readonly string[]; secondaryPitch?: string | null;
 }
 export const emptyDraft = (): CreationDraft => ({ name: '', kind: null, position: null, throws: null, bats: null, pitchForm: null, archetype: null, focus: [] });
 export const CREATION_STEPS = ['NAME', 'KIND', 'POSITION', 'HANDS', 'TYPE', 'FOCUS', 'CONFIRM'] as const;
@@ -20,7 +20,8 @@ export const PITCH_FORM_LIST: readonly PitchForm[] = PITCH_FORMS;
 export const LEFT_THROW_BLOCKED = ['C', '2B', '3B', 'SS'] as const;
 export const typesFor = (kind: PlayerKind) => (kind === 'HITTER' ? HITTER_TYPES : PITCHER_TYPES);
 export const abilitiesFor = (kind: PlayerKind): readonly AbilityKey[] => (kind === 'HITTER' ? HITTER_ABILITIES : PITCHER_ABILITIES);
-export type FieldErrors = Partial<Record<'name' | 'kind' | 'position' | 'throws' | 'bats' | 'pitchForm' | 'archetype' | 'focus', string>>;
+export const SECONDARY_PITCHES: Readonly<Record<string, string>> = { P02: '투심', P03: '슬라이더', P04: '커브', P05: '체인지업', P06: '스플리터', P07: '커터' };
+export type FieldErrors = Partial<Record<'name' | 'kind' | 'position' | 'throws' | 'bats' | 'pitchForm' | 'secondaryPitch' | 'archetype' | 'focus', string>>;
 
 /** Errors that block leaving `step`; the messages sit next to the input. Never throws. */
 export function validateStep(d: CreationDraft, step: CreationStep): FieldErrors {
@@ -37,6 +38,7 @@ export function validateStep(d: CreationDraft, step: CreationStep): FieldErrors 
     if (!d.throws) e.throws = '던지는 손을 선택하세요.';
     if (!d.bats) e.bats = '치는 쪽을 선택하세요.';
     if (d.kind === 'PITCHER' && !d.pitchForm) e.pitchForm = '투구폼을 선택하세요.';
+    if (d.kind === 'PITCHER' && (!d.secondaryPitch || !Object.hasOwn(SECONDARY_PITCHES, d.secondaryPitch))) e.secondaryPitch = '포심과 함께 사용할 보조 구종을 선택하세요.';
     if (d.throws === 'L' && d.position && (LEFT_THROW_BLOCKED as readonly string[]).includes(d.position)) e.throws = '좌투는 포수·2루수·3루수·유격수를 맡을 수 없습니다. 포지션이나 던지는 손을 바꾸세요.';
   }
   if (step === 'TYPE' && (!d.kind || !d.archetype || !Object.hasOwn(typesFor(d.kind), d.archetype))) e.archetype = '유형을 선택하세요.';
@@ -51,7 +53,7 @@ export function toggleFocus(d: CreationDraft, key: string): CreationDraft {
 }
 /** Changing kind resets everything that depends on it. */
 export function setKind(d: CreationDraft, kind: PlayerKind): CreationDraft {
-  return d.kind === kind ? d : { ...d, kind, position: null, pitchForm: null, archetype: null, focus: [] };
+  return d.kind === kind ? d : { ...d, kind, position: null, pitchForm: null, secondaryPitch: null, archetype: null, focus: [] };
 }
 export interface Preview { archetypeLabel: string; overall: string; abilities: readonly { key: AbilityKey; label: string; value: number; focus: boolean }[] }
 /** S02 empty state until a type and four focus abilities exist; then the starting abilities of the chosen type. */
@@ -64,5 +66,5 @@ export function previewOf(d: CreationDraft): Preview | null {
 /** Complete, valid draft → the command payload. The caller supplies the idempotency id (a retry reuses it). */
 export function toCreationRequest(d: CreationDraft, commandId: string): CreationRequest | null {
   if (firstInvalidStep(d)) return null;
-  return { commandId, name: normalizePlayerName(d.name), kind: d.kind!, position: d.position!, throws: d.throws!, bats: d.bats!, pitchForm: d.kind === 'PITCHER' ? d.pitchForm : null, archetype: d.archetype!, focus: [...d.focus] };
+  return { commandId, name: normalizePlayerName(d.name), kind: d.kind!, position: d.position!, throws: d.throws!, bats: d.bats!, pitchForm: d.kind === 'PITCHER' ? d.pitchForm : null, ...(d.kind === 'PITCHER' ? { secondaryPitch: d.secondaryPitch! } : {}), archetype: d.archetype!, focus: [...d.focus] };
 }

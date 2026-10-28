@@ -20,7 +20,9 @@ test('left-handed throwers cannot take C/2B/3B/SS; pitchers need a pitch form; s
   assert.deepEqual(validateStep({ ...left, position: 'LF' }, 'HANDS'), {});
   const p: CreationDraft = { ...hitter(), kind: 'PITCHER', position: 'SP', archetype: 'VELOCITY', focus: ['VELOCITY', 'STUFF', 'COMMAND', 'STAMINA'] };
   assert.ok(validateStep(p, 'HANDS').pitchForm);
-  assert.deepEqual(validateStep({ ...p, pitchForm: 'OVERHAND' }, 'HANDS'), {});
+  assert.ok(validateStep({ ...p, pitchForm: 'OVERHAND' }, 'HANDS').secondaryPitch);
+  assert.deepEqual(validateStep({ ...p, pitchForm: 'OVERHAND', secondaryPitch: 'P04' }, 'HANDS'), {});
+  assert.ok(validateStep({ ...p, pitchForm: 'OVERHAND', secondaryPitch: 'P01' }, 'HANDS').secondaryPitch);
   assert.deepEqual(validateStep(emptyDraft(), 'CONFIRM'), {});
 });
 
@@ -50,4 +52,6 @@ test('request is built only from a complete draft; the same command id travels w
   const r = toCreationRequest({ ...hitter(), name: '  김철수 ' }, 'c1')!;
   assert.deepEqual([r.commandId, r.name, r.pitchForm, r.focus.length], ['c1', '김철수', null, 4]);
   assert.equal(CREATION_STEPS.at(-1), 'CONFIRM');
+  const pitcher = toCreationRequest({ ...hitter(), kind: 'PITCHER', position: 'SP', pitchForm: 'OVERHAND', secondaryPitch: 'P04', archetype: 'VELOCITY', focus: ['VELOCITY', 'STUFF', 'COMMAND', 'STAMINA'] }, 'pitcher')!;
+  assert.equal(pitcher.secondaryPitch, 'P04');
 });

@@ -66,6 +66,7 @@ const M4_PLAY: readonly M4PlayScreenId[] = ['S04', 'S05', 'S06', 'S07', 'S08', '
 const M5_IDS = m5.ids as readonly M5ScreenId[];
 const M5_TITLES = m5.titles as Record<M5ScreenId, string>;
 const PLAY = new Set<string>([...M4_PLAY, ...M5_IDS]);
+export const isPlayScreenId = (id: string): id is PlayScreenId => PLAY.has(id);
 
 type Catalog = { summary: DecisionView['summary']; options: DecisionView['options']; notice?: string };
 

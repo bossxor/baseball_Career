@@ -1,3 +1,6 @@
+import {usTermCovers} from './us-contract-history.js';
+import type {UsContractYearArchive} from './us-contract-history.js';
+import {assertUsContractMarket,usContractForOffer} from './us-contracts.js';
 import {refreshCareerSeasonGoals} from './season-goals.js';
 import {mlbServiceTime} from './us-service-time.js';
 import type {UsCareer,ActiveUsRosterWorld} from './us-career-entry.js';
@@ -31,7 +34,7 @@ export function usYearTransitionReadiness(c:UsCareer){
  if(nextAge>=c.military.deadlineAge&&c.military.status==='UNRESOLVED')blockers.push('MILITARY_PLAN_REQUIRED');
  if(nextAge>45)blockers.push('MAX_AGE_REACHED');
  const signing=c.amateurHistory.usRecruitment!.program.signing!,controlSeasonsUsed=Number(c.world.seasonKey)-Number(signing.seasonKey)+1;
- if(c.contract.type==='US_MAJOR'||controlSeasonsUsed>=c.contract.controlSeasons)blockers.push('CONTRACT_DECISION_REQUIRED');
+ if(!usTermCovers(c.contract,targetSeasonKey)&&c.contractMarket?.status!=='ACCEPTED'&&(c.contract.type==='US_MAJOR'||controlSeasonsUsed>=c.contract.controlSeasons))blockers.push('CONTRACT_DECISION_REQUIRED');
  return {ready:blockers.length===0,blockers,targetSeasonKey,nextAge,mlbService:mlbServiceTime(c.records,c.health,c.protagonistKey),controlSeasonsUsed,remainingMinorControlSeasons:Math.max(0,c.contract.controlSeasons-controlSeasonsUsed)};
 }
 export interface UsAgeRosterStage {receiptKey:string;sourceRevision:number;sourceSeasonKey:string;sourceRecordRevision:number;targetSeasonKey:string;world:ActiveUsRosterWorld;health:HealthLedger;supply:UsSupplyReceipt}
@@ -57,11 +60,33 @@ export function stageUsAgeAndRosters(c:UsCareer,revision:number):UsAgeRosterStag
 
 /** Atomic continuation of the original six-season minor contract. Major renewals/FA remain explicit decisions. */
 export function startNextUsMinorSeason(c:UsCareer,revision:number,funding:readonly UsAnnualFunding[]):UsCareer {
+ if(c.contract.type!=='US_MINOR'||c.schemaVersion===4||c.contractMarket)throw new RangeError('US_YEAR_TRANSITION_NOT_READY');
  const stage=stageUsAgeAndRosters(c,revision),registered=Object.keys(stage.world.players).sort(),sortedFunding=funding.map(f=>({...f})).sort((a,b)=>a.organizationId<b.organizationId?-1:1),inventory=fundUsMinorYear(c.inventory,stage.targetSeasonKey,registered,sortedFunding,c.protagonistOrganizationId,c.contract.annualSalaryUsd),player=stage.world.players[c.protagonistKey]!;
  const archive:UsMinorYearArchive={receiptKey:JSON.stringify(['us-minor-year-close',c.activation.receiptKey,c.world.seasonKey]),seasonKey:c.world.seasonKey,sourceRevision:c.revision,recordRevision:c.records.revision,endingPlayer:structuredClone(c.world.players[c.protagonistKey]!),contract:structuredClone(c.contract),inventory:c.inventory,season:c.season!,seasonSchedule:c.seasonSchedule!,preseasonPlan:c.preseasonPlan!,campNotices:c.campNotices??[],postseason:c.postseason!,seasonGrowth:c.seasonGrowth,funding:sortedFunding,nextRegisteredPlayerKeys:registered,supply:stage.supply};
  // shortcut: historical game ledgers remain in the root; externalize closed seasons before long native careers.
  const next:UsCareer={...c,schemaVersion:3,revision:c.revision+1,world:stage.world,health:stage.health,minorYears:[...(c.minorYears??[]),archive],inventory,contract:{...c.contract,seasonKey:stage.targetSeasonKey},registration:{...c.registration,seasonKey:stage.targetSeasonKey,status:'ACTIVE'},phaseContext:{phase:'PRESEASON_SETUP'},seasonGrowth:createSeasonGrowthLedger(player,stage.targetSeasonKey,stage.world.calendar.growthDays.length),development:{...c.development,seasonStartPlayer:structuredClone(player)},planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
  if(c.traits)next.traits={...c.traits,lastClosedDay:null,lastSeasonKey:stage.targetSeasonKey};
  delete next.season;delete next.seasonSchedule;delete next.preseasonPlan;delete next.campNotices;delete next.postseason;
+ assertUsCareerRevision(next,next.revision);return refreshCareerSeasonGoals(next);
+}
+
+/** Explicit accepted contract or an already funded term; same year-close audits and roster supply as the minor path. */
+export function startNextUsContractSeason(c:UsCareer,revision:number):UsCareer {
+ assertUsCareerRevision(c,revision);assertUsContractMarket(c);
+ const target=String(Number(c.world.seasonKey)+1),m=c.contractMarket,offer=m?.offers.find(o=>o.offerKey===m.acceptedOfferKey);
+ if(m?.status!=='ACCEPTED'&&!usTermCovers(c.contract,target))throw new RangeError('US_CONTRACT_NOT_AVAILABLE');
+ const stage=stageUsAgeAndRosters(c,revision),world=stage.world,own=world.organizations.find(o=>o.id===c.protagonistOrganizationId)!,clubId=offer?.clubId??own.id,to=world.organizations.find(o=>o.id===clubId)!,level=offer?.initialLevel??c.registration.level;
+ if(offer?.swapKey){
+  const fromLevel=Object.keys(own.levels).find(l=>own.levels[l as keyof typeof own.levels].includes(c.protagonistKey)) as keyof typeof own.levels|undefined;
+  if(!fromLevel||!to.levels.MLB.includes(offer.swapKey))throw new RangeError('US_CONTRACT_SLOT_CHANGED');
+  own.levels[fromLevel]=own.levels[fromLevel].map(k=>k===c.protagonistKey?offer.swapKey!:k).sort();to.levels.MLB=to.levels.MLB.map(k=>k===offer.swapKey?c.protagonistKey:k).sort();
+ }
+ assertActiveUsRosterWorld(world);
+ const contract=offer?usContractForOffer(c.contract,m!,offer):{...c.contract,seasonKey:target},rights:UsCareer['rights']=offer?{territory:'US',holderOrgId:clubId,sourceType:m!.freeAgent?'FREE_AGENT':'RENEWAL',playerKey:c.protagonistKey}:c.rights;
+ const funding=m?.funding??world.organizations.map(o=>({organizationId:o.id,addedBudgetUsd:0})),registered=Object.keys(world.players).sort(),inventory=fundUsMinorYear(c.inventory,target,registered,funding,clubId,offer?.guaranteedUsd??0),player=world.players[c.protagonistKey]!,registration:UsCareer['registration']={...c.registration,clubId,level,seasonKey:target,status:'ACTIVE'};
+ const archive:UsContractYearArchive={receiptKey:JSON.stringify(['us-contract-year-close',c.activation.receiptKey,c.world.seasonKey]),seasonKey:c.world.seasonKey,sourceRevision:c.revision,recordRevision:c.records.revision,endingPlayer:structuredClone(c.world.players[c.protagonistKey]!),contract:c.contract,inventory:c.inventory,season:c.season!,seasonSchedule:c.seasonSchedule!,preseasonPlan:c.preseasonPlan!,campNotices:c.campNotices??[],postseason:c.postseason!,seasonGrowth:c.seasonGrowth,funding:funding.map(f=>({...f})),nextRegisteredPlayerKeys:registered,supply:stage.supply,clubId:c.protagonistOrganizationId,registration:c.registration,rights:c.rights,nextClubId:clubId,nextContract:contract,nextRights:rights,nextRegistration:registration,...(m?{market:m}:{})};
+ const next:UsCareer={...c,schemaVersion:4,revision:c.revision+1,world,health:stage.health,contractYears:[...(c.contractYears??[]),archive],inventory,contract,rights,protagonistOrganizationId:clubId,registration,phaseContext:{phase:'PRESEASON_SETUP'},seasonGrowth:createSeasonGrowthLedger(player,target,world.calendar.growthDays.length),development:{...c.development,seasonStartPlayer:structuredClone(player)},planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
+ if(c.traits)next.traits={...c.traits,lastClosedDay:null,lastSeasonKey:target};
+ delete next.season;delete next.seasonSchedule;delete next.preseasonPlan;delete next.campNotices;delete next.postseason;delete next.contractMarket;
  assertUsCareerRevision(next,next.revision);return refreshCareerSeasonGoals(next);
 }

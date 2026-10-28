@@ -1,0 +1,6 @@
+apps/api/test/m2-native-career.test.ts(19,39): error TS2552: Cannot find name 'RequestInfo'. Did you mean 'RequestInit'?
+apps/api/test/m2-native-career.test.ts(43,100): error TS2345: Argument of type '{ career: HighSchoolCareer; }' is not assignable to parameter of type 'NativeCareerState'.
+  Property 'schemaVersion' is missing in type '{ career: HighSchoolCareer; }' but required in type 'UiShellState'.
+apps/web/src/http.ts(46,48): error TS2304: Cannot find name 'HeadersInit'.
+apps/web/src/http.ts(53,55): error TS2339: Property 'onLine' does not exist on type 'Navigator'.
+apps/web/src/screen-states.ts(2,16): error TS1543: Importing a JSON file into an ECMAScript module requires a 'type: "json"' import attribute when 'module' is set to 'NodeNext'.

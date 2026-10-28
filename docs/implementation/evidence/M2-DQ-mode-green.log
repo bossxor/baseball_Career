@@ -1,0 +1,14 @@
+✔ native career saves reject club commands before and after seeding without changing saved state or revision (1337.5607ms)
+✔ native pitcher creation requires a chosen secondary pitch; normal difficulty stays the approved default (15.7082ms)
+✔ M2 creation marker is persisted, validated and owner scoped; a replay cannot switch the engine (396.159ms)
+✔ M4 UI shell: create → seed → advance → settle → choose S04→S28 (1257.1643ms)
+✔ M5 UI shell: S21 stub GET + CHOICE back; S34 via college (1233.9648ms)
+✔ club creation is stored once and S13/S15 read that save (1514.2301ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2704.331

@@ -1,0 +1,133 @@
+✖ MLB terms enforce the final salary floor and starting-age term boundaries (3.5319ms)
+✖ unexpired original minor control cannot be replaced by an unsolicited offseason market (0.1829ms)
+✖ expired control fixes at most three real offers without changing current affiliation, money, RNG or records (0.1522ms)
+✖ accepted external offer activates once next year, reserves guarantee once and pays the first actual date identically after JSON (0.1588ms)
+✖ tampered offers and incomplete funding cannot commit; a missing offer never auto-signs (0.1093ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 0
+ℹ fail 5
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 464.5284
+
+✖ failing tests:
+
+test at packages\engine\test\us-contracts.test.ts:1:1421
+✖ MLB terms enforce the final salary floor and starting-age term boundaries (3.5319ms)
+  AssertionError [ERR_ASSERTION]: missing US contract lifecycle
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at api (E:\AI\Game\baseball_career\packages\engine\test\us-contracts.test.ts:22:64)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-contracts.test.ts:33:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\us-contracts.test.ts:1:1912
+✖ unexpired original minor control cannot be replaced by an unsolicited offseason market (0.1829ms)
+  AssertionError [ERR_ASSERTION]: missing US contract lifecycle
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at api (E:\AI\Game\baseball_career\packages\engine\test\us-contracts.test.ts:22:64)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-contracts.test.ts:41:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\us-contracts.test.ts:1:2197
+✖ expired control fixes at most three real offers without changing current affiliation, money, RNG or records (0.1522ms)
+  AssertionError [ERR_ASSERTION]: missing US contract lifecycle
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at api (E:\AI\Game\baseball_career\packages\engine\test\us-contracts.test.ts:22:64)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-contracts.test.ts:47:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\us-contracts.test.ts:1:3400
+✖ accepted external offer activates once next year, reserves guarantee once and pays the first actual date identically after JSON (0.1588ms)
+  AssertionError [ERR_ASSERTION]: missing US contract lifecycle
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at api (E:\AI\Game\baseball_career\packages\engine\test\us-contracts.test.ts:22:64)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-contracts.test.ts:61:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\us-contracts.test.ts:1:5920
+✖ tampered offers and incomplete funding cannot commit; a missing offer never auto-signs (0.1093ms)
+  AssertionError [ERR_ASSERTION]: missing US contract lifecycle
+  + actual - expected
+  
+  + 'undefined'
+  - 'function'
+  
+      at api (E:\AI\Game\baseball_career\packages\engine\test\us-contracts.test.ts:22:64)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-contracts.test.ts:84:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,39 @@
+✔ actual KBO/MiLB signing gives one immutable A01 receipt, cosmetic and E90, read/replay/JSON mutate nothing (1594.8175ms)
+✔ first appearances require actual PA/BF; career milestone totals never combine leagues or postseason (47.4789ms)
+✔ career W100 and SV200 use one league across years; correction keeps first evidence and cosmetics (38.6957ms)
+✔ international/posting and archive alone cannot invent milestones; A12 needs both actual leagues plus retirement receipt (34.6026ms)
+✔ malformed unlock identity, duplicate reward, forged receipt and unsupported awards are rejected (800.2707ms)
+✔ college graduation requires resolved E75, not four completed years or an enrollment status toggle (3920.1638ms)
+✔ military COMPLETED needs both actual completed service blocks and return receipt, not status alone (39.5736ms)
+✖ A11 needs the original high-school rival plus an actual reunion game and evidenced registrations (23.4483ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 7
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6783.5758
+
+✖ failing tests:
+
+test at packages\engine\test\career-achievements.test.ts:1:8581
+✖ A11 needs the original high-school rival plus an actual reunion game and evidenced registrations (23.4483ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(!ids(refreshCareerAchievements(c)).includes('A11'))
+  
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\career-achievements.test.ts:51:186)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

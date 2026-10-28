@@ -1,3 +1,4 @@
+import {refreshCareerAchievements} from './career-achievements.js';
 import {assertUsAmateurYearEnd} from './us-entry.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCareerRevision} from './high-school-career.js';
@@ -64,7 +65,7 @@ export function decideCareerUsDirect(s:HighSchoolCareer,expectedRevision:number,
   if(next.kboRecruitment){const k=next.kboRecruitment;if(k.program.result?.round && k.program.decision==='PENDING')k.program=decideKboDraft(k.world,k.program,k.program.version,'DECLINE');next.previousKboRecruitments=[...(next.previousKboRecruitments??[]),k];delete next.kboRecruitment;}
   next.phaseContext={phase:'NEXT_SEASON_READY',route:'US',contractKey:program.signing!.contract.contractKey};
  }
- next.revision++;return next;
+ next.revision++;return refreshCareerAchievements(next);
 }
 
 

@@ -1,0 +1,28 @@
+✖ native pitcher creation requires a chosen secondary pitch; normal difficulty stays the approved default (15.8685ms)
+✔ M2 creation marker is persisted, validated and owner scoped; a replay cannot switch the engine (679.2172ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1490.6113
+
+✖ failing tests:
+
+test at apps\api\test\m2-native-career.test.ts:10:1
+✖ native pitcher creation requires a chosen secondary pitch; normal difficulty stays the approved default (15.8685ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\apps\api\test\m2-native-career.test.ts:14:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /SECONDARY_PITCH_REQUIRED/,
+    operator: 'throws',
+    diff: 'simple'
+  }

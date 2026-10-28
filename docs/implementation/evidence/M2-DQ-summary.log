@@ -1,0 +1,19 @@
+M2-DQ Task3 native first-school UI integration — 2026-10-27
+RED: M2-DQ-api-red.log observed missing real E01 stop before implementation.
+Additional RED: pitcher user selection validation, save-list player title, native chronicle phase/day; see M2-DQ-*-red.log.
+GREEN: native createHttpApi -> real Hono/PGlite -> UI_SEED -> E01 KEEP_FOCUS -> PRE confirmation -> ONE_GAME -> actual engine record totals -> S16.
+Public command names/receipt pipeline unchanged. HTTP S02 uses internal creation careerEngine=M2 marker; preexisting/bare shell callers unchanged.
+Native state stored under state.career. DTOs allowlist display fields only; seed/RNG/P/world/record ledgers absent.
+Ownership, exact receipt replay, source immutability, JSON resume, native missing/invalid secondary pitch, unsupported choice rollback and unknown screen checks covered.
+Native S16 projection executes before CLUB_SCREEN_IDS dispatch. No new screen, asset, style, dependency or engine change.
+Native creation uses approved default normal GROWTH and fixed2027; H01 remains the first-school implementation default until school/difficulty controls are connected.
+Pitchers choose P02-P07 in existing HANDS step; no silent secondary pitch selection. E01/E02/E03 KEEP_FOCUS and E41/E43 skip/defer commands use native reducers; other unavailable choices explain why and cannot fake progress.
+Native chronicle export retains existing private ownership/allowlist output and now reads native player name, last closed day, and phase. No narrative generation added.
+Final scoped API run: npx tsx --test apps/api/test/*.test.ts — exit0,26total/24pass/0fail/2Neon environment skips (M2-DQ-api-suite.log).
+Final web run: npm run test:web — exit0,27/27,includes real client/API native game,SSR/accessibility/creation and legacy fixtures (M2-DQ-web.log).
+Final checks: API tsc,web tsc,root tsconfig.tests tsc and scoped eslint all exit0;git diff --check exit0.
+Limits: no full repository check/build/browser/real-device/Neon run in this task; parent owns final integrated check. Whole school season/route/export narrative are not claimed complete. No commit/push.
+Review correction: CLUB_* is rejected before club dispatch whenever careerEngine=M2 or a native career root exists.
+RED: M2-DQ-mode-red.log observed CLUB_CREATE returning200 on a native marker save (expected400).
+GREEN: M2-DQ-mode-green.log,6/6 focused native/legacy M4/M5/real club tests pass; marker-only and seeded native states preserve full row/phase/summary/revision on rejection; native root without marker is also protected.
+Scoped eslint,API tsc and root tests tsc exit0. Only engine-command.ts and native API regression changed for this review fix; no engine source edits.

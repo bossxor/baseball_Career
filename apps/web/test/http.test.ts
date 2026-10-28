@@ -56,6 +56,21 @@ test('http api maps saves list and create→seed→career against a stub fetch',
   assert.notDeepEqual(after.recentRecords, before.recentRecords);
   assert.ok(calls.some(c => c.url.includes('/game-creations')));
   assert.ok(calls.some(c => c.body?.includes('UI_SEED')));
+  assert.equal(JSON.parse(calls.find(c => c.url.endsWith('/game-creations'))!.body!).careerEngine, 'M2');
+});
+
+test('http api: native preseason confirmation is a persisted UI_ADVANCE intent', async () => {
+  const commands: Record<string, unknown>[] = [];
+  const originalFetch = globalThis.fetch;
+  try {
+    globalThis.fetch = (async (_input: RequestInfo | URL, init?: RequestInit) => {
+      if (init?.method === 'POST') { commands.push(JSON.parse(String(init.body)) as Record<string, unknown>); return new Response(JSON.stringify({ revision: '1' })); }
+      return new Response(JSON.stringify({ revision: '1', nextActions: [{ id: 'advance' }] }));
+    }) as typeof fetch;
+    const api = createHttpApi({ baseUrl: 'http://api.test', getToken: () => 't' });
+    await api.act('s1', 'confirm-preseason', 'ONE_GAME', 'pre');
+    assert.deepEqual(commands, [{ commandId: 'pre', expectedRevision: 0, type: 'UI_ADVANCE', payload: { mode: 'ONE_GAME', actionId: 'confirm-preseason' } }]);
+  } finally { globalThis.fetch = originalFetch; }
 });
 
 test('http api: a 401 calls onUnauthorized once and surfaces AUTH_REQUIRED', async () => {

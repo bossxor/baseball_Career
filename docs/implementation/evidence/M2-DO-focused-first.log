@@ -1,0 +1,14 @@
+US contract native date: {"year":"2036","age":25,"level":"MLB","games":75,"firstSalary":44768,"guaranteeReservedOnce":true,"jsonEqual":true}
+✔ MLB terms enforce the final salary floor and starting-age term boundaries (1.1099ms)
+✔ unexpired original minor control cannot be replaced by an unsolicited offseason market (2483.8556ms)
+✔ expired control fixes at most three real offers without changing current affiliation, money, RNG or records (16239.9391ms)
+✔ accepted external offer activates once next year, reserves guarantee once and pays the first actual date identically after JSON (31933.2501ms)
+✔ tampered offers and incomplete funding cannot commit; a missing offer never auto-signs (2702.4373ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 53852.2551

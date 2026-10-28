@@ -1,0 +1,18 @@
+✔ actual KBO/MiLB signing gives one immutable A01 receipt, cosmetic and E90, read/replay/JSON mutate nothing (1605.2456ms)
+✔ first appearances require actual PA/BF; career milestone totals never combine leagues or postseason (49.1496ms)
+✔ career W100 and SV200 use one league across years; correction keeps first evidence and cosmetics (38.5685ms)
+✔ international/posting and archive alone cannot invent milestones; A12 needs both actual leagues plus retirement receipt (34.8114ms)
+✔ malformed unlock identity, duplicate reward, forged receipt and unsupported awards are rejected (813.1931ms)
+✔ college graduation requires resolved E75, not four completed years or an enrollment status toggle (3895.4629ms)
+✔ military COMPLETED needs both actual completed service blocks and return receipt, not status alone (32.8606ms)
+✔ A11 needs the original high-school rival plus an actual reunion game and evidenced registrations (51.8769ms)
+✔ career aggregation ignores NPC-only rows and reads no NPC statistics while preserving milestone results (83.5019ms)
+✔ unchanged refresh validates its sources without cloning an already earned achievement ledger (36.1425ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6937.0866

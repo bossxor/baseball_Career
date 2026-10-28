@@ -104,18 +104,19 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
     async create(request: CreationRequest): Promise<CreationReceipt> {
       const created = await req('/api/game-creations', {
         method: 'POST', headers: await headers(),
-        body: JSON.stringify({ creationId: request.commandId, mode: 'CAREER' }),
+        body: JSON.stringify({ creationId: request.commandId, mode: 'CAREER', careerEngine: 'M2' }),
       }) as { saveId: string; revision: string };
       revisions.set(created.saveId, Number(created.revision));
       await command(created.saveId, `${request.commandId}:seed`, 'UI_SEED', {
         name: request.name, kind: request.kind, position: request.position,
         throws: request.throws, bats: request.bats, pitchForm: request.pitchForm,
         archetype: request.archetype, focus: [...request.focus],
+        ...(request.kind === 'PITCHER' ? { secondaryPitch: request.secondaryPitch } : {}),
       });
       return { saveId: created.saveId };
     },
     async act(saveId: string, actionId: string, mode: ProgressMode, commandId: string): Promise<CareerView> {
-      if (actionId === 'advance') await command(saveId, commandId, 'UI_ADVANCE', { mode });
+      if (actionId === 'advance' || actionId === 'confirm-preseason') await command(saveId, commandId, 'UI_ADVANCE', { mode, ...(actionId === 'confirm-preseason' ? { actionId } : {}) });
       const data = await req(`/api/saves/${encodeURIComponent(saveId)}/career`, { headers: await headers(false) }) as CareerView & { revision?: string };
       if (data.revision) revisions.set(saveId, Number(data.revision));
       return data;

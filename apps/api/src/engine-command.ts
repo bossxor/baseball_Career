@@ -1,10 +1,11 @@
 import { allocateCapped, ENGINE_VERSION } from '@playball/engine';
 import { applyClubSave } from './club-shell.js';
+import { advanceNativeCareer, chooseNativeCareer, seedNativeCareer, type NativeCareerState } from './native-career.js';
 import {
-  applyUiAdvance, applyUiChoose, applyUiSeed, phaseOf, type ChooseNext, type UiShellState,
+  applyUiAdvance, applyUiChoose, applyUiSeed, phaseOf, type ChooseNext,
 } from './ui-shell.js';
 
-export type SaveState = UiShellState;
+export type SaveState = NativeCareerState;
 
 export type CommandBody = {
   commandId: string;
@@ -23,7 +24,16 @@ export type AppliedCommand = {
 
 /** ALLOCATE_DEMO (M3 E2E) + UI_SEED/ADVANCE/CHOOSE (M4 shell over the same pipeline). */
 export function applyEngineCommand(state: SaveState, command: CommandBody): AppliedCommand {
-  if (command.type.startsWith('CLUB_')) return applyClubSave(state, command);
+  if (command.type.startsWith('CLUB_')) {
+    if (state.careerEngine === 'M2' || state.career) throw Object.assign(new Error('UNSUPPORTED_COMMAND'), { code: 'INVALID_REQUEST' });
+    return applyClubSave(state, command);
+  }
+  if (command.type === 'UI_SEED' && state.careerEngine === 'M2') return seedNativeCareer(state, command.payload);
+  if (state.career) {
+    if (command.type === 'UI_ADVANCE') return advanceNativeCareer(state, command.payload);
+    if (command.type === 'UI_CHOOSE') return chooseNativeCareer(state, command.payload);
+    throw Object.assign(new Error('UNSUPPORTED_COMMAND'), { code: 'INVALID_REQUEST' });
+  }
   if (command.type === 'UI_SEED') {
     const applied = applyUiSeed(state, command.payload);
     return { ...applied, eventIds: [], phase: phaseOf(applied.nextState) };

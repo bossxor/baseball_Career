@@ -4,7 +4,8 @@ import { gameSaves } from '@playball/db';
 import type { AppVariables } from './auth.js';
 import { CLUB_SCREEN_IDS } from '@playball/engine';
 import { clubScreenOf } from './club-shell.js';
-import { careerView, decisionView, type UiShellState } from './ui-shell.js';
+import { careerView, decisionView } from './ui-shell.js';
+import { nativeCareerView, nativeDecisionView, type NativeCareerState } from './native-career.js';
 
 function errorBody(
   c: Context<{ Variables: AppVariables }>,
@@ -37,7 +38,8 @@ export async function getCareer(c: Context<{ Variables: AppVariables }>) {
 
   if (!row || row.deletedAt || row.ownerId !== subject) return errorBody(c, 'SAVE_NOT_FOUND', 404);
   try {
-    const view = careerView(row.id, (row.state as UiShellState) ?? { schemaVersion: 1 });
+    const state = (row.state as NativeCareerState) ?? { schemaVersion: 1 };
+    const view = state.career ? nativeCareerView(row.id, state.career) : careerView(row.id, state);
     return c.json({ ...view, revision: row.revision.toString() });
   } catch {
     return errorBody(c, 'INVALID_REQUEST', 400);
@@ -63,8 +65,9 @@ export async function getScreen(c: Context<{ Variables: AppVariables }>) {
     .limit(1);
 
   if (!row || row.deletedAt || row.ownerId !== subject) return errorBody(c, 'SAVE_NOT_FOUND', 404);
-  const state = (row.state as UiShellState) ?? { schemaVersion: 1 };
+  const state = (row.state as NativeCareerState) ?? { schemaVersion: 1 };
   try {
+    if (state.career) return c.json(nativeDecisionView(row.id, state.career, screenId));
     if ((CLUB_SCREEN_IDS as readonly string[]).includes(screenId)) {
       const playerKey = c.req.query('playerKey'), gameKey = c.req.query('gameKey');
       return c.json(clubScreenOf(state, screenId, {

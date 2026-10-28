@@ -1,3 +1,4 @@
+import type {CareerAchievementLedger} from './career-achievements.js';
 import type {CareerGoalLedger} from './season-goals.js';
 import type {UsAmateurYearEnd} from './us-entry.js';
 import type {KboAmateurYearEnd} from './kbo-entry.js';
@@ -53,6 +54,7 @@ export type HighSchoolCareerPhase =
  | {phase:'NEXT_SEASON_READY';route:'US';contractKey:string}
  | {phase:'EVENT_DECISION';eventKey:string;resume:{phase:'PRESEASON_SETUP'}|HighSchoolProgressPhase|{phase:'CAREER_ROUTE'}|{phase:'SEASON_REVIEW'}};
 export interface HighSchoolCareer {
+ achievements?:CareerAchievementLedger;
  goals?:CareerGoalLedger;
  schemaVersion:1;revision:number;world:HighSchoolWorld;difficulty:Difficulty;
  phaseContext:HighSchoolCareerPhase;events:readonly EventInstance[];

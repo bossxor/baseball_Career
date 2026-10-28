@@ -42,9 +42,9 @@ export async function postGameCreation(c: Context<{ Variables: AppVariables }>) 
   const db = c.get('db');
   const subject = c.get('subject');
 
-  let body: { creationId?: unknown; mode?: unknown };
+  let body: { creationId?: unknown; mode?: unknown; careerEngine?: unknown };
   try {
-    body = (await c.req.json()) as { creationId?: unknown; mode?: unknown };
+    body = (await c.req.json()) as typeof body;
   } catch {
     return errorBody(c, 'INVALID_REQUEST', 400);
   }
@@ -54,6 +54,7 @@ export async function postGameCreation(c: Context<{ Variables: AppVariables }>) 
   }
   const mode = body.mode === 'CLUB' ? 'CLUB' : body.mode === 'CAREER' ? 'CAREER' : null;
   if (!mode) return errorBody(c, 'INVALID_REQUEST', 400);
+  if (body.careerEngine !== undefined && (body.careerEngine !== 'M2' || mode !== 'CAREER')) return errorBody(c, 'INVALID_REQUEST', 400);
 
   const saveId = creationSaveId(subject, body.creationId);
   const view = (row: { id: string; revision: bigint; mode: string; phase: string }) => ({
@@ -64,14 +65,14 @@ export async function postGameCreation(c: Context<{ Variables: AppVariables }>) 
     mode: row.mode,
   });
   const find = async () => (await db
-    .select({ id: gameSaves.id, revision: gameSaves.revision, mode: gameSaves.mode, phase: gameSaves.phase })
+    .select({ id: gameSaves.id, revision: gameSaves.revision, mode: gameSaves.mode, phase: gameSaves.phase, state: gameSaves.state })
     .from(gameSaves)
     .where(and(eq(gameSaves.id, saveId), eq(gameSaves.ownerId, subject)))
     .limit(1))[0];
 
   const existing = await find();
   if (existing) {
-    if (existing.mode !== mode) return errorBody(c, 'COMMAND_ID_REUSED', 409);
+    if (existing.mode !== mode || (existing.state as { careerEngine?: string })?.careerEngine !== body.careerEngine) return errorBody(c, 'COMMAND_ID_REUSED', 409);
     return c.json(view(existing));
   }
   if ((await activeSaveCount(c)) >= ACTIVE_SAVE_CAP) return errorBody(c, 'SAVE_SLOT_REQUIRED', 422);
@@ -89,12 +90,13 @@ export async function postGameCreation(c: Context<{ Variables: AppVariables }>) 
       stampCount: 0,
       creationId: body.creationId,
       createdWith: 'M3_SHELL',
+      ...(body.careerEngine === 'M2' ? { careerEngine: 'M2' } : {}),
       nonce: randomUUID(),
     },
   }).onConflictDoNothing();
 
   // A concurrent identical request may have inserted first: both callers read the one row.
   const saved = await find();
-  if (!saved || saved.mode !== mode) return errorBody(c, 'COMMAND_ID_REUSED', 409);
+  if (!saved || saved.mode !== mode || (saved.state as { careerEngine?: string })?.careerEngine !== body.careerEngine) return errorBody(c, 'COMMAND_ID_REUSED', 409);
   return c.json(view(saved));
 }
