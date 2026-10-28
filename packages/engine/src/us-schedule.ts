@@ -1,3 +1,4 @@
+import {assertUsMilitaryPlayable} from './us-military-plan.js';
 import {professionalGameDays} from './season-calendar.js';
 import type {UsCareer} from './us-career-entry.js';
 import {assertUsCareerRevision} from './us-career-entry.js';
@@ -20,5 +21,8 @@ function leagues(s:UsCareer):UsSeasonSchedule['leagues'] {
 }
 export function assertUsSeasonSchedule(s:ScheduledUsCareer):void {assertUsCareerRevision(s,s.revision);const published=s.seasonSchedule;if(!published || published.receiptKey!==key(s) || published.seasonKey!==s.world.seasonKey || published.sourceBasis!==basis(s) || canonicalJson(published.leagues)!==canonicalJson(leagues(s)))throw new RangeError('STALE_US_SEASON_SCHEDULE');}
 /** Publication commits all five calendars together; it does not play games, pay salary or reserve a second contract. */
-export function publishUsSeasonSchedule(s:ScheduledUsCareer,revision:number):ScheduledUsCareer {assertSource(s,revision);if(s.seasonSchedule){assertUsSeasonSchedule(s);return structuredClone(s);}const next=structuredClone(s);next.seasonSchedule={receiptKey:key(s),seasonKey:s.world.seasonKey,sourceBasis:basis(s),leagues:leagues(s)};next.revision++;return next;}
+export function publishUsSeasonSchedule(s:ScheduledUsCareer,revision:number):ScheduledUsCareer {assertUsMilitaryPlayable(s);return publishUsSeasonScheduleOwned(s,revision);}
+/** Internal publication for the NPC season while the protagonist serves. */
+export function publishUsMilitarySeasonSchedule(s:ScheduledUsCareer,revision:number):ScheduledUsCareer {if(!['FROZEN_SERVICE','TERMINATED_SERVICE'].includes(s.military.status))throw new RangeError('US_MILITARY_SERVICE_NOT_ACTIVE');return publishUsSeasonScheduleOwned(s,revision);}
+function publishUsSeasonScheduleOwned(s:ScheduledUsCareer,revision:number):ScheduledUsCareer {assertSource(s,revision);if(s.seasonSchedule){assertUsSeasonSchedule(s);return structuredClone(s);}const next=structuredClone(s);next.seasonSchedule={receiptKey:key(s),seasonKey:s.world.seasonKey,sourceBasis:basis(s),leagues:leagues(s)};next.revision++;return next;}
 export function usSeasonScheduleView(s:ScheduledUsCareer){assertUsSeasonSchedule(s);return {seasonKey:s.world.seasonKey,leagues:(Object.keys(US_SEASON_GAMES) as UsLevel[]).map(level=>({level,gamesPerTeam:US_SEASON_GAMES[level],totalGames:s.seasonSchedule!.leagues[level].length,nextDay:s.seasonSchedule!.leagues[level][0]!.worldDay}))};}

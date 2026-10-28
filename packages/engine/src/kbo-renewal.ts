@@ -7,6 +7,7 @@ import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {recordTotals} from './records.js';
 import {createWorldEvent,completeBlockingEvent,eventDefinition} from './events.js';
+import {careerAgentRenewalOffer} from './career-agent.js';
 
 /** 01 §6 non-FA 1-year renewal offer for my player, fixed once per season (no RNG, refresh never changes it). */
 export interface KboRenewal {
@@ -47,14 +48,14 @@ export function offerKboRenewal(source:KboCareer,expectedRevision:number):KboCar
  career.events=[...career.events,event];career.revision++;return career;
 }
 /** S08 accept: closes E30 by domain commit. The new contract activates with the next season (72 Y02), not now. */
-export function acceptKboRenewal(source:KboCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number}):KboCareer {
+export function acceptKboRenewal(source:KboCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number;offerKey?:string}):KboCareer {
  assertCareerRevision(source,expectedRevision);
  const renewal=source.renewal,event=source.events.find(e=>e.eventKey===input.eventKey);
  if(!renewal || renewal.status!=='OFFERED' || renewal.eventKey!==input.eventKey || !event || event.definitionId!=='E30')throw new RangeError('INVALID_KBO_RENEWAL');
- const club=source.world.clubs.find(c=>c.id===source.protagonistClubId)!;
- if(kboFutureCommitmentWon(source.world,club.id,1)+renewal.annualSalaryWon>club.budgetWon*.9)throw new RangeError('INVALID_KBO_RENEWAL');
+ const club=source.world.clubs.find(c=>c.id===source.protagonistClubId)!,offer=careerAgentRenewalOffer(source,input.offerKey);
+ if(kboFutureCommitmentWon(source.world,club.id,1)-offer.reservedDeltaWon+offer.annualSalaryWon>club.budgetWon*.9)throw new RangeError('INVALID_KBO_RENEWAL');
  const context={worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['OPEN_CAREER_OFFERS']};
  const resolved=completeBlockingEvent(event,input.eventVersion,{sourceEvidenceKey:event.evidenceKey,receiptKey:JSON.stringify(['kbo-renewal-accept',renewal.offerKey]),command:'ACCEPT_RENEWAL'},context);
  const career=structuredClone(source);
- career.renewal={...renewal,status:'ACCEPTED'};career.events=career.events.map(e=>e.eventKey===event.eventKey?resolved:e);career.revision++;return career;
+ career.renewal={...renewal,offerKey:offer.offerKey,annualSalaryWon:offer.annualSalaryWon,status:'ACCEPTED'};career.events=career.events.map(e=>e.eventKey===event.eventKey?resolved:e);career.revision++;return career;
 }

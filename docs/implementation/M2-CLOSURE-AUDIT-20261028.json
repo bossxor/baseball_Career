@@ -1,0 +1,2550 @@
+{
+  "schemaVersion": 1,
+  "status": "GAP_AUDIT_NOT_RUNTIME_PASS",
+  "date": "2026-10-28",
+  "baseCommit": "ef03ff9",
+  "sourceCheckout": "E:/AI/Game/baseball_career",
+  "testsRun": false,
+  "notes": [
+    "Literal source references are triage, not trigger or domain completion.",
+    "Manual source findings, milestones,24 paths and PF-D01~15 are in companion MD.",
+    "Concurrent implementation changes after base commit are not validated."
+  ],
+  "events": [
+    {
+      "id": "E01",
+      "title": "마지막 고교의 겨울",
+      "catalogTrigger": "HS_PRE, 고유",
+      "choices": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "KEEP_FOCUS",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/high-school-career.ts",
+          "line": 117
+        },
+        {
+          "file": "packages/engine/src/high-school-career.ts",
+          "line": 124
+        }
+      ]
+    },
+    {
+      "id": "E02",
+      "title": "타격 자세의 갈림길",
+      "catalogTrigger": "고교 타자, 12경기",
+      "choices": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "KEEP_FOCUS",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/high-school-career.ts",
+          "line": 124
+        },
+        {
+          "file": "packages/engine/src/high-school-progress.ts",
+          "line": 79
+        },
+        {
+          "file": "packages/engine/src/high-school-progress.ts",
+          "line": 82
+        }
+      ]
+    },
+    {
+      "id": "E03",
+      "title": "마운드의 과제",
+      "catalogTrigger": "고교 투수, 12경기",
+      "choices": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "KEEP_FOCUS",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/high-school-career.ts",
+          "line": 124
+        },
+        {
+          "file": "packages/engine/src/high-school-progress.ts",
+          "line": 79
+        },
+        {
+          "file": "packages/engine/src/high-school-progress.ts",
+          "line": 82
+        }
+      ]
+    },
+    {
+      "id": "E04",
+      "title": "스카우트의 질문",
+      "catalogTrigger": "HS_RESULT",
+      "choices": [
+        {
+          "command": "OPEN_ROUTE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S28"
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/high-school-route.ts",
+          "line": 41
+        },
+        {
+          "file": "packages/engine/src/high-school-route.ts",
+          "line": 47
+        },
+        {
+          "file": "packages/engine/src/high-school-route.ts",
+          "line": 49
+        },
+        {
+          "file": "packages/engine/src/high-school-route.ts",
+          "line": 59
+        }
+      ]
+    },
+    {
+      "id": "E05",
+      "title": "지명을 기다리는 날",
+      "catalogTrigger": "DRAFT_RESULT",
+      "choices": [
+        {
+          "command": "ACCEPT_CAREER_OFFER",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "DECLINE_DRAFT",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E06",
+      "title": "이름이 불리지 않았다",
+      "catalogTrigger": "UNDRAFTED",
+      "choices": [
+        {
+          "command": "OPEN_UNDRAFTED_ROUTES",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S28"
+        },
+        {
+          "command": "REQUEST_RETIRE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S09"
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E07",
+      "title": "다시 받은 기회",
+      "catalogTrigger": "RETRY_RESULT, 제안 존재",
+      "choices": [
+        {
+          "command": "ACCEPT_CAREER_OFFER",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "REQUEST_RETIRE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S09"
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E08",
+      "title": "프로의 첫 캠프",
+      "catalogTrigger": "첫 PRO_PRE",
+      "choices": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "KEEP_FOCUS",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-preseason.ts",
+          "line": 40
+        },
+        {
+          "file": "packages/engine/src/kbo-preseason.ts",
+          "line": 45
+        },
+        {
+          "file": "packages/engine/src/kbo-preseason.ts",
+          "line": 62
+        }
+      ]
+    },
+    {
+      "id": "E09",
+      "title": "첫 1군 호출",
+      "catalogTrigger": "FUTURES, 자리 존재, 경쟁점수 충족",
+      "choices": [
+        {
+          "command": "ACCEPT_CALLUP",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "DEFER_CALLUP",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-callup.ts",
+          "line": 36
+        },
+        {
+          "file": "packages/engine/src/kbo-callup.ts",
+          "line": 50
+        },
+        {
+          "file": "packages/engine/src/kbo-callup.ts",
+          "line": 51
+        },
+        {
+          "file": "packages/engine/src/kbo-callup.ts",
+          "line": 62
+        }
+      ]
+    },
+    {
+      "id": "E10",
+      "title": "짧은 기회의 무게",
+      "catalogTrigger": "첫 콜업 후20경기",
+      "choices": [
+        {
+          "command": "REQUEST_ROLE_REVIEW",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E11",
+      "title": "두 번째 숙제",
+      "catalogTrigger": "2군 한 시즌 종료",
+      "choices": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "KEEP_FOCUS",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E12",
+      "title": "주전과 백업 사이",
+      "catalogTrigger": "1군 타자, 출장비율<40%",
+      "choices": [
+        {
+          "command": "START_POSITION_PLAN",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E13",
+      "title": "낯선 수비 자리",
+      "catalogTrigger": "E12 START_POSITION_PLAN 확정 후 같은 positionPlanId의 적격 팀경기24개 완료",
+      "choices": [
+        {
+          "command": "CONFIRM_POSITION",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "CANCEL_POSITION_PLAN",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E14",
+      "title": "선발의 문",
+      "catalogTrigger": "RP, 체력≥60, SP 공석",
+      "choices": [
+        {
+          "command": "REQUEST_SP_REVIEW",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E15",
+      "title": "마지막 아웃의 자리",
+      "catalogTrigger": "RP, 위기≥60, CP 공석",
+      "choices": [
+        {
+          "command": "REQUEST_CP_REVIEW",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E16",
+      "title": "구속보다 안정",
+      "catalogTrigger": "투수, BB9>4.5, 20이닝 이후",
+      "choices": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "KEEP_FOCUS",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E17",
+      "title": "긴 무안타",
+      "catalogTrigger": "타자, 최근20AB H=0",
+      "choices": [
+        {
+          "command": "OPEN_STYLE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S22"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E18",
+      "title": "장타가 필요한 때",
+      "catalogTrigger": "타자, 100AB HR≤1",
+      "choices": [
+        {
+          "command": "OPEN_STYLE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S22"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E19",
+      "title": "흔들린 두 경기",
+      "catalogTrigger": "SP, 최근2등판 ER≥10",
+      "choices": [
+        {
+          "command": "REQUEST_REST",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E20",
+      "title": "코치의 조언",
+      "catalogTrigger": "최근20경기성적지수≤40,일반조언쿨다운충족",
+      "choices": [
+        {
+          "command": "OPEN_DEVELOPMENT",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S22"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E21",
+      "title": "작은 통증",
+      "catalogTrigger": "부상 판정 경미 시",
+      "choices": [
+        {
+          "command": "ACK_INJURY",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E22",
+      "title": "긴 재활",
+      "catalogTrigger": "부상 중간/중대 시",
+      "choices": [
+        {
+          "command": "ACK_INJURY",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E23",
+      "title": "돌아온 그라운드",
+      "catalogTrigger": "부상 회복 직후",
+      "choices": [
+        {
+          "command": "CONFIRM_RETURN",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E24",
+      "title": "처음 받은 박수",
+      "catalogTrigger": "첫100H 또는 첫10승/20SV",
+      "choices": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E25",
+      "title": "올스타의 초대",
+      "catalogTrigger": "시즌중 성적 상위, 고유 시즌",
+      "choices": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E26",
+      "title": "라이벌의 등장",
+      "catalogTrigger": "동포지션 경쟁점수±5",
+      "choices": [
+        {
+          "command": "OPEN_COMPETITION",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S16"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E27",
+      "title": "포스트시즌의 긴장",
+      "catalogTrigger": "첫PS",
+      "choices": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E28",
+      "title": "우승 뒤의 겨울",
+      "catalogTrigger": "팀 우승, OFFSEASON",
+      "choices": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E29",
+      "title": "첫 개인상",
+      "catalogTrigger": "첫 수상",
+      "choices": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E30",
+      "title": "재계약 제안",
+      "catalogTrigger": "비FA CONTRACT — 다음 시즌 또는 복귀 잔여 시즌 일할 재계약",
+      "choices": [
+        {
+          "command": "OPEN_CAREER_OFFERS",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S08"
+        },
+        {
+          "command": "REQUEST_RETIRE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S09"
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-military-planning.ts",
+          "line": 31
+        },
+        {
+          "file": "packages/engine/src/kbo-military-state.ts",
+          "line": 44
+        },
+        {
+          "file": "packages/engine/src/kbo-offseason-exit.ts",
+          "line": 32
+        },
+        {
+          "file": "packages/engine/src/kbo-offseason-exit.ts",
+          "line": 46
+        },
+        {
+          "file": "packages/engine/src/kbo-remainder-renewal.ts",
+          "line": 26
+        },
+        {
+          "file": "packages/engine/src/kbo-remainder-renewal.ts",
+          "line": 42
+        },
+        {
+          "file": "packages/engine/src/kbo-renewal.ts",
+          "line": 42
+        },
+        {
+          "file": "packages/engine/src/kbo-renewal.ts",
+          "line": 43
+        },
+        {
+          "file": "packages/engine/src/kbo-renewal.ts",
+          "line": 53
+        },
+        {
+          "file": "packages/engine/src/kbo-retirement.ts",
+          "line": 59
+        },
+        {
+          "file": "packages/engine/src/kbo-retirement.ts",
+          "line": 72
+        }
+      ]
+    },
+    {
+      "id": "E31",
+      "title": "FA 시장의 문",
+      "catalogTrigger": "자격 충족 CONTRACT",
+      "choices": [
+        {
+          "command": "OPEN_CAREER_OFFERS",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S08"
+        },
+        {
+          "command": "OPEN_RETURN",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S33"
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E32",
+      "title": "익숙한 유니폼",
+      "catalogTrigger": "FA 원구단/타구단 제안 존재",
+      "choices": [
+        {
+          "command": "ACCEPT_CAREER_OFFER",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "BACK_TO_OFFERS",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S08"
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E33",
+      "title": "베테랑의 역할",
+      "catalogTrigger": "나이≥33, 백업 전환",
+      "choices": [
+        {
+          "command": "ACCEPT_ROLE",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "OPEN_CAREER_OFFERS",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S08"
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E34",
+      "title": "전력 외 통보",
+      "catalogTrigger": "계약 미보유, 팀 후보 제외",
+      "choices": [
+        {
+          "command": "OPEN_UNCONTRACTED_ROUTES",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S28"
+        },
+        {
+          "command": "REQUEST_RETIRE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S09"
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E35",
+      "title": "마지막 테스트 결과",
+      "catalogTrigger": "준비시즌3회소진/유효오퍼0/대학복학등다른합법진로0",
+      "choices": [
+        {
+          "command": "CONFIRM_RETIRE",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E36",
+      "title": "떠날 시기를 고르다",
+      "catalogTrigger": "수동 은퇴 가능 OFFSEASON",
+      "choices": [
+        {
+          "command": "CONFIRM_RETIRE",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "CANCEL_RETIRE",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-retirement.ts",
+          "line": 46
+        },
+        {
+          "file": "packages/engine/src/kbo-retirement.ts",
+          "line": 60
+        },
+        {
+          "file": "packages/engine/src/us-retirement.ts",
+          "line": 24
+        },
+        {
+          "file": "packages/engine/src/us-retirement.ts",
+          "line": 30
+        },
+        {
+          "file": "packages/engine/src/us-retirement.ts",
+          "line": 35
+        }
+      ]
+    },
+    {
+      "id": "E37",
+      "title": "마지막 인사",
+      "catalogTrigger": "RETIRED",
+      "choices": [
+        {
+          "command": "OPEN_ARCHIVE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S10"
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-retirement.ts",
+          "line": 46
+        },
+        {
+          "file": "packages/engine/src/kbo-retirement.ts",
+          "line": 53
+        },
+        {
+          "file": "packages/engine/src/us-retirement.ts",
+          "line": 24
+        },
+        {
+          "file": "packages/engine/src/us-retirement.ts",
+          "line": 27
+        }
+      ]
+    },
+    {
+      "id": "E38",
+      "title": "장기집권의 부담",
+      "catalogTrigger": "구단 3연패, CLB_REVIEW",
+      "choices": [
+        {
+          "command": "OPEN_CLUB_REVIEW",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S14"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "OTHER_MILESTONE_DOMAIN",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E39",
+      "title": "기회를 원하는 유망주",
+      "catalogTrigger": "구단2군,22세이하,경쟁점수상위",
+      "choices": [
+        {
+          "command": "OPEN_LINEUP",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S15"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "OTHER_MILESTONE_DOMAIN",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E40",
+      "title": "한정된 겨울 예산",
+      "catalogTrigger": "구단 오프시즌, 예산<예정연봉",
+      "choices": [
+        {
+          "command": "OPEN_BUDGET",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S37"
+        },
+        {
+          "command": "OPEN_REBUILD",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S37"
+        }
+      ],
+      "status": "OTHER_MILESTONE_DOMAIN",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E41",
+      "title": "새 시즌의 유형",
+      "catalogTrigger": "프리시즌 또는 정규일정 절반,유형변경기회남음",
+      "choices": [
+        {
+          "command": "OPEN_STYLE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S22"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/high-school-progress.ts",
+          "line": 79
+        },
+        {
+          "file": "packages/engine/src/high-school-progress.ts",
+          "line": 108
+        },
+        {
+          "file": "packages/engine/src/high-school-progress.ts",
+          "line": 110
+        },
+        {
+          "file": "packages/engine/src/kbo-windows.ts",
+          "line": 72
+        },
+        {
+          "file": "packages/engine/src/kbo-windows.ts",
+          "line": 85
+        },
+        {
+          "file": "packages/engine/src/kbo-windows.ts",
+          "line": 86
+        },
+        {
+          "file": "packages/engine/src/us-windows.ts",
+          "line": 53
+        },
+        {
+          "file": "packages/engine/src/us-windows.ts",
+          "line": 66
+        },
+        {
+          "file": "packages/engine/src/us-windows.ts",
+          "line": 67
+        }
+      ]
+    },
+    {
+      "id": "E42",
+      "title": "다른 이름의 선수",
+      "catalogTrigger": "결산별칭변화. '이번 시즌의 변화가 선수의 인상을 바꿨습니다.'",
+      "choices": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E43",
+      "title": "한 번의 특별훈련",
+      "catalogTrigger": "정규일정1/3경기해금,세계시즌usage=0",
+      "choices": [
+        {
+          "command": "OPEN_TRAINING",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S23"
+        },
+        {
+          "command": "DEFER_TRAINING",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "FORFEIT_TRAINING",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/high-school-progress.ts",
+          "line": 79
+        },
+        {
+          "file": "packages/engine/src/high-school-progress.ts",
+          "line": 83
+        },
+        {
+          "file": "packages/engine/src/high-school-progress.ts",
+          "line": 108
+        },
+        {
+          "file": "packages/engine/src/high-school-progress.ts",
+          "line": 109
+        },
+        {
+          "file": "packages/engine/src/high-school-training.ts",
+          "line": 52
+        },
+        {
+          "file": "packages/engine/src/kbo-windows.ts",
+          "line": 72
+        },
+        {
+          "file": "packages/engine/src/kbo-windows.ts",
+          "line": 75
+        },
+        {
+          "file": "packages/engine/src/kbo-windows.ts",
+          "line": 85
+        },
+        {
+          "file": "packages/engine/src/us-windows.ts",
+          "line": 53
+        },
+        {
+          "file": "packages/engine/src/us-windows.ts",
+          "line": 56
+        },
+        {
+          "file": "packages/engine/src/us-windows.ts",
+          "line": 66
+        }
+      ]
+    },
+    {
+      "id": "E44",
+      "title": "국가의 부름",
+      "catalogTrigger": "최종후보. '대표팀이 합류 의사를 물었습니다.'",
+      "choices": [
+        {
+          "command": "ACCEPT_NATIONAL",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "DECLINE_NATIONAL",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 59
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 67
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 165
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 168
+        },
+        {
+          "file": "packages/engine/src/kbo-progress.ts",
+          "line": 95
+        }
+      ]
+    },
+    {
+      "id": "E45",
+      "title": "대표팀 밖에서",
+      "catalogTrigger": "선발탈락. '이번 명단에는 이름이 없었습니다.'",
+      "choices": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-national-selection.ts",
+          "line": 31
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 165
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 166
+        }
+      ]
+    },
+    {
+      "id": "E46",
+      "title": "첫 국제무대",
+      "catalogTrigger": "대회첫실제출장. '유니폼 앞의 이름이 달라졌습니다.'",
+      "choices": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 90
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 142
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 146
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 149
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 165
+        }
+      ]
+    },
+    {
+      "id": "E47",
+      "title": "메달과 다음 의무",
+      "catalogTrigger": "올림픽메달/AG금+게임자격충족",
+      "choices": [
+        {
+          "command": "OPEN_SERVICE_ELIGIBILITY",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S26"
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 91
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 101
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 165
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 172
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 190
+        },
+        {
+          "file": "packages/engine/src/kbo-progress.ts",
+          "line": 95
+        }
+      ]
+    },
+    {
+      "id": "E48",
+      "title": "돌아오는 비행기",
+      "catalogTrigger": "대회종료. '팀의 결과와 내 경기를 돌아봅니다.'",
+      "choices": [
+        {
+          "command": "CONFIRM_NATIONAL_RETURN",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 92
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 102
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 165
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 171
+        },
+        {
+          "file": "packages/engine/src/kbo-progress.ts",
+          "line": 95
+        }
+      ]
+    },
+    {
+      "id": "E49",
+      "title": "겨울의 병역계획",
+      "catalogTrigger": "미해결오프시즌. '다가올 시즌과 복무 계획을 함께 생각합니다.'",
+      "choices": [
+        {
+          "command": "APPLY_MILITARY_TEAM",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "START_SERVICE",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "DEFER_SERVICE",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-military-planning.ts",
+          "line": 15
+        },
+        {
+          "file": "packages/engine/src/kbo-military-planning.ts",
+          "line": 28
+        },
+        {
+          "file": "packages/engine/src/kbo-military-planning.ts",
+          "line": 29
+        },
+        {
+          "file": "packages/engine/src/kbo-military-planning.ts",
+          "line": 47
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 104
+        }
+      ]
+    },
+    {
+      "id": "E50",
+      "title": "상무 선발 발표",
+      "catalogTrigger": "지원1회확정. '지원 결과가 도착했습니다.'",
+      "choices": [
+        {
+          "command": "CONFIRM_MILITARY_RESULT",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-military-state.ts",
+          "line": 48
+        },
+        {
+          "file": "packages/engine/src/kbo-offseason-exit.ts",
+          "line": 45
+        },
+        {
+          "file": "packages/engine/src/kbo-renewal.ts",
+          "line": 37
+        }
+      ]
+    },
+    {
+      "id": "E51",
+      "title": "잠시 내려놓는 배트",
+      "catalogTrigger": "현역복무시작. '원구단을 떠나 복무를 시작합니다.'",
+      "choices": [
+        {
+          "command": "ADVANCE_SERVICE",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 20
+        },
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 28
+        },
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 58
+        },
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 59
+        },
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 60
+        },
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 79
+        }
+      ]
+    },
+    {
+      "id": "E52",
+      "title": "부대의 그라운드",
+      "catalogTrigger": "상무첫블록. '군 체육팀에서 야구와 복무를 이어갑니다.'",
+      "choices": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ADVANCE_SERVICE",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 20
+        },
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 28
+        },
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 58
+        },
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 59
+        },
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 79
+        }
+      ]
+    },
+    {
+      "id": "E53",
+      "title": "다시 받는 유니폼",
+      "catalogTrigger": "18개월완료. '복무를 마치고 원구단으로 돌아왔습니다.'",
+      "choices": [
+        {
+          "command": "CONFIRM_SERVICE_RETURN",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 20
+        },
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 21
+        },
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 51
+        },
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 58
+        },
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 74
+        },
+        {
+          "file": "packages/engine/src/kbo-military-events.ts",
+          "line": 79
+        }
+      ]
+    },
+    {
+      "id": "E54",
+      "title": "남은 마지막 겨울",
+      "catalogTrigger": "27세미해결. '게임 규칙상 다음 시즌 전에는 복무 계획을 확정해야 합니다.'",
+      "choices": [
+        {
+          "command": "APPLY_MILITARY_TEAM",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "START_SERVICE",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-military-planning.ts",
+          "line": 15
+        },
+        {
+          "file": "packages/engine/src/kbo-military-planning.ts",
+          "line": 28
+        },
+        {
+          "file": "packages/engine/src/kbo-military-planning.ts",
+          "line": 29
+        },
+        {
+          "file": "packages/engine/src/kbo-military-planning.ts",
+          "line": 47
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 104
+        }
+      ]
+    },
+    {
+      "id": "E55",
+      "title": "계속되는 활동의무",
+      "catalogTrigger": "ATHLETE_SERVICE오프시즌. '선수 활동과 함께 이행할 의무를 확인합니다.'",
+      "choices": [
+        {
+          "command": "ACK_SERVICE_OBLIGATION",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 155
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 156
+        },
+        {
+          "file": "packages/engine/src/kbo-national.ts",
+          "line": 165
+        }
+      ]
+    },
+    {
+      "id": "E56",
+      "title": "졸업 뒤 다음 무대",
+      "catalogTrigger": "고교졸업진로상태,미국카드는능력과유효오퍼조건부",
+      "choices": [
+        {
+          "command": "OPEN_ROUTE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S28"
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E57",
+      "title": "바다 건너의 계약서",
+      "catalogTrigger": "'첫 시작은 메이저 무대보다 작은 구장일 수 있습니다.'",
+      "choices": [
+        {
+          "command": "ACCEPT_CAREER_OFFER",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "BACK_TO_ROUTE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S28"
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E58",
+      "title": "낯선 클럽하우스",
+      "catalogTrigger": "'언어도 준비도 낯설지만 오늘의 훈련은 시작됩니다.'",
+      "choices": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/us-preseason.ts",
+          "line": 37
+        },
+        {
+          "file": "packages/engine/src/us-preseason.ts",
+          "line": 43
+        },
+        {
+          "file": "packages/engine/src/us-preseason.ts",
+          "line": 60
+        }
+      ]
+    },
+    {
+      "id": "E59",
+      "title": "다음 레벨의 문",
+      "catalogTrigger": "승격조건충족. '한 단계 높은 팀에서 기회를 받았습니다.'",
+      "choices": [
+        {
+          "command": "CONFIRM_PROMOTION",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "DEFER_PROMOTION",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/us-levels.ts",
+          "line": 26
+        },
+        {
+          "file": "packages/engine/src/us-levels.ts",
+          "line": 33
+        }
+      ]
+    },
+    {
+      "id": "E60",
+      "title": "메이저리그의 전화",
+      "catalogTrigger": "'구단이 메이저리그 합류를 알렸습니다.'",
+      "choices": [
+        {
+          "command": "CONFIRM_CALLUP",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/us-levels.ts",
+          "line": 26
+        },
+        {
+          "file": "packages/engine/src/us-levels.ts",
+          "line": 33
+        }
+      ]
+    },
+    {
+      "id": "E61",
+      "title": "다시 내려가는 길",
+      "catalogTrigger": "강등확정조건. '상위 명단에 남지 못했습니다.'",
+      "choices": [
+        {
+          "command": "CONFIRM_DEMOTION",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "OPEN_RIGHTS",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S08"
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/us-levels.ts",
+          "line": 26
+        },
+        {
+          "file": "packages/engine/src/us-levels.ts",
+          "line": 33
+        }
+      ]
+    },
+    {
+      "id": "E62",
+      "title": "포스팅을 요청하다",
+      "catalogTrigger": "'국내에서 쌓은 시간 뒤에 새로운 무대를 생각합니다.'",
+      "choices": [
+        {
+          "command": "REQUEST_POSTING",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 74
+        },
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 82
+        },
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 83
+        },
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 89
+        }
+      ]
+    },
+    {
+      "id": "E63",
+      "title": "구단의 대답",
+      "catalogTrigger": "'원구단이 요청에 답했습니다.'",
+      "choices": [
+        {
+          "command": "OPEN_POSTING_OFFERS",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S32"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 74
+        },
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 109
+        },
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 116
+        },
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 139
+        },
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 148
+        },
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 173
+        },
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 198
+        }
+      ]
+    },
+    {
+      "id": "E64",
+      "title": "협상의 끝",
+      "catalogTrigger": "'제안과 남은 시간을 함께 봅니다.'",
+      "choices": [
+        {
+          "command": "ACCEPT_CAREER_OFFER",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "REMAIN_ORIGINAL",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 74
+        },
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 141
+        },
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 148
+        },
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 159
+        },
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 198
+        },
+        {
+          "file": "packages/engine/src/kbo-posting.ts",
+          "line": 200
+        }
+      ]
+    },
+    {
+      "id": "E65",
+      "title": "처음 선 빅리그",
+      "catalogTrigger": "실제첫출장. '명단의 이름이 경기 기록의 이름이 됐습니다.'",
+      "choices": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/us-debut.ts",
+          "line": 10
+        },
+        {
+          "file": "packages/engine/src/us-debut.ts",
+          "line": 15
+        },
+        {
+          "file": "packages/engine/src/us-debut.ts",
+          "line": 20
+        }
+      ]
+    },
+    {
+      "id": "E66",
+      "title": "미국에서 맞는 FA",
+      "catalogTrigger": "'새 팀과 새로운 역할을 고를 수 있게 됐습니다.'",
+      "choices": [
+        {
+          "command": "OPEN_CAREER_OFFERS",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S08"
+        },
+        {
+          "command": "OPEN_RETURN",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S33"
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/us-kbo-return.ts",
+          "line": 48
+        },
+        {
+          "file": "packages/engine/src/us-minor-history.ts",
+          "line": 33
+        },
+        {
+          "file": "packages/engine/src/us-minor-market.ts",
+          "line": 51
+        },
+        {
+          "file": "packages/engine/src/us-minor-market.ts",
+          "line": 68
+        }
+      ]
+    },
+    {
+      "id": "E67",
+      "title": "돌아갈 그라운드",
+      "catalogTrigger": "'다시 국내에서 뛰는 길을 확인합니다.'",
+      "choices": [
+        {
+          "command": "CONFIRM_DOMESTIC_RETURN",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "CANCEL_RETURN",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/us-kbo-return.ts",
+          "line": 48
+        },
+        {
+          "file": "packages/engine/src/us-kbo-return.ts",
+          "line": 79
+        }
+      ]
+    },
+    {
+      "id": "E68",
+      "title": "기다림도 커리어",
+      "catalogTrigger": "'복귀를 준비하는 시간이 지나갑니다.'",
+      "choices": [
+        {
+          "command": "ADVANCE_RETURN_PROGRAM",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E69",
+      "title": "두 리그의 마지막 인사",
+      "catalogTrigger": "'어느 리그의 기록도 다른 기록을 지우지 않습니다.'",
+      "choices": [
+        {
+          "command": "OPEN_ARCHIVE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S10"
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E70",
+      "title": "졸업 뒤의 캠퍼스",
+      "catalogTrigger": "고교졸업/대학진학검토",
+      "choices": [
+        {
+          "command": "OPEN_COLLEGES",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S34"
+        },
+        {
+          "command": "BACK_TO_ROUTE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S28"
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E71",
+      "title": "대학의 첫 유니폼",
+      "catalogTrigger": "대학입학확정후1회",
+      "choices": [
+        {
+          "command": "CHOOSE_FOCUS",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E72",
+      "title": "대학선수권의 초대",
+      "catalogTrigger": "대학정규상위4확정",
+      "choices": [
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E73",
+      "title": "두 번째 봄 다음의 선택",
+      "catalogTrigger": "2학년시즌결산/조기지명미시도",
+      "choices": [
+        {
+          "command": "ENTER_EARLY_DRAFT",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ADVANCE_ACADEMIC_YEAR",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "OPEN_US_IF_VALID",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S29"
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E74",
+      "title": "다시 학교 그라운드로",
+      "catalogTrigger": "조기미지명/미계약복학가능",
+      "choices": [
+        {
+          "command": "ADVANCE_ACADEMIC_YEAR",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "REQUEST_RETIRE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S09"
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E75",
+      "title": "졸업과 다음 무대",
+      "catalogTrigger": "4학년결산",
+      "choices": [
+        {
+          "command": "GRADUATE_COLLEGE",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/college-graduation.ts",
+          "line": 24
+        },
+        {
+          "file": "packages/engine/src/college-graduation.ts",
+          "line": 26
+        },
+        {
+          "file": "packages/engine/src/college-graduation.ts",
+          "line": 37
+        }
+      ]
+    },
+    {
+      "id": "E76",
+      "title": "미뤄 둔 학년",
+      "catalogTrigger": "휴학중복무완료",
+      "choices": [
+        {
+          "command": "RESUME_COLLEGE",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E77",
+      "title": "새로운 관찰 보고서",
+      "catalogTrigger": "탐색명령성공receipt",
+      "choices": [
+        {
+          "command": "OPEN_SCOUT_REPORT",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S36"
+        }
+      ],
+      "status": "OTHER_MILESTONE_DOMAIN",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E78",
+      "title": "이번 탐색의 빈자리",
+      "catalogTrigger": "탐색명령실패receipt",
+      "choices": [
+        {
+          "command": "OPEN_SEARCH",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S36"
+        },
+        {
+          "command": "OPEN_MARKET",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S17"
+        }
+      ],
+      "status": "OTHER_MILESTONE_DOMAIN",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E79",
+      "title": "제안서를 보내기 전에",
+      "catalogTrigger": "구단제안초안확인",
+      "choices": [
+        {
+          "command": "SUBMIT_OFFER",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "CANCEL_DRAFT_OFFER",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "OTHER_MILESTONE_DOMAIN",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E80",
+      "title": "협상 라운드의 마감",
+      "catalogTrigger": "제안라운드결과receipt",
+      "choices": [
+        {
+          "command": "OPEN_OFFER_RESULTS",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S17"
+        }
+      ],
+      "status": "OTHER_MILESTONE_DOMAIN",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E81",
+      "title": "그라운드를 지키는 예산",
+      "catalogTrigger": "재정재건필요",
+      "choices": [
+        {
+          "command": "CONFIRM_REBUILD",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "BACK_TO_BUDGET",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S37"
+        }
+      ],
+      "status": "OTHER_MILESTONE_DOMAIN",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E82",
+      "title": "다시 시작하는 선수",
+      "catalogTrigger": "보관복사생성미리보기",
+      "choices": [
+        {
+          "command": "CONFIRM_IMPORT",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "CANCEL_IMPORT",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        }
+      ],
+      "status": "OTHER_MILESTONE_DOMAIN",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E83",
+      "title": "숨겨진 난이도의 약속",
+      "catalogTrigger": "해금후치트카드를직접선택한뒤",
+      "choices": [
+        {
+          "command": "CONFIRM_DIFFICULTY",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "BACK_TO_DIFFICULTY",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S12"
+        }
+      ],
+      "status": "CREATION_FORM_ENGINE_PRECURSOR_UI_PENDING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E84",
+      "title": "나만의 무기를 얻다",
+      "catalogTrigger": "특성해금조건충족receipt",
+      "choices": [
+        {
+          "command": "OPEN_TRAITS",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S38"
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/pro-trait-notices.ts",
+          "line": 35
+        },
+        {
+          "file": "packages/engine/src/pro-trait-notices.ts",
+          "line": 39
+        },
+        {
+          "file": "packages/engine/src/pro-trait-notices.ts",
+          "line": 53
+        },
+        {
+          "file": "packages/engine/src/trait-notices.ts",
+          "line": 13
+        },
+        {
+          "file": "packages/engine/src/trait-notices.ts",
+          "line": 16
+        },
+        {
+          "file": "packages/engine/src/trait-notices.ts",
+          "line": 17
+        },
+        {
+          "file": "packages/engine/src/trait-notices.ts",
+          "line": 30
+        }
+      ]
+    },
+    {
+      "id": "E85",
+      "title": "쌓아 온 나만의 무기",
+      "catalogTrigger": "보유특성정보조회또는새특성해금요약",
+      "choices": [
+        {
+          "command": "OPEN_TRAITS",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S38"
+        }
+      ],
+      "status": "EXISTING_SUMMARY_READER_NOT_WORLD_EVENT",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E86",
+      "title": "새로운 공의 연습",
+      "catalogTrigger": "프리시즌새구종학습가능",
+      "choices": [
+        {
+          "command": "SET_PITCH_TRAINING",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E87",
+      "title": "손끝에 익은 구종",
+      "catalogTrigger": "구종XP등급기준통과receipt",
+      "choices": [
+        {
+          "command": "OPEN_REPERTOIRE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S39"
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E88",
+      "title": "타구를 만드는 접근",
+      "catalogTrigger": "성향변경창/타자",
+      "choices": [
+        {
+          "command": "SET_BATTING_APPROACH",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "TRIGGER_WRAPPER_MISSING_EXISTING_PRIMITIVES",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E89",
+      "title": "이번 시즌의 약속",
+      "catalogTrigger": "프리시즌목표선택가능",
+      "choices": [
+        {
+          "command": "SET_GOALS",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/season-goals.ts",
+          "line": 40
+        },
+        {
+          "file": "packages/engine/src/season-goals.ts",
+          "line": 104
+        },
+        {
+          "file": "packages/engine/src/season-goals.ts",
+          "line": 106
+        },
+        {
+          "file": "packages/engine/src/season-goals.ts",
+          "line": 107
+        },
+        {
+          "file": "packages/engine/src/season-goals.ts",
+          "line": 116
+        },
+        {
+          "file": "packages/engine/src/season-goals.ts",
+          "line": 127
+        }
+      ]
+    },
+    {
+      "id": "E90",
+      "title": "숫자 너머의 한 걸음",
+      "catalogTrigger": "목표달성기록receipt",
+      "choices": [
+        {
+          "command": "OPEN_ACHIEVEMENTS",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S40"
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/season-goals.ts",
+          "line": 40
+        },
+        {
+          "file": "packages/engine/src/season-goals.ts",
+          "line": 165
+        }
+      ]
+    },
+    {
+      "id": "E91",
+      "title": "함께 볼 계약서",
+      "catalogTrigger": "프로계약후에이전트선택가능",
+      "choices": [
+        {
+          "command": "HIRE_AGENT",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E92",
+      "title": "한 번의 역제안",
+      "catalogTrigger": "유효오퍼/미사용재협상횟수",
+      "choices": [
+        {
+          "command": "REQUEST_SALARY_COUNTER",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E93",
+      "title": "내 역할을 묻다",
+      "catalogTrigger": "20팀경기검토창/출장가능",
+      "choices": [
+        {
+          "command": "REQUEST_ROLE_REVIEW",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "DOMAIN_OR_OWNER_MISSING",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E94",
+      "title": "같은 출발선의 이름",
+      "catalogTrigger": "고교관계선수고정생성 또는 실제프로대결근거관계형성확정",
+      "choices": [
+        {
+          "command": "OPEN_RELATIONS",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S42"
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-relations.ts",
+          "line": 61
+        },
+        {
+          "file": "packages/engine/src/kbo-relations.ts",
+          "line": 62
+        },
+        {
+          "file": "packages/engine/src/pitcher-rival.ts",
+          "line": 57
+        },
+        {
+          "file": "packages/engine/src/pitcher-rival.ts",
+          "line": 64
+        },
+        {
+          "file": "packages/engine/src/pitcher-rival.ts",
+          "line": 71
+        },
+        {
+          "file": "packages/engine/src/pitcher-rival.ts",
+          "line": 74
+        },
+        {
+          "file": "packages/engine/src/pitcher-rival.ts",
+          "line": 75
+        },
+        {
+          "file": "packages/engine/src/relation-notices.ts",
+          "line": 42
+        },
+        {
+          "file": "packages/engine/src/relation-notices.ts",
+          "line": 57
+        },
+        {
+          "file": "packages/engine/src/relation-notices.ts",
+          "line": 69
+        }
+      ]
+    },
+    {
+      "id": "E95",
+      "title": "다시 마주한 유니폼",
+      "catalogTrigger": "라이벌관계단계변경후첫실제대진",
+      "choices": [
+        {
+          "command": "OPEN_RELATIONS",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S42"
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-relations.ts",
+          "line": 61
+        },
+        {
+          "file": "packages/engine/src/kbo-relations.ts",
+          "line": 71
+        },
+        {
+          "file": "packages/engine/src/kbo-reunion-events.ts",
+          "line": 34
+        },
+        {
+          "file": "packages/engine/src/kbo-reunion-events.ts",
+          "line": 43
+        },
+        {
+          "file": "packages/engine/src/kbo-reunion-events.ts",
+          "line": 49
+        }
+      ]
+    },
+    {
+      "id": "E96",
+      "title": "이번에는 같은 편",
+      "catalogTrigger": "라이벌또는동료실제같은팀등록",
+      "choices": [
+        {
+          "command": "OPEN_RELATIONS",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S42"
+        }
+      ],
+      "status": "EXECUTABLE_SLICE_FOUND_FULL_PATH_NOT_PROVEN",
+      "sourceLiteralRefs": [
+        {
+          "file": "packages/engine/src/kbo-relations.ts",
+          "line": 61
+        },
+        {
+          "file": "packages/engine/src/kbo-relations.ts",
+          "line": 71
+        },
+        {
+          "file": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 68
+        },
+        {
+          "file": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 98
+        },
+        {
+          "file": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 104
+        },
+        {
+          "file": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 112
+        },
+        {
+          "file": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 122
+        },
+        {
+          "file": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 133
+        },
+        {
+          "file": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 144
+        },
+        {
+          "file": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 154
+        },
+        {
+          "file": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 166
+        },
+        {
+          "file": "packages/engine/src/kbo-team-reunions.ts",
+          "line": 173
+        }
+      ]
+    },
+    {
+      "id": "E97",
+      "title": "그라운드 곁의 두 번째 삶",
+      "catalogTrigger": "은퇴원본지도자고용미리보기",
+      "choices": [
+        {
+          "command": "HIRE_RETIRED_STAFF",
+          "dispatchClass": "DOMAIN",
+          "targetScreen": null
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "OTHER_MILESTONE_DOMAIN",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E98",
+      "title": "한 타석씩 남길 경기",
+      "catalogTrigger": "중요경기직전/중계알림ON",
+      "choices": [
+        {
+          "command": "WATCH_IMPORTANT_GAME",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S44"
+        },
+        {
+          "command": "SKIP_COMMENTARY",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "OTHER_MILESTONE_DOMAIN",
+      "sourceLiteralRefs": []
+    },
+    {
+      "id": "E99",
+      "title": "한 장에 남긴 시간",
+      "catalogTrigger": "새연대기장면확정receipt",
+      "choices": [
+        {
+          "command": "OPEN_CHRONICLE",
+          "dispatchClass": "NAVIGATE",
+          "targetScreen": "S45"
+        },
+        {
+          "command": "ACK_EVENT",
+          "dispatchClass": "ACK",
+          "targetScreen": null
+        }
+      ],
+      "status": "OTHER_MILESTONE_DOMAIN",
+      "sourceLiteralRefs": []
+    }
+  ]
+}

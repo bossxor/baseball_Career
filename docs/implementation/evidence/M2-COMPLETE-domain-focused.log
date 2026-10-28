@@ -1,0 +1,47 @@
+✔ P15 first pro hire is immediate; changes and direct negotiation become effective next season once (570.8429ms)
+✔ P15 cumulative fee has exact2% with tiny splits, duplicate receipt and no signing-bonus or inactive-agent fee (1409.7626ms)
+✔ P15 real renewal preview .60/.68 never draws; success reserves only delta, supersedes base and actual accept uses raised salary (577.1249ms)
+✔ P15 rejection keeps original offer and no reserved delta; changed budget, forged raise and stale preview never consume RNG (539.5013ms)
+✔ E91/E92/E93 are actual source-bound optional notices; domain choices and ACK close exactly once (830.2989ms)
+✔ accepted role review is consumed by next real lineup once, preserves bucket and never promises an appearance (1473.1845ms)
+✔ AG03 actual USD counteroffer reserves a fixed funded quote, signs next year and survives immutable history replay (5350.9588ms)
+✖ ordinary KBO payroll pays actual registered games, no prior-game replay, and agent hire never charges earlier gross (3.9888ms)
+✔ second completed college year attaches one E73; entering early draft is versioned, immutable and once per enrollment (2722.7078ms)
+✔ real undrafted second-year result opens E74 and preserves third-year enrollment plus independent graduation draft (5672.4372ms)
+✔ declining a real early offer permits school return; signing ends enrollment and activates the existing pro contract (2526.6631ms)
+✔ second-year US comparison requires a real offer; signature closes college eligibility and a decline permits return (2224.11ms)
+✔ KBO native closed postseason date raises E84 and restores its exact continuation (1070.9634ms)
+✔ KBO native closed postseason championship raises E84 and restores its exact continuation (852.1809ms)
+✔ US native closed postseason date raises E84 and restores its exact continuation (3826.4439ms)
+✔ US native closed postseason championship raises E84 and restores its exact continuation (2353.3028ms)
+Native military opening: {"year":"2031","nativeNpcGames":75,"ownAppearances":0,"salaryUsd":0,"closedDays":1}
+✔ service world runs actual NPC opening games with zero own appearances or salary and blocks ordinary play (30151.7611ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 16
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30501.7537
+
+✖ failing tests:
+
+test at packages\engine\test\career-agent.test.ts:1:10138
+✖ ordinary KBO payroll pays actual registered games, no prior-game replay, and agent hire never charges earlier gross (3.9888ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'undefined'
+  - 'function'
+
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\career-agent.test.ts:93:104)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'undefined',
+    expected: 'function',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

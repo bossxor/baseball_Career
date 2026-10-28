@@ -1,0 +1,10 @@
+Native military opening: {"year":"2031","nativeNpcGames":75,"ownAppearances":0,"salaryUsd":0,"closedDays":1}
+✔ service world runs actual NPC opening games with zero own appearances or salary and blocks ordinary play (29533.9784ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29957.5793

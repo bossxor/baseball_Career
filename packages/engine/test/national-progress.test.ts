@@ -1,3 +1,4 @@
+import {careerAchievementsView} from '../src/career-achievements.js';
 import {confirmKboPreseasonPlan} from '../src/kbo-preseason.js';
 import {confirmKboOpeningRoster} from '../src/kbo-opening-roster.js';
 import {confirmKboSeasonSchedule} from '../src/kbo-schedule.js';
@@ -57,7 +58,7 @@ test('career AG bracket uses the sealed actual28 Korean identities and seals rec
  const accepted=acceptAg(enteredKboCareer()),raw=canonicalJson(accepted),started=startNationalTournament(accepted,accepted.revision,'AG');
  assert.equal(canonicalJson(accepted),raw);assert.equal(started.national!.brackets!.length,1);
  const done=finishTournament(started),result=done.national!.competitions[0]!,keys=new Set(accepted.national!.selections![0]!.roster.slots.map(s=>s.playerKey));
- assert.equal(result.tournament,'AG');assert.equal(result.registered,true);assert.ok(result.gameKeys!.length>=16);
+ assert.equal(result.tournament,'AG');assert.equal(careerAchievementsView(done).achievements.find(a=>a.achievementId==='A04')!.status,result.officialAppearance?'COMPLETED':'LOCKED');assert.equal(result.registered,true);assert.ok(result.gameKeys!.length>=16);
  const korGames=result.gameKeys!.map(k=>done.records.games[k]!).filter(g=>Object.hasOwn(g.teams,'KOR'));
  assert.ok(korGames.length>=3);
  for(const g of korGames){for(const key of Object.keys(g.batting).filter(k=>Object.hasOwn(accepted.world.players,k)))assert.ok(keys.has(key));assert.ok(!Object.keys(g.batting).some(k=>/^KOR-h/.test(k)));}

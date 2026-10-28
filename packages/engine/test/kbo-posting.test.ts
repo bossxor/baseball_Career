@@ -1,3 +1,4 @@
+import {careerAchievementsView} from '../src/career-achievements.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {stagedKboOffseason} from './kbo-offseason-fixtures.js';
@@ -56,7 +57,7 @@ test('accept pays the club fee once, seals return rights, removes the player and
  let c=postingCareer({ovr:80});const key=c.protagonistKey,clubId=c.protagonistClubId,contract=structuredClone(c.world.contracts[key]!),budget=c.world.clubs.find(x=>x.id===clubId)!.budgetWon,reserved=c.world.clubs.find(x=>x.id===clubId)!.reservedSalaryWon,raw=canonicalJson(c);
  c=requestKboPosting(c,c.revision);c=resolveKboPostingClub(c,c.revision);c=openKboPostingOffers(c,c.revision,1);const offer=c.posting!.windows[0]!.offers![0]!;assert.ok(offer);const fee=kboPostingFeeWon(offer);
  assert.throws(()=>acceptKboPostingOffer(c,c.revision-1,offer.offerKey,1),/REVISION/);assert.throws(()=>acceptKboPostingOffer(c,c.revision,offer.offerKey,31),/EXPIRED/);
- const source=canonicalJson(c),signed=acceptKboPostingOffer(c,c.revision,offer.offerKey,1);assert.equal(canonicalJson(c),source);assert.notEqual(source,raw);assert.equal(signed.phaseContext.phase,'ARCHIVED');assert.equal(signed.posting!.windows[0]!.status,'SIGNED');assert.equal(signed.posting!.windows[0]!.compensationWon,fee);
+ const source=canonicalJson(c),signed=acceptKboPostingOffer(c,c.revision,offer.offerKey,1);assert.equal(canonicalJson(c),source);assert.notEqual(source,raw);assert.equal(signed.phaseContext.phase,'ARCHIVED');assert.equal(careerAchievementsView(signed).achievements.find(a=>a.achievementId==='A06')!.status,'COMPLETED');assert.equal(signed.posting!.windows[0]!.status,'SIGNED');assert.equal(signed.posting!.windows[0]!.compensationWon,fee);
  assert.equal(signed.world.clubs.find(x=>x.id===clubId)!.budgetWon,budget+fee);assert.equal(signed.world.clubs.find(x=>x.id===clubId)!.reservedSalaryWon,reserved-contract.annualSalaryWon);
  assert.equal(signed.world.contracts[key],undefined);assert.equal(signed.world.players[key],undefined);assert.ok(!signed.world.clubs.find(x=>x.id===clubId)!.roster.includes(key));
  assert.deepEqual(signed.posting!.windows[0]!.returnRights,{holderClubId:clubId,territory:'KR',sourceType:'POSTING',seasonKey:'2040',contractKey:contract.contractKey,annualSalaryWon:contract.annualSalaryWon,years:contract.years,snapshotRevision:c.revision});

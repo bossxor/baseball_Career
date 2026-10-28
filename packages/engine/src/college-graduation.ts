@@ -13,6 +13,7 @@ import {draftBaseScore} from './draft.js';
 import {kboDraftView} from './kbo-draft.js';
 import {validateSeasonGrowthLedger} from './growth-ledger.js';
 import {careerUsDirectView} from './career-us.js';
+import {refreshCareerAchievements} from './career-achievements.js';
 
 export interface CollegeGraduation {schemaVersion:1;eventKey:string;receiptKey:string;sourceBasis:string}
 function basis(source:HighSchoolCareer):string {
@@ -42,7 +43,7 @@ export function graduateCollegeCareer(source:HighSchoolCareer,expectedRevision:n
  assertCollegeCareerRevision(source,expectedRevision);const {admission,graduation,event}=graduationSource(source),phase=source.phaseContext;
  if(phase.phase!=='EVENT_DECISION' || phase.eventKey!==event.eventKey || phase.resume.phase!=='CAREER_ROUTE' || source.events.filter(e=>e.status==='OPEN').length!==1)throw new RangeError('INVALID_CAREER_PHASE');
  const resolved=completeBlockingEvent(event,eventVersion,{sourceEvidenceKey:event.evidenceKey,receiptKey:graduation.receiptKey,command:'GRADUATE_COLLEGE'},{worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['GRADUATE_COLLEGE']});
- const career=structuredClone(source);career.events=career.events.map(e=>e.eventKey===event.eventKey?resolved:e);career.collegeAdmission={...admission,status:'GRADUATED'};career.phaseContext={phase:'CAREER_ROUTE'};career.revision++;career.collegeGraduation={...graduation,sourceBasis:basis(career)};return career;
+ const career=structuredClone(source);career.events=career.events.map(e=>e.eventKey===event.eventKey?resolved:e);career.collegeAdmission={...admission,status:'GRADUATED'};career.phaseContext={phase:'CAREER_ROUTE'};career.revision++;career.collegeGraduation={...graduation,sourceBasis:basis(career)};return refreshCareerAchievements(career);
 }
 /** Public allowlist: no raw P/seed/RNG and no fabricated club slots, draft odds, college re-entry or empty US offer card. */
 export function collegeGraduationRouteView(source:HighSchoolCareer){

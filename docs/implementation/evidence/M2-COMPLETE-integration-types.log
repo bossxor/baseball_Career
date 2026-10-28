@@ -1,0 +1,18 @@
+packages/engine/src/kbo-remainder-renewal.ts(26,101): error TS2339: Property 'pendingGame' does not exist on type 'KboSeasonProgress | KboPostseasonPhase | { phase: "SEASON_REVIEW"; }'.
+  Property 'pendingGame' does not exist on type '{ phase: "SEASON_REVIEW"; }'.
+packages/engine/src/kbo-remainder-renewal.ts(26,125): error TS2339: Property 'nextWorldDay' does not exist on type 'KboSeasonProgress | KboPostseasonPhase | { phase: "SEASON_REVIEW"; }'.
+  Property 'nextWorldDay' does not exist on type '{ phase: "SEASON_REVIEW"; }'.
+packages/engine/src/pro-trait-notices.ts(54,47): error TS2345: Argument of type 'KboSeasonProgress | KboPostseasonPhase | UsProgress | UsPostseasonPhase | { phase: "SEASON_REVIEW"; } | { ...; }' is not assignable to parameter of type 'ProProgress'.
+  Type 'KboPostseasonPhase' is not assignable to type 'ProProgress'.
+    Type 'KboPostseasonPhase' is not assignable to type 'UsProgress'.
+      Types of property 'phase' are incompatible.
+        Type '"POSTSEASON_PROGRESS"' is not assignable to type '"SEASON_PROGRESS"'.
+packages/engine/src/pro-trait-notices.ts(57,159): error TS2322: Type '{ pendingGame: null; phase: "SEASON_PROGRESS"; nextWorldDay: number; } | { pendingGame: null; phase: "POSTSEASON_PROGRESS"; postseason: KboPostseason; nextWorldDay: number; } | { ...; } | { ...; } | { ...; } | { ...; }' is not assignable to type '{ phase: "PRESEASON_SETUP"; } | KboSeasonProgress | { phase: "SEASON_REVIEW"; } | { phase: "EVENT_DECISION"; eventKey: string; resume: KboSeasonProgress | KboPostseasonPhase | { ...; }; } | ... 4 more ... | UsPhase'.
+  Object literal may only specify known properties, and 'pendingGame' does not exist in type '{ phase: "SEASON_REVIEW"; } | { phase: "SEASON_REVIEW"; }'.
+packages/engine/src/us-career-entry.ts(37,9): error TS2305: Module '"./us-military-plan.js"' has no exported member 'usMilitaryHistoricalView'.
+packages/engine/src/us-military-plan.ts(2,32): error TS6133: 'assertActiveUsRosterWorld' is declared but its value is never read.
+packages/engine/src/us-military-plan.ts(2,58): error TS6133: 'usCareerView' is declared but its value is never read.
+packages/engine/src/us-military-plan.ts(7,1): error TS6133: 'retireAndSupplyUsNpcs' is declared but its value is never read.
+packages/engine/src/us-military-plan.ts(9,1): error TS6133: 'emptyPitchXpLedger' is declared but its value is never read.
+packages/engine/src/us-military-plan.ts(10,1): error TS6133: 'createSeasonGrowthLedger' is declared but its value is never read.
+packages/engine/src/us-military-plan.ts(96,366): error TS2304: Cannot find name 'daysInYear'.

@@ -1,3 +1,6 @@
+import type {CareerAchievementLedger} from './career-achievements.js';
+import {collegeLeaveElapsedYears} from './college-service.js';
+import type {CareerAgentLedger} from './career-agent.js';
 import {refreshCareerSeasonGoals,refreshCareerPreseasonGoalSelection} from './season-goals.js';
 import type {CareerGoalLedger} from './season-goals.js';
 import type {KboOffseasonExit} from './kbo-offseason-exit.js';
@@ -56,9 +59,11 @@ export type KboNationalResume={phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase
 export type KboNationalPhase={phase:'INTERNATIONAL_PROGRESS'|'INTERNATIONAL_REVIEW';competitionId:string;nextWorldDay:number;resume:KboNationalResume};
 /** New pro root: never pass this world to HS/COLLEGE commands. Scheduling and games follow separately. */
 export interface KboCareer {
+ achievements?:CareerAchievementLedger;
+ agents?:CareerAgentLedger;
  goals?:CareerGoalLedger;
  schemaVersion:1|2|3|4|5|6|7;revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveKboRosterWorld;
- protagonistKey:string;protagonistClubId:string;phaseContext:{phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase:'SEASON_REVIEW'}|{phase:'EVENT_DECISION';eventKey:string;resume:KboSeasonProgress}|KboPostseasonPhase|KboNationalPhase|{phase:'RETIRE_CONFIRM';eventKey:string}|{phase:'ARCHIVED'};
+ protagonistKey:string;protagonistClubId:string;phaseContext:{phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase:'SEASON_REVIEW'}|{phase:'EVENT_DECISION';eventKey:string;resume:KboSeasonProgress|KboPostseasonPhase|{phase:'SEASON_REVIEW'}}|KboPostseasonPhase|KboNationalPhase|{phase:'RETIRE_CONFIRM';eventKey:string}|{phase:'ARCHIVED'};
  activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string};
  registration:{playerKey:string;clubId:string;seasonKey:string;status:'ACTIVE';firstTeam:boolean;competitionKey?:'KBO'|'FUTURES'};
  rights:Omit<KboRookieSigning['rights'],'sourceType'> & {sourceType:'DRAFT'|'TRANSFER'|'FREE_AGENT'};amateurHistory:HighSchoolCareer;
@@ -86,6 +91,8 @@ export function startSignedKboCareer(source:HighSchoolCareer,expectedRevision:nu
  const registration={...structuredClone(signing.registration),status:'ACTIVE' as const},teamWorld={worldKey:world.worldKey,seasonKey:world.seasonKey,leagueKey:'KBO',protagonistKey:key,protagonistSchoolId:club.id,schools:world.clubs,players:world.players};
  const day=calendar.growthDays[0]!,relationships=formRegisteredTeamTeammate(source.relationships,teamWorld,signing.receiptKey,day);
  const career:KboCareer={schemaVersion:1,revision:source.revision+1,difficulty:source.difficulty,world,protagonistKey:key,protagonistClubId:club.id,phaseContext:{phase:'PRESEASON_SETUP'},activation:{receiptKey:entryKey(ready),sourceYearEndReceiptKey:ready.receiptKey,sourceRevision:source.revision,contractKey:signing.contract.contractKey},registration,rights:structuredClone(signing.rights),amateurHistory:structuredClone(source),records:structuredClone(source.records),health:{...structuredClone(source.health),injuries:Object.hasOwn(source.health.injuries,key)?{[key]:structuredClone(source.health.injuries[key]!)}:{}},seasonGrowth:createSeasonGrowthLedger(player,world.seasonKey,calendar.growthDays.length),development:{...structuredClone(source.development),seasonStartPlayer:structuredClone(player)},...(source.traits?{traits:{...structuredClone(source.traits),lastClosedDay:null,lastSeasonKey:world.seasonKey}}:{}),relationships,events:structuredClone(source.events),...(source.goals?{goals:source.goals}:{}),relationNotices:structuredClone(source.relationNotices??[]),styleUsedWindows:[...source.styleUsedWindows],planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
+ if(source.collegeService?.status==='RESUMED'&&collegeLeaveElapsedYears(source)>0)career.military={status:'COMPLETED',applications:[],completedSeasonKey:source.collegeService.completionDays[1]!.seasonKey};
+ if(source.achievements)career.achievements=structuredClone(source.achievements);
  career.relationNotices=queueRelationFormationNotices({...career,world:teamWorld,previousSeasons:[...(source.previousSeasons??[]),{world:source.world}]},day)??[];
  career.campNotices=queueKboFirstCampNotices(career);return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(career));
 }

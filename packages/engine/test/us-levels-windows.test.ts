@@ -65,7 +65,7 @@ test('E61 OPEN_RIGHTS navigates to S08 with the event, registration and money un
 test('E61 navigation and demotion reject stale or changed review, event and resume input without writes',()=>{
  const c=demotionReview(),e=c.events.at(-1)!,input={eventKey:e.eventKey,eventVersion:e.version,command:'OPEN_RIGHTS'},raw=canonicalJson(c);
  assert.throws(()=>resolveUsLevelEventResult(c,c.revision-1,input),/REVISION/);assert.throws(()=>resolveUsLevelEventResult(c,c.revision,{...input,eventVersion:e.version+1}),/EVENT_VERSION_CHANGED/);assert.throws(()=>resolveUsLevelEventResult(c,c.revision,{...input,command:'CONFIRM_PROMOTION'}),/INVALID_CHOICE/);
- for(const change of [(x:UsCareer)=>{x.season!.levelReviews!.at(-1)!.score++;},(x:UsCareer)=>{x.events.at(-1)!.resume.registrationKey='foreign-club';},(x:UsCareer)=>{if(x.phaseContext.phase==='EVENT_DECISION')x.phaseContext.resume.nextWorldDay++;}]){const bad=structuredClone(c);change(bad);const before=canonicalJson(bad);assert.throws(()=>resolveUsLevelEventResult(bad,bad.revision,input),/REVIEW_CHANGED/);assert.equal(canonicalJson(bad),before);}
+ for(const change of [(x:UsCareer)=>{x.season!.levelReviews!.at(-1)!.score++;},(x:UsCareer)=>{x.events.at(-1)!.resume.registrationKey='foreign-club';},(x:UsCareer)=>{if(x.phaseContext.phase==='EVENT_DECISION'&&x.phaseContext.resume.phase==='SEASON_PROGRESS')x.phaseContext.resume.nextWorldDay++;}]){const bad=structuredClone(c);change(bad);const before=canonicalJson(bad);assert.throws(()=>resolveUsLevelEventResult(bad,bad.revision,input),/REVIEW_CHANGED/);assert.equal(canonicalJson(bad),before);}
  assert.equal(canonicalJson(c),raw);
 });
 test('MLB E61 still requires exhausted-option consent and preserves the MLB contract on successful demotion',()=>{

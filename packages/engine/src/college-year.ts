@@ -20,6 +20,7 @@ import {createSchoolEmergencyRegistry} from './high-school-emergency.js';
 import type {DevelopmentPlayer} from './player.js';
 import type {Repertoire} from './repertoire.js';
 import {assertCollegeYearResult} from './college-result.js';
+import {prepareCollegeYearContinuation} from './college-route.js';
 
 export interface CollegeNpcGrowth {seasonKey:string;results:Record<string,{budgetUnits:number;gainedUnits:number;discardedUnits:number;gains:readonly number[]}>}
 function permanentWorld(source:HighSchoolCareer):CollegeWorld {
@@ -31,6 +32,7 @@ function receiptKey(source:HighSchoolCareer):string {return JSON.stringify(['col
 /** Explicit continuation after academic completion. Unused training and unfinished learning cannot disappear. */
 export function closeCollegeSeasonForNextYear(source:HighSchoolCareer,expectedRevision:number,forfeitUnusedTraining=false):HighSchoolCareer {
  assertCollegeCareerRevision(source,expectedRevision);assertCollegeYearResult(source);
+ source=prepareCollegeYearContinuation(source);
  if(source.collegeAdmission!.academicYear===4)throw new RangeError('COLLEGE_GRADUATION_ROUTE_REQUIRED');
  if(source.phaseContext.phase!=='OFFSEASON_REVIEW' || source.collegeYearEnd || source.collegeNpcGrowth || !source.seasonGrowth || !source.development || source.events.some(e=>e.status==='OPEN') || source.collegeCup?.status!=='COMPLETE')throw new RangeError('INVALID_COLLEGE_YEAR_END');
  validateSeasonGrowthLedger(source.seasonGrowth);
@@ -60,7 +62,7 @@ export function closeCollegeSeasonForNextYear(source:HighSchoolCareer,expectedRe
  career.health=closeSeasonHealth(career.health,base.seasonKey).ledger;career.phaseContext={phase:'NEXT_SEASON_READY',route:'COLLEGE',admissionKey:source.collegeAdmission!.admissionKey};career.revision++;
  Object.assign(career,refreshCareerSeasonGoals(career));career.collegeYearEnd={receiptKey:receiptKey(source),admissionKey:source.collegeAdmission!.admissionKey,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};return refreshCareerSeasonGoals(career);
 }
-function nextWorld(source:HighSchoolCareer):CollegeWorld {
+export function nextCollegeWorld(source:HighSchoolCareer):CollegeWorld {
  const base=permanentWorld(source),year=base.calendar.year+1,seasonKey=String(year),calendar=createSeasonCalendar(year),players:Record<string,DevelopmentPlayer>={},repertoires:Record<string,Repertoire>={};
  if(Object.values(source.records.games).some(g=>g.scope.seasonKey===seasonKey))throw new RangeError('NEXT_SEASON_RECORDS_ALREADY_EXIST');
  const schools=base.schools.map(s=>({...s,roster:[] as string[]})),templates=[] as {simulationKey:string;kind:'HITTER'|'PITCHER';position:string;schoolId:string}[];
@@ -83,12 +85,12 @@ export function startNextCollegeSeason(source:HighSchoolCareer,expectedRevision:
  const ready=source.collegeYearEnd,admission=source.collegeAdmission!;
  if(source.phaseContext.phase!=='NEXT_SEASON_READY' || source.phaseContext.route!=='COLLEGE' || source.phaseContext.admissionKey!==admission.admissionKey || admission.academicYear===4 || !ready || ready.receiptKey!==receiptKey(source) || ready.admissionKey!==admission.admissionKey || ready.sourceRevision!==source.revision || ready.sourceBasis!==schoolYearEndBasis(source) || !source.seasonGrowth?.finalized || !source.health.closedSeasons.includes(source.world.seasonKey) || !source.collegeNpcGrowth || source.events.some(e=>e.status==='OPEN'))throw new RangeError('COLLEGE_YEAR_END_REQUIRED');
  validateSeasonGrowthLedger(source.seasonGrowth);
- const world=nextWorld(source),career=structuredClone(source),archive=archiveSchoolSeason(career,ready.receiptKey),player=world.players[world.protagonistKey]!;
+ const world=nextCollegeWorld(source),career=structuredClone(source),archive=archiveSchoolSeason(career,ready.receiptKey),player=world.players[world.protagonistKey]!;
  career.previousSeasons=[...(career.previousSeasons??[]),archive];career.world=world;
  career.health={...career.health,injuries:Object.fromEntries(Object.entries(career.health.injuries).filter(([key])=>Object.hasOwn(world.players,key)))};
  career.days=createSchoolDayLedger(world);career.emergency=createSchoolEmergencyRegistry(world);career.seasonGrowth=createSeasonGrowthLedger(player,world.seasonKey,world.calendar.growthDays.length);
  career.development={...career.development!,seasonStartPlayer:structuredClone(player)};career.planHistory=[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}];
  career.collegeAdmission={...admission,academicYear:admission.academicYear===1?2:admission.academicYear===2?3:4};
  if(career.traits)career.traits={...career.traits,lastClosedDay:null,lastSeasonKey:world.seasonKey};
- delete career.collegeYearEnd;delete career.collegeCup;delete career.collegeResult;delete career.collegeNpcGrowth;career.phaseContext={phase:'PRESEASON_SETUP'};career.revision++;return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(career));
+ delete career.collegeYearEnd;delete career.collegeCup;delete career.collegeResult;delete career.collegeNpcGrowth;delete career.collegeEarlyRoute;career.phaseContext={phase:'PRESEASON_SETUP'};career.revision++;return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(career));
 }

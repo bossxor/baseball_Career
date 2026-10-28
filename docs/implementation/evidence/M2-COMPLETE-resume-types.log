@@ -1,0 +1,5 @@
+packages/engine/test/college-route.test.ts(3,38): error TS6133: 'enrolledCollegeCareer' is declared but its value is never read.
+packages/engine/test/college-route.test.ts(19,68): error TS2307: Cannot find module '../src/college-route.js' or its corresponding type declarations.
+packages/engine/test/college-route.test.ts(27,158): error TS2307: Cannot find module '../src/college-route.js' or its corresponding type declarations.
+packages/engine/test/college-route.test.ts(35,153): error TS2307: Cannot find module '../src/college-route.js' or its corresponding type declarations.
+packages/engine/test/us-military-plan.test.ts(14,30): error TS6133: 'advanceUsCareer' is declared but its value is never read.

@@ -14,6 +14,8 @@ import {completeBlockingEvent} from './events.js';
 import {decideKboDraft} from './kbo-draft.js';
 import {createUsReservationLedger,assertUsReservationLedger,reserveUsDirectSigning} from './us-reservations.js';
 import type {UsReservationLedger} from './us-reservations.js';
+import {collegeEarlyRouteView,attachCollegeUnsignedReturn} from './college-route.js';
+import {refreshCareerAchievements} from './career-achievements.js';
 
 export interface CareerUsRecruitment {schemaVersion:1;world:UsRecruitmentWorld;program:UsDirectProgram;sourceBasis:string;currentWorldDay:number;reservations:UsReservationLedger;closedBy?:'COLLEGE'|'KBO'}
 function basis(s:HighSchoolCareer):string {return canonicalJson({world:s.world,records:s.records,health:s.health,days:s.days,development:s.development??null,seasonGrowth:s.seasonGrowth??null,graduation:s.graduation??null,collegeAdmission:s.collegeAdmission??null,collegeGraduation:s.collegeGraduation??null,ownAssessment:s.ownAssessment??null});}
@@ -35,7 +37,7 @@ function current(s:HighSchoolCareer):CareerUsRecruitment {
 /** The world worker supplies real open slots/budget; the user-approved deadline is30 game days. */
 export function prepareCareerUsDirect(s:HighSchoolCareer,expectedRevision:number,world:UsRecruitmentWorld):HighSchoolCareer {
  assertCareerRevision(s,expectedRevision);if(s.phaseContext.phase!=='CAREER_ROUTE')throw new RangeError('INVALID_CAREER_PHASE');
- if(s.world.leagueKey==='COLLEGE')collegeGraduationRouteView(s);else highSchoolCareerRouteView(s);
+ if(s.world.leagueKey==='COLLEGE'){if(s.collegeAdmission?.academicYear===2)collegeEarlyRouteView(s);else collegeGraduationRouteView(s);}else highSchoolCareerRouteView(s);
  const assessmentKey=JSON.stringify(['amateur-us',s.world.worldKey,s.world.seasonKey,s.world.protagonistKey]);
  if(s.usRecruitment || s.previousUsRecruitments?.some(r=>r.program.input.assessmentKey===assessmentKey))throw new RangeError('US_ASSESSMENT_ALREADY_EXISTS');
  if(world.worldKey!==s.world.worldKey || world.seed!==s.world.seed || world.seasonKey!==String(s.world.calendar!.year+1))throw new RangeError('INVALID_US_RECRUITMENT_WORLD');
@@ -48,12 +50,12 @@ export function advanceCareerUsNegotiation(s:HighSchoolCareer,expectedRevision:n
  assertCareerRevision(s,expectedRevision);if(s.phaseContext.phase!=='CAREER_ROUTE')throw new RangeError('INVALID_CAREER_PHASE');const r=current(s);
  if(r.program.decision!=='PENDING' || !Number.isSafeInteger(days) || days<1 || !Number.isSafeInteger(r.currentWorldDay+days))throw new RangeError('INVALID_US_NEGOTIATION_ADVANCE');
  const target=Math.min(r.program.input.expiresWorldDay,r.currentWorldDay+days);if(target===r.currentWorldDay)return structuredClone(s);
- const next=structuredClone(s);next.usRecruitment!.currentWorldDay=target;next.revision++;return next;
+ const next=structuredClone(s);next.usRecruitment!.currentWorldDay=target;next.revision++;return target===r.program.input.expiresWorldDay&&s.collegeAdmission?.academicYear===2&&!s.kboRecruitment?attachCollegeUnsignedReturn(next):next;
 }
 /** Same revision protects competing domestic/overseas choices. Activation and actual income posting are separate. */
 export function decideCareerUsDirect(s:HighSchoolCareer,expectedRevision:number,input:{programVersion:number;decision:{type:'SIGN';offerKey:string}|{type:'DECLINE'};eventVersion?:number}):HighSchoolCareer {
  assertCareerRevision(s,expectedRevision);if(s.phaseContext.phase!=='CAREER_ROUTE')throw new RangeError('INVALID_CAREER_PHASE');
- if(s.world.leagueKey==='COLLEGE')collegeGraduationRouteView(s);else highSchoolCareerRouteView(s);
+ if(s.world.leagueKey==='COLLEGE'){if(s.collegeAdmission?.academicYear===2)collegeEarlyRouteView(s);else collegeGraduationRouteView(s);}else highSchoolCareerRouteView(s);
  const r=current(s),program=decideUsDirect(r.world,r.program,input.programVersion,r.currentWorldDay,input.decision),next=structuredClone(s);next.usRecruitment={...next.usRecruitment!,program};
  if(input.decision.type==='SIGN'){
   next.usRecruitment!.reservations=reserveUsDirectSigning(r.reservations,program);
@@ -63,8 +65,9 @@ export function decideCareerUsDirect(s:HighSchoolCareer,expectedRevision:number,
   }else if(s.events.some(e=>e.status==='OPEN'))throw new RangeError('BLOCKING_EVENT_PENDING');
   if(next.kboRecruitment){const k=next.kboRecruitment;if(k.program.result?.round && k.program.decision==='PENDING')k.program=decideKboDraft(k.world,k.program,k.program.version,'DECLINE');next.previousKboRecruitments=[...(next.previousKboRecruitments??[]),k];delete next.kboRecruitment;}
   next.phaseContext={phase:'NEXT_SEASON_READY',route:'US',contractKey:program.signing!.contract.contractKey};
+  if(next.collegeAdmission?.academicYear===2){next.collegeAdmission={...next.collegeAdmission,status:'LEFT_FOR_PRO'};next.usRecruitment={...next.usRecruitment!,sourceBasis:basis(next)};}
  }
- next.revision++;return next;
+ next.revision++;return input.decision.type==='DECLINE'&&next.collegeAdmission?.academicYear===2&&!next.kboRecruitment?attachCollegeUnsignedReturn(next):refreshCareerAchievements(next);
 }
 
 

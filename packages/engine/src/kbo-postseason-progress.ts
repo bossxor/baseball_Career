@@ -13,9 +13,11 @@ import {createKboPostseason,nextKboPostseasonGame,recordKboPostseasonGame} from 
 import type {KboPostseason} from './kbo-postseason.js';
 import type {ScheduledGame} from './schedule.js';
 import {refreshCareerTraits} from './high-school-traits.js';
+import {raiseProHiddenTraitNotice} from './pro-trait-notices.js';
+import {canonicalJson} from './game.js';
 
 export type KboPostseasonPhase={phase:'POSTSEASON_PROGRESS';postseason:KboPostseason;nextWorldDay:number;pendingGame:KboPendingGame|null};
-export type KboPostseasonStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'GAME_FINAL'|'HEALTH_CHANGE'|'POSTSEASON_COMPLETE';
+export type KboPostseasonStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'GAME_FINAL'|'HEALTH_CHANGE'|'POSTSEASON_COMPLETE'|'MAJOR_EVENT';
 const ROUNDS=['WILD_CARD','SEMI_PLAYOFF','PLAYOFF','KOREAN_SERIES'];
 
 /** SEASON_REVIEW → POSTSEASON_PROGRESS once per season: seeds are the final KBO regular-season ranks 1..5 (01 tie-breaks). */
@@ -32,6 +34,20 @@ function scheduledFor(career:KboCareer,phase:KboPostseasonPhase):ScheduledGame {
  const next=nextKboPostseasonGame(phase.postseason)!,round=ROUNDS.indexOf(next.round);
  return {simulationKey:JSON.stringify([career.world.seasonKey,'KBO','POSTSEASON',next.round,next.gameNumber]),leagueKey:'KBO',seasonKey:career.world.seasonKey,round:round*10+next.gameNumber,worldDay:phase.nextWorldDay,awayTeamKey:next.awayTeamKey,homeTeamKey:next.homeTeamKey,phase:'POSTSEASON'};
 }
+/** Rebuild the saved playoff cursor from official winners and the already-closed date evidence. */
+export function assertKboPostseasonProgress(c:KboCareer,p:KboPostseasonPhase):void {
+ const clubs=c.world.clubs.map(club=>club.id),seeds=leagueStandings(c.records,{seasonKey:c.world.seasonKey,leagueKey:'KBO',phase:'REGULAR'},clubs,c.world.seed,c.world.worldKey).slice(0,5).map(s=>s.teamKey);
+ let expected=createKboPostseason(c.world.seasonKey,seeds),last:number|undefined;
+ for(const series of p.postseason.series)for(const result of series.games){
+  const game=nextKboPostseasonGame(expected);if(!game)throw new RangeError('CHANGED_KBO_POSTSEASON');
+  const key=JSON.stringify([c.world.seasonKey,'KBO','POSTSEASON',game.round,game.gameNumber]),row=c.records.games[key];
+  if(!row||row.gameKey!==key||row.scope.seasonKey!==c.world.seasonKey||row.scope.leagueKey!=='KBO'||row.scope.phase!=='POSTSEASON'||Object.keys(row.teams).length!==2||row.teams[result.winner??'']?.W!==1||row.teams[result.winner===game.homeTeamKey?game.awayTeamKey:game.homeTeamKey]?.L!==1||last!==undefined&&row.worldDay!==last+1)throw new RangeError('MISSING_KBO_POSTSEASON_RESULT');
+  const date=c.days?.days.find(d=>d.day===row.worldDay);
+  if(!date||date.evidence!==canonicalJson({worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,day:row.worldDay,contributions:[row]}))throw new RangeError('CHANGED_KBO_POSTSEASON_EVIDENCE');
+  expected=recordKboPostseasonGame(expected,result.winner!);last=row.worldDay;
+ }
+ if(last===undefined||!c.days||c.days.worldKey!==c.world.worldKey||c.days.seasonKey!==c.world.seasonKey||c.days.days.at(-1)?.day!==last||p.nextWorldDay!==last+1||canonicalJson(expected)!==canonicalJson(p.postseason))throw new RangeError('CHANGED_KBO_POSTSEASON');
+}
 /** One postseason game per world day. Safe chunks and JSON resume like the regular season; the day closes for every
  * club player (fatigue/rest once) with only the two playing first teams settling team-game health. */
 export function advanceKboPostseason(source:KboCareer,expectedRevision:number):{career:KboCareer;stopReason:KboPostseasonStop} {
@@ -39,6 +55,8 @@ export function advanceKboPostseason(source:KboCareer,expectedRevision:number):{
  if(source.phaseContext.phase!=='POSTSEASON_PROGRESS' || !source.days)throw new RangeError('INVALID_CAREER_PHASE');
  const career=structuredClone(source),phase=career.phaseContext as KboPostseasonPhase;
  const finish=(stopReason:KboPostseasonStop)=>{career.revision++;return {career:refreshCareerSeasonGoals(career),stopReason};};
+ const interruptHidden=(day:number)=>{const notice=raiseProHiddenTraitNotice(career,day,career.phaseContext as KboPostseasonPhase|{phase:'SEASON_REVIEW'});if(!notice)return false;Object.assign(career,notice);return true;};
+ if(!phase.pendingGame&&interruptHidden(phase.nextWorldDay-1))return finish('MAJOR_EVENT');
  if(!nextKboPostseasonGame(phase.postseason)){career.postseason=phase.postseason;career.phaseContext={phase:'SEASON_REVIEW'};return finish('POSTSEASON_COMPLETE');}
  const scheduled=scheduledFor(career,phase);
  if(!phase.pendingGame){
@@ -60,6 +78,7 @@ export function advanceKboPostseason(source:KboCareer,expectedRevision:number):{
  // Same day-close hooks as the regular season: trait unlocks (PS records count for T06) and my health stop.
  career.traits=refreshCareerTraits(career,scheduled.worldDay,['KBO']);settleKboOpponentReunions(career,scheduled.worldDay);
  const healthChanged=closed.result.injured.includes(career.protagonistKey) || closed.result.recovered.includes(career.protagonistKey);
- if(!nextKboPostseasonGame(phase.postseason)){career.postseason=phase.postseason;career.phaseContext={phase:'SEASON_REVIEW'};return finish('POSTSEASON_COMPLETE');}
+ if(!nextKboPostseasonGame(phase.postseason)){career.postseason=phase.postseason;career.phaseContext={phase:'SEASON_REVIEW'};return finish(interruptHidden(scheduled.worldDay)?'MAJOR_EVENT':'POSTSEASON_COMPLETE');}
+ if(interruptHidden(scheduled.worldDay))return finish('MAJOR_EVENT');
  return finish(healthChanged?'HEALTH_CHANGE':'GAME_FINAL');
 }

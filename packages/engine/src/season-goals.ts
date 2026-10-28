@@ -1,3 +1,4 @@
+import {refreshCareerAchievements} from './career-achievements.js';
 import {assertKboAmateurYearEnd} from './kbo-entry.js';
 import {assertUsAmateurYearEnd} from './us-entry.js';
 import {schoolYearEndBasis} from './college-entry.js';
@@ -156,6 +157,7 @@ export function replaceCareerSeasonGoal<T extends GoalCareer>(c:T,revision:numbe
 }
 /** SERVER ONLY: call after final official records/state changes, inside the caller's revision commit. */
 export function refreshCareerSeasonGoals<T extends GoalCareer>(c:T):T {
+ c=refreshCareerAchievements(c);
  if(!c.goals)return c;validate(c);const l=structuredClone(c.goals),events=[...l.notices],key=registration(c).key;
  for(const [year,s]of Object.entries(l.seasons))for(const g of s.slots){
   if(g.status==='REPLACED'||g.status==='EXPIRED')continue;g.progress=progress(c,g);const reached=g.progress>=SEASON_GOAL_DEFINITIONS[g.goalId].target,correction=g.status==='COMPLETED'&&!reached;

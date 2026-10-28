@@ -3,6 +3,7 @@ import type {RecordLedger} from './records.js';
 import type {CareerPhase} from '@playball/rules';
 import type {RelationshipHistorySource} from './relationship-history.js';
 import {assertKboAmateurYearEnd} from './kbo-entry.js';
+import {assertUsAmateurYearEnd} from './us-entry.js';
 import {assertTeamEntryRelationReceipt,teamEntryFormationKey} from './team-teammates.js';
 import type {PlayerRelationship,RelationMilestone} from './relationships.js';
 import type {HighSchoolCareer} from './high-school-career.js';
@@ -83,11 +84,13 @@ export function prepareRelationNoticeRead(source:RelationFormationNoticeSource,i
 export function resolveCareerRelationNotice(source:HighSchoolCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number;command:string}) {
  assertCareerRevision(source,expectedRevision);
  if(source.kboYearEnd)assertKboAmateurYearEnd(source);
+ if(source.usYearEnd)assertUsAmateurYearEnd(source);
  if(source.collegeYearEnd && (source.collegeYearEnd.sourceRevision!==source.revision || source.collegeYearEnd.sourceBasis!==schoolYearEndBasis(source)))throw new RangeError('STALE_RELATION_NOTICE_YEAR_END');
  const selected=prepareRelationNoticeRead(source,input);
  const career=structuredClone(source);career.relationNotices=selected.notices;career.revision++;
  // The full-career seal includes notice metadata. Verify it first, then carry that seal across this read-state-only commit.
  if(career.collegeYearEnd)career.collegeYearEnd={...career.collegeYearEnd,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};
  if(career.kboYearEnd)career.kboYearEnd={...career.kboYearEnd,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};
+ if(career.usYearEnd)career.usYearEnd={...career.usYearEnd,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};
  return {career,navigation:selected.navigation};
 }

@@ -10,6 +10,7 @@ import type {RecordScope,BattingTotals,PitchingTotals} from './records.js';
 import {battingRates,pitchingRates,inningsDisplay,emptyBatting,emptyPitching} from './stats.js';
 import {pitchMastery,validatePitchWeights} from './repertoire.js';
 import type {PitchId} from '@playball/rules';
+import {careerIncomeView} from './career-agent.js';
 
 const compare=(a:string,b:string)=>a<b?-1:a>b?1:0;
 function batting(line:BattingTotals|undefined){const s=line??{...emptyBatting(),games:0,twoB:0,threeB:0};return {games:s.games,PA:s.PA,AB:s.AB,H:s.H,twoB:s.twoB,threeB:s.threeB,HR:s.HR,TB:s.TB,R:s.R,RBI:s.RBI,BB:s.BB,HBP:s.HBP,K:s.K,rates:battingRates(s)};}
@@ -32,7 +33,7 @@ export function kboRetirementArchiveView(source:KboCareer){
  const records=[...groups.values()].sort((a,b)=>compare(a.leagueKey,b.leagueKey) || compare(a.phase,b.phase)).map(scope=>({...scope,record:own(scope)}));
  const score=overall(p.kind,p.abilities),peak=overall(p.kind,p.careerPeaks),book=source.world.repertoires[key];
  if(p.kind==='PITCHER' && !book || p.kind==='HITTER' && book)throw new RangeError('KBO_ARCHIVE_REPERTOIRE_INVALID');if(book)validatePitchWeights(book.book,book.weights);
- return {archiveKey:r.receiptKey,retirement:{reason:r.reason,seasonKey:r.seasonKey,age:r.age,lastTeam:{id:club.id,name:club.name},...(r.remainingPaidGameDays===undefined?{}:{endedContractGameDays:r.remainingPaidGameDays})},player:{playerKey:key,name:p.name,kind:p.kind,position:p.position,throws:p.throws,bats:p.bats,pitchForm:p.pitchForm??null,archetype:p.archetype,
+ return {archiveKey:r.receiptKey,...(source.agents?{income:careerIncomeView(source)}:{}),retirement:{reason:r.reason,seasonKey:r.seasonKey,age:r.age,lastTeam:{id:club.id,name:club.name},...(r.remainingPaidGameDays===undefined?{}:{endedContractGameDays:r.remainingPaidGameDays})},player:{playerKey:key,name:p.name,kind:p.kind,position:p.position,throws:p.throws,bats:p.bats,pitchForm:p.pitchForm??null,archetype:p.archetype,
   overall:Math.round(score.sumUnits/score.denominator*10)/10,careerPeakAbilityAverage:Math.round(peak.sumUnits/peak.denominator*10)/10,abilities:abilityKeys(p.kind).map(ability=>({ability,current:p.abilities[ability]!/10_000,careerPeak:p.careerPeaks[ability]!/10_000})),
   pitches:book?Object.keys(book.book).sort().map(pitchId=>({pitchId,active:Object.hasOwn(book.weights,pitchId),weight:book.weights[pitchId as PitchId]??0,mastery:pitchMastery(book.book[pitchId as PitchId]!)})):[]},records,seasonRows:rows};
 }

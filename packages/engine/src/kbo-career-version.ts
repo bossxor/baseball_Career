@@ -1,9 +1,11 @@
+import {assertCareerAgentLedger} from './career-agent.js';
 import {assertNationalLedger} from './kbo-national.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertCareerRevision} from './high-school-career.js';
 
 /** KBO v2 introduced ACTIVE. v3 adds mandatory plans and return conditioning. v4 adds midseason transfers. v5 enables military health/temporary identities. v6 preserves NPC suspension/return obligations. v7 adds deferred offseason release/signing. School/v1 guards remain unchanged. */
-export function assertKboCareerRevision(source:Pick<KboCareer,'schemaVersion'|'revision'> & Partial<Pick<KboCareer,'transferHistory'|'world'|'sangmu'|'offseasonExit'|'national'|'phaseContext'>>,expectedRevision:number):void {
+export function assertKboCareerRevision(source:Pick<KboCareer,'schemaVersion'|'revision'> & Partial<Pick<KboCareer,'transferHistory'|'world'|'sangmu'|'offseasonExit'|'national'|'phaseContext'|'agents'|'protagonistKey'>>,expectedRevision:number):void {
+ if(source.agents){if(!source.world||!source.protagonistKey)throw new RangeError('INVALID_AGENT_LEDGER');assertCareerAgentLedger(source as KboCareer);}
  if(![1,2,3,4,5,6,7].includes(source.schemaVersion))throw new RangeError('CAREER_REVISION_CHANGED');
  if(source.schemaVersion<7 && source.offseasonExit!==undefined)throw new RangeError('CAREER_REVISION_CHANGED');
  if(source.schemaVersion<4 && ((source.transferHistory?.length??0)>0 || Object.values(source.world?.contracts??{}).some(c=>c.remainderPay?.schemaVersion===2)))throw new RangeError('CAREER_REVISION_CHANGED');

@@ -17,7 +17,7 @@ import {fundUsMinorYear} from './us-minor-history.js';
 import type {UsAnnualFunding,UsMinorYearArchive} from './us-minor-history.js';
 import {createSeasonGrowthLedger} from './growth-ledger.js';
 
-export type UsYearBlocker='SEASON_NOT_IN_REVIEW'|'POSTSEASON_NOT_COMPLETE'|'PENDING_GAME'|'OPEN_EVENT'|'GROWTH_NOT_FINALIZED'|'TRAINING_DECISION_REQUIRED'|'PITCH_LEARNING_NOT_SETTLED'|'MILITARY_PLAN_REQUIRED'|'MAX_AGE_REACHED'|'CONTRACT_DECISION_REQUIRED';
+export type UsYearBlocker='SEASON_NOT_IN_REVIEW'|'POSTSEASON_NOT_COMPLETE'|'PENDING_GAME'|'OPEN_EVENT'|'GROWTH_NOT_FINALIZED'|'TRAINING_DECISION_REQUIRED'|'PITCH_LEARNING_NOT_SETTLED'|'MILITARY_PLAN_REQUIRED'|'MILITARY_SERVICE_ACTIVE'|'MILITARY_RETURN_REQUIRED'|'MAX_AGE_REACHED'|'CONTRACT_DECISION_REQUIRED';
 /** Read-only blockers. Contract/FA and military decisions are never made by the annual world worker. */
 export function usYearTransitionReadiness(c:UsCareer){
  assertUsCareerRevision(c,c.revision);const blockers:UsYearBlocker[]=[],phase=c.phaseContext,player=c.world.players[c.protagonistKey]!,nextAge=player.age+1,targetSeasonKey=String(Number(c.world.seasonKey)+1);
@@ -29,10 +29,13 @@ export function usYearTransitionReadiness(c:UsCareer){
  if(!c.development.trainingUsedSeasons.includes(c.world.seasonKey))blockers.push('TRAINING_DECISION_REQUIRED');
  if(Object.values(c.world.repertoires).some(b=>b.ledger.baseReservedUnits!==0||b.learning&&b.learning.quarters.length!==4))blockers.push('PITCH_LEARNING_NOT_SETTLED');
  if(nextAge>=c.military.deadlineAge&&c.military.status==='UNRESOLVED')blockers.push('MILITARY_PLAN_REQUIRED');
+ if(c.military.status==='FROZEN_SERVICE'||c.military.status==='TERMINATED_SERVICE')blockers.push('MILITARY_SERVICE_ACTIVE');
+ else if(c.military.service?.version===2&&c.military.service.returnOption?.status!=='CONFIRMED')blockers.push('MILITARY_RETURN_REQUIRED');
  if(nextAge>45)blockers.push('MAX_AGE_REACHED');
  const originSeason=c.kboTransfer?String(Number(c.kboTransfer.kboSeasonKey)+1):c.amateurHistory.usRecruitment?.program.signing?.seasonKey;
  if(!originSeason||!/^\d{4}$/.test(originSeason)||Number(originSeason)>Number(c.world.seasonKey))throw new RangeError('INVALID_US_CONTRACT_ORIGIN');
- const controlSeasonsUsed=Number(c.world.seasonKey)-Number(originSeason)+1;
+ const frozenSeasons=c.military.service?.years?.filter(y=>y.seasonKey!==c.military.planSeasonKey&&y.season.militaryService?.programId===c.military.service!.programId&&y.season.paidUsd===0).length??0;
+ const controlSeasonsUsed=Number(c.world.seasonKey)-Number(originSeason)+1-frozenSeasons;
  const minorTerm=c.kboTransfer?c.kboTransfer.offer.years:c.contract.controlSeasons;
  if(c.contract.type==='US_MAJOR'||controlSeasonsUsed>=minorTerm)blockers.push('CONTRACT_DECISION_REQUIRED');
  return {ready:blockers.length===0,blockers,targetSeasonKey,nextAge,mlbService:mlbServiceTime(c.records,c.health,c.protagonistKey),controlSeasonsUsed,remainingMinorControlSeasons:Math.max(0,minorTerm-controlSeasonsUsed)};
@@ -45,7 +48,7 @@ function restoreEmergencyRegistrations(c:UsCareer,world:ActiveUsRosterWorld):voi
 /** Expand/stage only: no new root, salary, contract or active year is committed. Discarding the stage is rollback.
  * Historical official games are not copied into the stage; the later activation must preserve the source ledger. */
 function stageUsYear(c:UsCareer,revision:number,majorRenewal:boolean,allowFreeAgent=false):UsAgeRosterStage {
- assertUsCareerRevision(c,revision);const ready=usYearTransitionReadiness(c),guaranteed=(c.contract.years??1)>1;if(ready.blockers.some(b=>!majorRenewal||b!=='CONTRACT_DECISION_REQUIRED')||majorRenewal&&c.contract.type!=='US_MAJOR'||majorRenewal&&ready.mlbService.freeAgentEligible&&!guaranteed&&!allowFreeAgent)throw new RangeError('US_YEAR_TRANSITION_NOT_READY');assertUsSeason(c,revision);auditUsClosedDays(c);auditUsCompletedPostseason(c);
+ assertUsCareerRevision(c,revision);const ready=usYearTransitionReadiness(c),guaranteed=(c.contract.years??1)>1||c.contract.remainingGuaranteedUsd!==undefined&&c.contract.remainingGuaranteedUsd>(c.season?.paidUsd??0);if(ready.blockers.some(b=>!majorRenewal||b!=='CONTRACT_DECISION_REQUIRED')||majorRenewal&&c.contract.type!=='US_MAJOR'||majorRenewal&&ready.mlbService.freeAgentEligible&&!guaranteed&&!allowFreeAgent)throw new RangeError('US_YEAR_TRANSITION_NOT_READY');assertUsSeason(c,revision);auditUsClosedDays(c);auditUsCompletedPostseason(c);
  if(Object.values(c.records.games).some(g=>g.scope.seasonKey===ready.targetSeasonKey))throw new RangeError('NEXT_SEASON_RECORDS_ALREADY_EXIST');
  const world=structuredClone(c.world);restoreEmergencyRegistrations(c,world);
  const retiring=Object.keys(world.players).filter(key=>key!==c.protagonistKey&&world.players[key]!.age===45),supply=retireAndSupplyUsNpcs(world,retiring,ready.targetSeasonKey,c.protagonistKey);

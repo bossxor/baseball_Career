@@ -1,3 +1,4 @@
+import {refreshCareerAchievements} from './career-achievements.js';
 import {overall,roleScore,KBO_ROSTER_LIMITS} from '@playball/rules';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision} from './kbo-career-version.js';
@@ -199,5 +200,5 @@ export function acceptKboPostingOffer(c:KboCareer,revision:number,offerKey:strin
   const ctx={worldKey:next.world.worldKey,seasonKey:next.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:e.offeredChoices};
   next.events=next.events.map(x=>x.eventKey===e.eventKey?(e.definitionId==='E64'?completeBlockingEvent(e,e.version,{sourceEvidenceKey:e.evidenceKey,receiptKey:JSON.stringify(['kbo-posting-accept',open.postingId,offerKey]),command:'ACCEPT_CAREER_OFFER'},ctx):cancelInvalidEvent(e,e.version,'POSTING_SIGNED',ctx)):x);
  }
- next.phaseContext={phase:'ARCHIVED'};next.revision++;return next;
+ next.phaseContext={phase:'ARCHIVED'};next.revision++;return refreshCareerAchievements(next);
 }

@@ -26,6 +26,7 @@ import {createCareerTraitLedger} from './high-school-traits.js';
 import {formHighSchoolRelations} from './relationships.js';
 import type {RelationshipLedger} from './relationships.js';
 import {queueRelationFormationNotices} from './relation-notices.js';
+import {collegeLeaveElapsedYears} from './college-service.js';
 import type {CareerTraitLedger} from './high-school-traits.js';
 import type {SeasonGrowthLedger} from './growth-ledger.js';
 import type {HighSchoolGraduation,CollegeAdmission} from './high-school-route.js';
@@ -49,11 +50,13 @@ export type HighSchoolCareerPhase =
  | {phase:'SEASON_REVIEW'}
  | {phase:'OFFSEASON_REVIEW'}
  | {phase:'CAREER_ROUTE'}
+ | {phase:'SERVICE_PROGRESS';nextWorldDay:number}
  | {phase:'NEXT_SEASON_READY';route:'COLLEGE';admissionKey:string}
  | {phase:'NEXT_SEASON_READY';route:'KBO';contractKey:string}
  | {phase:'NEXT_SEASON_READY';route:'US';contractKey:string}
  | {phase:'EVENT_DECISION';eventKey:string;resume:{phase:'PRESEASON_SETUP'}|HighSchoolProgressPhase|{phase:'CAREER_ROUTE'}|{phase:'SEASON_REVIEW'}};
 export interface HighSchoolCareer {
+ achievements?:import('./career-achievements.js').CareerAchievementLedger;
  goals?:CareerGoalLedger;
  schemaVersion:1;revision:number;world:HighSchoolWorld;difficulty:Difficulty;
  phaseContext:HighSchoolCareerPhase;events:readonly EventInstance[];
@@ -75,6 +78,8 @@ export interface HighSchoolCareer {
  collegeResult?:CollegeSeasonResult;
  collegeNpcGrowth?:CollegeNpcGrowth;
  collegeGraduation?:CollegeGraduation;
+ collegeEarlyRoute?:import('./college-route.js').CollegeEarlyRoute;
+ collegeService?:import('./college-service.js').CollegeServiceProgram;
  kboRecruitment?:CareerKboRecruitment;
  previousKboRecruitments?:readonly CareerKboRecruitment[];
  usRecruitment?:CareerUsRecruitment;
@@ -99,7 +104,7 @@ export function assertHighSchoolCareerRevision(source:HighSchoolCareer,expectedR
 export function assertCollegeCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
  assertCareerRevision(source,expectedRevision);
  const admission=source.collegeAdmission,world=source.world,player=world.players[world.protagonistKey];
- if(world.leagueKey!=='COLLEGE' || !admission || admission.status!=='ENROLLED' || ![1,2,3,4].includes(admission.academicYear) || ![admission.academicYear-1,admission.academicYear].includes(admission.yearsCompleted) || admission.collegeId!==world.protagonistSchoolId || admission.playerKey!==world.protagonistKey || admission.position!==player?.position || admission.entryYear+admission.academicYear-1!==world.calendar?.year || world.seasonKey!==String(world.calendar?.year))throw new RangeError('INVALID_CAREER_REGISTRATION');
+ if(world.leagueKey!=='COLLEGE' || !admission || admission.status!=='ENROLLED' || ![1,2,3,4].includes(admission.academicYear) || ![admission.academicYear-1,admission.academicYear].includes(admission.yearsCompleted) || admission.collegeId!==world.protagonistSchoolId || admission.playerKey!==world.protagonistKey || admission.position!==player?.position || admission.entryYear+admission.academicYear-1+collegeLeaveElapsedYears(source)!==world.calendar?.year || world.seasonKey!==String(world.calendar?.year))throw new RangeError('INVALID_CAREER_REGISTRATION');
 }
 export function assertSchoolCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
  if(source.world.leagueKey==='COLLEGE')assertCollegeCareerRevision(source,expectedRevision);

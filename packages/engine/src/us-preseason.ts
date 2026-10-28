@@ -1,3 +1,4 @@
+import {assertUsMilitaryPlayable} from './us-military-plan.js';
 import {US_SEASON_GAMES} from './us-schedule.js';
 import {registerPitchLearning} from './pitch-learning-progress.js';
 import {assertFocus,PITCH_IDS} from '@playball/rules';
@@ -44,22 +45,27 @@ export function queueUsFirstCampNotices(s:UsCareer):readonly EventInstance[]{
 }
 function written(s:UsCareer){s.revision++;s.campNotices=queueUsFirstCampNotices(s);return s;}
 export function setUsPreseasonFocus(s:UsCareer,revision:number,focus:readonly string[]):UsCareer {
+ assertUsMilitaryPlayable(s);
  assertSource(s,revision);const p=s.world.players[s.protagonistKey]!;assertFocus(p.kind,focus);return written(updatePlan(s,focus,p.archetype));
 }
 export function setUsPreseasonArchetype(s:UsCareer,revision:number,archetype:string):UsCareer {
+ assertUsMilitaryPlayable(s);
  assertSource(s,revision);const p=s.world.players[s.protagonistKey]!;archetypeFor(p.kind,archetype);const key=windowKey(s);
  if(p.archetype!==archetype && s.styleUsedWindows.includes(key))throw new RangeError('STYLE_WINDOW_USED');const next=updatePlan(s,p.focus,archetype);if(p.archetype!==archetype)next.styleUsedWindows=[...s.styleUsedWindows,key];return written(next);
 }
 export function setUsPreseasonPitchWeights(s:UsCareer,revision:number,weights:PitchWeights):UsCareer {
+ assertUsMilitaryPlayable(s);
  assertSource(s,revision);const key=s.protagonistKey;if(s.world.players[key]!.kind!=='PITCHER')throw new RangeError('PITCHER_REQUIRED');const next=structuredClone(s);next.world.repertoires[key]=setPitchWeights(s.world.repertoires[key]!,weights,windowKey(s),true);return written(next);
 }
 export function beginUsPreseasonPitchLearning(s:UsCareer,revision:number,pitchId:PitchId,replacedPitchId?:PitchId):UsCareer {
+ assertUsMilitaryPlayable(s);
  assertSource(s,revision);const key=s.protagonistKey;if(s.world.players[key]!.kind!=='PITCHER')throw new RangeError('PITCHER_REQUIRED');const next=structuredClone(s);next.world.repertoires[key]=beginPitchLearning(s.world.repertoires[key]!,pitchId,true,replacedPitchId?{pitchId:replacedPitchId,windowId:windowKey(s)}:undefined);next.world.repertoires[key]=registerPitchLearning(next.world.repertoires[key]!,s.world.worldKey,key,US_SEASON_GAMES[s.registration.level],Object.hasOwn(s.health.injuries,key));return written(next);
 }
 export function unreadUsFirstCampNotices(s:UsCareer){
  assertSource(s,s.revision,true);const notices=s.campNotices??[];if(notices.length>1)throw new RangeError('DUPLICATE_US_FIRST_CAMP');return notices.flatMap(e=>{campSource(s,e);if(e.status!=='OPEN')return [];const d=eventDefinition('E58');return [{eventKey:e.eventKey,eventVersion:e.version,definitionId:'E58' as const,title:d.title,body:d.body,offeredCommands:s.preseasonPlan?['ACK_EVENT']:['CHOOSE_FOCUS','ACK_EVENT']}];});
 }
 export function resolveUsFirstCampNotice(s:UsCareer,revision:number,input:{eventKey:string;eventVersion:number;command:string;focus?:readonly string[]}):UsCareer {
+ assertUsMilitaryPlayable(s);
  assertSource(s,revision,true);const matches=(s.campNotices??[]).filter(e=>e.eventKey===input.eventKey);if(matches.length!==1)throw new RangeError('UNKNOWN_US_FIRST_CAMP');const e=matches[0]!;campSource(s,e);
  const context={worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:s.preseasonPlan?['ACK_EVENT']:['CHOOSE_FOCUS','ACK_EVENT']};
  if(input.command==='ACK_EVENT' && input.focus!==undefined)throw new RangeError('UNEXPECTED_FOCUS');const chosen=resolveEventChoice(e,input.eventVersion,input.command,input.focus?{focus:[...input.focus]}:null,context);let next=structuredClone(s),resolved=chosen.event;
@@ -67,9 +73,14 @@ export function resolveUsFirstCampNotice(s:UsCareer,revision:number,input:{event
  next.campNotices=next.campNotices!.map(event=>event.eventKey===e.eventKey?resolved:event);return written(next);
 }
 /** Locks the plan for later roster/schedule activation. Does not create a game or claim a1st-team slot. */
-export function confirmUsPreseasonPlan(s:UsCareer,revision:number):UsCareer {
+export function confirmUsPreseasonPlan(s:UsCareer,revision:number):UsCareer {assertUsMilitaryPlayable(s);return confirmUsPreseasonPlanOwned(s,revision);}
+/** Internal service-world plan; no user training/style command is performed. */
+export function confirmUsMilitaryPreseasonPlan(s:UsCareer,revision:number):UsCareer {
+ if(!['FROZEN_SERVICE','TERMINATED_SERVICE'].includes(s.military.status))throw new RangeError('US_MILITARY_SERVICE_NOT_ACTIVE');return confirmUsPreseasonPlanOwned(s,revision);
+}
+function confirmUsPreseasonPlanOwned(s:UsCareer,revision:number):UsCareer {
  assertSource(s,revision,true);if(s.preseasonPlan)return structuredClone(s);const next=structuredClone(s),p=next.world.players[next.protagonistKey]!;
- next.campNotices=queueUsFirstCampNotices(next);next.seasonGrowth.seasonStart=structuredClone(p);next.development.seasonStartPlayer=structuredClone(p);next.revision++;
+ next.campNotices=['FROZEN_SERVICE','TERMINATED_SERVICE'].includes(s.military.status)?[]:queueUsFirstCampNotices(next);next.seasonGrowth.seasonStart=structuredClone(p);next.development.seasonStartPlayer=structuredClone(p);next.revision++;
  next.preseasonPlan={receiptKey:planKey(next),seasonKey:next.world.seasonKey,playerKey:next.protagonistKey,confirmedRevision:next.revision,sourceBasis:basis(next)};return next;
 }
 export function usPreseasonPlanView(s:UsCareer){

@@ -9,11 +9,13 @@ import {prepareKboDraft,kboDraftView,resolveKboDraft,decideKboDraft,assertKboDra
 import type {KboDraftProgram} from './kbo-draft.js';
 import {canonicalJson} from './game.js';
 import {completeBlockingEvent} from './events.js';
+import {collegeEarlyRouteView,attachCollegeUnsignedReturn} from './college-route.js';
+import {refreshCareerAchievements} from './career-achievements.js';
 export interface CareerKboRecruitment {schemaVersion:1;world:KboRosterWorld;program:KboDraftProgram;sourceBasis:string}
 function basis(source:HighSchoolCareer){return canonicalJson({world:source.world,records:source.records,health:source.health,days:source.days,development:(source.development??null),seasonGrowth:(source.seasonGrowth??null),graduation:(source.graduation??null),collegeAdmission:(source.collegeAdmission??null),collegeGraduation:(source.collegeGraduation??null)});}
 function route(source:HighSchoolCareer):number {
  if(source.phaseContext.phase!=='CAREER_ROUTE')throw new RangeError('INVALID_CAREER_PHASE');
- if(source.world.leagueKey==='COLLEGE')return collegeGraduationRouteView(source).draftBaseScore;
+ if(source.world.leagueKey==='COLLEGE')return (source.collegeAdmission?.academicYear===2?collegeEarlyRouteView(source):collegeGraduationRouteView(source)).draftBaseScore;
  highSchoolCareerRouteView(source);
  return highSchoolCareerDraftScore(source);
 }
@@ -26,7 +28,8 @@ function current(source:HighSchoolCareer){
 /** The first domestic assessment owns one next-season pro world. Later-year league advancement is separate. */
 export function prepareCareerKboDraft(source:HighSchoolCareer,expectedRevision:number,preferredClubId:string|null=null):HighSchoolCareer {
  assertCareerRevision(source,expectedRevision);const score=route(source);
- if(source.kboRecruitment || source.previousKboRecruitments?.length)throw new RangeError('KBO_ASSESSMENT_ALREADY_EXISTS');
+ const assessmentKey=JSON.stringify(['amateur-kbo',source.world.worldKey,source.world.seasonKey,source.world.protagonistKey]);
+ if(source.kboRecruitment || source.previousKboRecruitments?.some(r=>r.program.assessmentKey===assessmentKey)||source.world.leagueKey!=='COLLEGE'&&source.previousKboRecruitments?.length)throw new RangeError('KBO_ASSESSMENT_ALREADY_EXISTS');
  const world=createKboRosterWorld({worldKey:source.world.worldKey,seasonKey:String(source.world.calendar!.year+1),seed:source.world.seed,difficulty:source.difficulty});
  const program=prepareKboDraft(world,{assessmentKey:JSON.stringify(['amateur-kbo',source.world.worldKey,source.world.seasonKey,source.world.protagonistKey]),player:source.world.players[source.world.protagonistKey]!,baseScore:score,preferredClubId});
  const career=structuredClone(source);career.kboRecruitment={schemaVersion:1,world,program,sourceBasis:basis(source)};career.revision++;return career;
@@ -35,7 +38,7 @@ export function careerKboDraftView(source:HighSchoolCareer){const r=current(sour
 export function resolveCareerKboDraft(source:HighSchoolCareer,expectedRevision:number,programVersion:number):HighSchoolCareer {
  assertCareerRevision(source,expectedRevision);route(source);const r=current(source);
  const program=resolveKboDraft(r.world,r.program,programVersion);if(r.program.result)return structuredClone(source);
- const career=structuredClone(source);career.kboRecruitment={...career.kboRecruitment!,program};career.revision++;return career;
+ const career=structuredClone(source);career.kboRecruitment={...career.kboRecruitment!,program};career.revision++;return source.collegeAdmission?.academicYear===2&&!program.result?.round&&!source.usRecruitment?attachCollegeUnsignedReturn(career):career;
 }
 /** Contract, rights, next-season roster/salary reservation and route closure are one immutable commit. */
 export function decideCareerKboDraft(source:HighSchoolCareer,expectedRevision:number,input:{programVersion:number;decision:'SIGN'|'DECLINE';eventVersion?:number}):HighSchoolCareer {
@@ -49,9 +52,10 @@ export function decideCareerKboDraft(source:HighSchoolCareer,expectedRevision:nu
    const resolved=completeBlockingEvent(event,input.eventVersion,{sourceEvidenceKey:event.evidenceKey,receiptKey:receipt.receiptKey,command:'ACCEPT_CAREER_OFFER'},{worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['ACCEPT_CAREER_OFFER']});career.events=career.events.map(e=>e.eventKey===event.eventKey?resolved:e);
   }else if(source.events.some(e=>e.status==='OPEN'))throw new RangeError('BLOCKING_EVENT_PENDING');
   career.phaseContext={phase:'NEXT_SEASON_READY',route:'KBO',contractKey:receipt.contract.contractKey};
+  if(career.collegeAdmission?.academicYear===2){career.collegeAdmission={...career.collegeAdmission,status:'LEFT_FOR_PRO'};career.kboRecruitment={...career.kboRecruitment!,sourceBasis:basis(career)};}
   if(career.usRecruitment){career.previousUsRecruitments=[...(career.previousUsRecruitments??[]),{...career.usRecruitment,closedBy:'KBO'}];delete career.usRecruitment;}
  }
- career.revision++;return career;
+ career.revision++;return input.decision==='DECLINE'&&career.collegeAdmission?.academicYear===2&&!career.usRecruitment?attachCollegeUnsignedReturn(career):refreshCareerAchievements(career);
 }
 
 /** Signed route boundary shared by year-end and future activation commands. */

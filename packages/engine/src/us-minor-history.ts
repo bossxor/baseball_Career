@@ -10,6 +10,7 @@ import {canonicalJson} from './game.js';
 import {usContractOrigin} from './us-contract-origin.js';
 import type {UsMinorRenewal} from './us-minor-market.js';
 import {validateEvent} from './events.js';
+import {usMilitaryContinuationOrigin} from './us-military-plan.js';
 
 /** Trusted financial additions; no UI money command or ability-based budget estimate. */
 export interface UsAnnualFunding {organizationId:string;addedBudgetUsd:number}
@@ -36,14 +37,14 @@ function renewalContract(c:UsCareer,r:UsMinorRenewal,y:UsMinorYearArchive,previo
 }
 /** Replays every contract epoch. EL's single tail renewal remains a read-only compatibility source. */
 export function openingUsMinorState(c:UsCareer) {
- const origin=usContractOrigin(c),first=Number(origin.contract.seasonKey),years=c.minorYears??[],limit=c.kboTransfer?origin.contract.years!:origin.contract.controlSeasons;
+ const resumed=usMilitaryContinuationOrigin(c),origin=resumed?.origin??usContractOrigin(c),first=Number(origin.contract.seasonKey),years=resumed?.minorYears??c.minorYears??[],limit=resumed?.remainingControlSeasons??(c.kboTransfer?origin.contract.years!:origin.contract.controlSeasons);
  if(!c.amateurHistory.world.players[c.protagonistKey]||!c.world.players[c.protagonistKey])throw new RangeError('INVALID_US_ENTRY_VIEW');
  let inventory=structuredClone(origin.inventory),contract={...origin.contract},organizationId=c.kboTransfer?c.kboTransfer.offer.organizationId:c.amateurHistory.usRecruitment!.program.signing!.rights.holderOrgId,epoch=first,term=limit,last:UsMinorRenewal|undefined;
- if(c.schemaVersion!==3){if(years.length||c.minorRenewal!==undefined||c.world.seasonKey!==origin.contract.seasonKey||c.kboTransfer&&c.world.players[c.protagonistKey]!.age!==origin.playerAge)throw new RangeError('INVALID_US_ENTRY_VIEW');return {inventory,contract,organizationId};}
+ if(c.schemaVersion!==3){if(years.length||!resumed&&c.minorRenewal!==undefined||c.world.seasonKey!==origin.contract.seasonKey||c.kboTransfer&&c.world.players[c.protagonistKey]!.age!==origin.playerAge)throw new RangeError('INVALID_US_ENTRY_VIEW');return {inventory,contract,organizationId};}
  if(origin.contract.type!=='US_MINOR'||!years.length||Number(c.world.seasonKey)!==first+years.length||c.world.players[c.protagonistKey]!.age!==origin.playerAge+years.length)throw new RangeError('INVALID_US_YEAR_HISTORY');
  for(const [i,y]of years.entries()){
   const season=String(first+i),target=String(first+i+1),elapsed=Number(season)-epoch+1;
-  if(y.seasonKey!==season||y.receiptKey!==JSON.stringify(['us-minor-year-close',c.activation.receiptKey,season])||!Number.isSafeInteger(y.sourceRevision)||y.sourceRevision<=c.activation.sourceRevision||y.sourceRevision>=c.revision||i>0&&y.sourceRevision<=years[i-1]!.sourceRevision||canonicalJson(y.contract)!==canonicalJson(contract)||canonicalJson(y.inventory)!==canonicalJson(inventory)||y.endingPlayer.simulationKey!==c.protagonistKey||y.endingPlayer.age!==origin.playerAge+i||y.supply.targetSeasonKey!==target||y.season.paidUsd!==contract.annualSalaryUsd||!y.season.growthFinalized||!y.seasonGrowth.finalized||y.seasonGrowth.seasonKey!==season||y.season.receiptKey!==JSON.stringify(['us-regular-season',y.seasonSchedule.receiptKey])||y.season.days.length!==y.season.lastDay-y.season.firstDay+1||!y.postseason.bracket.championKey||y.postseason.bracket.seasonKey!==season)throw new RangeError('INVALID_US_YEAR_HISTORY');
+  if(y.seasonKey!==season||y.receiptKey!==JSON.stringify(['us-minor-year-close',c.activation.receiptKey,season])||!Number.isSafeInteger(y.sourceRevision)||y.sourceRevision<=c.activation.sourceRevision||y.sourceRevision>=c.revision||i>0&&y.sourceRevision<=years[i-1]!.sourceRevision||canonicalJson(y.contract)!==canonicalJson(contract)||canonicalJson(y.inventory)!==canonicalJson(inventory)||y.endingPlayer.simulationKey!==c.protagonistKey||y.endingPlayer.age!==origin.playerAge+i||y.supply.targetSeasonKey!==target||y.season.paidUsd!==(resumed&&i===0?resumed.returnPaidUsd:contract.annualSalaryUsd)||!y.season.growthFinalized||!y.seasonGrowth.finalized||y.seasonGrowth.seasonKey!==season||y.season.receiptKey!==JSON.stringify(['us-regular-season',y.seasonSchedule.receiptKey])||y.season.days.length!==y.season.lastDay-y.season.firstDay+1||!y.postseason.bracket.championKey||y.postseason.bracket.seasonKey!==season)throw new RangeError('INVALID_US_YEAR_HISTORY');
   validateDevelopmentPlayer(y.endingPlayer);validateSeasonGrowthLedger(y.seasonGrowth);assertMlbPostseason(y.postseason.bracket);
   if(y.minorRenewal!==undefined&&(!y.minorRenewal||typeof y.minorRenewal!=='object'))throw new RangeError('INVALID_US_MINOR_RENEWAL');
   const renewal=y.minorRenewal??(i===years.length-1&&years.length===limit&&c.minorRenewal?.signedFromSeasonKey===season?c.minorRenewal:undefined);

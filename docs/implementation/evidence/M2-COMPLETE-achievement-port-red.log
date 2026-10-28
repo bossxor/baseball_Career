@@ -1,0 +1,66 @@
+✖ native KBO and US signing/entry commits carry A01 without requiring season goal selection (663.6278ms)
+✖ A01 is committed by actual contract acceptance before annual closure or pro activation (144.1596ms)
+✔ actual KBO/MiLB signing gives one immutable A01 receipt, cosmetic and E90, read/replay/JSON mutate nothing (1564.0322ms)
+✔ first appearances require actual PA/BF; career milestone totals never combine leagues or postseason (47.6403ms)
+✔ career W100 and SV200 use one league across years; correction keeps first evidence and cosmetics (34.2758ms)
+✔ international/posting and archive alone cannot invent milestones; A12 needs both actual leagues plus retirement receipt (33.2996ms)
+✔ malformed unlock identity, duplicate reward, forged receipt and unsupported awards are rejected (753.501ms)
+✔ college graduation requires resolved E75, not four completed years or an enrollment status toggle (3846.6639ms)
+✔ military COMPLETED needs both actual completed service blocks and return receipt, not status alone (31.8549ms)
+✔ A11 needs the original high-school rival plus an actual reunion game and evidenced registrations (48.5739ms)
+✔ career aggregation ignores NPC-only rows and reads no NPC statistics while preserving milestone results (81.8519ms)
+✔ unchanged refresh validates its sources without cloning an already earned achievement ledger (33.1456ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 10
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6914.1754
+
+✖ failing tests:
+
+test at packages\engine\test\career-achievements-integration.test.ts:1:536
+✖ native KBO and US signing/entry commits carry A01 without requiring season goal selection (663.6278ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'LOCKED'
+  - 'COMPLETED'
+
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\career-achievements-integration.test.ts:13:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'LOCKED',
+    expected: 'COMPLETED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\career-achievements-integration.test.ts:1:1119
+✖ A01 is committed by actual contract acceptance before annual closure or pro activation (144.1596ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'LOCKED'
+  - 'COMPLETED'
+
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\career-achievements-integration.test.ts:25:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'LOCKED',
+    expected: 'COMPLETED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

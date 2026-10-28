@@ -1,0 +1,10 @@
+✔ accept pays the club fee once, seals return rights, removes the player and never credits player income (171.6646ms)
+✔ career AG bracket uses the sealed actual28 Korean identities and seals records after FINAL (3926.9967ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4325.037

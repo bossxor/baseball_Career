@@ -50,7 +50,7 @@ test('resolver rejects stale revision, version, command, foreign world, altered 
  assert.throws(()=>resolveProHiddenTraitNotice(raised,raised.revision-1,input),/REVISION/);assert.throws(()=>resolveProHiddenTraitNotice(raised,raised.revision,{...input,eventVersion:e.version+1}),/VERSION/);assert.throws(()=>resolveProHiddenTraitNotice(raised,raised.revision,{...input,command:'ACK_EVENT'}),/CHOICE/);
  const foreign=structuredClone(raised);foreign.world.worldKey+='foreign';assert.throws(()=>resolveProHiddenTraitNotice(foreign,foreign.revision,input),/SOURCE/);
  const owner=structuredClone(raised);owner.registration.clubId+='changed';assert.throws(()=>resolveProHiddenTraitNotice(owner,owner.revision,input),/SOURCE/);
- const resume=structuredClone(raised);if(resume.phaseContext.phase!=='EVENT_DECISION')throw new Error('fixture');resume.phaseContext.resume.nextWorldDay++;assert.throws(()=>resolveProHiddenTraitNotice(resume,resume.revision,input),/RESUME/);
+ const resume=structuredClone(raised);if(resume.phaseContext.phase!=='EVENT_DECISION'||resume.phaseContext.resume.phase!=='SEASON_PROGRESS')throw new Error('fixture');resume.phaseContext.resume.nextWorldDay++;assert.throws(()=>resolveProHiddenTraitNotice(resume,resume.revision,input),/RESUME/);
  const receipt=structuredClone(raised);receipt.traits!.unlocks=receipt.traits!.unlocks.map(u=>({...u,seasonKey:'1900'}));assert.throws(()=>resolveProHiddenTraitNotice(receipt,receipt.revision,input),/SOURCE/);assert.equal(canonicalJson(raised),raw);
  const result=resolveProHiddenTraitNotice(raised,raised.revision,input);assert.equal(result.navigation!.targetScreen,'S38');assert.equal(canonicalJson(raised),raw);
 });

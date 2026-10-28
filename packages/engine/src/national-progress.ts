@@ -1,3 +1,4 @@
+import {refreshCareerAchievements} from './career-achievements.js';
 import {auditCareerNationalDays,nationalDayEvidence} from './national-day-audit.js';
 import {emptyPitchXpLedger} from './pitch-xp.js';
 import type {Repertoire} from './repertoire.js';
@@ -203,6 +204,7 @@ export function advanceCareerNationalMatch(c:KboCareer,revision:number,maxPlateA
  commitPitchXp(next,out.finalGame);
  replaceBracket(next,out.bracket);
  if(bracket.dayCloseVersion===1)queueNationalFirstAppearance(next,bracket.competitionId,out.contribution.gameKey);
+ if(!next.achievements?.unlocks.some(u=>u.achievementId==='A04')&&((out.contribution.batting[next.protagonistKey]?.PA??0)+(out.contribution.pitching[next.protagonistKey]?.BF??0)>0))Object.assign(next,refreshCareerAchievements(next));
  if(out.stopReason!=='TOURNAMENT_COMPLETE'||bracket.dayCloseVersion===1){next.revision++;return {career:next,stopReason:'GAME_FINAL'};}
  return {career:sealCareerTournament(next,revision,out.bracket),stopReason:'TOURNAMENT_COMPLETE'};
 }

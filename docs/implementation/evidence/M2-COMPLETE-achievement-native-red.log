@@ -1,0 +1,54 @@
+✖ accept pays the club fee once, seals return rights, removes the player and never credits player income (148.6187ms)
+✖ career AG bracket uses the sealed actual28 Korean identities and seals records after FINAL (3904.5736ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4271.4666
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-posting.test.ts:1:6927
+✖ accept pays the club fee once, seals return rights, removes the player and never credits player income (148.6187ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'LOCKED'
+  - 'COMPLETED'
+
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-posting.test.ts:60:216)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'LOCKED',
+    expected: 'COMPLETED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\national-progress.test.ts:1:4509
+✖ career AG bracket uses the sealed actual28 Korean identities and seals records after FINAL (3904.5736ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+
+  + 'LOCKED'
+  - 'COMPLETED'
+
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\national-progress.test.ts:61:46)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'LOCKED',
+    expected: 'COMPLETED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

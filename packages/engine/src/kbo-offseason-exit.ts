@@ -11,9 +11,10 @@ import {createWorldEvent,eventDefinition,completeBlockingEvent} from './events.j
 import {assertKboRecruitmentWorld} from './kbo-draft.js';
 import {formRegisteredTeamTeammate} from './team-teammates.js';
 import {queueRelationFormationNotices} from './relation-notices.js';
+import {careerAgentOffseasonOffer} from './career-agent.js';
 
 export interface KboOffseasonOffer {offerKey:string;clubId:string;years:1;annualSalaryWon:number;firstTeamGuaranteed:false}
-export interface KboOffseasonExit {requestKey:string;eventKey:string;playerKey:string;fromClubId:string;seasonKey:string;sourceBasis:string;offers:readonly KboOffseasonOffer[];status:'OPEN'|'ACCEPTED';acceptedOfferKey?:string}
+export interface KboOffseasonExit {requestKey:string;eventKey:string;playerKey:string;fromClubId:string;seasonKey:string;sourceBasis:string;offers:readonly KboOffseasonOffer[];status:'OPEN'|'ACCEPTED';acceptedOfferKey?:string;acceptedBaseOfferKey?:string}
 
 function projection(c:KboCareer){
  const key=c.protagonistKey,target=String(Number(c.world.seasonKey)+1),{valueWon,basis}=kboRenewalValueWon(c),old=c.world.contracts[key]!,salary=kboRenewalSalaryWon(old.annualSalaryWon,valueWon),origin=c.world.clubs.find(t=>t.id===c.protagonistClubId)!;
@@ -30,9 +31,9 @@ function projection(c:KboCareer){
 export function assertKboOffseasonExit(c:KboCareer):KboOffseasonExit {
  const o=c.offseasonExit,p=projection(c),event=c.events.find(e=>e.eventKey===o?.eventKey);
  if(!o || c.schemaVersion<7 || !kboContractExpiresAfterSeason(c) || c.phaseContext.phase!=='SEASON_REVIEW' || !c.seasonClose || o.playerKey!==c.protagonistKey || o.fromClubId!==c.protagonistClubId || o.seasonKey!==p.target || p.originFits || o.requestKey!==p.requestKey || o.sourceBasis!==p.sourceBasis || canonicalJson(o.offers)!==canonicalJson(p.offers) || !['OPEN','ACCEPTED'].includes(o.status) || !event || event.worldKey!==c.world.worldKey || event.seasonKey!==c.world.seasonKey || event.definitionId!=='E30' || event.evidence.fields.contractWindowId!==o.requestKey || event.evidence.fields.sourceReceiptId!==c.seasonClose.receiptKey || event.evidence.fields.playerSimulationKey!==c.protagonistKey)throw new RangeError('KBO_OFFSEASON_OFFERS_CHANGED');
- if(o.status==='OPEN' && (event.status!=='OPEN' || o.acceptedOfferKey!==undefined))throw new RangeError('KBO_OFFSEASON_OFFERS_CHANGED');
+ if(o.status==='OPEN' && (event.status!=='OPEN' || o.acceptedOfferKey!==undefined || o.acceptedBaseOfferKey!==undefined))throw new RangeError('KBO_OFFSEASON_OFFERS_CHANGED');
  if(o.status==='ACCEPTED'){
-  const offer=o.offers.find(x=>x.offerKey===o.acceptedOfferKey),r=c.renewal;
+  const base=o.offers.find(x=>x.offerKey===(o.acceptedBaseOfferKey??o.acceptedOfferKey)),offer=base?careerAgentOffseasonOffer(c,base,o.acceptedOfferKey!):undefined,r=c.renewal;
   if(!offer || event.status!=='RESOLVED' || event.resolution?.kind!=='DOMAIN' || event.resolution.command!=='ACCEPT_OFFSEASON_OFFER' || event.resolution.receiptKey!==JSON.stringify(['kbo-offseason-accept',offer?.offerKey]) || !r || r.status!=='ACCEPTED' || r.offerKey!==offer.offerKey || r.eventKey!==o.eventKey || r.playerKey!==o.playerKey || r.clubId!==offer.clubId || r.seasonKey!==o.seasonKey || r.years!==1 || r.annualSalaryWon!==offer.annualSalaryWon || r.valueWon!==p.valueWon || r.previousSalaryWon!==c.world.contracts[c.protagonistKey]!.annualSalaryWon || canonicalJson(r.basis)!==canonicalJson(p.basis))throw new RangeError('KBO_OFFSEASON_OFFERS_CHANGED');
  }
  return o;
@@ -48,10 +49,10 @@ export function compareKboOffseasonOffers(source:KboCareer,expectedRevision:numb
 }
 
 export function acceptKboOffseasonOffer(source:KboCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number;offerKey:string}):KboCareer {
- assertKboCareerRevision(source,expectedRevision);assertKboRecruitmentWorld(source.world);const o=assertKboOffseasonExit(source),offer=o.offers.find(x=>x.offerKey===input.offerKey),event=source.events.find(e=>e.eventKey===o.eventKey)!;
+ assertKboCareerRevision(source,expectedRevision);assertKboRecruitmentWorld(source.world);const o=assertKboOffseasonExit(source),request=source.agents?.salaryRequests.find(r=>r.offerSetKey===o.requestKey&&r.counterOfferKey===input.offerKey),base=o.offers.find(x=>x.offerKey===(request?.baseOfferKey??input.offerKey)),offer=base?careerAgentOffseasonOffer(source,base,input.offerKey):undefined,event=source.events.find(e=>e.eventKey===o.eventKey)!;
  if(o.status!=='OPEN' || !offer || input.eventKey!==o.eventKey)throw new RangeError('KBO_OFFSEASON_OFFERS_CHANGED');
  const resolved=completeBlockingEvent(event,input.eventVersion,{sourceEvidenceKey:event.evidenceKey,receiptKey:JSON.stringify(['kbo-offseason-accept',offer.offerKey]),command:'ACCEPT_OFFSEASON_OFFER'},{worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['OPEN_CAREER_OFFERS']}),p=projection(source),c=structuredClone(source);
- c.offseasonExit={...o,status:'ACCEPTED',acceptedOfferKey:offer.offerKey};c.renewal={...offer,eventKey:o.eventKey,playerKey:o.playerKey,seasonKey:o.seasonKey,previousSalaryWon:source.world.contracts[o.playerKey]!.annualSalaryWon,valueWon:p.valueWon,basis:p.basis,status:'ACCEPTED'};c.events=c.events.map(e=>e.eventKey===event.eventKey?resolved:e);c.revision++;return c;
+ c.offseasonExit={...o,status:'ACCEPTED',acceptedOfferKey:offer.offerKey,...(base!.offerKey!==offer.offerKey?{acceptedBaseOfferKey:base!.offerKey}:{})};c.renewal={...offer,eventKey:o.eventKey,playerKey:o.playerKey,seasonKey:o.seasonKey,previousSalaryWon:source.world.contracts[o.playerKey]!.annualSalaryWon,valueWon:p.valueWon,basis:p.basis,status:'ACCEPTED'};if(c.world.finance?.agentCounterReservations)c.world.finance.agentCounterReservations=c.world.finance.agentCounterReservations.map(r=>r.offerSetKey===o.requestKey&&r.counterOfferKey!==offer.offerKey?{...r,status:'RELEASED' as const}:r);c.events=c.events.map(e=>e.eventKey===event.eventKey?resolved:e);c.revision++;return c;
 }
 
 export function kboOffseasonOffersView(c:KboCareer){

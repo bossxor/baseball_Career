@@ -2,6 +2,8 @@ import {formPitcherRivalFromGame} from './pitcher-rival.js';
 import {raiseProHiddenTraitNotice} from './pro-trait-notices.js';
 import {settleRelationshipDirectDuels} from './relationships.js';
 import {refreshCareerSeasonGoals} from './season-goals.js';
+import {consumeCareerRoleReview} from './career-agent.js';
+import {settleKboPersonalPayrollDay} from './career-payroll.js';
 import {settleRegisteredPitchLearning,registerPitchLearning,registerPitchLearningCalendar} from './pitch-learning-progress.js';
 import {closeKboNpcMilitaryCalendarDay,settleKboNpcMilitaryPayrollDay} from './kbo-npc-military.js';
 import {kboReturnConditionMultiplier,settleKboReturnConditionDay} from './kbo-return-condition.js';
@@ -113,7 +115,8 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
    const next=pendingQueue(career,day)[0];
    if(next){
     const world=createKboCompetitionGameWorld(career.world,next.leagueKey,career.protagonistKey,career.sangmu);
-    progress.pendingGame={leagueKey:next.leagueKey,job:prepareSchoolCompetitionGame(world,career.records,next.game,kboGameContext(career,next.leagueKey))};
+    const reviewed=consumeCareerRoleReview(career,world,next.game,kboGameContext(career,next.leagueKey));Object.assign(career,reviewed.career);
+    progress.pendingGame={leagueKey:next.leagueKey,job:prepareSchoolCompetitionGame(world,career.records,next.game,reviewed.context)};
    }
   }
   if(progress.pendingGame){
@@ -142,7 +145,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   // Serving NPC books live outside club rosters, but use the same official registration receipts.
   for(const [key,member]of Object.entries(career.sangmu?.members??{}))if(member.repertoire?.learning)member.repertoire=settleRegisteredPitchLearning({worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,playerKey:key,repertoire:member.repertoire,records:career.records,health:career.health,schedule:LEAGUES.flatMap(l=>schedulesOf(career)[l]),scheduledGames:member.repertoire.learning.registration?.scheduledGames??144,numerator:career.difficulty==='REALISTIC'?6:5});
   const serviceReturn=closeKboMilitaryCalendarDay(career,day,progress);closeKboNpcMilitaryCalendarDay(career,day);
-  settleKboServicePayrollDay(career,day);settleKboReturnedTeamReunions(career,day);settleKboAiTeamReunions(career,day);settleKboNpcMilitaryPayrollDay(career,day);settleKboReturnConditionDay(career,day);settleKboOpponentReunions(career,day);settleKboArmyTeamReunions(career,day);
+  settleKboServicePayrollDay(career,day);Object.assign(career,settleKboPersonalPayrollDay(career,day));settleKboReturnedTeamReunions(career,day);settleKboAiTeamReunions(career,day);settleKboNpcMilitaryPayrollDay(career,day);settleKboReturnConditionDay(career,day);settleKboOpponentReunions(career,day);settleKboArmyTeamReunions(career,day);
   career.traits=refreshCareerTraits(career,day,LEAGUES);
   // 14 order: call-up/demotion review before style/training windows.
   const aiMoves=progress.nextWorldDay>last?null:reviewKboAiRosters(career);if(aiMoves)Object.assign(career,aiMoves);

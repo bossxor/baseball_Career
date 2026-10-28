@@ -183,3 +183,12 @@ export type {NationalCareerSources,NationalCandidateProjection} from './national
 export {resolveProHiddenTraitNotice} from './pro-trait-notices.js';
 
 export {unreadPitcherRivalNotices,resolvePitcherRivalNotice} from './pitcher-rival.js';
+
+export * from './career-agent.js';
+
+export {enterCollegeEarlyDraft,collegeEarlyRouteView,prepareCollegeUnsignedReturn,returnUnsignedCollegeCareer} from './college-route.js';
+
+export {startCollegeMilitaryLeave,advanceCollegeMilitaryService,resumeCollegeAfterService,collegeMilitaryServiceView} from './college-service.js';
+
+export {CAREER_ACHIEVEMENT_DEFINITIONS,refreshCareerAchievements,careerAchievementsView} from './career-achievements.js';
+export type {CareerAchievementLedger} from './career-achievements.js';

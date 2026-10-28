@@ -3,7 +3,7 @@ import type {HighSchoolCareer} from './high-school-career.js';
 import {closeSchoolCompetitionDay} from './high-school-day.js';
 import {archetypeFor,validateDevelopmentPlayer} from './player.js';
 import type {DevelopmentPlayer} from './player.js';
-import {assertHighSchoolCareerRevision,assertSchoolCareerRevision} from './high-school-career.js';
+import {assertHighSchoolCareerRevision,assertSchoolCareerRevision,assertCollegeCareerRevision} from './high-school-career.js';
 import {assertSeasonCalendar,scheduleHighSchoolCalendar} from './season-calendar.js';
 import {createSeasonGrowthLedger,settleClosedGrowthPeriods} from './growth-ledger.js';
 import type {ClosedGrowthPeriod} from './growth-ledger.js';
@@ -87,9 +87,22 @@ export function settleSchoolCareerGrowth(source:HighSchoolCareer,expectedRevisio
  const calendar=source.world.calendar;if(!calendar)throw new RangeError('MISSING_SEASON_CALENDAR');assertSeasonCalendar(calendar);
  assertSchedule(source.world.schedule,source.world.schools.map(s=>s.id),48,24);
  if(canonicalJson(scheduleHighSchoolCalendar(source.world.schedule,calendar))!==canonicalJson(source.world.schedule))throw new RangeError('CHANGED_SCHOOL_CALENDAR');
- const evidence=collectSchoolGrowthEvidence(source,schedule,openingRehabilitation),growthIndex=new Map(calendar.growthDays.map((d,i)=>[d,i])),schoolDays=new Set(calendar.highSchoolDays),college=source.world.leagueKey==='COLLEGE';
+ const evidence=collectSchoolGrowthEvidence(source,schedule,openingRehabilitation);
+ if(evidence.days.filter(d=>calendar.highSchoolDays.includes(d.worldDay)).length!==calendar.highSchoolDays.length)throw new RangeError('INCOMPLETE_GROWTH_DAYS');
+ return settleRegisteredGrowth(source,evidence);
+}
+/** Interrupted academic years settle only their real closed dates before the service owner takes over. */
+export function settleCollegeLeaveGrowth(source:HighSchoolCareer,revision:number){
+ assertCollegeCareerRevision(source,revision);const calendar=source.world.calendar!;assertSeasonCalendar(calendar);
+ const schedule=source.world.schedule,first=Math.min(...schedule.map(g=>g.worldDay)),last=source.days.days.at(-1)?.day??first-1;
+ if(source.days.days.some((d,i)=>d.day!==first+i)||Object.values(source.records.games).some(g=>g.scope.seasonKey===source.world.seasonKey&&g.scope.leagueKey==='COLLEGE'&&g.worldDay>last))throw new RangeError('INCOMPLETE_GROWTH_DAYS');
+ for(const d of source.days.days)closeSchoolCompetitionDay(source.world,source.records,source.health,source.days,d.day,schedule);
+ const previous=source.previousSeasons?.at(-1);if(!previous)throw new RangeError('MISSING_PREVIOUS_SEASON');
+ return settleRegisteredGrowth(source,collectRegisteredSchoolGrowthEvidence(source,schedule,Object.hasOwn(previous.health.injuries,source.world.protagonistKey)));
+}
+function settleRegisteredGrowth(source:HighSchoolCareer,evidence:HighSchoolGrowthEvidence){
+ const calendar=source.world.calendar!,growthIndex=new Map(calendar.growthDays.map((d,i)=>[d,i])),schoolDays=new Set(calendar.highSchoolDays),college=source.world.leagueKey==='COLLEGE';
  const eligible=evidence.days.filter(d=>schoolDays.has(d.worldDay)),periods:ClosedGrowthPeriod[]=[];
- if(eligible.length!==calendar.highSchoolDays.length)throw new RangeError('INCOMPLETE_GROWTH_DAYS');
  for(let i=0;i<eligible.length;){
   const start=i,plan=eligible[i]!;
   while(i<eligible.length && eligible[i]!.archetype===plan.archetype && canonicalJson(eligible[i]!.focus)===canonicalJson(plan.focus))i++;
