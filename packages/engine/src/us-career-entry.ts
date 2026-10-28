@@ -32,7 +32,7 @@ import {queueRelationFormationNotices} from './relation-notices.js';
 import type {KboPostingOffer,KboPostingReturnRights} from './kbo-posting.js';
 import {usContractOrigin} from './us-contract-origin.js';
 import type {UsContractOrigin} from './us-contract-origin.js';
-import type {UsMinorMarket} from './us-minor-market.js';
+import type {UsMinorMarket,UsMinorRenewal} from './us-minor-market.js';
 import {assertUsMinorMarket} from './us-minor-market.js';
 
 export interface KboUsTransfer {
@@ -40,7 +40,7 @@ export interface KboUsTransfer {
 }
 export interface ActiveUsRosterWorld extends UsRosterWorld {status:'ACTIVE';calendar:SeasonCalendar;reserves?:Record<string,string[]>}
 export interface UsCareer {
- goals?:CareerGoalLedger;minorMarket?:UsMinorMarket;
+ goals?:CareerGoalLedger;minorMarket?:UsMinorMarket;minorRenewal?:UsMinorRenewal;
  retirement?:UsCareerRetirement;schemaVersion:1|2|3|4;majorYears?:readonly UsMajorYearArchive[];minorYears?:readonly UsMinorYearArchive[];mode:'US_CAREER';revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveUsRosterWorld;protagonistKey:string;protagonistOrganizationId:string;
  phaseContext:UsPhase;postseason?:{bracket:MlbPostseason;conferences:Record<MlbLeague,string[]>;gameEvidence:string[]};season?:UsSeasonState;seasonSchedule?:UsSeasonSchedule;preseasonPlan?:UsPreseasonPlan;campNotices?:readonly EventInstance[];
  activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string;populationBasis:'INITIAL_INVENTORY'|'LEGACY_BOOTSTRAP'|'KBO_TRANSFER'};
@@ -84,15 +84,17 @@ export function startSignedUsCareer(source:HighSchoolCareer,expectedRevision:num
 export function usCareerView(c:UsCareer){
  assertUsRetirementState(c);
  const p=c.world.players[c.protagonistKey],org=c.world.organizations.find(o=>o.id===c.protagonistOrganizationId),r=c.registration;
- if(![1,2,3,4].includes(c.schemaVersion) || c.mode!=='US_CAREER' || !['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW','EVENT_DECISION','POSTSEASON_PROGRESS','RETIRE_CONFIRM','ARCHIVED'].includes(c.phaseContext.phase) || !p || !org || r.playerKey!==p.simulationKey || r.clubId!==org.id || r.seasonKey!==c.world.seasonKey || !['ACTIVE','INJURED'].includes(r.status) || (r.status==='ACTIVE'?!org.levels[r.level]?.includes(p.simulationKey):!c.world.reserves?.[org.id]?.includes(p.simulationKey)) || c.rights.holderOrgId!==org.id || c.contract.status!=='ACTIVE' || c.contract.contractKey!==(c.schemaVersion===4?(Array.isArray(c.majorYears)?c.majorYears.at(-1)?.nextContract?.contractKey:undefined):(c.season?.majorActivation?.contractKey??c.activation.contractKey)))throw new RangeError('INVALID_US_ENTRY_VIEW');assertUsRecruitmentWorld(c.inventory);
+ const liveContractKey=c.schemaVersion===4?(Array.isArray(c.majorYears)?c.majorYears.at(-1)?.nextContract?.contractKey:undefined):(c.season?.majorActivation?.contractKey??c.minorRenewal?.contract.contractKey??c.activation.contractKey);
+ if(![1,2,3,4].includes(c.schemaVersion) || c.mode!=='US_CAREER' || !['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW','EVENT_DECISION','POSTSEASON_PROGRESS','RETIRE_CONFIRM','ARCHIVED'].includes(c.phaseContext.phase) || !p || !org || r.playerKey!==p.simulationKey || r.clubId!==org.id || r.seasonKey!==c.world.seasonKey || !['ACTIVE','INJURED'].includes(r.status) || (r.status==='ACTIVE'?!org.levels[r.level]?.includes(p.simulationKey):!c.world.reserves?.[org.id]?.includes(p.simulationKey)) || c.rights.holderOrgId!==org.id || c.contract.status!=='ACTIVE' || c.contract.contractKey!==liveContractKey)throw new RangeError('INVALID_US_ENTRY_VIEW');assertUsRecruitmentWorld(c.inventory);
  if(c.minorMarket!==undefined)assertUsMinorMarket(c);
  if(c.activation.populationBasis==='KBO_TRANSFER'){
-  const t=c.kboTransfer;if(!t||t.offer.organizationId!==c.protagonistOrganizationId||c.income.some(e=>e.kind==='SIGNING_BONUS')||c.activation.receiptKey!==JSON.stringify(['kbo-us-activation',t.postingId??t.windowId]))throw new RangeError('INVALID_US_ENTRY_VIEW');
+  const t=c.kboTransfer;if(!t||c.income.some(e=>e.kind==='SIGNING_BONUS')||c.activation.receiptKey!==JSON.stringify(['kbo-us-activation',t.postingId??t.windowId])||(c.minorRenewal?c.minorRenewal.organizationId!==c.protagonistOrganizationId:t.offer.organizationId!==c.protagonistOrganizationId))throw new RangeError('INVALID_US_ENTRY_VIEW');
   if(t.origin===undefined){if(c.contract.annualSalaryUsd!==t.offer.annualSalaryUsd||c.contract.years!==t.offer.years||c.activation.contractKey!==c.contract.contractKey)throw new RangeError('INVALID_US_ENTRY_VIEW');}
   else{
-   const origin=usContractOrigin(c),professional=c.schemaVersion===4?openingUsMajorYear(c):null,major=c.season?.majorActivation,expectedInventory=professional?.inventory??openingUsMinorInventory(c);let expectedContract=professional?.contract??{...origin.contract,seasonKey:c.world.seasonKey};
+   const origin=usContractOrigin(c),professional=c.schemaVersion===4?openingUsMajorYear(c):null,major=c.season?.majorActivation,expectedInventory=professional?.inventory??openingUsMinorInventory(c);let expectedContract=professional?.contract??(c.minorRenewal?{...c.minorRenewal.contract,seasonKey:c.world.seasonKey}:{...origin.contract,seasonKey:c.world.seasonKey});
    if(professional&&major)throw new RangeError('UNEXPECTED_US_MAJOR_REACTIVATION');
    if(major){const span=c.season!.lastDay-c.season!.firstDay+1,minor=origin.contract.annualSalaryUsd;if(origin.contract.type!=='US_MINOR'||major.contractKey!==JSON.stringify(['us-major-entry',origin.contract.contractKey,c.world.seasonKey])||major.fromContractKey!==origin.contract.contractKey||major.annualSalaryUsd!==800000||!Number.isSafeInteger(major.effectiveDay)||major.effectiveDay<=c.season!.firstDay||major.effectiveDay>c.season!.lastDay||major.reservedAdditionalUsd!==Math.floor((minor*(major.effectiveDay-c.season!.firstDay)+800000*(c.season!.lastDay-major.effectiveDay+1))/span)-minor)throw new RangeError('INVALID_US_MAJOR_ACTIVATION');expectedInventory.clubs.find(o=>o.id===c.protagonistOrganizationId)!.availableBudgetUsd-=major.reservedAdditionalUsd;expectedContract={...expectedContract,type:'US_MAJOR',years:1,contractKey:major.contractKey,annualSalaryUsd:800000};}
+   if(c.minorRenewal){const r=c.minorRenewal;if(r.organizationId!==c.protagonistOrganizationId||r.contract.contractKey!==c.contract.contractKey||r.contract.years!==1||r.contract.annualSalaryUsd!==30000||canonicalJson({...r.contract,seasonKey:c.world.seasonKey})!==canonicalJson(c.contract))throw new RangeError('INVALID_US_MINOR_RENEWAL');}
    if(canonicalJson(c.contract)!==canonicalJson(expectedContract)||canonicalJson(c.inventory)!==canonicalJson(expectedInventory))throw new RangeError('INVALID_US_ENTRY_VIEW');
   }
   return {seasonKey:c.world.seasonKey,player:{name:p.name,age:p.age,kind:p.kind,position:p.position},club:{id:org.id,name:org.name},registration:{status:r.status,level:r.level},contract:{type:c.contract.type,currency:c.contract.currency,annualSalaryUsd:c.contract.annualSalaryUsd,signingBonusUsd:c.contract.signingBonusUsd,controlSeasons:c.contract.controlSeasons,...(c.contract.years===undefined?{}:{years:c.contract.years}),nationalReleaseAllowed:c.contract.nationalReleaseAllowed,militaryReturnOption:c.contract.militaryReturnOption},phase:c.phaseContext.phase};

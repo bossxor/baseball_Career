@@ -1,21 +1,42 @@
-import type {UsCareer} from './us-career-entry.js';
-import {assertUsCareerRevision} from './us-career-entry.js';
+import type {UsCareer,ActiveUsRosterWorld} from './us-career-entry.js';
+import {assertUsCareerRevision,assertActiveUsRosterWorld} from './us-career-entry.js';
 import {usYearTransitionReadiness} from './us-year-transition.js';
 import {auditUsClosedDays} from './us-growth.js';
 import {auditUsCompletedPostseason} from './us-postseason-progress.js';
+import {assertUsSeason} from './us-season.js';
 import {fundUsMinorYear} from './us-minor-history.js';
-import type {UsAnnualFunding} from './us-minor-history.js';
+import type {UsAnnualFunding,UsMinorYearArchive} from './us-minor-history.js';
 import type {UsLevel} from './us-world.js';
 import {recordTotals} from './records.js';
 import {usCompetitionScore} from './us-levels.js';
-import {createWorldEvent,resolveEventChoice,validateEvent} from './events.js';
+import {createWorldEvent,resolveEventChoice,completeBlockingEvent,validateEvent} from './events.js';
 import {canonicalJson} from './game.js';
+import {retireAndSupplyUsNpcs} from './us-supply.js';
+import {closeSeasonHealth} from './health.js';
+import {createSeasonCalendar} from './season-calendar.js';
+import {schoolYearEndRepertoire} from './college-entry.js';
+import {emptyPitchXpLedger} from './pitch-xp.js';
+import {createSeasonGrowthLedger} from './growth-ledger.js';
+import {refreshCareerSeasonGoals} from './season-goals.js';
+import {formRegisteredTeamTeammate} from './team-teammates.js';
+import {queueRelationFormationNotices} from './relation-notices.js';
+import {HITTER_TYPES,PITCHER_TYPES,PITCH_IDS,abilityKeys} from '@playball/rules';
+import {archetypeFor,truncatedNormal,validateDevelopmentPlayer} from './player.js';
+import type {DevelopmentPlayer} from './player.js';
+import {initialProfileAbilities} from './initial-abilities.js';
+import {generateNpcIdentities,generateNpcPotential} from './npc.js';
+import {nextInteger} from './rng.js';
+import {createRepertoire} from './repertoire.js';
 
 export interface UsMinorOffer {
  offerKey:string;organizationId:string;organizationName:string;initialLevel:Exclude<UsLevel,'MLB'>;years:1;annualSalaryUsd:number;signingBonusUsd:0;currency:'USD';nationalReleaseAllowed:boolean;militaryReturnOption:boolean;competitorKey:string|null;competitorScore:number|null;
 }
 export interface UsMinorMarket {
  marketId:string;worldKey:string;seasonKey:string;targetSeasonKey:string;playerKey:string;sourceContractKey:string;sourceOrganizationId:string;sourceRevision:number;recordRevision:number;initialLevel:Exclude<UsLevel,'MLB'>;status:'OPEN';playerScore:number;funding:UsAnnualFunding[];offers:UsMinorOffer[];eventKey:string;
+}
+/** Sealed after accept; original usContractOrigin stays untouched. */
+export interface UsMinorRenewal {
+ marketId:string;offerKey:string;organizationId:string;signedFromSeasonKey:string;sourceRevision:number;contract:UsCareer['contract'];funding:UsAnnualFunding[];displacedCompetitorKey:string|null;
 }
 const marketId=(c:UsCareer)=>JSON.stringify(['us-minor-market',c.activation.receiptKey,c.world.seasonKey,c.contract.contractKey]);
 const sortedFunding=(funding:readonly UsAnnualFunding[])=>funding.map(f=>({...f})).sort((a,b)=>a.organizationId<b.organizationId?-1:a.organizationId>b.organizationId?1:0);
@@ -54,4 +75,69 @@ export function usMinorMarketView(c:UsCareer){
 export function resolveUsMinorMarketEvent(c:UsCareer,revision:number,input:{eventKey:string;eventVersion:number;command:string}){
  assertUsCareerRevision(c,revision);const m=c.minorMarket,e=c.events.find(e=>e.eventKey===input.eventKey);if(!m||m.eventKey!==input.eventKey||!e)throw new RangeError('INVALID_US_MINOR_MARKET_EVENT');
  const picked=resolveEventChoice(e,input.eventVersion,input.command,null,{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:['OPEN_CAREER_OFFERS','OPEN_RETURN']});if(!picked.navigation||picked.domain||picked.event.status!=='OPEN')throw new RangeError('INVALID_US_MINOR_MARKET_NAVIGATION');return {career:c,navigation:picked.navigation};
+}
+
+function restoreEmergencyRegistrations(c:UsCareer,world:ActiveUsRosterWorld):void {
+ for(const[key,e]of Object.entries(c.season!.emergency?.entries??{}))if(e.releasedDay===null){const org=world.organizations.find(o=>o.id===e.clubId)!,reserve=world.reserves?.[org.id];if(!org.levels[e.level].includes(key)||!reserve?.includes(e.replacedKey))throw new RangeError('INVALID_US_EMERGENCY_REGISTRATION');org.levels[e.level]=org.levels[e.level].map(k=>k===key?e.replacedKey:k);world.reserves![org.id]=reserve.filter(k=>k!==e.replacedKey);world.reserves![org.id]!.push(key);}
+}
+
+const minorLevels:readonly Exclude<UsLevel,'MLB'>[]=['ROOKIE','A','AA','AAA'];
+/** Same org promote/reserve first; Rookie bottom adds one real us-rookie. No invented upper-level free agent. */
+function fillSourceVacancy(world:ActiveUsRosterWorld,fromId:string,level:Exclude<UsLevel,'MLB'>,kind:DevelopmentPlayer['kind'],exclude:string,targetSeasonKey:string,serial:{n:number}):void {
+ const from=world.organizations.find(o=>o.id===fromId)!;world.reserves=world.reserves??{};
+ const reserve=(world.reserves[from.id]??[]).filter(k=>k!==exclude&&world.players[k]?.kind===kind).sort()[0];
+ if(reserve){from.levels[level]=[...from.levels[level],reserve].sort();world.reserves[from.id]=(world.reserves[from.id]??[]).filter(k=>k!==reserve);return;}
+ const index=minorLevels.indexOf(level);for(let donor=index-1;donor>=0;donor--){const lower=minorLevels[donor]!,promo=from.levels[lower].filter(k=>k!==exclude&&world.players[k]!.kind===kind).sort()[0];if(!promo)continue;from.levels[lower]=from.levels[lower].filter(k=>k!==promo);from.levels[level]=[...from.levels[level],promo].sort();fillSourceVacancy(world,fromId,lower,kind,exclude,targetSeasonKey,serial);return;}
+ if(level!=='ROOKIE')throw new RangeError('US_MINOR_MARKET_SOURCE_RESERVE_REQUIRED');
+ const position=kind==='PITCHER'?'SP':'CF',key=JSON.stringify(['us-rookie',world.worldKey,targetSeasonKey,from.id,kind,position,serial.n++]);if(Object.hasOwn(world.players,key))throw new RangeError('US_ROOKIE_KEY_COLLISION');
+ const identity=generateNpcIdentities([{simulationKey:key,kind,position}],world.rng.handedness);world.rng.handedness=identity.state;
+ const types=Object.keys(kind==='HITTER'?HITTER_TYPES:PITCHER_TYPES),draw=nextInteger(world.rng.roster,types.length);world.rng.roster=draw.state;const archetype=types[draw.value]!,profile=archetypeFor(kind,archetype),keys=abilityKeys(kind),z=truncatedNormal(world.rng.roster);world.rng.roster=z.state;
+ const abilities=initialProfileAbilities(kind,archetype,Math.round(35+4*z.value)),potential=generateNpcPotential(kind,abilities,{mode:'CAREER',difficulty:world.difficulty,owned:false},world.rng.potential);world.rng.potential=potential.state;
+ const age=nextInteger(world.rng.roster,5);world.rng.roster=age.state;
+ const player:DevelopmentPlayer={...identity.players[0]!,name:'미국신인'+serial.n,age:18+age.value,archetype,focus:[...keys].sort((a,b)=>profile.weights[keys.indexOf(b)]!-profile.weights[keys.indexOf(a)]!||keys.indexOf(a)-keys.indexOf(b)).slice(0,4),abilities,potential:potential.potential,careerPeaks:{...abilities},fatigue:0};validateDevelopmentPlayer(player);world.players[key]=player;
+ if(kind==='PITCHER'){const pitch=nextInteger(world.rng.roster,6);world.rng.roster=pitch.state;world.repertoires[key]=createRepertoire(PITCH_IDS[pitch.value+1]!,targetSeasonKey);}
+ from.levels.ROOKIE=[...from.levels.ROOKIE,key].sort();
+}
+function moveToOffer(world:ActiveUsRosterWorld,key:string,level:Exclude<UsLevel,'MLB'>,fromId:string,offer:UsMinorOffer,targetSeasonKey:string):string|null {
+ const from=world.organizations.find(o=>o.id===fromId)!,to=world.organizations.find(o=>o.id===offer.organizationId)!;
+ if(!from.levels[level].includes(key))throw new RangeError('US_MINOR_MARKET_ROSTER_CHANGED');
+ from.levels[level]=from.levels[level].filter(k=>k!==key);
+ if(offer.organizationId===fromId){from.levels[level]=[...from.levels[level],key].sort();return null;}
+ if(!offer.competitorKey||!to.levels[level].includes(offer.competitorKey))throw new RangeError('US_MINOR_MARKET_COMPETITOR_CHANGED');
+ to.levels[level]=to.levels[level].map(k=>k===offer.competitorKey?key:k);world.reserves=world.reserves??{};
+ fillSourceVacancy(world,fromId,level,world.players[key]!.kind,key,targetSeasonKey,{n:0});
+ world.reserves[to.id]=[...(world.reserves[to.id]??[]),offer.competitorKey].sort();
+ return offer.competitorKey;
+}
+
+/** Accept one sealed minor offer, archive the expired control year, and open the next season on the new 1-year contract. */
+export function acceptUsMinorMarketOffer(c:UsCareer,revision:number,offerKey:string):UsCareer {
+ assertUsCareerRevision(c,revision);assertUsMinorMarket(c);const m=c.minorMarket!,offer=m.offers.find(o=>o.offerKey===offerKey);if(!offer)throw new RangeError('US_MINOR_OFFER_NOT_FOUND');
+ const sealed=canonicalJson(offer),ready=usYearTransitionReadiness(c);if(ready.blockers.some(b=>b!=='CONTRACT_DECISION_REQUIRED'&&b!=='OPEN_EVENT')||!ready.blockers.includes('CONTRACT_DECISION_REQUIRED'))throw new RangeError('US_MINOR_MARKET_NOT_AVAILABLE');
+ assertUsSeason(c,revision);auditUsClosedDays(c);auditUsCompletedPostseason(c);
+ if(Object.values(c.records.games).some(g=>g.scope.seasonKey===ready.targetSeasonKey))throw new RangeError('NEXT_SEASON_RECORDS_ALREADY_EXIST');
+ const event=c.events.find(e=>e.eventKey===m.eventKey)!;if(event.status!=='OPEN')throw new RangeError('INVALID_US_MINOR_MARKET');
+ const world=structuredClone(c.world);restoreEmergencyRegistrations(c,world);
+ const displaced=moveToOffer(world,c.protagonistKey,m.initialLevel,c.protagonistOrganizationId,offer,ready.targetSeasonKey);
+ const retiring=Object.keys(world.players).filter(key=>key!==c.protagonistKey&&world.players[key]!.age===45),supply=retireAndSupplyUsNpcs(world,retiring,ready.targetSeasonKey,c.protagonistKey);
+ for(const[key,p]of Object.entries(world.players)){if(!Object.hasOwn(c.world.players,key))continue;world.players[key]={...p,age:p.age+1,fatigue:0};const book=schoolYearEndRepertoire({world:c.world},key);if(book)world.repertoires[key]={...structuredClone(book),seasonId:ready.targetSeasonKey,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};}
+ const ended=closeSeasonHealth(c.health,c.world.seasonKey).ledger,health={...ended,rng:{...ended.rng},injuries:structuredClone(ended.injuries)};for(const r of supply.retired)delete health.injuries[r.playerKey];
+ world.seasonKey=ready.targetSeasonKey;world.calendar=createSeasonCalendar(Number(ready.targetSeasonKey),'calendar-2');assertActiveUsRosterWorld(world);
+ const registered=Object.keys(world.players).sort(),funding=sortedFunding(m.funding),contract:UsCareer['contract']={contractKey:JSON.stringify(['us-minor-renewal',m.marketId,offer.offerKey]),type:'US_MINOR',currency:'USD',years:1,annualSalaryUsd:30000,signingBonusUsd:0,controlSeasons:6,status:'ACTIVE',seasonKey:ready.targetSeasonKey,nationalReleaseAllowed:offer.nationalReleaseAllowed,militaryReturnOption:offer.militaryReturnOption};
+ if(canonicalJson(m.offers.find(o=>o.offerKey===offerKey))!==sealed)throw new RangeError('US_MINOR_OFFER_CHANGED');
+ const inventory=fundUsMinorYear(c.inventory,ready.targetSeasonKey,registered,funding,offer.organizationId,30000),player=world.players[c.protagonistKey]!;
+ const archive:UsMinorYearArchive={receiptKey:JSON.stringify(['us-minor-year-close',c.activation.receiptKey,c.world.seasonKey]),seasonKey:c.world.seasonKey,sourceRevision:c.revision,recordRevision:c.records.revision,endingPlayer:structuredClone(c.world.players[c.protagonistKey]!),contract:structuredClone(c.contract),inventory:c.inventory,season:c.season!,seasonSchedule:c.seasonSchedule!,preseasonPlan:c.preseasonPlan!,campNotices:c.campNotices??[],postseason:c.postseason!,seasonGrowth:c.seasonGrowth,funding,nextRegisteredPlayerKeys:registered,supply};
+ const ctx={worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:event.offeredChoices};
+ const closed=completeBlockingEvent(event,event.version,{sourceEvidenceKey:event.evidenceKey,receiptKey:archive.receiptKey,command:'ACCEPT_CAREER_OFFER'},ctx);
+ const renewal:UsMinorRenewal={marketId:m.marketId,offerKey:offer.offerKey,organizationId:offer.organizationId,signedFromSeasonKey:c.world.seasonKey,sourceRevision:c.revision,contract:{...contract},funding,displacedCompetitorKey:displaced};
+ const day=world.calendar.growthDays[0]!,teamWorld={worldKey:world.worldKey,seasonKey:world.seasonKey,leagueKey:m.initialLevel,protagonistKey:c.protagonistKey,protagonistSchoolId:offer.organizationId,schools:world.organizations.map(o=>({id:o.id,name:o.name,roster:o.levels[m.initialLevel]})),players:world.players};
+ const next:UsCareer={...c,schemaVersion:3,revision:c.revision+1,world,health,minorYears:[...(c.minorYears??[]),archive],inventory,contract,protagonistOrganizationId:offer.organizationId,rights:{...c.rights,holderOrgId:offer.organizationId},registration:{playerKey:c.protagonistKey,clubId:offer.organizationId,level:m.initialLevel,seasonKey:ready.targetSeasonKey,status:'ACTIVE'},phaseContext:{phase:'PRESEASON_SETUP'},seasonGrowth:createSeasonGrowthLedger(player,ready.targetSeasonKey,world.calendar.growthDays.length),development:{...c.development,seasonStartPlayer:structuredClone(player)},planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}],events:c.events.map(e=>e.eventKey===event.eventKey?closed:e),minorRenewal:renewal};
+ delete next.minorMarket;delete next.season;delete next.seasonSchedule;delete next.preseasonPlan;delete next.campNotices;delete next.postseason;
+ if(c.traits)next.traits={...c.traits,lastClosedDay:null,lastSeasonKey:ready.targetSeasonKey};
+ if(offer.organizationId!==c.protagonistOrganizationId){
+  const ledger=c.relationships&&Array.isArray(c.relationships.relations)?c.relationships:undefined;
+  next.relationships=formRegisteredTeamTeammate(ledger,teamWorld,archive.receiptKey,day);
+  const notices=queueRelationFormationNotices({...next,world:teamWorld},day);if(notices)next.relationNotices=notices;
+ }
+ assertUsCareerRevision(next,next.revision);return refreshCareerSeasonGoals(next);
 }

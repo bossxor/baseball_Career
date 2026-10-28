@@ -29,12 +29,14 @@ export function openingUsMinorInventory(c:UsCareer):UsRecruitmentWorld {
  const startAge=origin.playerAge;
  let expected=structuredClone(origin.inventory);
  if(c.schemaVersion!==3){if(years.length||c.world.seasonKey!==origin.contract.seasonKey||c.kboTransfer&&c.world.players[c.protagonistKey]!.age!==startAge)throw new RangeError('INVALID_US_ENTRY_VIEW');return expected;}
- if(origin.contract.type!=='US_MINOR'||!years.length||years.length>=limit||Number(c.world.seasonKey)!==first+years.length||c.world.players[c.protagonistKey]!.age!==startAge+years.length)throw new RangeError('INVALID_US_YEAR_HISTORY');
+ if(origin.contract.type!=='US_MINOR'||!years.length||years.length>limit||(years.length<limit&&!!c.minorRenewal)||(years.length===limit&&!c.minorRenewal)||Number(c.world.seasonKey)!==first+years.length||c.world.players[c.protagonistKey]!.age!==startAge+years.length)throw new RangeError('INVALID_US_YEAR_HISTORY');
+ const originOrg=c.kboTransfer?c.kboTransfer.offer.organizationId:c.protagonistOrganizationId;
  for(const [i,y]of years.entries()){
-  const season=String(first+i),target=String(first+i+1),contract={...origin.contract,seasonKey:season};
+  const season=String(first+i),target=String(first+i+1),contract={...origin.contract,seasonKey:season},renew=i===limit-1&&c.minorRenewal,pay=renew?30000:origin.contract.annualSalaryUsd,holder=renew?c.minorRenewal!.organizationId:originOrg,funding=renew?c.minorRenewal!.funding:y.funding;
   if(y.seasonKey!==season||y.receiptKey!==JSON.stringify(['us-minor-year-close',c.activation.receiptKey,season])||!Number.isSafeInteger(y.sourceRevision)||y.sourceRevision<=c.activation.sourceRevision||y.sourceRevision>=c.revision||i>0&&y.sourceRevision<=years[i-1]!.sourceRevision||canonicalJson(y.contract)!==canonicalJson(contract)||canonicalJson(y.inventory)!==canonicalJson(expected)||y.endingPlayer.simulationKey!==c.protagonistKey||y.endingPlayer.age!==startAge+i||y.supply.targetSeasonKey!==target||y.season.paidUsd!==origin.contract.annualSalaryUsd||!y.season.growthFinalized||!y.seasonGrowth.finalized||y.seasonGrowth.seasonKey!==season||y.season.receiptKey!==JSON.stringify(['us-regular-season',y.seasonSchedule.receiptKey])||y.season.days.length!==y.season.lastDay-y.season.firstDay+1||!y.postseason.bracket.championKey||y.postseason.bracket.seasonKey!==season)throw new RangeError('INVALID_US_YEAR_HISTORY');
+  if(renew){const r=c.minorRenewal!;if(r.signedFromSeasonKey!==season||r.marketId!==JSON.stringify(['us-minor-market',c.activation.receiptKey,season,origin.contract.contractKey])||r.organizationId!==c.protagonistOrganizationId||canonicalJson(r.funding)!==canonicalJson(y.funding)||r.contract.years!==1||r.contract.annualSalaryUsd!==30000||r.contract.type!=='US_MINOR'||r.contract.signingBonusUsd!==0||r.contract.contractKey!==JSON.stringify(['us-minor-renewal',r.marketId,r.offerKey]))throw new RangeError('INVALID_US_MINOR_RENEWAL');}
   validateDevelopmentPlayer(y.endingPlayer);validateSeasonGrowthLedger(y.seasonGrowth);assertMlbPostseason(y.postseason.bracket);
-  expected=fundUsMinorYear(y.inventory,target,y.nextRegisteredPlayerKeys,y.funding,c.protagonistOrganizationId,origin.contract.annualSalaryUsd);
+  expected=fundUsMinorYear(y.inventory,target,y.nextRegisteredPlayerKeys,funding,holder,pay);
  }
  return expected;
 }

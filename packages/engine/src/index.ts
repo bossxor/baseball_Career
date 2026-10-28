@@ -171,5 +171,5 @@ export {nationalNationPreset,createNationalBracket,nextNationalMatch,prepareNati
 export type {NationalBracket,NationalMatch,NationalMatchResult,NationalTournamentWindow} from './national-bracket.js';
 export {startNationalTournament,prepareCareerNationalMatch,advanceCareerNationalMatch,closeCareerNationalDay} from './national-progress.js';
 export type {NationalProgressStop} from './national-progress.js';
-export {openUsMinorMarket,usMinorMarketView,resolveUsMinorMarketEvent} from './us-minor-market.js';
-export type {UsMinorMarket,UsMinorOffer} from './us-minor-market.js';
+export {openUsMinorMarket,usMinorMarketView,resolveUsMinorMarketEvent,acceptUsMinorMarketOffer} from './us-minor-market.js';
+export type {UsMinorMarket,UsMinorOffer,UsMinorRenewal} from './us-minor-market.js';

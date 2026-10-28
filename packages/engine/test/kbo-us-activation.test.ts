@@ -26,7 +26,7 @@ import {startNextUsMinorSeason} from '../src/us-year-transition.js';
 import {reviewUsLevel,resolveUsLevelEvent} from '../src/us-levels.js';
 import {usSalaryEntitlement} from '../src/us-season.js';
 import {emptyBatting} from '../src/stats.js';
-import {openUsMinorMarket,usMinorMarketView,resolveUsMinorMarketEvent} from '../src/us-minor-market.js';
+import {openUsMinorMarket,usMinorMarketView,resolveUsMinorMarketEvent,acceptUsMinorMarketOffer} from '../src/us-minor-market.js';
 
 type Fixture=Pick<KboCareer,'world'|'protagonistKey'> & {proSeasons:KboSeasonArchive[];seasonClose?:KboSeasonClose;records:ReturnType<typeof emptyRecordLedger>;health:ReturnType<typeof createHealthLedger>};
 function season(s:Fixture,year:string,count:number){
@@ -154,4 +154,24 @@ test('minor market saved competitor identities cannot be foreign, unrelated or n
 });
 test('minor market absent comparators cannot create other-club demand',()=>{
  const absent=minorDemandSource(),me=absent.world.players[absent.protagonistKey]!;for(const org of absent.world.organizations.filter(o=>o.id!==absent.protagonistOrganizationId))for(const key of org.levels[absent.registration.level]){const p=absent.world.players[key]!;if(p.kind===me.kind&&p.position===me.position)p.position=me.position==='LF'?'RF':'LF';}assert.equal(usMinorMarketView(openUsMinorMarket(absent,absent.revision,zeroFunding(absent))).offers.filter(o=>o.organizationId!==absent.protagonistOrganizationId).length,0);
+});
+
+test('accepting the sealed original-club minor offer archives the year, closes E66 and starts a 1yr $30000 term',()=>{
+ const c=minorDemandSource(),opened=openUsMinorMarket(c,c.revision,zeroFunding(c)),home=opened.minorMarket!.offers.find(o=>o.organizationId===opened.protagonistOrganizationId)!;assert.ok(home);
+ const raw=canonicalJson(opened),signed=acceptUsMinorMarketOffer(opened,opened.revision,home.offerKey);
+ assert.equal(canonicalJson(opened),raw);assert.equal(signed.contract.years,1);assert.equal(signed.contract.annualSalaryUsd,30_000);assert.equal(signed.protagonistOrganizationId,c.protagonistOrganizationId);
+ assert.equal(signed.events.find(e=>e.eventKey===opened.minorMarket!.eventKey)!.status,'RESOLVED');assert.equal(signed.minorMarket,undefined);assert.ok(signed.minorRenewal);
+ assert.equal(signed.phaseContext.phase,'PRESEASON_SETUP');assert.deepEqual(usCareerView(JSON.parse(JSON.stringify(signed))),usCareerView(signed));
+ assert.throws(()=>acceptUsMinorMarketOffer(opened,opened.revision-1,home.offerKey),/REVISION/);
+ assert.throws(()=>acceptUsMinorMarketOffer(transferred(70,33).us,1,home.offerKey),/REVISION|NOT_AVAILABLE|INVALID/);
+});
+
+test('accepting another club offer moves the player, keeps level, and preserves the sealed quote under JSON',()=>{
+ const c=minorDemandSource(),opened=openUsMinorMarket(c,c.revision,zeroFunding(c)),away=opened.minorMarket!.offers.find(o=>o.organizationId!==opened.protagonistOrganizationId)!;assert.ok(away);assert.ok(away.competitorKey);
+ const signed=acceptUsMinorMarketOffer(opened,opened.revision,away.offerKey);
+ assert.equal(signed.protagonistOrganizationId,away.organizationId);assert.equal(signed.registration.level,opened.registration.level);assert.equal(signed.contract.annualSalaryUsd,30_000);
+ assert.ok(signed.world.organizations.find(o=>o.id===away.organizationId)!.levels[signed.registration.level].includes(signed.protagonistKey));
+ assert.ok(!signed.world.organizations.find(o=>o.id===c.protagonistOrganizationId)!.levels[signed.registration.level].includes(signed.protagonistKey));
+ assert.equal(signed.minorRenewal!.displacedCompetitorKey,away.competitorKey);
+ assert.deepEqual(usCareerView(JSON.parse(JSON.stringify(signed))),usCareerView(signed));
 });
