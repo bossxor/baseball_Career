@@ -1,0 +1,37 @@
+✔ A07 requires earned athlete eligibility and three completed consecutive duty seasons across school/KBO/US roots (2998.1869ms)
+✔ actual KBO/MiLB signing gives one immutable A01 receipt, cosmetic and E90, read/replay/JSON mutate nothing (641.336ms)
+✔ first appearances require actual PA/BF; career milestone totals never combine leagues or postseason (71.8523ms)
+✔ career W100 and SV200 use one league across years; correction keeps first evidence and cosmetics (56.8599ms)
+✔ international/posting and archive alone cannot invent milestones; A12 needs both actual leagues plus retirement receipt (53.7408ms)
+✔ malformed unlock identity, duplicate reward, forged receipt and unsupported awards are rejected (1199.1673ms)
+✔ college graduation requires resolved E75, not four completed years or an enrollment status toggle (6692.681ms)
+✔ military COMPLETED needs both actual completed service blocks and return receipt, not status alone (59.3715ms)
+✔ A11 needs the original high-school rival plus an actual reunion game and evidenced registrations (87.645ms)
+✔ career aggregation ignores NPC-only rows and reads no NPC statistics while preserving milestone results (161.2169ms)
+✔ unchanged refresh validates its sources without cloning an already earned achievement ledger (57.2052ms)
+✔ P15 first pro hire is immediate; changes and direct negotiation become effective next season once (786.9851ms)
+✔ P15 cumulative fee has exact2% with tiny splits, duplicate receipt and no signing-bonus or inactive-agent fee (3115.7823ms)
+✔ P15 real renewal preview .60/.68 never draws; success reserves only delta, supersedes base and actual accept uses raised salary (783.1431ms)
+✔ P15 rejection keeps original offer and no reserved delta; changed budget, forged raise and stale preview never consume RNG (799.4958ms)
+✔ E91/E92/E93 are actual source-bound optional notices; domain choices and ACK close exactly once (1207.9889ms)
+✔ accepted role review is consumed by next real lineup once, preserves bucket and never promises an appearance (2114.0589ms)
+✔ AG03 actual USD counteroffer reserves a fixed funded quote, signs next year and survives immutable history replay (7607.1357ms)
+✔ ordinary KBO payroll pays actual registered games, no prior-game replay, and agent hire never charges earlier gross (1729.669ms)
+✔ offseason transfer counter is one request for the entire offer set and the actual accepted renewal consumes its replacement (658.8951ms)
+✔ multi-year USD counter requires every trusted future year; missing or forged authority cannot consume a request (57907.2613ms)
+✔ normal KBO144 registered payments true up exactly and public income exposes net separately from audited gross (1142.0414ms)
+✔ promise trust accumulates raw15 then-10 as5; injury cancels a promise without a trust penalty (1882.3627ms)
+✔ FINAL observer keeps actual immutable fielding slots, JSON replay is idempotent and legacy slots stay unknown (19.3029ms)
+✔ annual awards use actual most-played position, 50-game and 200-PA thresholds, explicit first-pro proof and deterministic ties (7.1886ms)
+✔ E25 freezes midpoint top ceil(eligible*.25), E29 comes from actual annual result and repeats neither receipt nor award type (24.671ms)
+✔ pitcher titles use recorded starts/relief, positive saves, full team inning qualification and exact rate ties (5.4018ms)
+✔ position awards count defensive appearances separately from a majority of DH games (6.6896ms)
+✔ authentic option survives actual promotion and six credited annual writers into a five-year FA guarantee before freeze (60596.7603ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 80438.8339

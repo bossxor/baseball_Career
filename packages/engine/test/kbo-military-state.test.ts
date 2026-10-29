@@ -12,7 +12,7 @@ import {startKboPostseason,advanceKboPostseason} from '../src/kbo-postseason-pro
 import {settleKboSeasonGrowth} from '../src/kbo-season-growth.js';
 import {closeKboSeason} from '../src/kbo-year-end.js';
 import {offerKboRenewal,acceptKboRenewal} from '../src/kbo-renewal.js';
-import {completeSangmuBlock} from '../src/kbo-military-program.js';
+import {completeSangmuBlock,enlistInSangmu} from '../src/kbo-military-program.js';
 import type {KboCareer} from '../src/kbo-career-entry.js';
 import {enteredKboCareer} from './fixtures.js';
 
@@ -78,7 +78,8 @@ test('an enlisted protagonist serves two seasons as a loan to the military team 
  // Completion: relabel the fixture so the second block is the season just played; the transition closes it and ends the loan.
  const fin=structuredClone(e),season=Number(fin.world.seasonKey),pg=fin.military!.program!;
  delete fin.military!.completionDays; // Explicitly exercises the pre-calendar legacy transition.
- fin.military!.program=completeSangmuBlock({...pg,blocks:[{...pg.blocks[0]!,seasonKey:String(season-1)},{...pg.blocks[1]!,seasonKey:String(season)}]},String(season-1),5);
+ const legacyProgram=enlistInSangmu({worldKey:fin.world.worldKey,playerKey:fin.protagonistKey,clubId:fin.protagonistClubId,selectionSeasonKey:String(season-2),contract:fin.world.contracts[fin.protagonistKey]!,remainingPaidGameDays:pg.contract.remainingPaidGameDays});
+ fin.military!.program=completeSangmuBlock(legacyProgram,String(season-1),5);
  const out=startNextKboSeason(fin,fin.revision);
  assert.equal(out.military!.status,'COMPLETED');assert.equal(out.military!.completedSeasonKey,String(season));assert.deepEqual(out.sangmu!.loaned,[]);assert.equal(kboProtagonistServing(out),false);
 });

@@ -78,7 +78,7 @@ function candidates(records:RecordLedger,l:CareerProAwardLedger,seasonKey:string
  const result:Candidate[]=[];
  const assignment=(key:string)=>{
   const counts=new Map<string,number>();let defense=0,known=0,teamGames=0;
-  for(const g of proofs){const p=g.appearances[key];if(!p)continue;counts.set(p.position,(counts.get(p.position)??0)+1);known++;if(p.position!=='DH')defense+=p.defenseUnits/UNITS_PER_POINT/100*.1;teamGames=Math.max(teamGames,totals.teams[p.teamKey]?.games??0);}
+  for(const g of proofs){const p=g.appearances[key];if(!p)continue;if(p.position!=='DH')counts.set(p.position,(counts.get(p.position)??0)+1);known++;if(p.position!=='DH')defense+=p.defenseUnits/UNITS_PER_POINT/100*.1;teamGames=Math.max(teamGames,totals.teams[p.teamKey]?.games??0);}
   const best=[...counts].sort((a,b)=>b[1]-a[1]||compareId(a[0],b[0]))[0];return {position:best?.[0]??null,positionGames:best?.[1]??0,defense,known,teamGames};
  };
  for(const [playerKey,b]of Object.entries(totals.batting)){

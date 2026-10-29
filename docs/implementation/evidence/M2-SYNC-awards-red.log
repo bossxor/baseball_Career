@@ -1,0 +1,36 @@
+✔ FINAL observer keeps actual immutable fielding slots, JSON replay is idempotent and legacy slots stay unknown (19.0574ms)
+✔ annual awards use actual most-played position, 50-game and 200-PA thresholds, explicit first-pro proof and deterministic ties (4.0756ms)
+✔ E25 freezes midpoint top ceil(eligible*.25), E29 comes from actual annual result and repeats neither receipt nor award type (20.8599ms)
+✔ pitcher titles use recorded starts/relief, positive saves, full team inning qualification and exact rate ties (2.9425ms)
+✖ position awards count defensive appearances separately from a majority of DH games (3.8323ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 4
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1137.7149
+
+✖ failing tests:
+
+test at packages\engine\test\pro-career-awards.test.ts:1:7278
+✖ position awards count defensive appearances separately from a majority of DH games (3.8323ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  undefined !== 'a'
+  
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\pro-career-awards.test.ts:82:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: 'a',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

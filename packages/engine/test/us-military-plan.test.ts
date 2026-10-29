@@ -1,3 +1,4 @@
+import {usGameContext,usMajorCallupAdditionalUsd} from '../src/us-season.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {closedUsMajorFixture} from './us-major-fixture.js';
@@ -126,8 +127,23 @@ test('active US return condition counts six registered bench games, excludes INT
  assert.equal(typeof military.usMilitaryReturnConditionMultiplier,'function');
  const source=controlledDischargedOption(),c=confirmUsMilitaryReturn(source,source.revision),key=c.protagonistKey,abilities=canonicalJson(c.world.players[key]!.abilities),effective=c.military.service!.returnOption!.effectiveWorldDay!,club=c.protagonistOrganizationId;
  assert.equal(military.usMilitaryReturnConditionMultiplier(c),.95);
+ assert.equal(usGameContext(c,{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,seed:c.world.seed,protagonistKey:key,leagueKey:c.registration.level,schools:[],repertoires:{},players:c.world.players} as Parameters<typeof usGameContext>[1]).conditionMultipliers?.[key],.95);
  c.health.games=[...c.health.games,{evidence:{gameKey:'controlled-int-return-rest',teamKey:'INT:'+club,seasonKey:c.world.seasonKey,day:effective,roster:[key],appearances:[]},result:{injured:[],recovered:[]}}];assert.equal(military.usMilitaryReturnConditionMultiplier(c),.95);
  for(let i=0;i<6;i++){const gameKey='controlled-us-return-health-'+i,day=effective+i;c.records.games[gameKey]={gameKey,worldDay:day,scope:{seasonKey:c.world.seasonKey,leagueKey:c.registration.level,phase:'REGULAR'},teams:{[club]:{games:1,W:0,L:0,T:1,R:0,RA:0},other:{games:1,W:0,L:0,T:1,R:0,RA:0}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}};c.health.games=[...c.health.games,{evidence:{gameKey,teamKey:c.registration.level+':'+club,seasonKey:c.world.seasonKey,day,roster:[key],appearances:[]},result:{injured:[],recovered:[]}}];assert.equal(military.usMilitaryReturnConditionMultiplier(c),i<5?.95:1);}
+ assert.equal(usGameContext(c,{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,seed:c.world.seed,protagonistKey:key,leagueKey:c.registration.level,schools:[],repertoires:{},players:c.world.players} as Parameters<typeof usGameContext>[1]).conditionMultipliers,undefined);
+ assert.equal(usGameContext(c,{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,seed:c.world.seed,protagonistKey:key,leagueKey:c.registration.level,schools:[],repertoires:{},players:{}} as Parameters<typeof usGameContext>[1]).conditionMultipliers,undefined);
  assert.equal(canonicalJson(c.world.players[key]!.abilities),abilities);
  const dup=structuredClone(c);dup.health.games=[...dup.health.games,dup.health.games.at(-1)!];assert.throws(()=>military.usMilitaryReturnConditionMultiplier(dup),/DOUBLE_BOOKED/);
+});
+
+
+test('controlled return-year MLB activation preserves pre-callup salary and validates derived contract and budget',()=>{
+ const returned=confirmUsMilitaryReturn(controlledDischargedOption(),controlledDischargedOption().revision),c=structuredClone(returned),s=c.season!,effectiveDay=c.military.service!.returnOption!.effectiveWorldDay!+10,closedDays=effectiveDay-s.firstDay,oldPaid=usSalaryEntitlement(c,closedDays),extra=usMajorCallupAdditionalUsd(c,effectiveDay),base=c.contract;
+ s.majorActivation={contractKey:JSON.stringify(['us-major-entry',base.contractKey,c.world.seasonKey]),fromContractKey:base.contractKey,effectiveDay,annualSalaryUsd:800000,reservedAdditionalUsd:extra};c.contract={...base,type:'US_MAJOR',contractKey:s.majorActivation.contractKey,annualSalaryUsd:800000};c.inventory.clubs.find(o=>o.id===c.protagonistOrganizationId)!.availableBudgetUsd-=extra;
+ assert.equal(usSalaryEntitlement(c,closedDays),oldPaid);
+ const games=Object.values(c.seasonSchedule!.leagues).flat(),first=Math.min(...games.map(g=>g.worldDay)),last=Math.max(...games.map(g=>g.worldDay)),start=Math.max(first,c.military.service!.returnOption!.effectiveWorldDay!);
+ assert.equal(usSalaryEntitlement(c,closedDays+1),Math.floor((30000*(effectiveDay-start)+800000)/(last-first+1)));
+ assert.equal(usMilitaryServiceView(c).contractStatus,'ACTIVE');
+ const bad=structuredClone(c);bad.season!.majorActivation!.reservedAdditionalUsd++;assert.throws(()=>usMilitaryServiceView(bad),/ACTIVATION/);
+ assert.deepEqual(c.military.service!.returnContract,returned.military.service!.returnContract);
 });

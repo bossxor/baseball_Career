@@ -1,0 +1,43 @@
+
+> again-playball@0.1.0 typecheck
+> npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/db && npm run typecheck --workspaces --if-present && tsc -p tsconfig.tests.json
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/db@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/db@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/engine@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/rules@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/api@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/web@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+packages/engine/test/pro-advice-repertoire-events.test.ts(50,49): error TS2322: Type '{ seasonKey: string; schemaVersion?: 1; worldKey?: string; days?: readonly { day: number; evidence: string; result: SchoolDayResult; }[]; }' is not assignable to type 'SchoolDayLedger'.
+  Property 'schemaVersion' is optional in type '{ seasonKey: string; schemaVersion?: 1; worldKey?: string; days?: readonly { day: number; evidence: string; result: SchoolDayResult; }[]; }' but required in type 'SchoolDayLedger'.
+packages/engine/test/pro-advice-repertoire-events.test.ts(51,49): error TS2322: Type '{ days: readonly { day: number; evidence: string; result: SchoolDayResult; }[]; schemaVersion?: 1; worldKey?: string; seasonKey?: string; }' is not assignable to type 'SchoolDayLedger'.
+  Property 'schemaVersion' is optional in type '{ days: readonly { day: number; evidence: string; result: SchoolDayResult; }[]; schemaVersion?: 1; worldKey?: string; seasonKey?: string; }' but required in type 'SchoolDayLedger'.
+packages/engine/test/pro-advice-repertoire-events.test.ts(52,49): error TS2322: Type '{ days: { day: number; evidence: string; result: SchoolDayResult; }[]; schemaVersion?: 1; worldKey?: string; seasonKey?: string; }' is not assignable to type 'SchoolDayLedger'.
+  Property 'schemaVersion' is optional in type '{ days: { day: number; evidence: string; result: SchoolDayResult; }[]; schemaVersion?: 1; worldKey?: string; seasonKey?: string; }' but required in type 'SchoolDayLedger'.
+packages/engine/test/pro-advice-repertoire-events.test.ts(52,70): error TS18048: 'c.days' is possibly 'undefined'.

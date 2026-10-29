@@ -46,9 +46,9 @@ export function assertCareerRouteNotices(c:RouteNoticeCareer):void {
    if(current&&e.seasonKey===c.world.seasonKey){if(canonicalJson(current)!==canonicalJson(f))throw new RangeError('ROUTE_NOTICE_CUP_EVIDENCE_CHANGED');}
    else {const a=admissionProven(c);if(!archive||!a||typeof f.academicYear!=='number'||![1,2,3,4].includes(f.academicYear)||archive.collegeResult?.academicYear!==f.academicYear)throw new RangeError('ROUTE_NOTICE_CUP_SOURCE_MISSING');const historical={...c,...archive,collegeAdmission:{...a,academicYear:f.academicYear as 1|2|3|4}};if(canonicalJson(cupEvidence(historical))!==canonicalJson(f))throw new RangeError('ROUTE_NOTICE_CUP_EVIDENCE_CHANGED');}
   }
-  if(e.status==='RESOLVED'){
+  if(e.status==='RESOLVED'||e.status==='CANCELLED_WITH_REASON'&&e.definitionId==='E06'){
    const fresh:EventInstance={...e,version:1,status:'OPEN',resolution:null};
-   if(e.resolution?.kind==='DOMAIN'){const proof={...l,notices:[fresh]};settleNotices(c,proof);if(canonicalJson(proof.notices[0]!.resolution)!==canonicalJson(e.resolution))throw new RangeError('ROUTE_NOTICE_COMMIT_RECEIPT_CHANGED');}
+   if(e.resolution?.kind==='DOMAIN'||e.status==='CANCELLED_WITH_REASON'){const proof={...l,notices:[fresh]};settleNotices(c,proof);if(canonicalJson(proof.notices[0]!.resolution)!==canonicalJson(e.resolution))throw new RangeError('ROUTE_NOTICE_COMMIT_RECEIPT_CHANGED');}
    else {const command=e.resolution?.command,selected=command&&resolveEventChoice(fresh,1,command,null,context(fresh));if(!selected||canonicalJson(selected.event.resolution)!==canonicalJson(e.resolution))throw new RangeError('INVALID_ROUTE_NOTICE_RESOLUTION');}
   }
  }
@@ -64,6 +64,8 @@ function settleNotices(c:RouteNoticeCareer,l:CareerRouteNoticeLedger){
   if(e.definitionId==='E05'||e.definitionId==='E06'){
    const r=domestic(c).find(r=>r.program.assessmentKey===f.draftProgramId)!;
    if(r.program.signing)return completeBlockingEvent(e,e.version,{sourceEvidenceKey:e.evidenceKey,receiptKey:r.program.signing.receiptKey,command:'ACCEPT_CAREER_OFFER'},context(e));
+   const signedUs=e.definitionId==='E06'?overseas(c).find(u=>u.program.signing?.playerKey===l.playerKey&&u.world.worldKey===l.worldKey&&u.program.signing.seasonKey===String(Number(e.seasonKey)+1)):undefined;
+   if(signedUs){assertUsDirect(signedUs.world,signedUs.program);return cancelInvalidEvent(e,e.version,'US_CONTRACT_SIGNED',context(e,signedUs.program.signing!.signedWorldDay));}
    if(r.program.decision==='DECLINED')return completeBlockingEvent(e,e.version,{sourceEvidenceKey:e.evidenceKey,receiptKey:JSON.stringify(['draft-decision',r.program.assessmentKey,'DECLINED',r.program.version]),command:'DECLINE_DRAFT'},context(e));
    const admission=admissionProven(c);if(admission&&admission.entryYear===Number(e.seasonKey)+1)return completeBlockingEvent(e,e.version,{sourceEvidenceKey:e.evidenceKey,receiptKey:admission.admissionKey,command:'ENROLL_COLLEGE'},context(e));
    const episode=c.retryCareer?.episodes.find(p=>p.receiptKey===r.program.result!.receiptKey),archive=episode&&c.previousSeasons?.find(s=>s.yearEndReceiptKey===JSON.stringify(['preparation-entry',c.world.worldKey,episode.seasonKey,c.world.protagonistKey,episode.receiptKey]));

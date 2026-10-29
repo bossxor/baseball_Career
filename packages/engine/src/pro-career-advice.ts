@@ -114,10 +114,19 @@ function observePlans(c:AdviceCareer,l:CareerAdviceLedger,day:number){
   return p;
  });
 }
+function adviceDayClosed(c:AdviceCareer,day:number):boolean {
+ if(isUs(c)||!c.days)return c.health.games.some(h=>h.evidence.seasonKey===c.world.seasonKey&&h.evidence.day===day);
+ const ledger=c.days,schedule=c.competitionSchedule,receipt=ledger.days.find(d=>d.day===day);
+ if(ledger.schemaVersion!==1||ledger.worldKey!==c.world.worldKey||ledger.seasonKey!==c.world.seasonKey||!schedule||schedule.seasonKey!==c.world.seasonKey||!receipt)return false;
+ // Offdates have no health rows; the date closer still seals the complete official contribution list.
+ const games=(['KBO','FUTURES'] as const).flatMap(league=>schedule.leagues[league].filter(g=>g.worldDay===day&&g.leagueKey===league)).sort((a,b)=>a.simulationKey<b.simulationKey?-1:1);
+ const contributions=games.map(g=>c.records.games[g.simulationKey]);
+ return contributions.every((g,i)=>g&&g.worldDay===day&&g.scope.seasonKey===c.world.seasonKey&&g.scope.leagueKey===games[i]!.leagueKey)&&receipt.evidence===canonicalJson({worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,day,contributions});
+}
 /** SERVER ONLY: after health/official records close, before the next lineup; caller owns the revision. */
 export function refreshProCareerAdvice<T extends AdviceCareer>(c:T,day:number):T {
  validate(c);if(c.phaseContext.phase!=='SEASON_PROGRESS'||c.phaseContext.pendingGame)return c;
- const r=registration(c);if(!Number.isSafeInteger(day)||day<0||!c.health.games.some(h=>h.evidence.seasonKey===c.world.seasonKey&&h.evidence.day===day))throw new RangeError('ADVICE_DAY_NOT_CLOSED');
+ const r=registration(c);if(!Number.isSafeInteger(day)||day<0||!adviceDayClosed(c,day))throw new RangeError('ADVICE_DAY_NOT_CLOSED');
  const l=structuredClone(c.advice??empty(c));observePlans(c,l,day);
  const games=registeredGames(c),count=games.length;
  if(r.active&&count>0&&count%24===0&&!l.checkpoints.some(x=>x.seasonKey===c.world.seasonKey&&x.teamGames===count)){

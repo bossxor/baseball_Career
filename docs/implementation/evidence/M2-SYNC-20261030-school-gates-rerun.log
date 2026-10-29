@@ -1,0 +1,14 @@
+✔ actual independent48-game preparation consumes one lifetime season only after native competition/date/growth settlement (93562.4952ms)
+✔ root preparation rejects stale revisions, missing results and forged projected state without changing source (425.614ms)
+✔ root preparation plan/roster commands preserve the native ledger and use the shared root revision (564.4085ms)
+✔ college AG pending game JSON resume preserves both source roots and rejects stale/changed academic evidence (3517.3667ms)
+✔ actual college AG returns each owner records/health/XP while preserving academic receipts and closing its real KBO host dates (9932.2502ms)
+✔ college duty consumes a distinct finalized academic season only after growth/health closure and seals the updated balance (1673.9355ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 95106.9226

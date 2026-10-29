@@ -73,3 +73,14 @@ test('pitcher titles use recorded starts/relief, positive saves, full team innin
  for(const r of Object.values(records.games))r.pitching.closer!.SV=0;
  assert.equal(calculateProSeasonAwards(records,l,'2027','KBO').some(a=>a.awardType==='CP'),false);
 });
+
+
+test('position awards count defensive appearances separately from a majority of DH games',()=>{
+ const {records,l}=syntheticSeason(110);
+ for(let i=0;i<110;i++)l.games[`g${i}`]!.appearances.a={teamKey:'away',position:i<60?'DH':'CF',defenseUnits:i<60?0:500_000};
+ const before=canonicalJson(l),awards=calculateProSeasonAwards(records,l,'2027','KBO');
+ assert.equal(awards.find(a=>a.awardType==='POSITION_CF')?.playerKey,'a');
+ assert.equal(canonicalJson(l),before);
+ for(let i=0;i<110;i++)l.games[`g${i}`]!.appearances.a!.position='DH';
+ assert.equal(calculateProSeasonAwards(records,l,'2027','KBO').some(a=>a.awardType.startsWith('POSITION_')&&a.playerKey==='a'),false);
+});

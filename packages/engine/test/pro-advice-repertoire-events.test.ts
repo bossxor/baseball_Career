@@ -17,6 +17,9 @@ import type {ScheduledGame} from '../src/schedule.js';
 import {createHighSchoolWorld} from '../src/high-school-world.js';
 import {createHighSchoolCareer,confirmCareerPlayer,resolveCareerFocusEvent} from '../src/high-school-career.js';
 import {abilityKeys} from '@playball/rules';
+import {closeKboCompetitionDay,createKboDayLedger} from '../src/kbo-day.js';
+import {confirmKboPreseasonPlan} from '../src/kbo-preseason.js';
+import {confirmKboOpeningRoster} from '../src/kbo-opening-roster.js';
 
 function ready(kind:'HITTER'|'PITCHER'='HITTER'){
  const c=enteredKboCareer(kind),club=c.world.clubs.find(x=>x.id===c.protagonistClubId)!;
@@ -32,10 +35,32 @@ function event<T extends AdviceCareer>(c:T,id:string):T&{advice:CareerAdviceLedg
  const d=eventDefinition(id),e=createWorldEvent({definitionId:id,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:d.evidenceDomain,fields:{playerSimulationKey:c.protagonistKey,worldSeasonId:c.world.seasonKey,adviceWindowId:'test-window'}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'SEASON_PROGRESS',competitionKey:'KBO',registrationKey:'protagonistClubId'in c?c.protagonistClubId:c.protagonistOrganizationId,sourceRevision:c.revision},sourceSequence:1,worldDay:24});return {...c,advice:{...advice(c),notices:[e]}};
 }
 
+test('advice accepts a real KBO offdate receipt without health games and rejects missing or changed receipts',()=>{
+ const entry=enteredKboCareer('HITTER'),plan=confirmKboPreseasonPlan(entry,entry.revision),c=confirmKboOpeningRoster(plan,plan.revision),[away,home]=c.world.clubs,seasonKey=c.world.seasonKey;
+ const scheduled=(day:number):ScheduledGame=>({simulationKey:'closed-date-'+day,leagueKey:'KBO',seasonKey,round:day,worldDay:day,awayTeamKey:away!.id,homeTeamKey:home!.id});
+ const leagues={KBO:[scheduled(1),scheduled(3)],FUTURES:[]};
+ c.competitionSchedule={receiptKey:'schedule',seasonKey,openingRosterReceiptKey:'roster',sourceRevision:0,confirmedRevision:1,leagues};
+ const game=leagues.KBO[0]!;
+ c.records.games[game.simulationKey]={gameKey:game.simulationKey,worldDay:1,scope:{seasonKey,leagueKey:'KBO',phase:'REGULAR'},teams:{[away!.id]:{games:1,W:0,L:0,T:1,R:0,RA:0},[home!.id]:{games:1,W:0,L:0,T:1,R:0,RA:0}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}};
+ const first=closeKboCompetitionDay(c.world,leagues,c.protagonistKey,c.records,c.health,createKboDayLedger(c.world),1);
+ const rest=closeKboCompetitionDay(first.world,leagues,c.protagonistKey,c.records,first.health,first.days,2);
+ c.world=rest.world;c.health=rest.health;c.days=rest.days;c.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:3,pendingGame:null};
+ assert.ok(!c.health.games.some(h=>h.evidence.day===2));
+ const before=canonicalJson(c);assert.deepEqual(refreshProCareerAdvice(c,2),c);assert.equal(canonicalJson(c),before);
+ assert.throws(()=>refreshProCareerAdvice({...c,days:{...rest.days,seasonKey:'wrong'}},2),/ADVICE_DAY_NOT_CLOSED/);
+ assert.throws(()=>refreshProCareerAdvice({...c,days:{...rest.days,days:first.days.days}},2),/ADVICE_DAY_NOT_CLOSED/);
+ assert.throws(()=>refreshProCareerAdvice({...c,days:{...rest.days,days:rest.days.days.map(row=>row.day===2?{...row,evidence:'changed'}:row)}},2),/ADVICE_DAY_NOT_CLOSED/);
+ assert.throws(()=>refreshProCareerAdvice(c,3),/ADVICE_DAY_NOT_CLOSED/);
+});
+
 test('E20 uses20-game performance regardless of optional morale; E26 compares the strongest competitor',()=>{
  const c=ready(),key=c.protagonistKey,club=c.world.clubs.find(t=>t.id===c.protagonistClubId)!;
  c.adviceMorale=100;
- for(let day=1;day<=24;day++){closed(c,day);c.records.games['advice-'+day]!.batting[key]={...emptyBatting(),PA:4,AB:4,K:4,twoB:0,threeB:0,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0};}
+ for(let day=1;day<=24;day++){
+  closed(c,day);const row=c.records.games['advice-'+day]!;
+  row.batting[key]={...emptyBatting(),PA:4,AB:4,K:4,twoB:0,threeB:0,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0};
+  const split={PA:0,AB:0,H:0,BB:0,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0};row.batterSplits[key]={L:{...split},R:{...split,PA:4,AB:4,K:4}};
+ }
  const rows=refreshProCareerAdvice(c,24).advice!.checkpoints[0]!.candidateIds;
  assert.ok(rows.includes('E20'));
  for(const row of Object.values(c.records.games))row.batting={};
@@ -50,7 +75,10 @@ test('E20 uses20-game performance regardless of optional morale; E26 compares th
 test('E19 requires two actual starts; relief outings cannot replace the starting sample',()=>{
  const c=ready('PITCHER'),key=c.protagonistKey;c.world.players[key]!.position='SP';
  for(let day=1;day<=24;day++)closed(c,day);
- for(const day of [23,24])c.records.games['advice-'+day]!.pitching[key]={...emptyPitching(),BF:20,outs:15,R:5,ER:5,games:1,starts:0,starterOuts:0,loadedBF:0,W:0,L:0,SV:0,HLD:0,BS:0,shutouts:0};
+ for(const day of [23,24]){
+  const row=c.records.games['advice-'+day]!;row.pitching[key]={...emptyPitching(),BF:20,outs:15,R:5,ER:5,games:1,starts:0,starterOuts:0,loadedBF:0,W:0,L:0,SV:0,HLD:0,BS:0,shutouts:0};
+  const split={BF:0,outs:0,AB:0,H:0,TB:0,HR:0,BB:0,HBP:0,K:0};row.pitcherSplits[key]={L:{...split},R:{...split,BF:20,outs:15}};
+ }
  assert.ok(!refreshProCareerAdvice(c,24).advice!.checkpoints[0]!.candidateIds.includes('E19'));
  for(const day of [23,24])c.records.games['advice-'+day]!.pitching[key]!.starts=1;
  assert.ok(refreshProCareerAdvice(c,24).advice!.checkpoints[0]!.candidateIds.includes('E19'));

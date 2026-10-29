@@ -1,0 +1,12 @@
+packages/engine/src/high-school-career.ts(30,47): error TS2307: Cannot find module './career-preparation.js' or its corresponding type declarations.
+packages/engine/src/high-school-career.ts(84,22): error TS2307: Cannot find module './career-preparation.js' or its corresponding type declarations.
+packages/engine/src/us-military-plan.ts(13,1): error TS6192: All imports in import declaration are unused.
+packages/engine/src/us-military-plan.ts(14,1): error TS6133: 'mlbServiceTime' is declared but its value is never read.
+packages/engine/src/us-military-plan.ts(15,1): error TS6133: 'recordTotals' is declared but its value is never read.
+packages/engine/src/us-military-plan.ts(16,1): error TS6192: All imports in import declaration are unused.
+packages/engine/test/career-preparation.test.ts(12,25): error TS2307: Cannot find module '../src/career-preparation.js' or its corresponding type declarations.
+packages/engine/test/career-preparation.test.ts(12,399): error TS7006: Parameter 'g' implicitly has an 'any' type.
+packages/engine/test/career-preparation.test.ts(15,69): error TS7006: Parameter 'e' implicitly has an 'any' type.
+packages/engine/test/career-preparation.test.ts(18,106): error TS18046: 'g' is of type 'unknown'.
+packages/engine/test/career-preparation.test.ts(18,141): error TS18046: 'g' is of type 'unknown'.
+packages/engine/test/career-preparation.test.ts(18,243): error TS18046: 'g' is of type 'unknown'.

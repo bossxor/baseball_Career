@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {abilityKeys} from '@playball/rules';
 import {completedCollegeAcademicYear,enrolledCollegeCareer,enteredKboCareer} from './fixtures.js';
 import {canonicalJson} from '../src/game.js';
+import {createOwnCareerAssessment} from '../src/high-school-assessment.js';
 import type {HighSchoolCareer} from '../src/high-school-career.js';
 import {assertCollegeCareerRevision} from '../src/high-school-career.js';
 import {confirmKboPreseasonPlan} from '../src/kbo-preseason.js';
@@ -19,7 +20,7 @@ import {openCollegeNationalSelection,respondCollegeNationalCallup,startCollegeNa
 function accepted(){
  // Controlled school regular scores and KBO pre-window dates isolate actual AG ownership; neither is a native domestic season.
  const college=enrolledCollegeCareer('PITCHER'),p=college.world.players.own!;
- p.abilities=Object.fromEntries(abilityKeys(p.kind).map(k=>[k,1_000_000]));p.potential={...p.abilities};p.careerPeaks={...p.abilities};college.development!.seasonStartPlayer=structuredClone(p);
+ p.abilities=Object.fromEntries(abilityKeys(p.kind).map(k=>[k,1_000_000]));p.potential={...p.abilities};p.careerPeaks={...p.abilities};college.development!.seasonStartPlayer=structuredClone(p);college.seasonGrowth!.seasonStart=structuredClone(p);college.ownAssessment=createOwnCareerAssessment(college.world);
  const c=completedCollegeAcademicYear(college),renamed=JSON.parse(JSON.stringify(enteredKboCareer()).replace(/\bown\b/g,'host-own')) as ReturnType<typeof enteredKboCareer>;
  const planned=confirmKboPreseasonPlan(renamed,renamed.revision),opening=confirmKboOpeningRoster(planned,planned.revision),scheduled=confirmKboSeasonSchedule(opening,opening.revision),kbo=startKboRegularSeason(scheduled,scheduled.revision);
  const bracket=createNationalBracket({worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,tournament:'AG',seed:`${c.world.seed}:national:AG:${c.world.seasonKey}`}),start=bracket.window.startDay,first=kbo.phaseContext.phase==='SEASON_PROGRESS'?kbo.phaseContext.nextWorldDay:0;

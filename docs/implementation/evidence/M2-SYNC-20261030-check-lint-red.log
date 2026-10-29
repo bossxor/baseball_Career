@@ -1,0 +1,14 @@
+
+> again-playball@0.1.0 check
+> npm run lint && npm run typecheck && npm test && npm run test:web && npm run build && npm run verify:engine && npm run verify:events && npm run verify:design && npm run verify:android && npm run verify:assets
+
+
+> again-playball@0.1.0 lint
+> eslint packages apps scripts
+
+
+E:\AI\Game\baseball_career\packages\engine\test\career-route-notices.test.ts
+  52:58  error  'r' is never reassigned. Use 'const' instead  prefer-const
+
+✖ 1 problem (1 error, 0 warnings)
+

@@ -82,6 +82,7 @@ test('goal HR scope never adds another league or postseason; completion/news/rew
 
 test('malformed persisted goal arrays, changed scope and unknown reward are rejected without editing the save',()=>{
  const c=active(['G03']),raw=canonicalJson(c),bad=structuredClone(c);bad.goals!.rewards=null as never;assert.throws(()=>careerSeasonGoalsView(bad),/INVALID_GOAL_LEDGER/);assert.equal(canonicalJson(c),raw);
+ const slots=structuredClone(c);slots.goals!.seasons[c.world.seasonKey]!.slots=null as never;const malformed=canonicalJson(slots);assert.throws(()=>careerSeasonGoalsView(slots),/INVALID_GOAL_LEDGER/);assert.equal(canonicalJson(slots),malformed);
  const scope=structuredClone(c);scope.goals!.seasons[c.world.seasonKey]!.slots[0]!.scope.phase='POSTSEASON';assert.throws(()=>refreshCareerSeasonGoals(scope),/INVALID_GOAL_LEDGER/);
  const reward=structuredClone(c);reward.goals!.rewards=[{rewardId:'R-FORGED',type:'BACKGROUND',firstReceipt:'forged',sources:['forged']}];assert.throws(()=>careerSeasonGoalsView(reward),/INVALID_GOAL_REWARD/);
 });

@@ -1,0 +1,36 @@
+✔ termination stops the active US contract and rejects fabricated service-season identity (4878.6041ms)
+✔ service annual owner ages and supplies the real roster without paying or rewriting history (2130.8669ms)
+✔ freeze parks the pitcher under the already signed option and preserves original USD and pitch history (3951.2099ms)
+✔ controlled calendar discharge opens only the existing option and confirms through day29 without retroactive salary (12497.8664ms)
+✔ controlled30day expiry terminates the frozen contract without manufacturing another option (1586.357ms)
+✔ service resume rejects removed native closed dates and altered archived game evidence (1307.9138ms)
+✔ return preserves existing unique field positions when selecting a legal roster slot (9986.9911ms)
+✔ service annual supply preserves a retiring45yearold pitcher and his historical repertoire across JSON (1973.8606ms)
+✖ controlled minor return resumes the next annual contract without consuming a frozen full season (5588.7097ms)
+✔ active US return condition counts six registered bench games, excludes INT and never changes abilities (1534.5544ms)
+Native military opening: {"year":"2031","nativeNpcGames":75,"ownAppearances":0,"salaryUsd":0,"closedDays":1}
+✔ service world runs actual NPC opening games with zero own appearances or salary and blocks ordinary play (48581.3057ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 49236.8589
+
+✖ failing tests:
+
+test at packages\engine\test\us-military-plan.test.ts:1:12992
+✖ controlled minor return resumes the next annual contract without consuming a frozen full season (5588.7097ms)
+  RangeError: INVALID_CAREER_ALIAS_HISTORY
+      at assertCareerAliases (E:\AI\Game\baseball_career\packages\engine\src\career-alias.ts:56:509)
+      at usCareerView (E:\AI\Game\baseball_career\packages\engine\src\us-career-entry.ts:121:84)
+      at usMilitaryHistoricalView (E:\AI\Game\baseball_career\packages\engine\src\us-military-plan.ts:192:13)
+      at usCareerView (E:\AI\Game\baseball_career\packages\engine\src\us-career-entry.ts:123:162)
+      at assertUsCareerRevision (E:\AI\Game\baseball_career\packages\engine\src\us-career-entry.ts:148:236)
+      at stageUsYear (E:\AI\Game\baseball_career\packages\engine\src\us-year-transition.ts:52:2)
+      at stageUsAgeAndRosters (E:\AI\Game\baseball_career\packages\engine\src\us-year-transition.ts:65:91)
+      at startNextUsMinorSeason (E:\AI\Game\baseball_career\packages\engine\src\us-year-transition.ts:71:14)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-military-plan.test.ts:121:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)

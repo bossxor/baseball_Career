@@ -1,3 +1,4 @@
+import {prepareKboDraft} from '../src/kbo-draft.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {completedHighSchoolCareer,enrolledCollegeCareer,completedCollegeRegularSeason} from './fixtures.js';
@@ -44,4 +45,16 @@ test('route notice guards reject forged source/resolution, stale root/event vers
  fake.routeNotices!.notices[0]!.status='RESOLVED';fake.routeNotices!.notices[0]!.resolution={kind:'ACK',command:'ACK_EVENT',receiptKey:null,reason:null};assert.throws(()=>assertCareerRouteNotices(fake));
  const forged=structuredClone(c) as RouteNoticeCareer;forged.kboRecruitment!.program.result!.receiptKey='forged';assert.throws(()=>assertCareerRouteNotices(forged));
  assert.throws(()=>resolveCareerRouteNotice(c,c.revision-1,{eventKey:e.eventKey,eventVersion:1,command:'DECLINE_DRAFT'}),/REVISION/);assert.equal(canonicalJson(c),raw);assert.deepEqual(careerRouteNoticesView(JSON.parse(JSON.stringify(c))),careerRouteNoticesView(c));assert.doesNotMatch(JSON.stringify(careerRouteNoticesView(c)),/potential|"seed"|"rng"|sourceBasis/);
+});
+
+
+test('E06 is invalidated only after an actual US signing, even when domestic roster slots were full',()=>{
+ const source=opened();let c=prepareCareerKboDraft(source,source.revision);const r=c.kboRecruitment!;
+ // Controlled full domestic rosters; draft and US contract decisions still use their real writers.
+ for(const club of r.world.clubs){const template=r.world.players[club.roster[0]!]!;for(let i=0;i<10;i++){const key=JSON.stringify(['route-full-roster',club.id,i]);r.world.players[key]={...structuredClone(template),simulationKey:key};r.world.contracts[key]={contractKey:key,playerKey:key,clubId:club.id,seasonKey:r.world.seasonKey,years:1,annualSalaryWon:30000000,signingBonusWon:0,status:'ACTIVE'};club.roster.push(key);club.reservedSalaryWon+=30000000;}}
+ r.program=prepareKboDraft(r.world,r.program.input);c=resolveCareerKboDraft(c,c.revision,1);assert.equal(notices(c,'E06')[0]!.status,'OPEN');
+ c=prepareCareerUsDirect(c,c.revision,inventory(c));const before=canonicalJson(c),offer=careerUsDirectView(c).offers[0]!;assert.ok(offer);
+ const signed=decideCareerUsDirect(c,c.revision,{programVersion:1,decision:{type:'SIGN',offerKey:offer.offerKey},eventVersion:1});
+ assert.equal(notices(signed,'E06')[0]!.status,'CANCELLED_WITH_REASON');assert.equal(canonicalJson(c),before);assertCareerRouteNotices(signed);assert.equal(refreshCareerRouteNotices(signed),signed);
+ const fake=structuredClone(signed),notice=fake.routeNotices!.notices.find(e=>e.definitionId==='E06')!;notice.resolution={...notice.resolution!,reason:'FORGED_CANCELLATION'};assert.throws(()=>assertCareerRouteNotices(fake),/RECEIPT_CHANGED/);
 });

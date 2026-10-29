@@ -1,0 +1,38 @@
+Native goal school proof: {"officialGames":8,"ownPA":5,"ownStarts":1,"recordsEqualWithoutGoals":true,"worldEqualWithoutGoals":true}
+Native goal college proof: {"controlledRegularGames":216,"nativeCupGames":2,"goals":[{"id":"G01","progress":0,"status":"ACTIVE"},{"id":"G09","progress":1,"status":"COMPLETED"},{"id":"G10","progress":1,"status":"COMPLETED"}],"cosmetics":2}
+✔ native preseason entry opens one non-blocking E89 in its committed revision without selecting goals (5578.7602ms)
+✔ optional E89 selects real goals, skips without goals, and rejects stale or duplicate choices (1455.6992ms)
+✔ E90 navigation consumes the existing source-bound outbox once without granting another reward (1080.7502ms)
+✔ goals are optional, max3, kind-filtered, PRE-only and source-safe without RNG or gameplay rewards (1148.0242ms)
+✔ goal HR scope never adds another league or postseason; completion/news/reward replay and correction are idempotent (963.0796ms)
+✔ malformed persisted goal arrays, changed scope and unknown reward are rejected without editing the save (1634.3294ms)
+✔ MID replacement uses sealed half-season, carries BB22 progress, rejects BB33 and cannot reset through moving levels (855.8552ms)
+✔ pitcher goals use raw K, saves and starterOuts, never all relief outs (2012.7748ms)
+✔ G01/G02/G04 count exact PA, fixed-lineup starts and walks with three cosmetic grants only (339.8317ms)
+✔ US year continuation preserves earned cosmetics and goal outbox without blocking the finalized contract path (3178.4434ms)
+✔ school goal expiry is committed before sealing the year-end receipt and survives the actual KBO entry command (801.3875ms)
+✔ serving Sports goal registration seals SANGMU/Futures instead of the original club; Active has no playable goal choices (854.4479ms)
+✔ G08 requires evidenced injury, actual recovery and a later official appearance, not a return button (443.2966ms)
+✔ native school game updates selected goals automatically and leaves gameplay identical to no-goal play (2661.8936ms)
+✔ college qualification goal settles at final seeding; native championship appearance counts G10 and never regular G01 (2016.6449ms)
+✔ ignored E89 can be acknowledged after starting without selecting goals or restoring the preseason phase (10101.6566ms)
+✔ historical goal acknowledgement validates and preserves a sealed school year end (1905.8665ms)
+✔ HS hitter/pitcher US activation closes amateur year once, increments age once and consumes no second reservation (3857.7655ms)
+✔ US year-end requires explicit training forfeiture and valid signed route; stale state fails atomically (549.8195ms)
+✔ US live registration guard rejects duplicate slots, orphan identities/books and organization capacity drift (1359.9433ms)
+✔ four-year graduate activates US at23 without repeating degree, college growth, salary reservation or amateur records (12190.1191ms)
+✔ a previously signed pre-population inventory bootstraps actual NPC registration without rewriting its contract or budget (508.3489ms)
+✔ posting return uses current US identity and a caller-owned latest domestic host; quote alone changes no money (11113.6962ms)
+✔ released overseas FA quotes current domestic FA terms and preserves a pitcher repertoire and injury evidence (6370.5056ms)
+✔ return requires unchanged authoritative US history, next domestic season and both source revisions (15453.5842ms)
+✔ continuing US cancels only the competing return event; malformed and consumed ownership cannot replay (10938.9636ms)
+✔ domestic return preserves goal history when the authority revision is below the US career revision (10629.5819ms)
+✔ accepted return ownership remains valid after actual achievement outbox reads on the US archive (9514.2033ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 65564.4129

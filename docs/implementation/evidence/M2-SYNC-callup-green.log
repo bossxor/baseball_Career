@@ -1,0 +1,9 @@
+✔ controlled return-year MLB activation preserves pre-callup salary and validates derived contract and budget (10951.5932ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11684.1898

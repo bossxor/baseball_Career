@@ -1,0 +1,39 @@
+✔ call-up never moves an active injury replacement out of its restoration slot (2474.9013ms)
+✔ US level review waits24 actual level games and minimum samples; defer consumes review without registration or salary changes (1088.3808ms)
+✔ US promotion swaps two existing registrations atomically, keeps records, shared identity and no immediate major appearance (867.419ms)
+✔ first MLB call-up preserves old minor salary basis and bonus; new800000 rate starts next day and budget is reserved once (515.2537ms)
+✔ US protected40 and incompatible seats produce explicit NO_SLOT instead of silently registering27 MLB players (166.1695ms)
+✔ US training and style windows use level thirds/halves and cannot reset season uses by moving levels (925.4899ms)
+✔ US option year consumes once only after20 minor registered games, with replayed dates ignored (83.9256ms)
+✔ a second low Rookie review cannot accidentally promote, and changed offered evidence cannot move a player (582.6609ms)
+✔ two actual low review calls offer E61 and its domain command swaps AAA/AA without changing pay or identity (1057.5561ms)
+✔ E61 OPEN_RIGHTS navigates to S08 with the event, registration and money unchanged (1593.1061ms)
+✔ E61 navigation and demotion reject stale or changed review, event and resume input without writes (2486.3778ms)
+✔ MLB E61 still requires exhausted-option consent and preserves the MLB contract on successful demotion (1248.0336ms)
+Major annual native proof: {"from":"2030","to":"2031","schema":4,"salary":5680000,"paid":30212,"nativeNewYearGames":75,"oldRecords":9038,"signingBonuses":1}
+Controlled major-years proof (not native seven seasons): {"lastYear":"2036","yearsArchived":6,"creditedSeasons":6,"paidUsd":46387415,"signingBonuses":1}
+✔ US final salary floor survives poor performance and market periods use contract-start age, without hidden-P price effects (1873.3659ms)
+✔ controlled annual major renewal creates root4, funds one salary once, preserves source/records/service/options and pays its first native date (18326.273ms)
+✔ major renewal rejects stale source, insufficient funds and changed financial quote history without losing the old root (5017.792ms)
+✔ controlled seven MLB seasons retain partial first-year noncredit and stop automatic renewal at six credited seasons (53539.2533ms)
+✔ annual major contract survives an actual call-up command after controlled AAA registration without a second reservation (2512.5582ms)
+✔ three spent option seasons need one explicit stay or FA choice and do not move the player (952.1161ms)
+✔ termination stops the active US contract and rejects fabricated service-season identity (6237.2885ms)
+✔ service annual owner ages and supplies the real roster without paying or rewriting history (2493.0345ms)
+✔ freeze parks the pitcher under the already signed option and preserves original USD and pitch history (4363.3277ms)
+✔ controlled calendar discharge opens only the existing option and confirms through day29 without retroactive salary (12196.51ms)
+✔ controlled30day expiry terminates the frozen contract without manufacturing another option (1655.7608ms)
+✔ service resume rejects removed native closed dates and altered archived game evidence (1307.4439ms)
+✔ return preserves existing unique field positions when selecting a legal roster slot (8795.0163ms)
+✔ service annual supply preserves a retiring45yearold pitcher and his historical repertoire across JSON (2037.9477ms)
+✔ controlled minor return resumes the next annual contract without consuming a frozen full season (6871.2496ms)
+✔ active US return condition counts six registered bench games, excludes INT and never changes abilities (1409.907ms)
+✔ controlled return-year MLB activation preserves pre-callup salary and validates derived contract and budget (2287.719ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 82977.1432

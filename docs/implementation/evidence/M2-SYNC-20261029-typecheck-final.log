@@ -1,0 +1,42 @@
+
+> again-playball@0.1.0 typecheck
+> npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/db && npm run typecheck --workspaces --if-present && tsc -p tsconfig.tests.json
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/db@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/db@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/engine@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/rules@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/api@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/web@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+packages/engine/test/us-military-plan.test.ts(130,31): error TS2352: Conversion of type '{ leagueKey: "ROOKIE" | "A" | "AA" | "AAA" | "MLB"; schools: never[]; repertoires: {}; players: Record<string, DevelopmentPlayer>; }' to type 'CompetitionGameWorld' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ leagueKey: "ROOKIE" | "A" | "AA" | "AAA" | "MLB"; schools: never[]; repertoires: {}; players: Record<string, DevelopmentPlayer>; }' is missing the following properties from type 'Pick<HighSchoolWorld, "players" | "repertoires" | "worldKey" | "seasonKey" | "seed" | "protagonistKey" | "schools">': worldKey, seasonKey, seed, protagonistKey
+packages/engine/test/us-military-plan.test.ts(133,31): error TS2352: Conversion of type '{ leagueKey: "ROOKIE" | "A" | "AA" | "AAA" | "MLB"; schools: never[]; repertoires: {}; players: Record<string, DevelopmentPlayer>; }' to type 'CompetitionGameWorld' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ leagueKey: "ROOKIE" | "A" | "AA" | "AAA" | "MLB"; schools: never[]; repertoires: {}; players: Record<string, DevelopmentPlayer>; }' is missing the following properties from type 'Pick<HighSchoolWorld, "players" | "repertoires" | "worldKey" | "seasonKey" | "seed" | "protagonistKey" | "schools">': worldKey, seasonKey, seed, protagonistKey
+packages/engine/test/us-military-plan.test.ts(134,31): error TS2352: Conversion of type '{ leagueKey: "ROOKIE" | "A" | "AA" | "AAA" | "MLB"; schools: never[]; repertoires: {}; players: {}; }' to type 'CompetitionGameWorld' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type '{ leagueKey: "ROOKIE" | "A" | "AA" | "AAA" | "MLB"; schools: never[]; repertoires: {}; players: {}; }' is missing the following properties from type 'Pick<HighSchoolWorld, "players" | "repertoires" | "worldKey" | "seasonKey" | "seed" | "protagonistKey" | "schools">': worldKey, seasonKey, seed, protagonistKey

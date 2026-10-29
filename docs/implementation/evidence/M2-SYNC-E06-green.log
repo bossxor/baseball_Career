@@ -1,0 +1,13 @@
+✔ E05/E06 bind actual native draft receipts; navigation cannot fabricate a contract or consume retry usage (914.4915ms)
+✔ E56/E57 require genuine currently valid US offers; native signing/expiry owns their resolution (138.188ms)
+✔ E71 requires committed admission; E72 requires actual semifinal qualification and never invents a cup result (1179.0104ms)
+✔ route notice guards reject forged source/resolution, stale root/event versions, and preserve originals (289.8055ms)
+✔ E06 is invalidated only after an actual US signing, even when domestic roster slots were full (446.4379ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3460.8195

@@ -1,0 +1,61 @@
+✖ actual independent48-game preparation consumes one lifetime season only after native competition/date/growth settlement (138805.965ms)
+✔ root preparation rejects stale revisions, missing results and forged projected state without changing source (479.3446ms)
+✔ root preparation plan/roster commands preserve the native ledger and use the shared root revision (637.5705ms)
+✖ college AG pending game JSON resume preserves both source roots and rejects stale/changed academic evidence (1179.663ms)
+✖ actual college AG returns each owner records/health/XP while preserving academic receipts and closing its real KBO host dates (1026.0977ms)
+✔ college duty consumes a distinct finalized academic season only after growth/health closure and seals the updated balance (1542.5628ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 3
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 140682.3383
+
+✖ failing tests:
+
+test at packages\engine\test\career-preparation.test.ts:1:859
+✖ actual independent48-game preparation consumes one lifetime season only after native competition/date/growth settlement (138805.965ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  false !== true
+  
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\career-preparation.test.ts:27:98)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\college-national.test.ts:1:3422
+✖ college AG pending game JSON resume preserves both source roots and rejects stale/changed academic evidence (1179.663ms)
+  RangeError: CHANGED_GROWTH_SEASON
+      at settleRegisteredGrowth (E:\AI\Game\baseball_career\packages\engine\src\high-school-growth.ts:116:189)
+      at settleSchoolCareerGrowth (E:\AI\Game\baseball_career\packages\engine\src\high-school-growth.ts:93:9)
+      at settleCollegeCareerGrowth (E:\AI\Game\baseball_career\packages\engine\src\college-result.ts:29:9)
+      at acknowledgeCollegeSeasonReview (E:\AI\Game\baseball_career\packages\engine\src\college-result.ts:36:15)
+      at completedCollegeAcademicYear (E:\AI\Game\baseball_career\packages\engine\test\fixtures.ts:88:142)
+      at accepted (E:\AI\Game\baseball_career\packages\engine\test\college-national.test.ts:24:10)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\college-national.test.ts:35:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+
+test at packages\engine\test\college-national.test.ts:1:5285
+✖ actual college AG returns each owner records/health/XP while preserving academic receipts and closing its real KBO host dates (1026.0977ms)
+  RangeError: CHANGED_GROWTH_SEASON
+      at settleRegisteredGrowth (E:\AI\Game\baseball_career\packages\engine\src\high-school-growth.ts:116:189)
+      at settleSchoolCareerGrowth (E:\AI\Game\baseball_career\packages\engine\src\high-school-growth.ts:93:9)
+      at settleCollegeCareerGrowth (E:\AI\Game\baseball_career\packages\engine\src\college-result.ts:29:9)
+      at acknowledgeCollegeSeasonReview (E:\AI\Game\baseball_career\packages\engine\src\college-result.ts:36:15)
+      at completedCollegeAcademicYear (E:\AI\Game\baseball_career\packages\engine\test\fixtures.ts:88:142)
+      at accepted (E:\AI\Game\baseball_career\packages\engine\test\college-national.test.ts:24:10)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\college-national.test.ts:58:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)

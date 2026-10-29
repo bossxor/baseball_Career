@@ -31,6 +31,7 @@ function snapshot(player:Pick<DevelopmentPlayer,'kind'|'archetype'>,recordAliase
 /** Only an earned canonical TITLE reward and its completion receipt prove a record alias. */
 function recordAliases(c:AliasCareer,beforeSeason?:string):CareerRecordAlias[]{
  const goals=c.goals;if(!goals)return [];
+ if(!Array.isArray(goals.rewards)||!goals.seasons||typeof goals.seasons!=='object'||Array.isArray(goals.seasons)||goals.rewards.some(r=>!r||!Array.isArray(r.sources))||Object.values(goals.seasons).some(s=>!s||!Array.isArray(s.slots)||!Array.isArray(s.history)||[...s.slots,...s.history].some(g=>!g||!g.scope)))throw new RangeError('INVALID_GOAL_LEDGER');
  if(goals.worldKey!==c.world.worldKey||goals.playerKey!==keyOf(c))throw new RangeError('INVALID_CAREER_ALIAS_GOALS');
  const result:CareerRecordAlias[]=[];
  for(const goalId of Object.keys(recordLabels)as AliasGoalId[]){

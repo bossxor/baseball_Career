@@ -1,3 +1,4 @@
+import {usMajorCallupAdditionalUsd} from './us-season.js';
 import type {UsCareer} from './us-career-entry.js';
 import type {UsMinorYearArchive} from './us-minor-history.js';
 import {openingUsMinorState,fundUsMinorYear} from './us-minor-history.js';
@@ -40,9 +41,9 @@ export function openingUsMajorYear(c:UsCareer){
  let firstPaid=resumed?resumed.returnPaidUsd:contract.annualSalaryUsd;
  if(contract.type==='US_MINOR'){
   if(!activation)throw new RangeError('MISSING_US_MAJOR_ORIGIN');
-  const span=first.season.lastDay-first.season.firstDay+1,key=JSON.stringify(['us-major-entry',contract.contractKey,first.seasonKey]),minor=contract.annualSalaryUsd;
-  if(activation.contractKey!==key||activation.fromContractKey!==contract.contractKey||activation.annualSalaryUsd!==800000||!Number.isSafeInteger(activation.effectiveDay)||activation.effectiveDay<=first.season.firstDay||activation.effectiveDay>first.season.lastDay||activation.reservedAdditionalUsd!==Math.floor((minor*(activation.effectiveDay-first.season.firstDay)+800000*(first.season.lastDay-activation.effectiveDay+1))/span)-minor)throw new RangeError('INVALID_US_MAJOR_ORIGIN');
-  inventory.clubs.find(o=>o.id===c.protagonistOrganizationId)!.availableBudgetUsd-=activation.reservedAdditionalUsd;firstPaid=minor+activation.reservedAdditionalUsd;
+  const key=JSON.stringify(['us-major-entry',contract.contractKey,first.seasonKey]),minor=contract.annualSalaryUsd;
+  if(activation.contractKey!==key||activation.fromContractKey!==contract.contractKey||activation.annualSalaryUsd!==800000||!Number.isSafeInteger(activation.effectiveDay)||activation.effectiveDay<=first.season.firstDay||activation.effectiveDay>first.season.lastDay||activation.reservedAdditionalUsd!==usMajorCallupAdditionalUsd({...projected,contract,season:first.season,seasonSchedule:first.seasonSchedule},activation.effectiveDay))throw new RangeError('INVALID_US_MAJOR_ORIGIN');
+  inventory.clubs.find(o=>o.id===c.protagonistOrganizationId)!.availableBudgetUsd-=activation.reservedAdditionalUsd;firstPaid=(resumed&&first.season.militaryService?resumed.returnPaidUsd:minor)+activation.reservedAdditionalUsd;
   contract={...contract,type:'US_MAJOR',contractKey:key,annualSalaryUsd:800000,...(c.kboTransfer?{years:1}:{})};
  }else if(activation||minorYears.length)throw new RangeError('INVALID_US_MAJOR_ORIGIN');
  for(const [i,y]of years!.entries()){

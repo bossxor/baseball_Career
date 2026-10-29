@@ -1,0 +1,22 @@
+
+> again-playball@0.1.0 typecheck
+> npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/db && npm run typecheck --workspaces --if-present && tsc -p tsconfig.tests.json
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+src/us-season.ts(62,70): error TS2375: Type '{ majorActivation: undefined; militaryService?: { programId: string; }; receiptKey: string; firstDay: number; lastDay: number; openingPlayers: Record<string, DevelopmentPlayer>; openingInjuries: string[]; ... 11 more ...; emergency?: UsEmergencyRegistry; }' is not assignable to type 'UsSeasonState' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'majorActivation' are incompatible.
+    Type 'undefined' is not assignable to type '{ contractKey: string; fromContractKey: string; effectiveDay: number; annualSalaryUsd: 800000; reservedAdditionalUsd: number; }'.
+npm error Lifecycle script `build` failed with error:
+npm error code 2
+npm error path E:\AI\Game\baseball_career\packages\engine
+npm error workspace @playball/engine@0.1.0
+npm error location E:\AI\Game\baseball_career\packages\engine
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c tsc -p tsconfig.json
