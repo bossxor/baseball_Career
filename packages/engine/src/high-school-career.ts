@@ -1,3 +1,4 @@
+import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {refreshCareerPreseasonGoalSelection} from './season-goals.js';
 import type {CareerGoalLedger} from './season-goals.js';
 import type {UsAmateurYearEnd} from './us-entry.js';
@@ -42,6 +43,7 @@ import type {CareerUsRecruitment} from './career-us.js';
 
 export interface HighSchoolAdvancePlan {mode:'NEXT_MAJOR_EVENT'|'ONE_GAME'|'ONE_WEEK';startWorldDay:number;startTeamGames:number}
 export type HighSchoolProgressPhase={phase:'SEASON_PROGRESS';nextWorldDay:number;pendingGame:HighSchoolGameJob|null;advancePlan?:HighSchoolAdvancePlan|null};
+export type CollegeNationalResumePhase={phase:'SEASON_REVIEW'}|{phase:'OFFSEASON_REVIEW'};
 export type HighSchoolCareerPhase =
  | {phase:'CREATED'}
  | {phase:'PRESEASON_SETUP'}
@@ -54,8 +56,14 @@ export type HighSchoolCareerPhase =
  | {phase:'NEXT_SEASON_READY';route:'COLLEGE';admissionKey:string}
  | {phase:'NEXT_SEASON_READY';route:'KBO';contractKey:string}
  | {phase:'NEXT_SEASON_READY';route:'US';contractKey:string}
+ | {phase:'INTERNATIONAL_PROGRESS'|'INTERNATIONAL_REVIEW';competitionId:string;nextWorldDay:number;resume:CollegeNationalResumePhase}
  | {phase:'EVENT_DECISION';eventKey:string;resume:{phase:'PRESEASON_SETUP'}|HighSchoolProgressPhase|{phase:'CAREER_ROUTE'}|{phase:'SEASON_REVIEW'}};
 export interface HighSchoolCareer {
+ retryCareer?:import('./retry-career.js').RetryCareerLedger;
+ preparationSeason?:import('./preparation-season.js').PreparationSeason;
+ repertoireEvents?:import('./repertoire-events.js').CareerRepertoireLedger;
+ national?:import('./college-national.js').CollegeNationalLedger;
+
  achievements?:import('./career-achievements.js').CareerAchievementLedger;
  goals?:CareerGoalLedger;
  schemaVersion:1;revision:number;world:HighSchoolWorld;difficulty:Difficulty;
@@ -136,7 +144,7 @@ export function resolveCareerFocusEvent(source:HighSchoolCareer,expectedRevision
   updated=updateCareerPlan(source,input.focus,player.archetype);
   resolved=completeEventDomain(event,prepared.domain,JSON.stringify(['career-domain',source.world.worldKey,source.revision+1,event.eventKey,input.command]),context);
  }
- updated.events=updated.events.map(e=>e.eventKey===event.eventKey?resolved:e);updated.phaseContext=structuredClone(phase.resume);updated.revision++;return refreshCareerPreseasonGoalSelection(updated);
+ updated.events=updated.events.map(e=>e.eventKey===event.eventKey?resolved:e);updated.phaseContext=structuredClone(phase.resume);updated.revision++;return refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(updated));
 }
 export const resolveInitialCareerEvent=resolveCareerFocusEvent;
 export function setPreseasonCareerFocus(source:HighSchoolCareer,expectedRevision:number,focus:readonly string[]):HighSchoolCareer {

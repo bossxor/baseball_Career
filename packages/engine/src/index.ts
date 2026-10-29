@@ -180,6 +180,12 @@ export type {UsKboReturnAuthority,UsKboReturnOffer,UsKboOwnershipReceipt,UsKboRe
 export {nationalUsCandidates} from './national-us-candidates.js';
 export type {NationalCareerSources,NationalCandidateProjection} from './national-us-candidates.js';
 
+export {openUsNationalSelection,respondUsNationalCallup,assertUsNationalResponseDeadline,startUsNationalTournament,prepareUsNationalMatch,advanceUsNationalMatch,closeUsNationalDay,auditUsNationalDays,assertUsNationalState,confirmUsNationalEligibility,confirmUsAthleteService,advanceUsAthleteDutySeason,resolveUsNationalEvent,returnUsNationalTournament} from './us-national.js';
+export type {UsNationalPhase,UsNationalLedger,UsNationalSession,UsNationalHostHandoff} from './us-national.js';
+
+export {collegeNationalCandidates,openCollegeNationalSelection,respondCollegeNationalCallup,assertCollegeNationalResponseDeadline,startCollegeNationalTournament,prepareCollegeNationalMatch,advanceCollegeNationalMatch,closeCollegeNationalDay,assertCollegeNationalState,confirmCollegeNationalEligibility,resolveCollegeNationalEvent,returnCollegeNationalTournament,confirmCollegeAthleteService,advanceCollegeAthleteDutySeason} from './college-national.js';
+export type {CollegeNationalPhase,CollegeNationalLedger,CollegeNationalSession,CollegeNationalSources} from './college-national.js';
+
 export {resolveProHiddenTraitNotice} from './pro-trait-notices.js';
 
 export {unreadPitcherRivalNotices,resolvePitcherRivalNotice} from './pitcher-rival.js';

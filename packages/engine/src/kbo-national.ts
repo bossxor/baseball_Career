@@ -25,12 +25,20 @@ export interface NationalCallup {
  inviteDay?:number;responseDeadlineDay?:number;finalRosterDay?:number;
 }
 export interface NationalLedger {
+ /** A US-owned tournament returns evidence without moving US identities or health RNG into the host. */
+ hostReturns?:readonly NationalHostReturn[];
  selections?:readonly NationalSelectionSnapshot[];
  brackets?:readonly NationalBracket[];
  invitations:readonly NationalCallup[];competitions:readonly NationalCompetitionResult[];benefits:readonly NationalBenefitReceipt[];
  athleteDutySeasonsRemaining?:number;
  athleteDutyStartSeasonKey?:string;athleteDutySettledSeasons?:readonly string[];
  returnedCompetitions?:readonly string[];eligibilityReviews?:readonly string[];
+}
+export interface NationalHostReturn {
+ competitionId:string;owner:'US'|'COLLEGE';sourceKboRevision:number;sourceOwnerRevision:number;
+ kboPlayerKeys:readonly string[];ownerPlayerKeys:readonly string[];
+ ownerHealthGames:import('./health.js').HealthLedger['games'];
+ recordGameKeys:readonly string[];fatigueDays:readonly number[];pitchXpKeys:readonly string[];
 }
 
 /** AG gold or any OLY medal qualifies only with a real appearance while still unresolved/pending. WBC/P12 never qualify. */
@@ -131,6 +139,12 @@ export function assertNationalLedger(n:NationalLedger|undefined,worldKey?:string
  if(n.benefits.some(b=>!b||b.benefitType!=='ATHLETE_ELIGIBLE'||b.resultVersion!==1||!Number.isSafeInteger(b.appliedRevision)||b.appliedRevision<1||b.benefitKey!==JSON.stringify(['national-benefit',b.competitionId,'ATHLETE_ELIGIBLE'])||!n.competitions.some(r=>r.competitionId===b.competitionId&&nationalAthleteEligible(r,'UNRESOLVED')))||new Set(n.benefits.map(b=>b.benefitKey)).size!==n.benefits.length)throw new RangeError('INVALID_NATIONAL_BENEFIT');
  if(n.selections!==undefined&&(!Array.isArray(n.selections)||n.selections.some(s=>!s||s.schemaVersion!==1||s.modelVersion!=='national-selection-1'||!s.worldKey||worldKey!==undefined&&s.worldKey!==worldKey||!s.seasonKey||!Array.isArray(s.scores)||!s.roster||!Array.isArray(s.roster.slots)||s.roster.slots.length!==28)||new Set(n.selections.map(s=>s.selectionId)).size!==n.selections.length))throw new RangeError('INVALID_NATIONAL_SELECTION');
  if(n.brackets!==undefined&&(!Array.isArray(n.brackets)||new Set(n.brackets.map(b=>b.competitionId)).size!==n.brackets.length||n.brackets.some(b=>!b||b.schemaVersion!==1||b.modelVersion!=='national-bracket-1'||!b.competitionId||!b.window||worldKey!==undefined&&b.worldKey!==worldKey||!TOURNAMENTS.includes(b.tournament))))throw new RangeError('INVALID_NATIONAL_BRACKET');
+ if(n.hostReturns!==undefined){
+  if(!Array.isArray(n.hostReturns)||new Set(n.hostReturns.map(r=>r.competitionId)).size!==n.hostReturns.length)throw new RangeError('INVALID_NATIONAL_HOST_RETURN');
+  for(const raw of n.hostReturns){const r:NationalHostReturn=raw,b=n.brackets?.find(b=>b.competitionId===r.competitionId),unique=(keys:readonly string[])=>Array.isArray(keys)&&keys.every(k=>typeof k==='string'&&!!k)&&new Set(keys).size===keys.length;
+   if(!b||!['US','COLLEGE'].includes(r.owner)||![r.sourceKboRevision,r.sourceOwnerRevision].every(v=>Number.isSafeInteger(v)&&v>0)||![r.kboPlayerKeys,r.ownerPlayerKeys,r.recordGameKeys,r.pitchXpKeys].every(unique)||r.ownerPlayerKeys.some(k=>r.kboPlayerKeys.includes(k))||r.pitchXpKeys.some(k=>!r.kboPlayerKeys.includes(k))||!Array.isArray(r.ownerHealthGames)||r.ownerHealthGames.some(h=>h.evidence.seasonKey!==b.seasonKey||h.evidence.teamKey!==b.tournament+':KOR'||!r.recordGameKeys.includes(h.evidence.gameKey)||h.evidence.roster.some((k:string)=>!r.ownerPlayerKeys.includes(k)))||!Array.isArray(r.fatigueDays)||r.fatigueDays.length!==b.window.endDay-b.window.startDay||r.fatigueDays.some((d,i)=>d!==b.window.startDay+i)||r.recordGameKeys.length!==b.results.length||r.recordGameKeys.some((k,i)=>k!==b.results[i]!.gameKey))throw new RangeError('INVALID_NATIONAL_HOST_RETURN');
+  }
+ }
  const left=n.athleteDutySeasonsRemaining;
  if(left!==undefined&&(!Number.isSafeInteger(left)||left<0||left>3||n.benefits.length===0))throw new RangeError('INVALID_ATHLETE_DUTY');
  if(n.athleteDutyStartSeasonKey!==undefined&&(!/^\d{4}$/.test(n.athleteDutyStartSeasonKey)||!Array.isArray(n.athleteDutySettledSeasons)||left===undefined||n.athleteDutySettledSeasons.length!==3-left||n.athleteDutySettledSeasons.some((y,i)=>y!==String(Number(n.athleteDutyStartSeasonKey)+i))))throw new RangeError('INVALID_ATHLETE_DUTY');

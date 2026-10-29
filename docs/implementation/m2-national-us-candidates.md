@@ -14,7 +14,9 @@ Records from both roots are projected without changing either root. Identical sh
 
 `national-progress.ts` also obtains emergency replacement candidates from `kboNationalCandidates(c)` and reads player identities from `c.world.players`; national lineup records likewise need this projected ledger. That execution path needs the same source context/identity resolver before a selected overseas player can play. Calling this helper alone does not finish US national tournament integration. The parent owns caller/export changes.
 
-Source/policy gaps: no durable shared world registry currently establishes which root owns a transferred player or advances both leagues to the same date; source revision equality does not solve that. US NPC nationality generation remains deferred. US callup/event lifecycle and tournament progression need an explicit owner rather than borrowing KBO phase types.
+`us-national.ts` now provides an explicit US callup/event/tournament owner, using the projection for selection and actual shared team snapshots. Its separate session pins the host source; completed game records, health, fatigue and actual pitch XP return through a two-root CAS result. See [the implementation contract](M2-US-NATIONAL-CLOSURE-20261029.md). This source integration has not been executed yet.
+
+Source/policy gaps: no durable shared world registry currently establishes which persisted root is latest; source revision equality does not solve that. Both roots must be loaded and committed under the caller's transaction. US NPC nationality generation remains deferred.
 
 ## Validation
 

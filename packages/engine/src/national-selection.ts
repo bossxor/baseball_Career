@@ -8,7 +8,7 @@ import {emptyBatting,emptyPitching,battingRates,pitchingRates} from './stats.js'
 import type {BattingLine,PitchingLine} from './types.js';
 import {createStreams,nextInteger} from './rng.js';
 
-export const NATIONAL_LEAGUE_ADJUSTMENTS=Object.freeze({MLB:8,KBO:0,AAA:-8,FUTURES:-12,AA:-15,A:-20,ROOKIE:-25} as const);
+export const NATIONAL_LEAGUE_ADJUSTMENTS=Object.freeze({MLB:8,KBO:0,AAA:-8,FUTURES:-12,AA:-15,A:-20,COLLEGE:-22,ROOKIE:-25} as const);
 export type NationalLeague=keyof typeof NATIONAL_LEAGUE_ADJUSTMENTS;
 export type NationalRole='C'|'1B'|'2B'|'3B'|'SS'|'LF'|'CF'|'RF'|'DH'|'UTIL'|'SP'|'RP'|'CP';
 export interface NationalCandidate {

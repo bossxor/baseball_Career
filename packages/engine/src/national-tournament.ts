@@ -28,7 +28,8 @@ export function nationalControlTeam(id:string,value:number,protagonist?:{key:str
 }
 
 /** The selected15/13 and actual player books supply game inputs; registration alone never guarantees an appearance. */
-export function koreaNationalTeam(c:KboCareer,selection:NationalSelectionSnapshot,gameNumber:number,recent:ReadonlyMap<string,BattingLine>,worldDay?:number):TeamSnapshot {
+export type NationalTeamContext=Pick<KboCareer,'records'|'health'|'sangmu'>&{world:Pick<KboCareer['world'],'players'|'repertoires'|'seasonKey'>};
+export function koreaNationalTeam(c:NationalTeamContext,selection:NationalSelectionSnapshot,gameNumber:number,recent:ReadonlyMap<string,BattingLine>,worldDay?:number):TeamSnapshot {
  if(worldDay!==undefined&&(!Number.isSafeInteger(worldDay)||worldDay<0))throw new RangeError('INVALID_NATIONAL_GAME_DAY');
  const used=new Map<string,Set<number>>();
  if(worldDay!==undefined)for(const g of Object.values(c.records.games)){

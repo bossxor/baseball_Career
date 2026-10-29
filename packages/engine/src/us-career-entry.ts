@@ -1,3 +1,5 @@
+import {refreshCareerRepertoireEvents} from './repertoire-events.js';
+import {assertUsNationalState} from './us-national.js';
 import type {CareerAchievementLedger} from './career-achievements.js';
 import {collegeLeaveElapsedYears} from './college-service.js';
 import {assertCareerAgentLedger,careerIncomeView} from './career-agent.js';
@@ -45,6 +47,16 @@ export interface KboUsTransfer {
 }
 export interface ActiveUsRosterWorld extends UsRosterWorld {status:'ACTIVE';calendar:SeasonCalendar;reserves?:Record<string,string[]>}
 export interface UsCareer {
+ national?:import('./us-national.js').UsNationalLedger;
+ usAmateurReturn?:import('./us-amateur-return.js').UsAmateurReturnLedger;
+
+ retryCareer?:import('./retry-career.js').RetryCareerLedger;
+ preparationSeason?:import('./preparation-season.js').PreparationSeason;
+ repertoireEvents?:import('./repertoire-events.js').CareerRepertoireLedger;
+ advice?:import('./pro-career-advice.js').CareerAdviceLedger;
+ adviceMorale?:number;
+ proResults?:import('./pro-career-results.js').CareerProResultLedger;
+
  achievements?:CareerAchievementLedger;
  agents?:CareerAgentLedger;
  goals?:CareerGoalLedger;domesticReturn?:import('./us-kbo-return.js').UsKboReturnQuote;minorMarket?:UsMinorMarket;minorRenewal?:UsMinorRenewal;
@@ -55,7 +67,7 @@ export interface UsCareer {
  rights:UsDirectSigning['rights'];contract:Omit<UsDirectSigning['contract'],'status'|'type'> & {type:'US_MINOR'|'US_MAJOR';years?:number;remainingGuaranteedUsd?:number;status:'ACTIVE'|'FROZEN'|'TERMINATED';seasonKey:string;nationalReleaseAllowed:boolean;militaryReturnOption:boolean};
  income:readonly (UsDirectSigning['income'] | {entryKey:string;currency:'USD';amount:number;kind:'SALARY';seasonKey:string;day:number})[];inventory:UsRecruitmentWorld;amateurHistory:HighSchoolCareer;
  records:HighSchoolCareer['records'];health:HighSchoolCareer['health'];seasonGrowth:ReturnType<typeof createSeasonGrowthLedger>;development:NonNullable<HighSchoolCareer['development']>;traits?:NonNullable<HighSchoolCareer['traits']>;relationships:NonNullable<HighSchoolCareer['relationships']>;events:HighSchoolCareer['events'];relationNotices:NonNullable<HighSchoolCareer['relationNotices']>;styleUsedWindows:HighSchoolCareer['styleUsedWindows'];planHistory:HighSchoolCareer['planHistory'];
- military:{status:'UNRESOLVED'|'FROZEN_SERVICE'|'TERMINATED_SERVICE'|'COMPLETED'|'NOT_APPLICABLE';deadlineAge:28;planSeasonKey?:string;frozenContractKey?:string;terminatedContractKey?:string;service?:import('./us-military-plan.js').UsMilitaryServiceProgram};kboTransfer?:KboUsTransfer;
+ military:{status:'UNRESOLVED'|'FROZEN_SERVICE'|'TERMINATED_SERVICE'|'ATHLETE_ELIGIBLE'|'ATHLETE_SERVICE'|'COMPLETED'|'NOT_APPLICABLE';deadlineAge:28;planSeasonKey?:string;frozenContractKey?:string;terminatedContractKey?:string;service?:import('./us-military-plan.js').UsMilitaryServiceProgram};kboTransfer?:KboUsTransfer;
 }
 
 /** Live rosters may change abilities/age/level; the initial distribution guard is only for seed-world admission. */
@@ -85,7 +97,9 @@ export function startSignedUsCareer(source:HighSchoolCareer,expectedRevision:num
  const book=schoolYearEndRepertoire(source,key);if(book)world.repertoires[key]={...structuredClone(book),seasonId:world.seasonKey,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};assertActiveUsRosterWorld(world);
  const day=calendar.growthDays[0]!,teamWorld={worldKey:world.worldKey,seasonKey:world.seasonKey,leagueKey:s.registration.level,protagonistKey:key,protagonistSchoolId:org.id,schools:world.organizations.map(o=>({id:o.id,name:o.name,roster:o.levels[s.registration.level]})),players:world.players};
  const relationships=formRegisteredTeamTeammate(source.relationships,teamWorld,s.receiptKey,day),c:UsCareer={schemaVersion:1,mode:'US_CAREER',revision:source.revision+1,difficulty:source.difficulty,world,protagonistKey:key,protagonistOrganizationId:org.id,phaseContext:{phase:'PRESEASON_SETUP'},activation:{receiptKey:JSON.stringify(['us-career-entry',ready.receiptKey]),sourceYearEndReceiptKey:ready.receiptKey,sourceRevision:source.revision,contractKey:s.contract.contractKey,populationBasis:r.world.registeredPlayerKeys.length?'INITIAL_INVENTORY':'LEGACY_BOOTSTRAP'},registration:{playerKey:key,clubId:org.id,level:s.registration.level,seasonKey:world.seasonKey,status:'ACTIVE'},rights:structuredClone(s.rights),contract:{...structuredClone(s.contract),seasonKey:world.seasonKey,status:'ACTIVE',nationalReleaseAllowed:s.offer.nationalReleaseAllowed,militaryReturnOption:s.offer.militaryReturnOption},income:[structuredClone(s.income)],inventory:structuredClone(r.reservations.currentWorld),amateurHistory:structuredClone(source),records:structuredClone(source.records),health:{...structuredClone(source.health),injuries:Object.hasOwn(source.health.injuries,key)?{[key]:structuredClone(source.health.injuries[key]!)}:{}},seasonGrowth:createSeasonGrowthLedger(player,world.seasonKey,calendar.growthDays.length),development:{...structuredClone(source.development),seasonStartPlayer:structuredClone(player)},...(source.traits?{traits:{...structuredClone(source.traits),lastClosedDay:null,lastSeasonKey:world.seasonKey}}:{}),relationships,events:structuredClone(source.events),...(source.goals?{goals:source.goals}:{}),relationNotices:structuredClone(source.relationNotices??[]),styleUsedWindows:[...source.styleUsedWindows],planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}],military:{status:'UNRESOLVED',deadlineAge:28}};
- c.relationNotices=queueRelationFormationNotices({...c,world:teamWorld,previousSeasons:[...(source.previousSeasons??[]),{world:source.world}]},day)??[];if(source.achievements)c.achievements=structuredClone(source.achievements);if(source.collegeService?.status==='RESUMED'&&collegeLeaveElapsedYears(source)>0)c.military={status:'COMPLETED',deadlineAge:28};return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(c));
+ if(source.retryCareer!==undefined)c.retryCareer=structuredClone(source.retryCareer);
+ if(source.repertoireEvents!==undefined)c.repertoireEvents=structuredClone(source.repertoireEvents);
+ c.relationNotices=queueRelationFormationNotices({...c,world:teamWorld,previousSeasons:[...(source.previousSeasons??[]),{world:source.world}]},day)??[];if(source.achievements)c.achievements=structuredClone(source.achievements);if(source.collegeService?.status==='RESUMED'&&collegeLeaveElapsedYears(source)>0)c.military={status:'COMPLETED',deadlineAge:28};return refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(c)));
 }
 
 export interface UsCareerPublicView {
@@ -94,13 +108,14 @@ export interface UsCareerPublicView {
  contract:Pick<UsCareer['contract'],'type'|'currency'|'annualSalaryUsd'|'signingBonusUsd'|'controlSeasons'|'nationalReleaseAllowed'|'militaryReturnOption'> & {years?:number;status?:UsCareer['contract']['status']};phase:UsPhase['phase'];
 }
 export function usCareerView(c:UsCareer):UsCareerPublicView {
+ assertUsNationalState(c);
  if(c?.agents)assertCareerAgentLedger(c);
  if(c.military.service?.version===2&&(!c.military.service.returnContract||Number(c.world.seasonKey)<=Number(c.military.service.returnContract.seasonKey)))return usMilitaryHistoricalView(c);
  if(c.domesticReturn!==undefined)assertUsKboReturnQuote(c);
  if(c.domesticReturn?.status!=='ACCEPTED')assertUsRetirementState(c);
  const p=c.world.players[c.protagonistKey],org=c.world.organizations.find(o=>o.id===c.protagonistOrganizationId),r=c.registration;
  const liveContractKey=c.schemaVersion===4?(Array.isArray(c.majorYears)?c.majorYears.at(-1)?.nextContract?.contractKey:undefined):(c.season?.majorActivation?.contractKey??c.minorRenewal?.contract.contractKey??c.activation.contractKey);
- if(![1,2,3,4].includes(c.schemaVersion) || c.mode!=='US_CAREER' || !['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW','EVENT_DECISION','POSTSEASON_PROGRESS','RETIRE_CONFIRM','ARCHIVED'].includes(c.phaseContext.phase) || !p || !org || r.playerKey!==p.simulationKey || r.clubId!==org.id || r.seasonKey!==c.world.seasonKey || !['ACTIVE','INJURED'].includes(r.status) || (r.status==='ACTIVE'?!org.levels[r.level]?.includes(p.simulationKey):!c.world.reserves?.[org.id]?.includes(p.simulationKey)) || c.rights.holderOrgId!==org.id || c.contract.status!=='ACTIVE' || c.contract.contractKey!==liveContractKey)throw new RangeError('INVALID_US_ENTRY_VIEW');assertUsRecruitmentWorld(c.inventory);
+ if(![1,2,3,4].includes(c.schemaVersion) || c.mode!=='US_CAREER' || !['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW','EVENT_DECISION','POSTSEASON_PROGRESS','RETIRE_CONFIRM','ARCHIVED','INTERNATIONAL_PROGRESS','INTERNATIONAL_REVIEW'].includes(c.phaseContext.phase) || !p || !org || r.playerKey!==p.simulationKey || r.clubId!==org.id || r.seasonKey!==c.world.seasonKey || !['ACTIVE','INJURED'].includes(r.status) || (r.status==='ACTIVE'?!org.levels[r.level]?.includes(p.simulationKey):!c.world.reserves?.[org.id]?.includes(p.simulationKey)) || c.rights.holderOrgId!==org.id || c.contract.status!=='ACTIVE' || c.contract.contractKey!==liveContractKey)throw new RangeError('INVALID_US_ENTRY_VIEW');assertUsRecruitmentWorld(c.inventory);
  if(c.minorMarket!==undefined)assertUsMinorMarket(c);
  if(c.activation.populationBasis==='KBO_TRANSFER'){
   const t=c.kboTransfer;if(!t||c.income.some(e=>e.kind==='SIGNING_BONUS')||c.activation.receiptKey!==JSON.stringify(['kbo-us-activation',t.postingId??t.windowId])||(c.minorRenewal?c.minorRenewal.organizationId!==c.protagonistOrganizationId:t.offer.organizationId!==c.protagonistOrganizationId))throw new RangeError('INVALID_US_ENTRY_VIEW');

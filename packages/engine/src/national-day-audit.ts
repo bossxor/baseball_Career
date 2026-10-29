@@ -21,9 +21,10 @@ export function auditCareerNationalDays(c:KboCareer):void {
     const r=b.results.find(r=>r.gameKey===m.gameKey)!;
     if(g.gameKey!==m.gameKey||Object.keys(g.teams).length!==2||g.teams[m.away]!.R!==r.awayRuns||g.teams[m.home]!.R!==r.homeRuns||g.teams[m.away]!.RA!==r.homeRuns||g.teams[m.home]!.RA!==r.awayRuns||g.teams[r.winner]!.W!==1)throw new RangeError('CHANGED_NATIONAL_GAME_EVIDENCE');
     if(m.away!=='KOR'&&m.home!=='KOR')continue;
-    const h=c.health.games.filter(h=>h.evidence.gameKey===m.gameKey&&h.evidence.teamKey===b.tournament+':KOR');
-    if(h.length!==1||h[0]!.evidence.day!==d.day||h[0]!.evidence.seasonKey!==b.seasonKey||canonicalJson(h[0]!.evidence.roster)!==canonicalJson(d.rosterKeys)||canonicalJson(h[0]!.evidence.appearances.map(p=>p.playerKey))!==canonicalJson(d.rosterKeys.filter((k:string)=>(g.batting[k]?.PA??0)+(g.pitching[k]?.BF??0)>0)))throw new RangeError('CHANGED_NATIONAL_HEALTH_EVIDENCE');
-    result.injured.push(...h[0]!.result.injured);result.recovered.push(...h[0]!.result.recovered);
+    const handoff=c.national?.hostReturns?.find(r=>r.competitionId===b.competitionId),local=c.health.games.filter(h=>h.evidence.gameKey===m.gameKey&&h.evidence.teamKey===b.tournament+':KOR'),external=(handoff?.ownerHealthGames??[]).filter(h=>h.evidence.gameKey===m.gameKey),h=[...local,...external];
+    if(!handoff&&h.length!==1||handoff&&(local.length!==Number(d.rosterKeys.some((k:string)=>handoff.kboPlayerKeys.includes(k)))||external.length!==Number(d.rosterKeys.some((k:string)=>handoff.ownerPlayerKeys.includes(k)))||local.some(x=>x.evidence.roster.some(k=>!handoff.kboPlayerKeys.includes(k)))))throw new RangeError('CHANGED_NATIONAL_HEALTH_OWNERSHIP');
+    if(h.some(x=>x.evidence.day!==d.day||x.evidence.seasonKey!==b.seasonKey)||canonicalJson(h.flatMap(x=>x.evidence.roster).sort())!==canonicalJson(d.rosterKeys)||canonicalJson(h.flatMap(x=>x.evidence.appearances.map(p=>p.playerKey)).sort())!==canonicalJson(d.rosterKeys.filter((k:string)=>(g.batting[k]?.PA??0)+(g.pitching[k]?.BF??0)>0)))throw new RangeError('CHANGED_NATIONAL_HEALTH_EVIDENCE');
+    for(const x of h){result.injured.push(...x.result.injured);result.recovered.push(...x.result.recovered);}
    }
    result.injured.sort();result.recovered.sort();if(canonicalJson(result)!==canonicalJson(d.result))throw new RangeError('CHANGED_NATIONAL_HEALTH_EVIDENCE');
    if(b.seasonKey===c.world.seasonKey){const closed=c.days?.days.find(row=>row.day===d.day);if(closed&&(closed.evidence!==nationalDayEvidence(b,d.day,d.gameKeys,d.rosterKeys)||canonicalJson(closed.result)!==canonicalJson(d.result)))throw new RangeError('CHANGED_NATIONAL_PRO_DAY_EVIDENCE');}

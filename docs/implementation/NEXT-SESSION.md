@@ -1,3 +1,9 @@
+# 최신 작업 — US national owner 집중 통과 (2026-10-29)
+
+`us-national` invitation/deadline/decline·pending JSON resume·native WBC handoff/health/XP/CAS·athlete duty 집중 **4/4 pass**. 증거 `evidence/M2-US-NATIONAL-focused.log`, 상세 [M2-US-NATIONAL-CLOSURE-20261029.md](M2-US-NATIONAL-CLOSURE-20261029.md). 엔진 typecheck 통과. tip 기준 **8ceb88c** + 본 슬라이스 WIP. 전체 `npm run check`/Neon/브라우저/APK 미실행. college AG owner·국내 atomic 저장 caller·30일 복귀·PS E84·99/24/PF-D 잔여. M2약60% 유지·전체 미완료. main/M6 병합·강제푸시·PC 종료 없음. V: 문서 Copy-Item만.
+
+다음: **국내 세계 atomic handoff caller → PS E84 → 전역 후30게임일 복귀 확정 →99사건/24경로/PF-D 실제 증거.** bulk 통합 게이트에서 full check.
+
 # 최신 상태 — M2 BULK 통합 검증 통과 (2026-10-28)
 
 원격 e26271b의 일괄 구현을 최신화하고 저장/사건 열람 경계를 수정했다. **전체 npm run check 종료0: 엔진/API844개 중842통과·실패0·Neon환경 미설정2건 건너뜀, 웹22/22.** lint·타입·build·엔진골든·이벤트·설계10종·Android셸·자산·HTTP 스모크 통과. 엔진/API duration_ms171601.1983, 소스 동결463파일 변경0. 실제 브라우저/Neon/Android 기기·전체24경로 통과는 아니다.
@@ -6,7 +12,7 @@
 
 이번 수정: 없는 선택값 비교 오류, 낮은 국내 authority revision의 과거 목표 이력 보존, archive 열람 후 소유권 영수증 보존, 학교 목표 열람의 검증/재봉인, 봉인된 학교 루트의 일반 E94 읽기 거절, 무시한 E89의 뒤늦은 ACK. 제어 fixture와 기존 관계 테스트도 실제 투수 숙적 추가를 검증하도록 고쳤다. 첫 실패 로그를 보존했다.
 
-다음: **PS E84/학교 US year-end 관계 열람 wrapper → 미국 국제대회 owner·국내 세계 atomic handoff → 전역 후30게임일 복귀 확정 →99사건/24경로/PF-D 실제 증거.** 사용자 확정 기한은13/14/21에 기록했고 실행은 후속이다. M2 약60%는 기존 범위 추정으로 유지하며 전체 완료 아님. [이번 구현·검증·인계](M2-RESUME-20261028.md).
+다음(당시): **PS E84/학교 US year-end 관계 열람 wrapper → 미국 국제대회 owner·국내 세계 atomic handoff → 전역 후30게임일 복귀 확정 →99사건/24경로/PF-D 실제 증거.** 사용자 확정 기한은13/14/21에 기록했고 실행은 후속이다. M2 약60%는 기존 범위 추정으로 유지하며 전체 완료 아님. [이번 구현·검증·인계](M2-RESUME-20261028.md).
 
 # 최신 작업 — M2 일괄 연결 체크포인트 (2026-10-28)
 
