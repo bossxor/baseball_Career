@@ -1,0 +1,54 @@
+✔ achievement E90 read acknowledges only its outbox notice across school, KBO and US roots with JSON replay (3170.3405ms)
+✔ achievement notice commands enforce root CAS, notice version, ownership and immutable source context (1353.8196ms)
+✔ historical completion and correction notices read independently without regranting rewards or restoring their phase (993.212ms)
+✔ achievement reads validate and rebind all school year-end seals; corrupted roots cannot be repaired by reading (1329.3982ms)
+✔ native KBO and US signing/entry commits carry A01 without requiring season goal selection (1647.0835ms)
+✔ A01 is committed by actual contract acceptance before annual closure or pro activation (373.8701ms)
+✔ A07 requires earned athlete eligibility and three completed consecutive duty seasons across school/KBO/US roots (3737.1746ms)
+✔ actual KBO/MiLB signing gives one immutable A01 receipt, cosmetic and E90, read/replay/JSON mutate nothing (659.191ms)
+✔ first appearances require actual PA/BF; career milestone totals never combine leagues or postseason (73.2788ms)
+✔ career W100 and SV200 use one league across years; correction keeps first evidence and cosmetics (59.5474ms)
+✔ international/posting and archive alone cannot invent milestones; A12 needs both actual leagues plus retirement receipt (55.4659ms)
+✔ malformed unlock identity, duplicate reward, forged receipt and unsupported awards are rejected (1224.5244ms)
+✔ college graduation requires resolved E75, not four completed years or an enrollment status toggle (6280.6604ms)
+✔ military COMPLETED needs both actual completed service blocks and return receipt, not status alone (49.9982ms)
+✔ A11 needs the original high-school rival plus an actual reunion game and evidenced registrations (77.6129ms)
+✔ career aggregation ignores NPC-only rows and reads no NPC statistics while preserving milestone results (119.6675ms)
+✔ unchanged refresh validates its sources without cloning an already earned achievement ledger (46.5092ms)
+✔ preseason confirmation persists two E94 notices for pinned rival/teammate without blocking progress (56.0052ms)
+✔ opening a notice acknowledges only that notice and navigates to its relation; gameplay phase and RNG stay unchanged (65.5978ms)
+✔ stale revision/version, wrong command, foreign or rewritten relation evidence reject atomically (50.1912ms)
+✔ unread notices do not stop real games; acknowledging both does not alter first-day results/health/trait evidence (1277.0803ms)
+✔ legacy HS saves catch up once at day close; absence of relations and college worlds creates no fictitious notice (604.2251ms)
+✔ notice acknowledgment during a pending task leaves that task and its saved resume untouched (42.0252ms)
+✔ notice acknowledgment during a real pending game preserves the exact cursor/RNG and resumed game result (900.3561ms)
+✔ approved25-player rule: no eligible rival produces no rival notice or extra NPC, while the teammate notice remains (23.6798ms)
+✔ acknowledging a notice after sealed year end preserves the valid seal and college activation; corrupt seals never get repaired (191.5222ms)
+✔ school relation reads validate and reseal a signed US year end after JSON resume (897.7733ms)
+Native goal school proof: {"officialGames":8,"ownPA":5,"ownStarts":1,"recordsEqualWithoutGoals":true,"worldEqualWithoutGoals":true}
+Native goal college proof: {"controlledRegularGames":216,"nativeCupGames":2,"goals":[{"id":"G01","progress":0,"status":"ACTIVE"},{"id":"G09","progress":1,"status":"COMPLETED"},{"id":"G10","progress":1,"status":"COMPLETED"}],"cosmetics":2}
+✔ native preseason entry opens one non-blocking E89 in its committed revision without selecting goals (3966.013ms)
+✔ optional E89 selects real goals, skips without goals, and rejects stale or duplicate choices (971.7049ms)
+✔ E90 navigation consumes the existing source-bound outbox once without granting another reward (675.7427ms)
+✔ goals are optional, max3, kind-filtered, PRE-only and source-safe without RNG or gameplay rewards (781.8388ms)
+✔ goal HR scope never adds another league or postseason; completion/news/reward replay and correction are idempotent (718.0512ms)
+✔ malformed persisted goal arrays, changed scope and unknown reward are rejected without editing the save (1129.0446ms)
+✔ MID replacement uses sealed half-season, carries BB22 progress, rejects BB33 and cannot reset through moving levels (617.4079ms)
+✔ pitcher goals use raw K, saves and starterOuts, never all relief outs (1424.7053ms)
+✔ G01/G02/G04 count exact PA, fixed-lineup starts and walks with three cosmetic grants only (260.732ms)
+✔ US year continuation preserves earned cosmetics and goal outbox without blocking the finalized contract path (2068.439ms)
+✔ school goal expiry is committed before sealing the year-end receipt and survives the actual KBO entry command (407.5173ms)
+✔ serving Sports goal registration seals SANGMU/Futures instead of the original club; Active has no playable goal choices (427.8771ms)
+✔ G08 requires evidenced injury, actual recovery and a later official appearance, not a return button (185.7757ms)
+✔ native school game updates selected goals automatically and leaves gameplay identical to no-goal play (808.8851ms)
+✔ college qualification goal settles at final seeding; native championship appearance counts G10 and never regular G01 (690.3884ms)
+✔ ignored E89 can be acknowledged after starting without selecting goals or restoring the preseason phase (3415.6024ms)
+✔ historical goal acknowledgement validates and preserves a sealed school year end (547.1208ms)
+ℹ tests 44
+ℹ suites 0
+ℹ pass 44
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19761.8894

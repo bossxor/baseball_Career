@@ -1,3 +1,4 @@
+import {resolveCareerAchievementEvent} from '../src/career-achievements.js';
 import {setCareerSeasonGoals,resolveCareerGoalEvent} from '../src/season-goals.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -67,5 +68,7 @@ test('accepted return ownership remains valid after actual achievement outbox re
  const {c,source,authority}=fixture('POSTING','HITTER',true),opened=openUsKboReturn(c,c.revision,source,authority,authority.revision),q=opened.domesticReturn!,returned=acceptUsKboReturn(opened,opened.revision,source,authority,authority.revision,{eventKey:q.eventKey,eventVersion:1,offerKey:q.offers[0]!.offerKey,worldDay:q.issuedWorldDay}),archived=returned.archivedUs,event=archived.goals!.notices.find(n=>n.definitionId==='E90')!;
  assert.ok(event);assert.doesNotThrow(()=>usCareerView(archived));const input={eventKey:event.eventKey,eventVersion:event.version,command:'OPEN_ACHIEVEMENTS' as const},raw=canonicalJson(archived),read=resolveCareerGoalEvent(archived,archived.revision,input).career;
  assert.equal(canonicalJson(archived),raw);assert.deepEqual(read.domesticReturn,archived.domesticReturn);assert.deepEqual(read.income,archived.income);assert.deepEqual(read.inventory,archived.inventory);assert.deepEqual(read.world,archived.world);assert.deepEqual(read.phaseContext,archived.phaseContext);assert.doesNotThrow(()=>usCareerView(read));assert.deepEqual(usCareerView(JSON.parse(JSON.stringify(read))),usCareerView(read));
+ const achievement=read.achievements!.notices.find(n=>n.status==='OPEN')!;assert.ok(achievement);const beforeAchievement=canonicalJson(read),achievementRead=resolveCareerAchievementEvent(read,read.revision,{eventKey:achievement.eventKey,eventVersion:achievement.version,command:'OPEN_ACHIEVEMENTS'}).career;
+ assert.equal(canonicalJson(read),beforeAchievement);assert.deepEqual(achievementRead.domesticReturn,read.domesticReturn);assert.deepEqual(achievementRead.world,read.world);assert.deepEqual(achievementRead.records,read.records);assert.deepEqual(achievementRead.inventory,read.inventory);assert.deepEqual(achievementRead.income,read.income);assert.deepEqual(achievementRead.achievements!.rewards,read.achievements!.rewards);assert.doesNotThrow(()=>usCareerView(achievementRead));assert.deepEqual(usCareerView(JSON.parse(JSON.stringify(achievementRead))),usCareerView(achievementRead));
  const forged=structuredClone(read);forged.domesticReturn!.ownership!.usSourceRevision--;assert.throws(()=>usCareerView(forged),/INVALID_US_KBO_RETURN/);
 });

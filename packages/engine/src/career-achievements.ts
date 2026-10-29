@@ -1,4 +1,10 @@
 import {collegeMilitaryServiceView} from './college-service.js';
+import {assertCareerRevision} from './high-school-career.js';
+import {assertKboCareerRevision} from './kbo-career-version.js';
+import {assertUsCareerRevision} from './us-career-entry.js';
+import {assertKboAmateurYearEnd} from './kbo-entry.js';
+import {assertUsAmateurYearEnd} from './us-entry.js';
+import {schoolYearEndBasis} from './college-entry.js';
 import {kboPostingFeeWon} from './kbo-posting.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import type {KboCareer} from './kbo-career-entry.js';
@@ -9,7 +15,7 @@ import {assertNationalLedger} from './kbo-national.js';
 import type {GameContribution} from './records.js';
 import {assertKboDraft} from './kbo-draft.js';
 import {assertUsDirect} from './us-direct.js';
-import {createWorldEvent,eventDefinition,validateEvent} from './events.js';
+import {createWorldEvent,eventDefinition,validateEvent,resolveEventChoice} from './events.js';
 import type {EventInstance} from './events.js';
 
 export const CAREER_ACHIEVEMENT_DEFINITIONS={
@@ -138,6 +144,28 @@ export function refreshCareerAchievements<T extends AchievementCareer>(c:T):T {
   if(stage){changed=true;const d=eventDefinition('E90'),source=e??old!.evidence,seasonKey=stage==='CORRECTED'?c.world.seasonKey:source.seasonKey;l.notices.push(createWorldEvent({definitionId:'E90',worldKey:l.worldKey,seasonKey,evidence:{version:1,type:d.evidenceDomain,fields:{playerSimulationKey:l.playerKey,worldSeasonId:seasonKey,goalId:id,stage}},resume:{worldKey:l.worldKey,seasonKey,phase:'SEASON_REVIEW',competitionKey:source.leagueKey,registrationKey:null,sourceRevision:c.revision},sourceSequence:l.notices.length+1,worldDay:source.worldDay}));}
  }
  return changed?{...c,achievements:l}:c;
+}
+/** Reads only achievement-owned E90 notices; the current gameplay phase and earned rewards stay intact. */
+export function resolveCareerAchievementEvent<T extends AchievementCareer>(c:T,revision:number,input:{eventKey:string;eventVersion:number;command:'OPEN_ACHIEVEMENTS'}) {
+ if(!('protagonistKey'in c))assertCareerRevision(c,revision);else if('protagonistClubId'in c)assertKboCareerRevision(c,revision);else assertUsCareerRevision(c,revision);
+ validate(c);const event=c.achievements?.notices.find(n=>n.eventKey===input.eventKey);
+ if(!event)throw new RangeError('ACHIEVEMENT_EVENT_NOT_FOUND');
+ const fields=event.evidence.fields,unlock=c.achievements!.unlocks.find(u=>u.achievementId===fields.goalId)!,seasonKey=fields.stage==='COMPLETED'?unlock.evidence.seasonKey:unlock.corrections[0]?.seasonKey;
+ if(event.seasonKey!==seasonKey||fields.worldSeasonId!==seasonKey||event.occurredWorldDay!==unlock.evidence.worldDay||event.resume.phase!=='SEASON_REVIEW'||event.resume.competitionKey!==unlock.evidence.leagueKey||event.resume.registrationKey!==null||event.resume.sourceRevision>c.revision)throw new RangeError('ACHIEVEMENT_EVENT_SOURCE_CHANGED');
+ if(!('protagonistKey'in c)){
+  if(c.kboYearEnd)assertKboAmateurYearEnd(c);if(c.usYearEnd)assertUsAmateurYearEnd(c);
+  if(c.collegeYearEnd&&(c.collegeYearEnd.sourceRevision!==c.revision||c.collegeYearEnd.sourceBasis!==schoolYearEndBasis(c)))throw new RangeError('STALE_ACHIEVEMENT_NOTICE_YEAR_END');
+ }
+ const selected=resolveEventChoice(event,input.eventVersion,input.command,null,{worldKey:c.world.worldKey,seasonKey:event.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['OPEN_ACHIEVEMENTS']});
+ const career:T={...c,revision:revision+1,achievements:{...c.achievements!,notices:c.achievements!.notices.map(n=>n.eventKey===event.eventKey?selected.event:n)}};
+ if(!('protagonistKey'in career)){
+  // Read metadata belongs to the year-end seal; carry it forward only after validating the original seal.
+  const basis=career.kboYearEnd||career.usYearEnd||career.collegeYearEnd?schoolYearEndBasis(career):null;
+  if(career.kboYearEnd)career.kboYearEnd={...career.kboYearEnd,sourceRevision:career.revision,sourceBasis:basis!};
+  if(career.usYearEnd)career.usYearEnd={...career.usYearEnd,sourceRevision:career.revision,sourceBasis:basis!};
+  if(career.collegeYearEnd)career.collegeYearEnd={...career.collegeYearEnd,sourceRevision:career.revision,sourceBasis:basis!};
+ }
+ return {career,navigation:selected.navigation};
 }
 export function careerAchievementsView(c:AchievementCareer){
  validate(c);return {playerKey:keyOf(c),sourceDifficulty:c.difficulty,gameplayRewardDelta:0 as const,noticeDelivery:'OUTBOX' as const,

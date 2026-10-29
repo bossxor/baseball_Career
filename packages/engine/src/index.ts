@@ -215,7 +215,7 @@ export {enterCollegeEarlyDraft,collegeEarlyRouteView,prepareCollegeUnsignedRetur
 
 export {startCollegeMilitaryLeave,advanceCollegeMilitaryService,resumeCollegeAfterService,collegeMilitaryServiceView} from './college-service.js';
 
-export {CAREER_ACHIEVEMENT_DEFINITIONS,refreshCareerAchievements,careerAchievementsView} from './career-achievements.js';
+export {CAREER_ACHIEVEMENT_DEFINITIONS,refreshCareerAchievements,careerAchievementsView,resolveCareerAchievementEvent} from './career-achievements.js';
 export type {CareerAchievementLedger} from './career-achievements.js';
 
 export {startCareerPreparation,confirmPreparationPreseason,advanceCareerPreparation,settleCareerPreparation,careerPreparationView,trainCareerPreparation,setCareerPreparationPlan,setCareerPreparationRosters,assertCareerPreparation} from './career-preparation.js';
