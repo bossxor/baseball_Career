@@ -12,6 +12,8 @@ import {validateDevelopmentPlayer} from './player.js';
 import {createWorldEvent,resolveEventChoice,completeBlockingEvent} from './events.js';
 import {createSeasonCalendar,assertSeasonCalendar} from './season-calendar.js';
 import {careerUsDirectView} from './career-us.js';
+import {careerPreparationView,careerPreparationDraftScore} from './career-preparation.js';
+import {refreshCareerRouteNotices} from './career-route-notices.js';
 
 export interface HighSchoolGraduation {
  version:1;eventKey:string;offerSetKey:string;sourceBasis:string;
@@ -63,6 +65,11 @@ function routeSource(source:HighSchoolCareer){
 }
 /** Read-only allowlist. Recruitment results and US offers are never fabricated to fill a card. */
 export function highSchoolCareerRouteView(source:HighSchoolCareer){
+ if(source.world.leagueKey==='INDEPENDENT'){
+  careerPreparationDraftScore(source);const preparation=careerPreparationView(source);
+  const player=source.world.players[source.world.protagonistKey]!,score=overall(player.kind,player.abilities);
+  return {offerSetKey:JSON.stringify(['preparation-route',source.world.worldKey,source.world.seasonKey,source.world.protagonistKey]),offerSetVersion:1,overall:score.sumUnits/score.denominator,overallDisplay:score.display,kbo:source.kboRecruitment?kboDraftView(source.kboRecruitment.world,source.kboRecruitment.program):{status:'AWAITING_RECRUITMENT' as const},colleges:[],us:undefined,preparation};
+ }
  const {graduation}=routeSource(source),result=evaluation(source);
  if(source.kboRecruitment && (source.kboRecruitment.program.input.baseScore!==result.draftBaseScore || canonicalJson(source.kboRecruitment.program.input.player)!==canonicalJson(source.world.players[source.world.protagonistKey])))throw new RangeError('STALE_CAREER_KBO_EVALUATION');
  return {offerSetKey:graduation.offerSetKey,offerSetVersion:graduation.version,overall:result.overall,overallDisplay:result.overallDisplay,
@@ -93,5 +100,5 @@ export function enrollHighSchoolCollege(source:HighSchoolCareer,expectedRevision
  }
  career.collegeAdmission={admissionKey,collegeId:college.id,status:'ADMITTED',entryYear,academicYear:1,yearsCompleted:0,playerKey:result.playerKey,position:result.position};
  if(career.usRecruitment){career.previousUsRecruitments=[...(career.previousUsRecruitments??[]),{...career.usRecruitment,closedBy:'COLLEGE'}];delete career.usRecruitment;}
- career.events=career.events.map(e=>e.eventKey===event.eventKey?resolved:e);career.phaseContext={phase:'NEXT_SEASON_READY',route:'COLLEGE',admissionKey};career.revision++;return career;
+ career.events=career.events.map(e=>e.eventKey===event.eventKey?resolved:e);career.phaseContext={phase:'NEXT_SEASON_READY',route:'COLLEGE',admissionKey};career.revision++;return refreshCareerRouteNotices(career);
 }

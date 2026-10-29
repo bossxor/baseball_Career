@@ -1,3 +1,4 @@
+import {settleCareerSeasonAlias} from './career-alias.js';
 import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {refreshCareerSeasonGoals,refreshCareerPreseasonGoalSelection} from './season-goals.js';
 import type {HighSchoolCareer} from './high-school-career.js';
@@ -22,6 +23,7 @@ import type {DevelopmentPlayer} from './player.js';
 import type {Repertoire} from './repertoire.js';
 import {assertCollegeYearResult} from './college-result.js';
 import {prepareCollegeYearContinuation} from './college-route.js';
+import {advanceCollegeAthleteDutySeason} from './college-national.js';
 
 export interface CollegeNpcGrowth {seasonKey:string;results:Record<string,{budgetUnits:number;gainedUnits:number;discardedUnits:number;gains:readonly number[]}>}
 function permanentWorld(source:HighSchoolCareer):CollegeWorld {
@@ -60,8 +62,8 @@ export function closeCollegeSeasonForNextYear(source:HighSchoolCareer,expectedRe
  }
  career.collegeNpcGrowth={seasonKey:base.seasonKey,results};
  const closed=finalizeSeasonGrowth(career.world.players[base.protagonistKey]!,career.seasonGrowth!,base.calendar.growthDays.length);career.world.players[base.protagonistKey]=closed.player;career.seasonGrowth=closed.ledger;
- career.health=closeSeasonHealth(career.health,base.seasonKey).ledger;career.phaseContext={phase:'NEXT_SEASON_READY',route:'COLLEGE',admissionKey:source.collegeAdmission!.admissionKey};career.revision++;
- Object.assign(career,refreshCareerSeasonGoals(career));career.collegeYearEnd={receiptKey:receiptKey(source),admissionKey:source.collegeAdmission!.admissionKey,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};return refreshCareerSeasonGoals(career);
+ career.health=closeSeasonHealth(career.health,base.seasonKey).ledger;advanceCollegeAthleteDutySeason(career);career.phaseContext={phase:'NEXT_SEASON_READY',route:'COLLEGE',admissionKey:source.collegeAdmission!.admissionKey};career.revision++;
+ Object.assign(career,settleCareerSeasonAlias(refreshCareerSeasonGoals(career),source));career.collegeYearEnd={receiptKey:receiptKey(source),admissionKey:source.collegeAdmission!.admissionKey,sourceRevision:career.revision,sourceBasis:schoolYearEndBasis(career)};return refreshCareerSeasonGoals(career);
 }
 export function nextCollegeWorld(source:HighSchoolCareer):CollegeWorld {
  const base=permanentWorld(source),year=base.calendar.year+1,seasonKey=String(year),calendar=createSeasonCalendar(year),players:Record<string,DevelopmentPlayer>={},repertoires:Record<string,Repertoire>={};

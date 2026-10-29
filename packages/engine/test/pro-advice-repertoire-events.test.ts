@@ -10,7 +10,7 @@ import {createWorldEvent,eventDefinition} from '../src/events.js';
 import {createStreams,seedPcg32,nextFloat} from '../src/rng.js';
 import {canonicalJson} from '../src/game.js';
 import type {GameContribution} from '../src/records.js';
-import {emptyPitching} from '../src/stats.js';
+import {emptyPitching,emptyBatting} from '../src/stats.js';
 import {grantPracticePitchXp} from '../src/repertoire.js';
 import type {CompetitionGameWorld,HighSchoolGameContext} from '../src/high-school-game.js';
 import type {ScheduledGame} from '../src/schedule.js';
@@ -31,6 +31,30 @@ function advice(c:AdviceCareer):CareerAdviceLedger{return {schemaVersion:1,world
 function event<T extends AdviceCareer>(c:T,id:string):T&{advice:CareerAdviceLedger}{
  const d=eventDefinition(id),e=createWorldEvent({definitionId:id,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:d.evidenceDomain,fields:{playerSimulationKey:c.protagonistKey,worldSeasonId:c.world.seasonKey,adviceWindowId:'test-window'}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'SEASON_PROGRESS',competitionKey:'KBO',registrationKey:'protagonistClubId'in c?c.protagonistClubId:c.protagonistOrganizationId,sourceRevision:c.revision},sourceSequence:1,worldDay:24});return {...c,advice:{...advice(c),notices:[e]}};
 }
+
+test('E20 uses20-game performance regardless of optional morale; E26 compares the strongest competitor',()=>{
+ const c=ready(),key=c.protagonistKey,club=c.world.clubs.find(t=>t.id===c.protagonistClubId)!;
+ c.adviceMorale=100;
+ for(let day=1;day<=24;day++){closed(c,day);c.records.games['advice-'+day]!.batting[key]={...emptyBatting(),PA:4,AB:4,K:4,twoB:0,threeB:0,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0};}
+ const rows=refreshProCareerAdvice(c,24).advice!.checkpoints[0]!.candidateIds;
+ assert.ok(rows.includes('E20'));
+ for(const row of Object.values(c.records.games))row.batting={};
+ const peers=club.firstTeam.filter(k=>k!==key&&c.world.players[k]!.kind==='HITTER');assert.ok(peers.length>=2);
+ c.world.players[key]!.abilities=Object.fromEntries(abilityKeys('HITTER').map(axis=>[axis,500_000]));
+ for(const peer of peers){c.world.players[peer]!.position=c.world.players[key]!.position;c.world.players[peer]!.abilities={...c.world.players[key]!.abilities};}
+ const near=refreshProCareerAdvice(c,24);assert.ok(near.advice!.checkpoints[0]!.candidateIds.includes('E26'));
+ c.world.players[peers[0]!]!.abilities=Object.fromEntries(abilityKeys('HITTER').map(axis=>[axis,900_000]));
+ assert.ok(!refreshProCareerAdvice(c,24).advice!.checkpoints[0]!.candidateIds.includes('E26'));
+});
+
+test('E19 requires two actual starts; relief outings cannot replace the starting sample',()=>{
+ const c=ready('PITCHER'),key=c.protagonistKey;c.world.players[key]!.position='SP';
+ for(let day=1;day<=24;day++)closed(c,day);
+ for(const day of [23,24])c.records.games['advice-'+day]!.pitching[key]={...emptyPitching(),BF:20,outs:15,R:5,ER:5,games:1,starts:0,starterOuts:0,loadedBF:0,W:0,L:0,SV:0,HLD:0,BS:0,shutouts:0};
+ assert.ok(!refreshProCareerAdvice(c,24).advice!.checkpoints[0]!.candidateIds.includes('E19'));
+ for(const day of [23,24])c.records.games['advice-'+day]!.pitching[key]!.starts=1;
+ assert.ok(refreshProCareerAdvice(c,24).advice!.checkpoints[0]!.candidateIds.includes('E19'));
+});
 
 test('general advice uses a separate stream, one uniform eligible draw per24 games, JSON replay and checkpoint idempotence',()=>{
  let c:AdviceCareer=ready();for(let day=1;day<=24;day++)closed(c,day);
@@ -61,10 +85,10 @@ test('left throwing position targets are legal; morale requires an explicit vali
 test('SP and CP requests enforce60 exactly, recheck vacancies and use existing roster competition without advice RNG',()=>{
  for(const [id,command,ability,role]of [['E14','REQUEST_SP_REVIEW','STAMINA','SP'],['E15','REQUEST_CP_REVIEW','COMPOSURE','CP']] as const){
   const base=ready('PITCHER'),key=base.protagonistKey,club=base.world.clubs.find(x=>x.id===base.protagonistClubId)!;base.world.players[key]!.position='RP';
-  for(const other of club.firstTeam)if(other!==key&&base.world.players[other]!.kind==='PITCHER'){base.world.players[other]!.position='RP';for(const axis of abilityKeys('PITCHER'))base.world.players[other]!.abilities[axis]=100_000;}
-  for(let day=1;day<=24;day++)closed(base,day);base.world.players[key]!.abilities[ability]=599_999;
+  for(const other of club.firstTeam)if(other!==key&&base.world.players[other]!.kind==='PITCHER'){base.world.players[other]!.position='RP';base.world.players[other]!.abilities=Object.fromEntries(abilityKeys('PITCHER').map(axis=>[axis,100_000]));}
+  for(let day=1;day<=24;day++)closed(base,day);base.world.players[key]!.abilities={...base.world.players[key]!.abilities,[ability]:599_999};
   const low=event(base,id),e=low.advice.notices[0]!;assert.throws(()=>resolveProCareerAdviceEvent(low,low.revision,{eventKey:e.eventKey,eventVersion:e.version,command}),/CHOICE/);
-  low.world.players[key]!.abilities[ability]=600_000;const before=canonicalJson(low.advice.rng),next=resolveProCareerAdviceEvent(low,low.revision,{eventKey:e.eventKey,eventVersion:e.version,command}).career;
+  low.world.players[key]!.abilities={...low.world.players[key]!.abilities,[ability]:600_000};const before=canonicalJson(low.advice.rng),next=resolveProCareerAdviceEvent(low,low.revision,{eventKey:e.eventKey,eventVersion:e.version,command}).career;
   assert.equal(next.world.players[key]!.position,role);assert.equal(canonicalJson(next.advice.rng),before);assert.equal(next.advice.roleReviews[0]!.outcome,'ROLE_CHANGED');
  }
 });

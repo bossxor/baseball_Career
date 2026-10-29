@@ -35,8 +35,8 @@ export function kboContractDecisionRequired(source:KboCareer):boolean {
 }
 /** After season close: fix the offer once and open blocking E30 (S08 compare / S09 retire). Phase stays SEASON_REVIEW. */
 export function offerKboRenewal(source:KboCareer,expectedRevision:number):KboCareer {
- if(kboServiceTimeView(source).registrationThresholds.domesticFa.reached)throw new RangeError('KBO_FA_DECISION_REQUIRED');
  assertCareerRevision(source,expectedRevision);
+ if(kboServiceTimeView(source).registrationThresholds.domesticFa.reached)throw new RangeError('KBO_FA_DECISION_REQUIRED');
  const season=source.world.seasonKey,close=source.seasonClose;
  if(source.phaseContext.phase!=='SEASON_REVIEW' || !close || close.seasonKey!==season || source.renewal?.seasonKey===String(Number(season)+1) || !kboContractExpiresAfterSeason(source) || source.events.some(e=>e.status==='OPEN' && e.definitionId!=='E50') || source.world.players[source.protagonistKey]!.age>=45)throw new RangeError('KBO_RENEWAL_NOT_AVAILABLE');
  const key=source.protagonistKey,previous=source.world.contracts[key]!.annualSalaryWon,{valueWon,basis}=kboRenewalValueWon(source);

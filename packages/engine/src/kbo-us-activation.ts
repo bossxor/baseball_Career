@@ -54,5 +54,8 @@ export function activateKboUsCareer(source:KboCareer,revision:number,roster:UsRo
  if(source.advice!==undefined)us.advice=structuredClone(source.advice);
  if(source.adviceMorale!==undefined)us.adviceMorale=structuredClone(source.adviceMorale);
  if(source.proResults!==undefined)us.proResults=structuredClone(source.proResults);
+ if(source.proAwards!==undefined)us.proAwards=structuredClone(source.proAwards);
+ if(source.aliases!==undefined)us.aliases=structuredClone(source.aliases);
+ if(source.recordCorrections!==undefined)us.recordCorrections=structuredClone(source.recordCorrections);
  assertUsCareerRevision(us,us.revision);return refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(us)));
 }

@@ -1,3 +1,27 @@
+# 사용량 마감 체크포인트 — 2026-10-29
+
+사용자 마감 기준은5시간 잔여8%. 마지막 조회에서사용99%/잔여1%가 확인되어 새 구현을 중단했다. PC 종료하지 않는다. 기준2f5c9f9 이후 현재 묶음을 미완료 체크포인트로 커밋·푸시한다.
+
+[이번 구현·남은 범위](M2-20261029-BATCH.md). lint/전체 typecheck 통과 후 npm run check의 엔진/API 런타임이 실행 중이다. 이 체크포인트는 전체 통과 또는 M2 완료가 아니다. 진행 중 로그는 evidence/M2-20261029-BATCH-check.log, 커밋 가능한 시점 스냅샷은 evidence/M2-20261029-BATCH-checkpoint.log. 실행 세션38446이 살아 있으면 먼저 종료 결과를 확인한다. 빌드/정적 검사 이후 source는 동결했다.
+
+## 다음 작업자가 먼저 처리할 것
+
+1. 전체 로그의 완료/실패 목록을 먼저 확인한다. 전체를 처음부터 반복하지 말고 실패한 파일만 집중 재실행한다. 아직 전체 스택이 출력되지 않은 실패1건: career-achievements.test.ts 'international/posting and archive alone cannot invent milestones; A12 needs both actual leagues plus retirement receipt'. 현재 view는unavailableReason:null을 반환하지만 오래된 테스트는A04/A06에 사유가 있다고 기대한다. 두 기능은 실제 구현됐으므로 스택 확인 후 LOCKED/지원상태 기대값을 최신 계약에 맞춘다. A12 동작 자체를 약화하지 않는다.
+2. 읽기 전용 리뷰 P2: pro-career-awards.ts assignment는DH도최다포지션에포함한다. DH60/CF50이면CF상자격이누락된다. 연간 포지션상은DH를제외한최다수비포지션으로선정하고별도회귀테스트를추가한다.
+3. 읽기 전용 리뷰 P2: KBO미지명 후 실제US계약성공 시E06이열린채남는다. career-route-notices.ts settleNotices에서 실제 미국 signing receipt를 근거로종료/무효화하고 미지명→US계약회귀를추가한다. ACK로계약하지않는다.
+4. source freeze436파일목록 evidence/M2-20261029-BATCH-source-freeze.json. 이후 수정 시변경파일/타입·lint·집중재검증을 기록한다. 미완료원장/급여/seed/공식경기/신원보존.
+5. M2전체미완료: 프로방출/미계약준비root,미국귀국의무root,E07/E34/E35/E68/E69/E70/E99,99사건/24경로/PF-D 실제증거. atomicDB/M6/실기기별도. 최신사용자별칭결정과일반서사24경기/35%/균등은14에기록했다.
+
+작업/Git/build: baseball-career-m2 / codex/m2-career-engine. V는문서Copy-Item만, V.git/강제푸시/훅스킵/main·M6병합금지. 현재원격해시는마감커밋의git log로확인한다.
+
+# M2 일괄 구현 재개 — 2026-10-29
+
+기준 커밋2f5c9f9, origin/codex/m2-career-engine 일치 확인. 작업은 baseball-career-m2 체크아웃이다. 사용자 마감 기준은5시간 사용량 **잔여8%**로 갱신했다. PC 종료하지 않는다. 구현 묶음 후 전체 npm run check1회, 이전 집중 통과 수를 새 변경의 검증으로 표시하지 않는다.
+
+진행 중: 실제 독립48경기 루트/평생3회/KBO 재평가, 대학 AG owner의 건강·연간 체육요원 의무 및 프로 인계, 프로 포지션 적합도 실제 슬롯 증거와 연말+10/+3, 올스타·수상E25/E29. 조언 E19/E20/E26을45의 최신 조건으로 수정. 타입 검사에서 누락 root모듈과 readonly테스트오류를 찾았으며 수정 후 통합 검증 대기.
+
+M2전체 완료 아님. 99사건/24경로/PF-D의실행증거·record correction transaction·native 복무/국제 조합은 계속 확인한다. M3두루트DB저장·M6·실기기범위는분리한다.
+
 # M2 전체 구현 계속 — 2026-10-29
 
 PS 사건·해외 복무 세계·대학 조기 진출/휴복학·에이전트 실제 협상을 구현 중이다. [현재 작업판](M2-COMPLETION-WORKBOARD.md)에서 검증 완료와 WIP를 구분한다. 실제 복무 NPC75경기·본인 출장/급여0·원본 불변·JSON 재개를 집중 확인했다. 전체 통합은 다음 묶음 마감 때 실행한다. M2 전체 완료 아님.

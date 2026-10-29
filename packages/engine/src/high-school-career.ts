@@ -1,3 +1,7 @@
+import {assertCareerAliases} from './career-alias.js';
+import {assertCareerRouteNotices} from './career-route-notices.js';
+import {auditCareerRecordCorrections} from './career-record-correction.js';
+import {assertCollegeNationalState} from './college-national.js';
 import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {refreshCareerPreseasonGoalSelection} from './season-goals.js';
 import type {CareerGoalLedger} from './season-goals.js';
@@ -59,6 +63,10 @@ export type HighSchoolCareerPhase =
  | {phase:'INTERNATIONAL_PROGRESS'|'INTERNATIONAL_REVIEW';competitionId:string;nextWorldDay:number;resume:CollegeNationalResumePhase}
  | {phase:'EVENT_DECISION';eventKey:string;resume:{phase:'PRESEASON_SETUP'}|HighSchoolProgressPhase|{phase:'CAREER_ROUTE'}|{phase:'SEASON_REVIEW'}};
 export interface HighSchoolCareer {
+ aliases?:import('./career-alias.js').CareerAliasLedger;
+ routeNotices?:import('./career-route-notices.js').CareerRouteNoticeLedger;
+ recordCorrections?:import('./career-record-correction.js').CareerRecordCorrectionLedger;
+ preparation?:import('./career-preparation.js').CareerPreparationLedger;
  retryCareer?:import('./retry-career.js').RetryCareerLedger;
  preparationSeason?:import('./preparation-season.js').PreparationSeason;
  repertoireEvents?:import('./repertoire-events.js').CareerRepertoireLedger;
@@ -107,12 +115,14 @@ export function assertCareerRevision(source:Pick<HighSchoolCareer,'schemaVersion
 }
 export function assertHighSchoolCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
  assertCareerRevision(source,expectedRevision);
- if(source.world.leagueKey==='COLLEGE')throw new RangeError('INVALID_CAREER_REGISTRATION');
+ if(source.world.leagueKey!==undefined)throw new RangeError('INVALID_CAREER_REGISTRATION');
+ auditCareerRecordCorrections(source);assertCareerAliases(source);assertCareerRouteNotices(source);
 }
 export function assertCollegeCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
  assertCareerRevision(source,expectedRevision);
  const admission=source.collegeAdmission,world=source.world,player=world.players[world.protagonistKey];
  if(world.leagueKey!=='COLLEGE' || !admission || admission.status!=='ENROLLED' || ![1,2,3,4].includes(admission.academicYear) || ![admission.academicYear-1,admission.academicYear].includes(admission.yearsCompleted) || admission.collegeId!==world.protagonistSchoolId || admission.playerKey!==world.protagonistKey || admission.position!==player?.position || admission.entryYear+admission.academicYear-1+collegeLeaveElapsedYears(source)!==world.calendar?.year || world.seasonKey!==String(world.calendar?.year))throw new RangeError('INVALID_CAREER_REGISTRATION');
+ assertCollegeNationalState(source);auditCareerRecordCorrections(source);assertCareerAliases(source);assertCareerRouteNotices(source);
 }
 export function assertSchoolCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
  if(source.world.leagueKey==='COLLEGE')assertCollegeCareerRevision(source,expectedRevision);

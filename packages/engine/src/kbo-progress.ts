@@ -1,7 +1,8 @@
+import {observeProCareerAwardGame,refreshProCareerAwards} from './pro-career-awards.js';
 import {refreshProCareerResultEvents} from './pro-career-results.js';
 import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {careerBattingApproaches} from './repertoire-events.js';
-import {prepareCareerAdviceGame,careerPositionFits,refreshProCareerAdvice,settleCareerAdviceRest} from './pro-career-advice.js';
+import {prepareCareerAdviceGame,careerPositionFits,refreshProCareerAdvice,settleCareerAdviceRest,observeProCareerPositionAppearance} from './pro-career-advice.js';
 import {formPitcherRivalFromGame} from './pitcher-rival.js';
 import {raiseProHiddenTraitNotice} from './pro-trait-notices.js';
 import {settleRelationshipDirectDuels} from './relationships.js';
@@ -105,7 +106,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
  const career=structuredClone(source),progress=career.phaseContext as KboSeasonProgress,last=lastDay(career);
  if(!Number.isSafeInteger(progress.nextWorldDay) || progress.nextWorldDay<firstDay(career))throw new RangeError('INVALID_KBO_PROGRESS');
  if(progress.pendingGame && (progress.pendingGame.job.worldDay!==progress.nextWorldDay || progress.pendingGame.job.worldKey!==career.world.worldKey || progress.pendingGame.job.seasonKey!==career.world.seasonKey))throw new RangeError('PENDING_GAME_CONTEXT_CHANGED');
- let plateAppearances=0,completedInnings=0,daysClosed=0;
+ const initialAdviceNotices=source.advice?.notices.length??0;let plateAppearances=0,completedInnings=0,daysClosed=0;
  const finish=(stopReason:KboProgressStop):KboProgressResult=>{career.revision++;return {career:refreshProCareerResultEvents(refreshCareerRepertoireEvents(refreshCareerSeasonGoals(career))),stopReason,plateAppearances,completedInnings,daysClosed};};
  // Regular-season close: T16 starter streaks settle once per season (107 §7), then the season review phase.
  const interruptHidden=(day:number)=>{const notice=raiseProHiddenTraitNotice(career,day,progress);if(!notice)return false;Object.assign(career,notice);return true;};
@@ -140,7 +141,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
     if(!Object.hasOwn(career.world.repertoires,key))throw new RangeError('UNREGISTERED_GAME_PITCHER');
     career.world.repertoires[key]=structuredClone(committed.world.repertoires[key]!);
    }
-   career.records=committed.records;if(pending.restProof)Object.assign(career,settleCareerAdviceRest(career,scheduled.simulationKey,pending.restProof.ordinaryStarter,pending.restProof.actualStarter));const duelRelations=settleRelationshipDirectDuels(career,scheduled.simulationKey);if(duelRelations)career.relationships=duelRelations;const pitcherFormation=formPitcherRivalFromGame(career,scheduled.simulationKey);if(pitcherFormation)Object.assign(career,pitcherFormation);progress.pendingGame=null;
+   career.records=committed.records;Object.assign(career,observeProCareerAwardGame(career,job.game));Object.assign(career,observeProCareerPositionAppearance(career,scheduled.simulationKey,job.game.input));if(pending.restProof)Object.assign(career,settleCareerAdviceRest(career,scheduled.simulationKey,pending.restProof.ordinaryStarter,pending.restProof.actualStarter));const duelRelations=settleRelationshipDirectDuels(career,scheduled.simulationKey);if(duelRelations)career.relationships=duelRelations;const pitcherFormation=formPitcherRivalFromGame(career,scheduled.simulationKey);if(pitcherFormation)Object.assign(career,pitcherFormation);progress.pendingGame=null;
    if(pendingQueue(career,day).length>0)continue;
   }
   const closed=closeKboCompetitionDay(career.world,schedulesOf(career),career.protagonistKey,career.records,career.health,career.days!,day,career.sangmu);
@@ -150,7 +151,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   for(const [key,member]of Object.entries(career.sangmu?.members??{}))if(member.repertoire?.learning)member.repertoire=settleRegisteredPitchLearning({worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,playerKey:key,repertoire:member.repertoire,records:career.records,health:career.health,schedule:LEAGUES.flatMap(l=>schedulesOf(career)[l]),scheduledGames:member.repertoire.learning.registration?.scheduledGames??144,numerator:career.difficulty==='REALISTIC'?6:5});
   const serviceReturn=closeKboMilitaryCalendarDay(career,day,progress);closeKboNpcMilitaryCalendarDay(career,day);
   settleKboServicePayrollDay(career,day);Object.assign(career,settleKboPersonalPayrollDay(career,day));settleKboReturnedTeamReunions(career,day);settleKboAiTeamReunions(career,day);settleKboNpcMilitaryPayrollDay(career,day);settleKboReturnConditionDay(career,day);settleKboOpponentReunions(career,day);settleKboArmyTeamReunions(career,day);
-  career.traits=refreshCareerTraits(career,day,LEAGUES);Object.assign(career,refreshProCareerAdvice(career,day));
+  career.traits=refreshCareerTraits(career,day,LEAGUES);Object.assign(career,refreshProCareerAdvice(career,day));Object.assign(career,refreshProCareerAwards(career,day,{[career.protagonistKey]:String(Number(career.amateurHistory.world.seasonKey)+1)}));
   // 14 order: call-up/demotion review before style/training windows.
   const aiMoves=progress.nextWorldDay>last?null:reviewKboAiRosters(career);if(aiMoves)Object.assign(career,aiMoves);
   if(serviceReturn)return finish('MAJOR_EVENT');
@@ -159,7 +160,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   if(callup){Object.assign(career,callup);if(career.phaseContext.phase==='EVENT_DECISION')return finish('MAJOR_EVENT');}
   const windowEvent=progress.nextWorldDay>last?null:raiseKboWindowEvent(career,day,progress);
   if(windowEvent){Object.assign(career,windowEvent);return finish('MAJOR_EVENT');}
-  if(interruptHidden(day))return finish('MAJOR_EVENT');
+  if(interruptHidden(day)||(career.advice?.notices.length??0)>initialAdviceNotices)return finish('MAJOR_EVENT');
   // Like school careers, a change to my own player's health stops progress so the player can react before the next day.
   if(closed.result.injured.includes(career.protagonistKey) || closed.result.recovered.includes(career.protagonistKey)){
    if(progress.nextWorldDay>last){return review();}

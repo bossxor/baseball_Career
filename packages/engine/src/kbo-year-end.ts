@@ -1,3 +1,5 @@
+import {settleCareerSeasonAlias} from './career-alias.js';
+import {settleProCareerPositionFits} from './pro-career-advice.js';
 import {refreshCareerSeasonGoals} from './season-goals.js';
 import {closeKboNpcMilitaryGrowth} from './kbo-npc-military-growth.js';
 import {settleKboFreeAgentSeason} from './kbo-free-agents.js';
@@ -43,7 +45,7 @@ export function closeKboSeason(source:KboCareer,expectedRevision:number,forfeitU
  const season=source.world.seasonKey,key=source.protagonistKey,W=source.world.calendar.growthDays.length;
  if(source.world.contracts[key]?.remainderPay && !source.world.contracts[key]!.remainderPay!.settlement)throw new RangeError('KBO_REMAINDER_NOT_FINALIZED');
  if(!source.seasonGrowth.entries.some(e=>JSON.parse(e.periodKey)[0]==='pro-growth'))throw new RangeError('KBO_SEASON_GROWTH_NOT_SETTLED');
- const career=structuredClone(source);let forfeited=false;
+ const career=structuredClone(settleProCareerPositionFits(source));let forfeited=false;
  if(!source.development.trainingUsedSeasons.includes(season)){
   if(forfeitUnusedTraining!==true)throw new RangeError('TRAINING_FORFEIT_REQUIRED');
   // SEASON_REVIEW means every scheduled team game is final, so the forfeit window is open by definition.
@@ -65,5 +67,5 @@ export function closeKboSeason(source:KboCareer,expectedRevision:number,forfeitU
  }
  career.revision++;
  career.seasonClose={receiptKey:JSON.stringify(['kbo-season-close',career.world.worldKey,season]),seasonKey:season,sourceRevision:career.revision,agingLossUnits:closed.lossUnits,trainingForfeited:forfeited,npcGrowth:npc.results};
- return refreshCareerSeasonGoals(career);
+ return settleCareerSeasonAlias(refreshCareerSeasonGoals(career),source);
 }

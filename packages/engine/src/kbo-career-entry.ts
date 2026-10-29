@@ -1,3 +1,4 @@
+import {schoolNationalInheritance} from './national-inheritance.js';
 import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import type {CareerAchievementLedger} from './career-achievements.js';
 import {collegeLeaveElapsedYears} from './college-service.js';
@@ -60,12 +61,15 @@ export type KboNationalResume={phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase
 export type KboNationalPhase={phase:'INTERNATIONAL_PROGRESS'|'INTERNATIONAL_REVIEW';competitionId:string;nextWorldDay:number;resume:KboNationalResume};
 /** New pro root: never pass this world to HS/COLLEGE commands. Scheduling and games follow separately. */
 export interface KboCareer {
+ aliases?:import('./career-alias.js').CareerAliasLedger;
+ recordCorrections?:import('./career-record-correction.js').CareerRecordCorrectionLedger;
  freeAgency?:import('./kbo-career-fa.js').KboCareerFaLedger;
  retryCareer?:import('./retry-career.js').RetryCareerLedger;
  preparationSeason?:import('./preparation-season.js').PreparationSeason;
  repertoireEvents?:import('./repertoire-events.js').CareerRepertoireLedger;
  advice?:import('./pro-career-advice.js').CareerAdviceLedger;
  adviceMorale?:number;
+ proAwards?:import('./pro-career-awards.js').CareerProAwardLedger;
  proResults?:import('./pro-career-results.js').CareerProResultLedger;
 
  achievements?:CareerAchievementLedger;
@@ -103,6 +107,9 @@ export function startSignedKboCareer(source:HighSchoolCareer,expectedRevision:nu
  if(source.collegeService?.status==='RESUMED'&&collegeLeaveElapsedYears(source)>0)career.military={status:'COMPLETED',applications:[],completedSeasonKey:source.collegeService.completionDays[1]!.seasonKey};
  if(source.achievements)career.achievements=structuredClone(source.achievements);
  career.relationNotices=queueRelationFormationNotices({...career,world:teamWorld,previousSeasons:[...(source.previousSeasons??[]),{world:source.world}]},day)??[];
+ const nationalInheritance=schoolNationalInheritance(source);if(nationalInheritance){career.national=nationalInheritance.national;career.military={status:nationalInheritance.status,applications:[]};}
+ if(source.aliases!==undefined)career.aliases=structuredClone(source.aliases);
+ if(source.recordCorrections!==undefined)career.recordCorrections=structuredClone(source.recordCorrections);
  if(source.retryCareer!==undefined)career.retryCareer=structuredClone(source.retryCareer);
  if(source.repertoireEvents!==undefined)career.repertoireEvents=structuredClone(source.repertoireEvents);
  career.campNotices=queueKboFirstCampNotices(career);return refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(career)));

@@ -12,6 +12,21 @@ import {refreshCareerAchievements,careerAchievementsView} from '../src/career-ac
 import type {AchievementCareer} from '../src/career-achievements.js';
 import type {GameContribution} from '../src/records.js';
 const cache=new Map<string,AchievementCareer>();
+test('A07 requires earned athlete eligibility and three completed consecutive duty seasons across school/KBO/US roots',()=>{
+ // Controlled earned-benefit/duty receipts isolate the achievement predicate; no military program or native medal is fabricated.
+ const sources:AchievementCareer[]=[enrolledCollegeCareer(),kbo(),us()];
+ for(const original of sources){
+  const c=structuredClone(original),year=Number(c.world.seasonKey),start=String(year-2),settled=[start,String(year-1),String(year)],competitionId='controlled-earned-athlete-benefit';delete c.achievements;
+  c.national={invitations:[],competitions:[{competitionId,tournament:'AG',seasonKey:String(year-3),medal:'GOLD',finalRank:1,registered:true,officialAppearance:true,resultVersion:1}],benefits:[{competitionId,benefitKey:JSON.stringify(['national-benefit',competitionId,'ATHLETE_ELIGIBLE']),benefitType:'ATHLETE_ELIGIBLE',appliedRevision:1,resultVersion:1}],athleteDutyStartSeasonKey:start,athleteDutySettledSeasons:settled,athleteDutySeasonsRemaining:0};
+  if('protagonistKey'in c)c.military={...c.military!,status:'COMPLETED'};else c.national.militaryStatus='COMPLETED';
+  const before=canonicalJson(c),done=refreshCareerAchievements(c),unlock=done.achievements!.unlocks.find(u=>u.achievementId==='A07')!;
+  assert.ok(unlock);assert.equal(unlock.evidence.seasonKey,String(year));assert.match(unlock.evidence.sourceKey,/athlete-duty-complete/);assert.equal(canonicalJson(c),before);assert.equal(refreshCareerAchievements(done),done);assert.deepEqual(refreshCareerAchievements(JSON.parse(JSON.stringify(done))),done);
+  const partial=structuredClone(c);partial.national!.athleteDutySeasonsRemaining=1;partial.national!.athleteDutySettledSeasons=settled.slice(0,2);if('protagonistKey'in partial)partial.military={...partial.military!,status:'ATHLETE_SERVICE'};else partial.national!.militaryStatus='ATHLETE_SERVICE';assert.ok(!ids(refreshCareerAchievements(partial)).includes('A07'));
+  const statusOnly=structuredClone(c);delete statusOnly.national;assert.ok(!ids(refreshCareerAchievements(statusOnly)).includes('A07'));
+  const gap=structuredClone(c);gap.national!.athleteDutySettledSeasons=[start,String(year),String(year+1)];assert.throws(()=>refreshCareerAchievements(gap),/ATHLETE_DUTY/);
+  const missingBenefit=structuredClone(c);missingBenefit.national!.benefits=[];assert.throws(()=>refreshCareerAchievements(missingBenefit),/ATHLETE_DUTY/);
+ }
+});
 function us(){if(!cache.has('us'))cache.set('us',preparedUsCareer());return structuredClone(cache.get('us')!) as ReturnType<typeof preparedUsCareer>&AchievementCareer;}
 function kbo(){if(!cache.has('kbo'))cache.set('kbo',enteredKboCareer());return structuredClone(cache.get('kbo')!) as ReturnType<typeof enteredKboCareer>&AchievementCareer;}
 function ids(c:AchievementCareer){return careerAchievementsView(c).achievements.filter(a=>a.status==='COMPLETED').map(a=>a.achievementId);}

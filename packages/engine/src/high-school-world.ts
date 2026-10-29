@@ -18,7 +18,7 @@ export const HIGH_SCHOOLS = [
 ] as const;
 import {HITTER_POSITIONS,PITCHER_POSITIONS,generateSchoolNpcRoster} from './school-roster.js';
 export interface HighSchoolWorld {
-  leagueKey?:'COLLEGE';
+  leagueKey?:'COLLEGE'|'INDEPENDENT';
   schoolBalanceVersion?:2;
   schemaVersion:1; rulesVersion:'1.0.0'; worldKey:string; seasonKey:string; seed:string;
   phase:'CREATED'; protagonistKey:string; protagonistSchoolId:string;

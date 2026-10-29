@@ -17,6 +17,7 @@ export const createSchoolEmergencyRegistry=(world:HighSchoolWorld):SchoolEmergen
 /** Reuses the active school's NPC profile and saved streams. Release never deletes identity/history. */
 export function reconcileSchoolEmergency(world:HighSchoolWorld,health:HealthLedger,source:SchoolEmergencyRegistry,day:number,difficulty:Difficulty):{world:HighSchoolWorld;registry:SchoolEmergencyRegistry;added:string[];released:string[]} {
   if(source.schemaVersion!==1 || source.worldKey!==world.worldKey || !Number.isSafeInteger(source.nextSerial) || source.nextSerial<1 || !Number.isSafeInteger(day) || day<0 || !['GROWTH','REALISTIC','SECRET_CHEAT'].includes(difficulty))throw new RangeError('INVALID_EMERGENCY_REGISTRY');
+  if(world.leagueKey==='INDEPENDENT')throw new RangeError('INDEPENDENT_EMERGENCY_POLICY_REQUIRED');
   const membership=new Map<string,string>();
   for(const school of world.schools)for(const key of school.roster){if(membership.has(key) || !Object.hasOwn(world.players,key))throw new RangeError('INVALID_EMERGENCY_REGISTRATION');membership.set(key,school.id);}
   for(const [key,entry] of Object.entries(source.entries)){

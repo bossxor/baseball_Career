@@ -117,5 +117,8 @@ export function acceptUsKboReturn(c:UsCareer,revision:number,source:KboCareer,a:
  if(c.advice!==undefined)kbo.advice=structuredClone(c.advice);else delete kbo.advice;
  if(c.adviceMorale!==undefined)kbo.adviceMorale=structuredClone(c.adviceMorale);else delete kbo.adviceMorale;
  if(c.proResults!==undefined)kbo.proResults=structuredClone(c.proResults);else delete kbo.proResults;
+ if(c.proAwards!==undefined)kbo.proAwards=structuredClone(c.proAwards);else delete kbo.proAwards;
+ if(c.aliases!==undefined)kbo.aliases=structuredClone(c.aliases);else delete kbo.aliases;
+ if(c.recordCorrections!==undefined)kbo.recordCorrections=structuredClone(c.recordCorrections);else delete kbo.recordCorrections;
  kboCareerEntryView(kbo);return {archivedUs,kbo:refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(kbo))),ownership};
 }

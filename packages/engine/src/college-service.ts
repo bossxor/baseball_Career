@@ -44,6 +44,7 @@ function current(c:HighSchoolCareer,revision:number){
 }
 /** ACTIVE only. SPORTS/ATHLETE require their real admission/benefit owner, never an inferred eligibility flag. */
 export function startCollegeMilitaryLeave(c:HighSchoolCareer,revision:number):HighSchoolCareer {
+ if(c.national?.militaryStatus&&c.national.militaryStatus!=='UNRESOLVED')throw new RangeError('COLLEGE_MILITARY_ALREADY_RESOLVED');
  assertCollegeCareerRevision(c,revision);const a=c.collegeAdmission!,key=c.world.protagonistKey,p=c.world.players[key]!;
  if(c.collegeService)throw new RangeError('COLLEGE_SERVICE_ALREADY_EXISTS');
  if(a.yearsCompleted!==a.academicYear-1||p.age<19||p.age>27||!['PRESEASON_SETUP','SEASON_PROGRESS'].includes(c.phaseContext.phase)||c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame!==null||c.events.some(e=>e.status==='OPEN')||c.kboRecruitment||c.usRecruitment||c.collegeYearEnd)throw new RangeError('COLLEGE_INCOMPLETE_YEAR_REQUIRED');

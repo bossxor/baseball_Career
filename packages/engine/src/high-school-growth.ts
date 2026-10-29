@@ -11,6 +11,7 @@ import {canonicalJson} from './game.js';
 import {refreshOwnCareerAssessment} from './high-school-assessment.js';
 import {assertSchedule} from './schedule.js';
 import type {ScheduledGame} from './schedule.js';
+import {schoolNationalEndInjured} from './college-national.js';
 
 export interface HighSchoolGrowthDay {
  worldDay:number;appearances:number;rehabilitating:boolean;focus:readonly string[];archetype:string;
@@ -73,7 +74,7 @@ export function collectRegisteredSchoolGrowthEvidence(source:HighSchoolCareer,sc
   // Diagnosis follows play; recovery follows an unavailable team game. Both affect the next date.
   if(injured)rehabilitating=true;if(recovered)rehabilitating=false;
  }
- if(rehabilitating!==Object.hasOwn(source.health.injuries,key))throw new RangeError('CHANGED_GROWTH_HEALTH_EVIDENCE');
+ if(rehabilitating!==schoolNationalEndInjured(source,key))throw new RangeError('CHANGED_GROWTH_HEALTH_EVIDENCE');
  return {worldKey:world.worldKey,seasonKey:world.seasonKey,playerKey:key,seasonStartPlayer:structuredClone(start),days};
 }
 

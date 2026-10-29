@@ -13,6 +13,7 @@ import {reconcileSchoolEmergency} from './high-school-emergency.js';
 import {refreshOwnCareerAssessment} from './high-school-assessment.js';
 import {refreshCareerTraits} from './high-school-traits.js';
 import {assertSeasonCalendar} from './season-calendar.js';
+import {refreshCareerRouteNotices} from './career-route-notices.js';
 
 export interface CollegeCup {schemaVersion:1;seasonKey:string;seeds:readonly string[];regularBasis:string;status:'ACTIVE'|'COMPLETE';championKey:string|null}
 export function collegeRegularStandings(source:HighSchoolCareer){
@@ -64,7 +65,7 @@ export function startCollegeCup(source:HighSchoolCareer,expectedRevision:number)
  for(const d of source.days.days)closeHighSchoolDay(source.world,source.records,source.health,source.days,d.day);
  const standings=collegeRegularStandings(source);if(standings.some(s=>s.games!==48))throw new RangeError('COLLEGE_REGULAR_NOT_COMPLETE');
  const career=structuredClone(source);career.collegeCup={schemaVersion:1,seasonKey:source.world.seasonKey,seeds:standings.slice(0,4).map(s=>s.teamKey),regularBasis:basis,status:'ACTIVE',championKey:null};
- career.phaseContext={phase:'POSTSEASON_PROGRESS',nextWorldDay:last+1,pendingGame:null};career.revision++;return refreshCareerSeasonGoals(career);
+ career.phaseContext={phase:'POSTSEASON_PROGRESS',nextWorldDay:last+1,pendingGame:null};career.revision++;return refreshCareerRouteNotices(refreshCareerSeasonGoals(career));
 }
 export function advanceCollegeCup(source:HighSchoolCareer,expectedRevision:number):SchoolProgressResult {
  assertCollegeCareerRevision(source,expectedRevision);

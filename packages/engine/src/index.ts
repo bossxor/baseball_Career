@@ -199,7 +199,7 @@ export {refreshProCareerResultEvents,resolveProCareerResultEvent} from './pro-ca
 export {openRetryCareerEpisode,retryCareerRouteView,beginRetryPreparation,completeRetryPreparation,acknowledgeRetryPreparationResult,assertRetryCareerLedger,assertRetryCareerRevision} from './retry-career.js';
 export type {RetryCareerLedger,RetryEpisode,RetryRouteAuthority,RetryEpisodeReason,RetryCareerPhase} from './retry-career.js';
 
-export {setPreparationRosters,startPreparationSeason,confirmPreparationPreseason,advancePreparationSeason,trainPreparationSeason,setPreparationPlan,completePreparationSeason,preparationSeasonView,assertPreparationSeason,assertPreparationWorld} from './preparation-season.js';
+export {setPreparationRosters,startPreparationSeason,confirmPreparationPreseason as confirmPreparationSeasonPreseason,advancePreparationSeason,trainPreparationSeason,setPreparationPlan,completePreparationSeason,preparationSeasonView,assertPreparationSeason,assertPreparationWorld} from './preparation-season.js';
 
 export {openUsAmateurReturn,settleUsAmateurIndependentYear,settleUsAmateurServiceYear,cancelUsAmateurReturnForUsOffer,usAmateurReturnView,assertUsAmateurReturnLedger} from './us-amateur-return.js';
 export type {UsAmateurReturnLedger} from './us-amateur-return.js';
@@ -217,3 +217,17 @@ export {startCollegeMilitaryLeave,advanceCollegeMilitaryService,resumeCollegeAft
 
 export {CAREER_ACHIEVEMENT_DEFINITIONS,refreshCareerAchievements,careerAchievementsView} from './career-achievements.js';
 export type {CareerAchievementLedger} from './career-achievements.js';
+
+export {startCareerPreparation,confirmPreparationPreseason,advanceCareerPreparation,settleCareerPreparation,careerPreparationView,trainCareerPreparation,setCareerPreparationPlan,setCareerPreparationRosters,assertCareerPreparation} from './career-preparation.js';
+export type {CareerPreparationLedger} from './career-preparation.js';
+
+export {observeProCareerAwardGame,refreshProCareerAwards,proCareerAwardsView,resolveProCareerAwardEvent,calculateProSeasonAwards,positiveCumulativeAwardLeaders,assertProCareerAwards} from './pro-career-awards.js';
+export type {CareerProAwardLedger,ProAward,ProAwardType} from './pro-career-awards.js';
+
+export {correctCareerGameContribution,auditCareerRecordCorrections} from './career-record-correction.js';
+export type {CareerRecordCorrectionLedger,CareerRecordCorrectionCommand,CareerRecordCorrectionReceipt} from './career-record-correction.js';
+
+export {settleCareerSeasonAlias,careerAliasView,resolveCareerAliasEvent,assertCareerAliases} from './career-alias.js';
+export type {CareerAliasLedger,CareerAliasReceipt} from './career-alias.js';
+export {refreshCareerRouteNotices,assertCareerRouteNotices,resolveCareerRouteNotice,careerRouteNoticesView} from './career-route-notices.js';
+export type {CareerRouteNoticeLedger} from './career-route-notices.js';

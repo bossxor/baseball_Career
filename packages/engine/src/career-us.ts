@@ -16,6 +16,7 @@ import {createUsReservationLedger,assertUsReservationLedger,reserveUsDirectSigni
 import type {UsReservationLedger} from './us-reservations.js';
 import {collegeEarlyRouteView,attachCollegeUnsignedReturn} from './college-route.js';
 import {refreshCareerAchievements} from './career-achievements.js';
+import {refreshCareerRouteNotices} from './career-route-notices.js';
 
 export interface CareerUsRecruitment {schemaVersion:1;world:UsRecruitmentWorld;program:UsDirectProgram;sourceBasis:string;currentWorldDay:number;reservations:UsReservationLedger;closedBy?:'COLLEGE'|'KBO'}
 function basis(s:HighSchoolCareer):string {return canonicalJson({world:s.world,records:s.records,health:s.health,days:s.days,development:s.development??null,seasonGrowth:s.seasonGrowth??null,graduation:s.graduation??null,collegeAdmission:s.collegeAdmission??null,collegeGraduation:s.collegeGraduation??null,ownAssessment:s.ownAssessment??null});}
@@ -42,7 +43,7 @@ export function prepareCareerUsDirect(s:HighSchoolCareer,expectedRevision:number
  if(s.usRecruitment || s.previousUsRecruitments?.some(r=>r.program.input.assessmentKey===assessmentKey))throw new RangeError('US_ASSESSMENT_ALREADY_EXISTS');
  if(world.worldKey!==s.world.worldKey || world.seed!==s.world.seed || world.seasonKey!==String(s.world.calendar!.year+1))throw new RangeError('INVALID_US_RECRUITMENT_WORLD');
  const program=prepareUsDirect(world,{assessmentKey,...candidate(s),eligible:true,issuedWorldDay:day(s),expiresWorldDay:day(s)+30});
- const next=structuredClone(s);next.usRecruitment={schemaVersion:1,world:structuredClone(world),program,sourceBasis:basis(s),currentWorldDay:day(s),reservations:createUsReservationLedger(world)};next.revision++;return next;
+ const next=structuredClone(s);next.usRecruitment={schemaVersion:1,world:structuredClone(world),program,sourceBasis:basis(s),currentWorldDay:day(s),reservations:createUsReservationLedger(world)};next.revision++;return refreshCareerRouteNotices(next);
 }
 export function careerUsDirectView(s:HighSchoolCareer){const r=current(s);return usDirectView(r.world,r.program,r.currentWorldDay);}
 /** No games run while comparing graduation routes. Persist elapsed negotiation days; never reroll offers. */
@@ -50,7 +51,7 @@ export function advanceCareerUsNegotiation(s:HighSchoolCareer,expectedRevision:n
  assertCareerRevision(s,expectedRevision);if(s.phaseContext.phase!=='CAREER_ROUTE')throw new RangeError('INVALID_CAREER_PHASE');const r=current(s);
  if(r.program.decision!=='PENDING' || !Number.isSafeInteger(days) || days<1 || !Number.isSafeInteger(r.currentWorldDay+days))throw new RangeError('INVALID_US_NEGOTIATION_ADVANCE');
  const target=Math.min(r.program.input.expiresWorldDay,r.currentWorldDay+days);if(target===r.currentWorldDay)return structuredClone(s);
- const next=structuredClone(s);next.usRecruitment!.currentWorldDay=target;next.revision++;return target===r.program.input.expiresWorldDay&&s.collegeAdmission?.academicYear===2&&!s.kboRecruitment?attachCollegeUnsignedReturn(next):next;
+ const next=structuredClone(s);next.usRecruitment!.currentWorldDay=target;next.revision++;return refreshCareerRouteNotices(target===r.program.input.expiresWorldDay&&s.collegeAdmission?.academicYear===2&&!s.kboRecruitment?attachCollegeUnsignedReturn(next):next);
 }
 /** Same revision protects competing domestic/overseas choices. Activation and actual income posting are separate. */
 export function decideCareerUsDirect(s:HighSchoolCareer,expectedRevision:number,input:{programVersion:number;decision:{type:'SIGN';offerKey:string}|{type:'DECLINE'};eventVersion?:number}):HighSchoolCareer {
@@ -67,7 +68,7 @@ export function decideCareerUsDirect(s:HighSchoolCareer,expectedRevision:number,
   next.phaseContext={phase:'NEXT_SEASON_READY',route:'US',contractKey:program.signing!.contract.contractKey};
   if(next.collegeAdmission?.academicYear===2){next.collegeAdmission={...next.collegeAdmission,status:'LEFT_FOR_PRO'};next.usRecruitment={...next.usRecruitment!,sourceBasis:basis(next)};}
  }
- next.revision++;return input.decision.type==='DECLINE'&&next.collegeAdmission?.academicYear===2&&!next.kboRecruitment?attachCollegeUnsignedReturn(next):refreshCareerAchievements(next);
+ next.revision++;return refreshCareerRouteNotices(input.decision.type==='DECLINE'&&next.collegeAdmission?.academicYear===2&&!next.kboRecruitment?attachCollegeUnsignedReturn(next):refreshCareerAchievements(next));
 }
 
 

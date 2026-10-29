@@ -5,6 +5,7 @@ import type {KboCareer} from './kbo-career-entry.js';
 import type {UsCareer} from './us-career-entry.js';
 import {canonicalJson} from './game.js';
 import {recordTotals} from './records.js';
+import {assertNationalLedger} from './kbo-national.js';
 import type {GameContribution} from './records.js';
 import {assertKboDraft} from './kbo-draft.js';
 import {assertUsDirect} from './us-direct.js';
@@ -53,6 +54,13 @@ function candidates(c:AchievementCareer):Partial<Record<CareerAchievementId,Care
  if(postingId&&offer){const accepted=c.events.find(e=>e.definitionId==='E64'&&e.worldKey===c.world.worldKey&&e.evidence.fields.playerSimulationKey===key&&e.evidence.fields.postingWindowId===postingId&&e.status==='RESOLVED'&&e.resolution?.command==='ACCEPT_CAREER_OFFER'&&e.resolution.receiptKey===JSON.stringify(['kbo-posting-accept',postingId,offer.offerKey]));
   if(accepted&&(!posting||posting.compensationWon===kboPostingFeeWon(offer))){validateEvent(accepted);result.A06=evidence(accepted.resolution!.receiptKey!,accepted.seasonKey,null,accepted.occurredWorldDay);}}
  const collegeService=school.collegeService;if(collegeService&&['COMPLETED','RESUMED'].includes(collegeService.status)&&collegeService.completedBlocks===2){collegeMilitaryServiceView(school);const done=collegeService.completionDays[1]!;result.A07=evidence(JSON.stringify(['college-service-complete',collegeService.programId]),done.seasonKey,null,done.worldDay);}
+ const national=c.national,athleteStatus='protagonistKey'in c?c.military?.status:c.national?.militaryStatus;
+ if(athleteStatus==='COMPLETED'&&national?.athleteDutySeasonsRemaining===0){
+  assertNationalLedger(national,c.world.worldKey);const start=national.athleteDutyStartSeasonKey,settled=national.athleteDutySettledSeasons;
+  if(start&&settled?.length===3&&settled.every((year,i)=>year===String(Number(start)+i))&&Number(settled[2])<=Number(c.world.seasonKey)&&national.benefits.some(b=>national.competitions.some(r=>r.competitionId===b.competitionId&&Number(r.seasonKey)<Number(start)))){
+   const seasonKey=settled[2]!,day=Object.values(c.records.games).reduce((n,g)=>g.scope.seasonKey===seasonKey?Math.max(n,g.worldDay):n,0);result.A07=evidence(JSON.stringify(['athlete-duty-complete',c.world.worldKey,key,start,settled]),seasonKey,null,day);
+  }
+ }
  const kr=school.kboRecruitment,ks=kr?.program.signing,ur=school.usRecruitment,us=ur?.program.signing;
  if(kr?.program.decision==='SIGNED'&&ks){
   assertKboDraft(kr.world,kr.program);

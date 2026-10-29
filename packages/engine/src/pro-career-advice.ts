@@ -94,10 +94,11 @@ function candidates(c:AdviceCareer):AdviceId[]{
  }else{
   if(roleEligible(c,'SP'))ids.push('E14');if(roleEligible(c,'CP'))ids.push('E15');
   if(pitch&&pitch.outs>=60&&pitch.BB*27/pitch.outs>4.5)ids.push('E16');
-  const last=games.filter(g=>(g.pitching[r.key]?.BF??0)>0).slice(-2);if(p.position==='SP'&&last.length===2&&last.reduce((n,g)=>n+g.pitching[r.key]!.ER,0)>=10&&!(c.advice?.restRequests??[]).some(x=>x.status==='PENDING'))ids.push('E19');
+  const last=games.filter(g=>(g.pitching[r.key]?.starts??0)>0).slice(-2);if(p.position==='SP'&&last.length===2&&last.reduce((n,g)=>n+g.pitching[r.key]!.ER,0)>=10&&!(c.advice?.restRequests??[]).some(x=>x.status==='PENDING'))ids.push('E19');
  }
- if(c.adviceMorale!==undefined&&c.adviceMorale<=40)ids.push('E20');
- if(r.roster.some(k=>k!==r.key&&!Object.hasOwn(c.health.injuries,k)&&c.world.players[k]!.kind===p.kind&&c.world.players[k]!.position===p.position&&Math.abs(competition(c,k)-competition(c,r.key))<=5))ids.push('E26');
+ if(recent.length===20&&performance(c,r.key,recent)<=40)ids.push('E20');
+ const competitors=r.roster.filter(k=>k!==r.key&&!Object.hasOwn(c.health.injuries,k)&&c.world.players[k]!.kind===p.kind&&c.world.players[k]!.position===p.position).map(k=>competition(c,k));
+ if(competitors.length&&Math.abs(Math.max(...competitors)-competition(c,r.key))<=5)ids.push('E26');
  return ids;
 }
 function queue(c:AdviceCareer,l:CareerAdviceLedger,id:AdviceId|'E13',fields:Record<string,string>,day:number){const r=registration(c),d=eventDefinition(id),evidenceFields=id==='E10'?{playerSimulationKey:r.key,milestoneKey:JSON.stringify(['first-callup-coaching-review',c.events.find(e=>e.definitionId==='E09'&&e.resolution?.command==='ACCEPT_CALLUP')!.eventKey])}:fields,event=createWorldEvent({definitionId:id,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:d.evidenceDomain,fields:evidenceFields},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'SEASON_PROGRESS',competitionKey:r.league,registrationKey:r.team,sourceRevision:c.revision},sourceSequence:l.notices.length+1,worldDay:day});if(!l.notices.some(e=>e.eventKey===event.eventKey))l.notices=[...l.notices,event];}

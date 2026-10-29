@@ -96,10 +96,11 @@ export function confirmPreparationPreseason(source:PreparationSeason,revision:nu
  assertRevision(source,revision);if(source.phase!=='PREPARATION_PRE')throw new RangeError('INVALID_PREPARATION_PHASE');
  const next=structuredClone(source);next.phase='PREPARATION_REGULAR';next.retry.phase=next.phase;return bump(next);
 }
+function calendarMonth(year:number,day:number):number {const leap=year%4===0&&(year%100!==0||year%400===0),lengths=[31,leap?29:28,31,30,31,30,31,31,30,31,30,31];let month=0;while(month<11&&day>=lengths[month]!){day-=lengths[month]!;month++;}return month;}
 /** One bounded chunk; pending FINAL publication, health and cursor always travel in the same result. */
 export function advancePreparationSeason(source:PreparationSeason,revision:number,mode:'ONE_GAME'|'ONE_MONTH'='ONE_GAME'):{career:PreparationSeason;stopReason:'CHUNK_LIMIT'|'ENGINE_LIMIT'|'ONE_GAME'|'ONE_MONTH'|'SEASON_COMPLETE'} {
  assertRevision(source,revision);if(source.phase!=='PREPARATION_REGULAR'||!['ONE_GAME','ONE_MONTH'].includes(mode))throw new RangeError('INVALID_PREPARATION_PHASE');
- const next=structuredClone(source),last=Math.max(...next.world.schedule.map(g=>g.worldDay)),initial=count(next),year=next.world.calendar.year,startMonth=new Date(Date.UTC(year,0,next.nextWorldDay+1)).getUTCMonth();let pa=0,innings=0;
+ const next=structuredClone(source),last=Math.max(...next.world.schedule.map(g=>g.worldDay)),initial=count(next),year=next.world.calendar.year,startMonth=calendarMonth(year,next.nextWorldDay);let pa=0,innings=0;
  const finish=(stopReason:'CHUNK_LIMIT'|'ENGINE_LIMIT'|'ONE_GAME'|'ONE_MONTH'|'SEASON_COMPLETE')=>({career:bump(next),stopReason});
  while(next.nextWorldDay<=last){
   const day=next.nextWorldDay;
@@ -113,7 +114,7 @@ export function advancePreparationSeason(source:PreparationSeason,revision:numbe
   for(const [key,book]of Object.entries(next.world.repertoires))if(book.learning){const team=next.world.schools.find(t=>t.roster.includes(key));if(team)next.world.repertoires[key]=settleRegisteredPitchLearning({worldKey:next.world.worldKey,seasonKey:next.world.seasonKey,playerKey:key,repertoire:book,records:next.records,health:next.health,schedule:next.world.schedule,scheduledGames:book.learning.registration?.scheduledGames??48,numerator:key===next.world.protagonistKey?(next.difficulty==='SECRET_CHEAT'?15:5):next.difficulty==='REALISTIC'?6:5});}
   if(next.nextWorldDay>last)return finish('SEASON_COMPLETE');
   if(mode==='ONE_GAME'&&count(next)>initial)return finish('ONE_GAME');
-  if(mode==='ONE_MONTH'&&new Date(Date.UTC(year,0,next.nextWorldDay+1)).getUTCMonth()!==startMonth)return finish('ONE_MONTH');
+  if(mode==='ONE_MONTH'&&calendarMonth(year,next.nextWorldDay)!==startMonth)return finish('ONE_MONTH');
   if(pa>=1000||innings>=20)return finish('CHUNK_LIMIT');
  }
  return finish('SEASON_COMPLETE');
