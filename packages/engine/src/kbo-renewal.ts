@@ -1,3 +1,5 @@
+import {assertAcceptedKboCareerFa} from './kbo-career-fa.js';
+import {kboServiceTimeView} from './kbo-service-time.js';
 import {assertKboOffseasonExit,compareKboOffseasonOffers} from './kbo-offseason-exit.js';
 import {kboFutureCommitmentWon} from './kbo-finance.js';
 import {kboContractPaymentBalance} from './kbo-contract-payments.js';
@@ -11,7 +13,7 @@ import {careerAgentRenewalOffer} from './career-agent.js';
 
 /** 01 §6 non-FA 1-year renewal offer for my player, fixed once per season (no RNG, refresh never changes it). */
 export interface KboRenewal {
- offerKey:string;eventKey:string;playerKey:string;clubId:string;seasonKey:string;years:1;
+ offerKey:string;eventKey:string;playerKey:string;clubId:string;seasonKey:string;years:1|2|3|4;
  previousSalaryWon:number;valueWon:number;annualSalaryWon:number;
  basis:{ovr:number;PA:number;OPS:number;outs:number;ERA:number};status:'OFFERED'|'ACCEPTED';
 }
@@ -25,7 +27,7 @@ export function kboContractExpiresAfterSeason(source:KboCareer):boolean {
 }
 /** The accepted renewal that covers the season after the current one, if any. */
 export function acceptedRenewal(source:KboCareer):KboRenewal|null {
- const r=source.renewal;if(r?.status==='ACCEPTED' && r.seasonKey===String(Number(source.world.seasonKey)+1) && r.clubId!==source.protagonistClubId)assertKboOffseasonExit(source);return r?.status==='ACCEPTED' && r.seasonKey===String(Number(source.world.seasonKey)+1)?r:null;
+ const r=source.renewal;if(r?.status==='ACCEPTED'&&r.seasonKey===String(Number(source.world.seasonKey)+1)){if(source.freeAgency?.windows.some(w=>w.state==='ACCEPTED'&&w.seasonKey===r.seasonKey))assertAcceptedKboCareerFa(source);else if(r.clubId!==source.protagonistClubId)assertKboOffseasonExit(source);}return r?.status==='ACCEPTED' && r.seasonKey===String(Number(source.world.seasonKey)+1)?r:null;
 }
 /** True when my contract ends with this season and no accepted renewal covers the next one (72 Y01 blocker). */
 export function kboContractDecisionRequired(source:KboCareer):boolean {
@@ -33,6 +35,7 @@ export function kboContractDecisionRequired(source:KboCareer):boolean {
 }
 /** After season close: fix the offer once and open blocking E30 (S08 compare / S09 retire). Phase stays SEASON_REVIEW. */
 export function offerKboRenewal(source:KboCareer,expectedRevision:number):KboCareer {
+ if(kboServiceTimeView(source).registrationThresholds.domesticFa.reached)throw new RangeError('KBO_FA_DECISION_REQUIRED');
  assertCareerRevision(source,expectedRevision);
  const season=source.world.seasonKey,close=source.seasonClose;
  if(source.phaseContext.phase!=='SEASON_REVIEW' || !close || close.seasonKey!==season || source.renewal?.seasonKey===String(Number(season)+1) || !kboContractExpiresAfterSeason(source) || source.events.some(e=>e.status==='OPEN' && e.definitionId!=='E50') || source.world.players[source.protagonistKey]!.age>=45)throw new RangeError('KBO_RENEWAL_NOT_AVAILABLE');

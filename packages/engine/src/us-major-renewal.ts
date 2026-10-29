@@ -1,3 +1,4 @@
+import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import type {UsCareer} from './us-career-entry.js';
 import {assertUsCareerRevision} from './us-career-entry.js';
 import {stageUsControlledMajorYear,usYearTransitionReadiness} from './us-year-transition.js';
@@ -47,7 +48,7 @@ export function startNextUsMajorSeason(c:UsCareer,revision:number,funding:readon
  const player=stage.world.players[c.protagonistKey]!,next:UsCareer={...c,schemaVersion:4,revision:revision+1,world:stage.world,health:stage.health,majorYears:[...(c.majorYears??[]),archive],inventory,contract:nextContract,registration:{...c.registration,seasonKey:stage.targetSeasonKey,status:'ACTIVE'},phaseContext:{phase:'PRESEASON_SETUP'},seasonGrowth:createSeasonGrowthLedger(player,stage.targetSeasonKey,stage.world.calendar.growthDays.length),development:{...c.development,seasonStartPlayer:structuredClone(player)},planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
  if(c.traits)next.traits={...c.traits,lastClosedDay:null,lastSeasonKey:stage.targetSeasonKey};
  delete next.season;delete next.seasonSchedule;delete next.preseasonPlan;delete next.campNotices;delete next.postseason;
- assertUsCareerRevision(next,next.revision);return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(next));
+ assertUsCareerRevision(next,next.revision);return refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(next)));
 }
 /** One current-club MLB offer after six credited seasons. Signing bonus is not paid again. */
 export function acceptUsMajorFreeAgency(c:UsCareer,revision:number,funding:readonly UsAnnualFunding[],counterOfferKey?:string):UsCareer {
@@ -58,5 +59,5 @@ export function acceptUsMajorFreeAgency(c:UsCareer,revision:number,funding:reado
  const player=stage.world.players[c.protagonistKey]!,next:UsCareer={...c,schemaVersion:4,revision:revision+1,world:stage.world,health:stage.health,majorYears:[...(c.majorYears??[]),archive],inventory,contract:nextContract,registration:{...c.registration,seasonKey:stage.targetSeasonKey,status:'ACTIVE'},phaseContext:{phase:'PRESEASON_SETUP'},seasonGrowth:createSeasonGrowthLedger(player,stage.targetSeasonKey,stage.world.calendar.growthDays.length),development:{...c.development,seasonStartPlayer:structuredClone(player)},planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
  if(c.traits)next.traits={...c.traits,lastClosedDay:null,lastSeasonKey:stage.targetSeasonKey};
  delete next.season;delete next.seasonSchedule;delete next.preseasonPlan;delete next.campNotices;delete next.postseason;
- assertUsCareerRevision(next,next.revision);return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(next));
+ assertUsCareerRevision(next,next.revision);return refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(next)));
 }

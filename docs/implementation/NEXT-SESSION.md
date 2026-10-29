@@ -1,8 +1,12 @@
-# 최신 작업 — US national owner 집중 통과 (2026-10-29)
+# 최신 작업 — US national + PS E84 + advice/retry/FA 집중 (2026-10-29)
 
-`us-national` invitation/deadline/decline·pending JSON resume·native WBC handoff/health/XP/CAS·athlete duty 집중 **4/4 pass**. 증거 `evidence/M2-US-NATIONAL-focused.log`, 상세 [M2-US-NATIONAL-CLOSURE-20261029.md](M2-US-NATIONAL-CLOSURE-20261029.md). 엔진 typecheck 통과. tip 기준 **8ceb88c** + 본 슬라이스 WIP. 전체 `npm run check`/Neon/브라우저/APK 미실행. college AG owner·국내 atomic 저장 caller·30일 복귀·PS E84·99/24/PF-D 잔여. M2약60% 유지·전체 미완료. main/M6 병합·강제푸시·PC 종료 없음. V: 문서 Copy-Item만.
+- US national owner **4/4** → `77ddfb7`. 증거 `evidence/M2-US-NATIONAL-focused.log`.
+- PS E84 KBO/US date+championship **4/4**. 증거 `evidence/M2-PS-E84-focused.log`.
+- advice/repertoire **11/11**, retry/prep/return **4/4**, KBO FA **7/7**. 엔진 typecheck 통과.
+- 국내 복귀 엔진 `acceptUsKboReturn` **6/6** 이미 있음. **atomic DB transport는 M3** (이 worktree에 api 패키지 없음).
+- 전체 `npm run check`/Neon/브라우저/APK 미실행. college AG owner·99/24/PF-D·30일 복귀 확정 증거 잔여. M2약60% 유지. main/M6 병합·강제푸시·PC 종료 없음. V: 문서 Copy-Item만.
 
-다음: **국내 세계 atomic handoff caller → PS E84 → 전역 후30게임일 복귀 확정 →99사건/24경로/PF-D 실제 증거.** bulk 통합 게이트에서 full check.
+다음: **99사건/24경로/PF-D 실제 증거 → bulk 통합 full check → M3 dual-root CAS.**
 
 # 최신 상태 — M2 BULK 통합 검증 통과 (2026-10-28)
 

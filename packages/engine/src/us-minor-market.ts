@@ -1,3 +1,4 @@
+import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {cancelUsKboReturnQuote} from './us-kbo-return.js';
 import type {UsCareer,ActiveUsRosterWorld} from './us-career-entry.js';
 import {assertUsCareerRevision,assertActiveUsRosterWorld} from './us-career-entry.js';
@@ -142,5 +143,5 @@ export function acceptUsMinorMarketOffer(c:UsCareer,revision:number,offerKey:str
   next.relationships=formRegisteredTeamTeammate(ledger,teamWorld,archive.receiptKey,day);
   const notices=queueRelationFormationNotices({...next,world:teamWorld},day);if(notices)next.relationNotices=notices;
  }
- assertUsCareerRevision(next,next.revision);return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(next));
+ assertUsCareerRevision(next,next.revision);return refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(next)));
 }

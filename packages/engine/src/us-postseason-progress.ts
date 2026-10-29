@@ -1,3 +1,5 @@
+import {refreshProCareerResultEvents} from './pro-career-results.js';
+import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {queueUsMajorDebut} from './us-debut.js';
 import {refreshCareerSeasonGoals} from './season-goals.js';
 import type {UsCareer} from './us-career-entry.js';
@@ -51,7 +53,7 @@ function closeGameDay(c:UsCareer,g:ScheduledGame){
 /** One official playoff game per date, bounded to the existing worker limit; regular payroll/growth is not paid twice. */
 export function advanceUsPostseason(c:UsCareer,revision:number):{career:UsCareer;stopReason:UsPostseasonStop} {
  assertUsSeason(c,revision);if(c.phaseContext.phase!=='POSTSEASON_PROGRESS'||c.postseason)throw new RangeError('INVALID_CAREER_PHASE');assertUsPostseasonProgress(c,c.phaseContext);
- const next=cloneUsCareerForGames(c),phase=next.phaseContext as UsPostseasonPhase,game=nextMlbPostseasonGame(phase.bracket),finish=(stopReason:UsPostseasonStop)=>{next.revision++;return {career:refreshCareerSeasonGoals(next),stopReason};};
+ const next=cloneUsCareerForGames(c),phase=next.phaseContext as UsPostseasonPhase,game=nextMlbPostseasonGame(phase.bracket),finish=(stopReason:UsPostseasonStop)=>{next.revision++;return {career:refreshProCareerResultEvents(refreshCareerRepertoireEvents(refreshCareerSeasonGoals(next))),stopReason};};
  const interruptHidden=(day:number)=>{const notice=raiseProHiddenTraitNotice(next,day,next.phaseContext as UsPostseasonPhase|{phase:'SEASON_REVIEW'});if(!notice)return false;Object.assign(next,notice);return true;};
  if(!phase.pendingGame&&interruptHidden(phase.nextWorldDay-1))return finish('MAJOR_EVENT');
  if(!game){next.postseason={bracket:phase.bracket,conferences:phase.conferences,gameEvidence:phase.gameEvidence};next.phaseContext={phase:'SEASON_REVIEW'};return finish('POSTSEASON_COMPLETE');}

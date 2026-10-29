@@ -1,3 +1,4 @@
+import type {FieldPosition} from './lineup.js';
 import { RULES_VERSION } from '@playball/rules';
 import type { Difficulty, Approach, PitchId } from '@playball/rules';
 import type { HighSchoolWorld } from './high-school-world.js';
@@ -24,6 +25,8 @@ export interface HighSchoolGameContext {
   recentPitchingOuts:Readonly<Record<string,number>>;
   traits:Readonly<Record<string,TraitOwnership>>;
   approaches:Readonly<Record<string,Approach>>;
+  positionFits?:Readonly<Record<string,Readonly<Record<FieldPosition,number>>>>;
+  ordinaryStarters?:Readonly<Record<string,string>>;
   /** Internal current-condition factor; frozen into the existing effective multiplier of each game snapshot. */
   conditionMultipliers?:Readonly<Record<string,number>>;
 }
@@ -53,7 +56,7 @@ export function prepareSchoolCompetitionGame(world:CompetitionGameWorld,records:
     const players=school.roster.map(k=>{const p=Object.hasOwn(world.players,k)?world.players[k]:undefined;if(!p || p.simulationKey!==k)throw new RangeError('MISSING_ROSTER_PLAYER');validateDevelopmentPlayer(p);return p;});
     const available=(p:DevelopmentPlayer)=>!context.unavailableKeys.includes(p.simulationKey);
     const hitters=players.filter(p=>p.kind==='HITTER');
-    const assignment=automaticFieldLineup(hitters.map(player=>({player,available:available(player),fits:initialPositionFits(player.position),recent:lookup(context.recentBatting,player.simulationKey)??emptyBatting()})));
+    const assignment=automaticFieldLineup(hitters.map(player=>({player,available:available(player),fits:lookup(context.positionFits??{},player.simulationKey)??initialPositionFits(player.position),recent:lookup(context.recentBatting,player.simulationKey)??emptyBatting()})));
     const starters=players.filter(p=>p.kind==='PITCHER' && p.position==='SP' && available(p));
     const selected=players.find(p=>p.simulationKey===lookup(context.starters,teamKey));
     if(!selected || selected.kind!=='PITCHER' || !available(selected) || starters.length>0 && selected.position!=='SP')throw new RangeError('INVALID_SCHOOL_STARTER');

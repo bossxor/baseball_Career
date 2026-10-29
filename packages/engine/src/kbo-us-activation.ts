@@ -1,3 +1,4 @@
+import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision} from './kbo-career-version.js';
 import type {UsCareer,ActiveUsRosterWorld,KboUsTransfer} from './us-career-entry.js';
@@ -48,5 +49,10 @@ export function activateKboUsCareer(source:KboCareer,revision:number,roster:UsRo
  const transfer:KboUsTransfer={source:signed.kind,...(signed.kind==='POSTING'?{postingId:signed.id}:{windowId:signed.id}),offer:structuredClone(offer),returnRights:signed.returnRights?structuredClone(signed.returnRights):null,kboSeasonKey:source.world.seasonKey,sourceRevision:revision,origin:{playerAge:nextPlayer.age,contract:structuredClone(contract),inventory:structuredClone(nextInventory)}};
  const us:UsCareer={schemaVersion:1,mode:'US_CAREER',revision:revision+1,difficulty:source.difficulty,world,protagonistKey:key,protagonistOrganizationId:offer.organizationId,phaseContext:{phase:'PRESEASON_SETUP'},activation:{receiptKey:JSON.stringify(['kbo-us-activation',signed.id]),sourceYearEndReceiptKey:signed.id,sourceRevision:revision,contractKey,populationBasis:'KBO_TRANSFER'},registration:{playerKey:key,clubId:offer.organizationId,level,seasonKey:world.seasonKey,status:'ACTIVE'},rights:{territory:'US',holderOrgId:offer.organizationId,sourceType:'AMATEUR',playerKey:key},contract,income:[],inventory:nextInventory,amateurHistory:structuredClone(source.amateurHistory),records:structuredClone(source.records),health:structuredClone(source.health),seasonGrowth:createSeasonGrowthLedger(nextPlayer,world.seasonKey,calendar.growthDays.length),development:{...structuredClone(source.development!),seasonStartPlayer:structuredClone(nextPlayer)},relationships:structuredClone(source.relationships),events:structuredClone(source.events),relationNotices:structuredClone(source.relationNotices??[]),styleUsedWindows:[...source.styleUsedWindows],planHistory:[{completedTeamGames:0,focus:[...nextPlayer.focus],archetype:nextPlayer.archetype}],military:{status:military,deadlineAge:28},kboTransfer:transfer};
  if(source.achievements)us.achievements=structuredClone(source.achievements);if(source.agents)us.agents=structuredClone(source.agents);if(source.traits)us.traits={...structuredClone(source.traits),lastClosedDay:null,lastSeasonKey:world.seasonKey};if(source.goals)us.goals=source.goals;
- assertUsCareerRevision(us,us.revision);return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(us));
+ if(source.retryCareer!==undefined)us.retryCareer=structuredClone(source.retryCareer);
+ if(source.repertoireEvents!==undefined)us.repertoireEvents=structuredClone(source.repertoireEvents);
+ if(source.advice!==undefined)us.advice=structuredClone(source.advice);
+ if(source.adviceMorale!==undefined)us.adviceMorale=structuredClone(source.adviceMorale);
+ if(source.proResults!==undefined)us.proResults=structuredClone(source.proResults);
+ assertUsCareerRevision(us,us.revision);return refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(us)));
 }

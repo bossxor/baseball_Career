@@ -1,3 +1,4 @@
+import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {refreshCareerSeasonGoals,refreshCareerPreseasonGoalSelection} from './season-goals.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCollegeCareerRevision} from './high-school-career.js';
@@ -92,5 +93,5 @@ export function startNextCollegeSeason(source:HighSchoolCareer,expectedRevision:
  career.development={...career.development!,seasonStartPlayer:structuredClone(player)};career.planHistory=[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}];
  career.collegeAdmission={...admission,academicYear:admission.academicYear===1?2:admission.academicYear===2?3:4};
  if(career.traits)career.traits={...career.traits,lastClosedDay:null,lastSeasonKey:world.seasonKey};
- delete career.collegeYearEnd;delete career.collegeCup;delete career.collegeResult;delete career.collegeNpcGrowth;delete career.collegeEarlyRoute;career.phaseContext={phase:'PRESEASON_SETUP'};career.revision++;return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(career));
+ delete career.collegeYearEnd;delete career.collegeCup;delete career.collegeResult;delete career.collegeNpcGrowth;delete career.collegeEarlyRoute;career.phaseContext={phase:'PRESEASON_SETUP'};career.revision++;return refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(career)));
 }

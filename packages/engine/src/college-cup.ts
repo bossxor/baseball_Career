@@ -1,3 +1,4 @@
+import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {refreshCareerSeasonGoals} from './season-goals.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCollegeCareerRevision} from './high-school-career.js';
@@ -74,7 +75,7 @@ export function advanceCollegeCup(source:HighSchoolCareer,expectedRevision:numbe
  const nextDay=(source.days.days.at(-1)?.day??-1)+1;
  if(progress.nextWorldDay!==nextDay || progress.pendingGame && (progress.pendingGame.worldKey!==source.world.worldKey || progress.pendingGame.seasonKey!==source.world.seasonKey || progress.pendingGame.worldDay!==nextDay))throw new RangeError('PENDING_GAME_CONTEXT_CHANGED');
  let plateAppearances=0,completedInnings=0;
- const finish=(stopReason:SchoolProgressStop,healthChanges:SchoolProgressResult['healthChanges']=null):SchoolProgressResult=>{career.revision++;return {career:refreshCareerSeasonGoals(career),stopReason,plateAppearances,completedInnings,healthChanges};};
+ const finish=(stopReason:SchoolProgressStop,healthChanges:SchoolProgressResult['healthChanges']=null):SchoolProgressResult=>{career.revision++;return {career:refreshCareerRepertoireEvents(refreshCareerSeasonGoals(career)),stopReason,plateAppearances,completedInnings,healthChanges};};
  while(plateAppearances<1000 && completedInnings<20){
   const day=progress.nextWorldDay,current=bracket(career),pending=current.schedule.filter(g=>g.worldDay===day && !Object.hasOwn(career.records.games,g.simulationKey))[0];
   if(progress.pendingGame && (!pending || progress.pendingGame.game.input.simulationKey!==pending.simulationKey))throw new RangeError('PENDING_GAME_CONTEXT_CHANGED');

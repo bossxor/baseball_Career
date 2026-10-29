@@ -11,7 +11,7 @@ import {createSeasonGrowthLedger} from './growth-ledger.js';
 import {fundUsMinorYear} from './us-minor-history.js';
 import {usContractOrigin} from './us-contract-origin.js';
 
-export type UsMilitaryStatus='UNRESOLVED'|'FROZEN_SERVICE'|'TERMINATED_SERVICE'|'COMPLETED'|'NOT_APPLICABLE';
+export type UsMilitaryStatus='UNRESOLVED'|'FROZEN_SERVICE'|'TERMINATED_SERVICE'|'ATHLETE_ELIGIBLE'|'ATHLETE_SERVICE'|'COMPLETED'|'NOT_APPLICABLE';
 export type UsMilitaryPlanChoice='FREEZE'|'TERMINATE';
 export type UsMilitaryServiceBlockKind='FULL_DOMESTIC_SEASON'|'FIRST_HALF_SEASON';
 export interface UsMilitaryServiceBlock {seasonKey:string;kind:UsMilitaryServiceBlockKind;completedWorldDay:number|null}

@@ -21,7 +21,7 @@ export function injuryProbability(fatigue:number):number {
 export function createHealthLedger(rng:RngState):HealthLedger {
   return {schemaVersion:1,rng:{...rng},injuries:Object.create(null) as Record<string,Injury>,games:[],closedSeasons:[]};
 }
-function validateHealthLedger(source:HealthLedger):void {
+export function validateHealthLedger(source:HealthLedger):void {
   if(source.schemaVersion!==1 || new Set(source.closedSeasons).size!==source.closedSeasons.length || source.closedSeasons.some(s=>!key(s)))throw new RangeError('INVALID_HEALTH_LEDGER');
   for(const [player,injury] of Object.entries(source.injuries)){
     if(!key(player) || !key(injury.diagnosedGameKey) || !key(injury.seasonKey) || !['MILD','MEDIUM','MAJOR'].includes(injury.severity))throw new RangeError('INVALID_INJURY');

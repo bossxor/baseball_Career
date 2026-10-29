@@ -1,3 +1,4 @@
+import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {refreshCareerPreseasonGoalSelection} from './season-goals.js';
 import {KBO_MONEY,KBO_ROSTER_LIMITS} from '@playball/rules';
 import type {KboCareer} from './kbo-career-entry.js';
@@ -71,5 +72,5 @@ export function acceptKboReturnOffer(c:KboCareer,revision:number,worldDay:number
  if(club.roster.length>=KBO_ROSTER_LIMITS.firstTeam){const first=selectKboFirstTeamRoster(club.roster.map(k=>next.world.players[k]!));if(first.length===KBO_ROSTER_LIMITS.firstTeam)club.firstTeam=first;}
  const n=next.returnHome!.negotiations.find(x=>x.negotiationId===open.negotiationId)!;n.status='ACCEPTED';n.acceptedContractKey=contract.contractKey;
  next.registration={playerKey:c.protagonistKey,clubId,seasonKey:c.world.seasonKey,status:'ACTIVE',firstTeam:club.firstTeam.includes(c.protagonistKey)};
- next.phaseContext={phase:'PRESEASON_SETUP'};next.revision++;return refreshCareerPreseasonGoalSelection(next);
+ next.phaseContext={phase:'PRESEASON_SETUP'};next.revision++;return refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(next));
 }

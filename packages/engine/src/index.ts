@@ -188,6 +188,25 @@ export type {CollegeNationalPhase,CollegeNationalLedger,CollegeNationalSession,C
 
 export {resolveProHiddenTraitNotice} from './pro-trait-notices.js';
 
+export {refreshProCareerAdvice,resolveProCareerAdviceEvent,proCareerAdviceView,prepareCareerAdviceGame,settleCareerAdviceRest,careerPositionFits,careerAdviceStarter,beginProPreseasonPositionFitPlan,observeProCareerPositionAppearance,settleProCareerPositionFits} from './pro-career-advice.js';
+export type {CareerAdviceLedger,AdviceCareer,CareerAdviceRestProof} from './pro-career-advice.js';
+
+export {refreshCareerRepertoireEvents,resolveCareerRepertoireEvent,careerBattingApproaches,setCareerBattingApproach,careerRepertoireEventsView} from './repertoire-events.js';
+export type {CareerRepertoireLedger,RepertoireCareer,PitchLevelReceipt} from './repertoire-events.js';
+
+export {refreshProCareerResultEvents,resolveProCareerResultEvent} from './pro-career-results.js';
+
+export {openRetryCareerEpisode,retryCareerRouteView,beginRetryPreparation,completeRetryPreparation,acknowledgeRetryPreparationResult,assertRetryCareerLedger,assertRetryCareerRevision} from './retry-career.js';
+export type {RetryCareerLedger,RetryEpisode,RetryRouteAuthority,RetryEpisodeReason,RetryCareerPhase} from './retry-career.js';
+
+export {setPreparationRosters,startPreparationSeason,confirmPreparationPreseason,advancePreparationSeason,trainPreparationSeason,setPreparationPlan,completePreparationSeason,preparationSeasonView,assertPreparationSeason,assertPreparationWorld} from './preparation-season.js';
+
+export {openUsAmateurReturn,settleUsAmateurIndependentYear,settleUsAmateurServiceYear,cancelUsAmateurReturnForUsOffer,usAmateurReturnView,assertUsAmateurReturnLedger} from './us-amateur-return.js';
+export type {UsAmateurReturnLedger} from './us-amateur-return.js';
+
+export {openKboCareerFa,selectKboCareerFaOffer,acceptKboCareerFaOffer,declineKboCareerFaSelection,kboCareerFaView,assertKboCareerFaLedger,assertAcceptedKboCareerFa,activateKboCareerFa} from './kbo-career-fa.js';
+export type {KboCareerFaLedger,KboCareerFaWindow,KboCareerFaOffer} from './kbo-career-fa.js';
+
 export {unreadPitcherRivalNotices,resolvePitcherRivalNotice} from './pitcher-rival.js';
 
 export * from './career-agent.js';

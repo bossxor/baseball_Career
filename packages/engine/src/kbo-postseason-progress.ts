@@ -1,3 +1,5 @@
+import {refreshProCareerResultEvents} from './pro-career-results.js';
+import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {refreshCareerSeasonGoals} from './season-goals.js';
 import {settleKboReturnConditionDay} from './kbo-return-condition.js';
 import {settleKboOpponentReunions} from './kbo-reunion-events.js';
@@ -54,7 +56,7 @@ export function advanceKboPostseason(source:KboCareer,expectedRevision:number):{
  assertCareerRevision(source,expectedRevision);
  if(source.phaseContext.phase!=='POSTSEASON_PROGRESS' || !source.days)throw new RangeError('INVALID_CAREER_PHASE');
  const career=structuredClone(source),phase=career.phaseContext as KboPostseasonPhase;
- const finish=(stopReason:KboPostseasonStop)=>{career.revision++;return {career:refreshCareerSeasonGoals(career),stopReason};};
+ const finish=(stopReason:KboPostseasonStop)=>{career.revision++;return {career:refreshProCareerResultEvents(refreshCareerRepertoireEvents(refreshCareerSeasonGoals(career))),stopReason};};
  const interruptHidden=(day:number)=>{const notice=raiseProHiddenTraitNotice(career,day,career.phaseContext as KboPostseasonPhase|{phase:'SEASON_REVIEW'});if(!notice)return false;Object.assign(career,notice);return true;};
  if(!phase.pendingGame&&interruptHidden(phase.nextWorldDay-1))return finish('MAJOR_EVENT');
  if(!nextKboPostseasonGame(phase.postseason)){career.postseason=phase.postseason;career.phaseContext={phase:'SEASON_REVIEW'};return finish('POSTSEASON_COMPLETE');}

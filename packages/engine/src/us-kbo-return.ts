@@ -1,3 +1,4 @@
+import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {KBO_MONEY,KBO_ROSTER_LIMITS} from '@playball/rules';
 import type {UsCareer} from './us-career-entry.js';
 import {assertUsCareerRevision} from './us-career-entry.js';
@@ -111,5 +112,10 @@ export function acceptUsKboReturn(c:UsCareer,revision:number,source:KboCareer,a:
  if(c.agents)kbo.agents=structuredClone(c.agents);else delete kbo.agents;
  if(c.traits)kbo.traits={...structuredClone(c.traits),lastClosedDay:null,lastSeasonKey:world.seasonKey};else delete kbo.traits;
  const notices=queueRelationFormationNotices({...kbo,world:teamWorld},day);if(notices)kbo.relationNotices=notices;
- kboCareerEntryView(kbo);return {archivedUs,kbo:refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(kbo)),ownership};
+ if(c.retryCareer!==undefined)kbo.retryCareer=structuredClone(c.retryCareer);else delete kbo.retryCareer;
+ if(c.repertoireEvents!==undefined)kbo.repertoireEvents=structuredClone(c.repertoireEvents);else delete kbo.repertoireEvents;
+ if(c.advice!==undefined)kbo.advice=structuredClone(c.advice);else delete kbo.advice;
+ if(c.adviceMorale!==undefined)kbo.adviceMorale=structuredClone(c.adviceMorale);else delete kbo.adviceMorale;
+ if(c.proResults!==undefined)kbo.proResults=structuredClone(c.proResults);else delete kbo.proResults;
+ kboCareerEntryView(kbo);return {archivedUs,kbo:refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(kbo))),ownership};
 }

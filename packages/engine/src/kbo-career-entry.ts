@@ -1,3 +1,4 @@
+import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import type {CareerAchievementLedger} from './career-achievements.js';
 import {collegeLeaveElapsedYears} from './college-service.js';
 import type {CareerAgentLedger} from './career-agent.js';
@@ -59,6 +60,14 @@ export type KboNationalResume={phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase
 export type KboNationalPhase={phase:'INTERNATIONAL_PROGRESS'|'INTERNATIONAL_REVIEW';competitionId:string;nextWorldDay:number;resume:KboNationalResume};
 /** New pro root: never pass this world to HS/COLLEGE commands. Scheduling and games follow separately. */
 export interface KboCareer {
+ freeAgency?:import('./kbo-career-fa.js').KboCareerFaLedger;
+ retryCareer?:import('./retry-career.js').RetryCareerLedger;
+ preparationSeason?:import('./preparation-season.js').PreparationSeason;
+ repertoireEvents?:import('./repertoire-events.js').CareerRepertoireLedger;
+ advice?:import('./pro-career-advice.js').CareerAdviceLedger;
+ adviceMorale?:number;
+ proResults?:import('./pro-career-results.js').CareerProResultLedger;
+
  achievements?:CareerAchievementLedger;
  agents?:CareerAgentLedger;
  goals?:CareerGoalLedger;
@@ -94,7 +103,9 @@ export function startSignedKboCareer(source:HighSchoolCareer,expectedRevision:nu
  if(source.collegeService?.status==='RESUMED'&&collegeLeaveElapsedYears(source)>0)career.military={status:'COMPLETED',applications:[],completedSeasonKey:source.collegeService.completionDays[1]!.seasonKey};
  if(source.achievements)career.achievements=structuredClone(source.achievements);
  career.relationNotices=queueRelationFormationNotices({...career,world:teamWorld,previousSeasons:[...(source.previousSeasons??[]),{world:source.world}]},day)??[];
- career.campNotices=queueKboFirstCampNotices(career);return refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(career));
+ if(source.retryCareer!==undefined)career.retryCareer=structuredClone(source.retryCareer);
+ if(source.repertoireEvents!==undefined)career.repertoireEvents=structuredClone(source.repertoireEvents);
+ career.campNotices=queueKboFirstCampNotices(career);return refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(career)));
 }
 
 /** Public entry receipt, not the raw pro root containing P, RNG and the full sealed amateur history. */

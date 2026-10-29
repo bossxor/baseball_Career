@@ -1,3 +1,4 @@
+import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {formPitcherRivalFromGame} from './pitcher-rival.js';
 import {settleRelationshipDirectDuels} from './relationships.js';
 import {refreshCareerSeasonGoals} from './season-goals.js';
@@ -9,7 +10,7 @@ import {recordTotals} from './records.js';
 import {createWorldEvent,resolveEventChoice,completeEventDomain,eventDefinition} from './events.js';
 import {assertHighSchoolCareerRevision,assertSchoolCareerRevision} from './high-school-career.js';
 import type {HighSchoolCareer,HighSchoolProgressPhase,HighSchoolAdvancePlan} from './high-school-career.js';
-import type {HighSchoolGameContext} from './high-school-game.js';
+import type {HighSchoolGameContext,CompetitionGameWorld} from './high-school-game.js';
 import type {BattingLine} from './types.js';
 import {forfeitCareerTrainingEvent} from './high-school-training.js';
 import {refreshOwnCareerAssessment} from './high-school-assessment.js';
@@ -21,7 +22,7 @@ export type SchoolProgressStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'ONE_GAME'|'ONE_WEEK
 export interface SchoolProgressResult {career:HighSchoolCareer;stopReason:SchoolProgressStop;plateAppearances:number;completedInnings:number;healthChanges:{injured:boolean;recovered:boolean}|null}
 function teamGames(state:HighSchoolCareer):number {return Object.values(state.records.games).filter(g=>g.scope.seasonKey===state.world.seasonKey && g.scope.leagueKey===(state.world.leagueKey??'HS') && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,state.world.protagonistSchoolId)).length;}
 /** Server-internal world AI context; never returned to clients. */
-export function highSchoolGameContext(state:HighSchoolCareer,competition:'REGULAR'|'POSTSEASON'='REGULAR'):HighSchoolGameContext {
+export function highSchoolGameContext(state:Pick<HighSchoolCareer,'records'|'health'|'difficulty'|'traits'|'repertoireEvents'> & {world:CompetitionGameWorld},competition:'REGULAR'|'POSTSEASON'='REGULAR'):HighSchoolGameContext {
  const total=recordTotals(state.records,{leagueKey:state.world.leagueKey??'HS',phase:'REGULAR',seasonKey:state.world.seasonKey});
  const postseason=competition==='POSTSEASON'?recordTotals(state.records,{leagueKey:state.world.leagueKey??'HS',phase:'POSTSEASON',seasonKey:state.world.seasonKey}):null;
  const starters:Record<string,string>=Object.create(null) as Record<string,string>,recentBatting:Record<string,BattingLine>=Object.create(null) as Record<string,BattingLine>;
@@ -34,7 +35,7 @@ export function highSchoolGameContext(state:HighSchoolCareer,competition:'REGULA
   const reviewed=recordTotals({...state.records,games:Object.fromEntries(Object.entries(state.records.games).filter(([key])=>reviewGames.has(key)))},{leagueKey:state.world.leagueKey??'HS',phase:'REGULAR',seasonKey:state.world.seasonKey});
   for(const key of school.roster)if(Object.hasOwn(reviewed.batting,key))recentBatting[key]=reviewed.batting[key]!;
  }
- return {difficulty:state.difficulty,unavailableKeys:Object.keys(state.health.injuries),starters,recentBatting,recentPitchingOuts:Object.fromEntries([...new Set([...Object.keys(total.pitching),...Object.keys(postseason?.pitching??{})])].map(key=>[key,(total.pitching[key]?.outs??0)+(postseason?.pitching[key]?.outs??0)])),traits:state.traits?.owned??{},approaches:{}};
+ return {difficulty:state.difficulty,unavailableKeys:Object.keys(state.health.injuries),starters,recentBatting,recentPitchingOuts:Object.fromEntries([...new Set([...Object.keys(total.pitching),...Object.keys(postseason?.pitching??{})])].map(key=>[key,(total.pitching[key]?.outs??0)+(postseason?.pitching[key]?.outs??0)])),traits:state.traits?.owned??{},approaches:state.repertoireEvents?{[state.repertoireEvents.playerKey]:state.repertoireEvents.approach}:{}};
 }
 /** Bounded server worker. A plan survives safe chunks; a fresh click never redraws a pending game. */
 export function advanceHighSchoolCareer(source:HighSchoolCareer,expectedRevision:number,mode?:HighSchoolAdvancePlan['mode']):SchoolProgressResult {
@@ -51,7 +52,7 @@ export function advanceSchoolCareer(source:HighSchoolCareer,expectedRevision:num
  if(progress.pendingGame && (progress.pendingGame.worldKey!==career.world.worldKey || progress.pendingGame.seasonKey!==career.world.seasonKey || progress.pendingGame.worldDay!==progress.nextWorldDay))throw new RangeError('PENDING_GAME_CONTEXT_CHANGED');
  const plan=current??{mode:mode??'NEXT_MAJOR_EVENT',startWorldDay:progress.nextWorldDay,startTeamGames:teamGames(career)};progress.advancePlan=plan;
  let plateAppearances=0,completedInnings=0;const initialTeamGames=teamGames(career),lastDay=Math.max(...career.world.schedule.map(g=>g.worldDay));
- const finish=(stopReason:SchoolProgressStop,healthChanges:SchoolProgressResult['healthChanges']=null):SchoolProgressResult=>{if(stopReason!=='CHUNK_LIMIT' && stopReason!=='ENGINE_LIMIT')progress.advancePlan=null;career.revision++;return {career:refreshCareerSeasonGoals(career),stopReason,plateAppearances,completedInnings,healthChanges};};
+ const finish=(stopReason:SchoolProgressStop,healthChanges:SchoolProgressResult['healthChanges']=null):SchoolProgressResult=>{if(stopReason!=='CHUNK_LIMIT' && stopReason!=='ENGINE_LIMIT')progress.advancePlan=null;career.revision++;return {career:refreshCareerRepertoireEvents(refreshCareerSeasonGoals(career)),stopReason,plateAppearances,completedInnings,healthChanges};};
  while(plateAppearances<1000 && completedInnings<20 && teamGames(career)-initialTeamGames<6){
   const day=progress.nextWorldDay;
   if(day>lastDay){career.traits=settleStarterSeasonTraits(career,lastDay);career.phaseContext={phase:'SEASON_REVIEW'};const seasonNotice=raiseHiddenTraitNotice(career,lastDay,{phase:'SEASON_REVIEW'});if(seasonNotice){Object.assign(career,seasonNotice);return finish('MAJOR_EVENT');}return finish('SEASON_REVIEW');}

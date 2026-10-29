@@ -11,12 +11,12 @@ export interface SchoolDayLedger {
   schemaVersion:1;worldKey:string;seasonKey:string;
   days:readonly {day:number;evidence:string;result:SchoolDayResult}[];
 }
-export const createSchoolDayLedger=(world:HighSchoolWorld):SchoolDayLedger=>({schemaVersion:1,worldKey:world.worldKey,seasonKey:world.seasonKey,days:[]});
+export const createSchoolDayLedger=(world:Pick<HighSchoolWorld,'worldKey'|'seasonKey'>):SchoolDayLedger=>({schemaVersion:1,worldKey:world.worldKey,seasonKey:world.seasonKey,days:[]});
 /** Internal postgame reducer. Persist world, health and day ledger together after all date games. */
 export function closeHighSchoolDay(world:HighSchoolWorld,records:RecordLedger,health:HealthLedger,source:SchoolDayLedger,day:number):{world:HighSchoolWorld;health:HealthLedger;days:SchoolDayLedger;result:SchoolDayResult;duplicate:boolean} {
   return closeSchoolCompetitionDay(world,records,health,source,day,world.schedule);
 }
-export function closeSchoolCompetitionDay(world:HighSchoolWorld,records:RecordLedger,health:HealthLedger,source:SchoolDayLedger,day:number,schedule:readonly ScheduledGame[]):{world:HighSchoolWorld;health:HealthLedger;days:SchoolDayLedger;result:SchoolDayResult;duplicate:boolean} {
+export function closeSchoolCompetitionDay<W extends Pick<HighSchoolWorld,'worldKey'|'seasonKey'|'players'|'schools'> & {leagueKey?:string}>(world:W,records:RecordLedger,health:HealthLedger,source:SchoolDayLedger,day:number,schedule:readonly ScheduledGame[]):{world:W;health:HealthLedger;days:SchoolDayLedger;result:SchoolDayResult;duplicate:boolean} {
   const calendar=schedule.map(g=>g.worldDay),first=Math.min(...calendar),last=Math.max(...calendar);
   if(source.schemaVersion!==1 || source.worldKey!==world.worldKey || source.seasonKey!==world.seasonKey || !Number.isSafeInteger(day) || day<first || day>last)throw new RangeError('INVALID_SCHOOL_DAY');
   const scheduled=schedule.filter(g=>g.worldDay===day).sort((a,b)=>a.simulationKey<b.simulationKey?-1:1);
