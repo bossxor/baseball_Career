@@ -101,6 +101,6 @@ export function completeRetryPreparation(source:RetryCareerLedger,revision:numbe
 }
 export function acknowledgeRetryPreparationResult(source:RetryCareerLedger,revision:number,a:RetryRouteAuthority):RetryCareerLedger {
  assertRetryCareerRevision(source,revision);if(source.phase!=='PREPARATION_RESULT')throw new RangeError('INVALID_RETRY_PHASE');
- const view=retryCareerRouteView(source,a),hasRoute=view.routes.some(r=>!['RETIRE','MILITARY_PLAN'].includes(r.routeId));
+ const view=retryCareerRouteView(source,a),hasRoute=view.routes.some(r=>r.routeId!=='RETIRE');
  return {...structuredClone(source),revision:revision+1,phase:hasRoute?'ROUTE_REVIEW':'RETIRE_DECISION'};
 }

@@ -48,9 +48,9 @@ export interface KboRosterRepairReceipt {
 }
 /** AI-only preseason safety repair (44 and14 U). Pure result; user club commands require their own confirmation.
  * Existing low-ability independent replacements are preferred. Never force a valuable former pro to accept minimum. */
-export function repairKboDualLeagueRosters(input:{world:ActiveKboRosterWorld;pool:KboFreeAgentPool;health:HealthLedger;protagonistKey:string;difficulty:Difficulty}){
+export function repairKboDualLeagueRosters(input:{world:ActiveKboRosterWorld;pool:KboFreeAgentPool;health:HealthLedger;protagonistKey?:string;difficulty:Difficulty}){
  const world=structuredClone(input.world),health=structuredClone(input.health);let pool=structuredClone(input.pool);
- if(pool.worldKey!==world.worldKey || pool.seasonKey!==world.seasonKey || pool.settlement || !Object.hasOwn(world.players,input.protagonistKey))throw new RangeError('INVALID_KBO_ROSTER_REPAIR');
+ if(pool.worldKey!==world.worldKey || pool.seasonKey!==world.seasonKey || pool.settlement || input.protagonistKey!==undefined&&!Object.hasOwn(world.players,input.protagonistKey))throw new RangeError('INVALID_KBO_ROSTER_REPAIR');
  assertKboFreeAgentPool(pool,Object.keys(world.players));
  const signings:KboRosterRepairReceipt['signings'][number][]=[],releases:KboRosterRepairReceipt['releases'][number][]=[];
  for(const club of [...world.clubs].sort((a,b)=>a.id<b.id?-1:1)){

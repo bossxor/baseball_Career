@@ -56,6 +56,7 @@ export type HighSchoolCareerPhase =
  | {phase:'SEASON_REVIEW'}
  | {phase:'OFFSEASON_REVIEW'}
  | {phase:'CAREER_ROUTE'}
+ | {phase:'ARCHIVED'}
  | {phase:'SERVICE_PROGRESS';nextWorldDay:number}
  | {phase:'NEXT_SEASON_READY';route:'COLLEGE';admissionKey:string}
  | {phase:'NEXT_SEASON_READY';route:'KBO';contractKey:string}
@@ -68,6 +69,7 @@ export interface HighSchoolCareer {
  recordCorrections?:import('./career-record-correction.js').CareerRecordCorrectionLedger;
  preparation?:import('./career-preparation.js').CareerPreparationLedger;
  retryCareer?:import('./retry-career.js').RetryCareerLedger;
+ retryExit?:import('./career-retry-exhaustion.js').AmateurRetryExit;
  preparationSeason?:import('./preparation-season.js').PreparationSeason;
  repertoireEvents?:import('./repertoire-events.js').CareerRepertoireLedger;
  national?:import('./college-national.js').CollegeNationalLedger;

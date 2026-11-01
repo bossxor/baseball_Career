@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "status": "USER_STOPPED_PARTIAL_NO_PATH_HASH_REPORT",
+  "completedPathHashReports": 0,
+  "runtimeReportExists": false,
+  "domainTests": {"tests": 199, "pass": 199, "fail": 0, "skipped": 0, "exitCode": 0, "log": "M2-CLOSURE-20261102-domains.log"},
+  "runnerSessions": [
+    {"sessionId": 19795, "status": "FAILED_PROOF_HARNESS_ARGUMENT", "error": "INVALID_ADVANCE_DAYS", "fixApplied": "Pass integer maxDays=1; rerun unverified"},
+    {"sessionId": 61237, "pid": 19880, "status": "TERMINATED_ON_USER_STOP", "argv": ["node", "--import", "tsx", "scripts/verify-m2-closure.mjs", "--paths-only"]}
+  ],
+  "m2Complete": false,
+  "notes": ["Do not infer runtime path PASS from source inventories or aggregate tests", "No hand-authored final path hashes", "See M2-CLOSURE-PROOF-HANDOFF-20261102.md"]
+}

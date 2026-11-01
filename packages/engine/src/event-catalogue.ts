@@ -1642,7 +1642,7 @@ export const EVENT_DEFINITIONS:readonly EventDefinition[] = [
     "evidenceDomain": "COLLEGE",
     "evidenceFields": [
       "playerSimulationKey",
-      "enrollmentId",
+      "routeOfferSetId",
       "academicYear",
       "sourceTaskId"
     ],

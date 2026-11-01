@@ -21,10 +21,18 @@ export function auditUsClosedDays(c:UsCareer):void {
 }
 /** One annual PRO entitlement for each identity; changing minor level creates no new annual budget. */
 export function settleUsSeasonGrowth(c:UsCareer,revision:number,forfeitUnusedTraining=false):UsCareer {
+ return settleOwnedUsGrowth(c,revision,forfeitUnusedTraining,false);
+}
+/** E68 already finalized the protagonist's ACTIVE/training periods; settle the same native world's NPCs once. */
+export function settleUsMilitaryReturnWorldGrowth(c:UsCareer,revision:number):UsCareer {
+ if(!c.season?.militaryService||!c.seasonGrowth.finalized||!c.military.service?.blocks.some(b=>b.seasonKey===c.world.seasonKey&&b.completedWorldDay!==null))throw new RangeError('US_RETURN_SERVICE_GROWTH_REQUIRED');
+ return settleOwnedUsGrowth(c,revision,false,true);
+}
+function settleOwnedUsGrowth(c:UsCareer,revision:number,forfeitUnusedTraining:boolean,returnService:boolean):UsCareer {
  assertUsSeason(c,revision);if(c.phaseContext.phase!=='SEASON_REVIEW' || c.season!.days.length!==c.season!.lastDay-c.season!.firstDay+1)throw new RangeError('US_SEASON_NOT_CLOSED');auditUsClosedDays(c);if(c.postseason)auditUsCompletedPostseason(c);validateSeasonGrowthLedger(c.seasonGrowth);if(c.season!.growthFinalized){if(!c.seasonGrowth.finalized)throw new RangeError('INVALID_US_GROWTH_FINALIZATION');return structuredClone(c);}
- if(!c.development.trainingUsedSeasons.includes(c.world.seasonKey)){if(!forfeitUnusedTraining)throw new RangeError('TRAINING_DECISION_REQUIRED');c=applyUsSeasonTraining(c,{type:'SKIP'});}
+ if(!returnService&&!c.development.trainingUsedSeasons.includes(c.world.seasonKey)){if(!forfeitUnusedTraining)throw new RangeError('TRAINING_DECISION_REQUIRED');c=applyUsSeasonTraining(c,{type:'SKIP'});}
  const next:UsCareer={...c,world:{...c.world,players:{...c.world.players}},season:{...c.season!}},s=next.season!,W=c.world.calendar.growthDays.length,totals=US_LEVELS.map(leagueKey=>recordTotals(c.records,{seasonKey:c.world.seasonKey,leagueKey,phase:'REGULAR'})),npcs:NonNullable<NonNullable<UsCareer['season']>['growthFinalized']>['npcs']={};
- for(const key of Object.keys(s.openingPlayers).sort()){const start=s.openingPlayers[key]!,current=next.world.players[key];if(!current)throw new RangeError('MISSING_US_GROWTH_PLAYER');const own=key===c.protagonistKey,appearances=totals.reduce((n,t)=>n+(start.kind==='HITTER'?(t.batting[key]?.PA??0):(t.pitching[key]?.outs??0)),0),ledger=own?c.seasonGrowth:createSeasonGrowthLedger(start,c.world.seasonKey,W),periods=usGrowthPeriods(c,key,start,appearances),growth=settleClosedGrowthPeriods(current,ledger,periods),closed=finalizeSeasonGrowth(growth.player,growth.ledger,W);next.world.players[key]=closed.player;if(own)next.seasonGrowth=closed.ledger;else npcs[key]={budgetUnits:growth.newBudgetUnits,gainedUnits:growth.newGainedUnits,agingLossUnits:closed.lossUnits};}
+ for(const key of Object.keys(s.openingPlayers).sort()){if(returnService&&key===c.protagonistKey)continue;const start=s.openingPlayers[key]!,current=next.world.players[key];if(!current)throw new RangeError('MISSING_US_GROWTH_PLAYER');const own=key===c.protagonistKey,appearances=totals.reduce((n,t)=>n+(start.kind==='HITTER'?(t.batting[key]?.PA??0):(t.pitching[key]?.outs??0)),0),ledger=own?c.seasonGrowth:createSeasonGrowthLedger(start,c.world.seasonKey,W),periods=usGrowthPeriods(c,key,start,appearances),growth=settleClosedGrowthPeriods(current,ledger,periods),closed=finalizeSeasonGrowth(growth.player,growth.ledger,W);next.world.players[key]=closed.player;if(own)next.seasonGrowth=closed.ledger;else npcs[key]={budgetUnits:growth.newBudgetUnits,gainedUnits:growth.newGainedUnits,agingLossUnits:closed.lossUnits};}
  s.growthFinalized={receiptKey:JSON.stringify(['us-season-growth-final',s.receiptKey]),npcs};advanceUsAthleteDutySeason(next);next.revision++;return settleCareerSeasonAlias(refreshCareerSeasonGoals(settleProCareerPositionFits(next)),c);
 }
 

@@ -1,0 +1,7 @@
+M2-CLOSE-RETURN-20261102 checkpoint
+Engine TypeScript: PASS, npx tsc -p packages/engine/tsconfig.json --noEmit, exit 0.
+Initial native two-season test: FAIL BATTING_SPLIT_MISMATCH in controlled source baseline; test fixture repaired afterward.
+Session 52276: interrupted with Ctrl+C before completion; old deep-root cloning loaded.
+Session 89768: interrupted with Ctrl+C on explicit user stop; exit 1, no completion output.
+No native two-season/service/activation/cancellation PASS claimed.
+See docs/implementation/M2-CLOSE-RETURN-HANDOFF-20261102.md for exact unfinished work.

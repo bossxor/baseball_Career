@@ -835,7 +835,7 @@
       "executionStatus": "NOT_IMPLEMENTED",
       "cancelPolicy": "CANCELLED_WITH_REASON_IF_SOURCE_INVALID",
       "domain": "COLLEGE",
-      "evidenceKey": "playerSimulationKey:enrollmentId:academicYear:sourceTaskId",
+      "evidenceKey": "playerSimulationKey:routeOfferSetId:academicYear:sourceTaskId",
       "eventId": "E70",
       "repeatPolicy": "ONCE_PER_ACADEMIC_STAGE",
       "predicateSource": "event-catalog-v2 + 45 + domain contract; validated at task creation and commit",

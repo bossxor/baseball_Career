@@ -61,10 +61,12 @@ export type KboNationalResume={phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase
 export type KboNationalPhase={phase:'INTERNATIONAL_PROGRESS'|'INTERNATIONAL_REVIEW';competitionId:string;nextWorldDay:number;resume:KboNationalResume};
 /** New pro root: never pass this world to HS/COLLEGE commands. Scheduling and games follow separately. */
 export interface KboCareer {
+ usAmateurReturnHistory?:import('./us-amateur-return-career.js').UsAmateurReturnCareer;
  aliases?:import('./career-alias.js').CareerAliasLedger;
  recordCorrections?:import('./career-record-correction.js').CareerRecordCorrectionLedger;
  freeAgency?:import('./kbo-career-fa.js').KboCareerFaLedger;
  retryCareer?:import('./retry-career.js').RetryCareerLedger;
+ retryPro?:import('./career-pro-retry.js').KboRetryPro;
  preparationSeason?:import('./preparation-season.js').PreparationSeason;
  repertoireEvents?:import('./repertoire-events.js').CareerRepertoireLedger;
  advice?:import('./pro-career-advice.js').CareerAdviceLedger;

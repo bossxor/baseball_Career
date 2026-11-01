@@ -1,0 +1,10 @@
+✔ E70 uses actual pre-admission route task, navigation never enrolls, admission closes its real receipt and survives JSON/activation (110.5307ms)
+✔ E70 keeps legitimate fallback schools and closes only from a real competing route; forged offer/task/context fails (310.6099ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 819.4822

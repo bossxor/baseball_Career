@@ -81,7 +81,7 @@ export function highSchoolCareerRouteView(source:HighSchoolCareer){
 export function openHighSchoolCareerRoute(source:HighSchoolCareer,expectedRevision:number,eventVersion:number){
  assertHighSchoolCareerRevision(source,expectedRevision);const {event,context}=routeSource(source);
  const selected=resolveEventChoice(event,eventVersion,'OPEN_ROUTE',null,context),career=structuredClone(source);
- career.phaseContext={phase:'CAREER_ROUTE'};career.revision++;return {career,navigation:selected.navigation};
+ career.phaseContext={phase:'CAREER_ROUTE'};career.revision++;return {career:refreshCareerRouteNotices(career),navigation:selected.navigation};
 }
 /** Admission is effective next season; the completed school world and its official records remain historical. */
 export function enrollHighSchoolCollege(source:HighSchoolCareer,expectedRevision:number,input:{eventVersion:number;offerSetKey:string;offerSetVersion:number;collegeId:string}):HighSchoolCareer {

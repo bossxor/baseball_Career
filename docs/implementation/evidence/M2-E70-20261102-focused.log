@@ -1,0 +1,21 @@
+✔ E05/E06 bind actual native draft receipts; navigation cannot fabricate a contract or consume retry usage (812.6149ms)
+✔ E56/E57 require genuine currently valid US offers; native signing/expiry owns their resolution (169.2264ms)
+✔ E71 requires committed admission; E72 requires actual semifinal qualification and never invents a cup result (949.993ms)
+✔ route notice guards reject forged source/resolution, stale root/event versions, and preserve originals (250.341ms)
+✔ E06 is invalidated only after an actual US signing, even when domestic roster slots were full (345.379ms)
+✔ E70 uses actual pre-admission route task, navigation never enrolls, admission closes its real receipt and survives JSON/activation (133.5323ms)
+✔ E70 keeps legitimate fallback schools and closes only from a real competing route; forged offer/task/context fails (384.3719ms)
+✔ season review atomically pays growth and opens one blocking E04 with a post-growth route snapshot (52.0694ms)
+✔ opening S28 keeps E04 open, repeated views/JSON restore do not change growth, RNG or revision (71.6414ms)
+✔ 43: college eligibility uses exact post-growth overall at48/52/55, fallback three stay available (134.6035ms)
+✔ college acceptance closes E04 once, preserves historical roster/records and reserves next-year admission (48.1306ms)
+✔ stale revision/event/offer, ineligible or unknown college, changed evaluation reject without partial effects (44.2406ms)
+✔ missing calendar, incomplete review and another pending event do not pay growth or create graduation (124.7756ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2955.4425

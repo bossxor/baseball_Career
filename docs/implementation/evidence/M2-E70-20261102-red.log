@@ -1,0 +1,43 @@
+✖ E70 uses actual pre-admission route task, navigation never enrolls, admission closes its real receipt and survives JSON/activation (40.5345ms)
+✖ E70 is absent with no eligible college and closes only from a real competing route; forged offer/task fails (48.3455ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 481.4196
+
+✖ failing tests:
+
+test at packages\engine\test\college-review-notice.test.ts:1:1061
+✖ E70 uses actual pre-admission route task, navigation never enrolls, admission closes its real receipt and survives JSON/activation (40.5345ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(n)
+  
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\college-review-notice.test.ts:13:72)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\college-review-notice.test.ts:1:2874
+✖ E70 is absent with no eligible college and closes only from a real competing route; forged offer/task fails (48.3455ms)
+  TypeError: Cannot read properties of undefined (reading 'notices')
+      at x.routeNotices.notices.find.evidence.fields.sourceTaskId (E:\AI\Game\baseball_career\packages\engine\test\college-review-notice.test.ts:20:115)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\college-review-notice.test.ts:20:340)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at Test.run (node:internal/test_runner/test:1462:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
