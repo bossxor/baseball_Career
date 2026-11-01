@@ -7,16 +7,20 @@ import {compareKboOffseasonOffers} from '../src/kbo-offseason-exit.js';
 import {createSeasonGrowthLedger,finalizeSeasonGrowth} from '../src/growth-ledger.js';
 import {closeSeasonHealth} from '../src/health.js';
 import {openRetryCareerEpisode,assertRetryCareerLedger} from '../src/retry-career.js';
+import {createKboPostseason,nextKboPostseasonGame,recordKboPostseasonGame} from '../src/kbo-postseason.js';
 import * as retry from '../src/career-pro-retry.js';
 
 /** Controlled unplayed pro closure and saturated future budgets. Retry commands and independent games are native. */
-export function retryNoOfferPrefix(priorTwo=false){
+export function retryNoOfferPrefix(priorTwo=false,retiringRoster=false){
  const c=enteredKboCareer();c.schemaVersion=7;c.phaseContext={phase:'SEASON_REVIEW'};c.military={status:'COMPLETED',applications:[]};
  c.days={schemaVersion:1,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,days:[{day:300,evidence:'controlled-retry-source',result:{injured:[],recovered:[]}}]};
  if(priorTwo)c.world.players[c.protagonistKey]!.age=23;
  const growth=createSeasonGrowthLedger(c.world.players[c.protagonistKey]!,c.world.seasonKey,c.world.calendar.growthDays.length),closed=finalizeSeasonGrowth(c.world.players[c.protagonistKey]!,growth,c.world.calendar.growthDays.length);c.world.players[c.protagonistKey]=closed.player;c.seasonGrowth=closed.ledger;c.health=closeSeasonHealth(c.health,c.world.seasonKey).ledger;
  c.seasonClose={receiptKey:'controlled-pro-close',seasonKey:c.world.seasonKey,sourceRevision:c.revision,agingLossUnits:closed.lossUnits,trainingForfeited:true};
+ // Controlled bracket winners complete the unplayed pro-prefix archive. These are not native pro games.
+ c.postseason=createKboPostseason(c.world.seasonKey,c.world.clubs.slice(0,5).map(t=>t.id));while(!c.postseason.championKey)c.postseason=recordKboPostseasonGame(c.postseason,nextKboPostseasonGame(c.postseason)!.homeTeamKey);
  for(const club of c.world.clubs){for(const key of club.roster)if(key!==c.protagonistKey)c.world.contracts[key]!.years=2;let remaining=club.budgetWon*.9-kboFutureCommitmentWon(c.world,club.id,1);for(const key of club.roster){if(key===c.protagonistKey)continue;const contract=c.world.contracts[key]!,amount=Math.min(remaining,KBO_MONEY.maximumSalaryWon-contract.annualSalaryWon);contract.annualSalaryWon+=amount;club.reservedSalaryWon+=amount;remaining-=amount;}assert.equal(remaining,0);}
+ if(retiringRoster)for(const [key,p]of Object.entries(c.world.players))if(key!==c.protagonistKey)p.age=44;
  if(priorTwo){
   // Prior completed optional periods are a labelled controlled prefix, never counted as native simulated seasons.
   const r=openRetryCareerEpisode(undefined,0,{worldKey:c.world.worldKey,playerKey:c.protagonistKey,seasonKey:'2027',age:20,reason:'PRO_RELEASED',receiptKey:'controlled-prior-episode'}),episodeId=r.episodes[0]!.episodeId;
@@ -27,16 +31,18 @@ export function retryNoOfferPrefix(priorTwo=false){
 export interface RetryScenarioCommand {command:string;input:unknown;output:KboCareer}
 let cached:ReturnType<typeof executeExhaustion>|undefined;
 /** P16: controlled prior2, actual native final48, actual zero-offer evaluation, explicit E35 confirmation. */
-export function runRetryExhaustionScenario(){cached??=executeExhaustion();return structuredClone(cached);}
+export function runRetryExhaustionScenario(){cached??=executeExhaustion();return cached;}
 function executeExhaustion(){
- const initialState=retryNoOfferPrefix(true),commands:RetryScenarioCommand[]=[];let c=initialState;
+ const initialState=retryNoOfferPrefix(true),commands:RetryScenarioCommand[]=[],advances:{revision:number;mode:'ONE_MONTH'}[]=[];let c=initialState;
  const apply=(command:string,input:unknown,next:KboCareer)=>{commands.push({command,input,output:next});c=next;};
  apply('OPEN_KBO_UNCONTRACTED_RETRY',{revision:c.revision},retry.openKboUncontractedRetry(c,c.revision));
  apply('OPEN_UNCONTRACTED_ROUTES',{revision:c.revision,eventVersion:1},retry.reviewKboUncontractedRoutes(c,c.revision,1));
  const routePreviewId=retry.kboRetryRoutesView(c).routePreviewId;
  apply('START_PREPARATION',{revision:c.revision,routePreviewId},retry.startKboRetryPreparation(c,c.revision,{routePreviewId}));
  apply('CONFIRM_PRESEASON',{revision:c.revision},retry.confirmKboRetryPreseason(c,c.revision));
- for(let i=0;i<2000&&c.preparationSeason!.nextWorldDay<=Math.max(...c.preparationSeason!.world.schedule.map(g=>g.worldDay));i++){const input={revision:c.revision,mode:'ONE_MONTH' as const},out=retry.advanceKboRetryPreparation(c,c.revision,input.mode);assert.notEqual(out.stopReason,'ENGINE_LIMIT');apply('ADVANCE_PREPARATION',input,out.career);}
+ for(let i=0;i<2000&&c.preparationSeason!.nextWorldDay<=Math.max(...c.preparationSeason!.world.schedule.map(g=>g.worldDay));i++){const input={revision:c.revision,mode:'ONE_MONTH' as const},out=retry.advanceKboRetryPreparation(c,c.revision,input.mode);assert.notEqual(out.stopReason,'ENGINE_LIMIT');advances.push(input);c=out.career;}
+ // Keep replay inputs and the final checkpoint; retaining every growing root exhausts Node's heap.
+ commands.push({command:'ADVANCE_PREPARATION_TO_END',input:{advances},output:c});
  apply('SETTLE_PREPARATION',{revision:c.revision,forfeitUnusedTraining:true},retry.settleKboRetryPreparation(c,c.revision,true));
  assert.equal(c.retryCareer!.careerPreparationUsed,3);assert.equal(retry.kboRetryRoutesView(c).offers.length,0);
  apply('OPEN_RETRY_EXHAUSTION',{revision:c.revision},retry.openKboRetryExhaustion(c,c.revision));

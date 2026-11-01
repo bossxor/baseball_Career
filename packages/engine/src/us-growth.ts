@@ -25,7 +25,7 @@ export function settleUsSeasonGrowth(c:UsCareer,revision:number,forfeitUnusedTra
 }
 /** E68 already finalized the protagonist's ACTIVE/training periods; settle the same native world's NPCs once. */
 export function settleUsMilitaryReturnWorldGrowth(c:UsCareer,revision:number):UsCareer {
- if(!c.season?.militaryService||!c.seasonGrowth.finalized||!c.military.service?.blocks.some(b=>b.seasonKey===c.world.seasonKey&&b.completedWorldDay!==null))throw new RangeError('US_RETURN_SERVICE_GROWTH_REQUIRED');
+ if(!c.season?.militaryService||c.contract.status!=='TERMINATED'||c.military.status!=='TERMINATED_SERVICE'||!c.seasonGrowth.finalized||c.seasonGrowth.playerKey!==c.protagonistKey||c.seasonGrowth.seasonKey!==c.world.seasonKey||c.seasonGrowth.aging?.elapsedDays!==c.world.calendar.growthDays.length||Object.values(c.records.games).some(g=>g.scope.seasonKey===c.world.seasonKey&&(Object.hasOwn(g.batting,c.protagonistKey)||Object.hasOwn(g.pitching,c.protagonistKey)))||!c.military.service?.blocks.some(b=>b.seasonKey===c.world.seasonKey&&b.completedWorldDay!==null))throw new RangeError('US_RETURN_SERVICE_GROWTH_REQUIRED');
  return settleOwnedUsGrowth(c,revision,false,true);
 }
 function settleOwnedUsGrowth(c:UsCareer,revision:number,forfeitUnusedTraining:boolean,returnService:boolean):UsCareer {

@@ -12,11 +12,18 @@ import {carryKboServicePayroll} from './kbo-service-payroll.js';
 import {createSeasonCalendar} from './season-calendar.js';
 import {emptyPitchXpLedger} from './pitch-xp.js';
 import {assertKboRecruitmentWorld} from './kbo-draft.js';
+import type {HealthLedger} from './health.js';
 
-/** Contractless protagonist is excluded from AI renewal, market, draft and safety signings. */
-export function advanceRetryKboWorld(source:KboCareer,worldSource:ActiveKboRosterWorld,poolSource?:KboFreeAgentPool){
+/** Offseason staging cannot settle suspended service, national duty or a live overseas return. */
+export function assertRetryKboWorldSupported(source:KboCareer,world:ActiveKboRosterWorld):void {
+ if(!['COMPLETED','NOT_APPLICABLE'].includes(source.military?.status??'UNRESOLVED')||Object.keys(world.suspendedContracts??{}).length||Object.keys(source.sangmu?.members??{}).length||source.sangmu?.loaned?.length||(source.national?.athleteDutySeasonsRemaining??0)>0||source.national?.invitations.some(i=>i.seasonKey===source.world.seasonKey&&i.status!=='DECLINED'&&!source.national?.competitions.some(c=>c.seasonKey===i.seasonKey&&c.tournament===i.tournament))||source.returnHome?.negotiations.some(n=>['OPEN','ACCEPTED'].includes(n.status))||source.posting?.windows.some(w=>w.status==='SIGNED')||source.overseasFa?.windows.some(w=>w.status==='SIGNED'))throw new RangeError('KBO_RETRY_WORLD_UNSUPPORTED');
+}
+
+/** Offseason staging only: no official pro games or annual NPC growth are claimed here. */
+export function advanceRetryKboWorld(source:KboCareer,worldSource:ActiveKboRosterWorld,poolSource?:KboFreeAgentPool,healthSource:HealthLedger=source.health){
+ assertRetryKboWorldSupported(source,worldSource);
  let world=structuredClone(worldSource);const prior=structuredClone(world.contracts),oldSeason=world.seasonKey,target=String(Number(oldSeason)+1),key=source.protagonistKey,expired:string[]=[];
- const health=structuredClone(source.health);delete health.injuries[key];
+ const health=structuredClone(healthSource);delete health.injuries[key];
  for(const club of world.clubs){club.roster=club.roster.filter(k=>k!==key);club.firstTeam=club.firstTeam.filter(k=>k!==key);}
  delete world.players[key];delete world.contracts[key];delete world.repertoires[key];
  const retired=retireKboOverAgeNpcs(world,Object.keys(world.players).filter(k=>world.players[k]!.age>=45),oldSeason,true);

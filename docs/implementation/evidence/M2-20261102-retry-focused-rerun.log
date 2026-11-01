@@ -1,0 +1,42 @@
+✔ genuine empty pro market opens E34; root CAS and owned preview guard independent preparation (1560.0943ms)
+✔ native final retry48 charges lifetime budget3 once; zero-budget market requires explicit E35 retirement (280662.1ms)
+✖ controlled retiring-roster budget fixture uses the same native final48; real market quote accepts into playable KBO (23801.9337ms)
+✖ controlled amateur root with shared native final48 requires fresh domestic assessment and explicit archive confirmation (6376.5627ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 313770.2007
+
+✖ failing tests:
+
+test at packages\engine\test\career-retry-completion.test.ts:1:3927
+✖ controlled retiring-roster budget fixture uses the same native final48; real market quote accepts into playable KBO (23801.9337ms)
+  RangeError: INVALID_KBO_FIRST_CAMP_SOURCE
+      at campSource (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\kbo-preseason.ts:40:420)
+      at queueKboFirstCampNotices (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\kbo-preseason.ts:44:224)
+      at confirmKboPreseasonPlan (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\kbo-preseason.ts:74:19)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\career-retry-completion.test.ts:46:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at packages\engine\test\career-retry-completion.test.ts:1:5775
+✖ controlled amateur root with shared native final48 requires fresh domestic assessment and explicit archive confirmation (6376.5627ms)
+  RangeError: ROUTE_NOTICE_COLLEGE_REVIEW_SOURCE_CHANGED
+      at collegeReviewTask (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\career-route-notices.ts:48:556)
+      at assertCareerRouteNotices (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\career-route-notices.ts:76:4)
+      at refreshCareerRouteNotices (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\career-route-notices.ts:125:2)
+      at resolveCareerKboDraft (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\career-kbo.ts:44:122)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\career-retry-completion.test.ts:56:42)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)

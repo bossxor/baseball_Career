@@ -4,6 +4,9 @@ import {assertCareerPreparation} from './career-preparation.js';
 import {highSchoolCareerRouteView} from './high-school-route.js';
 import {careerUsDirectView} from './career-us.js';
 import {assertKboDraft} from './kbo-draft.js';
+import {careerKboDraftView} from './career-kbo.js';
+import {collegeLeaveElapsedYears} from './college-service.js';
+import {assertCollegeNationalState} from './college-national.js';
 import {canonicalJson} from './game.js';
 import {createWorldEvent,eventDefinition,completeBlockingEvent,validateEvent} from './events.js';
 
@@ -13,8 +16,10 @@ function exhausted(c:HighSchoolCareer){
  if(c.world.leagueKey!=='INDEPENDENT'||p.phase!=='PREPARATION_RESULT'||r.careerPreparationUsed!==3||!k||!k.program.result)throw new RangeError('RETRY_ASSESSMENT_REQUIRED');
  assertKboDraft(k.world,k.program);
  const routeSource={...c,events:c.events.filter(e=>e.eventKey!==c.retryExit?.eventKey)};
+ careerKboDraftView(routeSource);
  const college=highSchoolCareerRouteView(routeSource).colleges.some(o=>o.eligible),resume=c.collegeAdmission?.status==='ENROLLED'&&c.collegeAdmission.yearsCompleted<4,us=c.usRecruitment&&careerUsDirectView(c).visible;
- const militaryComplete=c.collegeService?.status==='RESUMED'||c.national?.militaryStatus==='COMPLETED';
+ if(c.collegeService?.status==='RESUMED')collegeLeaveElapsedYears(c);if(c.national)assertCollegeNationalState(c);
+ const militaryComplete=c.collegeService?.status==='RESUMED'||c.national?.militaryStatus==='COMPLETED'&&c.national.benefits.length>0&&c.national.athleteDutySettledSeasons?.length===3&&c.national.athleteDutySeasonsRemaining===0;
  if(college||resume||us||!militaryComplete||k.program.signing||k.program.result.round&&k.program.decision!=='DECLINED')throw new RangeError('RETRY_ROUTES_REMAIN');
  return canonicalJson([c.world,c.records,c.health,c.retryCareer,c.preparationSeason!.result,k.program,c.collegeAdmission??null,c.usRecruitment?.program??null,c.national??null,c.collegeService??null]);
 }

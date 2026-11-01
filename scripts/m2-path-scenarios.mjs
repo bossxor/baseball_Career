@@ -21,6 +21,16 @@ import {startKboRegularSeason} from '../packages/engine/src/kbo-progress.ts';
 import {offerKboRenewal,acceptKboRenewal} from '../packages/engine/src/kbo-renewal.ts';
 import {hireCareerAgent,careerSalaryCounterPreview,requestCareerSalaryCounter,settleAgentFee} from '../packages/engine/src/career-agent.ts';
 import {canonicalJson} from '../packages/engine/src/game.ts';
+import {refreshCareerRepertoireEvents,resolveCareerRepertoireEvent} from '../packages/engine/src/repertoire-events.ts';
+import {validatePitchXpLedger} from '../packages/engine/src/pitch-xp.ts';
+import {validatePitchWeights} from '../packages/engine/src/repertoire.ts';
+import {openNationalCallup,respondNationalCallup,confirmNationalEligibility} from '../packages/engine/src/kbo-national.ts';
+import {playAsianGamesTournament} from '../packages/engine/src/national-tournament.ts';
+import {createSeasonCalendar} from '../packages/engine/src/season-calendar.ts';
+import {recordTotals} from '../packages/engine/src/records.ts';
+import {requestKboPosting,resolveKboPostingClub,openKboPostingOffers,resolveKboPostingOfferEvent} from '../packages/engine/src/kbo-posting.ts';
+import {createWorldStream,nextInteger} from '../packages/engine/src/rng.ts';
+import {emptyBatting} from '../packages/engine/src/stats.ts';
 
 const prefix=description=>({kind:'CONTROLLED_PREFIX_NATIVE_SLICE',description});
 function schoolRoute(t){t.command('ACKNOWLEDGE_HS_REVIEW',{},s=>acknowledgeHighSchoolSeasonReview(s,s.revision));t.command('OPEN_CAREER_ROUTE',{eventVersion:1},s=>openHighSchoolCareerRoute(s,s.revision,1));}
@@ -53,8 +63,8 @@ export function controlledSchoolPaths(trace){
  t.command('GRADUATE_COLLEGE',{eventVersion:t.state.events.at(-1).version},s=>graduateCollegeCareer(s,s.revision,s.events.at(-1).version));signKbo(t);assert.equal(t.state.amateurHistory.collegeAdmission.status,'GRADUATED');result.push(t.finish({terminal:'KBO_ACTIVE',graduated:true,collegeRecordsPreserved:Object.values(t.state.records.games).some(g=>g.scope.leagueKey==='COLLEGE')}));
  for(const [id,strength,budget]of [['P06',800000,3000000],['P07',10000,0]]){
   t=trace(id,completedHighSchoolCareer(strength),prefix('Controlled HS216 no-appearance contributions and explicit ability boundary; actual US eligibility/offers/signing reducers below.'));schoolRoute(t);const us=inventory(t.state,budget);
-  t.command('PREPARE_US_DIRECT',{inventoryHash:canonicalJson(us.inventory)},s=>prepareCareerUsDirect(s,s.revision,us.inventory));const view=careerUsDirectView(t.state);
-  if(id==='P06'){assert.equal(view.visible,true);assert.ok(view.offers.length);const offerKey=view.offers[0].offerKey;t.command('SIGN_US_DIRECT',{offerKey,eventVersion:1},s=>decideCareerUsDirect(s,s.revision,{programVersion:1,decision:{type:'SIGN',offerKey},eventVersion:1}));t.command('CLOSE_SCHOOL_FOR_US',{forfeitUnusedTraining:true},s=>closeSchoolSeasonForUs(s,s.revision,true));t.command('START_SIGNED_US',{worldKey:us.world.worldKey},s=>startSignedUsCareer(s,s.revision,us.world));assert.ok(t.state.contract);assert.ok(['ROOKIE','A'].includes(t.state.registration.level));result.push(t.finish({terminal:'US_MINOR_PRE',actualFixedOffer:true}));}
+  t.command('PREPARE_US_DIRECT',{inventory:us.inventory},s=>prepareCareerUsDirect(s,s.revision,us.inventory));const view=careerUsDirectView(t.state);
+  if(id==='P06'){assert.equal(view.visible,true);assert.ok(view.offers.length);const offerKey=view.offers[0].offerKey;t.command('SIGN_US_DIRECT',{programVersion:1,decision:{type:'SIGN',offerKey},eventVersion:1},s=>decideCareerUsDirect(s,s.revision,{programVersion:1,decision:{type:'SIGN',offerKey},eventVersion:1}));t.command('CLOSE_SCHOOL_FOR_US',{forfeitUnusedTraining:true},s=>closeSchoolSeasonForUs(s,s.revision,true));t.command('START_SIGNED_US',{world:us.world},s=>startSignedUsCareer(s,s.revision,us.world));assert.ok(t.state.contract);assert.ok(['ROOKIE','A'].includes(t.state.registration.level));result.push(t.finish({terminal:'US_MINOR_PRE',actualFixedOffer:true}));}
   else {assert.equal(view.visible,false);assert.equal(view.offers.length,0);result.push(t.finish({terminal:'US_CARD_HIDDEN',offers:0,noFakeOffer:true}));}
  }
  return result;
@@ -81,9 +91,76 @@ export function agentPath(trace){
   t.command('HIRE_AGENT',{agentId:'AG01'},s=>hireCareerAgent(s,s.revision,'AG01'));t.command('OFFER_KBO_RENEWAL',{},s=>offerKboRenewal(s,s.revision));const q=careerSalaryCounterPreview(t.state),base=canonicalJson(t.state.renewal);
   t.command('REQUEST_SALARY_COUNTER',{previewId:q.previewId,raiseBps:seed.includes('reject')?3000:1000},s=>requestCareerSalaryCounter(s,s.revision,{previewId:q.previewId,raiseBps:seed.includes('reject')?3000:1000}));const request=t.state.agents.salaryRequests.at(-1);
   if(request.outcome==='REJECTED')assert.equal(canonicalJson(t.state.renewal),base);
-  const eventKey=t.state.renewal.eventKey,offerKey=request.counterOfferKey??undefined;t.command('ACCEPT_KBO_RENEWAL',{eventKey,eventVersion:1,offerKey},s=>acceptKboRenewal(s,s.revision,{eventKey,eventVersion:1,offerKey}));
-  const pay={entryKey:'path-salary',currency:'KRW',gross:100000000,kind:'SALARY',seasonKey:t.state.world.seasonKey,worldDay:300};t.command('SETTLE_AGENT_FEE',pay,s=>settleAgentFee(s,pay));const income=t.state.agents.income.find(i=>i.currency==='KRW');assert.equal(income.fee,2000000);assert.equal(income.net,98000000);
+  const eventKey=t.state.renewal.eventKey,offerKey=request.counterOfferKey,input={eventKey,eventVersion:1,...(offerKey?{offerKey}:{})};t.command('ACCEPT_KBO_RENEWAL',input,s=>acceptKboRenewal(s,s.revision,input));
+  const pay={entryKey:'path-salary',currency:'KRW',gross:100000000,kind:'SALARY',seasonKey:t.state.world.seasonKey,worldDay:300};t.command('SETTLE_AGENT_FEE',pay,s=>settleAgentFee(s,pay));const income=t.state.agents.income.find(i=>i.entryKey===pay.entryKey);assert.equal(income.fee,2000000);assert.equal(income.net,98000000);
   results.push(t.finish({terminal:'CONTRACT_DECIDED',counterOutcome:request.outcome,rejectedOriginalPreserved:request.outcome==='REJECTED'?true:null,fee:2000000,net:98000000}));
  }
  assert.ok(results.some(r=>r.invariantReport.counterOutcome==='REJECTED'),'P15 requires actual rejected outcome');assert.ok(results.some(r=>r.invariantReport.counterOutcome==='ACCEPTED'),'P15 requires actual accepted outcome');return results;
+}
+
+export function pitcherLearningPath(trace){
+ const t=trace('P02-learning',enteredKboCareer('PITCHER'),prefix('Existing controlled HS/draft fixture enters KBO preseason as pitcher. Traced E86 opens real learning and reserves shared XP. Role competition and completed training remain unproven.'));
+ t.command('REFRESH_REPERTOIRE_EVENTS',{},s=>refreshCareerRepertoireEvents(s));
+ const event=t.state.repertoireEvents.notices.find(e=>e.definitionId==='E86'&&e.status==='OPEN');assert.ok(event);
+ const input={eventKey:event.eventKey,eventVersion:event.version,command:'SET_PITCH_TRAINING',pitchId:'P07'};
+ t.command('SET_PITCH_TRAINING',input,s=>resolveCareerRepertoireEvent(s,s.revision,input));
+ const player=t.state.world.players[t.state.protagonistKey],book=t.state.world.repertoires[t.state.protagonistKey];
+ assert.equal(Object.keys(player.abilities).length,6);assert.ok(Object.hasOwn(player.abilities,'PICKOFF'));assert.equal(book.learning.pitchId,'P07');assert.equal(book.ledger.baseReservedUnits,100000);validatePitchXpLedger(book.ledger);validatePitchWeights(book.book,book.weights);
+ return t.finish({terminal:'PITCH_LEARNING_REGISTERED',sixAbilities:true,reservedBaseXp:100000,pitchWeightsValid:true,sharedXpLedgerValid:true,unproven:['native creation-to-role competition','learning completion and game XP']});
+}
+
+export function nationalAppearancePath(trace){
+ const initial=enteredKboCareer();
+ // Controlled national-ready boundary, matching kbo-national.test.ts; no domestic full season is claimed.
+ initial.world.seasonKey='2030';initial.world.calendar=createSeasonCalendar(2030);initial.phaseContext={phase:'SEASON_REVIEW'};initial.events=[];initial.records={revision:0,games:{}};initial.health.games=[];initial.military={status:'UNRESOLVED',applications:[]};initial.seasonClose={seasonKey:'2030'};
+ const player=initial.world.players[initial.protagonistKey];player.abilities=Object.fromEntries(Object.keys(player.abilities).map(axis=>[axis,650000]));
+ const t=trace('P11-national-appearance',initial,prefix('Controlled national-ready 2030 review, abilities65 and empty professional records. Actual callup response and batch 16-game AG tournament produce persisted official appearance and eligibility result. Full 28-player selection and international calendar worker remain unproven.'));
+ t.command('OPEN_NATIONAL_CALLUP',{tournament:'AG'},s=>openNationalCallup(s,s.revision,'AG'));
+ const selectionId=t.state.national.invitations[0].selectionId;t.command('ACCEPT_NATIONAL',{selectionId,decision:'ACCEPT'},s=>respondNationalCallup(s,s.revision,selectionId,'ACCEPT'));
+ t.command('PLAY_ASIAN_GAMES',{},s=>playAsianGamesTournament(s,s.revision));
+ const result=t.state.national.competitions[0],totals=recordTotals(t.state.records,{seasonKey:'2030',leagueKey:'AG',phase:'INTERNATIONAL'});
+ assert.equal(result.gameKeys.length,16);assert.ok(totals.batting[t.state.protagonistKey].PA>0);assert.equal(result.officialAppearance,true);
+ const eligible=result.medal==='GOLD';assert.equal(t.state.military.status,eligible?'ATHLETE_ELIGIBLE':'UNRESOLVED');
+ if(eligible)t.command('CONFIRM_NATIONAL_ELIGIBILITY',{competitionId:result.competitionId},s=>confirmNationalEligibility(s,s.revision,result.competitionId));
+ assert.notEqual(t.state.military.status,'COMPLETED');
+ return t.finish({terminal:'ACTUAL_AG_RESULT',games:16,officialAppearance:true,medal:result.medal,athleteEligible:eligible,militaryStatus:t.state.military.status,serviceCompletionNotInferred:true,unproven:eligible?['three duty seasons']:['positive medal eligibility branch','three duty seasons']});
+}
+
+function postingBoundary(strength=800000,age=30){
+ const c=enteredKboCareer(),key=c.protagonistKey,club=c.protagonistClubId,other=c.world.clubs.find(t=>t.id!==club).id;
+ c.world.seasonKey='2040';c.world.calendar=createSeasonCalendar(2040);c.phaseContext={phase:'SEASON_REVIEW'};c.events=[];c.records={revision:0,games:{}};c.health.games=[];c.health.injuries={};c.proSeasons=[];c.seasonClose={seasonKey:'2040'};c.military={status:'COMPLETED',applications:[]};
+ const player=c.world.players[key];player.age=age;player.abilities=Object.fromEntries(Object.keys(player.abilities).map(k=>[k,strength]));player.potential={...player.abilities};player.careerPeaks={...player.abilities};Object.assign(c.world.contracts[key],{seasonKey:'2040',years:2,status:'ACTIVE'});
+ for(let year=2034;year<=2040;year++){
+  if(year<2040)c.proSeasons.push({seasonKey:String(year)});
+  for(let day=1;day<=100;day++){
+   const gameKey=JSON.stringify(['controlled-posting-registration',year,day]);c.records.games[gameKey]={gameKey,worldDay:day,scope:{seasonKey:String(year),leagueKey:'KBO',phase:'REGULAR'},teams:{[club]:{games:1,W:0,L:0,T:1,R:0,RA:0},[other]:{games:1,W:0,L:0,T:1,R:0,RA:0}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}};
+   c.health.games.push({evidence:{gameKey,teamKey:'KBO:'+club,seasonKey:String(year),day,roster:[key],appearances:[]},result:{injured:[],recovered:[]}});
+   if(year===2040&&day===100){const good=strength>=650000;c.records.games[gameKey].batting[key]={...emptyBatting(),PA:100,AB:90,H:good?40:0,TB:good?70:0,HR:good?5:0,R:20,RBI:20,BB:10,K:good?10:90,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0};}
+  }
+ }
+ // Controlled seed guarantees a nonempty offer-count boundary, never changes a reducer outcome afterward.
+ const postingId=JSON.stringify(['kbo-posting',c.world.worldKey,c.world.seasonKey,key]);
+ for(let i=0;i<100;i++){const seed='m2-posting-'+i;if(nextInteger(createWorldStream(seed,JSON.stringify(['kbo-posting-offers',postingId]),'roster'),4).value>0){c.world.seed=seed;return c;}}
+ throw new Error('POSTING_FIXTURE_SEED_BUDGET');
+}
+
+export function postingPaths(trace){
+ const results=[];
+ for(const branch of ['SIGN','DEFER','NO_OFFER','REMAIN']){
+  const t=trace(branch==='SIGN'?'P08-posting-sign':'P09-posting-'+branch.toLowerCase(),postingBoundary(branch==='DEFER'?400000:800000,branch==='NO_OFFER'?45:30),prefix('Controlled seven closed100-registration seasons, military completion, current contract and batting boundary. Seed fixed before tracing to nonempty offer-count draw; age45 separately guarantees genuine zero offers. Real posting reducers below; no native seven-season career or US activation claim.'));
+  const key=t.state.protagonistKey,contract=canonicalJson(t.state.world.contracts[key]),abilities=canonicalJson(t.state.world.players[key].abilities);
+  t.command('REQUEST_KBO_POSTING',{},s=>requestKboPosting(s,s.revision));t.command('RESOLVE_POSTING_CLUB',{},s=>resolveKboPostingClub(s,s.revision));
+  if(branch==='DEFER')assert.equal(t.state.posting.windows[0].status,'DEFERRED');
+  else {
+   assert.equal(t.state.posting.windows[0].status,'APPROVED');t.command('OPEN_POSTING_OFFERS',{issuedWorldDay:1},s=>openKboPostingOffers(s,s.revision,1));
+   const window=t.state.posting.windows[0],event=t.state.events.find(e=>e.definitionId==='E64'&&e.status==='OPEN');assert.ok(event);
+   if(branch==='NO_OFFER')assert.equal(window.offers.length,0);else assert.ok(window.offers.length>0);
+   const input={eventKey:event.eventKey,eventVersion:event.version,command:branch==='SIGN'?'ACCEPT_CAREER_OFFER':'REMAIN_ORIGINAL',...(branch==='SIGN'?{offerKey:window.offers[0].offerKey,worldDay:1}:{})};
+   t.command('RESOLVE_POSTING_OFFER',input,s=>resolveKboPostingOfferEvent(s,s.revision,input));
+  }
+  if(branch==='SIGN'){assert.equal(t.state.posting.windows[0].status,'SIGNED');assert.equal(t.state.world.contracts[key],undefined);assert.ok(t.state.posting.windows[0].returnRights);}
+  else {assert.equal(canonicalJson(t.state.world.contracts[key]),contract);assert.equal(canonicalJson(t.state.world.players[key].abilities),abilities);}
+  results.push(t.finish({terminal:t.state.posting.windows[0].status,branch,originalContractPreserved:branch!=='SIGN',noAbilityPenalty:branch!=='SIGN',unproven:branch==='SIGN'?['US root activation and subsequent games']:['native seven-season prefix']}));
+ }
+ return results;
 }

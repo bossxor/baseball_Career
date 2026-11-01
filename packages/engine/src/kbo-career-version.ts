@@ -1,3 +1,4 @@
+import {assertKboRetryState} from './career-pro-retry.js';
 import {assertCareerAliases} from './career-alias.js';
 import {auditCareerRecordCorrections} from './career-record-correction.js';
 import {assertProCareerAwards} from './pro-career-awards.js';
@@ -8,7 +9,7 @@ import type {KboCareer} from './kbo-career-entry.js';
 import {assertCareerRevision} from './high-school-career.js';
 
 /** KBO v2 introduced ACTIVE. v3 adds mandatory plans and return conditioning. v4 adds midseason transfers. v5 enables military health/temporary identities. v6 preserves NPC suspension/return obligations. v7 adds deferred offseason release/signing. School/v1 guards remain unchanged. */
-export function assertKboCareerRevision(source:Pick<KboCareer,'schemaVersion'|'revision'> & Partial<Pick<KboCareer,'aliases'|'recordCorrections'|'proAwards'|'records'|'freeAgency'|'transferHistory'|'world'|'sangmu'|'offseasonExit'|'national'|'phaseContext'|'agents'|'protagonistKey'>>,expectedRevision:number):void {
+export function assertKboCareerRevision(source:Pick<KboCareer,'schemaVersion'|'revision'> & Partial<Pick<KboCareer,'retryPro'|'aliases'|'recordCorrections'|'proAwards'|'records'|'freeAgency'|'transferHistory'|'world'|'sangmu'|'offseasonExit'|'national'|'phaseContext'|'agents'|'protagonistKey'>>,expectedRevision:number):void {
  if(source.agents){if(!source.world||!source.protagonistKey)throw new RangeError('INVALID_AGENT_LEDGER');assertCareerAgentLedger(source as KboCareer);}
  if(source.proAwards){if(!source.world||!source.records||!source.protagonistKey)throw new RangeError('INVALID_PRO_AWARD_LEDGER');assertProCareerAwards(source as KboCareer);}
  if(source.recordCorrections){if(!source.world||!source.records||!source.protagonistKey)throw new RangeError('INVALID_RECORD_CORRECTION_LEDGER');auditCareerRecordCorrections(source as KboCareer);}
@@ -28,4 +29,5 @@ export function assertKboCareerRevision(source:Pick<KboCareer,'schemaVersion'|'r
   if(!b||b.dayCloseVersion!==1||b.seasonKey!==source.world?.seasonKey||!Number.isSafeInteger(phase.nextWorldDay)||phase.nextWorldDay!==b.window.startDay+(b.dayReceipts?.length??0)||phase.nextWorldDay>b.window.endDay||!phase.resume||!['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW'].includes(phase.resume.phase)||phase.resume.phase==='SEASON_PROGRESS'&&(phase.resume.pendingGame!==null||phase.resume.nextWorldDay!==b.window.startDay)||phase.phase==='INTERNATIONAL_REVIEW'&&phase.nextWorldDay!==b.window.endDay)throw new RangeError('INVALID_NATIONAL_PHASE');
  }
  assertCareerRevision({schemaVersion:1,revision:source.revision},expectedRevision);
+ if(source.retryPro)assertKboRetryState(source as KboCareer);
 }

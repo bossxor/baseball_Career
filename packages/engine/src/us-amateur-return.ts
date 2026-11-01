@@ -1,6 +1,6 @@
+import type {Difficulty} from '@playball/rules';
 import {canonicalJson} from './game.js';
 import type {UsCareer} from './us-career-entry.js';
-import {assertUsCareerRevision} from './us-career-entry.js';
 import {usYearTransitionReadiness} from './us-year-transition.js';
 import {usMilitaryCompletionDays} from './us-military-plan.js';
 import type {UsMilitaryServiceProgram} from './us-military-plan.js';
@@ -40,8 +40,11 @@ export function assertUsAmateurReturnLedger(s:UsAmateurReturnLedger,identity?:{w
 function assertRevision(s:UsAmateurReturnLedger,revision:number):void {assertUsAmateurReturnLedger(s);if(revision!==s.revision||revision===Number.MAX_SAFE_INTEGER)throw new RangeError('US_AMATEUR_RETURN_REVISION_CHANGED');}
 /** Opens only an actually expired amateur minor contract; an existing KBO return route never enters this program. */
 export function openUsAmateurReturn(c:UsCareer,revision:number):UsAmateurReturnLedger {
- assertUsCareerRevision(c,revision);const ready=usYearTransitionReadiness(c),p=c.world.players[c.protagonistKey]!;
- if(c.kboTransfer||c.contract.type!=='US_MINOR'||c.phaseContext.phase!=='SEASON_REVIEW'||ready.remainingMinorControlSeasons!==0||ready.blockers.some(b=>!['CONTRACT_DECISION_REQUIRED','MILITARY_PLAN_REQUIRED'].includes(b))||p.age+2>35||!['UNRESOLVED','COMPLETED','NOT_APPLICABLE'].includes(c.military.status))throw new RangeError('US_AMATEUR_RETURN_NOT_AVAILABLE');
+ if(!Number.isSafeInteger(revision)||revision!==c.revision)throw new RangeError('STALE_US_CAREER_REVISION');
+ const ready=usYearTransitionReadiness(c),p=c.world.players[c.protagonistKey]!;
+ const open=c.events.filter(e=>e.status==='OPEN');let returnMarket=false;
+ if(c.minorMarket){returnMarket=open.length===1&&open[0]!.eventKey===c.minorMarket.eventKey&&open[0]!.definitionId==='E66';}
+ if(c.kboTransfer||c.contract.type!=='US_MINOR'||c.phaseContext.phase!=='SEASON_REVIEW'||ready.remainingMinorControlSeasons!==0||ready.blockers.some(b=>!['CONTRACT_DECISION_REQUIRED','MILITARY_PLAN_REQUIRED'].includes(b)&&!(b==='OPEN_EVENT'&&returnMarket))||p.age+2>35||!['UNRESOLVED','COMPLETED','NOT_APPLICABLE'].includes(c.military.status))throw new RangeError('US_AMATEUR_RETURN_NOT_AVAILABLE');
  const next:UsAmateurReturnLedger={version:1,revision:1,returnId:'',worldKey:c.world.worldKey,playerKey:c.protagonistKey,sourceSeasonKey:c.world.seasonKey,sourceRevision:revision,sourceContractKey:c.contract.contractKey,sourceAge:p.age,sourcePlayer:structuredClone(p),origin:c.amateurHistory.world.leagueKey==='COLLEGE'?'COLLEGE_DIRECT':'HIGH_SCHOOL_DIRECT',status:'PREPARING',militaryStatus:c.military.status as UsAmateurReturnLedger['militaryStatus'],years:[],draftReservationKey:null};next.returnId=returnKey(next);assertUsAmateurReturnLedger(next);return next;
 }
 function appendYear(s:UsAmateurReturnLedger,year:UsAmateurReturnYear,militaryCompleted=false):UsAmateurReturnLedger {
@@ -57,7 +60,7 @@ export function settleUsAmateurIndependentYear(s:UsAmateurReturnLedger,revision:
  return appendYear(s,{seasonKey:preparation.world.seasonKey,age:p.age,endWorldDay:preparation.world.calendar.growthDays.at(-1)!,kind:'INDEPENDENT',receiptKey:preparation.result.receiptKey,seasonGrowth:preparation.seasonGrowth,endingPlayer:p,recordRevision:preparation.records.revision});
 }
 /** Actual ACTIVE block receipts share the same world seasons;18months never adds a third preparation year. */
-export function settleUsAmateurServiceYear(s:UsAmateurReturnLedger,revision:number,input:{player:DevelopmentPlayer;seasonKey:string;service:UsMilitaryServiceProgram;records:RecordLedger;seasonGrowth?:SeasonGrowthLedger}):{return:UsAmateurReturnLedger;player:DevelopmentPlayer;seasonGrowth:SeasonGrowthLedger} {
+export function settleUsAmateurServiceYear(s:UsAmateurReturnLedger,revision:number,input:{player:DevelopmentPlayer;seasonKey:string;service:UsMilitaryServiceProgram;records:RecordLedger;seasonGrowth?:SeasonGrowthLedger;difficulty?:Difficulty}):{return:UsAmateurReturnLedger;player:DevelopmentPlayer;seasonGrowth:SeasonGrowthLedger} {
  assertRevision(s,revision);validateDevelopmentPlayer(input.player);const completed=s.years.find(y=>y.seasonKey===input.seasonKey);
  if(completed){if(completed.kind==='INDEPENDENT'||canonicalJson(input.player)!==canonicalJson(completed.endingPlayer)||canonicalJson(input.seasonGrowth)!==canonicalJson(completed.seasonGrowth))throw new RangeError('US_RETURN_EVIDENCE_REUSED');return {return:structuredClone(s),player:structuredClone(input.player),seasonGrowth:structuredClone(completed.seasonGrowth)};}
  const index=s.years.length,expectedSeason=String(Number(s.sourceSeasonKey)+index+1),program=input.service,dates=usMilitaryCompletionDays(s.sourceSeasonKey),due=dates[index];
@@ -65,7 +68,8 @@ export function settleUsAmateurServiceYear(s:UsAmateurReturnLedger,revision:numb
  const previous=index>0?s.years[index-1]!.endingPlayer:s.sourcePlayer;if(canonicalJson({...input.player,age:previous.age,fatigue:previous.fatigue})!==canonicalJson(previous))throw new RangeError('US_RETURN_PLAYER_CARRY_CHANGED');
  const calendar=createSeasonCalendar(Number(input.seasonKey)),growth=input.seasonGrowth??createSeasonGrowthLedger(input.player,input.seasonKey,calendar.growthDays.length);validateSeasonGrowthLedger(growth);
  if(growth.entries.length||growth.finalized||canonicalJson(growth.seasonStart)!==canonicalJson(input.player)||growth.seasonKey!==input.seasonKey)throw new RangeError('US_RETURN_GROWTH_ALREADY_STARTED');
- const serviceDays=calendar.growthDays.filter(day=>index===0||day<=due.worldDay).length,periods:ClosedGrowthPeriod[]=[],base={levelSeasonDays:calendar.highSchoolDays.length,level:'COLLEGE' as const,appearances:0,pitcherRole:input.player.position==='RP'?'RP' as const:input.player.position==='CP'?'CP' as const:'SP' as const,rehabRatio:0,trainingMultiplier:1,policy:{mode:'CAREER' as const,difficulty:'REALISTIC' as const,beneficiary:true}};
+ if(input.difficulty!==undefined&&!['GROWTH','REALISTIC','SECRET_CHEAT'].includes(input.difficulty))throw new RangeError('INVALID_RETURN_GROWTH_DIFFICULTY');
+ const serviceDays=calendar.growthDays.filter(day=>index===0||day<=due.worldDay).length,periods:ClosedGrowthPeriod[]=[],base={levelSeasonDays:calendar.highSchoolDays.length,level:'COLLEGE' as const,appearances:0,pitcherRole:input.player.position==='RP'?'RP' as const:input.player.position==='CP'?'CP' as const:'SP' as const,rehabRatio:0,trainingMultiplier:1,policy:{mode:'CAREER' as const,difficulty:input.difficulty??'REALISTIC' as const,beneficiary:true}};
  // ACTIVE contributes zero; the remaining half-year gets the existing no-appearance training factor.
  periods.push({periodKey:JSON.stringify(['return-service',s.returnId,input.seasonKey]),focus:[...input.player.focus],archetype:input.player.archetype,period:{...base,startDay:0,endDay:serviceDays,ordinaryMilitary:true}});
  if(serviceDays<calendar.growthDays.length)periods.push({periodKey:JSON.stringify(['return-training',s.returnId,input.seasonKey]),focus:[...input.player.focus],archetype:input.player.archetype,period:{...base,startDay:serviceDays,endDay:calendar.growthDays.length,ordinaryMilitary:false}});

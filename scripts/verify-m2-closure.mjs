@@ -19,28 +19,33 @@ import {startKboRegularSeason, advanceKboCareer} from '../packages/engine/src/kb
 import {setCareerSeasonGoals} from '../packages/engine/src/season-goals.ts';
 import {hireCareerAgent, assertCareerAgentLedger} from '../packages/engine/src/career-agent.ts';
 import {recordTotals} from '../packages/engine/src/records.ts';
-import {controlledSchoolPaths,collegeServicePath,agentPath} from './m2-path-scenarios.mjs';
+import {controlledSchoolPaths,collegeServicePath,agentPath,pitcherLearningPath,nationalAppearancePath,postingPaths} from './m2-path-scenarios.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const hash=value=>createHash('sha256').update(canonicalJson(value)).digest('hex');
 const json=value=>JSON.parse(JSON.stringify(value));
+let activeTrace;
+const completedTraces=[];
 
 /** Engine receipts are not API idempotency receipts. Each row retains the actual command input and output hash. */
 function trace(id,initial,prefix){
  let state=initial;
+ const initialFixture=json(initial);
  const rows=[];
- return {id,prefix,initialFixture:json(initial),get state(){return state;},rows,
+ const current={id,prefix,initialFixture,get state(){return state;},rows,
   command(command,input,apply){
-   const source=state,before=hash(source),out=apply(source),next=out?.career??out;
+   const source=state,before=hash(source),commandInput=json(input),inputHash=hash(commandInput),out=apply(source),next=out?.career??out;
    assert.equal(hash(source),before,'command mutated its input');
+   assert.equal(hash(input),inputHash,'command mutated its input arguments');
    assert.equal(hash(json(next)),hash(next),'state must survive JSON');
    // Replay from serialized source, with the same exact command input and revision.
-   const replay=apply(json(source));assert.equal(hash(replay),hash(out),'JSON replay diverged');
-   rows.push({command,input,sourceRevision:source.revision,resultRevision:next.revision,sourceHash:before,resultHash:hash(next),outputHash:hash(out)});
+   const replaySource=json(source),replay=apply(replaySource);assert.equal(hash(replaySource),before,'replay mutated its input');assert.equal(hash(replay),hash(out),'JSON replay diverged');
+   rows.push({command,input:commandInput,inputHash,sourceRevision:source.revision,resultRevision:next.revision,sourceHash:before,resultHash:hash(next),outputHash:hash(out)});
    state=next;return state;
   },
-  finish(invariantReport){return {id,prefix,initialFixture:json(initial),initialFixtureHash:hash(initial),commandReceipts:rows,commandChainHash:hash(rows),finalStateHash:hash(state),invariantReport,status:'M2_SLICE_PROVEN_FULL_PATH_NOT_CLAIMED'};}
+  finish(invariantReport){const result={id,pathIds:[...new Set(id.match(/P\d{2}/g)??[])],prefix,initialFixture,initialFixtureHash:hash(initialFixture),commandReceipts:rows,commandChainHash:hash(rows),finalStateHash:hash(state),invariantReport,status:'M2_SLICE_PROVEN_FULL_PATH_NOT_CLAIMED'};completedTraces.push(result);current.finished=true;return result;}
  };
+ activeTrace=current;return current;
 }
 function resolveSchoolEvent(t){
  const c=t.state,e=c.events.find(e=>e.eventKey===c.phaseContext.eventKey);assert.ok(e);
@@ -73,7 +78,7 @@ function nativeSchool(){
  return t.finish({highSchoolLeagueGames:216,gamesPerTeam:48,collegeAcademicYear:1,oldRecordsPreserved:true,staleRevisionRejectedAtomically:true,jsonReplay:'every command',sourceImmutability:'every command'});
 }
 function controlledKbo(){
- const initial=enteredKboCareer(),t=trace('P01-P14-P15-controlled-KBO-entry-and-game',initial,{kind:'CONTROLLED_PREFIX_NATIVE_SLICE',fixture:'packages/engine/test/fixtures.ts:enteredKboCareer',description:'Controlled no-appearance HS records and abilities80; real draft/signing/year-entry in fixture. Traced commands begin at KBO preseason; no native HS-to-KBO full-path claim.'});
+ const initial=enteredKboCareer(),t=trace('P01-P15-P23-controlled-KBO-entry-and-game',initial,{kind:'CONTROLLED_PREFIX_NATIVE_SLICE',fixture:'packages/engine/test/fixtures.ts:enteredKboCareer',description:'Controlled no-appearance HS records and abilities80; real draft/signing/year-entry in fixture. Traced commands begin at KBO preseason; P23 covers immutable committed record reads only. No native HS-to-KBO full-path or M7 replay/export claim.'});
  t.command('SET_GOALS',{goalIds:['G01','G03']},s=>setCareerSeasonGoals(s,s.revision,['G01','G03']));
  t.command('HIRE_AGENT',{agentId:'AG01'},s=>hireCareerAgent(s,s.revision,'AG01'));
  t.command('CONFIRM_KBO_PRESEASON',{},s=>confirmKboPreseasonPlan(s,s.revision));
@@ -85,17 +90,24 @@ function controlledKbo(){
   t.command('ADVANCE_KBO',{maxDays:1},s=>advanceKboCareer(s,s.revision,1));
  }
  assertCareerAgentLedger(t.state);assert.equal(t.state.achievements.unlocks.some(a=>a.achievementId==='A01'),true);
- return t.finish({actualProGames:Object.values(t.state.records.games).filter(g=>g.scope.seasonKey===t.state.world.seasonKey).length,agentLedgerValid:true,firstContractAchievement:true,jsonReplay:'every command',sourceImmutability:'every command'});
+ const committed=hash(t.state.records),world=hash(t.state.world),scope={seasonKey:t.state.world.seasonKey,leagueKey:'KBO',phase:'REGULAR'};
+ for(let i=0;i<2;i++)t.command('READ_COMMITTED_RECORD_TOTALS',{scope},s=>({career:s,projection:recordTotals(s.records,scope)}));
+ assert.equal(hash(t.state.records),committed);assert.equal(hash(t.state.world),world);
+ return t.finish({actualProGames:Object.values(t.state.records.games).filter(g=>g.scope.seasonKey===t.state.world.seasonKey).length,agentLedgerValid:true,firstContractAchievement:true,committedRecordHash:committed,repeatedRecordReadsImmutable:true,jsonReplay:'every command',sourceImmutability:'every command',unproven:['P14 same-game trait/goal/chronicle integration','P23 M7 replay/card/export/backup']});
 }
 function files(directory){return readdirSync(directory,{withFileTypes:true}).flatMap(entry=>entry.isDirectory()?files(resolve(directory,entry.name)):[resolve(directory,entry.name)]);}
-const sourceFiles=['packages/engine/src','packages/rules/src','packages/engine/test'].flatMap(dir=>files(resolve(root,dir))).filter(path=>/\.(ts|json)$/.test(path));
-const sourceManifest=()=>sourceFiles.map(path=>({file:relative(root,path).replaceAll('\\','/'),sha256:createHash('sha256').update(readFileSync(path)).digest('hex')}));
+const sourceManifest=()=>[...['packages/engine/src','packages/rules/src','packages/engine/test'].flatMap(dir=>files(resolve(root,dir))).filter(path=>/\.(ts|json)$/.test(path)),...['scripts/verify-m2-closure.mjs','scripts/m2-path-scenarios.mjs','docs/design/event-catalog-v2.json','docs/design/end-to-end-design-paths.json','package.json','package-lock.json'].map(file=>resolve(root,file))].sort().map(path=>({file:relative(root,path).replaceAll('\\','/'),sha256:createHash('sha256').update(readFileSync(path)).digest('hex')}));
 const start=sourceManifest();
+const output=resolve(root,process.argv.slice(2).find(arg=>!arg.startsWith('--'))??'docs/implementation/evidence/M2-CLOSURE-20261102-runtime.json');
+const slices=[];
+try{
 console.log('M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit');
-const slices=process.argv.includes('--paths-only')?[]:[nativeSchool(),controlledKbo()];
+if(!process.argv.includes('--paths-only')){slices.push(nativeSchool());slices.push(controlledKbo());}
 slices.push(...controlledSchoolPaths(trace));console.log('M2 closure: school/draft/college/US endpoints verified');
 slices.push(collegeServicePath(trace));console.log('M2 closure: college18month service/resume endpoint verified');
 slices.push(...agentPath(trace));console.log('M2 closure: accepted/rejected counteroffer endpoints verified');
+slices.push(pitcherLearningPath(trace),nationalAppearancePath(trace));console.log('M2 closure: pitcher learning and actual national appearance endpoints verified');
+slices.push(...postingPaths(trace));console.log('M2 closure: posting sign/defer/no-offer/remain endpoints verified');
 assert.deepEqual(sourceManifest(),start,'source changed during closure proof; rerun on stable files');
 const catalogue=JSON.parse(readFileSync(resolve(root,'docs/design/event-catalog-v2.json'),'utf8')).events;
 const events=catalogue.map(e=>{
@@ -104,8 +116,13 @@ const events=catalogue.map(e=>{
  return {id:e.id,title:e.title,owner,sourceReferences,testReferences,status:'SOURCE_TRIAGE_ONLY_NOT_RUNTIME_PASS'};
 });
 assert.equal(events.length,99);assert.equal(new Set(events.map(e=>e.id)).size,99);
-const paths=JSON.parse(readFileSync(resolve(root,'docs/design/end-to-end-design-paths.json'),'utf8')).paths.map(p=>({id:p.id,flow:p.flow,status:'FULL_PATH_NOT_PROVEN',sliceIds:slices.filter(s=>s.id.includes(p.id)).map(s=>s.id)}));
+const paths=JSON.parse(readFileSync(resolve(root,'docs/design/end-to-end-design-paths.json'),'utf8')).paths.map(p=>({id:p.id,flow:p.flow,status:'FULL_PATH_NOT_PROVEN',sliceIds:slices.filter(s=>s.pathIds.includes(p.id)).map(s=>s.id)}));
 assert.equal(paths.length,24);
 const result={schemaVersion:1,status:'PARTIAL_RUNTIME_EVIDENCE_NOT_M2_COMPLETION',rulesVersion:slices[0].initialFixture.world.rulesVersion,sourceManifestHash:hash(start),sourceManifest:start,slices,events,paths,externalDependencies:['M3 persistent CAS/receipt/idempotency/two-device/Neon','M4/M5 actual screens/accessibility/visual silhouette inspection','M6 club paths and unified world workers','M7 chronicle producer/export/backup','M8 actual device execution'],unproven:'Unexecuted path segments, events and PF checks are not inferred from these command hashes. Source/test references are triage only.'};
-const output=resolve(root,process.argv.slice(2).find(arg=>!arg.startsWith('--'))??'docs/implementation/evidence/M2-CLOSURE-20261102-runtime.json');mkdirSync(resolve(output,'..'),{recursive:true});writeFileSync(output,JSON.stringify(result,null,2)+'\n');
+assert.deepEqual(sourceManifest(),start,'source changed while building closure inventory; rerun on stable files');
+mkdirSync(resolve(output,'..'),{recursive:true});writeFileSync(output,JSON.stringify(result,null,2)+'\n');
 console.log(JSON.stringify({status:result.status,sourceManifestHash:result.sourceManifestHash,slices:slices.map(({id,commandChainHash,finalStateHash,commandReceipts})=>({id,commandChainHash,finalStateHash,commands:commandReceipts.length})),output},null,2));
+}catch(error){
+ const end=sourceManifest(),failure={schemaVersion:1,status:'FAILED_RUNTIME_EVIDENCE_NOT_M2_COMPLETION',sourceManifestHash:hash(start),sourceManifest:start,sourceUnchanged:hash(start)===hash(end),finalSourceManifestHash:hash(end),error:{name:error.name,message:error.message,stack:error.stack},completedSlices:completedTraces,interruptedSlice:activeTrace&&!activeTrace.finished?{id:activeTrace.id,prefix:activeTrace.prefix,initialFixture:activeTrace.initialFixture,initialFixtureHash:hash(activeTrace.initialFixture),commandReceipts:activeTrace.rows,commandChainHash:hash(activeTrace.rows),lastStateHash:hash(activeTrace.state),status:'INTERRUPTED_NOT_PROVEN'}:null};
+ const failedOutput=output.replace(/\.json$/,'')+'-failed.json';mkdirSync(resolve(failedOutput,'..'),{recursive:true});writeFileSync(failedOutput,JSON.stringify(failure,null,2)+'\n');console.error(JSON.stringify({status:failure.status,error:failure.error.message,failedOutput}));process.exitCode=1;
+}

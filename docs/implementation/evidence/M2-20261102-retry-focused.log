@@ -1,0 +1,16 @@
+✖ packages\engine\test\career-retry-completion.test.ts (126918.9644ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 126938.6609
+
+✖ failing tests:
+
+test at packages\engine\test\career-retry-completion.test.ts:1:1
+✖ packages\engine\test\career-retry-completion.test.ts (126918.9644ms)
+  'test failed'
+Interrupted own focused test at 126s: full per-advance snapshots reached >3.5GB working set; compacted trace before rerun.

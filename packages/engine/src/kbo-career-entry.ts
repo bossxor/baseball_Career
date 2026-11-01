@@ -78,7 +78,7 @@ export interface KboCareer {
  agents?:CareerAgentLedger;
  goals?:CareerGoalLedger;
  schemaVersion:1|2|3|4|5|6|7;revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveKboRosterWorld;
- protagonistKey:string;protagonistClubId:string;phaseContext:{phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase:'SEASON_REVIEW'}|{phase:'EVENT_DECISION';eventKey:string;resume:KboSeasonProgress|KboPostseasonPhase|{phase:'SEASON_REVIEW'}}|KboPostseasonPhase|KboNationalPhase|{phase:'RETIRE_CONFIRM';eventKey:string}|{phase:'ARCHIVED'};
+ protagonistKey:string;protagonistClubId:string;phaseContext:{phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase:'SEASON_REVIEW'}|{phase:'RETRY_REVIEW'|'RETRY_PREPARATION'}|{phase:'EVENT_DECISION';eventKey:string;resume:KboSeasonProgress|KboPostseasonPhase|{phase:'SEASON_REVIEW'}}|KboPostseasonPhase|KboNationalPhase|{phase:'RETIRE_CONFIRM';eventKey:string}|{phase:'ARCHIVED'};
  activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string};
  registration:{playerKey:string;clubId:string;seasonKey:string;status:'ACTIVE';firstTeam:boolean;competitionKey?:'KBO'|'FUTURES'};
  rights:Omit<KboRookieSigning['rights'],'sourceType'> & {sourceType:'DRAFT'|'TRANSFER'|'FREE_AGENT'};amateurHistory:HighSchoolCareer;

@@ -1,0 +1,65 @@
+✔ direct amateur expiry uses native1-year quotes and repeated epochs without rewriting the original six-season contract (119883.2355ms)
+✖ M2-CLOSE-RETURN-20261102: controlled US prefix: root preserves original US evidence and plays two native mandatory seasons, without retry budget (550844.3345ms)
+✔ M2-CLOSE-RETURN-20261102: committed E66 receipt derives a native TERMINATE service owner and synchronized retry metadata (19997.3861ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 573304.3554
+
+✖ failing tests:
+
+test at packages\engine\test\us-amateur-return-career.test.ts:1:2699
+✖ M2-CLOSE-RETURN-20261102: controlled US prefix: root preserves original US evidence and plays two native mandatory seasons, without retry budget (550844.3345ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + undefined
+  - {
+  -   batterSplits: {},
+  -   batting: {},
+  -   gameKey: '["2029","HS",0,0]',
+  -   matchups: {},
+  -   pitcherSplits: {},
+  -   pitching: {},
+  -   scope: {
+  -     leagueKey: 'HS',
+  -     phase: 'REGULAR',
+  -     seasonKey: '2029'
+  -   },
+  -   teams: {
+  -     H02: {
+  -       L: 0,
+  -       R: 0,
+  -       RA: 0,
+  -       T: 1,
+  -       W: 0,
+  -       games: 1
+  -     },
+  -     H09: {
+  -       L: 0,
+  -       R: 0,
+  -       RA: 0,
+  -       T: 1,
+  -       W: 0,
+  -       games: 1
+  -     }
+  -   },
+  -   worldDay: 31
+  - }
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-amateur-return-career.test.ts:48:83)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { gameKey: '["2029","HS",0,0]', worldDay: 31, scope: { seasonKey: '2029', leagueKey: 'HS', phase: 'REGULAR' }, teams: { H02: [Object], H09: [Object] }, batting: {}, pitching: {}, batterSplits: {}, pitcherSplits: {}, matchups: {} },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -69,7 +69,9 @@ test('RETURN18 months shares exactly two seasons, ACTIVE growth zero, actual US 
  const completionDays=usMilitaryCompletionDays('2030');const service:UsMilitaryServiceProgram={programId:JSON.stringify(['us-military-service','retry-world','2030','own']),planSeasonKey:'2030',scheduledBlocks:2,completionDays,completedBlocks:2,blocks:completionDays.map((d,i)=>({seasonKey:d.seasonKey,kind:i===0?'FULL_DOMESTIC_SEASON':'FIRST_HALF_SEASON',completedWorldDay:d.worldDay}))};
  let p={...player,age:34};const one=settleUsAmateurServiceYear(s,s.revision,{player:p,seasonKey:'2031',service,records:{revision:0,games:{}}});
  assert.equal(one.seasonGrowth.totalBudgetUnits,0);assert.equal(one.return.years.length,1);s=one.return;p={...one.player,age:35};
- const two=settleUsAmateurServiceYear(s,s.revision,{player:p,seasonKey:'2032',service,records:{revision:0,games:{}}});s=two.return;
+ const cheat=settleUsAmateurServiceYear(s,s.revision,{player:p,seasonKey:'2032',service,records:{revision:0,games:{}},difficulty:'SECRET_CHEAT'});
+ const two=settleUsAmateurServiceYear(s,s.revision,{player:p,seasonKey:'2032',service,records:{revision:0,games:{}}});s=two.return;assert.ok(cheat.seasonGrowth.totalBudgetUnits>two.seasonGrowth.totalBudgetUnits);
+
  assert.equal(s.status,'DRAFT_READY');assert.equal(s.years.length,2);assert.equal(s.militaryStatus,'COMPLETED');assert.ok(s.draftReservationKey);assert.equal(two.seasonGrowth.entries.length,2);
  assert.deepEqual(settleUsAmateurServiceYear(JSON.parse(JSON.stringify(s)),s.revision,{player:two.player,seasonKey:'2032',service,records:{revision:0,games:{}},seasonGrowth:two.seasonGrowth}).return,s);
  const a=authority(35,'2032');assert.throws(()=>cancelUsAmateurReturnForUsOffer(s,s.revision,a,{offerRef:'fake',authorityRevision:1}),/OPTION_EXPIRED/);

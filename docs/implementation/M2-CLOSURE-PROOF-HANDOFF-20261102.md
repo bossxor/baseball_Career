@@ -1,5 +1,19 @@
 # M2 closure proof handoff — user-requested stop, 2026-11-02
 
+## Resume harness changes (unexecuted until stable source checkpoint)
+
+The resumed proof owner changed only the two proof scripts and this handoff. No runtime success is inferred from these edits:
+
+- Command receipts now retain a JSON command input and its SHA256, source/result/output hashes, source/result revisions, and command-chain hash. Both original and serialized replay inputs must remain immutable. Initial fixtures are captured once per slice; full state is not retained after every command.
+- The source manifest is rebuilt and sorted at each comparison, so added/deleted engine, rules, and test files are detected. The manifest also covers both harness scripts, path/event catalogues, package metadata and the dependency lockfile. Concurrent changes still reject the proof. A failure writes a separate `-failed.json` containing the actual exception, completed slices and interrupted command receipts; it never writes a success status into the final report.
+- P15 salary assertions select the actual `path-salary` receipt rather than the first KRW income (which may be a signing bonus). US external inventory/world inputs are retained as actual command inputs rather than labels.
+- P02 adds the real E86 learning writer, six pitcher abilities including PICKOFF, valid weights and shared XP reservation. Role competition and completed learning remain unproven.
+- P08/P09 add actual posting request/decision/offer reducers for sign, defer, age45 zero offers, and remaining with the original club. Seven closed100-registration seasons, military completion, abilities and recent batting are controlled fixture inputs. Seed selection occurs before tracing and only chooses a nonzero offer-count boundary. These slices do not prove a native seven-season career or US activation.
+- P11 adds actual callup response and the existing batch16-game AG reducer, persisted PA, appearance and result-dependent military eligibility. It does not prove the full28-player selection/calendar worker or three duty seasons. If the actual medal is not gold, the positive eligibility branch remains explicitly unproven.
+- Default KBO execution adds P23 repeated read-only committed record totals with unchanged world/record hashes. M7 commentary/replay/card/export/backup remain external. P14 was removed from that slice's ID because it does not independently prove same-game trait/goal/chronicle integration.
+
+P10/P16 integration awaits the owning agents' stable helper contracts. P13 and P14 have no new executed endpoint proof here. The parent owns the final stable-source runtime and single full-suite validation. Do not cite this edit note as runtime evidence.
+
 ## Frozen state
 
 M2 is **not complete**. No complete P01–24 runtime report or persisted path SHA256 set was produced. Stop requested while extending the proof runner; source and tests below are WIP for checkpoint commit. Do not report this checkpoint as M2 PASS.
