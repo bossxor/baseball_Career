@@ -1,0 +1,75 @@
+✖ retirement narrative uses only my official historical US PA or BF, sharing one receipt and archive (2556.5647ms)
+✖ US retirement confirmation/cancellation preserves source, all league records, income and contract without another payment (3543.8033ms)
+✖ US maximum-age retirement closes at45 with unresolved overseas deadline preserved, not erased or treated as exemption (1028.9761ms)
+✔ US contract and bench registration without official PA/BF retain E37 and the same archive receipt (1055.2324ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 1
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6008.6489
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-postseason-progress.test.ts:259:1
+✖ retirement narrative uses only my official historical US PA or BF, sharing one receipt and archive (2556.5647ms)
+  AssertionError [ERR_ASSERTION]: ["ROOKIE","REGULAR",1,0,"own","VOLUNTARY"]
+  
+  'E37' !== 'E69'
+  
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\kbo-postseason-progress.test.ts:276:54)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 'E37',
+    expected: 'E69',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\us-retirement.test.ts:18:1
+✖ US retirement confirmation/cancellation preserves source, all league records, income and contract without another payment (3543.8033ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'E37' !== 'E69'
+  
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-retirement.test.ts:21:159)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'E37',
+    expected: 'E69',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\us-retirement.test.ts:39:1
+✖ US maximum-age retirement closes at45 with unresolved overseas deadline preserved, not erased or treated as exemption (1028.9761ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'E37' !== 'E69'
+  
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-retirement.test.ts:41:91)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:969:18)
+      at Test.postRun (node:internal/test_runner/test:1537:19)
+      at node:internal/test_runner/test:1300:31
+      at node:internal/process/task_queues:151:7
+      at AsyncResource.runInAsyncScope (node:async_hooks:227:14)
+      at AsyncResource.runMicrotask (node:internal/process/task_queues:148:8) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'E37',
+    expected: 'E69',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

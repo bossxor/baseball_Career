@@ -7,6 +7,7 @@ import {requestUsRetirement,resolveUsRetirement,retireUsAtMaxAge} from '../src/u
 import {usRetirementArchiveView} from '../src/us-archive-view.js';
 import {usCareerView} from '../src/us-career-entry.js';
 import {startNextUsMinorSeason} from '../src/us-year-transition.js';
+import {US_LEVELS} from '../src/us-season.js';
 import {canonicalJson} from '../src/game.js';
 import type {UsCareer} from '../src/us-career-entry.js';
 const digest=(c:unknown)=>createHash('sha256').update(canonicalJson(c)).digest('hex');
@@ -17,7 +18,7 @@ function choose(c:UsCareer,command:'CONFIRM_RETIRE'|'CANCEL_RETIRE'){
 test('US retirement confirmation/cancellation preserves source, all league records, income and contract without another payment',()=>{
  const c=finished(),before=digest(c),open=requestUsRetirement(c,c.revision);assert.equal(digest(c),before);assert.equal(open.events.at(-1)!.definitionId,'E36');
  const cancelled=choose(open,'CANCEL_RETIRE');assert.equal(cancelled.phaseContext.phase,'SEASON_REVIEW');assert.equal(cancelled.retirement,undefined);assert.deepEqual(cancelled.income,c.income);
- const frozen=digest(open),retired=choose(open,'CONFIRM_RETIRE');assert.equal(digest(open),frozen);assert.equal(retired.phaseContext.phase,'ARCHIVED');assert.equal(retired.events.at(-1)!.definitionId,'E37');assert.equal(retired.retirement!.reason,'VOLUNTARY');
+ const frozen=digest(open),retired=choose(open,'CONFIRM_RETIRE');assert.equal(digest(open),frozen);assert.equal(retired.phaseContext.phase,'ARCHIVED');assert.equal(retired.events.at(-1)!.definitionId,'E69');assert.equal(retired.retirement!.reason,'VOLUNTARY');
  assert.equal(retired.records,c.records);assert.equal(retired.world,c.world);assert.deepEqual(retired.income,c.income);assert.deepEqual(retired.inventory,c.inventory);assert.deepEqual(retired.contract,c.contract);
  assert.deepEqual(choose(JSON.parse(JSON.stringify(open)),'CONFIRM_RETIRE'),retired);assert.throws(()=>choose(retired,'CONFIRM_RETIRE'),/RETIREMENT_EVENT/);
  assert.throws(()=>startNextUsMinorSeason(retired,retired.revision,retired.world.organizations.map(o=>({organizationId:o.id,addedBudgetUsd:0}))),/NOT_READY/);
@@ -37,11 +38,26 @@ test('US archive separates school/minor/MLB and zero MLB debut, returns public s
 
 test('US maximum-age retirement closes at45 with unresolved overseas deadline preserved, not erased or treated as exemption',()=>{
  const young=finished();assert.throws(()=>retireUsAtMaxAge(young,young.revision),/NOT_AVAILABLE/);const c=finished();c.world.players[c.protagonistKey]!.age=45;const before=digest(c),retired=retireUsAtMaxAge(c,c.revision);
- assert.equal(digest(c),before);assert.equal(retired.retirement!.reason,'MAX_AGE');assert.equal(usRetirementArchiveView(retired).retirement.age,45);assert.deepEqual(retired.military,c.military);assert.equal(retired.military.status,'UNRESOLVED');
+ assert.equal(digest(c),before);assert.equal(retired.retirement!.reason,'MAX_AGE');assert.equal(retired.events.at(-1)!.definitionId,'E69');assert.equal(retired.events.filter(e=>e.definitionId==='E37'||e.definitionId==='E69').length,1);assert.equal(retired.events.at(-1)!.evidence.fields.retirementTaskOrReceiptId,retired.retirement!.receiptKey);assert.equal(usRetirementArchiveView(retired).retirement.age,45);assert.deepEqual(retired.military,c.military);assert.equal(retired.military.status,'UNRESOLVED');
 });
 
 test('US retirement rejects unfinished seasons, stale/version mismatch and changed final evidence atomically',()=>{
  const early=preparedUsCareer();assert.throws(()=>requestUsRetirement(early,early.revision),/NOT_AVAILABLE/);const c=finished(),raw=digest(c);assert.throws(()=>requestUsRetirement(c,c.revision-1),/REVISION/);assert.equal(digest(c),raw);
  const open=requestUsRetirement(c,c.revision),e=open.events.at(-1)!,before=digest(open);assert.throws(()=>resolveUsRetirement(open,open.revision,{eventKey:e.eventKey,eventVersion:e.version+1,command:'CONFIRM_RETIRE'}),/VERSION/);assert.equal(digest(open),before);
  const changed=finished(),g=Object.values(changed.records.games).find(g=>g.scope.phase==='POSTSEASON')!;g.teams[Object.keys(g.teams)[0]!]!.R++;const altered=digest(changed);assert.throws(()=>requestUsRetirement(changed,changed.revision),/EVIDENCE/);assert.equal(digest(changed),altered);
+});
+
+
+test('US contract and bench registration without official PA/BF retain E37 and the same archive receipt',()=>{
+ const c=finished(),key=c.protagonistKey;
+ // Controlled no-appearance season: keep the active US contract, salary and registration; recertify date fixtures.
+ for(const g of Object.values(c.records.games))if(US_LEVELS.some(level=>level===g.scope.leagueKey)){
+  if(g.batting[key]){for(const field of Object.keys(g.batting[key]!))g.batting[key]![field as keyof typeof g.batting[string]]=0;g.batting[key]!.games=1;}
+  if(g.batterSplits[key])for(const split of Object.values(g.batterSplits[key]!))for(const field of Object.keys(split))split[field as keyof typeof split]=0;
+  delete g.pitching[key];delete g.pitcherSplits[key];
+ }
+ for(const d of c.season!.days){d.appearances=0;d.evidence=canonicalJson(US_LEVELS.flatMap(level=>c.seasonSchedule!.leagues[level].filter(g=>g.worldDay===d.day).map(g=>c.records.games[g.simulationKey]!)));}
+ const before=digest(c),retired=choose(requestUsRetirement(c,c.revision),'CONFIRM_RETIRE');
+ assert.equal(digest(c),before);assert.equal(retired.events.at(-1)!.definitionId,'E37');assert.equal(retired.events.filter(e=>e.definitionId==='E37'||e.definitionId==='E69').length,1);
+ assert.equal(retired.events.at(-1)!.evidence.fields.retirementTaskOrReceiptId,retired.retirement!.receiptKey);assert.equal(usRetirementArchiveView(retired).archiveKey,retired.retirement!.receiptKey);assert.equal(retired.records,c.records);assert.deepEqual(retired.income,c.income);assert.deepEqual(retired.contract,c.contract);
 });

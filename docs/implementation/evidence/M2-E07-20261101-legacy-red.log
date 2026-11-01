@@ -1,0 +1,21 @@
+✖ older retry E05 notices remain readable without a second offer and ambiguous duplicate publications reject (51900.3219ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 52339.9125
+
+✖ failing tests:
+
+test at packages\engine\test\retry-offer-notice.test.ts:1:5518
+✖ older retry E05 notices remain readable without a second offer and ambiguous duplicate publications reject (51900.3219ms)
+  RangeError: ROUTE_NOTICE_DRAFT_EVIDENCE_CHANGED
+      at assertCareerRouteNotices (E:\AI\Game\baseball_career\packages\engine\src\career-route-notices.ts:60:261)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\retry-offer-notice.test.ts:51:2)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

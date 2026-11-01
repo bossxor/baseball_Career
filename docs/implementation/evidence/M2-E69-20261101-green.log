@@ -1,0 +1,12 @@
+✔ retirement narrative uses only my official historical US PA or BF, sharing one receipt and archive (6729.7515ms)
+✔ US retirement confirmation/cancellation preserves source, all league records, income and contract without another payment (4251.6299ms)
+✔ US maximum-age retirement closes at45 with unresolved overseas deadline preserved, not erased or treated as exemption (1087.1286ms)
+✔ US contract and bench registration without official PA/BF retain E37 and the same archive receipt (1041.2702ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7177.0405

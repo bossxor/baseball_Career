@@ -1,0 +1,33 @@
+✔ zero-first-team career archives actual identity/six peaks and zero rates without exposing hidden state or creating a player copy (571.2193ms)
+✔ KBO, Futures and postseason totals stay distinct, with rates from summed raw numerators rather than averaged seasons (417.3093ms)
+✔ pitcher archive retains hand/form and active pitch mastery without exposing pitch XP or treating zero outs as ERA0 (524.5493ms)
+✔ live roots, foreign retirement club/year, mismatched age and future receipt cannot masquerade as a retired archive (1224.2491ms)
+✔ the postseason plays real games day by day to one champion and returns to SEASON_REVIEW (3322.0578ms)
+✔ postseason home runs feed career trait evidence after each postseason day (566.9417ms)
+✔ year transition readiness lists every Y01 blocker until postseason, growth, season close and my contract are done (2139.0298ms)
+✔ E30 renewal offer follows 08 once and closes only through the accepted domain commit (2254.5157ms)
+✔ Y02 stages age+1 and contract years for every pro player without changing the source (2289.2744ms)
+✔ next season activates every player at once and the second pro season opens and plays (7117.4409ms)
+✔ season close grows and ages every pro NPC once from the natural PRO period (2026.2091ms)
+✔ NPCs who played at45 retire before AI renewal, supply and complete two-league reselection (2337.5375ms)
+✔ my retirement: E36 cancel returns, confirm closes E30 and archives; age 45 ends the career without a renewal (2236.8946ms)
+✔ forced retirement review needs age 35 and two closed seasons under the first-team threshold (2002.4447ms)
+✔ year transition drafts a 100-player rookie class in reverse standings order, with room and budget respected (2645.5075ms)
+✔ mass NPC retirement repairs both leagues before atomic activation, without deleting debt, records or the old generation (2914.9345ms)
+✔ legacy multi-year contracts carry only actual remaining years, including my unexpired contract without a new renewal (2555.449ms)
+✔ the military unit ages with the year transition, completes the played block and rejoins finished programs (4908.5424ms)
+✔ retiring a suspended contract preserves all unpaid game days instead of losing one calendar year in its warning (2227.0122ms)
+✔ retirement narrative uses only my official historical US PA or BF, sharing one receipt and archive (6356.5479ms)
+✔ US retirement confirmation/cancellation preserves source, all league records, income and contract without another payment (4871.6817ms)
+✔ US archive separates school/minor/MLB and zero MLB debut, returns public six-stat peaks without hidden state (1321.9051ms)
+✔ US maximum-age retirement closes at45 with unresolved overseas deadline preserved, not erased or treated as exemption (1034.1456ms)
+✔ US retirement rejects unfinished seasons, stale/version mismatch and changed final evidence atomically (2621.5638ms)
+✔ US contract and bench registration without official PA/BF retain E37 and the same archive receipt (1011.3144ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48383.2383

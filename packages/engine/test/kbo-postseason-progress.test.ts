@@ -10,6 +10,7 @@ import {startKboPostseason,advanceKboPostseason} from '../src/kbo-postseason-pro
 import {settleKboSeasonGrowth} from '../src/kbo-season-growth.js';
 import type {KboCareer} from '../src/kbo-career-entry.js';
 import {enteredKboCareer} from './fixtures.js';
+import {emptyBatting,emptyPitching} from '../src/stats.js';
 import {canonicalJson} from '../src/game.js';
 import {closeKboSeason} from '../src/kbo-year-end.js';
 import {kboYearTransitionReadiness,stageKboAgeAndContracts,startNextKboSeason} from '../src/kbo-year-transition.js';
@@ -252,4 +253,30 @@ test('retiring a suspended contract preserves all unpaid game days instead of lo
  const before=canonicalJson(c),asked=requestKboRetirement(c,c.revision),e=asked.events.at(-1)!,out=resolveKboRetirement(asked,asked.revision,{eventKey:e.eventKey,eventVersion:e.version,command:'CONFIRM_RETIRE'});
  assert.equal(out.retirement!.remainingContractYears,4);assert.equal(out.retirement!.remainingPaidGameDays,576);assert.equal(kboRetirementArchiveView(out).retirement.endedContractGameDays,576);assert.equal(canonicalJson(c),before);assert.deepEqual(out.world.contracts[key]!.servicePay,contract.servicePay);
  const invalid=structuredClone(out);invalid.retirement!.remainingPaidGameDays=575;assert.throws(()=>kboRetirementArchiveView(invalid),/ARCHIVE_CONTRACT_INVALID/);
+});
+
+
+test('retirement narrative uses only my official historical US PA or BF, sharing one receipt and archive',()=>{
+ const base=closed(),key=base.protagonistKey,template=Object.values(base.records.games).find(g=>Object.keys(g.batting).length>0)!;
+ const cases=[
+  ['ROOKIE','REGULAR',1,0,key,'E69'],['A','POSTSEASON',1,0,key,'E69'],['AA','REGULAR',0,1,key,'E69'],['AAA','REGULAR',1,0,key,'E69'],['MLB','POSTSEASON',0,1,key,'E69'],
+  ['MLB','REGULAR',0,0,key,'E37'],['AAA','REGULAR',1,0,'npc-only','E37'],['MLB','INTERNATIONAL',1,0,key,'E37'],['KBO','REGULAR',1,0,key,'E37'],['AG','INTERNATIONAL',1,0,key,'E37'],
+ ] as const;
+ for(const [leagueKey,phase,PA,BF,playerKey,expected] of cases){
+  const c=structuredClone(base),g=structuredClone(template);g.gameKey='historical-us';g.scope={seasonKey:String(Number(c.world.seasonKey)-1),leagueKey,phase};
+  const zero={PA:0,AB:0,H:0,BB:0,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0},pitchZero={BF:0,outs:0,AB:0,H:0,TB:0,HR:0,BB:0,HBP:0,K:0};
+  g.batting={[playerKey]:{...emptyBatting(),PA,AB:PA,K:PA,twoB:0,threeB:0,games:1,fieldingGames:0,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0}};
+  g.batterSplits={[playerKey]:{L:{...zero},R:{...zero,PA,AB:PA,K:PA}}};
+  g.pitching=BF?{[playerKey]:{...emptyPitching(),BF,games:1,starts:0,starterOuts:0,loadedBF:0,W:0,L:0,SV:0,HLD:0,BS:0,shutouts:0}}:{};
+  g.pitcherSplits=BF?{[playerKey]:{L:{...pitchZero},R:{...pitchZero,BF}}}:{};g.matchups={};c.records.games[g.gameKey]=g;
+  for(const reason of ['VOLUNTARY','MAX_AGE'] as const){
+   const source=structuredClone(c);if(reason==='MAX_AGE')source.world.players[key]!.age=45;
+   const before=canonicalJson(source),open=reason==='VOLUNTARY'?requestKboRetirement(source,source.revision):source,e=open.events.at(-1)!;
+   const done=reason==='VOLUNTARY'?resolveKboRetirement(open,open.revision,{eventKey:e.eventKey,eventVersion:e.version,command:'CONFIRM_RETIRE'}):retireKboAtMaxAge(source,source.revision);
+   assert.equal(canonicalJson(source),before);assert.equal(done.events.at(-1)!.definitionId,expected,JSON.stringify([leagueKey,phase,PA,BF,playerKey,reason]));
+   const notices=done.events.filter(e=>e.definitionId==='E37'||e.definitionId==='E69');assert.equal(notices.length,1);assert.equal(notices[0]!.evidence.fields.retirementTaskOrReceiptId,done.retirement!.receiptKey);assert.equal(notices[0]!.evidence.fields.playerSimulationKey,key);
+   assert.equal(kboRetirementArchiveView(done).archiveKey,done.retirement!.receiptKey);assert.deepEqual(done.records,source.records);assert.deepEqual(done.world.contracts,source.world.contracts);assert.deepEqual(done.world.finance,source.world.finance);
+   assert.deepEqual(kboRetirementArchiveView(JSON.parse(JSON.stringify(done))),kboRetirementArchiveView(done));assert.throws(()=>retireKboAtMaxAge(done,done.revision),/RETIREMENT_NOT_AVAILABLE/);
+  }
+ }
 });
