@@ -4,6 +4,7 @@ import { gameSaves } from '@playball/db';
 import type { AppVariables } from './auth.js';
 import { CLUB_SCREEN_IDS } from '@playball/engine';
 import { clubScreenOf } from './club-shell.js';
+import { RETRY_SCREEN_IDS, retryScreenOf } from './career-retry-shell.js';
 import { careerView, decisionView, type UiShellState } from './ui-shell.js';
 
 function errorBody(
@@ -72,6 +73,7 @@ export async function getScreen(c: Context<{ Variables: AppVariables }>) {
         ...(gameKey ? { gameKey } : {}),
       }));
     }
+    if ((RETRY_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(retryScreenOf(state, screenId));
     return c.json(decisionView(row.id, state, screenId));
   } catch (err) {
     const code = err && typeof err === 'object' && 'code' in err ? String((err as { code: string }).code) : 'INVALID_REQUEST';
