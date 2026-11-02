@@ -11,7 +11,8 @@ export const SANGMU_TEAM_KEY='SANGMU';
 /** Internal worker projection only. Caller authorizes career phase, queue/date, health and starters.
  * Both leagues share identities/books but have disjoint registered rosters. This is not a career transition. */
 export function createKboCompetitionGameWorld(world:ActiveKboRosterWorld,leagueKey:'KBO'|'FUTURES',protagonistKey:string,sangmu?:KboSangmuUnit):CompetitionGameWorld {
- if(!['KBO','FUTURES'].includes(leagueKey) || !Object.hasOwn(world.players,protagonistKey) || !world.clubs.some(c=>c.roster.includes(protagonistKey)))throw new RangeError('INVALID_KBO_GAME_WORLD');
+ // An empty protagonist key is club mode (no own player): nobody gets the protagonist-only rules.
+ if(!['KBO','FUTURES'].includes(leagueKey) || protagonistKey!=='' && (!Object.hasOwn(world.players,protagonistKey) || !world.clubs.some(c=>c.roster.includes(protagonistKey))))throw new RangeError('INVALID_KBO_GAME_WORLD');
  assertKboRecruitmentWorld(world);
  if(sangmu)assertSangmuUnit(sangmu,world);
  for(const c of world.clubs)if(c.firstTeam.length!==28 || new Set(c.firstTeam).size!==28 || c.firstTeam.some(k=>!c.roster.includes(k) || kboActiveContractSuspended(world.contracts[k]!)))throw new RangeError('INVALID_KBO_GAME_REGISTRATION');

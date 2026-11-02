@@ -118,6 +118,8 @@
 
 **M2-DN 검증 완료 (2026-10-27):** 상무/현역 목표 예외·MLB FA 전1년 재계약·루트4·연봉/일일 지급/이월·재승격 중복 계약 방지. 전체 npm run check 종료0: 총716개 중714통과·실패0·Neon환경 부재2건 건너뜀, 웹20/20. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. 엔진/API duration_ms839708.6663, 동결418파일 변경0. 실제 브라우저/Neon/실기기 검증은 아니다. [DN](../implementation/M2-DN-MAJOR-RENEWAL.md). 실제 새해 첫날75경기와 통제7시즌은 별도 근거다. 잔여5% 시 기록·커밋·푸시, PC 종료 금지.
 
+**M2-DN 검증 완료:** 상무 목표의 SANGMU/FUTURES·반시즌 창과 현역 선택/교체 불가 사유를 보강했다. 신규5+기존11 집중16/16·타입·lint 통과. 실제 상무 PA4/선발1·무목표 대비 경기 상태 동일·JSON 재개를 확인했다. 전체 npm run check 종료0: 엔진/API 총752개 중750통과·실패0·Neon환경 부재2개 건너뜀, 웹24/24. lint·타입·build·엔진골든·이벤트·설계10종·Android셸·자산 검증과 HTTP 스모크 통과. 엔진/API duration_ms206645.4053, 소스 동결438파일 변경0. 실제 브라우저/Neon/실기기 검증은 아니다. [DN](../implementation/M2-DN-MILITARY-GOALS.md). 실제 UI/18개월 완주·미국 계약은 남아 있다.
+
 **M2-DM 기본 경로 검증 완료:** 시즌 목표10종·기념 보상·E90 outbox. 전체 npm run check 종료0: 총710개 중708통과·실패0·Neon환경 부재2건 건너뜀, 웹20/20. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. 엔진/API duration_ms809722.8611, 동결412파일 변경0. 실제 브라우저/Neon/실기기 검증은 아니다. [DM](../implementation/M2-DM-SEASON-GOALS.md). 다음은 상무/현역 목표 등록 예외·미국 계약. MLB 연봉 최종800000/나이별5·3·2·1년 제안 결정은13/14에 반영했다.
 
 **M2-DL 검증 완료:** 미국 수동/45세 은퇴·실제 레벨별 공개 보관·기록/수입 보존. 전체 npm run check 종료0: 총699개 중697통과·실패0·Neon환경 부재2건 건너뜀, 웹20/20. lint/타입/build/엔진골든/이벤트/설계10종/Android셸/자산·HTTP 스모크 통과. 엔진/API duration_ms496580.9465, 동결410파일 변경0. 실제 브라우저/Neon/실기기 검증은 아니다. [DL](../implementation/M2-DL-US-RETIREMENT-ARCHIVE.md). 전체83%/남음17%와 M2영역50%는 남은 핵심 경로가 있어 유지하며 기능 범위 가중 추정이다. PC 종료 금지 지시 유지.

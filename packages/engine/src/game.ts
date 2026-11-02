@@ -62,6 +62,7 @@ function validateInput(input: GameInput): void {
       assertAbilities('PITCHER', pitcher.abilities);
       effectiveAbilities('PITCHER', pitcher.abilities, pitcher.fatigue, pitcher.morale, pitcher.temporary);
       if (!['SP', 'RP', 'CP'].includes(pitcher.role) || !Number.isSafeInteger(pitcher.recentOuts) || pitcher.recentOuts < 0) throw new RangeError('Invalid pitcher role/workload');
+      if (pitcher.bullpen !== undefined && !['CP', 'SU', 'MR', 'LR'].includes(pitcher.bullpen)) throw new RangeError('Invalid pitcher role/workload');
       const pitch = selectRepresentativePitch(pitcher.repertoire, 0);
       matchupEffects(pitcher.pitchForm, pitch.pitchId, pitch.mastery, pitcher.throws, 'R', 'BALANCED', pitcher.traitLogits);
     }
@@ -106,8 +107,10 @@ function reviewPitcher(state: GameState, team: 0 | 1): void {
   if (line.pitches < threshold && current.fatigue < 80 && (starter || line.outs < 6)) return;
   const lead = state.scores[team] - state.scores[team === 0 ? 1 : 0];
   const preference = state.inning >= 9 && lead > 0 && lead <= 3 ? ['CP', 'RP', 'SP'] : state.inning >= 7 ? ['RP', 'CP', 'SP'] : ['RP', 'SP', 'CP'];
+  const slotOrder = state.inning >= 9 && lead > 0 && lead <= 3 ? ['CP', 'SU', 'MR', 'LR'] : state.inning >= 7 ? ['SU', 'MR', 'LR', 'CP'] : ['MR', 'LR', 'SU', 'CP'];
   const candidates = state.input.teams[team].pitchers.map((p, index) => ({ p, index })).filter(({ p }) => p.available && !state.appearances.some(a => a.pitcherKey === p.simulationKey));
-  candidates.sort((a, b) => preference.indexOf(a.p.role) - preference.indexOf(b.p.role) || a.p.fatigue - b.p.fatigue || a.p.recentOuts - b.p.recentOuts || (a.p.simulationKey < b.p.simulationKey ? -1 : a.p.simulationKey > b.p.simulationKey ? 1 : 0));
+  const slotted = candidates.some(c => c.p.bullpen);
+  candidates.sort((a, b) => (slotted ? (a.p.bullpen ? slotOrder.indexOf(a.p.bullpen) : 99) - (b.p.bullpen ? slotOrder.indexOf(b.p.bullpen) : 99) : preference.indexOf(a.p.role) - preference.indexOf(b.p.role)) || a.p.fatigue - b.p.fatigue || a.p.recentOuts - b.p.recentOuts || (a.p.simulationKey < b.p.simulationKey ? -1 : a.p.simulationKey > b.p.simulationKey ? 1 : 0));
   const next = candidates[0];
   if (!next) return; // No free replacement; last eligible pitcher keeps the fatigue penalty.
   state.activePitcherIndex[team] = next.index;

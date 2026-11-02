@@ -9,6 +9,7 @@ import {assertKboCareerRevision} from './kbo-career-version.js';
 import type {UsCareer} from './us-career-entry.js';
 import {assertUsCareerRevision} from './us-career-entry.js';
 import {US_SEASON_GAMES} from './us-schedule.js';
+import {kboActiveContractSuspended} from './kbo-service-payroll.js';
 import {recordTotals} from './records.js';
 import type {RecordScope} from './records.js';
 import {canonicalJson} from './game.js';
@@ -27,9 +28,10 @@ export interface SeasonGoals {leagueKey:string;teamKey:string;scheduledGames:num
 export interface CareerGoalLedger {schemaVersion:1;worldKey:string;playerKey:string;seasons:Record<string,SeasonGoals>;notices:readonly EventInstance[];rewards:readonly {rewardId:string;type:typeof SEASON_GOAL_DEFINITIONS[SeasonGoalId]['rewardType'];firstReceipt:string;sources:readonly string[]}[]}
 const isUs=(c:GoalCareer):c is UsCareer=>'mode'in c&&c.mode==='US_CAREER';
 const isKbo=(c:GoalCareer):c is KboCareer=>'protagonistClubId'in c;
+const servingActive=(c:GoalCareer)=>isKbo(c)&&kboActiveContractSuspended(c.world.contracts[c.protagonistKey]!);
 function registration(c:GoalCareer){
  if(isUs(c))return {key:c.protagonistKey,team:c.protagonistOrganizationId,league:c.registration.level,games:US_SEASON_GAMES[c.registration.level],available:true};
- if(isKbo(c)){const p=c.military?.program,currentService=!p||p.completedBlocks<p.scheduledBlocks&&p.blocks.some(b=>b.seasonKey===c.world.seasonKey),sports=c.sangmu?.loaned?.includes(c.protagonistKey)||currentService&&c.military?.status==='SERVING_SPORTS';return {key:c.protagonistKey,team:sports?'SANGMU':c.protagonistClubId,league:sports?'FUTURES':c.registration.competitionKey??(c.registration.firstTeam?'KBO':'FUTURES'),games:144,available:!(currentService&&c.military?.status==='SERVING_ACTIVE')};}
+ if(isKbo(c)){const p=c.military?.program,currentService=!p||p.completedBlocks<p.scheduledBlocks&&p.blocks.some(b=>b.seasonKey===c.world.seasonKey),sports=currentService&&(!!c.sangmu?.loaned?.includes(c.protagonistKey)||c.military?.status==='SERVING_SPORTS');return {key:c.protagonistKey,team:sports?'SANGMU':c.protagonistClubId,league:sports?'FUTURES':c.registration.competitionKey??(c.registration.firstTeam?'KBO':'FUTURES'),games:144,available:!(currentService&&c.military?.status==='SERVING_ACTIVE')};}
  return {key:c.world.protagonistKey,team:c.world.protagonistSchoolId,league:c.world.leagueKey??'HS',games:c.world.schedule.filter(g=>g.homeTeamKey===c.world.protagonistSchoolId||g.awayTeamKey===c.world.protagonistSchoolId).length,available:true};
 }
 function assertRevision(c:GoalCareer,revision:number){if(isUs(c))assertUsCareerRevision(c,revision);else if(isKbo(c))assertKboCareerRevision(c,revision);else assertCareerRevision(c,revision);}
@@ -81,6 +83,7 @@ function slot(c:GoalCareer,id:SeasonGoalId,index:number):SeasonGoalSlot {
 function teamGames(c:GoalCareer,s:SeasonGoals):number {return Object.values(c.records.games).filter(g=>g.scope.seasonKey===c.world.seasonKey&&g.scope.leagueKey===s.leagueKey&&g.scope.phase==='REGULAR'&&Object.hasOwn(g.teams,s.teamKey)).length;}
 export function setCareerSeasonGoals<T extends GoalCareer>(c:T,revision:number,ids:readonly SeasonGoalId[]):T {
  assertRevision(c,revision);validate(c);if(c.phaseContext.phase!=='PRESEASON_SETUP')throw new RangeError('GOALS_LOCKED');
+ if(servingActive(c))throw new RangeError('GOAL_SELECTION_UNAVAILABLE');
  if(!Array.isArray(ids)||ids.length>3||new Set(ids).size!==ids.length)throw new RangeError('GOAL_SLOT_CONFLICT');const r=registration(c);
  if(Object.values(c.records.games).some(g=>g.scope.seasonKey===c.world.seasonKey&&g.scope.phase==='REGULAR'))throw new RangeError('GOALS_LOCKED');
  const l=structuredClone(c.goals??empty(c)),old=l.seasons[c.world.seasonKey];l.seasons[c.world.seasonKey]={leagueKey:r.league,teamKey:r.team,scheduledGames:r.games,replacementUsed:false,slots:ids.map((id,i)=>slot(c,id,i)),history:[...(old?.history??[]),...(old?.slots.map(g=>({...g,status:'REPLACED' as const}))??[])]};
@@ -149,7 +152,7 @@ export function resolveCareerGoalEvent<T extends GoalCareer>(c:T,revision:number
 }
 export function replaceCareerSeasonGoal<T extends GoalCareer>(c:T,revision:number,index:number,id:SeasonGoalId):T {
  assertRevision(c,revision);validate(c);const s=c.goals?.seasons[c.world.seasonKey],old=s?.slots.find(g=>g.slot===index);
- if(c.phaseContext.phase!=='SEASON_PROGRESS'||c.phaseContext.pendingGame||!s||!old||old.status!=='ACTIVE')throw new RangeError('GOAL_REPLACEMENT_NOT_ELIGIBLE');
+ if(servingActive(c)||c.phaseContext.phase!=='SEASON_PROGRESS'||c.phaseContext.pendingGame||!s||!old||old.status!=='ACTIVE')throw new RangeError('GOAL_REPLACEMENT_NOT_ELIGIBLE');
  if(progress(c,old)>=SEASON_GOAL_DEFINITIONS[old.goalId].target)throw new RangeError('GOAL_REPLACEMENT_NOT_ELIGIBLE');
  if(s.replacementUsed)throw new RangeError('GOAL_REPLACEMENT_USED');if(teamGames(c,s)<Math.ceil(s.scheduledGames/2))throw new RangeError('GOAL_REPLACEMENT_WINDOW_NOT_OPEN');
  if(s.slots.some(g=>g.goalId===id))throw new RangeError('GOAL_SLOT_CONFLICT');const nextSlot=slot(c,id,index);nextSlot.progress=progress(c,nextSlot);if(nextSlot.progress>=SEASON_GOAL_DEFINITIONS[id].target)throw new RangeError('GOAL_ALREADY_SATISFIED');
@@ -170,7 +173,7 @@ export function refreshCareerSeasonGoals<T extends GoalCareer>(c:T):T {
 }
 export function careerSeasonGoalsView(c:GoalCareer){
  assertRevision(c,c.revision);validate(c);const r=registration(c),s=c.goals?.seasons[c.world.seasonKey],definitions=(Object.keys(SEASON_GOAL_DEFINITIONS) as SeasonGoalId[]).filter(id=>eligible(c,id)).map(id=>({goalId:id,...SEASON_GOAL_DEFINITIONS[id],rewardId:'R-'+id}));
- return {seasonKey:c.world.seasonKey,playerKey:r.key,sourceDifficulty:c.difficulty,availabilityReason:r.available?null:'SERVING_ACTIVE' as const,definitions,recommendedIds:recommend(c,definitions.map(d=>d.goalId)),noticeDelivery:'OUTBOX' as const,notices:(c.goals?.notices??[]).map(n=>({eventKey:n.eventKey,definitionId:n.definitionId,version:n.version,status:n.status,commands:[...n.offeredChoices],goalId:n.evidence.fields.goalId,stage:n.evidence.fields.stage,title:eventDefinition(n.definitionId).title})),history:(s?.history??[]).map(g=>({...g,scope:{...g.scope}})),slots:(s?.slots??[]).map(g=>({...g,scope:{...g.scope},progress:progress(c,g),target:SEASON_GOAL_DEFINITIONS[g.goalId].target,previousLeague:g.scope.leagueKey!==r.league})),replacement:{used:s?.replacementUsed??false,open:r.available&&!!s&&!s.replacementUsed&&c.phaseContext.phase==='SEASON_PROGRESS'&&!c.phaseContext.pendingGame&&s.slots.some(g=>g.status==='ACTIVE'&&progress(c,g)<SEASON_GOAL_DEFINITIONS[g.goalId].target)&&teamGames(c,s)>=Math.ceil(s.scheduledGames/2)},rewards:c.goals?.rewards.map(reward=>({...reward,sources:[...reward.sources]}))??[],gameplayRewardDelta:0 as const};
+ return {seasonKey:c.world.seasonKey,playerKey:r.key,sourceDifficulty:c.difficulty,availabilityReason:r.available?null:'SERVING_ACTIVE' as const,registration:{teamKey:r.available?r.team:null,leagueKey:r.available?r.league:null},selection:{open:r.available&&c.phaseContext.phase==='PRESEASON_SETUP'&&!Object.values(c.records.games).some(g=>g.scope.seasonKey===c.world.seasonKey&&g.scope.phase==='REGULAR'),reason:!r.available?'SERVING_ACTIVE' as const:c.phaseContext.phase!=='PRESEASON_SETUP'||Object.values(c.records.games).some(g=>g.scope.seasonKey===c.world.seasonKey&&g.scope.phase==='REGULAR')?'GOALS_LOCKED' as const:null},definitions,recommendedIds:recommend(c,definitions.map(d=>d.goalId)),noticeDelivery:'OUTBOX' as const,notices:(c.goals?.notices??[]).map(n=>({eventKey:n.eventKey,definitionId:n.definitionId,version:n.version,status:n.status,commands:[...n.offeredChoices],goalId:n.evidence.fields.goalId,stage:n.evidence.fields.stage,title:eventDefinition(n.definitionId).title})),history:(s?.history??[]).map(g=>({...g,scope:{...g.scope}})),slots:(s?.slots??[]).map(g=>({...g,scope:{...g.scope},progress:progress(c,g),target:SEASON_GOAL_DEFINITIONS[g.goalId].target,previousLeague:g.scope.leagueKey!==r.league})),replacement:{used:s?.replacementUsed??false,reason:r.available?null:'SERVING_ACTIVE' as const,open:r.available&&!!s&&!s.replacementUsed&&c.phaseContext.phase==='SEASON_PROGRESS'&&!c.phaseContext.pendingGame&&s.slots.some(g=>g.status==='ACTIVE'&&progress(c,g)<SEASON_GOAL_DEFINITIONS[g.goalId].target)&&teamGames(c,s)>=Math.ceil(s.scheduledGames/2)},rewards:c.goals?.rewards.map(reward=>({...reward,sources:[...reward.sources]}))??[],gameplayRewardDelta:0 as const};
 }
 
 function recommend(c:GoalCareer,ids:SeasonGoalId[]):SeasonGoalId[]{

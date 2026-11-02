@@ -60,3 +60,7 @@ GU-D01 추천 근거 문구에 퍼센트 예측 없음/02 BB22→G04 교체 시 
 문구·배치는 초안D이며106에서 원문·대표 시안·순수 로컬 조작·정적 검수에 연결했다. 실제 앱/API/DB/기기 검증은 미실행이다.
 
 최신 연결 범위는 [106](106-EXPANSION-UI-CLOSURE.md),실행 전61항목의 원문/시안 진입점은state-ui-preview-coverage.json이다. NOT_EXECUTED를 유지한다.
+
+## M2-DN 공개 상태 연결 (D, 2026-10-27)
+
+엔진 careerSeasonGoalsView는 현재 registration(teamKey/leagueKey)과 selection(open/reason), replacement.reason을 추가 제공한다. 현역 무등록은 registration 두 값 null·SERVING_ACTIVE이며 추천이 비어 있다는 사실만으로 조회 실패나 목표 미선택으로 표현하지 않는다. 소비자는 '현역 복무 중에는 경기 등록이 없어 새 목표를 선택하거나 교체할 수 없습니다' 사유와 기존 목표/보상 열람을 제공한다. 상무는 SANGMU/FUTURES 등록을 표시한다. 실제 S40 화면·접근성 검증은 별도이며 이 DTO 구현만으로 완료로 표시하지 않는다.

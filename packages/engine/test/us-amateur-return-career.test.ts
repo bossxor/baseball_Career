@@ -50,9 +50,9 @@ test('M2-CLOSE-RETURN-20261102: controlled US prefix: root preserves original US
  assert.ok(resolved.draft!.program.result!.round,'strong controlled US prefix must produce a real native draft offer');
  const signed=decideUsAmateurReturnDraft(resolved,resolved.revision,resolved.draft!.program.version,'SIGN');
  let kbo=startSignedUsAmateurReturnKboCareer(signed,signed.revision);
- assert.equal(kbo.world.players[kbo.protagonistKey]!.age,c.return.sourceAge+3);assert.deepEqual(kbo.usAmateurReturnHistory,signed);
+ assert.equal(kbo.world.players[kbo.protagonistKey]!.age,c.return.sourceAge+3);assert.equal(canonicalJson(kbo.usAmateurReturnHistory),canonicalJson(signed));
  for(const [key,row] of Object.entries(source.records.games))assert.deepEqual(kbo.records.games[key],row);
- for(const notice of unreadKboFirstCampNotices(kbo))kbo=resolveKboFirstCampNotice(kbo,kbo.revision,{eventKey:notice.eventKey,eventVersion:notice.eventVersion,command:'ACK_EVENT'});
+ for(const notice of unreadKboFirstCampNotices(kbo))kbo=resolveKboFirstCampNotice(kbo,kbo.revision,{eventKey:notice.eventKey,eventVersion:notice.eventVersion,command:'KEEP_FOCUS'});
  kbo=confirmKboPreseasonPlan(kbo,kbo.revision);kbo=confirmKboOpeningRoster(kbo,kbo.revision);kbo=confirmKboSeasonSchedule(kbo,kbo.revision);kbo=startKboRegularSeason(kbo,kbo.revision);
  const played=advanceKboCareer(kbo,kbo.revision,1);assert.notEqual(played.stopReason,'ENGINE_LIMIT');assert.ok(played.career.records.revision>kbo.records.revision);
 });

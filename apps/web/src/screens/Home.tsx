@@ -37,6 +37,7 @@ export function Home({ data, state = 'ready', showSaves = false, logo, onResume,
       )}
       <nav aria-label="모드" className="mode-nav">
         {onNew ? <Button primary={empty} onClick={() => onNew('CAREER')}>새 커리어</Button> : null}
+        {onNew ? <Button onClick={() => onNew('CLUB')}>새 구단</Button> : null}
         {onSettings ? <Button onClick={onSettings}>설정</Button> : null}
       </nav>
       {data && data.archiveCount > 0 ? <p className="muted">보관한 선수 {data.archiveCount}명</p> : null}

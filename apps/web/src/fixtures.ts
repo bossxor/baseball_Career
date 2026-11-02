@@ -1,7 +1,8 @@
 import type { PlayballApi } from './api.js';
 import type {
-  CareerView, ChooseReceipt, CreationReceipt, CreationRequest, DecisionView, HomeData, NextAction, PlayScreenId, ProgressMode, SaveSummary,
+  CareerView, ChooseReceipt, ClubCreateRequest, ClubScreen, ClubScreenId, CreationReceipt, CreationRequest, DecisionView, HomeData, NextAction, PlayScreenId, ProgressMode, SaveSummary,
 } from './model.js';
+import { CLUB_CHOICES } from './club.js';
 import { POSITION_LABELS } from './creation.js';
 import { M5_IDS, PLAY_SCREEN_IDS, SCREEN_TITLES } from './screen-states.js';
 
@@ -111,6 +112,8 @@ const catalog = (screenId: PlayScreenId): Catalog => m4Catalogs[screenId] ?? stu
 export function createFixtureApi(): PlayballApi {
   const saves = new Map<string, FixtureSave>(), created = new Map<string, string>();
   const acted = new Map<string, CareerView>(), chosen = new Map<string, ChooseReceipt>();
+  const clubs = new Map<string, { summary: SaveSummary; started: boolean; lineup: boolean }>();
+  const clubCreated = new Map<string, string>(), clubCommands = new Map<string, ClubScreen>();
 
   const view = (s: FixtureSave): CareerView => {
     const p = s.request, week = Math.floor(s.day / 7) + 1;
@@ -150,7 +153,7 @@ export function createFixtureApi(): PlayballApi {
 
   return {
     async home(): Promise<HomeData> {
-      const list = [...saves.values()].map(s => s.summary);
+      const list = [...saves.values()].map(s => s.summary).concat([...clubs.values()].map(s => s.summary));
       return { saves: list, archiveCount: 0, resume: list.length ? { saveId: list[0]!.saveId, label: list[0]!.phaseLabel } : null };
     },
     async career(saveId: string): Promise<CareerView> {
@@ -219,6 +222,45 @@ export function createFixtureApi(): PlayballApi {
       const receipt = { next };
       chosen.set(commandId, receipt);
       return receipt;
+    },
+    async createClub(request: ClubCreateRequest): Promise<CreationReceipt> {
+      const prior = clubCreated.get(request.commandId);
+      if (prior) return { saveId: prior };
+      if (!CLUB_CHOICES.some(([id]) => id === request.clubId)) throw new Error('INVALID_KBO_CLUB_GAME');
+      const saveId = `club-${clubs.size + 1}`;
+      clubs.set(saveId, {
+        summary: { saveId, mode: 'CLUB', title: request.clubId, seasonLabel: '2027', phaseLabel: 'PRESEASON_SETUP', savedAtLabel: '방금', revision: 1 },
+        started: false, lineup: false,
+      });
+      clubCreated.set(request.commandId, saveId);
+      return { saveId };
+    },
+    async club(saveId: string, screenId: ClubScreenId): Promise<ClubScreen> {
+      const row = clubs.get(saveId);
+      if (!row) throw new Error('NOT_FOUND');
+      const name = CLUB_CHOICES.find(([id]) => id === row.summary.title)?.[1] ?? row.summary.title;
+      return {
+        screenId, title: screenId,
+        lines: [{ label: '구단', value: `${name} · ${row.started ? '시즌' : '시즌 전'}${row.lineup ? ' · 라인업' : ''}` }],
+        links: (['S13', 'S14', 'S15', 'S17', 'S18', 'S19'] as const).filter(id => id !== screenId).map(id => ({ screenId: id, label: id })),
+        commands: screenId === 'S13' && !row.started ? [{ id: 'start', label: '시즌 시작', type: 'CLUB_START', payload: {} }]
+          : screenId === 'S13' ? [{ id: 'day', label: '1일 진행', type: 'CLUB_ADVANCE', payload: { maxDays: 1 } }]
+          : screenId === 'S15' ? [{ id: 'auto', label: '자동 편성', type: 'CLUB_LINEUP', payload: { auto: true } }] : [],
+      };
+    },
+    async clubCommand(saveId: string, commandId: string, type: string, payload: Record<string, unknown>): Promise<ClubScreen> {
+      const prior = clubCommands.get(commandId);
+      if (prior) return prior;
+      const row = clubs.get(saveId);
+      if (!row) throw new Error('NOT_FOUND');
+      if (type === 'CLUB_START') row.started = true;
+      if (type === 'CLUB_LINEUP' && payload.auto === true) row.lineup = true;
+      if (type === 'CLUB_LINEUP' && payload.clear === true) row.lineup = false;
+      if (type === 'CLUB_ADVANCE' && !row.started) throw new Error('INVALID_CLUB_PHASE');
+      row.summary = { ...row.summary, revision: row.summary.revision + 1, phaseLabel: row.started ? 'SEASON_PROGRESS' : row.summary.phaseLabel };
+      const screen = await this.club(saveId, 'S13');
+      clubCommands.set(commandId, screen);
+      return screen;
     },
   };
 }

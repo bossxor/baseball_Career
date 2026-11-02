@@ -1,3 +1,5 @@
+**최신화 2026-11-02:** origin/main(4885afc, M6·M3~M9 수정 포함)을 병합했다. 충돌 코드 3곳(high-school-game 수동 라인업+positionFits, kbo-roster-repair 구단모드 빈 protagonistKey, season-goals 병역 목록)은 양쪽 기능을 모두 살렸다. 직전 전체 check 실패 원인은 us-amateur-return-career.test.ts의 낡은 단언 2개(structuredClone이 null 프로토타입을 바꿔 deepEqual 실패, E08 신규 캠프 알림에 ACK_EVENT 대신 KEEP_FOCUS)였고 테스트만 고쳤다. 전체 check 결과는 이 병합 커밋 검증 로그(evidence/M2-20261102-main-merge-check.log)를 확인한다. M2 전체 완료 아님.
+
 **사용량 마감 확인:** 2026-11-02 최종 조회5시간사용92%·잔여8%. 새작업중지, 현재묶음코드/집중증거/남은일을커밋·푸시한다. 전체검사세션59753은계속실행되며로그/종료코드를다음번에확인한다. PC종료없음.
 
 # M2 재개 묶음 체크포인트 — 2026-11-02

@@ -290,5 +290,6 @@ export function applyUiChoose(
 }
 
 export function phaseOf(state: UiShellState): string {
-  return state.ui?.phase ?? 'BOOT';
+  const club = state.club as { phase?: string } | undefined;
+  return state.ui?.phase ?? club?.phase ?? 'BOOT';
 }

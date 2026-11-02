@@ -22,7 +22,7 @@ export interface KboAiFaRound {
 }
 /** Pure internal AI-only three-round market for a staged target year, not the interactive club command/API.
  * Every team's offers are fixed/reserved before any draw. A later player's odds never react to earlier winners. */
-export function runKboAiFreeAgentMarket(input:{world:ActiveKboRosterWorld;pool:KboFreeAgentPool;reports?:KboAiAssessments;sourceSeasonKey:string;records:RecordLedger;health:HealthLedger;difficulty:Difficulty}){
+export function runKboAiFreeAgentMarket(input:{world:ActiveKboRosterWorld;pool:KboFreeAgentPool;reports?:KboAiAssessments;sourceSeasonKey:string;records:RecordLedger;health:HealthLedger;difficulty:Difficulty;userClub?:{clubId:string;offers:readonly {playerKey:string;annualSalaryWon:number;years:number}[]}}){
  if(Number(input.world.seasonKey)!==Number(input.sourceSeasonKey)+1 || input.pool.worldKey!==input.world.worldKey || input.pool.seasonKey!==input.world.seasonKey || input.pool.settlement)throw new RangeError('INVALID_KBO_FA_MARKET_SOURCE');
  const world=structuredClone(input.world);let pool=structuredClone(input.pool);const health=structuredClone(input.health);let reports=structuredClone(input.reports??{});const rounds:KboAiFaRound[]=[],totals=recordTotals(input.records,{leagueKey:'KBO',phase:'REGULAR',seasonKey:input.sourceSeasonKey});
  for(const round of [1,2,3] as const){
@@ -32,10 +32,11 @@ export function runKboAiFreeAgentMarket(input:{world:ActiveKboRosterWorld;pool:K
   for(const club of [...world.clubs].sort((a,b)=>a.id<b.id?-1:a.id>b.id?1:0)){
    if(!kboRecruitmentOpen(world,club.id))continue;
    const pending:KboAiFaOffer[]=[],members=club.roster.map(k=>world.players[k]!);
-   const candidates=Object.keys(pool.players).sort().map(playerKey=>{
+   const userSpec=input.userClub?.clubId===club.id?new Map(input.userClub.offers.map(o=>[o.playerKey,o])):null;
+   const candidates=Object.keys(pool.players).sort().filter(k=>!userSpec||userSpec.has(k)).map(playerKey=>{
     const p=pool.players[playerKey]!.player,t=terms.get(playerKey)!,need=kboAiRoleNeed(p,members),preference=nextFloat(createWorldStream(world.seed,JSON.stringify(['kbo-fa-preference',world.worldKey,playerKey,club.id]),'potential')).value;
     const ratio=.9+.3*nextFloat(createWorldStream(world.seed,JSON.stringify(['kbo-ai-fa-price',world.worldKey,world.seasonKey,round,club.id,playerKey]),'roster')).value;
-    const salary=Math.max(KBO_MONEY.minimumSalaryWon,Math.min(KBO_MONEY.maximumSalaryWon,Math.round(t.annualSalaryWon*ratio/10_000)*10_000)),role=need.needScore===100 || roleScore(p.kind,p.abilities,p.position)>=need.incumbentRoleScore?1:need.needScore===50?.8:.5;
+    const salary=userSpec?userSpec.get(playerKey)!.annualSalaryWon:Math.max(KBO_MONEY.minimumSalaryWon,Math.min(KBO_MONEY.maximumSalaryWon,Math.round(t.annualSalaryWon*ratio/10_000)*10_000)),role=need.needScore===100 || roleScore(p.kind,p.abilities,p.position)>=need.incumbentRoleScore?1:need.needScore===50?.8:.5;
     const priority=kboAiCandidatePriority({roleScore:roleScore(p.kind,p.abilities,p.position),...need,outlookMidpoint:assessmentMidpointScore(p.kind,reports[playerKey]!.ranges),annualSalaryWon:salary,budgetWon:club.budgetWon});
     return {playerKey,salary,priority,need:need.needScore,role,preference};
    }).sort((a,b)=>Number(b.need===100)-Number(a.need===100) || b.priority-a.priority || (a.playerKey<b.playerKey?-1:a.playerKey>b.playerKey?1:0));
@@ -44,7 +45,7 @@ export function runKboAiFreeAgentMarket(input:{world:ActiveKboRosterWorld;pool:K
     const t=terms.get(c.playerKey)!,balance=kboClubBalance(world,club.id),annualPending=pending.reduce((n,o)=>n+o.annualSalaryWon,0);
     // Protected minimum cannot fund a normal competitive offer (44); safety contracts use a separate repair reducer.
     if(c.salary+annualPending>balance.availableWon)continue;
-    let years=Math.min(t.years,10000-Number(world.seasonKey));
+    let years=Math.min(userSpec?.get(c.playerKey)?.years??t.years,10000-Number(world.seasonKey));
     while(years>1 && Array.from({length:years-1},(_,i)=>i+1).some(y=>kboFutureCommitmentWon(world,club.id,y)+pending.reduce((n,o)=>n+(o.years>y?o.annualSalaryWon:0),0)+c.salary>club.budgetWon*.9))years--;
     if(years<1)continue;
     pending.push({offerKey:JSON.stringify(['kbo-ai-fa-offer',world.worldKey,world.seasonKey,round,club.id,c.playerKey]),playerKey:c.playerKey,clubId:club.id,annualSalaryWon:c.salary,years,role:c.role,preference:c.preference,desiredAnnualSalaryWon:t.annualSalaryWon,desiredYears:t.years,score:recruitmentOfferScore({totalWon:c.salary*years,desiredTotalWon:t.annualSalaryWon*t.years,role:c.role,preference:c.preference})});
