@@ -7,6 +7,7 @@ import {confirmUsPreseasonPlan} from '../src/us-preseason.js';
 import {publishUsSeasonSchedule} from '../src/us-schedule.js';
 import type {UsCareer} from '../src/us-career-entry.js';
 import {canonicalJson} from '../src/game.js';
+import {startUsRegularSeason,advanceUsCareer} from '../src/us-season.js';
 import {openUsMinorMarket} from '../src/us-minor-market.js';
 import {emptyPitching} from '../src/stats.js';
 import {requestUsAmateurReturn,startUsAmateurReturnYear,advanceUsAmateurReturn,settleUsAmateurReturnYear,prepareUsAmateurReturnDraft,resolveUsAmateurReturnDraft,usAmateurReturnCareerView,assertUsAmateurReturnCareer,decideUsAmateurReturnDraft,startSignedUsAmateurReturnKboCareer,resignUsAfterAmateurReturn} from '../src/us-amateur-return-career.js';
@@ -77,5 +78,6 @@ test('M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after one inde
  assert.equal(us.world.seasonKey,String(Number(source.world.seasonKey)+2));assert.equal(us.contract.seasonKey,us.world.seasonKey);assert.equal(us.usAmateurReturn!.status,'CANCELLED_US');
  assert.deepEqual(us.world.players[us.protagonistKey]!.abilities,c.return.years[0]!.endingPlayer.abilities);assert.equal(us.world.players[us.protagonistKey]!.age,c.return.years[0]!.age+1);
  const resumed=JSON.parse(JSON.stringify(us)) as typeof us,planned=publishUsSeasonSchedule(confirmUsPreseasonPlan(resumed,resumed.revision),resumed.revision+1);assert.equal(planned.world.seasonKey,us.world.seasonKey);
+ const live=startUsRegularSeason(planned,planned.revision),day=advanceUsCareer(live,live.revision,1);assert.notEqual(day.stopReason,'ENGINE_LIMIT');assert.ok(day.career.revision>live.revision);
  assert.equal(canonicalJson(source),raw);assert.throws(()=>resignUsAfterAmateurReturn(c,c.revision-1,offer!.offerKey),/REVISION/);
 });
