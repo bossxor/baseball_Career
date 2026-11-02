@@ -3,8 +3,9 @@ import {
   confirmKboRetryPreseason, advanceKboRetryPreparation, trainKboRetryPreparation, settleKboRetryPreparation,
   kboRetryPreparationView, acceptKboRetryOffer, openKboRetryExhaustion, requestKboRetryRetirement,
   confirmKboRetryRetirement, kboRetryRetirementView, assertKboRetryState,
+  openAmateurRetryExhaustion, confirmAmateurRetryExhaustion,
 } from '@playball/engine';
-import type { KboCareer } from '@playball/engine';
+import type { KboCareer, HighSchoolCareer } from '@playball/engine';
 import type { AppliedCommand, CommandBody, SaveState } from './engine-command.js';
 
 export const RETRY_SCREEN_IDS = ['RETRY_ROUTES', 'RETRY_PREP', 'RETRY_RETIREMENT'] as const;
@@ -32,7 +33,8 @@ export function applyCareerRetry(state: SaveState, command: CommandBody): Applie
   if (!career) fail('CAREER_NOT_FOUND');
   const p = (command.payload && typeof command.payload === 'object' ? command.payload : fail('INVALID_PAYLOAD')) as Payload;
   const rev = num(p, 'careerRevision');
-  const exit = () => ({ eventKey: str(p, 'eventKey'), eventVersion: num(p, 'eventVersion'), command: 'CONFIRM_RETIRE' as const });
+  const exit = () => ({ eventKey: typeof p.eventKey === 'string' ? p.eventKey : '', eventVersion: typeof p.eventVersion === 'number' ? p.eventVersion : 0, command: 'CONFIRM_RETIRE' as const });
+  if (command.type.startsWith('CAREER_RETRY_AMATEUR_')) return applyAmateurExit(state, command, p, rev, exit());
   let next: KboCareer;
   let stopReason: string | undefined;
   try {
@@ -78,4 +80,23 @@ export function retryScreenOf(state: SaveState, screenId: string): unknown {
   } catch (err) {
     codeOf(err);
   }
+}
+
+/** Amateur (HighSchoolCareer) E35 exit: same save slot, different engine owner. */
+function applyAmateurExit(state: SaveState, command: CommandBody, _p: Payload, rev: number, confirm: { eventKey: string; eventVersion: number; command: 'CONFIRM_RETIRE' }): AppliedCommand {
+  const career = state.career as HighSchoolCareer;
+  let next: HighSchoolCareer;
+  try {
+    if (command.type === 'CAREER_RETRY_AMATEUR_EXHAUST') next = openAmateurRetryExhaustion(career, rev);
+    else if (command.type === 'CAREER_RETRY_AMATEUR_CONFIRM_RETIRE') next = confirmAmateurRetryExhaustion(career, rev, confirm);
+    else fail('UNSUPPORTED_COMMAND');
+  } catch (err) {
+    codeOf(err);
+  }
+  return {
+    nextState: { ...state, schemaVersion: state.schemaVersion ?? 1, career: next! },
+    summary: { type: command.type, phase: next!.phaseContext.phase, careerRevision: next!.revision, retryExit: next!.retryExit?.status },
+    eventIds: [],
+    phase: next!.phaseContext.phase,
+  };
 }
