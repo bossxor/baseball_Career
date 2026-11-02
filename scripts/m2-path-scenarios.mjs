@@ -86,7 +86,9 @@ function closedNegotiation(){
 }
 export function agentPath(trace){
  const results=[];
- for(const seed of ['agent-success-0','agent-reject-0']){
+ // The counter outcome is a seeded draw: pick the first seed that really yields each outcome, as career-agent.test.ts does.
+ const probe=(prefix,raiseBps,outcome)=>{for(let i=0;i<30;i++){const seed=prefix+i,c=closedNegotiation();c.world.seed=seed;const h=hireCareerAgent(c,c.revision,'AG01'),o=offerKboRenewal(h,h.revision),q=careerSalaryCounterPreview(o),n=requestCareerSalaryCounter(o,o.revision,{previewId:q.previewId,raiseBps});if(n.agents.salaryRequests.at(-1).outcome===outcome)return seed;}throw new Error('P15 no seed yields '+outcome);};
+ for(const seed of [probe('agent-success-',1000,'ACCEPTED'),probe('agent-reject-',3000,'REJECTED')]){
   const initial=closedNegotiation();initial.world.seed=seed;const t=trace('P15-'+seed,initial,prefix('Controlled career-agent.test.ts season-close boundary. Actual hire→renewal quote→one counter→accepted/rejected outcome and salary-fee settlement below; no native pro season claim.'));
   t.command('HIRE_AGENT',{agentId:'AG01'},s=>hireCareerAgent(s,s.revision,'AG01'));t.command('OFFER_KBO_RENEWAL',{},s=>offerKboRenewal(s,s.revision));const q=careerSalaryCounterPreview(t.state),base=canonicalJson(t.state.renewal);
   t.command('REQUEST_SALARY_COUNTER',{previewId:q.previewId,raiseBps:seed.includes('reject')?3000:1000},s=>requestCareerSalaryCounter(s,s.revision,{previewId:q.previewId,raiseBps:seed.includes('reject')?3000:1000}));const request=t.state.agents.salaryRequests.at(-1);
@@ -135,7 +137,7 @@ function postingBoundary(strength=800000,age=30){
   for(let day=1;day<=100;day++){
    const gameKey=JSON.stringify(['controlled-posting-registration',year,day]);c.records.games[gameKey]={gameKey,worldDay:day,scope:{seasonKey:String(year),leagueKey:'KBO',phase:'REGULAR'},teams:{[club]:{games:1,W:0,L:0,T:1,R:0,RA:0},[other]:{games:1,W:0,L:0,T:1,R:0,RA:0}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}};
    c.health.games.push({evidence:{gameKey,teamKey:'KBO:'+club,seasonKey:String(year),day,roster:[key],appearances:[]},result:{injured:[],recovered:[]}});
-   if(year===2040&&day===100){const good=strength>=650000;c.records.games[gameKey].batting[key]={...emptyBatting(),PA:100,AB:90,H:good?40:0,TB:good?70:0,HR:good?5:0,R:20,RBI:20,BB:10,K:good?10:90,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0};}
+   if(year===2040&&day===100){const good=strength>=650000;c.records.games[gameKey].batting[key]={...emptyBatting(),PA:100,AB:90,H:good?40:0,TB:good?70:0,HR:good?5:0,R:20,RBI:20,BB:10,K:good?10:90,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0};const split=()=>({PA:0,AB:0,H:0,BB:0,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0});c.records.games[gameKey].batterSplits[key]={L:split(),R:split()};}
   }
  }
  // Controlled seed guarantees a nonempty offer-count boundary, never changes a reducer outcome afterward.
