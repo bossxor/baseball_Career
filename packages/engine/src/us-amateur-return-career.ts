@@ -29,6 +29,11 @@ import {createSeasonGrowthLedger} from './growth-ledger.js';
 import {queueKboFirstCampNotices} from './kbo-preseason.js';
 import {formRegisteredTeamTeammate} from './team-teammates.js';
 import {settleUsMilitaryReturnWorldGrowth} from './us-growth.js';
+import {acceptUsMinorMarketOffer} from './us-minor-market.js';
+import {fundUsMinorYear} from './us-minor-history.js';
+import {retireAndSupplyUsNpcs} from './us-supply.js';
+import {cancelUsAmateurReturnForUsOffer} from './us-amateur-return.js';
+import {settleClosedGrowthPeriods,finalizeSeasonGrowth} from './growth-ledger.js';
 
 /** Original US root remains an immutable archive; current native owners travel in this root transaction. */
 export interface UsAmateurReturnCareer {
@@ -188,7 +193,39 @@ export function startSignedUsAmateurReturnKboCareer(s:UsAmateurReturnCareer,n:nu
  c.campNotices=queueKboFirstCampNotices(c);kboCareerEntryView(c);return c;
 }
 export function usAmateurReturnCareerView(s:UsAmateurReturnCareer){assertUsAmateurReturnCareer(s);return {...usAmateurReturnView(s.return),revision:s.revision,events:s.events.map(e=>({eventKey:e.eventKey,eventVersion:e.version,status:e.status})),draft:s.draft?kboDraftView(s.draft.world,s.draft.program):null};}
-/** Direct-amateur US re-signing lacks a native market/continuation owner. Fail closed until that exists. */
-export function cancelUsAmateurReturnAfterUsSigning(s:UsAmateurReturnCareer,n:number,_accepted:UsCareer):UsAmateurReturnCareer {
- void _accepted;revision(s,n);throw new RangeError('US_AMATEUR_RETURN_RESIGNING_NOT_SUPPORTED');
+/**
+ * Re-sign with a source US club whose sealed offer carried the military return option (docs/design/14 §8).
+ * The frozen US world is not restored: skipped seasons age and grow NPCs once each; the protagonist enters with the
+ * ability earned during the return years. The caller replaces this root with the returned UsCareer.
+ */
+export function resignUsAfterAmateurReturn(s:UsAmateurReturnCareer,n:number,offerKey:string):UsCareer {
+ revision(s,n);const r=s.return,k=r.years.length,market=s.source.minorMarket,offer=market?.offers.find(o=>o.offerKey===offerKey),last=r.years.at(-1);
+ if(!market||!offer||!last||!offer.militaryReturnOption||!['PREPARING','DRAFT_READY'].includes(r.status)||r.militaryStatus==='UNRESOLVED'||s.draft?.program.decision==='SIGNED')throw new RangeError('US_RETURN_OPTION_NOT_AVAILABLE');
+ const sourceSeason=Number(r.sourceSeasonKey);
+ cancelUsAmateurReturnForUsOffer(r,r.revision,{worldKey:r.worldKey,playerKey:r.playerKey,seasonKey:last.seasonKey,age:last.age,worldDay:0,authorityRevision:n,hasProContractHistory:false,activeContract:false,domesticRightsAvailable:true,domesticDraftEligible:false,mandatoryReturnActive:false,militaryStatus:r.militaryStatus,collegeAdmissionRefs:[],collegeResumeRef:null,domesticOffers:[],usOffers:[{offerRef:offerKey,expiresGameDay:1}],usScoutScore:0,usRightsEligible:true,retirementAllowed:true},{offerRef:offerKey,authorityRevision:n});
+ const base=acceptUsMinorMarketOffer(s.source,s.source.revision,offerKey),world=structuredClone(base.world),key=r.playerKey;let inventory=base.inventory;
+ // Skipped seasons sourceSeason+1..sourceSeason+k: NPCs play them off-screen, then age into the next one.
+ for(let i=1;i<=k;i++){
+  const seasonKey=String(sourceSeason+i),calendar=createSeasonCalendar(Number(seasonKey),'calendar-2'),W=calendar.growthDays.length;
+  for(const npc of Object.keys(world.players).sort()){
+   if(npc===key)continue;const p=world.players[npc]!,ledger=createSeasonGrowthLedger(p,seasonKey,W);
+   // ponytail: flat typical workload per role; real NPC usage needs the off-screen league sim.
+   const period={startDay:0,endDay:W,levelSeasonDays:W,level:'PRO' as const,appearances:p.kind==='HITTER'?400:p.position==='RP'||p.position==='CP'?180:540,pitcherRole:p.position==='RP'?'RP' as const:p.position==='CP'?'CP' as const:'SP' as const,rehabRatio:0,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER' as const,difficulty:s.source.difficulty,beneficiary:false}};
+   const grown=settleClosedGrowthPeriods(p,ledger,[{periodKey:JSON.stringify(['us-return-offscreen',r.returnId,seasonKey,npc]),focus:[...p.focus],archetype:p.archetype,period}]);
+   world.players[npc]=finalizeSeasonGrowth(grown.player,grown.ledger,W).player;
+  }
+  if(i<k){
+   const next=String(sourceSeason+i+1),retiring=Object.keys(world.players).filter(x=>x!==key&&world.players[x]!.age===45);
+   retireAndSupplyUsNpcs(world,retiring,next,key);
+   for(const [x,p] of Object.entries(world.players))if(x!==key)world.players[x]={...p,age:p.age+1,fatigue:0};
+   world.seasonKey=next;world.calendar=createSeasonCalendar(Number(next),'calendar-2');
+   inventory=fundUsMinorYear(inventory,next,Object.keys(world.players).sort(),market.funding,offer.organizationId,0);
+  }
+ }
+ const target=String(sourceSeason+k+1);world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target),'calendar-2');
+ for(const b of Object.values(world.repertoires))Object.assign(b,{seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()});// ponytail: NPC pitch books stay as signed; off-screen pitch XP needs the league sim.
+ const book=s.preparation?.world.repertoires[key]??s.service?.world.repertoires[key];
+ world.players[key]={...structuredClone(last.endingPlayer),age:last.age+1,fatigue:0};if(book)world.repertoires[key]={...structuredClone(book),seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};
+ const player=world.players[key]!,contract={...base.contract,seasonKey:target},out:UsCareer={...base,schemaVersion:2,revision:base.revision+1,world,inventory,contract,registration:{...base.registration,seasonKey:target},usReturnContinuation:{playerAge:player.age,contract:structuredClone(contract),inventory:structuredClone(inventory),sourceMinorYears:base.minorYears?.length??0,sourceMajorYears:base.majorYears?.length??0,remainingControlSeasons:contract.controlSeasons,paidUsd:30000},seasonGrowth:createSeasonGrowthLedger(player,target,world.calendar.growthDays.length),development:{...base.development,seasonStartPlayer:structuredClone(player)},usAmateurReturn:{...structuredClone(r),revision:r.revision+1,status:'CANCELLED_US',draftReservationKey:null,cancelledByOfferRef:offerKey}};
+ assertUsCareerRevision(out,out.revision);return out;
 }

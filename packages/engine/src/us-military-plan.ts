@@ -299,6 +299,7 @@ function usMilitarySourceCareer(c:UsCareer):UsCareer {
 
 /** Existing history readers replay the original prefix, then this explicit post-service contract epoch. */
 export function usMilitaryContinuationOrigin(c:UsCareer){
+ const r=c.usReturnContinuation;if(r)return {origin:{playerAge:r.playerAge,contract:r.contract,inventory:r.inventory},minorYears:(c.minorYears??[]).slice(r.sourceMinorYears),majorYears:(c.majorYears??[]).slice(r.sourceMajorYears),remainingControlSeasons:r.remainingControlSeasons,returnPaidUsd:r.paidUsd};
  const s=c.military.service;if(s?.version!==2||s.returnOption?.status!=='CONFIRMED'||!s.returnContract||!s.returnInventory)return null;
  usCareerView(usMilitarySourceCareer(c));
  const inventory=usMilitaryInactiveInventory(c),club=inventory.clubs.find(o=>o.id===s.returnOption!.organizationId)!;club.availableBudgetUsd-=s.returnReservationUsd!;

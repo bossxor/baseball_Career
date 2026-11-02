@@ -247,7 +247,7 @@ export {openKboUncontractedRetry,reviewKboUncontractedRoutes,kboRetryRoutesView,
 export type {KboRetryPro} from './career-pro-retry.js';
 export {openAmateurRetryExhaustion,confirmAmateurRetryExhaustion} from './career-retry-exhaustion.js';
 export type {AmateurRetryExit} from './career-retry-exhaustion.js';
-export {requestUsAmateurReturn,startUsAmateurReturnYear,advanceUsAmateurReturn,settleUsAmateurReturnYear,prepareUsAmateurReturnDraft,resolveUsAmateurReturnDraft,decideUsAmateurReturnDraft,startSignedUsAmateurReturnKboCareer,usAmateurReturnCareerView,assertUsAmateurReturnCareer} from './us-amateur-return-career.js';
+export {requestUsAmateurReturn,startUsAmateurReturnYear,advanceUsAmateurReturn,settleUsAmateurReturnYear,prepareUsAmateurReturnDraft,resolveUsAmateurReturnDraft,decideUsAmateurReturnDraft,startSignedUsAmateurReturnKboCareer,resignUsAfterAmateurReturn,usAmateurReturnCareerView,assertUsAmateurReturnCareer} from './us-amateur-return-career.js';
 export type {UsAmateurReturnCareer} from './us-amateur-return-career.js';
 
 export {requestKboRetryRetirement,confirmKboRetryRetirement,kboRetryRetirementView} from './career-pro-retry.js';

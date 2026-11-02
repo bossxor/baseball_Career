@@ -70,3 +70,7 @@ npx tsx --test packages/engine/test/us-amateur-return-career.test.ts
 ```
 
 The focused test has no P10 export/scenario helper yet. Do not label its controlled US baseline as native US season proof.
+
+## 2026-11-02 update
+
+`cancelUsAmateurReturnAfterUsSigning` was replaced by `resignUsAfterAmateurReturn(root, revision, offerKey)` (return-option offer only, docs/design/14 §8). Frozen US world is not restored: skipped seasons grow NPCs with a flat per-role workload and age them once each; protagonist keeps the return-year ability. New `UsCareer.usReturnContinuation` is read by `usMilitaryContinuationOrigin` so minor/major history replays only post-epoch years. Verified: one independent year then re-sign, JSON round trip, preseason plan + schedule publish. Not verified: service-year origin, two-year origin, a played first US season after re-sign, NPC off-screen pitch XP, rights/budget accounting for the skipped seasons (salary is charged once at the first skipped season).

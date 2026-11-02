@@ -30,7 +30,7 @@
 
 # 저장·인계 체크포인트 — 2026-11-02
 
-사용자 요청으로 추가 구현을 중지했다. [현재 상태·검증·재개 순서](M2-CHECKPOINT-20261102.md)를 먼저 읽는다. E70 집중 통과, E34/E35/E68와 경로 runner는 WIP다. 프로 재도전 E34/E35/E36 집중 career-retry-completion 5/5 통과(2026-11-02 재검증, 제어 fixture). API 연결: CAREER_RETRY_* 명령 11종+화면 RETRY_ROUTES/RETRY_PREP/RETRY_RETIREMENT, 커리어 전체를 세이브 state.career JSON에 저장(apps/api/src/career-retry-shell.ts, API 테스트 m2-career-retry 통과). KBO 커리어 API 생성 경로와 웹 UI는 미연결, 귀국 native2시즌 통과·재계약 취소는 fail-closed, 경로 해시 미완료. 이번 전체 check 미실행이며 M2 전체 미완료. 마지막 전체 통과는4f0cde7이다.
+사용자 요청으로 추가 구현을 중지했다. [현재 상태·검증·재개 순서](M2-CHECKPOINT-20261102.md)를 먼저 읽는다. E70 집중 통과, E34/E35/E68와 경로 runner는 WIP다. 프로 재도전 E34/E35/E36 집중 career-retry-completion 5/5 통과(2026-11-02 재검증, 제어 fixture). API 연결: CAREER_RETRY_* 명령 11종+화면 RETRY_ROUTES/RETRY_PREP/RETRY_RETIREMENT, 커리어 전체를 세이브 state.career JSON에 저장(apps/api/src/career-retry-shell.ts, API 테스트 m2-career-retry 통과). KBO 커리어 API 생성 경로와 웹 UI는 미연결, 귀국 native2시즌 통과, 미국 재계약(resignUsAfterAmateurReturn: 복귀옵션 오퍼, 경과 시즌 NPC 성장·고령화는 고정 근사 업무량(ponytail), usReturnContinuation 이력 epoch, 1년 독립 후 재계약→프리시즌/일정 발행 검증; 서비스 연도 경로·2년 후 경로 미검증), 경로 해시 미완료. 이번 전체 check 미실행이며 M2 전체 미완료. 마지막 전체 통과는4f0cde7이다.
 
 # 최신 검증 완료 — 2026-11-01
 
