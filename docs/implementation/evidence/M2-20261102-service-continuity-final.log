@@ -1,0 +1,24 @@
+✔ termination stops the active US contract and rejects fabricated service-season identity (3369.8716ms)
+✔ service annual owner ages and supplies the real roster without paying or rewriting history (1424.976ms)
+✔ freeze parks the pitcher under the already signed option and preserves original USD and pitch history (2548.7723ms)
+✔ controlled calendar discharge opens only the existing option and confirms through day29 without retroactive salary (8205.4659ms)
+✔ controlled30day expiry terminates the frozen contract without manufacturing another option (1094.1069ms)
+✔ service resume rejects removed native closed dates and altered archived game evidence (902.4864ms)
+✔ return preserves existing unique field positions when selecting a legal roster slot (5730.5081ms)
+✔ service annual supply preserves a retiring45yearold pitcher and his historical repertoire across JSON (1201.4994ms)
+✔ controlled minor return resumes the next annual contract without consuming a frozen full season (4320.6858ms)
+✔ active US return condition counts six registered bench games, excludes INT and never changes abilities (803.5664ms)
+✔ controlled return-year MLB activation preserves pre-callup salary and validates derived contract and budget (1352.9172ms)
+✔ expired minor confirmation opens a separate offer; explicit acceptance reserves once without paying or rewriting source history (31192.2477ms)
+✔ new return offer rejects stale revisions and changed identity; decline survives JSON without any reservation (7228.3875ms)
+✔ controlled offer day29 remains acceptable and day30 expires without payment or implicit acceptance (5798.969ms)
+✔ one native pending-offer chunk preserves its source and resumes identically after JSON (7133.4929ms)
+✔ controlled service dates: return re-sign preserves actual settled NPC growth, supply RNG and records (44931.3401ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 16
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 129642.7785

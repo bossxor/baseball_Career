@@ -49,6 +49,13 @@ test('M2-CLOSE-RETURN-20261102: controlled US prefix: root preserves original US
  {const liveForged=structuredClone(c);liveForged.preparation!.retry.age++;assert.throws(()=>assertUsAmateurReturnCareer(liveForged));}
  assert.equal(c.return.status,'DRAFT_READY');assert.equal(c.retry.periods.length,2);assert.ok(c.retry.periods.every(p=>!p.usageCharged&&p.kind==='MANDATORY_RETURN'&&p.evidenceReceipt));
  assert.deepEqual(c.source,source);assert.equal(canonicalJson(source),raw);const ownRow=Object.values(source.records.games).find(g=>Object.hasOwn(g.batting,source.protagonistKey)||Object.hasOwn(g.pitching,source.protagonistKey))!;assert.ok(ownRow);assert.deepEqual(c.preparation!.records.games[ownRow.gameKey],ownRow);
+ const returnOffer=source.minorMarket!.offers.find(o=>o.militaryReturnOption);assert.ok(returnOffer);
+ const beforeResigning=canonicalJson(c),resigned=resignUsAfterAmateurReturn(c,c.revision,returnOffer.offerKey);
+ assert.equal(resigned.revision,c.revision+1);assert.equal(resigned.world.seasonKey,String(Number(source.world.seasonKey)+3));
+ assert.equal(resigned.inventory.seasonKey,resigned.world.seasonKey);assert.equal(resigned.usAmateurReturn!.status,'CANCELLED_US');
+ assert.ok(Object.values(resigned.world.repertoires).every(b=>b.seasonId===resigned.world.seasonKey));
+ assert.equal(canonicalJson(resigned.records.games),canonicalJson({...source.records.games,...c.preparation!.records.games}));
+ assert.equal(canonicalJson(c),beforeResigning);usCareerView(resigned);
  const drafted=prepareUsAmateurReturnDraft(c,c.revision),resolved=resolveUsAmateurReturnDraft(drafted,drafted.revision,1);assert.ok(resolved.draft!.program.result);assert.equal(resolved.draft!.program.assessmentKey,c.return.draftReservationKey);assert.deepEqual(resolved.draft!.program.input.player,c.return.years[1]!.endingPlayer);assert.doesNotMatch(JSON.stringify(usAmateurReturnCareerView(resolved)),/potential|"rng"|"seed"/);
  assert.ok(resolved.draft!.program.result!.round,'strong controlled US prefix must produce a real native draft offer');
  const signed=decideUsAmateurReturnDraft(resolved,resolved.revision,resolved.draft!.program.version,'SIGN');
@@ -76,7 +83,10 @@ test('M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after one inde
  let c=startUsAmateurReturnYear(requestUsAmateurReturn(source,source.revision),source.revision+1,1);
  for(let i=0;i<2000;i++){const next=advanceUsAmateurReturn(c,c.revision);c=next.career;if(next.stopReason==='SEASON_COMPLETE')break;}
  c=settleUsAmateurReturnYear(c,c.revision);assert.equal(c.return.years.length,1);
- const us=resignUsAfterAmateurReturn(c,c.revision,offer!.offerKey);
+ const returnBefore=canonicalJson(c),us=resignUsAfterAmateurReturn(c,c.revision,offer!.offerKey);
+ assert.equal(us.revision,c.revision+1,'root handoff must advance the active return revision');
+ assert.equal(canonicalJson(c),returnBefore);
+ assert.equal(canonicalJson(resignUsAfterAmateurReturn(JSON.parse(returnBefore),c.revision,offer!.offerKey)),canonicalJson(us));
  assert.equal(us.world.seasonKey,String(Number(source.world.seasonKey)+2));assert.equal(us.contract.seasonKey,us.world.seasonKey);assert.equal(us.usAmateurReturn!.status,'CANCELLED_US');
  assert.equal(us.inventory.seasonKey,us.world.seasonKey);
  assert.equal(us.protagonistOrganizationId,offer!.organizationId);assert.equal(us.usReturnContinuation!.organizationId,offer!.organizationId);

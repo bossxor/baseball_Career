@@ -33,8 +33,54 @@ import {recordTotals} from '../packages/engine/src/records.ts';
 import {requestKboPosting,resolveKboPostingClub,openKboPostingOffers,resolveKboPostingOfferEvent} from '../packages/engine/src/kbo-posting.ts';
 import {createWorldStream,nextInteger} from '../packages/engine/src/rng.ts';
 import {emptyBatting} from '../packages/engine/src/stats.ts';
+import {createHighSchoolWorld} from '../packages/engine/src/high-school-world.ts';
+import {createHighSchoolCareer,confirmCareerPlayer,resolveCareerFocusEvent,confirmCareerPreseason} from '../packages/engine/src/high-school-career.ts';
+import {advanceHighSchoolCareer,resolveCareerWindowEvent} from '../packages/engine/src/high-school-progress.ts';
+import {previewCareerTraining,trainHighSchoolCareer} from '../packages/engine/src/high-school-training.ts';
 
 const prefix=description=>({kind:'CONTROLLED_PREFIX_NATIVE_SLICE',description});
+
+/** Diagnosis is controlled; recovery, deferred opportunity and exact one-time payment are native commands. */
+export function injuryTrainingPath(trace){
+ let c=createHighSchoolCareer(createHighSchoolWorld({worldKey:'training-world',seasonKey:'2032',seed:'training-fixture',schoolId:'H01',startDay:31,player:{simulationKey:'my-hitter',name:'내타자',kind:'HITTER',position:'CF',throws:'R',bats:'R',pitchForm:null,archetype:'BALANCED',focus:['CONTACT','POWER','DISCIPLINE','DEFENSE'],difficulty:'GROWTH'}}),'GROWTH');
+ c=confirmCareerPlayer(c,c.revision);c=resolveCareerFocusEvent(c,c.revision,{eventKey:c.events[0].eventKey,eventVersion:1,command:'KEEP_FOCUS'});c=confirmCareerPreseason(c,c.revision);
+ for(let i=0;;i++){
+  assert.ok(i<400,'training window command budget exhausted');
+  if(c.phaseContext.phase==='EVENT_DECISION'){
+   const e=c.events.find(e=>e.eventKey===c.phaseContext.eventKey);
+   assert.ok(['E02','E03'].includes(e.definitionId),'unexpected prefix event');
+   break;
+  }else c=advanceHighSchoolCareer(c,c.revision).career;
+ }
+ const key=c.world.protagonistKey,diagnosis=c.health.games.findLast(g=>g.evidence.roster.includes(key));assert.ok(diagnosis);
+ diagnosis.result.injured=[...new Set([...diagnosis.result.injured,key])];
+ c.health.injuries[key]={severity:'MILD',remainingTeamGames:7,diagnosedGameKey:diagnosis.evidence.gameKey,seasonKey:c.world.seasonKey};
+ const t=trace('P13-injury-deferred-training',c,prefix('Native12-game focus-window prefix; controlled mild diagnosis appended to its real health receipt. Traced commands play seven real recovery games, automatically delay E43 while injured, then defer the recovered window and apply exactly one annual guaranteed enhancement. Natural diagnosis draw and actual screens remain unproven.'));
+ const focus=c.events.find(e=>e.eventKey===c.phaseContext.eventKey),focusInput={eventKey:focus.eventKey,eventVersion:focus.version,command:'KEEP_FOCUS'},choice={type:'GUARANTEED',ability:'POWER'};
+ t.command('KEEP_FOCUS',focusInput,s=>resolveCareerFocusEvent(s,s.revision,focusInput));
+ assert.ok(!t.state.development.trainingUsedSeasons.includes(c.world.seasonKey));
+ let delayedAfterSixteen=false;
+ for(let i=0;Object.hasOwn(t.state.health.injuries,key);i++){
+  assert.ok(i<100,'recovery command budget exhausted');
+  assert.ok(!t.state.events.some(e=>e.definitionId==='E43'),'injury must delay the training window');
+  if(t.state.phaseContext.phase==='SEASON_PROGRESS'&&!t.state.phaseContext.pendingGame&&!t.state.phaseContext.advancePlan&&previewCareerTraining(t.state,choice).reason==='INJURED'){
+   delayedAfterSixteen=true;const before=canonicalJson(t.state);assert.throws(()=>trainHighSchoolCareer(t.state,t.state.revision,choice));assert.equal(canonicalJson(t.state),before);
+  }
+  t.command('ADVANCE_HS',{mode:'ONE_GAME'},s=>{const out=advanceHighSchoolCareer(s,s.revision,'ONE_GAME');assert.notEqual(out.stopReason,'ENGINE_LIMIT');return out;});
+ }
+ assert.ok(delayedAfterSixteen,'training must remain unpaid past game16 while injured');
+ assert.ok(t.state.health.games.some(g=>g.result.recovered.includes(key)));
+ const window=t.state.events.find(e=>e.eventKey===t.state.phaseContext.eventKey);assert.equal(window.definitionId,'E43');
+ const input={eventKey:window.eventKey,eventVersion:window.version,command:'DEFER_TRAINING'};
+ t.command('DEFER_TRAINING',input,s=>resolveCareerWindowEvent(s,s.revision,input));
+ const before=t.state.world.players[key],preview=previewCareerTraining(t.state,choice),rng=canonicalJson(t.state.development.trainingRng);assert.equal(preview.eligible,true);
+ const power=before.abilities.POWER,fatigue=before.fatigue;
+ t.command('TRAIN_HS',choice,s=>trainHighSchoolCareer(s,s.revision,choice));
+ const result=t.state.development.trainingResults.at(-1),after=t.state.world.players[key];
+ assert.equal(after.abilities.POWER,power+preview.gainUnits);assert.equal(result.fatigueBefore,fatigue);assert.equal(result.fatigueAfter,after.fatigue);assert.equal(result.success,true);assert.equal(canonicalJson(t.state.development.trainingRng),rng);
+ const sealed=canonicalJson(t.state);assert.throws(()=>trainHighSchoolCareer(t.state,t.state.revision,choice),/LIMIT_REACHED/);assert.equal(canonicalJson(t.state),sealed);
+ return t.finish({terminal:'RECOVERED_AND_TRAINED',nativeRecovery:true,controlledDiagnosis:true,trainingWindowDelayedWhileInjured:true,annualUses:t.state.development.trainingUsedSeasons.filter(s=>s===c.world.seasonKey).length,gainUnits:preview.gainUnits,fatigueBefore:fatigue,fatigueAfter:after.fatigue,noGuaranteedTrainingDraw:true,repeatedPaymentRejectedAtomically:true,jsonReplay:'every command',unproven:['natural diagnosis draw','M4 actual screens']});
+}
 
 /** Only the final independent season is native; the two earlier uses are labelled inputs. */
 export function retryExhaustionPath(trace){

@@ -1,0 +1,118 @@
+M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit
+M2 closure: school endpoints verified
+M2 closure: collegeService endpoints verified
+M2 closure: pitcher endpoints verified
+M2 closure: posting endpoints verified
+M2 closure: agent endpoints verified
+M2 closure: national endpoints verified
+M2 closure: nativeKbo endpoints verified
+M2 closure: injury endpoints verified
+{
+  "status": "PARTIAL_RUNTIME_EVIDENCE_NOT_M2_COMPLETION",
+  "sourceManifestHash": "62035a6002b422067891c153fccfd7c58250c2e206099c0553f05bed66114bad",
+  "slices": [
+    {
+      "id": "P01",
+      "commandChainHash": "a8f1c53dfec12e4aec6a9e2b6dcbb0d32ccebbb79e7f56ec2a16656054e0c5da",
+      "finalStateHash": "18d1ea15ea8ca5dbb346e21e491795a5ecdd2a6ce90a3c74c9ee88278c7a9e93",
+      "commands": 7
+    },
+    {
+      "id": "P03",
+      "commandChainHash": "5201a9e287359707550f966f2e4156237ab9978f95d5eb6d410af0d85304fd84",
+      "finalStateHash": "be1c18c92e01cdae3c92c4b7e20f419889a03d4ebf2ffed84f1d8883a85c7e81",
+      "commands": 2
+    },
+    {
+      "id": "P04",
+      "commandChainHash": "60e1afd49a98518e68eaca63843210c616820dc5f3ab52524ae5852d09ed00d6",
+      "finalStateHash": "1c0f4811a8be0ca8eb1f9634724d5b986a9717a0cf524724d9d0cba05ac977d6",
+      "commands": 6
+    },
+    {
+      "id": "P05",
+      "commandChainHash": "31356d7241150594273ee14a505bcaa2f268d7561a5dfa9f4559ed4a722e77dc",
+      "finalStateHash": "da137c861a62275d1e4a327c81c8a31a2450dd7bdef6f15e4e93e99788aff8c2",
+      "commands": 6
+    },
+    {
+      "id": "P06",
+      "commandChainHash": "59a045aa0f98e82d8ebdc8c1b8a9bfe2e4b89a80cfcf58edcbd33b50923334de",
+      "finalStateHash": "88dea52daaaef2f1f7c0750ebb1111b9bdef1678d1d0df7ffa0178d335e6bd67",
+      "commands": 6
+    },
+    {
+      "id": "P07",
+      "commandChainHash": "4d5de5d3f09a050c6a548687d9a06861abaf3624ea9dbc8405506dc98ffc485e",
+      "finalStateHash": "56c0f3ec97ad9080f962b6cbac7133dc74dea98493ae32012801f3f4f9cb12e5",
+      "commands": 3
+    },
+    {
+      "id": "P12",
+      "commandChainHash": "021c0205be5bcf1153e19a163363513742b4812772c005c8017812d66bdef92a",
+      "finalStateHash": "4db96b727c9c1bf0a6219753c315205f93db62d25685c42651717e91f245eb69",
+      "commands": 31
+    },
+    {
+      "id": "P02-learning",
+      "commandChainHash": "212d3dedf60dd410bb983d383b60aa706609262a92e1715d9553de3e0ef740a9",
+      "finalStateHash": "0af773dfa9207e7a5a174e595f11ff6482086cd07aa60e8bf1c95180079c7c2d",
+      "commands": 2
+    },
+    {
+      "id": "P08-posting-sign",
+      "commandChainHash": "36be3d458975339d0088de0d5ce00d3d63dccfab89d4f164e5ec65a453f608ea",
+      "finalStateHash": "5c25a0eb699a796f2dd6a1bab0bcae8d1752a9abf84ce8805cae35507f96d80e",
+      "commands": 4
+    },
+    {
+      "id": "P09-posting-defer",
+      "commandChainHash": "bbfb579eb2938aabe369d41ed10e3633d429971b7bbb8c4e3ea516f2f70cc659",
+      "finalStateHash": "8e99bfc09f127aa3333d8fea2270337f8c763d321e31d3b144376163c96cfe18",
+      "commands": 2
+    },
+    {
+      "id": "P09-posting-no_offer",
+      "commandChainHash": "591fa8d61286761f6fa3905f7ba8fbd115b2c2f5946f8cbbc365ebdce9b40eeb",
+      "finalStateHash": "5abe82db852a0398d897b3b1653d3a186fc7a46aabaebbf857403b15839cc1c4",
+      "commands": 4
+    },
+    {
+      "id": "P09-posting-remain",
+      "commandChainHash": "e06a4af1782220f5638d50804157556725b31376a07c9267ac69dcf095d647d1",
+      "finalStateHash": "587e1cf1a7d7a5a443acb96d989c21d9a3b976931d2f0adbb52e476938f28410",
+      "commands": 4
+    },
+    {
+      "id": "P15-agent-success-1",
+      "commandChainHash": "f6508b4aa0415931f95aa3f32222d4d75a94a9a54e75b2f8d7f9ae083b5aa705",
+      "finalStateHash": "722a95200acfcf812210e65f1a415fca2bad31334aa7ef99fa5e1935f35d55db",
+      "commands": 5
+    },
+    {
+      "id": "P15-agent-reject-0",
+      "commandChainHash": "fd59fa2ee5813d2e5c94e0c23ce75b367fc1cbb06df50c006aa145d643b98a94",
+      "finalStateHash": "1d4c42ecf54a7da5e11cec4ddfdc9c2128ded86f317c9b685bf4ff215dedb330",
+      "commands": 5
+    },
+    {
+      "id": "P11-national-appearance",
+      "commandChainHash": "93fe2c6ae997b11363ca05fb6ef8667d6671f988799e6e29cbee82b85e45e5dc",
+      "finalStateHash": "a2d781c65d42d2b0f6b474cbea6b05b5424fd34142668097521124105430ddfd",
+      "commands": 3
+    },
+    {
+      "id": "P01-P15-P23-controlled-KBO-entry-and-game",
+      "commandChainHash": "963190b79fb3fb91970b8ba2734c9b14d08a67f72394fb9db32259d9108a6bd8",
+      "finalStateHash": "da727934515976181d048f271f45c781ce01e66db5395411b2ffd816fd6bc2ce",
+      "commands": 9
+    },
+    {
+      "id": "P13-injury-deferred-training",
+      "commandChainHash": "dbfc841d7f83b80857d2f4d33c8995b07aa8ab014eebab36e38a5fec45be4622",
+      "finalStateHash": "22c5f88dcdf57f2ab9e3d2ffcdfce48f24ffa8b4ead7198e895e44abd28f2798",
+      "commands": 19
+    }
+  ],
+  "output": "E:\\AI\\Game\\baseball_career\\docs\\implementation\\evidence\\M2-20261102-final-paths.json.gz"
+}

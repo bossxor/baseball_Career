@@ -1,0 +1,6 @@
+
+> again-playball@0.1.0 smoke
+> node scripts/smoke.mjs
+
+PASS: built web HTML + 2 JS/CSS entry assets served over HTTP; web proxy → running API → rulesVersion 1.0.0.
+NOT TESTED: browser rendering, game simulation, authentication, database, storage or APK.

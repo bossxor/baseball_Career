@@ -55,6 +55,8 @@ export interface UsCareer {
  recordCorrections?:import('./career-record-correction.js').CareerRecordCorrectionLedger;
  national?:import('./us-national.js').UsNationalLedger;
  usAmateurReturn?:import('./us-amateur-return.js').UsAmateurReturnLedger;
+ /** Immutable native service evidence retained after the active military owner is replaced. */
+ usAmateurReturnHistory?:import('./us-amateur-return-career.js').UsAmateurReturnCareer;
  /** Explicit history epoch after a return-option re-sign: readers replay only years after it. */
  usReturnContinuation?:{playerAge:number;organizationId?:string;contract:UsCareer['contract'];inventory:UsCareer['inventory'];sourceMinorYears:number;sourceMajorYears:number;remainingControlSeasons:number;paidUsd:number};
 

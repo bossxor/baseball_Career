@@ -43,7 +43,7 @@ export function usYearTransitionReadiness(c:UsCareer){
 }
 export interface UsAgeRosterStage {receiptKey:string;sourceRevision:number;sourceSeasonKey:string;sourceRecordRevision:number;targetSeasonKey:string;world:ActiveUsRosterWorld;health:HealthLedger;supply:UsSupplyReceipt}
 /** Restore injury substitutions before their year-local emergency registry is retired; injuries themselves remain. */
-function restoreEmergencyRegistrations(c:UsCareer,world:ActiveUsRosterWorld):void {
+export function restoreUsEmergencyRegistrations(c:UsCareer,world:ActiveUsRosterWorld):void {
  for(const[key,e]of Object.entries(c.season!.emergency?.entries??{}))if(e.releasedDay===null){const org=world.organizations.find(o=>o.id===e.clubId)!,reserve=world.reserves?.[org.id];if(!org.levels[e.level].includes(key)||!reserve?.includes(e.replacedKey))throw new RangeError('INVALID_US_EMERGENCY_REGISTRATION');org.levels[e.level]=org.levels[e.level].map(k=>k===key?e.replacedKey:k);world.reserves![org.id]=reserve.filter(k=>k!==e.replacedKey);world.reserves![org.id]!.push(key);}
 }
 /** Expand/stage only: no new root, salary, contract or active year is committed. Discarding the stage is rollback.
@@ -51,7 +51,7 @@ function restoreEmergencyRegistrations(c:UsCareer,world:ActiveUsRosterWorld):voi
 function stageUsYear(c:UsCareer,revision:number,majorRenewal:boolean,allowFreeAgent=false):UsAgeRosterStage {
  assertUsCareerRevision(c,revision);const ready=usYearTransitionReadiness(c),guaranteed=(c.contract.years??1)>1||c.contract.remainingGuaranteedUsd!==undefined&&c.contract.remainingGuaranteedUsd>(c.season?.paidUsd??0);if(ready.blockers.some(b=>!majorRenewal||b!=='CONTRACT_DECISION_REQUIRED')||majorRenewal&&c.contract.type!=='US_MAJOR'||majorRenewal&&ready.mlbService.freeAgentEligible&&!guaranteed&&!allowFreeAgent)throw new RangeError('US_YEAR_TRANSITION_NOT_READY');assertUsSeason(c,revision);auditUsClosedDays(c);auditUsCompletedPostseason(c);
  if(Object.values(c.records.games).some(g=>g.scope.seasonKey===ready.targetSeasonKey))throw new RangeError('NEXT_SEASON_RECORDS_ALREADY_EXIST');
- const world=structuredClone(c.world);restoreEmergencyRegistrations(c,world);
+ const world=structuredClone(c.world);restoreUsEmergencyRegistrations(c,world);
  const retiring=Object.keys(world.players).filter(key=>key!==c.protagonistKey&&world.players[key]!.age===45),supply=retireAndSupplyUsNpcs(world,retiring,ready.targetSeasonKey,c.protagonistKey);
  for(const[key,p]of Object.entries(world.players)){
   if(!Object.hasOwn(c.world.players,key))continue;world.players[key]={...p,age:p.age+1,fatigue:0};

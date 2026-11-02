@@ -1,0 +1,30 @@
+✖ M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after one independent year; skipped seasons age the frozen NPC world (59034.8955ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 59530.8192
+
+✖ failing tests:
+
+test at packages\engine\test\us-amateur-return-career.test.ts:73:1
+✖ M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after one independent year; skipped seasons age the frozen NPC world (59034.8955ms)
+  AssertionError [ERR_ASSERTION]: root handoff must advance the active return revision
+  
+  46 !== 145
+  
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-amateur-return-career.test.ts:80:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 46,
+    expected: 145,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

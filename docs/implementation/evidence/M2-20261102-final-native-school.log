@@ -1,0 +1,15 @@
+M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit
+M2 closure: nativeSchool endpoints verified
+{
+  "status": "PARTIAL_RUNTIME_EVIDENCE_NOT_M2_COMPLETION",
+  "sourceManifestHash": "62035a6002b422067891c153fccfd7c58250c2e206099c0553f05bed66114bad",
+  "slices": [
+    {
+      "id": "P03-native-HS-to-college-entry",
+      "commandChainHash": "a543a6922a9d5381f0eef9ad2a28c28b833079f43c33cbe53c1975495d05743f",
+      "finalStateHash": "268c51e8e6f6e0165ed9c1d4730d267bea13b613093415d1e29cbcbaba40fbab",
+      "commands": 107
+    }
+  ],
+  "output": "E:\\AI\\Game\\baseball_career\\docs\\implementation\\evidence\\M2-20261102-final-native-school.json.gz"
+}

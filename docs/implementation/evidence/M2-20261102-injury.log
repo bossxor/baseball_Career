@@ -1,0 +1,15 @@
+M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit
+M2 closure: injury endpoints verified
+{
+  "status": "PARTIAL_RUNTIME_EVIDENCE_NOT_M2_COMPLETION",
+  "sourceManifestHash": "f9b3d3ce45c3a4ed79701b8a29c43c4f23365e9d4db4062736be71f0dc3fd09f",
+  "slices": [
+    {
+      "id": "P13-injury-deferred-training",
+      "commandChainHash": "f6c01b501c324ea8653352d69eafc77952487afb3f760ec49d21d09454556c70",
+      "finalStateHash": "1d72a664e2a14ab99ac4a24a6a623f6b1b365e04163cd34d2f03754158fb704d",
+      "commands": 10
+    }
+  ],
+  "output": "E:\\AI\\Game\\baseball_career\\docs\\implementation\\evidence\\M2-20261102-injury.json.gz"
+}

@@ -20,7 +20,7 @@ import {startKboRegularSeason, advanceKboCareer} from '../packages/engine/src/kb
 import {setCareerSeasonGoals} from '../packages/engine/src/season-goals.ts';
 import {hireCareerAgent, assertCareerAgentLedger} from '../packages/engine/src/career-agent.ts';
 import {recordTotals} from '../packages/engine/src/records.ts';
-import {controlledSchoolPaths,collegeServicePath,agentPath,pitcherLearningPath,nationalAppearancePath,postingPaths,retryExhaustionPath} from './m2-path-scenarios.mjs';
+import {controlledSchoolPaths,collegeServicePath,agentPath,pitcherLearningPath,nationalAppearancePath,postingPaths,retryExhaustionPath,injuryTrainingPath} from './m2-path-scenarios.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const hash=value=>createHash('sha256').update(canonicalJson(value)).digest('hex');
@@ -104,7 +104,7 @@ function writeEvidence(path,value){mkdirSync(resolve(path,'..'),{recursive:true}
 const slices=[];
 try{
 console.log('M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit');
-const scenarios={nativeSchool:()=>[nativeSchool()],nativeKbo:()=>[controlledKbo()],school:()=>controlledSchoolPaths(trace),collegeService:()=>[collegeServicePath(trace)],agent:()=>agentPath(trace),pitcher:()=>[pitcherLearningPath(trace)],national:()=>[nationalAppearancePath(trace)],posting:()=>postingPaths(trace),retry:()=>[retryExhaustionPath(trace)]};
+const scenarios={nativeSchool:()=>[nativeSchool()],nativeKbo:()=>[controlledKbo()],school:()=>controlledSchoolPaths(trace),collegeService:()=>[collegeServicePath(trace)],agent:()=>agentPath(trace),pitcher:()=>[pitcherLearningPath(trace)],national:()=>[nationalAppearancePath(trace)],posting:()=>postingPaths(trace),retry:()=>[retryExhaustionPath(trace)],injury:()=>[injuryTrainingPath(trace)]};
 const selection=process.argv.find(arg=>arg.startsWith('--scenarios='))?.slice('--scenarios='.length);
 const selected=selection===undefined?Object.keys(scenarios).filter(name=>!process.argv.includes('--paths-only')||!name.startsWith('native')):selection.split(',');
 assert.ok(selected.length>0&&new Set(selected).size===selected.length&&selected.every(name=>Object.hasOwn(scenarios,name)),'unknown, empty or duplicate closure scenario');

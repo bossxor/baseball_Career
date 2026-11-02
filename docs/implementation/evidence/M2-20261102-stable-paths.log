@@ -1,0 +1,9 @@
+M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit
+M2 closure: school endpoints verified
+M2 closure: collegeService endpoints verified
+M2 closure: pitcher endpoints verified
+M2 closure: posting endpoints verified
+M2 closure: agent endpoints verified
+M2 closure: national endpoints verified
+M2 closure: nativeSchool endpoints verified
+INTERRUPTED_FOR_CONFIRMED_REVIEW_FIX: source freeze invalidated; completed endpoint messages are not a final report.

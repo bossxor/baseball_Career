@@ -1,5 +1,5 @@
 import {usMajorCallupAdditionalUsd} from './us-season.js';
-import type {UsCareer} from './us-career-entry.js';
+import type {UsCareer,ActiveUsRosterWorld} from './us-career-entry.js';
 import {assertUsCareerRevision,assertActiveUsRosterWorld,usCareerView} from './us-career-entry.js';
 import type {UsLevel} from './us-world.js';
 import {usYearTransitionReadiness} from './us-year-transition.js';
@@ -250,12 +250,20 @@ export function confirmUsMilitaryReturn(c:UsCareer,revision:number):UsCareer {
  return activateUsMilitaryReturn(c,contract,remaining);
 }
 
+/** Return from a service reserve into a legal current roster; historical pre-service competitors are not live slots. */
+export function registerUsReturningPlayer(world:ActiveUsRosterWorld,key:string,organizationId:string,level:UsLevel):void {
+ const org=world.organizations.find(o=>o.id===organizationId),player=world.players[key],source=world.organizations.filter(o=>world.reserves?.[o.id]?.includes(key));
+ if(!org||!player||source.length!==1||world.organizations.some(o=>Object.values(o.levels).some(roster=>roster.includes(key))))throw new RangeError('US_MILITARY_RETURN_NO_LEGAL_SLOT');
+ const roster=org.levels[level],right=roster.filter(k=>world.players[k]!.kind==='HITTER'&&world.players[k]!.throws==='R').length;
+ const displaced=roster.filter(k=>world.players[k]!.kind===player.kind).sort((a,b)=>Number(world.players[b]!.position===player.position)-Number(world.players[a]!.position===player.position)||(a<b?-1:1)).find(k=>{const p=world.players[k]!;return (p.position===player.position||roster.some(other=>other!==k&&world.players[other]!.position===p.position))&&(player.kind!=='HITTER'||player.throws==='R'||p.throws==='L'||right>4);});
+ if(!displaced)throw new RangeError('US_MILITARY_RETURN_NO_LEGAL_SLOT');
+ org.levels[level]=roster.map(k=>k===displaced?key:k).sort();world.reserves![source[0]!.id]=world.reserves![source[0]!.id]!.filter(k=>k!==key);world.reserves![org.id]=[...(world.reserves![org.id]??[]),displaced].sort();
+}
+
 function activateUsMilitaryReturn(c:UsCareer,contract:UsCareer['contract'],remaining:number):UsCareer {
- const s=c.military.service!,option=s.returnOption!,next=structuredClone(c),key=c.protagonistKey,org=next.world.organizations.find(o=>o.id===option.organizationId)!;
+ const s=c.military.service!,option=s.returnOption!,next=structuredClone(c),key=c.protagonistKey;
  if(!Object.hasOwn(next.health.injuries,key)){
-  const player=next.world.players[key]!,roster=org.levels[option.level],right=roster.filter(k=>next.world.players[k]!.kind==='HITTER'&&next.world.players[k]!.throws==='R').length;
-  const displaced=roster.filter(k=>next.world.players[k]!.kind===player.kind).sort((a,b)=>Number(next.world.players[b]!.position===player.position)-Number(next.world.players[a]!.position===player.position)||(a<b?-1:1)).find(k=>{const p=next.world.players[k]!;return (p.position===player.position||roster.some(other=>other!==k&&next.world.players[other]!.position===p.position))&&(player.kind!=='HITTER'||player.throws==='R'||p.throws==='L'||right>4);});
-  if(!displaced)throw new RangeError('US_MILITARY_RETURN_NO_LEGAL_SLOT');org.levels[option.level]=roster.map(k=>k===displaced?key:k).sort();next.world.reserves![org.id]=[...next.world.reserves![org.id]!.filter(k=>k!==key),displaced].sort();next.registration={...next.registration,level:option.level,status:'ACTIVE'};
+  registerUsReturningPlayer(next.world,key,option.organizationId,option.level);next.registration={...next.registration,level:option.level,status:'ACTIVE'};
  }
  const effective=s.cursor!.worldDay+1,games=Object.values(c.seasonSchedule!.leagues).flat(),first=Math.min(...games.map(g=>g.worldDay)),last=Math.max(...games.map(g=>g.worldDay)),reservation=Math.min(contract.remainingGuaranteedUsd??Infinity,Math.floor(contract.annualSalaryUsd*Math.max(0,last-Math.max(first,effective)+1)/(last-first+1)));
  const club=next.inventory.clubs.find(o=>o.id===option.organizationId)!;if(club.availableBudgetUsd<reservation)throw new RangeError('US_MILITARY_RETURN_BUDGET_REQUIRED');club.availableBudgetUsd-=reservation;

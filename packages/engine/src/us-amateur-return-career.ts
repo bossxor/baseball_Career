@@ -4,7 +4,7 @@ import {assertUsCareerRevision} from './us-career-entry.js';
 import {canonicalJson} from './game.js';
 import {openUsAmateurReturn,assertUsAmateurReturnLedger,settleUsAmateurIndependentYear,settleUsAmateurServiceYear,usAmateurReturnView} from './us-amateur-return.js';
 import type {UsAmateurReturnLedger} from './us-amateur-return.js';
-import {chooseUsMilitaryPlan,startUsMilitaryServiceSeason,completeUsMilitaryService,usMilitaryServiceView} from './us-military-plan.js';
+import {chooseUsMilitaryPlan,startUsMilitaryServiceSeason,completeUsMilitaryService,usMilitaryServiceView,registerUsReturningPlayer} from './us-military-plan.js';
 import {startUsMilitaryWorld,advanceUsMilitaryWorld} from './us-season.js';
 import {startPreparationSeason,confirmPreparationPreseason,advancePreparationSeason,completePreparationSeason,assertPreparationSeason} from './preparation-season.js';
 import type {PreparationSeason,PreparationWorld} from './preparation-season.js';
@@ -34,6 +34,7 @@ import {refreshCareerSeasonGoals,refreshCareerPreseasonGoalSelection} from './se
 import {settleUsMilitaryReturnWorldGrowth} from './us-growth.js';
 import {acceptUsMinorMarketOffer} from './us-minor-market.js';
 import {fundUsMinorYear} from './us-minor-history.js';
+import {restoreUsEmergencyRegistrations} from './us-year-transition.js';
 import {retireAndSupplyUsNpcs} from './us-supply.js';
 import {cancelUsAmateurReturnForUsOffer} from './us-amateur-return.js';
 import {settleClosedGrowthPeriods,finalizeSeasonGrowth} from './growth-ledger.js';
@@ -208,9 +209,17 @@ export function resignUsAfterAmateurReturn(s:UsAmateurReturnCareer,n:number,offe
  if(!owner||owner.world.seasonKey!==last.seasonKey||!owner.seasonGrowth.finalized||s.preparation&&s.preparation.phase!=='PREPARATION_RESULT')throw new RangeError('US_RETURN_YEAR_IN_PROGRESS');
  const sourceSeason=Number(r.sourceSeasonKey);
  cancelUsAmateurReturnForUsOffer(r,r.revision,{worldKey:r.worldKey,playerKey:r.playerKey,seasonKey:last.seasonKey,age:last.age,worldDay:0,authorityRevision:n,hasProContractHistory:false,activeContract:false,domesticRightsAvailable:true,domesticDraftEligible:false,mandatoryReturnActive:false,militaryStatus:r.militaryStatus,collegeAdmissionRefs:[],collegeResumeRef:null,domesticOffers:[],usOffers:[{offerRef:offerKey,expiresGameDay:1}],usScoutScore:0,usRightsEligible:true,retirementAllowed:true},{offerRef:offerKey,authorityRevision:n});
- const base=acceptUsMinorMarketOffer(s.source,s.source.revision,offerKey),world=structuredClone(base.world),key=r.playerKey;let inventory=base.inventory;
+ const base=acceptUsMinorMarketOffer(s.source,s.source.revision,offerKey),world=structuredClone(s.service?.world??base.world),key=r.playerKey;let inventory=base.inventory;
+ if(s.service){
+  restoreUsEmergencyRegistrations(s.service,world);
+  const target=String(Number(world.seasonKey)+1),existing=new Set(Object.keys(world.players));
+  retireAndSupplyUsNpcs(world,Object.keys(world.players).filter(x=>x!==key&&world.players[x]!.age===45),target,key);
+  for(const [x,p] of Object.entries(world.players))if(existing.has(x))world.players[x]={...p,age:p.age+1,fatigue:0};
+  registerUsReturningPlayer(world,key,offer.organizationId,offer.initialLevel);
+  inventory=fundUsMinorYear(s.service.inventory,target,Object.keys(world.players).sort(),market.funding,offer.organizationId,offer.annualSalaryUsd);
+ }
  // Skipped seasons sourceSeason+1..sourceSeason+k: NPCs play them off-screen, then age into the next one.
- for(let i=1;i<=k;i++){
+ for(let i=1;!s.service&&i<=k;i++){
   const seasonKey=String(sourceSeason+i),calendar=createSeasonCalendar(Number(seasonKey),'calendar-2'),W=calendar.growthDays.length;
   for(const npc of Object.keys(world.players).sort()){
    if(npc===key)continue;const p=world.players[npc]!,ledger=createSeasonGrowthLedger(p,seasonKey,W);
@@ -224,6 +233,7 @@ export function resignUsAfterAmateurReturn(s:UsAmateurReturnCareer,n:number,offe
    retireAndSupplyUsNpcs(world,retiring,next,key);
    for(const [x,p] of Object.entries(world.players))if(x!==key&&existing.has(x))world.players[x]={...p,age:p.age+1,fatigue:0};
    world.seasonKey=next;world.calendar=createSeasonCalendar(Number(next),'calendar-2');
+   for(const b of Object.values(world.repertoires))Object.assign(b,{seasonId:next,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()});
    // The offer already reserved its salary. Rolling into its actual start year must not charge it again.
    const funding=i<k?market.funding:inventory.clubs.map(c=>({organizationId:c.id,addedBudgetUsd:0}));
    inventory=fundUsMinorYear(inventory,next,Object.keys(world.players).sort(),funding,offer.organizationId,0);
@@ -236,8 +246,9 @@ export function resignUsAfterAmateurReturn(s:UsAmateurReturnCareer,n:number,offe
  const player=world.players[key]!,contract={...base.contract,seasonKey:target};
  const records={revision:owner.records.revision,games:structuredClone({...s.source.records.games,...owner.records.games})},health=structuredClone(owner.health);
  health.injuries=Object.fromEntries(Object.entries(health.injuries).filter(([x])=>Object.hasOwn(world.players,x)));
- const out:UsCareer={...base,schemaVersion:2,revision:base.revision+1,world,inventory,contract,records,health,registration:{...base.registration,seasonKey:target},usReturnContinuation:{playerAge:player.age,contract:structuredClone(contract),inventory:structuredClone(inventory),sourceMinorYears:base.minorYears?.length??0,sourceMajorYears:base.majorYears?.length??0,remainingControlSeasons:contract.years??contract.controlSeasons,paidUsd:30000},seasonGrowth:createSeasonGrowthLedger(player,target,world.calendar.growthDays.length),development:{...structuredClone(owner.development),seasonStartPlayer:structuredClone(player)},retryCareer:structuredClone(s.retry),styleUsedWindows:[...owner.styleUsedWindows],planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}],military:{...base.military,status:r.militaryStatus},usAmateurReturn:{...structuredClone(r),revision:r.revision+1,status:'CANCELLED_US',draftReservationKey:null,cancelledByOfferRef:offerKey}};
+ const out:UsCareer={...base,schemaVersion:2,revision:n+1,world,inventory,contract,records,health,registration:{...base.registration,seasonKey:target},usReturnContinuation:{playerAge:player.age,contract:structuredClone(contract),inventory:structuredClone(inventory),sourceMinorYears:base.minorYears?.length??0,sourceMajorYears:base.majorYears?.length??0,remainingControlSeasons:contract.years??contract.controlSeasons,paidUsd:30000},seasonGrowth:createSeasonGrowthLedger(player,target,world.calendar.growthDays.length),development:{...structuredClone(owner.development),seasonStartPlayer:structuredClone(player)},retryCareer:structuredClone(s.retry),styleUsedWindows:[...owner.styleUsedWindows],planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}],military:{...base.military,status:r.militaryStatus},usAmateurReturn:{...structuredClone(r),revision:r.revision+1,status:'CANCELLED_US',draftReservationKey:null,cancelledByOfferRef:offerKey}};
  if(owner.traits)out.traits={...structuredClone(owner.traits),lastClosedDay:null,lastSeasonKey:target};
+ if(s.service){out.usAmateurReturnHistory=structuredClone(s);out.income=structuredClone(s.service.income);}
  out.usReturnContinuation!.organizationId=offer.organizationId;
  const teamWorld={worldKey:world.worldKey,seasonKey:target,leagueKey:out.registration.level,protagonistKey:key,protagonistSchoolId:offer.organizationId,schools:world.organizations.map(o=>({id:o.id,name:o.name,roster:o.levels[out.registration.level]})),players:world.players};
  out.relationships=formRegisteredTeamTeammate(s.preparation?.relationships??s.service?.relationships??s.source.relationships,teamWorld,JSON.stringify(['us-return-resign',r.returnId,offerKey,target]),world.calendar.growthDays[0]!);

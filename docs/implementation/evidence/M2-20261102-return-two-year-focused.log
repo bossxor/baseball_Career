@@ -1,0 +1,25 @@
+✖ M2-CLOSE-RETURN-20261102: controlled US prefix: root preserves original US evidence and plays two native mandatory seasons, without retry budget (144067.5682ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 144604.1884
+
+✖ failing tests:
+
+test at packages\engine\test\us-amateur-return-career.test.ts:29:1
+✖ M2-CLOSE-RETURN-20261102: controlled US prefix: root preserves original US evidence and plays two native mandatory seasons, without retry budget (144067.5682ms)
+  RangeError: INVALID_US_REPERTOIRE
+      at <anonymous> (E:\AI\Game\baseball_career\packages\engine\src\us-career-entry.ts:88:522)
+      at Array.map (<anonymous>)
+      at assertActiveUsRosterWorld (E:\AI\Game\baseball_career\packages\engine\src\us-career-entry.ts:88:191)
+      at retireAndSupplyUsNpcs (E:\AI\Game\baseball_career\packages\engine\src\us-supply.ts:21:2)
+      at resignUsAfterAmateurReturn (E:\AI\Game\baseball_career\packages\engine\src\us-amateur-return-career.ts:231:4)
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\packages\engine\test\us-amateur-return-career.test.ts:53:50)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1397:25)
+      at Test.start (node:internal/test_runner/test:1257:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
