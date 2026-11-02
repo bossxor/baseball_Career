@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import {retryNoOfferPrefix} from '../packages/engine/test/retry-completion-scenario.ts';
+import * as retry from '../packages/engine/src/career-pro-retry.ts';
 import {completedHighSchoolCareer,completedCollegeAcademicYear,enrolledCollegeCareer,enteredKboCareer} from '../packages/engine/test/fixtures.ts';
 import {acknowledgeHighSchoolSeasonReview,openHighSchoolCareerRoute} from '../packages/engine/src/high-school-route.ts';
 import {prepareCareerKboDraft,resolveCareerKboDraft,decideCareerKboDraft} from '../packages/engine/src/career-kbo.ts';
@@ -33,6 +35,33 @@ import {createWorldStream,nextInteger} from '../packages/engine/src/rng.ts';
 import {emptyBatting} from '../packages/engine/src/stats.ts';
 
 const prefix=description=>({kind:'CONTROLLED_PREFIX_NATIVE_SLICE',description});
+
+/** Only the final independent season is native; the two earlier uses are labelled inputs. */
+export function retryExhaustionPath(trace){
+ const t=trace('P16-retry-exhaustion',retryNoOfferPrefix(true),prefix('Controlled closed pro season, saturated actual budgets and two prior optional completions. Commands below play the final independent48 and explicitly confirm retirement; no native full pro career or external archive export claim.'));
+ t.command('OPEN_KBO_UNCONTRACTED_RETRY',{},s=>retry.openKboUncontractedRetry(s,s.revision));
+ t.command('OPEN_UNCONTRACTED_ROUTES',{eventVersion:1},s=>retry.reviewKboUncontractedRoutes(s,s.revision,1));
+ const routePreviewId=retry.kboRetryRoutesView(t.state).routePreviewId;
+ t.command('START_PREPARATION',{routePreviewId},s=>retry.startKboRetryPreparation(s,s.revision,{routePreviewId}));
+ t.command('CONFIRM_PRESEASON',{},s=>retry.confirmKboRetryPreseason(s,s.revision));
+ for(let i=0;t.state.preparationSeason.nextWorldDay<=Math.max(...t.state.preparationSeason.world.schedule.map(g=>g.worldDay));i++){
+  assert.ok(i<2000,'retry preparation command budget exhausted');
+  t.command('ADVANCE_PREPARATION',{mode:'ONE_MONTH'},s=>{const out=retry.advanceKboRetryPreparation(s,s.revision,'ONE_MONTH');assert.notEqual(out.stopReason,'ENGINE_LIMIT');return out;});
+ }
+ t.command('SETTLE_PREPARATION',{forfeitUnusedTraining:true},s=>retry.settleKboRetryPreparation(s,s.revision,true));
+ assert.equal(t.state.retryCareer.careerPreparationUsed,3);assert.equal(retry.kboRetryRoutesView(t.state).offers.length,0);
+ const p=t.state.preparationSeason,own=p.world.protagonistKey;
+ const games=Object.values(p.records.games).filter(g=>g.scope.seasonKey===p.world.seasonKey&&g.scope.leagueKey==='INDEPENDENT');
+ assert.equal(games.length,216);assert.equal(games.filter(g=>Object.hasOwn(g.teams,p.world.protagonistSchoolId)).length,48);
+ const recordHash=canonicalJson(t.state.records),player=canonicalJson(p.world.players[own]);
+ t.command('OPEN_RETRY_EXHAUSTION',{},s=>retry.openKboRetryExhaustion(s,s.revision));
+ const e=t.state.events.find(e=>e.definitionId==='E35'&&e.status==='OPEN');assert.ok(e);
+ const input={eventKey:e.eventKey,eventVersion:e.version,command:'CONFIRM_RETIRE'};
+ t.command('CONFIRM_RETIRE',input,s=>retry.confirmKboRetryExhaustion(s,s.revision,input));
+ assert.equal(t.state.phaseContext.phase,'ARCHIVED');assert.equal(canonicalJson(t.state.records),recordHash);assert.equal(canonicalJson(t.state.preparationSeason.world.players[own]),player);
+ assert.equal(t.state.events.find(x=>x.eventKey===e.eventKey).status,'RESOLVED');
+ return t.finish({terminal:'ARCHIVED',nativePreparationSeasons:1,nativeIndependentLeagueGames:games.length,ownTeamGames:48,totalOptionalUses:3,realMarketOffers:0,explicitRetirement:true,recordsAndPlayerPreserved:true,jsonReplay:'every command',unproven:['native earlier pro career and first two optional seasons','M3 archive persistence','M7 export']});
+}
 function schoolRoute(t){t.command('ACKNOWLEDGE_HS_REVIEW',{},s=>acknowledgeHighSchoolSeasonReview(s,s.revision));t.command('OPEN_CAREER_ROUTE',{eventVersion:1},s=>openHighSchoolCareerRoute(s,s.revision,1));}
 function signKbo(t){
  t.command('PREPARE_KBO_DRAFT',{},s=>prepareCareerKboDraft(s,s.revision));t.command('RESOLVE_KBO_DRAFT',{programVersion:1},s=>resolveCareerKboDraft(s,s.revision,1));

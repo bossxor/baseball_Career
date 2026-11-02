@@ -8,7 +8,9 @@ import {publishUsSeasonSchedule} from '../src/us-schedule.js';
 import type {UsCareer} from '../src/us-career-entry.js';
 import {canonicalJson} from '../src/game.js';
 import {startUsRegularSeason,advanceUsCareer} from '../src/us-season.js';
-import {openUsMinorMarket} from '../src/us-minor-market.js';
+import {openUsMinorMarket,acceptUsMinorMarketOffer} from '../src/us-minor-market.js';
+import {usCareerView} from '../src/us-career-entry.js';
+import {prepareRelationNoticeRead} from '../src/relation-notices.js';
 import {emptyPitching} from '../src/stats.js';
 import {requestUsAmateurReturn,startUsAmateurReturnYear,advanceUsAmateurReturn,settleUsAmateurReturnYear,prepareUsAmateurReturnDraft,resolveUsAmateurReturnDraft,usAmateurReturnCareerView,assertUsAmateurReturnCareer,decideUsAmateurReturnDraft,startSignedUsAmateurReturnKboCareer,resignUsAfterAmateurReturn} from '../src/us-amateur-return-career.js';
 import {unreadKboFirstCampNotices,resolveKboFirstCampNotice,confirmKboPreseasonPlan} from '../src/kbo-preseason.js';
@@ -70,14 +72,36 @@ test('M2-CLOSE-RETURN-20261102: committed E66 receipt derives a native TERMINATE
 
 test('M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after one independent year; skipped seasons age the frozen NPC world',()=>{
  const closed=expired(),source=openUsMinorMarket(closed,closed.revision,closed.inventory.clubs.map(o=>({organizationId:o.id,addedBudgetUsd:3_000_000}))),raw=canonicalJson(source);
- const offer=source.minorMarket!.offers.find(o=>o.militaryReturnOption);assert.ok(offer,'fixture market must carry a return-option offer');
+ const offer=source.minorMarket!.offers.find(o=>o.militaryReturnOption&&o.organizationId!==source.protagonistOrganizationId);assert.ok(offer,'controlled market must carry a return-option offer from another organization');
  let c=startUsAmateurReturnYear(requestUsAmateurReturn(source,source.revision),source.revision+1,1);
  for(let i=0;i<2000;i++){const next=advanceUsAmateurReturn(c,c.revision);c=next.career;if(next.stopReason==='SEASON_COMPLETE')break;}
  c=settleUsAmateurReturnYear(c,c.revision);assert.equal(c.return.years.length,1);
  const us=resignUsAfterAmateurReturn(c,c.revision,offer!.offerKey);
  assert.equal(us.world.seasonKey,String(Number(source.world.seasonKey)+2));assert.equal(us.contract.seasonKey,us.world.seasonKey);assert.equal(us.usAmateurReturn!.status,'CANCELLED_US');
+ assert.equal(us.inventory.seasonKey,us.world.seasonKey);
+ assert.equal(us.protagonistOrganizationId,offer!.organizationId);assert.equal(us.usReturnContinuation!.organizationId,offer!.organizationId);
+ assert.equal(us.usReturnContinuation!.remainingControlSeasons,1,'a one-year re-sign must not restart the original six-season control');
+ for(const [key,player] of Object.entries(source.world.players))if(key!==source.protagonistKey&&us.world.players[key])assert.equal(us.world.players[key]!.age,player.age+2,`NPC age must follow both elapsed seasons: ${key}`);
+ assert.equal(canonicalJson(us.records.games),canonicalJson({...source.records.games,...c.preparation!.records.games}));
+ assert.equal(canonicalJson(us.health),canonicalJson(c.preparation!.health));
+ assert.equal(canonicalJson(us.development),canonicalJson({...c.preparation!.development,seasonStartPlayer:us.world.players[us.protagonistKey]}));
+ assert.equal(canonicalJson(us.retryCareer),canonicalJson(c.retry));assert.deepEqual(us.styleUsedWindows,c.preparation!.styleUsedWindows);
+ const budget=source.inventory.clubs.find(o=>o.id===offer!.organizationId)!.availableBudgetUsd+source.minorMarket!.funding.find(f=>f.organizationId===offer!.organizationId)!.addedBudgetUsd-30000;
+ assert.equal(us.inventory.clubs.find(o=>o.id===offer!.organizationId)!.availableBudgetUsd,budget,'reserve the signed salary once, without a second grant or debit');
+ assert.ok(us.goals!.notices.some(e=>e.definitionId==='E89'&&e.seasonKey===us.world.seasonKey));
+ assert.ok(us.repertoireEvents!.notices.some(e=>e.definitionId==='E88'&&e.seasonKey===us.world.seasonKey));
+ const teamWorld={worldKey:us.world.worldKey,seasonKey:us.world.seasonKey,leagueKey:us.registration.level,protagonistKey:us.protagonistKey,protagonistSchoolId:us.protagonistOrganizationId,schools:us.world.organizations.map(o=>({id:o.id,name:o.name,roster:o.levels[us.registration.level]})),players:us.world.players};
+ const teammate=us.relationNotices.find(e=>e.definitionId==='E94'&&e.seasonKey===us.world.seasonKey);assert.ok(teammate);
+ assert.doesNotThrow(()=>prepareRelationNoticeRead({...us,world:teamWorld},{eventKey:teammate.eventKey,eventVersion:teammate.version,command:'OPEN_RELATIONS'}));
  assert.deepEqual(us.world.players[us.protagonistKey]!.abilities,c.return.years[0]!.endingPlayer.abilities);assert.equal(us.world.players[us.protagonistKey]!.age,c.return.years[0]!.age+1);
  const resumed=JSON.parse(JSON.stringify(us)) as typeof us,planned=publishUsSeasonSchedule(confirmUsPreseasonPlan(resumed,resumed.revision),resumed.revision+1);assert.equal(planned.world.seasonKey,us.world.seasonKey);
  const live=startUsRegularSeason(planned,planned.revision),day=advanceUsCareer(live,live.revision,1);assert.notEqual(day.stopReason,'ENGINE_LIMIT');assert.ok(day.career.revision>live.revision);
  assert.equal(canonicalJson(source),raw);assert.throws(()=>resignUsAfterAmateurReturn(c,c.revision-1,offer!.offerKey),/REVISION/);
+ // Controlled next-season regular/PS prefix; actual second market and acceptance must replay the new holder epoch.
+ const closedAgain=finishedUsCareerFixture(planned),marketAgain=openUsMinorMarket(closedAgain,closedAgain.revision,closedAgain.inventory.clubs.map(o=>({organizationId:o.id,addedBudgetUsd:3_000_000}))),sameClub=marketAgain.minorMarket!.offers.find(o=>o.organizationId===us.protagonistOrganizationId);assert.ok(sameClub);
+ const renewed=acceptUsMinorMarketOffer(marketAgain,marketAgain.revision,sameClub.offerKey);assert.equal(renewed.protagonistOrganizationId,us.protagonistOrganizationId);assert.equal(renewed.contract.years,1);usCareerView(renewed);
+ const oldFormat=JSON.parse(JSON.stringify(renewed)) as typeof renewed;delete oldFormat.usReturnContinuation!.organizationId;assert.deepEqual(usCareerView(oldFormat),usCareerView(renewed));
+ const forged=JSON.parse(JSON.stringify(renewed)) as typeof renewed;forged.usReturnContinuation!.organizationId=source.protagonistOrganizationId;assert.throws(()=>usCareerView(forged),/RETURN_ORGANIZATION/);
+ const started=startUsAmateurReturnYear(c,c.revision,1);
+ assert.throws(()=>resignUsAfterAmateurReturn(started,started.revision,offer!.offerKey),/YEAR_IN_PROGRESS/);
 });

@@ -39,7 +39,7 @@ function renewalContract(c:UsCareer,r:UsMinorRenewal,y:UsMinorYearArchive,previo
 export function openingUsMinorState(c:UsCareer) {
  const resumed=usMilitaryContinuationOrigin(c),origin=resumed?.origin??usContractOrigin(c),first=Number(origin.contract.seasonKey),years=resumed?.minorYears??c.minorYears??[],limit=resumed?.remainingControlSeasons??(c.kboTransfer?origin.contract.years!:origin.contract.controlSeasons);
  if(!c.amateurHistory.world.players[c.protagonistKey]||!c.world.players[c.protagonistKey])throw new RangeError('INVALID_US_ENTRY_VIEW');
- let inventory=structuredClone(origin.inventory),contract={...origin.contract},organizationId=c.kboTransfer?c.kboTransfer.offer.organizationId:c.amateurHistory.usRecruitment!.program.signing!.rights.holderOrgId,epoch=first,term=limit,last:UsMinorRenewal|undefined;
+ let inventory=structuredClone(origin.inventory),contract={...origin.contract},organizationId=resumed?.organizationId??(c.kboTransfer?c.kboTransfer.offer.organizationId:c.amateurHistory.usRecruitment!.program.signing!.rights.holderOrgId),epoch=first,term=limit,last:UsMinorRenewal|undefined;
  if(c.schemaVersion!==3){if(years.length||!resumed&&c.minorRenewal!==undefined||c.world.seasonKey!==origin.contract.seasonKey||c.kboTransfer&&c.world.players[c.protagonistKey]!.age!==origin.playerAge)throw new RangeError('INVALID_US_ENTRY_VIEW');return {inventory,contract,organizationId};}
  if(origin.contract.type!=='US_MINOR'||!years.length||Number(c.world.seasonKey)!==first+years.length||c.world.players[c.protagonistKey]!.age!==origin.playerAge+years.length)throw new RangeError('INVALID_US_YEAR_HISTORY');
  for(const [i,y]of years.entries()){

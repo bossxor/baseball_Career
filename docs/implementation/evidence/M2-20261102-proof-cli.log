@@ -1,0 +1,3 @@
+M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit
+{"status":"FAILED_RUNTIME_EVIDENCE_NOT_M2_COMPLETION","error":"unknown, empty or duplicate closure scenario","failedOutput":"C:\\Users\\N-052\\.codex\\visualizations\\2026\\10\\16\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\baseball-career-m2\\docs\\implementation\\evidence\\M2-20261102-proof-cli-invalid-failed.json.gz"}
+PASS: unknown scenario rejected; gzip failure evidence readable; no scenario executed

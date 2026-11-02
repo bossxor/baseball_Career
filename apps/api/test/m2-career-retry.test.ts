@@ -28,7 +28,7 @@ test('E34 -> E36 retry retirement runs through save commands and screens', async
       body: JSON.stringify({ commandId: `r-${n++}`, expectedRevision: saveRevision, type, payload: { careerRevision: careerRev, ...payload } }),
     });
     if (res.status === 200) {
-      const r = await json<{ revision: string; summary: { careerRevision: number } }>(res);
+      const r = await json<{ revision: string; summary: { careerRevision: number; phase: string } }>(res);
       saveRevision = Number(r.revision); careerRevision = r.summary.careerRevision;
       return r;
     }

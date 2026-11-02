@@ -3,6 +3,7 @@ import {createHash} from 'node:crypto';
 import {readFileSync, readdirSync, writeFileSync, mkdirSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {resolve, relative} from 'node:path';
+import {gzipSync} from 'node:zlib';
 import {canonicalJson} from '../packages/engine/src/game.ts';
 import {createHighSchoolWorld, assertHighSchoolWorld} from '../packages/engine/src/high-school-world.ts';
 import {createHighSchoolCareer, confirmCareerPlayer, resolveCareerFocusEvent, confirmCareerPreseason} from '../packages/engine/src/high-school-career.ts';
@@ -19,7 +20,7 @@ import {startKboRegularSeason, advanceKboCareer} from '../packages/engine/src/kb
 import {setCareerSeasonGoals} from '../packages/engine/src/season-goals.ts';
 import {hireCareerAgent, assertCareerAgentLedger} from '../packages/engine/src/career-agent.ts';
 import {recordTotals} from '../packages/engine/src/records.ts';
-import {controlledSchoolPaths,collegeServicePath,agentPath,pitcherLearningPath,nationalAppearancePath,postingPaths} from './m2-path-scenarios.mjs';
+import {controlledSchoolPaths,collegeServicePath,agentPath,pitcherLearningPath,nationalAppearancePath,postingPaths,retryExhaustionPath} from './m2-path-scenarios.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const hash=value=>createHash('sha256').update(canonicalJson(value)).digest('hex');
@@ -99,15 +100,15 @@ function files(directory){return readdirSync(directory,{withFileTypes:true}).fla
 const sourceManifest=()=>[...['packages/engine/src','packages/rules/src','packages/engine/test'].flatMap(dir=>files(resolve(root,dir))).filter(path=>/\.(ts|json)$/.test(path)),...['scripts/verify-m2-closure.mjs','scripts/m2-path-scenarios.mjs','docs/design/event-catalog-v2.json','docs/design/end-to-end-design-paths.json','package.json','package-lock.json'].map(file=>resolve(root,file))].sort().map(path=>({file:relative(root,path).replaceAll('\\','/'),sha256:createHash('sha256').update(readFileSync(path)).digest('hex')}));
 const start=sourceManifest();
 const output=resolve(root,process.argv.slice(2).find(arg=>!arg.startsWith('--'))??'docs/implementation/evidence/M2-CLOSURE-20261102-runtime.json');
+function writeEvidence(path,value){mkdirSync(resolve(path,'..'),{recursive:true});const data=JSON.stringify(value,null,2)+'\n';writeFileSync(path,path.endsWith('.gz')?gzipSync(data):data);}
 const slices=[];
 try{
 console.log('M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit');
-if(!process.argv.includes('--paths-only')){slices.push(nativeSchool());slices.push(controlledKbo());}
-slices.push(...controlledSchoolPaths(trace));console.log('M2 closure: school/draft/college/US endpoints verified');
-slices.push(collegeServicePath(trace));console.log('M2 closure: college18month service/resume endpoint verified');
-slices.push(...agentPath(trace));console.log('M2 closure: accepted/rejected counteroffer endpoints verified');
-slices.push(pitcherLearningPath(trace),nationalAppearancePath(trace));console.log('M2 closure: pitcher learning and actual national appearance endpoints verified');
-slices.push(...postingPaths(trace));console.log('M2 closure: posting sign/defer/no-offer/remain endpoints verified');
+const scenarios={nativeSchool:()=>[nativeSchool()],nativeKbo:()=>[controlledKbo()],school:()=>controlledSchoolPaths(trace),collegeService:()=>[collegeServicePath(trace)],agent:()=>agentPath(trace),pitcher:()=>[pitcherLearningPath(trace)],national:()=>[nationalAppearancePath(trace)],posting:()=>postingPaths(trace),retry:()=>[retryExhaustionPath(trace)]};
+const selection=process.argv.find(arg=>arg.startsWith('--scenarios='))?.slice('--scenarios='.length);
+const selected=selection===undefined?Object.keys(scenarios).filter(name=>!process.argv.includes('--paths-only')||!name.startsWith('native')):selection.split(',');
+assert.ok(selected.length>0&&new Set(selected).size===selected.length&&selected.every(name=>Object.hasOwn(scenarios,name)),'unknown, empty or duplicate closure scenario');
+for(const name of selected){slices.push(...scenarios[name]());console.log('M2 closure: '+name+' endpoints verified');}
 assert.deepEqual(sourceManifest(),start,'source changed during closure proof; rerun on stable files');
 const catalogue=JSON.parse(readFileSync(resolve(root,'docs/design/event-catalog-v2.json'),'utf8')).events;
 const events=catalogue.map(e=>{
@@ -120,9 +121,9 @@ const paths=JSON.parse(readFileSync(resolve(root,'docs/design/end-to-end-design-
 assert.equal(paths.length,24);
 const result={schemaVersion:1,status:'PARTIAL_RUNTIME_EVIDENCE_NOT_M2_COMPLETION',rulesVersion:slices[0].initialFixture.world.rulesVersion,sourceManifestHash:hash(start),sourceManifest:start,slices,events,paths,externalDependencies:['M3 persistent CAS/receipt/idempotency/two-device/Neon','M4/M5 actual screens/accessibility/visual silhouette inspection','M6 club paths and unified world workers','M7 chronicle producer/export/backup','M8 actual device execution'],unproven:'Unexecuted path segments, events and PF checks are not inferred from these command hashes. Source/test references are triage only.'};
 assert.deepEqual(sourceManifest(),start,'source changed while building closure inventory; rerun on stable files');
-mkdirSync(resolve(output,'..'),{recursive:true});writeFileSync(output,JSON.stringify(result,null,2)+'\n');
+writeEvidence(output,result);
 console.log(JSON.stringify({status:result.status,sourceManifestHash:result.sourceManifestHash,slices:slices.map(({id,commandChainHash,finalStateHash,commandReceipts})=>({id,commandChainHash,finalStateHash,commands:commandReceipts.length})),output},null,2));
 }catch(error){
  const end=sourceManifest(),failure={schemaVersion:1,status:'FAILED_RUNTIME_EVIDENCE_NOT_M2_COMPLETION',sourceManifestHash:hash(start),sourceManifest:start,sourceUnchanged:hash(start)===hash(end),finalSourceManifestHash:hash(end),error:{name:error.name,message:error.message,stack:error.stack},completedSlices:completedTraces,interruptedSlice:activeTrace&&!activeTrace.finished?{id:activeTrace.id,prefix:activeTrace.prefix,initialFixture:activeTrace.initialFixture,initialFixtureHash:hash(activeTrace.initialFixture),commandReceipts:activeTrace.rows,commandChainHash:hash(activeTrace.rows),lastStateHash:hash(activeTrace.state),status:'INTERRUPTED_NOT_PROVEN'}:null};
- const failedOutput=output.replace(/\.json$/,'')+'-failed.json';mkdirSync(resolve(failedOutput,'..'),{recursive:true});writeFileSync(failedOutput,JSON.stringify(failure,null,2)+'\n');console.error(JSON.stringify({status:failure.status,error:failure.error.message,failedOutput}));process.exitCode=1;
+ const failedOutput=output.replace(/\.json(?:\.gz)?$/,'')+'-failed.json'+(output.endsWith('.gz')?'.gz':'');writeEvidence(failedOutput,failure);console.error(JSON.stringify({status:failure.status,error:failure.error.message,failedOutput}));process.exitCode=1;
 }

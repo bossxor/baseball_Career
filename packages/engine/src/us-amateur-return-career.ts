@@ -28,6 +28,9 @@ import {assertKboRecruitmentWorld} from './kbo-draft.js';
 import {createSeasonGrowthLedger} from './growth-ledger.js';
 import {queueKboFirstCampNotices} from './kbo-preseason.js';
 import {formRegisteredTeamTeammate} from './team-teammates.js';
+import {queueRelationFormationNotices} from './relation-notices.js';
+import {refreshCareerRepertoireEvents} from './repertoire-events.js';
+import {refreshCareerSeasonGoals,refreshCareerPreseasonGoalSelection} from './season-goals.js';
 import {settleUsMilitaryReturnWorldGrowth} from './us-growth.js';
 import {acceptUsMinorMarketOffer} from './us-minor-market.js';
 import {fundUsMinorYear} from './us-minor-history.js';
@@ -201,6 +204,8 @@ export function usAmateurReturnCareerView(s:UsAmateurReturnCareer){assertUsAmate
 export function resignUsAfterAmateurReturn(s:UsAmateurReturnCareer,n:number,offerKey:string):UsCareer {
  revision(s,n);const r=s.return,k=r.years.length,market=s.source.minorMarket,offer=market?.offers.find(o=>o.offerKey===offerKey),last=r.years.at(-1);
  if(!market||!offer||!last||!offer.militaryReturnOption||!['PREPARING','DRAFT_READY'].includes(r.status)||r.militaryStatus==='UNRESOLVED'||s.draft?.program.decision==='SIGNED')throw new RangeError('US_RETURN_OPTION_NOT_AVAILABLE');
+ const owner=s.preparation??s.service;
+ if(!owner||owner.world.seasonKey!==last.seasonKey||!owner.seasonGrowth.finalized||s.preparation&&s.preparation.phase!=='PREPARATION_RESULT')throw new RangeError('US_RETURN_YEAR_IN_PROGRESS');
  const sourceSeason=Number(r.sourceSeasonKey);
  cancelUsAmateurReturnForUsOffer(r,r.revision,{worldKey:r.worldKey,playerKey:r.playerKey,seasonKey:last.seasonKey,age:last.age,worldDay:0,authorityRevision:n,hasProContractHistory:false,activeContract:false,domesticRightsAvailable:true,domesticDraftEligible:false,mandatoryReturnActive:false,militaryStatus:r.militaryStatus,collegeAdmissionRefs:[],collegeResumeRef:null,domesticOffers:[],usOffers:[{offerRef:offerKey,expiresGameDay:1}],usScoutScore:0,usRightsEligible:true,retirementAllowed:true},{offerRef:offerKey,authorityRevision:n});
  const base=acceptUsMinorMarketOffer(s.source,s.source.revision,offerKey),world=structuredClone(base.world),key=r.playerKey;let inventory=base.inventory;
@@ -209,23 +214,34 @@ export function resignUsAfterAmateurReturn(s:UsAmateurReturnCareer,n:number,offe
   const seasonKey=String(sourceSeason+i),calendar=createSeasonCalendar(Number(seasonKey),'calendar-2'),W=calendar.growthDays.length;
   for(const npc of Object.keys(world.players).sort()){
    if(npc===key)continue;const p=world.players[npc]!,ledger=createSeasonGrowthLedger(p,seasonKey,W);
-   // ponytail: flat typical workload per role; real NPC usage needs the off-screen league sim.
+   // shortcut: flat workload per role until the off-screen league sim supplies actual usage.
    const period={startDay:0,endDay:W,levelSeasonDays:W,level:'PRO' as const,appearances:p.kind==='HITTER'?400:p.position==='RP'||p.position==='CP'?180:540,pitcherRole:p.position==='RP'?'RP' as const:p.position==='CP'?'CP' as const:'SP' as const,rehabRatio:0,trainingMultiplier:1,ordinaryMilitary:false,policy:{mode:'CAREER' as const,difficulty:s.source.difficulty,beneficiary:false}};
    const grown=settleClosedGrowthPeriods(p,ledger,[{periodKey:JSON.stringify(['us-return-offscreen',r.returnId,seasonKey,npc]),focus:[...p.focus],archetype:p.archetype,period}]);
    world.players[npc]=finalizeSeasonGrowth(grown.player,grown.ledger,W).player;
   }
-  if(i<k){
-   const next=String(sourceSeason+i+1),retiring=Object.keys(world.players).filter(x=>x!==key&&world.players[x]!.age===45);
+  {
+   const next=String(sourceSeason+i+1),existing=new Set(Object.keys(world.players)),retiring=Object.keys(world.players).filter(x=>x!==key&&world.players[x]!.age===45);
    retireAndSupplyUsNpcs(world,retiring,next,key);
-   for(const [x,p] of Object.entries(world.players))if(x!==key)world.players[x]={...p,age:p.age+1,fatigue:0};
+   for(const [x,p] of Object.entries(world.players))if(x!==key&&existing.has(x))world.players[x]={...p,age:p.age+1,fatigue:0};
    world.seasonKey=next;world.calendar=createSeasonCalendar(Number(next),'calendar-2');
-   inventory=fundUsMinorYear(inventory,next,Object.keys(world.players).sort(),market.funding,offer.organizationId,0);
+   // The offer already reserved its salary. Rolling into its actual start year must not charge it again.
+   const funding=i<k?market.funding:inventory.clubs.map(c=>({organizationId:c.id,addedBudgetUsd:0}));
+   inventory=fundUsMinorYear(inventory,next,Object.keys(world.players).sort(),funding,offer.organizationId,0);
   }
  }
  const target=String(sourceSeason+k+1);world.seasonKey=target;world.calendar=createSeasonCalendar(Number(target),'calendar-2');
- for(const b of Object.values(world.repertoires))Object.assign(b,{seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()});// ponytail: NPC pitch books stay as signed; off-screen pitch XP needs the league sim.
+ for(const b of Object.values(world.repertoires))Object.assign(b,{seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()});// shortcut: NPC pitch books stay unchanged until off-screen pitch XP is simulated.
  const book=s.preparation?.world.repertoires[key]??s.service?.world.repertoires[key];
  world.players[key]={...structuredClone(last.endingPlayer),age:last.age+1,fatigue:0};if(book)world.repertoires[key]={...structuredClone(book),seasonId:target,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};
- const player=world.players[key]!,contract={...base.contract,seasonKey:target},out:UsCareer={...base,schemaVersion:2,revision:base.revision+1,world,inventory,contract,registration:{...base.registration,seasonKey:target},usReturnContinuation:{playerAge:player.age,contract:structuredClone(contract),inventory:structuredClone(inventory),sourceMinorYears:base.minorYears?.length??0,sourceMajorYears:base.majorYears?.length??0,remainingControlSeasons:contract.controlSeasons,paidUsd:30000},seasonGrowth:createSeasonGrowthLedger(player,target,world.calendar.growthDays.length),development:{...base.development,seasonStartPlayer:structuredClone(player)},usAmateurReturn:{...structuredClone(r),revision:r.revision+1,status:'CANCELLED_US',draftReservationKey:null,cancelledByOfferRef:offerKey}};
- assertUsCareerRevision(out,out.revision);return out;
+ const player=world.players[key]!,contract={...base.contract,seasonKey:target};
+ const records={revision:owner.records.revision,games:structuredClone({...s.source.records.games,...owner.records.games})},health=structuredClone(owner.health);
+ health.injuries=Object.fromEntries(Object.entries(health.injuries).filter(([x])=>Object.hasOwn(world.players,x)));
+ const out:UsCareer={...base,schemaVersion:2,revision:base.revision+1,world,inventory,contract,records,health,registration:{...base.registration,seasonKey:target},usReturnContinuation:{playerAge:player.age,contract:structuredClone(contract),inventory:structuredClone(inventory),sourceMinorYears:base.minorYears?.length??0,sourceMajorYears:base.majorYears?.length??0,remainingControlSeasons:contract.years??contract.controlSeasons,paidUsd:30000},seasonGrowth:createSeasonGrowthLedger(player,target,world.calendar.growthDays.length),development:{...structuredClone(owner.development),seasonStartPlayer:structuredClone(player)},retryCareer:structuredClone(s.retry),styleUsedWindows:[...owner.styleUsedWindows],planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}],military:{...base.military,status:r.militaryStatus},usAmateurReturn:{...structuredClone(r),revision:r.revision+1,status:'CANCELLED_US',draftReservationKey:null,cancelledByOfferRef:offerKey}};
+ if(owner.traits)out.traits={...structuredClone(owner.traits),lastClosedDay:null,lastSeasonKey:target};
+ out.usReturnContinuation!.organizationId=offer.organizationId;
+ const teamWorld={worldKey:world.worldKey,seasonKey:target,leagueKey:out.registration.level,protagonistKey:key,protagonistSchoolId:offer.organizationId,schools:world.organizations.map(o=>({id:o.id,name:o.name,roster:o.levels[out.registration.level]})),players:world.players};
+ out.relationships=formRegisteredTeamTeammate(s.preparation?.relationships??s.service?.relationships??s.source.relationships,teamWorld,JSON.stringify(['us-return-resign',r.returnId,offerKey,target]),world.calendar.growthDays[0]!);
+ out.relationNotices=structuredClone(s.source.relationNotices);
+ out.relationNotices=queueRelationFormationNotices({...out,world:teamWorld},world.calendar.growthDays[0]!)??out.relationNotices;
+ assertUsCareerRevision(out,out.revision);return refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(out)));
 }

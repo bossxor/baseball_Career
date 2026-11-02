@@ -1,0 +1,2 @@
+M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit
+INTERRUPTED after approximately 15 minutes: full per-command native replay deferred to avoid duplicate simulation before bulk integration. No P16 runtime PASS or completed hash report. Only owned PID 38760 stopped.

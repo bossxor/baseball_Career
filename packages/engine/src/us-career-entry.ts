@@ -56,7 +56,7 @@ export interface UsCareer {
  national?:import('./us-national.js').UsNationalLedger;
  usAmateurReturn?:import('./us-amateur-return.js').UsAmateurReturnLedger;
  /** Explicit history epoch after a return-option re-sign: readers replay only years after it. */
- usReturnContinuation?:{playerAge:number;contract:UsCareer['contract'];inventory:UsCareer['inventory'];sourceMinorYears:number;sourceMajorYears:number;remainingControlSeasons:number;paidUsd:number};
+ usReturnContinuation?:{playerAge:number;organizationId?:string;contract:UsCareer['contract'];inventory:UsCareer['inventory'];sourceMinorYears:number;sourceMajorYears:number;remainingControlSeasons:number;paidUsd:number};
 
  retryCareer?:import('./retry-career.js').RetryCareerLedger;
  preparationSeason?:import('./preparation-season.js').PreparationSeason;
