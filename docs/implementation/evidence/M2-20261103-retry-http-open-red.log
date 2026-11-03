@@ -1,0 +1,31 @@
+{"message":"out of memory"}
+✖ returned player HTTP opens once, rejects stale/foreign/authority input and persists US acceptance once (28075.2017ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30486.0171
+
+✖ failing tests:
+
+test at apps\api\test\m2-us-return-retry-http.test.ts:29:1
+✖ returned player HTTP opens once, rejects stale/foreign/authority input and persists US acceptance once (28075.2017ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  500 !== 200
+  
+      at <anonymous> (E:\AI\Game\baseball_career\apps\api\test\m2-us-return-retry-http.test.ts:34:59)
+      at async owned (E:\AI\Game\baseball_career\apps\api\test\m2-us-return-retry-http.test.ts:25:3)
+      at async TestContext.<anonymous> (E:\AI\Game\baseball_career\apps\api\test\m2-us-return-retry-http.test.ts:31:2)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 500,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

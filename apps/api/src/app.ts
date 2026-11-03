@@ -117,7 +117,15 @@ export function createApp(options: CreateAppOptions = {}) {
   app.notFound(c => c.json({ code: 'NOT_FOUND' }, 404));
   app.onError((error, c) => {
     // Operators need the cause; the client only gets the request id (no message, no stack).
-    console.error(JSON.stringify({ level: 'error', requestId: c.get('requestId'), message: error instanceof Error ? error.message : String(error) }));
+    let cause: unknown = error;
+    for (let depth = 0; depth < 8; depth++) {
+      if (!cause || typeof cause !== 'object' || !('cause' in cause) || !cause.cause || cause.cause === cause) break;
+      cause = cause.cause;
+    }
+    const message = cause instanceof Error ? cause.message : String(cause);
+    // Query wrappers include the entire save in parameters, which can dwarf the error and its cause.
+    const bounded = /^Failed query:/i.test(message) || /\nparams:/i.test(message) ? 'Database query failed' : message.slice(0, 500);
+    console.error(JSON.stringify({ level: 'error', requestId: c.get('requestId'), message: bounded }));
     return c.json({ code: 'INTERNAL_ERROR', requestId: c.get('requestId') }, 500);
   });
   return app;

@@ -1,3 +1,5 @@
+import assert from 'node:assert/strict';
+import * as retry from '../src/us-return-retry.js';
 import fs from 'node:fs';
 import {createHash} from 'node:crypto';
 import {closedUsOptionCareer} from './us-option-fixture.js';
@@ -45,4 +47,39 @@ export function nativeUndraftedUsReturn():UsAmateurReturnCareer {
  if(c.draft!.program.result?.round!==null)throw new Error('NATIVE_UNDRAFTED_RESULT_REQUIRED');assertUsAmateurReturnCareer(c);cache=c;
  if(path){const artifact={schemaVersion:1,sourceCommit:'5363de3',controlledUsPrefix:true,mandatoryTeamGames:[48,48],controlledDraftMarket:'LEGAL_PAYROLL_CAP',commands,sha256:createHash('sha256').update(canonicalJson(c)).digest('hex'),origin:c};fs.writeFileSync(path,JSON.stringify(artifact));}
  return structuredClone(c);
+}
+
+let optionalCache:retry.UsAmateurReturnRetryCareer|undefined;
+export function nativeOptionalUsReturnRetry():retry.UsAmateurReturnRetryCareer {
+ if(optionalCache)return structuredClone(optionalCache);
+ const origin=nativeUndraftedUsReturn(),c=retry.openUsAmateurReturnRetry(origin,origin.revision),view=retry.usAmateurReturnRetryRoutesView(c);
+ let active=retry.startUsAmateurReturnRetryPreparation(c,c.revision,{routePreviewId:view.routePreviewId});
+ assert.equal(active.preparation!.world.players[origin.return.playerKey]!.age,origin.retry.age+1);assert.equal(active.retry.careerPreparationUsed,origin.retry.careerPreparationUsed);assert.equal(active.origin.return.years.length,2);
+ assert.throws(()=>retry.settleUsAmateurReturnRetryPreparation(active,active.revision,true),/INCOMPLETE/);
+ active=retry.confirmUsAmateurReturnRetryPreseason(active,active.revision);const before=canonicalJson(c.origin.return);let complete=false,resumed=false;
+ for(let i=0;i<2000;i++){const out=retry.advanceUsAmateurReturnRetryPreparation(active,active.revision,'ONE_MONTH');assert.notEqual(out.stopReason,'ENGINE_LIMIT');if(!resumed){const again=retry.advanceUsAmateurReturnRetryPreparation(JSON.parse(JSON.stringify(active)),active.revision,'ONE_MONTH');assert.equal(canonicalJson(out),canonicalJson(again));resumed=true;}active=out.career;if(out.stopReason==='SEASON_COMPLETE'){complete=true;break;}}
+ assert.ok(complete);assert.equal(active.retry.careerPreparationUsed,origin.retry.careerPreparationUsed);
+ const done=retry.settleUsAmateurReturnRetryPreparation(active,active.revision,true);assert.equal(done.retry.careerPreparationUsed,origin.retry.careerPreparationUsed+1);assert.equal(done.completedPreparation.length,1);assert.equal(done.preparation!.result!.completedTeamGames,48);assert.equal(canonicalJson(done.origin.return),before);assert.equal(canonicalJson(retry.settleUsAmateurReturnRetryPreparation(done,done.revision,true)),canonicalJson(done));
+ const fresh=retry.usAmateurReturnRetryPreparationView(done);assert.equal(fresh.evaluation!.kind,'AMATEUR_DRAFT');retry.assertUsAmateurReturnRetryCareer(JSON.parse(JSON.stringify(done)));
+ optionalCache=done;return structuredClone(done);
+}
+
+/** Actual three optional seasons; callers can test distinct persistence boundaries on the same scenario. */
+export function nativeExhaustedUsReturnRetry():retry.UsAmateurReturnRetryCareer {
+ let c=nativeOptionalUsReturnRetry();
+ const closeDraft=(source:retry.UsAmateurReturnRetryCareer)=>{
+  let next=retry.prepareUsAmateurReturnRetryDraft(source,source.revision);next=retry.resolveUsAmateurReturnRetryDraft(next,next.revision,next.draft!.program.version);
+  if(next.draft!.program.result!.round!==null)next=retry.decideUsAmateurReturnRetryDraft(next,next.revision,next.draft!.program.version,'DECLINE');return next;
+ };
+ for(let year=2;year<=3;year++){
+  c=closeDraft(c);const view=retry.usAmateurReturnRetryRoutesView(c);c=retry.startUsAmateurReturnRetryPreparation(c,c.revision,{routePreviewId:view.routePreviewId});c=retry.confirmUsAmateurReturnRetryPreseason(c,c.revision);let finished=false;
+  for(let i=0;i<2000;i++){const out=retry.advanceUsAmateurReturnRetryPreparation(c,c.revision,'ONE_MONTH');assert.notEqual(out.stopReason,'ENGINE_LIMIT');c=out.career;if(out.stopReason==='SEASON_COMPLETE'){finished=true;break;}}
+  assert.ok(finished);assert.equal(c.retry.careerPreparationUsed,year-1);c=retry.settleUsAmateurReturnRetryPreparation(c,c.revision,true);assert.equal(c.retry.careerPreparationUsed,year);assert.equal(c.preparation!.result!.completedTeamGames,48);
+  process.stderr.write(JSON.stringify({nativeOptionalSettled:year,teamGames:48,recordRevision:c.preparation!.records.revision})+'\n');
+ }
+ c=closeDraft(c);assert.throws(()=>retry.openUsAmateurReturnRetryExhaustion(c,c.revision),/ASSESSMENT_REQUIRED/);
+ c=retry.assessUsAmateurReturnRetryUsOpportunity(c,c.revision);const q=c.usOpportunities!.at(-1)!;
+ if(q.status==='AVAILABLE'||q.retainedOfferRefs.length)assert.throws(()=>retry.openUsAmateurReturnRetryExhaustion(c,c.revision),/ROUTES_REMAIN/);
+ c=retry.declineUsAmateurReturnRetryUsOpportunity(c,c.revision,q.assessmentKey);
+ return c;
 }

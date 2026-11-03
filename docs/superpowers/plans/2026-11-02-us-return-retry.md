@@ -1,3 +1,7 @@
+# 2026-11-03 implementation checkpoint
+
+The gateway, explicit returned-US rights, native preparation, KBO/US activation, E35 owner and package/API dispatch were implemented through `d76f99d`. The checkboxes below retain the original acceptance checklist; they are not an up-to-date completion ledger. Read `docs/implementation/M2-US-RETURN-RETRY-20261103.md` and `M2-RESUME-VALIDATION-20261103.md` for actual focused/runtime evidence. The resumed native three-optional-season E35/JSON archive run passed1/1 (exit0); the frozen whole gate is running. Real large-save HTTP/PostgreSQL acceptance remains unproven after PGlite reproduced an out-of-memory UPDATE; an explicit isolated PostgreSQL test target is required. Whole-M2 completion is not claimed.
+
 # Returned-US optional retry Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Use superpowers:requesting-code-review before the final gate. Steps use checkbox (`- [ ]`) syntax for tracking.
@@ -122,4 +126,4 @@ All commands below consume the root's own `revision`. Views return explicit allo
 
 ## Plan self-review
 
-This plan covers the gateway, source-specific draft exception, actual preparation budget, every contract/no-offer state, both live US/KBO activation paths, E35 and real public callers. Review Focus conditions each have owning tests. Existing primitives remain authoritative; no fake school/expired contract, generalized eligibility bypass or new dependency is proposed. Implementation has not started; check current branch and evidence before execution.
+This plan covers the gateway, source-specific draft exception, actual preparation budget, every contract/no-offer state, both live US/KBO activation paths, E35 and real public callers. Review Focus conditions each have owning tests. Existing primitives remain authoritative; no fake school/expired contract, generalized eligibility bypass or new dependency is proposed. Implementation and focused proof now exist; use the checkpoint above to locate unfinished acceptance rather than restarting completed tasks.

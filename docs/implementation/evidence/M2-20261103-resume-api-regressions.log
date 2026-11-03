@@ -1,0 +1,23 @@
+✔ API logs the bounded database cause without serializing query parameters or save state (13.6011ms)
+✔ API bounds cyclic causes and an unwrapped query error without dropping its request id (0.8147ms)
+✔ API redacts parameter lines after an actual newline without relying on a query wrapper prefix (0.7086ms)
+✔ amateur E36 requests, cancels, archives and opens S10 through owned save commands without pro appearances (1113.0417ms)
+✔ E71 HTTP focus commits once, resumes stored notice and rejects stale/foreign/authority input atomically (1076.5492ms)
+✔ E73 HTTP comparison preserves enrollment until owned signing and reserves accepted terms once (9715.5581ms)
+✔ KBO and US E85 HTTP summary omits private receipts and ACK persists cursor without touching gameplay (6529.4493ms)
+✔ route notice HTTP acknowledgment persists only metadata and never substitutes for the focus domain writer (862.2977ms)
+✔ E74 HTTP return resumes enrollment from actual empty offers and preserves records, with CAS and replay (5427.9126ms)
+✔ E73 public event version drives early draft or continued enrollment without private save access (9884.2649ms)
+﹣ returned player HTTP opens once, rejects stale/foreign/authority input and persists US acceptance once (0.4257ms) # SKIP
+﹣ latest native optional player persists an actual KBO signing and activation through HTTP (0.0959ms) # SKIP
+﹣ three actual optional seasons persist E35 confirmation atomically without another budget charge (0.0578ms) # SKIP
+✔ returned-US commands reject caller authority before reading an owner (1.1155ms)
+✔ native returned owner uses the existing save command pipeline, JSON and public retry screens (26398.6729ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 3
+ℹ todo 0
+ℹ duration_ms 68842.991

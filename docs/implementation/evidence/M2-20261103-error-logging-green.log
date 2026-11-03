@@ -1,0 +1,10 @@
+✔ API logs the bounded database cause without serializing query parameters or save state (13.2842ms)
+✔ API bounds cyclic causes and an unwrapped query error without dropping its request id (1.0952ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1569.5131

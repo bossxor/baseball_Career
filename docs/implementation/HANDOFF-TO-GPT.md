@@ -1,3 +1,7 @@
+# 최신화 후 검증 재개 — 2026-11-03
+
+원격 d76f99d까지 최신화했다. [현재 구현·실행·저장 자원 경계](M2-RESUME-VALIDATION-20261103.md)를 먼저 읽는다. 의무 귀국2시즌을 재생성했고 선택3시즌 E35·JSON 보관이1/1 통과했다. 전체 check는 source506파일 동결 후 실행 중이다. 장기174MB 저장의 PGlite UPDATE 메모리 부족을 확인했고 실제 PostgreSQL HTTP3건은 별도 연결 전까지 미검증이다. 오류 로그의 전체 저장 원문 복사 문제는 원인·길이 제한과3개 회귀로 수정했다. 아래 세션17083/완료 추정은 과거 기록이다. M2 전체 완료 아님.
+
 # 최신 검증 — API 기존/신규 경로9/9 통과
 
 제품 코드7f7bbae 변경 없이 API3파일 묶음9/9(기존 HTTP7 + 새 pure dispatch/JSON2), 실패0·제외0,195129ms 통과. evidence/M2-20261103-return-api-regressions.log와 .exitcode.txt를 본다. 새 returned root의 실제 HTTP/Neon/외부 CAS 검수는 여전히 남는다. E35 장기 검사 세션17083은2시즌 정산 후3시즌째 진행 중이며 최종 .exitcode.txt부터 확인한다. 기존 큰 runtime JSON2개·zz-dbg.log 보존, PC 종료 금지. 아래 인계의 다음 작업을 계속한다.
