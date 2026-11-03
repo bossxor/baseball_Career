@@ -64,6 +64,7 @@ export type HighSchoolCareerPhase =
  | {phase:'INTERNATIONAL_PROGRESS'|'INTERNATIONAL_REVIEW';competitionId:string;nextWorldDay:number;resume:CollegeNationalResumePhase}
  | {phase:'EVENT_DECISION';eventKey:string;resume:{phase:'PRESEASON_SETUP'}|HighSchoolProgressPhase|{phase:'CAREER_ROUTE'}|{phase:'SEASON_REVIEW'}};
 export interface HighSchoolCareer {
+ amateurRetirement?:import('./amateur-retirement.js').AmateurRetirement;
  aliases?:import('./career-alias.js').CareerAliasLedger;
  routeNotices?:import('./career-route-notices.js').CareerRouteNoticeLedger;
  recordCorrections?:import('./career-record-correction.js').CareerRecordCorrectionLedger;

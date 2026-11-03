@@ -1,0 +1,43 @@
+✖ E71 CHOOSE_FOCUS commits the actual first college PRE writer once and retains its source-bound receipt (89.3218ms)
+✖ open E73 owns fixed US comparison without consuming early KBO eligibility; only actual US signing closes enrollment (4058.4392ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5133.958
+
+✖ failing tests:
+
+test at packages\engine\test\college-choice-effects.test.ts:19:1
+✖ E71 CHOOSE_FOCUS commits the actual first college PRE writer once and retains its source-bound receipt (89.3218ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(!notices.careerRouteNoticesView(before).notices.find(n=>n.eventKey===e.eventKey)!.requiresDomainCommands.includes('CHOOSE_FOCUS'))
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\college-choice-effects.test.ts:21:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\college-choice-effects.test.ts:34:1
+✖ open E73 owns fixed US comparison without consuming early KBO eligibility; only actual US signing closes enrollment (4058.4392ms)
+  RangeError: INVALID_CAREER_PHASE
+      at prepareCareerUsDirect (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\career-us.ts:40:90)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\college-choice-effects.test.ts:36:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

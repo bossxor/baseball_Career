@@ -28,6 +28,12 @@ function closed(age=28,qualified=8){
 }
 function selected(c:KboCareer,offerKey?:string){const v=kboCareerFaView(c)!;return selectKboCareerFaOffer(c,c.revision,{eventKey:v.eventKey,eventVersion:v.eventVersion,offerKey:offerKey??v.offers[0]!.offerKey});}
 function accepted(c:KboCareer){const v=kboCareerFaView(c)!;return acceptKboCareerFaOffer(c,c.revision,{eventKey:v.eventKey,eventVersion:v.eventVersion,offerKey:v.selectedOfferKey!});}
+function backupSource(age:number){
+ const source=closed(age),p=source.world.players[source.protagonistKey]!;
+ source.world.players[p.simulationKey]={...p,abilities:Object.fromEntries(Object.keys(p.abilities).map(key=>[key,10_000]))};
+ for(const other of Object.values(source.world.players))if(other.simulationKey!==p.simulationKey&&other.kind===p.kind&&other.position===p.position){const axes=Object.fromEntries(Object.keys(other.abilities).map(key=>[key,1_000_000]));source.world.players[other.simulationKey]={...other,abilities:axes,potential:{...axes},careerPeaks:{...axes}};}
+ return source;
+}
 
 test('FA registered eight100-game closed seasons includes bench/injury; seven/99/Futures never become FA',()=>{
  const eligible=closed(),before=canonicalJson(eligible);assert.equal(kboServiceTimeView(eligible).qualifiedSeasons,8);const opened=openKboCareerFa(eligible,eligible.revision);assert.ok(kboCareerFaView(opened)!.offers.length);assert.equal(canonicalJson(eligible),before);assert.deepEqual(opened.world,eligible.world);assert.deepEqual(opened.records,eligible.records);assert.deepEqual(opened.rights,eligible.rights);
@@ -59,12 +65,36 @@ test('FA accepted different-club contract activates once at Y02; original season
  assert.equal(next.protagonistClubId,offer.clubId);assert.equal(next.world.clubs.filter(t=>t.roster.includes(next.protagonistKey)).length,1);assert.equal(next.rights.holderOrgId,offer.clubId);assert.equal(next.rights.sourceType,'FREE_AGENT');assert.equal(next.registration.firstTeam,false);assert.equal(next.world.contracts[next.protagonistKey]!.years,offer.years);assert.deepEqual(next.world.players[next.protagonistKey]!.abilities,source.world.players[source.protagonistKey]!.abilities);assert.deepEqual(next.records,source.records);assert.equal(canonicalJson(source),snapshot);
 });
 test('FA a real backup-role quote opens E33 and commits ACCEPT_ROLE, without first-team guarantee',()=>{
- const source=closed(),p=source.world.players[source.protagonistKey]!;
- source.world.players[p.simulationKey]={...p,abilities:Object.fromEntries(Object.keys(p.abilities).map(key=>[key,10_000]))};
- for(const other of Object.values(source.world.players))if(other.simulationKey!==p.simulationKey&&other.kind===p.kind&&other.position===p.position){const axes=Object.fromEntries(Object.keys(other.abilities).map(key=>[key,1_000_000]));source.world.players[other.simulationKey]={...other,abilities:axes,potential:{...axes},careerPeaks:{...axes}};}
+ const source=backupSource(33);
  const opened=openKboCareerFa(source,source.revision),offer=kboCareerFaView(opened)!.offers.find(o=>o.role===.5)!;assert.ok(offer);
  const selection=selected(opened,offer.offerKey),v=kboCareerFaView(selection)!;assert.equal(selection.events.find(e=>e.eventKey===v.eventKey)!.definitionId,'E33');
  const signed=accepted(selection);assert.equal(signed.events.find(e=>e.eventKey===v.eventKey)!.resolution!.command,'ACCEPT_ROLE');assert.equal(signed.freeAgency!.windows[0]!.offers.find(o=>o.offerKey===offer.offerKey)!.firstTeamGuaranteed,false);
+});
+
+test('FA backup event uses sealed current age32 versus33, not next-contract age or mutable live age',()=>{
+ for(const age of [32,33]){
+  const source=backupSource(age),raw=canonicalJson(source),opened=openKboCareerFa(source,source.revision),offer=kboCareerFaView(opened)!.offers.find(o=>o.role===.5)!;assert.ok(offer);
+  const quotes=canonicalJson(kboCareerFaView(opened)!.offers);
+  opened.world.players[opened.protagonistKey]!.age=age===32?33:32;
+  const selection=selected(JSON.parse(JSON.stringify(opened)),offer.offerKey),v=kboCareerFaView(selection)!,e=selection.events.find(e=>e.eventKey===v.eventKey)!;
+  assert.equal(e.definitionId,age===32?'E32':'E33');
+  const signed=accepted(selection);assert.equal(signed.events.find(x=>x.eventKey===v.eventKey)!.resolution!.command,age===32?'ACCEPT_CAREER_OFFER':'ACCEPT_ROLE');
+  assert.equal(canonicalJson(kboCareerFaView(signed)!.offers),quotes);assert.equal(canonicalJson(source),raw);assertAcceptedKboCareerFa(JSON.parse(JSON.stringify(signed)));
+ }
+});
+
+test('FA legacy unversioned young backup E33 and signed receipts remain readable and actionable',()=>{
+ const source=backupSource(28),opened=openKboCareerFa(source,source.revision),w=opened.freeAgency!.windows[0]!;
+ // Controlled old persisted window: its original basis has no role-event policy field.
+ Reflect.deleteProperty(w.snapshot,'roleEventPolicy');
+ w.sourceBasis=canonicalJson({windowId:w.windowId,sourceSeasonKey:w.sourceSeasonKey,seasonKey:w.seasonKey,sourceRevision:w.sourceRevision,sourceRecordRevision:w.sourceRecordRevision,sourceReceipt:w.sourceReceipt,fromClubId:w.fromClubId,snapshot:w.snapshot});
+ const offer=kboCareerFaView(opened)!.offers.find(o=>o.role===.5)!;assert.ok(offer);
+ const selection=selected(JSON.parse(JSON.stringify(opened)),offer.offerKey),v=kboCareerFaView(selection)!;
+ assert.equal(selection.events.find(e=>e.eventKey===v.eventKey)!.definitionId,'E33');
+ const signed=accepted(selection),raw=canonicalJson(signed),restored=JSON.parse(JSON.stringify(signed));assertAcceptedKboCareerFa(restored);assert.equal(canonicalJson(restored),raw);
+ assert.equal(restored.events.find((e:{eventKey:string})=>e.eventKey===v.eventKey).resolution.command,'ACCEPT_ROLE');
+ const declined=declineKboCareerFaSelection(selection,selection.revision,{eventKey:v.eventKey,eventVersion:v.eventVersion});assert.deepEqual(kboCareerFaView(declined)!.offers,kboCareerFaView(opened)!.offers);
+ const bad=JSON.parse(JSON.stringify(opened));bad.freeAgency.windows[0].snapshot.roleEventPolicy='UNKNOWN';assert.throws(()=>kboCareerFaView(bad),/FA_WINDOW/);
 });
 test('FA actual guaranteed60-player roster or future90 percent debt removes that club; an all-closed market has no fake offer',()=>{
  const source=closed(),to=source.world.clubs.find(t=>t.id!==source.protagonistClubId)!,donor=source.world.clubs.find(t=>t.id!==source.protagonistClubId&&t.id!==to.id)!;

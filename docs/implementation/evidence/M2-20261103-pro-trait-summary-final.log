@@ -1,0 +1,13 @@
+✔ pro E85 summary returns only own general receipt allowlist; read and caller mutation preserve the root (19190.0017ms)
+✔ pro E85 ACK has root CAS, persists one cursor and preserves closed histories, gameplay and hidden notice eligibility (21179.6836ms)
+✔ pro E85 rejects forged cursor, ownership, future record evidence and mismatched registration (7122.967ms)
+✔ pro E85 ACK preserves sealed US season, salary and next-year readiness at actual closed-owner boundary (50971.2271ms)
+✔ pro E85 ACK keeps the active retry preparation mirror valid without advancing preparation or old world seals (9028.4578ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 129941.6367

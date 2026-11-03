@@ -1,0 +1,4 @@
+Copy-Item documents/evidence unique files before this receipt: 52
+V design manifest hashes matched: 359
+Stale V baseline files14/58/102 were backed up and copied from unchanged Git HEAD.
+No source or .git copied. Original full check exit1; corrected focus/tail exit0.

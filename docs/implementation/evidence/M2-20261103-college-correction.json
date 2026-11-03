@@ -1,0 +1,9 @@
+{
+  "after": "0F99F26B0A07F92F2F1A17FC7D812F38F7CDCE8F89B23B7DECFCEC4387477A64",
+  "fullRun": "M2-20261103-event-check.log",
+  "timestamp": "2026-11-03T09:31:42.3523472+09:00",
+  "before": "A4445E3601CE87FB3247C9D9645A71926B94E0EBFAD887C182FF07DD43C779C1",
+  "reason": "Full run E73 failure: canonicalJson rejects explicit undefined; restore original optional field presence before comparison",
+  "path": "packages/engine/src/career-us.ts",
+  "note": "Full run started with original source freeze; focused regression and remaining gate validate this correction separately"
+}

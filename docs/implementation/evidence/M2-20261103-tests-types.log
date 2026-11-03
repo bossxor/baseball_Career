@@ -1,0 +1,5 @@
+packages/engine/test/amateur-retirement.test.ts(43,39): error TS2542: Index signature in type 'Readonly<Record<string, number>>' only permits reading.
+packages/engine/test/pro-trait-summary.test.ts(70,16): error TS2375: Type '{ traits: CareerTraitLedger | undefined; version: 1; revision: number; retry: RetryCareerLedger; world: PreparationWorld; ... 13 more ...; result?: { receiptKey: string; baseScore: number; adjustedPerformance: number; completedTeamGames: 48; }; }' is not assignable to type 'PreparationSeason' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'traits' are incompatible.
+    Type 'CareerTraitLedger | undefined' is not assignable to type 'CareerTraitLedger'.
+      Type 'undefined' is not assignable to type 'CareerTraitLedger'.

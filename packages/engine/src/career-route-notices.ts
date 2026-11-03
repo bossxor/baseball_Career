@@ -1,4 +1,4 @@
-import {COLLEGES,overall} from '@playball/rules';
+import {COLLEGES,overall,assertFocus} from '@playball/rules';
 import {highSchoolCareerRouteView} from './high-school-route.js';
 import {assertCareerPreparation} from './career-preparation.js';
 import {assertRetryCareerLedger} from './retry-career.js';
@@ -8,15 +8,17 @@ import type {CareerKboRecruitment} from './career-kbo.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCareerRevision} from './high-school-career.js';
 import type {EventInstance} from './events.js';
-import {createWorldEvent,eventDefinition,validateEvent,resolveEventChoice,completeBlockingEvent,cancelInvalidEvent} from './events.js';
+import {createWorldEvent,eventDefinition,validateEvent,resolveEventChoice,completeBlockingEvent,completeEventDomain,cancelInvalidEvent} from './events.js';
 import {assertKboDraft} from './kbo-draft.js';
 import {assertUsDirect} from './us-direct.js';
 import {canShowUsDirect} from './draft.js';
 import {collegeCupSchedule} from './college-cup.js';
 import {canonicalJson} from './game.js';
+import {setCollegePreseasonFocus} from './college-career.js';
 
 type NoticeId='E05'|'E06'|'E07'|'E56'|'E57'|'E70'|'E71'|'E72';
-export interface CareerRouteNoticeLedger {version:1;worldKey:string;playerKey:string;notices:readonly EventInstance[]}
+interface CollegeAdmissionFocusChoice {eventKey:string;enrollmentId:string;seasonKey:string;appliedRevision:number;focus:readonly string[];receiptKey:string}
+export interface CareerRouteNoticeLedger {version:1;worldKey:string;playerKey:string;notices:readonly EventInstance[];collegeFocusChoices?:readonly CollegeAdmissionFocusChoice[]}
 export type RouteNoticeCareer=HighSchoolCareer & {routeNotices?:CareerRouteNoticeLedger};
 function ledger(c:RouteNoticeCareer):CareerRouteNoticeLedger {return c.routeNotices??{version:1,worldKey:c.world.worldKey,playerKey:c.world.protagonistKey,notices:[]};}
 const domestic=(c:RouteNoticeCareer)=>[...(c.previousKboRecruitments??[]),...(c.kboRecruitment?[c.kboRecruitment]:[])];
@@ -43,6 +45,9 @@ function admissionProven(c:RouteNoticeCareer){
  if(!a||a.playerKey!==c.world.protagonistKey||!e||e.worldKey!==c.world.worldKey||e.evidence.fields.careerSimulationKey!==a.playerKey||a.admissionKey!==JSON.stringify(['college-admission',JSON.stringify(['hs-route',c.world.worldKey,e.seasonKey,a.playerKey]),a.collegeId]))return null;
  return a;
 }
+function focusReceipt(choice:Omit<CollegeAdmissionFocusChoice,'receiptKey'>){return JSON.stringify(['college-admission-focus',choice.eventKey,choice.enrollmentId,choice.seasonKey,choice.appliedRevision,choice.focus]);}
+function admissionActivation(c:RouteNoticeCareer){const a=admissionProven(c);return a&&c.previousSeasons?.some(s=>s.world.seasonKey===String(a.entryYear-1)&&s.yearEndReceiptKey===JSON.stringify(['college-year-end',a.admissionKey,s.world.seasonKey]))?a:null;}
+function canChooseAdmissionFocus(c:RouteNoticeCareer){const a=admissionActivation(c);return !!a&&a.status==='ENROLLED'&&a.academicYear===1&&a.yearsCompleted===0&&c.world.leagueKey==='COLLEGE'&&c.world.seasonKey===String(a.entryYear)&&c.phaseContext.phase==='PRESEASON_SETUP'&&!c.collegeYearEnd&&!c.kboYearEnd&&!c.usYearEnd&&!Object.values(c.records.games).some(g=>g.scope.seasonKey===c.world.seasonKey);}
 function collegeReviewTask(c:RouteNoticeCareer,e:EventInstance){
  const f=e.evidence.fields,key=c.world.protagonistKey,task=c.events.find(n=>n.eventKey===f.sourceTaskId),world=c.world.seasonKey===e.seasonKey&&c.world.leagueKey===undefined?c.world:c.previousSeasons?.find(s=>s.world.seasonKey===e.seasonKey&&s.world.leagueKey===undefined)?.world;
  if(!task||!world||world.worldKey!==e.worldKey||world.protagonistKey!==key||task.definitionId!=='E04'||task.worldKey!==e.worldKey||task.seasonKey!==e.seasonKey||task.evidence.fields.careerSimulationKey!==key||f.playerSimulationKey!==key||f.academicYear!==1||f.routeOfferSetId!==JSON.stringify(['hs-route',e.worldKey,e.seasonKey,key])||e.resume.phase!=='CAREER_ROUTE'||e.resume.competitionKey!=='HS'||e.resume.registrationKey!==world.protagonistSchoolId||e.resume.sourceRevision<task.resume.sourceRevision||e.occurredWorldDay!==task.occurredWorldDay)throw new RangeError('ROUTE_NOTICE_COLLEGE_REVIEW_SOURCE_CHANGED');
@@ -61,6 +66,12 @@ function cupEvidence(c:RouteNoticeCareer){
 export function assertCareerRouteNotices(c:RouteNoticeCareer):void {
  const l=ledger(c);
  if(l.version!==1||l.worldKey!==c.world.worldKey||l.playerKey!==c.world.protagonistKey||!Array.isArray(l.notices)||new Set(l.notices.map(e=>e.eventKey)).size!==l.notices.length)throw new RangeError('INVALID_CAREER_ROUTE_NOTICES');
+ const choices=l.collegeFocusChoices??[];if(!Array.isArray(choices)||choices.some(x=>!x||typeof x!=='object'||!Array.isArray(x.focus))||new Set(choices.map(x=>x.eventKey)).size!==choices.length)throw new RangeError('INVALID_COLLEGE_FOCUS_RECEIPT');
+ for(const choice of choices){
+  const a=admissionActivation(c),event=l.notices.find(e=>e.eventKey===choice.eventKey);
+  if(!a||choice.enrollmentId!==a.admissionKey||choice.seasonKey!==String(a.entryYear)||!Number.isSafeInteger(choice.appliedRevision)||choice.appliedRevision<1||choice.appliedRevision>c.revision||choice.receiptKey!==focusReceipt(choice)||!event||choice.appliedRevision<=event.resume.sourceRevision||event.definitionId!=='E71'||event.status!=='RESOLVED'||event.resolution?.kind!=='DOMAIN'||event.resolution.command!=='CHOOSE_FOCUS'||event.resolution.receiptKey!==choice.receiptKey)throw new RangeError('INVALID_COLLEGE_FOCUS_RECEIPT');
+  assertFocus(c.world.players[l.playerKey]!.kind,choice.focus);
+ }
  const draftPrograms=new Set<string>();
  for(const e of l.notices){
   validateEvent(e);if(!['E05','E06','E07','E56','E57','E70','E71','E72'].includes(e.definitionId)||e.worldKey!==l.worldKey||e.resume.sourceRevision>c.revision)throw new RangeError('INVALID_CAREER_ROUTE_NOTICE');
@@ -106,6 +117,9 @@ function settleNotices(c:RouteNoticeCareer,l:CareerRouteNoticeLedger){
    const admission=admissionProven(c);if(admission&&admission.entryYear===Number(e.seasonKey)+1)return completeBlockingEvent(e,e.version,{sourceEvidenceKey:e.evidenceKey,receiptKey:admission.admissionKey,command:'ENROLL_COLLEGE'},context(e));
    const episode=c.retryCareer?.episodes.find(p=>p.receiptKey===r.program.result!.receiptKey),archive=episode&&c.previousSeasons?.find(s=>s.yearEndReceiptKey===JSON.stringify(['preparation-entry',c.world.worldKey,episode.seasonKey,c.world.protagonistKey,episode.receiptKey]));
    if(archive)return completeBlockingEvent(e,e.version,{sourceEvidenceKey:e.evidenceKey,receiptKey:archive.yearEndReceiptKey,command:'START_PREPARATION'},context(e));
+  }else if(e.definitionId==='E71'){
+   const choice=l.collegeFocusChoices?.find(r=>r.eventKey===e.eventKey);
+   if(choice){const plan=resolveEventChoice(e,e.version,'CHOOSE_FOCUS',{focus:choice.focus},context(e)).domain!;return completeEventDomain(e,plan,choice.receiptKey,context(e));}
   }else if(e.definitionId==='E70'){
    const task=collegeReviewTask(c,e),admission=admissionProven(c);
    if(admission&&task.resolution?.receiptKey===admission.admissionKey)return completeBlockingEvent(e,e.version,{sourceEvidenceKey:e.evidenceKey,receiptKey:admission.admissionKey,command:'ENROLL_COLLEGE'},context(e));
@@ -131,6 +145,17 @@ export function refreshCareerRouteNotices<T extends RouteNoticeCareer>(c:T):T {
  const cup=cupEvidence(c);if(cup)append(c,l,'E72',cup,day);
  settleNotices(c,l);const next=canonicalJson(l)===canonicalJson(ledger(c))?c:{...c,routeNotices:l};assertCareerRouteNotices(next);return next;
 }
+/** E71 is published at admission, but its focus effect belongs to the actually activated first college PRE. */
+export function chooseCollegeAdmissionFocus<T extends RouteNoticeCareer>(c:T,revision:number,input:{eventKey:string;eventVersion:number;focus:readonly string[]}):T {
+ assertCareerRevision(c,revision);assertCareerRouteNotices(c);
+ if(!canChooseAdmissionFocus(c))throw new RangeError('COLLEGE_FOCUS_NOT_AVAILABLE');
+ const l=structuredClone(ledger(c)),e=l.notices.find(e=>e.eventKey===input.eventKey);
+ if(!e||e.definitionId!=='E71')throw new RangeError('COLLEGE_FOCUS_NOTICE_NOT_FOUND');
+ const plan=resolveEventChoice(e,input.eventVersion,'CHOOSE_FOCUS',{focus:input.focus},context(e)).domain!;
+ const next=setCollegePreseasonFocus(c,revision,input.focus) as T,source={eventKey:e.eventKey,enrollmentId:c.collegeAdmission!.admissionKey,seasonKey:c.world.seasonKey,appliedRevision:next.revision,focus:[...input.focus]},choice={...source,receiptKey:focusReceipt(source)};
+ l.collegeFocusChoices=[...(l.collegeFocusChoices??[]),choice];l.notices=l.notices.map(old=>old.eventKey===e.eventKey?completeEventDomain(e,plan,choice.receiptKey,context(e)):old);
+ next.routeNotices=l;assertCareerRouteNotices(next);return next;
+}
 /** Navigation/ACK never signs, declines, enters a school, or changes a focus plan. */
 export function resolveCareerRouteNotice<T extends RouteNoticeCareer>(c:T,revision:number,input:{eventKey:string;eventVersion:number;command:string}){
  assertCareerRevision(c,revision);assertCareerRouteNotices(c);if(c.collegeYearEnd||c.kboYearEnd||c.usYearEnd)throw new RangeError('ROUTE_NOTICE_YEAR_END_SEALED');
@@ -139,5 +164,5 @@ export function resolveCareerRouteNotice<T extends RouteNoticeCareer>(c:T,revisi
  const changed=canonicalJson(l)!==canonicalJson(ledger(c));return {career:changed?{...c,revision:revision+1,routeNotices:l}:c,navigation:selected.navigation};
 }
 export function careerRouteNoticesView(c:RouteNoticeCareer){
- assertCareerRouteNotices(c);return {notices:ledger(c).notices.map(e=>({eventKey:e.eventKey,eventVersion:e.version,definitionId:e.definitionId,status:e.status,title:eventDefinition(e.definitionId).title,commands:e.status==='OPEN'?eventDefinition(e.definitionId).choices.filter(x=>x.dispatchClass!=='DOMAIN').map(x=>x.command):[],requiresDomainCommands:e.status==='OPEN'?eventDefinition(e.definitionId).choices.filter(x=>x.dispatchClass==='DOMAIN').map(x=>x.command):[]}))};
+ assertCareerRouteNotices(c);return {notices:ledger(c).notices.map(e=>({eventKey:e.eventKey,eventVersion:e.version,definitionId:e.definitionId,status:e.status,title:eventDefinition(e.definitionId).title,commands:e.status==='OPEN'?eventDefinition(e.definitionId).choices.filter(x=>x.dispatchClass!=='DOMAIN').map(x=>x.command):[],requiresDomainCommands:e.status==='OPEN'?eventDefinition(e.definitionId).choices.filter(x=>x.dispatchClass==='DOMAIN'&&(e.definitionId!=='E71'||canChooseAdmissionFocus(c))).map(x=>x.command):[]}))};
 }

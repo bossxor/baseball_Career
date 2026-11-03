@@ -1,0 +1,18 @@
+{
+  "sampledAt": "2026-11-03T10:16:10.6150338+09:00",
+  "concurrency": 2,
+  "priority": "BelowNormal",
+  "scope": "Owned check workers only; one point sample, not a peak or heap-leak benchmark",
+  "workers": [
+    {
+      "test": "packages\\engine\\test\\us-amateur-return-career.test.ts",
+      "cpuSeconds": 802.1,
+      "workingSetMB": 3534.3
+    },
+    {
+      "test": "packages\\engine\\test\\us-postseason.test.ts",
+      "cpuSeconds": 46.1,
+      "workingSetMB": 987.7
+    }
+  ]
+}

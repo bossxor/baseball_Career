@@ -1,0 +1,17 @@
+✔ FA registered eight100-game closed seasons includes bench/injury; seven/99/Futures never become FA (8479.838ms)
+✔ FA quote uses contract-start age4/3/2/1 years, fixed existing price seed, cap and JSON refresh stability (12618.8157ms)
+✔ FA E31 comparison and E32/E33 actual domain contract; decline preserves identical offers and old money (2106.4705ms)
+✔ FA corrections do not reprice frozen quotes; CAS/version/forged quote/money failures preserve original source (3269.7093ms)
+✔ FA accepted different-club contract activates once at Y02; original season/player/registration/salary survives untouched (2164.7223ms)
+✔ FA a real backup-role quote opens E33 and commits ACCEPT_ROLE, without first-team guarantee (1016.6376ms)
+✔ FA backup event uses sealed current age32 versus33, not next-contract age or mutable live age (3346.9967ms)
+✔ FA legacy unversioned young backup E33 and signed receipts remain readable and actionable (1895.5084ms)
+✔ FA actual guaranteed60-player roster or future90 percent debt removes that club; an all-closed market has no fake offer (1917.7813ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 38682.2859

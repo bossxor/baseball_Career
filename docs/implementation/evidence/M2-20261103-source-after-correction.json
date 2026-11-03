@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-11-03T10:22:50.7236623+09:00",
+  "fileCount": 495,
+  "changes": [
+    {
+      "file": "packages/engine/src/career-us.ts",
+      "before": "a4445e3601ce87fb3247c9d9645a71926b94e0ebfad887c182ff07dd43c779c1",
+      "after": "0f99f26b0a07f92f2f1a17fc7d812f38f7cdce8f89b23b7decfcec4387477a64"
+    }
+  ],
+  "correctionEvidence": "M2-20261103-college-correction.json",
+  "originalFullCheck": {
+    "skipped": 2,
+    "tests": 1025,
+    "exitCode": 1,
+    "log": "M2-20261103-event-check.log",
+    "pass": 1022,
+    "durationMs": 4227615.214,
+    "fail": 1
+  },
+  "correctedCollege": {
+    "pass": 2,
+    "tests": 2,
+    "fail": 0,
+    "exitCode": 0,
+    "log": "M2-20261103-college-correction-test.log"
+  },
+  "tail": {
+    "webTests": 24,
+    "webPass": 24,
+    "exitCode": 0,
+    "log": "M2-20261103-corrected-tail-check.log"
+  },
+  "status": "ORIGINAL_FAILURE_REPAIRED_AND_FOCUSED_RECHECKED; NO_SECOND_WHOLE_RUN",
+  "limitations": [
+    "Single full run contains original E73 failure; do not report npm run check exit0",
+    "Initial run and post-fix focused/tail gates are separate evidence",
+    "Neon environment2 skipped; no device/browser gameplay proof"
+  ]
+}

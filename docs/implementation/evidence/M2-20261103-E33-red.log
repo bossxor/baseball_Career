@@ -1,0 +1,30 @@
+✖ FA backup event uses sealed current age32 versus33, not next-contract age or mutable live age (4073.5584ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9468.5674
+
+✖ failing tests:
+
+test at packages\engine\test\kbo-career-fa.test.ts:74:1
+✖ FA backup event uses sealed current age32 versus33, not next-contract age or mutable live age (4073.5584ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  'E33' !== 'E32'
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\kbo-career-fa.test.ts:80:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'E33',
+    expected: 'E32',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

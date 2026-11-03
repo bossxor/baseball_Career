@@ -251,3 +251,8 @@ export {requestUsAmateurReturn,startUsAmateurReturnYear,advanceUsAmateurReturn,s
 export type {UsAmateurReturnCareer} from './us-amateur-return-career.js';
 
 export {requestKboRetryRetirement,confirmKboRetryRetirement,kboRetryRetirementView} from './career-pro-retry.js';
+export {requestAmateurRetirement,resolveAmateurRetirement,amateurRetirementView,openAmateurArchive} from './amateur-retirement.js';
+export type {AmateurRetirement} from './amateur-retirement.js';
+export {unreadProTraitSummary,acknowledgeProTraitSummary} from './pro-trait-summary.js';
+export {chooseCollegeAdmissionFocus} from './career-route-notices.js';
+export {assertCollegeUnsignedReturn,assertCollegeEarlyUsComparison,collegeEarlyUsComparisonView,openCollegeEarlyUsOffer} from './college-route.js';

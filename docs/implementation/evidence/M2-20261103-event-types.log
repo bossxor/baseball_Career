@@ -1,0 +1,4 @@
+packages/engine/src/career-us.ts(57,291): error TS2379: Argument of type '{ collegeAdmission: CollegeAdmission | undefined; amateurRetirement?: import("./amateur-retirement.js").AmateurRetirement; aliases?: import("./career-alias.js").CareerAliasLedger; ... 42 more ...; planHistory: readonly { completedTeamGames: number; focus: readonly string[]; archetype: string; }[]; }' is not assignable to parameter of type 'HighSchoolCareer' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'collegeAdmission' are incompatible.
+    Type 'CollegeAdmission | undefined' is not assignable to type 'CollegeAdmission'.
+      Type 'undefined' is not assignable to type 'CollegeAdmission'.

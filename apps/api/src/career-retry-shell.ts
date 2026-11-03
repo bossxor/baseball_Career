@@ -4,11 +4,12 @@ import {
   kboRetryPreparationView, acceptKboRetryOffer, openKboRetryExhaustion, requestKboRetryRetirement,
   confirmKboRetryRetirement, kboRetryRetirementView, assertKboRetryState,
   openAmateurRetryExhaustion, confirmAmateurRetryExhaustion,
+  requestAmateurRetirement, resolveAmateurRetirement, amateurRetirementView, openAmateurArchive,
 } from '@playball/engine';
 import type { KboCareer, HighSchoolCareer } from '@playball/engine';
 import type { AppliedCommand, CommandBody, SaveState } from './engine-command.js';
 
-export const RETRY_SCREEN_IDS = ['RETRY_ROUTES', 'RETRY_PREP', 'RETRY_RETIREMENT'] as const;
+export const RETRY_SCREEN_IDS = ['RETRY_ROUTES', 'RETRY_PREP', 'RETRY_RETIREMENT', 'AMATEUR_RETIREMENT'] as const;
 
 function fail(code: string): never {
   throw Object.assign(new Error(code), { code });
@@ -74,6 +75,7 @@ export function retryScreenOf(state: SaveState, screenId: string): unknown {
   const career = readCareer(state);
   if (!career) fail('CAREER_NOT_FOUND');
   try {
+    if (screenId === 'AMATEUR_RETIREMENT') return amateurRetirementView(state.career as HighSchoolCareer);
     if (screenId === 'RETRY_ROUTES') return kboRetryRoutesView(career!);
     if (screenId === 'RETRY_PREP') return kboRetryPreparationView(career!);
     return kboRetryRetirementView(career!);
@@ -83,19 +85,29 @@ export function retryScreenOf(state: SaveState, screenId: string): unknown {
 }
 
 /** Amateur (HighSchoolCareer) E35 exit: same save slot, different engine owner. */
-function applyAmateurExit(state: SaveState, command: CommandBody, _p: Payload, rev: number, confirm: { eventKey: string; eventVersion: number; command: 'CONFIRM_RETIRE' }): AppliedCommand {
+function applyAmateurExit(state: SaveState, command: CommandBody, p: Payload, rev: number, confirm: { eventKey: string; eventVersion: number; command: 'CONFIRM_RETIRE' }): AppliedCommand {
   const career = state.career as HighSchoolCareer;
   let next: HighSchoolCareer;
+  let navigation: unknown;
   try {
     if (command.type === 'CAREER_RETRY_AMATEUR_EXHAUST') next = openAmateurRetryExhaustion(career, rev);
     else if (command.type === 'CAREER_RETRY_AMATEUR_CONFIRM_RETIRE') next = confirmAmateurRetryExhaustion(career, rev, confirm);
+    else if (command.type === 'CAREER_RETRY_AMATEUR_REQUEST_RETIRE') next = requestAmateurRetirement(career, rev, p.eventKey === undefined && p.eventVersion === undefined ? undefined : { eventKey: str(p, 'eventKey'), eventVersion: num(p, 'eventVersion') });
+    else if (command.type === 'CAREER_RETRY_AMATEUR_RESOLVE_RETIRE') {
+      if (p.decision !== 'CONFIRM_RETIRE' && p.decision !== 'CANCEL_RETIRE') fail('INVALID_PAYLOAD');
+      next = resolveAmateurRetirement(career, rev, { eventKey: str(p, 'eventKey'), eventVersion: num(p, 'eventVersion'), command: p.decision });
+    }
+    else if (command.type === 'CAREER_RETRY_AMATEUR_OPEN_ARCHIVE') {
+      const out = openAmateurArchive(career, rev, { eventKey: str(p, 'eventKey'), eventVersion: num(p, 'eventVersion') });
+      next = out.career; navigation = out.navigation;
+    }
     else fail('UNSUPPORTED_COMMAND');
   } catch (err) {
     codeOf(err);
   }
   return {
     nextState: { ...state, schemaVersion: state.schemaVersion ?? 1, career: next! },
-    summary: { type: command.type, phase: next!.phaseContext.phase, careerRevision: next!.revision, retryExit: next!.retryExit?.status },
+    summary: { type: command.type, phase: next!.phaseContext.phase, careerRevision: next!.revision, retryExit: next!.retryExit?.status, amateurRetirement: next!.amateurRetirement?.status, ...(navigation === undefined ? {} : { navigation }) },
     eventIds: [],
     phase: next!.phaseContext.phase,
   };

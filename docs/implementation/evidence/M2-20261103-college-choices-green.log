@@ -1,0 +1,41 @@
+✖ E71 CHOOSE_FOCUS commits the actual first college PRE writer once and retains its source-bound receipt (5297.2353ms)
+✔ open E73 owns fixed US comparison without consuming early KBO eligibility; only actual US signing closes enrollment (37314.0348ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 70369.8207
+
+✖ failing tests:
+
+test at packages\engine\test\college-choice-effects.test.ts:19:1
+✖ E71 CHOOSE_FOCUS commits the actual first college PRE writer once and retains its source-bound receipt (5297.2353ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /NOT_OPEN|RESOLVED|AVAILABLE/. Input:
+  
+  'RangeError: EVENT_VERSION_CHANGED'
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\college-choice-effects.test.ts:28:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: RangeError: EVENT_VERSION_CHANGED
+        at checkOpen (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\events.ts:49:46)
+        at resolveEventChoice (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\events.ts:55:2)
+        at Module.chooseCollegeAdmissionFocus (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\career-route-notices.ts:154:13)
+        at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\college-choice-effects.test.ts:28:28)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\college-choice-effects.test.ts:28:9)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.start (node:internal/test_runner/test:1242:17),
+    expected: /NOT_OPEN|RESOLVED|AVAILABLE/,
+    operator: 'throws',
+    diff: 'simple'
+  }

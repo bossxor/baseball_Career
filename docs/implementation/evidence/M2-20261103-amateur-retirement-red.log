@@ -1,0 +1,53 @@
+✖ amateur voluntary E36 cancels to the original route, confirms a zero-pro archive and preserves unresolved military and records (1120.1335ms)
+✖ amateur retirement rejects live school/service/pro roots, signed contracts, stale CAS/version and changed confirmation source atomically (381.6493ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18949.8163
+
+✖ failing tests:
+
+test at packages\engine\test\amateur-retirement.test.ts:10:1
+✖ amateur voluntary E36 cancels to the original route, confirms a zero-pro archive and preserves unresolved military and records (1120.1335ms)
+  RangeError: AMATEUR_RETIREMENT_NOT_IMPLEMENTED
+      at requestAmateurRetirement (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\amateur-retirement.ts:2:155)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\amateur-retirement.test.ts:11:59)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+
+test at packages\engine\test\amateur-retirement.test.ts:23:1
+✖ amateur retirement rejects live school/service/pro roots, signed contracts, stale CAS/version and changed confirmation source atomically (381.6493ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /REVISION/. Input:
+  
+  'RangeError: AMATEUR_RETIREMENT_NOT_IMPLEMENTED'
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\amateur-retirement.test.ts:24:46)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: RangeError: AMATEUR_RETIREMENT_NOT_IMPLEMENTED
+        at requestAmateurRetirement (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\amateur-retirement.ts:2:155)
+        at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\amateur-retirement.test.ts:24:57)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\amateur-retirement.test.ts:24:46)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+        at Test.postRun (node:internal/test_runner/test:1522:19)
+        at Test.run (node:internal/test_runner/test:1447:12),
+    expected: /REVISION/,
+    operator: 'throws',
+    diff: 'simple'
+  }

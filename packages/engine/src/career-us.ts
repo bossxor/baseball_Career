@@ -14,13 +14,19 @@ import {completeBlockingEvent} from './events.js';
 import {decideKboDraft} from './kbo-draft.js';
 import {createUsReservationLedger,assertUsReservationLedger,reserveUsDirectSigning} from './us-reservations.js';
 import type {UsReservationLedger} from './us-reservations.js';
-import {collegeEarlyRouteView,attachCollegeUnsignedReturn} from './college-route.js';
+import {collegeEarlyRouteView,attachCollegeUnsignedReturn,assertCollegeEarlyUsComparison,commitCollegeEarlyUsSigning} from './college-route.js';
 import {refreshCareerAchievements} from './career-achievements.js';
 import {refreshCareerRouteNotices} from './career-route-notices.js';
 
 export interface CareerUsRecruitment {schemaVersion:1;world:UsRecruitmentWorld;program:UsDirectProgram;sourceBasis:string;currentWorldDay:number;reservations:UsReservationLedger;closedBy?:'COLLEGE'|'KBO'}
 function basis(s:HighSchoolCareer):string {return canonicalJson({world:s.world,records:s.records,health:s.health,days:s.days,development:s.development??null,seasonGrowth:s.seasonGrowth??null,graduation:s.graduation??null,collegeAdmission:s.collegeAdmission??null,collegeGraduation:s.collegeGraduation??null,ownAssessment:s.ownAssessment??null});}
 function day(s:HighSchoolCareer):number {return s.days.days.at(-1)?.day??0;}
+function pendingCollegeComparison(s:HighSchoolCareer){return s.world.leagueKey==='COLLEGE'&&s.collegeAdmission?.academicYear===2&&s.phaseContext.phase==='EVENT_DECISION'&&s.phaseContext.eventKey===s.collegeEarlyRoute?.eventKey;}
+function assertRoute(s:HighSchoolCareer){
+ if(pendingCollegeComparison(s)){assertCollegeEarlyUsComparison(s);return;}
+ if(s.phaseContext.phase!=='CAREER_ROUTE')throw new RangeError('INVALID_CAREER_PHASE');
+ if(s.world.leagueKey==='COLLEGE'){if(s.collegeAdmission?.academicYear===2)collegeEarlyRouteView(s);else collegeGraduationRouteView(s);}else highSchoolCareerRouteView(s);
+}
 function candidate(s:HighSchoolCareer){
  const p=s.world.players[s.world.protagonistKey]!,totals=recordTotals(s.records,{seasonKey:s.world.seasonKey,leagueKey:'HS',phase:'REGULAR'});
  const adjustedPerformance=s.world.leagueKey==='COLLEGE'?collegeCareerDraftEvaluation(s).performanceCollege:p.kind==='HITTER'?recentBattingPerformance(totals.batting[p.simulationKey]??emptyBatting()):recentPitchingPerformance(totals.pitching[p.simulationKey]??emptyPitching());
@@ -37,8 +43,7 @@ function current(s:HighSchoolCareer):CareerUsRecruitment {
 }
 /** The world worker supplies real open slots/budget; the user-approved deadline is30 game days. */
 export function prepareCareerUsDirect(s:HighSchoolCareer,expectedRevision:number,world:UsRecruitmentWorld):HighSchoolCareer {
- assertCareerRevision(s,expectedRevision);if(s.phaseContext.phase!=='CAREER_ROUTE')throw new RangeError('INVALID_CAREER_PHASE');
- if(s.world.leagueKey==='COLLEGE'){if(s.collegeAdmission?.academicYear===2)collegeEarlyRouteView(s);else collegeGraduationRouteView(s);}else highSchoolCareerRouteView(s);
+ assertCareerRevision(s,expectedRevision);assertRoute(s);
  const assessmentKey=JSON.stringify(['amateur-us',s.world.worldKey,s.world.seasonKey,s.world.protagonistKey]);
  if(s.usRecruitment || s.previousUsRecruitments?.some(r=>r.program.input.assessmentKey===assessmentKey))throw new RangeError('US_ASSESSMENT_ALREADY_EXISTS');
  if(world.worldKey!==s.world.worldKey || world.seed!==s.world.seed || world.seasonKey!==String(s.world.calendar!.year+1))throw new RangeError('INVALID_US_RECRUITMENT_WORLD');
@@ -46,29 +51,39 @@ export function prepareCareerUsDirect(s:HighSchoolCareer,expectedRevision:number
  const next=structuredClone(s);next.usRecruitment={schemaVersion:1,world:structuredClone(world),program,sourceBasis:basis(s),currentWorldDay:day(s),reservations:createUsReservationLedger(world)};next.revision++;return refreshCareerRouteNotices(next);
 }
 export function careerUsDirectView(s:HighSchoolCareer){const r=current(s);return usDirectView(r.world,r.program,r.currentWorldDay);}
+/** Internal E73 transition: checking the domestic draft changes no previously quoted US player or terms. */
+export function carryCollegeUsComparison(source:HighSchoolCareer,updated:HighSchoolCareer):HighSchoolCareer {
+ const r=current(source),admission=source.collegeAdmission;
+ if(!admission||!pendingCollegeComparison(source)||updated.phaseContext.phase!=='CAREER_ROUTE'||!updated.collegeAdmission?.earlyDraftAttempted)throw new RangeError('COLLEGE_US_COMPARISON_CHANGED');
+ const restoredAdmission={...updated.collegeAdmission};
+ if(admission.earlyDraftAttempted===undefined)delete restoredAdmission.earlyDraftAttempted;
+ else restoredAdmission.earlyDraftAttempted=admission.earlyDraftAttempted;
+ if(canonicalJson(restoredAdmission)!==canonicalJson(admission)||basis({...updated,collegeAdmission:admission})!==basis(source))throw new RangeError('COLLEGE_US_COMPARISON_CHANGED');
+ return {...updated,usRecruitment:{...r,sourceBasis:basis(updated)}};
+}
 /** No games run while comparing graduation routes. Persist elapsed negotiation days; never reroll offers. */
 export function advanceCareerUsNegotiation(s:HighSchoolCareer,expectedRevision:number,days:number):HighSchoolCareer {
- assertCareerRevision(s,expectedRevision);if(s.phaseContext.phase!=='CAREER_ROUTE')throw new RangeError('INVALID_CAREER_PHASE');const r=current(s);
+ assertCareerRevision(s,expectedRevision);assertRoute(s);const r=current(s);
  if(r.program.decision!=='PENDING' || !Number.isSafeInteger(days) || days<1 || !Number.isSafeInteger(r.currentWorldDay+days))throw new RangeError('INVALID_US_NEGOTIATION_ADVANCE');
  const target=Math.min(r.program.input.expiresWorldDay,r.currentWorldDay+days);if(target===r.currentWorldDay)return structuredClone(s);
- const next=structuredClone(s);next.usRecruitment!.currentWorldDay=target;next.revision++;return refreshCareerRouteNotices(target===r.program.input.expiresWorldDay&&s.collegeAdmission?.academicYear===2&&!s.kboRecruitment?attachCollegeUnsignedReturn(next):next);
+ const next=structuredClone(s);next.usRecruitment!.currentWorldDay=target;next.revision++;return refreshCareerRouteNotices(target===r.program.input.expiresWorldDay&&s.collegeAdmission?.academicYear===2&&!s.kboRecruitment&&!pendingCollegeComparison(s)?attachCollegeUnsignedReturn(next):next);
 }
 /** Same revision protects competing domestic/overseas choices. Activation and actual income posting are separate. */
 export function decideCareerUsDirect(s:HighSchoolCareer,expectedRevision:number,input:{programVersion:number;decision:{type:'SIGN';offerKey:string}|{type:'DECLINE'};eventVersion?:number}):HighSchoolCareer {
- assertCareerRevision(s,expectedRevision);if(s.phaseContext.phase!=='CAREER_ROUTE')throw new RangeError('INVALID_CAREER_PHASE');
- if(s.world.leagueKey==='COLLEGE'){if(s.collegeAdmission?.academicYear===2)collegeEarlyRouteView(s);else collegeGraduationRouteView(s);}else highSchoolCareerRouteView(s);
+ assertCareerRevision(s,expectedRevision);assertRoute(s);const comparing=pendingCollegeComparison(s);
  const r=current(s),program=decideUsDirect(r.world,r.program,input.programVersion,r.currentWorldDay,input.decision),next=structuredClone(s);next.usRecruitment={...next.usRecruitment!,program};
  if(input.decision.type==='SIGN'){
   next.usRecruitment!.reservations=reserveUsDirectSigning(r.reservations,program);
   if(s.world.leagueKey!=='COLLEGE'){
    const event=s.events.find(e=>e.eventKey===s.graduation!.eventKey)!;if(input.eventVersion===undefined)throw new RangeError('EVENT_VERSION_REQUIRED');
    const resolved=completeBlockingEvent(event,input.eventVersion,{sourceEvidenceKey:event.evidenceKey,receiptKey:program.signing!.receiptKey,command:'ACCEPT_CAREER_OFFER'},{worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['ACCEPT_CAREER_OFFER']});next.events=next.events.map(e=>e.eventKey===event.eventKey?resolved:e);
-  }else if(s.events.some(e=>e.status==='OPEN'))throw new RangeError('BLOCKING_EVENT_PENDING');
+  }else if(comparing){if(input.eventVersion===undefined)throw new RangeError('EVENT_VERSION_REQUIRED');Object.assign(next,commitCollegeEarlyUsSigning(next,input.eventVersion));}
+  else if(s.events.some(e=>e.status==='OPEN'))throw new RangeError('BLOCKING_EVENT_PENDING');
   if(next.kboRecruitment){const k=next.kboRecruitment;if(k.program.result?.round && k.program.decision==='PENDING')k.program=decideKboDraft(k.world,k.program,k.program.version,'DECLINE');next.previousKboRecruitments=[...(next.previousKboRecruitments??[]),k];delete next.kboRecruitment;}
   next.phaseContext={phase:'NEXT_SEASON_READY',route:'US',contractKey:program.signing!.contract.contractKey};
   if(next.collegeAdmission?.academicYear===2){next.collegeAdmission={...next.collegeAdmission,status:'LEFT_FOR_PRO'};next.usRecruitment={...next.usRecruitment!,sourceBasis:basis(next)};}
  }
- next.revision++;return refreshCareerRouteNotices(input.decision.type==='DECLINE'&&next.collegeAdmission?.academicYear===2&&!next.kboRecruitment?attachCollegeUnsignedReturn(next):refreshCareerAchievements(next));
+ next.revision++;return refreshCareerRouteNotices(input.decision.type==='DECLINE'&&next.collegeAdmission?.academicYear===2&&!next.kboRecruitment&&!comparing?attachCollegeUnsignedReturn(next):refreshCareerAchievements(next));
 }
 
 

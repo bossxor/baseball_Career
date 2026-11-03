@@ -1,0 +1,25 @@
+✖ open E73 owns fixed US comparison without consuming early KBO eligibility; only actual US signing closes enrollment (14836.3144ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16917.6309
+
+✖ failing tests:
+
+test at packages\engine\test\college-choice-effects.test.ts:34:1
+✖ open E73 owns fixed US comparison without consuming early KBO eligibility; only actual US signing closes enrollment (14836.3144ms)
+  TypeError: Unsupported canonical value
+      at canonicalJson (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\game.ts:273:9)
+      at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\game.ts:272:162)
+      at Array.map (<anonymous>)
+      at canonicalJson (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\game.ts:272:114)
+      at carryCollegeUsComparison (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\career-us.ts:57:145)
+      at choose (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\college-route.ts:38:136)
+      at Module.enterCollegeEarlyDraft (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\college-route.ts:41:53)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\college-choice-effects.test.ts:40:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)

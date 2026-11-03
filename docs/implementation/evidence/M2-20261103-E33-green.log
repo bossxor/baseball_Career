@@ -1,0 +1,11 @@
+✔ FA a real backup-role quote opens E33 and commits ACCEPT_ROLE, without first-team guarantee (1027.5821ms)
+✔ FA backup event uses sealed current age32 versus33, not next-contract age or mutable live age (3015.8938ms)
+✔ FA legacy unversioned young backup E33 and signed receipts remain readable and actionable (1975.8449ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7394.1803

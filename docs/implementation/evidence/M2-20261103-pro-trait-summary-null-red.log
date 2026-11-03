@@ -1,0 +1,40 @@
+✖ pro E85 rejects forged cursor, ownership, future record evidence and mismatched registration (27297.5523ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 39303.9951
+
+✖ failing tests:
+
+test at packages\engine\test\pro-trait-summary.test.ts:51:1
+✖ pro E85 rejects forged cursor, ownership, future record evidence and mismatched registration (27297.5523ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /TRAIT_LEDGER/. Input:
+  
+  "TypeError: Cannot read properties of null (reading 'unlocked')"
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\pro-trait-summary.test.ts:56:127)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: Cannot read properties of null (reading 'unlocked')
+        at validateTraits (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\traits.ts:8:24)
+        at validateCareerTraitLedger (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\high-school-traits.ts:82:127)
+        at sourceReceipts (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\pro-trait-summary.ts:22:2)
+        at unreadProTraitSummary (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\pro-trait-summary.ts:29:9)
+        at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\pro-trait-summary.test.ts:56:138)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\pro-trait-summary.test.ts:56:127)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25),
+    expected: /TRAIT_LEDGER/,
+    operator: 'throws',
+    diff: 'simple'
+  }
