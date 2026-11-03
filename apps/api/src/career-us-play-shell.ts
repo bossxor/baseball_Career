@@ -5,6 +5,7 @@ const fields=new Map<string,readonly string[]>([
  ['RESOLVE_CAMP',['eventKey','eventVersion','command','focus']],['CONFIRM_PRESEASON',[]],
  ['PUBLISH_SCHEDULE',[]],['START',[]],['ADVANCE',['maxDays']],['RESOLVE_HIDDEN',['eventKey','eventVersion','command']],
  ['RESOLVE_WINDOW',['eventKey','eventVersion','command']],['RESOLVE_LEVEL',['eventKey','eventVersion','command']],['TRAIN',['choice']],['CHANGE_STYLE',['archetype']],
+ ['NEXT_MINOR_YEAR',[]],['OPEN_MINOR_MARKET',[]],['RESOLVE_MINOR_MARKET',['eventKey','eventVersion','command']],['ACCEPT_MINOR_OFFER',['offerKey']],
 ]);
 function fail(code:string):never {throw Object.assign(new Error(code),{code});}
 function domainError(error:unknown):never {fail(error instanceof Error&&/^[A-Z][A-Z0-9_]*$/.test(error.message)?error.message:'INVALID_REQUEST');}
@@ -40,6 +41,11 @@ export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand 
    case 'RESOLVE_LEVEL':{const result=engine.resolveUsLevelEventResult(c,revision,{eventKey:string('eventKey'),eventVersion:number('eventVersion'),command:string('command')});next=result.career;navigation=result.navigation;break;}
    case 'TRAIN':next=engine.trainUsCareer(c,revision,p.choice as engine.TrainingChoice);break;
    case 'CHANGE_STYLE':next=engine.changeUsMidseasonArchetype(c,revision,string('archetype'));break;
+   // No annual grant is inferred from an HTTP request; reuse a sealed quote or carry the current balance.
+   case 'NEXT_MINOR_YEAR':next=engine.startNextUsMinorSeason(c,revision,c.inventory.clubs.map(club=>({organizationId:club.id,addedBudgetUsd:0})));break;
+   case 'OPEN_MINOR_MARKET':next=engine.openUsMinorMarket(c,revision,c.minorMarket?.funding??c.inventory.clubs.map(club=>({organizationId:club.id,addedBudgetUsd:0})));break;
+   case 'RESOLVE_MINOR_MARKET':{const result=engine.resolveUsMinorMarketEvent(c,revision,{eventKey:string('eventKey'),eventVersion:number('eventVersion'),command:string('command')});next=result.career;navigation=result.navigation;break;}
+   case 'ACCEPT_MINOR_OFFER':next=engine.acceptUsMinorMarketOffer(c,revision,string('offerKey'));break;
    default:fail('UNSUPPORTED_COMMAND');
   }
  }catch(error){domainError(error);}
@@ -53,6 +59,8 @@ export function usPlayScreen(state:SaveState):unknown {
   const view=engine.usCareerView(c),phase=c.phaseContext,event=phase.phase==='EVENT_DECISION'?c.events.find(event=>event.eventKey===phase.eventKey&&event.status==='OPEN'):undefined;
   return {...view,careerRevision:c.revision,campNotices:c.phaseContext.phase==='PRESEASON_SETUP'?engine.unreadUsFirstCampNotices(c):[],
    pendingEvent:event?{eventKey:event.eventKey,eventVersion:event.version,definitionId:event.definitionId,commands:[...event.offeredChoices]}:null,
-   progress:c.season?{closedDays:c.season.days.length,firstDay:c.season.firstDay,lastDay:c.season.lastDay,paidUsd:c.season.paidUsd}:null};
+   progress:c.season?{closedDays:c.season.days.length,firstDay:c.season.firstDay,lastDay:c.season.lastDay,paidUsd:c.season.paidUsd}:null,
+   yearTransition:phase.phase==='SEASON_REVIEW'?engine.usYearTransitionReadiness(c):null,
+   minorMarket:c.minorMarket?{...engine.usMinorMarketView(c),eventKey:c.minorMarket.eventKey,eventVersion:c.events.find(event=>event.eventKey===c.minorMarket!.eventKey)!.version}:null};
  }catch(error){domainError(error);}
 }

@@ -7,11 +7,38 @@ import {raiseUsWindowEvent} from '../../../packages/engine/src/us-windows.js';
 import type {UsProgress} from '../../../packages/engine/src/us-season.js';
 import {applyEngineCommand} from '../src/engine-command.js';
 import {usPlayScreen} from '../src/career-us-play-shell.js';
+import {finishedUsCareerFixture} from '../../../packages/engine/test/us-finished-fixture.js';
+import {expiredRetryUsCareer} from '../../../packages/engine/test/us-return-retry-fixture.js';
 
 test('ordinary US play rejects caller state and invalid advance bounds',()=>{
  for(const payload of [{careerRevision:1,maxDays:8},{careerRevision:1,maxDays:0},{careerRevision:1,maxDays:'1'},{careerRevision:1,maxDays:1,world:{}},{careerRevision:1,maxDays:1,budget:1}]){
   assert.throws(()=>applyEngineCommand({schemaVersion:1},{commandId:'bad',expectedRevision:0,type:'CAREER_US_PLAY_ADVANCE',payload}),/INVALID_PAYLOAD/);
  }
+});
+
+test('US annual API exposes actual blockers and advances an owned closed year without caller funding or new income',()=>{
+ const c=finishedUsCareerFixture(),view=usPlayScreen({schemaVersion:1,career:c}) as {yearTransition:{ready:boolean;targetSeasonKey:string}};
+ assert.equal(view.yearTransition.ready,true);
+ const command={commandId:'next-year',expectedRevision:0,type:'CAREER_US_PLAY_NEXT_MINOR_YEAR',payload:{careerRevision:c.revision}};
+ assert.throws(()=>applyEngineCommand({schemaVersion:1,career:c},{...command,payload:{...command.payload,funding:[{addedBudgetUsd:999999}]}}),/INVALID_PAYLOAD/);
+ const advanced=applyEngineCommand({schemaVersion:1,career:c},command),next=advanced.nextState.career as UsCareer;
+ assert.equal(next.world.seasonKey,view.yearTransition.targetSeasonKey);assert.equal(next.world.players[next.protagonistKey]!.age,c.world.players[c.protagonistKey]!.age+1);assert.equal(next.phaseContext.phase,'PRESEASON_SETUP');
+ assert.deepEqual(next.income,c.income);assert.deepEqual(next.records,c.records);assert.equal(c.phaseContext.phase,'SEASON_REVIEW');
+ const quoted=JSON.parse(JSON.stringify(next)) as UsCareer;assert.ok(usPlayScreen({schemaVersion:1,career:quoted}));
+});
+
+test('expired US minor API quotes persisted budgets, exposes owned choices and accepts an actual one-year offer',()=>{
+ const c=expiredRetryUsCareer(),dispatch=(source:UsCareer,name:string,payload:Record<string,unknown>={})=>applyEngineCommand({schemaVersion:1,career:source},{commandId:name+source.revision,expectedRevision:0,type:'CAREER_US_PLAY_'+name,payload:{careerRevision:source.revision,...payload}});
+ const opened=dispatch(c,'OPEN_MINOR_MARKET').nextState.career as UsCareer;
+ assert.ok(opened.minorMarket!.funding.every(row=>row.addedBudgetUsd===0));
+ const view=usPlayScreen({schemaVersion:1,career:opened}) as {minorMarket:{eventKey:string;eventVersion:number;offers:{offerKey:string;organizationId:string}[]}};
+ const market=view.minorMarket,offer=market.offers[0];assert.ok(offer);
+ const navigation=dispatch(opened,'RESOLVE_MINOR_MARKET',{eventKey:market.eventKey,eventVersion:market.eventVersion,command:'OPEN_CAREER_OFFERS'});
+ assert.ok(navigation.summary.navigation);assert.strictEqual(navigation.nextState.career,opened);
+ assert.throws(()=>dispatch(opened,'ACCEPT_MINOR_OFFER',{offerKey:'forged'}),/NOT_FOUND/);
+ const signed=dispatch(opened,'ACCEPT_MINOR_OFFER',{offerKey:offer.offerKey}).nextState.career as UsCareer;
+ assert.equal(signed.contract.years,1);assert.equal(signed.contract.annualSalaryUsd,30000);assert.equal(signed.protagonistOrganizationId,offer.organizationId);assert.equal(signed.minorRenewal!.offerKey,offer.offerKey);assert.deepEqual(signed.income,c.income);assert.deepEqual(signed.records,c.records);
+ assert.equal(opened.minorMarket!.status,'OPEN');assert.equal(signed.world.seasonKey,String(Number(c.world.seasonKey)+1));
 });
 
 test('ordinary US window API resolves real E43 and retains navigation without consuming training on view',()=>{
