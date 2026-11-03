@@ -8,6 +8,7 @@ import {
 } from '@playball/engine';
 import type { KboCareer, HighSchoolCareer } from '@playball/engine';
 import type { AppliedCommand, CommandBody, SaveState } from './engine-command.js';
+import {applyUsReturnRetry,isUsReturnRetry,usReturnRetryScreen} from './career-us-return-retry-shell.js';
 
 export const RETRY_SCREEN_IDS = ['RETRY_ROUTES', 'RETRY_PREP', 'RETRY_RETIREMENT', 'AMATEUR_RETIREMENT'] as const;
 
@@ -30,6 +31,7 @@ const num = (p: Payload, k: string) => (typeof p[k] === 'number' ? (p[k] as numb
 
 /** CAREER_RETRY_* — thin dispatch over the E34/E35/E36 engine owners. Engine guards stay authoritative. */
 export function applyCareerRetry(state: SaveState, command: CommandBody): AppliedCommand {
+  if(command.type.startsWith('CAREER_RETRY_US_RETURN_'))return applyUsReturnRetry(state,command);
   const career = readCareer(state);
   if (!career) fail('CAREER_NOT_FOUND');
   const p = (command.payload && typeof command.payload === 'object' ? command.payload : fail('INVALID_PAYLOAD')) as Payload;
@@ -72,6 +74,7 @@ export function applyCareerRetry(state: SaveState, command: CommandBody): Applie
 }
 
 export function retryScreenOf(state: SaveState, screenId: string): unknown {
+  if(isUsReturnRetry(state.career))return usReturnRetryScreen(state.career,screenId);
   const career = readCareer(state);
   if (!career) fail('CAREER_NOT_FOUND');
   try {

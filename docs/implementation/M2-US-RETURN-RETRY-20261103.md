@@ -59,3 +59,15 @@ Task5 엔진: 실제3회 소진과 실제 국내 종료 평가·미국 no-offer/
 최신 build·전체 테스트 타입·변경19파일 lint는 return-checkpoint-static.log 종료0. 이전 static 실패는 테스트의 잘못된 ONE_DAY 문자열과 사용하지 않는 변수였고 수정 후 통과했다. 설계10종 통과, 문서 패키지138절·해시359개를 재생성했다. M2 추정은 사용자 요청으로55%에서65%로 재평가했으며 전체 가중87.5%다. 관리용 추정이고 검증 완료율이 아니다.
 
 남은 일: E35 실제3회 결과 확인/수정 → apps/api career-retry-shell의 전용 owner/strict payload/JSON/CAS/allowlisted reads 연결 → 최종 fresh review → source 동결 후 전체 npm run check1회·HTTP smoke → 증거/인계/푸시. API와 웹에서 새 root를 플레이할 수 있다고 아직 주장하지 않는다. M2 전체99사건·24경로·PF 증거도 별도다.
+
+## 저장 API 후속 — 2026-11-03
+
+CAREER_RETRY_US_RETURN_ 전용16명령을 기존 applyEngineCommand/applyCareerRetry 저장 흐름에 연결했다. KBO cast 이전에 mode:US_RETURN_RETRY를 구분한다. OPEN만 실제 UsAmateurReturnCareer를 받으며 다른 명령은 새 root를 요구한다. 읽기는 RETRY_ROUTES/PREP/RETIREMENT의 기존 화면 주소에서 허용된 DTO로 연결한다. 새 저장소나 결제/급여 writer를 만들지 않았다.
+
+원본/예산/자격/선수 객체를 payload로 받지 않는다. 명령별 필드 allowlist, 정수 careerRevision/프로그램/사건 버전, 제한된 진행 모드, 명시적 훈련 포기 boolean, 포지션/능력 선택 검증을 거쳐 실제 엔진 명령을 호출한다. 실제 Root↔KBO/US 전환은 결과 전체를 같은 state.career에 저장한다.
+
+RED 이후 실제 미지명 접두→API OPEN→JSON→공개 조회→US 평가/거절→JSON→API START/준비 조회를2/2 확인했다. 잘못된 권한 payload·stale careerRevision·진행 모드를 거절했다. API build·전체 테스트 타입·변경3파일 lint와 함께 return-api-batch.log 종료0(60400ms). 원래 US6시즌은 제어 접두, 의무 복귀2시즌은 native 접두 캐시다. 이는 applyEngineCommand/화면 reader 검사이며 HTTP 인증/Neon DB 트랜잭션·외부 저장 CAS·idempotency 실행 증거가 아니다.
+
+E35 장기 검사는 세션17083에서 현재 선택2시즌 정산(각48경기, recordRevision54012)을 기록했고3시즌째 진행 중이다. log에 일부 진행이 있어도 최종 종료 코드와 테스트 PASS 전에는 완료로 세지 않는다. source snapshot은6e888cd 전후 경계 보강 전이며 최종 source 전체 gate가 아니다.
+
+다음: E35 native 결과 처리, 실제3회 원본으로 API 은퇴 확인/US·KBO 활성화의 저장 연동 검사 보강, 신선한 전체 변경 리뷰, 최종 source 동결 후 npm run check1회+HTTP smoke. 게임 웹 버튼/전체 화면, 실제 계정 기기 간 저장 검수는 아직 이번 묶음에서 하지 않았다. M2 추정65%는 유지한다.

@@ -1,3 +1,9 @@
+# 최신 — 귀국 재도전 저장 API16명령 연결
+
+기능 기준6e888cd 이후 career-us-return-retry-shell.ts와 기존 retry shell을 연결했다. 실제 gateway/JSON/허용 DTO/US 평가·거절/준비 시작 집중2/2, API build·전체 테스트 타입·변경3파일 lint 종료0. evidence/M2-20261103-return-api-batch.log를 본다. HTTP/Neon/외부 저장 CAS/idempotency까지 실행한 검사는 아니다.
+
+E35 실제3선택시즌 검사는 세션17083 / evidence/M2-20261103-return-exhaustion-native.log 진행 중이다. 실제 선택2시즌48경기 정산을 기록했고3시즌째다. 종료 시 .exitcode.txt와 전체 테스트 결과를 먼저 확인한다. 실패면 고친다. 이전 source snapshot이므로 최종 whole gate로 세지 않는다. 다음은 실제 E35 원본의 API 확인/전환 저장 검수, fresh review, 전체 check1회/HTTP smoke다. STATUS M2 관리용 추정65%·전체87.5% 유지. PC 종료 금지, V:는 문서/증거 Copy-Item만. 최종 commit/remote는 git log/rev-parse로 확인한다.
+
 # 최신 체크포인트 — 귀국 선택 준비·KBO/US 실제 진입 확인
 
 M2-US-RETURN-RETRY-20261103.md의 마지막 절부터 읽는다. 실제 선택48경기·KBO 새 계약/첫 날짜·최신 선택 선수의 US 계약/첫 날짜 통과. 후속 미국 계약은 제어 시즌 closure 뒤 native writer 검사이며 full native US season이 아니다. JSON US 복원/군복무 NPC current quote 묶음2/2, checkpoint build/전체 테스트 타입/lint 종료0. E35 실제3선택시즌 검사는 세션17083 / evidence/M2-20261103-return-exhaustion-native.log 실행 중이며 .exitcode.txt로 완료를 확인한다. 최신 source는 시작 후 나이/이전 평가 archive 검증을 보강했으므로 이 검사는 최종 전체 gate가 아니다.
