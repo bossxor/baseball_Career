@@ -1,6 +1,6 @@
 import {
   chooseCollegeAdmissionFocus, careerRouteNoticesView, resolveCareerRouteNotice,
-  collegeEarlyUsComparisonView, openCollegeEarlyUsOffer, decideCareerUsDirect, assertCollegeUnsignedReturn, returnUnsignedCollegeCareer,
+  collegeEarlyUsComparisonView, openCollegeEarlyUsOffer, decideCareerUsDirect, assertCollegeUnsignedReturn, returnUnsignedCollegeCareer, assertCollegeEarlyUsComparison, enterCollegeEarlyDraft, closeCollegeSeasonForNextYear,
   unreadProTraitSummary, acknowledgeProTraitSummary,
 } from '@playball/engine';
 import type {HighSchoolCareer, KboCareer, UsCareer} from '@playball/engine';
@@ -14,6 +14,8 @@ const FIELDS = new Map<string,readonly string[]>([
   ['CAREER_CHOICE_COLLEGE_SIGN_US',['careerRevision','eventVersion','programVersion','offerKey']],
   ['CAREER_CHOICE_PRO_ACK_TRAITS',['careerRevision']],
   ['CAREER_CHOICE_COLLEGE_RETURN',['careerRevision','eventVersion']],
+  ['CAREER_CHOICE_COLLEGE_EARLY_DRAFT',['careerRevision','eventVersion']],
+  ['CAREER_CHOICE_COLLEGE_CONTINUE',['careerRevision','eventVersion','forfeitUnusedTraining']],
   ['CAREER_CHOICE_ACK_ROUTE_NOTICE',['careerRevision','eventKey','eventVersion']],
 ]);
 function fail(code:string):never {throw Object.assign(new Error(code),{code});}
@@ -49,6 +51,12 @@ export function applyCareerChoice(state:SaveState,command:CommandBody):AppliedCo
     }else if(command.type==='CAREER_CHOICE_ACK_ROUTE_NOTICE'){
       if(typeof p.eventKey!=='string')fail('INVALID_PAYLOAD');
       nextCareer=resolveCareerRouteNotice(career as HighSchoolCareer,revision,{eventKey:p.eventKey,eventVersion:number(p,'eventVersion'),command:'ACK_EVENT'}).career;
+    }else if(command.type==='CAREER_CHOICE_COLLEGE_EARLY_DRAFT')nextCareer=enterCollegeEarlyDraft(career as HighSchoolCareer,revision,number(p,'eventVersion'));
+    else if(command.type==='CAREER_CHOICE_COLLEGE_CONTINUE'){
+      const {e}=assertCollegeEarlyUsComparison(career as HighSchoolCareer);
+      if(number(p,'eventVersion')!==e.version)fail('EVENT_VERSION_CHANGED');
+      if(typeof p.forfeitUnusedTraining!=='boolean')fail('INVALID_PAYLOAD');
+      nextCareer=closeCollegeSeasonForNextYear(career as HighSchoolCareer,revision,p.forfeitUnusedTraining);
     }else if(command.type==='CAREER_CHOICE_COLLEGE_RETURN')nextCareer=returnUnsignedCollegeCareer(career as HighSchoolCareer,revision,number(p,'eventVersion'));
     else nextCareer=acknowledgeProTraitSummary(career as KboCareer|UsCareer,revision);
   }catch(err){domainError(err);}
@@ -62,7 +70,10 @@ export function careerChoiceScreen(state:SaveState,screenId:string):unknown {
   const career=source(state);
   try {
     if(screenId==='CAREER_ROUTE_NOTICES')return {...careerRouteNoticesView(career as HighSchoolCareer),careerRevision:career.revision};
-    if(screenId==='COLLEGE_US_COMPARISON')return {...collegeEarlyUsComparisonView(career as HighSchoolCareer),careerRevision:career.revision};
+    if(screenId==='COLLEGE_US_COMPARISON'){
+      const {e}=assertCollegeEarlyUsComparison(career as HighSchoolCareer),view=collegeEarlyUsComparisonView(career as HighSchoolCareer);
+      return {...view,careerRevision:career.revision,eventKey:e.eventKey,eventVersion:e.version,routeCommands:e.offeredChoices.filter(choice=>choice!=='OPEN_US_IF_VALID'||Boolean(view.us))};
+    }
     if(screenId==='COLLEGE_UNSIGNED_RETURN'){
       const event=assertCollegeUnsignedReturn(career as HighSchoolCareer);
       return {careerRevision:career.revision,eventKey:event.eventKey,eventVersion:event.version,commands:[...event.offeredChoices]};

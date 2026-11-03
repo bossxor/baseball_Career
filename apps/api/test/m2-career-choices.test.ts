@@ -92,3 +92,13 @@ test('E74 HTTP return resumes enrollment from actual empty offers and preserves 
   assert.deepEqual(await json(await h.post('CAREER_CHOICE_COLLEGE_RETURN',payload,'return')),receipt);assert.equal((await h.post('CAREER_CHOICE_COLLEGE_RETURN',payload,'stale-save')).status,409);assert.equal(canonicalJson(await h.stored()),canonicalJson(saved));
  });
 });
+
+test('E73 public event version drives early draft or continued enrollment without private save access',async()=>{
+ for(const route of ['EARLY_DRAFT','CONTINUE']){const source=comparison(0);await owned(source,async h=>{
+  const read=await h.screen('COLLEGE_US_COMPARISON');assert.equal(read.status,200);const view=await json<{eventKey:string;eventVersion:number;routeCommands:string[]}>(read);assert.equal(typeof view.eventKey,'string');assert.equal(typeof view.eventVersion,'number');assert.ok(!view.routeCommands.includes('OPEN_US_IF_VALID'));
+  const type='CAREER_CHOICE_COLLEGE_'+route,payload={eventVersion:view.eventVersion,...(route==='CONTINUE'?{forfeitUnusedTraining:true}:{})},response=await h.post(type,payload,'route');assert.equal(response.status,200);const receipt=await json(response),saved=await h.stored();assert.equal(saved.collegeAdmission!.status,'ENROLLED');assert.equal(canonicalJson(saved.records),canonicalJson(source.records));
+  if(route==='EARLY_DRAFT'){assert.equal(saved.phaseContext.phase,'CAREER_ROUTE');assert.equal(saved.collegeAdmission!.earlyDraftAttempted,true);assert.equal(canonicalJson(saved.usRecruitment!.program),canonicalJson(source.usRecruitment!.program));}
+  else{assert.equal(saved.phaseContext.phase,'NEXT_SEASON_READY');assert.equal(saved.collegeAdmission!.earlyDraftAttempted,undefined);assert.equal(saved.previousUsRecruitments!.at(-1)!.closedBy,'COLLEGE');assert.ok(saved.collegeYearEnd);}
+  assert.deepEqual(await json(await h.post(type,payload,'route')),receipt);
+ });}
+});

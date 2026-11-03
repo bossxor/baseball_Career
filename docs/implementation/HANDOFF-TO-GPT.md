@@ -1,3 +1,6 @@
+# 최신 재개 지점 — E73 조기 드래프트·계속 재학 추가
+
+기준6d7a3e6 이후 API2파일 변경. 공개 사건 키/버전과 유효 routeCommands를 추가하고 COLLEGE_EARLY_DRAFT·COLLEGE_CONTINUE를 기존 writer에 연결했다. 계속 재학은 eventVersion과 명시적 forfeitUnusedTraining boolean을 검사한다. lint/전체 테스트 타입/API build 통과, 추가 읽기 검토 Critical/Important 없음. 전체 API 검사는 실행 중이며 evidence/M2-20261103-choice-route-batch.log와 .exitcode.txt를 먼저 확인한다. RED는 choice-route-red.log. 완료 판정은 종료 결과 후에만 한다. PC 종료 금지. 아래는 이전 인계다.
 # 최신 상태 — 2026-11-03 선택·복학·특성 저장 API
 
 **기능 팁 afa1aa1:** 원격 일치 확인. 이후 ACK 검토 보강은 테스트/인계만 변경했고 focused1/1·lint 통과, 제품 코드 변경0이다. 최종 인계 커밋은 git log -1로 확인한다.
