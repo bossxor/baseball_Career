@@ -45,3 +45,5 @@ E73 열람은 saveRevision만 진행하고 careerRevision/학적/기록/프로�
 기능 팁 afa1aa1은 원격과 일치한다. 비차단 route ACK 지적도 보강했다: 잘못된 event/root version의400과 저장 불변, 같은 command-id의 동일 receipt 재전송을 HTTP에서 확인했다. focused1/1·lint 종료0(6569ms), 제품 코드 변경0. 최종 API31 실행 이후 테스트만1파일 보강했으므로 전체 batch를 다시 통과했다고 해석하지 않는다. 초기 source freeze는 당시 실행본으로 보존한다. evidence/M2-20261103-choice-ack-review-check.log 참조.
 
 추가 E73: 공개 사건키/버전 누락을 RED로 확인하고 응답 메타데이터와 EARLY_DRAFT/CONTINUE 명령을 추가했다. engine 변경0, lint/타입/API build 통과·API batch 진행 중. 계속 재학에서 남은 훈련 포기를 HTTP가 임의 확정하지 않고 명시 boolean을 받는다. 검사 로그/종료 코드는 choice-route-batch를 따른다.
+
+최종 E73 후속 결과: 기능 fcd379e 푸시 확인. 실제 읽기4·명령8 연결, API32중30통과·환경2제외·실패0, 웹24/24, lint/타입/API build·설계10종·HTTP smoke 종료0. 전체 engine 런타임 재실행 아님. 최신 로그는 choice-route-batch.log/.exitcode.txt, 요약은 choice-route-result.json. M2 전체 완료 및 실제 웹 버튼 완성은 아니다.

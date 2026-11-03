@@ -1,0 +1,11 @@
+{
+  "apiTests": 32,
+  "apiFail": 0,
+  "webPass": 24,
+  "log": "M2-20261103-choice-route-batch.log",
+  "apiSkipped": 2,
+  "apiPass": 30,
+  "engineRuntimeRerun": false,
+  "exitCode": 0,
+  "featureTip": "fcd379e"
+}
