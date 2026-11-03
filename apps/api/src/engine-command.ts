@@ -3,6 +3,8 @@ import { applyClubSave } from './club-shell.js';
 import { applyCareerRetry } from './career-retry-shell.js';
 import { applyCareerChoice } from './career-choice-shell.js';
 import { applyUsReturn } from './career-us-return-shell.js';
+import { applyUsMilitary } from './career-us-military-shell.js';
+import { applyUsPlay } from './career-us-play-shell.js';
 import {
   applyUiAdvance, applyUiChoose, applyUiSeed, phaseOf, type ChooseNext, type UiShellState,
 } from './ui-shell.js';
@@ -26,6 +28,8 @@ export type AppliedCommand = {
 
 /** ALLOCATE_DEMO (M3 E2E) + UI_SEED/ADVANCE/CHOOSE (M4 shell over the same pipeline). */
 export function applyEngineCommand(state: SaveState, command: CommandBody): AppliedCommand {
+  if (command.type.startsWith('CAREER_US_PLAY_')) return applyUsPlay(state, command);
+  if (command.type.startsWith('CAREER_US_MILITARY_')) return applyUsMilitary(state, command);
   if (command.type.startsWith('CAREER_US_RETURN_')) return applyUsReturn(state, command);
   if (command.type.startsWith('CLUB_')) return applyClubSave(state, command);
   if (command.type.startsWith('CAREER_RETRY_')) return applyCareerRetry(state, command);

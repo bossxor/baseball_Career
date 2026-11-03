@@ -1,0 +1,17 @@
+✔ US military commands reject authority, invalid choices and unbounded dates before reading a career (0.8543ms)
+✔ US military API freezes or terminates a real contract and starts bounded native service play (3789.5717ms)
+✔ controlled service dates reach real discharge, preserve 30-game-day option and require explicit return choice (7329.9193ms)
+✔ command API rejects non-object JSON without changing a save or recording a receipt (641.0564ms)
+✔ creation API rejects non-object JSON without consuming a save slot (325.2679ms)
+✔ expired minor confirmation opens a separate offer; explicit acceptance reserves once without paying or rewriting source history (31379.9467ms)
+✔ new return offer rejects stale revisions and changed identity; decline survives JSON without any reservation (6624.1079ms)
+✔ controlled offer day29 remains acceptable and day30 expires without payment or implicit acceptance (4761.537ms)
+✔ one native pending-offer chunk preserves its source and resumes identically after JSON (7168.2466ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 65699.9336

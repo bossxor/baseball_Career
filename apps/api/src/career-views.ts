@@ -7,6 +7,8 @@ import { clubScreenOf } from './club-shell.js';
 import { RETRY_SCREEN_IDS, retryScreenOf } from './career-retry-shell.js';
 import { CAREER_CHOICE_SCREEN_IDS, careerChoiceScreen } from './career-choice-shell.js';
 import { US_RETURN_SCREEN_IDS, usReturnScreen } from './career-us-return-shell.js';
+import { US_MILITARY_SCREEN_IDS, usMilitaryScreen } from './career-us-military-shell.js';
+import { usPlayScreen } from './career-us-play-shell.js';
 import { careerView, decisionView, type UiShellState } from './ui-shell.js';
 
 function errorBody(
@@ -77,6 +79,8 @@ export async function getScreen(c: Context<{ Variables: AppVariables }>) {
     }
     if ((RETRY_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(retryScreenOf(state, screenId));
     if ((US_RETURN_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(usReturnScreen(state, screenId));
+    if ((US_MILITARY_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(usMilitaryScreen(state, screenId));
+    if (screenId==='US_CAREER') return c.json(usPlayScreen(state));
     if ((CAREER_CHOICE_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(careerChoiceScreen(state, screenId));
     return c.json(decisionView(row.id, state, screenId));
   } catch (err) {

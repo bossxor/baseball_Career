@@ -1,0 +1,15 @@
+
+> @playball/api@0.1.0 build
+> tsc -p tsconfig.json
+
+✔ ordinary US play rejects caller state and invalid advance bounds (0.7572ms)
+✔ ordinary US window API resolves real E43 and retains navigation without consuming training on view (1305.4137ms)
+✔ ordinary US API starts a signed scheduled career, advances native games and restores its public progress (1245.5078ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3938.6142
