@@ -115,3 +115,13 @@ test('M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after one inde
  const started=startUsAmateurReturnYear(c,c.revision,1);
  assert.throws(()=>resignUsAfterAmateurReturn(started,started.revision,offer!.offerKey),/YEAR_IN_PROGRESS/);
 });
+
+test('M2-CLOSE-RETURN-20261102: a return-option US offer also re-signs after two independent years',()=>{
+ const closed=expired(),source=openUsMinorMarket(closed,closed.revision,closed.inventory.clubs.map(o=>({organizationId:o.id,addedBudgetUsd:3_000_000}))),offer=source.minorMarket!.offers.find(o=>o.militaryReturnOption)!;
+ let c=requestUsAmateurReturn(source,source.revision);
+ for(let year=0;year<2;year++){c=startUsAmateurReturnYear(c,c.revision,1);for(let i=0;i<2000;i++){const next=advanceUsAmateurReturn(c,c.revision);c=next.career;if(next.stopReason==='SEASON_COMPLETE')break;}c=settleUsAmateurReturnYear(c,c.revision);}
+ const us=resignUsAfterAmateurReturn(c,c.revision,offer.offerKey);
+ assert.equal(us.world.seasonKey,String(Number(source.world.seasonKey)+3));assert.equal(us.usAmateurReturn!.status,'CANCELLED_US');
+ assert.deepEqual(us.world.players[us.protagonistKey]!.abilities,c.return.years[1]!.endingPlayer.abilities);
+ const resumed=JSON.parse(JSON.stringify(us)) as typeof us;publishUsSeasonSchedule(confirmUsPreseasonPlan(resumed,resumed.revision),resumed.revision+1);
+});
