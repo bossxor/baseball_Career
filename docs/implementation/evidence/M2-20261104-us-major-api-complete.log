@@ -1,0 +1,13 @@
+✔ major API rejects caller financial terms and preserves an unfunded owner (10078.4256ms)
+✔ major API reuses an existing server-owned agent funding quote without accepting new client money (3716.7362ms)
+✔ accepted owned USD counteroffer is displayed and signed at the same price through the API (8956.8064ms)
+✔ major annual API uses previously booked native funding, reserves once and preserves JSON and historical income (9722.8856ms)
+✔ six controlled credited MLB years expose explicit original-club FA and continue its remaining guarantee through the API (101378.079ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 135477.7856

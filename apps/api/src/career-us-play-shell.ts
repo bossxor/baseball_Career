@@ -7,12 +7,32 @@ const fields=new Map<string,readonly string[]>([
  ['RESOLVE_WINDOW',['eventKey','eventVersion','command']],['RESOLVE_LEVEL',['eventKey','eventVersion','command']],['TRAIN',['choice']],['CHANGE_STYLE',['archetype']],
  ['NEXT_MINOR_YEAR',[]],['OPEN_MINOR_MARKET',[]],['RESOLVE_MINOR_MARKET',['eventKey','eventVersion','command']],['ACCEPT_MINOR_OFFER',['offerKey']],
  ['CONFIGURE_LEAGUES',[]],['START_POSTSEASON',[]],['ADVANCE_POSTSEASON',[]],
+ ['NEXT_MAJOR_YEAR',['counterOfferKey']],['ACCEPT_MAJOR_FA',['counterOfferKey']],
 ]);
 function fail(code:string):never {throw Object.assign(new Error(code),{code});}
 function domainError(error:unknown):never {fail(error instanceof Error&&/^[A-Z][A-Z0-9_]*$/.test(error.message)?error.message:'INVALID_REQUEST');}
 function owner(state:SaveState):engine.UsCareer {
  if(!state.career||typeof state.career!=='object'||Array.isArray(state.career))fail('CAREER_NOT_FOUND');
  return state.career as engine.UsCareer;
+}
+function majorFunding(c:engine.UsCareer){
+ return c.agents?.usSalaryOffers?.find(o=>o.fromSeasonKey===c.world.seasonKey)?.funding??c.inventory.clubs.map(club=>({organizationId:club.id,addedBudgetUsd:0}));
+}
+function majorPrice(c:engine.UsCareer,funding:ReturnType<typeof majorFunding>,baseSalary:number){
+ const offer=c.agents?.usSalaryOffers?.find(o=>o.fromSeasonKey===c.world.seasonKey),accepted=c.agents?.salaryRequests.find(r=>r.offerSetKey===offer?.offerSetKey&&r.outcome==='ACCEPTED'),key=accepted?.counterOfferKey??undefined;
+ const price=engine.careerAgentUsSalary(c,funding,baseSalary,key);
+ return {annualSalaryUsd:price.annualSalaryUsd,...(key?{counterOfferKey:key}:{})};
+}
+function majorContractView(c:engine.UsCareer,transition:ReturnType<typeof engine.usYearTransitionReadiness>|null){
+ if(c.contract.type!=='US_MAJOR'||!transition||transition.blockers.some(b=>b!=='CONTRACT_DECISION_REQUIRED'))return null;
+ const funding=majorFunding(c);
+ try{
+  const quote=engine.usMajorRenewalPreview(c),balance=c.inventory.clubs.find(o=>o.id===c.protagonistOrganizationId)!.availableBudgetUsd+(funding.find(f=>f.organizationId===c.protagonistOrganizationId)?.addedBudgetUsd??0),price=quote.guaranteed?{annualSalaryUsd:quote.annualSalaryUsd}:majorPrice(c,funding,quote.annualSalaryUsd);
+  return {kind:'RENEWAL' as const,...quote,...price,funded:balance>=price.annualSalaryUsd};
+ }catch(error){
+  if(error instanceof RangeError&&error.message==='US_MAJOR_RENEWAL_NOT_AVAILABLE'&&transition.mlbService.freeAgentEligible){const market=engine.usMajorFreeAgencyPreview(c,funding);return {kind:'ORIGINAL_CLUB_FA' as const,...market,offers:market.offers.map(o=>({...o,...majorPrice(c,funding,o.annualSalaryUsd)}))};}
+  throw error;
+ }
 }
 export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand {
  const name=command.type.slice('CAREER_US_PLAY_'.length),allowed=fields.get(name),raw=command.payload;
@@ -23,6 +43,7 @@ export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand 
  const string=(key:string)=>typeof p[key]==='string'?p[key] as string:fail('INVALID_PAYLOAD');
  const revision=number('careerRevision');
  if(name==='ADVANCE'&&(number('maxDays')<1||number('maxDays')>7))fail('INVALID_PAYLOAD');
+ if(p.counterOfferKey!==undefined&&(typeof p.counterOfferKey!=='string'||!p.counterOfferKey))fail('INVALID_PAYLOAD');
  if(p.focus!==undefined&&(!Array.isArray(p.focus)||!p.focus.every(key=>typeof key==='string')))fail('INVALID_PAYLOAD');
  if(name==='TRAIN'){
   const choice=p.choice;if(!choice||typeof choice!=='object'||Array.isArray(choice))fail('INVALID_PAYLOAD');
@@ -54,6 +75,8 @@ export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand 
     next=engine.startUsPostseason(c,revision,c.world.conferenceRegistry);break;
    }
    case 'ADVANCE_POSTSEASON':{engine.assertUsMilitaryPlayable(c);const result=engine.advanceUsPostseason(c,revision);next=result.career;stopReason=result.stopReason;break;}
+   case 'NEXT_MAJOR_YEAR':next=engine.startNextUsMajorSeason(c,revision,majorFunding(c),p.counterOfferKey as string|undefined);break;
+   case 'ACCEPT_MAJOR_FA':next=engine.acceptUsMajorFreeAgency(c,revision,majorFunding(c),p.counterOfferKey as string|undefined);break;
    default:fail('UNSUPPORTED_COMMAND');
   }
  }catch(error){domainError(error);}
@@ -64,11 +87,12 @@ export function usPlayScreen(state:SaveState):unknown {
  const c=owner(state);
  try{
   engine.assertUsMilitaryPlayable(c);
-  const view=engine.usCareerView(c),phase=c.phaseContext,event=phase.phase==='EVENT_DECISION'?c.events.find(event=>event.eventKey===phase.eventKey&&event.status==='OPEN'):undefined;
+  const view=engine.usCareerView(c),phase=c.phaseContext,event=phase.phase==='EVENT_DECISION'?c.events.find(event=>event.eventKey===phase.eventKey&&event.status==='OPEN'):undefined,transition=phase.phase==='SEASON_REVIEW'?engine.usYearTransitionReadiness(c):null;
   return {...view,careerRevision:c.revision,campNotices:c.phaseContext.phase==='PRESEASON_SETUP'?engine.unreadUsFirstCampNotices(c):[],
    pendingEvent:event?{eventKey:event.eventKey,eventVersion:event.version,definitionId:event.definitionId,commands:[...event.offeredChoices]}:null,
    progress:c.season?{closedDays:c.season.days.length,firstDay:c.season.firstDay,lastDay:c.season.lastDay,paidUsd:c.season.paidUsd}:null,
-   yearTransition:phase.phase==='SEASON_REVIEW'?engine.usYearTransitionReadiness(c):null,
+   yearTransition:transition,
+   majorContract:majorContractView(c,transition),
    leagues:engine.usConferenceConfigurationView(c),
    postseason:phase.phase==='POSTSEASON_PROGRESS'||c.postseason?engine.usPostseasonView(c):null,
    minorMarket:c.minorMarket?{...engine.usMinorMarketView(c),eventKey:c.minorMarket.eventKey,eventVersion:c.events.find(event=>event.eventKey===c.minorMarket!.eventKey)!.version}:null};

@@ -1,0 +1,40 @@
+✖ major API rejects caller financial terms and preserves an unfunded owner (2.4181ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4167.357
+
+✖ failing tests:
+
+test at apps\api\test\m2-us-major-year.test.ts:12:1
+✖ major API rejects caller financial terms and preserves an unfunded owner (2.4181ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /INVALID_PAYLOAD/. Input:
+  
+  'Error: UNSUPPORTED_COMMAND'
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-us-major-year.test.ts:13:78)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: UNSUPPORTED_COMMAND
+        at fail (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\src\career-us-play-shell.ts:11:55)
+        at applyUsPlay (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\src\career-us-play-shell.ts:19:14)
+        at applyEngineCommand (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\src\engine-command.ts:31:58)
+        at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-us-major-year.test.ts:13:89)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-us-major-year.test.ts:13:78)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.start (node:internal/test_runner/test:1242:17),
+    expected: /INVALID_PAYLOAD/,
+    operator: 'throws',
+    diff: 'simple'
+  }

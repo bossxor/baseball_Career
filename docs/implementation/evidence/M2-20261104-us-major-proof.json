@@ -1,0 +1,22 @@
+{
+  "base": "5d3b6bc",
+  "apiFocused": {
+    "passed": 5,
+    "failed": 0,
+    "log": "M2-20261104-us-major-api-complete.log"
+  },
+  "counter": {
+    "redDisplayed": 5680000,
+    "expected": 6248000,
+    "greenPassed": 1
+  },
+  "staticExit": 0,
+  "reviewActionableFindings": 0,
+  "controlledSixSeasonPrefix": true,
+  "nativeSixSeasonPlaythrough": false,
+  "wholeSuiteExecuted": false,
+  "sourceHashes": {
+    "apps/api/src/career-us-play-shell.ts": "e9b9376ec85f6c84ed6c6eddc1efaf7978d517e1c4461cec0cf03893565dce95",
+    "apps/api/test/m2-us-major-year.test.ts": "6e815b7ffe92eb0696414140ad59c0d032c40b32749324bf7338bcbd3ed1670f"
+  }
+}

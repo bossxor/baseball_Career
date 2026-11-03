@@ -1,3 +1,9 @@
+# 최신 — 메이저 재계약·원구단 FA 저장 API
+
+M2-US-MAJOR-YEAR-API-20261104.md를 먼저 읽는다. 기존 native NEXT_MAJOR_YEAR/ACCEPT_MAJOR_FA2명령과 실제 연말 quote 연결. 소유 funding만 재사용하고 지원금 추정0. 승인 counter 표시5680000→6248000 불일치를 RED로 잡아 native 가격/키와 통일했다. 최종 API5/5·정적 검사·독립 리뷰 통과. 통제6등록시즌 뒤 FA/보장 승계이며 native6년 전체가 아니다. 원구단 외 시장은 별도 범위다.
+
+US_PLAY는 총19명령이다. 현재 source 전체 check·실제 대형 PostgreSQL·기본 화면·99/24/PF는 아직 남는다. 사용자는 원구단+타 구단 최대3곳 MLB FA 비교를 승인했다(14/13 반영). 다음 묶음에서 새 시장의 소유권/계약/로스터·연도별 금전 연속성을 구현한다. 현재 current-club-only native를 전체 시장 완료로 세지 않는다. 기존 사용자 us-amateur-return-career.test.ts21줄은 그대로 보존한다. PC 종료 금지, V: 문서/증거 Copy-Item만. 최종 커밋은 git log/remote로 확인한다. 아래는 과거 인계다.
+
 # 최신 — 가상 US 고정 AL/NL·포스트시즌 API
 
 M2-US-LEAGUES-POSTSEASON-API-20261104.md를 먼저 읽는다. 원격 bc0f51b까지 최신화했고 사용자 승인으로 가상30구단 고정 ID 소속표를 생성/legacy metadata에 연결했다. 공개3명령(CONFIGURE_LEAGUES/START_POSTSEASON/ADVANCE_POSTSEASON), 소속/PS 공개 조회 연결. 묶음11/11·정적 검사 종료0, 독립 리뷰 조치 사항 없음. controlled 정규 접두 뒤 새 API native FINAL1경기와 기존 PS native46경기 우승 검증이며 native 정규8790경기 증거는 아니다. 전체 check는 새 source에 재실행하지 않았다.
