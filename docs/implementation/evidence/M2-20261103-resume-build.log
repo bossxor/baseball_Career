@@ -1,0 +1,16 @@
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/db@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/api@0.1.0 build
+> tsc -p tsconfig.json
+

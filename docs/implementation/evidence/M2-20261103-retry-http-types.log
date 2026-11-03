@@ -1,0 +1,4 @@
+apps/api/test/m2-us-return-retry-http.test.ts(23,79): error TS2322: Type 'Response | Promise<Response>' is not assignable to type 'Promise<Response>'.
+  Type 'Response' is missing the following properties from type 'Promise<Response>': then, catch, finally, [Symbol.toStringTag]
+apps/api/test/m2-us-return-retry-http.test.ts(23,276): error TS2322: Type 'Response | Promise<Response>' is not assignable to type 'Promise<Response>'.
+  Type 'Response' is missing the following properties from type 'Promise<Response>': then, catch, finally, [Symbol.toStringTag]

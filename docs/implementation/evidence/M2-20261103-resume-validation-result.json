@@ -1,0 +1,43 @@
+{
+  "sourceCommit": "e6df2eee7fd6b4a5cc7c6c2ab797819ff2a4b85a",
+  "checkExitCode": 0,
+  "engineAndApi": {
+    "tests": 1058,
+    "pass": 1053,
+    "fail": 0,
+    "skipped": 5,
+    "durationMs": 1915578.1941
+  },
+  "web": {
+    "tests": 24,
+    "pass": 24,
+    "fail": 0
+  },
+  "smokeExitCode": 0,
+  "sourceFreeze": {
+    "files": 506,
+    "changed": [],
+    "added": []
+  },
+  "nativeOptionalExhaustion": {
+    "passed": true,
+    "mandatorySeasons": 2,
+    "mandatoryBudgetCharged": 0,
+    "optionalSeasons": 3,
+    "gamesPerTeamPerOptionalSeason": 48,
+    "finalUsage": 3,
+    "recordRevision": 54228
+  },
+  "pathProof": {
+    "slices": 17,
+    "commands": 118,
+    "whole24PathsProven": false
+  },
+  "externalSkips": [
+    "existing Neon transaction environment",
+    "existing Managed Auth environment",
+    "three large-save PostgreSQL HTTP tests without PLAYBALL_LARGE_SAVE_DATABASE_URL"
+  ],
+  "observedUnresolvedLimit": "PGlite out-of-memory updating the native roughly174MB return origin, reproduced in memory and disk filesystems. Real PostgreSQL persistence is unverified.",
+  "m2Complete": false
+}

@@ -29,7 +29,7 @@
 - 실제 의무 귀국2시즌 접두 생성 종료0: resume-native-prefix.log.
 - 실제 선택3시즌·새 국내 평가·미국 제안 처리·명시 E35/JSON 보관: 1/1 통과, 종료0,973177.5424ms. 각48경기, 누적예산3·의무2시즌 소모0. 최종 recordRevision54228. resume-exhaustion-native.log 및 .exitcode.txt를 본다.
 - 오류 로깅3개 회귀 통과. 신규 PostgreSQL HTTP3개는 환경 미설정으로 제외.
-- 공유 helper 추출과 신규 타입/lint 통과. 신선한 엔진/오류/HTTP 검사 리뷰 후 source506파일을 동결했다. 전체 npm run check는 resume-final-check.log에서 실행 중이다. 이전 통과 수를 이번 전체 통과로 합산하지 않는다.
+- 공유 helper 추출과 신규 타입/lint 통과. 신선한 엔진/오류/HTTP 검사 리뷰 후 source506파일을 동결했다. 전체 npm run check 종료0: 엔진/API1058중1053통과·실패0·환경 의존5건 제외,1915578.1941ms. 웹24/24, build·엔진/이벤트/설계10종·Android셸·자산 검사와 HTTP smoke 종료0. source506파일 변경·추가0. 제외5건은 기존 Neon/Auth2건과 별도 PostgreSQL HTTP3건이다. 실제 대용량 PostgreSQL 성공/M2 전체 완료를 뜻하지 않는다.
 - API 인접 회귀15중12통과·실패0·별도 PostgreSQL3제외,68842.991ms(resume-api-regressions.log). 기존 대학 선택/은퇴/특성 HTTP와 귀국 root pure dispatch를 포함한다. 신규 대용량3건을 실제 HTTP 통과로 세지 않는다.
 
 전체99사건/24경로/PF, 실제 웹 연결, KBO 배경 OFFSEASON_STAGING_ONLY와 미국 비활동 workload 근사 등 기존 한계는 유지한다. 현재 엔진 owner를 가짜 학교/계약/원장으로 바꾸거나, 테스트 자원 부족을 가짜 성공/계약 보장으로 우회하지 않는다.
@@ -37,3 +37,11 @@
 ## 최신 경로 해시
 
 최종 소스에서 기존17구간·118명령을 재실행해 종료0을 확인했다. `evidence/M2-20261103-resume-paths.json.gz`의 sourceManifestHash는 `4c6dd5fef7bb7991898fac712ca78387afa625c04c994666c3279cbad747298c`다. 학교 진로/대학 복학/구종/포스팅/협상/대표 경기/KBO 첫 경기/P13 부상 회복 구간을 포함한다. 제어 접두와 구간별 미증명 부분은 보고서에 유지했다. 전체24경로 완료 또는 새 귀국 E35 전체 명령 해시를 뜻하지 않는다. 새 E35는 별도의 native 테스트 실행 증거다.
+
+## 최종 저장 및 재개
+
+구현·집중 증거는 `e6df2ee`로 커밋·푸시하고 원격 일치를 확인했다. 이후 변경은 최종 전체 검사 결과와 인계다. 최종 커밋은 git log -1로 확인한다. 신선한 리뷰에서 엔진 owner의 구체적인 결함은 확인되지 않았고, 로깅 regex 우려는 실제 줄바꿈 회귀가 변경 없이 통과해 오탐으로 판정했다. 새 HTTP fixture는 CAREER 저장을 사용한다. PostgreSQL HTTP3건은 환경 미설정으로 실행하지 않았다.
+
+전체 실행 증거는 `evidence/M2-20261103-resume-final-check.log`, `.exitcode.txt`, `resume-final-smoke.log`, `resume-final-freeze-check.json`, `resume-validation-result.json`에 있다. 이 세션의 engine/rules 제품 코드는 d76f99d와 동일하고, 변경된 API 제품 코드는 제한된 오류 로깅뿐이다. 실제3선택시즌 E35가 같은 최종 전체 묶음에서도 재통과했다. 장기 내장 DB 메모리 부족을 수정됐다고 주장하지 않는다.
+
+사용량 최종 조회에서5시간사용86%·잔여14%, 주간사용91%·잔여9%를 확인해5% 마감과 인계/푸시 여유를 확보했다. 새 구현은 추가하지 않고 현재 검증 묶음을 마감한다. PC 종료/사용량 초기화/실제 외부 DB 접속은 수행하지 않았다.
