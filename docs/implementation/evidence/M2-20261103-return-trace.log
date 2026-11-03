@@ -1,0 +1,15 @@
+M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit
+M2 closure: nativeReturnedUs endpoints verified
+{
+  "status": "PARTIAL_RUNTIME_EVIDENCE_NOT_M2_COMPLETION",
+  "sourceManifestHash": "37914a30ac9c273fe33a38662fdbb06c96a3cbb444e29bdaae107fbc5f12fed7",
+  "slices": [
+    {
+      "id": "P10-returned-undrafted-to-current-US-contract",
+      "commandChainHash": "8a023cd8384abc400fc593444739f7645d0144c85016bdc319652041d2a6f824",
+      "finalStateHash": "4dfb90b16fe6bdd7af181a5f580d2694f70cb6596b7cb53141023803492d0ff4",
+      "commands": 3
+    }
+  ],
+  "output": "E:\\AI\\Game\\baseball_career\\docs\\implementation\\evidence\\M2-20261103-return-trace.json.gz"
+}

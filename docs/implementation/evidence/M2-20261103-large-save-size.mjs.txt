@@ -1,0 +1,36 @@
+// Offline measurement only. Pass the native cache path; no DB connection or save mutation.
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+import {gzipSync,gunzipSync} from 'node:zlib';
+
+const raw=fs.readFileSync(process.argv[2]);
+const cache=JSON.parse(raw),origin=cache.origin;
+assert.equal(cache.schemaVersion,1);
+assert.ok(origin?.source&&Array.isArray(origin.completedPreparation));
+const hash=data=>createHash('sha256').update(data).digest('hex');
+const size=value=>Buffer.byteLength(JSON.stringify(value));
+const serialized=JSON.stringify(origin),compressed=gzipSync(serialized);
+assert.equal(hash(gunzipSync(compressed)),hash(serialized),'gzip must preserve the exact serialized origin');
+const rows=[];
+function inspect(value,path,depth){
+ if(!value||typeof value!=='object')return;
+ for(const [key,child] of Object.entries(value)){
+  const bytes=size(child);if(bytes<100000)continue;
+  rows.push({path:path+'.'+key,bytes,sha256:hash(JSON.stringify(child))});
+  if(depth>0)inspect(child,path+'.'+key,depth-1);
+ }
+}
+inspect(origin,'origin',2);
+const groups=Object.values(Object.groupBy(rows,row=>row.sha256));
+const duplicateGroups=groups.filter(group=>group.length>1).map(group=>({bytesEach:group[0].bytes,paths:group.map(row=>row.path)}));
+const live=JSON.stringify(origin.preparation),last=JSON.stringify(origin.completedPreparation.at(-1));
+assert.equal(live,last,'the measured completed live preparation must equal the final immutable archive');
+const result={
+ status:'OFFLINE_SIZE_MEASUREMENT_NOT_DATABASE_ACCEPTANCE',
+ cacheBytes:raw.length,cacheSha256:hash(raw),originBytes:size(origin),originGzipBytes:compressed.length,
+ gzipRoundTripExact:true,livePreparationDuplicatesLastArchive:true,livePreparationDuplicateBytes:Buffer.byteLength(live),
+ measurementScope:'This cache only. Rows overlap; do not add them. Compression is a size estimate, not a storage implementation or DB acceptance proof.',
+ rows,duplicateGroups,
+};
+process.stdout.write(JSON.stringify(result,null,2)+'\n');

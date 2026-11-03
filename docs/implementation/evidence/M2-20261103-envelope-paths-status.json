@@ -1,0 +1,6 @@
+{
+  "status": "CANCELLED_AT_USER_WORKFLOW_CHANGE_NOT_A_PASS",
+  "reason": "User requested bundled implementation and one final validation instead of repeated long proof runs. Interrupted owned session 51463. All scenario endpoint lines printed, but no final artifact or successful exit was recorded.",
+  "processExitCode": 1,
+  "finalArtifactProduced": false
+}

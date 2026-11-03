@@ -1,6 +1,32 @@
 import assert from 'node:assert/strict';
+import {nativeUndraftedUsReturn} from '../packages/engine/test/us-return-retry-fixture.ts';
+import * as returnedRetry from '../packages/engine/src/us-return-retry.ts';
 import {retryNoOfferPrefix} from '../packages/engine/test/retry-completion-scenario.ts';
 import * as retry from '../packages/engine/src/career-pro-retry.ts';
+
+export function returnedUsContractPath(trace){
+ const origin=nativeUndraftedUsReturn();
+ const t=trace('P10-returned-undrafted-to-current-US-contract',origin,{
+  kind:'CONTROLLED_PREFIX_NATIVE_SLICE',
+  fixture:'packages/engine/test/us-return-retry-fixture.ts:nativeUndraftedUsReturn',
+  description:'Six controlled closed US years, two actual independent48-game mandatory return years, actual initial undrafted draw under controlled legal payroll saturation. Tracing starts after that draw: returned retry gateway, current US opportunity and accepted contract. No optional season, military service, native full US season or full P10 claim.',
+ });
+ t.command('OPEN_US_RETURN_RETRY',{},s=>returnedRetry.openUsAmateurReturnRetry(s,s.revision));
+ t.command('ASSESS_US_RETURN_RETRY_US',{},s=>returnedRetry.assessUsAmateurReturnRetryUsOpportunity(s,s.revision));
+ const quoted=t.state,q=quoted.usOpportunities.at(-1),view=returnedRetry.usAmateurReturnRetryRoutesView(quoted);
+ const offer=q.offers.find(o=>o.organizationId!==origin.source.protagonistOrganizationId)??q.offers[0];assert.ok(offer);
+ const input={routePreviewId:view.routePreviewId,offerKey:offer.offerKey};
+ t.command('ACCEPT_US_RETURN_RETRY_US',input,s=>returnedRetry.resignUsAfterAmateurReturnRetry(s,s.revision,input));
+ const us=t.state,club=us.inventory.clubs.find(c=>c.id===offer.organizationId),before=q.inventory.clubs.find(c=>c.id===offer.organizationId);
+ assert.equal(us.world.seasonKey,q.world.seasonKey);
+ assert.equal(us.world.players[us.protagonistKey].age,quoted.retry.age+1);
+ assert.equal(us.retryCareer.careerPreparationUsed,0);
+ assert.equal(us.usAmateurReturnHistory.return.years.length,2);
+ assert.equal(us.contract.annualSalaryUsd,30000);
+ assert.equal(club.availableBudgetUsd,before.availableBudgetUsd-30000);
+ assert.ok(Object.keys(origin.source.records.games).every(key=>Object.hasOwn(us.records.games,key)));
+ return t.finish({mandatoryTeamGames:[48,48],mandatoryYears:2,optionalBudgetUsed:0,currentYearQuote:true,currentAge:true,annualSalaryUsd:30000,salaryReservedOnce:true,originalRecordsPreserved:true,jsonReplay:'every command',sourceImmutability:'every command'});
+}
 import {completedHighSchoolCareer,completedCollegeAcademicYear,enrolledCollegeCareer,enteredKboCareer} from '../packages/engine/test/fixtures.ts';
 import {acknowledgeHighSchoolSeasonReview,openHighSchoolCareerRoute} from '../packages/engine/src/high-school-route.ts';
 import {prepareCareerKboDraft,resolveCareerKboDraft,decideCareerKboDraft} from '../packages/engine/src/career-kbo.ts';

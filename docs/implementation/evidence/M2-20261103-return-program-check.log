@@ -1,0 +1,27 @@
+✔ API logs the bounded database cause without serializing query parameters or save state (16.9495ms)
+✔ API bounds cyclic causes and an unwrapped query error without dropping its request id (0.9702ms)
+✔ API redacts parameter lines after an actual newline without relying on a query wrapper prefix (0.8206ms)
+✔ mandatory return commands reject caller authority and malformed input before accessing a career (1.1136ms)
+✔ US contract end enters the real mandatory return owner, starts a year and advances bounded native games (26206.5758ms)
+✔ actual completed mandatory owner exposes its draft and hands off to the existing optional retry gateway (18711.2308ms)
+✔ CORS: allowed origins get headers on preflight and responses, unknown origins get none (714.26ms)
+✔ creation ids are owner-scoped: another user never sees or collides with a save (465.2005ms)
+✔ concurrent identical creations all return the one save; the active-save cap applies to creation too (562.3916ms)
+✔ list cursor keeps microsecond precision: no row sharing a millisecond is skipped (516.1037ms)
+✔ UI shell: the server validates the seed and refuses a second one (546.0882ms)
+✔ UI shell: advance and choose follow the phase, the pending event, the offered options and the chances (494.2917ms)
+✔ M7 input: wrong types answer 400, never 500; a club backup restores as a club save (488.3208ms)
+✔ M7 ids: concurrent identical backups resolve to one file; restore ids are owner-scoped and bound to one backup (461.4417ms)
+✔ V02 reject missing auth and non-allowlisted subject (744.5104ms)
+✔ V03 unique receipt, idempotent replay, rollback on bad payload (565.754ms)
+✔ F08 two devices same expectedRevision — one wins, other 409 (464.6438ms)
+✔ command API rejects non-object JSON without changing a save or recording a receipt (733.1246ms)
+✔ creation API rejects non-object JSON without consuming a save slot (392.6546ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 60666.1362

@@ -20,7 +20,7 @@ import {startKboRegularSeason, advanceKboCareer} from '../packages/engine/src/kb
 import {setCareerSeasonGoals} from '../packages/engine/src/season-goals.ts';
 import {hireCareerAgent, assertCareerAgentLedger} from '../packages/engine/src/career-agent.ts';
 import {recordTotals} from '../packages/engine/src/records.ts';
-import {controlledSchoolPaths,collegeServicePath,agentPath,pitcherLearningPath,nationalAppearancePath,postingPaths,retryExhaustionPath,injuryTrainingPath} from './m2-path-scenarios.mjs';
+import {controlledSchoolPaths,collegeServicePath,agentPath,pitcherLearningPath,nationalAppearancePath,postingPaths,retryExhaustionPath,injuryTrainingPath,returnedUsContractPath} from './m2-path-scenarios.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const hash=value=>createHash('sha256').update(canonicalJson(value)).digest('hex');
@@ -104,7 +104,7 @@ function writeEvidence(path,value){mkdirSync(resolve(path,'..'),{recursive:true}
 const slices=[];
 try{
 console.log('M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit');
-const scenarios={nativeSchool:()=>[nativeSchool()],nativeKbo:()=>[controlledKbo()],school:()=>controlledSchoolPaths(trace),collegeService:()=>[collegeServicePath(trace)],agent:()=>agentPath(trace),pitcher:()=>[pitcherLearningPath(trace)],national:()=>[nationalAppearancePath(trace)],posting:()=>postingPaths(trace),retry:()=>[retryExhaustionPath(trace)],injury:()=>[injuryTrainingPath(trace)]};
+const scenarios={nativeReturnedUs:()=>[returnedUsContractPath(trace)],nativeSchool:()=>[nativeSchool()],nativeKbo:()=>[controlledKbo()],school:()=>controlledSchoolPaths(trace),collegeService:()=>[collegeServicePath(trace)],agent:()=>agentPath(trace),pitcher:()=>[pitcherLearningPath(trace)],national:()=>[nationalAppearancePath(trace)],posting:()=>postingPaths(trace),retry:()=>[retryExhaustionPath(trace)],injury:()=>[injuryTrainingPath(trace)]};
 const selection=process.argv.find(arg=>arg.startsWith('--scenarios='))?.slice('--scenarios='.length);
 const selected=selection===undefined?Object.keys(scenarios).filter(name=>!process.argv.includes('--paths-only')||!name.startsWith('native')):selection.split(',');
 assert.ok(selected.length>0&&new Set(selected).size===selected.length&&selected.every(name=>Object.hasOwn(scenarios,name)),'unknown, empty or duplicate closure scenario');
@@ -119,7 +119,7 @@ const events=catalogue.map(e=>{
 assert.equal(events.length,99);assert.equal(new Set(events.map(e=>e.id)).size,99);
 const paths=JSON.parse(readFileSync(resolve(root,'docs/design/end-to-end-design-paths.json'),'utf8')).paths.map(p=>({id:p.id,flow:p.flow,status:'FULL_PATH_NOT_PROVEN',sliceIds:slices.filter(s=>s.pathIds.includes(p.id)).map(s=>s.id)}));
 assert.equal(paths.length,24);
-const result={schemaVersion:1,status:'PARTIAL_RUNTIME_EVIDENCE_NOT_M2_COMPLETION',rulesVersion:slices[0].initialFixture.world.rulesVersion,sourceManifestHash:hash(start),sourceManifest:start,slices,events,paths,externalDependencies:['M3 persistent CAS/receipt/idempotency/two-device/Neon','M4/M5 actual screens/accessibility/visual silhouette inspection','M6 club paths and unified world workers','M7 chronicle producer/export/backup','M8 actual device execution'],unproven:'Unexecuted path segments, events and PF checks are not inferred from these command hashes. Source/test references are triage only.'};
+const result={schemaVersion:1,status:'PARTIAL_RUNTIME_EVIDENCE_NOT_M2_COMPLETION',rulesVersion:(slices[0].initialFixture.world??slices[0].initialFixture.source.world).rulesVersion,sourceManifestHash:hash(start),sourceManifest:start,slices,events,paths,externalDependencies:['M3 persistent CAS/receipt/idempotency/two-device/Neon','M4/M5 actual screens/accessibility/visual silhouette inspection','M6 club paths and unified world workers','M7 chronicle producer/export/backup','M8 actual device execution'],unproven:'Unexecuted path segments, events and PF checks are not inferred from these command hashes. Source/test references are triage only.'};
 assert.deepEqual(sourceManifest(),start,'source changed while building closure inventory; rerun on stable files');
 writeEvidence(output,result);
 console.log(JSON.stringify({status:result.status,sourceManifestHash:result.sourceManifestHash,slices:slices.map(({id,commandChainHash,finalStateHash,commandReceipts})=>({id,commandChainHash,finalStateHash,commands:commandReceipts.length})),output},null,2));

@@ -1,0 +1,382 @@
+{
+  "status": "OFFLINE_SIZE_MEASUREMENT_NOT_DATABASE_ACCEPTANCE",
+  "cacheBytes": 174464252,
+  "cacheSha256": "319bda08f3d092198b221152434dc2ed92defc673e7f7eca6a2b6d0ad91117d8",
+  "originBytes": 174464008,
+  "originGzipBytes": 7147860,
+  "gzipRoundTripExact": true,
+  "livePreparationDuplicatesLastArchive": true,
+  "livePreparationDuplicateBytes": 33963900,
+  "measurementScope": "This cache only. Rows overlap; do not add them. Compression is a size estimate, not a storage implementation or DB acceptance proof.",
+  "rows": [
+    {
+      "path": "origin.source",
+      "bytes": 79981862,
+      "sha256": "324dbef47292d9acd285758094ac011682b87338817adb634416d3b1e381d0bd"
+    },
+    {
+      "path": "origin.source.world",
+      "bytes": 3195698,
+      "sha256": "e9237ef75243c03d6c6b5b6b719f22c72e5fe2bac4e36bd6dd5b4b68e185eca9"
+    },
+    {
+      "path": "origin.source.world.organizations",
+      "bytes": 243787,
+      "sha256": "e91c26574bc3f6ceabd0e4fc4e03c6977d50cd47c17829f889bad8a178c78665"
+    },
+    {
+      "path": "origin.source.world.players",
+      "bytes": 2426535,
+      "sha256": "7cbba080e1a54c600d9fe2d423a01a7d7ffce380898a2d82a0f493f01e27ea79"
+    },
+    {
+      "path": "origin.source.world.repertoires",
+      "bytes": 523201,
+      "sha256": "41977c809e7cd95d6cc520a280e41588e48f03aa21d56e25d674b42ad539017c"
+    },
+    {
+      "path": "origin.source.income",
+      "bytes": 300209,
+      "sha256": "bb308699b5616514a698aef3a6a640f4acab306f7adfab2c5230a0c7d689ef9d"
+    },
+    {
+      "path": "origin.source.inventory",
+      "bytes": 245827,
+      "sha256": "8a25f74813eadd15104a4172ddf558facd01b4c2c305bcb51b368124c5f57e50"
+    },
+    {
+      "path": "origin.source.inventory.registeredPlayerKeys",
+      "bytes": 241417,
+      "sha256": "01b28d16e01cfb23f8ccacd525a31860d04ad01a32e8413163d8146f64dfee89"
+    },
+    {
+      "path": "origin.source.amateurHistory",
+      "bytes": 8810061,
+      "sha256": "cbfeea7fe3952ccd4ad08c903283fcbba1613e347603234de25f51814b16e3c6"
+    },
+    {
+      "path": "origin.source.amateurHistory.world",
+      "bytes": 207776,
+      "sha256": "147393b1c7f85722a624def4592045672bcda22c3d1563c4014256a222ccf5ec"
+    },
+    {
+      "path": "origin.source.amateurHistory.health",
+      "bytes": 362560,
+      "sha256": "678598c1ee780bb527c340caa036c81689b68cb1ff5f94b19a0766ae2bfc3c50"
+    },
+    {
+      "path": "origin.source.amateurHistory.days",
+      "bytes": 102310,
+      "sha256": "cda0962057a9110c55993140935e7aa43cac7db18b1f7d2d41ea7e72b75b0d46"
+    },
+    {
+      "path": "origin.source.amateurHistory.usRecruitment",
+      "bytes": 2428905,
+      "sha256": "a64453e1cce4e54a1d7b4c72360e06337042dbffbba308575ff94a0c1f9aa145"
+    },
+    {
+      "path": "origin.source.amateurHistory.usYearEnd",
+      "bytes": 5616472,
+      "sha256": "c38994ca14408522515c1d0a4f88e7834452db4e4e9938e225be037fb409a20f"
+    },
+    {
+      "path": "origin.source.records",
+      "bytes": 18183352,
+      "sha256": "712e01a3f3e8303ffa585d627f0430e0bc9c4ca60d0736130f28d072c4b074a6"
+    },
+    {
+      "path": "origin.source.records.games",
+      "bytes": 18183325,
+      "sha256": "164154b6c8134ed4bfeaa454044d4e3ab2db4a34fd28dcaceab819feeb5ab748"
+    },
+    {
+      "path": "origin.source.health",
+      "bytes": 362595,
+      "sha256": "b5fc1ef6a872b6a0a251ffc5e7aa21cd90d71f70ee88421ec96f33e6b530d0e6"
+    },
+    {
+      "path": "origin.source.health.games",
+      "bytes": 362409,
+      "sha256": "14e8e9c91f1a9c49db8c86facc7000104d01c57128ff90d2077e941fa8695080"
+    },
+    {
+      "path": "origin.source.minorYears",
+      "bytes": 41112226,
+      "sha256": "f250dea368fceb23eb8f65708a7f587cd79fd01a64f66e6ab056d522e9bfb087"
+    },
+    {
+      "path": "origin.source.minorYears.0",
+      "bytes": 8227186,
+      "sha256": "3bce76f58f6566e7fe0ce33ddc94b9b01e01983356b75e5ced7cf35ec0718bd4"
+    },
+    {
+      "path": "origin.source.minorYears.1",
+      "bytes": 8217910,
+      "sha256": "9c18319d7e88f9dbfcd95f8657c2b1a8042c46ba6da77adccf1e4e7598327d3b"
+    },
+    {
+      "path": "origin.source.minorYears.2",
+      "bytes": 8222410,
+      "sha256": "fa5e3e449a99a96be64805ad5c8a2e2c4fa3465d0a714a07af221e1f2ca44b12"
+    },
+    {
+      "path": "origin.source.minorYears.3",
+      "bytes": 8218269,
+      "sha256": "3cb95f6bb0e9118dece4ae74d00ae19a4480767a42bff3c2ee93dcaefd2625bd"
+    },
+    {
+      "path": "origin.source.minorYears.4",
+      "bytes": 8226445,
+      "sha256": "eb4b643e6fcd2409ad0f95bc289a69dc824ac5117685a8376a34615e18175241"
+    },
+    {
+      "path": "origin.source.seasonSchedule",
+      "bytes": 1311818,
+      "sha256": "e18da65fe329c2d280f26679ea159ac01721b51d3ebaa785547fb868060668ef"
+    },
+    {
+      "path": "origin.source.seasonSchedule.leagues",
+      "bytes": 1306261,
+      "sha256": "28a5b72cfa4db56d61460424525fd4577ccf29f3d5604960840bff673532f9d9"
+    },
+    {
+      "path": "origin.source.season",
+      "bytes": 6392394,
+      "sha256": "0edeee5b5faceb4c3e696e06247069dc0055d342df226d3ee49148931f74c419"
+    },
+    {
+      "path": "origin.source.season.openingPlayers",
+      "bytes": 2426540,
+      "sha256": "2c9d9a6c84e6ef59f1bc3e1fbca7c4b13f89ea1c8c7249957fbec8ea122cff2b"
+    },
+    {
+      "path": "origin.source.season.days",
+      "bytes": 3414316,
+      "sha256": "2141f02dc6cd1e68a6cc3be038c3e209514ec11097697cddbe895524cd9519ae"
+    },
+    {
+      "path": "origin.source.season.growthFinalized",
+      "bytes": 455588,
+      "sha256": "a99b213335aa22a07bfa83db2c3cfb5b6c721a367f7813983c4948adf370a3ef"
+    },
+    {
+      "path": "origin.return",
+      "bytes": 256688,
+      "sha256": "de34884a830e196c6aa9300aba1a30da919c1985742799fab95c2e625879a001"
+    },
+    {
+      "path": "origin.return.years",
+      "bytes": 255195,
+      "sha256": "c116e687f0f30b908ad7fd3365147f65069f1fe65b10648c46be41b5a3c39c25"
+    },
+    {
+      "path": "origin.return.years.0",
+      "bytes": 124528,
+      "sha256": "621a019a1c788436c094c93133d07f2eb7656e306f30d230d88be9ed40ee77a2"
+    },
+    {
+      "path": "origin.return.years.1",
+      "bytes": 130664,
+      "sha256": "73969478a87ccc8011a4aa1382d3fe8420594110724f9be545aeefe6520e1304"
+    },
+    {
+      "path": "origin.completedPreparation",
+      "bytes": 59048204,
+      "sha256": "db48eaa3d175650bd44b08de8536fa7f20df9a1267c61b75b49532d59b05dcd6"
+    },
+    {
+      "path": "origin.completedPreparation.0",
+      "bytes": 25084301,
+      "sha256": "1424e404a827c8deda2d2d0f95e4e3158b056e149e7995204546905a96ff48dd"
+    },
+    {
+      "path": "origin.completedPreparation.0.world",
+      "bytes": 5183474,
+      "sha256": "ff32e0a33e70d51ab3064ae956d440b8e859e8fe29d17efc805e54b72f4a9d5f"
+    },
+    {
+      "path": "origin.completedPreparation.0.records",
+      "bytes": 8103243,
+      "sha256": "e5c0b1c1086f8b53dfa5a29feceb3ca5891ff22e48552f05b7363f1d25f70879"
+    },
+    {
+      "path": "origin.completedPreparation.0.health",
+      "bytes": 1694772,
+      "sha256": "78c2b008b4d9e734080ab6245a0642318cc09af6725011d0f05a2c8aaefc0074"
+    },
+    {
+      "path": "origin.completedPreparation.0.days",
+      "bytes": 9957510,
+      "sha256": "34b6a00e807bd93a1c09dcf3ed9007970265c02aa5c15a331d788b76a7b2e261"
+    },
+    {
+      "path": "origin.completedPreparation.0.seasonGrowth",
+      "bytes": 123192,
+      "sha256": "1682bbb0cd1bfcfa6096d13198c067a720019af9259dfc4483b00d0ad15b16b2"
+    },
+    {
+      "path": "origin.completedPreparation.1",
+      "bytes": 33963900,
+      "sha256": "c8aacb391b2473f4f4d9ef8979764fc6166d45c78736d96ecfb8711be54ef9ac"
+    },
+    {
+      "path": "origin.completedPreparation.1.world",
+      "bytes": 5225398,
+      "sha256": "fb230b9e674bd98c37466b41fce1d8822bed614ef5166fd90a40473ef0c3e5e9"
+    },
+    {
+      "path": "origin.completedPreparation.1.records",
+      "bytes": 15522704,
+      "sha256": "5cfc5da0407cf091d95b4369403f7c22bebea74c0a792c856c35b699f09c3919"
+    },
+    {
+      "path": "origin.completedPreparation.1.health",
+      "bytes": 3027283,
+      "sha256": "b9707a46b0468cb7f066f05c0780b7af380ec704ea339b3703b9864bd1c909f2"
+    },
+    {
+      "path": "origin.completedPreparation.1.days",
+      "bytes": 10032512,
+      "sha256": "d0aa042c260eabd3f84a402488eb32b97e03eb34aa14199816f95c9ce3682e39"
+    },
+    {
+      "path": "origin.completedPreparation.1.seasonGrowth",
+      "bytes": 129328,
+      "sha256": "74df77c16cd1f65083a0440f607a5573e7e92c8570bba4959f39e3332595c913"
+    },
+    {
+      "path": "origin.preparation",
+      "bytes": 33963900,
+      "sha256": "c8aacb391b2473f4f4d9ef8979764fc6166d45c78736d96ecfb8711be54ef9ac"
+    },
+    {
+      "path": "origin.preparation.world",
+      "bytes": 5225398,
+      "sha256": "fb230b9e674bd98c37466b41fce1d8822bed614ef5166fd90a40473ef0c3e5e9"
+    },
+    {
+      "path": "origin.preparation.world.players",
+      "bytes": 142352,
+      "sha256": "0537eed56367b4eed233b3dabe308a595cb1fbbe7a48b4e1c286d16081871fb2"
+    },
+    {
+      "path": "origin.preparation.world.repertoires",
+      "bytes": 5030815,
+      "sha256": "105e178d931edad445f658fe99b9cc5328797cdfbb1fbf14ebee7387dfdafa18"
+    },
+    {
+      "path": "origin.preparation.records",
+      "bytes": 15522704,
+      "sha256": "5cfc5da0407cf091d95b4369403f7c22bebea74c0a792c856c35b699f09c3919"
+    },
+    {
+      "path": "origin.preparation.records.games",
+      "bytes": 15522677,
+      "sha256": "a101363cc23ba50675f6db0c662fdc7f525adfd82d2d16ddaf7187f381773826"
+    },
+    {
+      "path": "origin.preparation.health",
+      "bytes": 3027283,
+      "sha256": "b9707a46b0468cb7f066f05c0780b7af380ec704ea339b3703b9864bd1c909f2"
+    },
+    {
+      "path": "origin.preparation.health.games",
+      "bytes": 3026325,
+      "sha256": "ca97cba00763c44c10258d2d9e878d03c97e41193e15525d87915e07151c3320"
+    },
+    {
+      "path": "origin.preparation.days",
+      "bytes": 10032512,
+      "sha256": "d0aa042c260eabd3f84a402488eb32b97e03eb34aa14199816f95c9ce3682e39"
+    },
+    {
+      "path": "origin.preparation.days.days",
+      "bytes": 10032441,
+      "sha256": "b9d5133fcbdb1e00187950f0e95b35c244c098608c9e266fcadba47e331332e2"
+    },
+    {
+      "path": "origin.preparation.seasonGrowth",
+      "bytes": 129328,
+      "sha256": "74df77c16cd1f65083a0440f607a5573e7e92c8570bba4959f39e3332595c913"
+    },
+    {
+      "path": "origin.preparation.seasonGrowth.entries",
+      "bytes": 128570,
+      "sha256": "14e0622d9b0d19c20dc88b7c0d6f495aca5861e87765099151ecaff9381d2f1f"
+    },
+    {
+      "path": "origin.draft",
+      "bytes": 1198362,
+      "sha256": "f63e9710a51221bc7fce67900fdac68136951c0eb9fc30b42a2c5da3fa8f5210"
+    },
+    {
+      "path": "origin.draft.world",
+      "bytes": 535782,
+      "sha256": "f57736fcc005bb31860e6d5a12b9a832e877f4110bb5e3c81a8a0e38ca4b47a6"
+    },
+    {
+      "path": "origin.draft.world.players",
+      "bytes": 308418,
+      "sha256": "09f30626dddc985fa20af6b3e856d2e751770b964cf90996375a7f6f581c75f4"
+    },
+    {
+      "path": "origin.draft.world.contracts",
+      "bytes": 135471,
+      "sha256": "875244f1574d1a31e18ca547f24a59ac8947eb831574acd0bd264cab9b9b363a"
+    },
+    {
+      "path": "origin.draft.program",
+      "bytes": 662559,
+      "sha256": "1a7496e15cfbc0dd5b3d01bfc685bd6e5606673490098605521044fb3ee57662"
+    },
+    {
+      "path": "origin.draft.program.sourceBasis",
+      "bytes": 660271,
+      "sha256": "af366954f1e50ebe162d158e3c62309fc6b87a6694f568a666fe70d02746d7f3"
+    }
+  ],
+  "duplicateGroups": [
+    {
+      "bytesEach": 33963900,
+      "paths": [
+        "origin.completedPreparation.1",
+        "origin.preparation"
+      ]
+    },
+    {
+      "bytesEach": 5225398,
+      "paths": [
+        "origin.completedPreparation.1.world",
+        "origin.preparation.world"
+      ]
+    },
+    {
+      "bytesEach": 15522704,
+      "paths": [
+        "origin.completedPreparation.1.records",
+        "origin.preparation.records"
+      ]
+    },
+    {
+      "bytesEach": 3027283,
+      "paths": [
+        "origin.completedPreparation.1.health",
+        "origin.preparation.health"
+      ]
+    },
+    {
+      "bytesEach": 10032512,
+      "paths": [
+        "origin.completedPreparation.1.days",
+        "origin.preparation.days"
+      ]
+    },
+    {
+      "bytesEach": 129328,
+      "paths": [
+        "origin.completedPreparation.1.seasonGrowth",
+        "origin.preparation.seasonGrowth"
+      ]
+    }
+  ]
+}
