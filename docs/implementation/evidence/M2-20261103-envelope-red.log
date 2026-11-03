@@ -1,0 +1,48 @@
+{"level":"error","requestId":"c10f9acb-7661-44db-bd34-7fe42d666d97","message":"Cannot read properties of null (reading 'commandId')"}
+✖ command API rejects non-object JSON without changing a save or recording a receipt (575.6568ms)
+{"level":"error","requestId":"725d9e91-b263-4976-8d7e-0e5ff072a7b2","message":"Cannot read properties of null (reading 'creationId')"}
+✖ creation API rejects non-object JSON without consuming a save slot (317.2398ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2227.2407
+
+✖ failing tests:
+
+test at apps\api\test\request-envelopes.test.ts:11:1
+✖ command API rejects non-object JSON without changing a save or recording a receipt (575.6568ms)
+  AssertionError [ERR_ASSERTION]: body null
+
+  500 !== 400
+
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\apps\api\test\request-envelopes.test.ts:22:14)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 500,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps\api\test\request-envelopes.test.ts:38:1
+✖ creation API rejects non-object JSON without consuming a save slot (317.2398ms)
+  AssertionError [ERR_ASSERTION]: body null
+
+  500 !== 400
+
+      at TestContext.<anonymous> (E:\AI\Game\baseball_career\apps\api\test\request-envelopes.test.ts:47:14)
+      at async Test.run (node:internal/test_runner/test:1404:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:969:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 500,
+    expected: 400,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

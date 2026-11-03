@@ -46,6 +46,7 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
     return errorBody(c, 'INVALID_REQUEST', 400);
   }
   if (
+    !body || typeof body !== 'object' || Array.isArray(body) ||
     typeof body.commandId !== 'string' ||
     body.commandId.length < 1 ||
     body.commandId.length > 128 ||

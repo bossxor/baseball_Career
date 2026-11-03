@@ -49,7 +49,7 @@ export async function postGameCreation(c: Context<{ Variables: AppVariables }>) 
     return errorBody(c, 'INVALID_REQUEST', 400);
   }
 
-  if (typeof body.creationId !== 'string' || !ID_PATTERN.test(body.creationId)) {
+  if (!body || typeof body !== 'object' || Array.isArray(body) || typeof body.creationId !== 'string' || !ID_PATTERN.test(body.creationId)) {
     return errorBody(c, 'INVALID_REQUEST', 400);
   }
   const mode = body.mode === 'CLUB' ? 'CLUB' : body.mode === 'CAREER' ? 'CAREER' : null;
