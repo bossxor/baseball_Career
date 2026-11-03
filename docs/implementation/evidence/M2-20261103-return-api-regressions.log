@@ -1,0 +1,17 @@
+✔ E71 HTTP focus commits once, resumes stored notice and rejects stale/foreign/authority input atomically (4019.2624ms)
+✔ E73 HTTP comparison preserves enrollment until owned signing and reserves accepted terms once (28540.2944ms)
+✔ KBO and US E85 HTTP summary omits private receipts and ACK persists cursor without touching gameplay (16678.657ms)
+✔ route notice HTTP acknowledgment persists only metadata and never substitutes for the focus domain writer (2486.9803ms)
+✔ E74 HTTP return resumes enrollment from actual empty offers and preserves records, with CAS and replay (12755.3827ms)
+✔ E73 public event version drives early draft or continued enrollment without private save access (27900.3778ms)
+✔ E34 -> E36 retry retirement runs through save commands and screens (15960.6085ms)
+✔ returned-US commands reject caller authority before reading an owner (1.9648ms)
+✔ native returned owner uses the existing save command pipeline, JSON and public retry screens (74428.4172ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 195129.905

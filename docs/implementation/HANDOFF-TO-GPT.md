@@ -1,3 +1,7 @@
+# 최신 검증 — API 기존/신규 경로9/9 통과
+
+제품 코드7f7bbae 변경 없이 API3파일 묶음9/9(기존 HTTP7 + 새 pure dispatch/JSON2), 실패0·제외0,195129ms 통과. evidence/M2-20261103-return-api-regressions.log와 .exitcode.txt를 본다. 새 returned root의 실제 HTTP/Neon/외부 CAS 검수는 여전히 남는다. E35 장기 검사 세션17083은2시즌 정산 후3시즌째 진행 중이며 최종 .exitcode.txt부터 확인한다. 기존 큰 runtime JSON2개·zz-dbg.log 보존, PC 종료 금지. 아래 인계의 다음 작업을 계속한다.
+
 # 최신 — 귀국 재도전 저장 API16명령 연결
 
 기능 기준6e888cd 이후 career-us-return-retry-shell.ts와 기존 retry shell을 연결했다. 실제 gateway/JSON/허용 DTO/US 평가·거절/준비 시작 집중2/2, API build·전체 테스트 타입·변경3파일 lint 종료0. evidence/M2-20261103-return-api-batch.log를 본다. HTTP/Neon/외부 저장 CAS/idempotency까지 실행한 검사는 아니다.

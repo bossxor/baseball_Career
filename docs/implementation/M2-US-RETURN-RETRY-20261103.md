@@ -71,3 +71,9 @@ RED 이후 실제 미지명 접두→API OPEN→JSON→공개 조회→US 평가
 E35 장기 검사는 세션17083에서 현재 선택2시즌 정산(각48경기, recordRevision54012)을 기록했고3시즌째 진행 중이다. log에 일부 진행이 있어도 최종 종료 코드와 테스트 PASS 전에는 완료로 세지 않는다. source snapshot은6e888cd 전후 경계 보강 전이며 최종 source 전체 gate가 아니다.
 
 다음: E35 native 결과 처리, 실제3회 원본으로 API 은퇴 확인/US·KBO 활성화의 저장 연동 검사 보강, 신선한 전체 변경 리뷰, 최종 source 동결 후 npm run check1회+HTTP smoke. 게임 웹 버튼/전체 화면, 실제 계정 기기 간 저장 검수는 아직 이번 묶음에서 하지 않았다. M2 추정65%는 유지한다.
+
+## API 기존 경로 회귀 — 2026-11-03
+
+새 prefix/owner 분기가 기존 KBO·대학 경로를 손상하지 않는지3개 API 테스트 파일을 한 번 묶어 실행했다.9/9 통과·실패0·제외0,195129ms(evidence/M2-20261103-return-api-regressions.log, 종료0). 기존7개는 HTTP app.request와 테스트 DB를 통한 집중/미국 비교·서명/특성 ACK/복학/조기 드래프트·계속 재학/재도전 은퇴 흐름이다. 새2개는 순수 명령 dispatch·JSON·공개 DTO·준비 시작 검사다. 새 returned root 자체의 실제 HTTP/Neon 저장/외부 CAS·idempotency까지 검증한 것으로 합산하지 않는다. 제품 코드 변경 없이 기존7f7bbae를 검사했다.
+
+E35 실제3시즌 장기 검사는 세션17083에서2시즌 정산 이후3시즌째 진행 중이다. 최종 결과/종료 코드가 없으므로 아직 통과/실패로 분류하지 않는다. 다음 세션에서 .exitcode.txt를 우선 확인하고 살아 있는 세션을 재사용한다. 최종 source 전체검사는 아직 실행하지 않았다.
