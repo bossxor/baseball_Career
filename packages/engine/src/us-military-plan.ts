@@ -1,3 +1,4 @@
+import {usReturnRetryContinuation} from './us-return-retry.js';
 import {usMajorCallupAdditionalUsd} from './us-season.js';
 import type {UsCareer,ActiveUsRosterWorld} from './us-career-entry.js';
 import {assertUsCareerRevision,assertActiveUsRosterWorld,usCareerView} from './us-career-entry.js';
@@ -308,6 +309,7 @@ function usMilitarySourceCareer(c:UsCareer):UsCareer {
 /** Existing history readers replay the original prefix, then this explicit post-service contract epoch. */
 export function usMilitaryContinuationOrigin(c:UsCareer){
  const r=c.usReturnContinuation;if(r){
+  if(r.retryOfferKey!==undefined){const epoch=usReturnRetryContinuation(c);return {origin:{playerAge:epoch.playerAge,contract:epoch.contract,inventory:epoch.inventory},organizationId:epoch.organizationId,minorYears:(c.minorYears??[]).slice(epoch.sourceMinorYears),majorYears:(c.majorYears??[]).slice(epoch.sourceMajorYears),remainingControlSeasons:epoch.remainingControlSeasons,returnPaidUsd:epoch.paidUsd};}
   const signed=c.minorYears?.[r.sourceMinorYears-1]?.minorRenewal,organizationId=r.organizationId??signed?.organizationId;
   if(r.organizationId!==undefined&&(!signed||signed.organizationId!==r.organizationId||signed.contract.contractKey!==r.contract.contractKey))throw new RangeError('INVALID_US_RETURN_ORGANIZATION');
   return {origin:{playerAge:r.playerAge,contract:r.contract,inventory:r.inventory},organizationId,minorYears:(c.minorYears??[]).slice(r.sourceMinorYears),majorYears:(c.majorYears??[]).slice(r.sourceMajorYears),remainingControlSeasons:r.remainingControlSeasons,returnPaidUsd:r.paidUsd};

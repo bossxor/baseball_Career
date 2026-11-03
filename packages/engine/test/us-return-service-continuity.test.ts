@@ -14,6 +14,7 @@ import {canonicalJson} from '../src/game.js';
 import {usCareerView} from '../src/us-career-entry.js';
 import {prepareUsRosters} from '../src/us-roster-repair.js';
 import {closeSeasonHealth} from '../src/health.js';
+import {stageUsReturnMarket} from '../src/us-return-us-market.js';
 
 test('controlled service dates: return re-sign preserves actual settled NPC growth, supply RNG and records',()=>{
  let source=closedUsOptionCareer('HITTER');
@@ -35,6 +36,12 @@ test('controlled service dates: return re-sign preserves actual settled NPC grow
  const before=canonicalJson(c),service=c.service!,expected=structuredClone(service.world),target=String(Number(expected.seasonKey)+1);
  const surviving=Object.keys(expected.players).filter(k=>k!==source.protagonistKey&&expected.players[k]!.age<45);
  retireAndSupplyUsNpcs(expected,Object.keys(expected.players).filter(k=>k!==source.protagonistKey&&expected.players[k]!.age===45),target,source.protagonistKey);
+ const staged=stageUsReturnMarket(c,service,'controlled-service-current-quote');
+ assert.equal(staged.world.seasonKey,target);assert.equal(staged.inventory.seasonKey,target);
+ assert.deepEqual(staged.world.rng,expected.rng);
+ for(const key of surviving){assert.deepEqual(staged.world.players[key]!.abilities,service.world.players[key]!.abilities);assert.deepEqual(staged.world.players[key]!.careerPeaks,service.world.players[key]!.careerPeaks);assert.equal(staged.world.players[key]!.age,service.world.players[key]!.age+1);}
+ for(const club of staged.inventory.clubs)assert.equal(club.availableBudgetUsd,service.inventory.clubs.find(o=>o.id===club.id)!.availableBudgetUsd,'current quote carries booked service balance without adding grants or reserving salary');
+ assert.equal(canonicalJson(c),before);
  const resumed=resignUsAfterAmateurReturn(c,c.revision,offer.offerKey);
  assert.equal(resumed.world.seasonKey,target);
  assert.deepEqual(Object.keys(resumed.world.players).sort(),Object.keys(expected.players).sort());

@@ -13,6 +13,7 @@ import type {RecordLedger} from './records.js';
 import {assertPreparationSeason} from './preparation-season.js';
 import type {PreparationSeason} from './preparation-season.js';
 import type {RetryRouteAuthority} from './retry-career.js';
+import {retryOfferIsLive} from './retry-career.js';
 import {appearanceFatigue} from './lineup.js';
 
 export interface UsAmateurReturnYear {
@@ -80,7 +81,7 @@ export function settleUsAmateurServiceYear(s:UsAmateurReturnLedger,revision:numb
 /** Returning to a live US offer cancels the domestic draft reservation, preserving completed years and original records. */
 export function cancelUsAmateurReturnForUsOffer(s:UsAmateurReturnLedger,revision:number,authority:RetryRouteAuthority,input:{offerRef:string;authorityRevision:number}):UsAmateurReturnLedger {
  assertRevision(s,revision);const offer=authority.usOffers.find(o=>o.offerRef===input.offerRef);
- if(authority.worldKey!==s.worldKey||authority.playerKey!==s.playerKey||authority.seasonKey!==String(Number(s.sourceSeasonKey)+s.years.length)||authority.age!==s.sourceAge+s.years.length||!Number.isSafeInteger(authority.worldDay)||authority.worldDay<0||!Number.isSafeInteger(authority.authorityRevision)||authority.authorityRevision!==input.authorityRevision||authority.activeContract||!authority.usRightsEligible||!['COMPLETED','NOT_APPLICABLE'].includes(authority.militaryStatus)||!offer||!Number.isSafeInteger(offer.expiresGameDay)||authority.worldDay>=offer.expiresGameDay)throw new RangeError('US_RETURN_OPTION_EXPIRED');
+ if(authority.worldKey!==s.worldKey||authority.playerKey!==s.playerKey||authority.seasonKey!==String(Number(s.sourceSeasonKey)+s.years.length)||authority.age!==s.sourceAge+s.years.length||!Number.isSafeInteger(authority.worldDay)||authority.worldDay<0||!Number.isSafeInteger(authority.authorityRevision)||authority.authorityRevision!==input.authorityRevision||authority.activeContract||!authority.usRightsEligible||!['COMPLETED','NOT_APPLICABLE'].includes(authority.militaryStatus)||!offer||!retryOfferIsLive(offer,authority.worldDay))throw new RangeError('US_RETURN_OPTION_EXPIRED');
  if(s.status==='CANCELLED_US'){if(s.cancelledByOfferRef!==input.offerRef)throw new RangeError('US_RETURN_ALREADY_CANCELLED');return structuredClone(s);}
  const next:UsAmateurReturnLedger={...structuredClone(s),revision:revision+1,status:'CANCELLED_US',draftReservationKey:null,cancelledByOfferRef:input.offerRef};assertUsAmateurReturnLedger(next);return next;
 }

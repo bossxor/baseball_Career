@@ -1,0 +1,10 @@
+✔ returned-US market assesses current year once, preserves return clauses and explicitly closes them without reserving salary (16775.9874ms)
+✔ controlled missing source US market is assessed from the actual returned owner rather than treated as no offers (9279.7848ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 27165.2184

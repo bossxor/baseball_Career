@@ -1,0 +1,18 @@
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+src/us-return-retry.ts(64,6): error TS2451: Cannot redeclare block-scoped variable 'previous'.
+src/us-return-retry.ts(81,8): error TS2451: Cannot redeclare block-scoped variable 'previous'.
+src/us-return-retry.ts(82,14): error TS2339: Property 'length' does not exist on type 'RecordLedger'.
+src/us-return-retry.ts(82,109): error TS2339: Property 'map' does not exist on type 'RecordLedger'.
+src/us-return-retry.ts(82,113): error TS7006: Parameter 'q' implicitly has an 'any' type.
+src/us-return-retry.ts(82,155): error TS2339: Property 'length' does not exist on type 'RecordLedger'.
+src/us-return-retry.ts(83,17): error TS2488: Type 'RecordLedger' must have a '[Symbol.iterator]()' method that returns an iterator.
+npm error Lifecycle script `build` failed with error:
+npm error code 2
+npm error path C:\Users\N-052\.codex\visualizations\2026\10\16\***\baseball-career-m2\packages\engine
+npm error workspace @playball/engine@0.1.0
+npm error location C:\Users\N-052\.codex\visualizations\2026\10\16\***\baseball-career-m2\packages\engine
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c tsc -p tsconfig.json

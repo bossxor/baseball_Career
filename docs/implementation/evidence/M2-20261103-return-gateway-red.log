@@ -1,0 +1,39 @@
+✖ uncompleted return gateway rejects without mutating the source (50269.034ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 52216.621
+
+✖ failing tests:
+
+test at packages\engine\test\us-return-retry.test.ts:8:1
+✖ uncompleted return gateway rejects without mutating the source (50269.034ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /US_RETURN_RETRY_NOT_AVAILABLE/. Input:
+  
+  'RangeError: NOT_IMPLEMENTED'
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-return-retry.test.ts:10:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: RangeError: NOT_IMPLEMENTED
+        at Module.openUsAmateurReturnRetry (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-return-retry.ts:8:148)
+        at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-return-retry.test.ts:10:26)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-return-retry.test.ts:10:9)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.start (node:internal/test_runner/test:1242:17)
+        at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17),
+    expected: /US_RETURN_RETRY_NOT_AVAILABLE/,
+    operator: 'throws',
+    diff: 'simple'
+  }

@@ -77,3 +77,43 @@ test('RETURN18 months shares exactly two seasons, ACTIVE growth zero, actual US 
  const a=authority(35,'2032');assert.throws(()=>cancelUsAmateurReturnForUsOffer(s,s.revision,a,{offerRef:'fake',authorityRevision:1}),/OPTION_EXPIRED/);
  a.usOffers=[{offerRef:'actual',expiresGameDay:301}];const cancelled=cancelUsAmateurReturnForUsOffer(s,s.revision,a,{offerRef:'actual',authorityRevision:1});assert.equal(cancelled.status,'CANCELLED_US');assert.equal(cancelled.draftReservationKey,null);assert.deepEqual(cancelled.years,s.years);
 });
+
+// Controlled server authority references; the returned-US root gateway separately proves native origin evidence.
+function returnedDraftAuthority(age=24){
+ const originSeason='2031',returnId=JSON.stringify(['us-amateur-return','retry-world','own',originSeason,'us-contract']),receiptKey=JSON.stringify(['career-kbo-draft-result',JSON.stringify(['amateur-return-draft',returnId,'2033'])]);
+ const source=openRetryCareerEpisode(undefined,0,{worldKey:'retry-world',playerKey:'own',receiptKey,reason:'AMATEUR_RETURN_UNDRAFTED',seasonKey:'2033',age:24});
+ source.age=age;source.seasonKey=String(2033+age-24);
+ const a={...authority(age,source.seasonKey),hasProContractHistory:true,collegeAdmissionRefs:['fake-college'],collegeResumeRef:'fake-resume',returnedUsDraftProof:{returnId,sourceContractKey:'us-contract',initialUndraftedReceipt:receiptKey,draftMaximumAge:35 as const}};
+ return {source,a};
+}
+test('returned-US draft exception requires the exact native receipt reference and never permits college',()=>{
+ const {source,a}=returnedDraftAuthority(),view=retryCareerRouteView(source,a);
+ assert.equal(view.rights.draftEligible,true);assert.ok(!view.routes.some(r=>r.routeId==='COLLEGE_ENTRY'||r.routeId==='COLLEGE_RESUME'));
+ const ordinary={...a};delete (ordinary as Partial<typeof a>).returnedUsDraftProof;assert.equal(retryCareerRouteView(source,ordinary).rights.draftEligible,false);
+ assert.throws(()=>retryCareerRouteView(source,{...a,returnedUsDraftProof:{...a.returnedUsDraftProof,sourceContractKey:'other'}} as typeof a),/RETURN.*DRAFT/);
+ assert.throws(()=>retryCareerRouteView(source,{...a,returnedUsDraftProof:{...a.returnedUsDraftProof,initialUndraftedReceipt:'unrelated'}} as typeof a),/RETURN.*DRAFT/);
+});
+test('returned-US draft age35 remains eligible but cannot buy an unevaluable age36 preparation season',()=>{
+ const at35=returnedDraftAuthority(35),older=returnedDraftAuthority(36);
+ assert.equal(retryCareerRouteView(at35.source,at35.a).rights.draftEligible,true);assert.ok(!retryCareerRouteView(at35.source,at35.a).routes.some(r=>r.routeId==='PREPARATION'));
+ assert.equal(retryCareerRouteView(older.source,older.a).rights.draftEligible,false);
+ const withUs={...at35.a,usRightsEligible:true,usOffers:[{offerRef:'actual-return-clause',ownerScope:{kind:'RETURN_CLAUSE' as const,sourceRef:'actual-return-clause'}}]};
+ assert.ok(retryCareerRouteView(at35.source,withUs).routes.some(r=>r.routeId==='PREPARATION'));
+});
+
+test('owned retry offer scope stays live until its native owner closes it; dated offers still expire',()=>{
+ const source=episode(),a={...authority(),usOffers:[{offerRef:'owned-quote',ownerScope:{kind:'RETURN_CLAUSE' as const,sourceRef:'owned-quote'}}]};
+ assert.ok(retryCareerRouteView(source,a).routes.some(r=>r.routeId==='US_CONTRACT'));
+ assert.ok(!retryCareerRouteView(source,{...authority(),usOffers:[{offerRef:'dated',expiresGameDay:300}]}).routes.some(r=>r.routeId==='US_CONTRACT'));
+ assert.throws(()=>retryCareerRouteView(source,{...a,usOffers:[{...a.usOffers[0]!,expiresGameDay:300}]}),/INVALID_RETRY_OFFERS/);
+});
+
+test('returned-US professional quote does not reuse the amateur scout threshold',()=>{
+ const {source,a}=returnedDraftAuthority();
+ const professional={...a,usScoutScore:0,usRightsEligible:true,usOffers:[{offerRef:'current-native-minor',ownerScope:{kind:'DECISION_WINDOW' as const,sourceRef:'current-native-minor'}}]};
+ assert.ok(retryCareerRouteView(source,professional).routes.some(r=>r.routeId==='US_CONTRACT'));
+ const ordinary={...professional};delete (ordinary as Partial<typeof professional>).returnedUsDraftProof;
+ assert.ok(!retryCareerRouteView(source,ordinary).routes.some(r=>r.routeId==='US_CONTRACT'));
+ assert.ok(!retryCareerRouteView(source,{...professional,usRightsEligible:false}).routes.some(r=>r.routeId==='US_CONTRACT'));
+ assert.ok(!retryCareerRouteView(source,{...professional,usOffers:[{offerRef:'amateur-dated',expiresGameDay:400}]}).routes.some(r=>r.routeId==='US_CONTRACT'));
+});

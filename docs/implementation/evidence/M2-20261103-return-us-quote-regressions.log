@@ -1,0 +1,11 @@
+✔ direct amateur expiry uses native1-year quotes and repeated epochs without rewriting the original six-season contract (48134.5487ms)
+✔ real return clauses preserve their identity and terms, while current budget and a legal competitor still gate quotes (4531.1482ms)
+✔ controlled service dates: return re-sign preserves actual settled NPC growth, supply RNG and records (123589.4455ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 179410.203

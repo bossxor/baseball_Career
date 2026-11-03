@@ -1,0 +1,14 @@
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+✔ fresh returned-US draft assessment cannot reuse the initial mandatory reservation before optional completion (18468.4796ms)
+✔ returned-US validation reuses only deep-immutable origin and always checks live or restored ledgers (16891.9888ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36815.9

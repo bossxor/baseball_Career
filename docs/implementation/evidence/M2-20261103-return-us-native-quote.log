@@ -1,0 +1,9 @@
+✔ returned-US market assesses current year once, preserves return clauses and explicitly closes them without reserving salary (17057.1893ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18287.2708

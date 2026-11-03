@@ -1,0 +1,24 @@
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+✔ uncompleted return gateway rejects without mutating the source (46279.6278ms)
+✔ native returned-US gateway retains actual undrafted origin, budget and mandatory receipts across JSON (72168.7422ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 120361.9241
+✔ returned-US draft exception requires the exact native receipt reference and never permits college (2.6334ms)
+✔ returned-US draft age35 remains eligible but cannot buy an unevaluable age36 preparation season (0.5291ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1051.1062

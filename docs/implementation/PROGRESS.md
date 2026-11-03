@@ -1,3 +1,16 @@
+# 최신 체크포인트 — 귀국 선택 준비·KBO/US 실제 진입 확인
+
+M2-US-RETURN-RETRY-20261103.md의 마지막 절부터 읽는다. 실제 선택48경기·KBO 새 계약/첫 날짜·최신 선택 선수의 US 계약/첫 날짜 통과. 후속 미국 계약은 제어 시즌 closure 뒤 native writer 검사이며 full native US season이 아니다. JSON US 복원/군복무 NPC current quote 묶음2/2, checkpoint build/전체 테스트 타입/lint 종료0. E35 실제3선택시즌 검사는 세션17083 / evidence/M2-20261103-return-exhaustion-native.log 실행 중이며 .exitcode.txt로 완료를 확인한다. 최신 source는 시작 후 나이/이전 평가 archive 검증을 보강했으므로 이 검사는 최종 전체 gate가 아니다.
+
+다음은 E35 결과 처리와 API의 US_RETURN_RETRY discriminator·strict payload·공개 DTO 연결이다. package exports는 추가됐지만 API/웹 연결은 아직 없다. sourceMinorYears/majorYears와 retryOfferKey의 새 US epoch, 원본 한 번+delta archive를 보존한다. STATUS 상단은 관리용 추정 M2 65%, 전체87.5%로 갱신했다. 전체 check는 이 묶음 연결을 끝낸 뒤1회만 실행한다. 큰 runtime JSON2개·zz-dbg.log는 보존, PC 종료 금지. Git 최종 커밋/remote는 git log와 rev-parse로 확인한다. 아래는 이전 인계다.
+
+# 최신 구현 중 — 귀국 선택48경기·KBO 실제 첫 경기 확인
+
+기준5363de3 이후 미커밋 묶음은 M2-US-RETURN-RETRY-20261103.md를 먼저 읽는다. Task1 gateway/authority 통과, Task2 실제 선택48경기1/1, Task3 native 새 KBO 계약·첫 날짜1/1 통과(535919ms, 종료0). Task4 현재 미국 quote·복귀 조항·명시적 거절 연결 중이며 실제 미국 계약/경기와 후속 갱신을 마쳐야 한다. Task5 실제 E35·package/API, Task6 최종 whole check는 남았다. 오래된 세션23438/51159는 이미 종료0이며 실행 중이 아니다. 큰 runtime JSON2개·zz-dbg.log는 보존, PC 종료 금지. 아래는 이전 인계다.
+
+# 최신 구현 중 — 귀국 미지명 후 선택 준비 root
+
+5363de3 이후 docs/implementation/M2-US-RETURN-RETRY-20261103.md와 docs/superpowers/plans/2026-11-02-us-return-retry.md를 먼저 읽는다. Task1 gateway/authority 집중 각2/2, 실제 의무 복귀2시즌 접두 생성 종료0. Task2 선택48경기 연결 구현 중이며 native 검사 세션23438 / evidence/M2-20261103-return-preparation-green.log를 확인한다. Task3~6은 남아 있고 새 root는 아직 package/API에 노출하지 않았다. 현재 source WIP를 삭제/reset하지 말 것. 기존 큰 runtime JSON2개·zz-dbg.log 보존, PC 종료 금지. 아래는 이전 인계다.
 # 최신 재개 지점 — E73 조기 드래프트·계속 재학 추가
 
 기준6d7a3e6 이후 API2파일 변경. 공개 사건 키/버전과 유효 routeCommands를 추가하고 COLLEGE_EARLY_DRAFT·COLLEGE_CONTINUE를 기존 writer에 연결했다. 계속 재학은 eventVersion과 명시적 forfeitUnusedTraining boolean을 검사한다. lint/전체 테스트 타입/API build 통과, 추가 읽기 검토 Critical/Important 없음. 전체 API 검사는 종료0이며 evidence/M2-20261103-choice-route-batch.log와 .exitcode.txt를 먼저 확인한다. RED는 choice-route-red.log. 최종 API32중30통과·환경2제외·실패0, 웹24/24·API build·타입/lint·설계10종·HTTP smoke 통과. 기능 팁 fcd379e 원격 일치, 엔진 런타임 전체는 반복하지 않았다. 다음은 귀국 재도전 root·실제 웹 버튼·99/24/PF 증거다. PC 종료 금지. 아래는 이전 인계다.

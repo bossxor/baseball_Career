@@ -11,7 +11,8 @@ export interface RetryCareerLedger {
  version:1;revision:number;worldKey:string;playerKey:string;seasonKey:string;age:number;careerPreparationUsed:number;
  phase:RetryCareerPhase;episodes:readonly RetryEpisode[];periods:readonly PreparationPeriod[];
 }
-export interface RetryRouteOffer {offerRef:string;expiresGameDay:number}
+export type RetryRouteOffer={offerRef:string;expiresGameDay:number}|{offerRef:string;ownerScope:{kind:'RETURN_CLAUSE'|'DECISION_WINDOW';sourceRef:string}};
+export interface ReturnedUsDraftProof {returnId:string;sourceContractKey:string;initialUndraftedReceipt:string;draftMaximumAge:35}
 /** Server-owned rights/offer projection. HTTP commands must never supply these eligibility flags. */
 export interface RetryRouteAuthority {
  worldKey:string;playerKey:string;seasonKey:string;age:number;worldDay:number;authorityRevision:number;
@@ -19,7 +20,7 @@ export interface RetryRouteAuthority {
  mandatoryReturnActive:boolean;militaryStatus:'UNRESOLVED'|'SERVING'|'COMPLETED'|'NOT_APPLICABLE';
  collegeAdmissionRefs:readonly string[];collegeResumeRef:string|null;
  domesticOffers:readonly RetryRouteOffer[];usOffers:readonly RetryRouteOffer[];usScoutScore:number;usRightsEligible:boolean;
- retirementAllowed:boolean;
+ retirementAllowed:boolean;returnedUsDraftProof?:ReturnedUsDraftProof;
 }
 const REASONS:readonly RetryEpisodeReason[]=['HIGH_SCHOOL_UNDRAFTED','COLLEGE_UNDRAFTED','PRO_RELEASED','CONTRACT_EXPIRED','AMATEUR_RETURN_UNDRAFTED'];
 const PHASES:readonly RetryCareerPhase[]=['UNCONTRACTED_REVIEW','PREPARATION_PRE','PREPARATION_REGULAR','PREPARATION_RESULT','ROUTE_REVIEW','RETIRE_DECISION'];
@@ -60,26 +61,45 @@ export function openRetryCareerEpisode(source:RetryCareerLedger|undefined,revisi
  const next:RetryCareerLedger={version:1,revision:(source?.revision??0)+1,worldKey:input.worldKey,playerKey:input.playerKey,seasonKey:input.seasonKey,age:input.age,careerPreparationUsed:source?.careerPreparationUsed??0,phase:'UNCONTRACTED_REVIEW',episodes:[...(source?.episodes??[]),episode],periods:structuredClone(source?.periods??[])};
  assertRetryCareerLedger(next);return next;
 }
+/** A reference is trusted only after the returned-US gateway validates its complete origin. */
+function assertReturnedUsDraftProof(source:RetryCareerLedger,a:RetryRouteAuthority):void {
+ const proof=a.returnedUsDraftProof;if(proof===undefined)return;
+ let identity:unknown;try{identity=JSON.parse(proof.returnId);}catch{throw new RangeError('INVALID_RETURNED_US_DRAFT_PROOF');}
+ if(!proof||typeof proof!=='object'||!Array.isArray(identity)||identity.length!==5||proof.returnId!==JSON.stringify(identity)||typeof identity[3]!=='string'||identity[0]!=='us-amateur-return'||identity[1]!==source.worldKey||identity[2]!==source.playerKey||!season(identity[3])||identity[4]!==proof.sourceContractKey||typeof proof.sourceContractKey!=='string'||!proof.sourceContractKey||proof.draftMaximumAge!==35||!a.hasProContractHistory)throw new RangeError('INVALID_RETURNED_US_DRAFT_PROOF');
+ const lastSeason=String(Number(identity[3])+2),receipt=JSON.stringify(['career-kbo-draft-result',JSON.stringify(['amateur-return-draft',proof.returnId,lastSeason])]),episode=source.episodes.find(e=>e.reason==='AMATEUR_RETURN_UNDRAFTED'&&e.receiptKey===receipt);
+ if(proof.initialUndraftedReceipt!==receipt||!episode||episode.seasonKey!==lastSeason||Number(source.seasonKey)<Number(lastSeason)||source.age!==episode.age+Number(source.seasonKey)-Number(lastSeason))throw new RangeError('INVALID_RETURNED_US_DRAFT_PROOF');
+}
+function validOfferShape(o:RetryRouteOffer):boolean {
+ if(!o||typeof o!=='object'||typeof o.offerRef!=='string'||!o.offerRef)return false;
+ if('ownerScope' in o)return !('expiresGameDay' in o)&&Boolean(o.ownerScope&&typeof o.ownerScope==='object'&&['RETURN_CLAUSE','DECISION_WINDOW'].includes(o.ownerScope.kind)&&o.ownerScope.sourceRef===o.offerRef);
+ return 'expiresGameDay' in o&&integer(o.expiresGameDay);
+}
+/** Native owners validate their sealed quote/clause before projecting an owner-scoped offer. */
+export function retryOfferIsLive(o:RetryRouteOffer,worldDay:number):boolean {
+ return validOfferShape(o)&&integer(worldDay)&&('ownerScope' in o||worldDay<o.expiresGameDay);
+}
 function assertAuthority(source:RetryCareerLedger,a:RetryRouteAuthority):void {
  assertRetryCareerLedger(source);
  if(a.worldKey!==source.worldKey || a.playerKey!==source.playerKey || a.seasonKey!==source.seasonKey || a.age!==source.age || !integer(a.worldDay) || !integer(a.authorityRevision) || !['UNRESOLVED','SERVING','COMPLETED','NOT_APPLICABLE'].includes(a.militaryStatus) || !Number.isFinite(a.usScoutScore) || a.usScoutScore< -5 || a.usScoutScore>=105 || [a.hasProContractHistory,a.activeContract,a.domesticRightsAvailable,a.domesticDraftEligible,a.mandatoryReturnActive,a.usRightsEligible,a.retirementAllowed].some(x=>typeof x!=='boolean') || !Array.isArray(a.collegeAdmissionRefs) || a.collegeAdmissionRefs.some(ref=>!ref) || new Set(a.collegeAdmissionRefs).size!==a.collegeAdmissionRefs.length || a.collegeResumeRef!==null&&typeof a.collegeResumeRef!=='string')throw new RangeError('INVALID_RETRY_AUTHORITY');
- for(const offers of [a.domesticOffers,a.usOffers])if(!Array.isArray(offers)||new Set(offers.map(o=>o.offerRef)).size!==offers.length||offers.some(o=>!o.offerRef||!integer(o.expiresGameDay)))throw new RangeError('INVALID_RETRY_OFFERS');
+ assertReturnedUsDraftProof(source,a);
+ for(const offers of [a.domesticOffers,a.usOffers])if(!Array.isArray(offers)||offers.some(o=>!validOfferShape(o))||new Set(offers.map(o=>o.offerRef)).size!==offers.length)throw new RangeError('INVALID_RETRY_OFFERS');
 }
 export function retryCareerRouteView(source:RetryCareerLedger,a:RetryRouteAuthority){
  assertAuthority(source,a);
  if(!['UNCONTRACTED_REVIEW','ROUTE_REVIEW','PREPARATION_RESULT','RETIRE_DECISION'].includes(source.phase))throw new RangeError('INVALID_RETRY_PHASE');
  const remaining=3-source.careerPreparationUsed,entryAge=source.age,militaryBlocked=a.militaryStatus==='SERVING'||a.militaryStatus==='UNRESOLVED'&&source.age+1>=28;
- const valid=(offers:readonly RetryRouteOffer[])=>offers.filter(o=>a.worldDay<o.expiresGameDay).map(o=>o.offerRef);
+ const valid=(offers:readonly RetryRouteOffer[])=>offers.filter(o=>retryOfferIsLive(o,a.worldDay)).map(o=>o.offerRef);
  const domestic=valid(a.domesticOffers),us=valid(a.usOffers),routes:{routeId:string;reasonCodes:string[];offerRefs:string[];consumesSeasons:number;ageAtCompletion:number}[]=[];
- if(!a.activeContract&&!militaryBlocked&&!a.mandatoryReturnActive&&a.domesticRightsAvailable&&remaining>0&&source.age+1<=45)routes.push({routeId:'PREPARATION',reasonCodes:['PREPARATION_REMAINING'],offerRefs:[],consumesSeasons:1,ageAtCompletion:source.age+1});
+ if(!a.activeContract&&!militaryBlocked&&!a.mandatoryReturnActive&&a.domesticRightsAvailable&&remaining>0&&source.age+1<=45&&(!a.returnedUsDraftProof||source.age+1<=a.returnedUsDraftProof.draftMaximumAge||a.usRightsEligible&&us.length>0))routes.push({routeId:'PREPARATION',reasonCodes:['PREPARATION_REMAINING'],offerRefs:[],consumesSeasons:1,ageAtCompletion:source.age+1});
  if(!a.activeContract&&!militaryBlocked&&!a.mandatoryReturnActive&&!a.hasProContractHistory&&entryAge>=19&&entryAge<=22&&entryAge+3<=45&&a.collegeAdmissionRefs.length)routes.push({routeId:'COLLEGE_ENTRY',reasonCodes:['AMATEUR_COLLEGE_ELIGIBLE'],offerRefs:[...a.collegeAdmissionRefs],consumesSeasons:0,ageAtCompletion:entryAge+3});
  if(!a.activeContract&&!militaryBlocked&&!a.mandatoryReturnActive&&!a.hasProContractHistory&&a.collegeResumeRef)routes.push({routeId:'COLLEGE_RESUME',reasonCodes:['ENROLLMENT_REMAINS_VALID'],offerRefs:[a.collegeResumeRef],consumesSeasons:0,ageAtCompletion:entryAge});
  if(!a.activeContract&&!militaryBlocked&&!a.mandatoryReturnActive&&a.domesticRightsAvailable&&domestic.length)routes.push({routeId:'DOMESTIC_CONTRACT',reasonCodes:['VALID_OFFER'],offerRefs:domestic,consumesSeasons:0,ageAtCompletion:source.age});
- if(!a.activeContract&&!militaryBlocked&&canShowUsDirect({scoutScore:a.usScoutScore,validOfferCount:us.length,eligible:a.usRightsEligible}))routes.push({routeId:'US_CONTRACT',reasonCodes:['VALID_US_OFFER'],offerRefs:us,consumesSeasons:0,ageAtCompletion:source.age});
+ const professionalUs=Boolean(a.returnedUsDraftProof&&a.usRightsEligible&&a.usOffers.some(o=>'ownerScope' in o&&retryOfferIsLive(o,a.worldDay)));
+ if(!a.activeContract&&!militaryBlocked&&(professionalUs||canShowUsDirect({scoutScore:a.usScoutScore,validOfferCount:us.length,eligible:a.usRightsEligible})))routes.push({routeId:'US_CONTRACT',reasonCodes:['VALID_US_OFFER'],offerRefs:us,consumesSeasons:0,ageAtCompletion:source.age});
  if(a.militaryStatus==='UNRESOLVED')routes.push({routeId:'MILITARY_PLAN',reasonCodes:[militaryBlocked?'MILITARY_DEADLINE':'MILITARY_UNRESOLVED'],offerRefs:[],consumesSeasons:0,ageAtCompletion:source.age});
  if(a.mandatoryReturnActive)routes.push({routeId:'MANDATORY_RETURN',reasonCodes:['RETURN_PERIOD_REQUIRED'],offerRefs:[],consumesSeasons:0,ageAtCompletion:source.age});
  if(a.retirementAllowed)routes.push({routeId:'RETIRE',reasonCodes:['MANUAL_RETIREMENT'],offerRefs:[],consumesSeasons:0,ageAtCompletion:source.age});
- return {routePreviewId:canonicalJson(['retry-route',source,a]),routes,preparation:{used:source.careerPreparationUsed,remaining,consumesNextSeason:routes.some(r=>r.routeId==='PREPARATION')},rights:{domesticAvailable:a.domesticRightsAvailable,draftEligible:!a.hasProContractHistory&&a.domesticDraftEligible},militaryTasks:routes.filter(r=>r.routeId==='MILITARY_PLAN'),ageAtCompletion:entryAge};
+ return {routePreviewId:canonicalJson(['retry-route',source,a]),routes,preparation:{used:source.careerPreparationUsed,remaining,consumesNextSeason:routes.some(r=>r.routeId==='PREPARATION')},rights:{domesticAvailable:a.domesticRightsAvailable,draftEligible:a.domesticDraftEligible&&(!a.hasProContractHistory||Boolean(a.returnedUsDraftProof&&source.age<=a.returnedUsDraftProof.draftMaximumAge))},militaryTasks:routes.filter(r=>r.routeId==='MILITARY_PLAN'),ageAtCompletion:entryAge};
 }
 export function beginRetryPreparation(source:RetryCareerLedger,revision:number,a:RetryRouteAuthority,input:{episodeId:string;seasonKey:string;routePreviewId:string;startDay:number;endDay:number}):RetryCareerLedger {
  assertRetryCareerRevision(source,revision);const view=retryCareerRouteView(source,a);

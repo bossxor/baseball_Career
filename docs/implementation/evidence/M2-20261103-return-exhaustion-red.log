@@ -1,0 +1,38 @@
+✖ returned-US E35 rejects unfinished optional budget and unassessed routes (22058.0853ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23744.192
+
+✖ failing tests:
+
+test at packages\engine\test\us-return-retry.test.ts:18:1
+✖ returned-US E35 rejects unfinished optional budget and unassessed routes (22058.0853ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /RETRY_ASSESSMENT_REQUIRED/. Input:
+  
+  'TypeError: retry.openUsAmateurReturnRetryExhaustion is not a function'
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-return-retry.test.ts:20:9)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: retry.openUsAmateurReturnRetryExhaustion is not a function
+        at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-return-retry.test.ts:20:26)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-return-retry.test.ts:20:9)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25)
+        at Test.start (node:internal/test_runner/test:1242:17)
+        at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17),
+    expected: /RETRY_ASSESSMENT_REQUIRED/,
+    operator: 'throws',
+    diff: 'simple'
+  }

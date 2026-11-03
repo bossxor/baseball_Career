@@ -1,0 +1,10 @@
+✔ returned retry US acceptance reserves one current-year contract and enters a real US date with full history (68537.2508ms)
+✔ controlled service dates: return re-sign preserves actual settled NPC growth, supply RNG and records (168285.9263ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 239722.837

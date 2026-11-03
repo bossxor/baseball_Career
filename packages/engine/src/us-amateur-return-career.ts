@@ -10,8 +10,8 @@ import {startPreparationSeason,confirmPreparationPreseason,advancePreparationSea
 import type {PreparationSeason,PreparationWorld} from './preparation-season.js';
 import {openRetryCareerEpisode,retryCareerRouteView,assertRetryCareerLedger} from './retry-career.js';
 import type {RetryCareerLedger,RetryRouteAuthority} from './retry-career.js';
-import {createSeasonCalendar,scheduleHighSchoolCalendar} from './season-calendar.js';
-import {createRoundRobinSchedule} from './schedule.js';
+import {createSeasonCalendar} from './season-calendar.js';
+import {createUsReturnPreparationWorld} from './us-return-preparation.js';
 import {emptyPitchXpLedger} from './pitch-xp.js';
 import {closeSeasonHealth} from './health.js';
 import {createWorldEvent,resolveEventChoice,completeEventDomain,completeBlockingEvent,validateEvent} from './events.js';
@@ -22,11 +22,9 @@ import {prepareKboDraft,resolveKboDraft,decideKboDraft,assertKboDraft,kboDraftVi
 import type {KboDraftProgram} from './kbo-draft.js';
 import {overall} from '@playball/rules';
 import {draftBaseScore} from './draft.js';
-import type {KboCareer,ActiveKboRosterWorld} from './kbo-career-entry.js';
-import {kboCareerEntryView} from './kbo-career-entry.js';
-import {assertKboRecruitmentWorld} from './kbo-draft.js';
+import type {KboCareer} from './kbo-career-entry.js';
+import {activateReturnedUsKbo} from './us-return-activation.js';
 import {createSeasonGrowthLedger} from './growth-ledger.js';
-import {queueKboFirstCampNotices} from './kbo-preseason.js';
 import {formRegisteredTeamTeammate} from './team-teammates.js';
 import {queueRelationFormationNotices} from './relation-notices.js';
 import {refreshCareerRepertoireEvents} from './repertoire-events.js';
@@ -125,16 +123,7 @@ function authority(s:UsAmateurReturnCareer):RetryRouteAuthority {
 }
 /** Register nine existing US affiliate populations; preserve current identities, books and abilities. */
 function independentWorld(s:UsAmateurReturnCareer):PreparationWorld {
- const previous=s.preparation?.world??s.source.world,year=Number(s.return.sourceSeasonKey)+s.return.years.length+1,calendar=createSeasonCalendar(year,'calendar-2'),key=s.return.playerKey;
- const schools=s.preparation?structuredClone(s.preparation.world.schools):s.source.world.organizations.slice(0,9).map(o=>({id:o.id,name:o.name,roster:o.levels.ROOKIE.filter(k=>k!==key)}));
- const protagonistSchoolId=s.preparation?.world.protagonistSchoolId??schools[0]!.id;
- if(!schools.some(t=>t.roster.includes(key)))schools.find(t=>t.id===protagonistSchoolId)!.roster.push(key);
- const registered=new Set(schools.flatMap(t=>t.roster));
- const world:PreparationWorld={worldKey:s.return.worldKey,seed:s.source.world.seed,seasonKey:String(year),leagueKey:'INDEPENDENT',protagonistKey:key,protagonistSchoolId,schools,players:structuredClone(Object.fromEntries(Object.entries(previous.players).filter(([k])=>registered.has(k)))),repertoires:structuredClone(Object.fromEntries(Object.entries(previous.repertoires).filter(([k])=>registered.has(k)))),calendar,schedule:[]};
- const old=s.return.years.at(-1)?.endingPlayer??s.return.sourcePlayer;world.players[key]=structuredClone(old);
- for(const p of Object.values(world.players)){p.age++;p.fatigue=0;}
- for(const b of Object.values(world.repertoires)){if(b.learning&&b.learning.quarters.length!==4)throw new RangeError('PITCH_LEARNING_SETTLEMENT_REQUIRED');b.seasonId=world.seasonKey;b.learning=null;b.usedWindows=[];b.ledger=emptyPitchXpLedger();}
- world.schedule=scheduleHighSchoolCalendar(createRoundRobinSchedule({teamKeys:schools.map(t=>t.id),leagueKey:'INDEPENDENT',seasonKey:world.seasonKey,startDay:calendar.highSchoolDays[0]!},6),calendar);return world;
+ return createUsReturnPreparationWorld(s.preparation?.world??s.source.world,s.return.years.at(-1)?.endingPlayer??s.return.sourcePlayer,String(Number(s.return.sourceSeasonKey)+s.return.years.length+1));
 }
 /** Consume the E66 receipt already committed by request; preserve the original OPEN source archive. */
 function serviceSource(s:UsAmateurReturnCareer):UsCareer {
@@ -183,18 +172,8 @@ export function decideUsAmateurReturnDraft(s:UsAmateurReturnCareer,n:number,prog
 }
 /** The real draft receipt owns roster, salary reservation and rights in one root replacement. */
 export function startSignedUsAmateurReturnKboCareer(s:UsAmateurReturnCareer,n:number):KboCareer {
- revision(s,n);const draft=s.draft,signing=draft?.program.signing;if(!draft||draft.program.decision!=='SIGNED'||!signing||s.return.status!=='DRAFT_READY')throw new RangeError('US_RETURN_SIGNED_DRAFT_REQUIRED');
- const key=s.return.playerKey,year=Number(signing.registration.seasonKey),calendar=createSeasonCalendar(year,'calendar-2'),last=s.return.years.at(-1)!,player={...structuredClone(last.endingPlayer),age:last.age+1,fatigue:0};
- const world:ActiveKboRosterWorld={...structuredClone(draft.world),status:'ACTIVE',calendar},club=world.clubs.find(c=>c.id===signing.registration.clubId)!;
- if(year!==Number(last.seasonKey)+1||Object.hasOwn(world.players,key)||club.reservedSalaryWon!==signing.reservedSalaryBeforeWon)throw new RangeError('US_RETURN_DRAFT_RESERVATION_CHANGED');
- world.players[key]=player;world.contracts[key]=structuredClone(signing.contract);club.roster=[...signing.rosterAfter];club.reservedSalaryWon=signing.reservedSalaryAfterWon;
- const book=s.preparation?.world.repertoires[key]??s.service?.world.repertoires[key]??s.source.world.repertoires[key];if(book)world.repertoires[key]={...structuredClone(book),seasonId:world.seasonKey,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};assertKboRecruitmentWorld(world);
- const owner=s.preparation??s.service??s.source,records={revision:owner.records.revision,games:structuredClone({...s.source.records.games,...owner.records.games})},health={...structuredClone(owner.health),injuries:Object.hasOwn(owner.health.injuries,key)?{[key]:structuredClone(owner.health.injuries[key]!)}:{}},receiptKey=JSON.stringify(['us-amateur-return-kbo',s.return.returnId,signing.receiptKey]);
- if(Object.values(records.games).some(g=>g.scope.seasonKey===world.seasonKey))throw new RangeError('US_RETURN_KBO_SEASON_CONFLICT');
- const teamWorld={worldKey:world.worldKey,seasonKey:world.seasonKey,leagueKey:'KBO',protagonistKey:key,protagonistSchoolId:club.id,schools:world.clubs,players:world.players},relationships=formRegisteredTeamTeammate(s.preparation?.relationships??s.source.relationships,teamWorld,receiptKey,calendar.growthDays[0]!);
- const c:KboCareer={schemaVersion:1,revision:n+1,difficulty:s.source.difficulty,world,protagonistKey:key,protagonistClubId:club.id,phaseContext:{phase:'PRESEASON_SETUP'},activation:{receiptKey,sourceYearEndReceiptKey:signing.receiptKey,sourceRevision:n,contractKey:signing.contract.contractKey},registration:{...signing.registration,status:'ACTIVE'},rights:structuredClone(signing.rights),amateurHistory:structuredClone(s.source.amateurHistory),usAmateurReturnHistory:structuredClone(s),records,health,seasonGrowth:createSeasonGrowthLedger(player,world.seasonKey,calendar.growthDays.length),development:{...structuredClone(owner.development),seasonStartPlayer:structuredClone(player)},relationships,events:[...s.source.events.filter(e=>!s.events.some(current=>current.eventKey===e.eventKey)),...s.events],relationNotices:structuredClone(s.source.relationNotices),styleUsedWindows:[...owner.styleUsedWindows],planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}],retryCareer:structuredClone(s.retry),military:{status:s.return.militaryStatus==='COMPLETED'?'COMPLETED':'NOT_APPLICABLE',applications:[]}};
- if(owner.traits)c.traits={...structuredClone(owner.traits),lastClosedDay:null,lastSeasonKey:world.seasonKey};if(s.source.achievements)c.achievements=structuredClone(s.source.achievements);if(s.source.aliases)c.aliases=structuredClone(s.source.aliases);if(s.source.recordCorrections)c.recordCorrections=structuredClone(s.source.recordCorrections);
- c.campNotices=queueKboFirstCampNotices(c);kboCareerEntryView(c);return c;
+ revision(s,n);if(!s.draft||s.draft.program.decision!=='SIGNED'||!s.draft.program.signing||s.return.status!=='DRAFT_READY')throw new RangeError('US_RETURN_SIGNED_DRAFT_REQUIRED');
+ return activateReturnedUsKbo({origin:s,owner:s.preparation??s.service??s.source,draft:s.draft,retry:s.retry,revision:n});
 }
 export function usAmateurReturnCareerView(s:UsAmateurReturnCareer){assertUsAmateurReturnCareer(s);return {...usAmateurReturnView(s.return),revision:s.revision,events:s.events.map(e=>({eventKey:e.eventKey,eventVersion:e.version,status:e.status})),draft:s.draft?kboDraftView(s.draft.world,s.draft.program):null};}
 /**
@@ -208,7 +187,7 @@ export function resignUsAfterAmateurReturn(s:UsAmateurReturnCareer,n:number,offe
  const owner=s.preparation??s.service;
  if(!owner||owner.world.seasonKey!==last.seasonKey||!owner.seasonGrowth.finalized||s.preparation&&s.preparation.phase!=='PREPARATION_RESULT')throw new RangeError('US_RETURN_YEAR_IN_PROGRESS');
  const sourceSeason=Number(r.sourceSeasonKey);
- cancelUsAmateurReturnForUsOffer(r,r.revision,{worldKey:r.worldKey,playerKey:r.playerKey,seasonKey:last.seasonKey,age:last.age,worldDay:0,authorityRevision:n,hasProContractHistory:false,activeContract:false,domesticRightsAvailable:true,domesticDraftEligible:false,mandatoryReturnActive:false,militaryStatus:r.militaryStatus,collegeAdmissionRefs:[],collegeResumeRef:null,domesticOffers:[],usOffers:[{offerRef:offerKey,expiresGameDay:1}],usScoutScore:0,usRightsEligible:true,retirementAllowed:true},{offerRef:offerKey,authorityRevision:n});
+ cancelUsAmateurReturnForUsOffer(r,r.revision,{worldKey:r.worldKey,playerKey:r.playerKey,seasonKey:last.seasonKey,age:last.age,worldDay:0,authorityRevision:n,hasProContractHistory:false,activeContract:false,domesticRightsAvailable:true,domesticDraftEligible:false,mandatoryReturnActive:false,militaryStatus:r.militaryStatus,collegeAdmissionRefs:[],collegeResumeRef:null,domesticOffers:[],usOffers:[{offerRef:offerKey,ownerScope:{kind:'RETURN_CLAUSE',sourceRef:offerKey}}],usScoutScore:0,usRightsEligible:true,retirementAllowed:true},{offerRef:offerKey,authorityRevision:n});
  const base=acceptUsMinorMarketOffer(s.source,s.source.revision,offerKey),world=structuredClone(s.service?.world??base.world),key=r.playerKey;let inventory=base.inventory;
  if(s.service){
   restoreUsEmergencyRegistrations(s.service,world);
