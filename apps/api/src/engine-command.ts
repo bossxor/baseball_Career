@@ -1,6 +1,7 @@
 import { allocateCapped, ENGINE_VERSION } from '@playball/engine';
 import { applyClubSave } from './club-shell.js';
 import { applyCareerRetry } from './career-retry-shell.js';
+import { applyCareerChoice } from './career-choice-shell.js';
 import {
   applyUiAdvance, applyUiChoose, applyUiSeed, phaseOf, type ChooseNext, type UiShellState,
 } from './ui-shell.js';
@@ -26,6 +27,7 @@ export type AppliedCommand = {
 export function applyEngineCommand(state: SaveState, command: CommandBody): AppliedCommand {
   if (command.type.startsWith('CLUB_')) return applyClubSave(state, command);
   if (command.type.startsWith('CAREER_RETRY_')) return applyCareerRetry(state, command);
+  if (command.type.startsWith('CAREER_CHOICE_')) return applyCareerChoice(state, command);
   if (command.type === 'UI_SEED') {
     const applied = applyUiSeed(state, command.payload);
     return { ...applied, eventIds: [], phase: phaseOf(applied.nextState) };

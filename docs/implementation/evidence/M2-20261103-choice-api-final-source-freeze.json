@@ -1,0 +1,18 @@
+[
+  {
+    "file": "apps/api/src/career-choice-shell.ts",
+    "sha256": "9D5D2B672FF01ADC2415EE03CA54AE8EF754325B454239A30E0BDFB81B8AF455"
+  },
+  {
+    "file": "apps/api/src/career-views.ts",
+    "sha256": "651E4C24C0D2450D4CADB323A24E34F393F5F626B483163A961925EDE790BCE9"
+  },
+  {
+    "file": "apps/api/src/engine-command.ts",
+    "sha256": "B04C9C1E0DB628D1DD02E2E5C67F6748DC50B2C28B59B1D78D64EC15A91ADD04"
+  },
+  {
+    "file": "apps/api/test/m2-career-choices.test.ts",
+    "sha256": "32C8E75C364AF684E3D7CBB1CAD56FA6BB15F61F6914573F2F41E761C402CA7C"
+  }
+]

@@ -1,0 +1,2 @@
+apps/api/src/career-choice-shell.ts(41,71): error TS2454: Variable 'navigation' is used before being assigned.
+apps/api/src/career-choice-shell.ts(42,9): error TS2454: Variable 'navigation' is used before being assigned.

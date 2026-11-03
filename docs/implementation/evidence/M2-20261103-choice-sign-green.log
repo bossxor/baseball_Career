@@ -1,0 +1,11 @@
+✔ E71 HTTP focus commits once, resumes stored notice and rejects stale/foreign/authority input atomically (4255.2911ms)
+✔ E73 HTTP comparison preserves enrollment until owned signing and reserves accepted terms once (24998.7817ms)
+✔ KBO and US E85 HTTP summary omits private receipts and ACK persists cursor without touching gameplay (14472.1627ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 47068.675

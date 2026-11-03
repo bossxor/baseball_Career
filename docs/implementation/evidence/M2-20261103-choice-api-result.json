@@ -1,0 +1,15 @@
+{
+  "sourceChanges": 0,
+  "engineChangesFrom9be891b": 0,
+  "webTests": 24,
+  "webPass": 24,
+  "apiSkipped": 2,
+  "apiTests": 31,
+  "sourceFiles": 4,
+  "batchExitCode": 0,
+  "fullEngineRuntimeRerun": false,
+  "checkedAt": "2026-11-03T11:09:11.6446559+09:00",
+  "apiFail": 0,
+  "log": "M2-20261103-choice-api-final-batch.log",
+  "apiPass": 29
+}

@@ -1,4 +1,12 @@
-# 최신 상태 — 2026-11-03 사건 선택 구현·검증 정리
+# 최신 상태 — 2026-11-03 선택·복학·특성 저장 API
+
+9be891b 이후 [API 호출·원장·검증·잔여](M2-CHOICE-API-20261103.md)를 구현했다. 읽기4종과 저장명령6종으로 대학 집중 선택·E73 미국 열람/실제 서명·E74 복학·일반 특성/진로 알림 ACK를 기존 M3 소유자/CAS/명령 영수증에 연결했다. 새 확률·연봉·성장·DB 스키마/의존성을 추가하지 않았다.
+
+최종 API31개 중29통과·환경2개 제외·실패0, 웹24/24, 전체 lint/typecheck/build·engine/event/design10종/Android shell/assets 정적 검증·HTTP smoke 종료0. 동결 API4파일 변경0, engine/rules는9be891b와 동일하다. 새 전체 engine/rules 런타임 검사는 반복하지 않았으며 이전 전체1025개 결과를 새 source의 전체 check 통과로 세지 않는다. 로그는 evidence/M2-20261103-choice-api-final-batch.log와 choice-api-result.json. 최종 읽기 검토 Critical/Important 없음.
+
+작업/Git/build는 baseball-career-m2 / codex/m2-career-engine, V:는 문서·증거 Copy-Item만. PC 종료 금지, 기존 큰 runtime JSON2개·zz-dbg.log 보존. 최종 커밋은 git log -1과 원격 해시로 확인한다. 다음은 귀국 미지명 선택 준비 root·웹 버튼 연결·99사건/24경로/PF 증거다. M2 전체 미완료. 아래는 과거 이력이다.
+
+# 이전 상태 — 2026-11-03 사건 선택 구현·검증 정리
 
 기준 b6165a2 이후 E33 나이·구 저장 호환, E36/E74 자발 은퇴와 E37 저장/보관 명령, E71 대학 집중·E73 미국 비교/서명, 프로 E85 요약을 구현했다. [변경·원장·검증·다음 작업](M2-EVENT-CLOSURE-20261103.md)을 먼저 읽는다.
 
