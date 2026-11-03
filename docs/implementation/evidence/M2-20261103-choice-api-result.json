@@ -11,5 +11,15 @@
   "checkedAt": "2026-11-03T11:09:11.6446559+09:00",
   "apiFail": 0,
   "log": "M2-20261103-choice-api-final-batch.log",
-  "apiPass": 29
+  "apiPass": 29,
+  "reviewFollowup": {
+    "featureTip": "afa1aa1",
+    "lintExitCode": 0,
+    "productChanges": 0,
+    "focusedPass": 1,
+    "testFileChanges": 1,
+    "log": "M2-20261103-choice-ack-review-check.log",
+    "designExitCode": 0,
+    "focusedFail": 0
+  }
 }

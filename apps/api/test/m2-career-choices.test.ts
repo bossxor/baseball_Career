@@ -74,7 +74,11 @@ test('route notice HTTP acknowledgment persists only metadata and never substitu
  const source=collegePre(),notice=careerRouteNoticesView(source).notices.find(e=>e.definitionId==='E71')!;
  await owned(source,async h=>{
   const payload={eventKey:notice.eventKey,eventVersion:notice.eventVersion};
-  const response=await h.post('CAREER_CHOICE_ACK_ROUTE_NOTICE',payload,'notice-ack');assert.equal(response.status,200);
+  const original=canonicalJson(await h.stored());
+  assert.equal((await h.post('CAREER_CHOICE_ACK_ROUTE_NOTICE',{...payload,eventVersion:99},'notice-stale-event')).status,400);assert.equal(canonicalJson(await h.stored()),original);
+  assert.equal((await h.post('CAREER_CHOICE_ACK_ROUTE_NOTICE',{...payload,careerRevision:source.revision-1},'notice-stale-root')).status,400);assert.equal(canonicalJson(await h.stored()),original);
+  const response=await h.post('CAREER_CHOICE_ACK_ROUTE_NOTICE',payload,'notice-ack');assert.equal(response.status,200);const receipt=await json(response);
+  assert.deepEqual(await json(await h.post('CAREER_CHOICE_ACK_ROUTE_NOTICE',payload,'notice-ack')),receipt);
   const saved=await h.stored();assert.equal(saved.routeNotices!.notices.find(e=>e.eventKey===notice.eventKey)!.resolution!.command,'ACK_EVENT');assert.equal(saved.routeNotices!.collegeFocusChoices?.length??0,0);assert.equal(canonicalJson(saved.world),canonicalJson(source.world));assert.equal(canonicalJson(saved.planHistory),canonicalJson(source.planHistory));assert.equal(canonicalJson(saved.records),canonicalJson(source.records));
  });
 });

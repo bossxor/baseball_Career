@@ -40,3 +40,6 @@ E73 열람은 saveRevision만 진행하고 careerRevision/학적/기록/프로�
 ## 다음 인계
 
 귀국 미지명 선택 준비 root의 실제 KBO/US/은퇴 세 출구, 이번 새 화면/명령의 실제 웹 버튼 연결,99사건/24경로/PF 실행 증거가 남는다. M2 전체 완료가 아니다. 작업/Git/build는 지정된 baseball-career-m2 체크아웃, V:에는 문서·증거만 Copy-Item한다. 기존 큰 runtime JSON2개와 zz-dbg.log는 미포함·보존한다. 최종 커밋/푸시는 git log -1과 origin/codex/m2-career-engine 해시로 확인한다.
+
+## 최종 검토 보강
+기능 팁 afa1aa1은 원격과 일치한다. 비차단 route ACK 지적도 보강했다: 잘못된 event/root version의400과 저장 불변, 같은 command-id의 동일 receipt 재전송을 HTTP에서 확인했다. focused1/1·lint 종료0(6569ms), 제품 코드 변경0. 최종 API31 실행 이후 테스트만1파일 보강했으므로 전체 batch를 다시 통과했다고 해석하지 않는다. 초기 source freeze는 당시 실행본으로 보존한다. evidence/M2-20261103-choice-ack-review-check.log 참조.

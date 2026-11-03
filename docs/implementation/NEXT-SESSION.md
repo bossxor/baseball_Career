@@ -1,5 +1,7 @@
 # 최신 상태 — 2026-11-03 선택·복학·특성 저장 API
 
+**기능 팁 afa1aa1:** 원격 일치 확인. 이후 ACK 검토 보강은 테스트/인계만 변경했고 focused1/1·lint 통과, 제품 코드 변경0이다. 최종 인계 커밋은 git log -1로 확인한다.
+
 9be891b 이후 [API 호출·원장·검증·잔여](M2-CHOICE-API-20261103.md)를 구현했다. 읽기4종과 저장명령6종으로 대학 집중 선택·E73 미국 열람/실제 서명·E74 복학·일반 특성/진로 알림 ACK를 기존 M3 소유자/CAS/명령 영수증에 연결했다. 새 확률·연봉·성장·DB 스키마/의존성을 추가하지 않았다.
 
 최종 API31개 중29통과·환경2개 제외·실패0, 웹24/24, 전체 lint/typecheck/build·engine/event/design10종/Android shell/assets 정적 검증·HTTP smoke 종료0. 동결 API4파일 변경0, engine/rules는9be891b와 동일하다. 새 전체 engine/rules 런타임 검사는 반복하지 않았으며 이전 전체1025개 결과를 새 source의 전체 check 통과로 세지 않는다. 로그는 evidence/M2-20261103-choice-api-final-batch.log와 choice-api-result.json. 최종 읽기 검토 Critical/Important 없음.
