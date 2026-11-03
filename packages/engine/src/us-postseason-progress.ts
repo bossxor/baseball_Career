@@ -19,6 +19,23 @@ import {settleTeamGameHealth} from './health.js';
 import {planEmergencyRoster} from './emergency-roster.js';
 import {refreshCareerTraits} from './high-school-traits.js';
 import {raiseProHiddenTraitNotice} from './pro-trait-notices.js';
+import {createUsConferenceRegistry,supportsUsConferenceRegistry} from './us-conference-registry.js';
+
+function canConfigureConferences(c:UsCareer):boolean {
+ return !c.world.conferenceRegistry&&!c.postseason&&['PRESEASON_SETUP','SEASON_REVIEW'].includes(c.phaseContext.phase)&&!(c.phaseContext.phase==='PRESEASON_SETUP'&&c.season)&&!c.events.some(e=>e.status==='OPEN')&&supportsUsConferenceRegistry(c.world.organizations);
+}
+export function usConferenceConfigurationView(c:UsCareer){
+ assertUsCareerRevision(c,c.revision);const r=c.world.conferenceRegistry;
+ const club=(id:string)=>({id,name:c.world.organizations.find(o=>o.id===id)!.name});
+ return {configured:Boolean(r),canConfigure:canConfigureConferences(c),groups:r?{AL:r.AL.map(club),NL:r.NL.map(club)}:null};
+}
+
+/** Legacy saves acquire only server-owned metadata; a current bracket is never reassigned. */
+export function configureUsCareerConferences(c:UsCareer,revision:number):UsCareer {
+ assertUsCareerRevision(c,revision);if(c.world.conferenceRegistry)return c;
+ if(!canConfigureConferences(c))throw new RangeError('US_CONFERENCE_CONFIGURATION_NOT_READY');
+ return {...c,revision:c.revision+1,world:{...c.world,conferenceRegistry:createUsConferenceRegistry(c.world.organizations)}};
+}
 
 export interface UsPostseasonPhase {phase:'POSTSEASON_PROGRESS';bracket:MlbPostseason;conferences:Record<MlbLeague,string[]>;nextWorldDay:number;gameEvidence:string[];pendingGame:UsPendingGame|null}
 export type UsPostseasonStop='CHUNK_LIMIT'|'ENGINE_LIMIT'|'GAME_FINAL'|'HEALTH_CHANGE'|'POSTSEASON_COMPLETE'|'ROSTER_DECISION_REQUIRED'|'MAJOR_EVENT';

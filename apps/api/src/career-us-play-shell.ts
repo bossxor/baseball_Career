@@ -6,6 +6,7 @@ const fields=new Map<string,readonly string[]>([
  ['PUBLISH_SCHEDULE',[]],['START',[]],['ADVANCE',['maxDays']],['RESOLVE_HIDDEN',['eventKey','eventVersion','command']],
  ['RESOLVE_WINDOW',['eventKey','eventVersion','command']],['RESOLVE_LEVEL',['eventKey','eventVersion','command']],['TRAIN',['choice']],['CHANGE_STYLE',['archetype']],
  ['NEXT_MINOR_YEAR',[]],['OPEN_MINOR_MARKET',[]],['RESOLVE_MINOR_MARKET',['eventKey','eventVersion','command']],['ACCEPT_MINOR_OFFER',['offerKey']],
+ ['CONFIGURE_LEAGUES',[]],['START_POSTSEASON',[]],['ADVANCE_POSTSEASON',[]],
 ]);
 function fail(code:string):never {throw Object.assign(new Error(code),{code});}
 function domainError(error:unknown):never {fail(error instanceof Error&&/^[A-Z][A-Z0-9_]*$/.test(error.message)?error.message:'INVALID_REQUEST');}
@@ -46,6 +47,13 @@ export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand 
    case 'OPEN_MINOR_MARKET':next=engine.openUsMinorMarket(c,revision,c.minorMarket?.funding??c.inventory.clubs.map(club=>({organizationId:club.id,addedBudgetUsd:0})));break;
    case 'RESOLVE_MINOR_MARKET':{const result=engine.resolveUsMinorMarketEvent(c,revision,{eventKey:string('eventKey'),eventVersion:number('eventVersion'),command:string('command')});next=result.career;navigation=result.navigation;break;}
    case 'ACCEPT_MINOR_OFFER':next=engine.acceptUsMinorMarketOffer(c,revision,string('offerKey'));break;
+   case 'CONFIGURE_LEAGUES':engine.assertUsMilitaryPlayable(c);next=engine.configureUsCareerConferences(c,revision);break;
+   case 'START_POSTSEASON':{
+    engine.assertUsCareerRevision(c,revision);engine.assertUsMilitaryPlayable(c);
+    if(!c.world.conferenceRegistry)fail('US_CONFERENCES_NOT_CONFIGURED');
+    next=engine.startUsPostseason(c,revision,c.world.conferenceRegistry);break;
+   }
+   case 'ADVANCE_POSTSEASON':{engine.assertUsMilitaryPlayable(c);const result=engine.advanceUsPostseason(c,revision);next=result.career;stopReason=result.stopReason;break;}
    default:fail('UNSUPPORTED_COMMAND');
   }
  }catch(error){domainError(error);}
@@ -61,6 +69,8 @@ export function usPlayScreen(state:SaveState):unknown {
    pendingEvent:event?{eventKey:event.eventKey,eventVersion:event.version,definitionId:event.definitionId,commands:[...event.offeredChoices]}:null,
    progress:c.season?{closedDays:c.season.days.length,firstDay:c.season.firstDay,lastDay:c.season.lastDay,paidUsd:c.season.paidUsd}:null,
    yearTransition:phase.phase==='SEASON_REVIEW'?engine.usYearTransitionReadiness(c):null,
+   leagues:engine.usConferenceConfigurationView(c),
+   postseason:phase.phase==='POSTSEASON_PROGRESS'||c.postseason?engine.usPostseasonView(c):null,
    minorMarket:c.minorMarket?{...engine.usMinorMarketView(c),eventKey:c.minorMarket.eventKey,eventVersion:c.events.find(event=>event.eventKey===c.minorMarket!.eventKey)!.version}:null};
  }catch(error){domainError(error);}
 }

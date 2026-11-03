@@ -1,3 +1,9 @@
+# 최신 — 가상 US 고정 AL/NL·포스트시즌 API
+
+M2-US-LEAGUES-POSTSEASON-API-20261104.md를 먼저 읽는다. 원격 bc0f51b까지 최신화했고 사용자 승인으로 가상30구단 고정 ID 소속표를 생성/legacy metadata에 연결했다. 공개3명령(CONFIGURE_LEAGUES/START_POSTSEASON/ADVANCE_POSTSEASON), 소속/PS 공개 조회 연결. 묶음11/11·정적 검사 종료0, 독립 리뷰 조치 사항 없음. controlled 정규 접두 뒤 새 API native FINAL1경기와 기존 PS native46경기 우승 검증이며 native 정규8790경기 증거는 아니다. 전체 check는 새 source에 재실행하지 않았다.
+
+과거 세션17083은 종료0·2/2, 실제 선택3시즌 E35/JSON 보관 완료다. 실행 중으로 보지 않는다. 대형 DB 저장/화면/메이저 연말 API/99·24·PF는 남았다. 다음은 기존 메이저 재계약·FA writer의 저장 명령 연결이다. 다른 작업자의 us-amateur-return-career.test.ts21줄 WIP는 수정/스테이징하지 않고 저장소 밖 backup에 보존한다. PC 종료 금지, V: 문서/증거 Copy-Item만. 최종 Git hash는 log/rev-parse로 확인한다. 아래는 과거 인계다.
+
 # 최신 구현 — 미국 다음 해·만료 계약
 
 [M2-US-YEAR-API-20261103.md](M2-US-YEAR-API-20261103.md)를 먼저 읽는다. 다음 마이너 연도·만료 견적·사건 탐색·실제 제안 수락4명령과 연말 blocker/제안 사건 조회 연결. 기존 잔액/봉인 funding만 사용하며 임의 지원금 없음. 연말 포함4/4 및 만료 양성1/1·lint·타입·API build 통과, 읽기 리뷰 문제 없음. 다음은 서버 소유 AL/NL registry 생성·PS API, 메이저 연말, 실제 화면, 대형 저장/99·24·PF 잔여다. M2 전체 미완료. 사용자의 끝까지 계속 요청으로 이전5% 중단선 해제. PC 종료 금지. 아래는 과거 기록이다.

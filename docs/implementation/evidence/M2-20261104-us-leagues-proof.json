@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-04",
+  "base": "bc0f51b",
+  "focused": {
+    "total": 11,
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0,
+    "log": "M2-20261104-us-postseason-batch.log"
+  },
+  "staticExit": 0,
+  "review": {
+    "mode": "read-only",
+    "actionableFindings": 0
+  },
+  "wholeSuiteExecuted": false,
+  "nativeRegularSeason": false,
+  "controlledRegularPrefix": true,
+  "nativePostseasonGamesInEngineRegression": 46,
+  "nativeApiFinalAtLeast": 1,
+  "sourceHashes": {
+    "packages/engine/src/us-conference-registry.ts": "86ebe02c3a555c40a912474309b6c018bc4444d672ac5502b3cd7a8b96d90889",
+    "packages/engine/src/us-world.ts": "edb01a76251378244c061a86f3a5fee06b139dcb0be1e047cc19aa8d633a9649",
+    "packages/engine/src/us-career-entry.ts": "02f564001fe59d73b3ff67f29e43b0447807f5da21304788256a0cdd51937e64",
+    "packages/engine/src/us-postseason-progress.ts": "bc16ac0b35eb51a0439fb33f66971ec1435cc2c2a571c439299103827049cbf6",
+    "packages/engine/src/index.ts": "553f4d3a078513f65050a87aa34efaaa0b09145386aab07b8547f73f910961bf",
+    "apps/api/src/career-us-play-shell.ts": "396da2ef4e80a3ab596e20635e646aefcda366c6d1d78cbee7d10677ded5957b",
+    "packages/engine/test/us-conference-registry.test.ts": "f8fb49071bb1dd2d99bc1d63c3239a203d4eff82081163bc382910ca03711ea1",
+    "apps/api/test/m2-us-postseason.test.ts": "1b7567ba228881755095b3c57942c06ecdec4a061f844ec5a72dc3aed8152966"
+  }
+}

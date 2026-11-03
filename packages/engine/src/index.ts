@@ -153,6 +153,7 @@ export * from './pitch-learning-progress.js';
 export * from './school-repertoire.js';
 
 export * from './us-postseason.js';
+export * from './us-conference-registry.js';
 export * from './us-postseason-progress.js';
 
 export * from './us-supply.js';

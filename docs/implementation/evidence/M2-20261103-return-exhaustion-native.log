@@ -1,0 +1,12 @@
+{"nativeOptionalSettled":2,"teamGames":48,"recordRevision":54012}
+{"nativeOptionalSettled":3,"teamGames":48,"recordRevision":54228}
+✔ returned-US E35 rejects unfinished optional budget and unassessed routes (18540.6756ms)
+✔ three native optional seasons close actual offers before explicit E35 retirement and JSON archive (2311933.5957ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2332305.549

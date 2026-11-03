@@ -8,6 +8,8 @@ import type {DevelopmentPlayer} from './player.js';
 import {initialProfileAbilities} from './initial-abilities.js';
 import {createRepertoire,validatePitchWeights} from './repertoire.js';
 import type {Repertoire} from './repertoire.js';
+import {supportsUsConferenceRegistry,createUsConferenceRegistry,assertUsConferenceRegistry} from './us-conference-registry.js';
+import type {UsConferenceRegistry} from './us-conference-registry.js';
 
 export const US_LEVEL_MEANS={ROOKIE:35,A:45,AA:55,AAA:65,MLB:75} as const;
 export type UsLevel=keyof typeof US_LEVEL_MEANS;
@@ -17,6 +19,7 @@ const minorP=['SP','SP','SP','SP','RP','RP','RP','RP','CP','CP'];
 function positions(level:UsLevel){return {HITTER:level==='MLB'?[...minorH,'RF']:minorH,PITCHER:level==='MLB'?['SP','SP','SP','SP','SP','RP','RP','RP','RP','RP','RP','CP','CP']:minorP};}
 function ageRange(level:UsLevel):readonly [number,number] {return level==='ROOKIE'?[18,22]:level==='A'?[19,24]:level==='AA'?[20,27]:level==='AAA'?[21,32]:[22,38];}
 export interface UsRosterWorld {
+ conferenceRegistry?:UsConferenceRegistry;
  schemaVersion:1;modelVersion:'us-roster-1';worldKey:string;seasonKey:string;seed:string;difficulty:Difficulty;
  organizations:{id:string;name:string;levels:Record<UsLevel,string[]>}[];
  players:Record<string,DevelopmentPlayer>;repertoires:Record<string,Repertoire>;
@@ -39,10 +42,11 @@ export function createUsRosterWorld(input:{worldKey:string;seasonKey:string;seed
   const player:DevelopmentPlayer={...npc,name:'미국선수'+(index+1),age:low+age.value,archetype,focus,abilities,potential:p.potential,careerPeaks:{...abilities},fatigue:0};validateDevelopmentPlayer(player);players[npc.simulationKey]=player;byOrg.get(meta.organizationId)!.levels[meta.level].push(npc.simulationKey);
   if(npc.kind==='PITCHER'){const pitch=nextInteger(roster,6);roster=pitch.state;repertoires[npc.simulationKey]=createRepertoire(PITCH_IDS[pitch.value+1]!,input.seasonKey);}
  }
- const result:UsRosterWorld={schemaVersion:1,modelVersion:'us-roster-1',worldKey:input.worldKey,seasonKey:input.seasonKey,seed:input.seed,difficulty:input.difficulty,organizations,players,repertoires,rng:{roster,potential,handedness:identity.state}};assertInitialUsRosterWorld(result);return result;
+ const result:UsRosterWorld={schemaVersion:1,modelVersion:'us-roster-1',worldKey:input.worldKey,seasonKey:input.seasonKey,seed:input.seed,difficulty:input.difficulty,organizations,players,repertoires,rng:{roster,potential,handedness:identity.state}};if(supportsUsConferenceRegistry(organizations))result.conferenceRegistry=createUsConferenceRegistry(organizations);assertInitialUsRosterWorld(result);return result;
 }
 /** Initial-size constraints must not be reused after real signings, promotions, aging or releases. */
 export function assertInitialUsRosterWorld(world:UsRosterWorld):void {
+ if(world.conferenceRegistry!==undefined)assertUsConferenceRegistry(world.conferenceRegistry,world.organizations);
  if(world.schemaVersion!==1 || world.modelVersion!=='us-roster-1' || !world.worldKey || !world.seasonKey || !world.seed || !['GROWTH','REALISTIC','SECRET_CHEAT'].includes(world.difficulty) || world.organizations.length!==30 || new Set(world.organizations.map(o=>o.id)).size!==30 || Object.keys(world.players).length!==3420 || Object.keys(world.repertoires).length!==1590)throw new RangeError('INVALID_US_INITIAL_WORLD');
  for(const key of ['roster','potential','handedness'] as const)validateRng(world.rng[key]);const seen=new Set<string>();
  for(const org of world.organizations){

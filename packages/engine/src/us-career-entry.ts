@@ -1,3 +1,4 @@
+import {assertUsConferenceRegistry} from './us-conference-registry.js';
 import {assertCareerAliases} from './career-alias.js';
 import {auditCareerRecordCorrections} from './career-record-correction.js';
 import {assertProCareerAwards} from './pro-career-awards.js';
@@ -84,6 +85,7 @@ export interface UsCareer {
 
 /** Live rosters may change abilities/age/level; the initial distribution guard is only for seed-world admission. */
 export function assertActiveUsRosterWorld(world:ActiveUsRosterWorld):void {
+ if(world.conferenceRegistry!==undefined)assertUsConferenceRegistry(world.conferenceRegistry,world.organizations);
  assertSeasonCalendar(world.calendar);
  if(world.schemaVersion!==1 || world.modelVersion!=='us-roster-1' || world.status!=='ACTIVE' || !world.worldKey || !world.seed || world.seasonKey!==String(world.calendar.year) || !['GROWTH','REALISTIC','SECRET_CHEAT'].includes(world.difficulty) || world.organizations.length!==30 || new Set(world.organizations.map(o=>o.id)).size!==30)throw new RangeError('INVALID_ACTIVE_US_WORLD');
  const seen=new Set<string>();let pitchers=0;
