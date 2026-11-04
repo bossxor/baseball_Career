@@ -1,0 +1,40 @@
+✖ actual KBO/college registration notice uses its native relation owner and changes only read metadata (813.5066ms)
+✖ school relation read preserves a sealed academic year and permits the actual following-year activation (1766.25ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3892.418
+
+✖ failing tests:
+
+test at apps\api\test\m2-relations.test.ts:1:899
+✖ actual KBO/college registration notice uses its native relation owner and changes only read metadata (813.5066ms)
+  Error: UNSUPPORTED_COMMAND
+      at applyEngineCommand (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\src\engine-command.ts:54:25)
+      at apply (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-relations.test.ts:10:84)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-relations.test.ts:14:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    code: 'INVALID_REQUEST'
+  }
+
+test at apps\api\test\m2-relations.test.ts:1:1578
+✖ school relation read preserves a sealed academic year and permits the actual following-year activation (1766.25ms)
+  Error: UNSUPPORTED_COMMAND
+      at applyEngineCommand (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\src\engine-command.ts:54:25)
+      at apply (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-relations.test.ts:10:84)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-relations.test.ts:20:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'INVALID_REQUEST'
+  }

@@ -1,3 +1,9 @@
+# 최신 — 학교·대학·KBO 관계 저장 API 검증 완료
+
+M2-CAREER-RELATIONS-API-20261104.md를 먼저 읽는다. 관계 목록/범위 상세와 E94~E96 native 처리·대학 연말 재봉인을 저장 API에 연결했다. 새 API4+native21=25/25, 타입/lint/API build 종료0·독립 리뷰 지적 없음. 미국은 history adapter/과거 신원 보존 부족으로 명시 거부하며 완료로 세지 않는다.
+
+다음은 프로 은퇴/보관 API, 미국 Major E66/귀국 및 관계 adapter다. 전체90394 결과 미수집/PASS 아님. 사용자 WIP 보존, PC 종료 금지. M2 전체/99·24·PF·일반 웹 완료 아님. 최종 커밋/푸시는 git log/remote 확인. 아래는 과거 기록이다.
+
 # 최신 — 시즌 목표·에이전트 저장 API 검증 완료
 
 M2-CAREER-SUPPORT-API-20261104.md를 먼저 읽는다. 목표3명령·agent5명령과2공개 조회를 native owner에 연결했다. native preview context는 SHA256 토큰으로 공개하고 서버가 현재 quote를 다시 구해 검증한다. 미국 자금/미래 권한은 실제 owner만 사용하며 지원 추정0. 지원 API7/7, 앞 프로 사건과 결합15/15, 타입/lint/API build 종료0·독립 리뷰 지적 없음. native 역할/연봉 확률·RNG 결과 동일, HTTP 소유권/CAS/재실행 검증.

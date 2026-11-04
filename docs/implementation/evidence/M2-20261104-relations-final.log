@@ -1,0 +1,33 @@
+✔ actual KBO/college registration notice uses its native relation owner and changes only read metadata (1141.962ms)
+✔ school relation read preserves a sealed academic year and permits the actual following-year activation (2709.258ms)
+✔ relation list/detail expose existing identities and only requested official scope without raw player/history state (1994.2569ms)
+✔ relation HTTP uses actual owned notices, persists read once, retains its native navigation and isolates another owner (4491.9955ms)
+✔ HITTER pro list retains historical school and active club teammate identities without invented transfers/stages (933.1809ms)
+✔ PITCHER pro list retains historical school and active club teammate identities without invented transfers/stages (841.8901ms)
+✔ historical relation details reuse existing official scoped records; never fabricate pro games or new player registration (876.927ms)
+✔ both historical and new pro E94 preserve names and ACK only their notice while the confirmed plan remains sealed (1344.6349ms)
+✔ stale revision/version, wrong command or foreign/duplicate relation evidence reject without changes (1165.8878ms)
+✔ unknown historical player remains unresolved; malformed ownership, foreign history and changed confirmed plan reject (3225.5771ms)
+✔ absence of relations/notices on restored old pro state is empty and querying never creates a new relation (1076.0805ms)
+✔ a pro teammate moved to FA or retirement keeps identity and notices as historical only, never a fake live registration (1476.5812ms)
+✔ actual regular day reunites opposing appearances once, preserves results/RNG and resumes identically from JSON (7489.5293ms)
+✔ E95 and E94 share a private-data-free read path; acknowledging a reunion changes no gameplay state or old notices (2334.7297ms)
+✔ bench-only registration, same team, other game, retired and already reunited relations do not create E95 (1498.4687ms)
+✔ unclosed days, corrupt registrations and invalid historical evidence reject atomically instead of inventing a meeting (3308.2514ms)
+✔ postseason hook uses a real final game without generating a direct-duel win or modifying permanent state (494.9363ms)
+✔ cross-kind opponent meeting does not fabricate a duel, WIN, or hidden trait qualification (1303.0282ms)
+✔ reading a completed legacy day does not backfill an opponent reunion (249.9218ms)
+✔ actual transfer reunites an existing rival at registration while preserving records, RNG and old history (5025.7998ms)
+✔ E94 and E96 coexist and acknowledgement changes only metadata without restoring the transfer phase (902.0353ms)
+✔ historical reunion proof survives later membership changes; missing, duplicated or forged proof rejects without mutation (1892.2648ms)
+✔ old completed transfers are read without backfilling team reunions; failed registration leaves its source intact (1600.2405ms)
+✔ team registration includes an injured player but excludes loans, active service and already formed or retired relations (815.9972ms)
+✔ actual opposing game E95 survives the later confirmed transfer E96 and both notices remain independently readable (756.7921ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 29926.9046

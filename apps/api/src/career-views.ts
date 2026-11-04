@@ -11,6 +11,7 @@ import { US_MILITARY_SCREEN_IDS, usMilitaryScreen } from './career-us-military-s
 import { usPlayScreen } from './career-us-play-shell.js';
 import { proEventsScreen } from './career-pro-events-shell.js';
 import { careerSupportScreen } from './career-support-shell.js';
+import { relationScreen } from './career-relations-shell.js';
 import { careerView, decisionView, type UiShellState } from './ui-shell.js';
 
 function errorBody(
@@ -85,6 +86,7 @@ export async function getScreen(c: Context<{ Variables: AppVariables }>) {
     if (screenId==='US_CAREER') return c.json(usPlayScreen(state));
     if (screenId==='PRO_EVENTS') return c.json(proEventsScreen(state));
     if (screenId==='CAREER_GOALS' || screenId==='CAREER_AGENT') return c.json(careerSupportScreen(state,screenId));
+    if (screenId==='CAREER_RELATIONS' || screenId==='CAREER_RELATION_DETAIL') return c.json(relationScreen(state,screenId,c.req.query()));
     if ((CAREER_CHOICE_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(careerChoiceScreen(state, screenId));
     return c.json(decisionView(row.id, state, screenId));
   } catch (err) {
