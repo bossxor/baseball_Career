@@ -1,3 +1,9 @@
+# 최신 — 프로 은퇴·보관 저장 API 검증 완료
+
+M2-PRO-RETIREMENT-API-20261104.md를 먼저 읽는다. KBO/US native 요청·확인/취소·최대나이와 공개 계약 확인/보관 조회를 저장 API에 연결했다. API4+native9=13/13, 타입/lint/API build 종료0·독립 리뷰 지적 없음. 실제 KBO HTTP CAS/재전송/소유권·보관 재조회 검증. 정규시즌 접두는 controlled이며 native 전체 시즌 증거는 아니다.
+
+99사건12개 행에 scoped API/native 증거를 추가했으며 자동 전체 시즌/기본 웹 완료와 구분한다. 미국 관계 adapter·Major E66/귀국, 24/PF·실제 화면·대형 DB가 잔여. 전체90394 결과 미수집/PASS 아님. 사용자 WIP 보존, PC 종료 금지. 최종 commit/remote는 git 확인. 아래는 과거 이력이다.
+
 # 최신 — 학교·대학·KBO 관계 저장 API 검증 완료
 
 M2-CAREER-RELATIONS-API-20261104.md를 먼저 읽는다. 관계 목록/범위 상세와 E94~E96 native 처리·대학 연말 재봉인을 저장 API에 연결했다. 새 API4+native21=25/25, 타입/lint/API build 종료0·독립 리뷰 지적 없음. 미국은 history adapter/과거 신원 보존 부족으로 명시 거부하며 완료로 세지 않는다.

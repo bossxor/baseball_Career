@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "INCOMPLETE_IMPLEMENTATION_AUDIT",
-  "baseline": "910447c + M2-EH verified worktree; E66 M2-EK verified",
+  "baseline": "d441a13; prior engine audit states retained; 2026-11-04 scoped API evidence only",
   "items": [
     {
       "id": "E01",
@@ -486,7 +486,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/pro-career-advice.ts",
@@ -501,7 +501,11 @@
           "line": 90
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Controlled24-game contributions; actual native position training plan. Ordinary web/automatic full-season trigger not certified.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-PRO-EVENT-SAVE-API-20261104.md",
+        "apps/api/test/m2-pro-events.test.ts"
+      ]
     },
     {
       "id": "E13",
@@ -846,7 +850,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/pro-career-results.ts",
@@ -869,7 +873,11 @@
           "line": 50
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Native injury diagnosis/recovery event evidence and actual CONFIRM_RETURN owner plus owned HTTP CAS/replay. No extra healing. Not a full injury career.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-PRO-EVENT-SAVE-API-20261104.md",
+        "apps/api/test/m2-pro-events.test.ts"
+      ]
     },
     {
       "id": "E24",
@@ -1030,7 +1038,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/pro-career-awards.ts",
@@ -1045,7 +1053,11 @@
           "line": 143
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Controlled50 official contributions; native award producer and notice read. ACK does not count as award generation. Native full award season not certified.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-PRO-EVENT-SAVE-API-20261104.md",
+        "apps/api/test/m2-pro-events.test.ts"
+      ]
     },
     {
       "id": "E30",
@@ -3299,7 +3311,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/repertoire-events.ts",
@@ -3318,7 +3330,11 @@
           "line": 84
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Actual KBO/US native pitch-learning selection and100k XP reservation; locked/archived command availability. Not a full pitch mastery season.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-PRO-EVENT-SAVE-API-20261104.md",
+        "apps/api/test/m2-pro-events.test.ts"
+      ]
     },
     {
       "id": "E87",
@@ -3367,7 +3383,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/repertoire-events.ts",
@@ -3382,7 +3398,11 @@
           "line": 69
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Actual native batting-approach writer on KBO root; reproducible save reload; locked/archived commands.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-PRO-EVENT-SAVE-API-20261104.md",
+        "apps/api/test/m2-pro-events.test.ts"
+      ]
     },
     {
       "id": "E89",
@@ -3399,7 +3419,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/season-goals.ts",
@@ -3426,7 +3446,11 @@
           "line": 131
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Native KBO/US/college goal selection; midpoint replacement from controlled72-game contributions; actual owned HTTP goals. Full-season completion reward trigger not certified.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-CAREER-SUPPORT-API-20261104.md",
+        "apps/api/test/m2-career-support.test.ts"
+      ]
     },
     {
       "id": "E90",
@@ -3475,7 +3499,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/career-agent.ts",
@@ -3494,7 +3518,11 @@
           "line": 181
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Actual native agent hire in KBO/US roots and owned HTTP persistence; no world/budget mutation.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-CAREER-SUPPORT-API-20261104.md",
+        "apps/api/test/m2-career-support.test.ts"
+      ]
     },
     {
       "id": "E92",
@@ -3511,7 +3539,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/career-agent.ts",
@@ -3530,7 +3558,11 @@
           "line": 181
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Native US salary preview/draw parity on controlled previous major season; opaque public token and stale rejection. KBO salary scenario not directly API-tested.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-CAREER-SUPPORT-API-20261104.md",
+        "apps/api/test/m2-career-support.test.ts"
+      ]
     },
     {
       "id": "E93",
@@ -3547,7 +3579,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/career-agent.ts",
@@ -3566,7 +3598,11 @@
           "line": 181
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Native KBO role preview/draw parity and accepted promise version invalidation; exact public odds; no live full-season role consequence certification.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-CAREER-SUPPORT-API-20261104.md",
+        "apps/api/test/m2-career-support.test.ts"
+      ]
     },
     {
       "id": "E94",
@@ -3579,7 +3615,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/kbo-relations.ts",
@@ -3622,7 +3658,11 @@
           "line": 70
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Actual native KBO/college registration notice; owned HTTP read/navigation; college year-close seal and following-year resume. US adapter intentionally unsupported.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-CAREER-RELATIONS-API-20261104.md",
+        "apps/api/test/m2-relations.test.ts"
+      ]
     },
     {
       "id": "E95",
@@ -3635,7 +3675,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/career-achievements.ts",
@@ -3674,7 +3714,11 @@
           "line": 49
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Existing native actual reunion tests plus KBO API owner dispatch; no direct HTTP E95 scenario or US adapter certification.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-CAREER-RELATIONS-API-20261104.md",
+        "apps/api/test/m2-relations.test.ts"
+      ]
     },
     {
       "id": "E96",
@@ -3687,7 +3731,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/career-achievements.ts",
@@ -3742,7 +3786,11 @@
           "line": 173
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Existing native same-team reunion tests plus KBO API owner dispatch; no direct HTTP E96 scenario or US adapter certification.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-CAREER-RELATIONS-API-20261104.md",
+        "apps/api/test/m2-relations.test.ts"
+      ]
     },
     {
       "id": "E97",

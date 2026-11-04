@@ -1,0 +1,40 @@
+✔ KBO and US native retirement cancel/confirm preserve money, records and identity and project public frozen archives (31155.8359ms)
+✔ retirement trust boundary rejects unsupported choices, injected ledgers, wrong version/revision and early retirement (8742.1483ms)
+✔ native maximum-age guard freezes both roots at45 without new pay or military exemption (4344.8195ms)
+✖ owned retirement HTTP persists confirmation once and reloads the actual archive with CAS and owner isolation (6780.7222ms)
+✔ zero-first-team career archives actual identity/six peaks and zero rates without exposing hidden state or creating a player copy (1060.7324ms)
+✔ KBO, Futures and postseason totals stay distinct, with rates from summed raw numerators rather than averaged seasons (795.1432ms)
+✔ pitcher archive retains hand/form and active pitch mastery without exposing pitch XP or treating zero outs as ERA0 (1172.7021ms)
+✔ live roots, foreign retirement club/year, mismatched age and future receipt cannot masquerade as a retired archive (2957.9142ms)
+✔ US retirement confirmation/cancellation preserves source, all league records, income and contract without another payment (25228.177ms)
+✔ US archive separates school/minor/MLB and zero MLB debut, returns public six-stat peaks without hidden state (6812.8591ms)
+✔ US maximum-age retirement closes at45 with unresolved overseas deadline preserved, not erased or treated as exemption (5056.1065ms)
+✔ US retirement rejects unfinished seasons, stale/version mismatch and changed final evidence atomically (11702.4214ms)
+✔ US contract and bench registration without official PA/BF retain E37 and the same archive receipt (3336.8679ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 12
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 60891.6104
+
+✖ failing tests:
+
+test at apps\api\test\m2-pro-retirement.test.ts:1:6267
+✖ owned retirement HTTP persists confirmation once and reloads the actual archive with CAS and owner isolation (6780.7222ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  400 !== 200
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-pro-retirement.test.ts:60:155)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
