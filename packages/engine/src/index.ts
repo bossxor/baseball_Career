@@ -206,7 +206,8 @@ export type {CareerAdviceLedger,AdviceCareer,CareerAdviceRestProof} from './pro-
 export {refreshCareerRepertoireEvents,resolveCareerRepertoireEvent,careerBattingApproaches,setCareerBattingApproach,careerRepertoireEventsView} from './repertoire-events.js';
 export type {CareerRepertoireLedger,RepertoireCareer,PitchLevelReceipt} from './repertoire-events.js';
 
-export {refreshProCareerResultEvents,resolveProCareerResultEvent} from './pro-career-results.js';
+export {refreshProCareerResultEvents,resolveProCareerResultEvent,proCareerResultEventsView} from './pro-career-results.js';
+export {assertKboCareerRevision} from './kbo-career-version.js';
 
 export {openRetryCareerEpisode,retryCareerRouteView,beginRetryPreparation,completeRetryPreparation,acknowledgeRetryPreparationResult,assertRetryCareerLedger,assertRetryCareerRevision} from './retry-career.js';
 export type {RetryCareerLedger,RetryEpisode,RetryRouteAuthority,RetryEpisodeReason,RetryCareerPhase} from './retry-career.js';

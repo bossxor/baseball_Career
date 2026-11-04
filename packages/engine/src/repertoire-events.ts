@@ -78,10 +78,14 @@ export function setCareerBattingApproach<T extends RepertoireCareer>(c:T,revisio
  const w=window(c);if(!w||l.usedApproachWindows.includes(windowKey(c,w)))throw new RangeError('APPROACH_WINDOW_CLOSED');
  l.approach=approach;l.usedApproachWindows=[...l.usedApproachWindows,windowKey(c,w)];return {...c,revision:revision+1,repertoireEvents:l};
 }
+function availableEventCommands(c:RepertoireCareer,event:EventInstance){
+ if(['ARCHIVED','EVENT_DECISION'].includes(c.phaseContext.phase)||'pendingGame'in c.phaseContext&&c.phaseContext.pendingGame)return [];
+ const w=window(c),key=event.evidence.fields.trainingWindowIdOrPitchLevelReceiptId;
+ return event.definitionId==='E87'?['OPEN_REPERTOIRE']:event.definitionId==='E86'?['ACK_EVENT',...(event.seasonKey===c.world.seasonKey&&key===windowKey(c,'PRE')&&learningAvailable(c)?['SET_PITCH_TRAINING']:[])]:['ACK_EVENT',...(event.seasonKey===c.world.seasonKey&&w&&key===windowKey(c,w)?['SET_BATTING_APPROACH']:[])];
+}
 export function resolveCareerRepertoireEvent<T extends RepertoireCareer>(c:T,revision:number,input:{eventKey:string;eventVersion:number;command:'SET_PITCH_TRAINING'|'SET_BATTING_APPROACH'|'OPEN_REPERTOIRE'|'ACK_EVENT';pitchId?:PitchId;replacedPitchId?:PitchId;approach?:Approach}) {
  assertRevision(c,revision);validate(c);const event=c.repertoireEvents?.notices.find(e=>e.eventKey===input.eventKey);if(!event)throw new RangeError('REPERTOIRE_EVENT_NOT_FOUND');
- const r=scope(c),w=window(c),key=event.evidence.fields.trainingWindowIdOrPitchLevelReceiptId;
- const commands=event.definitionId==='E87'?['OPEN_REPERTOIRE']:event.definitionId==='E86'?['ACK_EVENT',...(event.seasonKey===c.world.seasonKey&&key===windowKey(c,'PRE')&&learningAvailable(c)?['SET_PITCH_TRAINING']:[])]:['ACK_EVENT',...(event.seasonKey===c.world.seasonKey&&w&&key===windowKey(c,w)?['SET_BATTING_APPROACH']:[])];
+ const r=scope(c),commands=availableEventCommands(c,event);
  const context={worldKey:c.world.worldKey,seasonKey:event.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:commands},selected=resolveEventChoice(event,input.eventVersion,input.command,input,context);
  let next:T=c;
  if(input.command==='SET_PITCH_TRAINING'){
@@ -98,5 +102,5 @@ export function resolveCareerRepertoireEvent<T extends RepertoireCareer>(c:T,rev
 }
 export function careerRepertoireEventsView(c:RepertoireCareer){
  validate(c);const l=c.repertoireEvents??empty(c),r=scope(c),w=window(c);
- return {approach:l.approach,approachOptions:Object.entries(APPROACH_LOGITS).map(([id,effects])=>({id,effects:{...effects}})),approachChangeAvailable:!!w&&c.world.players[r.key]!.kind==='HITTER'&&!l.usedApproachWindows.includes(windowKey(c,w)),learningAvailable:learningAvailable(c),levels:l.levels.map(x=>({pitchId:x.pitchId,grade:x.grade,seasonKey:x.seasonKey})),notices:l.notices.filter(e=>e.status==='OPEN').map(e=>({eventKey:e.eventKey,eventVersion:e.version,definitionId:e.definitionId,title:eventDefinition(e.definitionId).title,body:eventDefinition(e.definitionId).body,commands:[...e.offeredChoices]}))};
+ return {approach:l.approach,approachOptions:Object.entries(APPROACH_LOGITS).map(([id,effects])=>({id,effects:{...effects}})),approachChangeAvailable:!!w&&c.world.players[r.key]!.kind==='HITTER'&&!l.usedApproachWindows.includes(windowKey(c,w)),learningAvailable:learningAvailable(c),levels:l.levels.map(x=>({pitchId:x.pitchId,grade:x.grade,seasonKey:x.seasonKey})),notices:l.notices.filter(e=>e.status==='OPEN').map(e=>({eventKey:e.eventKey,eventVersion:e.version,definitionId:e.definitionId,title:eventDefinition(e.definitionId).title,body:eventDefinition(e.definitionId).body,commands:availableEventCommands(c,e)}))};
 }

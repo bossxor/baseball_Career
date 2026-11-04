@@ -1,0 +1,28 @@
+✔ controlled E12 uses the actual position-training domain writer; unrelated payload is rejected (1968.4241ms)
+✔ actual medical owner confirms only proven recovery; acknowledgment never heals or changes player abilities (3138.93ms)
+✖ native annual award notice acknowledgment preserves its receipt, statistics and money (1083.0781ms)
+✔ owned KBO/US E86 and E88 commands use existing learning/approach writers without caller state (5894.4256ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16754.5873
+
+✖ failing tests:
+
+test at apps\api\test\m2-pro-events.test.ts:1:4743
+✖ native annual award notice acknowledgment preserves its receipt, statistics and money (1083.0781ms)
+  TypeError: Cannot read properties of undefined (reading 'L')
+      at recordTotals (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\records.ts:113:289)
+      at candidates (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\pro-career-awards.ts:77:15)
+      at refreshProCareerAwards (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\pro-career-awards.ts:135:148)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-pro-events.test.ts:52:4)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)

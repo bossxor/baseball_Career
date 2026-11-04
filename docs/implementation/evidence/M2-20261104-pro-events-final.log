@@ -1,0 +1,35 @@
+✔ controlled E12 uses the actual position-training domain writer; unrelated payload is rejected (2215.6542ms)
+✔ actual medical owner confirms only proven recovery; acknowledgment never heals or changes player abilities (3364.6591ms)
+✔ native annual award notice acknowledgment preserves its receipt, statistics and money (1273.3179ms)
+✔ owned KBO/US E86 and E88 commands use existing learning/approach writers without caller state (6113.5749ms)
+✔ prototype-named choices are rejected as domain errors instead of escaping as TypeError (3024.5573ms)
+✔ PRO_EVENTS real HTTP owns the source, hides private metadata, and applies medical choice once across retries and CAS conflicts (9975.1754ms)
+✔ repertoire notices stop offering a domain choice when its actual preseason owner has locked the window (1860.2279ms)
+✔ archived or blocking-decision careers cannot resolve repertoire notices or expose a runnable action (1180.3167ms)
+✔ advice accepts a real KBO offdate receipt without health games and rejects missing or changed receipts (2755.1928ms)
+✔ E20 uses20-game performance regardless of optional morale; E26 compares the strongest competitor (1406.1812ms)
+✔ E19 requires two actual starts; relief outings cannot replace the starting sample (1634.0578ms)
+✔ general advice uses a separate stream, one uniform eligible draw per24 games, JSON replay and checkpoint idempotence (2273.9312ms)
+✔ position plan counts24 later healthy registered FINAL games and confirms the latest version without granting100 fit (1768.6705ms)
+✔ left throwing position targets are legal; morale requires an explicit valid0..100 domain value (1366.4671ms)
+✔ SP and CP requests enforce60 exactly, recheck vacancies and use existing roster competition without advice RNG (2903.6475ms)
+✔ the seasonal cap and two following seasons cooldown filter candidates before consuming the advice stream (1332.2943ms)
+✔ a rest request affects the actual starter and settles only after an official replacement start (1279.6147ms)
+✔ E86 invokes the real KBO and US learning writer; E88 persists the game approach and consumes its window (5827.0814ms)
+✔ rest preparation runs after ordinary coaching, freezes a JSON safe proof and leaves unrelated context unchanged (1905.8285ms)
+✔ E87 follows only committed XP threshold evidence and replay does not duplicate the level receipt (1657.9835ms)
+✔ E86 school choice reaches the existing learning and calendar registration writer (51.6848ms)
+✔ medical notices use the real injury and recovery, and CONFIRM_RETURN grants no health or ability effect (1551.7937ms)
+✔ FINAL observer keeps actual immutable fielding slots, JSON replay is idempotent and legacy slots stay unknown (68.802ms)
+✔ annual awards use actual most-played position, 50-game and 200-PA thresholds, explicit first-pro proof and deterministic ties (18.0533ms)
+✔ E25 freezes midpoint top ceil(eligible*.25), E29 comes from actual annual result and repeats neither receipt nor award type (80.8884ms)
+✔ pitcher titles use recorded starts/relief, positive saves, full team inning qualification and exact rate ties (13.3716ms)
+✔ position awards count defensive appearances separately from a majority of DH games (16.6337ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 37271.3729

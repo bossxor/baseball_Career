@@ -1,0 +1,70 @@
+✖ controlled E12 uses the actual position-training domain writer; unrelated payload is rejected (719.7178ms)
+✖ actual medical owner confirms only proven recovery; acknowledgment never heals or changes player abilities (1210.1451ms)
+✖ native annual award notice acknowledgment preserves its receipt, statistics and money (730.3897ms)
+✖ owned KBO/US E86 and E88 commands use existing learning/approach writers without caller state (1534.7229ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 0
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5610.8443
+
+✖ failing tests:
+
+test at apps\api\test\m2-pro-events.test.ts:1:2664
+✖ controlled E12 uses the actual position-training domain writer; unrelated payload is rejected (719.7178ms)
+  Error: UNSUPPORTED_COMMAND
+      at applyEngineCommand (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\src\engine-command.ts:50:25)
+      at dispatch (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-pro-events.test.ts:27:131)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-pro-events.test.ts:32:95)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    code: 'INVALID_REQUEST'
+  }
+
+test at apps\api\test\m2-pro-events.test.ts:1:4058
+✖ actual medical owner confirms only proven recovery; acknowledgment never heals or changes player abilities (1210.1451ms)
+  Error: UNSUPPORTED_COMMAND
+      at applyEngineCommand (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\src\engine-command.ts:50:25)
+      at dispatch (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-pro-events.test.ts:27:131)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-pro-events.test.ts:38:106)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'INVALID_REQUEST'
+  }
+
+test at apps\api\test\m2-pro-events.test.ts:1:4743
+✖ native annual award notice acknowledgment preserves its receipt, statistics and money (730.3897ms)
+  TypeError: Cannot read properties of undefined (reading 'L')
+      at recordTotals (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\records.ts:113:289)
+      at candidates (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\pro-career-awards.ts:77:15)
+      at refreshProCareerAwards (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\pro-career-awards.ts:135:148)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-pro-events.test.ts:52:4)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at apps\api\test\m2-pro-events.test.ts:1:6191
+✖ owned KBO/US E86 and E88 commands use existing learning/approach writers without caller state (1534.7229ms)
+  Error: UNSUPPORTED_COMMAND
+      at applyEngineCommand (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\src\engine-command.ts:50:25)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-pro-events.test.ts:59:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    code: 'INVALID_REQUEST'
+  }

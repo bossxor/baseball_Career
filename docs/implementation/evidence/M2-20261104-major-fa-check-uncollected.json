@@ -1,0 +1,11 @@
+{
+  "status": "ENDED_WITHOUT_RESULT",
+  "checkedAt": "2026-11-04T04:19:34.219Z",
+  "exitCode": null,
+  "activeTestProcesses": 0,
+  "loggedPassMarkers": 930,
+  "loggedFailureMarkers": 0,
+  "sourceFiles": 536,
+  "changed": [],
+  "note": "Session90394 unknown; no exitcode/final freeze file. No cause inferred; not PASS."
+}
