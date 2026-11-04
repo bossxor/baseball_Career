@@ -115,7 +115,7 @@ function observePlans(c:AdviceCareer,l:CareerAdviceLedger,day:number){
  });
 }
 function adviceDayClosed(c:AdviceCareer,day:number):boolean {
- if(isUs(c)||!c.days)return c.health.games.some(h=>h.evidence.seasonKey===c.world.seasonKey&&h.evidence.day===day);
+ if(isUs(c)||!c.days)return c.health.games.some(h=>h.evidence.seasonKey===c.world.seasonKey&&h.evidence.day===day)||isUs(c)&&!!c.season?.days.some(d=>d.day===day);
  const ledger=c.days,schedule=c.competitionSchedule,receipt=ledger.days.find(d=>d.day===day);
  if(ledger.schemaVersion!==1||ledger.worldKey!==c.world.worldKey||ledger.seasonKey!==c.world.seasonKey||!schedule||schedule.seasonKey!==c.world.seasonKey||!receipt)return false;
  // Offdates have no health rows; the date closer still seals the complete official contribution list.
