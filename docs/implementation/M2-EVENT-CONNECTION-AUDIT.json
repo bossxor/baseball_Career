@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "INCOMPLETE_IMPLEMENTATION_AUDIT",
-  "baseline": "d441a13; prior engine audit states retained; 2026-11-04 scoped API evidence only",
+  "baseline": "cc16fb5; scoped API/native evidence 2026-11-04; global check pending",
   "items": [
     {
       "id": "E01",
@@ -1310,7 +1310,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/career-pro-retry.ts",
@@ -1345,7 +1345,11 @@
           "line": 36
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Pro KBO/US native request/cancel/confirm and maximum-age owner plus actual KBO HTTP persistence/archives. Controlled season prefixes; amateur/retry cases and ordinary web not certified here.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-PRO-RETIREMENT-API-20261104.md",
+        "apps/api/test/m2-pro-retirement.test.ts"
+      ]
     },
     {
       "id": "E37",
@@ -1358,7 +1362,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/career-retirement-event.ts",
@@ -1377,7 +1381,11 @@
           "line": 25
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Native actual retirement producer and zero-first-team archive projection tested. Explicit event OPEN_ARCHIVE navigation/ACK lifecycle is not wired by this API slice.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-PRO-RETIREMENT-API-20261104.md",
+        "apps/api/test/m2-pro-retirement.test.ts"
+      ]
     },
     {
       "id": "E38",
@@ -1503,7 +1511,7 @@
         }
       ],
       "scope": "REQUIRES_SCOPE_REVIEW_M6",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/career-alias.ts",
@@ -1518,7 +1526,11 @@
           "line": 76
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Controlled100-day annual ledger drives native type-derived alias notice, actual E42 metadata ACK and prior history preserved. Full-year native trigger/web not certified.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-CAREER-HONORS-API-20261104.md",
+        "apps/api/test/m2-career-honors.test.ts"
+      ]
     },
     {
       "id": "E43",
@@ -2851,7 +2863,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/career-retirement-event.ts",
@@ -2870,7 +2882,11 @@
           "line": 25
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Native retirement farewell producer and per-league archive projection; records and contract frozen. Explicit event OPEN_ARCHIVE navigation lifecycle/whole career not certified.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-PRO-RETIREMENT-API-20261104.md",
+        "apps/api/test/m2-pro-retirement.test.ts"
+      ]
     },
     {
       "id": "E70",
@@ -3463,7 +3479,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
       "references": [
         {
           "path": "packages/engine/src/career-achievements.ts",
@@ -3482,7 +3498,11 @@
           "line": 170
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Actual direct-US A01 achievement producer and native E90 metadata read plus owned HTTP CAS/replay; cosmetic rewards unchanged. Goal-owned E90 and all achievement paths not certified by this slice.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-CAREER-HONORS-API-20261104.md",
+        "apps/api/test/m2-career-honors.test.ts"
+      ]
     },
     {
       "id": "E91",
@@ -3658,10 +3678,12 @@
           "line": 70
         }
       ],
-      "note": "Actual native KBO/college registration notice; owned HTTP read/navigation; college year-close seal and following-year resume. US adapter intentionally unsupported.",
+      "note": "Actual KBO/college/US native entry formation notices and owned HTTP CAS/replay; college year-end reseal. US uses saved current/school/retired identities; absent former KBO identities remain UNKNOWN_REFERENCE. US E95/E96 writer/owner not certified.",
       "verifiedEvidence": [
         "docs/implementation/M2-CAREER-RELATIONS-API-20261104.md",
-        "apps/api/test/m2-relations.test.ts"
+        "apps/api/test/m2-relations.test.ts",
+        "docs/implementation/M2-US-RELATIONS-API-20261104.md",
+        "apps/api/test/m2-us-relations.test.ts"
       ]
     },
     {

@@ -1,0 +1,8 @@
+{
+  "status": "RUNNING",
+  "startedAt": "2026-11-04T05:24:30.1260168Z",
+  "powershellPid": 26896,
+  "sourceCommit": "cc16fb585baf466f53a4991c1e30eea8edfd6e95",
+  "command": "npm run check",
+  "includesExistingUserTestWip": true
+}

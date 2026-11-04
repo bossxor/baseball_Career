@@ -1,0 +1,173 @@
+{
+  "observedAt": "2026-11-04T05:32:01.909Z",
+  "scope": "New API subset only, full check remains running",
+  "expected": 33,
+  "passed": 33,
+  "checks": [
+    {
+      "file": "apps/api/test/m2-pro-events.test.ts",
+      "name": "controlled E12 uses the actual position-training domain writer; unrelated payload is rejected",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-pro-events.test.ts",
+      "name": "actual medical owner confirms only proven recovery; acknowledgment never heals or changes player abilities",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-pro-events.test.ts",
+      "name": "native annual award notice acknowledgment preserves its receipt, statistics and money",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-pro-events.test.ts",
+      "name": "owned KBO/US E86 and E88 commands use existing learning/approach writers without caller state",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-pro-events.test.ts",
+      "name": "prototype-named choices are rejected as domain errors instead of escaping as TypeError",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-pro-events.test.ts",
+      "name": "PRO_EVENTS real HTTP owns the source, hides private metadata, and applies medical choice once across retries and CAS conflicts",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-pro-events.test.ts",
+      "name": "repertoire notices stop offering a domain choice when its actual preseason owner has locked the window",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-pro-events.test.ts",
+      "name": "archived or blocking-decision careers cannot resolve repertoire notices or expose a runnable action",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-career-support.test.ts",
+      "name": "KBO/US/college goal outbox selects actual native goals and never grants gameplay money or growth",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-career-support.test.ts",
+      "name": "KBO/US agent E91 hires its actual native contract without changing player, records or budget",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-career-support.test.ts",
+      "name": "role preview is opaque, publishes actual odds and consumes the same native draw; stale/raw tokens reject without mutation",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-career-support.test.ts",
+      "name": "US salary quote uses booked money only, hides native funding/context and negotiates with the same native probability and draw",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-career-support.test.ts",
+      "name": "goal and agent boundaries reject wrong-domain or injected fields and preserve the current owner",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-career-support.test.ts",
+      "name": "goal replacement uses the real midpoint and once-only owner instead of a client flag",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-career-support.test.ts",
+      "name": "goal selection and agent hiring persist through real HTTP with owner isolation, CAS and exact receipt replay",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-relations.test.ts",
+      "name": "actual KBO/college registration notice uses its native relation owner and changes only read metadata",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-relations.test.ts",
+      "name": "school relation read preserves a sealed academic year and permits the actual following-year activation",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-relations.test.ts",
+      "name": "relation list/detail expose existing identities and only requested official scope without raw player/history state",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-relations.test.ts",
+      "name": "relation HTTP uses actual owned notices, persists read once, retains its native navigation and isolates another owner",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-pro-retirement.test.ts",
+      "name": "KBO and US native retirement cancel/confirm preserve money, records and identity and project public frozen archives",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-pro-retirement.test.ts",
+      "name": "retirement trust boundary rejects unsupported choices, injected ledgers, wrong version/revision and early retirement",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-pro-retirement.test.ts",
+      "name": "native maximum-age guard freezes both roots at45 without new pay or military exemption",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-pro-retirement.test.ts",
+      "name": "owned retirement HTTP persists confirmation once and reloads the actual archive with CAS and owner isolation",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-career-honors.test.ts",
+      "name": "achievement E90 reaches the actual native notice owner",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-career-honors.test.ts",
+      "name": "actual E42 acknowledges only its alias outbox and exposes a receipt-free historical display",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-career-honors.test.ts",
+      "name": "honors expose cosmetics across owned school/pro roots without refreshing or issuing achievements on read",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-career-honors.test.ts",
+      "name": "honors HTTP uses the actual achievement owner with save CAS/replay, reloadable rewards and isolated reads",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-us-relations.test.ts",
+      "name": "actual US entry relationships are readable using the owned US root",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-us-relations.test.ts",
+      "name": "US actual formation notice read preserves every game, roster, money and phase with JSON restart",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-us-relations.test.ts",
+      "name": "US list distinguishes actual live levels, archived school identity and unavailable legacy references without inventing players",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-us-relations.test.ts",
+      "name": "US retired teammate identity is read from actual native annual supply, never restored to a roster",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-us-relations.test.ts",
+      "name": "US formation relation HTTP preserves save ownership, CAS and exact navigation across repeated delivery",
+      "pass": true
+    },
+    {
+      "file": "apps/api/test/m2-us-relations.test.ts",
+      "name": "US relation detail sums only actual requested league/phase/year rows, not merely echoing the scope",
+      "pass": true
+    }
+  ]
+}

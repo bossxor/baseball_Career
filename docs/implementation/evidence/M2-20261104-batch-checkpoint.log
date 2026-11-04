@@ -1,0 +1,125 @@
+
+> again-playball@0.1.0 check
+> npm run lint && npm run typecheck && npm test && npm run test:web && npm run build && npm run verify:engine && npm run verify:events && npm run verify:design && npm run verify:android && npm run verify:assets
+
+
+> again-playball@0.1.0 lint
+> eslint packages apps scripts
+
+
+> again-playball@0.1.0 typecheck
+> npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/db && npm run typecheck --workspaces --if-present && tsc -p tsconfig.tests.json
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/db@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/db@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/engine@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/rules@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/api@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/web@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> again-playball@0.1.0 test
+> npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/db && tsx --test --test-concurrency=2 packages/rules/test/*.test.ts packages/engine/test/*.test.ts apps/api/test/*.test.ts
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/db@0.1.0 build
+> tsc -p tsconfig.json
+
+✔ API logs the bounded database cause without serializing query parameters or save state (53.8234ms)
+✔ API bounds cyclic causes and an unwrapped query error without dropping its request id (2.8601ms)
+✔ API redacts parameter lines after an actual newline without relying on a query wrapper prefix (2.4155ms)
+✔ liveness exposes no save, secret or database readiness claim (63.4048ms)
+✔ version is public and secret-free (2.0689ms)
+✔ ready without db is 503 (1.9676ms)
+✔ ready with db reports schemaCompatible (3049.8317ms)
+✔ game writes without db stay unavailable (3.2852ms)
+✔ amateur E36 requests, cancels, archives and opens S10 through owned save commands without pro appearances (4820.4222ms)
+✔ E71 HTTP focus commits once, resumes stored notice and rejects stale/foreign/authority input atomically (4984.2545ms)
+✔ E73 HTTP comparison preserves enrollment until owned signing and reserves accepted terms once (35528.9503ms)
+✔ KBO and US E85 HTTP summary omits private receipts and ACK persists cursor without touching gameplay (20835.063ms)
+✔ route notice HTTP acknowledgment persists only metadata and never substitutes for the focus domain writer (2821.7194ms)
+✔ E74 HTTP return resumes enrollment from actual empty offers and preserves records, with CAS and replay (15228.8235ms)
+✔ E73 public event version drives early draft or continued enrollment without private save access (27684.9867ms)
+✔ achievement E90 reaches the actual native notice owner (2098.9526ms)
+✔ actual E42 acknowledges only its alias outbox and exposes a receipt-free historical display (1892.1305ms)
+✔ honors expose cosmetics across owned school/pro roots without refreshing or issuing achievements on read (4679.7243ms)
+✔ honors HTTP uses the actual achievement owner with save CAS/replay, reloadable rewards and isolated reads (7179.9548ms)
+✔ E34 -> E36 retry retirement runs through save commands and screens (18802.1349ms)
+✔ KBO/US/college goal outbox selects actual native goals and never grants gameplay money or growth (4199.1252ms)
+✔ KBO/US agent E91 hires its actual native contract without changing player, records or budget (3053.0674ms)
+✔ role preview is opaque, publishes actual odds and consumes the same native draw; stale/raw tokens reject without mutation (1949.9735ms)
+✔ US salary quote uses booked money only, hides native funding/context and negotiates with the same native probability and draw (30830.2186ms)
+✔ goal and agent boundaries reject wrong-domain or injected fields and preserve the current owner (1332.9734ms)
+✔ goal replacement uses the real midpoint and once-only owner instead of a client flag (1162.9097ms)
+✔ goal selection and agent hiring persist through real HTTP with owner isolation, CAS and exact receipt replay (7940.7588ms)
+✔ controlled E12 uses the actual position-training domain writer; unrelated payload is rejected (2044.104ms)
+✔ actual medical owner confirms only proven recovery; acknowledgment never heals or changes player abilities (2731.7361ms)
+✔ native annual award notice acknowledgment preserves its receipt, statistics and money (1076.1466ms)
+✔ owned KBO/US E86 and E88 commands use existing learning/approach writers without caller state (4591.229ms)
+✔ prototype-named choices are rejected as domain errors instead of escaping as TypeError (2005.095ms)
+✔ PRO_EVENTS real HTTP owns the source, hides private metadata, and applies medical choice once across retries and CAS conflicts (6769.7921ms)
+✔ repertoire notices stop offering a domain choice when its actual preseason owner has locked the window (2037.5617ms)
+✔ archived or blocking-decision careers cannot resolve repertoire notices or expose a runnable action (1501.5246ms)
+✔ KBO and US native retirement cancel/confirm preserve money, records and identity and project public frozen archives (21158.0076ms)
+✔ retirement trust boundary rejects unsupported choices, injected ledgers, wrong version/revision and early retirement (6742.8345ms)
+✔ native maximum-age guard freezes both roots at45 without new pay or military exemption (4125.7996ms)
+✔ owned retirement HTTP persists confirmation once and reloads the actual archive with CAS and owner isolation (6528.9739ms)
+✔ actual KBO/college registration notice uses its native relation owner and changes only read metadata (2061.4808ms)
+✔ school relation read preserves a sealed academic year and permits the actual following-year activation (4754.7176ms)
+✔ relation list/detail expose existing identities and only requested official scope without raw player/history state (3651.2724ms)
+✔ relation HTTP uses actual owned notices, persists read once, retains its native navigation and isolates another owner (7420.362ms)
+✔ major API rejects caller financial terms and preserves an unfunded owner (12917.0402ms)
+✔ major API reuses an existing server-owned agent funding quote without accepting new client money (5939.1046ms)
+✔ accepted owned USD counteroffer is displayed and signed at the same price through the API (10103.6314ms)
+✔ major annual API uses previously booked native funding, reserves once and preserves JSON and historical income (13621.8644ms)
+✔ six controlled credited MLB years expose explicit original-club FA and continue its remaining guarantee through the API (114105.2089ms)
+✔ US military commands reject authority, invalid choices and unbounded dates before reading a career (2.6033ms)
+✔ US military API freezes or terminates a real contract and starts bounded native service play (12319.5759ms)
+✔ controlled service dates reach real discharge, preserve 30-game-day option and require explicit return choice (22069.1344ms)
+✔ ordinary US play rejects caller state and invalid advance bounds (2.1878ms)
+✔ US annual API exposes actual blockers and advances an owned closed year without caller funding or new income (10460.323ms)
+✔ expired US minor API quotes persisted budgets, exposes owned choices and accepts an actual one-year offer (59078.3488ms)
+✔ ordinary US window API resolves real E43 and retains navigation without consuming training on view (3477.6468ms)
+✔ ordinary US API starts a signed scheduled career, advances native games and restores its public progress (3800.8638ms)
+✔ US legacy membership configuration preserves owner data and rejects client membership (5061.5152ms)
+✔ owned US postseason API starts fixed leagues and commits a native game without regular payroll changes (2803.9767ms)
+✔ actual US entry relationships are readable using the owned US root (1601.499ms)
+✔ US actual formation notice read preserves every game, roster, money and phase with JSON restart (1613.0806ms)
+✔ US list distinguishes actual live levels, archived school identity and unavailable legacy references without inventing players (1485.0584ms)
+✔ US retired teammate identity is read from actual native annual supply, never restored to a roster (8805.869ms)
+✔ US formation relation HTTP preserves save ownership, CAS and exact navigation across repeated delivery (6648.3685ms)
+✔ US relation detail sums only actual requested league/phase/year rows, not merely echoing the scope (820.3424ms)
+Native mandatory return year 1 complete
