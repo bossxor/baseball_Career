@@ -1,0 +1,51 @@
+✔ achievement E90 reaches the actual native notice owner (918.4586ms)
+✖ actual E42 acknowledges only its alias outbox and exposes a receipt-free historical display (1010.7272ms)
+✔ honors expose cosmetics across owned school/pro roots without refreshing or issuing achievements on read (3112.0304ms)
+✔ honors HTTP uses the actual achievement owner with save CAS/replay, reloadable rewards and isolated reads (4691.2749ms)
+✔ A07 requires earned athlete eligibility and three completed consecutive duty seasons across school/KBO/US roots (4377.6089ms)
+✔ actual KBO/MiLB signing gives one immutable A01 receipt, cosmetic and E90, read/replay/JSON mutate nothing (971.5154ms)
+✔ first appearances require actual PA/BF; career milestone totals never combine leagues or postseason (107.8087ms)
+✔ career W100 and SV200 use one league across years; correction keeps first evidence and cosmetics (75.7741ms)
+✔ international/posting and archive alone cannot invent milestones; A12 needs both actual leagues plus retirement receipt (69.5411ms)
+✔ malformed unlock identity, duplicate reward, forged receipt and unsupported awards are rejected (2149.7798ms)
+✔ college graduation requires resolved E75, not four completed years or an enrollment status toggle (9571.6741ms)
+✔ military COMPLETED needs both actual completed service blocks and return receipt, not status alone (70.6613ms)
+✔ A11 needs the original high-school rival plus an actual reunion game and evidenced registrations (112.4548ms)
+✔ career aggregation ignores NPC-only rows and reads no NPC statistics while preserving milestone results (238.102ms)
+✔ unchanged refresh validates its sources without cloning an already earned achievement ledger (89.4376ms)
+✔ initial type alone creates historical baseline without fabricated E42 or any player/record/growth bonus (4.9946ms)
+✔ selected existing type plus genuinely earned canonical alias produces annual E42 once, corrected commemorative reward remains (2.36ms)
+✔ prior earned aliases establish first baseline; no receipt or reward evidence means no record alias (1.8543ms)
+✔ next annual receipt compares last settled alias, live display follows selected type without publishing midseason events (1.2917ms)
+✔ pitcher type and G07 use existing labels without a new nickname threshold (0.9174ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 19
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18905.7567
+
+✖ failing tests:
+
+test at apps\api\test\m2-career-honors.test.ts:1:1969
+✖ actual E42 acknowledges only its alias outbox and exposes a receipt-free historical display (1010.7272ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  2 !== 1
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-career-honors.test.ts:23:171)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

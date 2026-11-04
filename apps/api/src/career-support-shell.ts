@@ -4,6 +4,7 @@ import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
 
 type ProCareer=engine.KboCareer|engine.UsCareer;
 const fields=new Map<string,readonly string[]>([
+ ['CAREER_HONOR_ACHIEVEMENT',['eventKey','eventVersion','command']],['CAREER_HONOR_ALIAS',['eventKey','eventVersion','command']],
  ['CAREER_GOALS_OPEN',[]],['CAREER_GOALS_RESOLVE',['eventKey','eventVersion','command','goalIds']],['CAREER_GOALS_REPLACE',['slot','goalId']],
  ['CAREER_AGENT_OPEN',[]],['CAREER_AGENT_RESOLVE',['eventKey','eventVersion','command','agentId','previewId','raiseBps']],['CAREER_AGENT_CHANGE',['agentId']],['CAREER_AGENT_PROMISE',[]],['CAREER_AGENT_OPEN_US_SALARY',[]],
 ]);
@@ -30,6 +31,12 @@ export function applyCareerSupport(state:SaveState,command:CommandBody):AppliedC
  const revision=number('careerRevision'),c=owner(state);let next:engine.GoalCareer,navigation:unknown;
  try{
   switch(command.type){
+   case 'CAREER_HONOR_ACHIEVEMENT':{
+    if(p.command!=='OPEN_ACHIEVEMENTS')fail('INVALID_PAYLOAD');const r=engine.resolveCareerAchievementEvent(c,revision,{eventKey:string('eventKey'),eventVersion:number('eventVersion'),command:p.command});next=r.career;navigation=r.navigation;break;
+   }
+   case 'CAREER_HONOR_ALIAS':{
+    if(p.command!=='ACK_EVENT')fail('INVALID_PAYLOAD');const r=engine.resolveCareerAliasEvent(c,revision,{eventKey:string('eventKey'),eventVersion:number('eventVersion'),command:p.command});next=r.career;navigation=r.navigation;break;
+   }
    case 'CAREER_GOALS_OPEN':next=engine.openCareerSeasonGoalSelection(c,revision);break;
    case 'CAREER_GOALS_RESOLVE':{
     const choice=string('command');if(p.goalIds!==undefined&&(choice!=='SET_GOALS'||!Array.isArray(p.goalIds)||!p.goalIds.every(id=>typeof id==='string'&&Object.hasOwn(engine.SEASON_GOAL_DEFINITIONS,id))))fail('INVALID_PAYLOAD');
@@ -67,5 +74,17 @@ export function careerSupportScreen(state:SaveState,screenId:'CAREER_GOALS'|'CAR
   const a=pro(c);if(isUs(a))engine.assertUsCareerRevision(a,a.revision);else engine.assertKboCareerRevision(a,a.revision);
   const salary=optionalPreview(()=>engine.careerSalaryCounterPreview(a)),role=optionalPreview(()=>engine.careerRoleReviewPreview(a)),view=engine.careerAgentView(a);
   return {careerRevision:a.revision,...view,notices:view.notices.map(n=>({...n,commands:[...(a.agents?.notices.find(e=>e.eventKey===n.eventKey)?.offeredChoices??[])]})),salary:salary?{previewId:token(salary.previewId),offerSetKey:salary.offerSetKey,baseOfferKey:salary.baseOfferKey,currency:salary.currency,deadlineWorldDay:salary.deadlineWorldDay,relationshipTrust:salary.relationshipTrust,requestUsed:salary.requestUsed,baseOfferState:salary.baseOfferState,options:salary.options}:null,role:role?{previewId:token(role.previewId),bucketKey:role.bucketKey,clubId:role.clubId,leagueKey:role.leagueKey,position:role.position,probability:role.probability,odds:role.odds,requestUsed:role.requestUsed}:null};
+ }catch(error){domainError(error);}
+}
+
+/** Public commemorative data only; native evidence/receipt strings are never a client write authority. */
+export function careerHonorsScreen(state:SaveState){
+ const c=owner(state);
+ try{
+  if(isUs(c))engine.assertUsCareerRevision(c,c.revision);else if('protagonistClubId'in c)engine.assertKboCareerRevision(c,c.revision);else engine.assertSchoolCareerRevision(c,c.revision);
+  const achievements=engine.careerAchievementsView(c),alias=engine.careerAliasView(c);
+  const snapshot=(s:typeof alias.current)=>({kind:s.kind,archetype:s.archetype,typeLabel:s.typeLabel,display:s.display,recordAliases:s.recordAliases.map(a=>({goalId:a.goalId,label:a.label,seasonKey:a.seasonKey}))});
+  const aliasReadable=!['ARCHIVED','EVENT_DECISION'].includes(c.phaseContext.phase)&&!('pendingGame'in c.phaseContext&&c.phaseContext.pendingGame)&&!(!('protagonistKey'in c)&&(c.collegeYearEnd||c.kboYearEnd||c.usYearEnd));
+  return {careerRevision:c.revision,gameplayRewardDelta:0,achievements:{playerKey:achievements.playerKey,sourceDifficulty:achievements.sourceDifficulty,achievements:achievements.achievements,rewards:achievements.rewards.map(r=>({rewardId:r.rewardId,type:r.type})),notices:achievements.notices.map(n=>({...n,eventVersion:n.version,commands:n.status==='OPEN'?['OPEN_ACHIEVEMENTS']:[]}))},alias:{current:snapshot(alias.current),history:alias.history.map(r=>({seasonKey:r.seasonKey,changed:r.changed,before:snapshot(r.before),after:snapshot(r.after)})),notices:alias.notices.map(n=>({...n,commands:aliasReadable?n.commands:[]}))}};
  }catch(error){domainError(error);}
 }

@@ -1,3 +1,9 @@
+# 최신 — 업적·별칭 저장 API 검증 완료
+
+M2-CAREER-HONORS-API-20261104.md를 먼저 읽는다. E90 업적 열람/E42 별칭 확인과 CAREER_HONORS 공개 조회를 기존 shell/native owner로 연결했다. API5+native15=20/20·타입/lint/API build 종료0·독립 리뷰 지적 없음. 기념 보상/별칭 이력 유지, 내부 receipt/보상 근거 비공개. 실제 HTTP는 US A01/E90 저장을 검증했다. E42 연말은 controlled 원장이다.
+
+다음은 US 관계 E94·공개 history adapter의 실제 저장 자료 범위와 Major E66/귀국이다. 근거 없는 과거 KBO 선수 신원/등록은 생성하지 않는다. 99/24/PF·기본 실제 웹·대형DB 잔여, 전체90394 결과 미수집. 사용자 WIP 보존·PC 종료 금지. Git 최종 hash는 log/remote 확인. 아래는 과거 기록이다.
+
 # 최신 — 프로 은퇴·보관 저장 API 검증 완료
 
 M2-PRO-RETIREMENT-API-20261104.md를 먼저 읽는다. KBO/US native 요청·확인/취소·최대나이와 공개 계약 확인/보관 조회를 저장 API에 연결했다. API4+native9=13/13, 타입/lint/API build 종료0·독립 리뷰 지적 없음. 실제 KBO HTTP CAS/재전송/소유권·보관 재조회 검증. 정규시즌 접두는 controlled이며 native 전체 시즌 증거는 아니다.

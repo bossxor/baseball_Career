@@ -34,7 +34,7 @@ export type AppliedCommand = {
 export function applyEngineCommand(state: SaveState, command: CommandBody): AppliedCommand {
   if (command.type.startsWith('CAREER_PRO_RETIRE_')) return applyProRetirement(state, command);
   if (command.type.startsWith('CAREER_RELATIONS_')) return applyRelationChoice(state, command);
-  if (command.type.startsWith('CAREER_GOALS_') || command.type.startsWith('CAREER_AGENT_')) return applyCareerSupport(state, command);
+  if (command.type.startsWith('CAREER_HONOR_') || command.type.startsWith('CAREER_GOALS_') || command.type.startsWith('CAREER_AGENT_')) return applyCareerSupport(state, command);
   if (command.type.startsWith('CAREER_PRO_EVENT_')) return applyProEvent(state, command);
   if (command.type.startsWith('CAREER_US_PLAY_')) return applyUsPlay(state, command);
   if (command.type.startsWith('CAREER_US_MILITARY_')) return applyUsMilitary(state, command);
