@@ -1,3 +1,4 @@
+import {assertUsMajorFaWindow} from './us-major-fa-window.js';
 import {assertUsConferenceRegistry} from './us-conference-registry.js';
 import {assertCareerAliases} from './career-alias.js';
 import {auditCareerRecordCorrections} from './career-record-correction.js';
@@ -73,7 +74,7 @@ export interface UsCareer {
  achievements?:CareerAchievementLedger;
  agents?:CareerAgentLedger;
  goals?:CareerGoalLedger;domesticReturn?:import('./us-kbo-return.js').UsKboReturnQuote;minorMarket?:UsMinorMarket;minorRenewal?:UsMinorRenewal;
- retirement?:UsCareerRetirement;schemaVersion:1|2|3|4;majorYears?:readonly UsMajorYearArchive[];minorYears?:readonly UsMinorYearArchive[];mode:'US_CAREER';revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveUsRosterWorld;protagonistKey:string;protagonistOrganizationId:string;
+ majorFaWindow?:import('./us-major-fa-window.js').UsMajorFaWindow;retirement?:UsCareerRetirement;schemaVersion:1|2|3|4;majorYears?:readonly UsMajorYearArchive[];minorYears?:readonly UsMinorYearArchive[];mode:'US_CAREER';revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveUsRosterWorld;protagonistKey:string;protagonistOrganizationId:string;
  phaseContext:UsPhase;postseason?:{bracket:MlbPostseason;conferences:Record<MlbLeague,string[]>;gameEvidence:string[]};season?:UsSeasonState;seasonSchedule?:UsSeasonSchedule;preseasonPlan?:UsPreseasonPlan;campNotices?:readonly EventInstance[];
  activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string;populationBasis:'INITIAL_INVENTORY'|'LEGACY_BOOTSTRAP'|'KBO_TRANSFER'};
  registration:{playerKey:string;clubId:string;level:UsLevel;seasonKey:string;status:'ACTIVE'|'INJURED'};
@@ -125,7 +126,7 @@ export interface UsCareerPublicView {
  contract:Pick<UsCareer['contract'],'type'|'currency'|'annualSalaryUsd'|'signingBonusUsd'|'controlSeasons'|'nationalReleaseAllowed'|'militaryReturnOption'> & {years?:number;status?:UsCareer['contract']['status']};phase:UsPhase['phase'];
 }
 export function usCareerView(c:UsCareer):UsCareerPublicView {
- assertUsNationalState(c);assertProCareerAwards(c);auditCareerRecordCorrections(c);assertCareerAliases(c);
+ assertUsMajorFaWindow(c);assertUsNationalState(c);assertProCareerAwards(c);auditCareerRecordCorrections(c);assertCareerAliases(c);
  if(c?.agents)assertCareerAgentLedger(c);
  if(c.military.service?.version===2&&(!c.military.service.returnContract||Number(c.world.seasonKey)<=Number(c.military.service.returnContract.seasonKey)))return usMilitaryHistoricalView(c);
  if(c.domesticReturn!==undefined)assertUsKboReturnQuote(c);

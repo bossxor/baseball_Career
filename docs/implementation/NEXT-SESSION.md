@@ -1,3 +1,9 @@
+# 최신 구현 — 2026-11-05: Major FA E66 저장·서명 연결
+
+[M2-MAJOR-FA-E66-20261105.md](M2-MAJOR-FA-E66-20261105.md)를 먼저 읽는다. 실제 E66 계약 창/저장 OPEN·NAV와 기존 FA 수락/은퇴 성공의 DOMAIN 해소를 연결했다.15/15·types/lint/engine/API build0·독립 리뷰 통과. 원구단 agent 증액/legacy 창 없는 FA와 금융 replay 유지. OPEN_RETURN은 S33 NAV까지만이며 실제 Major 국내 복귀 authority/등록은 잔여다.
+
+다음은 새 RED로 발견한 은퇴 취소 뒤 재요청 ID 충돌과 귀국 service 완료 신호/검사 cap 보완이다. 이전 실제2년 선택 검사는 cap3000<최소3516으로 완주 불가해 중지했다. stop-reason 증거를 확인하며 종료1을 새 제품 실패나 PASS로 세지 않는다. 기존 사용자 WIP15줄/큰파일 보존. PC 종료 금지. 아래는 과거 이력이다.
+
 # 최신 구현 — 2026-11-05: 프로 은퇴 인사·보관 이동 API 완료
 
 [M2-PRO-ARCHIVE-NAVIGATION-20261105.md](M2-PRO-ARCHIVE-NAVIGATION-20261105.md)를 먼저 읽는다. E37/E69 OPEN_ARCHIVE를 실제 native archive/이벤트 owner에 연결했고 기존+신규API7/7·types/lint/build0·독립 리뷰 통과. 사건 metadata/revision만 바뀌고 과거 세계/급여/기록·ARCHIVED를 보존한다. legacy 카드 없어도 보관 조회 유지.

@@ -1,0 +1,24 @@
+✔ Major FA window commands reject caller funding, state, malformed version and unsupported choices at the save boundary (1.6945ms)
+✔ Major E66 owned HTTP persists one window, keeps NAV pending and actual FA signing closes it with one financial reservation (136318.8385ms)
+✔ native eligible Major FA opens exactly one source-owned E66 without changing money or playing another season (69515.8753ms)
+✔ Major E66 navigates while pending and preserves original native offers, records, income and annual state (13177.4152ms)
+✔ actual Major FA acceptance closes only the owned E66 and commits the existing native transfer once (17090.0682ms)
+✔ Major E66 survives retirement cancellation and closes atomically only on actual retirement confirmation (8382.1057ms)
+✔ Major E66 cannot bypass another blocking task, damaged window source, invalid funding or stale revision (8554.8726ms)
+✔ pending Major E66 preserves a sealed original-club agent counteroffer and charges its accepted price once (11508.8267ms)
+✔ pure controlled offer projection uses demand, 40 protection and actual funded budgets without RNG (2404.6501ms)
+Controlled FA prefix; real transfer and replay: {"from":"US15","to":"US07","offers":4,"salary":9904000,"years":5}
+✔ controlled six credited seasons compare at most three foreign clubs, sign one and replay historical budgets after JSON and guaranteed renewal (74310.3246ms)
+✔ US retirement confirmation/cancellation preserves source, all league records, income and contract without another payment (8521.8856ms)
+✔ US archive separates school/minor/MLB and zero MLB debut, returns public six-stat peaks without hidden state (2737.9174ms)
+✔ US maximum-age retirement closes at45 with unresolved overseas deadline preserved, not erased or treated as exemption (2069.2717ms)
+✔ US retirement rejects unfinished seasons, stale/version mismatch and changed final evidence atomically (8845.1385ms)
+✔ US contract and bench registration without official PA/BF retain E37 and the same archive receipt (2606.8385ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 373831.0961

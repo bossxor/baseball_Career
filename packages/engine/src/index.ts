@@ -262,3 +262,5 @@ export {chooseCollegeAdmissionFocus} from './career-route-notices.js';
 export {assertCollegeUnsignedReturn,assertCollegeEarlyUsComparison,collegeEarlyUsComparisonView,openCollegeEarlyUsOffer} from './college-route.js';
 
 export * from './us-relations.js';
+
+export {openUsMajorFaWindow,resolveUsMajorFaWindow,usMajorFaWindowView,hasOnlyUsMajorFaWindowEvent} from './us-major-fa-window.js';

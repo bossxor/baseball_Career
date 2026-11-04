@@ -1,0 +1,26 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {eq} from 'drizzle-orm';
+import {createTestDb,seedAllowedSubject,gameSaves} from '@playball/db';
+import {createApp} from '../src/app.js';
+import {json} from './json.js';
+import {applyEngineCommand} from '../src/engine-command.js';
+import {closedUsFreeAgentFixture} from '../../../packages/engine/test/us-major-fa-fixture.js';
+import {canonicalJson} from '../../../packages/engine/src/game.js';
+import type {UsCareer} from '@playball/engine';
+
+test('Major FA window commands reject caller funding, state, malformed version and unsupported choices at the save boundary',()=>{
+ for(const [type,payload]of [['OPEN_MAJOR_FA_WINDOW',{careerRevision:1,funding:[]}],['OPEN_MAJOR_FA_WINDOW',{careerRevision:1,majorFaWindow:{}}],['RESOLVE_MAJOR_FA_WINDOW',{careerRevision:1,eventKey:'x',eventVersion:1,command:'OPEN_RETURN',world:{}}]]as const)assert.throws(()=>applyEngineCommand({schemaVersion:1},{commandId:'inject',expectedRevision:0,type:'CAREER_US_PLAY_'+type,payload}),/INVALID_PAYLOAD/);
+});
+
+test('Major E66 owned HTTP persists one window, keeps NAV pending and actual FA signing closes it with one financial reservation',async()=>{
+ const {db,client}=await createTestDb();try{
+  const source=closedUsFreeAgentFixture(),headers={Authorization:'Bearer dev:major-window-owner','Content-Type':'application/json'};await seedAllowedSubject(db,'major-window-owner');await seedAllowedSubject(db,'major-window-foreign');const app=createApp({db,auth:{allowDevBearer:true}}),created=await json<{saveId:string}>(await app.request('/api/game-creations',{method:'POST',headers,body:JSON.stringify({creationId:'major-window-http',mode:'CLUB'})}));await db.update(gameSaves).set({state:{schemaVersion:1,career:source}}).where(eq(gameSaves.id,created.saveId));const path='/api/saves/'+created.saveId,post=(id:string,saveRevision:number,type:string,payload:Record<string,unknown>)=>app.request(path+'/commands',{method:'POST',headers,body:JSON.stringify({commandId:id,expectedRevision:saveRevision,type:'CAREER_US_PLAY_'+type,payload})});
+  const opened=await post('open',0,'OPEN_MAJOR_FA_WINDOW',{careerRevision:source.revision});assert.equal(opened.status,200);const receipt=await json(opened);assert.deepEqual(await json(await post('open',0,'OPEN_MAJOR_FA_WINDOW',{careerRevision:source.revision})),receipt);
+  const read=await app.request(path+'/screens/US_CAREER',{headers});assert.equal(read.status,200);const view=await json<{careerRevision:number;majorFaWindow:{eventKey:string;eventVersion:number;commands:string[]};majorContract:{kind:string;offers:{offerKey:string;organizationId:string;annualSalaryUsd:number}[]}}>(read);assert.equal(view.majorContract.kind,'FREE_AGENCY');assert.deepEqual(view.majorFaWindow.commands,['OPEN_CAREER_OFFERS','OPEN_RETURN']);assert.ok(view.majorContract.offers.length<=4);assert.doesNotMatch(JSON.stringify(view.majorFaWindow),/sourceRevision|receiptKey|sourceBasis|"rng"|"seed"/);
+  const choice={careerRevision:view.careerRevision,eventKey:view.majorFaWindow.eventKey,eventVersion:view.majorFaWindow.eventVersion,command:'OPEN_CAREER_OFFERS'},navigate=await post('navigate',1,'RESOLVE_MAJOR_FA_WINDOW',choice);assert.equal(navigate.status,200);assert.equal((await json<{summary:{navigation:{targetScreen:string}}}>(navigate)).summary.navigation.targetScreen,'S08');
+  assert.equal((await post('bad-version',2,'RESOLVE_MAJOR_FA_WINDOW',{...choice,eventVersion:choice.eventVersion+1})).status,400);const [pending]=await db.select({state:gameSaves.state}).from(gameSaves).where(eq(gameSaves.id,created.saveId)),c=(pending!.state as {career:UsCareer}).career;assert.equal(c.events.find(e=>e.eventKey===choice.eventKey)!.status,'OPEN');assert.equal(c.revision,view.careerRevision);assert.equal(canonicalJson(c.world),canonicalJson(source.world));assert.deepEqual(c.income,source.income);
+  const offer=view.majorContract.offers.find(o=>o.organizationId!==source.protagonistOrganizationId)!;assert.ok(offer);const sign={careerRevision:view.careerRevision,offerKey:offer.offerKey},accepted=await post('sign',2,'ACCEPT_MAJOR_FA',sign);assert.equal(accepted.status,200);const signedReceipt=await json(accepted);assert.deepEqual(await json(await post('sign',2,'ACCEPT_MAJOR_FA',sign)),signedReceipt);assert.equal((await post('conflict',2,'ACCEPT_MAJOR_FA',sign)).status,409);
+  const [saved]=await db.select({state:gameSaves.state}).from(gameSaves).where(eq(gameSaves.id,created.saveId)),next=(saved!.state as {career:UsCareer}).career;assert.equal(next.majorFaWindow,undefined);assert.equal(next.events.find(e=>e.eventKey===choice.eventKey)!.resolution!.command,'ACCEPT_CAREER_OFFER');assert.equal(next.protagonistOrganizationId,offer.organizationId);assert.equal(canonicalJson(next.records),canonicalJson(source.records));assert.deepEqual(next.income,source.income);for(const club of source.inventory.clubs)assert.equal(next.inventory.clubs.find(o=>o.id===club.id)!.availableBudgetUsd,club.availableBudgetUsd-(club.id===offer.organizationId?offer.annualSalaryUsd:0));assert.equal((await app.request(path+'/screens/US_CAREER',{headers:{Authorization:'Bearer dev:major-window-foreign'}})).status,404);
+ }finally{await client.close();}
+});

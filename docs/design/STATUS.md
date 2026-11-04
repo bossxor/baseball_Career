@@ -14,9 +14,11 @@
 | M9 배포·운영·출시 검증 | 2% | 100% | 2% |
 | **합계** | **100%** | — | **87.5%** |
 
+**2026-11-05 Major FA 사건 연결:** E66 창/저장 NAV·실제 서명/은퇴 해소,15/15·types/lint/build·리뷰 통과. 원구단 증액 계약/legacy 유지. 국내 복귀 NAV 이후 실제 authority/등록은 잔여. [구현/검증](../implementation/M2-MAJOR-FA-E66-20261105.md).
+
 **2026-11-05 보관 이동 연결:** E37/E69 OPEN_ARCHIVE backend owner와 공개 카드, API7/7·types/lint/API build·리뷰 통과. [구현/증거](../implementation/M2-PRO-ARCHIVE-NAVIGATION-20261105.md). 일반 웹 S10 전체 binding은 별도다.
 
-**2026-11-05 재개 구현:** 복무 휴식일의 조언 판정 보완, 새 경계 포함29/29·build/types/lint·리뷰 통과. 실제2년 native 회귀1건은 실행 중이며 전체 PASS/M2 완료가 아니다. [현재 구현](../implementation/M2-US-SERVICE-ADVICE-DAY-20261105.md).
+**2026-11-05 재개 구현:** 복무 휴식일의 조언 판정 보완, 새 경계 포함29/29·build/types/lint·리뷰 통과. 실제2년 native 회귀는 test cap3000으로8790경기를 완주할 수 없어 중지했고 검사 구동부/완료 신호 보완 중이다. 전체 PASS/M2 완료 아님. [현재 구현](../implementation/M2-US-SERVICE-ADVICE-DAY-20261105.md).
 
 **최신 갱신 — 2026-11-05:** 전체 검사는 종료1로 확정됐다. 후속 수정2fb681e가 HEAD/remote에 반영돼 있으며 수정 후 검증이 다음 작업이다. [최신 인계·실패 재현·작업 순서](../implementation/M2-HANDOFF-20261105.md).
 
@@ -33,7 +35,7 @@
 
 **전체 검사 — 종료1:** 2026-11-04 14:24~16:20 KST. 실제 집계 **총1120·통과1113·실패2·제외5**. 린트·전체 타입 통과 후 엔진/API 테스트에서 실패해 뒤의 웹 검사·전체 build·후속 verify 단계는 이 실행에서 수행하지 못했다. 두 실패는 기존 사용자 WIP의 미국 복무 귀국 테스트/DBG에서 ADVICE_DAY_NOT_CLOSED. source cc16fb5 + 당시 WIP21줄,583파일 실행 중 변경0. 후속2fb681e의 미국 season.days 종료 판정 보완은 이 실행 후 변경으로 재검증이 필요하다. 현재 재현 WIP15줄은 최신 인계의 패치에 보관했다. [최종 로그](../implementation/evidence/M2-20261104-batch-check.log) · [종료 상태](../implementation/evidence/M2-20261104-batch-run.json) · [최종 변경 대조](../implementation/evidence/M2-20261104-batch-freeze-check.json).
 
-**남은 M2:** Major FA E66 사건·최신 KBO 세계를 사용하는 귀국 소유권 연결, 미국 E95/E96 재회 처리, 99사건 잔여 감사·24경로/PF 실행 증거·실제 웹 연결·대형 실제 DB 검증. 사건99개 중17개에 이번 부분 실행 근거를 연결했다. 미감사61개가61개 미구현이라는 뜻은 아니다. [사건 감사](../implementation/M2-EVENT-CONNECTION-AUDIT.md).
+**남은 M2:** Major FA 국내 복귀·최신 KBO 세계를 사용하는 귀국 소유권 연결, 미국 E95/E96 재회 처리, 99사건 잔여 감사·24경로/PF 실행 증거·실제 웹 연결·대형 실제 DB 검증. 사건99개 중17개에 이번 부분 실행 근거를 연결했다. 미감사61개가61개 미구현이라는 뜻은 아니다. [사건 감사](../implementation/M2-EVENT-CONNECTION-AUDIT.md).
 
 **진행률 기준:** 상단 **M2 완료 추정65%·남음35%, 전체87.5%·남음12.5%** 유지. 관리용 추정이며 검사 통과율이 아니다. 전체 검사/수용 조건이 남아 임의로 올리지 않았다. 다른 영역은 기존 추정으로 이번에 재검증하지 않았다. 전체 계산은68% + 30% × 65% = 87.5%다.
 

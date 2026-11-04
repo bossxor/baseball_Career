@@ -1,0 +1,13 @@
+✔ native eligible Major FA opens exactly one source-owned E66 without changing money or playing another season (77431.4992ms)
+✔ Major E66 navigates while pending and preserves original native offers, records, income and annual state (28266.0225ms)
+✔ actual Major FA acceptance closes only the owned E66 and commits the existing native transfer once (30452.5839ms)
+✔ Major E66 survives retirement cancellation and closes atomically only on actual retirement confirmation (13395.4143ms)
+✔ Major E66 cannot bypass another blocking task, damaged window source, invalid funding or stale revision (13232.5485ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 164782.583
