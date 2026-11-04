@@ -1381,10 +1381,12 @@
           "line": 25
         }
       ],
-      "note": "Native actual retirement producer and zero-first-team archive projection tested. Explicit event OPEN_ARCHIVE navigation/ACK lifecycle is not wired by this API slice.",
+      "note": "Actual pro retirement producer/archive plus E37/E69 native OPEN_ARCHIVE through owned save API, CAS/replay/version and immutable history validated. Controlled season prefixes; ordinary web S10 binding/full-career trace not certified.",
       "verifiedEvidence": [
         "docs/implementation/M2-PRO-RETIREMENT-API-20261104.md",
-        "apps/api/test/m2-pro-retirement.test.ts"
+        "apps/api/test/m2-pro-retirement.test.ts",
+        "docs/implementation/M2-PRO-ARCHIVE-NAVIGATION-20261105.md",
+        "docs/implementation/evidence/M2-20261105-archive-nav-focused.log"
       ]
     },
     {
@@ -2882,10 +2884,12 @@
           "line": 25
         }
       ],
-      "note": "Native retirement farewell producer and per-league archive projection; records and contract frozen. Explicit event OPEN_ARCHIVE navigation lifecycle/whole career not certified.",
+      "note": "Actual pro retirement producer/archive plus E37/E69 native OPEN_ARCHIVE through owned save API, CAS/replay/version and immutable history validated. Controlled season prefixes; ordinary web S10 binding/full-career trace not certified.",
       "verifiedEvidence": [
         "docs/implementation/M2-PRO-RETIREMENT-API-20261104.md",
-        "apps/api/test/m2-pro-retirement.test.ts"
+        "apps/api/test/m2-pro-retirement.test.ts",
+        "docs/implementation/M2-PRO-ARCHIVE-NAVIGATION-20261105.md",
+        "docs/implementation/evidence/M2-20261105-archive-nav-focused.log"
       ]
     },
     {

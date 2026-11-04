@@ -1,0 +1,15 @@
+✔ KBO and US native retirement cancel/confirm preserve money, records and identity and project public frozen archives (22319.959ms)
+✔ retirement trust boundary rejects unsupported choices, injected ledgers, wrong version/revision and early retirement (6479.1679ms)
+✔ native maximum-age guard freezes both roots at45 without new pay or military exemption (4998.4729ms)
+✔ owned retirement HTTP persists confirmation once and reloads the actual archive with CAS and owner isolation (9994.6824ms)
+✔ pro farewell navigation opens the native archive for E37/E69 without copying a player or changing financial history (7218.586ms)
+✔ pro archive keeps legacy snapshots readable, rejects duplicate farewell authority and validates revision/event version (4248.8849ms)
+✔ pro farewell HTTP closes the stored navigation once and preserves archived identity and income across retries (16525.8409ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 75455.4643

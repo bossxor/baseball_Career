@@ -1,3 +1,9 @@
+# 최신 구현 — 2026-11-05: 프로 은퇴 인사·보관 이동 API 완료
+
+[M2-PRO-ARCHIVE-NAVIGATION-20261105.md](M2-PRO-ARCHIVE-NAVIGATION-20261105.md)를 먼저 읽는다. E37/E69 OPEN_ARCHIVE를 실제 native archive/이벤트 owner에 연결했고 기존+신규API7/7·types/lint/build0·독립 리뷰 통과. 사건 metadata/revision만 바뀌고 과거 세계/급여/기록·ARCHIVED를 보존한다. legacy 카드 없어도 보관 조회 유지.
+
+다음은 미국 Major FA E66 사건 연결이다. 실제2년 복무 재서명1건은 세션17857에서 실행 중(복무 수정5f6a1ca 기준). 결과와 검증 source 범위를 분리해 확인한다. 이전 전체 종료1은 그대로 남는다. 사용자 WIP/큰파일 보존·PC 종료 금지. 아래는 과거 기록이다.
+
 # 최신 구현 — 2026-11-05: 복무 휴식일 판정 보완·실제2년 회귀 실행 중
 
 [M2-US-SERVICE-ADVICE-DAY-20261105.md](M2-US-SERVICE-ADVICE-DAY-20261105.md)를 먼저 읽는다. 기존2fb681e를 보완해 실제 빈 날짜 receipt/현재 schedule 연결을 확인한다.29/29·build/types/lint0·독립 리뷰 지적 없음. 이전 실패의 실제2년 native 재서명 회귀1건은 세션17857에서 실행 중이며 PASS로 쓰지 않는다. evidence/M2-20261105-native-service-run.json/.log/.exitcode.txt와 engine/rules freeze를 확인한다. 기존 사용자 WIP15줄과 큰 파일 원본 보존.
