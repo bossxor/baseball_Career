@@ -1,5 +1,7 @@
 import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {refreshCareerSeasonGoals,refreshCareerPreseasonGoalSelection} from './season-goals.js';
+import {moveToOffer} from './us-minor-market.js';
+import type {UsMajorOffer} from './us-major-offers.js';
 import {mlbServiceTime} from './us-service-time.js';
 import type {UsCareer,ActiveUsRosterWorld} from './us-career-entry.js';
 import {assertUsCareerRevision,assertActiveUsRosterWorld} from './us-career-entry.js';
@@ -48,13 +50,14 @@ export function restoreUsEmergencyRegistrations(c:UsCareer,world:ActiveUsRosterW
 }
 /** Expand/stage only: no new root, salary, contract or active year is committed. Discarding the stage is rollback.
  * Historical official games are not copied into the stage; the later activation must preserve the source ledger. */
-function stageUsYear(c:UsCareer,revision:number,majorRenewal:boolean,allowFreeAgent=false):UsAgeRosterStage {
+function stageUsYear(c:UsCareer,revision:number,majorRenewal:boolean,allowFreeAgent=false,offer?:UsMajorOffer):UsAgeRosterStage {
  assertUsCareerRevision(c,revision);const ready=usYearTransitionReadiness(c),guaranteed=(c.contract.years??1)>1||c.contract.remainingGuaranteedUsd!==undefined&&c.contract.remainingGuaranteedUsd>(c.season?.paidUsd??0);if(ready.blockers.some(b=>!majorRenewal||b!=='CONTRACT_DECISION_REQUIRED')||majorRenewal&&c.contract.type!=='US_MAJOR'||majorRenewal&&ready.mlbService.freeAgentEligible&&!guaranteed&&!allowFreeAgent)throw new RangeError('US_YEAR_TRANSITION_NOT_READY');assertUsSeason(c,revision);auditUsClosedDays(c);auditUsCompletedPostseason(c);
  if(Object.values(c.records.games).some(g=>g.scope.seasonKey===ready.targetSeasonKey))throw new RangeError('NEXT_SEASON_RECORDS_ALREADY_EXIST');
  const world=structuredClone(c.world);restoreUsEmergencyRegistrations(c,world);
+ if(offer)moveToOffer(world,c.protagonistKey,c.registration.level,c.protagonistOrganizationId,offer,ready.targetSeasonKey);
  const retiring=Object.keys(world.players).filter(key=>key!==c.protagonistKey&&world.players[key]!.age===45),supply=retireAndSupplyUsNpcs(world,retiring,ready.targetSeasonKey,c.protagonistKey);
  for(const[key,p]of Object.entries(world.players)){
-  if(!Object.hasOwn(c.world.players,key))continue;world.players[key]={...p,age:p.age+1,fatigue:0};
+  if(!Object.hasOwn(c.world.players,key)){const book=world.repertoires[key];if(book)world.repertoires[key]={...book,seasonId:ready.targetSeasonKey};continue;}world.players[key]={...p,age:p.age+1,fatigue:0};
   const book=schoolYearEndRepertoire({world:c.world},key);if(book)world.repertoires[key]={...structuredClone(book),seasonId:ready.targetSeasonKey,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};
  }
  const ended=closeSeasonHealth(c.health,c.world.seasonKey).ledger,health:HealthLedger={...ended,rng:{...ended.rng},injuries:structuredClone(ended.injuries)};for(const r of supply.retired)delete health.injuries[r.playerKey];
@@ -64,7 +67,7 @@ function stageUsYear(c:UsCareer,revision:number,majorRenewal:boolean,allowFreeAg
 
 export function stageUsAgeAndRosters(c:UsCareer,revision:number):UsAgeRosterStage {return stageUsYear(c,revision,false);}
 /** Server-only stage: contract commit still requires the controlled-major annual writer. */
-export function stageUsControlledMajorYear(c:UsCareer,revision:number,allowFreeAgent=false):UsAgeRosterStage {return stageUsYear(c,revision,true,allowFreeAgent);}
+export function stageUsControlledMajorYear(c:UsCareer,revision:number,allowFreeAgent=false,offer?:UsMajorOffer):UsAgeRosterStage {return stageUsYear(c,revision,true,allowFreeAgent,offer);}
 
 /** Atomic continuation of the original six-season minor contract. Major renewals/FA remain explicit decisions. */
 export function startNextUsMinorSeason(c:UsCareer,revision:number,funding:readonly UsAnnualFunding[]):UsCareer {

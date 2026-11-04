@@ -1,0 +1,23 @@
+✔ major API rejects caller financial terms and preserves an unfunded owner (7601.3498ms)
+✔ major API reuses an existing server-owned agent funding quote without accepting new client money (4484.5016ms)
+✔ accepted owned USD counteroffer is displayed and signed at the same price through the API (7872.684ms)
+✔ major annual API uses previously booked native funding, reserves once and preserves JSON and historical income (8882.6421ms)
+✔ six controlled credited MLB years expose explicit original-club FA and continue its remaining guarantee through the API (67544.2449ms)
+Major annual native proof: {"from":"2030","to":"2031","schema":4,"salary":5680000,"paid":30212,"nativeNewYearGames":75,"oldRecords":9038,"signingBonuses":1}
+Controlled major-years proof (not native seven seasons): {"lastYear":"2036","yearsArchived":6,"creditedSeasons":6,"paidUsd":46387415,"signingBonuses":1}
+✔ US final salary floor survives poor performance and market periods use contract-start age, without hidden-P price effects (1758.1105ms)
+✔ controlled annual major renewal creates root4, funds one salary once, preserves source/records/service/options and pays its first native date (24818.5026ms)
+✔ major renewal rejects stale source, insufficient funds and changed financial quote history without losing the old root (9927.7836ms)
+✔ controlled seven MLB seasons retain partial first-year noncredit and stop automatic renewal at six credited seasons (87352.7467ms)
+✔ annual major contract survives an actual call-up command after controlled AAA registration without a second reservation (3754.8949ms)
+✔ three spent option seasons need one explicit stay or FA choice and do not move the player (1263.5624ms)
+Controlled FA prefix; real transfer and replay: {"from":"US15","to":"US07","offers":4,"salary":9904000,"years":5}
+✔ controlled six credited seasons compare at most three foreign clubs, sign one and replay historical budgets after JSON and guaranteed renewal (70694.3386ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 300784.6381

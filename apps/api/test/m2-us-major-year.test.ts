@@ -54,9 +54,13 @@ test('six controlled credited MLB years expose explicit original-club FA and con
   const opening=startNextUsMajorSeason(c,c.revision,c.inventory.clubs.map(o=>({organizationId:o.id,addedBudgetUsd:20000000})));
   c=finishControlledMajorSeason(publishUsSeasonSchedule(confirmUsPreseasonPlan(opening,opening.revision),opening.revision+1));
  }
- const view=usPlayScreen({schemaVersion:1,career:c}) as {majorContract:{kind:string;offers:{organizationId:string;years:number;annualSalaryUsd:number}[]}};
- assert.equal(view.majorContract.kind,'ORIGINAL_CLUB_FA');assert.equal(view.majorContract.offers.length,1);const offer=view.majorContract.offers[0]!;assert.equal(offer.organizationId,c.protagonistOrganizationId);
+ const view=usPlayScreen({schemaVersion:1,career:c}) as {majorContract:{kind:string;offers:{offerKey:string;organizationId:string;years:number;annualSalaryUsd:number}[]}};
+ assert.equal(view.majorContract.kind,'FREE_AGENCY');assert.ok(view.majorContract.offers.length>=1&&view.majorContract.offers.length<=4);const offer=view.majorContract.offers[0]!;assert.equal(offer.organizationId,c.protagonistOrganizationId);
  assert.throws(()=>dispatch(c,'ACCEPT_MAJOR_FA',{years:1}),/INVALID_PAYLOAD/);assert.throws(()=>dispatch(c,'NEXT_MAJOR_YEAR'),/NOT_AVAILABLE/);
+ const foreign=view.majorContract.offers.find(o=>o.organizationId!==c.protagonistOrganizationId)!;assert.ok(foreign);assert.doesNotMatch(JSON.stringify(view),/competitorScore|playerScore|potential|negotiationRng/);
+ assert.throws(()=>dispatch(c,'ACCEPT_MAJOR_FA',{offerKey:foreign.offerKey,counterOfferKey:'original-club-counter'}),/INVALID_AGENT_US_OFFER/);
+ assert.throws(()=>dispatch(c,'ACCEPT_MAJOR_FA',{offerKey:'unknown'}),/OFFER_NOT_FOUND/);
+ const moved=dispatch(c,'ACCEPT_MAJOR_FA',{offerKey:foreign.offerKey}).nextState.career as UsCareer;assert.equal(moved.protagonistOrganizationId,foreign.organizationId);assert.deepEqual(moved.income,c.income);assert.deepEqual(usPlayScreen({schemaVersion:1,career:JSON.parse(JSON.stringify(moved))}),usPlayScreen({schemaVersion:1,career:moved}));
  const signed=dispatch(c,'ACCEPT_MAJOR_FA').nextState.career as UsCareer;
  assert.equal(signed.contract.years,offer.years);assert.equal(signed.contract.annualSalaryUsd,offer.annualSalaryUsd);assert.deepEqual(signed.income,c.income);assert.strictEqual(signed.records,c.records);assert.ok(signed.majorYears!.at(-1)!.funding.every(f=>f.addedBudgetUsd===0));
  const ended=finishControlledMajorSeason(publishUsSeasonSchedule(confirmUsPreseasonPlan(signed,signed.revision),signed.revision+1)),preview=usPlayScreen({schemaVersion:1,career:ended}) as {majorContract:{kind:string;guaranteed:boolean}};

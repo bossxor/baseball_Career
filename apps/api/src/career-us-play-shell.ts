@@ -7,7 +7,7 @@ const fields=new Map<string,readonly string[]>([
  ['RESOLVE_WINDOW',['eventKey','eventVersion','command']],['RESOLVE_LEVEL',['eventKey','eventVersion','command']],['TRAIN',['choice']],['CHANGE_STYLE',['archetype']],
  ['NEXT_MINOR_YEAR',[]],['OPEN_MINOR_MARKET',[]],['RESOLVE_MINOR_MARKET',['eventKey','eventVersion','command']],['ACCEPT_MINOR_OFFER',['offerKey']],
  ['CONFIGURE_LEAGUES',[]],['START_POSTSEASON',[]],['ADVANCE_POSTSEASON',[]],
- ['NEXT_MAJOR_YEAR',['counterOfferKey']],['ACCEPT_MAJOR_FA',['counterOfferKey']],
+ ['NEXT_MAJOR_YEAR',['counterOfferKey']],['ACCEPT_MAJOR_FA',['counterOfferKey','offerKey']],
 ]);
 function fail(code:string):never {throw Object.assign(new Error(code),{code});}
 function domainError(error:unknown):never {fail(error instanceof Error&&/^[A-Z][A-Z0-9_]*$/.test(error.message)?error.message:'INVALID_REQUEST');}
@@ -30,7 +30,7 @@ function majorContractView(c:engine.UsCareer,transition:ReturnType<typeof engine
   const quote=engine.usMajorRenewalPreview(c),balance=c.inventory.clubs.find(o=>o.id===c.protagonistOrganizationId)!.availableBudgetUsd+(funding.find(f=>f.organizationId===c.protagonistOrganizationId)?.addedBudgetUsd??0),price=quote.guaranteed?{annualSalaryUsd:quote.annualSalaryUsd}:majorPrice(c,funding,quote.annualSalaryUsd);
   return {kind:'RENEWAL' as const,...quote,...price,funded:balance>=price.annualSalaryUsd};
  }catch(error){
-  if(error instanceof RangeError&&error.message==='US_MAJOR_RENEWAL_NOT_AVAILABLE'&&transition.mlbService.freeAgentEligible){const market=engine.usMajorFreeAgencyPreview(c,funding);return {kind:'ORIGINAL_CLUB_FA' as const,...market,offers:market.offers.map(o=>({...o,...majorPrice(c,funding,o.annualSalaryUsd)}))};}
+  if(error instanceof RangeError&&error.message==='US_MAJOR_RENEWAL_NOT_AVAILABLE'&&transition.mlbService.freeAgentEligible){const market=engine.usMajorFreeAgencyPreview(c,funding);return {kind:'FREE_AGENCY' as const,...market,offers:market.offers.map(o=>({offerKey:o.offerKey,organizationId:o.organizationId,currentLevel:o.initialLevel,years:o.years,currency:o.currency,nationalReleaseAllowed:o.nationalReleaseAllowed,militaryReturnOption:o.militaryReturnOption,...(o.organizationId===c.protagonistOrganizationId?majorPrice(c,funding,o.annualSalaryUsd):{annualSalaryUsd:o.annualSalaryUsd})}))};}
   throw error;
  }
 }
@@ -43,6 +43,7 @@ export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand 
  const string=(key:string)=>typeof p[key]==='string'?p[key] as string:fail('INVALID_PAYLOAD');
  const revision=number('careerRevision');
  if(name==='ADVANCE'&&(number('maxDays')<1||number('maxDays')>7))fail('INVALID_PAYLOAD');
+ if(p.offerKey!==undefined&&(typeof p.offerKey!=='string'||!p.offerKey))fail('INVALID_PAYLOAD');
  if(p.counterOfferKey!==undefined&&(typeof p.counterOfferKey!=='string'||!p.counterOfferKey))fail('INVALID_PAYLOAD');
  if(p.focus!==undefined&&(!Array.isArray(p.focus)||!p.focus.every(key=>typeof key==='string')))fail('INVALID_PAYLOAD');
  if(name==='TRAIN'){
@@ -76,7 +77,7 @@ export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand 
    }
    case 'ADVANCE_POSTSEASON':{engine.assertUsMilitaryPlayable(c);const result=engine.advanceUsPostseason(c,revision);next=result.career;stopReason=result.stopReason;break;}
    case 'NEXT_MAJOR_YEAR':next=engine.startNextUsMajorSeason(c,revision,majorFunding(c),p.counterOfferKey as string|undefined);break;
-   case 'ACCEPT_MAJOR_FA':next=engine.acceptUsMajorFreeAgency(c,revision,majorFunding(c),p.counterOfferKey as string|undefined);break;
+   case 'ACCEPT_MAJOR_FA':next=engine.acceptUsMajorFreeAgency(c,revision,majorFunding(c),p.counterOfferKey as string|undefined,p.offerKey as string|undefined);break;
    default:fail('UNSUPPORTED_COMMAND');
   }
  }catch(error){domainError(error);}

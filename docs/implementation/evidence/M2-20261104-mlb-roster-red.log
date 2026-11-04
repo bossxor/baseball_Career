@@ -1,0 +1,22 @@
+✖ MLB offer moves an actual registered NPC, promotes internally and supplies only Rookie; reserve swap preserves population (1584.2869ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2493.8163
+
+✖ failing tests:
+
+test at packages\engine\test\us-offer-roster.test.ts:1:231
+✖ MLB offer moves an actual registered NPC, promotes internally and supplies only Rookie; reserve swap preserves population (1584.2869ms)
+  RangeError: US_MINOR_MARKET_SOURCE_RESERVE_REQUIRED
+      at fillSourceVacancy (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-minor-market.ts:104:28)
+      at moveToOffer (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-minor-market.ts:121:2)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-offer-roster.test.ts:10:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

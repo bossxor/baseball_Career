@@ -1,0 +1,11 @@
+✔ HITTER MLB offer moves an actual registered NPC, promotes internally and supplies only Rookie; reserve swap preserves population (1659.4514ms)
+✔ PITCHER MLB offer moves an actual registered NPC, promotes internally and supplies only Rookie; reserve swap preserves population (1231.6578ms)
+✔ offer vacancy and same-year Rookie retirement cannot allocate the same rookie identity (1187.2687ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4997.473

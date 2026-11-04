@@ -21,7 +21,7 @@ import {usYearTransitionReadiness} from '../src/us-year-transition.js';
 import {enteredKboCareer} from './fixtures.js';
 import type {UsCareer} from '../src/us-career-entry.js';
 import {finishControlledMajorSeason} from './us-major-fixture.js';
-import {startNextUsMajorSeason} from '../src/us-major-renewal.js';
+import {usMajorFreeAgencyPreview,acceptUsMajorFreeAgency,startNextUsMajorSeason} from '../src/us-major-renewal.js';
 import {startNextUsMinorSeason} from '../src/us-year-transition.js';
 import {reviewUsLevel,resolveUsLevelEvent} from '../src/us-levels.js';
 import {usSalaryEntitlement} from '../src/us-season.js';
@@ -200,4 +200,13 @@ test('a renewed away-club minor contract supports a real callup command and next
 test('historical renewal E66 must retain expiry stage and review phase even when its event identity is rebuilt',()=>{
  const c=expiredMinor(),opened=openUsMinorMarket(c,c.revision,zeroFunding(c)),home=opened.minorMarket!.offers.find(o=>o.organizationId===c.protagonistOrganizationId)!,signed=acceptUsMinorMarketOffer(opened,opened.revision,home.offerKey),source=signed.events.find(e=>e.eventKey===opened.minorMarket!.eventKey)!;
  for(const field of ['stage','phase','competition'] as const){const bad=structuredClone(signed),fresh=createWorldEvent({definitionId:'E66',worldKey:source.worldKey,seasonKey:source.seasonKey,evidence:{...source.evidence,fields:{...source.evidence.fields,...(field==='stage'?{stage:'UNRELATED_STAGE'}:{})}},resume:{...source.resume,...(field==='phase'?{phase:'PRESEASON_SETUP' as const}:{}),...(field==='competition'?{competitionKey:'ROOKIE'}:{})},sourceSequence:source.sourceSequence,worldDay:source.occurredWorldDay}),closed=completeBlockingEvent(fresh,fresh.version,{sourceEvidenceKey:fresh.evidenceKey,receiptKey:source.resolution!.receiptKey!,command:'ACCEPT_CAREER_OFFER'},{worldKey:fresh.worldKey,seasonKey:fresh.seasonKey,worldDay:fresh.occurredWorldDay,eligibleCommands:fresh.offeredChoices});bad.events=bad.events.map(e=>e.eventKey===source.eventKey?closed:e);const raw=canonicalJson(bad);assert.throws(()=>usCareerView(bad),/INVALID_US_MINOR_RENEWAL/);assert.equal(canonicalJson(bad),raw);}
+});
+
+
+test('KBO-origin MLB FA changes actual club while preserving origin inventory, historical payroll and guaranteed next year',()=>{
+ let c=finishControlledMajorSeason(openingTransferred(transferred(80,27).us));
+ while(!usYearTransitionReadiness(c).mlbService.freeAgentEligible)c=finishControlledMajorSeason(openingTransferred(startNextUsMajorSeason(c,c.revision,annualFunding(c))));
+ const origin=structuredClone(c.kboTransfer!.origin),old=c.protagonistOrganizationId,quote=usMajorFreeAgencyPreview(c,annualFunding(c)),offer=quote.offers.find(o=>o.organizationId!==old)!;assert.ok(offer);
+ const next=acceptUsMajorFreeAgency(c,c.revision,annualFunding(c),undefined,offer.offerKey);assert.notEqual(next.protagonistOrganizationId,old);assert.deepEqual(next.kboTransfer!.origin,origin);assert.deepEqual(usCareerView(JSON.parse(JSON.stringify(next))),usCareerView(next));
+ const closed=finishControlledMajorSeason(openingTransferred(next)),continued=startNextUsMajorSeason(closed,closed.revision,annualFunding(closed));assert.equal(continued.protagonistOrganizationId,offer.organizationId);assert.equal(continued.contract.years,next.contract.years!-1);assert.deepEqual(continued.kboTransfer!.origin,origin);usCareerView(continued);
 });

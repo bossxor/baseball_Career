@@ -94,9 +94,9 @@ function restoreEmergencyRegistrations(c:UsCareer,world:ActiveUsRosterWorld):voi
  for(const[key,e]of Object.entries(c.season!.emergency?.entries??{}))if(e.releasedDay===null){const org=world.organizations.find(o=>o.id===e.clubId)!,reserve=world.reserves?.[org.id];if(!org.levels[e.level].includes(key)||!reserve?.includes(e.replacedKey))throw new RangeError('INVALID_US_EMERGENCY_REGISTRATION');org.levels[e.level]=org.levels[e.level].map(k=>k===key?e.replacedKey:k);world.reserves![org.id]=reserve.filter(k=>k!==e.replacedKey);world.reserves![org.id]!.push(key);}
 }
 
-const minorLevels:readonly Exclude<UsLevel,'MLB'>[]=['ROOKIE','A','AA','AAA'];
+const minorLevels:readonly UsLevel[]=['ROOKIE','A','AA','AAA','MLB'];
 /** Same org promote/reserve first; Rookie bottom adds one real us-rookie. No invented upper-level free agent. */
-function fillSourceVacancy(world:ActiveUsRosterWorld,fromId:string,level:Exclude<UsLevel,'MLB'>,kind:DevelopmentPlayer['kind'],exclude:string,targetSeasonKey:string,serial:{n:number}):void {
+function fillSourceVacancy(world:ActiveUsRosterWorld,fromId:string,level:UsLevel,kind:DevelopmentPlayer['kind'],exclude:string,targetSeasonKey:string,serial:{n:number}):void {
  const from=world.organizations.find(o=>o.id===fromId)!;world.reserves=world.reserves??{};
  const reserve=(world.reserves[from.id]??[]).filter(k=>k!==exclude&&world.players[k]?.kind===kind).sort()[0];
  if(reserve){from.levels[level]=[...from.levels[level],reserve].sort();world.reserves[from.id]=(world.reserves[from.id]??[]).filter(k=>k!==reserve);return;}
@@ -108,11 +108,18 @@ function fillSourceVacancy(world:ActiveUsRosterWorld,fromId:string,level:Exclude
  const abilities=initialProfileAbilities(kind,archetype,Math.round(35+4*z.value)),potential=generateNpcPotential(kind,abilities,{mode:'CAREER',difficulty:world.difficulty,owned:false},world.rng.potential);world.rng.potential=potential.state;
  const age=nextInteger(world.rng.roster,5);world.rng.roster=age.state;
  const player:DevelopmentPlayer={...identity.players[0]!,name:'미국신인'+serial.n,age:18+age.value,archetype,focus:[...keys].sort((a,b)=>profile.weights[keys.indexOf(b)]!-profile.weights[keys.indexOf(a)]!||keys.indexOf(a)-keys.indexOf(b)).slice(0,4),abilities,potential:potential.potential,careerPeaks:{...abilities},fatigue:0};validateDevelopmentPlayer(player);world.players[key]=player;
- if(kind==='PITCHER'){const pitch=nextInteger(world.rng.roster,6);world.rng.roster=pitch.state;world.repertoires[key]=createRepertoire(PITCH_IDS[pitch.value+1]!,targetSeasonKey);}
+ if(kind==='PITCHER'){const pitch=nextInteger(world.rng.roster,6);world.rng.roster=pitch.state;world.repertoires[key]=createRepertoire(PITCH_IDS[pitch.value+1]!,world.seasonKey);}
  from.levels.ROOKIE=[...from.levels.ROOKIE,key].sort();
 }
-export function moveToOffer(world:ActiveUsRosterWorld,key:string,level:Exclude<UsLevel,'MLB'>,fromId:string,offer:UsMinorOffer,targetSeasonKey:string):string|null {
+export function moveToOffer(world:ActiveUsRosterWorld,key:string,level:UsLevel,fromId:string,offer:Pick<UsMinorOffer,'organizationId'|'competitorKey'>,targetSeasonKey:string):string|null {
  const from=world.organizations.find(o=>o.id===fromId)!,to=world.organizations.find(o=>o.id===offer.organizationId)!;
+ if(!from||!to||!world.players[key])throw new RangeError('US_MINOR_MARKET_ROSTER_CHANGED');
+ const active=from.levels[level].includes(key),reserve=world.reserves?.[fromId]?.includes(key);
+ if(!active&&reserve){
+  const other=offer.competitorKey,p=world.players[key]!;
+  if(!other||!to.levels[level].includes(other)||world.players[other]!.kind!==p.kind||world.players[other]!.position!==p.position)throw new RangeError('US_MINOR_MARKET_COMPETITOR_CHANGED');
+  world.reserves![fromId]=world.reserves![fromId]!.filter(k=>k!==key);to.levels[level]=to.levels[level].map(k=>k===other?key:k);world.reserves![to.id]=[...(world.reserves![to.id]??[]),other].sort();return other;
+ }
  if(!from.levels[level].includes(key))throw new RangeError('US_MINOR_MARKET_ROSTER_CHANGED');
  from.levels[level]=from.levels[level].filter(k=>k!==key);
  if(offer.organizationId===fromId){from.levels[level]=[...from.levels[level],key].sort();return null;}
@@ -133,7 +140,7 @@ export function acceptUsMinorMarketOffer(c:UsCareer,revision:number,offerKey:str
  const world=structuredClone(c.world);restoreEmergencyRegistrations(c,world);
  const displaced=moveToOffer(world,c.protagonistKey,m.initialLevel,c.protagonistOrganizationId,offer,ready.targetSeasonKey);
  const retiring=Object.keys(world.players).filter(key=>key!==c.protagonistKey&&world.players[key]!.age===45),supply=retireAndSupplyUsNpcs(world,retiring,ready.targetSeasonKey,c.protagonistKey);
- for(const[key,p]of Object.entries(world.players)){if(!Object.hasOwn(c.world.players,key))continue;world.players[key]={...p,age:p.age+1,fatigue:0};const book=schoolYearEndRepertoire({world:c.world},key);if(book)world.repertoires[key]={...structuredClone(book),seasonId:ready.targetSeasonKey,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};}
+ for(const[key,p]of Object.entries(world.players)){if(!Object.hasOwn(c.world.players,key)){const book=world.repertoires[key];if(book)world.repertoires[key]={...book,seasonId:ready.targetSeasonKey};continue;}world.players[key]={...p,age:p.age+1,fatigue:0};const book=schoolYearEndRepertoire({world:c.world},key);if(book)world.repertoires[key]={...structuredClone(book),seasonId:ready.targetSeasonKey,usedWindows:[],learning:null,ledger:emptyPitchXpLedger()};}
  const ended=closeSeasonHealth(c.health,c.world.seasonKey).ledger,health={...ended,rng:{...ended.rng},injuries:structuredClone(ended.injuries)};for(const r of supply.retired)delete health.injuries[r.playerKey];
  world.seasonKey=ready.targetSeasonKey;world.calendar=createSeasonCalendar(Number(ready.targetSeasonKey),'calendar-2');assertActiveUsRosterWorld(world);
  const registered=Object.keys(world.players).sort(),funding=sortedFunding(m.funding),contract:UsCareer['contract']={contractKey:JSON.stringify(['us-minor-renewal',m.marketId,offer.offerKey]),type:'US_MINOR',currency:'USD',years:1,annualSalaryUsd:30000,signingBonusUsd:0,controlSeasons:6,status:'ACTIVE',seasonKey:ready.targetSeasonKey,nationalReleaseAllowed:offer.nationalReleaseAllowed,militaryReturnOption:offer.militaryReturnOption};

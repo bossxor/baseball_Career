@@ -30,7 +30,7 @@ export function retireAndSupplyUsNpcs(world:ActiveUsRosterWorld,retiringKeys:rea
  }
  let serial=0;
  const rookie=(org:Organization,slot:Vacancy)=>{
-  const key=JSON.stringify(['us-rookie',world.worldKey,targetSeasonKey,org.id,slot.kind,slot.position,serial++]);if(Object.hasOwn(world.players,key))throw new RangeError('US_ROOKIE_KEY_COLLISION');
+  let key:string;do{key=JSON.stringify(['us-rookie',world.worldKey,targetSeasonKey,org.id,slot.kind,slot.position,serial++]);}while(Object.hasOwn(world.players,key));
   const identity=generateNpcIdentities([{simulationKey:key,kind:slot.kind,position:slot.position}],world.rng.handedness);world.rng.handedness=identity.state;
   const types=Object.keys(slot.kind==='HITTER'?HITTER_TYPES:PITCHER_TYPES),draw=nextInteger(world.rng.roster,types.length);world.rng.roster=draw.state;const archetype=types[draw.value]!,profile=archetypeFor(slot.kind,archetype),keys=abilityKeys(slot.kind),z=truncatedNormal(world.rng.roster);world.rng.roster=z.state;
   const abilities=initialProfileAbilities(slot.kind,archetype,Math.round(35+4*z.value)),potential=generateNpcPotential(slot.kind,abilities,{mode:'CAREER',difficulty:world.difficulty,owned:false},world.rng.potential);world.rng.potential=potential.state;

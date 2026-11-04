@@ -1,0 +1,26 @@
+✔ HITTER MLB offer moves an actual registered NPC, promotes internally and supplies only Rookie; reserve swap preserves population (1675.3205ms)
+✖ PITCHER MLB offer moves an actual registered NPC, promotes internally and supplies only Rookie; reserve swap preserves population (1224.1471ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3840.9827
+
+✖ failing tests:
+
+test at packages\engine\test\us-offer-roster.test.ts:1:269
+✖ PITCHER MLB offer moves an actual registered NPC, promotes internally and supplies only Rookie; reserve swap preserves population (1224.1471ms)
+  RangeError: INVALID_US_REPERTOIRE
+      at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-career-entry.ts:93:522)
+      at Array.map (<anonymous>)
+      at assertActiveUsRosterWorld (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-career-entry.ts:93:191)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-offer-roster.test.ts:13:103)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

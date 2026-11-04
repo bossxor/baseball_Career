@@ -1,3 +1,9 @@
+# 최신 — MLB FA 타 구단 비교·실제 이적
+
+[M2-US-MAJOR-FA-TRANSFER-20261104.md](M2-US-MAJOR-FA-TRANSFER-20261104.md)를 먼저 읽는다. 원구단+타 구단 최대3곳 조회/offerKey 수락, 현재 레벨·구단별 지급 이력·보장/옵션·동료 연결. 집중 묶음12/12·로스터3/3·견적1/1·KBO1/1과 build/type/lint 통과. 독립 리뷰 KBO-origin holder P1 수정·회귀/재리뷰 확인. FA6시즌 접두는 controlled이며 native6년 전체가 아니다.
+
+전체 npm run check 세션90394 진행 중. evidence/M2-20261104-major-fa-check.log/.exitcode.txt와 freeze-check.json을 먼저 확인하고 실패면 고친다. source536 manifest는 최초 nonexistent config 오류 후 static 단계 중 기록했으며 코드 변경 없음. 현재 source 전체 통과/커밋/푸시 완료를 추정하지 않는다. 사용자 WIP21줄·큰 runtime JSON·zz-dbg.log 보존. PC 종료 금지. Git 최종 상태는 log/rev-parse로 확인한다. 아래는 과거 이력이다.
+
 # 최신 — 메이저 재계약·원구단 FA 저장 API
 
 M2-US-MAJOR-YEAR-API-20261104.md를 먼저 읽는다. 기존 native NEXT_MAJOR_YEAR/ACCEPT_MAJOR_FA2명령과 실제 연말 quote 연결. 소유 funding만 재사용하고 지원금 추정0. 승인 counter 표시5680000→6248000 불일치를 RED로 잡아 native 가격/키와 통일했다. 최종 API5/5·정적 검사·독립 리뷰 통과. 통제6등록시즌 뒤 FA/보장 승계이며 native6년 전체가 아니다. 원구단 외 시장은 별도 범위다.

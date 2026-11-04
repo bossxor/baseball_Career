@@ -1,0 +1,26 @@
+✔ HITTER MLB offer moves an actual registered NPC, promotes internally and supplies only Rookie; reserve swap preserves population (1658.0122ms)
+✔ PITCHER MLB offer moves an actual registered NPC, promotes internally and supplies only Rookie; reserve swap preserves population (1189.7194ms)
+✖ offer vacancy and same-year Rookie retirement cannot allocate the same rookie identity (1160.8562ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4924.9233
+
+✖ failing tests:
+
+test at packages\engine\test\us-offer-roster.test.ts:1:1907
+✖ offer vacancy and same-year Rookie retirement cannot allocate the same rookie identity (1160.8562ms)
+  RangeError: US_ROOKIE_KEY_COLLISION
+      at rookie (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-supply.ts:33:156)
+      at retireAndSupplyUsNpcs (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-supply.ts:45:28)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-offer-roster.test.ts:21:136)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
