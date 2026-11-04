@@ -1,8 +1,16 @@
+# 최신 인계 — 구현23cac7d 푸시·전체 검사 실행 중
+
+MLB FA 원구단+타 구단 최대3곳 비교·실제 이적/역대 구단 지급/보장·옵션·동료 연결을 구현23cac7d로 커밋·푸시하고 원격 일치를 확인했다. 집중12/12·로스터3/3·견적1/1·KBO1/1, build/type/lint·독립 리뷰 통과. M2-US-MAJOR-FA-TRANSFER-20261104.md를 먼저 읽는다. M2 전체 완료 아님.
+
+사용량 잔여1% 확인으로 현재 상태를 인계한다. 전체 npm run check는 세션90394에서 실행 중이며 종료/통과를 주장하지 않는다. evidence/M2-20261104-major-fa-check.exitcode.txt 유무와 log 마지막을 먼저 확인한다. 실행 프로세스는 us-amateur-return-career.test.ts와 us-return-retry.test.ts이며 긴 실제 복무/재도전 경로다. 로그는 파일 순서 출력으로 현재930통과·실패 표식0에서 지연되고 후속 파일도 이미 실행됐다. 현재 source536파일의 중간 해시 대조 변경0; 종료 시 생성되는 major-fa-freeze-check.json을 확인해야 최종 검증이다. 실행 중 검사를 중복 시작하지 않는다. 이 채팅 세션이 유효하면 write_stdin90394로 확인하고, 다른 환경이면 node 프로세스/로그/종료코드 파일로 판정한다.
+
+기존 사용자 테스트 WIP21줄과 큰 runtime JSON2개·zz-dbg.log는 보존/미스테이징했다. 전체 검사에는 현재 사용자 WIP도 포함돼 있다. 실제 Neon/Managed Auth/대형 PostgreSQL 환경 제외를 최종 통과와 구분한다. 기본 웹 화면의 미국 명령 연결·99사건 감사/24경로/PF·대형 DB는 남는다. PC 종료 금지, V: 문서/증거 Copy-Item만. 아래는 과거 이력이다.
+
 # 최신 — MLB FA 타 구단 비교·실제 이적
 
 [M2-US-MAJOR-FA-TRANSFER-20261104.md](M2-US-MAJOR-FA-TRANSFER-20261104.md)를 먼저 읽는다. 원구단+타 구단 최대3곳 조회/offerKey 수락, 현재 레벨·구단별 지급 이력·보장/옵션·동료 연결. 집중 묶음12/12·로스터3/3·견적1/1·KBO1/1과 build/type/lint 통과. 독립 리뷰 KBO-origin holder P1 수정·회귀/재리뷰 확인. FA6시즌 접두는 controlled이며 native6년 전체가 아니다.
 
-전체 npm run check 세션90394 진행 중. evidence/M2-20261104-major-fa-check.log/.exitcode.txt와 freeze-check.json을 먼저 확인하고 실패면 고친다. source536 manifest는 최초 nonexistent config 오류 후 static 단계 중 기록했으며 코드 변경 없음. 현재 source 전체 통과/커밋/푸시 완료를 추정하지 않는다. 사용자 WIP21줄·큰 runtime JSON·zz-dbg.log 보존. PC 종료 금지. Git 최종 상태는 log/rev-parse로 확인한다. 아래는 과거 이력이다.
+구현23cac7d 커밋·푸시/원격 일치 확인. 전체 npm run check 세션90394 진행 중. evidence/M2-20261104-major-fa-check.log/.exitcode.txt와 freeze-check.json을 먼저 확인하고 실패면 고친다. source536 manifest는 최초 nonexistent config 오류 후 static 단계 중 기록했으며 코드 변경 없음. 현재 source 전체 통과/커밋/푸시 완료를 추정하지 않는다. 사용자 WIP21줄·큰 runtime JSON·zz-dbg.log 보존. PC 종료 금지. Git 최종 상태는 log/rev-parse로 확인한다. 아래는 과거 이력이다.
 
 # 최신 — 메이저 재계약·원구단 FA 저장 API
 
