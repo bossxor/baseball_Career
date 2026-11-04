@@ -1,0 +1,13 @@
+✔ KBO/US/college goal outbox selects actual native goals and never grants gameplay money or growth (2118.9536ms)
+✔ KBO/US agent E91 hires its actual native contract without changing player, records or budget (1408.9154ms)
+✔ role preview is opaque, publishes actual odds and consumes the same native draw; stale/raw tokens reject without mutation (940.1681ms)
+✔ US salary quote uses booked money only, hides native funding/context and negotiates with the same native probability and draw (18174.7017ms)
+✔ goal and agent boundaries reject wrong-domain or injected fields and preserve the current owner (872.9158ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25037.183

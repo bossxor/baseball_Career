@@ -1,0 +1,23 @@
+✔ KBO/US/college goal outbox selects actual native goals and never grants gameplay money or growth (2844.2921ms)
+✔ KBO/US agent E91 hires its actual native contract without changing player, records or budget (2039.0403ms)
+✔ role preview is opaque, publishes actual odds and consumes the same native draw; stale/raw tokens reject without mutation (1268.2577ms)
+✔ US salary quote uses booked money only, hides native funding/context and negotiates with the same native probability and draw (20856.3745ms)
+✔ goal and agent boundaries reject wrong-domain or injected fields and preserve the current owner (944.2272ms)
+✔ goal replacement uses the real midpoint and once-only owner instead of a client flag (777.0843ms)
+✔ goal selection and agent hiring persist through real HTTP with owner isolation, CAS and exact receipt replay (5120.0781ms)
+✔ controlled E12 uses the actual position-training domain writer; unrelated payload is rejected (991.9306ms)
+✔ actual medical owner confirms only proven recovery; acknowledgment never heals or changes player abilities (1962.7388ms)
+✔ native annual award notice acknowledgment preserves its receipt, statistics and money (889.7237ms)
+✔ owned KBO/US E86 and E88 commands use existing learning/approach writers without caller state (3665.8114ms)
+✔ prototype-named choices are rejected as domain errors instead of escaping as TypeError (1781.2939ms)
+✔ PRO_EVENTS real HTTP owns the source, hides private metadata, and applies medical choice once across retries and CAS conflicts (5704.4373ms)
+✔ repertoire notices stop offering a domain choice when its actual preseason owner has locked the window (2246.4484ms)
+✔ archived or blocking-decision careers cannot resolve repertoire notices or expose a runnable action (1444.294ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36243.5242

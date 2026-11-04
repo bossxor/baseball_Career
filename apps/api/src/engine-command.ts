@@ -6,6 +6,7 @@ import { applyUsReturn } from './career-us-return-shell.js';
 import { applyUsMilitary } from './career-us-military-shell.js';
 import { applyUsPlay } from './career-us-play-shell.js';
 import { applyProEvent } from './career-pro-events-shell.js';
+import { applyCareerSupport } from './career-support-shell.js';
 import {
   applyUiAdvance, applyUiChoose, applyUiSeed, phaseOf, type ChooseNext, type UiShellState,
 } from './ui-shell.js';
@@ -29,6 +30,7 @@ export type AppliedCommand = {
 
 /** ALLOCATE_DEMO (M3 E2E) + UI_SEED/ADVANCE/CHOOSE (M4 shell over the same pipeline). */
 export function applyEngineCommand(state: SaveState, command: CommandBody): AppliedCommand {
+  if (command.type.startsWith('CAREER_GOALS_') || command.type.startsWith('CAREER_AGENT_')) return applyCareerSupport(state, command);
   if (command.type.startsWith('CAREER_PRO_EVENT_')) return applyProEvent(state, command);
   if (command.type.startsWith('CAREER_US_PLAY_')) return applyUsPlay(state, command);
   if (command.type.startsWith('CAREER_US_MILITARY_')) return applyUsMilitary(state, command);

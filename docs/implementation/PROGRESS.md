@@ -1,3 +1,9 @@
+# 최신 — 시즌 목표·에이전트 저장 API 검증 완료
+
+M2-CAREER-SUPPORT-API-20261104.md를 먼저 읽는다. 목표3명령·agent5명령과2공개 조회를 native owner에 연결했다. native preview context는 SHA256 토큰으로 공개하고 서버가 현재 quote를 다시 구해 검증한다. 미국 자금/미래 권한은 실제 owner만 사용하며 지원 추정0. 지원 API7/7, 앞 프로 사건과 결합15/15, 타입/lint/API build 종료0·독립 리뷰 지적 없음. native 역할/연봉 확률·RNG 결과 동일, HTTP 소유권/CAS/재실행 검증.
+
+다음은 관계 E94~96 공개 읽기/해결 및 미국 Major E66/국내 복귀 연결 범위다. 이전 전체90394는 결과 미수집/PASS 아님. 기존 WIP21줄·큰 runtime JSON 보존. M2 전체/99·24·PF·일반 웹 연결 완료를 주장하지 않는다. PC 종료 금지. Git hash는 log/remote 확인. 아래는 과거 기록이다.
+
 # 최신 — 프로 사건 저장 API 검증 완료
 
 M2-PRO-EVENT-SAVE-API-20261104.md를 먼저 읽는다. CAREER_PRO_EVENT_ 네 도메인(조언/의료·기록/수상/구종), PRO_EVENTS 공개 조회와 저장 CAS 배선. 새 API8+기존native19=27/27, 타입/lint/엔진·API build 종료0. prototype 입력·닫힌 훈련창 표시·archived/필수선택 repertoire 처리 빈틈을 RED로 재현·수정. 독립 리뷰 P2 해결 확인. 원래 경력/의료/기록 접두는 controlled, 실제 선택/HTTP 저장 검증이다.

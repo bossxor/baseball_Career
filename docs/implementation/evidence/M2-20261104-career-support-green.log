@@ -1,0 +1,10 @@
+✔ KBO/US/college goal outbox selects actual native goals and never grants gameplay money or growth (2069.8825ms)
+✔ KBO/US agent E91 hires its actual native contract without changing player, records or budget (1388.7458ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4896.0676

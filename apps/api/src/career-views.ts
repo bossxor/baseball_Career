@@ -10,6 +10,7 @@ import { US_RETURN_SCREEN_IDS, usReturnScreen } from './career-us-return-shell.j
 import { US_MILITARY_SCREEN_IDS, usMilitaryScreen } from './career-us-military-shell.js';
 import { usPlayScreen } from './career-us-play-shell.js';
 import { proEventsScreen } from './career-pro-events-shell.js';
+import { careerSupportScreen } from './career-support-shell.js';
 import { careerView, decisionView, type UiShellState } from './ui-shell.js';
 
 function errorBody(
@@ -83,6 +84,7 @@ export async function getScreen(c: Context<{ Variables: AppVariables }>) {
     if ((US_MILITARY_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(usMilitaryScreen(state, screenId));
     if (screenId==='US_CAREER') return c.json(usPlayScreen(state));
     if (screenId==='PRO_EVENTS') return c.json(proEventsScreen(state));
+    if (screenId==='CAREER_GOALS' || screenId==='CAREER_AGENT') return c.json(careerSupportScreen(state,screenId));
     if ((CAREER_CHOICE_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(careerChoiceScreen(state, screenId));
     return c.json(decisionView(row.id, state, screenId));
   } catch (err) {
