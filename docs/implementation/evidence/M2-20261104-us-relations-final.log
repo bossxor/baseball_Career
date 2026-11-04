@@ -1,0 +1,23 @@
+✔ actual KBO/college registration notice uses its native relation owner and changes only read metadata (2071.9186ms)
+✔ school relation read preserves a sealed academic year and permits the actual following-year activation (4362.7475ms)
+✔ relation list/detail expose existing identities and only requested official scope without raw player/history state (3437.6748ms)
+✔ relation HTTP uses actual owned notices, persists read once, retains its native navigation and isolates another owner (8582.4151ms)
+✔ actual US entry relationships are readable using the owned US root (1816.697ms)
+✔ US actual formation notice read preserves every game, roster, money and phase with JSON restart (1767.6853ms)
+✔ US list distinguishes actual live levels, archived school identity and unavailable legacy references without inventing players (2006.5283ms)
+✔ US retired teammate identity is read from actual native annual supply, never restored to a roster (11917.94ms)
+✔ US formation relation HTTP preserves save ownership, CAS and exact navigation across repeated delivery (9249.453ms)
+✔ college S42 keeps archived HS rival/teammate identity and last known registration without inferring a new stage (650.1615ms)
+✔ archived same-kind identity reuses real scoped contributions, not invented meetings; zero scopes remain empty (339.5148ms)
+✔ unknown history stays as an unresolved reference, not retirement or an invented player (328.056ms)
+✔ current identity takes priority and the latest archived snapshot is chosen for historical identity (310.4647ms)
+✔ foreign history and malformed relationship ownership reject instead of leaking another world (371.8169ms)
+✔ persisted E94 notices keep the archived name after college entry without recreating the formation event (455.6669ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 15
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30849.7607

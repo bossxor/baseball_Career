@@ -260,3 +260,5 @@ export type {AmateurRetirement} from './amateur-retirement.js';
 export {unreadProTraitSummary,acknowledgeProTraitSummary} from './pro-trait-summary.js';
 export {chooseCollegeAdmissionFocus} from './career-route-notices.js';
 export {assertCollegeUnsignedReturn,assertCollegeEarlyUsComparison,collegeEarlyUsComparisonView,openCollegeEarlyUsOffer} from './college-route.js';
+
+export * from './us-relations.js';

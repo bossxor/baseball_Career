@@ -1,3 +1,9 @@
+# 최신 — 미국 관계 history·E94 저장 API 검증 완료
+
+M2-US-RELATIONS-API-20261104.md를 먼저 읽는다. 실제 US 레벨 명단/학교 archive/저장 은퇴 supply만 사용해 공개 관계 목록·상세와 E94 native 읽기 owner를 연결했다. 누락된 과거 KBO 신원은 UNKNOWN_REFERENCE 유지, E95/E96는 별도 owner 미완료.15/15+mixed-scope1/1·types/lint/engine/API build0·독립 리뷰 blocking 지적 없음. 실제 HTTP CAS/재전송/소유권 검증.
+
+현재 묶음 뒤 전체 check를1회 실행할 예정이며 결과를 확인하기 전 PASS로 쓰지 않는다. 기존90394는 결과 미수집. 사용자 WIP21줄/큰JSON/zz 보존. PC 종료 금지. Major E66/귀국·미국 재회·99/24/PF·실제 웹·대형DB 잔여. 최종 commit/remote는 git 확인. 아래는 과거 이력이다.
+
 # 최신 — 업적·별칭 저장 API 검증 완료
 
 M2-CAREER-HONORS-API-20261104.md를 먼저 읽는다. E90 업적 열람/E42 별칭 확인과 CAREER_HONORS 공개 조회를 기존 shell/native owner로 연결했다. API5+native15=20/20·타입/lint/API build 종료0·독립 리뷰 지적 없음. 기념 보상/별칭 이력 유지, 내부 receipt/보상 근거 비공개. 실제 HTTP는 US A01/E90 저장을 검증했다. E42 연말은 controlled 원장이다.

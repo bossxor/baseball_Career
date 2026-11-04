@@ -1,0 +1,46 @@
+✔ actual KBO/college registration notice uses its native relation owner and changes only read metadata (2710.4166ms)
+✔ school relation read preserves a sealed academic year and permits the actual following-year activation (4964.0223ms)
+✔ relation list/detail expose existing identities and only requested official scope without raw player/history state (4574.4668ms)
+✔ relation HTTP uses actual owned notices, persists read once, retains its native navigation and isolates another owner (11568.9033ms)
+✔ actual US entry relationships are readable using the owned US root (2409.5122ms)
+✔ US actual formation notice read preserves every game, roster, money and phase with JSON restart (2206.2961ms)
+✖ US list distinguishes actual live levels, archived school identity and unavailable legacy references without inventing players (1107.6423ms)
+✔ US retired teammate identity is read from actual native annual supply, never restored to a roster (13993.8311ms)
+✔ US formation relation HTTP preserves save ownership, CAS and exact navigation across repeated delivery (13457.3992ms)
+✔ college S42 keeps archived HS rival/teammate identity and last known registration without inferring a new stage (530.3078ms)
+✔ archived same-kind identity reuses real scoped contributions, not invented meetings; zero scopes remain empty (390.6063ms)
+✔ unknown history stays as an unresolved reference, not retirement or an invented player (359.3943ms)
+✔ current identity takes priority and the latest archived snapshot is chosen for historical identity (421.6925ms)
+✔ foreign history and malformed relationship ownership reject instead of leaking another world (499.2133ms)
+✔ persisted E94 notices keep the archived name after college entry without recreating the formation event (520.6019ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 14
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 42456.5354
+
+✖ failing tests:
+
+test at apps\api\test\m2-us-relations.test.ts:1:2303
+✖ US list distinguishes actual live levels, archived school identity and unavailable legacy references without inventing players (1107.6423ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(school)
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-us-relations.test.ts:23:233)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

@@ -33,7 +33,7 @@ test('relation list/detail expose existing identities and only requested officia
   const key=view.relations[0]!.relationKey,league='protagonistClubId'in c?'KBO':'COLLEGE',scope={relationKey:key,leagueKey:league,phase:'POSTSEASON',seasonKey:c.world.seasonKey},detail=relationScreen(state,'CAREER_RELATION_DETAIL',scope) as {scope:unknown};assert.deepEqual(detail.scope,{leagueKey:league,phase:'POSTSEASON',seasonKey:c.world.seasonKey});assert.equal(canonicalJson(c),before);
   assert.throws(()=>relationScreen(state,'CAREER_RELATION_DETAIL',{...scope,phase:'INVALID'}),/INVALID_PAYLOAD/);assert.throws(()=>relationScreen(state,'CAREER_RELATION_DETAIL',{...scope,seasonKey:'wrong'}),/INVALID_PAYLOAD/);assert.throws(()=>relationScreen(state,'CAREER_RELATION_DETAIL',{...scope,world:'injected'}),/INVALID_PAYLOAD/);
  }
- const us=activeUsCareer('HITTER');assert.throws(()=>relationScreen({schemaVersion:1,career:us},'CAREER_RELATIONS'),/US_RELATION_HISTORY_REQUIRED/);
+ const us=activeUsCareer('HITTER');assert.ok(relationScreen({schemaVersion:1,career:us},'CAREER_RELATIONS'));
 });
 
 test('relation HTTP uses actual owned notices, persists read once, retains its native navigation and isolates another owner',async()=>{
