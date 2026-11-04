@@ -1,3 +1,9 @@
+# 최신 구현 — 2026-11-05: 복무 휴식일 판정 보완·실제2년 회귀 실행 중
+
+[M2-US-SERVICE-ADVICE-DAY-20261105.md](M2-US-SERVICE-ADVICE-DAY-20261105.md)를 먼저 읽는다. 기존2fb681e를 보완해 실제 빈 날짜 receipt/현재 schedule 연결을 확인한다.29/29·build/types/lint0·독립 리뷰 지적 없음. 이전 실패의 실제2년 native 재서명 회귀1건은 세션17857에서 실행 중이며 PASS로 쓰지 않는다. evidence/M2-20261105-native-service-run.json/.log/.exitcode.txt와 engine/rules freeze를 확인한다. 기존 사용자 WIP15줄과 큰 파일 원본 보존.
+
+사용자는 인계 종료가 아니라 이 체크아웃에서 계속 구현을 지시했다. E37/E69 보관 이동 API를 구현 중이며 native 실행과 무관한 API 작업을 이어간다. 전체 check는 매 수정 반복하지 않는다. PC 종료 금지·V는 docs 복사만. 아래는 과거 기록이다.
+
 # 최신 상태 — 2026-11-05: 전체 실패 결과 확정·후속 수정 검증 필요
 
 [M2-HANDOFF-20261105.md](M2-HANDOFF-20261105.md)를 먼저 읽는다. 전체 check는 이미 종료1:1120건 중1113통과·2실패·5제외, source583파일 실행 중 변경0. 두 실패는 기존 테스트 WIP의 ADVICE_DAY_NOT_CLOSED이며 당시 DBG도 포함했다. 다음 웹/최종 build 단계는 도달하지 않았다.

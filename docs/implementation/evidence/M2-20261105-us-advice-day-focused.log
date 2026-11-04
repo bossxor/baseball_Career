@@ -1,0 +1,37 @@
+✔ advice accepts a real KBO offdate receipt without health games and rejects missing or changed receipts (2657.9206ms)
+✔ E20 uses20-game performance regardless of optional morale; E26 compares the strongest competitor (1791.0496ms)
+✔ E19 requires two actual starts; relief outings cannot replace the starting sample (1452.3158ms)
+✔ general advice uses a separate stream, one uniform eligible draw per24 games, JSON replay and checkpoint idempotence (2026.076ms)
+✔ position plan counts24 later healthy registered FINAL games and confirms the latest version without granting100 fit (1764.2183ms)
+✔ left throwing position targets are legal; morale requires an explicit valid0..100 domain value (1721.665ms)
+✔ SP and CP requests enforce60 exactly, recheck vacancies and use existing roster competition without advice RNG (3184.2899ms)
+✔ the seasonal cap and two following seasons cooldown filter candidates before consuming the advice stream (1441.1152ms)
+✔ a rest request affects the actual starter and settles only after an official replacement start (1728.5122ms)
+✔ E86 invokes the real KBO and US learning writer; E88 persists the game approach and consumes its window (9546.8752ms)
+✔ rest preparation runs after ordinary coaching, freezes a JSON safe proof and leaves unrelated context unchanged (2878.7309ms)
+✔ E87 follows only committed XP threshold evidence and replay does not duplicate the level receipt (1429.3328ms)
+✔ E86 school choice reaches the existing learning and calendar registration writer (36.9564ms)
+✔ medical notices use the real injury and recovery, and CONFIRM_RETURN grants no health or ability effect (1500.0002ms)
+✔ US military worker closes an actual rest date without health rows and refreshes advice once across JSON resume (31384.4796ms)
+✔ US advice refuses missing rest-day closure and future unclosed dates (1953.2801ms)
+✔ US advice does not accept a date alone when its rest receipt or owning season is corrupted (21392.3839ms)
+✔ US advice cannot use an empty receipt to close a scheduled competition date without game health evidence (501.3557ms)
+✔ termination stops the active US contract and rejects fabricated service-season identity (20457.7419ms)
+✔ service annual owner ages and supplies the real roster without paying or rewriting history (5548.2206ms)
+✔ freeze parks the pitcher under the already signed option and preserves original USD and pitch history (10367.5634ms)
+✔ controlled calendar discharge opens only the existing option and confirms through day29 without retroactive salary (34957.5411ms)
+✔ controlled30day expiry terminates the frozen contract without manufacturing another option (4964.1579ms)
+✔ service resume rejects removed native closed dates and altered archived game evidence (4119.3039ms)
+✔ return preserves existing unique field positions when selecting a legal roster slot (26387.2256ms)
+✔ service annual supply preserves a retiring45yearold pitcher and his historical repertoire across JSON (5035.4918ms)
+✔ controlled minor return resumes the next annual contract without consuming a frozen full season (19687.0852ms)
+✔ active US return condition counts six registered bench games, excludes INT and never changes abilities (2863.5341ms)
+✔ controlled return-year MLB activation preserves pre-callup salary and validates derived contract and budget (4795.3533ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 175839.011

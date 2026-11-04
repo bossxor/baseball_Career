@@ -1,0 +1,50 @@
+✔ US military worker closes an actual rest date without health rows and refreshes advice once across JSON resume (23421.342ms)
+✔ US advice refuses missing rest-day closure and future unclosed dates (1384.3269ms)
+✖ US advice does not accept a date alone when its rest receipt or owning season is corrupted (3660.5021ms)
+✖ US advice cannot use an empty receipt to close a scheduled competition date without game health evidence (5422.9392ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 2
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36569.7687
+
+✖ failing tests:
+
+test at packages\engine\test\pro-advice-us-day.test.ts:1:2665
+✖ US advice does not accept a date alone when its rest receipt or owning season is corrupted (3660.5021ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\pro-advice-us-day.test.ts:27:445)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /ADVICE_DAY_NOT_CLOSED/,
+    operator: 'throws',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\pro-advice-us-day.test.ts:1:3252
+✖ US advice cannot use an empty receipt to close a scheduled competition date without game health evidence (5422.9392ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\pro-advice-us-day.test.ts:31:314)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /ADVICE_DAY_NOT_CLOSED/,
+    operator: 'throws',
+    diff: 'simple'
+  }

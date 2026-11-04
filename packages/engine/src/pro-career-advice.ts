@@ -115,7 +115,13 @@ function observePlans(c:AdviceCareer,l:CareerAdviceLedger,day:number){
  });
 }
 function adviceDayClosed(c:AdviceCareer,day:number):boolean {
- if(isUs(c)||!c.days)return c.health.games.some(h=>h.evidence.seasonKey===c.world.seasonKey&&h.evidence.day===day)||isUs(c)&&!!c.season?.days.some(d=>d.day===day);
+ if(isUs(c)||!c.days){
+  if(c.health.games.some(h=>h.evidence.seasonKey===c.world.seasonKey&&h.evidence.day===day))return true;
+  if(!isUs(c))return false;
+  const season=c.season,schedule=c.seasonSchedule,receipts=season?.days.filter(d=>d.day===day)??[];
+  // Rest dates have no team-health rows; require their own sealed empty date, never just a matching number.
+  return !!season&&!!schedule&&schedule.seasonKey===c.world.seasonKey&&season.receiptKey===JSON.stringify(['us-regular-season',schedule.receiptKey])&&day>=season.firstDay&&day<=season.lastDay&&receipts.length===1&&receipts[0]!.evidence==='[]'&&!Object.values(schedule.leagues).some(games=>games.some(g=>g.worldDay===day));
+ }
  const ledger=c.days,schedule=c.competitionSchedule,receipt=ledger.days.find(d=>d.day===day);
  if(ledger.schemaVersion!==1||ledger.worldKey!==c.world.worldKey||ledger.seasonKey!==c.world.seasonKey||!schedule||schedule.seasonKey!==c.world.seasonKey||!receipt)return false;
  // Offdates have no health rows; the date closer still seals the complete official contribution list.
