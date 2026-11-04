@@ -1,6 +1,6 @@
 # 최신 —6묶음 푸시·전체 검사 진행 중
 
-M2-20261104-SAVE-API-CHECKPOINT.md를 먼저 읽는다. 기능 source는cc16fb5이며 여섯 묶음 커밋/푸시 완료. 이번 신규 API33건은 현재 전체 실행에서도33/33 통과했다. 전체 로그 중간 표식64통과/0실패이며 최종 PASS가 아니다. 린트/전체 타입 통과, native 미국 귀국·재도전 두 긴 파일 실행 중이다. 최초 의무 준비1년 완료 출력 확인. source583파일 중간 해시 변경0, 최종 freeze-check는 종료 뒤 확인한다.
+M2-20261104-SAVE-API-CHECKPOINT.md를 먼저 읽는다. 기능 source는cc16fb5이며 여섯 묶음 커밋/푸시 완료. 이번 신규 API33건은 현재 전체 실행에서도33/33 통과했다. 전체 로그 중간 표식64통과/0실패이며 최종 PASS가 아니다. 린트/전체 타입 통과, native 미국 귀국·재도전 두 긴 파일 실행 중이다. 사용량 잔여8%에서 관찰한 한 경로의 native 의무 준비2년 완료 출력까지 확인. 해당 검사/전체 종료를 뜻하지 않는다. source583파일 중간 해시 변경0, 최종 freeze-check는 종료 뒤 확인한다.
 
 전체 npm run check 세션51745, powershell PID26896. evidence/M2-20261104-batch-run.json·-check.log·-check.exitcode.txt·-freeze-check.json을 확인한다. 이 채팅에서write_stdin51745가 가능하면 사용하고, 다른 환경은 PID/로그/exitcode로 판정한다. 중복 전체 검사를 시작하지 않는다. -checkpoint.log/-run-checkpoint.json/-midrun-freeze-check.json은 중간 스냅샷일 뿐이다. 종료코드 파일이 없으면 완료로 쓰지 않는다. 이전90394는 결과 미수집/PASS 아님.
 

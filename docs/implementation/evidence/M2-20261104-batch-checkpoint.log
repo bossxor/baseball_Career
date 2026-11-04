@@ -123,3 +123,29 @@
 ✔ US formation relation HTTP preserves save ownership, CAS and exact navigation across repeated delivery (6648.3685ms)
 ✔ US relation detail sums only actual requested league/phase/year rows, not merely echoing the scope (820.3424ms)
 Native mandatory return year 1 complete
+Native mandatory return year 2 complete
+✔ mandatory return commands reject caller authority and malformed input before accessing a career (2.4236ms)
+✔ US contract end enters the real mandatory return owner, starts a year and advances bounded native games (59807.336ms)
+✔ actual completed mandatory owner exposes its draft and hands off to the existing optional retry gateway (505498.654ms)
+﹣ returned player HTTP opens once, rejects stale/foreign/authority input and persists US acceptance once (1.362ms) # SKIP
+﹣ latest native optional player persists an actual KBO signing and activation through HTTP (0.1597ms) # SKIP
+﹣ three actual optional seasons persist E35 confirmation atomically without another budget charge (0.1586ms) # SKIP
+Native mandatory return year 1 complete
+Native mandatory return year 2 complete
+✔ returned-US commands reject caller authority before reading an owner (1.8708ms)
+✔ native returned owner uses the existing save command pipeline, JSON and public retry screens (532904.0109ms)
+✔ CORS: allowed origins get headers on preflight and responses, unknown origins get none (2132.8826ms)
+✔ creation ids are owner-scoped: another user never sees or collides with a save (1253.5801ms)
+✔ concurrent identical creations all return the one save; the active-save cap applies to creation too (1844.5467ms)
+✔ list cursor keeps microsecond precision: no row sharing a millisecond is skipped (1277.4693ms)
+✔ UI shell: the server validates the seed and refuses a second one (1136.8385ms)
+✔ UI shell: advance and choose follow the phase, the pending event, the offered options and the chances (1363.7297ms)
+✔ M7 input: wrong types answer 400, never 500; a club backup restores as a club save (1185.0604ms)
+✔ M7 ids: concurrent identical backups resolve to one file; restore ids are owner-scoped and bound to one backup (1591.9506ms)
+﹣ Neon V03 unique/rollback/F08 on m3-dev (0.7961ms) # SKIP
+✔ V02 reject missing auth and non-allowlisted subject (1958.3965ms)
+✔ V03 unique receipt, idempotent replay, rollback on bad payload (1297.5512ms)
+✔ F08 two devices same expectedRevision — one wins, other 409 (1432.7149ms)
+﹣ V02 Managed Auth JWT + allowlist + owner isolation (0.8887ms) # SKIP
+✔ M4 UI shell: create → seed → advance → settle → choose S04→S28 (2194.8077ms)
+✔ M5 UI shell: S21 stub GET + CHOICE back; S34 via college (2028.9567ms)

@@ -45,3 +45,6 @@ cc16fb5 이후 source583파일을 동결해 npm run check를1회 실행했다. �
 현재 긴 두 API 파일은 nativeUndraftedUsReturn의6년 controlled US 접두+실제 의무 준비2년을 각 프로세스에서 다시 만든다. helper에 기존 PLAYBALL_NATIVE_RETURN_PREFIX 입력/출력 기능이 있다. 다음 실행은 새 source 동결본에서 이 prefix를 외부 임시 경로에 **한 번 native 생성**한 뒤, artifact canonical SHA256/assertUsAmateurReturnCareer와 생성 시 source manifest를 검증하고 동일 코드 검사들에서만 재사용할 수 있다. 과거 raw runtime JSON이나 출처 없는 fixture를 새 native 실행 증거로 바꾸지 않는다.
 
 동시에 여러 worker가 같은 빈 cache 경로를 생성하게 하지 않는다. bootstrap을 완료/검증한 후 read-only 캐시로 공유한다. source/seed/게임 규칙이 바뀌면 다시 생성한다. helper의 기존 sourceCommit 문자열만으로 현재 코드임을 증명하지 말고 외부 실행 manifest를 함께 남긴다. 이번 전체 실행은 cache 환경을 설정하지 않은 fresh 경로이며 진행 중 환경을 바꾸지 않았다. 이는 다음 검사의 실행 방법 제안이고 현재 검사 단축/완료 주장이 아니다.
+
+## 잔여8% 마감 관찰
+2026-11-04 전체 검사는 세션51745/PID26896에서 계속 실행 중이다. 관찰한 한 경로의 Native mandatory return year 1/2 complete 출력까지 확인했다. 아직 최종 집계/종료코드가 없으므로 해당 파일 전체와 전체 check PASS를 주장하지 않는다. 신규 API33/33·중간 source583파일 변경0 증거는 보존했다. -checkpoint.log는 이 시점 스냅샷이며 실제 진행 로그는 -check.log다. 컴퓨터/검사 프로세스를 종료하지 않았다.
