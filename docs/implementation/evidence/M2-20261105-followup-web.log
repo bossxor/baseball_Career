@@ -1,0 +1,36 @@
+
+> again-playball@0.1.0 test:web
+> tsx --tsconfig apps/web/tsconfig.json --test apps/web/test/*.test.ts apps/web/test/*.test.tsx
+
+✔ fixture club creation is idempotent and the picker lists a club (22.0598ms)
+✔ http createClub posts a club creation and CLUB_CREATE (45.3202ms)
+✔ name: NFC, trimmed, 1..12 graphemes, no control characters (7.76ms)
+✔ left-handed throwers cannot take C/2B/3B/SS; pitchers need a pitch form; steps block only their own errors (0.8569ms)
+✔ focus is exactly four distinct abilities of the chosen kind; a fifth pick is refused, kind change resets dependents (1.1854ms)
+✔ preview exists only with a type and four focus picks and shows the type start values (1.1262ms)
+✔ request is built only from a complete draft; the same command id travels with it (0.7972ms)
+✔ http api maps saves list and create→seed→career against a stub fetch (70.6763ms)
+✔ http api: a 401 calls onUnauthorized once and surfaces AUTH_REQUIRED (2.3074ms)
+✔ http api: a retried command keeps the revision it was first sent with (lost response), and a conflict clears it (4.7635ms)
+✔ Login: fields, submit disabled until filled, error announced, optional dev path (24.7837ms)
+✔ ApiError maps revision conflict to conflict state (0.3997ms)
+✔ state texts equal the design catalog (no drift) (2.3706ms)
+✔ S01: empty start, resume label kept while loading, internal states never shown, errors announced (26.584ms)
+✔ S02: one step at a time with its error next to the input, stepper marks the current step, preview empty text (14.706ms)
+✔ S03: buttons come only from nextActions, default progress mode, disabled reason is linked, pending event locks progress (6.5466ms)
+✔ fixture api: a retried creation or action with the same command id changes nothing twice (3.6553ms)
+✔ routes: unknown or incomplete addresses fall back to home; play screens parse (1.0311ms)
+✔ S06 Decision: empty text, option disabilities linked, confirm needs selection (6.1217ms)
+✔ fixture decision/choose: same commandId is idempotent; S04→S28 chain (1.239ms)
+✔ M5 stub screens: routeable Decision shell; college → S34; back returns career (0.7294ms)
+✔ V08-M4: touch targets ≥44px, focus ring, 16px body, reduced-motion (2.2539ms)
+✔ V08-M4: Hangul IME composition is gated on S02 name submit (0.4158ms)
+✔ V08-M4: Korean webfonts declared with font-display swap (0.292ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1964.0158

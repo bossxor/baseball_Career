@@ -1,4 +1,4 @@
-import {careerRetirementEventId} from './career-retirement-event.js';
+import {careerRetirementEventId,retirementConfirmationId} from './career-retirement-event.js';
 import {refreshCareerSeasonGoals} from './season-goals.js';
 import {kboServiceContractView} from './kbo-service-payroll.js';
 import {KBO_CONTRACT_GAME_DAYS} from './kbo-military-program.js';
@@ -45,7 +45,7 @@ function offseason(s:KboCareer){
  if(s.phaseContext.phase!=='SEASON_REVIEW' || s.seasonClose?.seasonKey!==s.world.seasonKey)throw new RangeError('KBO_RETIREMENT_NOT_AVAILABLE');
 }
 function retirementEvent(s:KboCareer,definitionId:'E36'|'E37'|'E69',revision:number){
- return createWorldEvent({definitionId,worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,evidence:{version:1,type:eventDefinition(definitionId).evidenceDomain,fields:{playerSimulationKey:s.protagonistKey,retirementTaskOrReceiptId:taskKey(s)}},
+ return createWorldEvent({definitionId,worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,evidence:{version:1,type:eventDefinition(definitionId).evidenceDomain,fields:{playerSimulationKey:s.protagonistKey,retirementTaskOrReceiptId:definitionId==='E36'?retirementConfirmationId(taskKey(s),revision):taskKey(s)}},
   resume:{worldKey:s.world.worldKey,seasonKey:s.world.seasonKey,phase:'SEASON_REVIEW',competitionKey:null,registrationKey:s.protagonistClubId,sourceRevision:revision},sourceSequence:s.events.length+1,worldDay:s.days!.days.at(-1)!.day});
 }
 function retire(source:KboCareer,career:KboCareer,reason:KboCareerRetirement['reason']):KboCareer {
@@ -66,7 +66,9 @@ export function requestKboRetirement(source:KboCareer,expectedRevision:number):K
 export function resolveKboRetirement(source:KboCareer,expectedRevision:number,input:{eventKey:string;eventVersion:number;command:'CONFIRM_RETIRE'|'CANCEL_RETIRE'}):KboCareer {
  assertCareerRevision(source,expectedRevision);const phase=source.phaseContext;
  if(phase.phase!=='RETIRE_CONFIRM' || phase.eventKey!==input.eventKey)throw new RangeError('INVALID_CAREER_PHASE');
- const event=source.events.find(e=>e.eventKey===input.eventKey)!,context=(e:EventInstance)=>({worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:[input.command]});
+ const event=source.events.find(e=>e.eventKey===input.eventKey);
+ if(!event||event.definitionId!=='E36'||input.command!=='CONFIRM_RETIRE'&&input.command!=='CANCEL_RETIRE'||event.worldKey!==source.world.worldKey||event.seasonKey!==source.world.seasonKey||event.evidence.fields.playerSimulationKey!==source.protagonistKey||event.evidence.fields.retirementTaskOrReceiptId!==taskKey(source)&&event.evidence.fields.retirementTaskOrReceiptId!==retirementConfirmationId(taskKey(source),event.resume.sourceRevision))throw new RangeError('INVALID_KBO_RETIREMENT_EVENT');
+ const context=(e:EventInstance)=>({worldKey:source.world.worldKey,seasonKey:source.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:[input.command]});
  const close=(e:EventInstance,command:string)=>completeBlockingEvent(e,e.version,{sourceEvidenceKey:e.evidenceKey,receiptKey:JSON.stringify(['kbo-retirement-decision',taskKey(source),command]),command},context(e));
  if(input.eventVersion!==event.version)throw new RangeError('EVENT_VERSION_CONFLICT');
  const career=structuredClone(source);

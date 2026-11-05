@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-11-04T23:29:38.182Z",
+  "loadedEngineBaseCommit": "5f6a1ca",
+  "existingTestWip": "docs/implementation/evidence/M2-20261105-existing-service-test-wip.patch",
+  "manifestSha256": "ee0be1178b2c978e6fc10060714050140e2b7e896ee04f8dada34a9c89d2df8d",
+  "engineFilesUnchangedSinceStart": true,
+  "baseCommitDifferences": [
+    "packages/engine/test/us-amateur-return-career.test.ts"
+  ],
+  "subsequentEngineFeaturesAreOutsideThisRunningRegression": true
+}

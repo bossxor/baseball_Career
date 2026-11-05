@@ -14,3 +14,11 @@ export function closeControlledServiceDates(c:UsCareer,through:number):UsCareer 
  next.phaseContext=through===s.lastDay?{phase:'SEASON_REVIEW'}:{phase:'SEASON_PROGRESS',nextWorldDay:through+1,pendingGame:null};next.revision++;assertUsSeason(next,next.revision);auditUsClosedDays(next);return next;
 }
 
+
+/** Each regular game has at most24 half-innings; this is a conservative test-only work bound, not an engine budget. */
+export function usServiceTestStepLimit(c:UsCareer):number {
+ if(!c.seasonSchedule||!c.season)throw new RangeError('US_SERVICE_TEST_SEASON_REQUIRED');const games=Object.values(c.seasonSchedule.leagues).reduce((n,g)=>n+g.length,0);return games*24+c.season.lastDay-c.season.firstDay+2;
+}
+export function usServiceTestProgress(c:UsCareer):string {
+ const p=c.phaseContext;return JSON.stringify([c.world.seasonKey,c.records.revision,p.phase,p.phase==='SEASON_PROGRESS'?p.nextWorldDay:null,p.phase==='SEASON_PROGRESS'?p.pendingGame?.job.game.input.simulationKey:null,p.phase==='SEASON_PROGRESS'?p.pendingGame?.job.game.playCursor:null]);
+}

@@ -1,0 +1,29 @@
+✖ a cancelled pro retirement can be requested again with a new confirmation identity while keeping the old decision (13399.395ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16719.7153
+
+✖ failing tests:
+
+test at apps\api\test\m2-pro-retirement.test.ts:1:14336
+✖ a cancelled pro retirement can be requested again with a new confirmation identity while keeping the old decision (13399.395ms)
+  AssertionError [ERR_ASSERTION]: Expected "actual" to be strictly unequal to:
+  
+  '["event-1","route-world","E36","{\\"fields\\":{\\"playerSimulationKey\\":\\"own\\",\\"retirementTaskOrReceiptId\\":\\"[\\\\\\"kbo-retirement\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"own\\\\\\"]\\"},\\"type\\":\\"RETIREMENT\\",\\"version\\":1}"]'
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-pro-retirement.test.ts:94:236)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '["event-1","route-world","E36","{\\"fields\\":{\\"playerSimulationKey\\":\\"own\\",\\"retirementTaskOrReceiptId\\":\\"[\\\\\\"kbo-retirement\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"own\\\\\\"]\\"},\\"type\\":\\"RETIREMENT\\",\\"version\\":1}"]',
+    expected: '["event-1","route-world","E36","{\\"fields\\":{\\"playerSimulationKey\\":\\"own\\",\\"retirementTaskOrReceiptId\\":\\"[\\\\\\"kbo-retirement\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"own\\\\\\"]\\"},\\"type\\":\\"RETIREMENT\\",\\"version\\":1}"]',
+    operator: 'notStrictEqual',
+    diff: 'simple'
+  }

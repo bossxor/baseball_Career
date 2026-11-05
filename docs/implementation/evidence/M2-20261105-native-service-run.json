@@ -1,0 +1,8 @@
+{
+  "status": "FINISHED",
+  "startedAt": "2026-11-04T23:20:34.5360228Z",
+  "powershellPid": 29980,
+  "command": "node --import tsx --test --test-name-pattern='two native service years' packages/engine/test/us-amateur-return-career.test.ts",
+  "exitCode": 1,
+  "endedAt": "2026-11-04T23:42:48.1885157Z"
+}

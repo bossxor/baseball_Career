@@ -1,0 +1,29 @@
+✔ KBO and US native retirement cancel/confirm preserve money, records and identity and project public frozen archives (15706.389ms)
+✔ retirement trust boundary rejects unsupported choices, injected ledgers, wrong version/revision and early retirement (3756.661ms)
+✔ native maximum-age guard freezes both roots at45 without new pay or military exemption (2163.7269ms)
+✔ owned retirement HTTP persists confirmation once and reloads the actual archive with CAS and owner isolation (4847.347ms)
+✔ pro farewell navigation opens the native archive for E37/E69 without copying a player or changing financial history (3607.5877ms)
+✔ pro archive keeps legacy snapshots readable, rejects duplicate farewell authority and validates revision/event version (2071.3809ms)
+✔ pro farewell HTTP closes the stored navigation once and preserves archived identity and income across retries (8898.6247ms)
+✔ a cancelled pro retirement can be requested again with a new confirmation identity while keeping the old decision (2814.5529ms)
+✔ legacy pending pro retirement confirmations remain readable and confirmable after identity versioning (3212.3735ms)
+✔ native KBO confirmation refuses an unknown runtime command without retiring or consuming the pending task (496.2097ms)
+✔ native eligible Major FA opens exactly one source-owned E66 without changing money or playing another season (54440.9568ms)
+✔ Major E66 navigates while pending and preserves original native offers, records, income and annual state (12152.6632ms)
+✔ actual Major FA acceptance closes only the owned E66 and commits the existing native transfer once (21837.2426ms)
+✔ Major E66 survives retirement cancellation and closes atomically only on actual retirement confirmation (13485.3745ms)
+✔ Major E66 cannot bypass another blocking task, damaged window source, invalid funding or stale revision (19389.7382ms)
+✔ pending Major E66 preserves a sealed original-club agent counteroffer and charges its accepted price once (29638.9247ms)
+✔ US retirement confirmation/cancellation preserves source, all league records, income and contract without another payment (24561.2118ms)
+✔ US archive separates school/minor/MLB and zero MLB debut, returns public six-stat peaks without hidden state (7736.0733ms)
+✔ US maximum-age retirement closes at45 with unresolved overseas deadline preserved, not erased or treated as exemption (5567.2989ms)
+✔ US retirement rejects unfinished seasons, stale/version mismatch and changed final evidence atomically (15673.7071ms)
+✔ US contract and bench registration without official PA/BF retain E37 and the same archive receipt (5291.3969ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 268682.4691

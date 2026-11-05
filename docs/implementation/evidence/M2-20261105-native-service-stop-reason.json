@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-04T23:42:47.697Z",
+  "reason": "Stopped own selected native regression after proving its 3000-call test bound cannot close the real 8790-game service year",
+  "proof": {
+    "scheduledGamesPerYear": 8790,
+    "minimumCompletedInningsPerFinishedRegularGame": 8,
+    "maximumCompletedInningsPerAdvance": 20,
+    "minimumCalls": 3516,
+    "existingTestLimit": 3000
+  },
+  "notProductFailureOrPass": true,
+  "scope": "loaded5f6a1ca plus existing service-test WIP; later MajorFA features not covered"
+}

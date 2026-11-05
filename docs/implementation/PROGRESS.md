@@ -1,3 +1,9 @@
+# 최신 구현 — 2026-11-05: 은퇴 재요청·복무 시즌 진행 수정 완료
+
+[M2-RETIREMENT-AND-SERVICE-PROGRESS-20261105.md](M2-RETIREMENT-AND-SERVICE-PROGRESS-20261105.md)를 먼저 읽는다. 은퇴 취소 뒤 E36 재요청 충돌과 귀국 복무 완료 신호를 수정했다.21/21+집중1/1·전체 타입/린트/웹24/빌드 종료0. 실제2년 완주는 미검증이며 old cap3000 검사는 중지 종료1로 분리 기록했다. 사용자 WIP 원본과 개선본 patch를 보존했다.
+
+현재 source는 git log/remote로 확인한다. 다음은 미국 E95/E96와 Major 국내 복귀 authority 잔여 연결이다. M2 관리추정65%·전체87.5% 유지. PC 종료 금지. 아래는 과거 기록이며 당시 실행 중/최신 표기는 현재 상태가 아니다.
+
 # 최신 구현 — 2026-11-05: Major FA E66 저장·서명 연결
 
 [M2-MAJOR-FA-E66-20261105.md](M2-MAJOR-FA-E66-20261105.md)를 먼저 읽는다. 실제 E66 계약 창/저장 OPEN·NAV와 기존 FA 수락/은퇴 성공의 DOMAIN 해소를 연결했다.15/15·types/lint/engine/API build0·독립 리뷰 통과. 원구단 agent 증액/legacy 창 없는 FA와 금융 replay 유지. OPEN_RETURN은 S33 NAV까지만이며 실제 Major 국내 복귀 authority/등록은 잔여다.

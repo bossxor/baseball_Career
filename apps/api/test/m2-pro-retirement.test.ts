@@ -88,3 +88,19 @@ test('pro farewell HTTP closes the stored navigation once and preserves archived
   const [saved]=await db.select({state:gameSaves.state}).from(gameSaves).where(eq(gameSaves.id,created.saveId)),next=(saved!.state as {career:UsCareer}).career;assert.equal(canonicalJson(next.world),canonicalJson(c.world));assert.equal(canonicalJson(next.records),canonicalJson(c.records));assert.deepEqual(next.income,(c as UsCareer).income);assert.deepEqual(next.retirement,c.retirement);assert.equal(next.phaseContext.phase,'ARCHIVED');assert.equal((await app.request(path+'/screens/CAREER_PRO_ARCHIVE',{headers:{Authorization:'Bearer dev:farewell-foreign'}})).status,404);const after=await json<{farewell:{commands:string[]}}>(await app.request(path+'/screens/CAREER_PRO_ARCHIVE',{headers}));assert.deepEqual(after.farewell.commands,[]);
  }finally{await client.close();}
 });
+
+
+test('a cancelled pro retirement can be requested again with a new confirmation identity while keeping the old decision',()=>{
+ for(const source of [closedKbo(),finishedUsCareerFixture()]){const first=apply(source,'REQUEST'),old=first.events.at(-1)!,cancelled=resolve(first,'CANCEL_RETIRE'),second=apply(cancelled,'REQUEST'),current=second.events.at(-1)!;assert.notEqual(current.eventKey,old.eventKey);assert.equal(second.events.find(e=>e.eventKey===old.eventKey)!.status,'RESOLVED');const retired=resolve(second,'CONFIRM_RETIRE');assert.equal(retired.phaseContext.phase,'ARCHIVED');assert.equal(retired.events.find(e=>e.eventKey===current.eventKey)!.resolution!.command,'CONFIRM_RETIRE');assert.equal(canonicalJson(retired.records),canonicalJson(source.records));}
+});
+
+import {createWorldEvent,resolveKboRetirement} from '@playball/engine';
+
+test('legacy pending pro retirement confirmations remain readable and confirmable after identity versioning',()=>{
+ for(const source of [closedKbo(),finishedUsCareerFixture()]){const asked=apply(source,'REQUEST'),e=asked.events.at(-1)!,receipt=JSON.stringify(['mode'in asked?'us-retirement':'kbo-retirement',asked.world.worldKey,asked.world.seasonKey,asked.protagonistKey]),legacy=createWorldEvent({definitionId:'E36',worldKey:e.worldKey,seasonKey:e.seasonKey,evidence:{...e.evidence,fields:{...e.evidence.fields,retirementTaskOrReceiptId:receipt}},resume:e.resume,sourceSequence:e.sourceSequence,worldDay:e.occurredWorldDay});asked.events=[...asked.events.slice(0,-1),legacy];asked.phaseContext={phase:'RETIRE_CONFIRM',eventKey:legacy.eventKey};const retired=resolve(JSON.parse(JSON.stringify(asked)),'CONFIRM_RETIRE');assert.equal(retired.phaseContext.phase,'ARCHIVED');assert.equal(retired.retirement!.receiptKey,receipt);assert.equal(retired.events.at(-1)!.evidence.fields.retirementTaskOrReceiptId,receipt);}
+});
+
+
+test('native KBO confirmation refuses an unknown runtime command without retiring or consuming the pending task',()=>{
+ const c=apply(closedKbo(),'REQUEST') as KboCareer,e=c.events.at(-1)!,before=canonicalJson(c);assert.throws(()=>resolveKboRetirement(c,c.revision,{eventKey:e.eventKey,eventVersion:e.version,command:'UNKNOWN' as 'CONFIRM_RETIRE'}),/INVALID_KBO_RETIREMENT_EVENT/);assert.equal(canonicalJson(c),before);
+});

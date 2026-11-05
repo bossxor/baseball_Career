@@ -148,7 +148,7 @@ export function startUsAmateurReturnYear(s:UsAmateurReturnCareer,n:number,eventV
 /** Bounded native worker. Pending games, records, health and date cursor commit together. */
 export function advanceUsAmateurReturn(s:UsAmateurReturnCareer,n:number):{career:UsAmateurReturnCareer;stopReason:string} {
  revision(s,n);if(s.return.status!=='PREPARING')throw new RangeError('US_RETURN_NOT_PREPARING');const next={...s};let stopReason:string;
- if(s.service){const result=advanceUsMilitaryWorld(s.service,s.service.revision,7);next.service=result.career;stopReason=result.stopReason;}
+ if(s.service){const result=advanceUsMilitaryWorld(s.service,s.service.revision,7);next.service=result.career;stopReason=result.stopReason==='SEASON_REVIEW'?'SEASON_COMPLETE':result.stopReason;}
  else {if(!s.preparation)throw new RangeError('US_RETURN_YEAR_NOT_STARTED');const result=advancePreparationSeason(s.preparation,s.preparation.revision,'ONE_MONTH');next.preparation=result.career;next.retry=result.career.retry;stopReason=result.stopReason;}
  next.revision++;return {career:next,stopReason};
 }

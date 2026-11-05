@@ -1,5 +1,5 @@
 import {hasOnlyUsMajorFaWindowEvent,completeUsMajorFaWindow} from './us-major-fa-window.js';
-import {careerRetirementEventId} from './career-retirement-event.js';
+import {careerRetirementEventId,retirementConfirmationId} from './career-retirement-event.js';
 import {refreshCareerSeasonGoals} from './season-goals.js';
 import type {UsCareer} from './us-career-entry.js';
 import {assertUsCareerRevision} from './us-career-entry.js';
@@ -23,7 +23,7 @@ function ready(c:UsCareer):void {
  if(blockers.some(b=>!['MAX_AGE_REACHED','CONTRACT_DECISION_REQUIRED','MILITARY_PLAN_REQUIRED'].includes(b)&&!(b==='OPEN_EVENT'&&hasOnlyUsMajorFaWindowEvent(c))))throw new RangeError('US_RETIREMENT_NOT_AVAILABLE');
  auditUsClosedDays(c);auditUsCompletedPostseason(c);
 }
-function notice(c:UsCareer,id:'E36'|'E37'|'E69',revision:number){return createWorldEvent({definitionId:id,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:eventDefinition(id).evidenceDomain,fields:{playerSimulationKey:c.protagonistKey,retirementTaskOrReceiptId:taskKey(c)}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'SEASON_REVIEW',competitionKey:null,registrationKey:c.protagonistOrganizationId,sourceRevision:revision},sourceSequence:c.events.length+1,worldDay:Object.values(c.records.games).reduce((day,g)=>g.scope.seasonKey===c.world.seasonKey?Math.max(day,g.worldDay):day,c.season!.lastDay)});}
+function notice(c:UsCareer,id:'E36'|'E37'|'E69',revision:number){return createWorldEvent({definitionId:id,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:eventDefinition(id).evidenceDomain,fields:{playerSimulationKey:c.protagonistKey,retirementTaskOrReceiptId:id==='E36'?retirementConfirmationId(taskKey(c),revision):taskKey(c)}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'SEASON_REVIEW',competitionKey:null,registrationKey:c.protagonistOrganizationId,sourceRevision:revision},sourceSequence:c.events.length+1,worldDay:Object.values(c.records.games).reduce((day,g)=>g.scope.seasonKey===c.world.seasonKey?Math.max(day,g.worldDay):day,c.season!.lastDay)});}
 function finish(c:UsCareer,reason:UsCareerRetirement['reason']):UsCareer {
  const revision=c.revision+1,retirement:UsCareerRetirement={receiptKey:taskKey(c),reason,seasonKey:c.world.seasonKey,age:c.world.players[c.protagonistKey]!.age,clubId:c.protagonistOrganizationId,endedContractKey:c.contract.contractKey,sourceRevision:revision};
  const prepared=completeUsMajorFaWindow(c,'CONFIRM_RETIRE',retirement.receiptKey),next:UsCareer={...prepared,revision,retirement,phaseContext:{phase:'ARCHIVED'},events:[...prepared.events,notice(prepared,careerRetirementEventId(c.records,c.protagonistKey),revision)]};assertUsCareerRevision(next,revision);return refreshCareerSeasonGoals(next);
@@ -34,7 +34,7 @@ export function requestUsRetirement(c:UsCareer,revision:number):UsCareer {
 }
 export function resolveUsRetirement(c:UsCareer,revision:number,input:{eventKey:string;eventVersion:number;command:'CONFIRM_RETIRE'|'CANCEL_RETIRE'}):UsCareer {
  assertUsCareerRevision(c,revision);const phase=c.phaseContext,event=c.events.find(e=>e.eventKey===input.eventKey);
- if(phase.phase!=='RETIRE_CONFIRM'||phase.eventKey!==input.eventKey||event?.definitionId!=='E36'||event.evidence.fields.retirementTaskOrReceiptId!==taskKey(c)||!['CONFIRM_RETIRE','CANCEL_RETIRE'].includes(input.command))throw new RangeError('INVALID_US_RETIREMENT_EVENT');
+ if(phase.phase!=='RETIRE_CONFIRM'||phase.eventKey!==input.eventKey||event?.definitionId!=='E36'||event.evidence.fields.playerSimulationKey!==c.protagonistKey||event.evidence.fields.retirementTaskOrReceiptId!==taskKey(c)&&event.evidence.fields.retirementTaskOrReceiptId!==retirementConfirmationId(taskKey(c),event.resume.sourceRevision)||!['CONFIRM_RETIRE','CANCEL_RETIRE'].includes(input.command))throw new RangeError('INVALID_US_RETIREMENT_EVENT');
  const base:UsCareer={...c,phaseContext:{phase:'SEASON_REVIEW'},events:c.events.filter(e=>e.eventKey!==event.eventKey)};ready(base);
  const closed=completeBlockingEvent(event,input.eventVersion,{sourceEvidenceKey:event.evidenceKey,receiptKey:JSON.stringify(['us-retirement-decision',taskKey(c),input.command]),command:input.command},{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:[input.command]});
  const next:UsCareer={...c,events:c.events.map(e=>e.eventKey===closed.eventKey?closed:e),phaseContext:{phase:'SEASON_REVIEW'}};

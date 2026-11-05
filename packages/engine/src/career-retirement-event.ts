@@ -7,3 +7,6 @@ export function careerRetirementEventId(records:RecordLedger,playerKey:string):'
   && (g.scope.phase==='REGULAR'||g.scope.phase==='POSTSEASON')
   && ((g.batting[playerKey]?.PA??0)>0||(g.pitching[playerKey]?.BF??0)>0))?'E69':'E37';
 }
+
+/** A cancelled dialogue may reopen; the permanent retirement/archive receipt stays unchanged. */
+export const retirementConfirmationId=(receiptKey:string,sourceRevision:number)=>JSON.stringify(['retirement-confirmation',receiptKey,sourceRevision]);

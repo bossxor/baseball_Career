@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-11-04T23:42:48.166Z",
+  "changed": [
+    "packages/engine\\src\\index.ts",
+    "packages/engine\\src\\us-career-entry.ts",
+    "packages/engine\\src\\us-major-fa-window.ts",
+    "packages/engine\\src\\us-major-renewal.ts",
+    "packages/engine\\src\\us-retirement.ts",
+    "packages/engine\\test\\us-major-fa-fixture.ts",
+    "packages/engine\\test\\us-major-fa-window.test.ts"
+  ],
+  "removed": [],
+  "unchanged": false
+}
