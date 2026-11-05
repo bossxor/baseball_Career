@@ -1,0 +1,7 @@
+{
+  "behavior": "Wait-Process then require final native service PASS; no polling",
+  "serviceRunnerPid": 12812,
+  "pid": 31060,
+  "evidenceBase": "C:\\Users\\N-052\\.codex\\visualizations\\2026\\10\\16\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\baseball-career-m2\\docs\\implementation\\evidence\\M2-20261105-us-return-season-run",
+  "startedAt": "2026-11-05T06:09:39.0091354Z"
+}

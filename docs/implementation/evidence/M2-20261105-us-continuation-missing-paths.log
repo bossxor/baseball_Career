@@ -1,0 +1,6 @@
+Error: US_RETURN_SEASON_PATHS_REQUIRED
+    at verifyUsReturnSeason (file:///C:/Users/N-052/.codex/visualizations/2026/10/16/01a142f8-66ea-7782-ba3e-b52df94ae1be/baseball-career-m2/scripts/verify-us-return-season.mjs:27:28)
+    at file:///C:/Users/N-052/.codex/visualizations/2026/10/16/01a142f8-66ea-7782-ba3e-b52df94ae1be/baseball-career-m2/scripts/verify-us-return-season.mjs:69:6
+    at ModuleJob.run (node:internal/modules/esm/module_job:439:25)
+    at async node:internal/modules/esm/loader:643:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)

@@ -1,0 +1,8 @@
+{
+  "serviceRunnerPid": 12812,
+  "pid": 32096,
+  "previousLaunch": "failed before run metadata; preserved launch-failed.json",
+  "startedAt": "2026-11-05T06:14:46.5354079Z",
+  "evidenceBase": "docs/implementation/evidence/M2-20261105-us-return-season-run",
+  "behavior": "Wait-Process then require final native service PASS; no polling"
+}

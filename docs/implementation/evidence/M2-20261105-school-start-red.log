@@ -1,0 +1,48 @@
+✖ HITTER native school starts through owned HTTP without a database fixture (2050.9021ms)
+✖ PITCHER native school starts through owned HTTP without a database fixture (1293.0253ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5574.1234
+
+✖ failing tests:
+
+test at apps\api\test\m2-school-start.test.ts:1:425
+✖ HITTER native school starts through owned HTTP without a database fixture (2050.9021ms)
+  AssertionError [ERR_ASSERTION]: {"code":"INVALID_REQUEST","messageKey":"invalid.request","requestId":"a0e8a16c-6aed-4699-b18f-f26bb32252a1"}
+  
+  400 !== 200
+  
+      at send (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-school-start.test.ts:17:115)
+      at async TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-school-start.test.ts:22:17)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps\api\test\m2-school-start.test.ts:1:425
+✖ PITCHER native school starts through owned HTTP without a database fixture (1293.0253ms)
+  AssertionError [ERR_ASSERTION]: {"code":"INVALID_REQUEST","messageKey":"invalid.request","requestId":"1326cf12-58fa-4da6-9d6d-a707e6eea18f"}
+  
+  400 !== 200
+  
+      at send (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-school-start.test.ts:17:115)
+      at async TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-school-start.test.ts:22:17)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

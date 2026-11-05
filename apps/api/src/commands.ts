@@ -66,7 +66,7 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
   try {
     return await db.transaction(async tx => {
       const locked = await tx.execute(
-        sql`SELECT id, owner_id, revision, state, deleted_at FROM game_saves WHERE id = ${saveId} FOR UPDATE`,
+        sql`SELECT id, owner_id, mode, revision, state, deleted_at FROM game_saves WHERE id = ${saveId} FOR UPDATE`,
       );
       const row = firstRow(locked);
       if (!row || row.deleted_at) return errorBody(c, 'SAVE_NOT_FOUND', 404);
@@ -89,6 +89,7 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
 
       let applied;
       try {
+        if(body.type.startsWith('CAREER_SCHOOL_')&&row.mode!=='CAREER')return errorBody(c,'CAREER_SAVE_REQUIRED',400);
         applied = applyEngineCommand((row.state as SaveState) ?? {}, body);
       } catch (err) {
         const code =

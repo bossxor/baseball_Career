@@ -1,0 +1,16 @@
+✔ HITTER owned KBO entry HTTP signs and activates exactly one real registration after explicit amateur closure (9131.2357ms)
+✔ PITCHER owned KBO entry HTTP signs and activates exactly one real registration after explicit amateur closure (8318.1261ms)
+✔ HITTER native school starts through owned HTTP without a database fixture (3124.6689ms)
+✔ PITCHER native school starts through owned HTTP without a database fixture (2076.2467ms)
+✔ V02 reject missing auth and non-allowlisted subject (1687.8228ms)
+✔ V03 unique receipt, idempotent replay, rollback on bad payload (1108.2493ms)
+✔ F08 two devices same expectedRevision — one wins, other 409 (1090.9177ms)
+✔ M4 UI shell: create → seed → advance → settle → choose S04→S28 (1803.3874ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 37910.4592

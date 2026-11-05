@@ -1,0 +1,9 @@
+{
+  "behavior": "Wait-Process then require final native service PASS; no polling",
+  "host": "pwsh",
+  "evidenceBase": "docs/implementation/evidence/M2-20261105-us-return-season-run",
+  "pid": 2576,
+  "serviceRunnerPid": 12812,
+  "startedAt": "2026-11-05T06:15:38.6036957Z",
+  "previousLaunch": "Windows PowerShell failed before metadata: Get-FileHash unavailable; prior launches preserved"
+}

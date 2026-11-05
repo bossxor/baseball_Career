@@ -1,3 +1,9 @@
+# 최신 구현 — 2026-11-05: DB fixture 없는 고교 native 시작·첫 worker
+
+[M2-SCHOOL-START-HTTP-20261105.md](M2-SCHOOL-START-HTTP-20261105.md). 소유한 빈 CAREER 저장에서 실제 생성→선수 확인→집중 유지→프리시즌→경기 worker, 타자/투수 및 KBO/M3/M4 회귀 묶음8/8·타입/린트0. 기존 저장 덮어쓰기/CLUB mode/seed 주입 거절. 웹 생성 UI 연결과 고교 전체 경로는 아직 남아 있다.
+
+[M2-US-RETURN-SEASON-DRIVER-20261105.md](M2-US-RETURN-SEASON-DRIVER-20261105.md)의 후속 검사는 pwsh PID2576이 Wait-Process로 복무 검사 PID12812 종료를 기다린다. 실제 복무1/1 PASS와 source 일치 후에만 재계약 첫 미국 정규시즌/급여/성장 검증을 실행한다. WAITING은 PASS가 아니다. 두 검사 로그 반복 폴링/중복 생성 금지·engine/rules/test 동결·서비스 WIP/큰파일 보존·PC 종료 금지. 전체 check 미재실행. 관리 M2 65% 유지. 아래는 과거 이력이다.
+
 # 최신 구현 — 2026-11-05: KBO 입단 native HTTP 연결
 
 [M2-KBO-ENTRY-HTTP-20261105.md](M2-KBO-ENTRY-HTTP-20261105.md). 실제 저장 명령 지명 준비→결과→서명→아마추어 연말 마감→KBO 첫 등록, 타자/투수2/2·타입/린트0·읽기 전용 리뷰 이상 없음. 실제5명령 해시를 보존했다. controlled 고교 접두이므로 전체24경로/웹 생성 완료가 아니다.
