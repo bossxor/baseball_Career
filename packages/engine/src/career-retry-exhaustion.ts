@@ -30,10 +30,21 @@ export function openAmateurRetryExhaustion(source:HighSchoolCareer,revision:numb
  const e=createWorldEvent({definitionId:'E35',worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:eventDefinition('E35').evidenceDomain,fields:{playerSimulationKey:c.world.protagonistKey,retirementTaskOrReceiptId:task}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'CAREER_ROUTE',competitionKey:'INDEPENDENT',registrationKey:c.world.protagonistSchoolId,sourceRevision:revision+1},sourceSequence:c.events.length+1,worldDay:c.days.days.at(-1)!.day});
  c.retryExit={version:1,eventKey:e.eventKey,sourceBasis:basis,status:'PENDING'};c.events=[...c.events,e];c.revision++;return c;
 }
+function checkedAmateurExit(source:HighSchoolCareer){
+ const x=source.retryExit,events=source.events.filter(e=>e.eventKey===x?.eventKey),e=events[0];
+ if(!x||x.version!==1||!['PENDING','ARCHIVED'].includes(x.status)||events.length!==1||!e||source.phaseContext.phase!==(x.status==='PENDING'?'CAREER_ROUTE':'ARCHIVED'))throw new RangeError('RETRY_RETIREMENT_NOT_AVAILABLE');validateEvent(e);
+ const fields={playerSimulationKey:source.world.protagonistKey,retirementTaskOrReceiptId:JSON.stringify(['retry-exhausted',source.preparationSeason?.result?.receiptKey])},receipt=JSON.stringify(['amateur-retry-retirement',e.evidenceKey]);
+ if(e.definitionId!=='E35'||e.worldKey!==source.world.worldKey||e.seasonKey!==source.world.seasonKey||canonicalJson(e.evidence.fields)!==canonicalJson(fields)||e.resume.phase!=='CAREER_ROUTE'||e.resume.competitionKey!=='INDEPENDENT'||e.resume.registrationKey!==source.world.protagonistSchoolId||e.occurredWorldDay!==source.days.days.at(-1)?.day||e.resume.sourceRevision>source.revision||e.resume.sourceRevision<=source.preparationSeason!.revision)throw new RangeError('INVALID_AMATEUR_RETRY_EXIT');
+ if(x.status==='PENDING'?(e.status!=='OPEN'||x.receiptKey!==undefined):(e.status!=='RESOLVED'||x.receiptKey!==receipt||e.resolution?.kind!=='DOMAIN'||e.resolution.command!=='CONFIRM_RETIRE'||e.resolution.receiptKey!==receipt))throw new RangeError('INVALID_AMATEUR_RETRY_EXIT');
+ // Archive reads validate the original route evidence without reactivating the stored career.
+ if(x.sourceBasis!==exhausted({...source,phaseContext:{phase:'CAREER_ROUTE'}}))throw new RangeError('PREVIEW_STALE');return {x,e,receipt};
+}
+export function amateurRetryExhaustionView(source:HighSchoolCareer){
+ assertCareerRevision(source,source.revision);const {x,e}=checkedAmateurExit(source),key=source.world.protagonistKey,p=source.world.players[key]!;
+ return {status:x.status,eventKey:e.eventKey,eventVersion:e.version,title:eventDefinition('E35').title,player:{simulationKey:key,name:p.name,age:p.age,kind:p.kind,position:p.position},careerPreparationUsed:source.retryCareer!.careerPreparationUsed,militaryStatus:'COMPLETED' as const,receiptKey:x.receiptKey??null,commands:x.status==='PENDING'?['CONFIRM_RETIRE']:[]};
+}
 export function confirmAmateurRetryExhaustion(source:HighSchoolCareer,revision:number,input:{eventKey:string;eventVersion:number;command:'CONFIRM_RETIRE'}):HighSchoolCareer {
- assertCareerRevision(source,revision);const x=source.retryExit,e=source.events.find(e=>e.eventKey===input.eventKey);
- if(!x||x.status!=='PENDING'||x.eventKey!==e?.eventKey||e.definitionId!=='E35'||input.command!=='CONFIRM_RETIRE'||source.phaseContext.phase!=='CAREER_ROUTE')throw new RangeError('RETRY_RETIREMENT_NOT_AVAILABLE');validateEvent(e);
- if(x.sourceBasis!==exhausted(source))throw new RangeError('PREVIEW_STALE');
+ assertCareerRevision(source,revision);if(source.retryExit?.status!=='PENDING'||input.command!=='CONFIRM_RETIRE')throw new RangeError('RETRY_RETIREMENT_NOT_AVAILABLE');const {x,e}=checkedAmateurExit(source);if(x.eventKey!==input.eventKey)throw new RangeError('RETRY_RETIREMENT_NOT_AVAILABLE');
  const receipt=JSON.stringify(['amateur-retry-retirement',e.evidenceKey]),resolved=completeBlockingEvent(e,input.eventVersion,{sourceEvidenceKey:e.evidenceKey,receiptKey:receipt,command:input.command},{worldKey:e.worldKey,seasonKey:e.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:[input.command]}),c=structuredClone(source);
  c.events=c.events.map(x=>x.eventKey===e.eventKey?resolved:x);c.retryExit={...x,status:'ARCHIVED',receiptKey:receipt};c.phaseContext={phase:'ARCHIVED'};c.revision++;return c;
 }

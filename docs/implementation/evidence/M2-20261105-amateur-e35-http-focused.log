@@ -1,0 +1,10 @@
+✔ amateur E35 HTTP opens, reads and confirms one owned archive with CAS/replay and no extra preparation charge (298469.0263ms)
+✔ amateur E36 requests, cancels, archives and opens S10 through owned save commands without pro appearances (4238.3494ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 313743.261

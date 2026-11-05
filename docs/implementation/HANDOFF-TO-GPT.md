@@ -1,3 +1,9 @@
+# 최신 구현 — 2026-11-05: 아마추어 E35 공개 조회·HTTP 확인 완료
+
+[M2-AMATEUR-E35-HTTP-20261105.md](M2-AMATEUR-E35-HTTP-20261105.md)와 [서비스 실행](M2-NATIVE-SERVICE-CACHE-20261105.md)을 먼저 읽는다. E35 open 뒤 GET400을 고쳐 실제 HTTP2/2(E35+기존E36), actor/basis/day/revision 범위·receipt·CAS/replay/소유권·공개 필드를 검증했다. optional 이전2회는 controlled라 전체3native시즌 증거가 아니다.
+
+서비스 인프라는16e39cf로 푸시됐다. 실제 서비스2년 선택 검사는 sourceSha9502bc35dfb67a94d09bf58822b914b84804620839390bbae05393268ea8bd7c의 hidden background이며 완료로 세지 않는다. service-prefix-run.run.json/.exitcode.txt가 최종 근거다. 반복 폴링/중복생성/동결한 엔진 파일 수정 금지. 원본 서비스 WIP/큰JSON/zz 보존. 아래는 과거 이력이다.
+
 # 최신 구현 — 2026-11-05: 서비스 접두 캐시·완료 원장 보완, 실제2년 백그라운드 실행
 
 [M2-NATIVE-SERVICE-CACHE-20261105.md](M2-NATIVE-SERVICE-CACHE-20261105.md)를 먼저 읽는다. 캐시/동결공유/잠금8건과 서비스 경계/연속성3건 통과. source/runtime bytes·canonical SHA256·owner 검증, 체크포인트·단일 writer·중단 후 보존 복구, 실제 정정 원장 교차 검증/US 재계약 전달을 구현했다. 정산 경계 자료는 controlled며 native2년 증거가 아니다.

@@ -1266,7 +1266,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "NOT_AUDITED",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261105",
       "references": [
         {
           "path": "packages/engine/src/career-pro-retry.ts",
@@ -1293,7 +1293,11 @@
           "line": 35
         }
       ],
-      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent."
+      "note": "Literal source reference is not evidence of a connected domain; dynamic references may be absent. Amateur E35 public owner + actual PGlite HTTP open/read/confirm verified2/2 with E36 on2026-11-05. Controlled earlier2 optional/athlete prefix; native final48 and draft/exit. Not three full native optional seasons, not large PostgreSQL US return substitute.",
+      "verifiedEvidence": [
+        "docs/implementation/M2-AMATEUR-E35-HTTP-20261105.md",
+        "apps/api/test/m2-amateur-exhaustion-http.test.ts"
+      ]
     },
     {
       "id": "E36",

@@ -14,6 +14,8 @@
 | M9 배포·운영·출시 검증 | 2% | 100% | 2% |
 | **합계** | **100%** | — | **87.5%** |
 
+**2026-11-05 E35 최신:** 실제 아마추어 E35 공개 조회/HTTP확정과 기존E36,최종2/2·타입/린트/build0. [범위/근거](../implementation/M2-AMATEUR-E35-HTTP-20261105.md). 서비스2년은 별도 background 미완료, 관리65%·전체87.5% 유지.
+
 **2026-11-05 현재:** 캐시/공유/복구8건·서비스 정산/연속성3건 통과. 실제 서비스2년 검사는 hidden background 시작·미완료, 전체 check는 아직 재실행하지 않는다. [현재 실행/소스/재개](../implementation/M2-NATIVE-SERVICE-CACHE-20261105.md). M2 관리65%·전체87.5% 유지.
 
 **2026-11-05 최신 구현:** 미국 확정 이적 관계 분리·E95 정규/PS 배선 및 관계 저장 API,최종12/12·타입/린트/build 종료0·독립 리뷰 보완. native 정규/controlled PS·계약 접두 구분. [상세](../implementation/M2-US-OPPONENT-REUNIONS-20261105.md). E96/최신 귀국 authority·전체 runtime은 잔여. 관리 추정65% 유지.

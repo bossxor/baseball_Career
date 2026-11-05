@@ -3,7 +3,7 @@ import {
   confirmKboRetryPreseason, advanceKboRetryPreparation, trainKboRetryPreparation, settleKboRetryPreparation,
   kboRetryPreparationView, acceptKboRetryOffer, openKboRetryExhaustion, requestKboRetryRetirement,
   confirmKboRetryRetirement, kboRetryRetirementView, assertKboRetryState,
-  openAmateurRetryExhaustion, confirmAmateurRetryExhaustion,
+  openAmateurRetryExhaustion, confirmAmateurRetryExhaustion, amateurRetryExhaustionView,
   requestAmateurRetirement, resolveAmateurRetirement, amateurRetirementView, openAmateurArchive,
 } from '@playball/engine';
 import type { KboCareer, HighSchoolCareer } from '@playball/engine';
@@ -78,7 +78,7 @@ export function retryScreenOf(state: SaveState, screenId: string): unknown {
   const career = readCareer(state);
   if (!career) fail('CAREER_NOT_FOUND');
   try {
-    if (screenId === 'AMATEUR_RETIREMENT') return amateurRetirementView(state.career as HighSchoolCareer);
+    if (screenId === 'AMATEUR_RETIREMENT') {const c=state.career as HighSchoolCareer;return c.retryExit?amateurRetryExhaustionView(c):amateurRetirementView(c);}
     if (screenId === 'RETRY_ROUTES') return kboRetryRoutesView(career!);
     if (screenId === 'RETRY_PREP') return kboRetryPreparationView(career!);
     return kboRetryRetirementView(career!);
@@ -90,6 +90,7 @@ export function retryScreenOf(state: SaveState, screenId: string): unknown {
 /** Amateur (HighSchoolCareer) E35 exit: same save slot, different engine owner. */
 function applyAmateurExit(state: SaveState, command: CommandBody, p: Payload, rev: number, confirm: { eventKey: string; eventVersion: number; command: 'CONFIRM_RETIRE' }): AppliedCommand {
   const career = state.career as HighSchoolCareer;
+  if(command.type==='CAREER_RETRY_AMATEUR_EXHAUST'||command.type==='CAREER_RETRY_AMATEUR_CONFIRM_RETIRE'){const allowed=command.type==='CAREER_RETRY_AMATEUR_EXHAUST'?['careerRevision']:['careerRevision','eventKey','eventVersion'];if(Object.keys(p).some(key=>!allowed.includes(key)))fail('INVALID_PAYLOAD');}
   let next: HighSchoolCareer;
   let navigation: unknown;
   try {
