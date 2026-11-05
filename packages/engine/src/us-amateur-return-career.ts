@@ -93,6 +93,8 @@ export function assertUsAmateurReturnCareer(s:UsAmateurReturnCareer):void {
   const program=c.military.service!;
   if(source.military.status!=='UNRESOLVED'||c.protagonistKey!==r.playerKey||c.world.worldKey!==r.worldKey||c.world.seed!==source.world.seed||!same(program.sourceContract,source.contract)||c.contract.status!=='TERMINATED'||c.military.status!==(r.years.length===2?'COMPLETED':'TERMINATED_SERVICE'))throw new RangeError('US_RETURN_LIVE_SERVICE_CHANGED');
   for(const y of r.years){
+   const added=Object.values(c.records.games).filter(g=>!Object.hasOwn(source.records.games,g.gameKey)&&Number(g.scope.seasonKey)<=Number(y.seasonKey)).length,corrections=(c.recordCorrections?.receipts??[]).filter(receipt=>receipt.afterRecordRevision>source.records.revision&&Number(receipt.seasonKey)<=Number(y.seasonKey)).length;
+   if(y.recordRevision!==source.records.revision+added+corrections)throw new RangeError('US_RETURN_COMPLETION_RECORD_REVISION_CHANGED');
    const growth=y.seasonKey===c.world.seasonKey?c.seasonGrowth:program.years?.find(a=>a.seasonKey===y.seasonKey)?.seasonGrowth;
    if(!growth||!same(growth,y.seasonGrowth))throw new RangeError('US_RETURN_COMPLETION_CHANGED');
    const settled=settleUsAmateurServiceYear(replay,replay.revision,{player:growth.seasonStart,seasonKey:y.seasonKey,service:program,records:{...c.records,revision:y.recordRevision},...(s.serviceGrowthPolicy?{difficulty:s.source.difficulty}:{})});replay=settled.return;
@@ -226,6 +228,7 @@ export function resignUsAfterAmateurReturn(s:UsAmateurReturnCareer,n:number,offe
  const records={revision:owner.records.revision,games:structuredClone({...s.source.records.games,...owner.records.games})},health=structuredClone(owner.health);
  health.injuries=Object.fromEntries(Object.entries(health.injuries).filter(([x])=>Object.hasOwn(world.players,x)));
  const out:UsCareer={...base,schemaVersion:2,revision:n+1,world,inventory,contract,records,health,registration:{...base.registration,seasonKey:target},usReturnContinuation:{playerAge:player.age,contract:structuredClone(contract),inventory:structuredClone(inventory),sourceMinorYears:base.minorYears?.length??0,sourceMajorYears:base.majorYears?.length??0,remainingControlSeasons:contract.years??contract.controlSeasons,paidUsd:30000},seasonGrowth:createSeasonGrowthLedger(player,target,world.calendar.growthDays.length),development:{...structuredClone(owner.development),seasonStartPlayer:structuredClone(player)},retryCareer:structuredClone(s.retry),styleUsedWindows:[...owner.styleUsedWindows],planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}],military:{...base.military,status:r.militaryStatus},usAmateurReturn:{...structuredClone(r),revision:r.revision+1,status:'CANCELLED_US',draftReservationKey:null,cancelledByOfferRef:offerKey}};
+ if(s.service?.recordCorrections){out.recordCorrections=structuredClone(s.service.recordCorrections);out.revision=Math.max(n,s.service.revision)+1;}
  if(owner.traits)out.traits={...structuredClone(owner.traits),lastClosedDay:null,lastSeasonKey:target};
  if(s.service){out.usAmateurReturnHistory=structuredClone(s);out.income=structuredClone(s.service.income);}
  out.usReturnContinuation!.organizationId=offer.organizationId;

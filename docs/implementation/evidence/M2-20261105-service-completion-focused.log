@@ -1,0 +1,14 @@
+✔ native cache checks canonical data, kind and current source before the domain owner accepts it (28.806ms)
+✔ native cache never accepts a prior source generation or a schema1 unbound fixture as fresh evidence (22.5472ms)
+✔ canonical cache roundtrip cannot turn an incomplete checkpoint into a completed owner (32.5729ms)
+✔ only one writer owns a prefix and its lock is released even after a failed generation (21.4991ms)
+✔ mandatory return service reports the same season-complete boundary as independent preparation without auto-settling the year (60428.191ms)
+✔ controlled service dates exercise both actual year settlements and reject forged/duplicate return completion evidence (159354.596ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 223663.2045

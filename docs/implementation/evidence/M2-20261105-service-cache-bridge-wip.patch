@@ -1,0 +1,25 @@
+diff --git a/packages/engine/test/us-amateur-return-career.test.ts b/packages/engine/test/us-amateur-return-career.test.ts
+index ae5dc1c..724140c 100644
+--- a/packages/engine/test/us-amateur-return-career.test.ts
++++ b/packages/engine/test/us-amateur-return-career.test.ts
+@@ -1,3 +1,4 @@
++import {nativeServiceUsReturn} from './us-native-service-fixture.js';
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import {closedUsOptionCareer} from './us-option-fixture.js';
+@@ -127,14 +128,7 @@ test('M2-CLOSE-RETURN-20261102: a return-option US offer also re-signs after two
+ });
+ 
+ test('M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after two native service years; open service blocks it',()=>{
+- const closed=expired();closed.military.status='UNRESOLVED';
+- const source=openUsMinorMarket(closed,closed.revision,closed.inventory.clubs.map(o=>({organizationId:o.id,addedBudgetUsd:3_000_000}))),offer=source.minorMarket!.offers.find(o=>o.militaryReturnOption)!;
+- let c=requestUsAmateurReturn(source,source.revision);
+- for(let year=0;year<2;year++){
+-  c=startUsAmateurReturnYear(c,c.revision,1);for(let i=0;i<3000;i++){const next=advanceUsAmateurReturn(c,c.revision);c=next.career;if(next.stopReason==='SEASON_COMPLETE')break;}
+-  c=settleUsAmateurReturnYear(c,c.revision);
+-  if(year===0)assert.throws(()=>resignUsAfterAmateurReturn(c,c.revision,offer.offerKey),/OPTION_NOT_AVAILABLE/);
+- }
++ const c=nativeServiceUsReturn(),source=c.source,offer=source.minorMarket!.offers.find(o=>o.militaryReturnOption)!;assert.equal(c.return.years.length,2);assert.equal(c.return.militaryStatus,'COMPLETED');
+  const us=resignUsAfterAmateurReturn(c,c.revision,offer.offerKey);
+  assert.equal(us.world.seasonKey,String(Number(source.world.seasonKey)+3));assert.equal(us.usAmateurReturn!.status,'CANCELLED_US');
+  const resumed=JSON.parse(JSON.stringify(us)) as typeof us;publishUsSeasonSchedule(confirmUsPreseasonPlan(resumed,resumed.revision),resumed.revision+1);

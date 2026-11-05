@@ -1,3 +1,9 @@
+# 최신 구현 — 2026-11-05: 서비스 접두 캐시·완료 원장 보완, 실제2년 백그라운드 실행
+
+[M2-NATIVE-SERVICE-CACHE-20261105.md](M2-NATIVE-SERVICE-CACHE-20261105.md)를 먼저 읽는다. 캐시/동결공유/잠금8건과 서비스 경계/연속성3건 통과. source/runtime bytes·canonical SHA256·owner 검증, 체크포인트·단일 writer·중단 후 보존 복구, 실제 정정 원장 교차 검증/US 재계약 전달을 구현했다. 정산 경계 자료는 controlled며 native2년 증거가 아니다.
+
+실제 서비스2년 검사는 PID 12812 hidden background로 시작했고 현재 완료로 세지 않는다. source 9502bc35dfb67a94d09bf58822b914b84804620839390bbae05393268ea8bd7c. service-prefix-run.run.json/.log/.exitcode.txt를 확인한다. 반복 폴링/중복 생성 금지. rules/engine source·dist·engine tests 동결. 원본 서비스 테스트 WIP와 기존 큰파일 보존. test patch 복구 순서는 위 문서. 통과한 뒤에만 WIP 커밋 및 전체 npm run check1회 검토. 다음은 재계약 첫 시즌 전체 정산·최신 KBO authority·E96·99/24/PF·웹 연결이다. PC 종료 금지. 아래는 과거 이력이며 당시 최신 표기는 현재가 아니다.
+
 # 최신 구현 — 2026-11-05: 미국 이적 관계 분리·E95 검증 완료
 
 [M2-US-OPPONENT-REUNIONS-20261105.md](M2-US-OPPONENT-REUNIONS-20261105.md)를 먼저 읽는다. 실제 정규 일마감/MLB PS FINAL hook·US 공개 관계/저장 읽기와 확정 minor/Major 외국단 이적 분리를 연결했다. 최종12/12·fail0·skip0, 전체 타입/린트/build 종료0·리뷰 보완 완료. 부상 예비 등록과 legacy fallback 유지. native 정규/controlled PS·계약 접두를 구분한다.

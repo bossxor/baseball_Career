@@ -1,0 +1,2 @@
+packages/engine/test/us-native-service-fixture.ts(26,8): error TS7022: 'c' implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.
+packages/engine/test/us-native-service-fixture.ts(30,300): error TS18046: 'g' is of type 'unknown'.

@@ -1,0 +1,15 @@
+✔ native cache checks canonical data, kind and current source before the domain owner accepts it (43.0745ms)
+✔ native cache never accepts a prior source generation or a schema1 unbound fixture as fresh evidence (31.7125ms)
+✔ canonical cache roundtrip cannot turn an incomplete checkpoint into a completed owner (40.2638ms)
+✔ only one writer owns a prefix and its lock is released even after a failed generation (31.1377ms)
+✔ actual native manifest binds existing configs and executed rules distribution (305.4139ms)
+✔ native cache pinning freezes verified historical rows and shares them without changing serialized values (0.7455ms)
+✔ native cache pinning refuses missing, corrected or regressed prefix evidence before sharing anything (0.4457ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1096.143

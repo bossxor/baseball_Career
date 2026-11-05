@@ -1,0 +1,79 @@
+✔ native cache checks canonical data, kind and current source before the domain owner accepts it (31.2079ms)
+✔ native cache never accepts a prior source generation or a schema1 unbound fixture as fresh evidence (26.1847ms)
+✔ canonical cache roundtrip cannot turn an incomplete checkpoint into a completed owner (38.7438ms)
+✔ only one writer owns a prefix and its lock is released even after a failed generation (24.1556ms)
+✔ actual native manifest binds existing configs and executed rules distribution (2159.7788ms)
+✖ native cache pinning freezes verified historical rows and shares them without changing serialized values (1.5289ms)
+✖ native cache pinning refuses missing, corrected or regressed prefix evidence before sharing anything (0.6904ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 5
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2856.7773
+
+✖ failing tests:
+
+test at packages\engine\test\native-return-cache.test.ts:1:3762
+✖ native cache pinning freezes verified historical rows and shares them without changing serialized values (1.5289ms)
+  AssertionError [ERR_ASSERTION]: Values have same structure but are not reference-equal:
+  
+  {
+    batterSplits: {},
+    batting: {},
+    gameKey: 'one',
+    matchups: {},
+    pitcherSplits: {},
+    pitching: {},
+    scope: {
+      leagueKey: 'ROOKIE',
+      phase: 'REGULAR',
+      seasonKey: '2030'
+    },
+    teams: {
+      club: {
+        L: 0,
+        R: 1,
+        RA: 0,
+        T: 0,
+        W: 1,
+        games: 1
+      }
+    },
+    worldDay: 1
+  }
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\native-return-cache.test.ts:24:300)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { gameKey: 'one', worldDay: 1, scope: { seasonKey: '2030', leagueKey: 'ROOKIE', phase: 'REGULAR' }, teams: { club: [Object] }, batting: {}, pitching: {}, batterSplits: {}, pitcherSplits: {}, matchups: {} },
+    expected: { gameKey: 'one', worldDay: 1, scope: { seasonKey: '2030', leagueKey: 'ROOKIE', phase: 'REGULAR' }, teams: { club: [Object] }, batting: {}, pitching: {}, batterSplits: {}, pitcherSplits: {}, matchups: {} },
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at packages\engine\test\native-return-cache.test.ts:1:4275
+✖ native cache pinning refuses missing, corrected or regressed prefix evidence before sharing anything (0.6904ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\native-return-cache.test.ts:25:339)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /PREFIX_CHANGED/,
+    operator: 'throws',
+    diff: 'simple'
+  }

@@ -1,0 +1,12 @@
+✔ native cache checks canonical data, kind and current source before the domain owner accepts it (29.0892ms)
+✔ native cache never accepts a prior source generation or a schema1 unbound fixture as fresh evidence (25.4155ms)
+✔ canonical cache roundtrip cannot turn an incomplete checkpoint into a completed owner (36.0722ms)
+✔ only one writer owns a prefix and its lock is released even after a failed generation (20.2729ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 564.3685

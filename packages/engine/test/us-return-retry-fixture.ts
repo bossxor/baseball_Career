@@ -1,7 +1,6 @@
+import {nativeReturnSource,assertNativeSourceUnchanged,readNativeReturnCache,writeNativeReturnCache,withNativeReturnWriter} from './native-return-cache.js';
 import assert from 'node:assert/strict';
 import * as retry from '../src/us-return-retry.js';
-import fs from 'node:fs';
-import {createHash} from 'node:crypto';
 import {closedUsOptionCareer} from './us-option-fixture.js';
 import {finishedUsCareerFixture} from './us-finished-fixture.js';
 import {startNextUsMinorSeason} from '../src/us-year-transition.js';
@@ -23,15 +22,14 @@ export function expiredRetryUsCareer(){
  for(const archive of [...(c.minorYears??[]),{season:c.season!,seasonSchedule:c.seasonSchedule!}])for(const day of archive.season.days){const rows=Object.values(archive.seasonSchedule.leagues).flatMap(games=>games.filter(g=>g.worldDay===day.day).map(g=>c.records.games[g.simulationKey]!));day.evidence=canonicalJson(rows);}
  c.military.status='NOT_APPLICABLE';return c;
 }
-let cache:UsAmateurReturnCareer|undefined;
+let cache:UsAmateurReturnCareer|undefined,cacheSource:string|undefined;
+function assertUndraftedPrefix(c:UsAmateurReturnCareer):void {assertUsAmateurReturnCareer(c);if(c.return.years.length!==2||c.return.years.some(y=>y.kind!=='INDEPENDENT')||c.draft?.program.result?.round!==null)throw new Error('NATIVE_INDEPENDENT_PREFIX_NOT_COMPLETE');}
 export function nativeUndraftedUsReturn():UsAmateurReturnCareer {
- if(cache)return structuredClone(cache);
- const path=process.env.PLAYBALL_NATIVE_RETURN_PREFIX;
- if(path&&fs.existsSync(path)){
-  const data=JSON.parse(fs.readFileSync(path,'utf8')) as {schemaVersion:number;origin:UsAmateurReturnCareer;sha256:string};
-  if(data.schemaVersion!==1||createHash('sha256').update(canonicalJson(data.origin)).digest('hex')!==data.sha256)throw new Error('NATIVE_RETURN_CACHE_CHANGED');
-  assertUsAmateurReturnCareer(data.origin);cache=data.origin;return structuredClone(cache);
- }
+ const path=process.env.PLAYBALL_NATIVE_RETURN_PREFIX,manifest=nativeReturnSource();
+ if(cache){if(cacheSource!==manifest.sha256)throw new Error('NATIVE_RETURN_CACHE_SOURCE_CHANGED');return structuredClone(cache);}
+ const load=()=>path?readNativeReturnCache(path,'INDEPENDENT_UNDRAFTED',manifest,assertUndraftedPrefix):undefined,saved=load();if(saved){cache=saved;cacheSource=manifest.sha256;return structuredClone(cache);}
+ const generate=()=>{
+ const saved=load();if(saved){cache=saved;cacheSource=manifest.sha256;return structuredClone(cache);}
  const source=expiredRetryUsCareer(),market=openUsMinorMarket(source,source.revision,source.inventory.clubs.map(o=>({organizationId:o.id,addedBudgetUsd:3_000_000})));
  let c=requestUsAmateurReturn(market,market.revision),commands=1;
  for(let year=0;year<2;year++){
@@ -45,8 +43,8 @@ export function nativeUndraftedUsReturn():UsAmateurReturnCareer {
  for(const club of c.draft!.world.clubs){let remaining=club.budgetWon*.9;for(const key of club.roster){const contract=c.draft!.world.contracts[key]!;contract.years=1;contract.annualSalaryWon=KBO_MONEY.minimumSalaryWon;remaining-=contract.annualSalaryWon;}for(const key of club.roster){const contract=c.draft!.world.contracts[key]!,delta=Math.min(remaining,KBO_MONEY.maximumSalaryWon-contract.annualSalaryWon);contract.annualSalaryWon+=delta;remaining-=delta;}if(remaining!==0)throw new Error('CONTROLLED_KBO_PAYROLL_CAPACITY');club.reservedSalaryWon=club.budgetWon*.9;}
  c.draft!.program=prepareKboDraft(c.draft!.world,c.draft!.program.input);c=resolveUsAmateurReturnDraft(c,c.revision,c.draft!.program.version);commands++;
  if(c.draft!.program.result?.round!==null)throw new Error('NATIVE_UNDRAFTED_RESULT_REQUIRED');assertUsAmateurReturnCareer(c);cache=c;
- if(path){const artifact={schemaVersion:1,sourceCommit:'5363de3',controlledUsPrefix:true,mandatoryTeamGames:[48,48],controlledDraftMarket:'LEGAL_PAYROLL_CAP',commands,sha256:createHash('sha256').update(canonicalJson(c)).digest('hex'),origin:c};fs.writeFileSync(path,JSON.stringify(artifact));}
- return structuredClone(c);
+ assertUndraftedPrefix(c);assertNativeSourceUnchanged(manifest);cacheSource=manifest.sha256;if(path)writeNativeReturnCache(path,'INDEPENDENT_UNDRAFTED',manifest,c);process.stdout.write(JSON.stringify({nativeIndependentPrefix:true,commands,sourceSha256:manifest.sha256})+'\n');return structuredClone(c);
+ };return path?withNativeReturnWriter(path,generate):generate();
 }
 
 let optionalCache:retry.UsAmateurReturnRetryCareer|undefined;

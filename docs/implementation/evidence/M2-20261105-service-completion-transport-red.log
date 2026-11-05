@@ -1,0 +1,991 @@
+✔ native cache checks canonical data, kind and current source before the domain owner accepts it (43.5914ms)
+✔ native cache never accepts a prior source generation or a schema1 unbound fixture as fresh evidence (36.0489ms)
+✔ canonical cache roundtrip cannot turn an incomplete checkpoint into a completed owner (47.3719ms)
+✔ only one writer owns a prefix and its lock is released even after a failed generation (33.9162ms)
+✔ actual native manifest binds existing configs and executed rules distribution (260.9873ms)
+✖ controlled service dates exercise both actual year settlements and reject forged/duplicate return completion evidence (172492.3712ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 174853.4512
+
+✖ failing tests:
+
+test at packages\engine\test\us-service-return-boundaries.test.ts:1:629
+✖ controlled service dates exercise both actual year settlements and reject forged/duplicate return completion evidence (172492.3712ms)
+  AssertionError [ERR_ASSERTION]: return re-sign must preserve actual official correction receipts
+  + actual - expected
+  
+  + undefined
+  - {
+  -   receipts: [
+  -     {
+  -       after: {
+  -         batterSplits: {
+  -           '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]': {
+  -             L: {
+  -               AB: 0,
+  -               BB: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               PA: 0,
+  -               RBI: 0,
+  -               TB: 0,
+  -               threeB: 0,
+  -               twoB: 0
+  -             },
+  -             R: {
+  -               AB: 1,
+  -               BB: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               PA: 1,
+  -               RBI: 1,
+  -               TB: 0,
+  -               threeB: 0,
+  -               twoB: 0
+  -             }
+  -           }
+  -         },
+  -         batting: {
+  -           '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]': {
+  -             AB: 1,
+  -             BB: 0,
+  -             H: 0,
+  -             HBP: 0,
+  -             HR: 0,
+  -             K: 0,
+  -             PA: 1,
+  -             R: 0,
+  -             RBI: 1,
+  -             TB: 0,
+  -             extraHomeSuccesses: 0,
+  -             fieldingGames: 1,
+  -             games: 1,
+  -             loadedHits: 0,
+  -             threeB: 0,
+  -             twoB: 0,
+  -             walkoffHits: 0
+  -           }
+  -         },
+  -         gameKey: '["2036","ROOKIE",59,14]',
+  -         matchups: {
+  -           '["[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]","[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]"]': {
+  -             batterKey: '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]',
+  -             pitcherKey: '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]',
+  -             stats: {
+  -               AB: 1,
+  -               BB: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               PA: 1,
+  -               RBI: 1,
+  -               TB: 0,
+  -               threeB: 0,
+  -               twoB: 0
+  -             }
+  -           }
+  -         },
+  -         pitcherSplits: {
+  -           '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]': {
+  -             L: {
+  -               AB: 0,
+  -               BB: 0,
+  -               BF: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               TB: 0,
+  -               outs: 0
+  -             },
+  -             R: {
+  -               AB: 1,
+  -               BB: 0,
+  -               BF: 1,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               TB: 0,
+  -               outs: 1
+  -             }
+  -           }
+  -         },
+  -         pitching: {
+  -           '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]': {
+  -             BB: 0,
+  -             BF: 1,
+  -             BS: 0,
+  -             ER: 0,
+  -             H: 0,
+  -             HBP: 0,
+  -             HLD: 0,
+  -             HR: 0,
+  -             K: 0,
+  -             L: 0,
+  -             R: 0,
+  -             SV: 0,
+  -             W: 0,
+  -             games: 1,
+  -             loadedBF: 0,
+  -             outs: 1,
+  -             pitches: 0,
+  -             shutouts: 0,
+  -             starterOuts: 1,
+  -             starts: 1
+  -           }
+  -         },
+  -         scope: {
+  -           leagueKey: 'ROOKIE',
+  -           phase: 'REGULAR',
+  -           seasonKey: '2036'
+  -         },
+  -         teams: {
+  -           US14: {
+  -             L: 0,
+  -             R: 0,
+  -             RA: 0,
+  -             T: 1,
+  -             W: 0,
+  -             games: 1
+  -           },
+  -           US15: {
+  -             L: 0,
+  -             R: 0,
+  -             RA: 0,
+  -             T: 1,
+  -             W: 0,
+  -             games: 1
+  -           }
+  -         },
+  -         worldDay: 99
+  -       },
+  -       afterDayEvidence: '[{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,0]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US01":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US29":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,1]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US28":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US30":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,2]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US02":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US27":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,3]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US03":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US26":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,4]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US04":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US25":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,5]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US05":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US24":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,6]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US06":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US23":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,7]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US07":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US22":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,8]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US08":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US21":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,9]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US09":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US20":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,10]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US10":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US19":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,11]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US11":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US18":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,12]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US12":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US17":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,13]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US13":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US16":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"L":{"AB":0,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":0,"RBI":0,"TB":0,"threeB":0,"twoB":0},"R":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":1,"TB":0,"threeB":0,"twoB":0}}},"batting":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"R":0,"RBI":1,"TB":0,"extraHomeSuccesses":0,"fieldingGames":1,"games":1,"loadedHits":0,"threeB":0,"twoB":0,"walkoffHits":0}},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,14]","matchups":{"[\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US15\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"HITTER\\\\\\",0]\\",\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US14\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"PITCHER\\\\\\",0]\\"]":{"batterKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]","pitcherKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]","stats":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":1,"TB":0,"threeB":0,"twoB":0}}},"pitcherSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"L":{"AB":0,"BB":0,"BF":0,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":0},"R":{"AB":1,"BB":0,"BF":1,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":1}}},"pitching":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"BB":0,"BF":1,"BS":0,"ER":0,"H":0,"HBP":0,"HLD":0,"HR":0,"K":0,"L":0,"R":0,"SV":0,"W":0,"games":1,"loadedBF":0,"outs":1,"pitches":0,"shutouts":0,"starterOuts":1,"starts":1}},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US14":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US15":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,0]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US01":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US29":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,1]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US28":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US30":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,2]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US02":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US27":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,3]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US03":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US26":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,4]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US04":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US25":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,5]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US05":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US24":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,6]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US06":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US23":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,7]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US07":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US22":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,8]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US08":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US21":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,9]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US09":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US20":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,10]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US10":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US19":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,11]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US11":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US18":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,12]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US12":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US17":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},'... 14329 more characters,
+  -       afterDuels: [],
+  -       afterRecordRevision: 61939,
+  -       afterRevision: 52,
+  -       afterTraits: {
+  -         lastClosedDay: 304,
+  -         lastSeasonKey: '2036',
+  -         owned: {},
+  -         schemaVersion: 1,
+  -         unlocks: []
+  -       },
+  -       before: {
+  -         batterSplits: {
+  -           '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]': {
+  -             L: {
+  -               AB: 0,
+  -               BB: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               PA: 0,
+  -               RBI: 0,
+  -               TB: 0,
+  -               threeB: 0,
+  -               twoB: 0
+  -             },
+  -             R: {
+  -               AB: 1,
+  -               BB: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               PA: 1,
+  -               RBI: 0,
+  -               TB: 0,
+  -               threeB: 0,
+  -               twoB: 0
+  -             }
+  -           }
+  -         },
+  -         batting: {
+  -           '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]': {
+  -             AB: 1,
+  -             BB: 0,
+  -             H: 0,
+  -             HBP: 0,
+  -             HR: 0,
+  -             K: 0,
+  -             PA: 1,
+  -             R: 0,
+  -             RBI: 0,
+  -             TB: 0,
+  -             extraHomeSuccesses: 0,
+  -             fieldingGames: 1,
+  -             games: 1,
+  -             loadedHits: 0,
+  -             threeB: 0,
+  -             twoB: 0,
+  -             walkoffHits: 0
+  -           }
+  -         },
+  -         gameKey: '["2036","ROOKIE",59,14]',
+  -         matchups: {
+  -           '["[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]","[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]"]': {
+  -             batterKey: '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]',
+  -             pitcherKey: '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]',
+  -             stats: {
+  -               AB: 1,
+  -               BB: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               PA: 1,
+  -               RBI: 0,
+  -               TB: 0,
+  -               threeB: 0,
+  -               twoB: 0
+  -             }
+  -           }
+  -         },
+  -         pitcherSplits: {
+  -           '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]': {
+  -             L: {
+  -               AB: 0,
+  -               BB: 0,
+  -               BF: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               TB: 0,
+  -               outs: 0
+  -             },
+  -             R: {
+  -               AB: 1,
+  -               BB: 0,
+  -               BF: 1,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               TB: 0,
+  -               outs: 1
+  -             }
+  -           }
+  -         },
+  -         pitching: {
+  -           '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]': {
+  -             BB: 0,
+  -             BF: 1,
+  -             BS: 0,
+  -             ER: 0,
+  -             H: 0,
+  -             HBP: 0,
+  -             HLD: 0,
+  -             HR: 0,
+  -             K: 0,
+  -             L: 0,
+  -             R: 0,
+  -             SV: 0,
+  -             W: 0,
+  -             games: 1,
+  -             loadedBF: 0,
+  -             outs: 1,
+  -             pitches: 0,
+  -             shutouts: 0,
+  -             starterOuts: 1,
+  -             starts: 1
+  -           }
+  -         },
+  -         scope: {
+  -           leagueKey: 'ROOKIE',
+  -           phase: 'REGULAR',
+  -           seasonKey: '2036'
+  -         },
+  -         teams: {
+  -           US14: {
+  -             L: 0,
+  -             R: 0,
+  -             RA: 0,
+  -             T: 1,
+  -             W: 0,
+  -             games: 1
+  -           },
+  -           US15: {
+  -             L: 0,
+  -             R: 0,
+  -             RA: 0,
+  -             T: 1,
+  -             W: 0,
+  -             games: 1
+  -           }
+  -         },
+  -         worldDay: 99
+  -       },
+  -       beforeDayEvidence: '[{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,0]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US01":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US29":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,1]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US28":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US30":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,2]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US02":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US27":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,3]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US03":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US26":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,4]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US04":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US25":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,5]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US05":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US24":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,6]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US06":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US23":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,7]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US07":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US22":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,8]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US08":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US21":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,9]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US09":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US20":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,10]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US10":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US19":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,11]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US11":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US18":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,12]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US12":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US17":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,13]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US13":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US16":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"L":{"AB":0,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":0,"RBI":0,"TB":0,"threeB":0,"twoB":0},"R":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":0,"TB":0,"threeB":0,"twoB":0}}},"batting":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"R":0,"RBI":0,"TB":0,"extraHomeSuccesses":0,"fieldingGames":1,"games":1,"loadedHits":0,"threeB":0,"twoB":0,"walkoffHits":0}},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,14]","matchups":{"[\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US15\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"HITTER\\\\\\",0]\\",\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US14\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"PITCHER\\\\\\",0]\\"]":{"batterKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]","pitcherKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]","stats":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":0,"TB":0,"threeB":0,"twoB":0}}},"pitcherSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"L":{"AB":0,"BB":0,"BF":0,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":0},"R":{"AB":1,"BB":0,"BF":1,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":1}}},"pitching":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"BB":0,"BF":1,"BS":0,"ER":0,"H":0,"HBP":0,"HLD":0,"HR":0,"K":0,"L":0,"R":0,"SV":0,"W":0,"games":1,"loadedBF":0,"outs":1,"pitches":0,"shutouts":0,"starterOuts":1,"starts":1}},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US14":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US15":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,0]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US01":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US29":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,1]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US28":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US30":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,2]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US02":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US27":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,3]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US03":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US26":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,4]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US04":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US25":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,5]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US05":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US24":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,6]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US06":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US23":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,7]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US07":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US22":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,8]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US08":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US21":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,9]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US09":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US20":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,10]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US10":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US19":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,11]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US11":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US18":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2036\\",\\"A\\",59,12]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2036"},"teams":{"US12":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US17":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},'... 14329 more characters,
+  -       beforeDuels: [],
+  -       beforeTraits: {
+  -         lastClosedDay: null,
+  -         lastSeasonKey: '2035',
+  -         owned: {},
+  -         schemaVersion: 1,
+  -         unlocks: []
+  -       },
+  -       command: {
+  -         beforeEvidence: '{"batterSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"L":{"AB":0,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":0,"RBI":0,"TB":0,"threeB":0,"twoB":0},"R":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":0,"TB":0,"threeB":0,"twoB":0}}},"batting":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"R":0,"RBI":0,"TB":0,"extraHomeSuccesses":0,"fieldingGames":1,"games":1,"loadedHits":0,"threeB":0,"twoB":0,"walkoffHits":0}},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,14]","matchups":{"[\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US15\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"HITTER\\\\\\",0]\\",\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US14\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"PITCHER\\\\\\",0]\\"]":{"batterKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]","pitcherKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]","stats":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":0,"TB":0,"threeB":0,"twoB":0}}},"pitcherSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"L":{"AB":0,"BB":0,"BF":0,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":0},"R":{"AB":1,"BB":0,"BF":1,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":1}}},"pitching":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"BB":0,"BF":1,"BS":0,"ER":0,"H":0,"HBP":0,"HLD":0,"HR":0,"K":0,"L":0,"R":0,"SV":0,"W":0,"games":1,"loadedBF":0,"outs":1,"pitches":0,"shutouts":0,"starterOuts":1,"starts":1}},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US14":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US15":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99}',
+  -         contribution: {
+  -           batterSplits: {
+  -             '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]': {
+  -               L: {
+  -                 AB: 0,
+  -                 BB: 0,
+  -                 H: 0,
+  -                 HBP: 0,
+  -                 HR: 0,
+  -                 K: 0,
+  -                 PA: 0,
+  -                 RBI: 0,
+  -                 TB: 0,
+  -                 threeB: 0,
+  -                 twoB: 0
+  -               },
+  -               R: {
+  -                 AB: 1,
+  -                 BB: 0,
+  -                 H: 0,
+  -                 HBP: 0,
+  -                 HR: 0,
+  -                 K: 0,
+  -                 PA: 1,
+  -                 RBI: 1,
+  -                 TB: 0,
+  -                 threeB: 0,
+  -                 twoB: 0
+  -               }
+  -             }
+  -           },
+  -           batting: {
+  -             '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]': {
+  -               AB: 1,
+  -               BB: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               PA: 1,
+  -               R: 0,
+  -               RBI: 1,
+  -               TB: 0,
+  -               extraHomeSuccesses: 0,
+  -               fieldingGames: 1,
+  -               games: 1,
+  -               loadedHits: 0,
+  -               threeB: 0,
+  -               twoB: 0,
+  -               walkoffHits: 0
+  -             }
+  -           },
+  -           gameKey: '["2036","ROOKIE",59,14]',
+  -           matchups: {
+  -             '["[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]","[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]"]': {
+  -               batterKey: '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]',
+  -               pitcherKey: '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]',
+  -               stats: {
+  -                 AB: 1,
+  -                 BB: 0,
+  -                 H: 0,
+  -                 HBP: 0,
+  -                 HR: 0,
+  -                 K: 0,
+  -                 PA: 1,
+  -                 RBI: 1,
+  -                 TB: 0,
+  -                 threeB: 0,
+  -                 twoB: 0
+  -               }
+  -             }
+  -           },
+  -           pitcherSplits: {
+  -             '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]': {
+  -               L: {
+  -                 AB: 0,
+  -                 BB: 0,
+  -                 BF: 0,
+  -                 H: 0,
+  -                 HBP: 0,
+  -                 HR: 0,
+  -                 K: 0,
+  -                 TB: 0,
+  -                 outs: 0
+  -               },
+  -               R: {
+  -                 AB: 1,
+  -                 BB: 0,
+  -                 BF: 1,
+  -                 H: 0,
+  -                 HBP: 0,
+  -                 HR: 0,
+  -                 K: 0,
+  -                 TB: 0,
+  -                 outs: 1
+  -               }
+  -             }
+  -           },
+  -           pitching: {
+  -             '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]': {
+  -               BB: 0,
+  -               BF: 1,
+  -               BS: 0,
+  -               ER: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HLD: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               L: 0,
+  -               R: 0,
+  -               SV: 0,
+  -               W: 0,
+  -               games: 1,
+  -               loadedBF: 0,
+  -               outs: 1,
+  -               pitches: 0,
+  -               shutouts: 0,
+  -               starterOuts: 1,
+  -               starts: 1
+  -             }
+  -           },
+  -           scope: {
+  -             leagueKey: 'ROOKIE',
+  -             phase: 'REGULAR',
+  -             seasonKey: '2036'
+  -           },
+  -           teams: {
+  -             US14: {
+  -               L: 0,
+  -               R: 0,
+  -               RA: 0,
+  -               T: 1,
+  -               W: 0,
+  -               games: 1
+  -             },
+  -             US15: {
+  -               L: 0,
+  -               R: 0,
+  -               RA: 0,
+  -               T: 1,
+  -               W: 0,
+  -               games: 1
+  -             }
+  -           },
+  -           worldDay: 99
+  -         },
+  -         correctionId: 'controlled-final-service-correction-0',
+  -         expectedRecordRevision: 61938,
+  -         expectedRevision: 51
+  -       },
+  -       playerKey: 'own',
+  -       receiptKey: '["official-record-correction-1","route-world","own","controlled-final-service-correction-0"]',
+  -       seal: '{"after":{"batterSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"L":{"AB":0,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":0,"RBI":0,"TB":0,"threeB":0,"twoB":0},"R":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":1,"TB":0,"threeB":0,"twoB":0}}},"batting":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"R":0,"RBI":1,"TB":0,"extraHomeSuccesses":0,"fieldingGames":1,"games":1,"loadedHits":0,"threeB":0,"twoB":0,"walkoffHits":0}},"gameKey":"[\\"2036\\",\\"ROOKIE\\",59,14]","matchups":{"[\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US15\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"HITTER\\\\\\",0]\\",\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US14\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"PITCHER\\\\\\",0]\\"]":{"batterKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]","pitcherKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]","stats":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":1,"TB":0,"threeB":0,"twoB":0}}},"pitcherSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"L":{"AB":0,"BB":0,"BF":0,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":0},"R":{"AB":1,"BB":0,"BF":1,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":1}}},"pitching":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"BB":0,"BF":1,"BS":0,"ER":0,"H":0,"HBP":0,"HLD":0,"HR":0,"K":0,"L":0,"R":0,"SV":0,"W":0,"games":1,"loadedBF":0,"outs":1,"pitches":0,"shutouts":0,"starterOuts":1,"starts":1}},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2036"},"teams":{"US14":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US15":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},"afterDayEvidence":"[{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,0]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US01\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US29\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,1]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US28\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US30\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,2]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US02\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US27\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,3]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US03\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US26\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,4]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US04\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US25\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,5]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US05\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US24\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,6]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US06\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US23\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,7]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US07\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US22\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,8]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US08\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US21\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,9]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US09\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US20\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,10]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US10\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US19\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,11]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US11\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US18\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,12]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US12\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US17\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,13]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US13\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US16\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US15\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"HITTER\\\\\\",0]\\":{\\"L\\":{\\"AB\\":0,\\"BB\\":0,\\"H\\":0,\\"HBP\\":0,\\"HR\\":0,\\"K\\":0,\\"PA\\":0,\\"RBI\\":0,\\"TB\\":0,\\"threeB\\":0,\\"twoB\\":0},\\"R\\":{\\"AB\\":1,\\"BB\\":0,\\"H\\":0,\\"HBP\\":0,\\"HR\\":0,\\"K\\":0,\\"PA\\":1,\\"RBI\\":1,\\"TB\\":0,\\"threeB\\":0,\\"twoB\\":0}}},\\"batting\\":{\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US15\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"HITTER\\\\\\",0]\\":{\\"AB\\":1,\\"BB\\":0,\\"H\\":0,\\"HBP\\":0,\\"HR\\":0,\\"K\\":0,\\"PA\\":1,\\"R\\":0,\\"RBI\\":1,\\"TB\\":0,\\"extraHomeSuccesses\\":0,\\"fieldingGames\\":1,\\"games\\":1,\\"loadedHits\\":0,\\"threeB\\":0,\\"twoB\\":0,\\"walkoffHits\\":0}},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"ROOKIE\\\\\\",59,14]\\",\\"matchups\\":{\\"[\\\\\\"[\\\\\\\\\\\\\\"us-npc\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"route-world\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"2030\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"US15\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ROOKIE\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"HITTER\\\\\\\\\\\\\\",0]\\\\\\",\\\\\\"[\\\\\\\\\\\\\\"us-npc\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"route-world\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"2030\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"US14\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ROOKIE\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"PITCHER\\\\\\\\\\\\\\",0]\\\\\\"]\\":{\\"batterKey\\":\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US15\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"HITTER\\\\\\",0]\\",\\"pitcherKey\\":\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US14\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"PITCHER\\\\\\",0]\\",\\"stats\\":{\\"AB\\":1,\\"BB\\":0,\\"H\\":0,\\"HBP\\":0,\\"HR\\":0,\\"K\\":0,\\"PA\\":1,\\"RBI\\":1,\\"TB\\":0,\\"threeB\\":0,\\"twoB\\":0}}},\\"pitcherSplits\\":{\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US14\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"PITCHER\\\\\\",0]\\":{\\"L\\":{\\"AB\\":0,\\"BB\\":0,\\"BF\\":0,\\"H\\":0,\\"HBP\\":0,\\"HR\\":0,\\"K\\":0,\\"TB\\":0,\\"outs\\":0},\\"R\\":{\\"AB\\":1,\\"BB\\":0,\\"BF\\":1,\\"H\\":0,\\"HBP\\":0,\\"HR\\":0,\\"K\\":0,\\"TB\\":0,\\"outs\\":1}}},\\"pitching\\":{\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US14\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"PITCHER\\\\\\",0]\\":{\\"BB\\":0,\\"BF\\":1,\\"BS\\":0,\\"ER\\":0,\\"H\\":0,\\"HBP\\":0,\\"HLD\\":0,\\"HR\\":0,\\"K\\":0,\\"L\\":0,\\"R\\":0,\\"SV\\":0,\\"W\\":0,\\"games\\":1,\\"loadedBF\\":0,\\"outs\\":1,\\"pitches\\":0,\\"shutouts\\":0,\\"starterOuts\\":1,\\"starts\\":1}},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US14\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US15\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"A\\\\\\",59,0]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"A\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US01\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US29\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2036\\\\\\",\\\\\\"A\\\\\\",59,1]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"A\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2036\\"},\\"teams\\":{\\"US28\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US'... 57942 more characters,
+  -       seasonKey: '2036',
+  -       status: 'CORRECTED',
+  -       worldKey: 'route-world'
+  -     },
+  -     {
+  -       after: {
+  -         batterSplits: {
+  -           '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]': {
+  -             L: {
+  -               AB: 0,
+  -               BB: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               PA: 0,
+  -               RBI: 0,
+  -               TB: 0,
+  -               threeB: 0,
+  -               twoB: 0
+  -             },
+  -             R: {
+  -               AB: 1,
+  -               BB: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               PA: 1,
+  -               RBI: 1,
+  -               TB: 0,
+  -               threeB: 0,
+  -               twoB: 0
+  -             }
+  -           }
+  -         },
+  -         batting: {
+  -           '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]': {
+  -             AB: 1,
+  -             BB: 0,
+  -             H: 0,
+  -             HBP: 0,
+  -             HR: 0,
+  -             K: 0,
+  -             PA: 1,
+  -             R: 0,
+  -             RBI: 1,
+  -             TB: 0,
+  -             extraHomeSuccesses: 0,
+  -             fieldingGames: 1,
+  -             games: 1,
+  -             loadedHits: 0,
+  -             threeB: 0,
+  -             twoB: 0,
+  -             walkoffHits: 0
+  -           }
+  -         },
+  -         gameKey: '["2037","ROOKIE",59,14]',
+  -         matchups: {
+  -           '["[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]","[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]"]': {
+  -             batterKey: '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]',
+  -             pitcherKey: '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]',
+  -             stats: {
+  -               AB: 1,
+  -               BB: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               PA: 1,
+  -               RBI: 1,
+  -               TB: 0,
+  -               threeB: 0,
+  -               twoB: 0
+  -             }
+  -           }
+  -         },
+  -         pitcherSplits: {
+  -           '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]': {
+  -             L: {
+  -               AB: 0,
+  -               BB: 0,
+  -               BF: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               TB: 0,
+  -               outs: 0
+  -             },
+  -             R: {
+  -               AB: 1,
+  -               BB: 0,
+  -               BF: 1,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               TB: 0,
+  -               outs: 1
+  -             }
+  -           }
+  -         },
+  -         pitching: {
+  -           '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]': {
+  -             BB: 0,
+  -             BF: 1,
+  -             BS: 0,
+  -             ER: 0,
+  -             H: 0,
+  -             HBP: 0,
+  -             HLD: 0,
+  -             HR: 0,
+  -             K: 0,
+  -             L: 0,
+  -             R: 0,
+  -             SV: 0,
+  -             W: 0,
+  -             games: 1,
+  -             loadedBF: 0,
+  -             outs: 1,
+  -             pitches: 0,
+  -             shutouts: 0,
+  -             starterOuts: 1,
+  -             starts: 1
+  -           }
+  -         },
+  -         scope: {
+  -           leagueKey: 'ROOKIE',
+  -           phase: 'REGULAR',
+  -           seasonKey: '2037'
+  -         },
+  -         teams: {
+  -           US14: {
+  -             L: 0,
+  -             R: 0,
+  -             RA: 0,
+  -             T: 1,
+  -             W: 0,
+  -             games: 1
+  -           },
+  -           US15: {
+  -             L: 0,
+  -             R: 0,
+  -             RA: 0,
+  -             T: 1,
+  -             W: 0,
+  -             games: 1
+  -           }
+  -         },
+  -         worldDay: 99
+  -       },
+  -       afterDayEvidence: '[{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,0]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US01":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US29":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,1]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US28":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US30":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,2]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US02":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US27":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,3]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US03":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US26":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,4]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US04":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US25":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,5]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US05":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US24":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,6]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US06":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US23":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,7]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US07":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US22":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,8]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US08":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US21":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,9]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US09":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US20":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,10]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US10":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US19":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,11]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US11":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US18":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,12]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US12":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US17":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,13]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US13":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US16":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"L":{"AB":0,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":0,"RBI":0,"TB":0,"threeB":0,"twoB":0},"R":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":1,"TB":0,"threeB":0,"twoB":0}}},"batting":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"R":0,"RBI":1,"TB":0,"extraHomeSuccesses":0,"fieldingGames":1,"games":1,"loadedHits":0,"threeB":0,"twoB":0,"walkoffHits":0}},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,14]","matchups":{"[\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US15\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"HITTER\\\\\\",0]\\",\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US14\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"PITCHER\\\\\\",0]\\"]":{"batterKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]","pitcherKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]","stats":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":1,"TB":0,"threeB":0,"twoB":0}}},"pitcherSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"L":{"AB":0,"BB":0,"BF":0,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":0},"R":{"AB":1,"BB":0,"BF":1,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":1}}},"pitching":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"BB":0,"BF":1,"BS":0,"ER":0,"H":0,"HBP":0,"HLD":0,"HR":0,"K":0,"L":0,"R":0,"SV":0,"W":0,"games":1,"loadedBF":0,"outs":1,"pitches":0,"shutouts":0,"starterOuts":1,"starts":1}},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US14":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US15":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,0]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US01":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US29":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,1]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US28":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US30":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,2]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US02":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US27":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,3]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US03":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US26":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,4]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US04":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US25":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,5]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US05":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US24":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,6]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US06":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US23":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,7]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US07":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US22":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,8]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US08":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US21":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,9]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US09":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US20":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,10]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US10":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US19":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,11]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US11":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US18":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,12]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US12":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US17":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},'... 14329 more characters,
+  -       afterDuels: [],
+  -       afterRecordRevision: 70730,
+  -       afterRevision: 60,
+  -       afterTraits: {
+  -         lastClosedDay: 303,
+  -         lastSeasonKey: '2037',
+  -         owned: {},
+  -         schemaVersion: 1,
+  -         unlocks: []
+  -       },
+  -       before: {
+  -         batterSplits: {
+  -           '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]': {
+  -             L: {
+  -               AB: 0,
+  -               BB: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               PA: 0,
+  -               RBI: 0,
+  -               TB: 0,
+  -               threeB: 0,
+  -               twoB: 0
+  -             },
+  -             R: {
+  -               AB: 1,
+  -               BB: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               PA: 1,
+  -               RBI: 0,
+  -               TB: 0,
+  -               threeB: 0,
+  -               twoB: 0
+  -             }
+  -           }
+  -         },
+  -         batting: {
+  -           '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]': {
+  -             AB: 1,
+  -             BB: 0,
+  -             H: 0,
+  -             HBP: 0,
+  -             HR: 0,
+  -             K: 0,
+  -             PA: 1,
+  -             R: 0,
+  -             RBI: 0,
+  -             TB: 0,
+  -             extraHomeSuccesses: 0,
+  -             fieldingGames: 1,
+  -             games: 1,
+  -             loadedHits: 0,
+  -             threeB: 0,
+  -             twoB: 0,
+  -             walkoffHits: 0
+  -           }
+  -         },
+  -         gameKey: '["2037","ROOKIE",59,14]',
+  -         matchups: {
+  -           '["[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]","[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]"]': {
+  -             batterKey: '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]',
+  -             pitcherKey: '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]',
+  -             stats: {
+  -               AB: 1,
+  -               BB: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               PA: 1,
+  -               RBI: 0,
+  -               TB: 0,
+  -               threeB: 0,
+  -               twoB: 0
+  -             }
+  -           }
+  -         },
+  -         pitcherSplits: {
+  -           '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]': {
+  -             L: {
+  -               AB: 0,
+  -               BB: 0,
+  -               BF: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               TB: 0,
+  -               outs: 0
+  -             },
+  -             R: {
+  -               AB: 1,
+  -               BB: 0,
+  -               BF: 1,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               TB: 0,
+  -               outs: 1
+  -             }
+  -           }
+  -         },
+  -         pitching: {
+  -           '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]': {
+  -             BB: 0,
+  -             BF: 1,
+  -             BS: 0,
+  -             ER: 0,
+  -             H: 0,
+  -             HBP: 0,
+  -             HLD: 0,
+  -             HR: 0,
+  -             K: 0,
+  -             L: 0,
+  -             R: 0,
+  -             SV: 0,
+  -             W: 0,
+  -             games: 1,
+  -             loadedBF: 0,
+  -             outs: 1,
+  -             pitches: 0,
+  -             shutouts: 0,
+  -             starterOuts: 1,
+  -             starts: 1
+  -           }
+  -         },
+  -         scope: {
+  -           leagueKey: 'ROOKIE',
+  -           phase: 'REGULAR',
+  -           seasonKey: '2037'
+  -         },
+  -         teams: {
+  -           US14: {
+  -             L: 0,
+  -             R: 0,
+  -             RA: 0,
+  -             T: 1,
+  -             W: 0,
+  -             games: 1
+  -           },
+  -           US15: {
+  -             L: 0,
+  -             R: 0,
+  -             RA: 0,
+  -             T: 1,
+  -             W: 0,
+  -             games: 1
+  -           }
+  -         },
+  -         worldDay: 99
+  -       },
+  -       beforeDayEvidence: '[{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,0]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US01":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US29":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,1]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US28":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US30":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,2]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US02":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US27":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,3]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US03":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US26":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,4]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US04":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US25":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,5]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US05":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US24":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,6]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US06":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US23":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,7]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US07":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US22":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,8]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US08":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US21":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,9]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US09":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US20":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,10]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US10":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US19":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,11]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US11":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US18":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,12]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US12":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US17":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,13]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US13":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US16":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"L":{"AB":0,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":0,"RBI":0,"TB":0,"threeB":0,"twoB":0},"R":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":0,"TB":0,"threeB":0,"twoB":0}}},"batting":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"R":0,"RBI":0,"TB":0,"extraHomeSuccesses":0,"fieldingGames":1,"games":1,"loadedHits":0,"threeB":0,"twoB":0,"walkoffHits":0}},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,14]","matchups":{"[\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US15\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"HITTER\\\\\\",0]\\",\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US14\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"PITCHER\\\\\\",0]\\"]":{"batterKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]","pitcherKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]","stats":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":0,"TB":0,"threeB":0,"twoB":0}}},"pitcherSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"L":{"AB":0,"BB":0,"BF":0,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":0},"R":{"AB":1,"BB":0,"BF":1,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":1}}},"pitching":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"BB":0,"BF":1,"BS":0,"ER":0,"H":0,"HBP":0,"HLD":0,"HR":0,"K":0,"L":0,"R":0,"SV":0,"W":0,"games":1,"loadedBF":0,"outs":1,"pitches":0,"shutouts":0,"starterOuts":1,"starts":1}},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US14":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US15":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,0]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US01":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US29":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,1]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US28":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US30":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,2]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US02":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US27":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,3]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US03":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US26":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,4]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US04":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US25":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,5]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US05":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US24":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,6]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US06":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US23":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,7]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US07":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US22":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,8]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US08":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US21":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,9]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US09":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US20":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,10]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US10":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US19":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,11]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US11":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US18":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},{"batterSplits":{},"batting":{},"gameKey":"[\\"2037\\",\\"A\\",59,12]","matchups":{},"pitcherSplits":{},"pitching":{},"scope":{"leagueKey":"A","phase":"REGULAR","seasonKey":"2037"},"teams":{"US12":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US17":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},'... 14329 more characters,
+  -       beforeDuels: [],
+  -       beforeTraits: {
+  -         lastClosedDay: 304,
+  -         lastSeasonKey: '2036',
+  -         owned: {},
+  -         schemaVersion: 1,
+  -         unlocks: []
+  -       },
+  -       command: {
+  -         beforeEvidence: '{"batterSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"L":{"AB":0,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":0,"RBI":0,"TB":0,"threeB":0,"twoB":0},"R":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":0,"TB":0,"threeB":0,"twoB":0}}},"batting":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"R":0,"RBI":0,"TB":0,"extraHomeSuccesses":0,"fieldingGames":1,"games":1,"loadedHits":0,"threeB":0,"twoB":0,"walkoffHits":0}},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,14]","matchups":{"[\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US15\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"HITTER\\\\\\",0]\\",\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US14\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"PITCHER\\\\\\",0]\\"]":{"batterKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]","pitcherKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]","stats":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":0,"TB":0,"threeB":0,"twoB":0}}},"pitcherSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"L":{"AB":0,"BB":0,"BF":0,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":0},"R":{"AB":1,"BB":0,"BF":1,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":1}}},"pitching":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"BB":0,"BF":1,"BS":0,"ER":0,"H":0,"HBP":0,"HLD":0,"HR":0,"K":0,"L":0,"R":0,"SV":0,"W":0,"games":1,"loadedBF":0,"outs":1,"pitches":0,"shutouts":0,"starterOuts":1,"starts":1}},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US14":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US15":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99}',
+  -         contribution: {
+  -           batterSplits: {
+  -             '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]': {
+  -               L: {
+  -                 AB: 0,
+  -                 BB: 0,
+  -                 H: 0,
+  -                 HBP: 0,
+  -                 HR: 0,
+  -                 K: 0,
+  -                 PA: 0,
+  -                 RBI: 0,
+  -                 TB: 0,
+  -                 threeB: 0,
+  -                 twoB: 0
+  -               },
+  -               R: {
+  -                 AB: 1,
+  -                 BB: 0,
+  -                 H: 0,
+  -                 HBP: 0,
+  -                 HR: 0,
+  -                 K: 0,
+  -                 PA: 1,
+  -                 RBI: 1,
+  -                 TB: 0,
+  -                 threeB: 0,
+  -                 twoB: 0
+  -               }
+  -             }
+  -           },
+  -           batting: {
+  -             '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]': {
+  -               AB: 1,
+  -               BB: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               PA: 1,
+  -               R: 0,
+  -               RBI: 1,
+  -               TB: 0,
+  -               extraHomeSuccesses: 0,
+  -               fieldingGames: 1,
+  -               games: 1,
+  -               loadedHits: 0,
+  -               threeB: 0,
+  -               twoB: 0,
+  -               walkoffHits: 0
+  -             }
+  -           },
+  -           gameKey: '["2037","ROOKIE",59,14]',
+  -           matchups: {
+  -             '["[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]","[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]"]': {
+  -               batterKey: '["us-npc","route-world","2030","US15","ROOKIE","HITTER",0]',
+  -               pitcherKey: '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]',
+  -               stats: {
+  -                 AB: 1,
+  -                 BB: 0,
+  -                 H: 0,
+  -                 HBP: 0,
+  -                 HR: 0,
+  -                 K: 0,
+  -                 PA: 1,
+  -                 RBI: 1,
+  -                 TB: 0,
+  -                 threeB: 0,
+  -                 twoB: 0
+  -               }
+  -             }
+  -           },
+  -           pitcherSplits: {
+  -             '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]': {
+  -               L: {
+  -                 AB: 0,
+  -                 BB: 0,
+  -                 BF: 0,
+  -                 H: 0,
+  -                 HBP: 0,
+  -                 HR: 0,
+  -                 K: 0,
+  -                 TB: 0,
+  -                 outs: 0
+  -               },
+  -               R: {
+  -                 AB: 1,
+  -                 BB: 0,
+  -                 BF: 1,
+  -                 H: 0,
+  -                 HBP: 0,
+  -                 HR: 0,
+  -                 K: 0,
+  -                 TB: 0,
+  -                 outs: 1
+  -               }
+  -             }
+  -           },
+  -           pitching: {
+  -             '["us-npc","route-world","2030","US14","ROOKIE","PITCHER",0]': {
+  -               BB: 0,
+  -               BF: 1,
+  -               BS: 0,
+  -               ER: 0,
+  -               H: 0,
+  -               HBP: 0,
+  -               HLD: 0,
+  -               HR: 0,
+  -               K: 0,
+  -               L: 0,
+  -               R: 0,
+  -               SV: 0,
+  -               W: 0,
+  -               games: 1,
+  -               loadedBF: 0,
+  -               outs: 1,
+  -               pitches: 0,
+  -               shutouts: 0,
+  -               starterOuts: 1,
+  -               starts: 1
+  -             }
+  -           },
+  -           scope: {
+  -             leagueKey: 'ROOKIE',
+  -             phase: 'REGULAR',
+  -             seasonKey: '2037'
+  -           },
+  -           teams: {
+  -             US14: {
+  -               L: 0,
+  -               R: 0,
+  -               RA: 0,
+  -               T: 1,
+  -               W: 0,
+  -               games: 1
+  -             },
+  -             US15: {
+  -               L: 0,
+  -               R: 0,
+  -               RA: 0,
+  -               T: 1,
+  -               W: 0,
+  -               games: 1
+  -             }
+  -           },
+  -           worldDay: 99
+  -         },
+  -         correctionId: 'controlled-final-service-correction-1',
+  -         expectedRecordRevision: 70729,
+  -         expectedRevision: 59
+  -       },
+  -       playerKey: 'own',
+  -       receiptKey: '["official-record-correction-1","route-world","own","controlled-final-service-correction-1"]',
+  -       seal: '{"after":{"batterSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"L":{"AB":0,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":0,"RBI":0,"TB":0,"threeB":0,"twoB":0},"R":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":1,"TB":0,"threeB":0,"twoB":0}}},"batting":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"R":0,"RBI":1,"TB":0,"extraHomeSuccesses":0,"fieldingGames":1,"games":1,"loadedHits":0,"threeB":0,"twoB":0,"walkoffHits":0}},"gameKey":"[\\"2037\\",\\"ROOKIE\\",59,14]","matchups":{"[\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US15\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"HITTER\\\\\\",0]\\",\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US14\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"PITCHER\\\\\\",0]\\"]":{"batterKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US15\\",\\"ROOKIE\\",\\"HITTER\\",0]","pitcherKey":"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]","stats":{"AB":1,"BB":0,"H":0,"HBP":0,"HR":0,"K":0,"PA":1,"RBI":1,"TB":0,"threeB":0,"twoB":0}}},"pitcherSplits":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"L":{"AB":0,"BB":0,"BF":0,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":0},"R":{"AB":1,"BB":0,"BF":1,"H":0,"HBP":0,"HR":0,"K":0,"TB":0,"outs":1}}},"pitching":{"[\\"us-npc\\",\\"route-world\\",\\"2030\\",\\"US14\\",\\"ROOKIE\\",\\"PITCHER\\",0]":{"BB":0,"BF":1,"BS":0,"ER":0,"H":0,"HBP":0,"HLD":0,"HR":0,"K":0,"L":0,"R":0,"SV":0,"W":0,"games":1,"loadedBF":0,"outs":1,"pitches":0,"shutouts":0,"starterOuts":1,"starts":1}},"scope":{"leagueKey":"ROOKIE","phase":"REGULAR","seasonKey":"2037"},"teams":{"US14":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1},"US15":{"L":0,"R":0,"RA":0,"T":1,"W":0,"games":1}},"worldDay":99},"afterDayEvidence":"[{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,0]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US01\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US29\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,1]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US28\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US30\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,2]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US02\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US27\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,3]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US03\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US26\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,4]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US04\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US25\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,5]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US05\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US24\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,6]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US06\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US23\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,7]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US07\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US22\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,8]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US08\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US21\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,9]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US09\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US20\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,10]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US10\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US19\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,11]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US11\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US18\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,12]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US12\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US17\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,13]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US13\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US16\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US15\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"HITTER\\\\\\",0]\\":{\\"L\\":{\\"AB\\":0,\\"BB\\":0,\\"H\\":0,\\"HBP\\":0,\\"HR\\":0,\\"K\\":0,\\"PA\\":0,\\"RBI\\":0,\\"TB\\":0,\\"threeB\\":0,\\"twoB\\":0},\\"R\\":{\\"AB\\":1,\\"BB\\":0,\\"H\\":0,\\"HBP\\":0,\\"HR\\":0,\\"K\\":0,\\"PA\\":1,\\"RBI\\":1,\\"TB\\":0,\\"threeB\\":0,\\"twoB\\":0}}},\\"batting\\":{\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US15\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"HITTER\\\\\\",0]\\":{\\"AB\\":1,\\"BB\\":0,\\"H\\":0,\\"HBP\\":0,\\"HR\\":0,\\"K\\":0,\\"PA\\":1,\\"R\\":0,\\"RBI\\":1,\\"TB\\":0,\\"extraHomeSuccesses\\":0,\\"fieldingGames\\":1,\\"games\\":1,\\"loadedHits\\":0,\\"threeB\\":0,\\"twoB\\":0,\\"walkoffHits\\":0}},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"ROOKIE\\\\\\",59,14]\\",\\"matchups\\":{\\"[\\\\\\"[\\\\\\\\\\\\\\"us-npc\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"route-world\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"2030\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"US15\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ROOKIE\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"HITTER\\\\\\\\\\\\\\",0]\\\\\\",\\\\\\"[\\\\\\\\\\\\\\"us-npc\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"route-world\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"2030\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"US14\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"ROOKIE\\\\\\\\\\\\\\",\\\\\\\\\\\\\\"PITCHER\\\\\\\\\\\\\\",0]\\\\\\"]\\":{\\"batterKey\\":\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US15\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"HITTER\\\\\\",0]\\",\\"pitcherKey\\":\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US14\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"PITCHER\\\\\\",0]\\",\\"stats\\":{\\"AB\\":1,\\"BB\\":0,\\"H\\":0,\\"HBP\\":0,\\"HR\\":0,\\"K\\":0,\\"PA\\":1,\\"RBI\\":1,\\"TB\\":0,\\"threeB\\":0,\\"twoB\\":0}}},\\"pitcherSplits\\":{\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US14\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"PITCHER\\\\\\",0]\\":{\\"L\\":{\\"AB\\":0,\\"BB\\":0,\\"BF\\":0,\\"H\\":0,\\"HBP\\":0,\\"HR\\":0,\\"K\\":0,\\"TB\\":0,\\"outs\\":0},\\"R\\":{\\"AB\\":1,\\"BB\\":0,\\"BF\\":1,\\"H\\":0,\\"HBP\\":0,\\"HR\\":0,\\"K\\":0,\\"TB\\":0,\\"outs\\":1}}},\\"pitching\\":{\\"[\\\\\\"us-npc\\\\\\",\\\\\\"route-world\\\\\\",\\\\\\"2030\\\\\\",\\\\\\"US14\\\\\\",\\\\\\"ROOKIE\\\\\\",\\\\\\"PITCHER\\\\\\",0]\\":{\\"BB\\":0,\\"BF\\":1,\\"BS\\":0,\\"ER\\":0,\\"H\\":0,\\"HBP\\":0,\\"HLD\\":0,\\"HR\\":0,\\"K\\":0,\\"L\\":0,\\"R\\":0,\\"SV\\":0,\\"W\\":0,\\"games\\":1,\\"loadedBF\\":0,\\"outs\\":1,\\"pitches\\":0,\\"shutouts\\":0,\\"starterOuts\\":1,\\"starts\\":1}},\\"scope\\":{\\"leagueKey\\":\\"ROOKIE\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US14\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US15\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"A\\\\\\",59,0]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"A\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US01\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US29\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1}},\\"worldDay\\":99},{\\"batterSplits\\":{},\\"batting\\":{},\\"gameKey\\":\\"[\\\\\\"2037\\\\\\",\\\\\\"A\\\\\\",59,1]\\",\\"matchups\\":{},\\"pitcherSplits\\":{},\\"pitching\\":{},\\"scope\\":{\\"leagueKey\\":\\"A\\",\\"phase\\":\\"REGULAR\\",\\"seasonKey\\":\\"2037\\"},\\"teams\\":{\\"US28\\":{\\"L\\":0,\\"R\\":0,\\"RA\\":0,\\"T\\":1,\\"W\\":0,\\"games\\":1},\\"US'... 57941 more characters,
+  -       seasonKey: '2037',
+  -       status: 'CORRECTED',
+  -       worldKey: 'route-world'
+  -     }
+  -   ],
+  -   schemaVersion: 1
+  - }
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-service-return-boundaries.test.ts:23:74)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { schemaVersion: 1, receipts: [ [Object], [Object] ] },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,0 +1,21 @@
+diff --git a/packages/engine/test/us-amateur-return-career.test.ts b/packages/engine/test/us-amateur-return-career.test.ts
+index de30a0c..724140c 100644
+--- a/packages/engine/test/us-amateur-return-career.test.ts
++++ b/packages/engine/test/us-amateur-return-career.test.ts
+@@ -1,3 +1,4 @@
++import {nativeServiceUsReturn} from './us-native-service-fixture.js';
+ import test from 'node:test';
+ import assert from 'node:assert/strict';
+ import {closedUsOptionCareer} from './us-option-fixture.js';
+@@ -125,3 +126,11 @@ test('M2-CLOSE-RETURN-20261102: a return-option US offer also re-signs after two
+  assert.deepEqual(us.world.players[us.protagonistKey]!.abilities,c.return.years[1]!.endingPlayer.abilities);
+  const resumed=JSON.parse(JSON.stringify(us)) as typeof us;publishUsSeasonSchedule(confirmUsPreseasonPlan(resumed,resumed.revision),resumed.revision+1);
+ });
++
++test('M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after two native service years; open service blocks it',()=>{
++ const c=nativeServiceUsReturn(),source=c.source,offer=source.minorMarket!.offers.find(o=>o.militaryReturnOption)!;assert.equal(c.return.years.length,2);assert.equal(c.return.militaryStatus,'COMPLETED');
++ const us=resignUsAfterAmateurReturn(c,c.revision,offer.offerKey);
++ assert.equal(us.world.seasonKey,String(Number(source.world.seasonKey)+3));assert.equal(us.usAmateurReturn!.status,'CANCELLED_US');
++ const resumed=JSON.parse(JSON.stringify(us)) as typeof us;publishUsSeasonSchedule(confirmUsPreseasonPlan(resumed,resumed.revision),resumed.revision+1);
++});
++

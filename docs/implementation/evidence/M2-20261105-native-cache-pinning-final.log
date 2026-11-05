@@ -1,0 +1,48 @@
+✔ native cache checks canonical data, kind and current source before the domain owner accepts it (106.4427ms)
+✔ native cache never accepts a prior source generation or a schema1 unbound fixture as fresh evidence (45.9319ms)
+✔ canonical cache roundtrip cannot turn an incomplete checkpoint into a completed owner (71.2361ms)
+✔ only one writer owns a prefix and its lock is released even after a failed generation (52.7965ms)
+✔ actual native manifest binds existing configs and executed rules distribution (625.2085ms)
+✔ native cache pinning freezes verified historical rows and shares them without changing serialized values (1.5874ms)
+✖ native cache pinning refuses missing, corrected or regressed prefix evidence before sharing anything (1.2453ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1540.1177
+
+✖ failing tests:
+
+test at packages\engine\test\native-return-cache.test.ts:1:4275
+✖ native cache pinning refuses missing, corrected or regressed prefix evidence before sharing anything (1.2453ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /PREFIX_CHANGED/. Input:
+  
+  'TypeError: Unsupported canonical value'
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\native-return-cache.test.ts:25:339)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: TypeError: Unsupported canonical value
+        at canonicalJson (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\game.ts:273:9)
+        at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\native-return-cache.ts:35:184)
+        at Array.some (<anonymous>)
+        at pinNativeRecordPrefix (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\native-return-cache.ts:35:149)
+        at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\native-return-cache.test.ts:25:350)
+        at getActual (node:assert:611:5)
+        at strict.throws (node:assert:759:24)
+        at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\native-return-cache.test.ts:25:339)
+        at Test.runInAsyncScope (node:async_hooks:227:14)
+        at Test.run (node:internal/test_runner/test:1382:25),
+    expected: /PREFIX_CHANGED/,
+    operator: 'throws',
+    diff: 'simple'
+  }

@@ -1,0 +1,16 @@
+✔ native cache checks canonical data, kind and current source before the domain owner accepts it (48.0942ms)
+✔ native cache never accepts a prior source generation or a schema1 unbound fixture as fresh evidence (35.1897ms)
+✔ canonical cache roundtrip cannot turn an incomplete checkpoint into a completed owner (56.172ms)
+✔ only one writer owns a prefix and its lock is released even after a failed generation (45.7636ms)
+✔ actual native manifest binds existing configs and executed rules distribution (2943.9386ms)
+✔ controlled service dates: return re-sign preserves actual settled NPC growth, supply RNG and records (228350.1673ms)
+✔ mandatory return service reports the same season-complete boundary as independent preparation without auto-settling the year (51064.8782ms)
+✔ controlled service dates exercise both actual year settlements and reject forged/duplicate return completion evidence (179604.283ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 467574.8931
