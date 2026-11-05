@@ -1,0 +1,42 @@
+{"nativeArchivePinReplay":true,"sha256":"4193d7491447f3b4944d457d13d8ab0951329af8d0e095c212bc4f03958bed64","baselineMs":7831.529399999999,"pinnedMs":6561.208800000008,"discardedReplayCommands":1}
+{"nativeServiceProgress":true,"year":1,"step":100,"day":34,"recordRevision":53373,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":200,"day":38,"recordRevision":53602,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":300,"day":41,"recordRevision":53830,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":400,"day":45,"recordRevision":54055,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":500,"day":48,"recordRevision":54281,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":600,"day":52,"recordRevision":54505,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":700,"day":55,"recordRevision":54734,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":800,"day":59,"recordRevision":54961,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":900,"day":62,"recordRevision":55183,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":1000,"day":66,"recordRevision":55407,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":1100,"day":69,"recordRevision":55632,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":1200,"day":73,"recordRevision":55858,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":1300,"day":76,"recordRevision":56079,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":1400,"day":80,"recordRevision":56307,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":1500,"day":83,"recordRevision":56531,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+{"nativeServiceProgress":true,"year":1,"step":1600,"day":87,"recordRevision":56756,"sourceSha256":"056cd891e3c2145c6d44d3e792400d0318e8717ccfe1a22b8158961b971e6fdc"}
+✖ M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after two native service years; open service blocks it (3934290.0549ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3937017.6597
+
+✖ failing tests:
+
+test at test\us-amateur-return-career.test.ts:1:15144
+✖ M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after two native service years; open service blocks it (3934290.0549ms)
+  RangeError: Invalid string length
+      at Array.join (<anonymous>)
+      at canonicalJson (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\game.ts:272:186)
+      at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\game.ts:272:162)
+      at Array.map (<anonymous>)
+      at canonicalJson (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\game.ts:272:114)
+      at writeNativeReturnCache (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\native-return-cache.ts:23:18)
+      at save (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-native-service-fixture.ts:34:89)
+      at generate (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-native-service-fixture.ts:41:428)
+      at withNativeReturnWriter (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\native-return-cache.ts:28:122)
+      at nativeServiceUsReturn (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-native-service-fixture.ts:45:16)
