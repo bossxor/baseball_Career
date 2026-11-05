@@ -1,3 +1,9 @@
+# 최신 구현 — 2026-11-05: 미국 이적 관계 분리·E95 검증 완료
+
+[M2-US-OPPONENT-REUNIONS-20261105.md](M2-US-OPPONENT-REUNIONS-20261105.md)를 먼저 읽는다. 실제 정규 일마감/MLB PS FINAL hook·US 공개 관계/저장 읽기와 확정 minor/Major 외국단 이적 분리를 연결했다. 최종12/12·fail0·skip0, 전체 타입/린트/build 종료0·리뷰 보완 완료. 부상 예비 등록과 legacy fallback 유지. native 정규/controlled PS·계약 접두를 구분한다.
+
+다음은 미국 E96 같은 팀 재회와 Major 국내 복귀 최신 KBO authority다.99/24/PF·웹·대형DB·실제2년 복무/전체 runtime은 미완료. M2 관리65%·전체87.5% 유지. 원본 사용자 WIP18줄/큰파일 보존. commit/push 최종값은 git log/remote로 확인한다. PC 종료 금지·V 문서 Copy-Item만. 아래는 과거 이력이다.
+
 # 최신 구현 — 2026-11-05: 은퇴 재요청·복무 시즌 진행 수정 완료
 
 [M2-RETIREMENT-AND-SERVICE-PROGRESS-20261105.md](M2-RETIREMENT-AND-SERVICE-PROGRESS-20261105.md)를 먼저 읽는다. 은퇴 취소 뒤 E36 재요청 충돌과 귀국 복무 완료 신호를 수정했다.21/21+집중1/1·전체 타입/린트/웹24/빌드 종료0. 실제2년 완주는 미검증이며 old cap3000 검사는 중지 종료1로 분리 기록했다. 사용자 WIP 원본과 개선본 patch를 보존했다.

@@ -1,0 +1,5 @@
+
+> again-playball@0.1.0 verify:assets
+> node scripts/verify-release-assets.mjs
+
+PASS: release assets — 2 fonts with OFL, provenance ok.

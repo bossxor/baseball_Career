@@ -31,7 +31,7 @@ test('direct amateur expiry uses native1-year quotes and repeated epochs without
  assert.equal(renewed.income.reduce((n,r)=>n+r.amount,0),paid);assert.equal(renewed.minorYears!.at(-1)!.minorRenewal!.offerKey,own.offerKey);usCareerView(renewed);
  const nextClosed=closedNext(renewed),second=openUsMinorMarket(nextClosed,nextClosed.revision,funding(nextClosed)),other=usMinorMarketView(second).offers.find(o=>o.organizationId!==second.protagonistOrganizationId);
  assert.ok(other,'funded low-level competitors must provide this controlled high-skill positive branch');
- const moved=acceptUsMinorMarketOffer(second,second.revision,other.offerKey);
+ const priorClub=second.world.organizations.find(o=>o.id===second.protagonistOrganizationId)!,priorRelations=second.relationships.relations.filter(r=>['FORMED','REUNITED_TEAM'].includes(r.stage)&&priorClub.levels[level].includes(r.otherPlayerKey));assert.ok(priorRelations.length);const moved=acceptUsMinorMarketOffer(second,second.revision,other.offerKey);for(const r of priorRelations){const actual=moved.relationships.relations.find(x=>x.relationKey===r.relationKey)!;assert.equal(actual.stage,'SEPARATED');assert.deepEqual(actual.milestones.slice(0,-1),r.milestones);}
  assert.equal(moved.rights.holderOrgId,other.organizationId);assert.equal(moved.protagonistOrganizationId,other.organizationId);assert.equal(moved.registration.level,level);assert.equal(moved.activation.contractKey,firstContract);assert.equal(digest(moved.amateurHistory),origin);usCareerView(moved);
  assert.equal(new Set(moved.minorYears!.flatMap(y=>y.minorRenewal?[y.minorRenewal.contract.contractKey]:[])).size,2);
  assert.throws(()=>acceptUsMinorMarketOffer(second,second.revision-1,other.offerKey),/REVISION/);

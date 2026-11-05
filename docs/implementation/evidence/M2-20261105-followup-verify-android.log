@@ -1,0 +1,5 @@
+
+> again-playball@0.1.0 verify:android
+> node scripts/verify-android-shell.mjs
+
+PASS: M8 Android shell — appId kr.againplayball.app, Cap project present.

@@ -1,3 +1,4 @@
+import {settleUsOpponentReunions} from './us-reunion-events.js';
 import {refreshProCareerResultEvents} from './pro-career-results.js';
 import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {queueUsMajorDebut} from './us-debut.js';
@@ -80,7 +81,7 @@ export function advanceUsPostseason(c:UsCareer,revision:number):{career:UsCareer
  const job=advanceHighSchoolGame(pending.job,1000,20);phase.pendingGame={level:'MLB',job};if(job.stopReason==='ENGINE_LIMIT')return finish('ENGINE_LIMIT');if(job.game.status!=='FINAL')return finish('CHUNK_LIMIT');
  const world=usCompetitionGameWorld(next,'MLB',scheduled),today={...next.records,games:Object.fromEntries(Object.entries(next.records.games).filter(([,g])=>g.scope.seasonKey===next.world.seasonKey&&g.worldDay===scheduled.worldDay))},done=commitSchoolCompetitionGame(world,today,job,scheduled);for(const key of Object.keys(job.game.pitchDevelopment!.players))next.world.repertoires[key]=done.world.repertoires[key]!;next.records={revision:done.records.revision,games:{...next.records.games,...done.records.games}};queueUsMajorDebut(next,scheduled.simulationKey);
  const teams=next.records.games[scheduled.simulationKey]!.teams,winner=teams[game.homeTeamKey]!.W?game.homeTeamKey:teams[game.awayTeamKey]!.W?game.awayTeamKey:null;if(!winner)throw new RangeError('US_POSTSEASON_WITHOUT_WINNER');
- const healthChanged=closeGameDay(next,scheduled);phase.bracket=recordMlbPostseasonGame(phase.bracket,winner);phase.gameEvidence.push(canonicalJson(next.records.games[scheduled.simulationKey]));phase.pendingGame=null;phase.nextWorldDay++;
+ const healthChanged=closeGameDay(next,scheduled);phase.bracket=recordMlbPostseasonGame(phase.bracket,winner);phase.gameEvidence.push(canonicalJson(next.records.games[scheduled.simulationKey]));phase.pendingGame=null;phase.nextWorldDay++;settleUsOpponentReunions(next,scheduled.worldDay,'POSTSEASON');
  if(phase.bracket.championKey){next.postseason={bracket:phase.bracket,conferences:phase.conferences,gameEvidence:phase.gameEvidence};next.phaseContext={phase:'SEASON_REVIEW'};return finish(interruptHidden(scheduled.worldDay)?'MAJOR_EVENT':'POSTSEASON_COMPLETE');}
  if(interruptHidden(scheduled.worldDay))return finish('MAJOR_EVENT');
  return finish(healthChanged?'HEALTH_CHANGE':'GAME_FINAL');

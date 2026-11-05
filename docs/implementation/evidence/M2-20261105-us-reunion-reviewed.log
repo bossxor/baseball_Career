@@ -1,0 +1,36 @@
+✔ actual US entry relationships are readable using the owned US root (1539.2607ms)
+✔ US actual formation notice read preserves every game, roster, money and phase with JSON restart (1513.6661ms)
+✔ US list distinguishes actual live levels, archived school identity and unavailable legacy references without inventing players (1026.6211ms)
+✔ US retired teammate identity is read from actual native annual supply, never restored to a roster (8252.6195ms)
+✔ US formation relation HTTP preserves save ownership, CAS and exact navigation across repeated delivery (7552.6732ms)
+✔ US relation detail sums only actual requested league/phase/year rows, not merely echoing the scope (829.2435ms)
+✔ US actual-game E95 HTTP owns history, rejects stale/foreign writes and replays one read without changing gameplay (29726.9657ms)
+✔ actual US regular day reunites both opposing appearances once and reads only its notice after JSON restart (62700.5131ms)
+✔ US old-day reads never backfill; bench/same-team or wrong source cannot invent reunion and corrupt registrations reject atomically (5855.025ms)
+✔ actual foreign Major signing separates only actual old-level companions and preserves all earlier milestones (64076.0155ms)
+✖ US PS reunion requires its FINAL envelope; carried KBO notices keep their original owner and corrupt US history rejects (903.9534ms)
+✔ foreign Major signing preserves an INJURED protagonist and injury-replaced companions without rejecting valid registered reserves (9062.7714ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 200096.09
+
+✖ failing tests:
+
+test at packages\engine\test\us-reunion-events.test.ts:1:5382
+✖ US PS reunion requires its FINAL envelope; carried KBO notices keep their original owner and corrupt US history rejects (903.9534ms)
+  RangeError: INVALID_PRO_AWARD_GAME
+      at validate (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\pro-career-awards.ts:34:200)
+      at assertProCareerAwards (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\pro-career-awards.ts:47:60)
+      at usCareerView (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-career-entry.ts:129:52)
+      at assertUsCareerRevision (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-career-entry.ts:157:236)
+      at relationSource (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-relations.ts:13:2)
+      at unreadUsRelationNotices (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-relations.ts:25:15)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-reunion-events.test.ts:36:538)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)

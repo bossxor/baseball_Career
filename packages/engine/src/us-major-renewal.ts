@@ -1,3 +1,4 @@
+import {separateUsTransferRelations} from './us-relation-transfer.js';
 import {hasOnlyUsMajorFaWindowEvent,completeUsMajorFaWindow} from './us-major-fa-window.js';
 import {formRegisteredTeamTeammate} from './team-teammates.js';
 import {queueRelationFormationNotices} from './relation-notices.js';
@@ -66,7 +67,7 @@ export function acceptUsMajorFreeAgency(c:UsCareer,revision:number,funding:reado
  delete next.season;delete next.seasonSchedule;delete next.preseasonPlan;delete next.campNotices;delete next.postseason;
  if(foreign){
   const teamWorld={worldKey:next.world.worldKey,seasonKey:next.world.seasonKey,leagueKey:offer.initialLevel,protagonistKey:next.protagonistKey,protagonistSchoolId:offer.organizationId,schools:next.world.organizations.map(o=>({id:o.id,name:o.name,roster:o.levels[offer.initialLevel]})),players:next.world.players},day=next.world.calendar.growthDays[0]!;
-  next.relationships=formRegisteredTeamTeammate(c.relationships,teamWorld,archive.receiptKey,day);const notices=queueRelationFormationNotices({...next,world:teamWorld},day);if(notices)next.relationNotices=notices;
+  next.relationships=formRegisteredTeamTeammate(separateUsTransferRelations(c,next,archive.receiptKey),teamWorld,archive.receiptKey,day);const notices=queueRelationFormationNotices({...next,world:teamWorld},day);if(notices)next.relationNotices=notices;
  }
  assertUsCareerRevision(next,next.revision);return refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(next)));
 }

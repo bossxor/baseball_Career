@@ -3701,7 +3701,7 @@
         }
       ],
       "scope": "REQUIRES_DOMAIN_REVIEW",
-      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261104",
+      "verification": "PARTIAL_API_DOMAIN_VERIFIED_20261105",
       "references": [
         {
           "path": "packages/engine/src/career-achievements.ts",
@@ -3740,10 +3740,13 @@
           "line": 49
         }
       ],
-      "note": "Existing native actual reunion tests plus KBO API owner dispatch; no direct HTTP E95 scenario or US adapter certification.",
+      "note": "Existing native actual reunion tests plus KBO API owner dispatch; no direct HTTP E95 scenario or US adapter certification. US E95 native regular-day writer and PGlite HTTP read verified12/12 on2026-11-05; PS envelope/contract six-season prefix controlled, not native full careers. E96 US remains incomplete.",
       "verifiedEvidence": [
         "docs/implementation/M2-CAREER-RELATIONS-API-20261104.md",
-        "apps/api/test/m2-relations.test.ts"
+        "apps/api/test/m2-relations.test.ts",
+        "docs/implementation/M2-US-OPPONENT-REUNIONS-20261105.md",
+        "packages/engine/test/us-reunion-events.test.ts",
+        "apps/api/test/m2-us-relations.test.ts"
       ]
     },
     {

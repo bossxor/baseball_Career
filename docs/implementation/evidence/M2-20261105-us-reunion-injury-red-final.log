@@ -1,0 +1,25 @@
+✖ foreign Major signing preserves an INJURED protagonist and injury-replaced companions without rejecting valid registered reserves (73451.9569ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 74757.6605
+
+✖ failing tests:
+
+test at packages\engine\test\us-reunion-events.test.ts:1:7063
+✖ foreign Major signing preserves an INJURED protagonist and injury-replaced companions without rejecting valid registered reserves (73451.9569ms)
+  RangeError: MISSING_INJURY_EVIDENCE
+      at validateHealthLedger (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\health.ts:29:162)
+      at closeSeasonHealth (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\health.ts:67:3)
+      at stageUsYear (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-year-transition.ts:63:14)
+      at stageUsControlledMajorYear (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-year-transition.ts:70:138)
+      at acceptUsMajorFreeAgency (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-major-renewal.ts:61:304)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-reunion-events.test.ts:45:729)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)

@@ -1,0 +1,16 @@
+✔ actual US entry relationships are readable using the owned US root (1592.8256ms)
+✔ US actual formation notice read preserves every game, roster, money and phase with JSON restart (1767.6982ms)
+✔ US list distinguishes actual live levels, archived school identity and unavailable legacy references without inventing players (1325.3004ms)
+✔ US retired teammate identity is read from actual native annual supply, never restored to a roster (7787.3314ms)
+✔ US formation relation HTTP preserves save ownership, CAS and exact navigation across repeated delivery (5134.681ms)
+✔ US relation detail sums only actual requested league/phase/year rows, not merely echoing the scope (776.4397ms)
+✔ actual US regular day reunites both opposing appearances once and reads only its notice after JSON restart (38675.1141ms)
+✔ US old-day reads never backfill; bench/same-team or wrong source cannot invent reunion and corrupt registrations reject atomically (5187.3688ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 69253.4226

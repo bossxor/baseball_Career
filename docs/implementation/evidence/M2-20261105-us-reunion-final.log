@@ -1,0 +1,62 @@
+✔ actual US entry relationships are readable using the owned US root (1039.0673ms)
+✔ US actual formation notice read preserves every game, roster, money and phase with JSON restart (1205.9406ms)
+✔ US list distinguishes actual live levels, archived school identity and unavailable legacy references without inventing players (1056.0671ms)
+✔ US retired teammate identity is read from actual native annual supply, never restored to a roster (5927.6235ms)
+✔ US formation relation HTTP preserves save ownership, CAS and exact navigation across repeated delivery (5413.4046ms)
+✔ US relation detail sums only actual requested league/phase/year rows, not merely echoing the scope (539.0926ms)
+✔ US actual-game E95 HTTP owns history, rejects stale/foreign writes and replays one read without changing gameplay (23282.2489ms)
+✔ direct amateur expiry uses native1-year quotes and repeated epochs without rewriting the original six-season contract (110943.4786ms)
+Controlled FA prefix; real transfer and replay: {"from":"US15","to":"US07","offers":4,"salary":9904000,"years":5}
+✔ controlled six credited seasons compare at most three foreign clubs, sign one and replay historical budgets after JSON and guaranteed renewal (116160.302ms)
+✔ actual US regular day reunites both opposing appearances once and reads only its notice after JSON restart (56967.62ms)
+✔ US old-day reads never backfill; bench/same-team or wrong source cannot invent reunion and corrupt registrations reject atomically (7845.1614ms)
+✔ actual foreign Major signing separates only actual old-level companions and preserves all earlier milestones (91430.6085ms)
+✖ US PS reunion requires its FINAL envelope; carried KBO notices keep their original owner and corrupt US history rejects (1099.4742ms)
+✖ foreign Major signing preserves an INJURED protagonist and injury-replaced companions without rejecting valid registered reserves (1332.0323ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 12
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 433268.5056
+
+✖ failing tests:
+
+test at packages\engine\test\us-reunion-events.test.ts:1:5382
+✖ US PS reunion requires its FINAL envelope; carried KBO notices keep their original owner and corrupt US history rejects (1099.4742ms)
+  RangeError: INVALID_PRO_AWARD_GAME
+      at validate (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\pro-career-awards.ts:34:200)
+      at assertProCareerAwards (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\pro-career-awards.ts:47:60)
+      at usCareerView (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-career-entry.ts:129:52)
+      at assertUsCareerRevision (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-career-entry.ts:157:236)
+      at relationSource (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-relations.ts:13:2)
+      at unreadUsRelationNotices (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\src\us-relations.ts:25:40)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-reunion-events.test.ts:36:538)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+
+test at packages\engine\test\us-reunion-events.test.ts:1:7063
+✖ foreign Major signing preserves an INJURED protagonist and injury-replaced companions without rejecting valid registered reserves (1332.0323ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'ACTIVE'
+  - 'INJURED'
+  
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-reunion-events.test.ts:44:967)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:960:18)
+      at Test.postRun (node:internal/test_runner/test:1522:19)
+      at Test.run (node:internal/test_runner/test:1447:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'ACTIVE',
+    expected: 'INJURED',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

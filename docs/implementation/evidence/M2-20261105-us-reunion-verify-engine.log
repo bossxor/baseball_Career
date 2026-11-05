@@ -1,0 +1,5 @@
+
+> again-playball@0.1.0 verify:engine
+> node --import tsx scripts/verify-engine.mjs
+
+PASS: compiled engine in independent Node process matches source golden SHA256 113761f605145c79179c912841754bf060e25d42856822f847074317288d5c92

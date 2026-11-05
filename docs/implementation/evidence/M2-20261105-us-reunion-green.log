@@ -1,0 +1,20 @@
+✔ actual US entry relationships are readable using the owned US root (859.6126ms)
+✔ US actual formation notice read preserves every game, roster, money and phase with JSON restart (1010.9675ms)
+✔ US list distinguishes actual live levels, archived school identity and unavailable legacy references without inventing players (859.1418ms)
+✔ US retired teammate identity is read from actual native annual supply, never restored to a roster (4957.8508ms)
+✔ US formation relation HTTP preserves save ownership, CAS and exact navigation across repeated delivery (3876.3975ms)
+✔ US relation detail sums only actual requested league/phase/year rows, not merely echoing the scope (475.0564ms)
+✔ US actual-game E95 HTTP owns history, rejects stale/foreign writes and replays one read without changing gameplay (18429.5297ms)
+✔ actual US regular day reunites both opposing appearances once and reads only its notice after JSON restart (48533.7573ms)
+✔ US old-day reads never backfill; bench/same-team or wrong source cannot invent reunion and corrupt registrations reject atomically (6081.0956ms)
+✔ actual foreign Major signing separates only actual old-level companions and preserves all earlier milestones (64273.1429ms)
+✔ US PS reunion requires its FINAL envelope; carried KBO notices keep their original owner and corrupt US history rejects (2584.9652ms)
+✔ foreign Major signing preserves an INJURED protagonist and injury-replaced companions without rejecting valid registered reserves (16790.9447ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 172255.8427

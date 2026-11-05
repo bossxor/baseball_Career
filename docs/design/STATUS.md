@@ -14,6 +14,8 @@
 | M9 배포·운영·출시 검증 | 2% | 100% | 2% |
 | **합계** | **100%** | — | **87.5%** |
 
+**2026-11-05 최신 구현:** 미국 확정 이적 관계 분리·E95 정규/PS 배선 및 관계 저장 API,최종12/12·타입/린트/build 종료0·독립 리뷰 보완. native 정규/controlled PS·계약 접두 구분. [상세](../implementation/M2-US-OPPONENT-REUNIONS-20261105.md). E96/최신 귀국 authority·전체 runtime은 잔여. 관리 추정65% 유지.
+
 **2026-11-05 최신:** 은퇴 재요청/복무 완료 신호 보완,21/21+집중1/1·타입/린트/웹24/빌드 종료0. 실제2년·전체 runtime 재검증은 남아 있다. [구현/증거](../implementation/M2-RETIREMENT-AND-SERVICE-PROGRESS-20261105.md). 아래 날짜별 문단은 과거 이력이다.
 
 **2026-11-05 Major FA 사건 연결:** E66 창/저장 NAV·실제 서명/은퇴 해소,15/15·types/lint/build·리뷰 통과. 원구단 증액 계약/legacy 유지. 국내 복귀 NAV 이후 실제 authority/등록은 잔여. [구현/검증](../implementation/M2-MAJOR-FA-E66-20261105.md).
