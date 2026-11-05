@@ -1,0 +1,24 @@
+✖ native school resumes through the real web HTTP adapter; lost response retries the exact native intent (3002.0432ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5111.2473
+
+✖ failing tests:
+
+test at apps\web\test\native-school-http.test.ts:1:408
+✖ native school resumes through the real web HTTP adapter; lost response retries the exact native intent (3002.0432ms)
+  Error [ApiError]: COMMAND_ID_REUSED
+      at req (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\web\src\http.ts:62:13)
+      at async command (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\web\src\http.ts:72:22)
+      at async Object.act (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\web\src\http.ts:127:11)
+      at async TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\web\test\native-school-http.test.ts:22:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    code: 'COMMAND_ID_REUSED',
+    currentRevision: undefined
+  }

@@ -41,3 +41,11 @@ export function schoolCareerScreen(state:SaveState){
   return {careerRevision:c.revision,phase:phase.phase,seasonKey:c.world.seasonKey,player:{name:p.name,kind:p.kind,position:p.position,age:p.age,abilities:p.abilities,overall:overall(p.kind,p.abilities).display},school:c.world.schools.find(s=>s.id===c.world.protagonistSchoolId)?.name,teamGames:Object.values(c.records.games).filter(g=>g.scope.seasonKey===c.world.seasonKey&&g.scope.phase==='REGULAR'&&Object.hasOwn(g.teams,c.world.protagonistSchoolId)).length,event:event?{definitionId:event.definitionId,eventKey:event.eventKey,eventVersion:event.version}:null};
  }catch(error){domainError(error);}
 }
+/** The existing web career screen can resume this owner without falling back to UI fixture state. */
+export function schoolCareerHome(saveId:string,state:SaveState){
+ const view=schoolCareerScreen(state)!,c=owner(state),phase=c.phaseContext.phase;
+ const action=(name:string,label:string,payload:Record<string,unknown>={})=>({id:'school:'+name,label,kind:'ADVANCE' as const,primary:true,command:{type:'CAREER_SCHOOL_'+name,payload:{careerRevision:c.revision,...payload}}});
+ const actions=phase==='CREATED'?[action('CONFIRM_PLAYER','선수 확인')]:phase==='PRESEASON_SETUP'?[action('CONFIRM_PRESEASON','시즌 시작')]:phase==='SEASON_PROGRESS'?[action('ADVANCE','진행')]:phase==='EVENT_DECISION'&&view.event&&['E01','E02','E03'].includes(view.event.definitionId)?[action('RESOLVE_FOCUS','현재 육성 계획 유지',{eventKey:view.event.eventKey,eventVersion:view.event.eventVersion,command:'KEEP_FOCUS'})]:[];
+ const phaseLabel:Record<string,string>={CREATED:'선수 확인',PRESEASON_SETUP:'시즌 준비',SEASON_PROGRESS:'정규시즌',EVENT_DECISION:'사건 선택',SEASON_REVIEW:'시즌 결산',CAREER_ROUTE:'진로 선택',NEXT_SEASON_READY:'다음 시즌 준비',RETIRE_CONFIRM:'은퇴 확인',ARCHIVED:'커리어 보관'};
+ return {saveId,protagonist:{name:view.player.name,kindLabel:view.player.kind==='HITTER'?'타자':'투수',positionLabel:view.player.position,ageLabel:view.player.age+'세'},stage:{leagueLabel:'고교',teamName:view.school??'',seasonLabel:view.seasonKey+' 시즌',phaseLabel:phaseLabel[phase]??'커리어'},progress:{mode:'NEXT_MAJOR_EVENT' as const,alternatives:['ONE_GAME','ONE_WEEK'] as const},nextActions:actions,pendingEventTitle:view.event?engine.eventDefinition(view.event.definitionId).title:null,recentRecords:[{label:'종합',value:view.player.overall},{label:'팀 경기',value:String(view.teamGames)}]};
+}

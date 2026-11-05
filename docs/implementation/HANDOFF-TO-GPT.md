@@ -1,3 +1,9 @@
+# 최신 구현 — 2026-11-05: 고교 native 웹 이어하기·재전송 보완
+
+[M2-SCHOOL-WEB-RESUME-20261105.md](M2-SCHOOL-WEB-RESUME-20261105.md). 기존 웹 커리어 화면에서 실제 고교 저장을 읽고 서버가 제공한 생성 확인/집중 유지/프리시즌/경기 명령을 실행한다. 실제 API+웹 어댑터로 두 클라이언트 읽기·POST 응답 상실·후속 GET 상실을 검증했다. COMMAND_ID_REUSED 재현 후 요청 전체를 재조회 성공까지 유지하도록 보완했다. 웹25/25·학교HTTP2/2·타입/린트0. 생성 폼·나머지 사건/졸업/KBO 전체 화면은 아직 남아 있다.
+
+현재 복무 검사는 PID12812의 source9502bc35dfb67a94 동결 실행, 후속 첫 미국 정규시즌은 pwsh PID2576이 원래 process 종료를 대기한다. 실제 최종 보고서가 없으므로 둘 다 PASS로 세지 않는다. 동결 engine/rules/src/dist와 engine/test 수정·중복 생성·반복 폴링 금지. 서비스 테스트 WIP/큰JSON/zz는 보존했다. 두 검사 통과와 잔여 수정 후에만 전체 npm run check1회. PC 종료 금지, V 문서 Copy-Item만. M2 관리65%·전체87.5% 유지. 아래는 과거 이력이다.
+
 # 최신 구현 — 2026-11-05: DB fixture 없는 고교 native 시작·첫 worker
 
 [M2-SCHOOL-START-HTTP-20261105.md](M2-SCHOOL-START-HTTP-20261105.md). 소유한 빈 CAREER 저장에서 실제 생성→선수 확인→집중 유지→프리시즌→경기 worker, 타자/투수 및 KBO/M3/M4 회귀 묶음8/8·타입/린트0. 기존 저장 덮어쓰기/CLUB mode/seed 주입 거절. 웹 생성 UI 연결과 고교 전체 경로는 아직 남아 있다.

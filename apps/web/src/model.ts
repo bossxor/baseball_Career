@@ -12,7 +12,7 @@ export interface HomeData {
 export type ProgressMode = 'NEXT_MAJOR_EVENT' | 'ONE_GAME' | 'ONE_WEEK';
 export type NextActionKind = 'ADVANCE' | 'EVENT' | 'PLAN' | 'RECORDS' | 'OPEN_SCREEN';
 /** Every call-to-action on S03 comes from this list; nothing is shown that the server did not offer. */
-export interface NextAction { id: string; label: string; kind: NextActionKind; primary?: boolean; disabledReason?: string }
+export interface NextAction { id: string; label: string; kind: NextActionKind; primary?: boolean; disabledReason?: string; command?:{type:string;payload:Record<string,unknown>} }
 export interface CareerView {
   saveId: string;
   protagonist: { name: string; kindLabel: string; positionLabel: string; ageLabel: string };

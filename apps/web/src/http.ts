@@ -40,8 +40,8 @@ function toSummary(row: SaveListItem): SaveSummary {
 export function createHttpApi(opts: HttpApiOptions): PlayballApi {
   const base = opts.baseUrl.replace(/\/$/, '');
   const revisions = new Map<string, number>();
-  // 28: the receipt hash includes expectedRevision, so a retry after a lost response must resend the first value.
-  const sentRevision = new Map<string, number>();
+  // 28: retry the whole original intent, including a failed refresh after a successful receipt.
+  const sentCommands = new Map<string, {expectedRevision:number;type:string;payload:unknown}>();
 
   const headers = async (json = true): Promise<HeadersInit> => {
     const h: Record<string, string> = { Authorization: `Bearer ${await opts.getToken()}` };
@@ -64,22 +64,23 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
     return res.json();
   };
 
-  const command = async (saveId: string, commandId: string, type: string, payload: unknown) => {
-    const expectedRevision = sentRevision.get(commandId) ?? revisions.get(saveId) ?? 0;
-    sentRevision.set(commandId, expectedRevision);
+  const command = async (saveId: string, commandId: string, type: string, payload: unknown, retainForRefresh=false) => {
+    const key=JSON.stringify([saveId,commandId]);
+    const intent=sentCommands.get(key)??{expectedRevision:revisions.get(saveId)??0,type,payload:structuredClone(payload)};
+    sentCommands.set(key,intent);
     try {
       const result = await req(`/api/saves/${encodeURIComponent(saveId)}/commands`, {
         method: 'POST',
         headers: await headers(),
-        body: JSON.stringify({ commandId, expectedRevision, type, payload }),
+        body: JSON.stringify({ commandId, ...intent }),
       }) as { revision: string; next?: ChooseReceipt['next'] };
       revisions.set(saveId, Number(result.revision));
-      sentRevision.delete(commandId);
+      if(!retainForRefresh)sentCommands.delete(key);
       return result;
     } catch (err) {
       if (err instanceof ApiError && err.code === 'REVISION_CONFLICT') {
         // Not applied: the next attempt may use the fresh revision.
-        sentRevision.delete(commandId);
+        sentCommands.delete(key);
         if (err.currentRevision !== undefined) revisions.set(saveId, err.currentRevision);
       }
       throw err;
@@ -115,9 +116,21 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
       return { saveId: created.saveId };
     },
     async act(saveId: string, actionId: string, mode: ProgressMode, commandId: string): Promise<CareerView> {
-      if (actionId === 'advance') await command(saveId, commandId, 'UI_ADVANCE', { mode });
+      if(actionId.startsWith('school:')){
+        const pending=sentCommands.get(JSON.stringify([saveId,commandId]));
+        if(pending)await command(saveId,commandId,pending.type,pending.payload,true);
+        else {
+          const current=await req(`/api/saves/${encodeURIComponent(saveId)}/career`,{headers:await headers(false)}) as CareerView&{revision:string};
+          revisions.set(saveId,Number(current.revision));
+          const selected=current.nextActions.find(a=>a.id===actionId&&!a.disabledReason)?.command;
+          if(!selected||!selected.type.startsWith('CAREER_SCHOOL_'))throw new ApiError('INVALID_REQUEST');
+          await command(saveId,commandId,selected.type,{...selected.payload,...(selected.type==='CAREER_SCHOOL_ADVANCE'?{mode}:{})},true);
+        }
+      }
+      if (actionId === 'advance') await command(saveId, commandId, 'UI_ADVANCE', { mode },true);
       const data = await req(`/api/saves/${encodeURIComponent(saveId)}/career`, { headers: await headers(false) }) as CareerView & { revision?: string };
       if (data.revision) revisions.set(saveId, Number(data.revision));
+      sentCommands.delete(JSON.stringify([saveId,commandId]));
       return data;
     },
     async decision(saveId: string, screenId: PlayScreenId): Promise<DecisionView> {
@@ -146,8 +159,10 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
       return req(`/api/saves/${encodeURIComponent(saveId)}/screens/${screenId}${suffix}`, { headers: await headers(false) }) as Promise<ClubScreen>;
     },
     async clubCommand(saveId: string, commandId: string, type: string, payload: Record<string, unknown>): Promise<ClubScreen> {
-      await command(saveId, commandId, type, payload);
-      return this.club(saveId, 'S13');
+      await command(saveId, commandId, type, payload,true);
+      const view=await this.club(saveId, 'S13');
+      sentCommands.delete(JSON.stringify([saveId,commandId]));
+      return view;
     },
   };
 }

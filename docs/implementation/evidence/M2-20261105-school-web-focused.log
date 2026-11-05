@@ -1,0 +1,11 @@
+✔ HITTER native school starts through owned HTTP without a database fixture (3130.8504ms)
+✔ PITCHER native school starts through owned HTTP without a database fixture (2034.2501ms)
+✔ native school resumes through the real web HTTP adapter; lost response retries the exact native intent (2641.4242ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12296.0124
