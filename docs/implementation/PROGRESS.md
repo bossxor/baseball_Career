@@ -1,3 +1,9 @@
+# 최신 구현 — 2026-11-05: KBO 입단 native HTTP 연결
+
+[M2-KBO-ENTRY-HTTP-20261105.md](M2-KBO-ENTRY-HTTP-20261105.md). 실제 저장 명령 지명 준비→결과→서명→아마추어 연말 마감→KBO 첫 등록, 타자/투수2/2·타입/린트0·읽기 전용 리뷰 이상 없음. 실제5명령 해시를 보존했다. controlled 고교 접두이므로 전체24경로/웹 생성 완료가 아니다.
+
+복무2년은 source9502bc35dfb67a94의 별도 hidden background이며 아직 완료 증거 없음. 동결 engine/rules/test 수정·반복 폴링 금지. 원본 서비스 WIP/큰JSON/zz 보존. 전체 check 미재실행. 다음은 실제 서비스 완료/재계약 첫 시즌 완주·최신 KBO 귀국 authority·E96·웹 native 생성/연결·99/24/PF다. PC 종료 금지. 아래는 과거 이력이다.
+
 # 최신 구현 — 2026-11-05: 아마추어 E35 공개 조회·HTTP 확인 완료
 
 [M2-AMATEUR-E35-HTTP-20261105.md](M2-AMATEUR-E35-HTTP-20261105.md)와 [서비스 실행](M2-NATIVE-SERVICE-CACHE-20261105.md)을 먼저 읽는다. E35 open 뒤 GET400을 고쳐 실제 HTTP2/2(E35+기존E36), actor/basis/day/revision 범위·receipt·CAS/replay/소유권·공개 필드를 검증했다. optional 이전2회는 controlled라 전체3native시즌 증거가 아니다.

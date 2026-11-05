@@ -1,0 +1,48 @@
+✖ HITTER owned KBO entry HTTP signs and activates exactly one real registration after explicit amateur closure (3356.4657ms)
+✖ PITCHER owned KBO entry HTTP signs and activates exactly one real registration after explicit amateur closure (2144.1034ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9006.9799
+
+✖ failing tests:
+
+test at apps\api\test\m2-kbo-entry.test.ts:1:806
+✖ HITTER owned KBO entry HTTP signs and activates exactly one real registration after explicit amateur closure (3356.4657ms)
+  AssertionError [ERR_ASSERTION]: {"code":"INVALID_REQUEST","messageKey":"invalid.request","requestId":"bcc6cc78-387f-495f-83e9-543d6cd21021"}
+  
+  400 !== 200
+  
+      at screen (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-kbo-entry.test.ts:23:102)
+      at async TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-kbo-entry.test.ts:24:17)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at apps\api\test\m2-kbo-entry.test.ts:1:806
+✖ PITCHER owned KBO entry HTTP signs and activates exactly one real registration after explicit amateur closure (2144.1034ms)
+  AssertionError [ERR_ASSERTION]: {"code":"INVALID_REQUEST","messageKey":"invalid.request","requestId":"e4778fd5-a5c8-4818-99f9-ad93258c05a5"}
+  
+  400 !== 200
+  
+      at screen (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-kbo-entry.test.ts:23:102)
+      at async TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-kbo-entry.test.ts:24:17)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 400,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

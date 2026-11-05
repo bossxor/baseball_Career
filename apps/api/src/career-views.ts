@@ -1,3 +1,4 @@
+import {kboRecruitmentScreen} from './career-kbo-entry-shell.js';
 import { eq } from 'drizzle-orm';
 import type { Context } from 'hono';
 import { gameSaves } from '@playball/db';
@@ -84,6 +85,7 @@ export async function getScreen(c: Context<{ Variables: AppVariables }>) {
     if ((RETRY_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(retryScreenOf(state, screenId));
     if ((US_RETURN_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(usReturnScreen(state, screenId));
     if ((US_MILITARY_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(usMilitaryScreen(state, screenId));
+    if(screenId==='KBO_RECRUITMENT')return c.json(kboRecruitmentScreen(state));
     if (screenId==='US_CAREER') return c.json(usPlayScreen(state));
     if (screenId==='CAREER_PRO_RETIREMENT' || screenId==='CAREER_PRO_ARCHIVE') return c.json(proRetirementScreen(state,screenId));
     if (screenId==='PRO_EVENTS') return c.json(proEventsScreen(state));

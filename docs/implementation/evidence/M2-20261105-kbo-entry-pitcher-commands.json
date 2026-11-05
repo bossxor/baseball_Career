@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "scope": "PARTIAL_NATIVE_HTTP_CHAIN",
+  "prefix": "CONTROLLED_HIGH_SCHOOL_CLOSED_SEASON_AND_ROUTE",
+  "kind": "PITCHER",
+  "commands": [
+    {
+      "type": "PREPARE",
+      "payload": {},
+      "beforeSha256": "76563b2067a695d5ff5f72ce3f6fd66276ee5ac7e0065e3bd48f46567e9f4e33",
+      "afterSha256": "e5b54703be4ce81e55b817c2c911b4d6b43aecca2dcd826d9551f59afb1fcc5a"
+    },
+    {
+      "type": "RESOLVE",
+      "payload": {
+        "programVersion": 1
+      },
+      "beforeSha256": "e5b54703be4ce81e55b817c2c911b4d6b43aecca2dcd826d9551f59afb1fcc5a",
+      "afterSha256": "746a2ea8d86fea8c1df7f393b73495b2df251434544a4f585a41d4d96d88d2ff"
+    },
+    {
+      "type": "DECIDE",
+      "payload": {
+        "programVersion": 2,
+        "decision": "SIGN",
+        "eventVersion": 1
+      },
+      "beforeSha256": "746a2ea8d86fea8c1df7f393b73495b2df251434544a4f585a41d4d96d88d2ff",
+      "afterSha256": "0bc3662c965ff64888a191f8e8743a3fa7729fe6e53545cec938325de89a1cba"
+    },
+    {
+      "type": "CLOSE_YEAR",
+      "payload": {
+        "forfeitUnusedTraining": true
+      },
+      "beforeSha256": "0bc3662c965ff64888a191f8e8743a3fa7729fe6e53545cec938325de89a1cba",
+      "afterSha256": "8760eabffa87a35440bc2a48a5c99518455c76de71a090255fd065c20ce449a3"
+    },
+    {
+      "type": "ACTIVATE",
+      "payload": {},
+      "beforeSha256": "8760eabffa87a35440bc2a48a5c99518455c76de71a090255fd065c20ce449a3",
+      "afterSha256": "9e69427217812158f0d82a062ce590ebe953086c70a6fb6e6a7980a7b6df9564"
+    }
+  ],
+  "fullPathProven": false
+}

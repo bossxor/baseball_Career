@@ -1,0 +1,10 @@
+✔ HITTER owned KBO entry HTTP signs and activates exactly one real registration after explicit amateur closure (9709.2646ms)
+✔ PITCHER owned KBO entry HTTP signs and activates exactly one real registration after explicit amateur closure (8748.4815ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 21764.621
