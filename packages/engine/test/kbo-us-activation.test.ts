@@ -210,3 +210,35 @@ test('KBO-origin MLB FA changes actual club while preserving origin inventory, h
  const next=acceptUsMajorFreeAgency(c,c.revision,annualFunding(c),undefined,offer.offerKey);assert.notEqual(next.protagonistOrganizationId,old);assert.deepEqual(next.kboTransfer!.origin,origin);assert.deepEqual(usCareerView(JSON.parse(JSON.stringify(next))),usCareerView(next));
  const closed=finishControlledMajorSeason(openingTransferred(next)),continued=startNextUsMajorSeason(closed,closed.revision,annualFunding(closed));assert.equal(continued.protagonistOrganizationId,offer.organizationId);assert.equal(continued.contract.years,next.contract.years!-1);assert.deepEqual(continued.kboTransfer!.origin,origin);usCareerView(continued);
 });
+
+import {openUsMajorFaWindow} from '../src/us-major-fa-window.js';
+import {createKboRosterWorld} from '../src/kbo-world.js';
+import {openUsKboReturn,acceptUsKboReturn,usKboReturnView} from '../src/us-kbo-return.js';
+import type {UsKboReturnAuthority} from '../src/us-kbo-return.js';
+
+let majorFaReturnCache:ReturnType<typeof buildMajorFaReturn>|undefined;
+function majorFaReturnFixture(){return structuredClone(majorFaReturnCache??=buildMajorFaReturn());}
+function buildMajorFaReturn(){
+ const t=transferred(80,27);let c=finishControlledMajorSeason(openingTransferred(t.us));
+ while(!usYearTransitionReadiness(c).mlbService.freeAgentEligible)c=finishControlledMajorSeason(openingTransferred(startNextUsMajorSeason(c,c.revision,annualFunding(c))));
+ const w=openUsMajorFaWindow(c,c.revision,annualFunding(c)),target=String(Number(w.world.seasonKey)+1),world={...createKboRosterWorld({worldKey:w.world.worldKey,seasonKey:target,seed:w.world.seed,difficulty:w.difficulty}),status:'ACTIVE' as const,calendar:createSeasonCalendar(Number(target),'calendar-2')};
+ const source=t.source;source.phaseContext={phase:'ARCHIVED'};
+ const host={...structuredClone(source),revision:100,world,records:structuredClone(w.records),health:createHealthLedger(createWorldStream('controlled-current-domestic','health','roster'))},authority:UsKboReturnAuthority={receiptKey:'controlled-authoritative-domestic-v100',revision:100,host};
+ return {w,source,authority};
+}
+test('Major FA E66 OPEN_RETURN opens a domestic return from the latest KBO authority and transfers ownership atomically',()=>{
+ const {w,source,authority}=majorFaReturnFixture(),raw=canonicalJson({w,source,authority}),opened=openUsKboReturn(w,w.revision,source,authority,authority.revision);
+ assert.equal(canonicalJson({w,source,authority}),raw);const view=usKboReturnView(opened),q=opened.domesticReturn!;assert.equal(q.marketEventKey,w.majorFaWindow!.eventKey);assert.equal(q.marketId,w.majorFaWindow!.windowId);assert.ok(view.offers.length>=1);
+ const res=acceptUsKboReturn(opened,opened.revision,source,authority,authority.revision,{eventKey:q.eventKey,eventVersion:1,offerKey:q.offers[0]!.offerKey,worldDay:q.issuedWorldDay});
+ assert.equal(res.archivedUs.majorFaWindow,undefined);assert.equal(res.archivedUs.events.find(e=>e.eventKey===q.marketEventKey)!.status,'RESOLVED');assert.equal(res.kbo.world.seasonKey,authority.host.world.seasonKey);assert.equal(res.kbo.revision,Math.max(opened.revision,authority.revision)+1);assert.ok(res.kbo.world.players[w.protagonistKey]);
+ assert.deepEqual(usCareerView(JSON.parse(JSON.stringify(res.archivedUs))),usCareerView(res.archivedUs));
+});
+test('Major FA return quote is pinned to the latest authority; continuing in the US cancels only E67 and a non-origin Major is refused',()=>{
+ const {w,source,authority}=majorFaReturnFixture(),opened=openUsKboReturn(w,w.revision,source,authority,authority.revision),q=opened.domesticReturn!;
+ assert.throws(()=>openUsKboReturn(w,w.revision,source,authority,99),/STALE_US_KBO_AUTHORITY/);
+ const moved=structuredClone(authority);moved.receiptKey='newer';assert.throws(()=>openUsKboReturn(opened,opened.revision,source,moved,moved.revision),/US_KBO_RETURN_QUOTE_CHANGED/);
+ const forged=structuredClone(opened);forged.domesticReturn!.marketId='foreign';assert.throws(()=>usCareerView(forged),/INVALID_US_KBO_RETURN/);
+ const signed=acceptUsMajorFreeAgency(opened,opened.revision,annualFunding(opened),undefined,usMajorFreeAgencyPreview(w,annualFunding(w)).offers[0]!.offerKey);
+ assert.equal(signed.domesticReturn,undefined);assert.equal(signed.events.find(e=>e.eventKey===q.eventKey)!.status,'CANCELLED_WITH_REASON');assert.equal(signed.majorFaWindow,undefined);assert.equal(signed.events.find(e=>e.eventKey===q.marketEventKey)!.resolution!.command,'ACCEPT_CAREER_OFFER');
+ const direct=structuredClone(w);delete direct.kboTransfer;assert.throws(()=>openUsKboReturn(direct,direct.revision,source,authority,authority.revision),/./);
+});

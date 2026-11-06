@@ -1,3 +1,4 @@
+import {cancelUsKboReturnQuote} from './us-kbo-return.js';
 import {separateUsTransferRelations} from './us-relation-transfer.js';
 import {hasOnlyUsMajorFaWindowEvent,completeUsMajorFaWindow} from './us-major-fa-window.js';
 import {formRegisteredTeamTeammate} from './team-teammates.js';
@@ -56,7 +57,7 @@ export function startNextUsMajorSeason(c:UsCareer,revision:number,funding:readon
 }
 /** Choose an owned MLB FA quote; omitted offer key preserves the original-club legacy command. */
 export function acceptUsMajorFreeAgency(c:UsCareer,revision:number,funding:readonly UsAnnualFunding[],counterOfferKey?:string,offerKey?:string):UsCareer {
- assertUsCareerRevision(c,revision);const preview=usMajorFreeAgencyPreview(c,funding);if(!preview.offers.length)throw new RangeError('US_MAJOR_FA_UNFUNDED');const q=market(c),offer=preview.offers.find(o=>offerKey===undefined?o.organizationId===c.protagonistOrganizationId:o.offerKey===offerKey);if(!offer)throw new RangeError('US_MAJOR_OFFER_NOT_FOUND');
+ assertUsCareerRevision(c,revision);c=cancelUsKboReturnQuote(c);const preview=usMajorFreeAgencyPreview(c,funding);if(!preview.offers.length)throw new RangeError('US_MAJOR_FA_UNFUNDED');const q=market(c),offer=preview.offers.find(o=>offerKey===undefined?o.organizationId===c.protagonistOrganizationId:o.offerKey===offerKey);if(!offer)throw new RangeError('US_MAJOR_OFFER_NOT_FOUND');
  const foreign=offer.organizationId!==c.protagonistOrganizationId;if(foreign&&counterOfferKey!==undefined)throw new RangeError('INVALID_AGENT_US_OFFER');
  const agent=foreign?{annualSalaryUsd:offer.annualSalaryUsd}:careerAgentUsSalary(c,funding,offer.annualSalaryUsd,counterOfferKey),prepared=completeUsMajorFaWindow(c,'ACCEPT_CAREER_OFFER',JSON.stringify(['us-major-fa-signing',c.majorFaWindow?.windowId??null,offer.offerKey,preview.nextSeasonKey])),stage=stageUsControlledMajorYear(prepared,revision,true,offer),registered=Object.keys(stage.world.players).sort(),sortedFunding=funding.map(f=>({...f})).sort((a,b)=>a.organizationId<b.organizationId?-1:1),nextContract={...usMajorFaContract(c,c.contract,stage.targetSeasonKey,agent.annualSalaryUsd,offer.years),nationalReleaseAllowed:offer.nationalReleaseAllowed,militaryReturnOption:offer.militaryReturnOption};
  let inventory;try{inventory=fundUsMinorYear(c.inventory,stage.targetSeasonKey,registered,sortedFunding,offer.organizationId,nextContract.annualSalaryUsd);}catch(error){if(error instanceof RangeError&&error.message==='US_MINOR_CONTRACT_BUDGET_REQUIRED')throw new RangeError('US_MAJOR_CONTRACT_BUDGET_REQUIRED',{cause:error});throw error;}
