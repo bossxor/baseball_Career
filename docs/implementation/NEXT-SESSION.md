@@ -1,3 +1,7 @@
+# 최신 구현 — 2026-11-06: Major FA E66 국내 복귀 + 미국 E96 재회·과거 신원
+
+[M2-MAJOR-FA-RETURN-20261106.md](M2-MAJOR-FA-RETURN-20261106.md): 마이너 만료 복귀(E67+원자 이전)를 KBO 출신 Major FA(E66 majorFaWindow)로 확장, 최신 KBO authority만 사용, 미국 잔류 서명 시 열린 E67만 취소. 신규2+회귀12 통과. [M2-US-TEAM-REUNION-E96-20261106.md](M2-US-TEAM-REUNION-E96-20261106.md): 미국 같은 팀 등록 E96/REUNITED_TEAM owner와 KBO→US 과거 관계 신원 봉인(relationIdentities). 직행자 귀국·API/웹 연결·native 장기 증거·기존 저장 신원 복구는 남아 있다. M2 완료 아님.
+
 # 최신 구현 — 2026-11-06: 웹 고교 생성 폼·진로/KBO 입단·재도전 흐름 화면
 
 [M2-WEB-CREATE-FLOW-RETRY-20261106.md](M2-WEB-CREATE-FLOW-RETRY-20261106.md). 생성 폼이 CAREER_SCHOOL_CREATE로 연결(학교9/성장·현실/투수 보조구종), 서버가 주는 CAREER_FLOW 화면의 명령만 재전송하는 #/flow 화면(결산→졸업 진로→KBO 지명·입단, KBO 재도전 안내→진로→준비→은퇴). API는 ACK_SEASON_REVIEW/OPEN_ROUTE 2개만 추가. 한계: 대학/미국 진로·프로 시즌·재도전 훈련 선택·실기기 미검증, 전체 check 미실행.

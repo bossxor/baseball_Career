@@ -74,7 +74,7 @@ export interface UsCareer {
  achievements?:CareerAchievementLedger;
  agents?:CareerAgentLedger;
  goals?:CareerGoalLedger;domesticReturn?:import('./us-kbo-return.js').UsKboReturnQuote;minorMarket?:UsMinorMarket;minorRenewal?:UsMinorRenewal;
- majorFaWindow?:import('./us-major-fa-window.js').UsMajorFaWindow;retirement?:UsCareerRetirement;schemaVersion:1|2|3|4;majorYears?:readonly UsMajorYearArchive[];minorYears?:readonly UsMinorYearArchive[];mode:'US_CAREER';revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveUsRosterWorld;protagonistKey:string;protagonistOrganizationId:string;
+ majorFaWindow?:import('./us-major-fa-window.js').UsMajorFaWindow;relationIdentities?:NonNullable<import('./relationship-history.js').RelationshipHistorySource['detachedPlayers']>;retirement?:UsCareerRetirement;schemaVersion:1|2|3|4;majorYears?:readonly UsMajorYearArchive[];minorYears?:readonly UsMinorYearArchive[];mode:'US_CAREER';revision:number;difficulty:HighSchoolCareer['difficulty'];world:ActiveUsRosterWorld;protagonistKey:string;protagonistOrganizationId:string;
  phaseContext:UsPhase;postseason?:{bracket:MlbPostseason;conferences:Record<MlbLeague,string[]>;gameEvidence:string[]};season?:UsSeasonState;seasonSchedule?:UsSeasonSchedule;preseasonPlan?:UsPreseasonPlan;campNotices?:readonly EventInstance[];
  activation:{receiptKey:string;sourceYearEndReceiptKey:string;sourceRevision:number;contractKey:string;populationBasis:'INITIAL_INVENTORY'|'LEGACY_BOOTSTRAP'|'KBO_TRANSFER'};
  registration:{playerKey:string;clubId:string;level:UsLevel;seasonKey:string;status:'ACTIVE'|'INJURED'};

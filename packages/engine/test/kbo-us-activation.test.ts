@@ -80,8 +80,8 @@ test('KBO overseas activation keeps nonapplicable service and refuses unresolved
  const bad=structuredClone(source);bad.military!.status='UNRESOLVED';const before=canonicalJson(bad);assert.throws(()=>activateKboUsCareer(bad,bad.revision,roster,inventory),/KBO_US_MILITARY_BLOCKED/);assert.equal(canonicalJson(bad),before);assert.equal(canonicalJson({source,roster,inventory}),raw);
 });
 
-function transferred(ability=80,age=29,budget=40_000_000,otherBudget=budget){
- const source=postedCareer(ability,age),holder=source.posting!.windows[0]!.offers!.find(o=>o.offerKey===source.posting!.windows[0]!.signedOfferKey)!.organizationId,roster=createUsRosterWorld({worldKey:source.world.worldKey,seasonKey:'2043',seed:source.world.seed,difficulty:source.difficulty,organizations:Array.from({length:30},(_,i)=>({id:'US'+String(i+1).padStart(2,'0'),name:'US Club '+String(i+1).padStart(2,'0')}))}),inventory=initialUsRecruitmentInventory(roster,roster.organizations.map(o=>({organizationId:o.id,rookieCapacity:23,aCapacity:23,availableBudgetUsd:o.id===holder?budget:otherBudget,nationalReleaseAllowed:true,militaryReturnOption:true})));
+function transferred(ability=80,age=29,budget=40_000_000,otherBudget=budget,mutate?:(s:KboCareer)=>void){
+ const source=postedCareer(ability,age);mutate?.(source);const holder=source.posting!.windows[0]!.offers!.find(o=>o.offerKey===source.posting!.windows[0]!.signedOfferKey)!.organizationId,roster=createUsRosterWorld({worldKey:source.world.worldKey,seasonKey:'2043',seed:source.world.seed,difficulty:source.difficulty,organizations:Array.from({length:30},(_,i)=>({id:'US'+String(i+1).padStart(2,'0'),name:'US Club '+String(i+1).padStart(2,'0')}))}),inventory=initialUsRecruitmentInventory(roster,roster.organizations.map(o=>({organizationId:o.id,rookieCapacity:23,aCapacity:23,availableBudgetUsd:o.id===holder?budget:otherBudget,nationalReleaseAllowed:true,militaryReturnOption:true})));
  return {source,us:activateKboUsCareer(source,source.revision,roster,inventory)};
 }
 function openingTransferred(c:UsCareer){let n=confirmUsPreseasonPlan(c,c.revision);for(const e of unreadUsFirstCampNotices(n))n=resolveUsFirstCampNotice(n,n.revision,{eventKey:e.eventKey,eventVersion:e.eventVersion,command:'ACK_EVENT'});n=publishUsSeasonSchedule(n,n.revision);return startUsRegularSeason(n,n.revision);}
@@ -241,4 +241,13 @@ test('Major FA return quote is pinned to the latest authority; continuing in the
  const signed=acceptUsMajorFreeAgency(opened,opened.revision,annualFunding(opened),undefined,usMajorFreeAgencyPreview(w,annualFunding(w)).offers[0]!.offerKey);
  assert.equal(signed.domesticReturn,undefined);assert.equal(signed.events.find(e=>e.eventKey===q.eventKey)!.status,'CANCELLED_WITH_REASON');assert.equal(signed.majorFaWindow,undefined);assert.equal(signed.events.find(e=>e.eventKey===q.marketEventKey)!.resolution!.command,'ACCEPT_CAREER_OFFER');
  const direct=structuredClone(w);delete direct.kboTransfer;assert.throws(()=>openUsKboReturn(direct,direct.revision,source,authority,authority.revision),/./);
+});
+
+import {usRelationshipListView} from '../src/us-relations.js';
+test('KBO-origin US career keeps sealed identities of past KBO relations that are not in the US world',()=>{
+ let ghost='';
+ const {us}=transferred(80,29,40_000_000,40_000_000,s=>{const club=s.world.clubs.find(c=>c.id===s.protagonistClubId)!;ghost=club.roster.find(k=>k!==s.protagonistKey)!;const pair=JSON.stringify([s.protagonistKey,ghost].sort());s.relationships={...s.relationships,relations:[...s.relationships.relations,{relationKey:JSON.stringify(['TEAMMATE',pair]),normalPairKey:pair,primaryPlayerKey:s.protagonistKey,otherPlayerKey:ghost,type:'TEAMMATE',stage:'SEPARATED',milestones:[{stage:'FORMED',evidenceKey:'controlled-kbo-formation',worldDay:0},{stage:'SEPARATED',evidenceKey:'controlled-kbo-separation',worldDay:1}]}]};});
+ assert.ok(ghost);assert.ok(!Object.hasOwn(us.world.players,ghost));
+ const row=usRelationshipListView(us).find(r=>r.otherPlayerKey===ghost)!;assert.ok(row);assert.equal(row.otherAvailability,'HISTORICAL_ONLY');assert.ok(row.other!.name);assert.doesNotMatch(JSON.stringify(row),/abilities|potential|careerPeaks/);
+ assert.deepEqual(usRelationshipListView(JSON.parse(JSON.stringify(us))),usRelationshipListView(us));
 });

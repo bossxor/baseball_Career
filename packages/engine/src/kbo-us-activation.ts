@@ -21,6 +21,17 @@ function signedOffer(c:KboCareer){
  throw new RangeError('KBO_US_TRANSFER_NOT_READY');
 }
 
+/** Past KBO relations whose person is in neither the US world nor the carried amateur history keep a sealed identity (read-only projection source). */
+function sealedRelationIdentities(source:KboCareer,us:UsCareer):NonNullable<UsCareer['relationIdentities']>|undefined {
+ const known=new Set([...Object.keys(us.world.players),...Object.keys(source.amateurHistory.world.players),...(source.amateurHistory.previousSeasons??[]).flatMap(a=>Object.keys(a.world.players))]),out:Record<string,NonNullable<UsCareer['relationIdentities']>[string]>={};
+ for(const r of source.relationships.relations){
+  const key=r.otherPlayerKey;if(known.has(key)||Object.hasOwn(out,key))continue;
+  const club=source.world.clubs.find(c=>c.roster.includes(key)),player=source.world.players[key]??source.freeAgents?.players[key]?.player??source.retiredPlayers?.find(p=>p.playerKey===key)?.player;
+  if(player)out[key]={player:structuredClone(player),lastKnownRegistration:club?{seasonKey:source.world.seasonKey,leagueKey:'KBO',teamId:club.id,teamName:club.name}:null};
+ }
+ return Object.keys(out).length?out:undefined;
+}
+
 /** Builds a US career root from a sealed KBO posting/overseas FA. Does not re-pay the KBO club fee. */
 export function activateKboUsCareer(source:KboCareer,revision:number,roster:UsRosterWorld,inventory:UsRecruitmentWorld):UsCareer {
  assertKboCareerRevision(source,revision);if(source.phaseContext.phase!=='ARCHIVED')throw new RangeError('KBO_US_TRANSFER_NOT_READY');
@@ -57,5 +68,6 @@ export function activateKboUsCareer(source:KboCareer,revision:number,roster:UsRo
  if(source.proAwards!==undefined)us.proAwards=structuredClone(source.proAwards);
  if(source.aliases!==undefined)us.aliases=structuredClone(source.aliases);
  if(source.recordCorrections!==undefined)us.recordCorrections=structuredClone(source.recordCorrections);
+ const identities=sealedRelationIdentities(source,us);if(identities)us.relationIdentities=identities;
  assertUsCareerRevision(us,us.revision);return refreshCareerRepertoireEvents(refreshCareerPreseasonGoalSelection(refreshCareerSeasonGoals(us)));
 }
