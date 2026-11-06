@@ -19,6 +19,8 @@ import {prepareCareerUsDirect,careerUsDirectView} from '../packages/engine/src/c
 import {createUsRosterWorld} from '../packages/engine/src/us-world.ts';
 import {initialUsRecruitmentInventory} from '../packages/engine/src/us-inventory.ts';
 import {startCollegeMilitaryLeave,advanceCollegeMilitaryService,resumeCollegeAfterService} from '../packages/engine/src/college-service.ts';
+import {validateSeasonGrowthLedger} from '../packages/engine/src/growth-ledger.ts';
+import {graduateCollegeCareer} from '../packages/engine/src/college-graduation.ts';
 import {canonicalJson} from '../packages/engine/src/game.ts';
 
 export const HS_SPEC={worldKey:'m2-closure-native',seasonKey:'2032',seasonYear:2032,seed:'m2-closure-native-v1',schoolId:'H01',player:{simulationKey:'own',name:'경로 검증',kind:'HITTER',position:'CF',throws:'R',bats:'R',pitchForm:null,archetype:'BALANCED',focus:['CONTACT','POWER','DISCIPLINE','DEFENSE'],difficulty:'GROWTH'}};
@@ -103,9 +105,26 @@ export function collegeYear(t){
  }
  t.command('ACKNOWLEDGE_COLLEGE_REVIEW',{},s=>acknowledgeCollegeSeasonReview(s,s.revision));
 }
+/** Close the academic year and enter the next. Returns growth-ledger facts: the closed year's ledger conserves its budget, no period is paid twice, and the new year starts with an empty ledger from the carried player. */
 export function collegeNextYear(t){
  t.command('CLOSE_COLLEGE_YEAR',{forfeitUnusedTraining:true},s=>closeCollegeSeasonForNextYear(s,s.revision,true));
+ const closed=t.state.seasonGrowth,own=t.state.protagonistKey??'own';
+ validateSeasonGrowthLedger(closed);assert.equal(closed.finalized,true);
+ const keys=closed.entries.map(e=>e.periodKey);assert.equal(new Set(keys).size,keys.length,'growth period paid twice');
+ const sum=a=>Object.values(a).reduce((x,y)=>x+y,0),gained=closed.entries.reduce((x,e)=>x+e.gainedUnits,0);
+ assert.equal(sum(t.state.world.players[own].abilities),sum(closed.seasonStart.abilities)+gained-closed.aging.lossUnits,'closed-year ability delta must equal ledger gains minus aging');
+ const carried=canonicalJson(t.state.world.players[own].abilities);
  t.command('START_COLLEGE_YEAR',{},s=>startNextCollegeSeason(s,s.revision));
+ const fresh=t.state.seasonGrowth;validateSeasonGrowthLedger(fresh);
+ assert.equal(fresh.entries.length,0);assert.equal(fresh.totalBudgetUnits,0);assert.equal(canonicalJson(fresh.seasonStart.abilities),carried,'next year must start from the carried abilities');
+ return {periods:keys.length,gainedUnits:gained,agingLossUnits:closed.aging.lossUnits,newLedgerEmpty:true};
+}
+/** Graduation then KBO signing (4th academic year already reviewed). */
+export function collegeGraduateAndSign(t){
+ t.command('GRADUATE_COLLEGE',{eventVersion:t.state.events.at(-1).version},s=>graduateCollegeCareer(s,s.revision,s.events.at(-1).version));
+ const draft=kboSign(t,null);
+ assert.equal(t.state.amateurHistory.collegeAdmission.status,'GRADUATED');
+ return draft;
 }
 export function collegeLeave(t){
  const academicYear=t.state.collegeAdmission.academicYear;

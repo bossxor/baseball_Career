@@ -277,6 +277,7 @@ export const PATH_REQUIREMENTS={
  P01:[...HS,...KBO],
  P03:[...HS,...COLLEGE,...YEAR,'CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR'],
  P04:[...HS,...COLLEGE,...YEAR,'CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR',...YEAR,'ENTER_EARLY_DRAFT','PREPARE_KBO_DRAFT','RESOLVE_KBO_DRAFT','RETURN_UNSIGNED_COLLEGE','CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR'],
+ P05:[...HS,...COLLEGE,...YEAR,'CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR',...YEAR,'CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR',...YEAR,'CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR',...YEAR,'GRADUATE_COLLEGE',...KBO],
  P07:[...HS,'PREPARE_US_DIRECT',...KBO],
  P12:[...HS,...COLLEGE,'START_COLLEGE_MILITARY_LEAVE','ADVANCE_COLLEGE_SERVICE','RESUME_COLLEGE'],
 };
@@ -285,7 +286,7 @@ export const PATH_REQUIREMENTS={
 export const PATH_GAPS={
  P02:'no native pitcher chain driver (HS pitcher creation->HS216->KBO sign->preseason roster role->E86 pitch training); role competition has no standalone engine command (kbo-opening-roster.ts:confirmKboOpeningRoster only) and XP-cap/pitch-ratio assertions are covered only by controlled slice',
  P04:'native chain runs (P04-native-decline-variant) but the native player is DRAFTED at the early draft (round 8), so the undrafted branch the path requires is not reached; only drafted-then-DECLINED to E74 return is executed. Needs a weaker native player or seed search for an undrafted draw (career-kbo.ts:resolveCareerKboDraft round null)',
- P05:'driver pending: four native college years (3 extra ~4min each) then graduateCollegeCareer->KBO draft',
+ P05:'ENGINE/PERSISTENCE: native chain ran 531 commands through 4 college years + graduation, then died at PREPARE_KBO_DRAFT with RangeError Invalid string length: the career state serializes past the V8 max string length (~0.5 GB). Measured after year 2: 123 MB (collegeEarlyRoute 54 MB, previousSeasons 31 MB, records 16 MB, collegeCup 7.5 MB, days 7.6 MB). Save-state snapshots duplicate per-year data; same blocker for M3 persistence. Needs engine to stop embedding duplicated season snapshots (or a streaming hasher in the harness)',
  P06:'native default hitter ends HS at overall 51.6; career-us.ts:careerUsDirectView stays hidden (US_DIRECT_MIN_SCOUT_SCORE in draft.ts). No creation preset/seed reaches the threshold within one HS season; needs seed search (~4 min/seed) or a college->US comparison chain (carryCollegeUsComparison)',
  P08:'KBO posting needs 7 closed native KBO registration seasons + military COMPLETED (kbo-posting.ts:kboPostingEligibility SERVICE_SHORT/MILITARY_BLOCKED); no native multi-season KBO driver (closeKboSeason->stageKboAgeAndContracts->startNextKboSeason x7) nor native military completion built; controlled fixture only',
  P09:'same prerequisite as P08 (7 native KBO seasons + military) before request/defer/no-offer/remain branches',

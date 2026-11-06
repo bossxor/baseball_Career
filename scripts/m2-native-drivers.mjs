@@ -53,12 +53,12 @@ export function nativePaths(trace,only){
   if(want('P03')||want('P04')||want('P05')){
    N.collegeYear(tc);
    const y1=collegeGames(tc.state).length;
-   N.collegeNextYear(tc);
+   const growth=N.collegeNextYear(tc);
    assert.equal(tc.state.collegeAdmission.academicYear,2);assert.equal(tc.state.collegeAdmission.yearsCompleted,1);
    assert.equal(Object.values(tc.state.records.games).filter(g=>g.scope.leagueKey==='HS').length,216);
    if(want('P03')){
     const totals=recordTotals(tc.state.records,{leagueKey:'COLLEGE',phase:'REGULAR',seasonKey:Object.values(tc.state.records.games).find(g=>g.scope.leagueKey==='COLLEGE').scope.seasonKey});
-    out.push(trace('P03-native-HS-college-year1-to-year2',null,prefix('Creation -> actual HS216 -> admission -> actual college216-game year, cup, review, year close and second-year entry.'),tc).finish({completesPaths:['P03'],collegeRegularGames:y1,teamGameCounts:[...new Set(Object.values(totals.teams).map(x=>x.games))],academicYear:2,yearsCompleted:1,hsRecordsPreserved:true,note:'Branch shares trunk rows; no extra command executed.'}));
+    out.push(trace('P03-native-HS-college-year1-to-year2',null,prefix('Creation -> actual HS216 -> admission -> actual college216-game year, cup, review, year close and second-year entry.'),tc).finish({completesPaths:['P03'],collegeRegularGames:y1,teamGameCounts:[...new Set(Object.values(totals.teams).map(x=>x.games))],academicYear:2,yearsCompleted:1,growthLedger:growth,growthDuplicateZero:true,hsRecordsPreserved:true,note:'Branch shares trunk rows; no extra command executed.'}));
    }
   if(want('P04')){
    // Native draw gives this player a pick (undrafted branch not reachable), so only the DECLINE variant (drafted, unsigned) is executed.
@@ -72,6 +72,15 @@ export function nativePaths(trace,only){
    N.collegeNextYear(t);
    assert.equal(t.state.collegeAdmission.academicYear,3);assert.equal(t.state.collegeAdmission.earlyDraftAttempted,true);assert.equal(t.state.previousKboRecruitments.length,1);
    out.push(t.finish({variantOf:'P04',draftRound:round,undraftedBranch:!round,declined:Boolean(round),returnEnrollmentPreserved:true,earlyAttempts:1,jsonReplay:'every command'}));
+  }
+  if(want('P05')){
+   if(!want('P04'))N.collegeYear(tc);
+   const growth=[N.collegeNextYear(tc)];N.collegeYear(tc);growth.push(N.collegeNextYear(tc));N.collegeYear(tc);
+   assert.equal(tc.state.collegeAdmission.academicYear,4);
+   const t=trace('P05-native-college-year4-graduation-to-KBO',null,prefix('Creation -> HS216 -> four native college years -> graduation -> KBO draft, signing, activation.'),tc);
+   const from=t.rows.length,draft=N.collegeGraduateAndSign(t);
+   const games=collegeGames(t.state).length;assert.equal(games,864);
+   out.push(t.finish({completesPaths:['P05'],graduated:true,collegeRegularGames:games,collegeRecordsSeparateFromHs:Object.values(t.state.records.games).some(g=>g.scope.leagueKey==='HS')&&games===864,growthLaterYears:growth,draftedClubId:draft.draftedClubId,draftRound:draft.round,graduationCommands:cmds(t,from),jsonReplay:'every command'}));
   }
   }
  }

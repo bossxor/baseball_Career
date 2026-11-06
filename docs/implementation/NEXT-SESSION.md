@@ -1,5 +1,7 @@
 # 최신 구현 — 2026-11-06: 24경로 native 폐쇄 러너 (4/24 엔진 native 증명)
 
+추가(실행 C, 3h20): P03 기간 성장 중복0 검증 통과(원장 검증·기간키 유일·능력 증감=이득−노화·새 원장 비어 있음), 영수증 재검증 해시가 실행 A와 동일. **P05는 엔진/저장 문제로 막힘**: 대학4년+졸업까지 531명령 실행 후 `PREPARE_KBO_DRAFT`에서 `Invalid string length`(커리어 상태 직렬화가 ~0.5GB 한계 초과; 2년차 후 123MB, collegeEarlyRoute 54MB·previousSeasons 31MB). M3 DB 저장에도 같은 위험.
+
 [M2-CLOSURE-GAPS-20261106.md](M2-CLOSURE-GAPS-20261106.md)에 24경로별 순위 격차표. `scripts/verify-m2-closure.mjs --scenarios=nativePaths --native=P01,...`가 생성부터 실제 명령만으로 이어진 체인(고교216→KBO 계약/대학1년/휴학·복무·복학/미국 카드 숨김)을 만들고, 러너가 영수증만으로(생성 상태 재구성 해시, 해시 연결, 필수 명령 순서) 재검증해야 상태가 `ENGINE_NATIVE_PATH_PROVEN`이 된다(수동 편집 금지). 실행 A 종료0: **P01·P03·P07·P12 증명**, 나머지 20개는 `FULL_PATH_NOT_PROVEN`+사유. 증거 `evidence/M2-20261106-closure-native-a.{json,log,exitcode.txt}`. 단일 프로세스 약63분.
 
 최우선 엔진 버그: native KBO 정규시즌이 첫 시즌 world day 67에서 `INVALID_PRO_TRAIT_PHASE`로 중단(`kbo-progress.ts:163`→`pro-trait-notices.ts:50`, phaseContext.pendingGame 잔존 의심). P15/P11/P08/P09/P16 및 P02 완성을 막는다. 재현·실패 상태는 공유 노트 폴더. P04는 native 선수가 조기 지명되어(8라운드) 미지명 분기에 도달 못함—DECLINE 변형(실행 B 종료0, 323명령, 증거 closure-native-b.*)만 실행했고 미증명 유지. P06은 native 선수 종합51.6으로 미국 카드 숨김. P17~P24는 M6/M3/M7 소유. `--tolerate-source-drift`로 실행(타 작업자의 엔진 수정이 기록됨); 릴리스 인용 전 조용한 트리에서 재실행. M2 완료 아님(4/24, 99사건 triage만, PF-D 미실행). 아래는 과거 이력이다.

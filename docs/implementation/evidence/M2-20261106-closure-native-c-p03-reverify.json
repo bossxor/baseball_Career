@@ -1,0 +1,34 @@
+{
+  "pathId": "P03",
+  "sliceId": "P03-native-HS-college-year1-to-year2",
+  "source": "docs/implementation/evidence/M2-20261106-closure-native-c-failed.json",
+  "verdict": {
+    "ok": true,
+    "commandChainHash": "3ed043e1da28f41f763df043c13f9fbfe6b7efdea8f8c6095ddb2dd7592dc1aa",
+    "finalStateHash": "4d1521544376c287252379778db25027f5045a6a6fb017345db12f658dbef8b8",
+    "commands": 212
+  },
+  "claims": [
+    "P03"
+  ],
+  "invariantReport": {
+    "completesPaths": [
+      "P03"
+    ],
+    "collegeRegularGames": 216,
+    "teamGameCounts": [
+      48
+    ],
+    "academicYear": 2,
+    "yearsCompleted": 1,
+    "growthLedger": {
+      "periods": 1,
+      "gainedUnits": 90659,
+      "agingLossUnits": 0,
+      "newLedgerEmpty": true
+    },
+    "growthDuplicateZero": true,
+    "hsRecordsPreserved": true,
+    "note": "Branch shares trunk rows; no extra command executed."
+  }
+}
