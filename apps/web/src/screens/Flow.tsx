@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button, isBusy } from '../ui.js';
 import { stateText } from '../screen-states.js';
 import type { ScreenState } from '../screen-states.js';
@@ -12,7 +12,9 @@ export interface FlowProps {
 export function Flow({ view, state = 'ready', onCommand, onBack, onReload }: FlowProps) {
   const [asking, setAsking] = useState<string | null>(null);
   const busy = isBusy(state), banner = state === 'ready' || state === 'empty' ? null : stateText('S03', state);
-  const pending = view?.commands.find(c => c.id === asking);
+  const pending = view?.commands.find(c => c.id === asking), confirmRef = useRef<HTMLElement>(null);
+  // Move focus into the confirmation so keyboard and screen-reader users land on the question.
+  useEffect(() => { if (pending) confirmRef.current?.focus(); }, [pending]);
   return (
     <main className="screen" aria-labelledby="flow-title" aria-busy={busy} data-screen="FLOW" data-state={state}>
       <header className="topbar">{onBack ? <button type="button" className="ghost" onClick={onBack}>커리어로</button> : <span />}</header>
@@ -28,10 +30,10 @@ export function Flow({ view, state = 'ready', onCommand, onBack, onReload }: Flo
           ) : null}
           {view.notice ? <p className="notice-card" role="status">{view.notice}</p> : null}
           {pending ? (
-            <section className="confirm-card" role="alertdialog" aria-labelledby="flow-confirm" aria-describedby="flow-confirm">
+            <section ref={confirmRef} tabIndex={-1} className="confirm-card" role="alertdialog" aria-labelledby="flow-confirm" aria-describedby="flow-confirm">
               <p id="flow-confirm"><strong>{pending.confirm}</strong></p>
               <div className="actions">
-                <Button primary busy={busy} onClick={() => { setAsking(null); onCommand?.(pending); }}>{pending.label}</Button>
+                <Button danger busy={busy} onClick={() => { setAsking(null); onCommand?.(pending); }}>{pending.label}</Button>
                 <Button onClick={() => setAsking(null)}>취소</Button>
               </div>
             </section>

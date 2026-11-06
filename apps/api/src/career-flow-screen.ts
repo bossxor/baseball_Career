@@ -1,5 +1,5 @@
 import * as engine from '@playball/engine';
-import {KBO_CLUBS} from '@playball/rules';
+import {KBO_CLUBS,ABILITY_LABELS,abilityKeys} from '@playball/rules';
 import type {SaveState} from './engine-command.js';
 
 /** One public, command-bearing screen for the school→KBO entry and pro-retry flows.
@@ -75,7 +75,7 @@ function schoolFlow(c:engine.HighSchoolCareer):FlowScreen {
 }
 
 function kboFlow(c:engine.KboCareer):FlowScreen {
- const p=c.world.players[c.protagonistKey],lines:{label:string;value:string}[]=[];
+ const p=c.world.players[c.protagonistKey]??c.preparationSeason?.world.players[c.protagonistKey],lines:{label:string;value:string}[]=[];
  if(p)lines.push({label:'선수',value:`${p.name} · ${p.age}세`});
  const out=(title:string,commands:FlowCommand[],notice:string|null=null):FlowScreen=>({screenId:'CAREER_FLOW',title,lines,commands,notice,careerRevision:c.revision});
  const r=c.retryPro,phase=c.phaseContext.phase;
@@ -101,7 +101,14 @@ function kboFlow(c:engine.KboCareer):FlowScreen {
   lines.push({label:'준비 시즌',value:`${v.seasonKey}시즌`},{label:'경기',value:`${v.completedTeamGames}/${v.scheduledTeamGames}`},{label:'남은 준비 기회',value:`${v.preparation.remaining}회`});
   const commands:FlowCommand[]=[];
   if(v.phase==='PREPARATION_PRE')commands.push(cmd(c,'prep-preseason','준비 시즌 시작','CAREER_RETRY_PRESEASON'));
-  else if(v.completedTeamGames<v.scheduledTeamGames)commands.push(cmd(c,'prep-game','1경기 진행','CAREER_RETRY_ADVANCE',{mode:'ONE_GAME'}),cmd(c,'prep-month','한 달 진행','CAREER_RETRY_ADVANCE',{mode:'ONE_MONTH'}));
+  else if(v.completedTeamGames<v.scheduledTeamGames){
+   // Training window and limits are the engine's (trainingPreview): open after a third of the games, once per season. CHALLENGE is not offered until its odds are shown.
+   if(p&&!v.trainingUsed&&v.completedTeamGames>=Math.ceil(v.scheduledTeamGames/3)){
+    for(const k of abilityKeys(p.kind))commands.push(cmd(c,'train-'+k,`훈련: ${ABILITY_LABELS[k]} 안정 성장 (피로 +5)`,'CAREER_RETRY_TRAIN',{choice:{type:'GUARANTEED',ability:k}}));
+    commands.push(cmd(c,'train-conditioning','훈련: 컨디션 회복 (피로 최대 -20)','CAREER_RETRY_TRAIN',{choice:{type:'CONDITIONING'}}),cmd(c,'train-skip','이번 시즌 훈련 건너뛰기','CAREER_RETRY_TRAIN',{choice:{type:'SKIP'}},'건너뛰면 이번 준비 시즌의 훈련 기회가 사라집니다. 건너뛸까요?'));
+   }
+   commands.push(cmd(c,'prep-game','1경기 진행','CAREER_RETRY_ADVANCE',{mode:'ONE_GAME'}),cmd(c,'prep-month','한 달 진행','CAREER_RETRY_ADVANCE',{mode:'ONE_MONTH'}));
+  }
   else commands.push(v.trainingUsed?cmd(c,'prep-settle','시즌 정산','CAREER_RETRY_SETTLE'):cmd(c,'prep-settle','남은 훈련 기회를 포기하고 정산','CAREER_RETRY_SETTLE',{forfeitUnusedTraining:true},'이번 준비 시즌의 훈련 기회는 사라집니다. 정산할까요?'));
   return out('재도전 준비 시즌',commands);
  }

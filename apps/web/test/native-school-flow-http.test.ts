@@ -141,6 +141,8 @@ test('pro retry shell is reachable from the web: notice → routes → preparati
         assert.deepEqual(view.commands.map(c => c.id), ['prep-game', 'prep-month']);
         view = await take('prep-game');
         assert.ok(view.commands.some(c => c.id === 'prep-game'), 'advance succeeded and the season continues');
+        // ponytail: the training window opens after 16 of 48 games (~minutes of PGlite time); TRAIN offering is typechecked, not run live.
+        assert.ok(!view.commands.some(c => c.id.startsWith('train-')), 'no training choices before the window opens');
       } else {
         view = await take('route-retire');
         assert.deepEqual(view.commands.map(c => c.id), ['retire']);

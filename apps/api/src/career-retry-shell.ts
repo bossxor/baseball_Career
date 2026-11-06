@@ -50,7 +50,12 @@ export function applyCareerRetry(state: SaveState, command: CommandBody): Applie
         const out = advanceKboRetryPreparation(career!, rev, p.mode === 'ONE_MONTH' ? 'ONE_MONTH' : 'ONE_GAME');
         next = out.career; stopReason = (out as { stopReason?: string }).stopReason; break;
       }
-      case 'CAREER_RETRY_TRAIN': next = trainKboRetryPreparation(career!, rev, p.choice as never); break;
+      case 'CAREER_RETRY_TRAIN': {
+        const t = p.choice as Payload | undefined;
+        const ok = t && typeof t === 'object' && (t.type === 'GUARANTEED' || t.type === 'CHALLENGE' ? typeof t.ability === 'string' && Object.keys(t).length === 2 : (t.type === 'CONDITIONING' || t.type === 'SKIP') && Object.keys(t).length === 1);
+        if (!ok) fail('INVALID_PAYLOAD');
+        next = trainKboRetryPreparation(career!, rev, p.choice as never); break;
+      }
       case 'CAREER_RETRY_SETTLE': next = settleKboRetryPreparation(career!, rev, p.forfeitUnusedTraining === true); break;
       case 'CAREER_RETRY_ACCEPT': next = acceptKboRetryOffer(career!, rev, { routePreviewId: str(p, 'routePreviewId'), offerKey: str(p, 'offerKey') }); break;
       case 'CAREER_RETRY_EXHAUST': next = openKboRetryExhaustion(career!, rev); break;

@@ -29,10 +29,10 @@ export function ScreenFrame({ id, state = 'ready', saveLabel, onBack, onReload, 
   );
 }
 
-export function Button({ children, onClick, primary, disabled, busy, type = 'button', describedBy }: {
-  children: ReactNode; onClick?: (() => void) | undefined; primary?: boolean | undefined; disabled?: boolean | undefined; busy?: boolean | undefined; type?: 'button' | 'submit'; describedBy?: string | undefined;
+export function Button({ children, onClick, primary, danger, disabled, busy, type = 'button', describedBy }: {
+  children: ReactNode; onClick?: (() => void) | undefined; primary?: boolean | undefined; danger?: boolean | undefined; disabled?: boolean | undefined; busy?: boolean | undefined; type?: 'button' | 'submit'; describedBy?: string | undefined;
 }) {
-  return <button type={type} className={primary ? 'btn primary' : 'btn'} onClick={onClick} disabled={disabled || busy} aria-busy={busy || undefined} aria-describedby={describedBy}>{children}</button>;
+  return <button type={type} className={primary ? 'btn primary' : danger ? 'btn danger' : 'btn'} onClick={onClick} disabled={disabled || busy} aria-busy={busy || undefined} aria-describedby={describedBy}>{children}</button>;
 }
 /** Error text sits next to the input it belongs to. */
 export const FieldError = ({ id, message }: { id: string; message?: string | undefined }) => (message ? <p id={id} className="field-error" role="alert">{message}</p> : null);
