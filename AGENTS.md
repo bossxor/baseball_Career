@@ -6,3 +6,4 @@
 - SLB Career는 직접 관찰한 공통 사용성 패턴만 참고한다. 코드, 이미지, 로고, 문구, 고유 화면은 복제하지 않는다. 프로젝트 로컬 에셋을 먼저 확인해 적합한 화면에 적용한다.
 - 타 채팅의 작업과 미커밋 변경을 보존한다. 담당 파일, 검증, 완료 범위를 명확히 하고, 사실은 코드·Git·실행 결과로 확인한다.
 - 의미 있는 변경은 코드·검증·관련 문서·Git 기록을 함께 남긴다. [진행](docs/implementation/PROGRESS.md), [최신 인계](docs/implementation/NEXT-SESSION.md), [설계 결정](docs/design/14-CANONICAL-DECISIONS.md)을 갱신한다.
+- Claude 팀은 `claude/*` 브랜치에서만 작업하고 Codex 작업 공간(`E:/AI/Game/baseball_*`)과 그 미커밋 변경은 건드리지 않는다. [Claude 팀 운영](docs/implementation/TF-OPERATIONS-CLAUDE.md)

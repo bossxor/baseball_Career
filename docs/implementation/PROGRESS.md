@@ -1,3 +1,7 @@
+# 2026-11-07 Claude 팀 착수·SLB 플레이·장면 적용
+
+Codex와 별개로 Claude Code 팀(브랜치 `claude/tf-lead`, 기준 `d71236b`)이 같은 목표를 병행한다. 운영: [TF-OPERATIONS-CLAUDE](TF-OPERATIONS-CLAUDE.md). SLB Career를 직접 플레이해(생성~프로 1년차) [기록](../benchmark/SLB_CAREER_PLAYTHROUGH.md)·[분석](../benchmark/SLB_CAREER_UX_ANALYSIS.md)·[백로그](../benchmark/SLB_CAREER_BACKLOG.md)를 남겼다. 이는 아래 11-06 항목의 'SLB 미완료'를 대체한다. 승인 애니 장면 12종(`art-*`)을 `apps/web/src/styles.css`에 적용했다(`c3b305d`). 웹 테스트 50/50, 웹 빌드·verify:assets·verify:android·verify:design 통과. 전체 `npm run check`와 실기기는 미실행이며 엔진 코드는 바꾸지 않았다. 문서 색인: [DECISIONS](../DECISIONS.md)·[CHANGELOG](../CHANGELOG.md).
+
 # 2026-11-06 TF 후속 구현
 
 - KBO. AI·콜업 검토가 복제한 상태를 병합해도 진행 중인 커서를 유지한다. 같은 오류를 재현한 회귀와 공식 201경기(59~90일), 로스터 검토 10건, JSON 재개를 확인했다. 고교 접두는 통제했다.

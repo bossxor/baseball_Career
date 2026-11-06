@@ -29,6 +29,6 @@ npm start       # 빌드된 API만 실행
 - [구현 진행 기록](docs/implementation/PROGRESS.md) · [구현 로드맵](docs/design/120-IMPLEMENTATION-ROADMAP.md)
 - [설계 시작점](docs/design/START-HERE.md) · [확정 결정](docs/design/14-CANONICAL-DECISIONS.md) · [설계 상태](docs/design/STATUS.md)
 - [테스트 계획](docs/implementation/M2-BULK-IMPLEMENTATION-AND-TEST-PLAN.md) · [개발 환경](docs/implementation/DEVELOPMENT.md) (오래된 상태 설명은 최신 인계와 코드 우선)
-- [TF 운영](docs/implementation/TF-OPERATIONS.md) · [벤치마킹](docs/benchmark/SLB_CAREER_PLAYTHROUGH.md) · [로컬 에셋](docs/assets/ASSET_INVENTORY.md)
+- [TF 운영(Codex)](docs/implementation/TF-OPERATIONS.md) · [TF 운영(Claude)](docs/implementation/TF-OPERATIONS-CLAUDE.md) · [결정 색인](docs/DECISIONS.md) · [변경 색인](docs/CHANGELOG.md) · [벤치마킹](docs/benchmark/SLB_CAREER_PLAYTHROUGH.md) · [로컬 에셋](docs/assets/ASSET_INVENTORY.md)
 
 설계 정적 검증과 실제 앱·DB·기기 검증은 별개입니다.

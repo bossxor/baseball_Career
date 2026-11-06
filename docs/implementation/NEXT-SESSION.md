@@ -1,3 +1,7 @@
+# 인계 — 2026-11-07: Claude 팀
+
+Claude 팀 상태·경계는 [TF-OPERATIONS-CLAUDE](TF-OPERATIONS-CLAUDE.md), 결과는 [PROGRESS](PROGRESS.md) 맨 위. 브랜치 `claude/tf-lead`는 `c3b305d`이며 푸시하지 않았다. 다음: ① 백로그 P1 진로 결정 카드 형식(미착수) ② P16 독립 준비/재도전 엔진(미착수, 이전 브랜치 `codex/m2-service-closure`에 [인계](M2-P16-PREPARATION-HANDOFF.md)) ③ 장면 PNG→WebP(미착수). 아래 M2 검증 범위(24경로 중 4)는 이번 변경으로 달라지지 않았다. Codex 작업 공간과 그 미커밋 변경은 접촉하지 않는다.
+
 # 2026-11-06 TF 후속 구현
 
 - KBO. AI·콜업 검토가 복제한 상태를 병합해도 진행 중인 커서를 유지한다. 같은 오류를 재현한 회귀와 공식 201경기(59~90일), 로스터 검토 10건, JSON 재개를 확인했다. 고교 접두는 통제했다.
