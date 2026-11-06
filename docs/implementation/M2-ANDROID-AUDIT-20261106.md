@@ -30,15 +30,16 @@ Suggested web diffs (m2-web owns):
 - D3: in Create.tsx shell, push a history entry per step: `onStep = s => { history.pushState({step:s}, ''); setStep(s); }` plus a `popstate` listener restoring the step (or encode step in hash `#/create/NAME`).
 - Optional D4: `viewport-fit=cover` + `.screen{padding-bottom:max(16px,env(safe-area-inset-bottom))}`; then Capacitor injects `--safe-area-inset-*` too.
 
-## 4. Device status — NOT VERIFIED
-Device `R5KL10FHTTN` (SM-S948N, Android 17/API 37, WebView 156) was connected. APK installed OK (`adb install -r` Success) and `am start -W` returned Status ok, no FATAL/AndroidRuntime in logcat (`evidence/M2-ANDROID-device-logcat.txt`). But keyguard was showing (`isKeyguardShowing=true`), so the screenshot captured only the lock screen (deleted, personal). **No UI of the app was seen; create form / flow screen / back / keyboard are unverified.** Login also needs a live API at the baked base.
+## 4. Device test — SM-S948N (R5KL10FHTTN, Android 17, WebView 156), same debug APK
+Evidence (app area only, status bar cropped, 1/3 scale): `evidence/M2-ANDROID-device-{1-login,2-home-api-fail,3-create-name,4-keyboard,5-create-step2}.png`, `evidence/M2-ANDROID-device-logcat-app.txt` (pid-filtered).
 
-Repro once the phone is unlocked:
-```
-adb install -r apps/web/android/app/build/outputs/apk/debug/app-debug.apk
-adb logcat -c; adb shell am start -n kr.againplayball.app/.MainActivity
-adb exec-out screencap -p > shell.png ; adb logcat -d | grep -iE "chromium|Capacitor|FATAL"
-# create: open #/create, advance steps, press Back (D3), focus name field -> keyboard must not cover field
-# flow: open #/flow/<saveId>; toggle airplane mode, act, restore network, verify retry
-```
-For a reachable API use a build with `VITE_API_BASE` pointing at a real https host.
+Device-verified:
+- install + launch OK; login renders; content sits between status bar and nav bar (native padding, not edge-to-edge).
+- "개발 토큰으로 계속" → Home. API unreachable (https://api.againplayball.kr): red box "진행을 확인하지 못했습니다… 연결과 저장 결과를 다시 확인하세요", 새 커리어/새 구단 buttons still usable, no crash. No explicit retry button on Home.
+- Create form: step 1 (이름) → step 2 (타자/투수) render; soft keyboard does not cover the focused name field.
+- **D3 confirmed**: Back on create step 2 exits the app to the launcher.
+- logcat: no FATAL/AndroidRuntime, no cleartext/CSP/ERR_ lines. One console error at load: `Error injecting safe area CSS: TypeError: Cannot read properties of null (reading 'style')` (Capacitor SystemBars runs before documentElement exists; layout was correct).
+
+NOT verified: rotation (needs changing the device rotation setting; skipped), `#/flow/<id>` and Back there (needs a save from a reachable API), create path beyond step 2, offline→retry replay, real login.
+
+Repro for the rest: `adb install -r <apk>`, `adb shell am start -n kr.againplayball.app/.MainActivity`, with a build whose `VITE_API_BASE` is a reachable https host; open `#/flow/<saveId>`, toggle airplane mode, act, restore, verify retry; rotate the device with the form open.
