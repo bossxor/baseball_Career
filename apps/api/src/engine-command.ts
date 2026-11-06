@@ -1,5 +1,6 @@
 import {applyKboEntry} from './career-kbo-entry-shell.js';
 import {applySchoolCareer} from './career-school-shell.js';
+import {applyCollege} from './career-college-shell.js';
 import { allocateCapped, ENGINE_VERSION } from '@playball/engine';
 import { applyClubSave } from './club-shell.js';
 import { applyCareerRetry } from './career-retry-shell.js';
@@ -35,6 +36,7 @@ export type AppliedCommand = {
 /** ALLOCATE_DEMO (M3 E2E) + UI_SEED/ADVANCE/CHOOSE (M4 shell over the same pipeline). */
 export function applyEngineCommand(state: SaveState, command: CommandBody): AppliedCommand {
   if(command.type.startsWith('CAREER_SCHOOL_'))return applySchoolCareer(state,command);
+  if(command.type.startsWith('CAREER_COLLEGE_'))return applyCollege(state,command);
   if(command.type.startsWith('CAREER_KBO_ENTRY_'))return applyKboEntry(state,command);
   if (command.type.startsWith('CAREER_PRO_RETIRE_')) return applyProRetirement(state, command);
   if (command.type.startsWith('CAREER_RELATIONS_')) return applyRelationChoice(state, command);

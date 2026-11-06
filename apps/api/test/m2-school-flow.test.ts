@@ -38,7 +38,7 @@ test('school season review → route: owned commands reject forged/stale input; 
     assert.equal(open.status, 200, await open.clone().text());
     const [row] = await db.select({ state: gameSaves.state }).from(gameSaves).where(eq(gameSaves.id, saveId));
     assert.equal(((row!.state as { career: HighSchoolCareer }).career).phaseContext.phase, 'CAREER_ROUTE');
-    assert.deepEqual((await screen()).commands.map(c => c.type), ['CAREER_KBO_ENTRY_PREPARE']);
+    assert.deepEqual((await screen()).commands.map(c => c.type).filter(t => !t.startsWith('CAREER_COLLEGE_')), ['CAREER_KBO_ENTRY_PREPARE']);
     assert.equal((await app.request('/api/saves/' + saveId + '/screens/CAREER_FLOW', { headers: { ...headers, Authorization: 'Bearer dev:nobody' } })).status === 200, false);
   } finally { await client.close(); }
 });

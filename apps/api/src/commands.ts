@@ -89,7 +89,7 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
 
       let applied;
       try {
-        if(body.type.startsWith('CAREER_SCHOOL_')&&row.mode!=='CAREER')return errorBody(c,'CAREER_SAVE_REQUIRED',400);
+        if((body.type.startsWith('CAREER_SCHOOL_')||body.type.startsWith('CAREER_COLLEGE_'))&&row.mode!=='CAREER')return errorBody(c,'CAREER_SAVE_REQUIRED',400);
         applied = applyEngineCommand((row.state as SaveState) ?? {}, body);
       } catch (err) {
         const code =

@@ -1,6 +1,7 @@
 import * as engine from '@playball/engine';
 import {KBO_CLUBS,ABILITY_LABELS,abilityKeys} from '@playball/rules';
 import type {SaveState} from './engine-command.js';
+import {collegeApplies,collegeFlow,collegeRouteCommands,isCollege} from './career-college-shell.js';
 
 /** One public, command-bearing screen for the school→KBO entry and pro-retry flows.
  * Every command here is an existing owned CAREER_* command; the web replays `type`/`payload` exactly and never builds its own.
@@ -19,12 +20,13 @@ const UNSUPPORTED='이 단계는 아직 웹에서 지원하지 않습니다. 저
 export function flowApplies(state:SaveState):boolean {
  const c=state.career as Career|undefined;if(!c||typeof c!=='object')return false;
  if(isKbo(c))return Boolean(c.retryPro)||c.phaseContext.phase==='SEASON_REVIEW';
+ if(isCollege(c))return true;
  return ['SEASON_REVIEW','CAREER_ROUTE','NEXT_SEASON_READY'].includes(c.phaseContext.phase)||(c.phaseContext.phase==='EVENT_DECISION'&&Boolean(open(c,'E04')))||Boolean(c.retryExit||c.amateurRetirement);
 }
 
 export function careerFlowScreen(state:SaveState):FlowScreen {
  const c=state.career as Career|undefined;if(!c||typeof c!=='object'||Array.isArray(c))throw Object.assign(new Error('CAREER_NOT_FOUND'),{code:'CAREER_NOT_FOUND'});
- return isKbo(c)?kboFlow(c):schoolFlow(c);
+ return isKbo(c)?kboFlow(c):collegeApplies(c)&&(isCollege(c)||c.phaseContext.phase==='NEXT_SEASON_READY')?collegeFlow(c):schoolFlow(c);
 }
 
 function cmd(c:Career,id:string,label:string,type:string,payload:Record<string,unknown>={},confirm?:string):FlowCommand {
@@ -64,6 +66,7 @@ function schoolFlow(c:engine.HighSchoolCareer):FlowScreen {
     cmd(c,'draft-sign','계약하고 입단','CAREER_KBO_ENTRY_DECIDE',{programVersion:draft.version,decision:'SIGN',eventVersion:grad.version}),
     cmd(c,'draft-decline','제안 거절','CAREER_KBO_ENTRY_DECIDE',{programVersion:draft.version,decision:'DECLINE',eventVersion:grad.version},'거절하면 이 지명은 사라집니다. 거절할까요?'));
   }
+  commands.push(...collegeRouteCommands(c));
   return out('졸업 진로 · KBO 지명',commands,'대학·미국 진로는 아직 웹에서 지원하지 않습니다.');
  }
  if(phase==='NEXT_SEASON_READY'&&c.phaseContext.route==='KBO'){
@@ -134,4 +137,11 @@ export function kboCareerHome(saveId:string,state:SaveState){
  return {saveId,protagonist:{name:p?.name??'',kindLabel:p?.kind==='PITCHER'?'투수':'타자',positionLabel:p?.position??'',ageLabel:p?`${p.age}세`:''},stage:{leagueLabel:'KBO',teamName:club(c.protagonistClubId),seasonLabel:c.world.seasonKey+' 시즌',phaseLabel:c.retryPro?'무소속 재도전':'프로'},progress:{mode:'NEXT_MAJOR_EVENT' as const,alternatives:['ONE_GAME','ONE_WEEK'] as const},
   nextActions:flow?[{id:'open:FLOW',label:'다음 단계 진행',kind:'OPEN_SCREEN' as const,primary:true}]:[{id:'pro-season',label:'프로 시즌 진행',kind:'ADVANCE' as const,disabledReason:'프로 시즌 진행은 아직 웹에서 지원하지 않습니다.'}],
   pendingEventTitle:null,recentRecords:[]};
+}
+
+/** Home for a college career: the flow screen is the play loop. */
+export function collegeCareerHome(saveId:string,state:SaveState){
+ const c=state.career as engine.HighSchoolCareer,p=c.world.players[c.world.protagonistKey]!;
+ return {saveId,protagonist:{name:p.name,kindLabel:p.kind==='PITCHER'?'투수':'타자',positionLabel:p.position,ageLabel:p.age+'세'},stage:{leagueLabel:'대학',teamName:c.world.schools.find(s=>s.id===c.world.protagonistSchoolId)?.name??'',seasonLabel:c.world.seasonKey+' 시즌',phaseLabel:c.collegeAdmission?c.collegeAdmission.academicYear+'학년':'대학'},progress:{mode:'NEXT_MAJOR_EVENT' as const,alternatives:['ONE_GAME','ONE_WEEK'] as const},
+  nextActions:[{id:'open:FLOW',label:'다음 단계 진행',kind:'OPEN_SCREEN' as const,primary:true}],pendingEventTitle:null,recentRecords:[]};
 }

@@ -97,7 +97,7 @@ test('graduation → KBO entry runs from server-provided flow commands only; a l
     await take('ack-review', true);
     assert.deepEqual(view.commands.map(c => c.id), ['open-route']);
     await take('open-route');
-    assert.deepEqual(view.commands.map(c => c.id), ['draft-prepare']);
+    assert.deepEqual(view.commands.map(c => c.id).filter(id => !id.startsWith('college-')), ['draft-prepare']);
     await take('draft-prepare');
     await take('draft-resolve');
     assert.ok(view.commands.some(c => c.id === 'draft-decline' && c.confirm), 'declining asks for confirmation');
