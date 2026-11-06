@@ -6,10 +6,11 @@ import { Home } from './screens/Home.js';
 import { Create } from './screens/Create.js';
 import { Career } from './screens/Career.js';
 import { Decision } from './screens/Decision.js';
+import { Flow } from './screens/Flow.js';
 import { ClubNew, ClubView } from './screens/Club.js';
 import { CREATION_STEPS, emptyDraft, firstInvalidStep, toCreationRequest, validateStep } from './creation.js';
 import type { CreationDraft, CreationStep, FieldErrors } from './creation.js';
-import type { CareerView, ClubScreen, ClubScreenId, DecisionView, HomeData, PlayScreenId, ProgressMode } from './model.js';
+import type { CareerView, ClubScreen, ClubScreenId, DecisionView, FlowView, HomeData, PlayScreenId, ProgressMode } from './model.js';
 import { isPlayScreen } from './screen-states.js';
 import type { ScreenState } from './screen-states.js';
 
@@ -18,6 +19,7 @@ type Route =
   | { name: 'home' }
   | { name: 'create' }
   | { name: 'career'; saveId: string }
+  | { name: 'flow'; saveId: string }
   | { name: 'play'; saveId: string; screenId: PlayScreenId }
   | { name: 'club-new' }
   | { name: 'club'; saveId: string; screenId: ClubScreenId };
@@ -30,6 +32,8 @@ export function parseRoute(hash: string): Route {
     const screenId = club[2] && CLUB_SCREENS.has(club[2]) ? club[2] as ClubScreenId : 'S13';
     return { name: 'club', saveId: id, screenId };
   }
+  const flow = /^#\/flow\/([^/]+)$/.exec(hash);
+  if (flow) return { name: 'flow', saveId: decodeURIComponent(flow[1]!) };
   const play = /^#\/play\/([^/]+)\/(S\d{2})$/.exec(hash);
   if (play && isPlayScreen(play[2]!)) return { name: 'play', saveId: decodeURIComponent(play[1]!), screenId: play[2] };
   const m = /^#\/?([a-z]*)\/?(.*)$/.exec(hash);
@@ -64,7 +68,7 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
   const [home, setHome] = useState<HomeData | null>(null), [showSaves, setShowSaves] = useState(false);
   const [career, setCareer] = useState<CareerView | null>(null), [mode, setMode] = useState<ProgressMode>('NEXT_MAJOR_EVENT');
   const [decision, setDecision] = useState<DecisionView | null>(null), [selected, setSelected] = useState<string | null>(null);
-  const [clubView, setClubView] = useState<ClubScreen | null>(null);
+  const [clubView, setClubView] = useState<ClubScreen | null>(null), [flowView, setFlowView] = useState<FlowView | null>(null);
   const [draft, setDraft] = useState<CreationDraft>(emptyDraft), [step, setStep] = useState<CreationStep>('NAME'), [errors, setErrors] = useState<FieldErrors>({});
   const creationId = useRef(newId());
   const intents = useIntentIds();
@@ -84,6 +88,7 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
         if (route.name === 'home') { const d = await api.home(); if (alive) { setHome(d); setState('ready'); } }
         else if (route.name === 'career') { const c = await api.career(route.saveId); if (alive) { setCareer(c); setMode(c.progress.mode); setState('ready'); } }
         else if (route.name === 'play') { const d = await api.decision(route.saveId, route.screenId); if (alive) { setDecision(d); setState(d.options.length ? 'ready' : 'empty'); } }
+        else if (route.name === 'flow') { const v = await api.flow(route.saveId); if (alive) { setFlowView(v); setState('ready'); } }
         else if (route.name === 'club') { const view = await api.club(route.saveId, route.screenId); if (alive) { setClubView(view); setState(view.lines.length ? 'ready' : 'empty'); } }
         else setState('ready');
       } catch (err) { if (alive) setState(stateFromError(err)); }
@@ -142,10 +147,20 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
         void run(async () => { await api.clubCommand(saveId, newId(), type, payload); setClubView(await api.club(saveId, screenId)); });
       }} />;
   }
+  if (route.name === 'flow') {
+    const saveId = route.saveId;
+    return <Flow view={flowView} state={state} onBack={() => go(`#/career/${encodeURIComponent(saveId)}`)} onReload={reload}
+      onCommand={cmd => {
+        // The id is tied to the served command and its career revision, so a retry after a lost response replays the same intent.
+        const key = `flow|${saveId}|${cmd.id}|${String(cmd.payload.careerRevision ?? '')}`;
+        void run(async () => { setFlowView(await api.flowCommand(saveId, intents.of(key), cmd.type, cmd.payload)); intents.done(key); });
+      }} />;
+  }
   if (route.name === 'career') {
     const saveId = route.saveId;
     return <Career view={career} state={state} mode={mode} onMode={setMode} onBack={() => go('#/')} onReload={reload}
       onAction={(actionId, m) => {
+        if (actionId === 'open:FLOW') { go(`#/flow/${encodeURIComponent(saveId)}`); return; }
         const screen = screenFromAction(actionId);
         if (screen) { openPlay(saveId, screen); return; }
         const key = `act|${saveId}|${actionId}|${m}`;

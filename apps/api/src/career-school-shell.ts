@@ -3,11 +3,13 @@ import * as engine from '@playball/engine';
 import {overall} from '@playball/rules';
 import type {PitchId} from '@playball/rules';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
+import {flowApplies} from './career-flow-screen.js';
 
 const fields=new Map<string,readonly string[]>([
  ['CREATE',['name','kind','position','throws','bats','pitchForm','archetype','focus','difficulty','schoolId','seasonYear','secondaryPitch']],
  ['CONFIRM_PLAYER',['careerRevision']],['RESOLVE_FOCUS',['careerRevision','eventKey','eventVersion','command','focus']],
  ['CONFIRM_PRESEASON',['careerRevision']],['ADVANCE',['careerRevision','mode']],
+ ['ACK_SEASON_REVIEW',['careerRevision']],['OPEN_ROUTE',['careerRevision','eventVersion']],
 ]);
 function fail(code:string):never{throw Object.assign(new Error(code),{code});}
 function domainError(error:unknown):never{fail(error instanceof Error&&/^[A-Z][A-Z0-9_]*$/.test(error.message)?error.message:'INVALID_REQUEST');}
@@ -31,6 +33,8 @@ export function applySchoolCareer(state:SaveState,command:CommandBody):AppliedCo
     if(input.command==='KEEP_FOCUS'&&input.focus!==undefined)fail('INVALID_PAYLOAD');
     next=engine.resolveCareerFocusEvent(c,revision,input as unknown as Parameters<typeof engine.resolveCareerFocusEvent>[2]);
    }else if(name==='CONFIRM_PRESEASON')next=engine.confirmCareerPreseason(c,revision);
+   else if(name==='ACK_SEASON_REVIEW')next=engine.acknowledgeHighSchoolSeasonReview(c,revision);
+   else if(name==='OPEN_ROUTE'){if(typeof input.eventVersion!=='number'||!Number.isSafeInteger(input.eventVersion)||input.eventVersion<1)fail('INVALID_PAYLOAD');next=engine.openHighSchoolCareerRoute(c,revision,input.eventVersion).career;}
    else {if(!['NEXT_MAJOR_EVENT','ONE_GAME','ONE_WEEK'].includes(String(input.mode)))fail('INVALID_PAYLOAD');const result=engine.advanceHighSchoolCareer(c,revision,input.mode as engine.HighSchoolAdvancePlan['mode']);next=result.career;stopReason=result.stopReason;}
   }
  }catch(error){domainError(error);}
@@ -45,7 +49,7 @@ export function schoolCareerScreen(state:SaveState){
 export function schoolCareerHome(saveId:string,state:SaveState){
  const view=schoolCareerScreen(state)!,c=owner(state),phase=c.phaseContext.phase;
  const action=(name:string,label:string,payload:Record<string,unknown>={})=>({id:'school:'+name,label,kind:'ADVANCE' as const,primary:true,command:{type:'CAREER_SCHOOL_'+name,payload:{careerRevision:c.revision,...payload}}});
- const actions=phase==='CREATED'?[action('CONFIRM_PLAYER','선수 확인')]:phase==='PRESEASON_SETUP'?[action('CONFIRM_PRESEASON','시즌 시작')]:phase==='SEASON_PROGRESS'?[action('ADVANCE','진행')]:phase==='EVENT_DECISION'&&view.event&&['E01','E02','E03'].includes(view.event.definitionId)?[action('RESOLVE_FOCUS','현재 육성 계획 유지',{eventKey:view.event.eventKey,eventVersion:view.event.eventVersion,command:'KEEP_FOCUS'})]:[];
+ const actions=phase==='CREATED'?[action('CONFIRM_PLAYER','선수 확인')]:phase==='PRESEASON_SETUP'?[action('CONFIRM_PRESEASON','시즌 시작')]:phase==='SEASON_PROGRESS'?[action('ADVANCE','진행')]:phase==='EVENT_DECISION'&&view.event&&['E01','E02','E03'].includes(view.event.definitionId)?[action('RESOLVE_FOCUS','현재 육성 계획 유지',{eventKey:view.event.eventKey,eventVersion:view.event.eventVersion,command:'KEEP_FOCUS'})]:flowApplies(state)?[{id:'open:FLOW',label:'다음 단계 진행',kind:'OPEN_SCREEN' as const,primary:true}]:[];
  const phaseLabel:Record<string,string>={CREATED:'선수 확인',PRESEASON_SETUP:'시즌 준비',SEASON_PROGRESS:'정규시즌',EVENT_DECISION:'사건 선택',SEASON_REVIEW:'시즌 결산',CAREER_ROUTE:'진로 선택',NEXT_SEASON_READY:'다음 시즌 준비',RETIRE_CONFIRM:'은퇴 확인',ARCHIVED:'커리어 보관'};
  return {saveId,protagonist:{name:view.player.name,kindLabel:view.player.kind==='HITTER'?'타자':'투수',positionLabel:view.player.position,ageLabel:view.player.age+'세'},stage:{leagueLabel:'고교',teamName:view.school??'',seasonLabel:view.seasonKey+' 시즌',phaseLabel:phaseLabel[phase]??'커리어'},progress:{mode:'NEXT_MAJOR_EVENT' as const,alternatives:['ONE_GAME','ONE_WEEK'] as const},nextActions:actions,pendingEventTitle:view.event?engine.eventDefinition(view.event.definitionId).title:null,recentRecords:[{label:'종합',value:view.player.overall},{label:'팀 경기',value:String(view.teamGames)}]};
 }

@@ -63,3 +63,10 @@ legend{font-weight:800;padding:0 6px}
   .actions,.mode-nav{grid-template-columns:repeat(auto-fit,minmax(200px,max-content))}
 }
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+.btn.danger{border-color:var(--danger);color:var(--danger)}
+.flow-lines{margin:0;display:grid;gap:8px}
+.flow-lines div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.flow-lines dt{color:var(--muted)}
+.flow-lines dd{margin:0;font-weight:700;text-align:right}
+.confirm-card{margin:0;padding:16px;border-radius:12px;background:var(--warn-bg);border:1px solid var(--danger);display:grid;gap:12px}

@@ -1,3 +1,7 @@
+# 최신 구현 — 2026-11-06: 웹 고교 생성 폼·진로/KBO 입단·재도전 흐름 화면
+
+[M2-WEB-CREATE-FLOW-RETRY-20261106.md](M2-WEB-CREATE-FLOW-RETRY-20261106.md). 생성 폼이 CAREER_SCHOOL_CREATE로 연결(학교9/성장·현실/투수 보조구종), 서버가 주는 CAREER_FLOW 화면의 명령만 재전송하는 #/flow 화면(결산→졸업 진로→KBO 지명·입단, KBO 재도전 안내→진로→준비→은퇴). API는 ACK_SEASON_REVIEW/OPEN_ROUTE 2개만 추가. 한계: 대학/미국 진로·프로 시즌·재도전 훈련 선택·실기기 미검증, 전체 check 미실행.
+
 # 최신 구현 — 2026-11-05: 고교 native 웹 이어하기·재전송 보완
 
 [M2-SCHOOL-WEB-RESUME-20261105.md](M2-SCHOOL-WEB-RESUME-20261105.md). 기존 웹 커리어 화면에서 실제 고교 저장을 읽고 서버가 제공한 생성 확인/집중 유지/프리시즌/경기 명령을 실행한다. 실제 API+웹 어댑터로 두 클라이언트 읽기·POST 응답 상실·후속 GET 상실을 검증했다. COMMAND_ID_REUSED 재현 후 요청 전체를 재조회 성공까지 유지하도록 보완했다. 웹25/25·학교HTTP2/2·타입/린트0. 생성 폼·나머지 사건/졸업/KBO 전체 화면은 아직 남아 있다.

@@ -1,7 +1,7 @@
 import type { PlayballApi } from './api.js';
 import { ApiError } from './errors.js';
 import type {
-  CareerView, ChooseReceipt, ClubCreateRequest, ClubScreen, ClubScreenId, CreationReceipt, CreationRequest, DecisionView, HomeData, PlayScreenId, ProgressMode, SaveSummary,
+  CareerView, ChooseReceipt, ClubCreateRequest, ClubScreen, ClubScreenId, CreationReceipt, CreationRequest, DecisionView, FlowView, HomeData, PlayScreenId, ProgressMode, SaveSummary,
 } from './model.js';
 
 export type HttpApiOptions = {
@@ -108,10 +108,15 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
         body: JSON.stringify({ creationId: request.commandId, mode: 'CAREER' }),
       }) as { saveId: string; revision: string };
       revisions.set(created.saveId, Number(created.revision));
-      await command(created.saveId, `${request.commandId}:seed`, 'UI_SEED', {
+      // Native high-school creation: the server owns world key, seed and roster; the client sends only visible choices.
+      // sentCommands keeps the exact intent, so a retry after a lost response replays the same payload (no COMMAND_ID_REUSED).
+      const s = request.school;
+      await command(created.saveId, `${request.commandId}:school`, 'CAREER_SCHOOL_CREATE', {
         name: request.name, kind: request.kind, position: request.position,
         throws: request.throws, bats: request.bats, pitchForm: request.pitchForm,
         archetype: request.archetype, focus: [...request.focus],
+        difficulty: s.difficulty, schoolId: s.schoolId, seasonYear: s.seasonYear,
+        ...(request.kind === 'PITCHER' && s.secondaryPitch ? { secondaryPitch: s.secondaryPitch } : {}),
       });
       return { saveId: created.saveId };
     },
@@ -150,6 +155,19 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
         worldKey: 'kbo-club', seed: request.commandId, difficulty: 'REALISTIC', clubId: request.clubId,
       });
       return { saveId: created.saveId };
+    },
+    async flow(saveId: string): Promise<FlowView | null> {
+      // The career read refreshes the save revision first, so a command sent from here never carries a stale one.
+      await this.career(saveId);
+      try { return await req(`/api/saves/${encodeURIComponent(saveId)}/screens/CAREER_FLOW`, { headers: await headers(false) }) as FlowView; }
+      catch (err) { if (err instanceof ApiError && err.code.startsWith('HTTP_4')) return null; throw err; }
+    },
+    async flowCommand(saveId: string, commandId: string, type: string, payload: Record<string, unknown>): Promise<FlowView | null> {
+      await command(saveId, commandId, type, payload, true);
+      // Keep the exact intent until the follow-up read succeeds: a lost refresh retries the original receipt (no COMMAND_ID_REUSED).
+      const view = await this.flow(saveId);
+      sentCommands.delete(JSON.stringify([saveId, commandId]));
+      return view;
     },
     async club(saveId: string, screenId: ClubScreenId, query: { playerKey?: string; gameKey?: string } = {}): Promise<ClubScreen> {
       const params = new URLSearchParams();

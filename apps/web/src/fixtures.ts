@@ -1,6 +1,6 @@
 import type { PlayballApi } from './api.js';
 import type {
-  CareerView, ChooseReceipt, ClubCreateRequest, ClubScreen, ClubScreenId, CreationReceipt, CreationRequest, DecisionView, HomeData, NextAction, PlayScreenId, ProgressMode, SaveSummary,
+  CareerView, ChooseReceipt, ClubCreateRequest, ClubScreen, ClubScreenId, CreationReceipt, CreationRequest, DecisionView, FlowView, HomeData, NextAction, PlayScreenId, ProgressMode, SaveSummary,
 } from './model.js';
 import { CLUB_CHOICES } from './club.js';
 import { POSITION_LABELS } from './creation.js';
@@ -187,6 +187,8 @@ export function createFixtureApi(): PlayballApi {
       acted.set(commandId, out);
       return out;
     },
+    async flow(): Promise<FlowView | null> { return null; },
+    async flowCommand(): Promise<FlowView | null> { return null; },
     async decision(saveId: string, screenId: PlayScreenId): Promise<DecisionView> {
       const s = saves.get(saveId);
       if (!s) throw new Error('NOT_FOUND');

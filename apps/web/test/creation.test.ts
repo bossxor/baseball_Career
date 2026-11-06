@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { emptyDraft, validateStep, toggleFocus, setKind, previewOf, toCreationRequest, firstInvalidStep, CREATION_STEPS } from '../src/creation.js';
 import type { CreationDraft } from '../src/creation.js';
 
-const hitter = (): CreationDraft => ({ name: '김철수', kind: 'HITTER', position: 'CF', throws: 'R', bats: 'L', pitchForm: null, archetype: 'BALANCED', focus: ['CONTACT', 'POWER', 'DISCIPLINE', 'RUNNING'] });
+const hitter = (): CreationDraft => ({ name: '김철수', kind: 'HITTER', position: 'CF', throws: 'R', bats: 'L', pitchForm: null, archetype: 'BALANCED', focus: ['CONTACT', 'POWER', 'DISCIPLINE', 'RUNNING'], schoolId: 'H02', difficulty: 'GROWTH', secondaryPitch: null });
 
 test('name: NFC, trimmed, 1..12 graphemes, no control characters', () => {
   assert.deepEqual(validateStep({ ...emptyDraft(), name: '  가나다라마바사아자차카타  ' }, 'NAME'), {});

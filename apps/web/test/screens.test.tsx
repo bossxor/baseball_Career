@@ -80,7 +80,7 @@ test('S03: buttons come only from nextActions, default progress mode, disabled r
 
 test('fixture api: a retried creation or action with the same command id changes nothing twice', async () => {
   const api = createFixtureApi();
-  const request = { commandId: 'create-1', name: '김철수', kind: 'HITTER' as const, position: 'CF', throws: 'R' as const, bats: 'L' as const, pitchForm: null, archetype: 'BALANCED', focus: ['CONTACT', 'POWER', 'DISCIPLINE', 'RUNNING'] };
+  const request = { commandId: 'create-1', name: '김철수', kind: 'HITTER' as const, position: 'CF', throws: 'R' as const, bats: 'L' as const, pitchForm: null, archetype: 'BALANCED', focus: ['CONTACT', 'POWER', 'DISCIPLINE', 'RUNNING'], school: { schoolId: 'H02', seasonYear: 2027, difficulty: 'GROWTH' as const, secondaryPitch: null } };
   const a = await api.create(request), b = await api.create(request);
   assert.equal(a.saveId, b.saveId);
   assert.equal((await api.home()).saves.length, 1);
@@ -127,7 +127,7 @@ test('S06 Decision: empty text, option disabilities linked, confirm needs select
 
 test('fixture decision/choose: same commandId is idempotent; S04→S28 chain', async () => {
   const api = createFixtureApi();
-  const { saveId } = await api.create({ commandId: 'c2', name: '박민수', kind: 'HITTER', position: 'CF', throws: 'R', bats: 'R', pitchForm: null, archetype: 'BALANCED', focus: ['CONTACT', 'POWER', 'DISCIPLINE', 'RUNNING'] });
+  const { saveId } = await api.create({ commandId: 'c2', name: '박민수', kind: 'HITTER', position: 'CF', throws: 'R', bats: 'R', pitchForm: null, archetype: 'BALANCED', focus: ['CONTACT', 'POWER', 'DISCIPLINE', 'RUNNING'], school: { schoolId: 'H02', seasonYear: 2027, difficulty: 'GROWTH' as const, secondaryPitch: null } });
   for (let i = 0; i < 8; i++) await api.act(saveId, 'advance', 'ONE_WEEK', `adv-${i}`);
   const career = await api.career(saveId);
   assert.ok(career.nextActions.some(a => a.id === 'open:S04'));
@@ -148,6 +148,7 @@ test('M5 stub screens: routeable Decision shell; college → S34; back returns c
   const { saveId } = await api.create({
     commandId: 'm5-1', name: '최민호', kind: 'PITCHER', position: 'SP', throws: 'R', bats: 'R',
     pitchForm: 'OVER', archetype: 'BALANCED', focus: ['VELOCITY', 'CONTROL', 'STAMINA', 'BREAK'],
+    school: { schoolId: 'H02', seasonYear: 2027, difficulty: 'GROWTH', secondaryPitch: 'P03' },
   });
   const season = await api.career(saveId);
   assert.ok(season.nextActions.some(a => a.id === 'open:S21'));

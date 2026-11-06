@@ -29,6 +29,8 @@ export const PROGRESS_LABELS: Readonly<Record<ProgressMode, string>> = {
 export interface CreationRequest {
   commandId: string; name: string; kind: 'HITTER' | 'PITCHER'; position: string; throws: 'R' | 'L'; bats: 'R' | 'L' | 'S';
   pitchForm: string | null; archetype: string; focus: readonly string[];
+  /** The HTTP adapter turns this into CAREER_SCHOOL_CREATE; fixtures ignore it. */
+  school: { schoolId: string; seasonYear: number; difficulty: 'GROWTH' | 'REALISTIC'; secondaryPitch: string | null };
 }
 export interface CreationReceipt { saveId: string }
 
@@ -57,3 +59,7 @@ export interface ClubScreen {
   commands: readonly { id: string; label: string; type: string; payload: Record<string, unknown> }[];
 }
 export interface ClubCreateRequest { commandId: string; clubId: string }
+
+/** Server-driven flow (school graduation/KBO entry, pro retry). The web replays `type`/`payload` exactly as served; it never builds a command. */
+export interface FlowCommand { id: string; label: string; type: string; payload: Record<string, unknown>; confirm?: string }
+export interface FlowView { title: string; lines: readonly { label: string; value: string }[]; commands: readonly FlowCommand[]; notice: string | null }

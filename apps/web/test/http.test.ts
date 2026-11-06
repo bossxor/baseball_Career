@@ -24,7 +24,7 @@ test('http api maps saves list and create→seed→career against a stub fetch',
       const parsed = JSON.parse(body!) as { type: string; commandId: string; expectedRevision: number };
       const next = String(Number(revisions['save_c1'] ?? '0') + 1);
       revisions['save_c1'] = next;
-      if (parsed.type === 'UI_SEED') state.seeded = true;
+      if (parsed.type === 'CAREER_SCHOOL_CREATE') state.seeded = true;
       if (parsed.type === 'UI_ADVANCE') state.day += 7;
       return new Response(JSON.stringify({ commandId: parsed.commandId, revision: next, phase: 'season', summary: {}, eventIds: [], nextActions: [] }), { status: 200 });
     }
@@ -47,7 +47,7 @@ test('http api maps saves list and create→seed→career against a stub fetch',
   assert.equal((await api.home()).saves.length, 0);
   const { saveId } = await api.create({
     commandId: 'c1', name: '김HTTP', kind: 'HITTER', position: 'CF', throws: 'R', bats: 'L',
-    pitchForm: null, archetype: 'BALANCED', focus: ['CONTACT', 'POWER', 'DISCIPLINE', 'RUNNING'],
+    pitchForm: null, archetype: 'BALANCED', focus: ['CONTACT', 'POWER', 'DISCIPLINE', 'RUNNING'], school: { schoolId: 'H02', seasonYear: 2027, difficulty: 'GROWTH' as const, secondaryPitch: null },
   });
   assert.equal(saveId, 'save_c1');
   assert.equal(state.seeded, true);
@@ -55,7 +55,7 @@ test('http api maps saves list and create→seed→career against a stub fetch',
   const after = await api.act(saveId, 'advance', 'ONE_WEEK', 'a1');
   assert.notDeepEqual(after.recentRecords, before.recentRecords);
   assert.ok(calls.some(c => c.url.includes('/game-creations')));
-  assert.ok(calls.some(c => c.body?.includes('UI_SEED')));
+  assert.ok(calls.some(c => c.body?.includes('CAREER_SCHOOL_CREATE')));
 });
 
 test('http api: a 401 calls onUnauthorized once and surfaces AUTH_REQUIRED', async () => {
@@ -80,12 +80,12 @@ test('http api: a retried command keeps the revision it was first sent with (los
     }
     return new Response(JSON.stringify({ code: 'NOT_FOUND' }), { status: 404 });
   }) as typeof fetch;
-  const request = { commandId: 'c9', name: '김HTTP', kind: 'HITTER' as const, position: 'CF', throws: 'R' as const, bats: 'L' as const, pitchForm: null, archetype: 'BALANCED', focus: ['CONTACT', 'POWER', 'DISCIPLINE', 'RUNNING'] };
+  const request = { commandId: 'c9', name: '김HTTP', kind: 'HITTER' as const, position: 'CF', throws: 'R' as const, bats: 'L' as const, pitchForm: null, archetype: 'BALANCED', focus: ['CONTACT', 'POWER', 'DISCIPLINE', 'RUNNING'], school: { schoolId: 'H02', seasonYear: 2027, difficulty: 'GROWTH' as const, secondaryPitch: null } };
   const api = createHttpApi({ baseUrl: 'http://api.test', getToken: () => 't' });
   await assert.rejects(api.create(request));
   mode = 'OK';
   await api.create(request);
-  assert.deepEqual(sent.map(s => [s.commandId, s.expectedRevision]), [['c9:seed', 0], ['c9:seed', 0]], 'the retry resends revision 0, not the 1 the server now reports');
+  assert.deepEqual(sent.map(s => [s.commandId, s.expectedRevision]), [['c9:school', 0], ['c9:school', 0]], 'the retry resends revision 0, not the 1 the server now reports');
   mode = 'CONFLICT';
   await assert.rejects(api.choose('s1', 'S06', 'opt-a', 'k1'));
   mode = 'OK';

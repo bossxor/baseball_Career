@@ -1,0 +1,45 @@
+
+> again-playball@0.1.0 test:web
+> tsx --tsconfig apps/web/tsconfig.json --test apps/web/test/*.test.ts apps/web/test/*.test.tsx
+
+✔ fixture club creation is idempotent and the picker lists a club (56.6536ms)
+✔ http createClub posts a club creation and CLUB_CREATE (76.6225ms)
+✔ name: NFC, trimmed, 1..12 graphemes, no control characters (9.6721ms)
+✔ left-handed throwers cannot take C/2B/3B/SS; pitchers need a pitch form; steps block only their own errors (0.7151ms)
+✔ focus is exactly four distinct abilities of the chosen kind; a fifth pick is refused, kind change resets dependents (1.287ms)
+✔ preview exists only with a type and four focus picks and shows the type start values (2.0925ms)
+✔ request is built only from a complete draft; the same command id travels with it (1.3648ms)
+✔ create school step: 9 schools, 2 difficulties (no cheat), pitcher-only second pitch without the fastball, labelled errors (283.3158ms)
+✔ flow screen: only served commands become buttons; busy disables them; a missing view explains itself (27.9622ms)
+✔ flow route parses and career shows the server-provided flow link (19.276ms)
+✔ http api maps saves list and create→seed→career against a stub fetch (65.5428ms)
+✔ http api: a 401 calls onUnauthorized once and surfaces AUTH_REQUIRED (2.7758ms)
+✔ http api: a retried command keeps the revision it was first sent with (lost response), and a conflict clears it (81.4251ms)
+✔ Login: fields, submit disabled until filled, error announced, optional dev path (38.2753ms)
+✔ ApiError maps revision conflict to conflict state (0.6836ms)
+✔ web school catalogue equals the engine list; pitcher second pitch excludes the base fastball (29.4394ms)
+✔ HITTER: web creation form request creates a native school career over real HTTP; a lost response replays the exact intent (6533.1125ms)
+✔ PITCHER: web creation form request creates a native school career over real HTTP; a lost response replays the exact intent (3306.6527ms)
+✔ graduation → KBO entry runs from server-provided flow commands only; a lost refresh replays the original receipt (14535.6863ms)
+✔ pro retry shell is reachable from the web: notice → routes → preparation start → retirement confirm (74390.9548ms)
+✔ native school resumes through the real web HTTP adapter; lost response retries the exact native intent (10197.6782ms)
+✔ state texts equal the design catalog (no drift) (9.3137ms)
+✔ S01: empty start, resume label kept while loading, internal states never shown, errors announced (84.0305ms)
+✔ S02: one step at a time with its error next to the input, stepper marks the current step, preview empty text (88.8293ms)
+✔ S03: buttons come only from nextActions, default progress mode, disabled reason is linked, pending event locks progress (84.2883ms)
+✔ fixture api: a retried creation or action with the same command id changes nothing twice (7.928ms)
+✔ routes: unknown or incomplete addresses fall back to home; play screens parse (1.237ms)
+✔ S06 Decision: empty text, option disabilities linked, confirm needs selection (47.3208ms)
+✔ fixture decision/choose: same commandId is idempotent; S04→S28 chain (7.3295ms)
+✔ M5 stub screens: routeable Decision shell; college → S34; back returns career (1.2895ms)
+✔ V08-M4: touch targets ≥44px, focus ring, 16px body, reduced-motion (2.1012ms)
+✔ V08-M4: Hangul IME composition is gated on S02 name submit (0.6557ms)
+✔ V08-M4: Korean webfonts declared with font-display swap (0.5281ms)
+ℹ tests 33
+ℹ suites 0
+ℹ pass 33
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 115022.3852

@@ -1,5 +1,6 @@
 import {kboRecruitmentScreen} from './career-kbo-entry-shell.js';
 import {schoolCareerScreen,schoolCareerHome} from './career-school-shell.js';
+import {careerFlowScreen,kboCareerHome} from './career-flow-screen.js';
 import { eq } from 'drizzle-orm';
 import type { Context } from 'hono';
 import { gameSaves } from '@playball/db';
@@ -49,7 +50,7 @@ export async function getCareer(c: Context<{ Variables: AppVariables }>) {
   if (!row || row.deletedAt || row.ownerId !== subject) return errorBody(c, 'SAVE_NOT_FOUND', 404);
   try {
     const state=(row.state as UiShellState)??{schemaVersion:1},owner=state.career as {schemaVersion?:number;world?:{schools?:unknown;leagueKey?:unknown}}|undefined;
-    const view = owner?.schemaVersion===1&&Array.isArray(owner.world?.schools)&&owner.world?.leagueKey===undefined?schoolCareerHome(row.id,state):careerView(row.id,state);
+    const view = owner?.schemaVersion===1&&Array.isArray(owner.world?.schools)&&owner.world?.leagueKey===undefined?schoolCareerHome(row.id,state):owner&&'protagonistClubId' in owner?kboCareerHome(row.id,state):careerView(row.id,state);
     return c.json({ ...view, revision: row.revision.toString() });
   } catch {
     return errorBody(c, 'INVALID_REQUEST', 400);
@@ -88,6 +89,7 @@ export async function getScreen(c: Context<{ Variables: AppVariables }>) {
     if ((US_RETURN_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(usReturnScreen(state, screenId));
     if ((US_MILITARY_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(usMilitaryScreen(state, screenId));
     if(screenId==='SCHOOL_CAREER')return c.json(schoolCareerScreen(state));
+    if(screenId==='CAREER_FLOW')return c.json(careerFlowScreen(state));
     if(screenId==='KBO_RECRUITMENT')return c.json(kboRecruitmentScreen(state));
     if (screenId==='US_CAREER') return c.json(usPlayScreen(state));
     if (screenId==='CAREER_PRO_RETIREMENT' || screenId==='CAREER_PRO_ARCHIVE') return c.json(proRetirementScreen(state,screenId));

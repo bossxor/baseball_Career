@@ -6,7 +6,7 @@ import { stateText } from '../screen-states.js';
 import type { ScreenState } from '../screen-states.js';
 import {
   CREATION_STEPS, STEP_LABELS, POSITIONS, POSITION_LABELS, FORM_LABELS, PITCH_FORM_LIST, typesFor, abilitiesFor,
-  previewOf, toggleFocus, setKind,
+  previewOf, toggleFocus, setKind, SCHOOLS, DIFFICULTY_LABELS, SECONDARY_PITCHES, SCHOOL_SEASON_YEAR,
 } from '../creation.js';
 import type { CreationDraft, CreationStep, FieldErrors, PitchForm } from '../creation.js';
 
@@ -104,8 +104,28 @@ export function Create({ draft, step, state = 'ready', errors, onDraft, onStep, 
             <FieldError id="focus-error" message={err.focus} />
           </fieldset>
         ) : null}
+        {step === 'SCHOOL' ? (
+          <>
+            <p className="muted">{SCHOOL_SEASON_YEAR}년 시즌, 고교 3학년부터 시작합니다.</p>
+            <fieldset><legend>학교</legend>
+              {SCHOOLS.map(s => <Radio key={s.id} name="school" value={s.id} current={draft.schoolId} label={s.name} onPick={v => set({ schoolId: v })} describedBy="schoolId-error" />)}
+              <FieldError id="schoolId-error" message={err.schoolId} />
+            </fieldset>
+            <fieldset><legend>난이도</legend>
+              {(['GROWTH', 'REALISTIC'] as const).map(v => <Radio key={v} name="difficulty" value={v} current={draft.difficulty} label={DIFFICULTY_LABELS[v]} onPick={x => set({ difficulty: x })} describedBy="difficulty-error" />)}
+              <FieldError id="difficulty-error" message={err.difficulty} />
+            </fieldset>
+            {kind === 'PITCHER' ? (
+              <fieldset><legend>보조 구종 (포심 외)</legend>
+                {Object.entries(SECONDARY_PITCHES).map(([id, label]) => <Radio key={id} name="secondary-pitch" value={id} current={draft.secondaryPitch} label={label} onPick={v => set({ secondaryPitch: v })} describedBy="secondaryPitch-error" />)}
+                <FieldError id="secondaryPitch-error" message={err.secondaryPitch} />
+              </fieldset>
+            ) : null}
+          </>
+        ) : null}
         {step === 'CONFIRM' ? (
           <section aria-label="생성 확인">
+            <p>{SCHOOLS.find(s => s.id === draft.schoolId)?.name ?? ''} · {draft.difficulty ? DIFFICULTY_LABELS[draft.difficulty] : ''}{draft.secondaryPitch ? ` · ${SECONDARY_PITCHES[draft.secondaryPitch] ?? ''}` : ''}</p>
             <p>{draft.name} · {kind === 'HITTER' ? '타자' : '투수'} · {draft.position ? POSITION_LABELS[draft.position] : ''} · {draft.throws ? hand(draft.throws) : ''}투 {draft.bats ? (draft.bats === 'S' ? '양타' : `${hand(draft.bats)}타`) : ''}{draft.pitchForm ? ` · ${FORM_LABELS[draft.pitchForm]}` : ''}</p>
           </section>
         ) : null}
