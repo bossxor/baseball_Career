@@ -9,6 +9,7 @@ import {emptyBatting,emptyPitching} from './stats.js';
 import {recentBattingPerformance,recentPitchingPerformance} from './lineup.js';
 import {prepareUsDirect,assertUsDirect,usDirectView,decideUsDirect} from './us-direct.js';
 import type {UsRecruitmentWorld,UsDirectProgram} from './us-direct.js';
+import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 import {canonicalJson} from './game.js';
 import {completeBlockingEvent} from './events.js';
 import {decideKboDraft} from './kbo-draft.js';
@@ -19,7 +20,7 @@ import {refreshCareerAchievements} from './career-achievements.js';
 import {refreshCareerRouteNotices} from './career-route-notices.js';
 
 export interface CareerUsRecruitment {schemaVersion:1;world:UsRecruitmentWorld;program:UsDirectProgram;sourceBasis:string;currentWorldDay:number;reservations:UsReservationLedger;closedBy?:'COLLEGE'|'KBO'}
-function basis(s:HighSchoolCareer):string {return canonicalJson({world:s.world,records:s.records,health:s.health,days:s.days,development:s.development??null,seasonGrowth:s.seasonGrowth??null,graduation:s.graduation??null,collegeAdmission:s.collegeAdmission??null,collegeGraduation:s.collegeGraduation??null,ownAssessment:s.ownAssessment??null});}
+function basis(s:HighSchoolCareer):string {return canonicalSeal({world:s.world,records:s.records,health:s.health,days:s.days,development:s.development??null,seasonGrowth:s.seasonGrowth??null,graduation:s.graduation??null,collegeAdmission:s.collegeAdmission??null,collegeGraduation:s.collegeGraduation??null,ownAssessment:s.ownAssessment??null});}
 function day(s:HighSchoolCareer):number {return s.days.days.at(-1)?.day??0;}
 function pendingCollegeComparison(s:HighSchoolCareer){return s.world.leagueKey==='COLLEGE'&&s.collegeAdmission?.academicYear===2&&s.phaseContext.phase==='EVENT_DECISION'&&s.phaseContext.eventKey===s.collegeEarlyRoute?.eventKey;}
 function assertRoute(s:HighSchoolCareer){
@@ -34,7 +35,7 @@ function candidate(s:HighSchoolCareer){
 }
 function current(s:HighSchoolCareer):CareerUsRecruitment {
  const seal=s.usYearEnd?assertUsAmateurYearEnd(s):null;const r=s.usRecruitment;
- if(!r || r.schemaVersion!==1 || r.closedBy!==undefined || r.sourceBasis!==(seal?.recruitmentSourceBasis??basis(s)) || r.world.worldKey!==s.world.worldKey || r.world.seed!==s.world.seed || r.world.seasonKey!==String(s.world.calendar!.year+1) || r.program.input.assessmentKey!==JSON.stringify(['amateur-us',s.world.worldKey,s.world.seasonKey,s.world.protagonistKey]) || canonicalJson(r.program.input.player)!==canonicalJson(s.world.players[s.world.protagonistKey]))throw new RangeError('STALE_CAREER_US_RECRUITMENT');
+ if(!r || r.schemaVersion!==1 || r.closedBy!==undefined || (seal?r.sourceBasis!==seal.recruitmentSourceBasis:!matchesCanonicalSeal(r.sourceBasis,basis(s))) || r.world.worldKey!==s.world.worldKey || r.world.seed!==s.world.seed || r.world.seasonKey!==String(s.world.calendar!.year+1) || r.program.input.assessmentKey!==JSON.stringify(['amateur-us',s.world.worldKey,s.world.seasonKey,s.world.protagonistKey]) || canonicalJson(r.program.input.player)!==canonicalJson(s.world.players[s.world.protagonistKey]))throw new RangeError('STALE_CAREER_US_RECRUITMENT');
  const expected=candidate(s),input=r.program.input;
  if(!input.eligible || input.issuedWorldDay!==day(s) || input.expiresWorldDay!==input.issuedWorldDay+30 || !Number.isSafeInteger(r.currentWorldDay) || r.currentWorldDay<input.issuedWorldDay || r.currentWorldDay>input.expiresWorldDay || input.adjustedPerformance!==expected.adjustedPerformance || canonicalJson(input.ranges)!==canonicalJson(expected.ranges))throw new RangeError('STALE_CAREER_US_EVALUATION');
  assertUsDirect(r.world,r.program);assertUsReservationLedger(r.reservations);

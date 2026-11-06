@@ -8,15 +8,15 @@
       "type": "PREPARE",
       "payload": {},
       "beforeSha256": "627fbcb6acf887bbaf40ba3bf98eb9a8fef44dae8442107bd008cd5a9a6222ae",
-      "afterSha256": "1762da22f28007f0adf2c9a61a50766850b77c06200a8500d46c5af083997ddb"
+      "afterSha256": "d5a11b67805476a22a9e02a7934b52d5a8e5fb23484c3cc50ed755599b3d9e63"
     },
     {
       "type": "RESOLVE",
       "payload": {
         "programVersion": 1
       },
-      "beforeSha256": "1762da22f28007f0adf2c9a61a50766850b77c06200a8500d46c5af083997ddb",
-      "afterSha256": "60a737b8ccf4be6232af74b42fa38bc002f505e0dab27f2e0f363dfe6df30d49"
+      "beforeSha256": "d5a11b67805476a22a9e02a7934b52d5a8e5fb23484c3cc50ed755599b3d9e63",
+      "afterSha256": "e87f1e639934c9bb7d7cb313cc7318c080011f11b8c50f1c7161e318c4d3713c"
     },
     {
       "type": "DECIDE",
@@ -25,22 +25,22 @@
         "decision": "SIGN",
         "eventVersion": 1
       },
-      "beforeSha256": "60a737b8ccf4be6232af74b42fa38bc002f505e0dab27f2e0f363dfe6df30d49",
-      "afterSha256": "0f6aa1c7fb30f80526528be7a54b2d359f6de8f17272af4d2aa433f0467dc913"
+      "beforeSha256": "e87f1e639934c9bb7d7cb313cc7318c080011f11b8c50f1c7161e318c4d3713c",
+      "afterSha256": "2e93148f4f29e5eacd3c6ae4c4978da1ead2210caac0b92dd83568e9eb9ef4fc"
     },
     {
       "type": "CLOSE_YEAR",
       "payload": {
         "forfeitUnusedTraining": true
       },
-      "beforeSha256": "0f6aa1c7fb30f80526528be7a54b2d359f6de8f17272af4d2aa433f0467dc913",
-      "afterSha256": "22712e64aaf018c1afb219bc141905e539539ea8fe4deb92870f294def2bd749"
+      "beforeSha256": "2e93148f4f29e5eacd3c6ae4c4978da1ead2210caac0b92dd83568e9eb9ef4fc",
+      "afterSha256": "5726b3ca17727c86f8be94c1495eeacda36277bd42800aea89ea7e0453db776f"
     },
     {
       "type": "ACTIVATE",
       "payload": {},
-      "beforeSha256": "22712e64aaf018c1afb219bc141905e539539ea8fe4deb92870f294def2bd749",
-      "afterSha256": "18d1ea15ea8ca5dbb346e21e491795a5ecdd2a6ce90a3c74c9ee88278c7a9e93"
+      "beforeSha256": "5726b3ca17727c86f8be94c1495eeacda36277bd42800aea89ea7e0453db776f",
+      "afterSha256": "9352731906e5705e59380b9d7c5144f0af10b6c1573ae8a35b6ce598584f4cf8"
     }
   ],
   "fullPathProven": false

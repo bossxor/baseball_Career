@@ -9,6 +9,7 @@ import {canonicalJson} from './game.js';
 import {createWorldStream,validateRng} from './rng.js';
 import type {RngState} from './rng.js';
 import {draftPreview,drawDraft} from './draft.js';
+import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 export interface KboDraftInput {assessmentKey:string;player:DevelopmentPlayer;baseScore:number;preferredClubId:string|null}
 export interface KboDraftResult {receiptKey:string;score:number|null;round:number|null;clubId:string|null}
 export interface KboRookieSigning {
@@ -52,7 +53,8 @@ function slots(world:KboRosterWorld,input:KboDraftInput){
   return {clubId:c.id,need,incumbent,preferred:c.id===input.preferredClubId};
  }).sort((a,b)=>b.need-a.need || a.incumbent-b.incumbent || Number(b.preferred)-Number(a.preferred) || (a.clubId<b.clubId?-1:1));
 }
-function basis(world:KboRosterWorld,input:KboDraftInput){return canonicalJson({world,input});}
+// Sealed as a hash: the draft world is copied into every recruitment archive.
+function basis(world:KboRosterWorld,input:KboDraftInput){return canonicalSeal({world,input});}
 export function prepareKboDraft(world:KboRosterWorld,input:KboDraftInput):KboDraftProgram {
  assertKboRecruitmentWorld(world);validInput(world,input);
  const rng=createWorldStream(world.seed,JSON.stringify(['career-kbo-draft-1',world.worldKey,world.seasonKey,input.assessmentKey]),'roster');
@@ -70,7 +72,7 @@ function signing(world:KboRosterWorld,p:KboDraftProgram):KboRookieSigning {
 export function assertKboDraft(world:KboRosterWorld,p:KboDraftProgram):void {
  assertKboRecruitmentWorld(world);validInput(world,p.input);validateRng(p.rngStart);validateRng(p.rng);
  const start=createWorldStream(world.seed,JSON.stringify(['career-kbo-draft-1',world.worldKey,world.seasonKey,p.assessmentKey]),'roster');
- if(p.schemaVersion!==1 || p.assessmentKey!==p.input.assessmentKey || p.worldKey!==world.worldKey || p.seasonKey!==world.seasonKey || p.sourceBasis!==basis(world,p.input) || canonicalJson(start)!==canonicalJson(p.rngStart))throw new RangeError('STALE_KBO_DRAFT');
+ if(p.schemaVersion!==1 || p.assessmentKey!==p.input.assessmentKey || p.worldKey!==world.worldKey || p.seasonKey!==world.seasonKey || !matchesCanonicalSeal(p.sourceBasis,basis(world,p.input)) || canonicalJson(start)!==canonicalJson(p.rngStart))throw new RangeError('STALE_KBO_DRAFT');
  const version=p.result?(p.decision==='PENDING'?2:3):1;
  if(p.version!==version || !['PENDING','SIGNED','DECLINED'].includes(p.decision) || !p.result && (p.decision!=='PENDING' || p.signing!==null || canonicalJson(p.rng)!==canonicalJson(start)))throw new RangeError('INVALID_KBO_DRAFT');
  if(p.result){const expected=expectedResult(world,p);if(canonicalJson(p.result)!==canonicalJson(expected.result) || canonicalJson(p.rng)!==canonicalJson(expected.rng))throw new RangeError('INVALID_KBO_DRAFT_RESULT');}

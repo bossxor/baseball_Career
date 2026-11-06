@@ -1,5 +1,7 @@
 # M2 P16 독립 준비/재도전 — 착수 인계 (2026-10-29)
 
+> **2026-11-07 정정: 이 문서는 낡았다.** 최신 원격(d71236b)에는 이미 `career-preparation.ts`·`preparation-season.ts`·`retry-career.ts`·`career-retry-exhaustion.ts`로 준비 시즌·재도전·소진 은퇴가 구현돼 있고 world.leagueKey에 INDEPENDENT가 있다. 남은 P16 공백은 [폐쇄 격차표](M2-CLOSURE-GAPS-20261106.md)의 "프로 방출→재도전 3회 네이티브 연결"이다. 아래 내용은 이력으로만 둔다.
+
 구현 코드 없음. 설계 66과 현재 엔진을 조사하고 사용자 결정 2개를 받은 상태에서 세션을 마감했다. 작성 당시 브랜치 codex/m2-service-closure(deeb61d). 2026-11-07 claude/tf-lead(d71236b 기준)로 이관. 분기 위치는 최신 코드에서 다시 확인할 것.
 
 ## 사용자 확정 (2026-10-29)

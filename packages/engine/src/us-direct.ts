@@ -6,6 +6,7 @@ import {usDirectBaseScore,drawUsDirectEvaluation,canShowUsDirect} from './draft.
 import {createWorldStream,nextInteger} from './rng.js';
 import type {RngState} from './rng.js';
 import {canonicalJson} from './game.js';
+import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 
 /** Trusted recruitment inventory. This is not a generated US league or its season roster. */
 export interface UsRecruitmentWorld {
@@ -43,7 +44,7 @@ function validateInput(world:UsRecruitmentWorld,input:UsDirectInput):void {
  assertUsRecruitmentWorld(world);validateDevelopmentPlayer(input.player);
  if(!input.assessmentKey || typeof input.eligible!=='boolean' || !Number.isSafeInteger(input.issuedWorldDay) || input.issuedWorldDay<0 || !Number.isSafeInteger(input.expiresWorldDay) || input.expiresWorldDay<=input.issuedWorldDay || world.registeredPlayerKeys.includes(input.player.simulationKey))throw new RangeError('INVALID_US_CANDIDATE');
 }
-function basis(world:UsRecruitmentWorld,input:UsDirectInput):string {return canonicalJson({world,input});}
+function basis(world:UsRecruitmentWorld,input:UsDirectInput):string {return canonicalSeal({world,input});}
 function evaluation(world:UsRecruitmentWorld,input:UsDirectInput){
  validateInput(world,input);
  const baseScore=usDirectBaseScore({kind:input.player.kind,roleScore:roleScore(input.player.kind,input.player.abilities,input.player.position),adjustedPerformance:input.adjustedPerformance,ranges:input.ranges});
@@ -68,7 +69,7 @@ export function prepareUsDirect(world:UsRecruitmentWorld,input:UsDirectInput):Us
 }
 export function assertUsDirect(world:UsRecruitmentWorld,p:UsDirectProgram):void {
  const expected=evaluation(world,p.input);
- if(p.schemaVersion!==1 || p.sourceBasis!==basis(world,p.input) || p.version!==(p.decision==='PENDING'?1:2) || !['PENDING','SIGNED','DECLINED'].includes(p.decision) || canonicalJson(expected)!==canonicalJson({baseScore:p.baseScore,score:p.score,rng:p.rng,offers:p.offers}))throw new RangeError('STALE_US_OFFER_SET');
+ if(p.schemaVersion!==1 || !matchesCanonicalSeal(p.sourceBasis,basis(world,p.input)) || p.version!==(p.decision==='PENDING'?1:2) || !['PENDING','SIGNED','DECLINED'].includes(p.decision) || canonicalJson(expected)!==canonicalJson({baseScore:p.baseScore,score:p.score,rng:p.rng,offers:p.offers}))throw new RangeError('STALE_US_OFFER_SET');
  if(p.decision==='SIGNED'){
   if(!p.signing || !Number.isSafeInteger(p.signing.signedWorldDay) || p.signing.signedWorldDay<p.input.issuedWorldDay || p.signing.signedWorldDay>=p.input.expiresWorldDay || canonicalJson(p.signing)!==canonicalJson(signing(world,p,p.signing.offer.offerKey,p.signing.signedWorldDay)))throw new RangeError('INVALID_US_SIGNING');
  }else if(p.signing!==null)throw new RangeError('INVALID_US_SIGNING');
