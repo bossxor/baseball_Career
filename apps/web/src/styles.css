@@ -121,3 +121,6 @@ legend{float:left;width:100%;font-weight:700;padding:0 0 4px}
 .cmd-facts div{display:flex;justify-content:space-between;gap:12px;font-size:.85rem}
 .cmd-facts dt{color:var(--muted)}
 .cmd-facts dd{margin:0;font-weight:600;text-align:right}
+
+.sign-card{margin:0;padding:20px;border-radius:var(--r);background:var(--card);box-shadow:var(--shadow);border:1px solid var(--green);display:grid;gap:12px}
+.sign-pad{width:100%;height:auto;aspect-ratio:600/160;border:1px dashed var(--muted);border-radius:12px;background:var(--bg);touch-action:none}

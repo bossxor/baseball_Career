@@ -77,3 +77,10 @@ test('flow screen: per-command facts render next to the button and are omitted w
   assert.match(html, /<dl id="facts-draft-sign" class="cmd-facts"><div><dt>조기 드래프트 기회<\/dt><dd>남은 1회<\/dd>/);
   assert.equal((html.match(/cmd-facts/g) ?? []).length, 1);
 });
+
+test('flow screen: a sign command shows no signature card until tapped, and the command stays unchanged', () => {
+  const view: FlowView = { ...flow, commands: [{ ...flow.commands[0]!, sign: { name: '김현수' } }] };
+  const html = renderToStaticMarkup(<Flow view={view} />);
+  assert.doesNotMatch(html, /sign-card/);
+  assert.match(html, /계약하고 입단/);
+});

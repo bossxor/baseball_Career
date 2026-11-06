@@ -155,7 +155,7 @@ export function collegeFlow(c:engine.HighSchoolCareer):FlowScreen{
   if(!draft.offer)return out(title+' 결과',[],draft.status==='DECLINED'?'지명 제안을 거절했습니다.':null);
   lines.push({label:'제안',value:draft.offer.years+'년 · 연봉 '+Math.round(draft.offer.annualSalaryWon/10_000).toLocaleString('ko-KR')+'만 원'});
   return out(title+' 결과',[
-   {id:'draft-sign',label:'계약하고 입단',type:'CAREER_KBO_ENTRY_DECIDE',payload:{careerRevision:c.revision,programVersion:draft.version,decision:'SIGN'},facts:[{label:'계약',value:`${draft.offer.years}년 · 연봉 ${Math.round(draft.offer.annualSalaryWon/10_000).toLocaleString('ko-KR')}만 원`}]},
+   {id:'draft-sign',label:'계약하고 입단',type:'CAREER_KBO_ENTRY_DECIDE',payload:{careerRevision:c.revision,programVersion:draft.version,decision:'SIGN'},sign:{name:p.name},facts:[{label:'계약',value:`${draft.offer.years}년 · 연봉 ${Math.round(draft.offer.annualSalaryWon/10_000).toLocaleString('ko-KR')}만 원`}]},
    {id:'draft-decline',label:'제안 거절',type:'CAREER_KBO_ENTRY_DECIDE',payload:{careerRevision:c.revision,programVersion:draft.version,decision:'DECLINE'},facts:[{label:'결과',value:'이 지명 제안은 사라집니다'}],confirm:'거절하면 이 지명은 사라집니다. 거절할까요?'},
   ]);
  }
