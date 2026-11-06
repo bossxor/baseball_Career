@@ -20,7 +20,9 @@ import {startKboRegularSeason, advanceKboCareer} from '../packages/engine/src/kb
 import {setCareerSeasonGoals} from '../packages/engine/src/season-goals.ts';
 import {hireCareerAgent, assertCareerAgentLedger} from '../packages/engine/src/career-agent.ts';
 import {recordTotals} from '../packages/engine/src/records.ts';
-import {controlledSchoolPaths,collegeServicePath,agentPath,pitcherLearningPath,nationalAppearancePath,postingPaths,retryExhaustionPath,injuryTrainingPath,returnedUsContractPath} from './m2-path-scenarios.mjs';
+import {nativeSliceVerdict} from './m2-native-paths.mjs';
+import {nativePaths} from './m2-native-drivers.mjs';
+import {PATH_GAPS,PATH_REQUIREMENTS,controlledSchoolPaths,collegeServicePath,agentPath,pitcherLearningPath,nationalAppearancePath,postingPaths,retryExhaustionPath,injuryTrainingPath,returnedUsContractPath} from './m2-path-scenarios.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const hash=value=>createHash('sha256').update(canonicalJson(value)).digest('hex');
@@ -29,10 +31,11 @@ let activeTrace;
 const completedTraces=[];
 
 /** Engine receipts are not API idempotency receipts. Each row retains the actual command input and output hash. */
-function trace(id,initial,prefix){
- let state=initial;
- const initialFixture=json(initial);
- const rows=[];
+function trace(id,initial,prefix,parent){
+ // parent: native trace whose already-verified command rows are shared by this branch (same hashes, not re-executed).
+ let state=parent?parent.state:initial;
+ const initialFixture=parent?parent.initialFixture:json(initial);
+ const rows=parent?[...parent.rows]:[];
  const current={id,prefix,initialFixture,get state(){return state;},rows,
   command(command,input,apply){
    const source=state,before=hash(source),commandInput=json(input),inputHash=hash(commandInput),out=apply(source),next=out?.career??out;
@@ -44,7 +47,7 @@ function trace(id,initial,prefix){
    rows.push({command,input:commandInput,inputHash,sourceRevision:source.revision,resultRevision:next.revision,sourceHash:before,resultHash:hash(next),outputHash:hash(out)});
    state=next;return state;
   },
-  finish(invariantReport){const result={id,pathIds:[...new Set(id.match(/P\d{2}/g)??[])],prefix,initialFixture,initialFixtureHash:hash(initialFixture),commandReceipts:rows,commandChainHash:hash(rows),finalStateHash:hash(state),invariantReport,status:'M2_SLICE_PROVEN_FULL_PATH_NOT_CLAIMED'};completedTraces.push(result);current.finished=true;return result;}
+  finish(invariantReport){const result={id,pathIds:[...new Set(id.match(/P\d{2}/g)??[])],parentId:parent?.id??null,prefix,initialFixture,initialFixtureHash:hash(initialFixture),commandReceipts:rows,commandChainHash:hash(rows),finalStateHash:hash(state),invariantReport,status:'M2_SLICE_PROVEN_FULL_PATH_NOT_CLAIMED'};completedTraces.push(result);current.finished=true;return result;}
  };
  activeTrace=current;return current;
 }
@@ -102,14 +105,17 @@ const start=sourceManifest();
 const output=resolve(root,process.argv.slice(2).find(arg=>!arg.startsWith('--'))??'docs/implementation/evidence/M2-CLOSURE-20261102-runtime.json');
 function writeEvidence(path,value){mkdirSync(resolve(path,'..'),{recursive:true});const data=JSON.stringify(value,null,2)+'\n';writeFileSync(path,path.endsWith('.gz')?gzipSync(data):data);}
 const slices=[];
+// --tolerate-source-drift: other workers edit the shared tree during long native runs. All modules were loaded before `start` was hashed, so the executed code is the start manifest; drift is recorded, never hidden.
+let sourceDrift=null;
+function checkStable(message){const now=sourceManifest();if(hash(now)===hash(start))return;if(!process.argv.includes('--tolerate-source-drift'))assert.fail(message);const before=new Map(start.map(r=>[r.file,r.sha256])),after=new Map(now.map(r=>[r.file,r.sha256]));sourceDrift={finalSourceManifestHash:hash(now),changedFiles:[...new Set([...before.keys(),...after.keys()])].filter(f=>before.get(f)!==after.get(f)).sort()};}
 try{
 console.log('M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit');
-const scenarios={nativeReturnedUs:()=>[returnedUsContractPath(trace)],nativeSchool:()=>[nativeSchool()],nativeKbo:()=>[controlledKbo()],school:()=>controlledSchoolPaths(trace),collegeService:()=>[collegeServicePath(trace)],agent:()=>agentPath(trace),pitcher:()=>[pitcherLearningPath(trace)],national:()=>[nationalAppearancePath(trace)],posting:()=>postingPaths(trace),retry:()=>[retryExhaustionPath(trace)],injury:()=>[injuryTrainingPath(trace)]};
+const scenarios={nativePaths:()=>nativePaths(trace,process.argv.find(a=>a.startsWith('--native='))?.slice(9).split(',')),nativeReturnedUs:()=>[returnedUsContractPath(trace)],nativeSchool:()=>[nativeSchool()],nativeKbo:()=>[controlledKbo()],school:()=>controlledSchoolPaths(trace),collegeService:()=>[collegeServicePath(trace)],agent:()=>agentPath(trace),pitcher:()=>[pitcherLearningPath(trace)],national:()=>[nationalAppearancePath(trace)],posting:()=>postingPaths(trace),retry:()=>[retryExhaustionPath(trace)],injury:()=>[injuryTrainingPath(trace)]};
 const selection=process.argv.find(arg=>arg.startsWith('--scenarios='))?.slice('--scenarios='.length);
 const selected=selection===undefined?Object.keys(scenarios).filter(name=>!process.argv.includes('--paths-only')||!name.startsWith('native')):selection.split(',');
 assert.ok(selected.length>0&&new Set(selected).size===selected.length&&selected.every(name=>Object.hasOwn(scenarios,name)),'unknown, empty or duplicate closure scenario');
 for(const name of selected){slices.push(...scenarios[name]());console.log('M2 closure: '+name+' endpoints verified');}
-assert.deepEqual(sourceManifest(),start,'source changed during closure proof; rerun on stable files');
+checkStable('source changed during closure proof; rerun on stable files');
 const catalogue=JSON.parse(readFileSync(resolve(root,'docs/design/event-catalog-v2.json'),'utf8')).events;
 const events=catalogue.map(e=>{
  const literal=new RegExp(`['"]${e.id}['"]`),sourceReferences=start.filter(r=>r.file.startsWith('packages/engine/src/')&&!r.file.endsWith('/event-catalogue.ts')&&literal.test(readFileSync(resolve(root,r.file),'utf8'))).map(r=>r.file),testReferences=start.filter(r=>r.file.endsWith('.test.ts')&&literal.test(readFileSync(resolve(root,r.file),'utf8'))).map(r=>r.file);
@@ -117,12 +123,16 @@ const events=catalogue.map(e=>{
  return {id:e.id,title:e.title,owner,sourceReferences,testReferences,status:'SOURCE_TRIAGE_ONLY_NOT_RUNTIME_PASS'};
 });
 assert.equal(events.length,99);assert.equal(new Set(events.map(e=>e.id)).size,99);
-const paths=JSON.parse(readFileSync(resolve(root,'docs/design/end-to-end-design-paths.json'),'utf8')).paths.map(p=>({id:p.id,flow:p.flow,status:'FULL_PATH_NOT_PROVEN',sliceIds:slices.filter(s=>s.pathIds.includes(p.id)).map(s=>s.id)}));
+// A path flips to proven ONLY when a native slice's receipts re-verify here; statuses are never hand-set.
+const paths=JSON.parse(readFileSync(resolve(root,'docs/design/end-to-end-design-paths.json'),'utf8')).paths.map(p=>{
+ const claims=slices.filter(s=>s.invariantReport?.completesPaths?.includes(p.id)),checks=claims.map(s=>({sliceId:s.id,...nativeSliceVerdict(s,PATH_REQUIREMENTS[p.id],hash)})),proof=checks.find(c=>c.ok);
+ return {id:p.id,flow:p.flow,status:proof?'ENGINE_NATIVE_PATH_PROVEN':'FULL_PATH_NOT_PROVEN',reason:proof?undefined:(checks.length?'native slice failed machine verification: '+checks.map(c=>c.problem).join('; '):PATH_GAPS[p.id]??'no native driver'),proof:proof?{sliceId:proof.sliceId,commandChainHash:proof.commandChainHash,finalStateHash:proof.finalStateHash,commands:proof.commands,requiredCommands:PATH_REQUIREMENTS[p.id]}:undefined,sliceIds:slices.filter(s=>s.pathIds.includes(p.id)).map(s=>s.id)};
+});
 assert.equal(paths.length,24);
-const result={schemaVersion:1,status:'PARTIAL_RUNTIME_EVIDENCE_NOT_M2_COMPLETION',rulesVersion:(slices[0].initialFixture.world??slices[0].initialFixture.source.world).rulesVersion,sourceManifestHash:hash(start),sourceManifest:start,slices,events,paths,externalDependencies:['M3 persistent CAS/receipt/idempotency/two-device/Neon','M4/M5 actual screens/accessibility/visual silhouette inspection','M6 club paths and unified world workers','M7 chronicle producer/export/backup','M8 actual device execution'],unproven:'Unexecuted path segments, events and PF checks are not inferred from these command hashes. Source/test references are triage only.'};
-assert.deepEqual(sourceManifest(),start,'source changed while building closure inventory; rerun on stable files');
+const result={schemaVersion:1,status:'PARTIAL_RUNTIME_EVIDENCE_NOT_M2_COMPLETION',rulesVersion:(slices[0].initialFixture.world??slices[0].initialFixture.source.world).rulesVersion,sourceManifestHash:hash(start),sourceManifest:start,sourceDrift,slices,events,paths,externalDependencies:['M3 persistent CAS/receipt/idempotency/two-device/Neon','M4/M5 actual screens/accessibility/visual silhouette inspection','M6 club paths and unified world workers','M7 chronicle producer/export/backup','M8 actual device execution'],unproven:'Unexecuted path segments, events and PF checks are not inferred from these command hashes. Source/test references are triage only.'};
+checkStable('source changed while building closure inventory; rerun on stable files');
 writeEvidence(output,result);
-console.log(JSON.stringify({status:result.status,sourceManifestHash:result.sourceManifestHash,slices:slices.map(({id,commandChainHash,finalStateHash,commandReceipts})=>({id,commandChainHash,finalStateHash,commands:commandReceipts.length})),output},null,2));
+console.log(JSON.stringify({status:result.status,paths:paths.map(p=>p.id+':'+p.status),sourceManifestHash:result.sourceManifestHash,slices:slices.map(({id,commandChainHash,finalStateHash,commandReceipts})=>({id,commandChainHash,finalStateHash,commands:commandReceipts.length})),output},null,2));
 }catch(error){
  const end=sourceManifest(),failure={schemaVersion:1,status:'FAILED_RUNTIME_EVIDENCE_NOT_M2_COMPLETION',sourceManifestHash:hash(start),sourceManifest:start,sourceUnchanged:hash(start)===hash(end),finalSourceManifestHash:hash(end),error:{name:error.name,message:error.message,stack:error.stack},completedSlices:completedTraces,interruptedSlice:activeTrace&&!activeTrace.finished?{id:activeTrace.id,prefix:activeTrace.prefix,initialFixture:activeTrace.initialFixture,initialFixtureHash:hash(activeTrace.initialFixture),commandReceipts:activeTrace.rows,commandChainHash:hash(activeTrace.rows),lastStateHash:hash(activeTrace.state),status:'INTERRUPTED_NOT_PROVEN'}:null};
  const failedOutput=output.replace(/\.json(?:\.gz)?$/,'')+'-failed.json'+(output.endsWith('.gz')?'.gz':'');writeEvidence(failedOutput,failure);console.error(JSON.stringify({status:failure.status,error:failure.error.message,failedOutput}));process.exitCode=1;

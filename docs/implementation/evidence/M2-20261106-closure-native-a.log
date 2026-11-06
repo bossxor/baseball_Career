@@ -1,0 +1,59 @@
+M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit
+M2 closure: nativePaths endpoints verified
+{
+  "status": "PARTIAL_RUNTIME_EVIDENCE_NOT_M2_COMPLETION",
+  "paths": [
+    "P01:ENGINE_NATIVE_PATH_PROVEN",
+    "P02:FULL_PATH_NOT_PROVEN",
+    "P03:ENGINE_NATIVE_PATH_PROVEN",
+    "P04:FULL_PATH_NOT_PROVEN",
+    "P05:FULL_PATH_NOT_PROVEN",
+    "P06:FULL_PATH_NOT_PROVEN",
+    "P07:ENGINE_NATIVE_PATH_PROVEN",
+    "P08:FULL_PATH_NOT_PROVEN",
+    "P09:FULL_PATH_NOT_PROVEN",
+    "P10:FULL_PATH_NOT_PROVEN",
+    "P11:FULL_PATH_NOT_PROVEN",
+    "P12:ENGINE_NATIVE_PATH_PROVEN",
+    "P13:FULL_PATH_NOT_PROVEN",
+    "P14:FULL_PATH_NOT_PROVEN",
+    "P15:FULL_PATH_NOT_PROVEN",
+    "P16:FULL_PATH_NOT_PROVEN",
+    "P17:FULL_PATH_NOT_PROVEN",
+    "P18:FULL_PATH_NOT_PROVEN",
+    "P19:FULL_PATH_NOT_PROVEN",
+    "P20:FULL_PATH_NOT_PROVEN",
+    "P21:FULL_PATH_NOT_PROVEN",
+    "P22:FULL_PATH_NOT_PROVEN",
+    "P23:FULL_PATH_NOT_PROVEN",
+    "P24:FULL_PATH_NOT_PROVEN"
+  ],
+  "sourceManifestHash": "a50e55b8dd027c576e59ceadc86f02e48cf06318e4e6241859be8b1546436071",
+  "slices": [
+    {
+      "id": "P01-native-hitter-HS-to-KBO-contract",
+      "commandChainHash": "de12ffdb6a896423555829f9ac6949bba67a3eef5d93a7016f4e25a092ac09fb",
+      "finalStateHash": "df370856a078e58af15df82b9b4d1fed4896824a829836d04bf7328f9afbce0d",
+      "commands": 109
+    },
+    {
+      "id": "P07-native-US-ineligible-to-other-route",
+      "commandChainHash": "3a22df1c5861d965f5a1aa5660e8d67b575800636ca1b1c3825cbe4fab10eebd",
+      "finalStateHash": "cb339e4eddfddf2bffcb4dc3762fbff9b20148510514f15c8c56eda1196a8271",
+      "commands": 110
+    },
+    {
+      "id": "P12-native-college-leave-service-resume",
+      "commandChainHash": "32e675b0ad72c16199aed88150f51349e4fe1a3083673d51aa893587f6b1f516",
+      "finalStateHash": "bc96300ae97aa507ecbff046d7db487b7effe1c47f296c18f6965582a643bf6c",
+      "commands": 138
+    },
+    {
+      "id": "P03-native-HS-college-year1-to-year2",
+      "commandChainHash": "3ed043e1da28f41f763df043c13f9fbfe6b7efdea8f8c6095ddb2dd7592dc1aa",
+      "finalStateHash": "4d1521544376c287252379778db25027f5045a6a6fb017345db12f658dbef8b8",
+      "commands": 212
+    }
+  ],
+  "output": "C:\\Users\\N-052\\.codex\\visualizations\\2026\\10\\16\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\baseball-career-m2\\docs\\implementation\\evidence\\M2-20261106-closure-native-a.json"
+}

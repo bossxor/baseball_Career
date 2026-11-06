@@ -1,3 +1,9 @@
+# 최신 구현 — 2026-11-06: 24경로 native 폐쇄 러너 (4/24 엔진 native 증명)
+
+[M2-CLOSURE-GAPS-20261106.md](M2-CLOSURE-GAPS-20261106.md)에 24경로별 순위 격차표. `scripts/verify-m2-closure.mjs --scenarios=nativePaths --native=P01,...`가 생성부터 실제 명령만으로 이어진 체인(고교216→KBO 계약/대학1년/휴학·복무·복학/미국 카드 숨김)을 만들고, 러너가 영수증만으로(생성 상태 재구성 해시, 해시 연결, 필수 명령 순서) 재검증해야 상태가 `ENGINE_NATIVE_PATH_PROVEN`이 된다(수동 편집 금지). 실행 A 종료0: **P01·P03·P07·P12 증명**, 나머지 20개는 `FULL_PATH_NOT_PROVEN`+사유. 증거 `evidence/M2-20261106-closure-native-a.{json,log,exitcode.txt}`. 단일 프로세스 약63분.
+
+최우선 엔진 버그: native KBO 정규시즌이 첫 시즌 world day 67에서 `INVALID_PRO_TRAIT_PHASE`로 중단(`kbo-progress.ts:163`→`pro-trait-notices.ts:50`, phaseContext.pendingGame 잔존 의심). P15/P11/P08/P09/P16 및 P02 완성을 막는다. 재현·실패 상태는 공유 노트 폴더. P04는 native 선수가 조기 지명되어(8라운드) 미지명 분기에 도달 못함—DECLINE 변형(실행 B)만. P06은 native 선수 종합51.6으로 미국 카드 숨김. P17~P24는 M6/M3/M7 소유. `--tolerate-source-drift`로 실행(타 작업자의 엔진 수정이 기록됨); 릴리스 인용 전 조용한 트리에서 재실행. M2 완료 아님(4/24, 99사건 triage만, PF-D 미실행). 아래는 과거 이력이다.
+
 # 최신 구현 — 2026-11-06: Major FA E66 국내 복귀 + 미국 E96 재회·과거 신원
 
 [M2-MAJOR-FA-RETURN-20261106.md](M2-MAJOR-FA-RETURN-20261106.md): 마이너 만료 복귀(E67+원자 이전)를 KBO 출신 Major FA(E66 majorFaWindow)로 확장, 최신 KBO authority만 사용, 미국 잔류 서명 시 열린 E67만 취소. 신규2+회귀12 통과. [M2-US-TEAM-REUNION-E96-20261106.md](M2-US-TEAM-REUNION-E96-20261106.md): 미국 같은 팀 등록 E96/REUNITED_TEAM owner와 KBO→US 과거 관계 신원 봉인(relationIdentities). 직행자 귀국·API/웹 연결·native 장기 증거·기존 저장 신원 복구는 남아 있다. M2 완료 아님.

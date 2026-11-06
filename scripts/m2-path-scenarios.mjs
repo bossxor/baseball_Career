@@ -267,3 +267,40 @@ export function postingPaths(trace){
  }
  return results;
 }
+
+/** Commands (in order) that a native slice must contain for the runner to accept its completion claim. */
+const HS=['CONFIRM_PLAYER','CONFIRM_PRESEASON','ADVANCE_HS','ACKNOWLEDGE_HS_REVIEW','OPEN_CAREER_ROUTE'];
+const KBO=['PREPARE_KBO_DRAFT','RESOLVE_KBO_DRAFT','SIGN_KBO_DRAFT','CLOSE_SCHOOL_FOR_KBO','START_SIGNED_KBO'];
+const COLLEGE=['ENROLL_COLLEGE','CLOSE_HS_FOR_COLLEGE','START_ADMITTED_COLLEGE'];
+const YEAR=['CONFIRM_COLLEGE_PRESEASON','ADVANCE_COLLEGE','START_COLLEGE_CUP','ADVANCE_COLLEGE_CUP','ACKNOWLEDGE_COLLEGE_REVIEW'];
+export const PATH_REQUIREMENTS={
+ P01:[...HS,...KBO],
+ P03:[...HS,...COLLEGE,...YEAR,'CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR'],
+ P04:[...HS,...COLLEGE,...YEAR,'CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR',...YEAR,'ENTER_EARLY_DRAFT','PREPARE_KBO_DRAFT','RESOLVE_KBO_DRAFT','RETURN_UNSIGNED_COLLEGE','CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR'],
+ P07:[...HS,'PREPARE_US_DIRECT',...KBO],
+ P12:[...HS,...COLLEGE,'START_COLLEGE_MILITARY_LEAVE','ADVANCE_COLLEGE_SERVICE','RESUME_COLLEGE'],
+};
+
+/** Why a path is still FULL_PATH_NOT_PROVEN. Reasons name the engine gap; docs/implementation/M2-CLOSURE-GAPS-20261106.md ranks them. */
+export const PATH_GAPS={
+ P02:'no native pitcher chain driver (HS pitcher creation->HS216->KBO sign->preseason roster role->E86 pitch training); role competition has no standalone engine command (kbo-opening-roster.ts:confirmKboOpeningRoster only) and XP-cap/pitch-ratio assertions are covered only by controlled slice',
+ P04:'native chain runs (P04-native-decline-variant) but the native player is DRAFTED at the early draft (round 8), so the undrafted branch the path requires is not reached; only drafted-then-DECLINED to E74 return is executed. Needs a weaker native player or seed search for an undrafted draw (career-kbo.ts:resolveCareerKboDraft round null)',
+ P05:'driver pending: four native college years (3 extra ~4min each) then graduateCollegeCareer->KBO draft',
+ P06:'native default hitter ends HS at overall 51.6; career-us.ts:careerUsDirectView stays hidden (US_DIRECT_MIN_SCOUT_SCORE in draft.ts). No creation preset/seed reaches the threshold within one HS season; needs seed search (~4 min/seed) or a college->US comparison chain (carryCollegeUsComparison)',
+ P08:'KBO posting needs 7 closed native KBO registration seasons + military COMPLETED (kbo-posting.ts:kboPostingEligibility SERVICE_SHORT/MILITARY_BLOCKED); no native multi-season KBO driver (closeKboSeason->stageKboAgeAndContracts->startNextKboSeason x7) nor native military completion built; controlled fixture only',
+ P09:'same prerequisite as P08 (7 native KBO seasons + military) before request/defer/no-offer/remain branches',
+ P10:'helper links missing: returned-US undrafted draw needs 6 native US seasons + 2 mandatory return years (us-amateur-return-career.ts, us-return-retry.ts, us-return-preparation.ts); engine has no native US-season-to-return chain, fixture us-return-retry-fixture.ts:nativeUndraftedUsReturn uses controlled closed years',
+ P11:'native player never reaches national selection (kbo-national-selection.ts needs ~65 ability; native player ~52); openNationalCallup requires a closed pro review; needs native multi-season growth or a selection path that does not need ability seeding',
+ P13:'natural diagnosis draw not driven: needs an HS/pro seed where the protagonist is injured in the first 12 games (health.ts); seed search ~4 min/probe. Recovery/deferral/one-time training commands already exist in controlled slice',
+ P14:'same-game trait/goal/chronicle integration: chronicle producer (E99/S45) is M7; no engine command emits one game->stat+trait+goal+chronicle receipt',
+ P15:'BLOCKED BY ENGINE BUG: a native KBO regular season cannot finish. advanceKboCareer throws INVALID_PRO_TRAIT_PHASE at world day 67 of season 2033 (pro-trait-notices.ts:50 raiseProHiddenTraitNotice <- kbo-progress.ts:163 interruptHidden): career.phaseContext still carries pendingGame after Object.assign of a cloned career (hypothesis: stale progress alias, kbo-progress.ts:144). Repro + failing state in the shared notes folder. After the fix P15 needs closeKboSeason->hireCareerAgent->offerKboRenewal->counter driver.',
+ P16:'native pro career + release + three independent retry uses not available; retry-completion-scenario.ts retryNoOfferPrefix and 2 earlier optional uses are controlled (career-pro-retry.ts)',
+ P17:'CLUB mode (M6): kbo-club-*.ts exist but unified club creation/lineup/first-game worker chain not wired as one native command chain',
+ P18:'CLUB mode (M6): archived original copy at 19 (kbo-club-import.ts:importArchivedPlayers) needs a native retired original; depends on P16-like native ARCHIVED career',
+ P19:'CLUB mode (M6): same-world role claim for imported original and coach hire (S43) not an engine command here',
+ P20:'CLUB mode (M6): scout/offer/round-close/signing (S36/S16/S17) not a single native chain',
+ P21:'CLUB mode (M6): finance rebuild, year transition and long league (kbo-club-year.ts, kbo-club-long-run.ts) need worker chain',
+ P22:'M3/API: cross-device creation/command replay with same owner is HTTP persistence (apps/api); not an engine command chain',
+ P23:'M7 replay/card/export/backup is external; only read-only committed record reads are provable here',
+ P24:'CLUB/DIFFICULTY: hard competition + club cheat + transfer + re-sign spans M6 club and difficulty policy; no native chain',
+};
