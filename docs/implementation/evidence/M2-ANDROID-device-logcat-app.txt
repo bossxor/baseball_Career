@@ -1,0 +1,536 @@
+--------- beginning of main
+11-06 09:35:08.640 I/libprocessgroup(29913): Created cgroup /sys/fs/cgroup/apps/uid_10842/pid_29913
+11-06 09:35:08.644 I/Zygote  (29913): Process 29913 created for kr.againplayball.app
+11-06 09:35:08.644 I/ainplayball.app(29913): Late-enabling -Xcheck:jni
+11-06 09:35:08.655 I/ainplayball.app(29913): Using generational CollectorTypeCMC GC.
+11-06 09:35:08.659 D/nativeloader(29913): Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+11-06 09:35:08.707 D/nativeloader(29913): Configuring clns-9 for other apk /data/app/~~0zX40Z8cAOfy4cuhybTQtg==/kr.againplayball.app-s-dlmWuZFNsyUcpIZ7TPdA==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~0zX40Z8cAOfy4cuhybTQtg==/kr.againplayball.app-s-dlmWuZFNsyUcpIZ7TPdA==/lib/arm64, permitted_path=/data:/mnt/expand:/data/user/0/kr.againplayball.app
+11-06 09:35:08.717 V/GraphicsEnvironment(29913): Currently set values for:
+11-06 09:35:08.717 V/GraphicsEnvironment(29913):   angle_gl_driver_selection_pkgs=[]
+11-06 09:35:08.717 V/GraphicsEnvironment(29913):   angle_gl_driver_selection_values=[]
+11-06 09:35:08.717 V/GraphicsEnvironment(29913): kr.againplayball.app is not listed in per-application setting
+11-06 09:35:08.717 V/GraphicsEnvironment(29913): No special selections for ANGLE, returning default driver choice
+11-06 09:35:08.717 V/GraphicsEnvironment(29913): App is not on the allowlist for updatable production driver.
+11-06 09:35:08.724 I/HWUI    (29913): Using FreeType backend (prop=Auto)
+--------- beginning of system
+11-06 09:35:08.728 D/ActivityThread(29913): kr.againplayball.app will use render engine as VK
+11-06 09:35:08.728 D/HWUI    (29913): HWUI - treat SMPTE_170M as sRGB
+11-06 09:35:08.729 I/DisplayManager(29913): Choreographer implicitly registered for the refresh rate.
+11-06 09:35:08.729 D/HWUI    (29913): CacheManager constructor. deviceInfo=(1080, 1920)
+11-06 09:35:08.732 E/Adreno-AppProfiles(29913): QSPM AIDL service doesn't exist
+11-06 09:35:08.732 I/AdrenoVK-0(29913): ===== BEGIN DUMP OF OVERRIDDEN SETTINGS =====
+11-06 09:35:08.732 I/AdrenoVK-0(29913): ===== END DUMP OF OVERRIDDEN SETTINGS =====
+11-06 09:35:08.733 D/DesktopExperienceFlags(29913): Toggle override initialized to: false
+11-06 09:35:08.733 E/Adreno-AppProfiles(29913): QSPM AIDL service doesn't exist
+11-06 09:35:08.733 I/AdrenoVK-0(29913): ===== BEGIN DUMP OF OVERRIDDEN SETTINGS =====
+11-06 09:35:08.733 I/AdrenoVK-0(29913): ===== END DUMP OF OVERRIDDEN SETTINGS =====
+11-06 09:35:08.734 D/qdgralloc(29913): Fetching IMapper5 from QtiMapper5
+11-06 09:35:08.735 D/AppCompatDelegate(29913): Checking for metadata for AppLocalesMetadataHolderService : Service not found
+11-06 09:35:08.740 I/SnapAlloc(29913): Graphics lib is available
+11-06 09:35:08.744 D/CompatChangeReporter(29913): Compat change id reported: 377864165; UID 10842; state: ENABLED
+11-06 09:35:08.745 I/AdrenoVK-0(29913): QUALCOMM build          : 089d643e2a, Icecd8f0534
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Build Date              : 07/01/26
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Shader Compiler Version : E031.50.19.27
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Local Branch            : 
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Remote Branch           : refs/tags/AU_LINUX_ANDROID_LA.VENDOR.16.2.0.11.00.00.1195.619
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Remote Branch           : NONE
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Reconstruct Branch      : NOTHING
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Build Config            : C P 20.0.0 AArch64
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Driver Path             : /vendor/lib64/hw/vulkan.adreno.so
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Driver Version          : 0842.19.13
+11-06 09:35:08.745 I/AdrenoVK-0(29913): PFP                     : 0x01510103
+11-06 09:35:08.745 I/AdrenoVK-0(29913): ME                      : 0x01510025
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Application Name    : android framework
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Process Name        : kr.againplayball.app
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Application Version : 0x00000000
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Engine Name         : android framework
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Engine Version      : 0x00000000
+11-06 09:35:08.745 I/AdrenoVK-0(29913): Api Version         : 0x00401000
+11-06 09:35:08.746 I/DecorView(29913): setWindowBackground: isPopOver=false color=fffafafa d=android.graphics.drawable.ColorDrawable@4728393
+11-06 09:35:08.749 I/ainplayball.app(29913): hiddenapi: Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (runtime_flags=0, domain=platform, api=unsupported) from Landroidx/appcompat/widget/ViewUtils; (domain=app, TargetSdkVersion=36) using reflection: allowed
+11-06 09:35:08.751 I/WebViewFactory(29913): Loading com.google.android.webview version 156.0.8078.47 (code 807804703)
+11-06 09:35:08.752 V/ResourcesManager(29913): The following library key has been added: ResourcesKey{ mHash=10811058 mResDir=null mSplitDirs=[] mOverlayDirs=[] mLibDirs=[/data/app/~~XzMs07y1v_ZKAe1VwcfrPg==/com.google.android.webview-JeCGLKyGeJvBNoW2R8g6BA==/base.apk,/system/framework/android.test.base.jar,/system_ext/framework/androidx.window.extensions.jar] mDisplayId=0 mOverrideConfig=v37 mCompatInfo={450dpi always-compat} mLoaders=[]}
+11-06 09:35:08.753 D/ApplicationLoaders(29913): Returning zygote-cached class loader: /system/framework/android.test.base.jar
+11-06 09:35:08.753 D/ApplicationLoaders(29913): Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+11-06 09:35:08.754 W/ainplayball.app(29913): Loading /data/app/~~XzMs07y1v_ZKAe1VwcfrPg==/com.google.android.webview-JeCGLKyGeJvBNoW2R8g6BA==/oat/arm64/base.odex non-executable as it requires an image which we failed to load
+11-06 09:35:08.755 D/nativeloader(29913): Configuring clns-10 for other apk /data/app/~~XzMs07y1v_ZKAe1VwcfrPg==/com.google.android.webview-JeCGLKyGeJvBNoW2R8g6BA==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~XzMs07y1v_ZKAe1VwcfrPg==/com.google.android.webview-JeCGLKyGeJvBNoW2R8g6BA==/lib/arm64:/data/app/~~XzMs07y1v_ZKAe1VwcfrPg==/com.google.android.webview-JeCGLKyGeJvBNoW2R8g6BA==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand
+11-06 09:35:08.764 I/cr_WVCFactoryProvider(29913): version=156.0.8078.47 (807804703) minSdkVersion=29 multiprocess=true packageId=2 splits=<none>
+11-06 09:35:08.767 D/nativeloader(29913): Load /data/app/~~XzMs07y1v_ZKAe1VwcfrPg==/com.google.android.webview-JeCGLKyGeJvBNoW2R8g6BA==/base.apk!/lib/arm64-v8a/libwebviewchromium.so using class loader ns clns-10 (caller=/data/app/~~XzMs07y1v_ZKAe1VwcfrPg==/com.google.android.webview-JeCGLKyGeJvBNoW2R8g6BA==/base.apk): ok
+11-06 09:35:08.768 D/nativeloader(29913): Load /system/lib64/libwebviewchromium_plat_support.so using class loader ns clns-10 (caller=/data/app/~~XzMs07y1v_ZKAe1VwcfrPg==/com.google.android.webview-JeCGLKyGeJvBNoW2R8g6BA==/base.apk): ok
+11-06 09:35:08.772 I/cr_LibraryLoader(29913): Successfully loaded native library
+11-06 09:35:08.772 I/cr_CachingUmaRecorder(29913): Flushed 46 samples from 21 histograms, 0 samples were dropped.
+11-06 09:35:08.772 I/cr_ChildProcLH(29913): ScopedServiceBindingBatch.tryActivate: false
+11-06 09:35:08.773 I/cr_CombinedPProvider(29913): #registerProvider() provider:WV.hj@22ee7cf isPolicyCacheEnabled:false policyProvidersSize:0
+11-06 09:35:08.773 I/cr_PolicyProvider(29913): #setManagerAndSource() 0
+11-06 09:35:08.773 I/cr_DisplayManager(29913): Is Display Topology available: false
+11-06 09:35:08.774 I/cr_policy(29913): registerReceiver succeeded after 1ms
+11-06 09:35:08.779 I/cr_CombinedPProvider(29913): #linkNativeInternal() 1
+11-06 09:35:08.779 I/cr_AppResProvider(29913): #getApplicationRestrictionsFromUserManager() Bundle[EMPTY_PARCEL]
+11-06 09:35:08.779 I/cr_PolicyProvider(29913): #notifySettingsAvailable() 0
+11-06 09:35:08.779 I/cr_CombinedPProvider(29913): #onSettingsAvailable() 0
+11-06 09:35:08.779 I/cr_CombinedPProvider(29913): #flushPolicies()
+11-06 09:35:08.786 W/chromium(29913): [WARNING:net/dns/dns_config_service_android.cc:69] Failed to read DnsConfig.
+11-06 09:35:08.798 D/Capacitor(29913): Starting BridgeActivity
+11-06 09:35:08.803 D/Capacitor(29913): Registering plugin instance: CapacitorCookies
+11-06 09:35:08.804 D/Capacitor(29913): Registering plugin instance: WebView
+11-06 09:35:08.804 D/Capacitor(29913): Registering plugin instance: CapacitorHttp
+11-06 09:35:08.804 D/Capacitor(29913): Registering plugin instance: SystemBars
+11-06 09:35:08.807 W/Capacitor(29913): Unable to read file at path public/plugins
+11-06 09:35:08.807 D/Capacitor(29913): Loading app at https://localhost
+11-06 09:35:08.813 W/cr_media(29913): BLUETOOTH_CONNECT permission is missing.
+11-06 09:35:08.813 W/cr_media(29913): getBluetoothAdapter() requires BLUETOOTH permission
+11-06 09:35:08.813 W/cr_media(29913): registerBluetoothIntentsIfNeeded: Requires BLUETOOTH permission
+11-06 09:35:08.814 D/Capacitor(29913): Handling local request: https://localhost/
+11-06 09:35:08.815 D/AudioSystem(29913): onNewService: media.audio_policy service obtained 0xb40000767d29f7f0
+11-06 09:35:08.815 D/AudioSystem(29913): getService: IAudioPolicyService retrieved: 0xb40000767d29f7f0  cached: 0xb40000767d29f7f0
+11-06 09:35:08.817 D/Capacitor(29913): App started
+11-06 09:35:08.817 D/Capacitor(29913): App resumed
+11-06 09:35:08.818 I/AdrenoGLES-0(29913): QUALCOMM build                   : 089d643e2a, Icecd8f0534
+11-06 09:35:08.818 I/AdrenoGLES-0(29913): Build Date                       : 07/01/26
+11-06 09:35:08.818 I/AdrenoGLES-0(29913): OpenGL ES Shader Compiler Version: E031.50.19.27
+11-06 09:35:08.818 I/AdrenoGLES-0(29913): Local Branch                     : 
+11-06 09:35:08.818 I/AdrenoGLES-0(29913): Remote Branch                    : refs/tags/AU_LINUX_ANDROID_LA.VENDOR.16.2.0.11.00.00.1195.619
+11-06 09:35:08.818 I/AdrenoGLES-0(29913): Remote Branch                    : NONE
+11-06 09:35:08.818 I/AdrenoGLES-0(29913): Reconstruct Branch               : NOTHING
+11-06 09:35:08.818 I/AdrenoGLES-0(29913): Build Config                     : C P 20.0.0 AArch64
+11-06 09:35:08.818 I/AdrenoGLES-0(29913): Driver Path                      : /vendor/lib64/egl/libGLESv2_adreno.so
+11-06 09:35:08.818 I/AdrenoGLES-0(29913): Driver Version                   : 0842.19.13
+11-06 09:35:08.818 I/AdrenoGLES-0(29913): Process Name                     : kr.againplayball.app
+11-06 09:35:08.819 D/ViewRootImpl(29913): desktopMode is false
+11-06 09:35:08.819 I/AdrenoGLES-0(29913): PFP: 0x01510103, ME: 0x01510025
+11-06 09:35:08.820 I/ViewRootImpl(29913): dVRR is enabled
+11-06 09:35:08.820 D/HardwareRenderer(29913): onDisplayChanged. displayId=0 current wxh=1440x3120 mLargest wxh=0x0
+11-06 09:35:08.820 D/HardwareRenderer(29913): Set largestWidth and largestHeight as logical resolution. (1440x3120)
+11-06 09:35:08.820 D/HWUI    (29913): setMaxSurfaceArea requested wxh=(1440,3120) requestedSurfaceArea(4492800) mMaxSurfaceArea(2073600)
+11-06 09:35:08.820 D/NativeCustomFrequencyManager(29913): [NativeCFMS] BpCustomFrequencyManager::BpCustomFrequencyManager()
+11-06 09:35:08.821 E/Adreno-AppProfiles(29913): QSPM AIDL service doesn't exist
+11-06 09:35:08.822 I/AdrenoUtils(29913): <ReadGpuID:1333>: Reading chip ID through GSL
+11-06 09:35:08.823 D/InputTransport(29913): Input channel constructed: 'f1a6c3d', fd=186
+11-06 09:35:08.823 I/InsetsController(29913): onStateChanged: host=kr.againplayball.app/kr.againplayball.app.MainActivity, from=android.view.ViewRootImpl.onInsetsStateChanged:3319, state=InsetsState: {mDisplayFrame=Rect(0, 0 - 1440, 3120), mDisplayCutout=DisplayCutout{insets=Rect(0, 139 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(680, 0 - 760, 139), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=1440 displayHeight=3120 physicalDisplayWidth=1440 physicalDisplayHeight=3120 density={3.75} cutoutSpec={M 0,0 H -10.66666666666667 V 37.06666666666667 H 10.66666666666667 V 0 H 0 Z @dp} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, mRoundedCorners=RoundedCorners{[RoundedCorner{position=TopLeft, radius=105, center=Point(105, 105)}, RoundedCorner{position=TopRight, radius=105, center=Point(1335, 105)}, RoundedCorner{position=BottomRight, radius=105, center=Point(1335, 3015)}, RoundedCorner{position=BottomLeft, radius=105, center=Point(105, 3015)}]}  mRoundedCornerFrame=Rect(0, 0 - 1440, 3120), mPrivacyIndicatorBounds=PrivacyIndicatorBounds {static bounds=Rect(1275, 0 - 1440, 149) rotation=0}, mDisplayShape=DisplayShape{type=2, displayWidth=1440, displayHeight=3120, physicalPixelDisplaySizeRatio=1.0, rotation=0, offsetX=0, offsetY=0, scale=1.0}, mSources= { InsetsSource: {3 mType=ime mFrame=[0,0][0,0] mAttachedInsets=null mVisible=false mFlags=INVALID mSideHint=NONE}, InsetsSource: {27 mType=displayCutout mFrame=[0,0][1440,139] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {11520001 mType=navigationBars mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520004 mType=systemGestures mFrame=[0,0][0,0] mAttachedInsets=null mVisible=true mFlags= mSideHint=NONE}, InsetsSource: {11520005 mType=mandatorySystemGestures mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520006 mType=tappableElement mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520024 mType=systemGestures mFrame=[0,0][0,0] mAttachedInsets=null mVisible=true mFlags= mSideHint=NONE}, InsetsSource: {72bd0000 mType=statusBars mFrame=[0,0][1440,149] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {72bd0005 mType=mandatorySystemGestures mFrame=[0,0][1440,184] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {72bd0006 mType=tappableElement mFrame=[0,0][1440,149] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP} }
+11-06 09:35:08.824 I/VRI[MainActivity]@2faf19(29913): synced displayState. AttachInfo displayState=2
+11-06 09:35:08.824 I/VRI[MainActivity]@2faf19(29913): setView = com.android.internal.policy.DecorView@a6659b7 IsHRR=false mFlingFrameRateChange=0 TM=true
+11-06 09:35:08.826 I/cr_AppResProvider(29913): #getApplicationRestrictionsFromUserManager() Bundle[EMPTY_PARCEL]
+11-06 09:35:08.826 I/cr_PolicyProvider(29913): #notifySettingsAvailable() 0
+11-06 09:35:08.826 I/cr_CombinedPProvider(29913): #onSettingsAvailable() 0
+11-06 09:35:08.826 I/cr_CombinedPProvider(29913): #flushPolicies()
+11-06 09:35:08.828 D/HWUI    (29913): HWUI - treat SMPTE_170M as sRGB
+11-06 09:35:08.828 D/WindowOnBackDispatcher(29913): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda1@9fcda53
+11-06 09:35:08.829 D/VRI[MainActivity]@2faf19(29913): WindowInsets changed: 1440x3120 statusBars:[0,149,0,0] navigationBars:[0,0,0,146] mandatorySystemGestures:[0,184,0,146] 
+11-06 09:35:08.829 I/CameraManagerGlobal(29913): Connecting to camera service
+11-06 09:35:08.832 D/VendorTagDescriptor(29913): addVendorDescriptor: vendor tag id 15622750491770684145 added
+11-06 09:35:08.832 D/VRI[MainActivity]@2faf19(29913): applyPrivacyLayerOverlapPolicy: request=false
+11-06 09:35:08.832 D/VRI[MainActivity]@2faf19(29913): applyPrivacyDisplayOverlapBounds: bounds=Rect(0, 0 - 0, 0)
+11-06 09:35:08.832 I/SurfaceComposerClient(29913): setPrivacyOverlapBounds VRI-kr.againplayball.app/kr.againplayball.app.MainActivity$_29913#68653 bounds=[0, 0, 0, 0]
+11-06 09:35:08.832 E/BufferQueueProducer(29913): Unable to open libpenguin.so: dlopen failed: library "libpenguin.so" not found.
+11-06 09:35:08.832 E/ainplayball.app(29913): Unable to open libpenguin.so: dlopen failed: library "libpenguin.so" not found.
+11-06 09:35:08.832 I/Surface (29913): Creating surface for consumer unnamed-29913-0 with slotExpansion=1 for 64 slots
+11-06 09:35:08.832 I/BufferQueueProducer(29913): [](id:74d900000000,api:0,p:0,c:29913) setDequeueTimeout:2077252342
+11-06 09:35:08.833 I/BLASTBufferQueue_Java(29913): new BLASTBufferQueue, mName= VRI[MainActivity]@2faf19 mNativeObject= 0xb40000769d20bc70 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3909 android.view.ViewRootImpl.updateRenderTargetIfNeeded:3890 android.view.ViewRootImpl.relayoutWindow:12632 android.view.ViewRootImpl.performTraversals:5287 android.view.ViewRootImpl.doTraversal:4255 android.view.ViewRootImpl$TraversalCallback.onVsync:13896 android.view.Choreographer$CallbackRecord.run:1995 android.view.Choreographer.doCallbacks:1440 android.view.Choreographer.doFrame:1393 android.view.Choreographer$FrameDisplayEventReceiver.run:1957 
+11-06 09:35:08.833 I/BLASTBufferQueue_Java(29913): update, w= 1440 h= 3120 mName = VRI[MainActivity]@2faf19 mNativeObject= 0xb40000769d20bc70 sc.mNativeObject= 0xb4000076bd207790 format= -1 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3914 android.view.ViewRootImpl.updateRenderTargetIfNeeded:3890 android.view.ViewRootImpl.relayoutWindow:12632 android.view.ViewRootImpl.performTraversals:5287 android.view.ViewRootImpl.doTraversal:4255 android.view.ViewRootImpl$TraversalCallback.onVsync:13896 
+11-06 09:35:08.833 D/VendorTagDescriptor(29913): addVendorDescriptor: vendor tag id 8932615658386372252 added
+11-06 09:35:08.833 I/Surface (29913): Creating surface for consumer VRI[MainActivity]@2faf19#0(BLAST Consumer)0 with slotExpansion=1 for 64 slots
+11-06 09:35:08.833 I/SurfaceComposerClient(29913): [GC_PD] apply eOverlapPrivacyLayer layerId=68653 eOverlapPrivacyLayer=0 flags=0x2000 mask=0x20002000
+11-06 09:35:08.833 I/VRI[MainActivity]@2faf19(29913): Relayout returned: old=(0,0,1440,3120) new=(0,0,1440,3120) relayoutAsync=false req=(1440,3120)0 dur=1 res=0x3 s={true 0xb40000777d22e980} ch=true seqId=1 syncSeqId=0
+11-06 09:35:08.833 D/VRI[MainActivity]@2faf19(29913): reportNextDraw android.view.ViewRootImpl.performTraversals:5295 android.view.ViewRootImpl.doTraversal:4255 android.view.ViewRootImpl$TraversalCallback.onVsync:13896 android.view.Choreographer$CallbackRecord.run:1995 android.view.Choreographer.doCallbacks:1440 
+11-06 09:35:08.833 D/VRI[MainActivity]@2faf19(29913): applyTransactionOnDraw applyImmediately
+11-06 09:35:08.833 I/VRI[MainActivity]@2faf19(29913): performConfigurationChange setNightDimText nightDimLevel=0
+11-06 09:35:08.834 D/VRI[MainActivity]@2faf19(29913): mThreadedRenderer.initialize() mSurface={isValid=true 0xb40000777d22e980} hwInitialized=true
+11-06 09:35:08.834 D/VRI[MainActivity]@2faf19(29913): reportNextDraw android.view.ViewRootImpl.performTraversals:5940 android.view.ViewRootImpl.doTraversal:4255 android.view.ViewRootImpl$TraversalCallback.onVsync:13896 android.view.Choreographer$CallbackRecord.run:1995 android.view.Choreographer.doCallbacks:1440 
+11-06 09:35:08.834 D/VRI[MainActivity]@2faf19(29913): Setup new sync=wmsSync-VRI[MainActivity]@2faf19#0
+11-06 09:35:08.834 I/VRI[MainActivity]@2faf19(29913): Creating new active sync group VRI[MainActivity]@2faf19#1
+11-06 09:35:08.836 D/VRI[MainActivity]@2faf19(29913): registerCallbacksForSync syncBuffer=false
+11-06 09:35:08.836 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:08.837 E/Adreno-AppProfiles(29913): QSPM AIDL service doesn't exist
+11-06 09:35:08.837 I/CameraManager(29913): registerAvailabilityCallback: Is device callback = false
+11-06 09:35:08.837 I/AdrenoVK-0(29913): ===== BEGIN DUMP OF OVERRIDDEN SETTINGS =====
+11-06 09:35:08.837 I/AdrenoVK-0(29913): ===== END DUMP OF OVERRIDDEN SETTINGS =====
+11-06 09:35:08.837 I/CameraManagerGlobal(29913): postSingleUpdate device: camera id 0 status STATUS_PRESENT
+11-06 09:35:08.837 I/AdrenoVK-0(29913): QUALCOMM build          : 089d643e2a, Icecd8f0534
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Build Date              : 07/01/26
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Shader Compiler Version : E031.50.19.27
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Local Branch            : 
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Remote Branch           : refs/tags/AU_LINUX_ANDROID_LA.VENDOR.16.2.0.11.00.00.1195.619
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Remote Branch           : NONE
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Reconstruct Branch      : NOTHING
+11-06 09:35:08.837 I/CameraManagerGlobal(29913): postSingleUpdate device: camera id 1 status STATUS_PRESENT
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Build Config            : C P 20.0.0 AArch64
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Driver Path             : /vendor/lib64/hw/vulkan.adreno.so
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Driver Version          : 0842.19.13
+11-06 09:35:08.837 I/AdrenoVK-0(29913): PFP                     : 0x01510103
+11-06 09:35:08.837 I/AdrenoVK-0(29913): ME                      : 0x01510025
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Application Name    : Chromium
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Process Name        : kr.againplayball.app
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Application Version : 0x00000000
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Engine Name         : (null)
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Engine Version      : 0x00000000
+11-06 09:35:08.837 I/AdrenoVK-0(29913): Api Version         : 0x00401000
+11-06 09:35:08.837 I/CameraManagerGlobal(29913): postSingleUpdate device: camera id 2 status STATUS_PRESENT
+11-06 09:35:08.837 I/CameraManagerGlobal(29913): postSingleUpdate device: camera id 3 status STATUS_PRESENT
+11-06 09:35:08.837 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview}
+11-06 09:35:08.837 I/CameraManagerGlobal(29913): Camera 0 facing CAMERA_FACING_BACK state now CAMERA_STATE_CLOSED for client com.microsoft.teams API Level 2 User Id 0Device Id 0
+11-06 09:35:08.838 I/CameraManagerGlobal(29913): Camera 1 facing CAMERA_FACING_FRONT state now CAMERA_STATE_CLOSED for client com.samsung.android.smartface API Level 2 User Id 0Device Id 0
+11-06 09:35:08.838 I/CameraManagerGlobal(29913): Camera 2 facing CAMERA_FACING_BACK state now CAMERA_STATE_CLOSED for client android.system API Level 2 User Id 0Device Id 0
+11-06 09:35:08.838 D/VRI[MainActivity]@2faf19(29913): Received frameDrawingCallback syncResult=0 frameNum=1.
+11-06 09:35:08.838 I/VRI[MainActivity]@2faf19(29913): mWNT: t=0xb4000076ad22b3c0 fn= 1 HdrRenderState mRenderHdrSdrRatio=1.0 caller= android.view.ViewRootImpl$12.onFrameDraw:16715 android.view.ThreadedRenderer$1.onFrameDraw:750 <bottom of call stack> 
+11-06 09:35:08.838 I/VRI[MainActivity]@2faf19(29913): Setting up sync and frameCommitCallback
+11-06 09:35:08.838 I/CameraManagerGlobal(29913): Camera 20 facing CAMERA_FACING_BACK state now CAMERA_STATE_CLOSED for client com.sec.android.app.camera API Level 2 User Id 0Device Id 0
+11-06 09:35:08.838 I/CameraManagerGlobal(29913): Camera 21 facing CAMERA_FACING_BACK state now CAMERA_STATE_CLOSED for client android.system API Level 2 User Id 0Device Id 0
+11-06 09:35:08.838 I/CameraManagerGlobal(29913): Camera 23 facing CAMERA_FACING_BACK state now CAMERA_STATE_CLOSED for client android.system API Level 2 User Id 0Device Id 0
+11-06 09:35:08.839 I/CameraManagerGlobal(29913): Camera 24 facing CAMERA_FACING_BACK state now CAMERA_STATE_CLOSED for client android.system API Level 2 User Id 0Device Id 0
+11-06 09:35:08.839 I/CameraManagerGlobal(29913): Camera 3 facing CAMERA_FACING_FRONT state now CAMERA_STATE_CLOSED for client android.system API Level 2 User Id 0Device Id 0
+11-06 09:35:08.839 I/CameraManagerGlobal(29913): Camera 4 facing CAMERA_FACING_FRONT state now CAMERA_STATE_CLOSED for client client.pid<2507> API Level 2 User Id 0Device Id 0
+11-06 09:35:08.839 I/CameraManagerGlobal(29913): Camera 52 facing CAMERA_FACING_BACK state now CAMERA_STATE_CLOSED for client android.system API Level 2 User Id 0Device Id 0
+11-06 09:35:08.840 I/CameraManagerGlobal(29913): Camera 54 facing CAMERA_FACING_BACK state now CAMERA_STATE_CLOSED for client android.system API Level 2 User Id 0Device Id 0
+11-06 09:35:08.840 I/CameraManagerGlobal(29913): Camera 56 facing CAMERA_FACING_BACK state now CAMERA_STATE_CLOSED for client android.system API Level 2 User Id 0Device Id 0
+11-06 09:35:08.841 I/CameraManagerGlobal(29913): Camera 58 facing CAMERA_FACING_BACK state now CAMERA_STATE_CLOSED for client android.system API Level 2 User Id 0Device Id 0
+11-06 09:35:08.841 I/CameraManagerGlobal(29913): Camera 90 facing CAMERA_FACING_FRONT state now CAMERA_STATE_CLOSED for client android.system API Level 2 User Id 0Device Id 0
+11-06 09:35:08.848 I/BLASTBufferQueue(29913): [VRI[MainActivity]@2faf19#0](f:0,a:0,s:0) onFrameAvailable the first frame is available
+11-06 09:35:08.848 I/SurfaceComposerClient(29913): apply transaction with the first frame. layerId: 68653, bufferData(ID: 128475356725249, frameNumber: 1)
+11-06 09:35:08.848 I/VRI[MainActivity]@2faf19(29913): Received frameCommittedCallback lastAttemptedDrawFrameNum=1 didProduceBuffer=true
+11-06 09:35:08.848 D/HWUI    (29913): CFMS:: SetUp Pid : 29913    Tid : 29936
+11-06 09:35:08.848 D/VRI[MainActivity]@2faf19(29913): reportDrawFinished seqId=1
+11-06 09:35:08.849 D/VRI[MainActivity]@2faf19(29913): call clearFrameRate
+11-06 09:35:08.849 I/VRI[MainActivity]@2faf19(29913): call setFrameRateCategory category=high, reason=boost, vri=VRI[MainActivity]@2faf19
+11-06 09:35:08.851 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:08.851 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview}
+11-06 09:35:08.855 I/InsetsSourceConsumer(29913): applyRequestedVisibilityToControl: visible=true, type=statusBars, host=kr.againplayball.app/kr.againplayball.app.MainActivity
+11-06 09:35:08.855 I/InsetsSourceConsumer(29913): applyRequestedVisibilityToControl: visible=true, type=navigationBars, host=kr.againplayball.app/kr.againplayball.app.MainActivity
+11-06 09:35:08.856 E/Capacitor/Console(29913): File:  - Line 6 - Msg: Error injecting safe area CSS: TypeError: Cannot read properties of null (reading 'style')
+11-06 09:35:08.856 E/Capacitor/Console(29913): File:  - Line 6 - Msg: Error injecting safe area CSS: TypeError: Cannot read properties of null (reading 'style')
+11-06 09:35:08.863 W/AudioCapabilities(29913): Unsupported mediaType audio/x-ape
+11-06 09:35:08.863 W/AudioCapabilities(29913): Unsupported mediaType audio/x-ima
+11-06 09:35:08.863 W/AudioCapabilities(29913): Unsupported mediaType audio/mpeg-L1
+11-06 09:35:08.863 W/AudioCapabilities(29913): Unsupported mediaType audio/mpeg-L2
+11-06 09:35:08.863 W/VideoCapabilities(29913): Unsupported mime video/wvc1
+11-06 09:35:08.863 W/VideoCapabilities(29913): Unsupported mime video/x-ms-wmv
+11-06 09:35:08.864 D/VRI[MainActivity]@2faf19(29913): mThreadedRenderer.initializeIfNeeded()#2 mSurface={isValid=true 0xb40000777d22e980}
+11-06 09:35:08.864 D/InputMethodManager(29913): setCurrentRootViewLocked: updateReceivingDispatcher
+11-06 09:35:08.865 D/InputMethodManagerUtils(29913): startInputInner - Id : 0
+11-06 09:35:08.865 I/InputMethodManager(29913): startInputInner - IInputMethodManagerGlobalInvoker.startInputOrWindowGainedFocus
+11-06 09:35:08.866 W/AudioCapabilities(29913): could not parse integer range: 1-3536000000
+11-06 09:35:08.866 W/VideoCapabilities(29913): Unsupported mime video/x-mvhevc
+11-06 09:35:08.866 W/AudioCapabilities(29913): could not parse integer range: 1-3536000000
+11-06 09:35:08.869 D/InputTransport(29913): Input channel constructed: 'ClientS', fd=262
+11-06 09:35:08.870 W/VideoCapabilities(29913): Unsupported mime image/vnd.android.heic
+11-06 09:35:08.871 W/VideoCapabilities(29913): Unrecognized profile/level 32768/256 for video/mp4v-es
+11-06 09:35:08.873 I/cr_A11yState(29913): Enabled accessibility services: [autoclicker.clicker.autoclickerapp.autoclickerforgames/autoclicker.clicker.clickerapp.autoclickerforgames.service.AutoClickerService, com.secaccu.clock.debug/com.secaccu.clock.AutoClickService]
+11-06 09:35:08.873 I/cr_A11yState(29913): Running accessibility services: [autoclicker.clicker.autoclickerapp.autoclickerforgames/autoclicker.clicker.clickerapp.autoclickerforgames.service.AutoClickerService]
+11-06 09:35:08.873 I/cr_A11yState(29913): Will check again after 250 milliseconds.
+11-06 09:35:08.873 D/InsetsController(29913): hide(ime())
+11-06 09:35:08.873 I/ImeTracker(29913): kr.againplayball.app:99801f4e: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-06 09:35:08.874 W/AudioCapabilities(29913): Unsupported mime audio/x-ape
+11-06 09:35:08.874 W/AudioCapabilities(29913): Unsupported mime audio/x-ima
+11-06 09:35:08.875 W/AudioCapabilities(29913): Unsupported mime audio/mpeg-L1
+11-06 09:35:08.875 W/AudioCapabilities(29913): Unsupported mime audio/mpeg-L2
+11-06 09:35:08.875 W/VideoCapabilities(29913): Unsupported mime video/wvc1
+11-06 09:35:08.875 W/VideoCapabilities(29913): Unsupported mime video/wvc1
+11-06 09:35:08.875 W/VideoCapabilities(29913): Unsupported mime video/x-ms-wmv
+11-06 09:35:08.876 D/Capacitor(29913): Handling local request: https://localhost/assets/index-fuT8hYYR.js
+11-06 09:35:08.876 D/Capacitor(29913): Handling local request: https://localhost/assets/index-BAIl20EY.css
+11-06 09:35:08.884 W/Utils   (29913): could not parse integer range '1-3536000000'
+11-06 09:35:08.884 W/Utils   (29913): could not parse integer range '1-3536000000'
+11-06 09:35:08.885 W/VideoCapabilities(29913): Unsupported mime video/x-mvhevc
+11-06 09:35:08.885 W/Utils   (29913): could not parse integer range '1-3536000000'
+11-06 09:35:08.886 W/Utils   (29913): could not parse integer range '1-3536000000'
+11-06 09:35:08.901 W/VideoCapabilities(29913): Unsupported mime image/vnd.android.heic
+11-06 09:35:08.901 W/VideoCapabilities(29913): Unsupported mime image/vnd.android.heic
+11-06 09:35:08.901 W/VideoCapabilities(29913): Unrecognized profile/level 32768/256 for video/mp4v-es
+11-06 09:35:08.933 D/Capacitor(29913): Handling local request: https://localhost/assets/NotoSansKR-Variable-k7NQXPol.ttf
+11-06 09:35:08.933 D/Capacitor(29913): Handling local request: https://localhost/assets/BlackHanSans-Regular-B0-nbKIc.ttf
+11-06 09:35:08.955 D/Capacitor(29913): Handling local request: https://localhost/favicon.ico
+11-06 09:35:08.960 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:08.960 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:08.964 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 0
+11-06 09:35:08.964 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:08.968 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:08.968 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:08.974 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 0
+11-06 09:35:08.974 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:08.979 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 0
+11-06 09:35:08.979 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:08.991 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 0
+11-06 09:35:08.991 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:08.997 I/ainplayball.app(29913): Compiler allocated 5454KB to compile void android.view.ViewRootImpl.performTraversals(long)
+11-06 09:35:09.008 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 0
+11-06 09:35:09.008 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:09.011 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 0
+11-06 09:35:09.011 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:09.015 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 0
+11-06 09:35:09.015 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:09.027 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:09.027 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:09.043 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:09.043 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:09.124 I/cr_A11yState(29913): Enabled accessibility services: [autoclicker.clicker.autoclickerapp.autoclickerforgames/autoclicker.clicker.clickerapp.autoclickerforgames.service.AutoClickerService, com.secaccu.clock.debug/com.secaccu.clock.AutoClickService]
+11-06 09:35:09.124 I/cr_A11yState(29913): Running accessibility services: [autoclicker.clicker.autoclickerapp.autoclickerforgames/autoclicker.clicker.clickerapp.autoclickerforgames.service.AutoClickerService]
+11-06 09:35:09.124 I/cr_A11yState(29913): Will check again after 500 milliseconds.
+11-06 09:35:09.625 I/cr_A11yState(29913): Enabled accessibility services: [autoclicker.clicker.autoclickerapp.autoclickerforgames/autoclicker.clicker.clickerapp.autoclickerforgames.service.AutoClickerService, com.secaccu.clock.debug/com.secaccu.clock.AutoClickService]
+11-06 09:35:09.625 I/cr_A11yState(29913): Running accessibility services: [autoclicker.clicker.autoclickerapp.autoclickerforgames/autoclicker.clicker.clickerapp.autoclickerforgames.service.AutoClickerService]
+11-06 09:35:09.625 I/cr_A11yState(29913): Will check again after 1000 milliseconds.
+11-06 09:35:10.627 I/cr_A11yState(29913): Enabled accessibility services: [autoclicker.clicker.autoclickerapp.autoclickerforgames/autoclicker.clicker.clickerapp.autoclickerforgames.service.AutoClickerService, com.secaccu.clock.debug/com.secaccu.clock.AutoClickService]
+11-06 09:35:10.627 I/cr_A11yState(29913): Running accessibility services: [autoclicker.clicker.autoclickerapp.autoclickerforgames/autoclicker.clicker.clickerapp.autoclickerforgames.service.AutoClickerService]
+11-06 09:35:10.627 I/cr_A11yState(29913): Will check again after 2000 milliseconds.
+11-06 09:35:11.834 I/VRI[MainActivity]@2faf19(29913): call setFrameRateCategory category=no preference, reason=boost timeout, vri=VRI[MainActivity]@2faf19
+11-06 09:35:12.629 I/cr_A11yState(29913): Enabled accessibility services: [autoclicker.clicker.autoclickerapp.autoclickerforgames/autoclicker.clicker.clickerapp.autoclickerforgames.service.AutoClickerService, com.secaccu.clock.debug/com.secaccu.clock.AutoClickService]
+11-06 09:35:12.630 I/cr_A11yState(29913): Running accessibility services: [autoclicker.clicker.autoclickerapp.autoclickerforgames/autoclicker.clicker.clickerapp.autoclickerforgames.service.AutoClickerService]
+11-06 09:35:12.630 I/cr_A11yState(29913): Will check again after 4000 milliseconds.
+11-06 09:35:13.935 D/ProfileInstaller(29913): Installing profile for kr.againplayball.app
+11-06 09:35:16.636 I/cr_A11yState(29913): Enabled accessibility services: [autoclicker.clicker.autoclickerapp.autoclickerforgames/autoclicker.clicker.clickerapp.autoclickerforgames.service.AutoClickerService, com.secaccu.clock.debug/com.secaccu.clock.AutoClickService]
+11-06 09:35:16.636 I/cr_A11yState(29913): Running accessibility services: [autoclicker.clicker.autoclickerapp.autoclickerforgames/autoclicker.clicker.clickerapp.autoclickerforgames.service.AutoClickerService]
+11-06 09:35:16.636 I/cr_A11yState(29913): Max delay reached. Send information as is.
+11-06 09:35:16.638 I/cr_A11yState(29913): New AccessibilityState: State{isComplexUserInteractionServiceEnabled=false, isTouchExplorationEnabled=false, isPerformGesturesEnabled=true, isAnyAccessibilityServiceEnabled=true, isAccessibilityToolPresent=false, isTextShowPasswordEnabled=false, isOnlyAutofillRunning=false, isOnlyPasswordManagersEnabled=false, isKnownScreenReaderEnabled=false, isSamsungTalkBackEnabled=false}
+11-06 09:35:25.245 I/VRI[MainActivity]@2faf19(29913): ViewPostIme pointer 0
+11-06 09:35:25.248 I/VRI[MainActivity]@2faf19(29913): call setFrameRateCategory category=high hint, reason=touch, vri=VRI[MainActivity]@2faf19
+11-06 09:35:25.249 I/VRI[MainActivity]@2faf19(29913): ViewPostIme pointer 1
+11-06 09:35:25.277 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:25.277 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:25.280 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 0
+11-06 09:35:25.280 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:25.292 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 0
+11-06 09:35:25.292 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:25.295 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 0
+11-06 09:35:25.295 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:25.299 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 0
+11-06 09:35:25.299 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:25.336 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:25.336 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:28.280 I/VRI[MainActivity]@2faf19(29913): call setFrameRateCategory category=no preference, reason=boost timeout, vri=VRI[MainActivity]@2faf19
+11-06 09:35:36.222 I/VRI[MainActivity]@2faf19(29913): ViewPostIme pointer 0
+11-06 09:35:36.222 I/VRI[MainActivity]@2faf19(29913): call setFrameRateCategory category=high hint, reason=touch, vri=VRI[MainActivity]@2faf19
+11-06 09:35:36.223 I/VRI[MainActivity]@2faf19(29913): ViewPostIme pointer 1
+11-06 09:35:36.245 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:36.245 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:36.247 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 0
+11-06 09:35:36.247 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:36.253 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:36.253 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:36.260 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 6
+11-06 09:35:36.260 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:36.271 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:36.271 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:36.272 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 6
+11-06 09:35:36.272 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:36.278 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:36.278 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:39.271 I/VRI[MainActivity]@2faf19(29913): call setFrameRateCategory category=no preference, reason=boost timeout, vri=VRI[MainActivity]@2faf19
+11-06 09:35:47.752 I/VRI[MainActivity]@2faf19(29913): ViewPostIme pointer 0
+11-06 09:35:47.752 I/VRI[MainActivity]@2faf19(29913): call setFrameRateCategory category=high hint, reason=touch, vri=VRI[MainActivity]@2faf19
+11-06 09:35:47.753 I/VRI[MainActivity]@2faf19(29913): ViewPostIme pointer 1
+11-06 09:35:47.761 D/InputMethodManagerUtils(29913): startInputInner - Id : 0
+11-06 09:35:47.761 I/InputMethodManager(29913): startInputInner - IInputMethodManagerGlobalInvoker.startInputOrWindowGainedFocus
+11-06 09:35:47.761 I/ImeTracker(29913): kr.againplayball.app:395e7447: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT fromUser false userId 0 displayId 0
+11-06 09:35:47.762 D/InputTransport(29913): Input channel constructed: 'ClientS', fd=279
+11-06 09:35:47.762 I/InputMethodManager_LC(29913): ssi(): flags=0 view=kr.againplayball.app reason=SHOW_SOFT_INPUT
+11-06 09:35:47.763 I/InputMethodManager_LC(29913): ssi() view is not EditText
+11-06 09:35:47.763 D/InsetsController(29913): show(ime())
+11-06 09:35:47.763 D/InsetsController(29913): Setting requestedVisibleTypes to 511 (was 503)
+11-06 09:35:47.763 I/InsetsController(29913): setRequestedVisibleTypes: visible=true, mask=ime, host=kr.againplayball.app/kr.againplayball.app.MainActivity, from=android.view.InsetsController.controlAnimationUnchecked:1712 android.view.InsetsController.applyAnimation:2359 android.view.InsetsController.applyAnimation:2284 android.view.InsetsController.show:1561 android.view.inputmethod.InputMethodManager.setImeVisibilityOnInsetsController:3143 android.view.inputmethod.InputMethodManager.showSoftInput:2775 android.view.inputmethod.InputMethodManager.showSoftInput:2689 android.view.inputmethod.InputMethodManager.showSoftInput:2680 org.chromium.content.browser.input.ImeAdapterImpl.A:226 org.chromium.content.browser.input.ImeAdapterImpl.updateState:27 
+11-06 09:35:47.767 I/AssistStructure(29913): Flattened final assist data: 2096 bytes, containing 1 windows, 5 views
+11-06 09:35:47.768 D/InputTransport(29913): Input channel destroyed: 'ClientS', fd=279
+11-06 09:35:47.769 I/VRI[MainActivity]@2faf19(29913): handleResized, frames=ClientWindowFrames{frame=[0,0][1440,3120] display=[0,0][1440,3120] parentFrame=[0,0][0,0]} displayId=0 dragResizing=false compatScale=1.0 frameChanged=false attachedFrameChanged=false configChanged=false displayChanged=false compatScaleChanged=false dragResizingChanged=false
+11-06 09:35:47.769 I/VRI[MainActivity]@2faf19(29913): handleResized seqId=1 mSeqId=1 mSyncSeqId=0 syncWithBuffers=false
+11-06 09:35:47.779 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:47.779 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:47.784 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 0
+11-06 09:35:47.784 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:47.850 D/WindowOnBackDispatcher(29913): setTopOnBackInvokedCallback (unwrapped): ImeOnBackInvokedCallback@67574981 Callback=android.window.IOnBackInvokedCallback$Stub$Proxy@65d3341
+11-06 09:35:47.884 I/InsetsController(29913): onStateChanged: host=kr.againplayball.app/kr.againplayball.app.MainActivity, from=android.view.ViewRootImpl.onInsetsStateChanged:3319, state=InsetsState: {mDisplayFrame=Rect(0, 0 - 1440, 3120), mDisplayCutout=DisplayCutout{insets=Rect(0, 139 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(680, 0 - 760, 139), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=1440 displayHeight=3120 physicalDisplayWidth=1440 physicalDisplayHeight=3120 density={3.75} cutoutSpec={M 0,0 H -10.66666666666667 V 37.06666666666667 H 10.66666666666667 V 0 H 0 Z @dp} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, mRoundedCorners=RoundedCorners{[RoundedCorner{position=TopLeft, radius=105, center=Point(105, 105)}, RoundedCorner{position=TopRight, radius=105, center=Point(1335, 105)}, RoundedCorner{position=BottomRight, radius=105, center=Point(1335, 3015)}, RoundedCorner{position=BottomLeft, radius=105, center=Point(105, 3015)}]}  mRoundedCornerFrame=Rect(0, 0 - 1440, 3120), mPrivacyIndicatorBounds=PrivacyIndicatorBounds {static bounds=Rect(1275, 0 - 1440, 149) rotation=0}, mDisplayShape=DisplayShape{type=2, displayWidth=1440, displayHeight=3120, physicalPixelDisplaySizeRatio=1.0, rotation=0, offsetX=0, offsetY=0, scale=1.0}, mSources= { InsetsSource: {3 mType=ime mFrame=[0,1926][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {27 mType=displayCutout mFrame=[0,0][1440,139] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {11520001 mType=navigationBars mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520004 mType=systemGestures mFrame=[0,0][0,0] mAttachedInsets=null mVisible=true mFlags= mSideHint=NONE}, InsetsSource: {11520005 mType=mandatorySystemGestures mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520006 mType=tappableElement mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520024 mType=systemGestures mFrame=[0,0][0,0] mAttachedInsets=null mVisible=true mFlags= mSideHint=NONE}, InsetsSource: {72bd0000 mType=statusBars mFrame=[0,0][1440,149] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {72bd0005 mType=mandatorySystemGestures mFrame=[0,0][1440,184] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {72bd0006 mType=tappableElement mFrame=[0,0][1440,149] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP} }
+11-06 09:35:47.884 I/VRI[MainActivity]@2faf19(29913): handleResized, frames=ClientWindowFrames{frame=[0,0][1440,3120] display=[0,0][1440,3120] parentFrame=[0,0][0,0]} displayId=0 dragResizing=false compatScale=1.0 frameChanged=false attachedFrameChanged=false configChanged=false displayChanged=false compatScaleChanged=false dragResizingChanged=false
+11-06 09:35:47.884 I/VRI[MainActivity]@2faf19(29913): handleResized seqId=1 mSeqId=1 mSyncSeqId=0 syncWithBuffers=false
+11-06 09:35:47.893 I/InsetsController(29913): onStateChanged: host=kr.againplayball.app/kr.againplayball.app.MainActivity, from=android.view.ViewRootImpl.onInsetsStateChanged:3319, state=InsetsState: {mDisplayFrame=Rect(0, 0 - 1440, 3120), mDisplayCutout=DisplayCutout{insets=Rect(0, 139 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(680, 0 - 760, 139), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=1440 displayHeight=3120 physicalDisplayWidth=1440 physicalDisplayHeight=3120 density={3.75} cutoutSpec={M 0,0 H -10.66666666666667 V 37.06666666666667 H 10.66666666666667 V 0 H 0 Z @dp} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, mRoundedCorners=RoundedCorners{[RoundedCorner{position=TopLeft, radius=105, center=Point(105, 105)}, RoundedCorner{position=TopRight, radius=105, center=Point(1335, 105)}, RoundedCorner{position=BottomRight, radius=105, center=Point(1335, 3015)}, RoundedCorner{position=BottomLeft, radius=105, center=Point(105, 3015)}]}  mRoundedCornerFrame=Rect(0, 0 - 1440, 3120), mPrivacyIndicatorBounds=PrivacyIndicatorBounds {static bounds=Rect(1275, 0 - 1440, 149) rotation=0}, mDisplayShape=DisplayShape{type=2, displayWidth=1440, displayHeight=3120, physicalPixelDisplaySizeRatio=1.0, rotation=0, offsetX=0, offsetY=0, scale=1.0}, mSources= { InsetsSource: {3 mType=ime mFrame=[0,1926][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {27 mType=displayCutout mFrame=[0,0][1440,139] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {11520001 mType=navigationBars mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520004 mType=systemGestures mFrame=[0,0][0,0] mAttachedInsets=null mVisible=true mFlags= mSideHint=NONE}, InsetsSource: {11520005 mType=mandatorySystemGestures mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520006 mType=tappableElement mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520024 mType=systemGestures mFrame=[0,0][0,0] mAttachedInsets=null mVisible=true mFlags= mSideHint=NONE}, InsetsSource: {72bd0000 mType=statusBars mFrame=[0,0][1440,149] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {72bd0005 mType=mandatorySystemGestures mFrame=[0,0][1440,184] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {72bd0006 mType=tappableElement mFrame=[0,0][1440,149] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP} }
+11-06 09:35:47.900 D/VRI[MainActivity]@2faf19(29913): WindowInsets changed: ime:[0,0,0,1194] 
+11-06 09:35:47.902 I/BLASTBufferQueue_Java(29913): update, w= 1440 h= 3120 mName = VRI[MainActivity]@2faf19 mNativeObject= 0xb40000769d20bc70 sc.mNativeObject= 0xb4000076bd207790 format= -1 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3898 android.view.ViewRootImpl.updateRenderTargetIfNeeded:3890 android.view.ViewRootImpl.relayoutWindow:12632 android.view.ViewRootImpl.performTraversals:5287 android.view.ViewRootImpl.doTraversal:4255 android.view.ViewRootImpl$TraversalCallback.onVsync:13896 
+11-06 09:35:47.902 I/VRI[MainActivity]@2faf19(29913): Relayout returned: old=(0,0,1440,3120) new=(0,0,1440,3120) relayoutAsync=true req=(1440,3120)0 dur=0 res=0x0 s={true 0xb40000777d22e980} ch=false seqId=1 syncSeqId=0
+11-06 09:35:47.902 I/VRI[MainActivity]@2faf19(29913): registerCallbackForPendingTransactions
+11-06 09:35:47.903 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:47.903 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:47.903 I/VRI[MainActivity]@2faf19(29913): mWNT: t=0xb4000076ad2365d0 fn= 14 HdrRenderState mRenderHdrSdrRatio=1.0 caller= android.view.ViewRootImpl$10.onFrameDraw:7108 android.view.ViewRootImpl$4.onFrameDraw:2700 android.view.ThreadedRenderer$1.onFrameDraw:750 
+11-06 09:35:47.904 W/InteractionJankMonitor(29913): Initializing without READ_DEVICE_CONFIG permission. enabled=false, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=kr.againplayball.app
+11-06 09:35:47.918 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:47.918 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:47.924 I/AdrenoVK-0(29913): Failed to link shaders.
+11-06 09:35:47.924 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:47.928 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:47.928 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:48.254 I/ImeTracker(29913): kr.againplayball.app:395e7447: onShown
+11-06 09:35:48.277 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:48.277 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:48.776 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:48.776 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:49.271 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:49.271 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:49.745 I/VRI[MainActivity]@2faf19(29913): ViewPostIme key 0
+11-06 09:35:49.749 I/VRI[MainActivity]@2faf19(29913): setInTouchMode(false), android.view.ViewRootImpl.checkForLeavingTouchModeAndConsume:11624 android.view.ViewRootImpl.-$$Nest$mcheckForLeavingTouchModeAndConsume:0 android.view.ViewRootImpl$EarlyPostImeInputStage.processKeyEvent:10079 android.view.ViewRootImpl$EarlyPostImeInputStage.onProcess:10063 android.view.ViewRootImpl$InputStage.deliver:9527 android.view.ViewRootImpl$InputStage.onDeliverToNext:9584 android.view.ViewRootImpl$InputStage.forward:9550 android.view.ViewRootImpl$AsyncInputStage.forward:9788 android.view.ViewRootImpl$ImeInputStage.onFinishedInputEvent:10048 android.view.inputmethod.InputMethodManager$PendingEvent.run:5690 
+11-06 09:35:49.751 I/VRI[MainActivity]@2faf19(29913): ViewPostIme key 0
+11-06 09:35:49.752 I/VRI[MainActivity]@2faf19(29913): ViewPostIme key 1
+11-06 09:35:49.752 I/VRI[MainActivity]@2faf19(29913): ViewPostIme key 1
+11-06 09:35:49.753 I/VRI[MainActivity]@2faf19(29913): ViewPostIme key 0
+11-06 09:35:49.754 I/VRI[MainActivity]@2faf19(29913): ViewPostIme key 1
+11-06 09:35:49.755 I/VRI[MainActivity]@2faf19(29913): ViewPostIme key 0
+11-06 09:35:49.757 I/VRI[MainActivity]@2faf19(29913): ViewPostIme key 1
+11-06 09:35:49.763 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:49.763 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:49.763 I/VRI[MainActivity]@2faf19(29913): ViewPostIme key 0
+11-06 09:35:49.766 I/VRI[MainActivity]@2faf19(29913): ViewPostIme key 1
+11-06 09:35:49.769 I/VRI[MainActivity]@2faf19(29913): ViewPostIme key 0
+11-06 09:35:49.772 I/VRI[MainActivity]@2faf19(29913): ViewPostIme key 1
+11-06 09:35:49.774 I/VRI[MainActivity]@2faf19(29913): ViewPostIme key 0
+11-06 09:35:49.777 I/VRI[MainActivity]@2faf19(29913): ViewPostIme key 1
+11-06 09:35:49.780 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:49.780 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:49.781 I/AdrenoVK-0(29913): Failed to link shaders.
+11-06 09:35:49.781 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:49.788 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:49.788 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:50.297 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:50.297 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:50.783 I/VRI[MainActivity]@2faf19(29913): call setFrameRateCategory category=no preference, reason=boost timeout, vri=VRI[MainActivity]@2faf19
+11-06 09:35:50.797 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:50.797 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:50.797 I/VRI[MainActivity]@2faf19(29913): call setFrameRateCategory category=high, reason=requested, vri=VRI[MainActivity]@2faf19
+11-06 09:35:51.290 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:51.290 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:51.792 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:51.792 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:52.293 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:52.293 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:52.795 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:52.795 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:53.298 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:53.298 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:53.797 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:53.798 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:54.298 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:54.299 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:54.794 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:54.794 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:55.298 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:55.298 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:55.794 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:55.794 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:56.294 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:56.295 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:56.794 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:56.795 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:57.293 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:57.293 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,1777 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:57.690 D/InsetsController(29913): hide(ime())
+11-06 09:35:57.690 D/WindowOnBackDispatcher(29913): setTopOnBackInvokedCallback (unwrapped): android.app.Activity$$ExternalSyntheticLambda1@9fcda53
+11-06 09:35:57.690 D/InsetsController(29913): Setting requestedVisibleTypes to 503 (was 511)
+11-06 09:35:57.690 I/InsetsController(29913): setRequestedVisibleTypes: visible=false, mask=ime, host=kr.againplayball.app/kr.againplayball.app.MainActivity, from=android.view.InsetsController.controlAnimationUnchecked:1712 android.view.InsetsController.applyAnimation:2359 android.view.InsetsController.applyAnimation:2284 android.view.InsetsController.hide:1645 android.view.inputmethod.InputMethodManager.setImeVisibilityOnInsetsController:3145 android.view.inputmethod.InputMethodManager.-$$Nest$smsetImeVisibilityOnInsetsController:0 android.view.inputmethod.InputMethodManager$H.handleMessage:1590 android.os.Handler.dispatchMessageImpl:142 android.os.Handler.dispatchMessage:125 android.os.Looper.loopOnce:321 
+11-06 09:35:57.691 D/InsetsController(29913): hide(ime())
+11-06 09:35:57.691 I/ImeTracker(29913): com.samsung.android.honeyboard:32271bdd: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-06 09:35:57.696 D/VRI[MainActivity]@2faf19(29913): WindowInsets changed: ime:null 
+11-06 09:35:57.697 I/BLASTBufferQueue_Java(29913): update, w= 1440 h= 3120 mName = VRI[MainActivity]@2faf19 mNativeObject= 0xb40000769d20bc70 sc.mNativeObject= 0xb4000076bd207790 format= -1 caller= android.view.ViewRootImpl.updateBlastSurfaceIfNeeded:3898 android.view.ViewRootImpl.updateRenderTargetIfNeeded:3890 android.view.ViewRootImpl.relayoutWindow:12632 android.view.ViewRootImpl.performTraversals:5287 android.view.ViewRootImpl.doTraversal:4255 android.view.ViewRootImpl$TraversalCallback.onVsync:13896 
+11-06 09:35:57.697 I/VRI[MainActivity]@2faf19(29913): Relayout returned: old=(0,0,1440,3120) new=(0,0,1440,3120) relayoutAsync=true req=(1440,3120)0 dur=0 res=0x0 s={true 0xb40000777d22e980} ch=false seqId=1 syncSeqId=0
+11-06 09:35:57.698 I/VRI[MainActivity]@2faf19(29913): registerCallbackForPendingTransactions
+11-06 09:35:57.698 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:57.699 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:57.699 I/VRI[MainActivity]@2faf19(29913): mWNT: t=0xb4000076ad22cae0 fn= 38 HdrRenderState mRenderHdrSdrRatio=1.0 caller= android.view.ViewRootImpl$10.onFrameDraw:7108 android.view.ViewRootImpl$4.onFrameDraw:2700 android.view.ThreadedRenderer$1.onFrameDraw:750 
+11-06 09:35:57.699 I/InsetsController(29913): onStateChanged: host=kr.againplayball.app/kr.againplayball.app.MainActivity, from=android.view.ViewRootImpl.onInsetsStateChanged:3319, state=InsetsState: {mDisplayFrame=Rect(0, 0 - 1440, 3120), mDisplayCutout=DisplayCutout{insets=Rect(0, 139 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(680, 0 - 760, 139), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=1440 displayHeight=3120 physicalDisplayWidth=1440 physicalDisplayHeight=3120 density={3.75} cutoutSpec={M 0,0 H -10.66666666666667 V 37.06666666666667 H 10.66666666666667 V 0 H 0 Z @dp} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, mRoundedCorners=RoundedCorners{[RoundedCorner{position=TopLeft, radius=105, center=Point(105, 105)}, RoundedCorner{position=TopRight, radius=105, center=Point(1335, 105)}, RoundedCorner{position=BottomRight, radius=105, center=Point(1335, 3015)}, RoundedCorner{position=BottomLeft, radius=105, center=Point(105, 3015)}]}  mRoundedCornerFrame=Rect(0, 0 - 1440, 3120), mPrivacyIndicatorBounds=PrivacyIndicatorBounds {static bounds=Rect(1275, 0 - 1440, 149) rotation=0}, mDisplayShape=DisplayShape{type=2, displayWidth=1440, displayHeight=3120, physicalPixelDisplaySizeRatio=1.0, rotation=0, offsetX=0, offsetY=0, scale=1.0}, mSources= { InsetsSource: {3 mType=ime mFrame=[0,1926][1440,3120] mAttachedInsets=null mVisible=false mFlags= mSideHint=BOTTOM}, InsetsSource: {27 mType=displayCutout mFrame=[0,0][1440,139] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {11520001 mType=navigationBars mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520004 mType=systemGestures mFrame=[0,0][0,0] mAttachedInsets=null mVisible=true mFlags= mSideHint=NONE}, InsetsSource: {11520005 mType=mandatorySystemGestures mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520006 mType=tappableElement mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520024 mType=systemGestures mFrame=[0,0][0,0] mAttachedInsets=null mVisible=true mFlags= mSideHint=NONE}, InsetsSource: {72bd0000 mType=statusBars mFrame=[0,0][1440,149] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {72bd0005 mType=mandatorySystemGestures mFrame=[0,0][1440,184] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {72bd0006 mType=tappableElement mFrame=[0,0][1440,149] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP} }
+11-06 09:35:57.699 I/VRI[MainActivity]@2faf19(29913): handleResized, frames=ClientWindowFrames{frame=[0,0][1440,3120] display=[0,0][1440,3120] parentFrame=[0,0][0,0]} displayId=0 dragResizing=false compatScale=1.0 frameChanged=false attachedFrameChanged=false configChanged=false displayChanged=false compatScaleChanged=false dragResizingChanged=false
+11-06 09:35:57.699 I/VRI[MainActivity]@2faf19(29913): handleResized seqId=1 mSeqId=1 mSyncSeqId=0 syncWithBuffers=false
+11-06 09:35:57.706 I/InsetsSourceConsumer(29913): applyRequestedVisibilityToControl: visible=true, type=navigationBars, host=kr.againplayball.app/kr.againplayball.app.MainActivity
+11-06 09:35:57.706 I/ImeTracker(29913): system_server:4e476634: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+11-06 09:35:57.714 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:57.714 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:57.730 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:57.730 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:57.798 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:57.798 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:58.298 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:58.298 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:58.539 I/InsetsController(29913): onStateChanged: host=kr.againplayball.app/kr.againplayball.app.MainActivity, from=android.view.ViewRootImpl.onInsetsStateChanged:3319, state=InsetsState: {mDisplayFrame=Rect(0, 0 - 1440, 3120), mDisplayCutout=DisplayCutout{insets=Rect(0, 139 - 0, 0) waterfall=Insets{left=0, top=0, right=0, bottom=0} boundingRect={Bounds=[Rect(0, 0 - 0, 0), Rect(680, 0 - 760, 139), Rect(0, 0 - 0, 0), Rect(0, 0 - 0, 0)]} cutoutPathParserInfo={CutoutPathParserInfo{displayWidth=1440 displayHeight=3120 physicalDisplayWidth=1440 physicalDisplayHeight=3120 density={3.75} cutoutSpec={M 0,0 H -10.66666666666667 V 37.06666666666667 H 10.66666666666667 V 0 H 0 Z @dp} rotation={0} scale={1.0} physicalPixelDisplaySizeRatio={1.0}}} sideOverrides={}}, mRoundedCorners=RoundedCorners{[RoundedCorner{position=TopLeft, radius=105, center=Point(105, 105)}, RoundedCorner{position=TopRight, radius=105, center=Point(1335, 105)}, RoundedCorner{position=BottomRight, radius=105, center=Point(1335, 3015)}, RoundedCorner{position=BottomLeft, radius=105, center=Point(105, 3015)}]}  mRoundedCornerFrame=Rect(0, 0 - 1440, 3120), mPrivacyIndicatorBounds=PrivacyIndicatorBounds {static bounds=Rect(1275, 0 - 1440, 149) rotation=0}, mDisplayShape=DisplayShape{type=2, displayWidth=1440, displayHeight=3120, physicalPixelDisplaySizeRatio=1.0, rotation=0, offsetX=0, offsetY=0, scale=1.0}, mSources= { InsetsSource: {3 mType=ime mFrame=[0,0][0,0] mAttachedInsets=null mVisible=false mFlags=INVALID mSideHint=NONE}, InsetsSource: {27 mType=displayCutout mFrame=[0,0][1440,139] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {11520001 mType=navigationBars mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520004 mType=systemGestures mFrame=[0,0][0,0] mAttachedInsets=null mVisible=true mFlags= mSideHint=NONE}, InsetsSource: {11520005 mType=mandatorySystemGestures mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520006 mType=tappableElement mFrame=[0,2974][1440,3120] mAttachedInsets=null mVisible=true mFlags= mSideHint=BOTTOM}, InsetsSource: {11520024 mType=systemGestures mFrame=[0,0][0,0] mAttachedInsets=null mVisible=true mFlags= mSideHint=NONE}, InsetsSource: {72bd0000 mType=statusBars mFrame=[0,0][1440,149] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {72bd0005 mType=mandatorySystemGestures mFrame=[0,0][1440,184] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP}, InsetsSource: {72bd0006 mType=tappableElement mFrame=[0,0][1440,149] mAttachedInsets=null mVisible=true mFlags= mSideHint=TOP} }
+11-06 09:35:58.540 I/VRI[MainActivity]@2faf19(29913): handleResized, frames=ClientWindowFrames{frame=[0,0][1440,3120] display=[0,0][1440,3120] parentFrame=[0,0][0,0]} displayId=0 dragResizing=false compatScale=1.0 frameChanged=false attachedFrameChanged=false configChanged=false displayChanged=false compatScaleChanged=false dragResizingChanged=false
+11-06 09:35:58.540 I/VRI[MainActivity]@2faf19(29913): handleResized seqId=1 mSeqId=1 mSyncSeqId=0 syncWithBuffers=false
+11-06 09:35:58.795 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:58.795 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.044 I/VRI[MainActivity]@2faf19(29913): ViewPostIme pointer 0
+11-06 09:35:59.045 I/VRI[MainActivity]@2faf19(29913): call setFrameRateCategory category=high hint, reason=touch, vri=VRI[MainActivity]@2faf19
+11-06 09:35:59.046 I/VRI[MainActivity]@2faf19(29913): ViewPostIme pointer 1
+11-06 09:35:59.059 I/ImeTracker(29913): kr.againplayball.app:a0fef8aa: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+11-06 09:35:59.059 I/InputMethodManager_LC(29913): hsifw() - flag : 0
+11-06 09:35:59.059 I/InputMethodManager_LC(29913): hsifw() - mService.hideSoftInput
+11-06 09:35:59.060 D/InsetsController(29913): hide(ime())
+11-06 09:35:59.060 I/ImeTracker(29913): kr.againplayball.app:a0fef8aa: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+11-06 09:35:59.060 D/CompatChangeReporter(29913): Compat change id reported: 395521150; UID 10842; state: ENABLED
+11-06 09:35:59.060 D/InputMethodManagerUtils(29913): startInputInner - Id : 0
+11-06 09:35:59.060 I/InputMethodManager(29913): startInputInner - IInputMethodManagerGlobalInvoker.startInputOrWindowGainedFocus
+11-06 09:35:59.062 D/InputTransport(29913): Input channel constructed: 'ClientS', fd=278
+11-06 09:35:59.062 D/InputTransport(29913): Input channel destroyed: 'ClientS', fd=278
+11-06 09:35:59.068 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.068 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.072 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 6
+11-06 09:35:59.072 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:59.076 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.076 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.084 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.084 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.093 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.093 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.109 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.110 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.119 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.119 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.127 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.127 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.135 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.135 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.143 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.143 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.152 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.152 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.160 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.161 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.164 I/AdrenoVK-0(29913): Shader compilation failed for shaderType: 0
+11-06 09:35:59.164 I/AdrenoVK-0(29913): Pipeline create failed
+11-06 09:35:59.168 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.168 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.179 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.179 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.184 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.184 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.193 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.193 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.201 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.201 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.210 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.210 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.218 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.218 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.226 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.226 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.235 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.235 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.243 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.244 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.253 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.253 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.260 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.260 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.268 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.268 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:35:59.277 I/View    (29913): setRequestedFrameRate frameRate=-4.0, this=com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}, caller=android.view.ViewGroup.setRequestedFrameRate:10202 WV.zd.p:1 WV.xe.h:117 WV.xe.onDraw:7 com.android.webview.chromium.WebViewChromium.onDraw:19 
+11-06 09:35:59.277 I/VRI[MainActivity]@2faf19(29913): Requested frameRateCategory 6 by com.getcapacitor.CapacitorWebView{c255c41 VFEDHVC.. .F...... 0,0-1440,2825 #7f0800c2 app:id/webview aid=1073741824}
+11-06 09:36:01.536 D/Activity(29913): onBackInvoked, activity=kr.againplayball.app.MainActivity@4931eff, caller=android.app.Activity.$r8$lambda$fMMzRqFB89XgwJjEXdqIB9hd6X4:0 android.app.Activity$$ExternalSyntheticLambda1.onBackInvoked:0 android.window.WindowOnBackInvokedDispatcher.onBackInvoked:445 
+11-06 09:36:01.550 D/Capacitor(29913): App paused
+11-06 09:36:01.564 I/ImeFocusController(29913): onPreWindowFocus: skipped hasWindowFocus=false mHasImeFocus=true
+11-06 09:36:01.565 I/ImeFocusController(29913): onPostWindowFocus: skipped hasWindowFocus=false mHasImeFocus=true
+11-06 09:36:01.642 D/InputTransport(29913): Input channel destroyed: 'ClientS', fd=262
+11-06 09:36:01.968 I/VRI[MainActivity]@2faf19(29913): handleAppVisibility oldVisibility=true newVisibility=false seqId=-1 mSeqId=1
+11-06 09:36:01.968 D/VRI[MainActivity]@2faf19(29913): visibilityChanged oldVisibility=true newVisibility=false
+11-06 09:36:01.972 D/HWUI    (29913): CacheManager::trimMemory(20)
+11-06 09:36:01.978 I/VRI[MainActivity]@2faf19(29913): Relayout returned: old=(0,0,1440,3120) new=(0,0,1440,3120) relayoutAsync=true req=(1440,3120)8 dur=0 res=0x0 s={false 0x0} ch=true seqId=1 syncSeqId=0
+11-06 09:36:01.978 D/VRI[MainActivity]@2faf19(29913): Not drawing due to not visible. Reason=!mAppVisible && !mForceDecorViewVisibility
+11-06 09:36:01.981 I/VRI[MainActivity]@2faf19(29913): stopped(true) old = false
+11-06 09:36:01.981 D/VRI[MainActivity]@2faf19(29913): WindowStopped on kr.againplayball.app/kr.againplayball.app.MainActivity set to true
+11-06 09:36:01.981 D/HWUI    (29913): CacheManager::trimMemory(20)
+11-06 09:36:01.983 I/AutofillManager(29913): onInvisibleForAutofill(): expiringResponse
+11-06 09:36:01.983 D/Capacitor(29913): App stopped
+11-06 09:36:01.984 D/WindowOnBackDispatcher(29913): setTopOnBackInvokedCallback (unwrapped): null
+11-06 09:36:01.985 D/Capacitor(29913): App destroyed
+11-06 09:36:01.989 D/HWUI    (29913): CacheManager::trimMemory(20)
+11-06 09:36:01.989 D/ViewRootImpl(29913): Skipping stats log for color mode
+11-06 09:36:01.990 I/VRI[MainActivity]@2faf19(29913): dispatchDetachedFromWindow
+11-06 09:36:01.991 D/InputTransport(29913): Input channel destroyed: 'f1a6c3d', fd=186
+11-06 09:36:01.997 D/BBA2    (29913): setIsFg isFg = false; delayValue 3999ms
