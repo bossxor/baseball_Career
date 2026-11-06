@@ -34,13 +34,14 @@ export function automaticFieldLineup(source:readonly LineupCandidate[],minimumFi
   for(const c of candidates) {validateDevelopmentPlayer(c.player);if(typeof c.available!=='boolean' || c.player.kind!=='HITTER' || Object.keys(c.fits).length!==8 || FIELD_POSITIONS.some(p=>!Number.isFinite(c.fits[p]) || c.fits[p]<0 || c.fits[p]>100))throw new RangeError('INVALID_LINEUP_CANDIDATE');}
   const slots=[...FIELD_POSITIONS,'DH'];let states=new Map<number,Assignment>([[0,{fit:0,score:0,fatigue:0,keys:slots.map(()=>null)}]]);
   for(const c of candidates.filter(c=>c.available)) {
+    const competition:number[]=[]; // pure per (candidate, slot); the DP revisits each pair for every mask
     const next=new Map(states);
     for(const [mask,assignment] of states)for(let i=0;i<slots.length;i++) {
       if(mask&(1<<i))continue;const position=slots[i]!;
       if(c.player.throws==='L' && ['C','2B','3B','SS'].includes(position))continue;
       const fit=position==='DH'?100:c.fits[position as FieldPosition];if(fit<minimumFit)continue;
       const keys=[...assignment.keys];keys[i]=c.player.simulationKey;
-      const proposal={fit:assignment.fit+fit,score:assignment.score+lineupCompetition(c,position),fatigue:assignment.fatigue+c.player.fatigue,keys},newMask=mask|(1<<i);
+      const proposal={fit:assignment.fit+fit,score:assignment.score+(competition[i]??=lineupCompetition(c,position)),fatigue:assignment.fatigue+c.player.fatigue,keys},newMask=mask|(1<<i);
       if(better(proposal,next.get(newMask)))next.set(newMask,proposal);
     }
     states=next;

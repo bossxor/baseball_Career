@@ -99,11 +99,11 @@ export function commitHighSchoolGame(world:HighSchoolWorld,records:RecordLedger,
   if(!scheduled || scheduled.phase)throw new RangeError('SCHOOL_SCHEDULE_MISMATCH');
   return commitSchoolCompetitionGame(world,records,job,scheduled);
 }
-export function commitSchoolCompetitionGame<W extends CompetitionGameWorld>(world:W,records:RecordLedger,job:HighSchoolGameJob,scheduled:ScheduledGame):{world:W;records:RecordLedger;duplicate:boolean} {
+export function commitSchoolCompetitionGame<W extends CompetitionGameWorld>(world:W,records:RecordLedger,job:HighSchoolGameJob,scheduled:ScheduledGame,shareRecords=false):{world:W;records:RecordLedger;duplicate:boolean} {
   if(job.schemaVersion!==1 || job.worldKey!==world.worldKey || job.seasonKey!==world.seasonKey || job.game.status!=='FINAL' || !job.game.pitchDevelopment)throw new RangeError('SCHOOL_GAME_NOT_COMMITTABLE');
   if(scheduled.simulationKey!==job.game.input.simulationKey || scheduled.worldDay!==job.worldDay || scheduled.seasonKey!==world.seasonKey || scheduled.leagueKey!==(world.leagueKey??'HS') || scheduled.phase!==undefined && scheduled.phase!=='POSTSEASON' || job.game.input.competition!==(scheduled.phase??'REGULAR') || job.game.input.teams[0].simulationKey!==scheduled.awayTeamKey || job.game.input.teams[1].simulationKey!==scheduled.homeTeamKey)throw new RangeError('SCHOOL_SCHEDULE_MISMATCH');
   const contribution=buildGameContribution(job.game,{seasonKey:world.seasonKey,leagueKey:world.leagueKey??'HS',phase:scheduled.phase??'REGULAR'},scheduled.worldDay);
-  const result=putGameContribution(records,contribution);
+  /* shareRecords: caller merges the returned rows into its own ledger and never mutates them; skips deep-cloning every earlier row per game. */const result=putGameContribution(records,contribution,false,shareRecords);
   if(result.duplicate)return {world,records,duplicate:true};
   if(records.revision!==job.basisRecordRevision || canonicalJson(world)!==job.basisWorld)throw new RangeError('STALE_SCHOOL_GAME');
   const updated=structuredClone(world);

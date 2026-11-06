@@ -19,7 +19,12 @@ function leagues(s:UsCareer):UsSeasonSchedule['leagues'] {
  const games=US_SEASON_GAMES[level],schedule=createEvenLeagueSchedule({teamKeys:ids,leagueKey:level,seasonKey:s.world.seasonKey,startDay:0},games).map(g=>{const day=days[g.worldDay];if(day===undefined)throw new RangeError('US_SCHEDULE_EXCEEDS_CALENDAR');return {...g,worldDay:day};});assertSchedule(schedule,ids,games,games/2);result[level]=schedule;
  }return result;
 }
-export function assertUsSeasonSchedule(s:ScheduledUsCareer):void {assertUsCareerRevision(s,s.revision);const published=s.seasonSchedule;if(!published || published.receiptKey!==key(s) || published.seasonKey!==s.world.seasonKey || published.sourceBasis!==basis(s) || canonicalJson(published.leagues)!==canonicalJson(leagues(s)))throw new RangeError('STALE_US_SEASON_SCHEDULE');}
+/* ponytail: one-entry memo of the pure recomputed calendar (inputs: team ids, game days, season); the published side is still compared fresh every call. */
+let memo:{input:string;canonical:string}|undefined;
+function expectedLeaguesJson(s:UsCareer):string {const input=JSON.stringify([s.world.organizations.map(o=>o.id),professionalGameDays(s.world.calendar),s.world.seasonKey]);if(memo?.input!==input)memo={input,canonical:canonicalJson(leagues(s))};return memo.canonical;}
+/** Caller has already run assertUsCareerRevision(s,s.revision). */
+export function assertUsSeasonScheduleChecked(s:ScheduledUsCareer):void {const published=s.seasonSchedule;if(!published || published.receiptKey!==key(s) || published.seasonKey!==s.world.seasonKey || published.sourceBasis!==basis(s) || canonicalJson(published.leagues)!==expectedLeaguesJson(s))throw new RangeError('STALE_US_SEASON_SCHEDULE');}
+export function assertUsSeasonSchedule(s:ScheduledUsCareer):void {assertUsCareerRevision(s,s.revision);assertUsSeasonScheduleChecked(s);}
 /** Publication commits all five calendars together; it does not play games, pay salary or reserve a second contract. */
 export function publishUsSeasonSchedule(s:ScheduledUsCareer,revision:number):ScheduledUsCareer {assertUsMilitaryPlayable(s);return publishUsSeasonScheduleOwned(s,revision);}
 /** Internal publication for the NPC season while the protagonist serves. */

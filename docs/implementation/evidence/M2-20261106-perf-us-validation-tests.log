@@ -1,0 +1,34 @@
+✔ US full-date annual settlement pays one PRO budget, all opening NPCs and one aging; explicit forfeiture and replay keep receipts (18879.3142ms)
+✔ US annual audit refuses changed FINAL totals and incomplete date receipts before awarding growth (3041.7847ms)
+✔ termination stops the active US contract and rejects fabricated service-season identity (21047.902ms)
+✔ service annual owner ages and supplies the real roster without paying or rewriting history (8090.3714ms)
+✔ freeze parks the pitcher under the already signed option and preserves original USD and pitch history (15648.5515ms)
+✔ controlled calendar discharge opens only the existing option and confirms through day29 without retroactive salary (51012.9397ms)
+✔ controlled30day expiry terminates the frozen contract without manufacturing another option (5246.0887ms)
+✔ service resume rejects removed native closed dates and altered archived game evidence (4626.4121ms)
+✔ return preserves existing unique field positions when selecting a legal roster slot (33737.5071ms)
+✔ service annual supply preserves a retiring45yearold pitcher and his historical repertoire across JSON (7407.0747ms)
+✔ controlled minor return resumes the next annual contract without consuming a frozen full season (25492.7445ms)
+✔ active US return condition counts six registered bench games, excludes INT and never changes abilities (4626.1877ms)
+✔ controlled return-year MLB activation preserves pre-callup salary and validates derived contract and budget (8347.0794ms)
+✔ US first camp updates four focus and seals plan once without games, money, population or growth (8123.4715ms)
+✔ US first camp focus event dispatch is atomic, stale/invalid/fake-origin changes fail (4989.0719ms)
+✔ US pitcher reuses repertoire allocation and learning reservation without inflating abilities or salary (5467.5311ms)
+✔ US opening seals the original level calendar before the first game without spending learning XP (4550.9957ms)
+✔ all five US schedules publish atomically, use shared international rest and preserve JSON identities (6494.4498ms)
+✔ US live startup projects only participating teams and keeps registrations, contracts and source immutable (6792.2148ms)
+✔ legacy calendar1 first date keeps all75 real games, salary and original pre-cache trait golden hashes (27813.5665ms)
+✔ US partial-game JSON resume equals continuous chunks, rejects stale revisions and corrupted pending provenance (11703.5433ms)
+✔ US injury repair first borrows inside the organization without fabricating players or changing26 MLB seats (9465.2926ms)
+✔ US exhausted organization uses minimum low-ability replacements, reserves injured identities and restores them after recovery (9454.8364ms)
+✔ US growth refuses unfinished seasons, and payroll mutations cannot mint future or duplicate salary (9242.7885ms)
+Native military opening: {"year":"2031","nativeNpcGames":75,"ownAppearances":0,"salaryUsd":0,"closedDays":1}
+✔ service world runs actual NPC opening games with zero own appearances or salary and blocks ordinary play (161372.8783ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 485652.8861
