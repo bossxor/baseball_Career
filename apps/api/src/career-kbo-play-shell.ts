@@ -1,5 +1,6 @@
 import * as engine from '@playball/engine';
-import {spanDeadline} from './span-budget.js';
+import {spanDeadline,spanStopOf,teamProgress} from './span-budget.js';
+import type {SpanStop} from './span-budget.js';
 import {ABILITY_LABELS,abilityKeys} from '@playball/rules';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
 import type {FlowCommand,FlowScreen} from './career-flow-screen.js';
@@ -26,7 +27,7 @@ function choice(v:unknown):engine.TrainingChoice{
 function advanceSpan(c:engine.KboCareer,rev:number,span:'SEASON'|'MONTH'){
   const until=spanDeadline();let r=engine.advanceKboCareer(c,rev,7),days=r.daysClosed;
   for(let i=0;i<200_000&&(r.stopReason==='CHUNK_LIMIT'||r.stopReason==='DAY_CLOSED')&&r.career.phaseContext.phase==='SEASON_PROGRESS'&&Date.now()<until&&(span==='SEASON'||days<30);i++){r=engine.advanceKboCareer(r.career,r.career.revision,span==='MONTH'?Math.min(7,30-days):7);days+=r.daysClosed;}
-  return r;
+  return {...r,monthDone:span==='MONTH'&&days>=30};
 }
 export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand{
  const name=command.type.slice('CAREER_KBO_PLAY_'.length),allowed=fields.get(name),raw=command.payload;
@@ -34,7 +35,7 @@ export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand
  if(!raw||typeof raw!=='object'||Array.isArray(raw)||Object.keys(raw).some(k=>k!=='careerRevision'&&!allowed.includes(k)))fail('INVALID_PAYLOAD');
  const p=raw as Record<string,unknown>,c=state.career as engine.KboCareer|undefined;
  if(!c||typeof c!=='object'||Array.isArray(c)||typeof c.protagonistClubId!=='string')fail('KBO_CAREER_REQUIRED');
- const rev=int(p,'careerRevision',1);let next:engine.KboCareer,stopReason:string|undefined;
+ const rev=int(p,'careerRevision',1);let next:engine.KboCareer,stopReason:string|undefined,spanStop:SpanStop|undefined;
  try{
   switch(name){
    case 'RESOLVE_CAMP':next=engine.resolveKboFirstCampNotice(c,rev,{eventKey:str(p,'eventKey'),eventVersion:int(p,'eventVersion',1),command:'KEEP_FOCUS'});break;
@@ -43,7 +44,7 @@ export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand
    case 'CONFIRM_SCHEDULE':next=engine.confirmKboSeasonSchedule(c,rev);break;
    case 'START':next=engine.startKboRegularSeason(c,rev);break;
    case 'ADVANCE':{const d=int(p,'maxDays',1);if(d>7)fail('INVALID_PAYLOAD');const r=engine.advanceKboCareer(c,rev,d);next=r.career;stopReason=r.stopReason;break;}
-   case 'ADVANCE_SPAN':{if(p.span!=='SEASON'&&p.span!=='MONTH')fail('INVALID_PAYLOAD');const r=advanceSpan(c,rev,p.span);next=r.career;stopReason=r.stopReason;break;}
+   case 'ADVANCE_SPAN':{if(p.span!=='SEASON'&&p.span!=='MONTH')fail('INVALID_PAYLOAD');const r=advanceSpan(c,rev,p.span);next=r.career;stopReason=r.stopReason;spanStop=spanStopOf(p.span,next.phaseContext.phase,r.stopReason,r.monthDone);break;}
    case 'WINDOW':{const cmd=str(p,'command');if(!WINDOW_COMMANDS.includes(cmd))fail('INVALID_PAYLOAD');next=engine.resolveKboWindowEvent(c,rev,{eventKey:str(p,'eventKey'),eventVersion:int(p,'eventVersion',1),command:cmd}).career;break;}
    case 'TRAIN':next=engine.trainKboCareer(c,rev,choice(p.choice));break;
    case 'SETTLE_GROWTH':next=engine.settleKboSeasonGrowth(c,rev).career;break;
@@ -53,7 +54,7 @@ export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand
    default:next=engine.startNextKboSeason(c,rev);
   }
  }catch(error){domainError(error);}
- return {nextState:{...state,career:next!},phase:next!.phaseContext.phase,eventIds:[],summary:{type:command.type,careerRevision:next!.revision,phase:next!.phaseContext.phase,...(stopReason?{stopReason}:{})}};
+ return {nextState:{...state,career:next!,...(spanStop?{span:{careerRevision:next!.revision,stop:spanStop}}:{})},phase:next!.phaseContext.phase,eventIds:[],summary:{type:command.type,careerRevision:next!.revision,phase:next!.phaseContext.phase,...(spanStop?{spanStop}:{}),...(stopReason?{stopReason}:{})}};
 }
 
 const LABELS:Record<string,string>={ACK_EVENT:'확인하고 계속',OPEN_TRAINING:'훈련 창 열기',DEFER_TRAINING:'나중에 하기',FORFEIT_TRAINING:'이번 시즌 훈련 포기'};
@@ -72,7 +73,7 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
   return out('시즌 준비',[cmd('start','정규시즌 시작','START')]);
  }
  if(phase.phase==='SEASON_PROGRESS'){
-  if(c.days)lines.push({label:'진행',value:`${c.days.days.length}일 경과 · 리그 경기 ${Object.keys(c.records.games).length}개 기록`});
+  if(c.days&&c.competitionSchedule){const g=teamProgress(c.competitionSchedule.leagues[c.registration.competitionKey==='FUTURES'?'FUTURES':'KBO'],c.protagonistClubId,c.records.games);lines.push({label:'정규시즌',value:`${g.done}/${g.total}경기 · ${c.days.days.length}일 경과`});}
   const commands:FlowCommand[]=[];
   if(!phase.pendingGame){
    const choices:engine.TrainingChoice[]=[...abilityKeys(p.kind).map(ability=>({type:'GUARANTEED' as const,ability})),{type:'CONDITIONING'}];

@@ -9,7 +9,7 @@ import {collegeApplies,collegeFlow,collegeRouteCommands,isCollege} from './caree
  * Every command here is an existing owned CAREER_* command; the web replays `type`/`payload` exactly and never builds its own.
  * Hidden values (seed, rng, potential, draft score) are never copied into lines or payloads. */
 export type FlowCommand={id:string;label:string;type:string;payload:Record<string,unknown>;confirm?:string};
-export type FlowScreen={screenId:'CAREER_FLOW';title:string;lines:{label:string;value:string}[];commands:FlowCommand[];notice:string|null;careerRevision:number};
+export type FlowScreen={screenId:'CAREER_FLOW';title:string;lines:{label:string;value:string}[];commands:FlowCommand[];notice:string|null;careerRevision:number;stop?:string};
 type Career=engine.HighSchoolCareer|engine.KboCareer;
 
 const club=(id:string)=>KBO_CLUBS.find(c=>c.id===id)?.name??id;
@@ -28,6 +28,13 @@ export function flowApplies(state:SaveState):boolean {
 }
 
 export function careerFlowScreen(state:SaveState):FlowScreen {
+ const screen=baseFlowScreen(state),sp=(state as {span?:{careerRevision:number;stop:string}}).span;
+ if(!sp||sp.careerRevision!==screen.careerRevision)return screen;
+ // Why the last season/month advance stopped: after a request-time-cap stop the same CTA reads as "continue".
+ if(sp.stop==='BUDGET')return {...screen,stop:sp.stop,notice:'시즌 진행 중 — 이어서 진행합니다. 같은 버튼을 다시 누르면 이어집니다.',commands:screen.commands.map(x=>x.id==='adv-season'?{...x,label:'이어서 진행 (이번 시즌 끝까지)'}:x)};
+ return {...screen,stop:sp.stop,notice:screen.notice??(sp.stop==='SEASON_END'?'정규시즌이 끝났습니다.':null)};
+}
+function baseFlowScreen(state:SaveState):FlowScreen {
  const c=state.career as Career|undefined;if(!c||typeof c!=='object'||Array.isArray(c))throw Object.assign(new Error('CAREER_NOT_FOUND'),{code:'CAREER_NOT_FOUND'});
  return isUs(c)?usFlow(c):isKbo(c)?kboFlow(c):collegeApplies(c)&&(isCollege(c)||c.phaseContext.phase==='NEXT_SEASON_READY')?collegeFlow(c):schoolFlow(c);
 }

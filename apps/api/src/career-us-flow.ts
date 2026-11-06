@@ -1,5 +1,6 @@
 import * as engine from '@playball/engine';
 import {ABILITY_LABELS,abilityKeys} from '@playball/rules';
+import {teamProgress} from './span-budget.js';
 import type {FlowCommand,FlowScreen} from './career-flow-screen.js';
 
 /** US road play loop. Commands are the existing owned CAREER_US_PLAY_* ones; availability is decided by engine previews/readiness, never by the client. */
@@ -26,7 +27,7 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
   return out('시즌 준비',[cmd('start','정규시즌 시작','START')]);
  }
  if(phase.phase==='SEASON_PROGRESS'){
-  if(c.season)lines.push({label:'진행',value:`${c.season.days.length}일 경과 · 리그 경기 ${Object.keys(c.records.games).length}개 기록`});
+  if(c.season){const g=teamProgress(c.seasonSchedule?.leagues[c.registration.level]??[],c.registration.clubId,c.records.games);lines.push({label:'정규시즌',value:`${g.done}/${g.total}경기 · ${c.season.days.length}일 경과`});}
   return out('미국 정규시즌',[...(phase.pendingGame?[]:training()),cmd('adv-season','이번 시즌 끝까지','ADVANCE_SPAN',{span:'SEASON'}),cmd('adv-month','다음 달까지','ADVANCE_SPAN',{span:'MONTH'}),cmd('adv-1','하루 진행','ADVANCE',{maxDays:1})]);
  }
  if(phase.phase==='EVENT_DECISION'){

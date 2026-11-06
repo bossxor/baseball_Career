@@ -1,5 +1,6 @@
 import * as engine from '@playball/engine';
-import {spanDeadline} from './span-budget.js';
+import {spanDeadline,spanStopOf} from './span-budget.js';
+import type {SpanStop} from './span-budget.js';
 import {ABILITY_LABELS,abilityKeys} from '@playball/rules';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
 import type {FlowCommand,FlowScreen} from './career-flow-screen.js';
@@ -42,7 +43,7 @@ function advanceSpan(c:engine.HighSchoolCareer,rev:number,span:'SEASON'|'MONTH')
   else if(span==='MONTH'&&r.stopReason==='ONE_WEEK'&&weeks<4){r=engine.advanceCollegeCareer(r.career,r.career.revision,'ONE_WEEK');if(r.stopReason==='ONE_WEEK')weeks++;}
   else break;
  }
- return r;
+ return {...r,monthDone:weeks>=4};
 }
 export function applyCollege(state:SaveState,command:CommandBody):AppliedCommand{
  const name=command.type.slice('CAREER_COLLEGE_'.length),allowed=fields.get(name),raw=command.payload;
@@ -50,7 +51,7 @@ export function applyCollege(state:SaveState,command:CommandBody):AppliedCommand
  if(!raw||typeof raw!=='object'||Array.isArray(raw)||Object.keys(raw).some(k=>!allowed.includes(k)))fail('INVALID_PAYLOAD');
  const p=raw as Record<string,unknown>,c=state.career as engine.HighSchoolCareer|undefined;
  if(!c||typeof c!=='object'||Array.isArray(c)||!c.world||!(name==='ENROLL'||collegeApplies(c)))fail('COLLEGE_OWNER_REQUIRED');
- const rev=int(p,'careerRevision');let next:engine.HighSchoolCareer,stopReason:string|undefined;
+ const rev=int(p,'careerRevision');let next:engine.HighSchoolCareer,stopReason:string|undefined,spanStop:SpanStop|undefined;
  try{
   if(name==='ENROLL')next=engine.enrollHighSchoolCollege(c,rev,{eventVersion:int(p,'eventVersion'),offerSetKey:str(p,'offerSetKey'),offerSetVersion:int(p,'offerSetVersion'),collegeId:str(p,'collegeId')});
   else if(name==='CLOSE_HS_YEAR')next=engine.closeHighSchoolSeasonForCollege(c,rev,bool(p,'forfeitUnusedTraining'));
@@ -60,6 +61,7 @@ export function applyCollege(state:SaveState,command:CommandBody):AppliedCommand
   else if(name==='ADVANCE'){
    if(p.mode!==undefined&&!['NEXT_MAJOR_EVENT','ONE_GAME','ONE_WEEK','SEASON','MONTH'].includes(String(p.mode)))fail('INVALID_PAYLOAD');
    const r=p.mode==='SEASON'||p.mode==='MONTH'?advanceSpan(c,rev,p.mode):engine.advanceCollegeCareer(c,rev,p.mode as engine.HighSchoolAdvancePlan['mode']|undefined);next=r.career;stopReason=r.stopReason;
+   if(p.mode==='SEASON'||p.mode==='MONTH')spanStop=spanStopOf(p.mode,next.phaseContext.phase,r.stopReason,'monthDone' in r&&r.monthDone===true);
   }else if(name==='WINDOW'){
    const cmd=str(p,'command');if(!WINDOW_COMMANDS.includes(cmd))fail('INVALID_PAYLOAD');
    next=engine.resolveCareerWindowEvent(c,rev,{eventKey:str(p,'eventKey'),eventVersion:int(p,'eventVersion'),command:cmd}).career;
@@ -70,7 +72,7 @@ export function applyCollege(state:SaveState,command:CommandBody):AppliedCommand
   else if(name==='CLOSE_YEAR')next=engine.closeCollegeSeasonForNextYear(c,rev,bool(p,'forfeitUnusedTraining'));
   else next=engine.startNextCollegeSeason(c,rev);
  }catch(error){domainError(error);}
- return {nextState:{...state,career:next},phase:next.phaseContext.phase,eventIds:[],summary:{type:command.type,careerRevision:next.revision,phase:next.phaseContext.phase,...(stopReason?{stopReason}:{})}};
+ return {nextState:{...state,career:next,...(spanStop?{span:{careerRevision:next.revision,stop:spanStop}}:{})},phase:next.phaseContext.phase,eventIds:[],summary:{type:command.type,careerRevision:next.revision,phase:next.phaseContext.phase,...(spanStop?{spanStop}:{}),...(stopReason?{stopReason}:{})}};
 }
 
 const WINDOW_LABELS:Record<string,string>={OPEN_TRAINING:'훈련 창 열기',FORFEIT_TRAINING:'이번 시즌 훈련 포기',DEFER_TRAINING:'나중에 하기',ACK_EVENT:'확인하고 계속'};

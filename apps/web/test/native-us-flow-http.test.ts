@@ -32,6 +32,7 @@ async function session(subject: string, career: unknown) {
       view = (await api.flowCommand(saveId, `${subject}-${n++}`, c.type, c.payload))!;
       return view;
     },
+    leagueGames: async () => Object.keys(((await db.select({ state: gameSaves.state }).from(gameSaves).where(eq(gameSaves.id, saveId)))[0]!.state as { career: { records: { games: object } } }).career.records.games).length,
     close: async () => { globalThis.fetch = originalFetch; await client.close(); },
   };
 }
@@ -44,11 +45,11 @@ test('US road: preseason chain → start → advance days → home links to the 
     for (let i = 0; i < 4 && !s.ids().includes('start'); i++) await s.take(s.ids()[0]!);
     await s.take('start');
     assert.ok(s.ids().includes('adv-1'));
-    const games = () => Number(/리그 경기 ([0-9]+)개/.exec(s.view.lines.map(l => l.value).join(' '))?.[1] ?? -1);
-    const before = games();
+    assert.match(s.view.lines.map(l => `${l.label} ${l.value}`).join(' '), /정규시즌 [0-9]+\/[0-9]+경기/, 'team progress is shown as done/total games');
+    const before = await s.leagueGames();
     await s.take('adv-1');
     if (s.ids().includes('continue')) await s.take('continue');
-    assert.ok(games() > before, `native games are recorded and shown: ${before} -> ${games()}`);
+    assert.ok(await s.leagueGames() > before, 'native games were recorded by the advance');
   } finally { await s.close(); }
 });
 
@@ -84,11 +85,15 @@ test('US road: ONE press chains many engine chunks (not one chunk or one day) an
     for (let i = 0; i < 4 && !s.ids().includes('start'); i++) await s.take(s.ids()[0]!);
     await s.take('start');
     assert.deepEqual(s.ids().filter(id => id.startsWith('adv-')), ['adv-season', 'adv-month', 'adv-1']);
-    const games = () => Number(/리그 경기 ([0-9]+)개/.exec(s.view.lines.map(l => l.value).join(' '))?.[1] ?? 0);
     await s.take('adv-1');
-    const single = games();
+    const single = await s.leagueGames();
     await s.take('adv-season');
-    assert.ok(games() > single + 4, `one default-CTA press advanced far more than one chunk: ${single} -> ${games()}`);
-    assert.ok(s.ids().includes('adv-season') || !s.view.title.startsWith('미국 정규시즌'), 'either resumable or stopped by an event');
+    const after = await s.leagueGames();
+    assert.ok(after > single + 4, `one default-CTA press advanced far more than one chunk: ${single} -> ${after}`);
+    if (s.view.stop === 'BUDGET') {
+      // Time-cap stop: the screen says so, and the same default CTA is the way to continue.
+      assert.match(s.view.notice ?? '', /시즌 진행 중 — 이어서 진행/);
+      assert.equal(s.view.commands.find(c => c.id === 'adv-season')?.label, '이어서 진행 (이번 시즌 끝까지)');
+    } else assert.ok(['EVENT', 'SEASON_END'].includes(s.view.stop ?? ''), `stop reason is reported: ${s.view.stop}`);
   } finally { delete process.env.PLAYBALL_SPAN_BUDGET_MS; await s.close(); }
 });

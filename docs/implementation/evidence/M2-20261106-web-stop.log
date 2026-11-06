@@ -1,0 +1,47 @@
+✔ college road: graduation route → enrollment → year-end handover → season start → play → annual training window (64575.4511ms)
+✔ college road: result → academic year close → next year; stale/forged payloads are rejected (13070.533ms)
+✔ KBO pro season: preseason chain → start → native games are advanced and shown (22720.3893ms)
+✔ KBO pro season: regular season end → postseason → season close, all from served commands (61128.7292ms)
+✔ KBO pro season: ONE press on the default CTA runs to the end of the regular season and stops at the review (13638.0086ms)
+✖ US road: preseason chain → start → advance days → home links to the flow (23871.9114ms)
+✔ US road: the annual training window is served as commands and training is one-time (22196.706ms)
+✔ US road: a finished season starts the next one from the served command (29385.0161ms)
+✖ US road: ONE press chains many engine chunks (not one chunk or one day) and stays resumable under the request time budget (30091.2329ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 7
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 304097.6226
+
+✖ failing tests:
+
+test at apps\web\test\native-us-flow-http.test.ts:1:1995
+✖ US road: preseason chain → start → advance days → home links to the flow (23871.9114ms)
+  AssertionError [ERR_ASSERTION]: native games are recorded and shown: 0 -> 0
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\web\test\native-us-flow-http.test.ts:51:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }
+
+test at apps\web\test\native-us-flow-http.test.ts:1:3884
+✖ US road: ONE press chains many engine chunks (not one chunk or one day) and stays resumable under the request time budget (30091.2329ms)
+  AssertionError [ERR_ASSERTION]: one default-CTA press advanced far more than one chunk: 0 -> 0
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\web\test\native-us-flow-http.test.ts:91:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

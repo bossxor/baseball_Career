@@ -59,6 +59,7 @@ test('college road: graduation route → enrollment → year-end handover → se
     // Play to the annual training window (E43 at 16 games); continue/pause appear while a multi-game plan is active.
     await s.take('adv-season'); // ONE press runs the engine until the mandatory training window (16 games) and stops there
     assert.deepEqual(s.ids(), ['open_training', 'forfeit_training']);
+    assert.equal(s.view.stop, 'EVENT', 'a mandatory window stopped the advance');
     assert.ok(s.view.commands.find(c => c.id === 'forfeit_training')!.confirm);
     await s.take('open_training');
     const train = s.ids().find(id => id.startsWith('train-') && id !== 'train-conditioning') ?? 'train-conditioning';

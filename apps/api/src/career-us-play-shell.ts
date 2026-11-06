@@ -1,5 +1,6 @@
 import * as engine from '@playball/engine';
-import {spanDeadline} from './span-budget.js';
+import {spanDeadline,spanStopOf} from './span-budget.js';
+import type {SpanStop} from './span-budget.js';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
 
 const fields=new Map<string,readonly string[]>([
@@ -41,7 +42,7 @@ function majorContractView(c:engine.UsCareer,transition:ReturnType<typeof engine
 function advanceUsSpan(c:engine.UsCareer,revision:number,span:'SEASON'|'MONTH'){
   const until=spanDeadline();let r=engine.advanceUsCareer(c,revision,7),days=r.daysClosed;
   for(let i=0;i<200_000&&(r.stopReason==='CHUNK_LIMIT'||r.stopReason==='DAY_CLOSED')&&r.career.phaseContext.phase==='SEASON_PROGRESS'&&Date.now()<until&&(span==='SEASON'||days<30);i++){r=engine.advanceUsCareer(r.career,r.career.revision,span==='MONTH'?Math.min(7,30-days):7);days+=r.daysClosed;}
-  return r;
+  return {...r,monthDone:span==='MONTH'&&days>=30};
 }
 export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand {
  const name=command.type.slice('CAREER_US_PLAY_'.length),allowed=fields.get(name),raw=command.payload;
@@ -60,14 +61,14 @@ export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand 
   const t=choice as Record<string,unknown>;
   if(!['GUARANTEED','CHALLENGE','CONDITIONING','SKIP'].includes(String(t.type))||Object.keys(t).some(key=>key!=='type'&&key!=='ability')||(['GUARANTEED','CHALLENGE'].includes(String(t.type))?typeof t.ability!=='string':t.ability!==undefined))fail('INVALID_PAYLOAD');
  }
- const c=owner(state);let next:engine.UsCareer,stopReason:string|undefined,rosterIssue:unknown,navigation:unknown;
+ const c=owner(state);let next:engine.UsCareer,stopReason:string|undefined,rosterIssue:unknown,navigation:unknown,spanStop:SpanStop|undefined;
  try{
   switch(name){
    case 'RESOLVE_CAMP':next=engine.resolveUsFirstCampNotice(c,revision,{eventKey:string('eventKey'),eventVersion:number('eventVersion'),command:string('command'),...(p.focus?{focus:p.focus as string[]}: {})});break;
    case 'CONFIRM_PRESEASON':next=engine.confirmUsPreseasonPlan(c,revision);break;
    case 'PUBLISH_SCHEDULE':next=engine.publishUsSeasonSchedule(c,revision);break;
    case 'START':next=engine.startUsRegularSeason(c,revision);break;
-   case 'ADVANCE_SPAN':{if(p.span!=='SEASON'&&p.span!=='MONTH')fail('INVALID_PAYLOAD');const result=advanceUsSpan(c,revision,p.span);next=result.career;stopReason=result.stopReason;rosterIssue=result.rosterIssue;break;}
+   case 'ADVANCE_SPAN':{if(p.span!=='SEASON'&&p.span!=='MONTH')fail('INVALID_PAYLOAD');const result=advanceUsSpan(c,revision,p.span);next=result.career;stopReason=result.stopReason;rosterIssue=result.rosterIssue;spanStop=spanStopOf(p.span,next.phaseContext.phase,result.stopReason,result.monthDone);break;}
    case 'ADVANCE':{const result=engine.advanceUsCareer(c,revision,number('maxDays'));next=result.career;stopReason=result.stopReason;rosterIssue=result.rosterIssue;break;}
    case 'RESOLVE_HIDDEN':{const result=engine.resolveProHiddenTraitNotice(c,revision,{eventKey:string('eventKey'),eventVersion:number('eventVersion'),command:string('command')});next=result.career;navigation=result.navigation;break;}
    case 'RESOLVE_WINDOW':{const result=engine.resolveUsWindowEvent(c,revision,{eventKey:string('eventKey'),eventVersion:number('eventVersion'),command:string('command')});next=result.career;navigation=result.navigation;break;}
@@ -94,7 +95,7 @@ export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand 
   }
  }catch(error){domainError(error);}
  const phase=next!.phaseContext.phase;
- return {nextState:{...state,career:next!},phase,summary:{type:command.type,careerRevision:next!.revision,phase,...(stopReason?{stopReason}:{}),...(rosterIssue?{rosterIssue}:{}),...(navigation?{navigation}:{})},eventIds:[]};
+ return {nextState:{...state,career:next!,...(spanStop?{span:{careerRevision:next!.revision,stop:spanStop}}:{})},phase,summary:{type:command.type,careerRevision:next!.revision,phase,...(spanStop?{spanStop}:{}),...(stopReason?{stopReason}:{}),...(rosterIssue?{rosterIssue}:{}),...(navigation?{navigation}:{})},eventIds:[]};
 }
 export function usPlayScreen(state:SaveState):unknown {
  const c=owner(state);

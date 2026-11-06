@@ -47,7 +47,7 @@ test('KBO pro season: preseason chain → start → native games are advanced an
     await s.take('start');
     assert.ok(s.ids().includes('adv-1'));
     await s.take('adv-1');
-    assert.match(s.view.lines.map(l => l.value).join(' '), /리그 경기 [0-9]+개 기록/);
+    assert.match(s.view.lines.map(l => l.value).join(' '), /[0-9]+\/[0-9]+경기 · [0-9]+일 경과/);
   } finally { await s.close(); }
 });
 
@@ -82,6 +82,7 @@ test('KBO pro season: ONE press on the default CTA runs to the end of the regula
     assert.deepEqual(s.ids().slice(0, 2), ['adv-season', 'adv-month'], 'default CTA = whole season, secondary = month');
     await s.take('adv-season');
     assert.ok(!s.ids().includes('adv-season'), `one press ended the season: ${s.ids()} / ${s.view.title}`);
+    assert.equal(s.view.stop, 'SEASON_END');
     assert.ok(s.ids().some(id => id === 'post-start' || id === 'next-year' || id.startsWith('camp')) || s.view.commands.length > 0);
   } finally { await s.close(); }
 });
