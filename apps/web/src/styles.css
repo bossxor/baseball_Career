@@ -28,6 +28,8 @@ button,input{font:inherit;color:inherit}
 button:disabled{cursor:not-allowed;opacity:.5;box-shadow:none}
 button[aria-busy=true]{opacity:.75;cursor:progress}
 .actions{display:grid;gap:10px}
+.actions .btn,.screen>section:not(.panel)>.btn{width:100%}
+.screen>section:not(.panel){display:grid;gap:10px}
 .mode-nav{display:grid;gap:10px}
 .save-list{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:10px}
 .save-card{width:100%;display:grid;gap:2px;text-align:left;padding:14px 18px;font-weight:400;border-radius:var(--r);box-shadow:var(--shadow)}
@@ -43,7 +45,10 @@ button[aria-busy=true]{opacity:.75;cursor:progress}
 .stepper li.now{background:var(--green);border-color:var(--green);color:#fff;font-weight:700}
 .stepper li.done{background:var(--green-soft);border-color:transparent;color:var(--green)}
 fieldset{border:0;border-radius:var(--r);background:var(--card);box-shadow:var(--shadow);margin:0;padding:16px;display:grid;gap:10px;min-width:0}
-legend{font-weight:700;padding:0 4px}
+.panel fieldset{background:none;box-shadow:none;padding:0}
+legend{float:left;width:100%;font-weight:700;padding:0 0 4px}
+.screen>ul[aria-label="내용"]{list-style:none;margin:0;padding:16px 20px;background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);display:grid;gap:8px}
+.screen>ul[aria-label="내용"] span{color:var(--muted);margin-right:8px}
 .field{display:grid;gap:6px}
 .field label{font-weight:600}
 .field input[type=text],.field input[type=email],.field input[type=password]{min-height:48px;border-radius:12px;border:1px solid var(--line);padding:0 14px;background:var(--bg);width:100%}
