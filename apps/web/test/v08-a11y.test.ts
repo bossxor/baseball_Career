@@ -27,7 +27,6 @@ test('V08-M4: Hangul IME composition is gated on S02 name submit', () => {
 });
 
 test('V08-M4: Korean webfonts declared with font-display swap', () => {
-  assert.match(css, /NotoSansKR/);
-  assert.match(css, /BlackHanSans/);
+  assert.match(css, /Pretendard/);
   assert.match(css, /font-display:swap/);
 });

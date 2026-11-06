@@ -13,6 +13,12 @@
       "licenseFile": "docs/design/assets/fonts/BlackHanSans-OFL.txt",
       "license": "OFL-1.1",
       "source": "Google Fonts Black Han Sans"
+    },
+    {
+      "file": "docs/design/assets/fonts/PretendardVariable.woff2",
+      "licenseFile": "docs/design/assets/fonts/PretendardVariable-OFL.txt",
+      "license": "OFL-1.1",
+      "source": "npm pretendard@1.3.9 (orioncactus/pretendard), bundled locally for offline APK"
     }
   ],
   "logos": [
