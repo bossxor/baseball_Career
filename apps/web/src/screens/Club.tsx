@@ -1,4 +1,5 @@
 import { Button, isBusy } from '../ui.js';
+import { Illustration } from '../assets/Illustration.js';
 import type { ScreenState } from '../screen-states.js';
 import type { ClubScreen, ClubScreenId } from '../model.js';
 import { CLUB_CHOICES } from '../club.js';
@@ -8,6 +9,7 @@ export function ClubNew({ state = 'ready', onPick, onBack }: { state?: ScreenSta
   return (
     <main className="screen" data-screen="S12" data-state={state} aria-busy={busy}>
       <header className="topbar"><button type="button" className="ghost" onClick={onBack}>뒤로</button></header>
+      <Illustration name="club" />
       <h1 className="screen-title">구단 만들기</h1>
       <nav aria-label="구단" className="mode-nav">
         {CLUB_CHOICES.map(([id, name]) => <Button key={id} disabled={busy} onClick={() => onPick(id)}>{name}</Button>)}
@@ -27,6 +29,7 @@ export function ClubView({
   return (
     <main className="screen" data-screen={view?.screenId ?? 'S13'} data-state={state} aria-busy={busy}>
       <header className="topbar"><button type="button" className="ghost" onClick={onBack}>뒤로</button></header>
+      <Illustration name="club" />
       <h1 className="screen-title">{view?.title ?? '구단'}</h1>
       {state === 'conflict' && onReload ? <Button primary onClick={onReload}>최신 저장 불러오기</Button> : null}
       {view ? (

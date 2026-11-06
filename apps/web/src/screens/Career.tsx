@@ -1,9 +1,11 @@
-import { ScreenFrame, Button, isBusy } from '../ui.js';
+import { Illustration } from '../assets/Illustration.js';
+import { Empty, ScreenFrame, Button, isBusy } from '../ui.js';
 import { stateText } from '../screen-states.js';
 import type { ScreenState } from '../screen-states.js';
 import { PROGRESS_LABELS } from '../model.js';
 import type { CareerView, ProgressMode } from '../model.js';
 
+const stageEmblem = (league: string) => /미국|MLB|마이너/.test(league) ? 'emblem-us' as const : /대학/.test(league) ? 'emblem-college' as const : /고교|학교/.test(league) ? 'emblem-school' as const : 'emblem-pro' as const;
 export interface CareerProps {
   view: CareerView | null; state?: ScreenState; mode?: ProgressMode;
   onMode?: (mode: ProgressMode) => void; onAction?: (actionId: string, mode: ProgressMode) => void; onBack?: () => void; onReload?: () => void;
@@ -14,14 +16,18 @@ export function Career({ view, state = 'ready', mode, onMode, onAction, onBack, 
   const busy = isBusy(state);
   const frame = { ...(onBack ? { onBack } : {}), ...(onReload ? { onReload } : {}) };
   if (!view) {
-    return <ScreenFrame id="S03" state={state} {...frame}><p className="empty">{stateText('S03', 'empty')}</p></ScreenFrame>;
+    return <ScreenFrame id="S03" state={state} {...frame}><Empty>{stateText('S03', 'empty')}</Empty></ScreenFrame>;
   }
   const current = mode ?? view.progress.mode, modes: readonly ProgressMode[] = [view.progress.mode, ...view.progress.alternatives];
   return (
     <ScreenFrame id="S03" state={state} {...frame}>
       <section className="panel" aria-label="선수">
-        <h2>{view.protagonist.name}</h2>
-        <p>{view.protagonist.kindLabel} · {view.protagonist.positionLabel} · {view.protagonist.ageLabel}</p>
+        <div className="player">
+          <Illustration name={/투수/.test(view.protagonist.kindLabel) ? 'pitcher' : 'hitter'} />
+          <div><h2>{view.protagonist.name}</h2>
+            <p>{view.protagonist.kindLabel} · {view.protagonist.positionLabel} · {view.protagonist.ageLabel}</p></div>
+          <Illustration name={stageEmblem(view.stage.leagueLabel)} />
+        </div>
         <p className="muted">{view.stage.leagueLabel} · {view.stage.teamName} · {view.stage.seasonLabel} · {view.stage.phaseLabel}</p>
       </section>
       {view.pendingEventTitle ? <p className="notice-card" role="status">처리할 사건이 있습니다: {view.pendingEventTitle}</p> : null}
@@ -36,7 +42,7 @@ export function Career({ view, state = 'ready', mode, onMode, onAction, onBack, 
         </fieldset>
       </section>
       <section className="panel" aria-label="최근 기록">
-        {view.recentRecords.length === 0 ? <p className="empty">{stateText('S03', 'empty')}</p> : (
+        {view.recentRecords.length === 0 ? <Empty>{stateText('S03', 'empty')}</Empty> : (
           <dl className="records">{view.recentRecords.map(r => <div key={r.label}><dt>{r.label}</dt><dd>{r.value}</dd></div>)}</dl>
         )}
       </section>

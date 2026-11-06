@@ -1,4 +1,4 @@
-import { ScreenFrame, Button, isBusy } from '../ui.js';
+import { Empty, ScreenFrame, Button, isBusy } from '../ui.js';
 import { stateText } from '../screen-states.js';
 import type { ScreenState } from '../screen-states.js';
 import type { DecisionView, PlayScreenId } from '../model.js';
@@ -18,7 +18,7 @@ export function Decision({ view, screenId, state = 'ready', selectedId = null, o
   if (!view || view.options.length === 0) {
     return (
       <ScreenFrame id={screenId} state={state === 'ready' ? 'empty' : state} {...frame}>
-        <p className="empty">{stateText(screenId, 'empty')}</p>
+        <Empty>{stateText(screenId, 'empty')}</Empty>
         {onBack ? <Button onClick={onBack}>돌아가기</Button> : null}
       </ScreenFrame>
     );
@@ -27,7 +27,7 @@ export function Decision({ view, screenId, state = 'ready', selectedId = null, o
     <ScreenFrame id={screenId} state={state} {...frame}>
       {view.notice ? <p className="notice-card" role="status">{view.notice}</p> : null}
       <section className="panel" aria-label="요약">
-        {view.summary.length === 0 ? <p className="empty">{stateText(screenId, 'empty')}</p> : (
+        {view.summary.length === 0 ? <Empty>{stateText(screenId, 'empty')}</Empty> : (
           <dl className="records">{view.summary.map(r => <div key={r.label}><dt>{r.label}</dt><dd>{r.value}</dd></div>)}</dl>
         )}
       </section>

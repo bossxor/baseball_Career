@@ -79,3 +79,16 @@ legend{float:left;width:100%;font-weight:700;padding:0 0 4px}
 .flow-lines dt{color:var(--muted)}
 .flow-lines dd{margin:0;font-weight:700;text-align:right}
 .confirm-card{margin:0;padding:20px;border-radius:var(--r);background:var(--card);box-shadow:var(--shadow);border:1px solid var(--danger);display:grid;gap:14px}
+
+.art{display:block;height:116px;border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.art-hero{height:208px}
+.art-svg{display:block;width:100%;height:100%}
+.art-icon{display:block;flex:none;width:56px;height:56px}
+.art-empty,.art-error{width:120px;height:80px;justify-self:center}
+.art-warn{justify-self:center}
+.empty-state{display:grid;justify-items:center;gap:4px;text-align:center;padding:12px 0}
+.player{display:flex;align-items:center;gap:14px}
+.player>div{flex:1;min-width:0}
+.player .art-icon:first-child{width:64px;height:64px}
+.player .art-icon:last-child{width:44px;height:44px}
+@media(min-width:768px){.screen>.art{grid-column:1 / -1}.art-hero{height:280px}}

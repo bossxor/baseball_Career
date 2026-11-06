@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Button, FieldError } from '../ui.js';
+import { Illustration } from '../assets/Illustration.js';
 
 export interface LoginProps {
   busy?: boolean;
@@ -12,6 +13,7 @@ export function Login({ busy = false, error = null, onSubmit, onDev }: LoginProp
   const [email, setEmail] = useState(''), [password, setPassword] = useState('');
   return (
     <main className="screen" data-screen="LOGIN" aria-labelledby="login-title">
+      <Illustration name="hero" />
       <h1 id="login-title" className="screen-title">다시, 플레이볼</h1>
       <p className="lead"><span>계정으로 이어서 합니다.</span></p>
       <form className="panel" onSubmit={e => { e.preventDefault(); onSubmit?.(email.trim(), password); }} noValidate>

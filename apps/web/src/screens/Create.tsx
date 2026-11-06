@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ABILITY_LABELS, FOCUS_COUNT } from '@playball/rules';
 import type { PlayerKind } from '@playball/rules';
-import { ScreenFrame, Button, FieldError, isBusy } from '../ui.js';
+import { Empty, ScreenFrame, Button, FieldError, isBusy } from '../ui.js';
 import { stateText } from '../screen-states.js';
 import type { ScreenState } from '../screen-states.js';
 import {
@@ -141,7 +141,7 @@ export function Create({ draft, step, state = 'ready', errors, onDraft, onStep, 
             <h2>{preview.archetypeLabel} · 종합 {preview.overall}</h2>
             <ul className="abilities">{preview.abilities.map(a => <li key={a.key}>{a.label} <strong>{a.value}</strong>{a.focus ? <span className="tag">집중</span> : null}</li>)}</ul>
           </>
-        ) : <p className="empty">{stateText('S02', 'empty')}</p>}
+        ) : <Empty>{stateText('S02', 'empty')}</Empty>}
       </section>
     </ScreenFrame>
   );
