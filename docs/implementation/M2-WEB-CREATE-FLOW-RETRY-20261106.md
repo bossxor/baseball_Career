@@ -19,3 +19,11 @@
 - 대학/미국 진로 선택, 프로 시즌 진행, 미국 복귀 재도전(`CAREER_RETRY_US_RETURN_*`) 화면은 미연결.
 - KBO 재도전 `CAREER_RETRY_OPEN` 가능 여부는 엔진 호출로 판정(읽기 시 clone 비용). KBO E36은 엔진에 취소 명령이 없어 확정만 제공.
 - 전체 npm run check 미실행. M2 완료로 세지 않는다.
+
+## 2026-11-06 추가: 시즌 진행(play 루프) — 대학 · 미국 · KBO
+- 공통 envelope는 기존 `CAREER_FLOW`(title/lines/commands/notice) 하나. 웹은 변경 없이 서버가 내려준 명령만 재전송한다.
+- 대학: `career-college-shell.ts`(`CAREER_COLLEGE_*`) — 진학·입학·시즌·훈련 창·컵·결산·학년 마감. 테스트 `native-college-flow-http.test.ts`.
+- 미국: `career-us-flow.ts`(기존 `CAREER_US_PLAY_*` 재사용) — 준비·진행·창/레벨/특성 이벤트·포스트시즌·다음 시즌. 테스트 `native-us-flow-http.test.ts`.
+- KBO 프로: `career-kbo-play-shell.ts`(`CAREER_KBO_PLAY_*`) — 준비·진행·훈련 창·포스트시즌·성장 정산·시즌 마감. 테스트 `native-kbo-play-http.test.ts`. 재도전 셸은 폴백으로 유지.
+- 권장안으로 정한 규칙: E41 스타일 변경 미제공(확인만), CHALLENGE 훈련 미제공, 대학 시작 시 포커스/아키타입 변경 생략.
+- 미연결: 대학 2학년 조기 드래프트/미국 선택·4학년 졸업, 미국 마이너 시장/메이저 FA·병역, KBO 계약 결정(FA/갱신)·병역·은퇴, 프로 경기 상세 보기. 실기기·브라우저 화면 미확인.
