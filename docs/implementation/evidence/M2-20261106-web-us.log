@@ -1,0 +1,11 @@
+✔ US road: preseason chain → start → advance days → home links to the flow (18783.4442ms)
+✔ US road: the annual training window is served as commands and training is one-time (19560.6484ms)
+✔ US road: a finished season starts the next one from the served command (24583.4687ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 68747.62

@@ -1,0 +1,53 @@
+
+> again-playball@0.1.0 test:web
+> tsx --tsconfig apps/web/tsconfig.json --test apps/web/test/*.test.ts apps/web/test/*.test.tsx --test-concurrency=1
+
+✔ fixture club creation is idempotent and the picker lists a club (28.0298ms)
+✔ http createClub posts a club creation and CLUB_CREATE (107.6125ms)
+✔ name: NFC, trimmed, 1..12 graphemes, no control characters (6.1911ms)
+✔ left-handed throwers cannot take C/2B/3B/SS; pitchers need a pitch form; steps block only their own errors (0.5718ms)
+✔ focus is exactly four distinct abilities of the chosen kind; a fifth pick is refused, kind change resets dependents (1.0378ms)
+✔ preview exists only with a type and four focus picks and shows the type start values (0.9384ms)
+✔ request is built only from a complete draft; the same command id travels with it (0.7163ms)
+✔ create school step: 9 schools, 2 difficulties (no cheat), pitcher-only second pitch without the fastball, labelled errors (70.5765ms)
+✔ flow screen: only served commands become buttons; busy disables them; a missing view explains itself (8.639ms)
+✔ flow route parses and career shows the server-provided flow link (28.2341ms)
+✔ load failure offers a retry button on every frame that can reload; without a reload handler there is none (7.3337ms)
+✔ safe-area and keyboard: viewport covers cutouts and shrinks for the keyboard; screen padding honours insets (2.6603ms)
+✔ http api maps saves list and create→seed→career against a stub fetch (165.2773ms)
+✔ http api: a 401 calls onUnauthorized once and surfaces AUTH_REQUIRED (2.0202ms)
+✔ http api: a retried command keeps the revision it was first sent with (lost response), and a conflict clears it (29.6489ms)
+✔ Login: fields, submit disabled until filled, error announced, optional dev path (37.9347ms)
+✔ ApiError maps revision conflict to conflict state (0.5905ms)
+✔ college road: graduation route → enrollment → year-end handover → season start → play → annual training window (123375.8136ms)
+✔ college road: result → academic year close → next year; stale/forged payloads are rejected (14025.5061ms)
+✔ retry ACCEPT: a served offer-* command signs the contract over HTTP; stale previews are rejected (472673.5584ms)
+✔ web school catalogue equals the engine list; pitcher second pitch excludes the base fastball (3.9123ms)
+✔ HITTER: web creation form request creates a native school career over real HTTP; a lost response replays the exact intent (7894.1427ms)
+✔ PITCHER: web creation form request creates a native school career over real HTTP; a lost response replays the exact intent (3731.4781ms)
+✔ graduation → KBO entry runs from server-provided flow commands only; a lost refresh replays the original receipt (14744.564ms)
+✔ pro retry shell is reachable from the web: notice → routes → preparation start → retirement confirm (65049.0402ms)
+✔ native school resumes through the real web HTTP adapter; lost response retries the exact native intent (10300.4125ms)
+✔ US road: preseason chain → start → advance days → home links to the flow (29993.7009ms)
+✔ US road: the annual training window is served as commands and training is one-time (29381.3975ms)
+✔ US road: a finished season starts the next one from the served command (35829.8208ms)
+✔ state texts equal the design catalog (no drift) (3.8579ms)
+✔ S01: empty start, resume label kept while loading, internal states never shown, errors announced (59.1541ms)
+✔ S02: one step at a time with its error next to the input, stepper marks the current step, preview empty text (52.582ms)
+✔ S03: buttons come only from nextActions, default progress mode, disabled reason is linked, pending event locks progress (7.5814ms)
+✔ fixture api: a retried creation or action with the same command id changes nothing twice (4.5417ms)
+✔ routes: unknown or incomplete addresses fall back to home; play screens parse (1.3367ms)
+✔ S06 Decision: empty text, option disabilities linked, confirm needs selection (10.2486ms)
+✔ fixture decision/choose: same commandId is idempotent; S04→S28 chain (1.6903ms)
+✔ M5 stub screens: routeable Decision shell; college → S34; back returns career (1.1694ms)
+✔ V08-M4: touch targets ≥44px, focus ring, 16px body, reduced-motion (2.0314ms)
+✔ V08-M4: Hangul IME composition is gated on S02 name submit (0.4057ms)
+✔ V08-M4: Korean webfonts declared with font-display swap (0.2901ms)
+ℹ tests 41
+ℹ suites 0
+ℹ pass 41
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 485635.6746

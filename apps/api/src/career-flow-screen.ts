@@ -1,6 +1,7 @@
 import * as engine from '@playball/engine';
 import {KBO_CLUBS,ABILITY_LABELS,abilityKeys} from '@playball/rules';
 import type {SaveState} from './engine-command.js';
+import {usFlow,isUs} from './career-us-flow.js';
 import {collegeApplies,collegeFlow,collegeRouteCommands,isCollege} from './career-college-shell.js';
 
 /** One public, command-bearing screen for the school→KBO entry and pro-retry flows.
@@ -20,13 +21,14 @@ const UNSUPPORTED='이 단계는 아직 웹에서 지원하지 않습니다. 저
 export function flowApplies(state:SaveState):boolean {
  const c=state.career as Career|undefined;if(!c||typeof c!=='object')return false;
  if(isKbo(c))return Boolean(c.retryPro)||c.phaseContext.phase==='SEASON_REVIEW';
+ if(isUs(c))return true;
  if(isCollege(c))return true;
  return ['SEASON_REVIEW','CAREER_ROUTE','NEXT_SEASON_READY'].includes(c.phaseContext.phase)||(c.phaseContext.phase==='EVENT_DECISION'&&Boolean(open(c,'E04')))||Boolean(c.retryExit||c.amateurRetirement);
 }
 
 export function careerFlowScreen(state:SaveState):FlowScreen {
  const c=state.career as Career|undefined;if(!c||typeof c!=='object'||Array.isArray(c))throw Object.assign(new Error('CAREER_NOT_FOUND'),{code:'CAREER_NOT_FOUND'});
- return isKbo(c)?kboFlow(c):collegeApplies(c)&&(isCollege(c)||c.phaseContext.phase==='NEXT_SEASON_READY')?collegeFlow(c):schoolFlow(c);
+ return isUs(c)?usFlow(c):isKbo(c)?kboFlow(c):collegeApplies(c)&&(isCollege(c)||c.phaseContext.phase==='NEXT_SEASON_READY')?collegeFlow(c):schoolFlow(c);
 }
 
 function cmd(c:Career,id:string,label:string,type:string,payload:Record<string,unknown>={},confirm?:string):FlowCommand {
