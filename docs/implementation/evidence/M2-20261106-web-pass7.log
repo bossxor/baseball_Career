@@ -1,0 +1,57 @@
+
+> again-playball@0.1.0 test:web
+> tsx --tsconfig apps/web/tsconfig.json --test apps/web/test/*.test.ts apps/web/test/*.test.tsx --test-concurrency=1
+
+✔ fixture club creation is idempotent and the picker lists a club (55.8078ms)
+✔ http createClub posts a club creation and CLUB_CREATE (73.9875ms)
+✔ name: NFC, trimmed, 1..12 graphemes, no control characters (8.4249ms)
+✔ left-handed throwers cannot take C/2B/3B/SS; pitchers need a pitch form; steps block only their own errors (0.6546ms)
+✔ focus is exactly four distinct abilities of the chosen kind; a fifth pick is refused, kind change resets dependents (1.2117ms)
+✔ preview exists only with a type and four focus picks and shows the type start values (1.6595ms)
+✔ request is built only from a complete draft; the same command id travels with it (1.1055ms)
+✔ create school step: 9 schools, 2 difficulties (no cheat), pitcher-only second pitch without the fastball, labelled errors (169.6816ms)
+✔ flow screen: only served commands become buttons; busy disables them; a missing view explains itself (190.2654ms)
+✔ flow route parses and career shows the server-provided flow link (31.9725ms)
+✔ load failure offers a retry button on every frame that can reload; without a reload handler there is none (145.0557ms)
+✔ safe-area and keyboard: viewport covers cutouts and shrinks for the keyboard; screen padding honours insets (3.4089ms)
+✔ http api maps saves list and create→seed→career against a stub fetch (102.535ms)
+✔ http api: a 401 calls onUnauthorized once and surfaces AUTH_REQUIRED (2.018ms)
+✔ http api: a retried command keeps the revision it was first sent with (lost response), and a conflict clears it (8.5541ms)
+✔ Login: fields, submit disabled until filled, error announced, optional dev path (79.4064ms)
+✔ ApiError maps revision conflict to conflict state (0.7387ms)
+✔ college road: graduation route → enrollment → year-end handover → season start → play → annual training window (91856.729ms)
+✔ college road: result → academic year close → next year; stale/forged payloads are rejected (27217.3517ms)
+✔ KBO pro season: preseason chain → start → native games are advanced and shown (38274.1217ms)
+✔ KBO pro season: regular season end → postseason → season close, all from served commands (97934.8484ms)
+✔ KBO pro season: ONE press on the default CTA runs to the end of the regular season and stops at the review (21802.5558ms)
+✔ retry ACCEPT: a served offer-* command signs the contract over HTTP; stale previews are rejected (581500.2385ms)
+✔ web school catalogue equals the engine list; pitcher second pitch excludes the base fastball (6.7218ms)
+✔ HITTER: web creation form request creates a native school career over real HTTP; a lost response replays the exact intent (10417.6607ms)
+✔ PITCHER: web creation form request creates a native school career over real HTTP; a lost response replays the exact intent (6303.2941ms)
+✔ graduation → KBO entry runs from server-provided flow commands only; a lost refresh replays the original receipt (19366.4523ms)
+✔ pro retry shell is reachable from the web: notice → routes → preparation start → retirement confirm (85287.7062ms)
+✔ native school resumes through the real web HTTP adapter; lost response retries the exact native intent (12315.2038ms)
+✔ US road: preseason chain → start → advance days → home links to the flow (39425.448ms)
+✔ US road: the annual training window is served as commands and training is one-time (36889.9467ms)
+✔ US road: a finished season starts the next one from the served command (53527.4484ms)
+✔ US road: ONE press chains many engine chunks (not one chunk or one day) and stays resumable under the request time budget (45026.0518ms)
+✔ state texts equal the design catalog (no drift) (4.0378ms)
+✔ S01: empty start, resume label kept while loading, internal states never shown, errors announced (193.861ms)
+✔ S02: one step at a time with its error next to the input, stepper marks the current step, preview empty text (82.2022ms)
+✔ S03: buttons come only from nextActions, default progress mode, disabled reason is linked, pending event locks progress (213.9761ms)
+✔ fixture api: a retried creation or action with the same command id changes nothing twice (5.8556ms)
+✔ routes: unknown or incomplete addresses fall back to home; play screens parse (1.6569ms)
+✔ S06 Decision: empty text, option disabilities linked, confirm needs selection (95.4292ms)
+✔ fixture decision/choose: same commandId is idempotent; S04→S28 chain (25.1856ms)
+✔ M5 stub screens: routeable Decision shell; college → S34; back returns career (36.1915ms)
+✔ V08-M4: touch targets ≥44px, focus ring, 16px body, reduced-motion (2.979ms)
+✔ V08-M4: Hangul IME composition is gated on S02 name submit (0.4728ms)
+✔ V08-M4: Korean webfonts declared with font-display swap (0.4846ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 45
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 596495.6823

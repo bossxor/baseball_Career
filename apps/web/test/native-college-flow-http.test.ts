@@ -8,6 +8,8 @@ import { createHttpApi } from '../src/http.js';
 import { completedHighSchoolCareer, completedCollegeAcademicYear } from '../../../packages/engine/test/fixtures.js';
 import type { FlowView } from '../src/model.js';
 
+// One press must be able to run a whole stretch; production keeps a 25s request budget.
+process.env.PLAYBALL_SPAN_BUDGET_MS = '900000';
 const HIDDEN = /"seed"|"rng"|potential|sourceBasis|"score"|baseScore/;
 
 /** Real PGlite + createApp + createHttpApi; every step replays a command the server served. */
@@ -49,13 +51,13 @@ test('college road: graduation route → enrollment → year-end handover → se
     assert.deepEqual(s.ids(), ['preseason']);
     assert.equal((await s.api.career(s.saveId)).stage.leagueLabel, '대학');
     await s.take('preseason');
-    assert.deepEqual(s.ids(), ['adv-event', 'adv-game', 'adv-week']);
+    assert.deepEqual(s.ids(), ['adv-season', 'adv-month', 'adv-game'], 'default CTA is the whole season, secondary is the month');
     assert.match(s.view.lines.map(l => l.value).join(' '), /0\/48경기/);
     await s.take('adv-game');
     for (let i = 0; i < 20 && s.ids().includes('continue'); i++) await s.take('continue'); // a game may span several chunks
     assert.match(s.view.lines.map(l => l.value).join(' '), /1\/48경기/, 'the played game is counted from the saved records');
     // Play to the annual training window (E43 at 16 games); continue/pause appear while a multi-game plan is active.
-    for (let i = 0; i < 40 && !s.ids().includes('open_training'); i++) await s.take(s.ids().includes('continue') ? 'continue' : 'adv-event');
+    await s.take('adv-season'); // ONE press runs the engine until the mandatory training window (16 games) and stops there
     assert.deepEqual(s.ids(), ['open_training', 'forfeit_training']);
     assert.ok(s.view.commands.find(c => c.id === 'forfeit_training')!.confirm);
     await s.take('open_training');

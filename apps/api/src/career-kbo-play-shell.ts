@@ -1,4 +1,5 @@
 import * as engine from '@playball/engine';
+import {spanDeadline} from './span-budget.js';
 import {ABILITY_LABELS,abilityKeys} from '@playball/rules';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
 import type {FlowCommand,FlowScreen} from './career-flow-screen.js';
@@ -6,7 +7,7 @@ import type {FlowCommand,FlowScreen} from './career-flow-screen.js';
 /** Thin owned dispatch for the KBO pro season loop. The engine decides every rule; the flow below only reflects its previews/readiness. */
 const fields=new Map<string,readonly string[]>([
  ['RESOLVE_CAMP',['eventKey','eventVersion']],['CONFIRM_PRESEASON',[]],['CONFIRM_ROSTER',[]],['CONFIRM_SCHEDULE',[]],['START',[]],
- ['ADVANCE',['maxDays']],['WINDOW',['eventKey','eventVersion','command']],['TRAIN',['choice']],
+ ['ADVANCE',['maxDays']],['ADVANCE_SPAN',['span']],['WINDOW',['eventKey','eventVersion','command']],['TRAIN',['choice']],
  ['START_POSTSEASON',[]],['ADVANCE_POSTSEASON',[]],['SETTLE_GROWTH',[]],['CLOSE_SEASON',['forfeitUnusedTraining']],['NEXT_YEAR',[]],
 ]);
 const WINDOW_COMMANDS=['OPEN_TRAINING','DEFER_TRAINING','FORFEIT_TRAINING','ACK_EVENT'];
@@ -20,6 +21,12 @@ function choice(v:unknown):engine.TrainingChoice{
  if((o.type==='GUARANTEED'||o.type==='CHALLENGE')&&typeof o.ability==='string'&&n===2)return {type:o.type,ability:o.ability};
  if((o.type==='CONDITIONING'||o.type==='SKIP')&&n===1)return {type:o.type};
  return fail('INVALID_PAYLOAD');
+}
+/** Chains the engine's own advances (see the US twin): the engine's stop reasons are the only stop rule. */
+function advanceSpan(c:engine.KboCareer,rev:number,span:'SEASON'|'MONTH'){
+  const until=spanDeadline();let r=engine.advanceKboCareer(c,rev,7),days=r.daysClosed;
+  for(let i=0;i<200_000&&(r.stopReason==='CHUNK_LIMIT'||r.stopReason==='DAY_CLOSED')&&r.career.phaseContext.phase==='SEASON_PROGRESS'&&Date.now()<until&&(span==='SEASON'||days<30);i++){r=engine.advanceKboCareer(r.career,r.career.revision,span==='MONTH'?Math.min(7,30-days):7);days+=r.daysClosed;}
+  return r;
 }
 export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand{
  const name=command.type.slice('CAREER_KBO_PLAY_'.length),allowed=fields.get(name),raw=command.payload;
@@ -36,6 +43,7 @@ export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand
    case 'CONFIRM_SCHEDULE':next=engine.confirmKboSeasonSchedule(c,rev);break;
    case 'START':next=engine.startKboRegularSeason(c,rev);break;
    case 'ADVANCE':{const d=int(p,'maxDays',1);if(d>7)fail('INVALID_PAYLOAD');const r=engine.advanceKboCareer(c,rev,d);next=r.career;stopReason=r.stopReason;break;}
+   case 'ADVANCE_SPAN':{if(p.span!=='SEASON'&&p.span!=='MONTH')fail('INVALID_PAYLOAD');const r=advanceSpan(c,rev,p.span);next=r.career;stopReason=r.stopReason;break;}
    case 'WINDOW':{const cmd=str(p,'command');if(!WINDOW_COMMANDS.includes(cmd))fail('INVALID_PAYLOAD');next=engine.resolveKboWindowEvent(c,rev,{eventKey:str(p,'eventKey'),eventVersion:int(p,'eventVersion',1),command:cmd}).career;break;}
    case 'TRAIN':next=engine.trainKboCareer(c,rev,choice(p.choice));break;
    case 'SETTLE_GROWTH':next=engine.settleKboSeasonGrowth(c,rev).career;break;
@@ -71,7 +79,7 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
    for(const ch of choices){let ok:boolean;try{ok=engine.previewKboTraining(c,ch).eligible;}catch{ok=false;}
     if(ok)commands.push(cmd('train-'+(ch.type==='GUARANTEED'?ch.ability:'conditioning'),ch.type==='GUARANTEED'?`훈련: ${ABILITY_LABELS[ch.ability as keyof typeof ABILITY_LABELS]} 안정 성장 (피로 +5)`:'훈련: 컨디션 회복 (피로 최대 -20)','TRAIN',{choice:ch}));}
   }
-  return out('프로 정규시즌',[...commands,cmd('adv-1','하루 진행','ADVANCE',{maxDays:1}),cmd('adv-3','3일 진행','ADVANCE',{maxDays:3}),cmd('adv-7','일주일 진행','ADVANCE',{maxDays:7})]);
+  return out('프로 정규시즌',[...commands,cmd('adv-season','이번 시즌 끝까지','ADVANCE_SPAN',{span:'SEASON'}),cmd('adv-month','다음 달까지','ADVANCE_SPAN',{span:'MONTH'}),cmd('adv-1','하루 진행','ADVANCE',{maxDays:1})]);
  }
  if(phase.phase==='EVENT_DECISION'){
   const e=c.events.find(x=>x.eventKey===phase.eventKey&&x.status==='OPEN');

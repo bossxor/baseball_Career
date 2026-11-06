@@ -13,6 +13,8 @@ import { startKboRegularSeason } from '../../../packages/engine/src/kbo-progress
 import type { KboCareer } from '../../../packages/engine/src/kbo-career-entry.js';
 import type { FlowView } from '../src/model.js';
 
+// One press must be able to run a whole stretch; production keeps a 25s request budget.
+process.env.PLAYBALL_SPAN_BUDGET_MS = '900000';
 const HIDDEN = /"seed"|"rng"|potential|sourceBasis|"score"|baseScore/;
 
 async function session(subject: string, career: unknown) {
@@ -65,5 +67,21 @@ test('KBO pro season: regular season end → postseason → season close, all fr
     assert.ok(s.ids().includes('close-season'), `postseason ends in a season close: ${s.ids()}`);
     await s.take('close-season');
     assert.ok(!s.ids().includes('close-season'));
+  } finally { await s.close(); }
+});
+
+test('KBO pro season: ONE press on the default CTA runs to the end of the regular season and stops at the review', async () => {
+  const e = enteredKboCareer('HITTER'), p = confirmKboPreseasonPlan(e, e.revision), o = confirmKboOpeningRoster(p, p.revision), sc = confirmKboSeasonSchedule(o, o.revision);
+  const c: KboCareer = structuredClone(startKboRegularSeason(sc, sc.revision));
+  const all = [...c.competitionSchedule!.leagues.KBO, ...c.competitionSchedule!.leagues.FUTURES], first = Math.min(...all.map(g => g.worldDay)), last = Math.max(...all.map(g => g.worldDay));
+  // Controlled prefix (as in the postseason fixture): every day but the final one is already closed.
+  c.days = { ...c.days!, days: Array.from({ length: last - first }, (_, i) => ({ day: first + i, evidence: 'test', result: { injured: [], recovered: [] } })) };
+  c.phaseContext = { phase: 'SEASON_PROGRESS', nextWorldDay: last, pendingGame: null };
+  const s = await session('web-kbo-3', c);
+  try {
+    assert.deepEqual(s.ids().slice(0, 2), ['adv-season', 'adv-month'], 'default CTA = whole season, secondary = month');
+    await s.take('adv-season');
+    assert.ok(!s.ids().includes('adv-season'), `one press ended the season: ${s.ids()} / ${s.view.title}`);
+    assert.ok(s.ids().some(id => id === 'post-start' || id === 'next-year' || id.startsWith('camp')) || s.view.commands.length > 0);
   } finally { await s.close(); }
 });

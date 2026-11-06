@@ -76,3 +76,19 @@ test('US road: a finished season starts the next one from the served command', a
     assert.match(s.view.lines.map(l => l.value).join(' '), /2\d{3}/);
   } finally { await s.close(); }
 });
+
+test('US road: ONE press chains many engine chunks (not one chunk or one day) and stays resumable under the request time budget', async () => {
+  process.env.PLAYBALL_SPAN_BUDGET_MS = '4000';
+  const s = await session('web-us-4', preparedUsOptionCareer('HITTER'));
+  try {
+    for (let i = 0; i < 4 && !s.ids().includes('start'); i++) await s.take(s.ids()[0]!);
+    await s.take('start');
+    assert.deepEqual(s.ids().filter(id => id.startsWith('adv-')), ['adv-season', 'adv-month', 'adv-1']);
+    const games = () => Number(/리그 경기 ([0-9]+)개/.exec(s.view.lines.map(l => l.value).join(' '))?.[1] ?? 0);
+    await s.take('adv-1');
+    const single = games();
+    await s.take('adv-season');
+    assert.ok(games() > single + 4, `one default-CTA press advanced far more than one chunk: ${single} -> ${games()}`);
+    assert.ok(s.ids().includes('adv-season') || !s.view.title.startsWith('미국 정규시즌'), 'either resumable or stopped by an event');
+  } finally { delete process.env.PLAYBALL_SPAN_BUDGET_MS; await s.close(); }
+});

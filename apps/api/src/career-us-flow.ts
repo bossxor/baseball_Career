@@ -27,7 +27,7 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
  }
  if(phase.phase==='SEASON_PROGRESS'){
   if(c.season)lines.push({label:'진행',value:`${c.season.days.length}일 경과 · 리그 경기 ${Object.keys(c.records.games).length}개 기록`});
-  return out('미국 정규시즌',[...(phase.pendingGame?[]:training()),cmd('adv-1','하루 진행','ADVANCE',{maxDays:1}),cmd('adv-3','3일 진행','ADVANCE',{maxDays:3}),cmd('adv-7','일주일 진행','ADVANCE',{maxDays:7})]);
+  return out('미국 정규시즌',[...(phase.pendingGame?[]:training()),cmd('adv-season','이번 시즌 끝까지','ADVANCE_SPAN',{span:'SEASON'}),cmd('adv-month','다음 달까지','ADVANCE_SPAN',{span:'MONTH'}),cmd('adv-1','하루 진행','ADVANCE',{maxDays:1})]);
  }
  if(phase.phase==='EVENT_DECISION'){
   const e=c.events.find(x=>x.eventKey===phase.eventKey&&x.status==='OPEN');

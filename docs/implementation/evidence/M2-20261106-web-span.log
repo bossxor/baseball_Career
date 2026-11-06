@@ -1,0 +1,17 @@
+✔ college road: graduation route → enrollment → year-end handover → season start → play → annual training window (65028.2651ms)
+✔ college road: result → academic year close → next year; stale/forged payloads are rejected (16075.7641ms)
+✔ KBO pro season: preseason chain → start → native games are advanced and shown (24344.2373ms)
+✔ KBO pro season: regular season end → postseason → season close, all from served commands (64346.3487ms)
+✔ KBO pro season: ONE press on the default CTA runs to the end of the regular season and stops at the review (17079.2517ms)
+✔ US road: preseason chain → start → advance days → home links to the flow (26295.6437ms)
+✔ US road: the annual training window is served as commands and training is one-time (26171.0281ms)
+✔ US road: a finished season starts the next one from the served command (34306.5344ms)
+✔ US road: ONE press chains many engine chunks (not one chunk or one day) and stays resumable under the request time budget (29123.7574ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 326911.2397

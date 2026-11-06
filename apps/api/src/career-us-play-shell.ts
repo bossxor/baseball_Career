@@ -1,8 +1,9 @@
 import * as engine from '@playball/engine';
+import {spanDeadline} from './span-budget.js';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
 
 const fields=new Map<string,readonly string[]>([
- ['RESOLVE_CAMP',['eventKey','eventVersion','command','focus']],['CONFIRM_PRESEASON',[]],
+ ['ADVANCE_SPAN',['span']],['RESOLVE_CAMP',['eventKey','eventVersion','command','focus']],['CONFIRM_PRESEASON',[]],
  ['PUBLISH_SCHEDULE',[]],['START',[]],['ADVANCE',['maxDays']],['RESOLVE_HIDDEN',['eventKey','eventVersion','command']],
  ['RESOLVE_WINDOW',['eventKey','eventVersion','command']],['RESOLVE_LEVEL',['eventKey','eventVersion','command']],['TRAIN',['choice']],['CHANGE_STYLE',['archetype']],
  ['NEXT_MINOR_YEAR',[]],['OPEN_MINOR_MARKET',[]],['RESOLVE_MINOR_MARKET',['eventKey','eventVersion','command']],['ACCEPT_MINOR_OFFER',['offerKey']],
@@ -35,6 +36,13 @@ function majorContractView(c:engine.UsCareer,transition:ReturnType<typeof engine
   throw error;
  }
 }
+/** One request chains the engine's own day/chunk advances: SEASON until the engine stops for anything but its internal limits
+ * (mandatory event, injury, roster decision, season review); MONTH until 30 world days are closed or an earlier stop. */
+function advanceUsSpan(c:engine.UsCareer,revision:number,span:'SEASON'|'MONTH'){
+  const until=spanDeadline();let r=engine.advanceUsCareer(c,revision,7),days=r.daysClosed;
+  for(let i=0;i<200_000&&(r.stopReason==='CHUNK_LIMIT'||r.stopReason==='DAY_CLOSED')&&r.career.phaseContext.phase==='SEASON_PROGRESS'&&Date.now()<until&&(span==='SEASON'||days<30);i++){r=engine.advanceUsCareer(r.career,r.career.revision,span==='MONTH'?Math.min(7,30-days):7);days+=r.daysClosed;}
+  return r;
+}
 export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand {
  const name=command.type.slice('CAREER_US_PLAY_'.length),allowed=fields.get(name),raw=command.payload;
  if(!allowed)fail('UNSUPPORTED_COMMAND');
@@ -59,6 +67,7 @@ export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand 
    case 'CONFIRM_PRESEASON':next=engine.confirmUsPreseasonPlan(c,revision);break;
    case 'PUBLISH_SCHEDULE':next=engine.publishUsSeasonSchedule(c,revision);break;
    case 'START':next=engine.startUsRegularSeason(c,revision);break;
+   case 'ADVANCE_SPAN':{if(p.span!=='SEASON'&&p.span!=='MONTH')fail('INVALID_PAYLOAD');const result=advanceUsSpan(c,revision,p.span);next=result.career;stopReason=result.stopReason;rosterIssue=result.rosterIssue;break;}
    case 'ADVANCE':{const result=engine.advanceUsCareer(c,revision,number('maxDays'));next=result.career;stopReason=result.stopReason;rosterIssue=result.rosterIssue;break;}
    case 'RESOLVE_HIDDEN':{const result=engine.resolveProHiddenTraitNotice(c,revision,{eventKey:string('eventKey'),eventVersion:number('eventVersion'),command:string('command')});next=result.career;navigation=result.navigation;break;}
    case 'RESOLVE_WINDOW':{const result=engine.resolveUsWindowEvent(c,revision,{eventKey:string('eventKey'),eventVersion:number('eventVersion'),command:string('command')});next=result.career;navigation=result.navigation;break;}

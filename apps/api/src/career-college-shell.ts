@@ -1,4 +1,5 @@
 import * as engine from '@playball/engine';
+import {spanDeadline} from './span-budget.js';
 import {ABILITY_LABELS,abilityKeys} from '@playball/rules';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
 import type {FlowCommand,FlowScreen} from './career-flow-screen.js';
@@ -31,6 +32,18 @@ export const isCollege=(c:engine.HighSchoolCareer)=>c.world.leagueKey==='COLLEGE
 /** College or the HS→college hand-over (admitted, not yet started). */
 export const collegeApplies=(c:engine.HighSchoolCareer)=>isCollege(c)||Boolean(c.collegeAdmission);
 
+/** One request runs the engine's own plans back to back: SEASON = "next major event" repeated until the engine stops for a reason
+ * other than its internal chunk limit (mandatory event, injury change, season review); MONTH = four weekly plans. The engine decides every stop. */
+function advanceSpan(c:engine.HighSchoolCareer,rev:number,span:'SEASON'|'MONTH'){
+ const until=spanDeadline();let r=engine.advanceCollegeCareer(c,rev,span==='SEASON'?'NEXT_MAJOR_EVENT':'ONE_WEEK'),weeks=r.stopReason==='ONE_WEEK'?1:0;
+ for(let i=0;i<20_000;i++){
+  if(r.career.phaseContext.phase!=='SEASON_PROGRESS'||Date.now()>=until)break;
+  if(r.stopReason==='CHUNK_LIMIT')r=engine.advanceCollegeCareer(r.career,r.career.revision);
+  else if(span==='MONTH'&&r.stopReason==='ONE_WEEK'&&weeks<4){r=engine.advanceCollegeCareer(r.career,r.career.revision,'ONE_WEEK');if(r.stopReason==='ONE_WEEK')weeks++;}
+  else break;
+ }
+ return r;
+}
 export function applyCollege(state:SaveState,command:CommandBody):AppliedCommand{
  const name=command.type.slice('CAREER_COLLEGE_'.length),allowed=fields.get(name),raw=command.payload;
  if(!allowed)fail('UNSUPPORTED_COMMAND');
@@ -45,14 +58,14 @@ export function applyCollege(state:SaveState,command:CommandBody):AppliedCommand
   else if(name==='CONFIRM_PRESEASON')next=engine.confirmCollegePreseason(c,rev);
   else if(name==='PAUSE')next=engine.pauseCollegeCareer(c,rev);
   else if(name==='ADVANCE'){
-   if(p.mode!==undefined&&!['NEXT_MAJOR_EVENT','ONE_GAME','ONE_WEEK'].includes(String(p.mode)))fail('INVALID_PAYLOAD');
-   const r=engine.advanceCollegeCareer(c,rev,p.mode as engine.HighSchoolAdvancePlan['mode']|undefined);next=r.career;stopReason=r.stopReason;
+   if(p.mode!==undefined&&!['NEXT_MAJOR_EVENT','ONE_GAME','ONE_WEEK','SEASON','MONTH'].includes(String(p.mode)))fail('INVALID_PAYLOAD');
+   const r=p.mode==='SEASON'||p.mode==='MONTH'?advanceSpan(c,rev,p.mode):engine.advanceCollegeCareer(c,rev,p.mode as engine.HighSchoolAdvancePlan['mode']|undefined);next=r.career;stopReason=r.stopReason;
   }else if(name==='WINDOW'){
    const cmd=str(p,'command');if(!WINDOW_COMMANDS.includes(cmd))fail('INVALID_PAYLOAD');
    next=engine.resolveCareerWindowEvent(c,rev,{eventKey:str(p,'eventKey'),eventVersion:int(p,'eventVersion'),command:cmd}).career;
   }else if(name==='TRAIN')next=engine.trainCollegeCareer(c,rev,trainingChoice(p.choice));
   else if(name==='START_CUP')next=engine.startCollegeCup(c,rev);
-  else if(name==='ADVANCE_CUP'){const r=engine.advanceCollegeCup(c,rev);next=r.career;stopReason=r.stopReason;}
+  else if(name==='ADVANCE_CUP'){let r=engine.advanceCollegeCup(c,rev);for(let i=0;i<2_000&&r.stopReason==='CHUNK_LIMIT';i++)r=engine.advanceCollegeCup(r.career,r.career.revision);next=r.career;stopReason=r.stopReason;}
   else if(name==='ACK_REVIEW')next=engine.acknowledgeCollegeSeasonReview(c,rev);
   else if(name==='CLOSE_YEAR')next=engine.closeCollegeSeasonForNextYear(c,rev,bool(p,'forfeitUnusedTraining'));
   else next=engine.startNextCollegeSeason(c,rev);
@@ -102,7 +115,7 @@ export function collegeFlow(c:engine.HighSchoolCareer):FlowScreen{
      if(ok)commands.push(cmd('train-'+(choice.type==='GUARANTEED'?choice.ability:'conditioning'),choice.type==='GUARANTEED'?`훈련: ${ABILITY_LABELS[choice.ability as keyof typeof ABILITY_LABELS]} 안정 성장 (피로 +5)`:'훈련: 컨디션 회복 (피로 최대 -20)','TRAIN',{choice}));
     }
    }
-   commands.push(cmd('adv-event','다음 중요 사건까지','ADVANCE',{mode:'NEXT_MAJOR_EVENT'}),cmd('adv-game','1경기 진행','ADVANCE',{mode:'ONE_GAME'}),cmd('adv-week','한 주 진행','ADVANCE',{mode:'ONE_WEEK'}));
+   commands.push(cmd('adv-season','이번 시즌 끝까지','ADVANCE',{mode:'SEASON'}),cmd('adv-month','다음 달까지','ADVANCE',{mode:'MONTH'}),cmd('adv-game','1경기 진행','ADVANCE',{mode:'ONE_GAME'}));
   }
   return out('대학 정규시즌',commands);
  }
