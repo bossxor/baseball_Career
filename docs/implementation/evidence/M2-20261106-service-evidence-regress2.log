@@ -1,0 +1,42 @@
+✔ US military worker closes an actual rest date without health rows and refreshes advice once across JSON resume (33530.5746ms)
+✔ US advice refuses missing rest-day closure and future unclosed dates (2976.4527ms)
+✔ US advice does not accept a date alone when its rest receipt or owning season is corrupted (18603.0011ms)
+✔ US advice cannot use an empty receipt to close a scheduled competition date without game health evidence (622.4419ms)
+✔ US full-date annual settlement pays one PRO budget, all opening NPCs and one aging; explicit forfeiture and replay keep receipts (20272.0617ms)
+✔ US annual audit refuses changed FINAL totals and incomplete date receipts before awarding growth (2962.5955ms)�✔ termination stops the active US contract and rejects fabricated service-season identity (18983.7907ms)
+✔ service annual owner ages and supplies the real roster without paying or rewriting history (8654.275ms)
+✔ freeze parks the pitcher under the already signed option and preserves original USD and pitch history (14159.6536ms)
+✔ controlled calendar discharge opens only the existing option and confirms through day29 without retroactive salary (46728.8257ms)
+✔ controlled30day expiry terminates the frozen contract without manufacturing another option (6718.441ms)
+✔ service resume rejects removed native closed dates and altered archived game evidence (5137.5534ms)
+✔ return preserves existing unique field positions when selecting a legal roster slot (36802.0416ms)
+✔ service annual supply preserves a retiring45yearold pitcher and his historical repertoire across JSON (10594.9211ms)
+✔ controlled minor return resumes the next annual contract without consuming a frozen full season (34417.0689ms)
+✔ active US return condition counts six registered bench games, excludes INT and never changes abilities (4127.3766ms)
+✔ controlled return-year MLB activation preserves pre-callup salary and validates derived contract and budget (6655.2543ms)
+✔ expired minor confirmation opens a separate offer; explicit acceptance reserves once without paying or rewriting source history (179809.5385ms)
+✔ new return offer rejects stale revisions and changed identity; decline survives JSON without any reservation (58929.3148ms)
+✔ controlled offer day29 remains acceptable and day30 expires without payment or implicit acceptance (24393.1855ms)
+✔ one native pending-offer chunk preserves its source and resumes identically after JSON (39757.2195ms)
+✔ controlled service dates: return re-sign preserves actual settled NPC growth, supply RNG and records (360123.3054ms)
+✔ mandatory return service reports the same season-complete boundary as independent preparation without auto-settling the year (177363.9822ms)
+✔ US live startup projects only participating teams and keeps registrations, contracts and source immutable (9740.734ms)
+✔ legacy calendar1 first date keeps all75 real games, salary and original pre-cache trait golden hashes (35197.0526ms)
+✔ US partial-game JSON resume equals continuous chunks, rejects stale revisions and corrupted pending provenance (15399.9714ms)
+✔ US injury repair first borrows inside the organization without fabricating players or changing26 MLB seats (11605.7861ms)
+✔ US exhausted organization uses minimum low-ability replacements, reserves injured identities and restores them after recovery (8355.7925ms)
+✔ US growth refuses unfinished seasons, and payroll mutations cannot mint future or duplicate salary (10571.2977ms)
+✔ authentic option survives actual promotion and six credited annual writers into a five-year FA guarantee before freeze (291107.7356ms)
+✔ controlled service dates exercise both actual year settlements and reject forged/duplicate return completion evidence (351146.5121ms)
+✔ MLB100 registrations credit a year even with no appearance and injury; six credited seasons qualify separately from minor rights (28.5258ms)
+✔ minor and postseason games do not create service; duplicate dates and missing/changed receipts reject (20.6045ms)
+Native military opening: {"year":"2031","nativeNpcGames":75,"ownAppearances":0,"salaryUsd":0,"closedDays":1}
+✔ service world runs actual NPC opening games with zero own appearances or salary and blocks ordinary play (169767.7221ms)
+ℹ tests 34
+ℹ suites 0
+ℹ pass 34
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2046120.794
