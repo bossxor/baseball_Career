@@ -1,3 +1,7 @@
+# 설계 제안 — 2026-11-06: 구글 로그인
+
+[133-GOOGLE-LOGIN](../design/133-GOOGLE-LOGIN.md): 구글 ID 토큰을 `google:<sub>`로 매핑해 `auth.ts resolveSubject`에 분기 추가(웹 GIS, Android Credential Manager 플러그인). 코드 미변경·사용자 확정 대기(D1~D6), Google Cloud 설정은 사용자 체크리스트 §4.
+
 # 최신 구현 — 2026-11-06: 24경로 native 폐쇄 러너 (4/24 엔진 native 증명)
 
 추가(실행 C, 3h20): P03 기간 성장 중복0 검증 통과(원장 검증·기간키 유일·능력 증감=이득−노화·새 원장 비어 있음), 영수증 재검증 해시가 실행 A와 동일. **P05는 엔진/저장 문제로 막힘**: 대학4년+졸업까지 531명령 실행 후 `PREPARE_KBO_DRAFT`에서 `Invalid string length`(커리어 상태 직렬화가 ~0.5GB 한계 초과; 2년차 후 123MB, collegeEarlyRoute 54MB·previousSeasons 31MB). M3 DB 저장에도 같은 위험.
