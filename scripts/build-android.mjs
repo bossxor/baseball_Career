@@ -39,7 +39,9 @@ function preferJdk21(env) {
 }
 
 function run(cmd, args, cwd, env = process.env) {
-  const r = spawnSync(cmd, args, { cwd, stdio: 'inherit', shell: true, env });
+  // shell:true splits unquoted paths ("C:\Program Files\nodejs\node.exe") on Windows.
+  const q = (s) => (/\s/.test(s) && !s.startsWith('"') ? `"${s}"` : s);
+  const r = spawnSync(q(cmd), args.map(q), { cwd, stdio: 'inherit', shell: true, env });
   if (r.status !== 0) process.exit(r.status ?? 1);
 }
 
@@ -52,7 +54,7 @@ if (!existsSync(join(android, 'app'))) {
 }
 run('npx', ['cap', 'sync', 'android'], web, env);
 
-const gradlew = process.platform === 'win32' ? 'gradlew.bat' : './gradlew';
+const gradlew = process.platform === 'win32' ? '.\\gradlew.bat' : './gradlew';
 run(gradlew, ['assembleDebug'], android, env);
 
 const apk = join(android, 'app', 'build', 'outputs', 'apk', 'debug', 'app-debug.apk');
