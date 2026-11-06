@@ -43,3 +43,8 @@ Device-verified:
 NOT verified: rotation (needs changing the device rotation setting; skipped), `#/flow/<id>` and Back there (needs a save from a reachable API), create path beyond step 2, offline→retry replay, real login.
 
 Repro for the rest: `adb install -r <apk>`, `adb shell am start -n kr.againplayball.app/.MainActivity`, with a build whose `VITE_API_BASE` is a reachable https host; open `#/flow/<saveId>`, toggle airplane mode, act, restore, verify retry; rotate the device with the form open.
+
+## 5. Rebuild at 3f82e1b (safe-area, retry button) — 2026-11-06
+- `npm run build:android` OK (log `evidence/M2-ANDROID-build2-20261106.log`). APK 10,261,734 B, sha256 `66267b5589b2606012054981b977e866f7bb9c8df9f62c8d7d3912690d6f0b3a`.
+- Phone R5KL10FHTTN disappeared from `adb devices` right after the build → **install and checks (insets with viewport-fit=cover, keyboard, retry button, rotation) NOT run on device**. Repro: `adb install -r` that APK, launch, tap 개발 토큰으로 계속, check Home retry button, open #/create + focus name, rotate.
+- `capacitor.build.gradle` / `capacitor.settings.gradle` "modified": by-product of `cap sync` rewriting them with LF while git (autocrlf=true) expects CRLF; `git diff --ignore-cr-at-eol` is empty. Not content changes; restored with `git checkout --` after each build. Do not commit.
