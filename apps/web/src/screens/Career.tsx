@@ -21,7 +21,7 @@ export function Career({ view, state = 'ready', mode, onMode, onAction, onBack, 
   const current = mode ?? view.progress.mode, modes: readonly ProgressMode[] = [view.progress.mode, ...view.progress.alternatives];
   return (
     <ScreenFrame id="S03" state={state} {...frame}>
-      <section className="panel" aria-label="선수">
+      <section className="panel player-sticky" aria-label="선수">
         <div className="player">
           <Illustration name={/투수/.test(view.protagonist.kindLabel) ? 'pitcher' : 'hitter'} />
           <div><h2>{view.protagonist.name}</h2>

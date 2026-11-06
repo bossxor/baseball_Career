@@ -128,8 +128,9 @@ export function collegeFlow(c:engine.HighSchoolCareer):FlowScreen{
    engine.assertCollegeEarlyUsComparison(c);
    const forfeit=!c.development?.trainingUsedSeasons.includes(c.world.seasonKey);
    return out('2학년 진로 선택',[
-    {id:'early-draft',label:'조기 드래프트 검토',type:'CAREER_CHOICE_COLLEGE_EARLY_DRAFT',payload:{careerRevision:c.revision,eventVersion:e.version}},
-    {id:'college-continue',label:forfeit?'남은 훈련을 포기하고 3학년 준비':'3학년 준비',type:'CAREER_CHOICE_COLLEGE_CONTINUE',payload:{careerRevision:c.revision,eventVersion:e.version,forfeitUnusedTraining:forfeit},...(forfeit?{confirm:'이번 학년에 쓰지 않은 훈련 기회가 사라집니다. 마감할까요?'}:{})},
+    // assertCollegeEarlyUsComparison above guarantees earlyDraftAttempted is false in year 2: the single attempt is still open.
+    {id:'early-draft',label:'조기 드래프트 검토',type:'CAREER_CHOICE_COLLEGE_EARLY_DRAFT',payload:{careerRevision:c.revision,eventVersion:e.version},facts:[{label:'조기 드래프트 기회',value:'남은 1회 (2학년 한정)'},{label:'지명받지 못하면',value:'대학으로 복귀할 수 있습니다'}]},
+    {id:'college-continue',label:forfeit?'남은 훈련을 포기하고 3학년 준비':'3학년 준비',type:'CAREER_CHOICE_COLLEGE_CONTINUE',payload:{careerRevision:c.revision,eventVersion:e.version,forfeitUnusedTraining:forfeit},facts:[{label:'조기 드래프트 기회',value:'사용하지 않고 넘어갑니다'}],...(forfeit?{confirm:'이번 학년에 쓰지 않은 훈련 기회가 사라집니다. 마감할까요?'}:{})},
    ]);
   }
   if(e?.definitionId==='E75')return out('대학 졸업',[cmd('graduate','졸업하고 진로 선택','GRADUATE',{eventVersion:e.version})]);
@@ -154,8 +155,8 @@ export function collegeFlow(c:engine.HighSchoolCareer):FlowScreen{
   if(!draft.offer)return out(title+' 결과',[],draft.status==='DECLINED'?'지명 제안을 거절했습니다.':null);
   lines.push({label:'제안',value:draft.offer.years+'년 · 연봉 '+Math.round(draft.offer.annualSalaryWon/10_000).toLocaleString('ko-KR')+'만 원'});
   return out(title+' 결과',[
-   {id:'draft-sign',label:'계약하고 입단',type:'CAREER_KBO_ENTRY_DECIDE',payload:{careerRevision:c.revision,programVersion:draft.version,decision:'SIGN'}},
-   {id:'draft-decline',label:'제안 거절',type:'CAREER_KBO_ENTRY_DECIDE',payload:{careerRevision:c.revision,programVersion:draft.version,decision:'DECLINE'},confirm:'거절하면 이 지명은 사라집니다. 거절할까요?'},
+   {id:'draft-sign',label:'계약하고 입단',type:'CAREER_KBO_ENTRY_DECIDE',payload:{careerRevision:c.revision,programVersion:draft.version,decision:'SIGN'},facts:[{label:'계약',value:`${draft.offer.years}년 · 연봉 ${Math.round(draft.offer.annualSalaryWon/10_000).toLocaleString('ko-KR')}만 원`}]},
+   {id:'draft-decline',label:'제안 거절',type:'CAREER_KBO_ENTRY_DECIDE',payload:{careerRevision:c.revision,programVersion:draft.version,decision:'DECLINE'},facts:[{label:'결과',value:'이 지명 제안은 사라집니다'}],confirm:'거절하면 이 지명은 사라집니다. 거절할까요?'},
   ]);
  }
  if(phase.phase==='NEXT_SEASON_READY'&&phase.route==='KBO'){

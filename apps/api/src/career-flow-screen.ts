@@ -8,7 +8,7 @@ import {collegeApplies,collegeFlow,collegeRouteCommands,isCollege} from './caree
 /** One public, command-bearing screen for the school→KBO entry and pro-retry flows.
  * Every command here is an existing owned CAREER_* command; the web replays `type`/`payload` exactly and never builds its own.
  * Hidden values (seed, rng, potential, draft score) are never copied into lines or payloads. */
-export type FlowCommand={id:string;label:string;type:string;payload:Record<string,unknown>;confirm?:string};
+export type FlowCommand={id:string;label:string;type:string;payload:Record<string,unknown>;confirm?:string;facts?:{label:string;value:string}[]};
 export type FlowScreen={screenId:'CAREER_FLOW';title:string;lines:{label:string;value:string}[];commands:FlowCommand[];notice:string|null;careerRevision:number;stop?:string};
 type Career=engine.HighSchoolCareer|engine.KboCareer;
 
@@ -73,8 +73,8 @@ function schoolFlow(c:engine.HighSchoolCareer):FlowScreen {
    if(draft.offer)lines.push({label:'제안',value:`${draft.offer.years}년 · 연봉 ${won(draft.offer.annualSalaryWon)}${draft.offer.signingBonusWon?` · 계약금 ${won(draft.offer.signingBonusWon)}`:''}`});
    const grad=c.graduation?c.events.find(e=>e.eventKey===c.graduation!.eventKey):undefined;
    if(draft.offer&&grad)commands.push(
-    cmd(c,'draft-sign','계약하고 입단','CAREER_KBO_ENTRY_DECIDE',{programVersion:draft.version,decision:'SIGN',eventVersion:grad.version}),
-    cmd(c,'draft-decline','제안 거절','CAREER_KBO_ENTRY_DECIDE',{programVersion:draft.version,decision:'DECLINE',eventVersion:grad.version},'거절하면 이 지명은 사라집니다. 거절할까요?'));
+    {...cmd(c,'draft-sign','계약하고 입단','CAREER_KBO_ENTRY_DECIDE',{programVersion:draft.version,decision:'SIGN',eventVersion:grad.version}),facts:[{label:'계약',value:`${draft.offer.years}년 · 연봉 ${won(draft.offer.annualSalaryWon)}`}]},
+    {...cmd(c,'draft-decline','제안 거절','CAREER_KBO_ENTRY_DECIDE',{programVersion:draft.version,decision:'DECLINE',eventVersion:grad.version},'거절하면 이 지명은 사라집니다. 거절할까요?'),facts:[{label:'결과',value:'이 지명 제안은 사라집니다'}]});
   }
   commands.push(...collegeRouteCommands(c));
   return out('졸업 진로 · KBO 지명',commands,'대학·미국 진로는 아직 웹에서 지원하지 않습니다.');
@@ -131,7 +131,7 @@ function kboFlow(c:engine.KboCareer):FlowScreen {
  const v=engine.kboRetryRoutesView(c),commands:FlowCommand[]=[];
  lines.push({label:'나이',value:`${v.ageAtCompletion}세`},{label:'남은 준비 기회',value:`${v.preparation.remaining}회`});
  for(const route of v.routes){
-  if(route.routeId==='PREPARATION')commands.push(cmd(c,'route-prep','준비 시즌으로 재도전','CAREER_RETRY_START',{routePreviewId:v.routePreviewId}));
+  if(route.routeId==='PREPARATION')commands.push({...cmd(c,'route-prep','준비 시즌으로 재도전','CAREER_RETRY_START',{routePreviewId:v.routePreviewId}),facts:[{label:'남은 준비 기회',value:`${v.preparation.remaining}회`}]});
   else if(route.routeId==='DOMESTIC_CONTRACT')for(const ref of route.offerRefs){
    const o=v.offers.find(x=>x.offerKey===ref);if(!o)continue;
    commands.push(cmd(c,'offer-'+ref,`${club(o.clubId)} 입단 · ${o.years}년 · 연봉 ${won(o.annualSalaryWon)}`,'CAREER_RETRY_ACCEPT',{routePreviewId:v.routePreviewId,offerKey:o.offerKey}));

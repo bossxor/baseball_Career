@@ -106,3 +106,18 @@ legend{float:left;width:100%;font-weight:700;padding:0 0 4px}
 .player .art-icon:first-child{width:64px;height:64px}
 .player .art-icon:last-child{width:44px;height:44px}
 @media(min-width:768px){.screen>.art{grid-column:1 / -1}.art-hero{height:280px}}
+/* Career header stays on top while scrolling; compact so it never hides much content. */
+.player-sticky{position:sticky;top:0;z-index:5;padding:10px 14px;gap:2px}
+.player-sticky .player{gap:10px}
+.player-sticky h2{font-size:1.05rem;line-height:1.3}
+.player-sticky .player p{margin:0;font-size:.85rem;color:var(--muted)}
+.player-sticky .player .art-icon:first-child{width:40px;height:40px}
+.player-sticky .player .art-icon:last-child{width:32px;height:32px}
+.player-sticky>.muted{font-size:.8rem;line-height:1.35}
+@media(min-width:768px){.screen>.player-sticky{grid-column:1 / -1}}
+.cmd{display:grid;gap:6px}
+.cmd .btn{width:100%}
+.cmd-facts{margin:0;display:grid;gap:2px;padding:0 4px}
+.cmd-facts div{display:flex;justify-content:space-between;gap:12px;font-size:.85rem}
+.cmd-facts dt{color:var(--muted)}
+.cmd-facts dd{margin:0;font-weight:600;text-align:right}

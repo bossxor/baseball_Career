@@ -70,3 +70,10 @@ test('safe-area and keyboard: viewport covers cutouts and shrinks for the keyboa
   assert.match(html, /interactive-widget=resizes-content/);
   for (const side of ['top', 'right', 'bottom', 'left']) assert.ok(css.includes(`env(safe-area-inset-${side}`), side);
 });
+
+test('flow screen: per-command facts render next to the button and are omitted when absent', () => {
+  const withFacts: FlowView = { ...flow, commands: [{ ...flow.commands[0]!, facts: [{ label: '조기 드래프트 기회', value: '남은 1회' }] }, flow.commands[1]!] };
+  const html = renderToStaticMarkup(<Flow view={withFacts} />);
+  assert.match(html, /<dl id="facts-draft-sign" class="cmd-facts"><div><dt>조기 드래프트 기회<\/dt><dd>남은 1회<\/dd>/);
+  assert.equal((html.match(/cmd-facts/g) ?? []).length, 1);
+});

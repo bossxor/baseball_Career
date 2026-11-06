@@ -43,7 +43,10 @@ export function Flow({ view, state = 'ready', onCommand, onBack, onReload }: Flo
           ) : (
             <div className="actions" role="group" aria-label="다음 행동">
               {view.commands.map((c, i) => (
-                <Button key={c.id} primary={i === 0 && !c.confirm} busy={busy} onClick={() => (c.confirm ? setAsking(c.id) : onCommand?.(c))}>{c.label}</Button>
+                <div key={c.id} className="cmd">
+                  <Button primary={i === 0 && !c.confirm} busy={busy} describedBy={c.facts?.length ? `facts-${c.id}` : undefined} onClick={() => (c.confirm ? setAsking(c.id) : onCommand?.(c))}>{c.label}</Button>
+                  {c.facts?.length ? <dl id={`facts-${c.id}`} className="cmd-facts">{c.facts.map(f => <div key={f.label}><dt>{f.label}</dt><dd>{f.value}</dd></div>)}</dl> : null}
+                </div>
               ))}
               {view.commands.length === 0 ? <Empty>지금 선택할 수 있는 행동이 없습니다.</Empty> : null}
             </div>
