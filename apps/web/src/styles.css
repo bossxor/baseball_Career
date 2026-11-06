@@ -7,7 +7,7 @@ body{margin:0;min-width:320px}
 button,input{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 
-.screen{max-width:1200px;margin:auto;min-height:100svh;padding:16px;display:grid;gap:16px;align-content:start}
+.screen{max-width:1200px;margin:auto;min-height:100svh;padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));scroll-padding-bottom:96px;display:grid;gap:16px;align-content:start}
 .topbar{display:flex;align-items:center;justify-content:space-between;min-height:44px}
 .save-state{color:var(--muted);font-size:.88rem}
 .screen-title{font-family:BlackHanSans,NotoSansKR,sans-serif;font-weight:400;font-size:clamp(1.75rem,6vw,2.6rem);line-height:1.2;margin:0;letter-spacing:-.02em}
@@ -58,7 +58,7 @@ legend{font-weight:800;padding:0 6px}
 .records dd{margin:0;font-variant-numeric:tabular-nums;font-weight:800}
 
 @media(min-width:768px){
-  .screen{padding:24px;grid-template-columns:1fr 1fr;align-items:start}
+  .screen{padding:max(24px,env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(24px,env(safe-area-inset-left));grid-template-columns:1fr 1fr;align-items:start}
   .screen>.topbar,.screen>.screen-title,.screen>.banner,.screen>.lead,.screen>.stepper,.screen>.actions,.screen>.mode-nav,.screen>.notice-card,.screen>fieldset{grid-column:1 / -1}
   .actions,.mode-nav{grid-template-columns:repeat(auto-fit,minmax(200px,max-content))}
 }

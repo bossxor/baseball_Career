@@ -23,6 +23,7 @@ export function ScreenFrame({ id, state = 'ready', saveLabel, onBack, onReload, 
       </header>
       <h1 id={titleId} className="screen-title">{SCREEN_TITLES[id]}</h1>
       {banner ? <p className={`banner banner-${state}`} role={state === 'error' || state === 'conflict' ? 'alert' : 'status'}>{banner}</p> : null}
+      {state === 'error' && onReload ? <Button onClick={onReload}>다시 시도</Button> : null}
       {state === 'conflict' && onReload ? <Button primary onClick={onReload}>최신 저장 불러오기</Button> : null}
       {children}
     </main>

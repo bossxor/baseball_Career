@@ -53,3 +53,20 @@ test('flow route parses and career shows the server-provided flow link', () => {
   };
   assert.match(renderToStaticMarkup(<Career view={view} />), /다음 단계 진행/);
 });
+
+test('load failure offers a retry button on every frame that can reload; without a reload handler there is none', async () => {
+  const { Home } = await import('../src/screens/Home.js');
+  const withRetry = renderToStaticMarkup(<Home data={null} state="error" onReload={() => {}} />);
+  assert.match(withRetry, /role="alert"/);
+  assert.match(withRetry, /<button[^>]*>다시 시도<\/button>/);
+  assert.doesNotMatch(renderToStaticMarkup(<Home data={null} state="error" />), /다시 시도/);
+  assert.doesNotMatch(renderToStaticMarkup(<Home data={null} state="ready" onReload={() => {}} />), /다시 시도/);
+});
+
+test('safe-area and keyboard: viewport covers cutouts and shrinks for the keyboard; screen padding honours insets', async () => {
+  const { readFileSync } = await import('node:fs');
+  const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8'), css = readFileSync(new URL('../src/styles.css', import.meta.url), 'utf8');
+  assert.match(html, /viewport-fit=cover/);
+  assert.match(html, /interactive-widget=resizes-content/);
+  for (const side of ['top', 'right', 'bottom', 'left']) assert.ok(css.includes(`env(safe-area-inset-${side}`), side);
+});

@@ -87,6 +87,7 @@ function kboFlow(c:engine.KboCareer):FlowScreen {
   const e=c.events.find(x=>x.eventKey===r.eventKey&&x.status==='OPEN');
   return out('무소속 안내',e?[cmd(c,'retry-review','진로 확인','CAREER_RETRY_REVIEW',{eventVersion:e.version})]:[],e?null:UNSUPPORTED);
  }
+ if(r.status==='ACCEPTED')return out('입단 완료',[],'새 구단과 계약했습니다. 프로 시즌 진행은 아직 웹에서 지원하지 않습니다.');
  if(r.status==='ARCHIVED'){
   const v=engine.kboRetryRetirementView(c);
   lines.push({label:'은퇴',value:`${v.seasonKey}시즌 · ${v.age}세`},{label:'마지막 구단',value:v.club.name});
