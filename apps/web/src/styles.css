@@ -84,6 +84,18 @@ legend{float:left;width:100%;font-weight:700;padding:0 0 4px}
 .art-hero{height:208px}
 .login-art{position:relative}
 .login-art::after{content:'';position:absolute;inset:0;background:url('../../../docs/design/assets/art-lab/hero-animation-navy-v2.png') 75% 0% / cover no-repeat;pointer-events:none}
+/* Approved anime panels over the SVG fallback: one 3x2 atlas cell (100cqw square) is cropped by --c/--r, --y = band start within the cell.
+   shortcut: each atlas is ~2.4MB PNG loaded whole, derive per-panel WebP when asset compression is scheduled. */
+.art-school,.art-college,.art-pro,.art-us,.art-club,.art-draft,.art-training,.art-game,.art-contract,.art-retire,.art-trophy,.art-quiet{position:relative;container-type:inline-size}
+.art-school::after,.art-college::after,.art-pro::after,.art-us::after,.art-club::after,.art-draft::after,.art-training::after,.art-game::after,.art-contract::after,.art-retire::after,.art-trophy::after,.art-quiet::after{content:'';position:absolute;inset:0;background:var(--atlas) calc(var(--c) * -100cqw) calc((var(--r) + var(--y)) * -100cqw) / 300% auto no-repeat;pointer-events:none}
+.art-draft,.art-training,.art-pro,.art-contract,.art-game{--atlas:url('../../../docs/design/assets/art-lab/career-events-animation-extra-navy-v2.png')}
+.art-us,.art-retire,.art-trophy{--atlas:url('../../../docs/design/assets/art-lab/career-events-animation-navy-v2.png')}
+.art-college,.art-club,.art-quiet{--atlas:url('../../../docs/design/assets/art-lab/career-scenes-finish-animation-v1.png')}
+.art-draft{--c:0;--r:0;--y:.12}.art-training{--c:1;--r:0;--y:.08}.art-pro{--c:0;--r:1;--y:.04}.art-contract{--c:1;--r:1;--y:.12}.art-game{--c:2;--r:1;--y:.14}
+.art-us{--c:2;--r:0;--y:.08}.art-retire{--c:1;--r:1;--y:.02}.art-trophy{--c:0;--r:1;--y:.38}
+.art-college{--c:0;--r:0;--y:.05}.art-club{--c:2;--r:1;--y:.35}.art-quiet{--c:1;--r:1;--y:.45}
+/* Single 1672x941 frame, not an atlas. */
+.art-school::after{background:url('../../../docs/design/assets/art-lab/graduation-animation-day-navy-v2.png') 0 -8cqw / 100% auto no-repeat}
 .art-svg{display:block;width:100%;height:100%}
 .art-icon{display:block;flex:none;width:56px;height:56px}
 .art-empty,.art-error{width:120px;height:80px;justify-self:center}
