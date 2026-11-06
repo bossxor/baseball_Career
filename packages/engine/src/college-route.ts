@@ -3,7 +3,7 @@ import {assertCollegeCareerRevision} from './high-school-career.js';
 import {assertCollegeYearResult} from './college-result.js';
 import {collegeCareerDraftEvaluation} from './college-graduation.js';
 import {createWorldEvent,completeBlockingEvent,resolveEventChoice,validateEvent} from './events.js';
-import {canonicalJson} from './game.js';
+import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 import {kboDraftView} from './kbo-draft.js';
 import {careerKboDraftView} from './career-kbo.js';
 import {careerUsDirectView,carryCollegeUsComparison} from './career-us.js';
@@ -11,7 +11,7 @@ import {assertUsDirect} from './us-direct.js';
 import {refreshCareerRouteNotices} from './career-route-notices.js';
 
 export interface CollegeEarlyRoute {schemaVersion:1;eventKey:string;receiptKey:string;sourceBasis:string;returnEventKey?:string}
-function basis(c:HighSchoolCareer){return canonicalJson({world:c.world,admission:c.collegeAdmission,result:c.collegeResult,cup:c.collegeCup,records:c.records,health:c.health,days:c.days,development:c.development,seasonGrowth:c.seasonGrowth});}
+function basis(c:HighSchoolCareer){return canonicalSeal({world:c.world,admission:c.collegeAdmission,result:c.collegeResult,cup:c.collegeCup,records:c.records,health:c.health,days:c.days,development:c.development,seasonGrowth:c.seasonGrowth});}
 function event(c:HighSchoolCareer,id:'E73'|'E74',task:string){
  const a=c.collegeAdmission!;
  return createWorldEvent({definitionId:id,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:'COLLEGE',fields:{playerSimulationKey:c.world.protagonistKey,enrollmentId:a.admissionKey,academicYear:2,sourceTaskId:task}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'CAREER_ROUTE',competitionKey:'COLLEGE',registrationKey:a.collegeId,sourceRevision:c.revision},sourceSequence:c.events.length+1,worldDay:c.days.days.at(-1)!.day});
@@ -25,7 +25,7 @@ export function attachCollegeEarlyRoute(c:HighSchoolCareer):HighSchoolCareer {
 }
 function current(c:HighSchoolCareer){
  assertCollegeCareerRevision(c,c.revision);const result=assertCollegeYearResult(c),a=c.collegeAdmission!,r=c.collegeEarlyRoute,e=c.events.find(e=>e.eventKey===r?.eventKey);
- if(a.academicYear!==2||!r||r.schemaVersion!==1||r.sourceBasis!==basis(c)||r.receiptKey!==JSON.stringify(['college-early-route',a.admissionKey,c.world.seasonKey])||!e||e.definitionId!=='E73'||e.worldKey!==c.world.worldKey||e.seasonKey!==c.world.seasonKey||e.evidence.fields.enrollmentId!==a.admissionKey||e.evidence.fields.playerSimulationKey!==a.playerKey||e.evidence.fields.academicYear!==2||e.evidence.fields.sourceTaskId!==result.receiptKey||e.resume.registrationKey!==a.collegeId)throw new RangeError('STALE_COLLEGE_EARLY_ROUTE');
+ if(a.academicYear!==2||!r||r.schemaVersion!==1||!matchesCanonicalSeal(r.sourceBasis,basis(c))||r.receiptKey!==JSON.stringify(['college-early-route',a.admissionKey,c.world.seasonKey])||!e||e.definitionId!=='E73'||e.worldKey!==c.world.worldKey||e.seasonKey!==c.world.seasonKey||e.evidence.fields.enrollmentId!==a.admissionKey||e.evidence.fields.playerSimulationKey!==a.playerKey||e.evidence.fields.academicYear!==2||e.evidence.fields.sourceTaskId!==result.receiptKey||e.resume.registrationKey!==a.collegeId)throw new RangeError('STALE_COLLEGE_EARLY_ROUTE');
  return {a,r,e};
 }
 function choose(c:HighSchoolCareer,version:number,command:'ENTER_EARLY_DRAFT'|'ADVANCE_ACADEMIC_YEAR'){

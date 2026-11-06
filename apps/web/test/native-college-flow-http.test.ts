@@ -5,6 +5,7 @@ import { createTestDb, seedAllowedSubject, gameSaves } from '@playball/db';
 import { createApp } from '../../api/src/app.js';
 import { json } from '../../api/test/json.js';
 import { createHttpApi } from '../src/http.js';
+import { closeCollegeSeasonForNextYear, startNextCollegeSeason, createOwnCareerAssessment } from '@playball/engine';
 import { completedHighSchoolCareer, completedCollegeAcademicYear } from '../../../packages/engine/test/fixtures.js';
 import type { FlowView } from '../src/model.js';
 
@@ -84,4 +85,84 @@ test('college road: result → academic year close → next year; stale/forged p
     assert.match(s.view.lines.map(l => `${l.label} ${l.value}`).join(' '), /학년 2학년/);
     assert.equal((await s.state()).career.world.seasonKey, '2031');
   } finally { await s.close(); }
+});
+
+
+/** Controlled academic-year records; every command after the E73 boundary goes through real HTTP. */
+function secondYear(strength=800_000) {
+ const first=completedCollegeAcademicYear(),ready=closeCollegeSeasonForNextYear(first,first.revision,true);
+ const start=startNextCollegeSeason(ready,ready.revision),player=start.world.players.own!;
+ player.abilities=Object.fromEntries(Object.keys(player.abilities).map(key=>[key,strength]));
+ player.potential={...player.abilities};player.careerPeaks={...player.abilities};
+ start.development!.seasonStartPlayer=structuredClone(player);
+ start.seasonGrowth!.seasonStart=structuredClone(player);
+ start.ownAssessment=createOwnCareerAssessment(start.world);
+ return completedCollegeAcademicYear(start);
+}
+
+test('college E73 continue closes the controlled second year with explicit training forfeiture',async()=>{
+ const s=await session('web-college-e73-continue',secondYear());
+ try {
+  assert.deepEqual(s.ids(),['early-draft','college-continue']);
+  const choice=s.view.commands.find(c=>c.id==='college-continue')!;
+  assert.ok(choice.confirm);assert.equal(choice.payload.forfeitUnusedTraining,true);
+  await assert.rejects(s.api.flowCommand(s.saveId,'e73-stale',choice.type,{...choice.payload,eventVersion:0}));
+  await s.take('college-continue');assert.deepEqual(s.ids(),['start-next']);
+  await s.take('start-next');assert.match(s.view.lines.map(l=>l.value).join(' '),/3학년/);
+ } finally {await s.close();}
+});
+
+test('college E73 early draft resolves, signs and enters KBO through served HTTP commands',async()=>{
+ const s=await session('web-college-e73-sign',secondYear());
+ try {
+  await s.take('early-draft');assert.deepEqual(s.ids(),['draft-prepare']);
+  await s.take('draft-prepare');await s.take('draft-resolve');
+  assert.deepEqual(s.ids(),['draft-sign','draft-decline']);
+  assert.ok(s.view.commands.find(c=>c.id==='draft-decline')!.confirm);
+  await s.take('draft-sign');assert.deepEqual(s.ids(),['close-kbo-year']);
+  assert.ok(s.view.commands[0]!.confirm);await s.take('close-kbo-year');
+  assert.deepEqual(s.ids(),['activate']);await s.take('activate');
+  assert.equal((await s.api.career(s.saveId)).stage.leagueLabel,'KBO');
+ } finally {await s.close();}
+});
+
+test('college early draft undrafted result returns to the third year',async()=>{
+ const s=await session('web-college-e73-return',secondYear(10_000));
+ try {
+  await s.take('early-draft');await s.take('draft-prepare');await s.take('draft-resolve');
+  assert.deepEqual(s.ids(),['college-return']);await s.take('college-return');
+  assert.deepEqual(s.ids(),['close-year']);assert.ok(s.view.commands[0]!.confirm);
+  await s.take('close-year');await s.take('start-next');
+  assert.match(s.view.lines.map(l=>l.value).join(' '),/3학년/);
+ } finally {await s.close();}
+});
+
+
+test('college early draft declined offer returns to school and retains the forfeiture confirmation',async()=>{
+ const s=await session('web-college-e73-decline',secondYear());
+ try {
+  await s.take('early-draft');await s.take('draft-prepare');await s.take('draft-resolve');
+  await s.take('draft-decline');assert.deepEqual(s.ids(),['college-return']);
+  await s.take('college-return');assert.deepEqual(s.ids(),['close-year']);
+  assert.ok(s.view.commands[0]!.confirm);await s.take('close-year');await s.take('start-next');
+  assert.match(s.view.lines.map(l=>l.value).join(' '),/3학년/);
+ } finally {await s.close();}
+});
+
+test('college E75 graduates, signs and activates through served HTTP commands',async()=>{
+ let year=secondYear();
+ for(let n=3;n<=4;n++){
+  const ready=closeCollegeSeasonForNextYear(year,year.revision,true);
+  year=completedCollegeAcademicYear(startNextCollegeSeason(ready,ready.revision));
+ }
+ const s=await session('web-college-e75',year);
+ try {
+  assert.deepEqual(s.ids(),['graduate']);
+  const choice=s.view.commands[0]!;
+  await assert.rejects(s.api.flowCommand(s.saveId,'e75-stale',choice.type,{...choice.payload,eventVersion:0}));
+  await s.take('graduate');assert.deepEqual(s.ids(),['draft-prepare']);
+  await s.take('draft-prepare');await s.take('draft-resolve');await s.take('draft-sign');
+  await s.take('close-kbo-year');await s.take('activate');
+  assert.equal((await s.api.career(s.saveId)).stage.leagueLabel,'KBO');
+ } finally {await s.close();}
 });

@@ -6,6 +6,7 @@ import {collegeCupSchedule} from './college-cup.js';
 import {validateSchoolGrowthDays} from './high-school-growth.js';
 import {createWorldEvent,completeBlockingEvent} from './events.js';
 import {canonicalJson} from './game.js';
+import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 import {recordTotals} from './records.js';
 import {emptyBatting,emptyPitching} from './stats.js';
 import {recentBattingPerformance,recentPitchingPerformance} from './lineup.js';
@@ -17,7 +18,7 @@ import {refreshCareerAchievements} from './career-achievements.js';
 
 export interface CollegeGraduation {schemaVersion:1;eventKey:string;receiptKey:string;sourceBasis:string}
 function basis(source:HighSchoolCareer):string {
- return canonicalJson({world:source.world,admission:source.collegeAdmission,collegeResult:source.collegeResult,collegeCup:source.collegeCup,seasonGrowth:source.seasonGrowth,recordRevision:source.records.revision,health:source.health,development:source.development});
+ return canonicalSeal({world:source.world,admission:source.collegeAdmission,collegeResult:source.collegeResult,collegeCup:source.collegeCup,seasonGrowth:source.seasonGrowth,recordRevision:source.records.revision,health:source.health,development:source.development});
 }
 /** Internal post-result attachment; the acknowledging command has already advanced its revision once. */
 export function attachCollegeGraduationTask(source:HighSchoolCareer):HighSchoolCareer {
@@ -35,7 +36,7 @@ export function prepareCollegeGraduation(source:HighSchoolCareer,expectedRevisio
 function graduationSource(source:HighSchoolCareer){
  const admission=source.collegeAdmission,graduation=source.collegeGraduation,result=assertCollegeYearResult(source);
  const event=source.events.find(e=>e.eventKey===graduation?.eventKey);
- if(source.world.leagueKey!=='COLLEGE' || !admission || admission.academicYear!==4 || admission.yearsCompleted!==4 || !graduation || graduation.schemaVersion!==1 || graduation.sourceBasis!==basis(source) || graduation.receiptKey!==JSON.stringify(['college-graduation',source.world.worldKey,source.world.seasonKey,admission.admissionKey,source.world.protagonistKey]) || !event || event.definitionId!=='E75' || event.worldKey!==source.world.worldKey || event.seasonKey!==source.world.seasonKey || event.resume.phase!=='CAREER_ROUTE' || event.resume.competitionKey!=='COLLEGE' || event.resume.registrationKey!==admission.collegeId || event.evidence.fields.playerSimulationKey!==source.world.protagonistKey || event.evidence.fields.enrollmentId!==admission.admissionKey || event.evidence.fields.academicYear!==4 || event.evidence.fields.sourceTaskId!==result.receiptKey)throw new RangeError('STALE_COLLEGE_GRADUATION');
+ if(source.world.leagueKey!=='COLLEGE' || !admission || admission.academicYear!==4 || admission.yearsCompleted!==4 || !graduation || graduation.schemaVersion!==1 || !matchesCanonicalSeal(graduation.sourceBasis,basis(source)) || graduation.receiptKey!==JSON.stringify(['college-graduation',source.world.worldKey,source.world.seasonKey,admission.admissionKey,source.world.protagonistKey]) || !event || event.definitionId!=='E75' || event.worldKey!==source.world.worldKey || event.seasonKey!==source.world.seasonKey || event.resume.phase!=='CAREER_ROUTE' || event.resume.competitionKey!=='COLLEGE' || event.resume.registrationKey!==admission.collegeId || event.evidence.fields.playerSimulationKey!==source.world.protagonistKey || event.evidence.fields.enrollmentId!==admission.admissionKey || event.evidence.fields.academicYear!==4 || event.evidence.fields.sourceTaskId!==result.receiptKey)throw new RangeError('STALE_COLLEGE_GRADUATION');
  return {admission,graduation,event};
 }
 /** Degree confirmation closes only E75. The shared world-year growth/training/health remain available to later registration. */

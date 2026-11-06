@@ -6,7 +6,7 @@ import {assertCareerRevision} from './high-school-career.js';
 import {assertCareerUsSigning} from './career-us.js';
 import {assertUsDirect} from './us-direct.js';
 import {assertUsReservationLedger} from './us-reservations.js';
-import {schoolYearEndBasis,schoolYearEndRepertoire} from './college-entry.js';
+import {matchesSchoolYearEndBasis,schoolYearEndBasis,schoolYearEndRepertoire} from './college-entry.js';
 import {applyCareerSeasonTraining} from './high-school-training.js';
 import {finalizeSeasonGrowth,validateSeasonGrowthLedger} from './growth-ledger.js';
 import {closeSeasonHealth} from './health.js';
@@ -17,7 +17,7 @@ const key=(s:HighSchoolCareer,contract:string)=>JSON.stringify(['school-us-year-
 
 export function assertUsAmateurYearEnd(s:HighSchoolCareer):UsAmateurYearEnd {
  const ready=s.usYearEnd,r=s.usRecruitment,signing=r?.program.signing,p=s.phaseContext;
- if(!ready || !r || r.closedBy!==undefined || r.program.decision!=='SIGNED' || !signing || p.phase!=='NEXT_SEASON_READY' || p.route!=='US' || p.contractKey!==ready.contractKey || ready.contractKey!==signing.contract.contractKey || ready.signingReceiptKey!==signing.receiptKey || ready.recruitmentSourceBasis!==r.sourceBasis || ready.receiptKey!==key(s,ready.contractKey) || ready.sourceRevision!==s.revision || ready.sourceBasis!==schoolYearEndBasis(s) || !s.seasonGrowth?.finalized || !s.health.closedSeasons.includes(s.world.seasonKey))throw new RangeError('STALE_US_AMATEUR_YEAR_END');
+ if(!ready || !r || r.closedBy!==undefined || r.program.decision!=='SIGNED' || !signing || p.phase!=='NEXT_SEASON_READY' || p.route!=='US' || p.contractKey!==ready.contractKey || ready.contractKey!==signing.contract.contractKey || ready.signingReceiptKey!==signing.receiptKey || ready.recruitmentSourceBasis!==r.sourceBasis || ready.receiptKey!==key(s,ready.contractKey) || ready.sourceRevision!==s.revision || !matchesSchoolYearEndBasis(s,ready.sourceBasis) || !s.seasonGrowth?.finalized || !s.health.closedSeasons.includes(s.world.seasonKey))throw new RangeError('STALE_US_AMATEUR_YEAR_END');
  assertUsDirect(r.world,r.program);assertUsReservationLedger(r.reservations);return ready;
 }
 

@@ -1,7 +1,7 @@
 import {refreshCareerAchievements} from './career-achievements.js';
 import {assertKboAmateurYearEnd} from './kbo-entry.js';
 import {assertUsAmateurYearEnd} from './us-entry.js';
-import {schoolYearEndBasis} from './college-entry.js';
+import {matchesSchoolYearEndBasis,schoolYearEndBasis} from './college-entry.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCareerRevision} from './high-school-career.js';
 import type {KboCareer} from './kbo-career-entry.js';
@@ -131,7 +131,7 @@ export function resolveCareerGoalEvent<T extends GoalCareer>(c:T,revision:number
  const context={worldKey:c.world.worldKey,seasonKey:event.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:event.definitionId==='E89'?['SET_GOALS','ACK_EVENT']:['OPEN_ACHIEVEMENTS']};
  if(!isUs(c)&&!isKbo(c)){
   if(c.kboYearEnd)assertKboAmateurYearEnd(c);if(c.usYearEnd)assertUsAmateurYearEnd(c);
-  if(c.collegeYearEnd&&(c.collegeYearEnd.sourceRevision!==c.revision||c.collegeYearEnd.sourceBasis!==schoolYearEndBasis(c)))throw new RangeError('STALE_GOAL_NOTICE_YEAR_END');
+  if(c.collegeYearEnd&&(c.collegeYearEnd.sourceRevision!==c.revision||!matchesSchoolYearEndBasis(c,c.collegeYearEnd.sourceBasis)))throw new RangeError('STALE_GOAL_NOTICE_YEAR_END');
  }
  const selected=resolveEventChoice(event,input.eventVersion,input.command,input.goalIds??null,context);
  let next=c;

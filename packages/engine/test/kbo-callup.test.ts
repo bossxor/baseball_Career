@@ -4,7 +4,7 @@ import {abilityKeys} from '@playball/rules';
 import {confirmKboPreseasonPlan} from '../src/kbo-preseason.js';
 import {confirmKboOpeningRoster} from '../src/kbo-opening-roster.js';
 import {confirmKboSeasonSchedule} from '../src/kbo-schedule.js';
-import {startKboRegularSeason} from '../src/kbo-progress.js';
+import {advanceKboCareer,startKboRegularSeason} from '../src/kbo-progress.js';
 import type {KboSeasonProgress} from '../src/kbo-progress.js';
 import {reviewKboCallup,resolveKboCallup,reviewKboAiRosters} from '../src/kbo-callup.js';
 import {protagonistLeague} from '../src/kbo-windows.js';
@@ -69,4 +69,27 @@ test('AI clubs promote a stronger futures player every 20 futures games without 
  assert.equal(mine.firstTeam.includes(after.protagonistKey),mineBefore.firstTeam.includes(before.protagonistKey));
  assert.equal(reviewKboAiRosters(after),null);
  assert.doesNotThrow(()=>createKboCompetitionGameWorld(after.world,'KBO',after.protagonistKey));
+});
+
+
+test('regular advance keeps its next-game cursor after AI and nonblocking call-up reviews',()=>{
+ const source=futures(19,10_000),first=progress(source).nextWorldDay;
+ const schedule=source.competitionSchedule!;
+ source.competitionSchedule={...schedule,leagues:{
+  KBO:schedule.leagues.KBO.filter(g=>g.worldDay!==first+1),
+  FUTURES:schedule.leagues.FUTURES.filter(g=>g.worldDay!==first+1),
+ }};
+ let c=source;
+ for(let i=0;i<50&&c.days!.days.length<2;i++){
+  const before=c;
+  const result=advanceKboCareer(c,c.revision,7);
+  c=result.career;
+  assert.notEqual(result.stopReason,'MAJOR_EVENT');
+  assert.equal(c.revision,before.revision+1);
+  assert.equal(progress(c).nextWorldDay,first+c.days!.days.length);
+ }
+ assert.ok(c.days!.days.length>=2);
+ assert.ok(c.aiRosterReviews!.includes(JSON.stringify([c.world.seasonKey,c.protagonistClubId,20])));
+ assert.equal(c.callupReviews!.find(r=>r.teamGames===20)?.outcome,'BELOW');
+ assert.equal(source.days!.days.length,0);
 });

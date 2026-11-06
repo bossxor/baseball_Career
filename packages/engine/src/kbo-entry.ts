@@ -4,7 +4,7 @@ import {refreshCareerSeasonGoals} from './season-goals.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCareerRevision} from './high-school-career.js';
 import {assertCareerKboSigning} from './career-kbo.js';
-import {schoolYearEndBasis,schoolYearEndRepertoire} from './college-entry.js';
+import {matchesSchoolYearEndBasis,schoolYearEndBasis,schoolYearEndRepertoire} from './college-entry.js';
 import {applyCareerSeasonTraining} from './high-school-training.js';
 import {validateSeasonGrowthLedger,finalizeSeasonGrowth} from './growth-ledger.js';
 import {closeSeasonHealth} from './health.js';
@@ -18,7 +18,7 @@ const yearEndKey=(source:HighSchoolCareer,contractKey:string)=>JSON.stringify(['
 /** Full-career metadata seal, not an activation or a second draft/signing. */
 export function assertKboAmateurYearEnd(source:HighSchoolCareer):KboAmateurYearEnd {
  const ready=source.kboYearEnd,r=source.kboRecruitment,signing=r?.program.signing,phase=source.phaseContext;
- if(!ready || !r || !signing || r.program.decision!=='SIGNED' || phase.phase!=='NEXT_SEASON_READY' || phase.route!=='KBO' || phase.contractKey!==ready.contractKey || ready.contractKey!==signing.contract.contractKey || ready.signingReceiptKey!==signing.receiptKey || ready.recruitmentSourceBasis!==r.sourceBasis || ready.receiptKey!==yearEndKey(source,ready.contractKey) || ready.sourceRevision!==source.revision || ready.sourceBasis!==schoolYearEndBasis(source) || !source.seasonGrowth?.finalized || !source.health.closedSeasons.includes(source.world.seasonKey))throw new RangeError('STALE_KBO_AMATEUR_YEAR_END');
+ if(!ready || !r || !signing || r.program.decision!=='SIGNED' || phase.phase!=='NEXT_SEASON_READY' || phase.route!=='KBO' || phase.contractKey!==ready.contractKey || ready.contractKey!==signing.contract.contractKey || ready.signingReceiptKey!==signing.receiptKey || ready.recruitmentSourceBasis!==r.sourceBasis || ready.receiptKey!==yearEndKey(source,ready.contractKey) || ready.sourceRevision!==source.revision || !matchesSchoolYearEndBasis(source,ready.sourceBasis) || !source.seasonGrowth?.finalized || !source.health.closedSeasons.includes(source.world.seasonKey))throw new RangeError('STALE_KBO_AMATEUR_YEAR_END');
  return ready;
 }
 /** Explicit closure after a signed domestic contract. Age, pro roster and salary reservations do not advance here. */

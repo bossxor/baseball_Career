@@ -153,11 +153,16 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
   settleKboServicePayrollDay(career,day);Object.assign(career,settleKboPersonalPayrollDay(career,day));settleKboReturnedTeamReunions(career,day);settleKboAiTeamReunions(career,day);settleKboNpcMilitaryPayrollDay(career,day);settleKboReturnConditionDay(career,day);settleKboOpponentReunions(career,day);settleKboArmyTeamReunions(career,day);
   career.traits=refreshCareerTraits(career,day,LEAGUES);Object.assign(career,refreshProCareerAdvice(career,day));Object.assign(career,refreshProCareerAwards(career,day,{[career.protagonistKey]:String(Number(career.amateurHistory.world.seasonKey)+1)}));
   // 14 order: call-up/demotion review before style/training windows.
-  const aiMoves=progress.nextWorldDay>last?null:reviewKboAiRosters(career);if(aiMoves)Object.assign(career,aiMoves);
+  // Review snapshots clone the phase. Keep the worker's live cursor unless an event takes ownership.
+  const aiMoves=progress.nextWorldDay>last?null:reviewKboAiRosters(career);if(aiMoves)Object.assign(career,aiMoves,{phaseContext:progress});
   if(serviceReturn)return finish('MAJOR_EVENT');
   if(progress.nextWorldDay<=last && contractDecisionRequired(career))return finish('CONTRACT_DECISION_REQUIRED');
   const callup=progress.nextWorldDay>last?null:reviewKboCallup(career,day,progress);
-  if(callup){Object.assign(career,callup);if(career.phaseContext.phase==='EVENT_DECISION')return finish('MAJOR_EVENT');}
+  if(callup){
+   Object.assign(career,callup);
+   if(career.phaseContext.phase==='EVENT_DECISION')return finish('MAJOR_EVENT');
+   career.phaseContext=progress;
+  }
   const windowEvent=progress.nextWorldDay>last?null:raiseKboWindowEvent(career,day,progress);
   if(windowEvent){Object.assign(career,windowEvent);return finish('MAJOR_EVENT');}
   if(interruptHidden(day)||(career.advice?.notices.length??0)>initialAdviceNotices)return finish('MAJOR_EVENT');

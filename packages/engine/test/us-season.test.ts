@@ -3,7 +3,7 @@ import {createCareerTraitLedger,refreshCareerTraits,settleStarterSeasonTraits} f
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {preparedUsCareer} from './us-fixtures.js';
-import {startUsRegularSeason,advanceUsCareer,usSeasonView,usCompetitionGameWorld,US_LEVELS} from '../src/us-season.js';
+import {startUsRegularSeason,advanceUsCareer,advanceUsCareerRun,usSeasonView,usCompetitionGameWorld,US_LEVELS} from '../src/us-season.js';
 import {usCareerView} from '../src/us-career-entry.js';
 import {canonicalJson} from '../src/game.js';
 import {prepareUsRosters} from '../src/us-roster-repair.js';
@@ -32,4 +32,17 @@ test('US exhausted organization uses minimum low-ability replacements, reserves 
 });
 test('US growth refuses unfinished seasons, and payroll mutations cannot mint future or duplicate salary',()=>{
  const c=startUsRegularSeason(preparedUsCareer(),preparedUsCareer().revision);assert.throws(()=>settleUsSeasonGrowth(c,c.revision),/NOT_CLOSED/);auditUsClosedDays(c);const bad=structuredClone(c);bad.season!.paidUsd=1;bad.season!.payroll=[{day:bad.season!.firstDay,amount:1,entryKey:'fake'}];assert.throws(()=>advanceUsCareer(bad,bad.revision),/PAYROLL|SEASON/);
+});
+
+
+test('batch continuation obeys the caller budget and resumes from the exact first chunk',()=>{
+ const source=preparedUsCareer(),started=startUsRegularSeason(source,source.revision);
+ const first=advanceUsCareer(started,started.revision,7);
+ let checks=0;
+ const batch=advanceUsCareerRun(started,started.revision,30,()=>{checks++;return false;});
+ assert.equal(checks,1);
+ assert.equal(batch.stopReason,first.stopReason);
+ assert.equal(batch.daysClosed,first.daysClosed);
+ assert.deepEqual(batch.career,first.career);
+ assert.deepEqual(advanceUsCareer(batch.career,batch.career.revision),advanceUsCareer(first.career,first.career.revision));
 });

@@ -4,7 +4,7 @@ import {assertKboCareerRevision} from './kbo-career-version.js';
 import {assertUsCareerRevision} from './us-career-entry.js';
 import {assertKboAmateurYearEnd} from './kbo-entry.js';
 import {assertUsAmateurYearEnd} from './us-entry.js';
-import {schoolYearEndBasis} from './college-entry.js';
+import {matchesSchoolYearEndBasis,schoolYearEndBasis} from './college-entry.js';
 import {kboPostingFeeWon} from './kbo-posting.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import type {KboCareer} from './kbo-career-entry.js';
@@ -154,7 +154,7 @@ export function resolveCareerAchievementEvent<T extends AchievementCareer>(c:T,r
  if(event.seasonKey!==seasonKey||fields.worldSeasonId!==seasonKey||event.occurredWorldDay!==unlock.evidence.worldDay||event.resume.phase!=='SEASON_REVIEW'||event.resume.competitionKey!==unlock.evidence.leagueKey||event.resume.registrationKey!==null||event.resume.sourceRevision>c.revision)throw new RangeError('ACHIEVEMENT_EVENT_SOURCE_CHANGED');
  if(!('protagonistKey'in c)){
   if(c.kboYearEnd)assertKboAmateurYearEnd(c);if(c.usYearEnd)assertUsAmateurYearEnd(c);
-  if(c.collegeYearEnd&&(c.collegeYearEnd.sourceRevision!==c.revision||c.collegeYearEnd.sourceBasis!==schoolYearEndBasis(c)))throw new RangeError('STALE_ACHIEVEMENT_NOTICE_YEAR_END');
+  if(c.collegeYearEnd&&(c.collegeYearEnd.sourceRevision!==c.revision||!matchesSchoolYearEndBasis(c,c.collegeYearEnd.sourceBasis)))throw new RangeError('STALE_ACHIEVEMENT_NOTICE_YEAR_END');
  }
  const selected=resolveEventChoice(event,input.eventVersion,input.command,null,{worldKey:c.world.worldKey,seasonKey:event.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:['OPEN_ACHIEVEMENTS']});
  const career:T={...c,revision:revision+1,achievements:{...c.achievements!,notices:c.achievements!.notices.map(n=>n.eventKey===event.eventKey?selected.event:n)}};

@@ -8,13 +8,14 @@ import type {KboRosterWorld} from './kbo-world.js';
 import {prepareKboDraft,kboDraftView,resolveKboDraft,decideKboDraft,assertKboDraft} from './kbo-draft.js';
 import type {KboDraftProgram} from './kbo-draft.js';
 import {canonicalJson} from './game.js';
+import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 import {completeBlockingEvent} from './events.js';
 import {collegeEarlyRouteView,attachCollegeUnsignedReturn} from './college-route.js';
 import {refreshCareerAchievements} from './career-achievements.js';
 import {careerPreparationDraftScore} from './career-preparation.js';
 import {refreshCareerRouteNotices} from './career-route-notices.js';
 export interface CareerKboRecruitment {schemaVersion:1;world:KboRosterWorld;program:KboDraftProgram;sourceBasis:string}
-function basis(source:HighSchoolCareer){return canonicalJson({world:source.world,records:source.records,health:source.health,days:source.days,development:(source.development??null),seasonGrowth:(source.seasonGrowth??null),graduation:(source.graduation??null),collegeAdmission:(source.collegeAdmission??null),collegeGraduation:(source.collegeGraduation??null)});}
+function basis(source:HighSchoolCareer){return canonicalSeal({world:source.world,records:source.records,health:source.health,days:source.days,development:(source.development??null),seasonGrowth:(source.seasonGrowth??null),graduation:(source.graduation??null),collegeAdmission:(source.collegeAdmission??null),collegeGraduation:(source.collegeGraduation??null)});}
 function route(source:HighSchoolCareer):number {
  if(source.phaseContext.phase!=='CAREER_ROUTE')throw new RangeError('INVALID_CAREER_PHASE');
  if(source.world.leagueKey==='INDEPENDENT')return careerPreparationDraftScore(source);
@@ -24,7 +25,7 @@ function route(source:HighSchoolCareer):number {
 }
 function current(source:HighSchoolCareer){
  const seal=source.kboYearEnd?assertKboAmateurYearEnd(source):null;
- const r=source.kboRecruitment;if(!r || r.schemaVersion!==1 || r.sourceBasis!==(seal?.recruitmentSourceBasis??basis(source)) || r.world.worldKey!==source.world.worldKey || r.world.seed!==source.world.seed || r.world.difficulty!==source.difficulty || r.world.seasonKey!==String(source.world.calendar!.year+1) || canonicalJson(r.program.input.player)!==canonicalJson(source.world.players[source.world.protagonistKey]))throw new RangeError('STALE_CAREER_KBO_RECRUITMENT');
+ const r=source.kboRecruitment;if(!r || r.schemaVersion!==1 || (seal?r.sourceBasis!==seal.recruitmentSourceBasis:!matchesCanonicalSeal(r.sourceBasis,basis(source))) || r.world.worldKey!==source.world.worldKey || r.world.seed!==source.world.seed || r.world.difficulty!==source.difficulty || r.world.seasonKey!==String(source.world.calendar!.year+1) || canonicalJson(r.program.input.player)!==canonicalJson(source.world.players[source.world.protagonistKey]))throw new RangeError('STALE_CAREER_KBO_RECRUITMENT');
  if(r.program.assessmentKey!==JSON.stringify(['amateur-kbo',source.world.worldKey,source.world.seasonKey,source.world.protagonistKey]) || r.program.input.baseScore!==(source.world.leagueKey==='INDEPENDENT'?careerPreparationDraftScore(source):source.world.leagueKey==='COLLEGE'?collegeCareerDraftEvaluation(source).draftBaseScore:highSchoolCareerDraftScore(source)))throw new RangeError('STALE_CAREER_KBO_EVALUATION');
  assertKboDraft(r.world,r.program);return r;
 }

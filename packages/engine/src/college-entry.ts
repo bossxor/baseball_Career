@@ -7,7 +7,7 @@ import type {HighSchoolCareer} from './high-school-career.js';
 import {assertHighSchoolCareerRevision} from './high-school-career.js';
 import {assertPendingCollegeAdmission} from './high-school-route.js';
 import {applyCareerSeasonTraining} from './high-school-training.js';
-import {canonicalJson} from './game.js';
+import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 import {validateSeasonGrowthLedger,finalizeSeasonGrowth,createSeasonGrowthLedger} from './growth-ledger.js';
 import type {SeasonGrowthLedger} from './growth-ledger.js';
 import {closeSeasonHealth} from './health.js';
@@ -22,7 +22,10 @@ import {refreshCareerRouteNotices} from './career-route-notices.js';
 export interface CollegeYearEnd {receiptKey:string;admissionKey:string;sourceRevision:number;sourceBasis:string}
 export type SchoolSeasonArchive=Pick<HighSchoolCareer,'world'|'health'|'days'|'emergency'|'development'|'planHistory'|'collegeCup'|'collegeResult'|'collegeNpcGrowth'|'collegeGraduation'> & {seasonGrowth:SeasonGrowthLedger;yearEndReceiptKey:string};
 export function schoolYearEndBasis(source:HighSchoolCareer):string {
- const snapshot={...source};delete snapshot.collegeYearEnd;delete snapshot.kboYearEnd;delete snapshot.usYearEnd;return canonicalJson(snapshot);
+ const snapshot={...source};delete snapshot.collegeYearEnd;delete snapshot.kboYearEnd;delete snapshot.usYearEnd;return canonicalSeal(snapshot);
+}
+export function matchesSchoolYearEndBasis(source:HighSchoolCareer,stored:string):boolean {
+ return matchesCanonicalSeal(stored,schoolYearEndBasis(source));
 }
 export function schoolYearEndRepertoire(source:{world:Pick<HighSchoolCareer['world'],'players'|'repertoires'|'seasonKey'>},playerKey:string):Repertoire|undefined {
  const player=source.world.players[playerKey]!;
@@ -56,7 +59,7 @@ export function closeHighSchoolSeasonForCollege(source:HighSchoolCareer,expected
 export function startAdmittedCollegeSeason(source:HighSchoolCareer,expectedRevision:number):HighSchoolCareer {
  assertHighSchoolCareerRevision(source,expectedRevision);
  const admission=source.collegeAdmission,ready=source.collegeYearEnd;
- if(source.phaseContext.phase!=='NEXT_SEASON_READY' || !admission || admission.status!=='ADMITTED' || !ready || ready.receiptKey!==JSON.stringify(['college-year-end',admission.admissionKey,source.world.seasonKey]) || ready.admissionKey!==admission.admissionKey || ready.sourceRevision!==source.revision || ready.sourceBasis!==schoolYearEndBasis(source) || !source.seasonGrowth?.finalized || !source.health.closedSeasons.includes(source.world.seasonKey) || source.events.some(e=>e.status==='OPEN'))throw new RangeError('COLLEGE_YEAR_END_REQUIRED');
+ if(source.phaseContext.phase!=='NEXT_SEASON_READY' || !admission || admission.status!=='ADMITTED' || !ready || ready.receiptKey!==JSON.stringify(['college-year-end',admission.admissionKey,source.world.seasonKey]) || ready.admissionKey!==admission.admissionKey || ready.sourceRevision!==source.revision || !matchesSchoolYearEndBasis(source,ready.sourceBasis) || !source.seasonGrowth?.finalized || !source.health.closedSeasons.includes(source.world.seasonKey) || source.events.some(e=>e.status==='OPEN'))throw new RangeError('COLLEGE_YEAR_END_REQUIRED');
  validateSeasonGrowthLedger(source.seasonGrowth);
  const key=source.world.protagonistKey,player={...structuredClone(source.world.players[key]!),age:source.world.players[key]!.age+1,fatigue:0};
  const previousBook=schoolYearEndRepertoire(source,source.world.protagonistKey),seasonKey=String(admission.entryYear);

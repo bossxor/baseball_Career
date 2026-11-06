@@ -3,7 +3,7 @@ import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {refreshCareerSeasonGoals,refreshCareerPreseasonGoalSelection} from './season-goals.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import {assertCollegeCareerRevision} from './high-school-career.js';
-import {schoolYearEndBasis,schoolYearEndRepertoire,archiveSchoolSeason} from './college-entry.js';
+import {matchesSchoolYearEndBasis,schoolYearEndBasis,schoolYearEndRepertoire,archiveSchoolSeason} from './college-entry.js';
 import {assertCollegeWorld} from './college-world.js';
 import type {CollegeWorld} from './college-world.js';
 import {collegeCupSchedule} from './college-cup.js';
@@ -86,7 +86,7 @@ export function nextCollegeWorld(source:HighSchoolCareer):CollegeWorld {
 export function startNextCollegeSeason(source:HighSchoolCareer,expectedRevision:number):HighSchoolCareer {
  assertCollegeCareerRevision(source,expectedRevision);assertCollegeYearResult(source);
  const ready=source.collegeYearEnd,admission=source.collegeAdmission!;
- if(source.phaseContext.phase!=='NEXT_SEASON_READY' || source.phaseContext.route!=='COLLEGE' || source.phaseContext.admissionKey!==admission.admissionKey || admission.academicYear===4 || !ready || ready.receiptKey!==receiptKey(source) || ready.admissionKey!==admission.admissionKey || ready.sourceRevision!==source.revision || ready.sourceBasis!==schoolYearEndBasis(source) || !source.seasonGrowth?.finalized || !source.health.closedSeasons.includes(source.world.seasonKey) || !source.collegeNpcGrowth || source.events.some(e=>e.status==='OPEN'))throw new RangeError('COLLEGE_YEAR_END_REQUIRED');
+ if(source.phaseContext.phase!=='NEXT_SEASON_READY' || source.phaseContext.route!=='COLLEGE' || source.phaseContext.admissionKey!==admission.admissionKey || admission.academicYear===4 || !ready || ready.receiptKey!==receiptKey(source) || ready.admissionKey!==admission.admissionKey || ready.sourceRevision!==source.revision || !matchesSchoolYearEndBasis(source,ready.sourceBasis) || !source.seasonGrowth?.finalized || !source.health.closedSeasons.includes(source.world.seasonKey) || !source.collegeNpcGrowth || source.events.some(e=>e.status==='OPEN'))throw new RangeError('COLLEGE_YEAR_END_REQUIRED');
  validateSeasonGrowthLedger(source.seasonGrowth);
  const world=nextCollegeWorld(source),career=structuredClone(source),archive=archiveSchoolSeason(career,ready.receiptKey),player=world.players[world.protagonistKey]!;
  career.previousSeasons=[...(career.previousSeasons??[]),archive];career.world=world;

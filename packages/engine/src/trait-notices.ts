@@ -1,5 +1,5 @@
 import {assertKboAmateurYearEnd} from './kbo-entry.js';
-import {schoolYearEndBasis} from './college-entry.js';
+import {matchesSchoolYearEndBasis,schoolYearEndBasis} from './college-entry.js';
 import {createWorldEvent,resolveEventChoice,eventDefinition} from './events.js';
 import type {HighSchoolCareer} from './high-school-career.js';
 import type {TraitUnlockReceipt} from './high-school-traits.js';
@@ -41,7 +41,7 @@ export function unreadTraitSummary(source:HighSchoolCareer):readonly TraitUnlock
 export function acknowledgeTraitSummary(source:HighSchoolCareer,expectedRevision:number):HighSchoolCareer {
  assertRevision(source,expectedRevision);
  if(source.kboYearEnd)assertKboAmateurYearEnd(source);
- if(source.collegeYearEnd && (source.collegeYearEnd.sourceRevision!==source.revision || source.collegeYearEnd.sourceBasis!==schoolYearEndBasis(source)))throw new RangeError('STALE_TRAIT_SUMMARY_YEAR_END');
+ if(source.collegeYearEnd && (source.collegeYearEnd.sourceRevision!==source.revision || !matchesSchoolYearEndBasis(source,source.collegeYearEnd.sourceBasis)))throw new RangeError('STALE_TRAIT_SUMMARY_YEAR_END');
  const career=structuredClone(source),length=career.traits?.unlocks.length??0;
  if(!career.traits || (career.traits.summaryCursor??0)===length)return career;
  career.traits.summaryCursor=length;career.revision++;

@@ -4,7 +4,7 @@ import {readFileSync, readdirSync, writeFileSync, mkdirSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {resolve, relative} from 'node:path';
 import {gzipSync} from 'node:zlib';
-import {canonicalJson} from '../packages/engine/src/game.ts';
+import {canonicalSha256 as hash} from '../packages/engine/src/canonical-seal.ts';
 import {createHighSchoolWorld, assertHighSchoolWorld} from '../packages/engine/src/high-school-world.ts';
 import {createHighSchoolCareer, confirmCareerPlayer, resolveCareerFocusEvent, confirmCareerPreseason} from '../packages/engine/src/high-school-career.ts';
 import {advanceHighSchoolCareer, resolveCareerWindowEvent} from '../packages/engine/src/high-school-progress.ts';
@@ -25,7 +25,6 @@ import {nativePaths} from './m2-native-drivers.mjs';
 import {PATH_GAPS,PATH_REQUIREMENTS,controlledSchoolPaths,collegeServicePath,agentPath,pitcherLearningPath,nationalAppearancePath,postingPaths,retryExhaustionPath,injuryTrainingPath,returnedUsContractPath} from './m2-path-scenarios.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
-const hash=value=>createHash('sha256').update(canonicalJson(value)).digest('hex');
 const json=value=>JSON.parse(JSON.stringify(value));
 let activeTrace;
 const completedTraces=[];

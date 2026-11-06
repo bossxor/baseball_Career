@@ -6,6 +6,12 @@ Cost unit: measured single-pass wall time on the shared machine — HS216 season
 
 Evidence and the native-run status are in the section "Runs" at the bottom.
 
+## TF 후속
+
+KBO 진행 커서 오류를 분리 재현해 수정했다. 통제 고교 접두 후 공식 KBO/FUTURES 201경기를 시뮬레이션하고 59~90일을 닫았다. 88회 진행 중 AI 로스터 검토 10건과 67일 이후 JSON 재개를 확인했다. P15 전체 경로 증거는 아직 없다.
+
+P05의 대학 진로·졸업·KBO 지명·아마추어 연말 검증용 상태 사본은 분할 SHA-256으로 교체했다. 기존 원문 봉인도 검증할 수 있다. 통제 대학 학년에서 졸업·계약·입단은 확인했다. 실제 대학 4년 전체, 500MB 이상 상태 저장, 새 코드에서의 24경로 재증명은 별도다. 아래 표는 당시 런 기록이다.
+
 ## Ranked gap table
 
 | Rank | Path | Flow | Native now? | Blocking engine gap (file / function) | Cost |

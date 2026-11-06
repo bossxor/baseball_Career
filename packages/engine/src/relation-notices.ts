@@ -12,7 +12,7 @@ import {assertCareerRevision} from './high-school-career.js';
 import {createWorldEvent,enqueueWorldEvent,eventDefinition,resolveEventChoice} from './events.js';
 import type {EventInstance} from './events.js';
 import {canonicalJson} from './game.js';
-import {schoolYearEndBasis} from './college-entry.js';
+import {matchesSchoolYearEndBasis,schoolYearEndBasis} from './college-entry.js';
 import {careerRelationshipListView} from './relationship-history.js';
 
 export interface RelationFormationNoticeSource {
@@ -85,7 +85,7 @@ export function resolveCareerRelationNotice(source:HighSchoolCareer,expectedRevi
  assertCareerRevision(source,expectedRevision);
  if(source.kboYearEnd)assertKboAmateurYearEnd(source);
  if(source.usYearEnd)assertUsAmateurYearEnd(source);
- if(source.collegeYearEnd && (source.collegeYearEnd.sourceRevision!==source.revision || source.collegeYearEnd.sourceBasis!==schoolYearEndBasis(source)))throw new RangeError('STALE_RELATION_NOTICE_YEAR_END');
+ if(source.collegeYearEnd && (source.collegeYearEnd.sourceRevision!==source.revision || !matchesSchoolYearEndBasis(source,source.collegeYearEnd.sourceBasis)))throw new RangeError('STALE_RELATION_NOTICE_YEAR_END');
  const selected=prepareRelationNoticeRead(source,input);
  const career=structuredClone(source);career.relationNotices=selected.notices;career.revision++;
  // The full-career seal includes notice metadata. Verify it first, then carry that seal across this read-state-only commit.

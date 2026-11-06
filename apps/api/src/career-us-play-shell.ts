@@ -40,9 +40,9 @@ function majorContractView(c:engine.UsCareer,transition:ReturnType<typeof engine
 /** One request chains the engine's own day/chunk advances: SEASON until the engine stops for anything but its internal limits
  * (mandatory event, injury, roster decision, season review); MONTH until 30 world days are closed or an earlier stop. */
 function advanceUsSpan(c:engine.UsCareer,revision:number,span:'SEASON'|'MONTH'){
-  const until=spanDeadline();let r=engine.advanceUsCareer(c,revision,7),days=r.daysClosed;
-  for(let i=0;i<200_000&&(r.stopReason==='CHUNK_LIMIT'||r.stopReason==='DAY_CLOSED')&&r.career.phaseContext.phase==='SEASON_PROGRESS'&&Date.now()<until&&(span==='SEASON'||days<30);i++){r=engine.advanceUsCareer(r.career,r.career.revision,span==='MONTH'?Math.min(7,30-days):7);days+=r.daysClosed;}
-  return {...r,monthDone:span==='MONTH'&&days>=30};
+ const until=spanDeadline();
+ const result=engine.advanceUsCareerRun(c,revision,span==='MONTH'?30:Number.MAX_SAFE_INTEGER,()=>Date.now()<until);
+ return {...result,monthDone:span==='MONTH'&&result.daysClosed>=30};
 }
 export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand {
  const name=command.type.slice('CAREER_US_PLAY_'.length),allowed=fields.get(name),raw=command.payload;
