@@ -1,6 +1,7 @@
 import * as engine from '@playball/engine';
 import {KBO_CLUBS,ABILITY_LABELS,abilityKeys} from '@playball/rules';
 import type {SaveState} from './engine-command.js';
+import {kboPlayFlow} from './career-kbo-play-shell.js';
 import {usFlow,isUs} from './career-us-flow.js';
 import {collegeApplies,collegeFlow,collegeRouteCommands,isCollege} from './career-college-shell.js';
 
@@ -20,7 +21,7 @@ const UNSUPPORTED='이 단계는 아직 웹에서 지원하지 않습니다. 저
 /** True when the flow screen has something to show for this career (the home screen links to it). */
 export function flowApplies(state:SaveState):boolean {
  const c=state.career as Career|undefined;if(!c||typeof c!=='object')return false;
- if(isKbo(c))return Boolean(c.retryPro)||c.phaseContext.phase==='SEASON_REVIEW';
+ if(isKbo(c))return true;
  if(isUs(c))return true;
  if(isCollege(c))return true;
  return ['SEASON_REVIEW','CAREER_ROUTE','NEXT_SEASON_READY'].includes(c.phaseContext.phase)||(c.phaseContext.phase==='EVENT_DECISION'&&Boolean(open(c,'E04')))||Boolean(c.retryExit||c.amateurRetirement);
@@ -80,6 +81,7 @@ function schoolFlow(c:engine.HighSchoolCareer):FlowScreen {
 }
 
 function kboFlow(c:engine.KboCareer):FlowScreen {
+ const play=kboPlayFlow(c);if(play)return play;
  const p=c.world.players[c.protagonistKey]??c.preparationSeason?.world.players[c.protagonistKey],lines:{label:string;value:string}[]=[];
  if(p)lines.push({label:'선수',value:`${p.name} · ${p.age}세`});
  const out=(title:string,commands:FlowCommand[],notice:string|null=null):FlowScreen=>({screenId:'CAREER_FLOW',title,lines,commands,notice,careerRevision:c.revision});

@@ -1,0 +1,10 @@
+✔ KBO pro season: preseason chain → start → native games are advanced and shown (13737.715ms)
+✔ KBO pro season: regular season end → postseason → season close, all from served commands (35453.3211ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 54833.1311
