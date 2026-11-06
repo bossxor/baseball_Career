@@ -1,0 +1,27 @@
+{"nativeArchivePinReplay":true,"sha256":"4193d7491447f3b4944d457d13d8ab0951329af8d0e095c212bc4f03958bed64","baselineMs":12548.179699999993,"pinnedMs":10450.97510000001,"discardedReplayCommands":1}
+{"nativeServiceProgress":true,"year":1,"step":100,"day":34,"recordRevision":53373,"sourceSha256":"270a9ac16d774ce29be3f2bcb2917698d2f96b9dfd8ffb626a4d87bf40dd0b7e"}
+{"nativeServiceProgress":true,"year":1,"step":200,"day":38,"recordRevision":53602,"sourceSha256":"270a9ac16d774ce29be3f2bcb2917698d2f96b9dfd8ffb626a4d87bf40dd0b7e"}
+✖ M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after two native service years; open service blocks it (1253941.3506ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1256274.0631
+
+✖ failing tests:
+
+test at test\us-amateur-return-career.test.ts:1:15144
+✖ M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after two native service years; open service blocks it (1253941.3506ms)
+  Error: NATIVE_RETURN_CACHE_SOURCE_CHANGED
+      at assertNativeSourceUnchanged (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\native-return-cache.ts:31:133)
+      at save (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-native-service-fixture.ts:26:19)
+      at generate (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-native-service-fixture.ts:33:428)
+      at nativeServiceUsReturn (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-native-service-fixture.ts:37:54)
+      at TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\packages\engine\test\us-amateur-return-career.test.ts:131:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1382:25)
+      at Test.start (node:internal/test_runner/test:1242:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
