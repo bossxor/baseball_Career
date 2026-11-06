@@ -43,7 +43,7 @@ Evidence and the native-run status are in the section "Runs" at the bottom.
 | Run | Command | Result | Evidence |
 |---|---|---|---|
 | A | `node --import tsx scripts/verify-m2-closure.mjs <out.json> --scenarios=nativePaths --native=P01,P07,P12,P03 --tolerate-source-drift` (`--max-old-space-size=6144`, single process, ~63 min wall on a shared machine) | exit 0. **P01, P03, P07, P12 = ENGINE_NATIVE_PATH_PROVEN**; the other 20 stay FULL_PATH_NOT_PROVEN with a reason. 109/110/138/212 commands, each executed twice (JSON replay + source immutability). | `evidence/M2-20261106-closure-native-a.{json,log,exitcode.txt}` |
-| B | same with `--native=P04` | P04 stays unproven even if the variant passes (see NEXT-SESSION for the outcome) | `evidence/M2-20261106-closure-native-b.*` |
+| B | same with `--native=P04` | exit 0 (~60 min). `P04-native-decline-variant`, 323 commands: HS216 → two college years → E73 early draft → native pick (round 8) → DECLINE → E74 return → year 3. **P04 remains FULL_PATH_NOT_PROVEN** (undrafted branch not reached). | `evidence/M2-20261106-closure-native-b.*` |
 
 ### Caveats the proof does not cover
 - `--tolerate-source-drift`: other workers edited engine files during the run. All modules were loaded before the start manifest was hashed, so the executed code is the start manifest; the report records `sourceDrift.changedFiles` (us-*/test scratch files, none on the executed native paths). Rerun without the flag on a quiet tree before citing for release.

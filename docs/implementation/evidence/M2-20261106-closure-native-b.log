@@ -1,0 +1,41 @@
+M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit
+M2 closure: nativePaths endpoints verified
+{
+  "status": "PARTIAL_RUNTIME_EVIDENCE_NOT_M2_COMPLETION",
+  "paths": [
+    "P01:FULL_PATH_NOT_PROVEN",
+    "P02:FULL_PATH_NOT_PROVEN",
+    "P03:FULL_PATH_NOT_PROVEN",
+    "P04:FULL_PATH_NOT_PROVEN",
+    "P05:FULL_PATH_NOT_PROVEN",
+    "P06:FULL_PATH_NOT_PROVEN",
+    "P07:FULL_PATH_NOT_PROVEN",
+    "P08:FULL_PATH_NOT_PROVEN",
+    "P09:FULL_PATH_NOT_PROVEN",
+    "P10:FULL_PATH_NOT_PROVEN",
+    "P11:FULL_PATH_NOT_PROVEN",
+    "P12:FULL_PATH_NOT_PROVEN",
+    "P13:FULL_PATH_NOT_PROVEN",
+    "P14:FULL_PATH_NOT_PROVEN",
+    "P15:FULL_PATH_NOT_PROVEN",
+    "P16:FULL_PATH_NOT_PROVEN",
+    "P17:FULL_PATH_NOT_PROVEN",
+    "P18:FULL_PATH_NOT_PROVEN",
+    "P19:FULL_PATH_NOT_PROVEN",
+    "P20:FULL_PATH_NOT_PROVEN",
+    "P21:FULL_PATH_NOT_PROVEN",
+    "P22:FULL_PATH_NOT_PROVEN",
+    "P23:FULL_PATH_NOT_PROVEN",
+    "P24:FULL_PATH_NOT_PROVEN"
+  ],
+  "sourceManifestHash": "12daefd1442fe876a8246016df32566d49b6ad648a30ed8b85596fbef1624d75",
+  "slices": [
+    {
+      "id": "P04-native-decline-variant",
+      "commandChainHash": "aef597491ff96ffe83bc1e26b8504a554554268938e01b22a373d6a2e021ee5b",
+      "finalStateHash": "25b395d62eb0625bd38f32cf8c09fd3395dbe2e1e2ba00b797f9a4528382f2d3",
+      "commands": 323
+    }
+  ],
+  "output": "C:\\Users\\N-052\\.codex\\visualizations\\2026\\10\\16\\01a142f8-66ea-7782-ba3e-b52df94ae1be\\baseball-career-m2\\docs\\implementation\\evidence\\M2-20261106-closure-native-b.json"
+}
