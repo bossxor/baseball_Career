@@ -8,6 +8,7 @@ import {assertCollegeNationalState} from './college-national.js';
 import {assertKboDraft} from './kbo-draft.js';
 import {assertUsDirect} from './us-direct.js';
 import {canonicalJson} from './game.js';
+import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 import {createWorldEvent,eventDefinition,completeBlockingEvent,cancelInvalidEvent,validateEvent,resolveEventChoice} from './events.js';
 import type {EventInstance} from './events.js';
 
@@ -17,7 +18,7 @@ export interface AmateurRetirement {
 }
 const same=(a:unknown,b:unknown)=>canonicalJson(a)===canonicalJson(b);
 function basis(c:HighSchoolCareer){
- return canonicalJson({world:c.world,records:c.records,health:c.health,days:c.days,development:c.development??null,seasonGrowth:c.seasonGrowth??null,
+ return canonicalSeal({world:c.world,records:c.records,health:c.health,days:c.days,development:c.development??null,seasonGrowth:c.seasonGrowth??null,
   traits:c.traits?{...c.traits,summaryCursor:0}:null,relationships:c.relationships??null,styleUsedWindows:c.styleUsedWindows,planHistory:c.planHistory,
   graduation:c.graduation??null,collegeAdmission:c.collegeAdmission??null,collegeResult:c.collegeResult??null,collegeCup:c.collegeCup??null,
   collegeGraduation:c.collegeGraduation??null,collegeEarlyRoute:c.collegeEarlyRoute??null,collegeService:c.collegeService??null,national:c.national??null,
@@ -54,7 +55,7 @@ function checked(c:HighSchoolCareer,status:'PENDING'|'ARCHIVED'){
   ||r.taskKey!==JSON.stringify(['amateur-retirement',e.worldKey,e.seasonKey,c.world.protagonistKey,e.resume.sourceRevision])
   ||e.sourceSequence!==r.sourceEvents.length+1||e.resume.sourceRevision>c.revision)throw new RangeError('AMATEUR_RETIREMENT_SOURCE_CHANGED');
  const original={...c,phaseContext:r.resume,events:r.sourceEvents};
- if(basis(original)!==r.sourceBasis)throw new RangeError('AMATEUR_RETIREMENT_SOURCE_CHANGED');safeRoute(original);
+ if(!matchesCanonicalSeal(r.sourceBasis,basis(original)))throw new RangeError('AMATEUR_RETIREMENT_SOURCE_CHANGED');safeRoute(original);
  const prefix=status==='PENDING'?r.sourceEvents:r.sourceEvents.map(e=>e.status==='OPEN'?cancelInvalidEvent(e,e.version,'AMATEUR_RETIRED',context(e)):e);
  if(!same(c.events.slice(0,prefix.length),prefix))throw new RangeError('AMATEUR_RETIREMENT_SOURCE_CHANGED');
  if(status==='PENDING'&&(c.phaseContext.phase!=='EVENT_DECISION'||c.phaseContext.eventKey!==e.eventKey||e.status!=='OPEN'||c.events.length!==prefix.length+1))throw new RangeError('AMATEUR_RETIREMENT_NOT_PENDING');

@@ -5,6 +5,7 @@ import {assertCollegeCareerRevision} from './high-school-career.js';
 import type {ScheduledGame} from './schedule.js';
 import {leagueStandings} from './standings.js';
 import {canonicalJson} from './game.js';
+import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 import {closeHighSchoolDay,closeSchoolCompetitionDay} from './high-school-day.js';
 import {prepareSchoolCompetitionGame,advanceHighSchoolGame,commitSchoolCompetitionGame} from './high-school-game.js';
 import {highSchoolGameContext} from './high-school-progress.js';
@@ -23,7 +24,7 @@ export function collegeRegularStandings(source:HighSchoolCareer){
 function regularBasis(source:HighSchoolCareer):string {
  const games=source.world.schedule.map(g=>source.records.games[g.simulationKey]);
  if(source.world.schedule.length!==216 || games.some(g=>!g || g.scope.seasonKey!==source.world.seasonKey || g.scope.leagueKey!=='COLLEGE' || g.scope.phase!=='REGULAR'))throw new RangeError('COLLEGE_REGULAR_NOT_COMPLETE');
- return canonicalJson({schedule:source.world.schedule,games});
+ return canonicalSeal({schedule:source.world.schedule,games});
 }
 function julyFirst(source:HighSchoolCareer):number {
  assertSeasonCalendar(source.world.calendar!);
@@ -38,7 +39,7 @@ function winner(source:HighSchoolCareer,game:ScheduledGame):string|null {
 }
 /** Rebuild the bracket from frozen seeds and FINAL records; cancelled third finals are never scheduled. */
 function bracket(source:HighSchoolCareer):{schedule:ScheduledGame[];championKey:string|null} {
- const cup=source.collegeCup;if(!cup || cup.schemaVersion!==1 || !['ACTIVE','COMPLETE'].includes(cup.status) || cup.seasonKey!==source.world.seasonKey || cup.regularBasis!==regularBasis(source) || canonicalJson(cup.seeds)!==canonicalJson(collegeRegularStandings(source).slice(0,4).map(s=>s.teamKey)))throw new RangeError('CHANGED_COLLEGE_CUP_BASIS');
+ const cup=source.collegeCup;if(!cup || cup.schemaVersion!==1 || !['ACTIVE','COMPLETE'].includes(cup.status) || cup.seasonKey!==source.world.seasonKey || !matchesCanonicalSeal(cup.regularBasis,regularBasis(source)) || canonicalJson(cup.seeds)!==canonicalJson(collegeRegularStandings(source).slice(0,4).map(s=>s.teamKey)))throw new RangeError('CHANGED_COLLEGE_CUP_BASIS');
  const day=julyFirst(source),game=(round:number,slot:number,awayTeamKey:string,homeTeamKey:string,worldDay:number):ScheduledGame=>({simulationKey:JSON.stringify([source.world.seasonKey,'COLLEGE_CUP',round,slot]),leagueKey:'COLLEGE',seasonKey:source.world.seasonKey,round,worldDay,awayTeamKey,homeTeamKey,phase:'POSTSEASON'});
  const schedule=[game(0,0,cup.seeds[3]!,cup.seeds[0]!,day),game(0,1,cup.seeds[2]!,cup.seeds[1]!,day)],finalists=schedule.map(g=>winner(source,g));
  const result=(championKey:string|null)=>{

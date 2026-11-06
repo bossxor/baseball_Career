@@ -12,6 +12,7 @@ import {formRegisteredTeamTeammate} from './team-teammates.js';
 import {openRetryCareerEpisode,retryCareerRouteView,assertRetryCareerLedger} from './retry-career.js';
 import type {RetryRouteAuthority} from './retry-career.js';
 import {canonicalJson} from './game.js';
+import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 import {createWorldEvent,eventDefinition,completeBlockingEvent} from './events.js';
 import type {EventInstance} from './events.js';
 import {createSeasonCalendar,scheduleHighSchoolCalendar} from './season-calendar.js';
@@ -40,7 +41,7 @@ function owned(c:KboCareer):KboRetryPro {
  if(exit.status!=='OPEN'||exit.offers.length||r.receiptKey!==JSON.stringify(['kbo-uncontracted',exit.requestKey,exit.sourceBasis])||r.marketWorld.worldKey!==c.world.worldKey||Object.hasOwn(r.marketWorld.players,c.protagonistKey))throw new RangeError('KBO_RETRY_SOURCE_CHANGED');
  if(r.status!=='ACCEPTED'&&canonicalJson([c.world,c.protagonistClubId,c.registration,c.rights,c.military??null,c.national??null])!==canonicalJson([r.origin.world,r.origin.protagonistClubId,r.origin.registration,r.origin.rights,r.origin.military??null,r.origin.national??null]))throw new RangeError('KBO_RETRY_ORIGIN_CHANGED');
  if(c.preparationSeason){assertPreparationSeason(c.preparationSeason);if(canonicalJson(c.preparationSeason.retry)!==canonicalJson(c.retryCareer)||canonicalJson(c.preparationSeason.records)!==canonicalJson(c.records))throw new RangeError('STALE_KBO_RETRY_PREPARATION');}
- if(r.quote&&(!c.preparationSeason?.result&&r.status!=='ACCEPTED'||r.quote.basis!==canonicalJson([r.quote.window,r.marketWorld])||canonicalJson(r.quote.offers)!==canonicalJson(r.quote.window.snapshot.player.age>=45?[]:quoteKboCareerMarket(r.quote.window).offers)||r.quote.window.worldKey!==c.world.worldKey||r.quote.window.playerKey!==c.protagonistKey||r.quote.window.seasonKey!==r.marketWorld.seasonKey||r.status!=='ACCEPTED'&&canonicalJson(r.quote)!==canonicalJson(marketQuote(c,r,c.preparationSeason!))))throw new RangeError('KBO_RETRY_QUOTE_CHANGED');
+ if(r.quote&&(!c.preparationSeason?.result&&r.status!=='ACCEPTED'||!matchesCanonicalSeal(r.quote.basis,canonicalSeal([r.quote.window,r.marketWorld]))||canonicalJson(r.quote.offers)!==canonicalJson(r.quote.window.snapshot.player.age>=45?[]:quoteKboCareerMarket(r.quote.window).offers)||r.quote.window.worldKey!==c.world.worldKey||r.quote.window.playerKey!==c.protagonistKey||r.quote.window.seasonKey!==r.marketWorld.seasonKey||r.status!=='ACCEPTED'&&canonicalJson(r.quote)!==canonicalJson(marketQuote(c,r,c.preparationSeason!))))throw new RangeError('KBO_RETRY_QUOTE_CHANGED');
  return r;
 }
 /** Pure root persistence guard. Never calls the root revision guard. */
@@ -119,7 +120,7 @@ export function settleKboRetryPreparation(source:KboCareer,revision:number,forfe
 function marketQuote(c:KboCareer,r:KboRetryPro,p:PreparationSeason){
  const totals=recordTotals(c.records,{seasonKey:p.world.seasonKey,leagueKey:'INDEPENDENT',phase:'REGULAR'}),key=c.protagonistKey,w=r.marketWorld;
  const snapshot:KboCareerFaWindow['snapshot']={seed:w.seed,player:structuredClone(p.world.players[key]!),contract:structuredClone(r.origin.world.contracts[key]!),qualifiedSeasons:0,...(totals.batting[key]?{batting:totals.batting[key]}:{}),...(totals.pitching[key]?{pitching:totals.pitching[key]}:{}),clubs:w.clubs.map(club=>({clubId:club.id,budgetWon:club.budgetWon,recruitmentOpen:kboRecruitmentOpen(w,club.id),guaranteedKeys:[...club.roster],commitments:[club.reservedSalaryWon+kboGuaranteedWon(w,club.id,w.seasonKey),...[1,2,3].map(y=>kboFutureCommitmentWon(w,club.id,y))],need:kboAiRoleNeed(p.world.players[key]!,club.roster.map(k=>w.players[k]!))}))};
- const window={worldKey:w.worldKey,seasonKey:w.seasonKey,playerKey:key,windowId:JSON.stringify(['kbo-retry-market',r.receiptKey,p.result!.receiptKey]),snapshot};return {window,offers:snapshot.player.age>=45?[]:quoteKboCareerMarket(window).offers,basis:canonicalJson([window,w])};
+ const window={worldKey:w.worldKey,seasonKey:w.seasonKey,playerKey:key,windowId:JSON.stringify(['kbo-retry-market',r.receiptKey,p.result!.receiptKey]),snapshot};return {window,offers:snapshot.player.age>=45?[]:quoteKboCareerMarket(window).offers,basis:canonicalSeal([window,w])};
 }
 export function kboRetryPreparationView(c:KboCareer){owned(c);if(!c.preparationSeason)throw new RangeError('KBO_RETRY_PREPARATION_REQUIRED');return preparationSeasonView(c.preparationSeason,authority(c));}
 export function acceptKboRetryOffer(source:KboCareer,revision:number,input:{routePreviewId:string;offerKey:string}):KboCareer {

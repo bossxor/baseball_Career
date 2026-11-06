@@ -8,6 +8,7 @@ import {careerKboDraftView} from './career-kbo.js';
 import {collegeLeaveElapsedYears} from './college-service.js';
 import {assertCollegeNationalState} from './college-national.js';
 import {canonicalJson} from './game.js';
+import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 import {createWorldEvent,eventDefinition,completeBlockingEvent,validateEvent} from './events.js';
 
 export interface AmateurRetryExit {version:1;eventKey:string;sourceBasis:string;status:'PENDING'|'ARCHIVED';receiptKey?:string}
@@ -21,7 +22,7 @@ function exhausted(c:HighSchoolCareer){
  if(c.collegeService?.status==='RESUMED')collegeLeaveElapsedYears(c);if(c.national)assertCollegeNationalState(c);
  const militaryComplete=c.collegeService?.status==='RESUMED'||c.national?.militaryStatus==='COMPLETED'&&c.national.benefits.length>0&&c.national.athleteDutySettledSeasons?.length===3&&c.national.athleteDutySeasonsRemaining===0;
  if(college||resume||us||!militaryComplete||k.program.signing||k.program.result.round&&k.program.decision!=='DECLINED')throw new RangeError('RETRY_ROUTES_REMAIN');
- return canonicalJson([c.world,c.records,c.health,c.retryCareer,c.preparationSeason!.result,k.program,c.collegeAdmission??null,c.usRecruitment?.program??null,c.national??null,c.collegeService??null]);
+ return canonicalSeal([c.world,c.records,c.health,c.retryCareer,c.preparationSeason!.result,k.program,c.collegeAdmission??null,c.usRecruitment?.program??null,c.national??null,c.collegeService??null]);
 }
 /** Fresh actual domestic result and every still-legal college/US/military route must be resolved first. */
 export function openAmateurRetryExhaustion(source:HighSchoolCareer,revision:number):HighSchoolCareer {
@@ -37,7 +38,7 @@ function checkedAmateurExit(source:HighSchoolCareer){
  if(e.definitionId!=='E35'||e.worldKey!==source.world.worldKey||e.seasonKey!==source.world.seasonKey||canonicalJson(e.evidence.fields)!==canonicalJson(fields)||e.resume.phase!=='CAREER_ROUTE'||e.resume.competitionKey!=='INDEPENDENT'||e.resume.registrationKey!==source.world.protagonistSchoolId||e.occurredWorldDay!==source.days.days.at(-1)?.day||e.resume.sourceRevision>source.revision||e.resume.sourceRevision<=source.preparationSeason!.revision)throw new RangeError('INVALID_AMATEUR_RETRY_EXIT');
  if(x.status==='PENDING'?(e.status!=='OPEN'||x.receiptKey!==undefined):(e.status!=='RESOLVED'||x.receiptKey!==receipt||e.resolution?.kind!=='DOMAIN'||e.resolution.command!=='CONFIRM_RETIRE'||e.resolution.receiptKey!==receipt))throw new RangeError('INVALID_AMATEUR_RETRY_EXIT');
  // Archive reads validate the original route evidence without reactivating the stored career.
- if(x.sourceBasis!==exhausted({...source,phaseContext:{phase:'CAREER_ROUTE'}}))throw new RangeError('PREVIEW_STALE');return {x,e,receipt};
+ if(!matchesCanonicalSeal(x.sourceBasis,exhausted({...source,phaseContext:{phase:'CAREER_ROUTE'}})))throw new RangeError('PREVIEW_STALE');return {x,e,receipt};
 }
 export function amateurRetryExhaustionView(source:HighSchoolCareer){
  assertCareerRevision(source,source.revision);const {x,e}=checkedAmateurExit(source),key=source.world.protagonistKey,p=source.world.players[key]!;
