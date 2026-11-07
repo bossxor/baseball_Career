@@ -1,3 +1,22 @@
+# 2026-11-07 읽기 전용 엔진 확인
+
+- `packages/engine/src/kbo-renewal.ts`의 `offerKboRenewal`은 비FA 제안에 `years: 1`을 생성한다. 타입의 `1|2|3|4`만으로 비FA 다년 제안이 있다고 볼 수 없다. 별도 제안 소유자와 FA·승계 경계를 추가 확인한다.
+- `packages/engine/src/pro-career-results.ts`의 E24는 리그별 최초 100안타·10승·20세이브 교차를 기록한다. 커리어 하이 및 다음 이정표 잔여를 제공하는 뷰는 이번 확인에서 찾지 못했으며, 공식 원장과 API 노출 범위를 추가 확인한다.
+- `high-school-training.ts`의 `changeMidseasonCareerArchetype`, `kbo-windows.ts`의 `changeKboMidseasonArchetype`, `us-windows.ts`의 `changeUsMidseasonArchetype`은 명시 입력을 받는 변경 함수다. 자동 스타일 변경 규칙은 확인되지 않았으며 다른 호출 경로·설계를 추가 확인한다.
+
+위는 확인 범위의 기록이며 새로운 수치·동작 결정이나 기능 완료가 아니다. 아래는 이전 인계다.
+
+# 인계 — 2026-11-07 Codex TF 작업 시작
+
+통합 작업 트리 `C:/Users/OJT/.codex/worktrees/tf-fast-season/baseball_career`, 기준 `origin/claude/tf-lead`의 `d29db0f`, 브랜치 `codex/tf-fast-season`. 기준 및 작업 상태는 팀장 통합 시 Git과 결과로 재확인한다.
+
+- **03 측정:** 설계 135 §3의 0단계. 고교·대학·KBO·US 각 1시즌 실제 HTTP→엔진→저장 경로의 항목별 시간 비율과 상위 3개 병목을 기록한다. 결과 미확인. 표 없이 최적화 착수·완료로 표시하지 않는다.
+- **02 시즌 결과:** SLB-05 및 구현 설계서 §0·§6에 따라 서버가 제공한 공식 기록을 사용한다. 작업·검증 결과 미확인.
+- **팀장:** 결과 검수·통합 후 조용한 전체 `npm run check` 1회. 종료 결과 전 PASS 아님. 설계 135 §5의 동일 결과 해시·재개·CAS·원자성·실기기 재개와 측정 기준도 별도 확인한다.
+- **보류:** 설계 134의 100 초과 표현, 능력 표시 합계형, 구단명 변경은 사용자 미결정으로 구현하지 않는다. 135의 NPC 경기 정확성 축소는 사용자 승인 전 금지.
+
+아래 Claude 인계의 **설계-구현 불일치 표**는 유지한다. 검증 증거가 확인된 항목만 갱신하고, 팀장 통합 전 완료로 표시하지 않는다. 아래는 이전 인계다.
+
 # 인계 — 2026-11-07 Claude 팀 최종 (구현은 다른 팀으로 이관)
 
 브랜치 `claude/tf-lead`(기준 `d71236b` = origin/codex/m2-career-engine). 사용자 지시: 설계까지 이 팀, 구현은 다른 TF팀. 인계 프롬프트: [HANDOFF-CLAUDE-TF-20261107](HANDOFF-CLAUDE-TF-20261107.md).
