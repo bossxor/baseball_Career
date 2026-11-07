@@ -63,4 +63,5 @@ export interface ClubCreateRequest { commandId: string; clubId: string }
 /** Server-driven flow (school graduation/KBO entry, pro retry). The web replays `type`/`payload` exactly as served; it never builds a command. */
 export interface FlowCommand { id: string; label: string; type: string; payload: Record<string, unknown>; confirm?: string; sign?: { name: string }; facts?: readonly { label: string; value: string }[] }
 export interface SeasonReviewView { season: string; sections: readonly { title: string; lines: readonly { label: string; value: string }[] }[] }
-export interface FlowView { title: string; lines: readonly { label: string; value: string }[]; commands: readonly FlowCommand[]; notice: string | null; stop?: string; seasonReview?: SeasonReviewView | null }
+export interface RetirementSummaryView { name: string; details: readonly { label: string; value: string }[]; sections: readonly { title: string; lines: readonly { label: string; value: string }[] }[] }
+export interface FlowView { title: string; lines: readonly { label: string; value: string }[]; commands: readonly FlowCommand[]; notice: string | null; stop?: string; seasonReview?: SeasonReviewView | null; retirementSummary?: RetirementSummaryView | null }

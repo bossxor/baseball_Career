@@ -29,6 +29,43 @@ function closedKbo(){
  c=settleKboSeasonGrowth(c,c.revision).career;cached=closeKboSeason(c,c.revision,true);return structuredClone(cached);
 }
 
+test('retirement Flow shows a zero-game KBO archive and keeps the US farewell command',async()=>{
+ const {db,client}=await createTestDb();
+ try {
+  const subject='retirement-summary',headers={Authorization:'Bearer dev:'+subject,'Content-Type':'application/json'};
+  await seedAllowedSubject(db,subject);
+  const app=createApp({db,auth:{allowDevBearer:true}});
+  const {saveId}=await json<{saveId:string}>(await app.request('/api/game-creations',{
+   method:'POST',headers,body:JSON.stringify({creationId:subject,mode:'CAREER'}),
+  }));
+  const kbo=enteredKboCareer(),player=kbo.world.players[kbo.protagonistKey]!;
+  kbo.phaseContext={phase:'ARCHIVED'};
+  kbo.retirement={reason:'VOLUNTARY',seasonKey:kbo.world.seasonKey,age:player.age,clubId:kbo.protagonistClubId,
+   receiptKey:'test-archive',sourceRevision:kbo.revision,remainingContractYears:0};
+  const us=resolve(apply(finishedUsCareerFixture(),'REQUEST'),'CONFIRM_RETIRE');
+  for(const c of [kbo,us]){
+   await db.update(gameSaves).set({state:{schemaVersion:1,career:c}}).where(eq(gameSaves.id,saveId));
+   const response=await app.request(`/api/saves/${saveId}/screens/CAREER_FLOW`,{headers});
+   assert.equal(response.status,200);
+   const view=await json<{retirementSummary:{name:string;sections:{title:string;lines:{label:string;value:string}[]}[]};commands:{type:string;payload:Record<string,unknown>}[]}>(response);
+   assert.equal(view.retirementSummary.name,c.world.players[c.protagonistKey]!.name);
+   assert.doesNotMatch(JSON.stringify(view.retirementSummary),/potential|sourceBasis|"rng"|"seed"|archiveKey/);
+   if(c===kbo){
+    const row=view.retirementSummary.sections.find(s=>s.title==='KBO 정규시즌');
+    assert.equal(row?.lines.find(l=>l.label==='경기')?.value,'0');
+   }else{
+    const e=us.events.find(e=>e.definitionId==='E69'&&e.status==='OPEN')!;
+    const command=view.commands.find(x=>x.type==='CAREER_PRO_RETIRE_OPEN_ARCHIVE');
+    assert.deepEqual(command?.payload,{careerRevision:us.revision,eventKey:e.eventKey,eventVersion:e.version});
+    const result=await app.request(`/api/saves/${saveId}/commands`,{method:'POST',headers,body:JSON.stringify({
+     commandId:'summary-farewell',expectedRevision:0,type:command!.type,payload:command!.payload,
+    })});
+    assert.equal(result.status,200);
+   }
+  }
+ } finally { await client.close(); }
+});
+
 test('KBO and US native retirement cancel/confirm preserve money, records and identity and project public frozen archives',()=>{
  for(const c of [closedKbo(),finishedUsCareerFixture()]){
   const before=canonicalJson(c),opened=apply(c,'REQUEST');assert.equal(opened.phaseContext.phase,'RETIRE_CONFIRM');const v=proRetirementScreen({schemaVersion:1,career:opened},'CAREER_PRO_RETIREMENT');assert.deepEqual(v.confirmation!.commands,['CONFIRM_RETIRE','CANCEL_RETIRE']);assert.doesNotMatch(JSON.stringify(v),/potential|sourceBasis|"rng"|"seed"|ledger/);
