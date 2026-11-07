@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-07",
+  "base": "d29db0f",
+  "branch": "codex/tf-fast-season",
+  "status": "PARTIAL_NOT_M2_COMPLETE",
+  "kboProfile": {
+    "pid": 22636,
+    "session": 40678,
+    "lastObservedCommands": 31,
+    "lastObservedTotalGamesIncludingPriorHs": 1219,
+    "lastObservedSeconds": 670,
+    "completed": false,
+    "outputWorktree": "C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career",
+    "output": "docs/implementation/evidence/CODEX-20261107-profile-kbo.json"
+  },
+  "fullCheck": "NOT_RUN",
+  "optimization": "NOT_STARTED",
+  "pendingUserDecisions": [
+    "134",
+    "ability-contribution-display",
+    "club-renaming"
+  ]
+}

@@ -1,0 +1,20 @@
+diff --git a/apps/web/test/native-kbo-play-http.test.ts b/apps/web/test/native-kbo-play-http.test.ts
+index 2c81f41..b9d02ad 100644
+--- a/apps/web/test/native-kbo-play-http.test.ts
++++ b/apps/web/test/native-kbo-play-http.test.ts
+@@ -67,6 +67,15 @@ test('KBO pro season: regular season end → postseason → season close, all fr
+     assert.ok(s.ids().includes('close-season'), `postseason ends in a season close: ${s.ids()}`);
+     await s.take('close-season');
+     assert.ok(!s.ids().includes('close-season'));
++    assert.deepEqual(s.ids(), ['contract-offers']);
++    await s.take('contract-offers');
++    const offer = s.view.commands.find(c => c.id === 'renew')!;
++    assert.ok(offer.sign);
++    assert.ok(offer.confirm);
++    await s.take('renew');
++    assert.deepEqual(s.ids(), ['next-year']);
++    await s.take('next-year');
++    assert.ok(s.ids().length > 0);
+   } finally { await s.close(); }
+ });
+ 
