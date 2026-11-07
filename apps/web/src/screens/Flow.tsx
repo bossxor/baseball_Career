@@ -4,6 +4,7 @@ import { Illustration } from '../assets/Illustration.js';
 import { stateText } from '../screen-states.js';
 import type { ScreenState } from '../screen-states.js';
 import type { FlowCommand, FlowView } from '../model.js';
+import { SeasonReview } from './SeasonReview.js';
 
 export interface FlowProps {
   view: FlowView | null; state?: ScreenState;
@@ -26,6 +27,7 @@ export function Flow({ view, state = 'ready', onCommand, onBack, onReload }: Flo
       {state === 'conflict' && onReload ? <Button primary onClick={onReload}>최신 저장 불러오기</Button> : null}
       {view ? (
         <>
+          {view.seasonReview ? <SeasonReview review={view.seasonReview} /> : null}
           {view.lines.length ? (
             <section className="panel" aria-label="현재 상태">
               <dl className="flow-lines">{view.lines.map(l => <div key={`${l.label}:${l.value}`}><dt>{l.label}</dt><dd>{l.value}</dd></div>)}</dl>
