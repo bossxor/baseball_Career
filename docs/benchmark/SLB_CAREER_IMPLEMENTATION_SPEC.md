@@ -140,9 +140,10 @@
 - 관찰: 31세부터 하락(−0.6 → 38세 −3.3 → 40세 −4.4/년), 41세 OVR 54에도 1군 주전·강제 은퇴 없음. 능력 상한 20(표시 100).
 - 우리: [42](../design/42-GROWTH-DIFFICULTY-REBIRTH.md)·45세 상한 규칙 유지. 원작 수치는 채택하지 않음.
 
-### SLB-21 은퇴와 기록 보관 [변형]
+### SLB-21 은퇴와 기록 보관 [변형 · 부분 구현]
 - 관찰: 확인 모달 → "나의 야구 인생" 연도별 릴 자동 재생(구단 엠블럼·레벨·사건 배지·서술) → 오늘의 타자 순위 팝업 → 선수 카드(레거시 점수 = 선수 가치·누적 기록·수상/신기록·우승·국가대표 합, 전성기 3년 능력 등급) → 통산 기록(헤드라인 한 줄, 통산 6지표, 주요 업적, 통산 수입, 레전드 비교, 추억 한 줄) → 기록실(통산 그리드·수상 횟수·가장 빛난 3년·최고의 순간·위대한 이정표) → 저장/삭제/다음 생. 1군 기록이 없으면 대부분 0으로 비어 있음.
 - 우리: 은퇴 보관(`kbo-retirement-archive*`, [15](../design/15-LONG-TERM-RECORDS.md)), 연대기는 M7([63](../design/63-CHRONICLE-DETAILED-CONTRACT.md)). 적용: 은퇴 요약 화면 구성(헤드라인·주요 업적·가장 빛난 3년·이정표·통산 수입), 1군 기록이 없어도 2군·해외·독립 기록으로 채움. **불채택**: 실존 선수 이름 비교(퍼블리시티권 위험, 가상 아키타입 비교로 대체), 광고·재화 회귀권, 다른 이용자 순위.
+- 구현 입력 `ebfaa2d`(팀장 통합 예정): 공개 archive DTO의 선수·은퇴 정보, 리그/단계별 공식 통산 및 제공 수입만 표시하고 열린 farewell 명령을 유지한다. 업적·가장 빛난 3년은 공개 DTO/승인 산식 부재로 미표시다.
 
 ### SLB-22 커리어·선수·우승 연혁 탭 [변형]
 - 관찰: 커리어 탭(연봉, 1군/2군 시즌 수, 통산 핵심, 최근 5시즌 WAR 그래프, 다음 이정표, 수상, 시즌 로그), 선수 탭(유형 칭호·강점/약점, 체격·지명 이력, 구단 신뢰·동료 관계·인기도 게이지, 병역 상태), 우승 연혁(리그 연도별 우승·준우승). 결함: 타자 커리어 탭에 투수 지표가 나옴.
@@ -207,6 +208,6 @@
 | SLB-05 결과 화면 | 부분(팀장 통합 예정) | `apps/api/src/career-season-review.ts`, `career-views.ts`, `apps/web/src/screens/SeasonReview.tsx`, `Flow.tsx`, `model.ts` | `career-season-review.test.ts`, `season-review.test.tsx`; HTTP 1/1·화면 2/2 보고 | a33601d |
 | SLB-13 FA 화면 | 대기 | `packages/engine/src/kbo-career-fa.ts` → API shell → `Decision.tsx`/`Flow.tsx` | 신규 | — |
 | SLB-14 병역 결과 | 대기 | `kbo-military-*`, `sangmu-*` → API shell | 신규 | — |
-| SLB-21 은퇴 요약 | 대기 | `kbo-retirement-archive*` → `career-pro-retirement-shell.ts` → 화면 | 신규 | — |
+| SLB-21 은퇴 요약 | 부분(팀장 통합 예정) | `career-retirement-summary.ts`, `career-views.ts`, `RetirementSummary.tsx`, `Flow.tsx`, `model.ts` | `m2-pro-retirement.test.ts`, `retirement-summary.test.tsx`; HTTP 1/1·표시 3/3 보고 | ebfaa2d |
 
 비가역 확인 점검 범위: `apps/api/src/career-*.ts`에서 `confirm`이 붙는 `FlowCommand`. 결정 화면(`Decision.tsx`)은 별도 "확정" 버튼이 확인 단계다. 재협상·트레이드·병역 지원·FA 계약 명령이 웹에 연결될 때 같은 원칙을 적용한다.
