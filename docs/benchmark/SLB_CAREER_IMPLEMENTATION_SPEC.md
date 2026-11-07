@@ -63,10 +63,10 @@
 - 우리: E08/E09 콜업, 국제대회([20](../design/20-INTERNATIONAL-COMPETITIONS.md)), 정지 사유 표시 구현됨.
 - 수용: 정지 카드 1장 = 서버 사건 1개, 선택 후 정확한 날짜에서 재개(기존 원칙).
 
-### SLB-05 시즌 결과 화면 [변형]
+### SLB-05 시즌 결과 화면 [변형 · 부분 구현]
 - 관찰 순서: 역할 변화 배지(신인→1군 주전) · 한 줄 시즌 평가 · 기록 카드(홈런·안타·타점 / 타율·출루·장타·OPS, 투수는 승·이닝·탈삼진·ERA·WHIP·K/9) · CH(커리어 하이) 표시 · 타이틀 트로피 · 타구 지표(최고·평균 타구속도, 강한타구·발사각·뜬공·배럴 %, 전년 대비 화살표) · OVR 변화와 능력별 증감 · 팀 순위(정규/최종)·승패 · 국가대표 선발 행 · 코멘트 1~2개 · 연봉 내역(계약 연봉+1군 보전금=총보수). 숫자는 0에서 카운트업, 마일스톤 토스트("100홈런까지 N개")는 탭해야 닫힘.
 - 우리: 공식 기록 정확성 우선. 적용: 역할 변화 배지, CH 표시, 능력 증감 칩, 팀 순위 줄, 코멘트(사건 문구 규칙), 연봉 내역. **변형**: 타구속도·배럴 같은 물리 지표는 우리 엔진에 없는 값이므로 표시하지 않음([24](../design/24-GAME-ENGINE-SCORING.md)에 해당 산출이 생길 때만). 토스트는 자동으로 사라지고 탭을 강요하지 않음.
-- 엔진: 기록(`records.ts`), 수상(`pro-career-awards.ts`), 성장 원장 있음. CH 판정·마일스톤 잔여 계산은 확인 필요.
+- 구현 입력 `a33601d`(팀장 통합 예정): 확정 정규 기록·이닝/율 및 존재하는 확정 성장·보수 원장을 Flow에 표시. CH·팀 순위·역할 배지는 미구현이며 CH 판정·마일스톤 잔여 계산은 확인 필요.
 - 수용: 모든 수치는 공식 기록 원장 값, 미완료 경기 수치 미공개. 카운트업 중에도 스크린리더는 최종값을 읽음.
 
 - 투수(4차): 보직별 상단 지표가 다름(불펜=홀드·경기·탈삼진·ERA·WHIP·K/9, 선발=승·이닝·탈삼진…), 구종 이름+문자 등급과 등급 상승 표시(↑), 1군 합류 시 역할 문구(예: 추격조)와 설명 한 줄. 우리: 보직별 지표 구성과 구종 등급 변화는 [48](../design/48-PITCHES-BATTING-APPROACH.md)·[57](../design/57-REPERTOIRE-DETAILED-CONTRACT.md) 원장 값으로 채택. 모달 뒤에 0·"?"가 보이는 구성은 따르지 않음.
@@ -204,7 +204,7 @@
 | SLB-09 서명 단계 | 부분(학교·대학·재도전 입단만) | 위와 같음 `FlowCommand.sign` | `flow-screens.test.tsx` | eb327cd |
 | SLB-10 상단 선수 헤더 | 완료 | `apps/web/src/screens/Career.tsx`, `styles.css` | `screens.test.tsx` | 21a9703 |
 | 비가역 확인 원칙(14) | 점검 완료 | 학교·대학·재도전 Flow 명령: 지명 거절·은퇴·대학 진학·준비 시즌 시작에 확인 | `native-school-flow-http.test.ts`(준비 시즌 확인) | 이번 커밋 |
-| SLB-05 결과 화면 | 대기 | `apps/api/src/career-views.ts`, KBO/US play shell, `Career.tsx` | 신규 | — |
+| SLB-05 결과 화면 | 부분(팀장 통합 예정) | `apps/api/src/career-season-review.ts`, `career-views.ts`, `apps/web/src/screens/SeasonReview.tsx`, `Flow.tsx`, `model.ts` | `career-season-review.test.ts`, `season-review.test.tsx`; HTTP 1/1·화면 2/2 보고 | a33601d |
 | SLB-13 FA 화면 | 대기 | `packages/engine/src/kbo-career-fa.ts` → API shell → `Decision.tsx`/`Flow.tsx` | 신규 | — |
 | SLB-14 병역 결과 | 대기 | `kbo-military-*`, `sangmu-*` → API shell | 신규 | — |
 | SLB-21 은퇴 요약 | 대기 | `kbo-retirement-archive*` → `career-pro-retirement-shell.ts` → 화면 | 신규 | — |

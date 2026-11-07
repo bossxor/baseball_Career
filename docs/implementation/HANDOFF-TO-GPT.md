@@ -1,3 +1,11 @@
+# 2026-11-07 고교 사건 연결 QA
+
+팀장 보고: 학교 사건 연결 수정 `78243ce8d9629f09d94e5ed5502344f7efc54f8e`를 통합 기준 `fa770d3`에 반영했다. 고교 72경기 E43의 API `nextActions` 공백을 수정하고 `RESOLVE_WINDOW`/`RESOLVE_HIDDEN`/`TRAIN`과 홈 E43 미루기·E41 확인·E84 확인을 연결했다. HTTP 3/3·API/테스트 타입·변경 범위 lint 통과 보고. 학교 훈련 선택 UI 재진입은 후속이다. 이 수정 포함 고교 전체 재측정은 예정이며 성능 개선 완료 근거가 아니다.
+
+# 2026-11-07 SLB-05 시즌 결과 부분 구현
+
+UI 입력 커밋 `a33601dcd6876f6ecd8d33d0feff9e24421f2f57`는 팀장 통합 예정이다. 시즌 결산 Flow에 공식 정규 기록과 이닝·율을 표시하고, 확정 성장·보수 원장이 있는 값만 표시한다. CH·팀 순위·역할 배지는 미구현이므로 부분 구현이다. 팀장 보고: HTTP 1/1·전체 테스트 타입 통과. 담당자 보고: 화면 2/2·변경 범위 lint 통과. 통합 소스 전체 `npm run check`와 브라우저·실기기 검증은 아직 확인하지 않았다.
+
 # 2026-11-07 Codex TF 인계
 
 통합 작업 트리 `C:/Users/OJT/.codex/worktrees/tf-fast-season/baseball_career`, 지정 기준 `origin/claude/tf-lead`의 `d29db0f`, 브랜치 `codex/tf-fast-season`. 03은 설계 135의 실제 API 경로 0단계 측정, 02는 SLB-05 시즌 결과 구현을 담당한다. 팀장이 검수·통합하고 조용한 전체 `npm run check` 1회를 수행한다. 각 결과는 아직 확인되지 않았다.
