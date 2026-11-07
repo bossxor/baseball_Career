@@ -1,6 +1,6 @@
 # 인계 — 2026-11-07 오후: Claude 팀 해야 할 일
 
-1. **통합 검사 차단 해소**: eb327cd·29ded68 포함 `npm run check`가 `packages/engine/test/us-amateur-return-career.test.ts`에서 CPU 8분 이상(통과 기준 약 27초) 멈춤. 해시 비교 자체는 원문 비교 대비 1.2배라 직접 원인 아님. 단일 파일을 29ded68 전후로 시간 비교해 원인 커밋·함수를 확정하고 고친다.
+1. **통합 검사**: eb327cd·29ded68 포함 `npm run check`는 미완료. 원인 측정 결과 `packages/engine/test/us-amateur-return-career.test.ts`가 29ded68 **전후 모두** 단독 10분 제한 초과(회귀 아님, 네이티브 장기 테스트 + 다른 세션 CPU 경합). 다른 세션이 쉬는 시간에 전체 check를 1회 끝까지 실행해 통과를 기록한다.
 2. **SLB 설계서 백로그 P1 구현**: [백로그](../benchmark/SLB_CAREER_BACKLOG.md) 순서. 시즌 결과 화면(SLB-05), 은퇴 요약(SLB-21), FA 시장·계약서(SLB-13), 병역 결과(SLB-14), 서명 단계 확장(SLB-09). 설계서 §0 규칙(복제 금지·서버 값만) 준수.
 3. **확인 필요 항목**(설계서 표기): 비FA 다년 연장 제안 엔진 존재, CH·이정표 잔여 계산, 스타일 자동 변경 규칙.
 4. **상태 크기(P05)**: 대학 `previousSeasons`의 누적 health 중복 제거(4년차 11.4MB 중 약 4.9MB).
