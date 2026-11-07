@@ -1,3 +1,10 @@
+# 2026-11-07 오후 Claude 팀 — SLB 3차 플레이와 구현 설계서
+
+- SLB Career 3차 직접 플레이: 타자 18시즌(대학 4년, 1R 지명, 1군·MVP·골든글러브, 비FA 다년 제안, 상무 합격·전역·콜업, 라이벌, WBC·프리미어12, FA 3회·1+1 상호옵션, 노쇠, 41세 은퇴·레거시·기록실). [3차 기록](../benchmark/SLB_CAREER_PLAYTHROUGH_03.md).
+- 다른 팀이 그대로 구현할 수 있는 [구현 설계서](../benchmark/SLB_CAREER_IMPLEMENTATION_SPEC.md)(SLB-01~23, 채택/변형/불채택, 근거 설계 문서, 엔진 현황, 수용 기준)와 [백로그](../benchmark/SLB_CAREER_BACKLOG.md) 갱신.
+- 미확인: 투수 프로 시즌·부상(04 작업자 4차 진행 중), 해외 진출·강제 은퇴·로그인 후 기능.
+- 통합 검사: 00cf5db까지 전체 통과(1163/1169). eb327cd·29ded68 포함 전체 check는 `us-amateur-return-career` 테스트에서 비정상적으로 오래 걸려 두 번 미완료. 원인 측정 중(아래 인계).
+
 # 2026-11-07 Claude 팀 착수·SLB 플레이·장면 적용
 
 Codex와 별개로 Claude Code 팀(브랜치 `claude/tf-lead`, 기준 `d71236b`)이 같은 목표를 병행한다. 운영: [TF-OPERATIONS-CLAUDE](TF-OPERATIONS-CLAUDE.md). SLB Career를 직접 플레이해(생성~프로 1년차) [기록](../benchmark/SLB_CAREER_PLAYTHROUGH.md)·[분석](../benchmark/SLB_CAREER_UX_ANALYSIS.md)·[백로그](../benchmark/SLB_CAREER_BACKLOG.md)를 남겼다. 이는 아래 11-06 항목의 'SLB 미완료'를 대체한다. 승인 애니 장면 12종(`art-*`)을 `apps/web/src/styles.css`에 적용했다(`c3b305d`). 웹 테스트 50/50, 웹 빌드·verify:assets·verify:android·verify:design 통과. 전체 `npm run check`와 실기기는 미실행이며 엔진 코드는 바꾸지 않았다. 문서 색인: [DECISIONS](../DECISIONS.md)·[CHANGELOG](../CHANGELOG.md).
