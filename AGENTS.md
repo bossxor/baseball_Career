@@ -7,3 +7,4 @@
 - 타 채팅의 작업과 미커밋 변경을 보존한다. 담당 파일, 검증, 완료 범위를 명확히 하고, 사실은 코드·Git·실행 결과로 확인한다.
 - 의미 있는 변경은 코드·검증·관련 문서·Git 기록을 함께 남긴다. [진행](docs/implementation/PROGRESS.md), [최신 인계](docs/implementation/NEXT-SESSION.md), [설계 결정](docs/design/14-CANONICAL-DECISIONS.md)을 갱신한다.
 - Claude 팀은 `claude/*` 브랜치에서만 작업하고 Codex 작업 공간(`E:/AI/Game/baseball_*`)과 그 미커밋 변경은 건드리지 않는다. [Claude 팀 운영](docs/implementation/TF-OPERATIONS-CLAUDE.md)
+- 설계 문서가 바뀌면 같은 변경에서 영향받는 엔진·API·웹·테스트를 고친다. 못 고치면 [최신 인계](docs/implementation/NEXT-SESSION.md)의 "설계-구현 불일치" 표에 등록하고 해소 전엔 완료로 표시하지 않는다. 벤치마킹 항목 구현 위치는 [SLB 구현 설계서 §6](docs/benchmark/SLB_CAREER_IMPLEMENTATION_SPEC.md).

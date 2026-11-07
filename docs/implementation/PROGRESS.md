@@ -1,3 +1,9 @@
+# 2026-11-07 저녁 Claude 팀 — 설계 반영과 구현 동기화
+
+- 확정 결정(14)에 SLB 반영 원칙·불채택 목록과 "설계 변경 시 구현 동기화" 규칙 추가, 설계 패키지·manifest 재생성(verify:design 통과).
+- 구현 점검: 비가역 명령 확인 원칙에 맞춰 재도전 '준비 시즌 시작'(평생 기회 1회 소모)에 확인 문구 추가, 회귀 테스트(native-school-flow-http 5/5).
+- 추적: [SLB 구현 설계서 §6](../benchmark/SLB_CAREER_IMPLEMENTATION_SPEC.md) 구현 위치표, [인계](NEXT-SESSION.md) 설계-구현 불일치 표, AGENTS.md 규칙.
+
 # 2026-11-07 오후 Claude 팀 — SLB 3차 플레이와 구현 설계서
 
 - SLB Career 3차 직접 플레이: 타자 18시즌(대학 4년, 1R 지명, 1군·MVP·골든글러브, 비FA 다년 제안, 상무 합격·전역·콜업, 라이벌, WBC·프리미어12, FA 3회·1+1 상호옵션, 노쇠, 41세 은퇴·레거시·기록실). [3차 기록](../benchmark/SLB_CAREER_PLAYTHROUGH_03.md).

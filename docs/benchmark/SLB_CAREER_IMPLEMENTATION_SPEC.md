@@ -166,3 +166,20 @@
 5. SLB-02 후보 카드 비교, SLB-01 랜덤·추천.
 
 각 항목 완료 기준: 서버 DTO 값만 사용, 375px·데스크톱 확인, 키보드 완료, 관련 테스트, [진행](../implementation/PROGRESS.md) 갱신.
+
+## 6. 구현 추적표 — 설계가 바뀌면 여기부터 고친다
+
+규칙: [확정 결정 2026-11-07](../design/14-CANONICAL-DECISIONS.md). 이 문서나 근거 설계 문서가 바뀌면 아래 "구현 위치"를 같은 변경에서 고치고 테스트를 갱신한다. 못 고치면 [최신 인계](../implementation/NEXT-SESSION.md) "설계-구현 불일치" 표에 등록한다.
+
+| 항목 | 상태 | 구현 위치 | 테스트 | 커밋 |
+| --- | --- | --- | --- | --- |
+| SLB-07 진로 카드 근거 | 부분 | `apps/api/src/career-flow-screen.ts`, `career-college-shell.ts`, `apps/web/src/screens/Flow.tsx`, `model.ts` | `apps/web/test/flow-screens.test.tsx` | 21a9703 |
+| SLB-09 서명 단계 | 부분(학교·대학·재도전 입단만) | 위와 같음 `FlowCommand.sign` | `flow-screens.test.tsx` | eb327cd |
+| SLB-10 상단 선수 헤더 | 완료 | `apps/web/src/screens/Career.tsx`, `styles.css` | `screens.test.tsx` | 21a9703 |
+| 비가역 확인 원칙(14) | 점검 완료 | 학교·대학·재도전 Flow 명령: 지명 거절·은퇴·대학 진학·준비 시즌 시작에 확인 | `native-school-flow-http.test.ts`(준비 시즌 확인) | 이번 커밋 |
+| SLB-05 결과 화면 | 대기 | `apps/api/src/career-views.ts`, KBO/US play shell, `Career.tsx` | 신규 | — |
+| SLB-13 FA 화면 | 대기 | `packages/engine/src/kbo-career-fa.ts` → API shell → `Decision.tsx`/`Flow.tsx` | 신규 | — |
+| SLB-14 병역 결과 | 대기 | `kbo-military-*`, `sangmu-*` → API shell | 신규 | — |
+| SLB-21 은퇴 요약 | 대기 | `kbo-retirement-archive*` → `career-pro-retirement-shell.ts` → 화면 | 신규 | — |
+
+비가역 확인 점검 범위: `apps/api/src/career-*.ts`에서 `confirm`이 붙는 `FlowCommand`. 결정 화면(`Decision.tsx`)은 별도 "확정" 버튼이 확인 단계다. 재협상·트레이드·병역 지원·FA 계약 명령이 웹에 연결될 때 같은 원칙을 적용한다.

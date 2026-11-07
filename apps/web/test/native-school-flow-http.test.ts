@@ -135,6 +135,8 @@ test('pro retry shell is reachable from the web: notice → routes → preparati
       assert.ok(view.commands.some(c => c.id === 'route-retire' && c.confirm));
       assert.doesNotMatch(JSON.stringify(view), HIDDEN);
       if (path === 'PREP') {
+        // 14 (2026-11-07): spending a lifetime preparation chance is irreversible and needs a confirmation step.
+        assert.match(view.commands.find(c => c.id === 'route-prep')?.confirm ?? '', /준비 기회 1회/);
         view = await take('route-prep');
         assert.deepEqual(view.commands.map(c => c.id), ['prep-preseason']);
         view = await take('prep-preseason');

@@ -131,7 +131,7 @@ function kboFlow(c:engine.KboCareer):FlowScreen {
  const v=engine.kboRetryRoutesView(c),commands:FlowCommand[]=[];
  lines.push({label:'나이',value:`${v.ageAtCompletion}세`},{label:'남은 준비 기회',value:`${v.preparation.remaining}회`});
  for(const route of v.routes){
-  if(route.routeId==='PREPARATION')commands.push({...cmd(c,'route-prep','준비 시즌으로 재도전','CAREER_RETRY_START',{routePreviewId:v.routePreviewId}),facts:[{label:'남은 준비 기회',value:`${v.preparation.remaining}회`}]});
+  if(route.routeId==='PREPARATION')commands.push({...cmd(c,'route-prep','준비 시즌으로 재도전','CAREER_RETRY_START',{routePreviewId:v.routePreviewId},`준비 시즌을 시작하면 평생 준비 기회 1회를 사용하고 되돌릴 수 없습니다(지금 남은 ${v.preparation.remaining}회). 시작할까요?`),facts:[{label:'남은 준비 기회',value:`${v.preparation.remaining}회`}]});
   else if(route.routeId==='DOMESTIC_CONTRACT')for(const ref of route.offerRefs){
    const o=v.offers.find(x=>x.offerKey===ref);if(!o)continue;
    commands.push({...cmd(c,'offer-'+ref,`${club(o.clubId)} 입단 · ${o.years}년 · 연봉 ${won(o.annualSalaryWon)}`,'CAREER_RETRY_ACCEPT',{routePreviewId:v.routePreviewId,offerKey:o.offerKey}),...(p?{sign:{name:p.name}}:{})});

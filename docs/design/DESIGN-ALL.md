@@ -194,9 +194,46 @@ U는사용자확정,D는구체기본안,V는실행증거필요입니다. 수치D
 | M9 배포·운영·출시 검증 | 2% | 100% | 2% |
 | **합계** | **100%** | — | **87.5%** |
 
-**추정 기준 갱신 — 2026-11-03:** M2의 오래된55%를65%로 재평가했다. 고교·대학·KBO·미국·병역·계약의 기존 구현에 더해, 이번 귀국 재도전 묶음의 실제 선택48경기와 KBO/미국 계약·첫 경기 확인을 반영한 관리용 추정이다. 테스트 통과율이나 전체 경로 검증 완료율은 아니다. 당시 E35 실제3회 소진 검사는 진행 중이었다. 현재 결과는 아래2026-11-04 기록을 따른다. 99사건 감사·24경로/PF 및 최신 source 최종 통합 검사는 여전히 별도다. 다른 영역의 추정치는 기존 값을 유지했다. 전체 추정은 각 영역 비중×완료 추정의 합계(68%+30%×65%=87.5%)다.
+**2026-11-05 웹 이어하기:** 실제 고교 저장의 기존 웹 화면/명령 연결, POST·후속 GET 상실의 동일 요청 재전송 보완. 웹25/25·학교HTTP2/2·타입/린트0. [범위](../implementation/M2-SCHOOL-WEB-RESUME-20261105.md). native 생성 폼/나머지 사건·전체 경로·전체 check는 잔여. M2 관리65%·전체87.5% 유지.
 
-**2026-11-04 현재 구현·검증:** 원격 bc0f51b 최신화 후5d3b6bc의 가상 US 고정 AL/NL·PS API 묶음11/11을 반영했다. 이어 메이저 재계약·원구단 FA2명령과 동일 native 가격 preview를 연결했다. 승인 인상안 표시/서명 불일치 수정 후 최종 API5/5·정적 검사·독립 리뷰 통과. source US_PLAY 총19명령이다. 통제6시즌/기존 기여 접두와 native 실제 경기 증거를 구분한다. e6df2ee 전체1058/1053/환경5제외·웹24 및 E35 실제3시즌2/2 종료0은 이전 source 증거다. 타 구단 MLB FA·기본 화면·현재 source 전체 check·실제 대형 DB·99/24/PF는 남는다. M2 관리용 추정65% 유지. [최신 구현](../implementation/M2-US-MAJOR-YEAR-API-20261104.md).
+**2026-11-05 고교 native 생성:** fixture 주입 없는 실제 생성부터 첫 worker·타자/투수, KBO/M3/M4 묶음8/8·타입/린트0. [범위](../implementation/M2-SCHOOL-START-HTTP-20261105.md). 복무2년과 후속 미국 시즌 검사는 별도 진행/대기이며 전체 check·웹 생성 연결·전체 경로는 잔여. M2 관리65%·전체87.5% 유지.
+
+**2026-11-05 KBO 입단:** native HTTP 지명→서명→연말 마감→등록, 타자/투수2/2·타입/린트0·리뷰 이상 없음. [범위/해시](../implementation/M2-KBO-ENTRY-HTTP-20261105.md). controlled 고교 접두·웹 생성과 전체24경로는 잔여. 실제 복무2년 진행 중, M2 관리65%·전체87.5% 유지。
+
+**2026-11-05 E35 최신:** 실제 아마추어 E35 공개 조회/HTTP확정과 기존E36,최종2/2·타입/린트/build0. [범위/근거](../implementation/M2-AMATEUR-E35-HTTP-20261105.md). 서비스2년은 별도 background 미완료, 관리65%·전체87.5% 유지.
+
+**2026-11-05 현재:** 캐시/공유/복구8건·서비스 정산/연속성3건 통과. 실제 서비스2년 검사는 hidden background 시작·미완료, 전체 check는 아직 재실행하지 않는다. [현재 실행/소스/재개](../implementation/M2-NATIVE-SERVICE-CACHE-20261105.md). M2 관리65%·전체87.5% 유지.
+
+**2026-11-05 최신 구현:** 미국 확정 이적 관계 분리·E95 정규/PS 배선 및 관계 저장 API,최종12/12·타입/린트/build 종료0·독립 리뷰 보완. native 정규/controlled PS·계약 접두 구분. [상세](../implementation/M2-US-OPPONENT-REUNIONS-20261105.md). E96/최신 귀국 authority·전체 runtime은 잔여. 관리 추정65% 유지.
+
+**2026-11-05 최신:** 은퇴 재요청/복무 완료 신호 보완,21/21+집중1/1·타입/린트/웹24/빌드 종료0. 실제2년·전체 runtime 재검증은 남아 있다. [구현/증거](../implementation/M2-RETIREMENT-AND-SERVICE-PROGRESS-20261105.md). 아래 날짜별 문단은 과거 이력이다.
+
+**2026-11-05 Major FA 사건 연결:** E66 창/저장 NAV·실제 서명/은퇴 해소,15/15·types/lint/build·리뷰 통과. 원구단 증액 계약/legacy 유지. 국내 복귀 NAV 이후 실제 authority/등록은 잔여. [구현/검증](../implementation/M2-MAJOR-FA-E66-20261105.md).
+
+**2026-11-05 보관 이동 연결:** E37/E69 OPEN_ARCHIVE backend owner와 공개 카드, API7/7·types/lint/API build·리뷰 통과. [구현/증거](../implementation/M2-PRO-ARCHIVE-NAVIGATION-20261105.md). 일반 웹 S10 전체 binding은 별도다.
+
+**2026-11-05 재개 구현:** 복무 휴식일의 조언 판정 보완, 새 경계 포함29/29·build/types/lint·리뷰 통과. 실제2년 native 회귀는 test cap3000으로8790경기를 완주할 수 없어 중지했고 검사 구동부/완료 신호 보완 중이다. 전체 PASS/M2 완료 아님. [현재 구현](../implementation/M2-US-SERVICE-ADVICE-DAY-20261105.md).
+
+**최신 갱신 — 2026-11-05:** 전체 검사는 종료1로 확정됐다. 후속 수정2fb681e가 HEAD/remote에 반영돼 있으며 수정 후 검증이 다음 작업이다. [최신 인계·실패 재현·작업 순서](../implementation/M2-HANDOFF-20261105.md).
+
+| 이번에 연결한 M2 영역 | 구현 범위 | 집중 검증 |
+|---|---|---|
+| 프로 사건 | 조언·의료/기록·수상·구종 저장 처리/공개 조회 | API8 + native19 = 27/27 |
+| 목표·에이전트 | 목표 선택/교체·고용·연봉/역할 요청·내부 견적 보호 | API7/7 |
+| 학교·대학·KBO 관계 | 목록·상세·E94~E96 읽기·대학 연말 봉인 유지 | API4 + native21 = 25/25 |
+| 프로 은퇴·보관 | 요청·취소/확정·최대나이·보관 기록 | API4 + native9 = 13/13 |
+| 업적·별칭 | E90/E42 읽기·기념 보상/과거 이력 보존 | API4 + native16 = 20/20 |
+| 미국 관계 | 실제 명단·학교/은퇴 자료의 목록/상세·E94 읽기 | 15/15 + 범위 통계1/1 별도 |
+
+신규 API 테스트는6파일 **33건**이며 종료한 전체 검사에서도 **33/33 통과**를 확인했다. 위 묶음은 기존 native 검사와 중복 실행을 포함하므로 모두 더해 독립 통과 수로 쓰지 않는다. 각 묶음 타입·lint·관련 build·독립 리뷰를 마쳤다. 미국 관계는 현재 지원하며, 저장에 없는 과거 신원은 UNKNOWN_REFERENCE로 유지한다.
+
+**전체 검사 — 종료1:** 2026-11-04 14:24~16:20 KST. 실제 집계 **총1120·통과1113·실패2·제외5**. 린트·전체 타입 통과 후 엔진/API 테스트에서 실패해 뒤의 웹 검사·전체 build·후속 verify 단계는 이 실행에서 수행하지 못했다. 두 실패는 기존 사용자 WIP의 미국 복무 귀국 테스트/DBG에서 ADVICE_DAY_NOT_CLOSED. source cc16fb5 + 당시 WIP21줄,583파일 실행 중 변경0. 후속2fb681e의 미국 season.days 종료 판정 보완은 이 실행 후 변경으로 재검증이 필요하다. 현재 재현 WIP15줄은 최신 인계의 패치에 보관했다. [최종 로그](../implementation/evidence/M2-20261104-batch-check.log) · [종료 상태](../implementation/evidence/M2-20261104-batch-run.json) · [최종 변경 대조](../implementation/evidence/M2-20261104-batch-freeze-check.json).
+
+**남은 M2:** Major FA 국내 복귀·최신 KBO 세계를 사용하는 귀국 소유권 연결, 미국 E95/E96 재회 처리, 99사건 잔여 감사·24경로/PF 실행 증거·실제 웹 연결·대형 실제 DB 검증. 사건99개 중17개에 이번 부분 실행 근거를 연결했다. 미감사61개가61개 미구현이라는 뜻은 아니다. [사건 감사](../implementation/M2-EVENT-CONNECTION-AUDIT.md).
+
+**진행률 기준:** 상단 **M2 완료 추정65%·남음35%, 전체87.5%·남음12.5%** 유지. 관리용 추정이며 검사 통과율이 아니다. 전체 검사/수용 조건이 남아 임의로 올리지 않았다. 다른 영역은 기존 추정으로 이번에 재검증하지 않았다. 전체 계산은68% + 30% × 65% = 87.5%다.
+
+이전 전체90394는 종료 코드/최종 집계 미수집이며 PASS가 아니다. 사용자 테스트 WIP·큰 runtime JSON·디버그 로그 보존. V:는 문서/증거 복사만, PC 종료 금지.
 
 **2026-11-02 사용자 마감 체크포인트:** 미국 귀국 후 재계약 연속성·타 구단 갱신·관계/목표/구종 알림 보강. lint·타입 검사 통과, 리뷰 전 집중 1/1 통과. 전체 check는 사용자 요청으로 중단(출력 통과 93건·실패 0건·최종 집계 없음), 최종 보강의 런타임 검증 미완료다. M2 전체 완료 아님. 과거 완료율을 임의 가산하지 않았다. [변경·검증·재개 순서](../implementation/M2-RETURN-CONTINUITY-20261102.md).
 
@@ -1579,6 +1616,23 @@ KBO 출신의 미국 마이너 계약 만료 후 원구단 재계약과 타 구�
 ## 2026-11-04 MLB FA 비교 — 사용자 확정 U
 
 MLB FA도 원구단과 조건을 충족한 타 구단 최대3곳의 제안을 비교한다. 연봉/계약 기간은 기존 MLB 산식을 사용하며 포지션 수요·예산·실제 등록 가능 여부로 후보를 걸러낸다. 기존 current-club-only engine/API를 전체 FA시장 완료로 세지 않는다. 실제 이적은 원장/보유권/등록/로스터/다음 시즌 소유 구단 이력까지 같은 명령으로 연결해야 한다.
+
+## 2026-11-06 구글 로그인 — 제안(미확정)
+
+구글 로그인 설계 제안은 [133](133-GOOGLE-LOGIN.md). 사용자 확정 전까지 구현하지 않으며 미결정 D1~D6은 133 §7.
+
+## 2026-11-07 SLB Career 벤치마킹 반영 — TF팀장 결정 D(사용자 위임)
+
+기준: [구현 설계서](../benchmark/SLB_CAREER_IMPLEMENTATION_SPEC.md)(SLB-01~24, 직접 플레이 1~4차). 원작에서 가져오는 것은 화면·흐름 패턴뿐이며 확률·계약·병역·성장·기록 규칙은 이 문서와 각 번호 문서가 계속 우선한다.
+
+- 화면 원칙 추가: 비가역 명령(계약·재협상·트레이드·병역·은퇴)은 결과 예고와 확인 단계를 둔다. 되돌리기 쉬운 선택만 같은 카드 2탭 확정을 허용한다. 이정표·축하 알림은 진행을 막지 않는다. 결과 지표는 모달 뒤에서도 최종값을 보인다.
+- 계약 서명 단계는 표시 전용이다. 서명은 명령 payload와 저장 상태를 바꾸지 않는다.
+- 진로·계약 선택지는 서버가 준 근거(자격·소모·남은 기회·실패 시 대안)만 카드에 표시한다. 잠재력·seed·RNG·드래프트 점수 원값은 노출하지 않는다.
+- 불채택 확정: 실존 선수 실명 비교(가상 유형 비교로 대체), 실시간 타이밍·기억 미니게임, 광고·재화 회귀권, 온라인 랭킹·상점·타 이용자 뉴스, 엔진이 산출하지 않는 타구 물리 지표 표시, 확인 없는 비가역 즉시 실행, 지명 후 거절 불가 구조.
+
+## 2026-11-07 설계 변경과 구현 동기화 — 사용자 확정 U
+
+설계 문서가 바뀌면 같은 변경 단위에서 영향받는 구현(엔진·API·웹·테스트·fixture)을 찾아 함께 고친다. 같은 변경에서 고치지 못하면 [최신 인계](../implementation/NEXT-SESSION.md)의 "설계-구현 불일치" 표에 결정 날짜·설계 위치·영향 파일·완료 기준을 등록하고, 해소 전에는 해당 기능을 완료로 표시하지 않는다. 벤치마킹 항목의 구현 위치는 [구현 설계서 §6](../benchmark/SLB_CAREER_IMPLEMENTATION_SPEC.md)에서 추적한다.
 
 ---
 
@@ -10542,6 +10596,146 @@ DESIGN-ALL은 원문을 모은 전달본, MANIFEST-SHA256.csv는 파일 무결�
 ## 최종 검증 결과
 
 verify-design.mjs / verify-state-ui.mjs / verify-art-direction.mjs 모두 종료코드0/PASS. 설계 파일359개를 MANIFEST의 경로·크기·SHA256으로 작업 폴더와 Git staged blob 양쪽에서 확인해359/359 일치, tracked 파일 집합도 정확히 일치했다. OS 캐시 항목0. 실제 앱 빌드/경기/DB/브라우저 검수가 아니라 설계 파일·정적 계약의 검증 결과다.
+
+---
+
+<!-- SOURCE: 132-USER-PACING-YEARLY-FAST-FORWARD.md -->
+
+# 132 — 연도별 빠른 진행 (진행 단위 확정, 결정31 일부 대체)
+
+2026-11-06 사용자 결정. 진행 속도에 관한 한 이 문서가 결정31(`31-USER-PACING-TRAINING-DIFFICULTY.md` U16)의 CTA 부분보다 우선한다.
+
+## 확정
+- 커리어 기본 CTA는 **'이번 시즌 끝까지'**다. 시즌(연도) 끝까지 자동으로 진행한다.
+- 보조 CTA는 **'다음 달까지'**다. 월 단위 진행은 유지한다(월말 또는 가장 먼저 도착한 정지 사건).
+- 하루·경기 단위 진행은 사용자 기본 UI가 아니다. 필요하면 보조 동작(1경기/하루)으로만 둔다.
+- 진행 중 **큰 사건이 나오면 그 자리에서 멈추고** 사용자가 선택한 뒤 계속한다. 정지 대상은 기존 설계의 의무 사건이다: 계약, 은퇴, 스타일, 강화(훈련 창), 대표 참가, 병역, 진로 선택, 큰 부상·회복, 수상/특성 알림 등. 사용자 선택을 건너뛰어 자동 확정하지 않는다.
+- 두 CTA 모두 같은 경기·성장·사건 엔진과 seed를 쓴다. 속도 보너스·페널티는 없고, 같은 seed의 최종 결과는 진행 단위와 무관하게 같다(PC01).
+
+## 결정31과의 관계
+- 대체: 기본 CTA '다음 달까지' → '이번 시즌 끝까지'로 바뀜. 보조 CTA '시즌 빠른 진행' → '다음 달까지'로 바뀜.
+- 유지: 의무 사건 정지, 내부 청크(저장/복구 단위) 구분, 앱 종료 시 마지막 커밋 날짜 복원과 자동 재개 금지, 확정 강화, 난이도 2종, 같은 seed 동일 결과.
+
+## 구현 규칙 (웹/서버)
+- 정지 규칙은 엔진의 기존 정지 이유(MAJOR_EVENT, HEALTH_CHANGE, SEASON_REVIEW, ROSTER_DECISION_REQUIRED, CONTRACT_DECISION_REQUIRED 등)를 그대로 쓴다. 서버가 엔진의 내부 청크 한계(CHUNK_LIMIT, DAY_CLOSED)만 이어 붙이며, 웹은 규칙을 계산하지 않는다.
+- 서버가 `CAREER_FLOW`에서 기본 명령 '이번 시즌 끝까지'(adv-season)와 보조 '다음 달까지'(adv-month)를 내려준다. 명령은 대학 `CAREER_COLLEGE_ADVANCE`(mode SEASON/MONTH), 미국 `CAREER_US_PLAY_ADVANCE_SPAN`, KBO `CAREER_KBO_PLAY_ADVANCE_SPAN`(span SEASON/MONTH)이다.
+- 한 번의 요청이 시즌 전체를 처리하므로 요청 시간이 길다. 모바일에서는 서버 요청 시간 제한과 진행 표시를 별도로 점검해야 한다(미확정 사항).
+
+---
+
+<!-- SOURCE: 133-GOOGLE-LOGIN.md -->
+
+# 133. 구글 로그인 설계 (보류 — 2026-11-06 사용자 결정: M2 범위 밖, 구현하지 않음)
+
+상태: **설계 제안**. 코드·설정·비밀값 변경 없음. 외부 서비스(구글/Neon) 동작은 이 문서 작성 시 직접 실증하지 않았다. 구현 착수 때 공식 문서·플러그인 호환을 다시 확인한다. 기존 [16](16-AUTH-OPERATIONS.md)·[87](87-PLATFORM-LOGIN-ACCOUNT-HANDOFF.md)의 "소셜 로그인은 추가 기능"을 구체화한다.
+
+## 1. 현재 인증 구조와 붙는 지점
+
+- API `apps/api/src/auth.ts` `resolveSubject(authorization, options)`: `Authorization: Bearer <t>` 하나에서 **subject 문자열**만 뽑는다. 두 경로:
+  1. `allowDevBearer`(AUTH_MODE=dev)일 때 `dev:<subject>`
+  2. `neonAuthBaseUrl`이 있으면 Neon Managed Auth JWT를 JWKS(`/.well-known/jwks.json`, EdDSA, issuer=origin)로 검증, `payload.sub`
+- 그 뒤 `requireAuth`가 `auth_allowed_subjects`(subject, status=ACTIVE)로 초대 허용을 확인하고 `c.set('subject')`. 이후 모든 보호 라우트(`app.ts` `protectedRoutes`)는 subject만 쓴다. `profiles.id`/`game_saves.owner_id`도 subject 텍스트(`game-creations.ts:79`, `restores.ts:133`가 `onConflictDoNothing`으로 프로필 생성).
+- 웹 `apps/web/src/main.tsx`: `VITE_API_BASE`가 있고 토큰이 없으면 `Login` 화면. 이메일/비밀번호 → `auth-session.ts signInForJwt`(Neon `/sign-in/email` → `/token`) → `sessionStorage['playball.jwt']`. 401이면 `onUnauthorized`가 토큰을 지우고 로그인 화면으로 복귀. `http.ts`가 매 요청 Bearer를 붙인다.
+- Android는 같은 웹 빌드를 Capacitor(`kr.againplayball.app`, androidScheme https)로 감싼다. 현재 네이티브 인증 코드는 없다.
+
+**붙는 지점은 한 곳**: `resolveSubject`에 세 번째 분기(구글 ID 토큰 → `google:<sub>`)를 추가한다. 허용 목록·소유자 분리·세이브·CORS는 그대로. 웹은 `Login` 화면에 버튼 하나와 토큰 저장 호출 하나만 추가한다.
+
+## 2. 클라이언트 흐름
+
+공통 규칙: 클라이언트는 **구글 ID 토큰(JWT)** 을 받아 기존과 같이 `Authorization: Bearer`로 보낸다. 구글 access token·refresh token은 앱이 보관하지 않는다. 서버에 새 세션/쿠키를 만들지 않는다(§3 대안 참고).
+
+### 웹
+Google Identity Services(`https://accounts.google.com/gsi/client`)의 "Sign in with Google" 버튼(`google.accounts.id.initialize({client_id, callback})`). 콜백의 `credential`이 ID 토큰이다. `writeToken(credential)`로 기존 저장소에 넣고 `setToken`. 이메일 폼·dev 버튼은 유지(공존).
+- 스크립트는 로그인 화면에서만 로드(CSP/오프라인 영향 최소화).
+- ID 토큰 수명은 약 1시간. 만료 시 API가 401 → 기존 `onUnauthorized`가 로그인 화면으로 돌린다. `auto_select`/원탭으로 재로그인 마찰을 줄인다. 무음 갱신 서버 세션은 만들지 않는다(§5 결정 D2).
+
+### Android (Capacitor)
+**권장안: Credential Manager 기반 Capacitor 플러그인 1개(`@capgo/capacitor-social-login`의 Google provider)**. 근거:
+1. 구글이 Android 구형 `GoogleSignInClient`를 대체한 공식 경로가 Credential Manager(+Sign in with Google)이며 플러그인이 이를 감싼다. 반환값이 웹과 같은 **ID 토큰** → 서버 검증 코드가 웹/앱 하나로 공통.
+2. WebView 안에서 GIS 팝업/리다이렉트를 쓰면 `https://localhost` origin(Capacitor)이 구글 승인 origin이 될 수 없어 불안정하다. 네이티브 시트가 정석이다.
+3. 시스템 브라우저+App Link 방식([16]의 일회용 code 교환)은 도메인 소유 인증·서버 code 교환 엔드포인트까지 새로 만들어야 해 가장 크다.
+- 플러그인에 **웹 클라이언트 ID**를 `serverClientId`(webClientId)로 넘기면 발급 ID 토큰의 `aud`가 웹 클라이언트 ID가 된다. 서버는 aud 하나만 검증하면 된다.
+- 미실증/주의: 플러그인의 Capacitor 8 호환 버전, Android `minSdk`, Credential Manager 의존성 충돌은 **착수 시 확인**한다. 맞는 플러그인이 없으면 대안은 프로젝트 내 소형 네이티브 플러그인(Kotlin, `androidx.credentials` + `googleid`)이며 JS 인터페이스(`signIn(): {idToken}`)는 동일하게 유지한다.
+- 앱 판별은 `Capacitor.isNativePlatform()`: 네이티브면 플러그인, 아니면 GIS 버튼.
+
+## 3. 서버
+
+### 검증 (`jose`는 이미 의존성)
+`createRemoteJWKSet(new URL('https://www.googleapis.com/oauth2/v3/certs'))` + `jwtVerify(token, jwks, {issuer: ['https://accounts.google.com','accounts.google.com'], audience: GOOGLE_WEB_CLIENT_ID, algorithms:['RS256']})`.
+- 서명(JWKS 자동 캐시·회전), `iss`, `aud`, `exp`/`nbf` 검증. `sub` 필수, `email_verified`는 보지 않는다(이메일을 쓰지 않으므로).
+- `azp`는 aud 단일 검증으로 충분. aud에 안드로이드 클라이언트 ID는 허용하지 않는다(serverClientId 사용 전제).
+- 환경변수: `GOOGLE_WEB_CLIENT_ID`(공개값, 비밀 아님). 없으면 구글 분기 비활성 — `health.auth`에 `'google'` 표기 추가 여부는 구현 시 판단.
+- 분기 순서: dev → (토큰 `iss`를 검증 전에 읽어 `accounts.google.com`이면 구글, 아니면 Neon). `iss` 읽기는 분기 선택에만 쓰고 신뢰하지 않으며 선택된 쪽의 전체 검증이 필수.
+
+### 계정 키 매핑
+- subject = `google:<sub>`. 접두사로 Neon sub·`dev:`와 충돌 불가, 이후 다른 제공자(`apple:` 등)도 같은 규칙.
+- 구글 `sub`는 계정 불변 식별자. **이메일은 키로 쓰지 않는다**(변경·재사용 가능).
+- 같은 사람이 이메일 로그인과 구글 로그인을 둘 다 쓰면 **서로 다른 계정**(세이브 분리). 자동 병합 없음(이메일 일치만으로 병합하면 계정 탈취 경로). 연결 기능은 이번 범위 밖.
+
+### 허용 목록과 기존 방식 공존
+- 기존 `auth_allowed_subjects`를 그대로 사용(스키마 변경 없음): 행 `google:<sub>`, ACTIVE.
+- 신규 로그인 사용자는 목록에 없어 `auth.forbidden` 401. 클라이언트는 이 때 **내 계정 코드**(`google:<sub>` — 비밀 아님)를 보여 주고 복사 버튼을 제공, 운영자가 SQL/관리 절차로 추가한다(결정 D1).
+- `dev:` 토큰은 `AUTH_MODE=dev`일 때만, Neon 이메일은 `NEON_AUTH_BASE_URL` 설정 때만 계속 동작. 운영에서 dev를 끄는 현행 원칙 유지.
+- `profiles.displayName`은 현재 subject를 그대로 쓴다. 구글 이름을 저장하지 않고 이 값을 유지하거나 고정 문구로 바꿀지는 구현 때 판단(결정 D4).
+
+### 저장 데이터·개인정보 최소화
+- 서버에 저장: `google:<sub>`(allowlist, profiles, owner_id)만. **이메일·이름·사진·ID 토큰 저장 금지**, 로그에도 토큰·이메일 기록 금지(현행 `requestId`만 기록).
+- 요청 스코프는 `openid`만(기본 ID 토큰 `sub`). 이메일·프로필 스코프를 추가 요청하지 않는다.
+- 토큰은 웹 `sessionStorage`(현행)에만. 네이티브도 앱 메모리/sessionStorage 수준. refresh 개념 없음.
+
+## 4. 사용자가 직접 해야 할 것 (체크리스트)
+
+비밀값은 문서·커밋·채팅에 넣지 않는다. 아래 중 **클라이언트 ID는 공개 식별자**이지만 클라이언트 시크릿은 이 설계에서 **생성·사용하지 않는다**(웹 ID 토큰 흐름은 시크릿 불필요).
+
+- [ ] Google Cloud 프로젝트 선택/생성
+- [ ] **OAuth 동의 화면**: 앱 이름 "다시플레이볼", 지원 이메일, 사용자 유형(외부), 스코프는 기본(`openid`)만. 게시 상태: 테스트 중이면 테스트 사용자 최대 100명 등록 필요, 소수 지인용이면 "테스트" 유지도 가능(토큰 수명 제약 없음은 ID 토큰 방식에서 영향 적음 — 게시 전 정책 재확인)
+- [ ] 개인정보처리방침/약관 URL(게시 시 필요 — 수집 항목: 구글 계정 고유 ID뿐)
+- [ ] **OAuth 클라이언트 ID(웹 애플리케이션)** 생성: 승인된 JavaScript 원본에 운영 웹 origin, 로컬 개발 `http://localhost:<포트>` 추가 → `GOOGLE_WEB_CLIENT_ID`, 웹 빌드 변수 `VITE_GOOGLE_CLIENT_ID`(둘 다 같은 웹 ID)
+- [ ] **OAuth 클라이언트 ID(Android)** 생성: 패키지명 `kr.againplayball.app` + **SHA-1** 지문
+  - 디버그 빌드용 SHA-1(`keytool -list -v -keystore <debug.keystore>`), 릴리스 서명키 SHA-1, Play App Signing을 쓰면 Play 콘솔의 앱 서명 SHA-1도 각각 등록(여러 개 가능, 클라이언트 ID를 지문마다 만들 수도 있음)
+  - Android 클라이언트 ID는 앱 코드에 직접 넣지 않아도 되지만(웹 ID를 serverClientId로 사용) **등록 자체는 필수**
+- [ ] 서버 환경변수 `GOOGLE_WEB_CLIENT_ID` 설정(호스트 비밀 저장소, Git 금지)
+- [ ] 첫 로그인 후 표시되는 계정 코드를 받아 허용 목록에 추가(또는 D1 결정에 따른 절차)
+- [ ] 실기기 1대 이상에 구글 계정 로그인된 Play 서비스 환경 확인(에뮬레이터는 Google APIs 이미지)
+
+## 5. 구현 단계와 테스트 계획
+
+단계 (각 단계 독립 커밋, 기존 테스트 유지):
+1. **서버**: `auth.ts`에 `verifyGoogleIdToken`/구글 분기 + 옵션 `googleClientId`(+ 테스트 주입용 `googleJwks`·`googleIssuers`) 추가. 구글 옵션 없으면 동작 불변.
+2. **웹**: `Login`에 구글 버튼, `auth-session.ts`에 GIS 로더/토큰 콜백. 계정 코드 안내 표시(403 시).
+3. **Android**: 플러그인 추가, `cap sync`, 서명 지문 등록 후 디버그 APK 설치·로그인 실기기 확인.
+4. 문서: 운영 환경변수/체크리스트를 README·HANDOFF에 반영.
+
+테스트 (외부 접속 없음):
+- `jose`로 **테스트 전용 키쌍** 생성(`generateKeyPair('RS256')`), 로컬 JWKS(`createLocalJWKSet`)를 옵션으로 주입. 이 키는 테스트 메모리에만 존재하며 저장소에 키 파일을 두지 않는다.
+- 케이스: 정상 → subject `google:<sub>`·허용 목록 일치 시 200; 서명 키 불일치; `aud` 불일치; `iss` 불일치; 만료; `sub` 없음; `alg=none`/HS256 거부; 허용 목록에 없으면 `auth.forbidden`; 같은 sub가 두 번 요청해도 같은 owner; `dev:`·Neon 분기가 기존 테스트대로 유지; 구글 옵션 미설정 시 구글 토큰 거절.
+- 웹: 버튼이 토큰을 저장/401에서 되돌아오는 단위 테스트(GIS는 stub).
+- 실제 구글과의 통합(JWKS 실조회, 실기기 시트)은 **자동 테스트 대상 아님** — 수동 체크 항목으로 남기고 미검증으로 보고한다.
+
+## 6. 위험과 대응
+
+- **오프라인/구글 서비스 장애**: JWKS는 서버가 캐시하며(`jose` 기본 쿨다운), 캐시가 있으면 구글 접속 없이 검증 가능. 최초 기동 직후 구글 장애면 구글 로그인만 실패, 이메일·dev 경로는 영향 없음. 클라이언트는 로컬 세이브가 없는 클라우드 구조라 오프라인 플레이는 이 기능 범위 밖.
+- **ID 토큰 1시간 수명**: 장시간 플레이 중 401. 현행 401 처리(로그인 화면 복귀) 시 진행 중 명령은 기존 receipt 재조회 규칙([87])을 따른다. 불편이 크면 서버 세션 도입(D2).
+- **토큰 탈취/재사용**: 1시간 Bearer. HTTPS 전제, 로그 금지. 웹은 sessionStorage(XSS 위험 현행과 동일).
+- **계정 삭제**: [16] 규칙대로 별도 재인증+삭제 job. 구글 쪽은 우리 서버가 구글 계정을 삭제할 수 없으므로 "게임 데이터 + allowlist/profile 삭제 + 구글 연결 해제 안내(구글 계정 설정의 서드파티 액세스)". 같은 `sub`로 재로그인하면 새 계정처럼 허용 목록에서 막힘(삭제 상태 유지 시) — 삭제 후 재가입 정책은 D3.
+- **구글 약관·정책**: 동의 화면 검수/게시 상태, 브랜드 가이드(버튼 모양)와 개인정보 URL 필요. Play 스토어 배포 시 데이터 안전 항목에 "계정 식별자 수집" 기재.
+- **SHA-1 불일치**: 디버그/릴리스/Play 서명별로 지문이 달라 "개발자 오류(10)"가 가장 흔한 실패. 체크리스트의 지문 전부 등록.
+- **WebView/origin**: 앱에서 GIS 웹 버튼을 쓰지 않는다(§2).
+- **allowlist 부트스트랩**: 계정 코드 방식이 번거로움(D1).
+
+## 7. 미결정 (제안안 → 사용자 확정 필요)
+
+| ID | 질문 | 권장 |
+|---|---|---|
+| D1 | 허용 목록 등록 방식: 구글 `sub` 코드 수동 등록 vs 이메일 사전 등록(이메일 스코프·저장 필요) | sub 코드 수동 등록(저장 최소) |
+| D2 | 1시간 후 재로그인으로 충분한가, 서버 세션(자체 refresh)을 둘 것인가 | 재로그인(원탭). 불편 확인 후 도입 |
+| D3 | 삭제 후 같은 구글 계정 재가입 허용/차단 | 허용 목록에서 제거 → 초대 재요청 |
+| D4 | `profiles.displayName`: subject 유지 vs 고정 문구 | 고정 문구 "플레이어"(구글 이름 저장 안 함) |
+| D5 | 대안: Neon Managed Auth의 구글 소셜 로그인 사용(서버 코드 변경 없이 JWT 유지). 프로젝트 지원 여부 미실증 | 직접 ID 토큰 검증 채택(이 문서). Neon 지원이 실증되면 재검토 |
+| D6 | 이메일 계정과 구글 계정 연결 | 이번 범위 제외 |
+
+## 8. 이번 범위 밖
+계정 연결/병합, 애플 로그인, 서버 자체 세션·refresh, 구글 API 호출(캘린더 등), 이메일 수집.
 
 ---
 
