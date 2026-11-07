@@ -43,3 +43,7 @@ P16 준비 시즌·재도전은 최신 원격에 이미 구현돼 있다. 남은
 
 - 사용자 질문("SLB 전부 해 봤나")에 대해: 1·2차는 일부 구간만이었다고 보고하고 3차(타자 18시즌 전체)를 팀장이 직접 플레이했다. 투수 프로·부상은 04 작업자가 4차로 진행.
 - 산출: [구현 설계서](../benchmark/SLB_CAREER_IMPLEMENTATION_SPEC.md), [3차 기록](../benchmark/SLB_CAREER_PLAYTHROUGH_03.md), 백로그 재정렬. 해야 할 일은 [최신 인계](NEXT-SESSION.md) 맨 위.
+
+## 2026-11-07 마감 — 설계 이관
+
+사용자 지시로 이 팀은 설계까지 하고 구현은 다른 TF팀이 이어간다. 최종 상태·해야 할 일은 [최신 인계](NEXT-SESSION.md) 맨 위, 팀장 전달 프롬프트는 [HANDOFF-CLAUDE-TF-20261107](HANDOFF-CLAUDE-TF-20261107.md).
