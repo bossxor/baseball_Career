@@ -54,7 +54,7 @@ export function applyUsReturn(state:SaveState,command:CommandBody):AppliedComman
  return {nextState:{...state,career:next!},phase,summary:{type:command.type,careerRevision:next!.revision,phase,...(stopReason?{stopReason}:{})},eventIds:[]};
 }
 
-export function usReturnScreen(state:SaveState,screen:string):unknown {
+export function usReturnScreen(state:SaveState,screen:string) {
  if(screen!=='US_RETURN_PROGRAM')fail('UNSUPPORTED_SCREEN');
  try{
   const c=owner(state),p=c.preparation,service=c.service,last=c.return.years.at(-1);

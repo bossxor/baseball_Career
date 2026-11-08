@@ -1,0 +1,5 @@
+{"league":"us","command":0,"type":"CAREER_US_PLAY_START","stop":null,"phase":"SEASON_PROGRESS","nextWorldDay":59,"games":216,"elapsedSeconds":1}
+{"league":"us","command":1,"type":"CAREER_US_PLAY_ADVANCE_SPAN","stop":"BUDGET","phase":"SEASON_PROGRESS","nextWorldDay":71,"games":1072,"elapsedSeconds":29}
+{"league":"us","command":2,"type":"CAREER_US_PLAY_ADVANCE_SPAN","stop":"BUDGET","phase":"SEASON_PROGRESS","nextWorldDay":78,"games":1509,"elapsedSeconds":60}
+{"league":"us","command":3,"type":"CAREER_US_PLAY_ADVANCE_SPAN","stop":"BUDGET","phase":"SEASON_PROGRESS","nextWorldDay":84,"games":1880,"elapsedSeconds":92}
+{"league":"us","status":"http_error","wallMs":113303.9147,"finalGames":1664,"commands":5,"output":"docs/implementation/evidence/CODEX-20261108-us-memory.json"}

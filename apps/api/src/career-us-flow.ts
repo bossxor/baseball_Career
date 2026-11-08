@@ -47,17 +47,22 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
  if(phase.phase==='SEASON_REVIEW'){
   const t=engine.usYearTransitionReadiness(c);
   if(t.ready)return out('시즌 종료',[cmd('next-minor-year','다음 시즌 시작','NEXT_MINOR_YEAR')],`다음 시즌: ${t.targetSeasonKey}`);
-  if(t.blockers.every(b=>b==='CONTRACT_DECISION_REQUIRED'||b==='OPEN_EVENT')){
+  if(t.blockers.every(b=>b==='CONTRACT_DECISION_REQUIRED'||b==='OPEN_EVENT'||(c.contract.type==='US_MINOR'&&c.minorMarket?.offers.length===0&&b==='MILITARY_PLAN_REQUIRED'))){
    const sign=(command:FlowCommand):FlowCommand=>({...command,confirm:'이 계약을 확정할까요?',sign:{name:p.name}});
    if(c.contract.type==='US_MINOR'){
     if(c.minorMarket){
      const market=engine.usMinorMarketView(c);
-     const commands=market.offers.map((o,i)=>({...sign(cmd('minor-'+i,
+     const commands:FlowCommand[]=market.offers.map((o,i)=>({...sign(cmd('minor-'+i,
       `${o.organizationName} · ${o.years}년 · 연봉 $${o.annualSalaryUsd.toLocaleString('en-US')}`,
       'ACCEPT_MINOR_OFFER',{offerKey:o.offerKey})),facts:[
        {label:'대표팀 차출',value:o.nationalReleaseAllowed?'허용':'불허'},
        {label:'병역 복귀 옵션',value:o.militaryReturnOption?'있음':'없음'},
       ]}));
+     if(!commands.length&&market.returnHome.available&&!c.kboTransfer){
+      let eligible:boolean;try{engine.openUsAmateurReturn(c,c.revision);eligible=true;}catch{eligible=false;}
+      if(eligible)commands.push({id:'return-request',label:'국내 복귀 준비',type:'CAREER_US_RETURN_REQUEST',
+       payload:{careerRevision:c.revision},confirm:'국내 복귀 준비를 시작할까요?'});
+     }
      return out('마이너 계약 제안',commands,commands.length?null:'현재 계약 제안이 없습니다.');
     }
     if(t.blockers.length===1)return out('계약 만료',[cmd('minor-market','계약 제안 확인','OPEN_MINOR_MARKET')]);

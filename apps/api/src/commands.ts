@@ -4,6 +4,10 @@ import { commandReceipts, gameSaves } from '@playball/db';
 import type { AppVariables } from './auth.js';
 import { requestHash } from './canonical-json.js';
 import { applyEngineCommand, type CommandBody, type SaveState } from './engine-command.js';
+import { channel } from 'node:diagnostics_channel';
+
+const commandDiagnostic = channel('playball.command.memory');
+const diagnostic = (stage:string) => { if(commandDiagnostic.hasSubscribers) commandDiagnostic.publish({stage}); };
 
 function parseRevision(value: unknown): bigint | null {
   if (typeof value === 'bigint') return value >= 0n ? value : null;
@@ -64,10 +68,13 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
   const subject = c.get('subject');
 
   try {
-    return await db.transaction(async tx => {
+    diagnostic('transaction-start');
+    const response = await db.transaction(async tx => {
+      diagnostic('lock-start');
       const locked = await tx.execute(
         sql`SELECT id, owner_id, mode, revision, state, deleted_at FROM game_saves WHERE id = ${saveId} FOR UPDATE`,
       );
+      diagnostic('lock-return');
       const row = firstRow(locked);
       if (!row || row.deleted_at) return errorBody(c, 'SAVE_NOT_FOUND', 404);
       if (String(row.owner_id) !== subject) return errorBody(c, 'SAVE_NOT_FOUND', 404);
@@ -90,8 +97,11 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
       let applied;
       try {
         if((body.type.startsWith('CAREER_SCHOOL_')||body.type.startsWith('CAREER_COLLEGE_')||body.type.startsWith('CAREER_KBO_PLAY_'))&&row.mode!=='CAREER')return errorBody(c,'CAREER_SAVE_REQUIRED',400);
+        diagnostic('engine-start');
         applied = applyEngineCommand((row.state as SaveState) ?? {}, body);
+        diagnostic('engine-return');
       } catch (err) {
+        diagnostic('engine-error');
         const code =
           err && typeof err === 'object' && 'code' in err ? String((err as { code: string }).code) : 'INVALID_REQUEST';
         return errorBody(c, code, 400);
@@ -109,6 +119,7 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
         result: { gains: applied.summary.gains, discarded: applied.summary.discarded },
       };
 
+      diagnostic('update-start');
       await tx
         .update(gameSaves)
         .set({
@@ -119,7 +130,9 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
           updatedAt: new Date(),
         })
         .where(eq(gameSaves.id, saveId));
+      diagnostic('update-return');
 
+      diagnostic('receipt-start');
       await tx.insert(commandReceipts).values({
         saveId,
         commandId: body.commandId,
@@ -127,10 +140,14 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
         result,
         resultingRevision: nextRevision,
       });
+      diagnostic('receipt-return');
 
       return c.json(result, 200);
     });
+    diagnostic('transaction-return');
+    return response;
   } catch (err) {
+    diagnostic('transaction-error');
     const msg = err instanceof Error ? err.message : String(err);
     if (msg.includes('unique') || msg.includes('duplicate') || msg.includes('UNIQUE')) {
       const [again] = await db

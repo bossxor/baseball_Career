@@ -20,6 +20,7 @@ import { proRetirementScreen } from './career-pro-retirement-shell.js';
 import { careerView, decisionView, type UiShellState } from './ui-shell.js';
 import { careerSeasonReview } from './career-season-review.js';
 import { retirementSummary } from './career-retirement-summary.js';
+import { isUsAmateurReturn,usReturnHome } from './career-us-return-flow.js';
 
 function errorBody(
   c: Context<{ Variables: AppVariables }>,
@@ -53,7 +54,7 @@ export async function getCareer(c: Context<{ Variables: AppVariables }>) {
   if (!row || row.deletedAt || row.ownerId !== subject) return errorBody(c, 'SAVE_NOT_FOUND', 404);
   try {
     const state=(row.state as UiShellState)??{schemaVersion:1},owner=state.career as {schemaVersion?:number;world?:{schools?:unknown;leagueKey?:unknown}}|undefined;
-    const view = owner?.schemaVersion===1&&Array.isArray(owner.world?.schools)&&owner.world?.leagueKey===undefined?schoolCareerHome(row.id,state):owner?.world?.leagueKey==='COLLEGE'?collegeCareerHome(row.id,state):owner&&'protagonistOrganizationId' in owner?usCareerHome(row.id,state):owner&&'protagonistClubId' in owner?kboCareerHome(row.id,state):careerView(row.id,state);
+    const view = isUsAmateurReturn(state.career)?usReturnHome(row.id,state.career):owner?.schemaVersion===1&&Array.isArray(owner.world?.schools)&&owner.world?.leagueKey===undefined?schoolCareerHome(row.id,state):owner?.world?.leagueKey==='COLLEGE'?collegeCareerHome(row.id,state):owner&&'protagonistOrganizationId' in owner?usCareerHome(row.id,state):owner&&'protagonistClubId' in owner?kboCareerHome(row.id,state):careerView(row.id,state);
     return c.json({ ...view, revision: row.revision.toString() });
   } catch {
     return errorBody(c, 'INVALID_REQUEST', 400);

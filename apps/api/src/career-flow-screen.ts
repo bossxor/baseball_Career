@@ -4,6 +4,7 @@ import type {SaveState} from './engine-command.js';
 import {kboPlayFlow} from './career-kbo-play-shell.js';
 import {usFlow,isUs} from './career-us-flow.js';
 import {collegeApplies,collegeFlow,collegeRouteCommands,isCollege} from './career-college-shell.js';
+import {isUsAmateurReturn,usReturnFlow} from './career-us-return-flow.js';
 
 /** One public, command-bearing screen for the school→KBO entry and pro-retry flows.
  * Every command here is an existing owned CAREER_* command; the web replays `type`/`payload` exactly and never builds its own.
@@ -20,6 +21,7 @@ const UNSUPPORTED='이 단계는 아직 웹에서 지원하지 않습니다. 저
 
 /** True when the flow screen has something to show for this career (the home screen links to it). */
 export function flowApplies(state:SaveState):boolean {
+ if(isUsAmateurReturn(state.career))return true;
  const c=state.career as Career|undefined;if(!c||typeof c!=='object')return false;
  if(isKbo(c))return true;
  if(isUs(c))return true;
@@ -35,6 +37,7 @@ export function careerFlowScreen(state:SaveState):FlowScreen {
  return {...screen,stop:sp.stop,notice:screen.notice??(sp.stop==='SEASON_END'?'정규시즌이 끝났습니다.':null)};
 }
 function baseFlowScreen(state:SaveState):FlowScreen {
+ if(isUsAmateurReturn(state.career))return usReturnFlow(state,state.career);
  const c=state.career as Career|undefined;if(!c||typeof c!=='object'||Array.isArray(c))throw Object.assign(new Error('CAREER_NOT_FOUND'),{code:'CAREER_NOT_FOUND'});
  if((isUs(c)||isKbo(c))&&c.phaseContext.phase==='RETIRE_CONFIRM'&&!(isKbo(c)&&c.retryPro)){
   const e=c.events.find(x=>x.eventKey===(c.phaseContext as {eventKey:string}).eventKey&&x.definitionId==='E36'&&x.status==='OPEN');
