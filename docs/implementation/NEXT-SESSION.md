@@ -1,3 +1,15 @@
+# 2026-11-08 TF 재개·측정 상태
+
+팀장 독립 검증: KBO 프로파일 결과는 `season_review` / `SEASON_REVIEW`, 1,440경기·55명령·벽시계 1,436,011.7258ms, 초기 해시 불변이다. 최종 해시 `533754a33db04115da7a73a1dc043653e4d8273e3d2effbb5212b6214262bb33`. CPU 샘플은 복제 48.7751%, DB 11.6909%, 시뮬레이션 10.3875%, 미분류 20.2708%이며 경합·계측 오버헤드가 있다. 이 비율은 항목별 벽시계 비율이 아니다.
+
+팀장 원본 JSON 검증: 고교는 `season_review`, 216경기·102명령·벽시계 69,373.8182ms, 소스 불변, 최종 해시 `1d304251844ba3558a0dbfdd0ef67af07523dfda79cbde48463aa762e9f44e24`다. 미국은 정규 1,800경기 후 `RESOLVE_LEVEL` 저장에서 HTTP 500 `INTERNAL_ERROR`, 서버 stderr `out of memory`로 중단됐다. 약 93.038초·5명령·`EVENT_DECISION`이며 시즌 완료가 아니다.
+
+설계 135의 정확한 항목별 벽시계 표와 측정 0단계는 미완료다. 엔진팀은 새 CPU 실행 중단·증거 정리, UI팀은 KBO/US 계약 Flow, QA팀은 읽기 전용 검토를 맡는다. 결과 확인 전 해당 작업 통과로 표시하지 않는다. 전체 check는 미실행이며 성능 최적화는 미착수다. 아래는 이전 이력이다.
+
+## QA 코드 검토 — 실행 재현 미실시
+
+학교 E43 미루기 후 훈련 UI 재진입 경로가 없고, E84 navigation 응답을 웹에서 사용하지 않는다. 학교·대학 성장 정산은 `SEASON_REVIEW` 이후라 현재 결과 화면에서 능력 변화 표시 경로가 없다. 학교 stale action ID의 E43/E41 충돌 수정은 root에 통합됐으며 HTTP 1/1·변경 범위 lint 통과를 확인했다. 이 항목은 코드 검토에서 확인된 미완료이며 실행 재현은 하지 않았다.
+
 # 인계 — 2026-11-07 Codex 구현 체크포인트
 
 - 작업 브랜치 `codex/tf-fast-season`, 기준 `origin/claude/tf-lead`의 `d29db0f`. 팀장 작업 경로는 `C:/Users/OJT/.codex/worktrees/tf-fast-season/baseball_career`다. 계정 공용 5시간 잔여15% 확인 뒤 인계·저장으로 전환했다.
@@ -81,6 +93,7 @@ UI 입력 커밋 `a33601dcd6876f6ecd8d33d0feff9e24421f2f57`는 팀장 통합 예
 | 2026-11-07 | 14 진행 템포: 중계 미리보기 기본 OFF | 중요 경기 미리보기 설정(미구현) | 기본값 OFF 테스트 |
 | 2026-11-07 | SLB-05 시즌 결과: CH·팀 순위·역할 배지 | `career-season-review.ts`, `SeasonReview.tsx` 및 관련 API·웹 테스트 | 공식 근거 확인 후 표시·검증; 미구현 항목 완료 전 부분 상태 유지 |
 | 2026-11-07 | SLB-21 은퇴 요약: 업적·가장 빛난 3년 | `career-retirement-summary.ts`, `RetirementSummary.tsx` 및 관련 API·웹 테스트 | 공개 DTO와 승인 산식 확인 후 표시·검증; 미구현 항목 완료 전 부분 상태 유지 |
+| 2026-11-08 | 학교 E43 재진입·E84 탐색, 학교/대학 결산 성장 표시 | 학교 Flow·웹 탐색·시즌 결과 API/화면 | 실제 재현과 UI 재진입·탐색 연결, 정산 시점에 맞는 공식 성장 표시 검증 |
 | 2026-11-07 | 135 빠른 시즌 진행 | `apps/api/src/span-budget.ts`, 각 play shell, 엔진 advance* | 135 §5 |
 
 # 2026-11-06 TF 후속 구현

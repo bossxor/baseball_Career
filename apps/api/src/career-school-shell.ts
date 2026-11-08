@@ -66,7 +66,7 @@ export function schoolCareerScreen(state:SaveState){
 /** The existing web career screen can resume this owner without falling back to UI fixture state. */
 export function schoolCareerHome(saveId:string,state:SaveState){
  const view=schoolCareerScreen(state)!,c=owner(state),phase=c.phaseContext.phase;
- const action=(name:string,label:string,payload:Record<string,unknown>={})=>({id:'school:'+name,label,kind:'ADVANCE' as const,primary:true,command:{type:'CAREER_SCHOOL_'+name,payload:{careerRevision:c.revision,...payload}}});
+ const action=(name:string,label:string,payload:Record<string,unknown>={})=>({id:'school:'+name+(payload.eventKey?':'+JSON.stringify([payload.eventKey,payload.eventVersion,c.revision]):''),label,kind:'ADVANCE' as const,primary:true,command:{type:'CAREER_SCHOOL_'+name,payload:{careerRevision:c.revision,...payload}}});
  const event=view.event,eventPayload=event?{eventKey:event.eventKey,eventVersion:event.eventVersion}:{};
  let actions:(ReturnType<typeof action>|{id:string;label:string;kind:'OPEN_SCREEN';primary:true})[]=[];
  if(phase==='CREATED')actions=[action('CONFIRM_PLAYER','선수 확인')];
