@@ -1,0 +1,5 @@
+{"league":"us","command":0,"type":"CAREER_US_PLAY_START","stop":null,"phase":"SEASON_PROGRESS","nextWorldDay":59,"games":216,"elapsedSeconds":1}
+{"league":"us","command":1,"type":"CAREER_US_PLAY_ADVANCE_SPAN","stop":"BUDGET","phase":"SEASON_PROGRESS","nextWorldDay":73,"games":1183,"elapsedSeconds":29}
+{"league":"us","command":2,"type":"CAREER_US_PLAY_ADVANCE_SPAN","stop":"BUDGET","phase":"SEASON_PROGRESS","nextWorldDay":81,"games":1696,"elapsedSeconds":59}
+{"league":"us","command":3,"type":"CAREER_US_PLAY_ADVANCE_SPAN","stop":"EVENT","phase":"EVENT_DECISION","nextWorldDay":null,"games":2016,"elapsedSeconds":87}
+{"league":"us","status":"http_error","wallMs":93037.6178,"finalGames":1800,"commands":5,"output":"docs/implementation/evidence/CODEX-20261108-profile-us.json"}

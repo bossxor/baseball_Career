@@ -1,0 +1,889 @@
+{
+  "league": "school",
+  "fixture": "controlled pre-season fixture",
+  "initialHash": "9247637e0026f6228c7c1af3b136af8538cf7776bc9f29a53fe9bdcb6b672cfe",
+  "status": "season_review",
+  "commands": [
+    {
+      "type": "CAREER_SCHOOL_CONFIRM_PLAYER",
+      "phase": "CREATED",
+      "elapsedMs": 16.759799999999814,
+      "status": 200
+    },
+    {
+      "type": "CAREER_SCHOOL_RESOLVE_FOCUS",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 11.771500000000287,
+      "status": 200
+    },
+    {
+      "type": "CAREER_SCHOOL_CONFIRM_PRESEASON",
+      "phase": "PRESEASON_SETUP",
+      "elapsedMs": 10.632700000000114,
+      "status": 200
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 80.98039999999992,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 85.92669999999998,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 77.80579999999964,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 98.8117000000002,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 120.98430000000008,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 125.07180000000062,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 114.6831000000002,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 142.6934999999994,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 179.8752999999997,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 145.19700000000012,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 172.0093999999999,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 165.78690000000006,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 169.70839999999953,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 179.02770000000055,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 242.03369999999995,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 192.22859999999946,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 234.98559999999998,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 265.8159999999998,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 236.45700000000033,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 268.8233999999993,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 290.14550000000054,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 272.33240000000023,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 340.6684000000005,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 273.7564999999995,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 239.9408999999996,
+      "status": 200,
+      "stop": "MAJOR_EVENT"
+    },
+    {
+      "type": "CAREER_SCHOOL_RESOLVE_FOCUS",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 122.82459999999992,
+      "status": 200
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 326.4881000000005,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 337.2407999999996,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 367.96789999999964,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 361.58100000000013,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 336.39750000000095,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 387.67199999999866,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 365.65179999999964,
+      "status": 200,
+      "stop": "MAJOR_EVENT"
+    },
+    {
+      "type": "CAREER_SCHOOL_RESOLVE_WINDOW",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 161.7409000000007,
+      "status": 200
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 320.92029999999977,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 419.6024000000016,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 368.09610000000066,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 436.5522000000001,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 450.7605000000003,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 453.3096999999998,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 410.14520000000084,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 464.2410999999993,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 563.0447000000022,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 459.83669999999984,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 482.6912000000011,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 460.9943999999996,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 553.0528000000013,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 495.5036,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 650.7440999999999,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 430.1947999999975,
+      "status": 200,
+      "stop": "MAJOR_EVENT"
+    },
+    {
+      "type": "CAREER_SCHOOL_RESOLVE_WINDOW",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 232.95330000000104,
+      "status": 200
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 596.2904999999992,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 584.9128999999994,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 555.0941999999995,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 692.3593000000001,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 566.2703000000001,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 602.1851999999999,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 583.1352000000006,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 756.6039000000019,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 694.881400000002,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 716.2332999999999,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 576.7027000000016,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 740.0155999999988,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 695.7277000000031,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 656.1160000000018,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 713.5854999999938,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 677.9967000000033,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 738.2389000000039,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 751.4143999999942,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 831.0708000000013,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 783.3567000000039,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 722.9988999999987,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 807.6892000000007,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 736.0416000000041,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 944.4058000000005,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 825.1607999999978,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 758.9809000000023,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 950.0648000000001,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 794.3505999999979,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 874.9676999999938,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 1008.3062999999966,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 826.610099999998,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 887.4643999999971,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 964.3447999999989,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 913.1392000000051,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 841.4033000000054,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 1084.8570999999938,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 962.0132000000012,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 886.9110000000001,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 955.8520999999964,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 1088.277399999999,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 1038.695599999999,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 1070.218700000005,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 1199.0704000000042,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 915.4983999999968,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 1056.291000000012,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 1074.9107999999978,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 982.7268999999942,
+      "status": 200,
+      "stop": "CHUNK_LIMIT"
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 830.273199999996,
+      "status": 200,
+      "stop": "SEASON_REVIEW"
+    }
+  ],
+  "node": "v24.20.0",
+  "platform": "win32",
+  "arch": "x64",
+  "method": "V8 CPU samples collected during HTTP commands and intervening reads; percentages are CPU sample shares, not wall time",
+  "wallMs": 69373.81820000001,
+  "finalHash": "1d304251844ba3558a0dbfdd0ef67af07523dfda79cbde48463aa762e9f44e24",
+  "initialHashUnchanged": true,
+  "finalPhase": "SEASON_REVIEW",
+  "finalGames": 216,
+  "cpuSamples": 46320,
+  "topSelfCpu": [
+    {
+      "frame": "structuredClone node:internal/worker/js_transferable",
+      "microseconds": 14927337
+    },
+    {
+      "frame": "parse file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js",
+      "microseconds": 5329575
+    },
+    {
+      "frame": "wasm-function[263] wasm://wasm/021d3ac6",
+      "microseconds": 4891919
+    },
+    {
+      "frame": "canonicalJson file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/game.js",
+      "microseconds": 4728500
+    },
+    {
+      "frame": "wasm-function[7024] wasm://wasm/021d3ac6",
+      "microseconds": 3886537
+    },
+    {
+      "frame": "mapToDriverValue file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/drizzle-orm/pg-core/columns/jsonb.js",
+      "microseconds": 3381171
+    },
+    {
+      "frame": "wasm-function[11112] wasm://wasm/021d3ac6",
+      "microseconds": 2956443
+    },
+    {
+      "frame": "(garbage collector) ",
+      "microseconds": 2317902
+    },
+    {
+      "frame": "P file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js",
+      "microseconds": 1848256
+    },
+    {
+      "frame": "sum file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/records.js",
+      "microseconds": 1825234
+    },
+    {
+      "frame": "(anonymous) file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/game.js",
+      "microseconds": 1768987
+    },
+    {
+      "frame": "wasm-function[294] wasm://wasm/021d3ac6",
+      "microseconds": 1330972
+    },
+    {
+      "frame": "wasm-function[240] wasm://wasm/021d3ac6",
+      "microseconds": 1316043
+    },
+    {
+      "frame": "recordTotals file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/records.js",
+      "microseconds": 1227825
+    },
+    {
+      "frame": "wasm-function[9876] wasm://wasm/021d3ac6",
+      "microseconds": 1030957
+    },
+    {
+      "frame": "decodeUTF8 ",
+      "microseconds": 883904
+    },
+    {
+      "frame": "wasm-function[11285] wasm://wasm/021d3ac6",
+      "microseconds": 860012
+    },
+    {
+      "frame": "wasm-function[7070] wasm://wasm/021d3ac6",
+      "microseconds": 808248
+    },
+    {
+      "frame": "encodeInto node:internal/encoding",
+      "microseconds": 708034
+    },
+    {
+      "frame": "automaticFieldLineup file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/lineup.js",
+      "microseconds": 688975
+    },
+    {
+      "frame": "wasm-function[264] wasm://wasm/021d3ac6",
+      "microseconds": 592551
+    },
+    {
+      "frame": "wasm-function[7063] wasm://wasm/021d3ac6",
+      "microseconds": 572997
+    },
+    {
+      "frame": "__emscripten_memcpy_js file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/index.js",
+      "microseconds": 520686
+    },
+    {
+      "frame": "wasm-function[7140] wasm://wasm/021d3ac6",
+      "microseconds": 516491
+    },
+    {
+      "frame": "wasm-function[7682] wasm://wasm/021d3ac6",
+      "microseconds": 503141
+    },
+    {
+      "frame": "wasm-function[296] wasm://wasm/021d3ac6",
+      "microseconds": 490090
+    },
+    {
+      "frame": "bytes file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js",
+      "microseconds": 489417
+    },
+    {
+      "frame": "wasm-function[11216] wasm://wasm/021d3ac6",
+      "microseconds": 439832
+    },
+    {
+      "frame": "wasm-function[7152] wasm://wasm/021d3ac6",
+      "microseconds": 363033
+    },
+    {
+      "frame": "tt file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js",
+      "microseconds": 345916
+    },
+    {
+      "frame": "validatePitchXpLedger file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/pitch-xp.js",
+      "microseconds": 323733
+    },
+    {
+      "frame": "wasm-function[7681] wasm://wasm/021d3ac6",
+      "microseconds": 311596
+    },
+    {
+      "frame": "wasm-function[244] wasm://wasm/021d3ac6",
+      "microseconds": 307711
+    },
+    {
+      "frame": "wasm-function[7676] wasm://wasm/021d3ac6",
+      "microseconds": 291461
+    },
+    {
+      "frame": "wasm-function[7143] wasm://wasm/021d3ac6",
+      "microseconds": 280245
+    },
+    {
+      "frame": "wasm-function[9879] wasm://wasm/021d3ac6",
+      "microseconds": 276633
+    },
+    {
+      "frame": "Xe file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js",
+      "microseconds": 241094
+    },
+    {
+      "frame": "commitSchoolCompetitionGame file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/high-school-game.js",
+      "microseconds": 229008
+    },
+    {
+      "frame": "add file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js",
+      "microseconds": 227273
+    },
+    {
+      "frame": "wasm-function[7138] wasm://wasm/021d3ac6",
+      "microseconds": 218394
+    }
+  ],
+  "rawSha256": "0d06853428b15b18158514cd03f4c63ced0f17b1e46d66f96ec0a67afa8e807f"
+}

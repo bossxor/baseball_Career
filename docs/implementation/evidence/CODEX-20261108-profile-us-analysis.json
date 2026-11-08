@@ -1,0 +1,53 @@
+{
+  "source": "docs/implementation/evidence/CODEX-20261108-profile-us.json",
+  "method": "exclusive nearest matching sampled stack frame; weighted by V8 timeDelta; estimated attribution, not component wall time",
+  "totalSampleMicroseconds": 93006554,
+  "categories": {
+    "simulation": {
+      "microseconds": 10317288,
+      "percent": 11.093076300837895
+    },
+    "day-close": {
+      "microseconds": 4672285,
+      "percent": 5.0236083362469275
+    },
+    "validation": {
+      "microseconds": 4760527,
+      "percent": 5.1184855209236115
+    },
+    "clone": {
+      "microseconds": 27916712,
+      "percent": 30.015854581602927
+    },
+    "seal": {
+      "microseconds": 1155859,
+      "percent": 1.242771557797959
+    },
+    "json": {
+      "microseconds": 0,
+      "percent": 0
+    },
+    "database": {
+      "microseconds": 18997048,
+      "percent": 20.42549388508685
+    },
+    "gc": {
+      "microseconds": 2966061,
+      "percent": 3.189088158238827
+    },
+    "idle": {
+      "microseconds": 0,
+      "percent": 0
+    },
+    "unclassified": {
+      "microseconds": 22220774,
+      "percent": 23.891621659265002
+    }
+  },
+  "limitations": [
+    "Rules are conservative heuristics; helper work follows its nearest recognized ancestor.",
+    "canonicalJson is not itself a seal; JSON builtins may be invisible.",
+    "V8 samples and PGlite wasm cannot measure database wait time.",
+    "GC, idle and unclassified remain separate."
+  ]
+}

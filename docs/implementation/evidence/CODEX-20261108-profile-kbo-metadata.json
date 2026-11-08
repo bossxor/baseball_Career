@@ -1,0 +1,559 @@
+{
+  "league": "kbo",
+  "fixture": "controlled pre-season fixture",
+  "initialHash": "9352731906e5705e59380b9d7c5144f0af10b6c1573ae8a35b6ce598584f4cf8",
+  "status": "season_review",
+  "commands": [
+    {
+      "type": "CAREER_KBO_PLAY_RESOLVE_CAMP",
+      "phase": "PRESEASON_SETUP",
+      "elapsedMs": 90.03460000000041,
+      "status": 200
+    },
+    {
+      "type": "CAREER_KBO_PLAY_CONFIRM_PRESEASON",
+      "phase": "PRESEASON_SETUP",
+      "elapsedMs": 80.70119999999997,
+      "status": 200
+    },
+    {
+      "type": "CAREER_KBO_PLAY_CONFIRM_ROSTER",
+      "phase": "PRESEASON_SETUP",
+      "elapsedMs": 95.71079999999984,
+      "status": 200
+    },
+    {
+      "type": "CAREER_KBO_PLAY_CONFIRM_SCHEDULE",
+      "phase": "PRESEASON_SETUP",
+      "elapsedMs": 96.95290000000023,
+      "status": 200
+    },
+    {
+      "type": "CAREER_KBO_PLAY_START",
+      "phase": "PRESEASON_SETUP",
+      "elapsedMs": 79.2168999999999,
+      "status": 200
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 25657.2229,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 25851.24,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 27055.174999999996,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 32239.630699999994,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 26696.619600000005,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 13617.524600000004,
+      "status": 200,
+      "stop": "EVENT"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_WINDOW",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 1073.7539999999863,
+      "status": 200
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 27359.674800000008,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 26824.626699999993,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 32963.779299999995,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 27636.396700000012,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28176.299100000004,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28246.9681,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 9335.871199999994,
+      "status": 200,
+      "stop": "EVENT"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_WINDOW",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 1563.2872999999672,
+      "status": 200
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28156.17359999998,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28375.088000000047,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28458.618000000017,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 27828.596600000048,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28323.670599999954,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 29167.93690000003,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28100.772699999972,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 27373.7635,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 30071.50959999999,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28446.11459999997,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28811.44299999997,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 29310.873299999977,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 29251.32579999999,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28498.354099999997,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28491.328800000018,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 30608.542800000054,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28865.763399999938,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28110.508199999924,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28530.147800000035,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28259.229300000006,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 27732.059299999964,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28785.079200000037,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 29234.53899999999,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 29628.887499999953,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 30890.29110000003,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 29477.872599999886,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 31779.00680000009,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 32724.47359999991,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 29679.09269999992,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 30341.099299999885,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 32374.98820000002,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 52769.59489999991,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 30932.73480000021,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28590.32030000002,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_KBO_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 21362.332200000063,
+      "status": 200,
+      "stop": "SEASON_END"
+    }
+  ],
+  "node": "v24.20.0",
+  "platform": "win32",
+  "arch": "x64",
+  "method": "V8 CPU samples collected during HTTP commands and intervening reads; percentages are CPU sample shares, not wall time",
+  "wallMs": 1436011.7258000001,
+  "finalHash": "533754a33db04115da7a73a1dc043653e4d8273e3d2effbb5212b6214262bb33",
+  "initialHashUnchanged": true,
+  "finalPhase": "SEASON_REVIEW",
+  "finalGames": 1440,
+  "cpuSamples": 952865,
+  "topSelfCpu": [
+    {
+      "frame": "structuredClone node:internal/worker/js_transferable",
+      "microseconds": 693679665
+    },
+    {
+      "frame": "canonicalJson file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/game.js",
+      "microseconds": 205622841
+    },
+    {
+      "frame": "(garbage collector) ",
+      "microseconds": 89011636
+    },
+    {
+      "frame": "(anonymous) file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/game.js",
+      "microseconds": 72296109
+    },
+    {
+      "frame": "sum file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/records.js",
+      "microseconds": 61589168
+    },
+    {
+      "frame": "recordTotals file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/records.js",
+      "microseconds": 60414440
+    },
+    {
+      "frame": "parse file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js",
+      "microseconds": 23187279
+    },
+    {
+      "frame": "wasm-function[263] wasm://wasm/021d3ac6",
+      "microseconds": 21832463
+    },
+    {
+      "frame": "kboCompetitionScore file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/kbo-callup.js",
+      "microseconds": 17755609
+    },
+    {
+      "frame": "wasm-function[7024] wasm://wasm/021d3ac6",
+      "microseconds": 16134534
+    },
+    {
+      "frame": "mapToDriverValue file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/drizzle-orm/pg-core/columns/jsonb.js",
+      "microseconds": 13611665
+    },
+    {
+      "frame": "wasm-function[11112] wasm://wasm/021d3ac6",
+      "microseconds": 12541970
+    },
+    {
+      "frame": "kboGameContext file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/kbo-progress.js",
+      "microseconds": 9127162
+    },
+    {
+      "frame": "P file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js",
+      "microseconds": 8045183
+    },
+    {
+      "frame": "commitSchoolCompetitionGame file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/high-school-game.js",
+      "microseconds": 8001905
+    },
+    {
+      "frame": "validatePitchXpLedger file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/pitch-xp.js",
+      "microseconds": 7078066
+    },
+    {
+      "frame": "validate file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/pro-career-awards.js",
+      "microseconds": 6696065
+    },
+    {
+      "frame": "structuredClone ",
+      "microseconds": 6638246
+    },
+    {
+      "frame": "wasm-function[240] wasm://wasm/021d3ac6",
+      "microseconds": 5991708
+    },
+    {
+      "frame": "wasm-function[294] wasm://wasm/021d3ac6",
+      "microseconds": 5910227
+    },
+    {
+      "frame": "wasm-function[9876] wasm://wasm/021d3ac6",
+      "microseconds": 4066151
+    },
+    {
+      "frame": "decodeUTF8 ",
+      "microseconds": 3902663
+    },
+    {
+      "frame": "wasm-function[7070] wasm://wasm/021d3ac6",
+      "microseconds": 3526631
+    },
+    {
+      "frame": "wasm-function[11285] wasm://wasm/021d3ac6",
+      "microseconds": 3448762
+    },
+    {
+      "frame": "encodeInto node:internal/encoding",
+      "microseconds": 3260671
+    },
+    {
+      "frame": "(anonymous) file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/high-school-traits.js",
+      "microseconds": 2795337
+    },
+    {
+      "frame": "wasm-function[7063] wasm://wasm/021d3ac6",
+      "microseconds": 2757264
+    },
+    {
+      "frame": "automaticFieldLineup file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/lineup.js",
+      "microseconds": 2722742
+    },
+    {
+      "frame": "wasm-function[7140] wasm://wasm/021d3ac6",
+      "microseconds": 2581219
+    },
+    {
+      "frame": "wasm-function[264] wasm://wasm/021d3ac6",
+      "microseconds": 2529872
+    },
+    {
+      "frame": "__emscripten_memcpy_js file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/index.js",
+      "microseconds": 2433635
+    },
+    {
+      "frame": "wasm-function[7682] wasm://wasm/021d3ac6",
+      "microseconds": 2332872
+    },
+    {
+      "frame": "wasm-function[296] wasm://wasm/021d3ac6",
+      "microseconds": 2287140
+    },
+    {
+      "frame": "wasm-function[11216] wasm://wasm/021d3ac6",
+      "microseconds": 2164223
+    },
+    {
+      "frame": "wasm-function[7152] wasm://wasm/021d3ac6",
+      "microseconds": 1814334
+    },
+    {
+      "frame": "bytes file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js",
+      "microseconds": 1813174
+    },
+    {
+      "frame": "assertKboRecruitmentWorld file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/kbo-draft.js",
+      "microseconds": 1707323
+    },
+    {
+      "frame": "tt file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js",
+      "microseconds": 1487705
+    },
+    {
+      "frame": "wasm-function[244] wasm://wasm/021d3ac6",
+      "microseconds": 1326632
+    },
+    {
+      "frame": "wasm-function[7143] wasm://wasm/021d3ac6",
+      "microseconds": 1301804
+    }
+  ],
+  "rawSha256": "f368ae6689fad0e0e35d06c4d26183bc461357583ca644c9610782e390234e1f"
+}

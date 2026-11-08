@@ -1,0 +1,218 @@
+{
+  "league": "us",
+  "fixture": "controlled pre-season fixture",
+  "initialHash": "305c73a6a4d691acbfa9fcee4fa4415a03805e54f89d44d974192c7ec47bc11d",
+  "status": "http_error",
+  "commands": [
+    {
+      "type": "CAREER_US_PLAY_START",
+      "phase": "PRESEASON_SETUP",
+      "elapsedMs": 328.01699999999937,
+      "status": 200
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 27383.9477,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28457.108799999995,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 25137.554099999994,
+      "status": 200,
+      "stop": "EVENT"
+    },
+    {
+      "type": "CAREER_US_PLAY_RESOLVE_LEVEL",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 5234.4522,
+      "status": 500
+    }
+  ],
+  "node": "v24.20.0",
+  "platform": "win32",
+  "arch": "x64",
+  "method": "V8 CPU samples collected during HTTP commands and intervening reads; percentages are CPU sample shares, not wall time",
+  "error": {
+    "code": "INTERNAL_ERROR",
+    "requestId": "a29ee8a4-57df-4a26-8fbb-a5be79d941d4"
+  },
+  "wallMs": 93037.6178,
+  "finalHash": "70ffeb6d44c2626c553362ca80fcf220fd0091287b99b3888567f433ea8c8068",
+  "initialHashUnchanged": true,
+  "finalPhase": "EVENT_DECISION",
+  "finalGames": 1800,
+  "cpuSamples": 60697,
+  "topSelfCpu": [
+    {
+      "frame": "structuredClone node:internal/worker/js_transferable",
+      "microseconds": 27542317
+    },
+    {
+      "frame": "validate file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/pro-career-awards.js",
+      "microseconds": 7997306
+    },
+    {
+      "frame": "canonicalJson file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/game.js",
+      "microseconds": 7566891
+    },
+    {
+      "frame": "automaticFieldLineup file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/lineup.js",
+      "microseconds": 3078970
+    },
+    {
+      "frame": "(garbage collector) ",
+      "microseconds": 2966061
+    },
+    {
+      "frame": "(anonymous) file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/game.js",
+      "microseconds": 2900289
+    },
+    {
+      "frame": "parse file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js",
+      "microseconds": 2551368
+    },
+    {
+      "frame": "sum file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/records.js",
+      "microseconds": 2010153
+    },
+    {
+      "frame": "wasm-function[263] wasm://wasm/021d3ac6",
+      "microseconds": 2004259
+    },
+    {
+      "frame": "validatePitchXpLedger file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/pitch-xp.js",
+      "microseconds": 1982462
+    },
+    {
+      "frame": "recordTotals file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/records.js",
+      "microseconds": 1836190
+    },
+    {
+      "frame": "wasm-function[7024] wasm://wasm/021d3ac6",
+      "microseconds": 1742775
+    },
+    {
+      "frame": "observeProCareerAwardGame file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/pro-career-awards.js",
+      "microseconds": 1578680
+    },
+    {
+      "frame": "mapToDriverValue file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/drizzle-orm/pg-core/columns/jsonb.js",
+      "microseconds": 1511451
+    },
+    {
+      "frame": "wasm-function[11112] wasm://wasm/021d3ac6",
+      "microseconds": 1442074
+    },
+    {
+      "frame": "usGameContext file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/us-season.js",
+      "microseconds": 1267923
+    },
+    {
+      "frame": "P file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js",
+      "microseconds": 1130261
+    },
+    {
+      "frame": "better file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/lineup.js",
+      "microseconds": 1063346
+    },
+    {
+      "frame": "(anonymous) file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/us-season.js",
+      "microseconds": 824703
+    },
+    {
+      "frame": "wasm-function[240] wasm://wasm/021d3ac6",
+      "microseconds": 799634
+    },
+    {
+      "frame": "cloneUsCareerForGames file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/us-season.js",
+      "microseconds": 747096
+    },
+    {
+      "frame": "advanceUsCareerOwned file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/us-season.js",
+      "microseconds": 724820
+    },
+    {
+      "frame": "process file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@noble/hashes/sha2.js",
+      "microseconds": 700814
+    },
+    {
+      "frame": "wasm-function[294] wasm://wasm/021d3ac6",
+      "microseconds": 644729
+    },
+    {
+      "frame": "(anonymous) file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/health.js",
+      "microseconds": 639739
+    },
+    {
+      "frame": "effectiveAbilities file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/probabilities.js",
+      "microseconds": 540505
+    },
+    {
+      "frame": "wasm-function[9876] wasm://wasm/021d3ac6",
+      "microseconds": 498315
+    },
+    {
+      "frame": "wasm-function[11285] wasm://wasm/021d3ac6",
+      "microseconds": 463394
+    },
+    {
+      "frame": "encodeInto node:internal/encoding",
+      "microseconds": 448109
+    },
+    {
+      "frame": "team file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/high-school-game.js",
+      "microseconds": 440222
+    },
+    {
+      "frame": "decodeUTF8 ",
+      "microseconds": 401925
+    },
+    {
+      "frame": "__emscripten_memcpy_js file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/node_modules/@electric-sql/pglite/dist/index.js",
+      "microseconds": 388155
+    },
+    {
+      "frame": "wasm-function[7070] wasm://wasm/021d3ac6",
+      "microseconds": 372212
+    },
+    {
+      "frame": "structuredClone ",
+      "microseconds": 352724
+    },
+    {
+      "frame": "validateHealthLedger file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/health.js",
+      "microseconds": 344525
+    },
+    {
+      "frame": "(anonymous) file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/high-school-traits.js",
+      "microseconds": 327587
+    },
+    {
+      "frame": "commitSchoolCompetitionGame file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/high-school-game.js",
+      "microseconds": 315609
+    },
+    {
+      "frame": "processPlateAppearance file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/game.js",
+      "microseconds": 291476
+    },
+    {
+      "frame": "assertAbilities file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/rules/dist/index.js",
+      "microseconds": 277473
+    },
+    {
+      "frame": "(anonymous) file:///C:/Users/OJT/.codex/worktrees/tf-season-profile/baseball_career/packages/engine/dist/probabilities.js",
+      "microseconds": 274357
+    }
+  ],
+  "rawSha256": "895cc7fed9d033756b08276dcad07081206fe92dc76add5ee538f9b4ba4776ba"
+}
