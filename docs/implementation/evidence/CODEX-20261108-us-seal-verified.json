@@ -1,0 +1,75 @@
+{
+  "league": "us",
+  "fixture": "controlled pre-season fixture",
+  "initialHash": "305c73a6a4d691acbfa9fcee4fa4415a03805e54f89d44d974192c7ec47bc11d",
+  "status": "http_error",
+  "commands": [
+    {
+      "type": "CAREER_US_PLAY_START",
+      "phase": "PRESEASON_SETUP",
+      "elapsedMs": 446.0785999999998,
+      "status": 200
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 26772.1074,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 27839.9747,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28355.7232,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 8635.988499999992,
+      "status": 200,
+      "stop": "EVENT"
+    },
+    {
+      "type": "CAREER_US_PLAY_RESOLVE_LEVEL",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 5338.107799999998,
+      "status": 200
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 29110.7221,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28757.560199999978,
+      "status": 500
+    }
+  ],
+  "node": "v24.20.0",
+  "platform": "win32",
+  "arch": "x64",
+  "method": "CPU profiling disabled",
+  "memoryMode": true,
+  "error": {
+    "code": "INTERNAL_ERROR",
+    "requestId": "4890a7f1-e6ea-480f-8976-c283afd00e61"
+  },
+  "wallMs": 166701.7107,
+  "finalHash": "46d46dc43d5d631bf32007165959764ceb0a323008c9a58d444a6cbaaf24b570",
+  "initialHashUnchanged": true,
+  "finalPhase": "SEASON_PROGRESS",
+  "finalGames": 2104
+}

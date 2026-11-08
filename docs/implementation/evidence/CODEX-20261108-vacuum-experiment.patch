@@ -1,0 +1,21 @@
+diff --git a/scripts/profile-career-api.mjs b/scripts/profile-career-api.mjs
+index eb81762..7f1d2db 100644
+--- a/scripts/profile-career-api.mjs
++++ b/scripts/profile-career-api.mjs
+@@ -43,6 +43,7 @@ const state=async()=>((await db.select({state:gameSaves.state,revision:gameSaves
+ const session=cpuEnabled?new Session():null;session?.connect();
+ const inspector=(method,params={})=>new Promise((resolve,reject)=>session.post(method,params,(err,result)=>err?reject(err):resolve(result)));
+ let result={league,fixture:'controlled pre-season fixture',initialHash,status:'running',commands:[],node:process.version,platform:process.platform,arch:process.arch,method:cpuEnabled?'V8 CPU samples collected during HTTP commands and intervening reads; percentages are CPU sample shares, not wall time':'CPU profiling disabled',memoryMode};
++result.vacuumBetweenCommands=process.argv.includes('--vacuum');
+ let current=source,revision=0,profile;
+ const start=performance.now();
+ try{
+@@ -66,6 +67,8 @@ try{
+   if(memoryMode)memory('request-return',{status:response.status});activeCommand=null;
+   const data=await response.json();result.commands.push({type:body.type,phase,elapsedMs,status:response.status,stop:data.summary?.spanStop??data.summary?.stopReason});
+   if(!response.ok){result.status='http_error';result.error=data;break;}
++  // Diagnostic only: reclaim obsolete PGlite row versions outside the API transaction.
++  if(result.vacuumBetweenCommands)await client.exec('VACUUM game_saves, command_receipts');
+   const row=await state();current=row.state.career;revision=Number(row.revision);
+   console.log(JSON.stringify({league,command:n,type:body.type,stop:data.summary?.spanStop??data.summary?.stopReason??null,phase:current.phaseContext.phase,nextWorldDay:current.phaseContext.nextWorldDay??null,games:Object.keys(current.records.games).length,elapsedSeconds:Math.round((performance.now()-start)/1000)}));
+  }
