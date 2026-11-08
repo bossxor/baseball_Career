@@ -11,14 +11,18 @@ export interface FlowProps {
   view: FlowView | null; state?: ScreenState;
   onCommand?: (command: FlowCommand) => void; onBack?: () => void; onReload?: () => void;
 }
+export function currentFlowCommand(commands: readonly FlowCommand[], selected: FlowCommand | null): FlowCommand | undefined {
+  return selected ? commands.find(command => JSON.stringify(command) === JSON.stringify(selected)) : undefined;
+}
 /** 진로·재도전 흐름. Buttons are exactly the commands the server offered; a command with `confirm` needs a second, explicit tap. */
 export function Flow({ view, state = 'ready', onCommand, onBack, onReload }: FlowProps) {
-  const [asking, setAsking] = useState<string | null>(null), [signing, setSigning] = useState<string | null>(null);
+  const [asking, setAsking] = useState<FlowCommand | null>(null), [signing, setSigning] = useState<FlowCommand | null>(null);
   const busy = isBusy(state), banner = state === 'ready' || state === 'empty' ? null : stateText('S03', state);
-  const pending = view?.commands.find(c => c.id === asking), signCmd = view?.commands.find(c => c.id === signing && c.sign), confirmRef = useRef<HTMLElement>(null), signRef = useRef<HTMLElement>(null);
+  const pending = currentFlowCommand(view?.commands ?? [], asking), signCmd = currentFlowCommand(view?.commands ?? [], signing), confirmRef = useRef<HTMLElement>(null), signRef = useRef<HTMLElement>(null);
   // Move focus into the confirmation so keyboard and screen-reader users land on the question.
   useEffect(() => { if (pending) confirmRef.current?.focus(); }, [pending]);
   useEffect(() => { if (signCmd) signRef.current?.focus(); }, [signCmd]);
+  useEffect(() => { if (asking && !pending) setAsking(null); if (signing && !signCmd) setSigning(null); }, [asking, pending, signing, signCmd]);
   return (
     <main className="screen" aria-labelledby="flow-title" aria-busy={busy} data-screen="FLOW" data-state={state}>
       <header className="topbar">{onBack ? <button type="button" className="ghost" onClick={onBack}>커리어로</button> : <span />}</header>
@@ -43,7 +47,7 @@ export function Flow({ view, state = 'ready', onCommand, onBack, onReload }: Flo
               <Illustration name="warn" />
               <p id="flow-confirm"><strong>{pending.confirm}</strong></p>
               <div className="actions">
-                <Button danger busy={busy} onClick={() => { setAsking(null); onCommand?.(pending); }}>{pending.label}</Button>
+                <Button danger busy={busy} onClick={() => { setAsking(null); if (pending.sign) setSigning(pending); else onCommand?.(pending); }}>{pending.label}</Button>
                 <Button onClick={() => setAsking(null)}>취소</Button>
               </div>
             </section>
@@ -51,7 +55,7 @@ export function Flow({ view, state = 'ready', onCommand, onBack, onReload }: Flo
             <div className="actions" role="group" aria-label="다음 행동">
               {view.commands.map((c, i) => (
                 <div key={c.id} className="cmd">
-                  <Button primary={i === 0 && !c.confirm} busy={busy} describedBy={c.facts?.length ? `facts-${c.id}` : undefined} onClick={() => (c.confirm ? setAsking(c.id) : c.sign ? setSigning(c.id) : onCommand?.(c))}>{c.label}</Button>
+                  <Button primary={i === 0 && !c.confirm} busy={busy} describedBy={c.facts?.length ? `facts-${c.id}` : undefined} onClick={() => (c.confirm ? setAsking(structuredClone(c)) : c.sign ? setSigning(structuredClone(c)) : onCommand?.(c))}>{c.label}</Button>
                   {c.facts?.length ? <dl id={`facts-${c.id}`} className="cmd-facts">{c.facts.map(f => <div key={f.label}><dt>{f.label}</dt><dd>{f.value}</dd></div>)}</dl> : null}
                 </div>
               ))}

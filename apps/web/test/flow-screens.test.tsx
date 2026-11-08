@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Create } from '../src/screens/Create.js';
-import { Flow } from '../src/screens/Flow.js';
+import { Flow, currentFlowCommand } from '../src/screens/Flow.js';
 import { Career } from '../src/screens/Career.js';
 import { emptyDraft, setKind, validateStep } from '../src/creation.js';
 import { parseRoute } from '../src/App.js';
@@ -29,6 +29,14 @@ const flow: FlowView = {
     { id: 'draft-decline', label: '제안 거절', type: 'CAREER_KBO_ENTRY_DECIDE', payload: { careerRevision: 3 }, confirm: '거절하면 이 지명은 사라집니다. 거절할까요?' },
   ],
 };
+
+test('confirmation and signing reject a changed offer with the same action id', () => {
+  const selected = {...flow.commands[0]!, sign:{name:'선수'}};
+  assert.deepEqual(currentFlowCommand([{...selected}], selected), selected);
+  assert.equal(currentFlowCommand([{...selected,payload:{careerRevision:4}}], selected), undefined);
+  assert.equal(currentFlowCommand([{...selected,payload:{careerRevision:3,offerKey:'other'}}], selected), undefined);
+  assert.equal(currentFlowCommand([], selected), undefined);
+});
 
 test('flow screen: only served commands become buttons; busy disables them; a missing view explains itself', () => {
   const html = renderToStaticMarkup(<Flow view={flow} onBack={() => {}} />);

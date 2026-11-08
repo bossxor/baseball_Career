@@ -1,0 +1,50 @@
+
+> again-playball@0.1.0 check
+> npm run lint && npm run typecheck && npm test && npm run test:web && npm run build && npm run verify:engine && npm run verify:events && npm run verify:design && npm run verify:android && npm run verify:assets
+
+
+> again-playball@0.1.0 lint
+> eslint packages apps scripts
+
+
+> again-playball@0.1.0 typecheck
+> npm run build --workspace @playball/rules && npm run build --workspace @playball/engine && npm run build --workspace @playball/db && npm run typecheck --workspaces --if-present && tsc -p tsconfig.tests.json
+
+
+> @playball/rules@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/engine@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/db@0.1.0 build
+> tsc -p tsconfig.json
+
+
+> @playball/db@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/engine@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/rules@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/api@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+
+> @playball/web@0.1.0 typecheck
+> tsc -p tsconfig.json --noEmit
+
+apps/api/test/m2-school-events-http.test.ts(21,61): error TS2339: Property 'then' does not exist on type 'Response | Promise<Response>'.
+  Property 'then' does not exist on type 'Response'.
+apps/api/test/m2-school-events-http.test.ts(29,54): error TS7006: Parameter 'a' implicitly has an 'any' type.
+apps/api/test/m2-school-events-http.test.ts(34,54): error TS7006: Parameter 'a' implicitly has an 'any' type.
+packages/engine/test/kbo-career-fa.test.ts(127,121): error TS2339: Property 'push' does not exist on type 'readonly EventInstance[]'.
+packages/engine/test/kbo-career-fa.test.ts(128,39): error TS2542: Index signature in type 'Readonly<Record<string, string | number>>' only permits reading.

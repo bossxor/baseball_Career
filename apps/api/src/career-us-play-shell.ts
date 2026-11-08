@@ -26,7 +26,7 @@ function majorPrice(c:engine.UsCareer,funding:ReturnType<typeof majorFunding>,ba
  const price=engine.careerAgentUsSalary(c,funding,baseSalary,key);
  return {annualSalaryUsd:price.annualSalaryUsd,...(key?{counterOfferKey:key}:{})};
 }
-function majorContractView(c:engine.UsCareer,transition:ReturnType<typeof engine.usYearTransitionReadiness>|null){
+export function majorContractView(c:engine.UsCareer,transition:ReturnType<typeof engine.usYearTransitionReadiness>|null){
  if(c.contract.type!=='US_MAJOR'||!transition||transition.blockers.some(b=>b!=='CONTRACT_DECISION_REQUIRED'&&!(b==='OPEN_EVENT'&&engine.hasOnlyUsMajorFaWindowEvent(c))))return null;
  const funding=majorFunding(c);
  try{

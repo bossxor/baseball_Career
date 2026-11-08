@@ -12,6 +12,7 @@ import { confirmKboSeasonSchedule } from '../../../packages/engine/src/kbo-sched
 import { startKboRegularSeason } from '../../../packages/engine/src/kbo-progress.js';
 import type { KboCareer } from '../../../packages/engine/src/kbo-career-entry.js';
 import type { FlowView } from '../src/model.js';
+import { retryNoOfferPrefix } from '../../../packages/engine/test/retry-completion-scenario.js';
 
 // One press must be able to run a whole stretch; production keeps a 25s request budget.
 process.env.PLAYBALL_SPAN_BUDGET_MS = '900000';
@@ -23,16 +24,31 @@ async function session(subject: string, career: unknown) {
   const app = createApp({ db, auth: { allowDevBearer: true } }), headers = { Authorization: 'Bearer dev:' + subject, 'Content-Type': 'application/json' };
   const { saveId } = await json<{ saveId: string }>(await app.request('/api/game-creations', { method: 'POST', headers, body: JSON.stringify({ creationId: subject, mode: 'CAREER' }) }));
   await db.update(gameSaves).set({ state: { schemaVersion: 1, career } }).where(eq(gameSaves.id, saveId));
-  globalThis.fetch = ((input: RequestInfo | URL, init?: RequestInit) => app.request(String(input), init)) as typeof fetch;
+  let loseRefresh = false;
+  const sent: string[] = [];
+  globalThis.fetch = ((input: RequestInfo | URL, init?: RequestInit) => {
+    if (init?.method === 'POST') sent.push(String(init.body));
+    if (loseRefresh && String(input).endsWith('/screens/CAREER_FLOW')) {
+      loseRefresh = false;
+      throw new TypeError('lost refresh');
+    }
+    return app.request(String(input), init);
+  }) as typeof fetch;
   const api = createHttpApi({ baseUrl: 'http://api.local', getToken: () => 'dev:' + subject });
   let view = (await api.flow(saveId))!, n = 0;
   return {
     api, saveId, get view() { return view; }, ids: () => view.commands.map(c => c.id),
-    take: async (id: string): Promise<FlowView> => {
+    take: async (id: string, lose = false): Promise<FlowView> => {
       const c = view.commands.find(x => x.id === id);
       assert.ok(c, `offered ${id}: ${view.commands.map(x => x.id)}`);
       assert.doesNotMatch(JSON.stringify(view), HIDDEN);
-      view = (await api.flowCommand(saveId, `${subject}-${n++}`, c.type, c.payload))!;
+      const commandId = `${subject}-${n++}`;
+      if (lose) {
+        loseRefresh = true;
+        await assert.rejects(api.flowCommand(saveId, commandId, c.type, c.payload));
+        view = (await api.flowCommand(saveId, commandId, c.type, {...c.payload,careerRevision:-1}))!;
+        assert.equal(sent.at(-1),sent.at(-2));
+      } else view = (await api.flowCommand(saveId, commandId, c.type, c.payload))!;
       return view;
     },
     close: async () => { globalThis.fetch = originalFetch; await client.close(); },
@@ -67,6 +83,26 @@ test('KBO pro season: regular season end → postseason → season close, all fr
     assert.ok(s.ids().includes('close-season'), `postseason ends in a season close: ${s.ids()}`);
     await s.take('close-season');
     assert.ok(!s.ids().includes('close-season'));
+    assert.deepEqual(s.ids(), ['contract-offers']);
+    await s.take('contract-offers');
+    const offer = s.view.commands.find(c => c.id === 'renew')!;
+    assert.ok(offer.sign);
+    assert.ok(offer.confirm);
+    await s.take('renew', true);
+    assert.deepEqual(s.ids(), ['next-year']);
+    await s.take('next-year');
+    assert.ok(s.ids().length > 0);
+  } finally { await s.close(); }
+});
+
+test('KBO empty offseason market keeps the existing retry route', async () => {
+  const s = await session('web-kbo-empty', retryNoOfferPrefix());
+  try {
+    assert.deepEqual(s.ids(), ['retry-open']);
+    await s.take('retry-open');
+    assert.deepEqual(s.ids(), ['retry-review']);
+    await s.take('retry-review');
+    assert.ok(s.ids().includes('route-prep'));
   } finally { await s.close(); }
 });
 

@@ -36,6 +36,16 @@ export function careerFlowScreen(state:SaveState):FlowScreen {
 }
 function baseFlowScreen(state:SaveState):FlowScreen {
  const c=state.career as Career|undefined;if(!c||typeof c!=='object'||Array.isArray(c))throw Object.assign(new Error('CAREER_NOT_FOUND'),{code:'CAREER_NOT_FOUND'});
+ if((isUs(c)||isKbo(c))&&c.phaseContext.phase==='RETIRE_CONFIRM'&&!(isKbo(c)&&c.retryPro)){
+  const e=c.events.find(x=>x.eventKey===(c.phaseContext as {eventKey:string}).eventKey&&x.definitionId==='E36'&&x.status==='OPEN');
+  const commands=e?['CONFIRM_RETIRE','CANCEL_RETIRE'].map(command=>({
+   id:command==='CONFIRM_RETIRE'?'retire-confirm':'retire-cancel',
+   label:command==='CONFIRM_RETIRE'?'은퇴 확정':'은퇴 취소',type:'CAREER_PRO_RETIRE_RESOLVE',
+   payload:{careerRevision:c.revision,eventKey:e.eventKey,eventVersion:e.version,command},
+   ...(command==='CONFIRM_RETIRE'?{confirm:'은퇴하면 되돌릴 수 없습니다. 확정할까요?'}:{}),
+  })):[];
+  return {screenId:'CAREER_FLOW',title:'은퇴 확인',lines:[],commands,notice:null,careerRevision:c.revision};
+ }
  return isUs(c)?usFlow(c):isKbo(c)?kboFlow(c):collegeApplies(c)&&(isCollege(c)||c.phaseContext.phase==='NEXT_SEASON_READY')?collegeFlow(c):schoolFlow(c);
 }
 

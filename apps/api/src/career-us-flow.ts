@@ -2,6 +2,7 @@ import * as engine from '@playball/engine';
 import {ABILITY_LABELS,abilityKeys} from '@playball/rules';
 import {teamProgress} from './span-budget.js';
 import type {FlowCommand,FlowScreen} from './career-flow-screen.js';
+import {majorContractView} from './career-us-play-shell.js';
 
 /** US road play loop. Commands are the existing owned CAREER_US_PLAY_* ones; availability is decided by engine previews/readiness, never by the client. */
 export const isUs=(c:object):c is engine.UsCareer=>'protagonistOrganizationId' in c;
@@ -46,6 +47,44 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
  if(phase.phase==='SEASON_REVIEW'){
   const t=engine.usYearTransitionReadiness(c);
   if(t.ready)return out('시즌 종료',[cmd('next-minor-year','다음 시즌 시작','NEXT_MINOR_YEAR')],`다음 시즌: ${t.targetSeasonKey}`);
+  if(t.blockers.every(b=>b==='CONTRACT_DECISION_REQUIRED'||b==='OPEN_EVENT')){
+   const sign=(command:FlowCommand):FlowCommand=>({...command,confirm:'이 계약을 확정할까요?',sign:{name:p.name}});
+   if(c.contract.type==='US_MINOR'){
+    if(c.minorMarket){
+     const market=engine.usMinorMarketView(c);
+     const commands=market.offers.map((o,i)=>({...sign(cmd('minor-'+i,
+      `${o.organizationName} · ${o.years}년 · 연봉 $${o.annualSalaryUsd.toLocaleString('en-US')}`,
+      'ACCEPT_MINOR_OFFER',{offerKey:o.offerKey})),facts:[
+       {label:'대표팀 차출',value:o.nationalReleaseAllowed?'허용':'불허'},
+       {label:'병역 복귀 옵션',value:o.militaryReturnOption?'있음':'없음'},
+      ]}));
+     return out('마이너 계약 제안',commands,commands.length?null:'현재 계약 제안이 없습니다.');
+    }
+    if(t.blockers.length===1)return out('계약 만료',[cmd('minor-market','계약 제안 확인','OPEN_MINOR_MARKET')]);
+   }else{
+    const quote=majorContractView(c,t);
+    if(quote?.kind==='RENEWAL'){
+     lines.push({label:'계약',value:`${quote.years}년 · 연봉 $${quote.annualSalaryUsd.toLocaleString('en-US')}`});
+     const commands=quote.funded?[sign(cmd('major-renew','계약 수락','NEXT_MAJOR_YEAR',
+      'counterOfferKey' in quote?{counterOfferKey:quote.counterOfferKey}:{}))]:[];
+     return out('메이저 재계약',commands,quote.funded?null:'계약 예산이 부족하여 진행할 수 없습니다.');
+    }
+    if(quote?.kind==='FREE_AGENCY'){
+     if(!c.majorFaWindow)return out('FA 자격',[cmd('major-market','FA 제안 확인','OPEN_MAJOR_FA_WINDOW')]);
+     const commands:FlowCommand[]=quote.offers.map((o,i)=>({...sign(cmd('major-fa-'+i,
+      `${o.organizationId} · ${o.years}년 · 연봉 $${o.annualSalaryUsd.toLocaleString('en-US')}`,
+      'ACCEPT_MAJOR_FA',{offerKey:o.offerKey,...('counterOfferKey' in o?{counterOfferKey:o.counterOfferKey}:{})})),facts:[
+       {label:'대표팀 차출',value:o.nationalReleaseAllowed?'허용':'불허'},
+       {label:'병역 복귀 옵션',value:o.militaryReturnOption?'있음':'없음'},
+      ]}));
+     if(!commands.length)commands.push({
+      id:'retire-request',label:'은퇴 절차 시작',type:'CAREER_PRO_RETIRE_REQUEST',
+      payload:{careerRevision:c.revision},confirm:'은퇴 확인 단계로 이동할까요?',
+     });
+     return out('메이저 FA 제안',commands,quote.offers.length?null:'현재 계약 제안이 없습니다.');
+    }
+   }
+  }
   const commands:FlowCommand[]=[];
   if(t.blockers.includes('POSTSEASON_NOT_COMPLETE'))commands.push(c.world.conferenceRegistry?cmd('post-start','포스트시즌 시작','START_POSTSEASON'):cmd('leagues','리그 편성 확인','CONFIGURE_LEAGUES'));
   if(t.blockers.includes('TRAINING_DECISION_REQUIRED')){let ok:boolean;try{ok=engine.previewUsTraining(c,{type:'SKIP'}).eligible;}catch{ok=false;}

@@ -1,7 +1,7 @@
 import * as engine from '@playball/engine';
 import {spanDeadline,spanStopOf,teamProgress} from './span-budget.js';
 import type {SpanStop} from './span-budget.js';
-import {ABILITY_LABELS,abilityKeys} from '@playball/rules';
+import {ABILITY_LABELS,abilityKeys,KBO_CLUBS} from '@playball/rules';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
 import type {FlowCommand,FlowScreen} from './career-flow-screen.js';
 
@@ -9,6 +9,8 @@ import type {FlowCommand,FlowScreen} from './career-flow-screen.js';
 const fields=new Map<string,readonly string[]>([
  ['RESOLVE_CAMP',['eventKey','eventVersion']],['CONFIRM_PRESEASON',[]],['CONFIRM_ROSTER',[]],['CONFIRM_SCHEDULE',[]],['START',[]],
  ['ADVANCE',['maxDays']],['ADVANCE_SPAN',['span']],['WINDOW',['eventKey','eventVersion','command']],['TRAIN',['choice']],
+ ['OPEN_CONTRACT_OFFERS',[]],['ACCEPT_RENEWAL',['eventKey','eventVersion','offerKey']],['ACCEPT_OFFSEASON',['eventKey','eventVersion','offerKey']],
+ ['SELECT_FA',['eventKey','eventVersion','offerKey']],['ACCEPT_FA',['eventKey','eventVersion','offerKey']],['DECLINE_FA',['eventKey','eventVersion']],
  ['START_POSTSEASON',[]],['ADVANCE_POSTSEASON',[]],['SETTLE_GROWTH',[]],['CLOSE_SEASON',['forfeitUnusedTraining']],['NEXT_YEAR',[]],
 ]);
 const WINDOW_COMMANDS=['OPEN_TRAINING','DEFER_TRAINING','FORFEIT_TRAINING','ACK_EVENT'];
@@ -36,6 +38,8 @@ export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand
  const p=raw as Record<string,unknown>,c=state.career as engine.KboCareer|undefined;
  if(!c||typeof c!=='object'||Array.isArray(c)||typeof c.protagonistClubId!=='string')fail('KBO_CAREER_REQUIRED');
  const rev=int(p,'careerRevision',1);let next:engine.KboCareer,stopReason:string|undefined,spanStop:SpanStop|undefined;
+ const event=()=>({eventKey:str(p,'eventKey'),eventVersion:int(p,'eventVersion',1)});
+ const offer=()=>({...event(),offerKey:str(p,'offerKey')});
  try{
   switch(name){
    case 'RESOLVE_CAMP':next=engine.resolveKboFirstCampNotice(c,rev,{eventKey:str(p,'eventKey'),eventVersion:int(p,'eventVersion',1),command:'KEEP_FOCUS'});break;
@@ -47,6 +51,12 @@ export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand
    case 'ADVANCE_SPAN':{if(p.span!=='SEASON'&&p.span!=='MONTH')fail('INVALID_PAYLOAD');const r=advanceSpan(c,rev,p.span);next=r.career;stopReason=r.stopReason;spanStop=spanStopOf(p.span,next.phaseContext.phase,r.stopReason,r.monthDone);break;}
    case 'WINDOW':{const cmd=str(p,'command');if(!WINDOW_COMMANDS.includes(cmd))fail('INVALID_PAYLOAD');next=engine.resolveKboWindowEvent(c,rev,{eventKey:str(p,'eventKey'),eventVersion:int(p,'eventVersion',1),command:cmd}).career;break;}
    case 'TRAIN':next=engine.trainKboCareer(c,rev,choice(p.choice));break;
+   case 'OPEN_CONTRACT_OFFERS':next=engine.kboServiceTimeView(c).registrationThresholds.domesticFa.reached?engine.openKboCareerFa(c,rev):engine.offerKboRenewal(c,rev);break;
+   case 'ACCEPT_RENEWAL':next=engine.acceptKboRenewal(c,rev,offer());break;
+   case 'ACCEPT_OFFSEASON':next=engine.acceptKboOffseasonOffer(c,rev,offer());break;
+   case 'SELECT_FA':next=engine.selectKboCareerFaOffer(c,rev,offer());break;
+   case 'ACCEPT_FA':next=engine.acceptKboCareerFaOffer(c,rev,offer());break;
+   case 'DECLINE_FA':next=engine.declineKboCareerFaSelection(c,rev,event());break;
    case 'SETTLE_GROWTH':next=engine.settleKboSeasonGrowth(c,rev).career;break;
    case 'START_POSTSEASON':next=engine.startKboPostseason(c,rev);break;
    case 'ADVANCE_POSTSEASON':{const r=engine.advanceKboPostseason(c,rev);next=r.career;stopReason=r.stopReason;break;}
@@ -94,6 +104,48 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
  if(phase.phase==='SEASON_REVIEW'&&c.days){
   const t=engine.kboYearTransitionReadiness(c);
   if(t.ready)return out('시즌 종료',[cmd('next-year','다음 시즌 시작','NEXT_YEAR')],`다음 시즌: ${t.targetSeasonKey}`);
+  if(c.seasonClose&&t.blockers.includes('CONTRACT_DECISION_REQUIRED')){
+   const label=(offer:{clubId:string;years:number;annualSalaryWon:number})=>
+    `${KBO_CLUBS.find(x=>x.id===offer.clubId)?.name??offer.clubId} · ${offer.years}년 · 연봉 ${offer.annualSalaryWon.toLocaleString('ko-KR')}원`;
+   const signed=(command:FlowCommand):FlowCommand=>({...command,confirm:'이 계약을 확정할까요?',sign:{name:p.name}});
+   const fa=engine.kboCareerFaView(c),offseason=engine.kboOffseasonOffersView(c);
+   if(fa?.state==='OPEN'){
+    const commands=fa.offers.map((o,i)=>cmd('fa-'+i,label(o),'SELECT_FA',
+     {eventKey:fa.eventKey,eventVersion:fa.eventVersion,offerKey:o.offerKey}));
+    if(!fa.offers.length&&fa.retirementAvailable)commands.push({
+     id:'retire-request',label:'은퇴 절차 시작',type:'CAREER_PRO_RETIRE_REQUEST',
+     payload:{careerRevision:c.revision},confirm:'은퇴 확인 단계로 이동할까요?',
+    });
+    return out('FA 제안 비교',commands,fa.offers.length?null:'조건에 맞는 제안이 없습니다.');
+   }
+   if(fa?.state==='SELECTED'){
+    const o=fa.offers.find(x=>x.offerKey===fa.selectedOfferKey)!;
+    lines.push({label:'제안',value:label(o)});
+    lines.push({label:'예상 역할',value:o.role===1?'주전 경쟁':o.role===0.8?'플래툰':'백업'});
+    return out('FA 계약 확인',[
+     signed(cmd('fa-sign','계약 수락','ACCEPT_FA',{eventKey:fa.eventKey,eventVersion:fa.eventVersion,offerKey:o.offerKey})),
+     cmd('fa-back','다른 제안 보기','DECLINE_FA',{eventKey:fa.eventKey,eventVersion:fa.eventVersion}),
+    ]);
+   }
+   if(offseason?.status==='OPEN'){
+    if(!offseason.offers.length)return null;
+    return out('다른 구단 제안',offseason.offers.map((o,i)=>{
+     const r=c.agents?.salaryRequests.find(x=>x.offerSetKey===c.offseasonExit?.requestKey&&x.baseOfferKey===o.offerKey&&x.outcome==='ACCEPTED');
+     const price=engine.careerAgentOffseasonOffer(c,o,r?.counterOfferKey??o.offerKey);
+     return signed(cmd('offseason-'+i,label({...o,annualSalaryWon:price.annualSalaryWon}),'ACCEPT_OFFSEASON',{eventKey:offseason.eventKey,eventVersion:offseason.eventVersion,offerKey:price.offerKey}));
+    }));
+   }
+   const renewal=c.renewal,e=c.events.find(x=>x.eventKey===renewal?.eventKey&&x.status==='OPEN');
+   if(renewal?.status==='OFFERED'&&e){
+    const counter=c.agents?.salaryRequests.find(x=>x.offerSetKey===renewal.offerKey&&x.outcome==='ACCEPTED');
+    const price=engine.careerAgentRenewalOffer(c,counter?.counterOfferKey??renewal.offerKey);
+    lines.push({label:'재계약',value:label({...renewal,annualSalaryWon:price.annualSalaryWon})});
+    return out('재계약 제안',[
+     signed(cmd('renew','재계약 수락','ACCEPT_RENEWAL',{eventKey:e.eventKey,eventVersion:e.version,offerKey:price.offerKey})),
+    ]);
+   }
+   if(!c.events.some(e=>e.status==='OPEN'&&e.definitionId!=='E50')&&p.age<45)return out('다음 시즌 계약',[cmd('contract-offers','계약 제안 확인','OPEN_CONTRACT_OFFERS')]);
+  }
   if(!c.postseason&&!c.seasonClose)return out('정규시즌 종료',[cmd('post-start','포스트시즌 시작','START_POSTSEASON')]);
   if(c.postseason?.championKey&&!c.seasonClose){
    if(!c.seasonGrowth.entries.some(e=>JSON.parse(e.periodKey)[0]==='pro-growth'))return out('시즌 정산',[cmd('settle-growth','시즌 성장 정산','SETTLE_GROWTH')]);

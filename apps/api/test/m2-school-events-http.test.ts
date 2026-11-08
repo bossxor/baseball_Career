@@ -18,7 +18,7 @@ test('school event choices resolve owned current events through HTTP without cha
    const event=createWorldEvent({definitionId,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:definition.evidenceDomain,fields},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'SEASON_PROGRESS',competitionKey:'HS',registrationKey:'H01',sourceRevision:c.revision},sourceSequence:c.events.length+1,worldDay:31});
    const source={...c,events:[...c.events,event],phaseContext:{phase:'EVENT_DECISION' as const,eventKey:event.eventKey,resume:c.phaseContext as Extract<typeof c.phaseContext,{phase:'SEASON_PROGRESS'}>}};
    await db.update(gameSaves).set({state:{schemaVersion:1,career:source}}).where(eq(gameSaves.id,created.saveId));
-   const readHome=()=>app.request(path+'/career',{headers}).then(json<{nextActions:{id:string;command:{type:string;payload:Record<string,unknown>}}[]}>);
+   const readHome=async()=>json<{nextActions:{id:string;command:{type:string;payload:Record<string,unknown>}}[]}>(await app.request(path+'/career',{headers}));
    const home=await readHome(),served=home.nextActions[0]!,action=served.command;ids.push(served.id);assert.equal(action.payload.eventVersion,event.version);assert.equal(action.payload.command,command);
    // The web refreshes the home view and matches the displayed ID before sending a command.
    for(const changed of [

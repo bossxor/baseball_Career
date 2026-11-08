@@ -66,7 +66,7 @@
 ### SLB-05 시즌 결과 화면 [변형 · 부분 구현]
 - 관찰 순서: 역할 변화 배지(신인→1군 주전) · 한 줄 시즌 평가 · 기록 카드(홈런·안타·타점 / 타율·출루·장타·OPS, 투수는 승·이닝·탈삼진·ERA·WHIP·K/9) · CH(커리어 하이) 표시 · 타이틀 트로피 · 타구 지표(최고·평균 타구속도, 강한타구·발사각·뜬공·배럴 %, 전년 대비 화살표) · OVR 변화와 능력별 증감 · 팀 순위(정규/최종)·승패 · 국가대표 선발 행 · 코멘트 1~2개 · 연봉 내역(계약 연봉+1군 보전금=총보수). 숫자는 0에서 카운트업, 마일스톤 토스트("100홈런까지 N개")는 탭해야 닫힘.
 - 우리: 공식 기록 정확성 우선. 적용: 역할 변화 배지, CH 표시, 능력 증감 칩, 팀 순위 줄, 코멘트(사건 문구 규칙), 연봉 내역. **변형**: 타구속도·배럴 같은 물리 지표는 우리 엔진에 없는 값이므로 표시하지 않음([24](../design/24-GAME-ENGINE-SCORING.md)에 해당 산출이 생길 때만). 토스트는 자동으로 사라지고 탭을 강요하지 않음.
-- 구현 입력 `a33601d`(팀장 통합 예정): 확정 정규 기록·이닝/율 및 존재하는 확정 성장·보수 원장을 Flow에 표시. CH·팀 순위·역할 배지는 미구현이며 CH 판정·마일스톤 잔여 계산은 확인 필요.
+- 구현 입력 `a33601d`(팀장 통합 완료): 확정 정규 기록·이닝/율 및 존재하는 확정 성장·보수 원장을 Flow에 표시. CH·팀 순위·역할 배지는 미구현이며 CH 판정·마일스톤 잔여 계산은 확인 필요.
 - 수용: 모든 수치는 공식 기록 원장 값, 미완료 경기 수치 미공개. 카운트업 중에도 스크린리더는 최종값을 읽음.
 
 - 투수(4차): 보직별 상단 지표가 다름(불펜=홀드·경기·탈삼진·ERA·WHIP·K/9, 선발=승·이닝·탈삼진…), 구종 이름+문자 등급과 등급 상승 표시(↑), 1군 합류 시 역할 문구(예: 추격조)와 설명 한 줄. 우리: 보직별 지표 구성과 구종 등급 변화는 [48](../design/48-PITCHES-BATTING-APPROACH.md)·[57](../design/57-REPERTOIRE-DETAILED-CONTRACT.md) 원장 값으로 채택. 모달 뒤에 0·"?"가 보이는 구성은 따르지 않음.
@@ -87,7 +87,7 @@
 
 ### SLB-09 계약 서명 [채택 → 구현됨]
 - 관찰: 서명 패드(손글씨) 또는 이름 서명, 서명 전 입단 비활성. FA 계약서는 저장된 서명 자동 재사용.
-- 우리: `FlowCommand.sign` 서명 단계 구현(eb327cd, 표시 전용). 남은 일: FA·재계약 계약서에도 같은 단계, 브라우저 검수.
+- 우리: `FlowCommand.sign` 표시 전용 서명을 학교·대학·재도전에 적용했다. KBO 재계약·FA 및 US 재계약·FA·마이너 만료 제안에 확인→서명을 연결하는 변경은 root 통합 후 API 3/3·웹 12/12 집중 검증을 통과했으며 견적 변경 시 확인을 해제한다. 브라우저 검수는 남았다.
 
 ### SLB-10 스토브리그 허브 [변형]
 - 관찰: 매년 같은 허브. 선수 카드, 특별훈련(남은 횟수 아이콘), 병역 계획 카드(미필일 때), 연봉 3칸(지난 연봉·제시액·인상률)+재협상, 주 CTA "수락 후 시즌 진행", 보조 CTA 트레이드 요청·은퇴·새 인생. 보장 계약 중이면 연봉 칸 대신 "보장 계약 n/N년" CTA.
@@ -103,7 +103,8 @@
 - 우리: 다년계약 구조는 [23](../design/23-US-CONTRACTS-RIGHTS.md)·KBO 재계약 규칙 기준. 엔진에 비FA 다년 연장 제안 흐름이 있는지 **확인 필요**(`kbo-renewal.ts`는 1년 재계약 중심).
 - 수용: 제안 금액은 구단 예산 예약과 일치, 거절해도 기존 계약 유지.
 
-### SLB-13 FA [변형]
+### SLB-13 FA [변형 · 부분 구현]
+- 현재 변경: KBO 재계약·FA와 US 재계약·FA·마이너 만료 제안에 확인→서명 연결이 root에 통합돼 API 3/3·웹 12/12 집중 검증을 통과했다. 무제안 KBO FA E31 은퇴 상태 동기화 수정은 root 통합 후 전체 자동 검증을 통과했으며 US 마이너 귀국 상태는 웹 미연결이다.
 - 관찰: 자격 화면(나이·예상 등급 A/B) → 신청(최대 3개 구단 다년 제안) 또는 보류(원소속팀 1년, 다음 해 다시 자격). 시장 카드: 구조(4년 / 2+2년 / 1+1년), 총액 vs 최대(옵션 분리), 최초 보장액, 역할, 구단 코멘트, 최근 3년 팀 순위, 희망 구단 배지. 2탭 → 계약서(성과 옵션: 출장 경기·타점·안타 기준) → 체결. 새 계약 시 "다음 시즌 상승 효과". 1+1 중간에 구단 연장 제안 → 선수 최종 선택(연장 수락/거절 후 자유계약). 32세 첫 FA(9시즌, 상무 포함), 36·37·41세 반복. 보류 시 연봉 -22%, 노장 제안은 짧은 기간.
 - 우리: `kbo-career-fa.ts`(FA 열기·시장)와 [44](../design/44-CLUB-ECONOMY-AI.md)·[25](../design/25-CLUB-AI-ECONOMY.md) 기준. 적용: 시장 카드 정보 구성(보장/옵션 분리, 팀 추이), 계약서 화면, 성과 옵션 표시. "상승 효과" 같은 숨은 보너스는 근거 규칙이 없으면 불채택.
 - 수용: 제안 수·금액·옵션은 엔진 시장 결과 그대로, 옵션 달성은 공식 기록으로 판정.
@@ -143,7 +144,7 @@
 ### SLB-21 은퇴와 기록 보관 [변형 · 부분 구현]
 - 관찰: 확인 모달 → "나의 야구 인생" 연도별 릴 자동 재생(구단 엠블럼·레벨·사건 배지·서술) → 오늘의 타자 순위 팝업 → 선수 카드(레거시 점수 = 선수 가치·누적 기록·수상/신기록·우승·국가대표 합, 전성기 3년 능력 등급) → 통산 기록(헤드라인 한 줄, 통산 6지표, 주요 업적, 통산 수입, 레전드 비교, 추억 한 줄) → 기록실(통산 그리드·수상 횟수·가장 빛난 3년·최고의 순간·위대한 이정표) → 저장/삭제/다음 생. 1군 기록이 없으면 대부분 0으로 비어 있음.
 - 우리: 은퇴 보관(`kbo-retirement-archive*`, [15](../design/15-LONG-TERM-RECORDS.md)), 연대기는 M7([63](../design/63-CHRONICLE-DETAILED-CONTRACT.md)). 적용: 은퇴 요약 화면 구성(헤드라인·주요 업적·가장 빛난 3년·이정표·통산 수입), 1군 기록이 없어도 2군·해외·독립 기록으로 채움. **불채택**: 실존 선수 이름 비교(퍼블리시티권 위험, 가상 아키타입 비교로 대체), 광고·재화 회귀권, 다른 이용자 순위.
-- 구현 입력 `ebfaa2d`(팀장 통합 예정): 공개 archive DTO의 선수·은퇴 정보, 리그/단계별 공식 통산 및 제공 수입만 표시하고 열린 farewell 명령을 유지한다. 업적·가장 빛난 3년은 공개 DTO/승인 산식 부재로 미표시다.
+- 구현 입력 `ebfaa2d`(팀장 통합 완료): 공개 archive DTO의 선수·은퇴 정보, 리그/단계별 공식 통산 및 제공 수입만 표시하고 열린 farewell 명령을 유지한다. 업적·가장 빛난 3년은 공개 DTO/승인 산식 부재로 미표시다.
 
 ### SLB-22 커리어·선수·우승 연혁 탭 [변형]
 - 관찰: 커리어 탭(연봉, 1군/2군 시즌 수, 통산 핵심, 최근 5시즌 WAR 그래프, 다음 이정표, 수상, 시즌 로그), 선수 탭(유형 칭호·강점/약점, 체격·지명 이력, 구단 신뢰·동료 관계·인기도 게이지, 병역 상태), 우승 연혁(리그 연도별 우승·준우승). 결함: 타자 커리어 탭에 투수 지표가 나옴.
@@ -202,12 +203,12 @@
 | 항목 | 상태 | 구현 위치 | 테스트 | 커밋 |
 | --- | --- | --- | --- | --- |
 | SLB-07 진로 카드 근거 | 부분 | `apps/api/src/career-flow-screen.ts`, `career-college-shell.ts`, `apps/web/src/screens/Flow.tsx`, `model.ts` | `apps/web/test/flow-screens.test.tsx` | 21a9703 |
-| SLB-09 서명 단계 | 부분(학교·대학·재도전 입단만) | 위와 같음 `FlowCommand.sign` | `flow-screens.test.tsx` | eb327cd |
+| SLB-09 서명 단계 | 부분(root 전체 자동 검증 통과) | API 계약 shell → `Flow.tsx`, `FlowCommand.sign` | 전체 check 통과; 브라우저 미검증 | 학교·대학·재도전 eb327cd; 계약 root 통합 |
 | SLB-10 상단 선수 헤더 | 완료 | `apps/web/src/screens/Career.tsx`, `styles.css` | `screens.test.tsx` | 21a9703 |
 | 비가역 확인 원칙(14) | 점검 완료 | 학교·대학·재도전 Flow 명령: 지명 거절·은퇴·대학 진학·준비 시즌 시작에 확인 | `native-school-flow-http.test.ts`(준비 시즌 확인) | 이번 커밋 |
-| SLB-05 결과 화면 | 부분(팀장 통합 예정) | `apps/api/src/career-season-review.ts`, `career-views.ts`, `apps/web/src/screens/SeasonReview.tsx`, `Flow.tsx`, `model.ts` | `career-season-review.test.ts`, `season-review.test.tsx`; HTTP 1/1·화면 2/2 보고 | a33601d |
-| SLB-13 FA 화면 | 대기 | `packages/engine/src/kbo-career-fa.ts` → API shell → `Decision.tsx`/`Flow.tsx` | 신규 | — |
+| SLB-05 결과 화면 | 부분(팀장 통합 완료) | `apps/api/src/career-season-review.ts`, `career-views.ts`, `apps/web/src/screens/SeasonReview.tsx`, `Flow.tsx`, `model.ts` | `career-season-review.test.ts`, `season-review.test.tsx`; HTTP 1/1·화면 2/2 보고 | a33601d |
+| SLB-13 FA 화면 | 부분(root 전체 자동 검증 통과) | KBO/US 계약 API shell → `Flow.tsx` | 전체 check 통과; 브라우저 미검증 | root 통합 |
 | SLB-14 병역 결과 | 대기 | `kbo-military-*`, `sangmu-*` → API shell | 신규 | — |
-| SLB-21 은퇴 요약 | 부분(팀장 통합 예정) | `career-retirement-summary.ts`, `career-views.ts`, `RetirementSummary.tsx`, `Flow.tsx`, `model.ts` | `m2-pro-retirement.test.ts`, `retirement-summary.test.tsx`; HTTP 1/1·표시 3/3 보고 | ebfaa2d |
+| SLB-21 은퇴 요약 | 부분(팀장 통합 완료) | `career-retirement-summary.ts`, `career-views.ts`, `RetirementSummary.tsx`, `Flow.tsx`, `model.ts` | `m2-pro-retirement.test.ts`, `retirement-summary.test.tsx`; HTTP 1/1·표시 3/3 보고 | ebfaa2d |
 
 비가역 확인 점검 범위: `apps/api/src/career-*.ts`에서 `confirm`이 붙는 `FlowCommand`. 결정 화면(`Decision.tsx`)은 별도 "확정" 버튼이 확인 단계다. 재협상·트레이드·병역 지원·FA 계약 명령이 웹에 연결될 때 같은 원칙을 적용한다.

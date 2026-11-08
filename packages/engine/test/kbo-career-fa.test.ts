@@ -8,6 +8,9 @@ import {createSeasonCalendar} from '../src/season-calendar.js';
 import {canonicalJson} from '../src/game.js';
 import {kboServiceTimeView} from '../src/kbo-service-time.js';
 import {openKboCareerFa,selectKboCareerFaOffer,acceptKboCareerFaOffer,declineKboCareerFaSelection,kboCareerFaView,assertAcceptedKboCareerFa,assertKboCareerFaLedger,activateKboCareerFa} from '../src/kbo-career-fa.js';
+import {requestKboRetirement,resolveKboRetirement} from '../src/kbo-retirement.js';
+import {kboRetirementArchiveView} from '../src/kbo-archive-view.js';
+import {resolveEventChoice} from '../src/events.js';
 
 /** Official registration-only receipts isolate FA; live day/game evidence is covered by kbo-service-time.test.ts. */
 function closed(age=28,qualified=8){
@@ -102,4 +105,25 @@ test('FA actual guaranteed60-player roster or future90 percent debt removes that
  donor.roster=donor.roster.filter(k=>!moving.includes(k));to.roster=[...to.roster,...moving];for(const key of moving)source.world.contracts[key]!.clubId=to.id;
  const blocked=openKboCareerFa(source,source.revision);assert.ok(!kboCareerFaView(blocked)!.offers.some(o=>o.clubId===to.id));
  const bankrupt=closed();for(const club of bankrupt.world.clubs)club.budgetWon=1;const empty=openKboCareerFa(bankrupt,bankrupt.revision);assert.equal(kboCareerFaView(empty)!.offers.length,0);assert.equal(kboCareerFaView(empty)!.emptyReason,'NO_ELIGIBLE_CLUB_CAPACITY_OR_BUDGET');
+});
+
+test('empty FA market permits retirement confirmation while preserving the market on cancellation',()=>{
+ const source=closed();for(const club of source.world.clubs)club.budgetWon=1;
+ const market=openKboCareerFa(source,source.revision),view=kboCareerFaView(market)!,before=canonicalJson(market);
+ assert.equal(view.offers.length,0);assert.equal(view.retirementAvailable,true);
+ assert.throws(()=>requestKboRetirement(market,market.revision-1),/REVISION/);assert.equal(canonicalJson(market),before);
+ const asked=requestKboRetirement(market,market.revision),phase=asked.phaseContext;assert.equal(phase.phase,'RETIRE_CONFIRM');if(phase.phase!=='RETIRE_CONFIRM')throw Error('phase');
+ const e=asked.events.find(e=>e.eventKey===phase.eventKey)!,input={eventKey:e.eventKey,eventVersion:e.version,command:'CANCEL_RETIRE' as const};
+ assert.throws(()=>resolveKboRetirement(asked,asked.revision,{...input,eventVersion:e.version+1}),/VERSION/);
+ const cancelled=resolveKboRetirement(asked,asked.revision,input);assert.equal(cancelled.events.find(e=>e.eventKey===view.eventKey)!.status,'OPEN');assert.deepEqual(kboCareerFaView(cancelled)!.offers,[]);
+ const again=requestKboRetirement(cancelled,cancelled.revision),next=again.phaseContext;if(next.phase!=='RETIRE_CONFIRM')throw Error('phase');const confirmation=again.events.find(e=>e.eventKey===next.eventKey)!;
+ const retired=resolveKboRetirement(again,again.revision,{eventKey:confirmation.eventKey,eventVersion:confirmation.version,command:'CONFIRM_RETIRE'});assert.equal(retired.phaseContext.phase,'ARCHIVED');
+ const resolved=retired.events.find(e=>e.eventKey===view.eventKey)!,receipt=retired.retirement!.receiptKey;
+ assert.equal(resolved.status,'RESOLVED');assert.equal(resolved.resolution!.command,'RETIRE');assert.equal(resolved.resolution!.receiptKey,JSON.stringify(['kbo-retirement-decision',receipt,'RETIRE']));
+ assert.equal(kboCareerFaView(retired),null);const archive=kboRetirementArchiveView(retired);assert.equal(archive.archiveKey,receipt);assert.deepEqual(kboRetirementArchiveView(JSON.parse(JSON.stringify(retired))),archive);
+ const farewell=retired.events.find(e=>['E37','E69'].includes(e.definitionId)&&e.evidence.fields.retirementTaskOrReceiptId===receipt)!;assert.ok(farewell);
+ const opened=resolveEventChoice(farewell,farewell.version,'OPEN_ARCHIVE',null,{worldKey:retired.world.worldKey,seasonKey:retired.world.seasonKey,worldDay:farewell.occurredWorldDay,eligibleCommands:['OPEN_ARCHIVE']});assert.equal(opened.navigation!.targetScreen,'S10');assert.equal(canonicalJson(market),before);
+ const withOffers=openKboCareerFa(closed(),closed().revision);assert.throws(()=>requestKboRetirement(withOffers,withOffers.revision),/NOT_AVAILABLE/);
+ const extra=structuredClone(market),unrelated=requestKboRetirement(source,source.revision).events.at(-1)!;extra.events=[...extra.events,unrelated];assert.throws(()=>requestKboRetirement(extra,extra.revision),/NOT_AVAILABLE/);
+ const forged=structuredClone(market);forged.events=forged.events.map(e=>e.eventKey===view.eventKey?{...e,evidence:{...e.evidence,fields:{...e.evidence.fields,sourceReceiptId:'forged'}}}:e);assert.throws(()=>requestKboRetirement(forged,forged.revision),/EVENT|EVIDENCE/);
 });

@@ -114,6 +114,7 @@ export function declineKboCareerFaSelection(source:Source,revision:number,input:
 }
 export function kboCareerFaView(source:Source){
  const w=source.freeAgency?.windows.find(w=>w.sourceSeasonKey===source.world.seasonKey);if(!w)return null;assertKboCareerFaLedger(source.freeAgency);const e=event(source,w);
+ if(source.phaseContext.phase==='ARCHIVED')return null;
  return {windowId:w.windowId,state:w.state,eventKey:e.eventKey,eventVersion:e.version,seasonKey:w.seasonKey,fromClubId:w.fromClubId,offers:w.offers.map(o=>({...o})),selectedOfferKey:w.selectedOfferKey??null,emptyReason:w.offers.length?null:'NO_ELIGIBLE_CLUB_CAPACITY_OR_BUDGET',registrationQualifiedSeasons:w.snapshot.qualifiedSeasons,retirementAvailable:w.state!=='ACCEPTED'};
 }
 /** Pure accepted-renewal guard for root/year readers; no live value recalculation and no recursive career view. */
