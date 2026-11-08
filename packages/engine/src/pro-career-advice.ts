@@ -11,6 +11,7 @@ import {FIELD_POSITIONS,initialPositionFits,recentBattingPerformance,recentPitch
 import type {FieldPosition} from './lineup.js';
 import {validateDevelopmentPlayer} from './player.js';
 import {canonicalJson} from './game.js';
+import {canonicalSeal} from './canonical-seal.js';
 import {createStreams,nextFloat,nextInteger,validateRng} from './rng.js';
 import type {RngState} from './rng.js';
 import {createWorldEvent,eventDefinition,validateEvent,resolveEventChoice,completeEventDomain} from './events.js';
@@ -120,7 +121,7 @@ function adviceDayClosed(c:AdviceCareer,day:number):boolean {
   if(!isUs(c))return false;
   const season=c.season,schedule=c.seasonSchedule,receipts=season?.days.filter(d=>d.day===day)??[];
   // Rest dates have no team-health rows; require their own sealed empty date, never just a matching number.
-  return !!season&&!!schedule&&schedule.seasonKey===c.world.seasonKey&&season.receiptKey===JSON.stringify(['us-regular-season',schedule.receiptKey])&&day>=season.firstDay&&day<=season.lastDay&&receipts.length===1&&receipts[0]!.evidence==='[]'&&!Object.values(schedule.leagues).some(games=>games.some(g=>g.worldDay===day));
+  return !!season&&!!schedule&&schedule.seasonKey===c.world.seasonKey&&season.receiptKey===JSON.stringify(['us-regular-season',schedule.receiptKey])&&day>=season.firstDay&&day<=season.lastDay&&receipts.length===1&&(receipts[0]!.evidence==='[]'||receipts[0]!.evidence===canonicalSeal([]))&&!Object.values(schedule.leagues).some(games=>games.some(g=>g.worldDay===day));
  }
  const ledger=c.days,schedule=c.competitionSchedule,receipt=ledger.days.find(d=>d.day===day);
  if(ledger.schemaVersion!==1||ledger.worldKey!==c.world.worldKey||ledger.seasonKey!==c.world.seasonKey||!schedule||schedule.seasonKey!==c.world.seasonKey||!receipt)return false;

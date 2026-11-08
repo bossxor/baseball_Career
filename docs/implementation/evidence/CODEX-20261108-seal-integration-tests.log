@@ -1,0 +1,35 @@
+✔ US military worker closes an actual rest date without health rows and refreshes advice once across JSON resume (6663.8845ms)
+✔ US advice refuses missing rest-day closure and future unclosed dates (481.7837ms)
+✔ US advice accepts the sealed empty rest day while rejecting a forged seal (553.7598ms)
+✔ US advice does not accept a date alone when its rest receipt or owning season is corrupted (4375.2357ms)
+✔ US advice cannot use an empty receipt to close a scheduled competition date without game health evidence (172.6131ms)
+✔ US full-date annual settlement pays one PRO budget, all opening NPCs and one aging; explicit forfeiture and replay keep receipts (3632.0551ms)
+✔ US annual audit refuses changed FINAL totals and incomplete date receipts before awarding growth (662.0302ms)
+✔ US day seals retain legacy receipts and reject changed official game evidence (1021.3007ms)
+✔ termination stops the active US contract and rejects fabricated service-season identity (3898.2352ms)
+✔ service annual owner ages and supplies the real roster without paying or rewriting history (1897.2869ms)
+✔ freeze parks the pitcher under the already signed option and preserves original USD and pitch history (2755.6629ms)
+✔ controlled calendar discharge opens only the existing option and confirms through day29 without retroactive salary (9916.0858ms)
+✔ controlled30day expiry terminates the frozen contract without manufacturing another option (1331.0934ms)
+✔ service resume rejects removed native closed dates and altered archived game evidence (1760.9622ms)
+✔ return preserves existing unique field positions when selecting a legal roster slot (6358.1391ms)
+✔ service annual supply preserves a retiring45yearold pitcher and his historical repertoire across JSON (1282.0767ms)
+✔ controlled minor return resumes the next annual contract without consuming a frozen full season (4456.2204ms)
+✔ active US return condition counts six registered bench games, excludes INT and never changes abilities (913.3146ms)
+✔ controlled return-year MLB activation preserves pre-callup salary and validates derived contract and budget (1531.6709ms)
+✔ US live startup projects only participating teams and keeps registrations, contracts and source immutable (1422.1791ms)
+✔ legacy calendar1 first date keeps all75 real games, salary and original pre-cache trait golden hashes (5764.766ms)
+✔ US partial-game JSON resume equals continuous chunks, rejects stale revisions and corrupted pending provenance (2869.9805ms)
+✔ US injury repair first borrows inside the organization without fabricating players or changing26 MLB seats (2193.0048ms)
+✔ US exhausted organization uses minimum low-ability replacements, reserves injured identities and restores them after recovery (2008.3641ms)
+✔ US growth refuses unfinished seasons, and payroll mutations cannot mint future or duplicate salary (2038.6401ms)
+✔ batch continuation obeys the caller budget and resumes from the exact first chunk (1403.678ms)
+✔ state size uses actual serialized bytes with nested Unicode, quotes and escaped strings (0.6241ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 42975.7029

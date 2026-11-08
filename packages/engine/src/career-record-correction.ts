@@ -5,6 +5,8 @@ import {assertKboCareerRevision} from './kbo-career-version.js';
 import type {UsCareer} from './us-career-entry.js';
 import {assertUsCareerRevision} from './us-career-entry.js';
 import {canonicalJson} from './game.js';
+import {canonicalSeal} from './canonical-seal.js';
+import {US_LEVELS} from './us-season.js';
 import {assertContributionSplits,putGameContribution} from './records.js';
 import type {GameContribution} from './records.js';
 import {settleRelationshipDirectDuels,validateDirectDuelReceipts} from './relationships.js';
@@ -67,7 +69,14 @@ function assertOpen(c:RecordCorrectionCareer,g:GameContribution){
 /** Rebase only the closed date's contribution evidence; its health/fatigue/payroll receipt stays unchanged. */
 function rebaseClosedDay(c:RecordCorrectionCareer,before:GameContribution,after:GameContribution){
  const days=isUs(c)?c.season!.days:c.days?.days,day=days?.find(d=>d.day===before.worldDay);if(!day)throw new RangeError('RECORD_CORRECTION_DAY_NOT_CLOSED');
- const old=day.evidence;let parsed:unknown;try{parsed=JSON.parse(old);}catch{throw new RangeError('RECORD_CORRECTION_DAY_EVIDENCE_CHANGED');}
+ const old=day.evidence;
+ if(isUs(c)&&old.startsWith('sha256:')){
+  if(!c.seasonSchedule)throw new RangeError('RECORD_CORRECTION_DAY_EVIDENCE_CHANGED');
+  const rows=US_LEVELS.flatMap(level=>c.seasonSchedule!.leagues[level].filter(g=>g.worldDay===before.worldDay).map(g=>c.records.games[g.simulationKey]));
+  if(rows.some(r=>!r)||rows.filter(r=>r?.gameKey===before.gameKey).length!==1||canonicalSeal(rows)!==old)throw new RangeError('RECORD_CORRECTION_DAY_EVIDENCE_CHANGED');
+  day.evidence=canonicalSeal(rows.map(r=>r!.gameKey===before.gameKey?after:r));return {before:old,after:day.evidence};
+ }
+ let parsed:unknown;try{parsed=JSON.parse(old);}catch{throw new RangeError('RECORD_CORRECTION_DAY_EVIDENCE_CHANGED');}
  const raw=parsed as {worldKey?:string;seasonKey?:string;day?:number;contributions?:GameContribution[]},rows=isUs(c)?parsed:raw.contributions;
  if(!Array.isArray(rows)||!isUs(c)&&(raw.worldKey!==c.world.worldKey||raw.seasonKey!==c.world.seasonKey||raw.day!==before.worldDay)||rows.filter(r=>r.gameKey===before.gameKey).length!==1||rows.some(r=>canonicalJson(c.records.games[r.gameKey])!==canonicalJson(r)))throw new RangeError('RECORD_CORRECTION_DAY_EVIDENCE_CHANGED');
  const corrected=rows.map(r=>r.gameKey===before.gameKey?after:r);day.evidence=canonicalJson(isUs(c)?corrected:{...raw,contributions:corrected});return {before:old,after:day.evidence};

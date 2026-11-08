@@ -1,0 +1,10 @@
+✔ retry season waits for the final league day and pending game before settlement (0.3891ms)
+✔ completed undrafted return opens retry and resumes preparation with owned revision (12929.8421ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13441.7213

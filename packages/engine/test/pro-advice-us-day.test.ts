@@ -6,6 +6,7 @@ import {chooseUsMilitaryPlan,startUsMilitaryServiceSeason} from '../src/us-milit
 import {startUsMilitaryWorld,advanceUsMilitaryWorld} from '../src/us-season.js';
 import {refreshProCareerAdvice} from '../src/pro-career-advice.js';
 import {canonicalJson} from '../src/game.js';
+import {canonicalSeal} from '../src/canonical-seal.js';
 import type {UsCareer} from '../src/us-career-entry.js';
 let cached:{prefix:UsCareer;off:number}|undefined;
 function beforeRest(){
@@ -21,6 +22,11 @@ test('US military worker closes an actual rest date without health rows and refr
 
 test('US advice refuses missing rest-day closure and future unclosed dates',()=>{
  const {career:c,off}=closedRest();const missing=structuredClone(c);missing.season!.days=missing.season!.days.filter(d=>d.day!==off);assert.throws(()=>refreshProCareerAdvice(missing,off),/ADVICE_DAY_NOT_CLOSED/);assert.throws(()=>refreshProCareerAdvice(c,off+1),/ADVICE_DAY_NOT_CLOSED/);
+});
+test('US advice accepts the sealed empty rest day while rejecting a forged seal',()=>{
+ const {career:c,off}=closedRest(),sealed=structuredClone(c);sealed.season!.days.find(d=>d.day===off)!.evidence=canonicalSeal([]);
+ assert.doesNotThrow(()=>refreshProCareerAdvice(sealed,off));sealed.season!.days.find(d=>d.day===off)!.evidence='sha256:'+'0'.repeat(64);
+ assert.throws(()=>refreshProCareerAdvice(sealed,off),/ADVICE_DAY_NOT_CLOSED/);
 });
 
 test('US advice does not accept a date alone when its rest receipt or owning season is corrupted',()=>{

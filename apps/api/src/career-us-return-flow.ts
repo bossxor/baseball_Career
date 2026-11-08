@@ -36,9 +36,16 @@ export function usReturnFlow(state:SaveState,c:engine.UsAmateurReturnCareer):Flo
   else if(draft.status==='SIGNED')commands=[cmd('return-kbo','KBO 입단','KBO_ACTIVATE')];
   else if(draft.status==='RESULT'&&draft.offer){
    lines.push({label:'제안',value:`${draft.offer.clubId} · ${draft.offer.years}년 · 연봉 ${draft.offer.annualSalaryWon.toLocaleString('ko-KR')}원`});
-   commands=[cmd('return-sign','계약 수락','DRAFT_DECIDE',{programVersion:draft.version,decision:'SIGN'},'계약을 수락할까요?'),
+   const player=c.preparation?.world.players[c.return.playerKey]??c.service?.world.players[c.return.playerKey]??c.source.world.players[c.return.playerKey]!;
+   commands=[{...cmd('return-sign','계약 수락','DRAFT_DECIDE',{programVersion:draft.version,decision:'SIGN'},'계약을 수락할까요?'),sign:{name:player.name}},
     cmd('return-decline','제안 거절','DRAFT_DECIDE',{programVersion:draft.version,decision:'DECLINE'},'제안을 거절할까요?')];
+  }else if(draft.status==='RESULT'&&draft.result?.round===null){
+   commands=[{id:'return-retry-open',label:'재도전 진로 확인',type:'CAREER_RETRY_US_RETURN_OPEN',payload:{careerRevision:c.revision}}];
   }else notice='지명 계약이 확정되지 않았습니다.';
+ }
+ if(c.draft?.program.decision!=='SIGNED')for(const offer of view.usOptions.filter(o=>o.available)){
+  const player=c.preparation?.world.players[c.return.playerKey]??c.service?.world.players[c.return.playerKey]??c.source.world.players[c.return.playerKey]!;
+  commands.push({...cmd('return-us-'+offer.offerKey,`${offer.organizationName} · ${offer.years}년 · 연봉 $${offer.annualSalaryUsd.toLocaleString('en-US')}`,'US_ACCEPT',{offerKey:offer.offerKey},'미국 계약을 수락할까요?'),sign:{name:player.name}});
  }
  return {screenId:'CAREER_FLOW',title:'국내 복귀 준비',lines,commands,notice,careerRevision:c.revision};
 }

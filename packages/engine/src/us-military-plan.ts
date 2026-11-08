@@ -6,6 +6,7 @@ import type {UsLevel} from './us-world.js';
 import {usYearTransitionReadiness} from './us-year-transition.js';
 import {createSeasonCalendar} from './season-calendar.js';
 import {canonicalJson} from './game.js';
+import {canonicalSeal} from './canonical-seal.js';
 import {retireAndSupplyUsNpcs} from './us-supply.js';
 import type {UsSupplyReceipt} from './us-supply.js';
 import {emptyPitchXpLedger} from './pitch-xp.js';
@@ -236,7 +237,7 @@ export function usMilitaryServiceView(c:UsCareer){
  assertUsCareerRevision(c,c.revision);const s=c.military.service;if(s?.version!==2)throw new RangeError('US_MILITARY_SERVICE_PROGRAM_REQUIRED');
  for(const year of s.years??[]){
   const games=new Map<number,string[]>();for(const level of LEVELS)for(const g of year.seasonSchedule.leagues[level]){const rows=games.get(g.worldDay)??[];rows.push(g.simulationKey);games.set(g.worldDay,rows);}
-  for(const d of year.season.days){const rows=(games.get(d.day)??[]).map(key=>c.records.games[key]);if(rows.some(r=>!r||r.worldDay!==d.day||r.scope.seasonKey!==year.seasonKey||r.scope.phase!=='REGULAR')||canonicalJson(rows)!==d.evidence&&canonicalJson(rows.map(r=>r!.gameKey))!==d.evidence)throw new RangeError('INVALID_US_SERVICE_ARCHIVE_EVIDENCE');}
+  for(const d of year.season.days){const rows=(games.get(d.day)??[]).map(key=>c.records.games[key]);if(rows.some(r=>!r||r.worldDay!==d.day||r.scope.seasonKey!==year.seasonKey||r.scope.phase!=='REGULAR')||(d.evidence.startsWith('sha256:')?canonicalSeal(rows)!==d.evidence:canonicalJson(rows)!==d.evidence&&canonicalJson(rows.map(r=>r!.gameKey))!==d.evidence))throw new RangeError('INVALID_US_SERVICE_ARCHIVE_EVIDENCE');}
  }
  return {status:c.military.status,contractStatus:c.contract.status,completedBlocks:s.completedBlocks,scheduledBlocks:s.scheduledBlocks,cursor:structuredClone(s.cursor),returnOption:s.returnOption?structuredClone(s.returnOption):null,returnOffer:s.returnOffer?{offerKey:s.returnOffer.offerKey,status:s.returnOffer.status,organizationId:s.sourceRegistration!.clubId,level:s.sourceRegistration!.level,currency:'USD' as const,annualSalaryUsd:s.returnOffer.contract.annualSalaryUsd,years:s.returnOffer.contract.years,expiresWorldDay:s.returnOffer.expiresWorldDay}:null};
 }

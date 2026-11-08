@@ -4,9 +4,10 @@ import assert from 'node:assert/strict';
 import {closedUsMajorFixture} from './us-major-fixture.js';
 import {closedUsOptionCareer as closedOptionCareer} from './us-option-fixture.js';
 import {finishedUsCareerFixture} from './us-finished-fixture.js';
-import {startUsMilitaryWorld,usSalaryEntitlement,assertUsSeason} from '../src/us-season.js';
+import {startUsMilitaryWorld,usSalaryEntitlement,assertUsSeason,US_LEVELS} from '../src/us-season.js';
 import {closeControlledServiceDates} from './us-service-fixture.js';
 import {canonicalJson} from '../src/game.js';
+import {canonicalSeal} from '../src/canonical-seal.js';
 import {createSeasonCalendar} from '../src/season-calendar.js';
 import {usMilitaryPlanPreview,chooseUsMilitaryPlan,completeUsMilitaryService,settleUsMilitaryServiceBlock,usMilitaryCompletionDays,assertUsMilitaryPlayable,startUsMilitaryServiceSeason,recordUsMilitaryClosedDay,usMilitaryServiceView,confirmUsMilitaryReturn,declineUsMilitaryReturn} from '../src/us-military-plan.js';
 import {usYearTransitionReadiness,startNextUsMinorSeason} from '../src/us-year-transition.js';
@@ -85,6 +86,7 @@ test('controlled30day expiry terminates the frozen contract without manufacturin
 
 test('service resume rejects removed native closed dates and altered archived game evidence',()=>{
  const source=controlledDischargedOption(),missing=structuredClone(source),changed=structuredClone(source);
+ const sealed=structuredClone(source),year=sealed.military.service!.years![1]!,day=year.season.days[0]!,rows=US_LEVELS.flatMap(l=>year.seasonSchedule.leagues[l].filter(g=>g.worldDay===day.day).map(g=>sealed.records.games[g.simulationKey]!));day.evidence=canonicalSeal(rows);assert.doesNotThrow(()=>usMilitaryServiceView(sealed));day.evidence='sha256:'+'0'.repeat(64);assert.throws(()=>usMilitaryServiceView(sealed),/ARCHIVE|EVIDENCE/);
  missing.military.service!.closedDays=missing.military.service!.completionDays;
  assert.throws(()=>usMilitaryServiceView(missing),/CALENDAR|DAY|ARCHIVE/);
  changed.military.service!.years![1]!.season.days[0]!.evidence='[]';

@@ -1,0 +1,8 @@
+{"league":"us","command":0,"type":"CAREER_US_PLAY_START","stop":null,"phase":"SEASON_PROGRESS","nextWorldDay":59,"games":216,"elapsedSeconds":1}
+{"league":"us","command":1,"type":"CAREER_US_PLAY_ADVANCE_SPAN","stop":"BUDGET","phase":"SEASON_PROGRESS","nextWorldDay":69,"games":923,"elapsedSeconds":29}
+{"league":"us","command":2,"type":"CAREER_US_PLAY_ADVANCE_SPAN","stop":"BUDGET","phase":"SEASON_PROGRESS","nextWorldDay":76,"games":1351,"elapsedSeconds":61}
+{"league":"us","command":3,"type":"CAREER_US_PLAY_ADVANCE_SPAN","stop":"BUDGET","phase":"SEASON_PROGRESS","nextWorldDay":81,"games":1660,"elapsedSeconds":94}
+{"league":"us","command":4,"type":"CAREER_US_PLAY_ADVANCE_SPAN","stop":"BUDGET","phase":"SEASON_PROGRESS","nextWorldDay":85,"games":1948,"elapsedSeconds":129}
+{"league":"us","command":5,"type":"CAREER_US_PLAY_ADVANCE_SPAN","stop":"EVENT","phase":"EVENT_DECISION","nextWorldDay":null,"games":2016,"elapsedSeconds":147}
+{"league":"us","command":6,"type":"CAREER_US_PLAY_RESOLVE_LEVEL","stop":null,"phase":"SEASON_PROGRESS","nextWorldDay":86,"games":2016,"elapsedSeconds":157}
+{"league":"us","status":"http_error","wallMs":189210.21519999998,"finalGames":1800,"commands":8,"output":"docs/implementation/evidence/CODEX-20261108-us-state-size.json"}

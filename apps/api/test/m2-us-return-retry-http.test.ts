@@ -56,6 +56,21 @@ test('returned player HTTP opens once, rejects stale/foreign/authority input and
  });
 });
 
+test('returned player Flow resumes retry after a replay and protects the owner',{skip:!databaseUrl},async()=>{
+ const origin=nativeUndraftedUsReturn();
+ await owned(origin,async h=>{
+  const flow=await json<{commands:{id:string;type:string;payload:Record<string,unknown>}[]}>(await h.screen('CAREER_FLOW'));
+  const open=flow.commands.find(c=>c.id==='return-retry-open')!;assert.ok(open);
+  const response=await h.post('flow-open','OPEN',open.payload);assert.equal(response.status,200);
+  const receipt=await json(response);assert.deepEqual(await json(await h.post('flow-open','OPEN',open.payload)),receipt);
+  assert.equal((await h.post('stale-open','OPEN',open.payload,1)).status,400);
+  assert.equal((await h.app.request('/api/saves/'+h.id+'/screens/CAREER_FLOW',{headers:h.foreignHeaders})).status,404);
+  const next=await json<{commands:{id:string}[]}>(await h.screen('CAREER_FLOW'));
+  assert.ok(next.commands.some(c=>c.id==='retry-start'));
+  assert.doesNotMatch(JSON.stringify(next),/"seed"|"rng"|"potential"|"records"/);
+ });
+});
+
 test('latest native optional player persists an actual KBO signing and activation through HTTP',{skip:!databaseUrl},async()=>{
  const source=nativeOptionalUsReturnRetry();
  await owned(source,async h=>{

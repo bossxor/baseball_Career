@@ -1,0 +1,2 @@
+{"league":"us","command":0,"type":"CAREER_US_PLAY_START","stop":null,"phase":"SEASON_PROGRESS","nextWorldDay":59,"games":216,"elapsedSeconds":1}
+{"league":"us","status":"http_error","wallMs":10266.8831,"finalGames":0,"commands":2,"output":"docs/implementation/evidence/CODEX-20261108-us-sealed.json"}

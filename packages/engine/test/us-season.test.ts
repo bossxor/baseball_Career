@@ -6,6 +6,8 @@ import {preparedUsCareer} from './us-fixtures.js';
 import {startUsRegularSeason,advanceUsCareer,advanceUsCareerRun,usSeasonView,usCompetitionGameWorld,US_LEVELS} from '../src/us-season.js';
 import {usCareerView} from '../src/us-career-entry.js';
 import {canonicalJson} from '../src/game.js';
+import {canonicalSeal} from '../src/canonical-seal.js';
+import {correctCareerGameContribution} from '../src/career-record-correction.js';
 import {prepareUsRosters} from '../src/us-roster-repair.js';
 import {assertActiveUsRosterWorld} from '../src/us-career-entry.js';
 import {auditUsClosedDays,settleUsSeasonGrowth} from '../src/us-growth.js';
@@ -16,6 +18,12 @@ test('US live startup projects only participating teams and keeps registrations,
 });
 test('legacy calendar1 first date keeps all75 real games, salary and original pre-cache trait golden hashes',()=>{
  const legacy=preparedUsCareer('HITTER','calendar-1'),opened=startUsRegularSeason(legacy,legacy.revision),raw=canonicalJson(opened),first=advanceUsCareer(opened,opened.revision);assert.equal(canonicalJson(opened),raw);assert.equal(first.daysClosed,0);assert.equal(first.career.season!.paidUsd,0);assert.ok(first.career.phaseContext.phase==='SEASON_PROGRESS');assert.ok(first.career.phaseContext.pendingGame);const done=closeOne(first.career),games=Object.values(done.records.games).filter(g=>g.scope.seasonKey===done.world.seasonKey);assert.equal(games.length,75);assert.equal(done.season!.days.length,1);assert.equal(done.season!.payroll.length,1);assert.equal(done.season!.paidUsd,Math.floor(30000/(done.season!.lastDay-done.season!.firstDay+1)));assert.equal(done.income.filter(e=>e.kind==='SIGNING_BONUS').length,1);assert.equal(games.reduce((n,g)=>n+Number(!!g.batting[done.protagonistKey])+Number(!!g.pitching[done.protagonistKey]),0)<=1,true);assert.ok(Object.values(done.world.repertoires).some(r=>r.ledger.entries.length>0));
+ const ordered=US_LEVELS.flatMap(l=>done.seasonSchedule!.leagues[l].filter(g=>g.worldDay===done.season!.firstDay).map(g=>done.records.games[g.simulationKey]!));assert.equal(done.season!.days[0]!.evidence,canonicalSeal(ordered));auditUsClosedDays(done);
+ const g=ordered.find(row=>Object.values(row.batting).some(b=>b.H>b.loadedHits))!,hitter=Object.keys(g.batting).find(k=>g.batting[k]!.H>g.batting[k]!.loadedHits)!,replacement=structuredClone(g);replacement.batting[hitter]!.loadedHits++;
+ const command={correctionId:'sealed-day-test',expectedRevision:done.revision,expectedRecordRevision:done.records.revision,beforeEvidence:canonicalJson(g),contribution:replacement},corrected=correctCareerGameContribution(done,command);
+ assert.match(corrected.receipt.afterDayEvidence,/^sha256:/);auditUsClosedDays(corrected.career);
+ const legacyDay=structuredClone(done);legacyDay.season!.days[0]!.evidence=canonicalJson(ordered);assert.doesNotThrow(()=>correctCareerGameContribution(legacyDay,command));
+ const forged=structuredClone(done);forged.season!.days[0]!.evidence='sha256:'+'0'.repeat(64);assert.throws(()=>correctCareerGameContribution(forged,command),/EVIDENCE_CHANGED/);
  // Golden outputs were captured from the pre-cache implementation on these same75 native games.
  const source=structuredClone(done);source.traits=createCareerTraitLedger();const pitcher=games.flatMap(g=>Object.keys(g.pitching).filter(k=>g.pitching[k]!.starts>0))[0]!;source.traits.starterStreaks={[pitcher]:{lastSeasonIndex:Number(done.world.seasonKey)-1,streak:4}};const digest=(value:unknown)=>createHash('sha256').update(canonicalJson(value)).digest('hex');assert.equal(digest(refreshCareerTraits(source,done.season!.firstDay,US_LEVELS)),'9b234e56f6009e5319c9c34403eb15e5c8ff21fc748574360221444f29fab492');assert.equal(digest(settleStarterSeasonTraits(source,done.season!.firstDay)),'bfb2674b180ef85031c6c331e3cbcceb3938c4d371ee33411427d6382c424d1d');
 

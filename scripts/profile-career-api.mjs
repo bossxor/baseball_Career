@@ -11,6 +11,7 @@ import {createApp} from '../apps/api/src/app.ts';
 import {createNativeHs} from './m2-native-paths.mjs';
 import {enrolledCollegeCareer,enteredKboCareer} from '../packages/engine/test/fixtures.ts';
 import {preparedUsOptionCareer} from '../packages/engine/test/us-option-fixture.ts';
+import {profileStateSize} from './profile-state-size.mjs';
 
 const memoryMode=process.argv.includes('--memory'),cpuEnabled=!process.argv.includes('--no-cpu');
 let activeCommand=null;
@@ -20,7 +21,7 @@ if(memoryMode){
  const original=gameSaves.state.mapToDriverValue;
  gameSaves.state.mapToDriverValue=function(value){
   if(activeCommand)memory('serialize-start');
-  try{const result=original.call(this,value);if(activeCommand)memory('serialize-return',{bytes:Buffer.byteLength(result)});return result;}
+  try{const result=original.call(this,value);if(activeCommand){memory('serialize-return',{bytes:Buffer.byteLength(result)});if(process.argv.includes('--size')&&result.length>=100_000_000)memory('state-sizes',{rows:profileStateSize(result)});}return result;}
   catch(error){if(activeCommand)memory('serialize-error',{errorName:error?.name});throw error;}
  };
 }
