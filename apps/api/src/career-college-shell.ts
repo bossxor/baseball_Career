@@ -18,6 +18,10 @@ const fields=new Map<string,readonly string[]>([
  ['START_CUP',['careerRevision']],['ADVANCE_CUP',['careerRevision']],['ACK_REVIEW',['careerRevision']],
  ['CLOSE_YEAR',['careerRevision','forfeitUnusedTraining']],['START_NEXT',['careerRevision']],['GRADUATE',['careerRevision','eventVersion']],
  ['MILITARY_LEAVE',['careerRevision']],['SERVICE_ADVANCE',['careerRevision']],['SERVICE_RESUME',['careerRevision','eventVersion']],
+ ['NATIONAL_EVENT',['careerRevision','eventKey','eventVersion','command']],['NATIONAL_ELIGIBILITY',['careerRevision','eventKey','eventVersion']],
+ ['NATIONAL_ADVANCE',['careerRevision']],['NATIONAL_DUTY',['careerRevision']],
+ ['NATIONAL_SELECT',['careerRevision','hostRevision']],['NATIONAL_START',['careerRevision','hostRevision']],['NATIONAL_RETURN',['careerRevision','hostRevision']],
+ ['NATIONAL_HOST_CREATE',['careerRevision']],['NATIONAL_HOST_ADVANCE',['careerRevision','hostRevision']],
 ]);
 const WINDOW_COMMANDS=['OPEN_TRAINING','FORFEIT_TRAINING','DEFER_TRAINING','OPEN_STYLE','ACK_EVENT'];
 function fail(code:string):never{throw Object.assign(new Error(code),{code});}
@@ -55,9 +59,59 @@ export function applyCollege(state:SaveState,command:CommandBody):AppliedCommand
  if(!raw||typeof raw!=='object'||Array.isArray(raw)||Object.keys(raw).some(k=>!allowed.includes(k)))fail('INVALID_PAYLOAD');
  const p=raw as Record<string,unknown>,c=state.career as engine.HighSchoolCareer|undefined;
  if(!c||typeof c!=='object'||Array.isArray(c)||!c.world||!(name==='ENROLL'||collegeApplies(c)))fail('COLLEGE_OWNER_REQUIRED');
- const rev=int(p,'careerRevision');let next:engine.HighSchoolCareer,stopReason:string|undefined,spanStop:SpanStop|undefined;
+ const rev=int(p,'careerRevision');let next:engine.HighSchoolCareer,stopReason:string|undefined,spanStop:SpanStop|undefined,updatedHost:engine.KboCareer|engine.CollegeLeagueHost|undefined;
  try{
   if(name==='ENROLL')next=engine.enrollHighSchoolCollege(c,rev,{eventVersion:int(p,'eventVersion'),offerSetKey:str(p,'offerSetKey'),offerSetVersion:int(p,'offerSetVersion'),collegeId:str(p,'collegeId')});
+  else if(name==='NATIONAL_HOST_CREATE'){
+   if(state.collegeNationalHost!==undefined)fail('NATIONAL_HOST_ALREADY_EXISTS');
+   updatedHost=engine.createCollegeLeagueHost(c,rev);next=c;
+  }else if(name==='NATIONAL_HOST_ADVANCE'){
+   const host=state.collegeNationalHost as engine.CollegeLeagueHost|undefined,hostRevision=int(p,'hostRevision');
+   if(!host||host.kind!=='COLLEGE_NPC_KBO'||host.revision!==hostRevision)fail('STALE_NATIONAL_CAREER_SOURCE');
+   if(c.events.some(e=>e.status==='OPEN'&&['E44','E45','E46','E47','E48'].includes(e.definitionId)))fail('NATIONAL_EVENT_PENDING');
+   const slot=c.world.calendar?.international.find(x=>x.type==='AG');if(!slot)fail('NATIONAL_NOT_SCHEDULED');
+   const selected=c.national?.selections?.some(s=>s.seasonKey===c.world.seasonKey&&s.tournament==='AG');
+   const stopDay=selected?slot.startDay:slot.startDay-6,deadline=spanDeadline();let current=host;
+   for(let i=0;i<20_000;i++){
+    const result=engine.advanceCollegeLeagueHost(c,rev,current,current.revision,stopDay);current=result.host;stopReason=result.stopReason;
+    if(stopReason==='TARGET_REACHED'||!['STARTED','NEXT_YEAR','YEAR_CLOSED','DAY_CLOSED','CHUNK_LIMIT','HEALTH_CHANGE','POSTSEASON_STARTED','POSTSEASON_COMPLETE','GAME_FINAL'].includes(stopReason)||Date.now()>=deadline)break;
+   }
+   updatedHost=current;next=c;
+  }
+  else if(name==='NATIONAL_SELECT'||name==='NATIONAL_START'||name==='NATIONAL_RETURN'){
+   const host=state.collegeNationalHost as engine.KboCareer|engine.CollegeLeagueHost|undefined,hostRevision=int(p,'hostRevision');
+   if(!host||typeof host!=='object'||Array.isArray(host)||host.revision!==hostRevision)fail('STALE_NATIONAL_CAREER_SOURCE');
+   if(name==='NATIONAL_RETURN'){
+    const result=engine.returnCollegeNationalTournament(c,rev,host,hostRevision);next=result.career;updatedHost=result.host;
+   }else{
+    const root='kind' in host&&host.kind==='COLLEGE_NPC_KBO'?host.game:host;
+    const sources={kbo:host,kboRevision:hostRevision,college:c,collegeRevision:rev,recordProjectionRevision:Math.max(root.records.revision,c.records.revision)};
+    if(name==='NATIONAL_SELECT'){
+     const day=root.days?.days.at(-1)?.day;if(day===undefined)fail('NATIONAL_CALENDAR_NOT_READY');
+     next=engine.openCollegeNationalSelection(c,rev,sources,'AG',day);
+    }else next=engine.startCollegeNationalTournament(c,rev,sources);
+   }
+  }
+  else if(name==='NATIONAL_EVENT'){
+   const eventKey=str(p,'eventKey'),eventVersion=int(p,'eventVersion'),command=str(p,'command');
+   const event=c.events.find(e=>e.eventKey===eventKey&&e.status==='OPEN');
+   if(!event||!['E44','E45','E46','E55'].includes(event.definitionId))fail('INVALID_NATIONAL_EVENT');
+   next=engine.resolveCollegeNationalEvent(c,rev,{eventKey,eventVersion,command,worldDay:event.occurredWorldDay}).career;
+  }else if(name==='NATIONAL_ELIGIBILITY'){
+   const eventKey=str(p,'eventKey'),eventVersion=int(p,'eventVersion'),event=c.events.find(e=>e.eventKey===eventKey&&e.status==='OPEN'&&e.definitionId==='E47');
+   if(!event||event.version!==eventVersion||typeof event.evidence.fields.competitionId!=='string')fail('INVALID_NATIONAL_EVENT');
+   next=engine.confirmCollegeNationalEligibility(c,rev,event.evidence.fields.competitionId);
+  }else if(name==='NATIONAL_DUTY')next=engine.confirmCollegeAthleteService(c,rev);
+  else if(name==='NATIONAL_ADVANCE'){
+   const phase=c.phaseContext;
+   if(phase.phase!=='INTERNATIONAL_PROGRESS')fail('COLLEGE_NATIONAL_NOT_OPEN');
+   const bracket=c.national?.brackets?.find(b=>b.competitionId===phase.competitionId);
+   if(!bracket)fail('NATIONAL_BRACKET_REQUIRED');
+   const match=engine.nextNationalMatch(bracket);
+   if(bracket.pendingGame){const result=engine.advanceCollegeNationalMatch(c,rev);next=result.career;stopReason=result.stopReason;}
+   else if(match?.day===phase.nextWorldDay)next=engine.prepareCollegeNationalMatch(c,rev);
+   else next=engine.closeCollegeNationalDay(c,rev,phase.nextWorldDay);
+  }
   else if(name==='CLOSE_HS_YEAR')next=engine.closeHighSchoolSeasonForCollege(c,rev,bool(p,'forfeitUnusedTraining'));
   else if(name==='START')next=engine.startAdmittedCollegeSeason(c,rev);
   else if(name==='MILITARY_LEAVE')next=engine.startCollegeMilitaryLeave(c,rev);
@@ -87,7 +141,7 @@ export function applyCollege(state:SaveState,command:CommandBody):AppliedCommand
   else next=engine.startNextCollegeSeason(c,rev);
  }catch(error){domainError(error);}
  const staged:SaveState=name==='ACK_REVIEW'||name==='GRADUATE'?stageAmateurUsEntry(state,next):{...state,career:next};if(name==='ENROLL')delete staged.usEntry;next=staged.career as engine.HighSchoolCareer;
- return {nextState:{...staged,...(spanStop?{span:{careerRevision:next.revision,stop:spanStop}}:{})},phase:next.phaseContext.phase,eventIds:[],summary:{type:command.type,careerRevision:next.revision,phase:next.phaseContext.phase,...(spanStop?{spanStop}:{}),...(stopReason?{stopReason}:{})}};
+ return {nextState:{...staged,...(updatedHost?{collegeNationalHost:updatedHost}:{}),...(spanStop?{span:{careerRevision:next.revision,stop:spanStop}}:{})},phase:next.phaseContext.phase,eventIds:[],summary:{type:command.type,careerRevision:next.revision,phase:next.phaseContext.phase,...(updatedHost?{hostRevision:updatedHost.revision}:{}),...(spanStop?{spanStop}:{}),...(stopReason?{stopReason}:{})}};
 }
 
 const WINDOW_LABELS:Record<string,string>={OPEN_TRAINING:'훈련 창 열기',FORFEIT_TRAINING:'이번 시즌 훈련 포기',DEFER_TRAINING:'나중에 하기',OPEN_STYLE:'플레이 스타일 선택',ACK_EVENT:'확인하고 계속'};
@@ -102,7 +156,7 @@ export function collegeRouteCommands(c:engine.HighSchoolCareer):FlowCommand[]{
   confirm:`${x.name}에 진학하면 이번 지명 절차는 끝납니다. 진학할까요?`}));
 }
 
-export function collegeFlow(c:engine.HighSchoolCareer):FlowScreen{
+export function collegeFlow(c:engine.HighSchoolCareer,host?:engine.KboCareer|engine.CollegeLeagueHost):FlowScreen{
  const p=c.world.players[c.world.protagonistKey]!,phase=c.phaseContext,admission=c.collegeAdmission;
  const lines:{label:string;value:string}[]=[{label:'선수',value:`${p.name} · ${p.age}세`},{label:'시즌',value:c.world.seasonKey}];
  if(admission)lines.push({label:'학년',value:`${admission.academicYear}학년`});
@@ -126,6 +180,32 @@ export function collegeFlow(c:engine.HighSchoolCareer):FlowScreen{
  const total=c.world.schedule.filter(g=>g.homeTeamKey===sid||g.awayTeamKey===sid).length;
  const school=c.world.schools.find(s=>s.id===sid)?.name??sid;
  lines.push({label:'대학',value:school},{label:'정규시즌',value:`${played.length}/${total}경기 · ${tally.W}승 ${tally.L}패${tally.T?` ${tally.T}무`:''}`});
+ const nationalEvent=c.events.find(e=>e.status==='OPEN'&&['E44','E45','E46','E47','E48','E55'].includes(e.definitionId));
+ if(nationalEvent){
+  const event={eventKey:nationalEvent.eventKey,eventVersion:nationalEvent.version};
+  if(nationalEvent.definitionId==='E44')return out('국가대표 선발',[
+   cmd('national-accept','대표팀 참가','NATIONAL_EVENT',{...event,command:'ACCEPT_NATIONAL'}),
+   cmd('national-decline','대표팀 불참','NATIONAL_EVENT',{...event,command:'DECLINE_NATIONAL'},'대표팀 참가를 거절할까요?'),
+  ]);
+  if(nationalEvent.definitionId==='E47')return out('국가대표 자격',[cmd('national-eligibility','자격 확인','NATIONAL_ELIGIBILITY',event)]);
+  if(nationalEvent.definitionId==='E48')return out('대회 종료',host?[cmd('national-return','원소속 복귀','NATIONAL_RETURN',{hostRevision:host.revision})]:[],'원소속 복귀 시 대회 기록이 반영됩니다.');
+  const command=nationalEvent.definitionId==='E55'?'ACK_SERVICE_OBLIGATION':'ACK_EVENT';
+  return out(engine.eventDefinition(nationalEvent.definitionId).title,[cmd('national-notice','확인','NATIONAL_EVENT',{...event,command})]);
+ }
+ if(phase.phase==='INTERNATIONAL_PROGRESS')return out('국가대표 대회',[cmd('national-advance','대회 진행','NATIONAL_ADVANCE')]);
+ if(['SEASON_REVIEW','OFFSEASON_REVIEW'].includes(phase.phase)&&c.collegeCup?.status==='COMPLETE'&&!c.events.some(e=>e.status==='OPEN')){
+  const slot=c.world.calendar?.international.find(x=>x.type==='AG');
+  if(slot&&!host)return out('국가대표 선발 준비',[cmd('national-host-create','대표팀 선발 준비','NATIONAL_HOST_CREATE')]);
+  const root=host&&'kind' in host&&host.kind==='COLLEGE_NPC_KBO'?host.game:host;
+  const progress=host&&'kind' in host&&host.kind==='COLLEGE_NPC_KBO'?host.game.progress:root&&'phaseContext' in root&&root.phaseContext.phase==='SEASON_PROGRESS'?root.phaseContext:null;
+  const day=root?.days?.days.at(-1)?.day;
+  const selected=c.national?.selections?.some(s=>s.seasonKey===c.world.seasonKey&&s.tournament==='AG');
+  if(slot&&host&&root&&root.world.worldKey===c.world.worldKey&&root.world.seed===c.world.seed){
+   if(root.world.seasonKey===c.world.seasonKey&&day!==undefined&&!selected&&day>=slot.startDay-7&&day<=slot.startDay-2)return out('국가대표 선발',[cmd('national-select','대표팀 선발 확인','NATIONAL_SELECT',{hostRevision:host.revision})]);
+   if(root.world.seasonKey===c.world.seasonKey&&selected&&progress&&!progress.pendingGame&&progress.nextWorldDay===slot.startDay&&day===slot.startDay-1)return out('국가대표 대회',[cmd('national-start','대회 시작','NATIONAL_START',{hostRevision:host.revision})]);
+   if('kind' in host&&host.kind==='COLLEGE_NPC_KBO'&&(!selected||!c.national?.returnedCompetitions?.some(id=>c.national?.brackets?.some(b=>b.competitionId===id&&b.seasonKey===c.world.seasonKey))))return out('국가대표 선발 준비',[cmd('national-host-advance','KBO 시즌 진행','NATIONAL_HOST_ADVANCE',{hostRevision:host.revision})]);
+  }
+ }
  if(phase.phase==='PRESEASON_SETUP'){
   const focusNotice=engine.careerRouteNoticesView(c).notices.find(e=>e.definitionId==='E71'&&e.requiresDomainCommands.includes('CHOOSE_FOCUS'));
   if(focusNotice){
@@ -227,7 +307,9 @@ export function collegeFlow(c:engine.HighSchoolCareer):FlowScreen{
  if(phase.phase==='POSTSEASON_PROGRESS')return out('대학 컵',[cmd('cup-advance','컵 경기 진행','ADVANCE_CUP')]);
  if(phase.phase==='OFFSEASON_REVIEW'&&admission&&admission.academicYear<4&&(admission.academicYear!==2||admission.earlyDraftAttempted)&&!c.events.some(e=>e.status==='OPEN')){
   const forfeit=!c.development?.trainingUsedSeasons.includes(c.world.seasonKey);
-  return out('학년 마무리',[cmd('close-year',forfeit?'남은 훈련 기회를 포기하고 학년 마감':'학년 마감','CLOSE_YEAR',{forfeitUnusedTraining:forfeit},forfeit?'이번 학년에 쓰지 않은 훈련 기회는 사라집니다. 마감할까요?':undefined)]);
+  const commands=[cmd('close-year',forfeit?'남은 훈련 기회를 포기하고 학년 마감':'학년 마감','CLOSE_YEAR',{forfeitUnusedTraining:forfeit},forfeit?'이번 학년에 쓰지 않은 훈련 기회는 사라집니다. 마감할까요?':undefined)];
+  if(c.national?.militaryStatus==='ATHLETE_ELIGIBLE'&&!c.collegeService)commands.unshift(cmd('national-duty','체육요원 의무 시작','NATIONAL_DUTY',{},'체육요원 활동 의무를 시작할까요?'));
+  return out('학년 마무리',commands);
  }
  if(phase.phase==='NEXT_SEASON_READY'&&c.collegeYearEnd)return out('다음 학년 준비',[cmd('start-next','다음 학년 시작','START_NEXT')]);
  return out('대학 단계',[],'이 단계는 아직 웹에서 지원하지 않습니다. 저장은 그대로 유지됩니다.');

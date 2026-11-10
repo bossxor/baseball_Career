@@ -15,16 +15,17 @@ import type {DevelopmentPlayer} from './player.js';
 import type {Repertoire} from './repertoire.js';
 import type {HealthLedger} from './health.js';
 import {canonicalJson} from './game.js';
+import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 
 export interface NationalHostSnapshot {hostSourceFingerprint:string;hostPlayers:Record<string,DevelopmentPlayer>;hostRepertoires:Record<string,Repertoire>;hostHealth:HealthLedger}
 export function captureNationalHost(host:KboCareer):NationalHostSnapshot {
  const members={...host.sangmu?.emergency?.entries,...host.sangmu?.members};
- return {hostSourceFingerprint:canonicalJson(host),hostPlayers:structuredClone({...host.world.players,...Object.fromEntries(Object.entries(members).map(([k,m])=>[k,m.player]))}),hostRepertoires:structuredClone({...host.world.repertoires,...Object.fromEntries(Object.entries(members).filter(([,m])=>m.repertoire).map(([k,m])=>[k,m.repertoire!]))}),hostHealth:structuredClone(host.health)};
+ return {hostSourceFingerprint:canonicalSeal(host),hostPlayers:structuredClone({...host.world.players,...Object.fromEntries(Object.entries(members).map(([k,m])=>[k,m.player]))}),hostRepertoires:structuredClone({...host.world.repertoires,...Object.fromEntries(Object.entries(members).filter(([,m])=>m.repertoire).map(([k,m])=>[k,m.repertoire!]))}),hostHealth:structuredClone(host.health)};
 }
 /** Actual KBO host patch shared by independent US/college tournament owners; caller commits both roots with CAS. */
 export function returnNationalHost(input:{host:KboCareer;expectedRevision:number;snapshot:NationalHostSnapshot;bracket:NationalBracket;selection:NationalSelectionSnapshot;registeredKeys:readonly string[];records:RecordLedger;owner:NationalHostReturn['owner'];ownerRevision:number;ownerPlayerKeys:readonly string[];ownerHealth:HealthLedger}):{host:KboCareer;ownership:NationalHostReturn} {
  const {host,expectedRevision,snapshot:s,bracket:b}=input;assertKboCareerRevision(host,expectedRevision);
- if(canonicalJson(host)!==s.hostSourceFingerprint||host.world.worldKey!==b.worldKey||host.world.seasonKey!==b.seasonKey||!['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW'].includes(host.phaseContext.phase)||host.phaseContext.phase==='SEASON_PROGRESS'&&(host.phaseContext.pendingGame||host.phaseContext.nextWorldDay!==b.window.startDay)||b.pendingGame||b.dayReceipts?.length!==b.window.endDay-b.window.startDay)throw new RangeError('STALE_NATIONAL_CAREER_SOURCE');
+ if(!matchesCanonicalSeal(s.hostSourceFingerprint,canonicalSeal(host))||host.world.worldKey!==b.worldKey||host.world.seasonKey!==b.seasonKey||!['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW'].includes(host.phaseContext.phase)||host.phaseContext.phase==='SEASON_PROGRESS'&&(host.phaseContext.pendingGame||host.phaseContext.nextWorldDay!==b.window.startDay)||b.pendingGame||b.dayReceipts?.length!==b.window.endDay-b.window.startDay)throw new RangeError('STALE_NATIONAL_CAREER_SOURCE');
  let next:KboCareer={...structuredClone(host),health:structuredClone(s.hostHealth)};
  for(const [key,player]of Object.entries(s.hostPlayers)){
   if(next.sangmu?.members[key])next.sangmu={...next.sangmu,members:{...next.sangmu.members,[key]:{...next.sangmu.members[key]!,player:structuredClone(player)}}};
