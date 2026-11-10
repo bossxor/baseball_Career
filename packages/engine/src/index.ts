@@ -267,3 +267,5 @@ export * from './us-relations.js';
 export {openUsMajorFaWindow,resolveUsMajorFaWindow,usMajorFaWindowView,hasOnlyUsMajorFaWindowEvent} from './us-major-fa-window.js';
 
 export {canRequestUsReturnRetirement,requestUsReturnRetirement,resolveUsReturnRetirement,usReturnRetirementView,openUsReturnArchive} from './us-return-retirement.js';
+
+export {careerSeasonGrowthSummary} from './career-growth-summary.js';
