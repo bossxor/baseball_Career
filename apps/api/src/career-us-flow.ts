@@ -14,6 +14,26 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
  const p=c.world.players[c.protagonistKey]!,phase=c.phaseContext,lines:{label:string;value:string}[]=[{label:'선수',value:`${p.name} · ${p.age}세`},{label:'시즌',value:c.world.seasonKey},{label:'레벨',value:c.registration.level}];
  const cmd=(id:string,label:string,type:string,payload:Record<string,unknown>={},confirm?:string):FlowCommand=>({id,label,type:'CAREER_US_PLAY_'+type,payload:{careerRevision:c.revision,...payload},...(confirm?{confirm}:{})});
  const out=(title:string,commands:FlowCommand[],notice:string|null=null):FlowScreen=>({screenId:'CAREER_FLOW',title,lines,commands,notice,careerRevision:c.revision});
+ const military=(id:string,label:string,name:string,payload:Record<string,unknown>={},confirm?:string):FlowCommand=>({id,label,type:'CAREER_US_MILITARY_'+name,payload:{careerRevision:c.revision,...payload},...(confirm?{confirm}:{})});
+ const service=c.military.service;
+ if(service?.version===2&&(c.military.status==='FROZEN_SERVICE'||c.military.status==='TERMINATED_SERVICE'||c.military.status==='COMPLETED'&&c.contract.status!=='ACTIVE')){
+  const v=engine.usMilitaryServiceView(c),commands:FlowCommand[]=[];
+  lines.push({label:'복무 구간',value:`${v.completedBlocks}/${v.scheduledBlocks}`});
+  if(v.cursor)lines.push({label:'진행 날짜',value:`${v.cursor.seasonKey} · ${v.cursor.worldDay}일`});
+  if(v.status==='FROZEN_SERVICE'||v.status==='TERMINATED_SERVICE'){
+   if(v.completedBlocks===v.scheduledBlocks)commands.push(military('service-complete','복무 완료','COMPLETE'));
+   else if(phase.phase==='SEASON_REVIEW')commands.push(military('service-year','다음 복무 시즌 시작','START_YEAR'));
+   else if(phase.phase==='SEASON_PROGRESS')commands.push(military('service-advance','복무 진행','ADVANCE',{maxDays:7}));
+  }else if(v.returnOffer?.status==='OPEN'){
+   const o=v.returnOffer;lines.push({label:'복귀 제안',value:`${o.organizationId} · ${o.level} · ${o.years}년 · 연봉 $${o.annualSalaryUsd.toLocaleString('en-US')}`});
+   if(v.cursor)lines.push({label:'제안 남은 일수',value:String(Math.max(0,o.expiresWorldDay-v.cursor.worldDay))});
+   commands.push({...military('service-offer-accept','새 계약 수락','ACCEPT_OFFER',{offerKey:o.offerKey},'이 계약을 수락할까요?'),sign:{name:p.name}},military('service-offer-decline','새 계약 거절','DECLINE_OFFER',{offerKey:o.offerKey},'이 제안을 거절할까요?'),military('service-wait','시간 진행','ADVANCE',{maxDays:1}));
+  }else if(v.returnOption?.status==='OPEN'){
+   if(v.cursor)lines.push({label:'복귀 남은 일수',value:String(Math.max(0,v.returnOption.expiresWorldDay-v.cursor.worldDay))});
+   commands.push(military('service-return','복귀 확정','CONFIRM_RETURN',{},'원소속 복귀를 확정할까요?'),military('service-decline','복귀 거절','DECLINE_RETURN',{},'복귀 옵션을 거절할까요?'),military('service-wait','시간 진행','ADVANCE',{maxDays:1}));
+  }
+  return out('미국 병역 복무',commands,commands.length?null:'현재 가능한 복귀 명령이 없습니다.');
+ }
  const training=():FlowCommand[]=>{
   const commands:FlowCommand[]=[],choices:engine.TrainingChoice[]=[...abilityKeys(p.kind).map(ability=>({type:'GUARANTEED' as const,ability})),{type:'CONDITIONING'}];
   for(const choice of choices){let ok:boolean;try{ok=engine.previewUsTraining(c,choice).eligible;}catch{ok=false;}
@@ -46,36 +66,41 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
  if(phase.phase==='POSTSEASON_PROGRESS')return out('포스트시즌',[cmd('post-advance','포스트시즌 진행','ADVANCE_POSTSEASON')]);
  if(phase.phase==='SEASON_REVIEW'){
   const t=engine.usYearTransitionReadiness(c);
-  if(t.ready)return out('시즌 종료',[cmd('next-minor-year','다음 시즌 시작','NEXT_MINOR_YEAR')],`다음 시즌: ${t.targetSeasonKey}`);
-  if(t.blockers.every(b=>b==='CONTRACT_DECISION_REQUIRED'||b==='OPEN_EVENT'||(c.contract.type==='US_MINOR'&&c.minorMarket?.offers.length===0&&b==='MILITARY_PLAN_REQUIRED'))){
+  let preview:ReturnType<typeof engine.usMilitaryPlanPreview>|undefined;try{preview=engine.usMilitaryPlanPreview(c);}catch{}
+  const planCommands=preview?.choices.map(choice=>military('military-'+choice.toLowerCase(),choice==='FREEZE'?'계약 동결 후 복무':'계약 종료 후 복무','PLAN',{choice},'이 병역 계획을 확정할까요?'))??[];
+  if(t.ready)return out('시즌 종료',[...planCommands,cmd('next-minor-year','다음 시즌 시작','NEXT_MINOR_YEAR')],`다음 시즌: ${t.targetSeasonKey}`);
+  if(t.blockers.includes('MILITARY_PLAN_REQUIRED')){
+   if(preview){lines.push({label:'병역 기한',value:`${preview.deadlineAge}세 · 다음 시즌 ${preview.nextAge}세`});return out('병역 계획',planCommands);}
+  }
+  if(t.blockers.every(b=>b==='CONTRACT_DECISION_REQUIRED'||b==='OPEN_EVENT'||(c.contract.type==='US_MINOR'&&!!c.minorMarket&&b==='MILITARY_PLAN_REQUIRED'))){
    const sign=(command:FlowCommand):FlowCommand=>({...command,confirm:'이 계약을 확정할까요?',sign:{name:p.name}});
    if(c.contract.type==='US_MINOR'){
     if(c.minorMarket){
      const market=engine.usMinorMarketView(c);
-     const commands:FlowCommand[]=market.offers.map((o,i)=>({...sign(cmd('minor-'+i,
+     const commands:FlowCommand[]=t.blockers.includes('MILITARY_PLAN_REQUIRED')?[]:market.offers.map((o,i)=>({...sign(cmd('minor-'+i,
       `${o.organizationName} · ${o.years}년 · 연봉 $${o.annualSalaryUsd.toLocaleString('en-US')}`,
       'ACCEPT_MINOR_OFFER',{offerKey:o.offerKey})),facts:[
        {label:'대표팀 차출',value:o.nationalReleaseAllowed?'허용':'불허'},
        {label:'병역 복귀 옵션',value:o.militaryReturnOption?'있음':'없음'},
       ]}));
-     if(!commands.length&&market.returnHome.available&&!c.kboTransfer){
+     if(market.returnHome.available&&!c.kboTransfer){
       let eligible:boolean;try{engine.openUsAmateurReturn(c,c.revision);eligible=true;}catch{eligible=false;}
       if(eligible)commands.push({id:'return-request',label:'국내 복귀 준비',type:'CAREER_US_RETURN_REQUEST',
        payload:{careerRevision:c.revision},confirm:'국내 복귀 준비를 시작할까요?'});
      }
-     return out('마이너 계약 제안',commands,commands.length?null:'현재 계약 제안이 없습니다.');
+     return out('마이너 계약 제안',[...planCommands,...commands],market.offers.length?null:'현재 계약 제안이 없습니다.');
     }
-    if(t.blockers.length===1)return out('계약 만료',[cmd('minor-market','계약 제안 확인','OPEN_MINOR_MARKET')]);
+    if(t.blockers.length===1)return out('계약 만료',[...planCommands,cmd('minor-market','계약 제안 확인','OPEN_MINOR_MARKET')]);
    }else{
     const quote=majorContractView(c,t);
     if(quote?.kind==='RENEWAL'){
      lines.push({label:'계약',value:`${quote.years}년 · 연봉 $${quote.annualSalaryUsd.toLocaleString('en-US')}`});
      const commands=quote.funded?[sign(cmd('major-renew','계약 수락','NEXT_MAJOR_YEAR',
       'counterOfferKey' in quote?{counterOfferKey:quote.counterOfferKey}:{}))]:[];
-     return out('메이저 재계약',commands,quote.funded?null:'계약 예산이 부족하여 진행할 수 없습니다.');
+     return out('메이저 재계약',[...planCommands,...commands],quote.funded?null:'계약 예산이 부족하여 진행할 수 없습니다.');
     }
     if(quote?.kind==='FREE_AGENCY'){
-     if(!c.majorFaWindow)return out('FA 자격',[cmd('major-market','FA 제안 확인','OPEN_MAJOR_FA_WINDOW')]);
+     if(!c.majorFaWindow)return out('FA 자격',[...planCommands,cmd('major-market','FA 제안 확인','OPEN_MAJOR_FA_WINDOW')]);
      const commands:FlowCommand[]=quote.offers.map((o,i)=>({...sign(cmd('major-fa-'+i,
       `${o.organizationId} · ${o.years}년 · 연봉 $${o.annualSalaryUsd.toLocaleString('en-US')}`,
       'ACCEPT_MAJOR_FA',{offerKey:o.offerKey,...('counterOfferKey' in o?{counterOfferKey:o.counterOfferKey}:{})})),facts:[
@@ -86,7 +111,7 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
       id:'retire-request',label:'은퇴 절차 시작',type:'CAREER_PRO_RETIRE_REQUEST',
       payload:{careerRevision:c.revision},confirm:'은퇴 확인 단계로 이동할까요?',
      });
-     return out('메이저 FA 제안',commands,quote.offers.length?null:'현재 계약 제안이 없습니다.');
+     return out('메이저 FA 제안',[...planCommands,...commands],quote.offers.length?null:'현재 계약 제안이 없습니다.');
     }
    }
   }

@@ -12,6 +12,7 @@ const fields=new Map<string,readonly string[]>([
  ['OPEN_CONTRACT_OFFERS',[]],['ACCEPT_RENEWAL',['eventKey','eventVersion','offerKey']],['ACCEPT_OFFSEASON',['eventKey','eventVersion','offerKey']],
  ['SELECT_FA',['eventKey','eventVersion','offerKey']],['ACCEPT_FA',['eventKey','eventVersion','offerKey']],['DECLINE_FA',['eventKey','eventVersion']],
  ['START_POSTSEASON',[]],['ADVANCE_POSTSEASON',[]],['SETTLE_GROWTH',[]],['CLOSE_SEASON',['forfeitUnusedTraining']],['NEXT_YEAR',[]],
+ ['MILITARY_OPEN',[]],['MILITARY_PLAN',['eventKey','eventVersion','command']],['MILITARY_RESULT',['command']],['MILITARY_ENLIST',[]],['MILITARY_EVENT',['eventKey','eventVersion','command','focus']],
 ]);
 const WINDOW_COMMANDS=['OPEN_TRAINING','DEFER_TRAINING','FORFEIT_TRAINING','ACK_EVENT'];
 function fail(code:string):never{throw Object.assign(new Error(code),{code});}
@@ -60,6 +61,11 @@ export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand
    case 'SETTLE_GROWTH':next=engine.settleKboSeasonGrowth(c,rev).career;break;
    case 'START_POSTSEASON':next=engine.startKboPostseason(c,rev);break;
    case 'ADVANCE_POSTSEASON':{const r=engine.advanceKboPostseason(c,rev);next=r.career;stopReason=r.stopReason;break;}
+   case 'MILITARY_OPEN':next=engine.openKboMilitaryPlan(c,rev);break;
+   case 'MILITARY_PLAN':next=engine.resolveKboMilitaryPlan(c,rev,{...event(),command:str(p,'command')}).career;break;
+   case 'MILITARY_RESULT':{const action=str(p,'command');if(!['ENLIST','DECLINE','ACK_REJECTION'].includes(action))fail('INVALID_PAYLOAD');next=engine.resolveSangmuApplication(c,rev,action as 'ENLIST'|'DECLINE'|'ACK_REJECTION');break;}
+   case 'MILITARY_ENLIST':next=engine.confirmKboActiveService(c,rev);break;
+   case 'MILITARY_EVENT':{const focus=p.focus;if(focus!==undefined&&(!Array.isArray(focus)||!focus.every(x=>typeof x==='string')))fail('INVALID_PAYLOAD');next=engine.resolveKboMilitaryEvent(c,rev,{...event(),command:str(p,'command'),...(focus===undefined?{}:{focus:focus as string[]})});break;}
    case 'CLOSE_SEASON':{if(typeof p.forfeitUnusedTraining!=='boolean')fail('INVALID_PAYLOAD');next=engine.closeKboSeason(c,rev,p.forfeitUnusedTraining);break;}
    default:next=engine.startNextKboSeason(c,rev);
   }
@@ -74,6 +80,12 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
  const phase=c.phaseContext,lines:{label:string;value:string}[]=[{label:'선수',value:`${p.name} · ${p.age}세`},{label:'시즌',value:c.world.seasonKey}];
  const cmd=(id:string,label:string,type:string,payload:Record<string,unknown>={},confirm?:string):FlowCommand=>({id,label,type:'CAREER_KBO_PLAY_'+type,payload:{careerRevision:c.revision,...payload},...(confirm?{confirm}:{})});
  const out=(title:string,commands:FlowCommand[],notice:string|null=null):FlowScreen=>({screenId:'CAREER_FLOW',title,lines,commands,notice,careerRevision:c.revision});
+ const militaryEvent=engine.kboMilitaryEventView(c)[0];
+ if(militaryEvent){
+  const actions=militaryEvent.choices.filter(x=>x.command!=='CHOOSE_FOCUS').map(x=>cmd('military-'+x.command,x.label,'MILITARY_EVENT',{eventKey:militaryEvent.eventKey,eventVersion:militaryEvent.eventVersion,command:x.command}));
+  if(militaryEvent.focus){const focus=militaryEvent.focus;actions.unshift(cmd('military-focus','현재 육성 계획 확인','MILITARY_EVENT',{eventKey:militaryEvent.eventKey,eventVersion:militaryEvent.eventVersion,command:'CHOOSE_FOCUS',focus}));}
+  return out(militaryEvent.title,actions,militaryEvent.body);
+ }
  if(phase.phase==='PRESEASON_SETUP'){
   let notices:ReturnType<typeof engine.unreadKboFirstCampNotices>;try{notices=engine.unreadKboFirstCampNotices(c);}catch{notices=[];}
   if(notices.length)return out('첫 캠프',notices.map(n=>cmd('camp-ack','현재 육성 계획 유지','RESOLVE_CAMP',{eventKey:n.eventKey,eventVersion:n.eventVersion})));
@@ -103,7 +115,18 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
  if(phase.phase==='POSTSEASON_PROGRESS')return out('포스트시즌',[cmd('post-advance','포스트시즌 진행','ADVANCE_POSTSEASON')]);
  if(phase.phase==='SEASON_REVIEW'&&c.days){
   const t=engine.kboYearTransitionReadiness(c);
-  if(t.ready)return out('시즌 종료',[cmd('next-year','다음 시즌 시작','NEXT_YEAR')],`다음 시즌: ${t.targetSeasonKey}`);
+  const planEvent=engine.kboMilitaryPlanEventView(c)[0];
+  if(planEvent){lines.push({label:'유예 가능 시즌',value:String(planEvent.futureGraceSeasons)});return out(planEvent.title,planEvent.choices.filter(x=>x.available).map(x=>cmd('military-plan-'+x.command,x.label,'MILITARY_PLAN',{eventKey:planEvent.eventKey,eventVersion:planEvent.eventVersion,command:x.command})),planEvent.body);}
+  const app=c.military?.status==='APPLICATION_PENDING'?c.military.applications.at(-1):undefined;
+  if(app?.decision==='PENDING'){lines.push({label:'상무 선발',value:app.accepted?'선발':'미선발'});const actions=app.accepted?['ENLIST','DECLINE']:['ACK_REJECTION'];return out('상무 선발 결과',actions.map(x=>cmd('military-result-'+x,x==='ENLIST'?'상무 입대':x==='DECLINE'?'입대 거절':'결과 확인','MILITARY_RESULT',{command:x})));}
+  const militaryCommands:FlowCommand[]=[];
+  if(c.seasonClose){
+   const plan=engine.kboMilitaryPlan(c),preview=engine.kboActiveServicePreview(c);
+   if(preview.canEnlist){lines.push({label:'복무 중 급여',value:preview.servicePayWon.toLocaleString('ko-KR')+'원'},{label:'계약 잔여 경기일',value:String(preview.remainingPaidGameDays)});militaryCommands.push(cmd('military-enlist','현역 입대 확정','MILITARY_ENLIST',{},'현역 입대를 확정할까요?'));}
+   if(plan.status==='UNRESOLVED'&&plan.age>=19&&plan.age<45&&!c.events.some(e=>e.status==='OPEN'&&e.definitionId!=='E30')&&!c.events.some(e=>['E49','E54'].includes(e.definitionId)&&e.seasonKey===c.world.seasonKey))militaryCommands.push(cmd('military-open','병역 계획 확인','MILITARY_OPEN'));
+  }
+  if(t.ready)return out('시즌 종료',[...militaryCommands,cmd('next-year','다음 시즌 시작','NEXT_YEAR')],`다음 시즌: ${t.targetSeasonKey}`);
+  if(t.blockers.includes('MILITARY_PLAN_REQUIRED')&&militaryCommands.length)return out('병역 계획',militaryCommands);
   if(c.seasonClose&&t.blockers.includes('CONTRACT_DECISION_REQUIRED')){
    const label=(offer:{clubId:string;years:number;annualSalaryWon:number})=>
     `${KBO_CLUBS.find(x=>x.id===offer.clubId)?.name??offer.clubId} · ${offer.years}년 · 연봉 ${offer.annualSalaryWon.toLocaleString('ko-KR')}원`;
@@ -116,7 +139,7 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
      id:'retire-request',label:'은퇴 절차 시작',type:'CAREER_PRO_RETIRE_REQUEST',
      payload:{careerRevision:c.revision},confirm:'은퇴 확인 단계로 이동할까요?',
     });
-    return out('FA 제안 비교',commands,fa.offers.length?null:'조건에 맞는 제안이 없습니다.');
+    return out('FA 제안 비교',[...militaryCommands,...commands],fa.offers.length?null:'조건에 맞는 제안이 없습니다.');
    }
    if(fa?.state==='SELECTED'){
     const o=fa.offers.find(x=>x.offerKey===fa.selectedOfferKey)!;
@@ -141,10 +164,11 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
     const price=engine.careerAgentRenewalOffer(c,counter?.counterOfferKey??renewal.offerKey);
     lines.push({label:'재계약',value:label({...renewal,annualSalaryWon:price.annualSalaryWon})});
     return out('재계약 제안',[
+     ...militaryCommands,
      signed(cmd('renew','재계약 수락','ACCEPT_RENEWAL',{eventKey:e.eventKey,eventVersion:e.version,offerKey:price.offerKey})),
     ]);
    }
-   if(!c.events.some(e=>e.status==='OPEN'&&e.definitionId!=='E50')&&p.age<45)return out('다음 시즌 계약',[cmd('contract-offers','계약 제안 확인','OPEN_CONTRACT_OFFERS')]);
+   if(!c.events.some(e=>e.status==='OPEN'&&e.definitionId!=='E50')&&p.age<45)return out('다음 시즌 계약',[...militaryCommands,cmd('contract-offers','계약 제안 확인','OPEN_CONTRACT_OFFERS')]);
   }
   if(!c.postseason&&!c.seasonClose)return out('정규시즌 종료',[cmd('post-start','포스트시즌 시작','START_POSTSEASON')]);
   if(c.postseason?.championKey&&!c.seasonClose){
