@@ -7,6 +7,33 @@ import { proRetirementScreen } from './career-pro-retirement-shell.js';
 type Line = { label: string; value: string };
 export type RetirementSummary = { name: string; details: Line[]; sections: { title: string; lines: Line[] }[] };
 
+type AwardReceipt = {receiptKey:string;seasonKey:string;status?:unknown;awards:readonly {playerKey:string;status?:unknown}[]};
+type AllStarReceipt = {receiptKey:string;seasonKey:string;status?:unknown;selected:readonly {playerKey:string;status?:unknown}[]};
+export function bestRetirementYears(seasonRows:readonly {seasonKey:string;record:{games:number}}[],playerKey:string,annual:readonly AwardReceipt[],allStars:readonly AllStarReceipt[]):Line[] {
+ const years = new Map<string, number>();
+ for (const row of seasonRows) {
+  if (/^\d{4}$/.test(row.seasonKey) && row.record.games > 0) years.set(row.seasonKey, 0);
+ }
+ const counted = new Set<string>();
+ const confirmed = (value:{status?:unknown}) => value.status === undefined || value.status === 'CONFIRMED' || value.status === 'FINAL' || value.status === 'COMMITTED';
+ for (const [kind, receipts] of [['annual', annual], ['allstar', allStars]] as const) {
+  for (const receipt of receipts) {
+   if (!confirmed(receipt as {status?:unknown})) continue;
+   if (!/^\d{4}$/.test(receipt.seasonKey)) continue;
+   const receiptId = JSON.stringify([kind, receipt.receiptKey]);
+   if (counted.has(receiptId)) continue;
+   counted.add(receiptId);
+   const count = 'awards' in receipt
+    ? receipt.awards.filter(a => a.playerKey === playerKey && confirmed(a as {status?:unknown})).length
+    : receipt.selected.filter(a => a.playerKey === playerKey && confirmed(a as {status?:unknown})).length;
+   if (count > 0) years.set(receipt.seasonKey, (years.get(receipt.seasonKey) ?? 0) + count);
+  }
+ }
+ const bestYears = [...years].sort((a,b) => b[1]-a[1] || b[0].localeCompare(a[0])).slice(0,3);
+ return bestYears.map(([year,count]) => ({label:`${year} 시즌`,value:`개인 수상·올스타 ${count}회`}));
+
+}
+
 /** Project the existing public archive; commands stay owned by the retirement shell. */
 export function retirementSummary(state: SaveState): { summary: RetirementSummary; commands: FlowCommand[]; notice: string | null } | null {
  const c = state.career as {phaseContext?:{phase?:string};retirement?:unknown;retryPro?:{status?:string}} | undefined;
@@ -43,6 +70,8 @@ export function retirementSummary(state: SaveState): { summary: RetirementSummar
   const achieved = careerAchievementsView(career).achievements.filter(a => a.status === 'COMPLETED');
   if (achieved.length) sections.push({title:'주요 업적',lines:achieved.map(a=>({label:a.achievementId,value:a.condition}))});
  }
+ const bestYears = bestRetirementYears(archive.seasonRows,career.protagonistKey,career.proAwards?.annual ?? [],career.proAwards?.allStars ?? []);
+ if (bestYears.length) sections.push({title:'가장 빛난 3년',lines:bestYears});
  const awards:Line[] = [];
  for (const receipt of career.proAwards?.annual ?? []) for (const award of receipt.awards) {
   if (award.playerKey===career.protagonistKey) awards.push({label:award.awardType,value:`${receipt.leagueKey} · ${receipt.seasonKey} 시즌`});

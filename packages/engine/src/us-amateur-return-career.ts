@@ -4,7 +4,7 @@ import type {UsCareer} from './us-career-entry.js';
 import type {RecordLedger} from './records.js';
 import {assertUsCareerRevision} from './us-career-entry.js';
 import {canonicalJson} from './game.js';
-import {openUsAmateurReturn,assertUsAmateurReturnLedger,settleUsAmateurIndependentYear,settleUsAmateurServiceYear,usAmateurReturnView} from './us-amateur-return.js';
+import {openUsAmateurReturn,assertUsAmateurReturnLedger,settleUsAmateurIndependentYear,settleUsAmateurServiceYear,usAmateurReturnView,usAmateurReturnOrigin} from './us-amateur-return.js';
 import type {UsAmateurReturnLedger} from './us-amateur-return.js';
 import {chooseUsMilitaryPlan,startUsMilitaryServiceSeason,completeUsMilitaryService,usMilitaryServiceView,registerUsReturningPlayer} from './us-military-plan.js';
 import {startUsMilitaryWorld,advanceUsMilitaryWorld} from './us-season.js';
@@ -64,7 +64,7 @@ function assertRecordPrefix(before:RecordLedger,after:RecordLedger):void {
 export function assertUsAmateurReturnCareer(s:UsAmateurReturnCareer):void {
  assertUsAmateurReturnLedger(s.return);assertRetryCareerLedger(s.retry);
  const r=s.return,source=s.source;
- if(s.serviceGrowthPolicy!==undefined&&s.serviceGrowthPolicy!=='SOURCE_DIFFICULTY'||s.version!==1||!Number.isSafeInteger(s.revision)||s.revision<1||r.sourceRevision!==source.revision||r.worldKey!==source.world.worldKey||r.playerKey!==source.protagonistKey||r.sourceContractKey!==source.contract.contractKey||r.sourceSeasonKey!==source.world.seasonKey||!same(r.sourcePlayer,source.world.players[source.protagonistKey])||r.origin!==(source.amateurHistory.world.leagueKey==='COLLEGE'?'COLLEGE_DIRECT':'HIGH_SCHOOL_DIRECT')||s.retry.worldKey!==r.worldKey||s.retry.playerKey!==r.playerKey||s.completedPreparation.length!==r.years.filter(y=>y.kind==='INDEPENDENT').length||s.preparation&&s.service||s.acceptedUs||r.status==='CANCELLED_US')throw new RangeError('INVALID_US_RETURN_ROOT');
+ if(s.serviceGrowthPolicy!==undefined&&s.serviceGrowthPolicy!=='SOURCE_DIFFICULTY'||s.version!==1||!Number.isSafeInteger(s.revision)||s.revision<1||r.sourceRevision!==source.revision||r.worldKey!==source.world.worldKey||r.playerKey!==source.protagonistKey||r.sourceContractKey!==source.contract.contractKey||r.sourceSeasonKey!==source.world.seasonKey||!same(r.sourcePlayer,source.world.players[source.protagonistKey])||r.origin!==usAmateurReturnOrigin(source)||s.retry.worldKey!==r.worldKey||s.retry.playerKey!==r.playerKey||s.completedPreparation.length!==r.years.filter(y=>y.kind==='INDEPENDENT').length||s.preparation&&s.service||s.acceptedUs||r.status==='CANCELLED_US')throw new RangeError('INVALID_US_RETURN_ROOT');
  let replay=openUsAmateurReturn(source,source.revision);
  if(!same({...replay,years:r.years,revision:r.revision,status:r.status,militaryStatus:r.militaryStatus,draftReservationKey:r.draftReservationKey},r))throw new RangeError('US_RETURN_SOURCE_CHANGED');
  const returnEvents=s.events.filter(e=>e.definitionId==='E68'),marketEvents=s.events.filter(e=>!['E68','E36','E37'].includes(e.definitionId));

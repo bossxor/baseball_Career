@@ -38,10 +38,16 @@ export function usYearTransitionReadiness(c:UsCareer){
  const originSeason=c.kboTransfer?String(Number(c.kboTransfer.kboSeasonKey)+1):c.amateurHistory.usRecruitment?.program.signing?.seasonKey;
  if(!originSeason||!/^\d{4}$/.test(originSeason)||Number(originSeason)>Number(c.world.seasonKey))throw new RangeError('INVALID_US_CONTRACT_ORIGIN');
  const frozenSeasons=c.military.service?.years?.filter(y=>y.seasonKey!==c.military.planSeasonKey&&y.season.militaryService?.programId===c.military.service!.programId&&y.season.paidUsd===0).length??0;
+ // Preserve cumulative eligible seasons; remaining control uses the current contract epoch.
  const controlSeasonsUsed=Number(c.world.seasonKey)-Number(originSeason)+1-frozenSeasons;
- const minorTerm=c.kboTransfer?c.kboTransfer.offer.years:c.contract.controlSeasons;
- if(c.contract.type==='US_MAJOR'||controlSeasonsUsed>=minorTerm)blockers.push('CONTRACT_DECISION_REQUIRED');
- return {ready:blockers.length===0,blockers,targetSeasonKey,nextAge,mlbService:mlbServiceTime(c.records,c.health,c.protagonistKey),controlSeasonsUsed,remainingMinorControlSeasons:Math.max(0,minorTerm-controlSeasonsUsed)};
+ const independent=!c.kboTransfer&&c.amateurHistory.world.leagueKey==='INDEPENDENT'&&c.amateurHistory.usRecruitment?.program.input.contractProfile==='INDEPENDENT_FIRST';
+ const returned=c.usReturnContinuation??(c.military.service?.returnContract?{contract:c.military.service.returnContract,remainingControlSeasons:c.military.service.remainingControlSeasons}:undefined);
+ const renewed=independent&&c.minorRenewal?.contract.contractKey===c.contract.contractKey?c.minorRenewal:undefined;
+ const epoch=renewed?Number(renewed.signedFromSeasonKey)+1:returned&&independent?Number(returned.contract.seasonKey):Number(originSeason);
+ const minorTerm=renewed?1:returned&&independent?returned.remainingControlSeasons!:c.kboTransfer?c.kboTransfer.offer.years:c.contract.controlSeasons;
+ const used=independent?(Number(c.world.seasonKey)-epoch+1-(c.military.service?.years?.filter(y=>Number(y.seasonKey)>=epoch&&y.seasonKey!==c.military.planSeasonKey&&y.season.militaryService?.programId===c.military.service!.programId&&y.season.paidUsd===0).length??0)):controlSeasonsUsed;
+ if(c.contract.type==='US_MAJOR'||used>=minorTerm)blockers.push('CONTRACT_DECISION_REQUIRED');
+ return {ready:blockers.length===0,blockers,targetSeasonKey,nextAge,mlbService:mlbServiceTime(c.records,c.health,c.protagonistKey),controlSeasonsUsed,remainingMinorControlSeasons:Math.max(0,minorTerm-used)};
 }
 export interface UsAgeRosterStage {receiptKey:string;sourceRevision:number;sourceSeasonKey:string;sourceRecordRevision:number;targetSeasonKey:string;world:ActiveUsRosterWorld;health:HealthLedger;supply:UsSupplyReceipt}
 /** Restore injury substitutions before their year-local emergency registry is retired; injuries themselves remain. */
