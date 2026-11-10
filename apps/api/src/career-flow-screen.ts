@@ -1,5 +1,5 @@
 import * as engine from '@playball/engine';
-import {KBO_CLUBS,ABILITY_LABELS,abilityKeys} from '@playball/rules';
+import {KBO_CLUBS,ABILITY_LABELS,abilityKeys,HITTER_TYPES,PITCHER_TYPES} from '@playball/rules';
 import type {SaveState} from './engine-command.js';
 import {kboPlayFlow} from './career-kbo-play-shell.js';
 import {usFlow,isUs} from './career-us-flow.js';
@@ -7,6 +7,8 @@ import {collegeApplies,collegeFlow,collegeRouteCommands,isCollege} from './caree
 import {isUsAmateurReturn,usReturnFlow} from './career-us-return-flow.js';
 import {isUsReturnRetry} from './career-us-return-retry-shell.js';
 import {usReturnRetryFlow} from './career-us-return-retry-flow.js';
+import {amateurUsCommands} from './career-us-entry-shell.js';
+import {draftLines} from './career-draft-lines.js';
 
 /** One public, command-bearing screen for the school→KBO entry and pro-retry flows.
  * Every command here is an existing owned CAREER_* command; the web replays `type`/`payload` exactly and never builds its own.
@@ -29,7 +31,7 @@ export function flowApplies(state:SaveState):boolean {
  if(isKbo(c))return true;
  if(isUs(c))return true;
  if(isCollege(c))return true;
- return ['SEASON_REVIEW','CAREER_ROUTE','NEXT_SEASON_READY'].includes(c.phaseContext.phase)||(c.phaseContext.phase==='EVENT_DECISION'&&Boolean(open(c,'E04')))||Boolean(c.retryExit||c.amateurRetirement);
+ return ['SEASON_PROGRESS','SEASON_REVIEW','CAREER_ROUTE','NEXT_SEASON_READY'].includes(c.phaseContext.phase)||(c.phaseContext.phase==='EVENT_DECISION'&&['E01','E02','E03','E04','E41','E43','E84'].some(id=>Boolean(open(c,id))))||Boolean(c.retryExit||c.amateurRetirement);
 }
 
 export function careerFlowScreen(state:SaveState):FlowScreen {
@@ -74,6 +76,48 @@ function schoolFlow(c:engine.HighSchoolCareer):FlowScreen {
   }
   return out('은퇴 확인',commands);
  }
+ const lastTraining=c.development?.trainingResults.at(-1);
+ if(lastTraining?.seasonKey===c.world.seasonKey)lines.push({label:'최근 특별 훈련',value:(lastTraining.success?'완료':'실패')+' · 성장 '+(lastTraining.gainUnits/10_000).toLocaleString('ko-KR')+' · 피로 '+lastTraining.fatigueBefore+' → '+lastTraining.fatigueAfter});
+ if(phase==='SEASON_PROGRESS'){
+  const commands:FlowCommand[]=[];
+  const choices:engine.TrainingChoice[]=[...abilityKeys(p.kind).flatMap(ability=>[{type:'GUARANTEED' as const,ability},{type:'CHALLENGE' as const,ability}]),{type:'CONDITIONING'},{type:'SKIP'}];
+  for(const choice of choices){
+   let preview:ReturnType<typeof engine.previewCareerTraining>;try{preview=engine.previewCareerTraining(c,choice);}catch{continue;}
+   if(!preview.eligible)continue;
+   const ability='ability' in choice?choice.ability:undefined;
+   const label=choice.type==='GUARANTEED'?'확정 성장':choice.type==='CHALLENGE'?'도전 강화':choice.type==='CONDITIONING'?'피로 회복':'이번 시즌 훈련 건너뛰기';
+   const facts=[{label:'성장',value:'+'+(preview.gainUnits/10_000).toLocaleString('ko-KR')},{label:'피로 변화',value:(preview.fatigueDelta>0?'+':'')+preview.fatigueDelta}];
+   if(preview.probability!==null&&preview.probability<1)facts.push({label:'성공 확률',value:(preview.probability*100).toLocaleString('ko-KR')+'%'});
+   commands.push({...cmd(c,'school-train-'+choice.type+'-'+(ability??''),(ability?ABILITY_LABELS[ability as keyof typeof ABILITY_LABELS]+' · ':'')+label,'CAREER_SCHOOL_TRAIN',{choice},choice.type==='SKIP'?'이번 시즌 특별 훈련을 건너뛸까요?':undefined),facts});
+  }
+  for(const [archetype,type] of Object.entries(p.kind==='HITTER'?HITTER_TYPES:PITCHER_TYPES)){
+   if(archetype===p.archetype)continue;
+   try{engine.previewMidseasonCareerArchetype(c,archetype);}catch{continue;}
+   commands.push(cmd(c,'school-style-'+archetype,type.label+'으로 변경','CAREER_SCHOOL_STYLE',{archetype},'이번 시즌 중반 스타일 변경 기회를 사용할까요?'));
+  }
+  commands.push(cmd(c,'school-progress','다음 주요 사건까지','CAREER_SCHOOL_ADVANCE',{mode:'NEXT_MAJOR_EVENT'}));
+  return out('고교 훈련 · 시즌 진행',commands);
+ }
+ if(phase==='EVENT_DECISION'){
+  const event=c.events.find(e=>e.eventKey===(c.phaseContext as {eventKey:string}).eventKey&&e.status==='OPEN');
+  if(event&&['E01','E02','E03'].includes(event.definitionId)){
+   const keys=abilityKeys(p.kind),commands=[cmd(c,'school-keep-focus','현재 육성 계획 유지','CAREER_SCHOOL_RESOLVE_FOCUS',{eventKey:event.eventKey,eventVersion:event.version,command:'KEEP_FOCUS'})];
+   for(let first=0;first<keys.length;first++)for(let second=first+1;second<keys.length;second++){
+    const focus=keys.filter((_,index)=>index!==first&&index!==second);
+    commands.push(cmd(c,'school-focus-'+focus.join('-'),focus.map(key=>ABILITY_LABELS[key]).join(' · '),'CAREER_SCHOOL_RESOLVE_FOCUS',{eventKey:event.eventKey,eventVersion:event.version,command:'CHOOSE_FOCUS',focus}));
+   }
+   return out('집중 육성 4개 선택',commands);
+  }
+  if(event&&['E41','E43'].includes(event.definitionId)){
+   const choices=event.definitionId==='E43'?[['OPEN_TRAINING','특별 훈련 선택'],['DEFER_TRAINING','나중에 훈련'],['FORFEIT_TRAINING','이번 시즌 훈련 포기']]:[['OPEN_STYLE','플레이 스타일 선택'],['ACK_EVENT','현재 스타일 유지']];
+   return out(engine.eventDefinition(event.definitionId).title,choices.map(([command,label])=>cmd(c,command!,label!,'CAREER_SCHOOL_RESOLVE_WINDOW',{eventKey:event.eventKey,eventVersion:event.version,command},command==='FORFEIT_TRAINING'?'이번 시즌 훈련 기회가 사라집니다. 포기할까요?':undefined)));
+  }
+  if(event?.definitionId==='E84'){
+   const traits=engine.careerTraitView(c);
+   for(const trait of traits.hidden)if(trait.unlocked)lines.push({label:'해금 특성',value:trait.name});
+   return out('특성 해금', [cmd(c,'school-traits','특성 확인하고 계속','CAREER_SCHOOL_RESOLVE_HIDDEN',{eventKey:event.eventKey,eventVersion:event.version,command:'OPEN_TRAITS'})]);
+  }
+ }
  if(phase==='SEASON_REVIEW')return out('시즌 결산',[cmd(c,'ack-review','시즌 결산 확인','CAREER_SCHOOL_ACK_SEASON_REVIEW')]);
  const e04=phase==='EVENT_DECISION'?open(c,'E04'):undefined;
  if(e04)return out('졸업 진로',[cmd(c,'open-route','진로 선택 열기','CAREER_SCHOOL_OPEN_ROUTE',{eventVersion:e04.version})]);
@@ -82,7 +126,7 @@ function schoolFlow(c:engine.HighSchoolCareer):FlowScreen {
   if(!draft||draft.status==='PREVIEW'&&!draft.result){
    if(!draft)commands.push(cmd(c,'draft-prepare','KBO 신인 드래프트 준비','CAREER_KBO_ENTRY_PREPARE'));
    else{
-    lines.push({label:'드래프트',value:draft.eligible?'지명 확률 확인 가능':'지원 자격 없음'});
+    lines.push(...draftLines(draft.preview));
     if(draft.eligible)commands.push(cmd(c,'draft-resolve','드래프트 결과 확인','CAREER_KBO_ENTRY_RESOLVE',{programVersion:draft.version}));
    }
   }else if(draft.result){
@@ -93,9 +137,10 @@ function schoolFlow(c:engine.HighSchoolCareer):FlowScreen {
     {...cmd(c,'draft-sign','계약하고 입단','CAREER_KBO_ENTRY_DECIDE',{programVersion:draft.version,decision:'SIGN',eventVersion:grad.version}),sign:{name:p.name},facts:[{label:'계약',value:`${draft.offer.years}년 · 연봉 ${won(draft.offer.annualSalaryWon)}`}]},
     {...cmd(c,'draft-decline','제안 거절','CAREER_KBO_ENTRY_DECIDE',{programVersion:draft.version,decision:'DECLINE',eventVersion:grad.version},'거절하면 이 지명은 사라집니다. 거절할까요?'),facts:[{label:'결과',value:'이 지명 제안은 사라집니다'}]});
   }
-  commands.push(...collegeRouteCommands(c));
-  return out('졸업 진로 · KBO 지명',commands,'대학·미국 진로는 아직 웹에서 지원하지 않습니다.');
+  commands.push(...collegeRouteCommands(c),...amateurUsCommands(c));
+  return out('졸업 진로 · KBO 지명',commands);
  }
+ if(phase==='NEXT_SEASON_READY'&&c.phaseContext.route==='US')return out('미국 진출 준비',amateurUsCommands(c));
  if(phase==='NEXT_SEASON_READY'&&c.phaseContext.route==='KBO'){
   if(c.kboYearEnd)return out('KBO 입단',[cmd(c,'activate','KBO 선수로 입단','CAREER_KBO_ENTRY_ACTIVATE')]);
   const forfeit=!c.development?.trainingUsedSeasons.includes(c.world.seasonKey);

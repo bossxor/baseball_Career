@@ -50,6 +50,7 @@ export * from './career-us.js';
 export * from './us-reservations.js';
 export * from './us-world.js';
 export * from './us-inventory.js';
+export {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 export * from './career-trait-view.js';
 export * from './trait-notices.js';
 export * from './relationships.js';
@@ -264,3 +265,5 @@ export {assertCollegeUnsignedReturn,assertCollegeEarlyUsComparison,collegeEarlyU
 export * from './us-relations.js';
 
 export {openUsMajorFaWindow,resolveUsMajorFaWindow,usMajorFaWindowView,hasOnlyUsMajorFaWindowEvent} from './us-major-fa-window.js';
+
+export {canRequestUsReturnRetirement,requestUsReturnRetirement,resolveUsReturnRetirement,usReturnRetirementView,openUsReturnArchive} from './us-return-retirement.js';

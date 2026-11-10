@@ -55,11 +55,15 @@ export function forfeitCareerTrainingEvent(source:HighSchoolCareer,expectedRevis
  const career=applyCareerSeasonTraining(source,{type:'SKIP'}),resolved=completeEventDomain(event,choice.domain,JSON.stringify(['career-forfeit-training',source.world.worldKey,source.world.seasonKey,source.revision+1]),eventContext);
  career.events=career.events.map(e=>e.eventKey===event.eventKey?resolved:e);career.phaseContext=structuredClone(phase.resume);career.revision++;return career;
 }
-export function changeMidseasonCareerArchetype(source:HighSchoolCareer,expectedRevision:number,archetype:string):HighSchoolCareer {
- assertSchoolCareerRevision(source,expectedRevision);safeSetup(source);
+export function previewMidseasonCareerArchetype(source:HighSchoolCareer,archetype:string):void {
+ safeSetup(source);
  if(source.phaseContext.phase!=='SEASON_PROGRESS' || completedTeamGames(source)<24 || Object.hasOwn(source.health.injuries,source.world.protagonistKey))throw new RangeError('STYLE_WINDOW_CLOSED');
  const player=source.world.players[source.world.protagonistKey]!;archetypeFor(player.kind,archetype);const window=JSON.stringify([source.world.seasonKey,'MID']);
  if(player.archetype!==archetype && source.styleUsedWindows.includes(window))throw new RangeError('STYLE_WINDOW_USED');
+}
+export function changeMidseasonCareerArchetype(source:HighSchoolCareer,expectedRevision:number,archetype:string):HighSchoolCareer {
+ assertSchoolCareerRevision(source,expectedRevision);previewMidseasonCareerArchetype(source,archetype);
+ const player=source.world.players[source.world.protagonistKey]!,window=JSON.stringify([source.world.seasonKey,'MID']);
  const career=structuredClone(source);career.development=structuredClone(development(source));career.world.players[player.simulationKey]={...career.world.players[player.simulationKey]!,archetype};
  if(player.archetype!==archetype)career.styleUsedWindows=[...career.styleUsedWindows,window];
  const count=completedTeamGames(source);career.planHistory=[...career.planHistory.filter(p=>p.completedTeamGames!==count),{completedTeamGames:count,focus:[...player.focus],archetype}];career.revision++;return career;

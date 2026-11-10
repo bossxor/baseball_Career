@@ -1,9 +1,11 @@
 import * as engine from '@playball/engine';
 import {spanDeadline,spanStopOf} from './span-budget.js';
 import type {SpanStop} from './span-budget.js';
-import {ABILITY_LABELS,abilityKeys,KBO_CLUBS} from '@playball/rules';
+import {ABILITY_LABELS,abilityKeys,KBO_CLUBS,HITTER_TYPES,PITCHER_TYPES} from '@playball/rules';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
 import type {FlowCommand,FlowScreen} from './career-flow-screen.js';
+import {amateurUsCommands,stageAmateurUsEntry} from './career-us-entry-shell.js';
+import {draftLines} from './career-draft-lines.js';
 
 /** Thin owned dispatch for the college road: HS route → enrollment → academic-year play loop. The engine owns every rule;
  * the web only replays the commands served by `collegeFlow`/`collegeRouteCommands`. */
@@ -11,11 +13,11 @@ const fields=new Map<string,readonly string[]>([
  ['ENROLL',['careerRevision','eventVersion','offerSetKey','offerSetVersion','collegeId']],
  ['CLOSE_HS_YEAR',['careerRevision','forfeitUnusedTraining']],['START',['careerRevision']],
  ['CONFIRM_PRESEASON',['careerRevision']],['ADVANCE',['careerRevision','mode']],['PAUSE',['careerRevision']],
- ['WINDOW',['careerRevision','eventKey','eventVersion','command']],['TRAIN',['careerRevision','choice']],
+ ['WINDOW',['careerRevision','eventKey','eventVersion','command']],['TRAIN',['careerRevision','choice']],['STYLE',['careerRevision','archetype']],['HIDDEN',['careerRevision','eventKey','eventVersion']],
  ['START_CUP',['careerRevision']],['ADVANCE_CUP',['careerRevision']],['ACK_REVIEW',['careerRevision']],
  ['CLOSE_YEAR',['careerRevision','forfeitUnusedTraining']],['START_NEXT',['careerRevision']],['GRADUATE',['careerRevision','eventVersion']],
 ]);
-const WINDOW_COMMANDS=['OPEN_TRAINING','FORFEIT_TRAINING','DEFER_TRAINING','ACK_EVENT'];
+const WINDOW_COMMANDS=['OPEN_TRAINING','FORFEIT_TRAINING','DEFER_TRAINING','OPEN_STYLE','ACK_EVENT'];
 function fail(code:string):never{throw Object.assign(new Error(code),{code});}
 function domainError(error:unknown):never{fail(error instanceof Error&&/^[A-Z][A-Z0-9_]*$/.test(error.message)?error.message:'INVALID_REQUEST');}
 const int=(p:Record<string,unknown>,k:string)=>{const v=p[k];if(typeof v!=='number'||!Number.isSafeInteger(v)||v<0)fail('INVALID_PAYLOAD');return v;};
@@ -66,6 +68,8 @@ export function applyCollege(state:SaveState,command:CommandBody):AppliedCommand
    const cmd=str(p,'command');if(!WINDOW_COMMANDS.includes(cmd))fail('INVALID_PAYLOAD');
    next=engine.resolveCareerWindowEvent(c,rev,{eventKey:str(p,'eventKey'),eventVersion:int(p,'eventVersion'),command:cmd}).career;
   }else if(name==='TRAIN')next=engine.trainCollegeCareer(c,rev,trainingChoice(p.choice));
+  else if(name==='STYLE')next=c.phaseContext.phase==='PRESEASON_SETUP'?engine.setCollegePreseasonArchetype(c,rev,str(p,'archetype')):engine.changeMidseasonCareerArchetype(c,rev,str(p,'archetype'));
+  else if(name==='HIDDEN')next=engine.resolveHiddenTraitNotice(c,rev,{eventKey:str(p,'eventKey'),eventVersion:int(p,'eventVersion'),command:'OPEN_TRAITS'}).career;
   else if(name==='START_CUP')next=engine.startCollegeCup(c,rev);
   else if(name==='ADVANCE_CUP'){let r=engine.advanceCollegeCup(c,rev);for(let i=0;i<2_000&&r.stopReason==='CHUNK_LIMIT';i++)r=engine.advanceCollegeCup(r.career,r.career.revision);next=r.career;stopReason=r.stopReason;}
   else if(name==='ACK_REVIEW')next=engine.acknowledgeCollegeSeasonReview(c,rev);
@@ -73,10 +77,11 @@ export function applyCollege(state:SaveState,command:CommandBody):AppliedCommand
   else if(name==='CLOSE_YEAR')next=engine.closeCollegeSeasonForNextYear(c,rev,bool(p,'forfeitUnusedTraining'));
   else next=engine.startNextCollegeSeason(c,rev);
  }catch(error){domainError(error);}
- return {nextState:{...state,career:next,...(spanStop?{span:{careerRevision:next.revision,stop:spanStop}}:{})},phase:next.phaseContext.phase,eventIds:[],summary:{type:command.type,careerRevision:next.revision,phase:next.phaseContext.phase,...(spanStop?{spanStop}:{}),...(stopReason?{stopReason}:{})}};
+ const staged:SaveState=name==='ACK_REVIEW'||name==='GRADUATE'?stageAmateurUsEntry(state,next):{...state,career:next};if(name==='ENROLL')delete staged.usEntry;next=staged.career as engine.HighSchoolCareer;
+ return {nextState:{...staged,...(spanStop?{span:{careerRevision:next.revision,stop:spanStop}}:{})},phase:next.phaseContext.phase,eventIds:[],summary:{type:command.type,careerRevision:next.revision,phase:next.phaseContext.phase,...(spanStop?{spanStop}:{}),...(stopReason?{stopReason}:{})}};
 }
 
-const WINDOW_LABELS:Record<string,string>={OPEN_TRAINING:'훈련 창 열기',FORFEIT_TRAINING:'이번 시즌 훈련 포기',DEFER_TRAINING:'나중에 하기',ACK_EVENT:'확인하고 계속'};
+const WINDOW_LABELS:Record<string,string>={OPEN_TRAINING:'훈련 창 열기',FORFEIT_TRAINING:'이번 시즌 훈련 포기',DEFER_TRAINING:'나중에 하기',OPEN_STYLE:'플레이 스타일 선택',ACK_EVENT:'확인하고 계속'};
 
 /** Enrollment offers for the graduation route; served next to the KBO draft commands. */
 export function collegeRouteCommands(c:engine.HighSchoolCareer):FlowCommand[]{
@@ -94,6 +99,7 @@ export function collegeFlow(c:engine.HighSchoolCareer):FlowScreen{
  if(admission)lines.push({label:'학년',value:`${admission.academicYear}학년`});
  const cmd=(id:string,label:string,type:string,payload:Record<string,unknown>={},confirm?:string):FlowCommand=>({id,label,type:'CAREER_COLLEGE_'+type,payload:{careerRevision:c.revision,...payload},...(confirm?{confirm}:{})});
  const out=(title:string,commands:FlowCommand[],notice:string|null=null):FlowScreen=>({screenId:'CAREER_FLOW',title,lines,commands,notice,careerRevision:c.revision});
+ if(phase.phase==='NEXT_SEASON_READY'&&phase.route==='US')return out('미국 진출 준비',amateurUsCommands(c));
  if(!isCollege(c)){
   // Admitted from the HS route: close the school year, then start the college season.
   if(phase.phase==='NEXT_SEASON_READY')return c.collegeYearEnd?out('대학 입학',[cmd('college-start','대학 시즌 시작','START')],'입학 절차를 마쳤습니다.'):
@@ -105,18 +111,41 @@ export function collegeFlow(c:engine.HighSchoolCareer):FlowScreen{
  const total=c.world.schedule.filter(g=>g.homeTeamKey===sid||g.awayTeamKey===sid).length;
  const school=c.world.schools.find(s=>s.id===sid)?.name??sid;
  lines.push({label:'대학',value:school},{label:'정규시즌',value:`${played.length}/${total}경기 · ${tally.W}승 ${tally.L}패${tally.T?` ${tally.T}무`:''}`});
- if(phase.phase==='PRESEASON_SETUP')return out('대학 시즌 준비',[cmd('preseason','시즌 시작','CONFIRM_PRESEASON')]);
+ if(phase.phase==='PRESEASON_SETUP'){
+  const focusNotice=engine.careerRouteNoticesView(c).notices.find(e=>e.definitionId==='E71'&&e.requiresDomainCommands.includes('CHOOSE_FOCUS'));
+  if(focusNotice){
+   const keys=abilityKeys(p.kind),commands:FlowCommand[]=[];
+   // Six abilities give fifteen distinct four-ability plans; every payload is server-owned.
+   for(let first=0;first<keys.length;first++)for(let second=first+1;second<keys.length;second++){
+    const focus=keys.filter((_,index)=>index!==first&&index!==second);
+    commands.push({id:'admission-focus-'+focus.join('-'),label:focus.map(key=>ABILITY_LABELS[key]).join(' · '),type:'CAREER_CHOICE_COLLEGE_FOCUS',payload:{careerRevision:c.revision,eventKey:focusNotice.eventKey,eventVersion:focusNotice.eventVersion,focus}});
+   }
+   return out('대학 집중 육성 4개 선택',commands);
+  }
+  const commands=[cmd('preseason','시즌 시작','CONFIRM_PRESEASON')];
+  for(const [archetype,type] of Object.entries(p.kind==='HITTER'?HITTER_TYPES:PITCHER_TYPES))if(archetype!==p.archetype)commands.push(cmd('preseason-style-'+archetype,type.label+'으로 변경','STYLE',{archetype}));
+  return out('대학 시즌 준비',commands);
+ }
  if(phase.phase==='SEASON_PROGRESS'){
   const commands:FlowCommand[]=[];
   if(phase.advancePlan)commands.push(cmd('continue','진행 이어가기','ADVANCE'),cmd('pause','여기서 멈추기','PAUSE'));
   else{
    // Training choices come from the engine's own preview (window, once per year); the web never evaluates them.
    if(!phase.pendingGame){
-    const choices:engine.TrainingChoice[]=[...abilityKeys(p.kind).map(ability=>({type:'GUARANTEED' as const,ability})),{type:'CONDITIONING'}];
+    const choices:engine.TrainingChoice[]=[...abilityKeys(p.kind).flatMap(ability=>[{type:'GUARANTEED' as const,ability},{type:'CHALLENGE' as const,ability}]),{type:'CONDITIONING'}];
     for(const choice of choices){
-     let ok:boolean;try{ok=engine.previewCareerTraining(c,choice).eligible;}catch{ok=false;}
-     if(ok)commands.push(cmd('train-'+(choice.type==='GUARANTEED'?choice.ability:'conditioning'),choice.type==='GUARANTEED'?`훈련: ${ABILITY_LABELS[choice.ability as keyof typeof ABILITY_LABELS]} 안정 성장 (피로 +5)`:'훈련: 컨디션 회복 (피로 최대 -20)','TRAIN',{choice}));
+     let preview:ReturnType<typeof engine.previewCareerTraining>;try{preview=engine.previewCareerTraining(c,choice);}catch{continue;}
+     if(!preview.eligible)continue;
+     const ability='ability' in choice?choice.ability:null;
+     const facts=[{label:'성장',value:'+'+(preview.gainUnits/10_000).toLocaleString('ko-KR')},{label:'피로 변화',value:String(preview.fatigueDelta)}];
+     if(preview.probability!==null&&preview.probability<1)facts.push({label:'성공 확률',value:(preview.probability*100).toLocaleString('ko-KR')+'%'});
+     commands.push({...cmd('train-'+choice.type+'-'+(ability??'conditioning'),ability?ABILITY_LABELS[ability as keyof typeof ABILITY_LABELS]+' · '+(choice.type==='CHALLENGE'?'도전 강화':'확정 성장'):'컨디션 회복','TRAIN',{choice}),facts});
     }
+   }
+   for(const [archetype,type] of Object.entries(p.kind==='HITTER'?HITTER_TYPES:PITCHER_TYPES)){
+    if(archetype===p.archetype)continue;
+    try{engine.previewMidseasonCareerArchetype(c,archetype);}catch{continue;}
+    commands.push(cmd('mid-style-'+archetype,type.label+'으로 변경','STYLE',{archetype},'이번 시즌 중반 스타일 변경 기회를 사용할까요?'));
    }
    commands.push(cmd('adv-season','이번 시즌 끝까지','ADVANCE',{mode:'SEASON'}),cmd('adv-month','다음 달까지','ADVANCE',{mode:'MONTH'}),cmd('adv-game','1경기 진행','ADVANCE',{mode:'ONE_GAME'}));
   }
@@ -125,13 +154,18 @@ export function collegeFlow(c:engine.HighSchoolCareer):FlowScreen{
  if(phase.phase==='EVENT_DECISION'){
   const e=c.events.find(x=>x.eventKey===phase.eventKey&&x.status==='OPEN');
   if(e?.definitionId==='E73'){
-   engine.assertCollegeEarlyUsComparison(c);
+   const comparison=engine.collegeEarlyUsComparisonView(c);
    const forfeit=!c.development?.trainingUsedSeasons.includes(c.world.seasonKey);
-   return out('2학년 진로 선택',[
+   const commands:FlowCommand[]=[
     // assertCollegeEarlyUsComparison above guarantees earlyDraftAttempted is false in year 2: the single attempt is still open.
     {id:'early-draft',label:'조기 드래프트 검토',type:'CAREER_CHOICE_COLLEGE_EARLY_DRAFT',payload:{careerRevision:c.revision,eventVersion:e.version},facts:[{label:'조기 드래프트 기회',value:'남은 1회 (2학년 한정)'},{label:'지명받지 못하면',value:'대학으로 복귀할 수 있습니다'}]},
     {id:'college-continue',label:forfeit?'남은 훈련을 포기하고 3학년 준비':'3학년 준비',type:'CAREER_CHOICE_COLLEGE_CONTINUE',payload:{careerRevision:c.revision,eventVersion:e.version,forfeitUnusedTraining:forfeit},facts:[{label:'조기 드래프트 기회',value:'사용하지 않고 넘어갑니다'}],...(forfeit?{confirm:'이번 학년에 쓰지 않은 훈련 기회가 사라집니다. 마감할까요?'}:{})},
-   ]);
+   ];
+   if(comparison.us){
+    commands.push({id:'college-us-compare',label:'미국 계약 비교',type:'CAREER_CHOICE_COLLEGE_OPEN_US',payload:{careerRevision:c.revision,eventVersion:e.version}});
+    for(const offer of comparison.us.offers)commands.push({id:'college-us-sign-'+offer.offerKey,label:offer.clubName+' 마이너 계약',type:'CAREER_CHOICE_COLLEGE_SIGN_US',payload:{careerRevision:c.revision,eventVersion:e.version,programVersion:comparison.us.version,offerKey:offer.offerKey},sign:{name:p.name},confirm:'미국 계약을 수락하고 대학을 떠날까요?',facts:[{label:'시작 리그',value:offer.initialLevel},{label:'연봉',value:'$'+offer.annualSalaryUsd.toLocaleString('en-US')},{label:'계약금',value:'$'+offer.signingBonusUsd.toLocaleString('en-US')}]});
+   }
+   return out('2학년 진로 선택',commands);
   }
   if(e?.definitionId==='E75')return out('대학 졸업',[cmd('graduate','졸업하고 진로 선택','GRADUATE',{eventVersion:e.version})]);
   if(e?.definitionId==='E74'){
@@ -139,24 +173,29 @@ export function collegeFlow(c:engine.HighSchoolCareer):FlowScreen{
    return out('대학 복귀',[{id:'college-return',label:'대학 복귀',type:'CAREER_CHOICE_COLLEGE_RETURN',payload:{careerRevision:c.revision,eventVersion:e.version}}]);
   }
   if(e&&phase.resume.phase==='SEASON_PROGRESS'&&['E41','E43'].includes(e.definitionId)){
-   // E41 (mid-season style change) is acknowledged only; the style change itself is not wired to the web yet.
-   const choices=e.definitionId==='E41'?['ACK_EVENT']:['OPEN_TRAINING','FORFEIT_TRAINING'];
-   return out(e.definitionId==='E43'?'연간 훈련 창':'시즌 중반 점검',choices.map(command=>cmd(command.toLowerCase(),WINDOW_LABELS[command]!,'WINDOW',{eventKey:e.eventKey,eventVersion:e.version,command},command==='FORFEIT_TRAINING'?'올해 훈련 기회가 사라집니다. 포기할까요?':undefined)),e.definitionId==='E41'?'스타일 변경은 아직 웹에서 지원하지 않습니다.':null);
+   const choices=e.definitionId==='E41'?['OPEN_STYLE','ACK_EVENT']:['OPEN_TRAINING','DEFER_TRAINING','FORFEIT_TRAINING'];
+   return out(e.definitionId==='E43'?'연간 훈련 창':'시즌 중반 점검',choices.map(command=>cmd(command.toLowerCase(),WINDOW_LABELS[command]!,'WINDOW',{eventKey:e.eventKey,eventVersion:e.version,command},command==='FORFEIT_TRAINING'?'올해 훈련 기회가 사라집니다. 포기할까요?':undefined)));
+  }
+  if(e?.definitionId==='E84'){
+   for(const trait of engine.careerTraitView(c).hidden)if(trait.unlocked)lines.push({label:'해금 특성',value:trait.name});
+   return out('특성 해금',[cmd('hidden-trait','확인하고 계속','HIDDEN',{eventKey:e.eventKey,eventVersion:e.version})]);
   }
   return out('대학 단계',[],'이 단계는 아직 웹에서 지원하지 않습니다. 저장은 그대로 유지됩니다.');
  }
  if(phase.phase==='CAREER_ROUTE'&&admission&&(admission.academicYear===2&&admission.earlyDraftAttempted||admission.status==='GRADUATED')){
   const title=admission.status==='GRADUATED'?'졸업 진로 · KBO 지명':'조기 드래프트';
   const draft=c.kboRecruitment?engine.careerKboDraftView(c):null;
-  if(!draft)return out(title,[{id:'draft-prepare',label:'KBO 신인 드래프트 준비',type:'CAREER_KBO_ENTRY_PREPARE',payload:{careerRevision:c.revision}}]);
-  if(!draft.result)return out(title,[{id:'draft-resolve',label:'드래프트 결과 확인',type:'CAREER_KBO_ENTRY_RESOLVE',payload:{careerRevision:c.revision,programVersion:draft.version}}]);
+  if(draft)lines.push(...draftLines(draft.preview));
+  if(!draft)return out(title,[{id:'draft-prepare',label:'KBO 신인 드래프트 준비',type:'CAREER_KBO_ENTRY_PREPARE',payload:{careerRevision:c.revision}},...amateurUsCommands(c)]);
+  if(!draft.result)return out(title,[{id:'draft-resolve',label:'드래프트 결과 확인',type:'CAREER_KBO_ENTRY_RESOLVE',payload:{careerRevision:c.revision,programVersion:draft.version}},...amateurUsCommands(c)]);
   const club=KBO_CLUBS.find(x=>x.id===draft.result!.clubId)?.name??draft.result.clubId;
   lines.push({label:'지명',value:draft.result.round?draft.result.round+'라운드 '+club:'지명 없음'});
-  if(!draft.offer)return out(title+' 결과',[],draft.status==='DECLINED'?'지명 제안을 거절했습니다.':null);
+  if(!draft.offer)return out(title+' 결과',amateurUsCommands(c),draft.status==='DECLINED'?'지명 제안을 거절했습니다.':null);
   lines.push({label:'제안',value:draft.offer.years+'년 · 연봉 '+Math.round(draft.offer.annualSalaryWon/10_000).toLocaleString('ko-KR')+'만 원'});
   return out(title+' 결과',[
    {id:'draft-sign',label:'계약하고 입단',type:'CAREER_KBO_ENTRY_DECIDE',payload:{careerRevision:c.revision,programVersion:draft.version,decision:'SIGN'},sign:{name:p.name},facts:[{label:'계약',value:`${draft.offer.years}년 · 연봉 ${Math.round(draft.offer.annualSalaryWon/10_000).toLocaleString('ko-KR')}만 원`}]},
    {id:'draft-decline',label:'제안 거절',type:'CAREER_KBO_ENTRY_DECIDE',payload:{careerRevision:c.revision,programVersion:draft.version,decision:'DECLINE'},facts:[{label:'결과',value:'이 지명 제안은 사라집니다'}],confirm:'거절하면 이 지명은 사라집니다. 거절할까요?'},
+   ...amateurUsCommands(c),
   ]);
  }
  if(phase.phase==='NEXT_SEASON_READY'&&phase.route==='KBO'){
