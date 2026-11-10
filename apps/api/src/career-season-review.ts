@@ -1,4 +1,4 @@
-import { battingRates, pitchingRates, inningsDisplay, recordTotals, careerSeasonGrowthSummary } from '@playball/engine';
+import { battingRates, pitchingRates, inningsDisplay, recordTotals, leagueStandings, careerSeasonGrowthSummary } from '@playball/engine';
 import type { HighSchoolCareer, KboCareer, UsCareer } from '@playball/engine';
 import { ABILITY_LABELS, UNITS_PER_POINT } from '@playball/rules';
 import type { SaveState } from './engine-command.js';
@@ -60,6 +60,31 @@ export function careerSeasonReview(state: SaveState): SeasonReview | null {
    label:ABILITY_LABELS[a.ability as keyof typeof ABILITY_LABELS] ?? a.ability,
    value:(a.deltaUnits / UNITS_PER_POINT).toFixed(2),
   }))});
+ }
+ if (review && 'protagonistClubId' in c && c.postseason?.seasonKey === season) {
+  const seedRank=c.postseason.seeds.indexOf(team);
+  const rank=seedRank>=0?seedRank+1:leagueStandings(c.records,{seasonKey:season,leagueKey:'KBO',phase:'REGULAR'},c.world.clubs.map(club=>club.id),c.world.seed,c.world.worldKey).find(row=>row.teamKey===team)?.rank;
+  if (rank) sections.push({title:'팀 순위',lines:[{label:'정규시즌',value:`${rank}위`}]});
+ }
+ if (review && ('protagonistClubId' in c || 'protagonistOrganizationId' in c)) {
+  sections.push({title:'시즌 종료 등록',lines:[
+   {label:'포지션',value:player.position},
+   {label:'등록',value:'protagonistClubId' in c ? (c.registration.firstTeam?'KBO 1군':'KBO 2군') : c.registration.level},
+  ]});
+  const role = c.advice?.roleReviews.filter(r => r.seasonKey === season && r.outcome === 'ROLE_CHANGED').at(-1);
+  if (role) sections.push({title:'역할 변화',lines:[{label:'확정 역할',value:role.targetRole}]});
+  const receipts = c.agents?.income.filter(r => r.seasonKey === season) ?? [];
+  for (const currency of ['KRW','USD'] as const) {
+   const entries = receipts.filter(r => r.currency === currency);
+   if (!entries.length) continue;
+   const money = (n:number) => currency === 'KRW' ? `${n.toLocaleString('ko-KR')}원` : `$${n.toLocaleString('en-US')}`;
+   const labels = {SALARY:'연봉 지급',SALARY_ADJUSTMENT:'연봉 정산',SIGNING_BONUS:'계약금'} as const;
+   sections.push({title:`확정 보수 내역 (${currency})`,lines:[
+    ...(['SALARY','SALARY_ADJUSTMENT','SIGNING_BONUS'] as const).filter(kind=>entries.some(r=>r.kind===kind)).map(kind=>({label:labels[kind],value:money(entries.filter(r=>r.kind===kind).reduce((sum,r)=>sum+r.gross,0))})),
+    {label:'에이전트 수수료',value:money(entries.reduce((sum,r)=>sum+r.fee,0))},
+    {label:'실수령',value:money(entries.reduce((sum,r)=>sum+r.net,0))},
+   ]});
+  }
  }
  if ('protagonistClubId' in c) {
   const payroll = c.agents?.kboPayroll?.filter(p => p.seasonKey === season);

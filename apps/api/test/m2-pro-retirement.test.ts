@@ -142,3 +142,16 @@ test('legacy pending pro retirement confirmations remain readable and confirmabl
 test('native KBO confirmation refuses an unknown runtime command without retiring or consuming the pending task',()=>{
  const c=apply(closedKbo(),'REQUEST') as KboCareer,e=c.events.at(-1)!,before=canonicalJson(c);assert.throws(()=>resolveKboRetirement(c,c.revision,{eventKey:e.eventKey,eventVersion:e.version,command:'UNKNOWN' as 'CONFIRM_RETIRE'}),/INVALID_KBO_RETIREMENT_EVENT/);assert.equal(canonicalJson(c),before);
 });
+
+test('retirement summary exposes recorded milestone without internal key',async()=>{
+ const {retirementSummary}=await import('../src/career-retirement-summary.js');
+ const c=enteredKboCareer(),player=c.world.players[c.protagonistKey]!;
+ c.phaseContext={phase:'ARCHIVED'};
+ c.retirement={reason:'VOLUNTARY',seasonKey:c.world.seasonKey,age:player.age,clubId:c.protagonistClubId,receiptKey:'archive',sourceRevision:c.revision,remainingContractYears:0};
+ c.proAwards={annual:[{seasonKey:c.world.seasonKey,leagueKey:'KBO',awards:[{playerKey:c.protagonistKey,awardType:'MVP',score:12},{playerKey:'other',awardType:'ROOKIE',score:4}]}],allStars:[]} as never;
+ c.proResults={notices:[{definitionId:'E24',seasonKey:c.world.seasonKey,evidence:{fields:{milestoneKey:JSON.stringify(['first-pro-record','KBO','100_H'])}}}]} as never;
+ const summary=retirementSummary({schemaVersion:1,career:c})!.summary;
+ assert.deepEqual(summary.sections.find(s=>s.title==='주요 이정표')?.lines,[{label:'통산 100안타',value:`KBO · ${c.world.seasonKey} 시즌`}]);
+ assert.deepEqual(summary.sections.find(s=>s.title==='수상')?.lines,[{label:'MVP',value:'KBO · '+c.world.seasonKey+' 시즌'}]);
+ assert.doesNotMatch(JSON.stringify(summary),/first-pro-record|milestoneKey|ROOKIE|score/);
+});

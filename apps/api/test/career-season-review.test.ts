@@ -72,3 +72,17 @@ test('school growth distinguishes pending, finalized, and legacy saves', async (
  delete c.seasonGrowth;
  assert.equal(careerSeasonReview(state),null);
 });
+
+test('season review presents only recorded rank, role changes and paid amounts', async () => {
+ const {careerSeasonReview} = await import('../src/career-season-review.js');
+ const c=enteredKboCareer(),season=c.world.seasonKey;
+ c.phaseContext={phase:'SEASON_REVIEW'};
+ c.postseason={schemaVersion:1,seasonKey:season,seeds:[c.protagonistClubId,'a','b','c','d'],series:[],championKey:null};
+ c.advice={roleReviews:[{seasonKey:season,targetRole:'SP',outcome:'ROLE_CHANGED'}]} as never;
+ c.agents={income:[{seasonKey:season,currency:'KRW',kind:'SALARY',gross:100,fee:10,net:90}]} as never;
+ const sections=careerSeasonReview({schemaVersion:1,career:c})!.sections;
+ assert.equal(sections.find(s=>s.title==='팀 순위')?.lines[0]?.value,'1위');
+ assert.equal(sections.find(s=>s.title==='역할 변화')?.lines[0]?.value,'SP');
+ assert.deepEqual(sections.find(s=>s.title==='확정 보수 내역 (KRW)')?.lines.map(l=>l.value),['100원','10원','90원']);
+ assert.doesNotMatch(JSON.stringify(sections),/candidateScore|receiptKey/);
+});
