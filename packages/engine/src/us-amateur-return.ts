@@ -22,14 +22,14 @@ export interface UsAmateurReturnYear {
 }
 export interface UsAmateurReturnLedger {
  version:1;revision:number;returnId:string;worldKey:string;playerKey:string;sourceSeasonKey:string;sourceRevision:number;sourceContractKey:string;sourceAge:number;
- origin:'HIGH_SCHOOL_DIRECT'|'COLLEGE_DIRECT';status:'PREPARING'|'DRAFT_READY'|'CANCELLED_US';militaryStatus:'UNRESOLVED'|'COMPLETED'|'NOT_APPLICABLE';
+ origin:'HIGH_SCHOOL_DIRECT'|'COLLEGE_DIRECT'|'INDEPENDENT_DIRECT';status:'PREPARING'|'DRAFT_READY'|'CANCELLED_US';militaryStatus:'UNRESOLVED'|'COMPLETED'|'NOT_APPLICABLE';
  sourcePlayer:DevelopmentPlayer;years:readonly UsAmateurReturnYear[];cancelledByOfferRef?:string;draftReservationKey:string|null;
 }
 function returnKey(s:Pick<UsAmateurReturnLedger,'worldKey'|'playerKey'|'sourceSeasonKey'|'sourceContractKey'>):string {return JSON.stringify(['us-amateur-return',s.worldKey,s.playerKey,s.sourceSeasonKey,s.sourceContractKey]);}
 /** Pure root-reader hook, deliberately does not read the active US career again. */
 export function assertUsAmateurReturnLedger(s:UsAmateurReturnLedger,identity?:{worldKey:string;playerKey:string}):void {
  validateDevelopmentPlayer(s.sourcePlayer);
- if(s.version!==1||!Number.isSafeInteger(s.revision)||s.revision<1||!Number.isSafeInteger(s.sourceRevision)||s.sourceRevision<0||!s.worldKey||!s.playerKey||!s.sourceContractKey||!/^\d{4}$/.test(s.sourceSeasonKey)||Number(s.sourceSeasonKey)<2027||Number(s.sourceSeasonKey)>9997||!Number.isSafeInteger(s.sourceAge)||s.sourceAge<19||s.sourceAge+2>35||s.returnId!==returnKey(s)||!['HIGH_SCHOOL_DIRECT','COLLEGE_DIRECT'].includes(s.origin)||!['PREPARING','DRAFT_READY','CANCELLED_US'].includes(s.status)||!['UNRESOLVED','COMPLETED','NOT_APPLICABLE'].includes(s.militaryStatus)||!Array.isArray(s.years)||s.years.length>2||identity&&(identity.worldKey!==s.worldKey||identity.playerKey!==s.playerKey))throw new RangeError('INVALID_US_AMATEUR_RETURN');
+ if(s.version!==1||!Number.isSafeInteger(s.revision)||s.revision<1||!Number.isSafeInteger(s.sourceRevision)||s.sourceRevision<0||!s.worldKey||!s.playerKey||!s.sourceContractKey||!/^\d{4}$/.test(s.sourceSeasonKey)||Number(s.sourceSeasonKey)<2027||Number(s.sourceSeasonKey)>9997||!Number.isSafeInteger(s.sourceAge)||s.sourceAge<19||s.sourceAge+2>35||s.returnId!==returnKey(s)||!['HIGH_SCHOOL_DIRECT','COLLEGE_DIRECT','INDEPENDENT_DIRECT'].includes(s.origin)||!['PREPARING','DRAFT_READY','CANCELLED_US'].includes(s.status)||!['UNRESOLVED','COMPLETED','NOT_APPLICABLE'].includes(s.militaryStatus)||!Array.isArray(s.years)||s.years.length>2||identity&&(identity.worldKey!==s.worldKey||identity.playerKey!==s.playerKey))throw new RangeError('INVALID_US_AMATEUR_RETURN');
  if(s.sourcePlayer.simulationKey!==s.playerKey||s.sourcePlayer.age!==s.sourceAge)throw new RangeError('US_RETURN_SOURCE_PLAYER_MISMATCH');
  for(const [i,y]of s.years.entries()){
   validateDevelopmentPlayer(y.endingPlayer);validateSeasonGrowthLedger(y.seasonGrowth);const calendar=createSeasonCalendar(Number(y.seasonKey));
@@ -39,6 +39,7 @@ export function assertUsAmateurReturnLedger(s:UsAmateurReturnLedger,identity?:{w
  if((s.status==='DRAFT_READY'?(s.years.length!==2||s.militaryStatus==='UNRESOLVED'||s.draftReservationKey!==reservation):s.draftReservationKey!==null)||s.status==='PREPARING'&&s.years.length===2||(s.status==='CANCELLED_US'?!s.cancelledByOfferRef:s.cancelledByOfferRef!==undefined))throw new RangeError('INVALID_US_AMATEUR_RETURN_STATE');
 }
 function assertRevision(s:UsAmateurReturnLedger,revision:number):void {assertUsAmateurReturnLedger(s);if(revision!==s.revision||revision===Number.MAX_SAFE_INTEGER)throw new RangeError('US_AMATEUR_RETURN_REVISION_CHANGED');}
+export function usAmateurReturnOrigin(c:UsCareer):UsAmateurReturnLedger['origin'] {return c.amateurHistory.world.leagueKey==='INDEPENDENT'?'INDEPENDENT_DIRECT':c.amateurHistory.world.leagueKey==='COLLEGE'?'COLLEGE_DIRECT':'HIGH_SCHOOL_DIRECT';}
 /** Opens only an actually expired amateur minor contract; an existing KBO return route never enters this program. */
 export function openUsAmateurReturn(c:UsCareer,revision:number):UsAmateurReturnLedger {
  if(!Number.isSafeInteger(revision)||revision!==c.revision)throw new RangeError('STALE_US_CAREER_REVISION');
@@ -46,7 +47,7 @@ export function openUsAmateurReturn(c:UsCareer,revision:number):UsAmateurReturnL
  const open=c.events.filter(e=>e.status==='OPEN');let returnMarket=false;
  if(c.minorMarket){returnMarket=open.length===1&&open[0]!.eventKey===c.minorMarket.eventKey&&open[0]!.definitionId==='E66';}
  if(c.kboTransfer||c.contract.type!=='US_MINOR'||c.phaseContext.phase!=='SEASON_REVIEW'||ready.remainingMinorControlSeasons!==0||ready.blockers.some(b=>!['CONTRACT_DECISION_REQUIRED','MILITARY_PLAN_REQUIRED'].includes(b)&&!(b==='OPEN_EVENT'&&returnMarket))||p.age+2>35||!['UNRESOLVED','COMPLETED','NOT_APPLICABLE'].includes(c.military.status))throw new RangeError('US_AMATEUR_RETURN_NOT_AVAILABLE');
- const next:UsAmateurReturnLedger={version:1,revision:1,returnId:'',worldKey:c.world.worldKey,playerKey:c.protagonistKey,sourceSeasonKey:c.world.seasonKey,sourceRevision:revision,sourceContractKey:c.contract.contractKey,sourceAge:p.age,sourcePlayer:structuredClone(p),origin:c.amateurHistory.world.leagueKey==='COLLEGE'?'COLLEGE_DIRECT':'HIGH_SCHOOL_DIRECT',status:'PREPARING',militaryStatus:c.military.status as UsAmateurReturnLedger['militaryStatus'],years:[],draftReservationKey:null};next.returnId=returnKey(next);assertUsAmateurReturnLedger(next);return next;
+ const next:UsAmateurReturnLedger={version:1,revision:1,returnId:'',worldKey:c.world.worldKey,playerKey:c.protagonistKey,sourceSeasonKey:c.world.seasonKey,sourceRevision:revision,sourceContractKey:c.contract.contractKey,sourceAge:p.age,sourcePlayer:structuredClone(p),origin:usAmateurReturnOrigin(c),status:'PREPARING',militaryStatus:c.military.status as UsAmateurReturnLedger['militaryStatus'],years:[],draftReservationKey:null};next.returnId=returnKey(next);assertUsAmateurReturnLedger(next);return next;
 }
 function appendYear(s:UsAmateurReturnLedger,year:UsAmateurReturnYear,militaryCompleted=false):UsAmateurReturnLedger {
  const years=[...s.years,structuredClone(year)],done=years.length===2,militaryStatus=militaryCompleted?'COMPLETED':s.militaryStatus;
@@ -85,4 +86,4 @@ export function cancelUsAmateurReturnForUsOffer(s:UsAmateurReturnLedger,revision
  if(s.status==='CANCELLED_US'){if(s.cancelledByOfferRef!==input.offerRef)throw new RangeError('US_RETURN_ALREADY_CANCELLED');return structuredClone(s);}
  const next:UsAmateurReturnLedger={...structuredClone(s),revision:revision+1,status:'CANCELLED_US',draftReservationKey:null,cancelledByOfferRef:input.offerRef};assertUsAmateurReturnLedger(next);return next;
 }
-export function usAmateurReturnView(s:UsAmateurReturnLedger){assertUsAmateurReturnLedger(s);return {returnId:s.returnId,status:s.status,completedSeasons:s.years.length,requiredSeasons:2,ageAtDraft:s.sourceAge+2,draftMaximumAge:35,careerPreparationConsumed:0,militaryStatus:s.militaryStatus,draftReservationKey:s.draftReservationKey,years:s.years.map(y=>({seasonKey:y.seasonKey,age:y.age,kind:y.kind,receiptKey:y.receiptKey}))};}
+export function usAmateurReturnView(s:UsAmateurReturnLedger){assertUsAmateurReturnLedger(s);return {returnId:s.returnId,origin:s.origin,status:s.status,completedSeasons:s.years.length,requiredSeasons:2,ageAtDraft:s.sourceAge+2,draftMaximumAge:35,careerPreparationConsumed:0,militaryStatus:s.militaryStatus,draftReservationKey:s.draftReservationKey,years:s.years.map(y=>({seasonKey:y.seasonKey,age:y.age,kind:y.kind,receiptKey:y.receiptKey}))};}
