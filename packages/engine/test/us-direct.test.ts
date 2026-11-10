@@ -37,3 +37,14 @@ test('US signing: one contract/rights/registration/income reservation, no duplic
  assert.throws(()=>decideUsDirect(w,signed,2,150,{type:'SIGN',offerKey:p.offers[0]!.offerKey}));assert.equal(canonicalJson({w,p}),before);
  const declined=decideUsDirect(w,p,1,180,{type:'DECLINE'});assert.equal(declined.signing,null);assert.equal(usDirectView(w,declined,180).status,'DECLINED');
 });
+
+test('independent first offer keeps the draw but reserves one year without bonus',()=>{
+ const w=world(),i=input(),legacy=prepareUsDirect(w,i),independent=prepareUsDirect(w,{...i,contractProfile:'INDEPENDENT_FIRST'});
+ assert.equal(independent.score,legacy.score);assert.equal(independent.offers[0]!.initialLevel,legacy.offers[0]!.initialLevel);
+ assert.ok(independent.offers.every(o=>o.controlSeasons===1&&o.annualSalaryUsd===30000&&o.signingBonusUsd===0));
+ const signed=decideUsDirect(w,independent,1,150,{type:'SIGN',offerKey:independent.offers[0]!.offerKey});
+ assert.equal(signed.signing!.contract.controlSeasons,1);assert.equal(signed.signing!.availableBudgetBeforeUsd-signed.signing!.availableBudgetAfterUsd,30000);
+ assertUsDirect(w,JSON.parse(JSON.stringify(signed)));
+ const forged=structuredClone(signed);forged.signing!.contract.controlSeasons=6;assert.throws(()=>assertUsDirect(w,forged));
+ const low={...w,clubs:w.clubs.map(c=>({...c,availableBudgetUsd:30000}))};assert.ok(prepareUsDirect(low,{...i,contractProfile:'INDEPENDENT_FIRST'}).offers.length);assert.equal(prepareUsDirect(low,i).offers.length,0);
+});

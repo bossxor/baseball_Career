@@ -16,16 +16,16 @@ export interface UsRecruitmentWorld {
 }
 export interface UsDirectInput {
  assessmentKey:string;player:DevelopmentPlayer;adjustedPerformance:number;
- ranges:Readonly<Record<string,PotentialRange>>;eligible:boolean;issuedWorldDay:number;expiresWorldDay:number;
+ ranges:Readonly<Record<string,PotentialRange>>;eligible:boolean;issuedWorldDay:number;expiresWorldDay:number;contractProfile?:'INDEPENDENT_FIRST';
 }
 export interface UsDirectOffer {
  offerKey:string;clubId:string;clubName:string;type:'US_MINOR';currency:'USD';initialLevel:'ROOKIE'|'A';
- signingBonusUsd:number;annualSalaryUsd:number;controlSeasons:6;firstTeamGuaranteed:false;
+ signingBonusUsd:number;annualSalaryUsd:number;controlSeasons:1|6;firstTeamGuaranteed:false;
  nationalReleaseAllowed:boolean;militaryReturnOption:boolean;
 }
 export interface UsDirectSigning {
  receiptKey:string;offer:UsDirectOffer;playerKey:string;seasonKey:string;signedWorldDay:number;
- contract:{contractKey:string;type:'US_MINOR';currency:'USD';status:'RESERVED';annualSalaryUsd:number;signingBonusUsd:number;controlSeasons:6};
+ contract:{contractKey:string;type:'US_MINOR';currency:'USD';status:'RESERVED';annualSalaryUsd:number;signingBonusUsd:number;controlSeasons:1|6};
  rights:{territory:'US';holderOrgId:string;sourceType:'AMATEUR';playerKey:string};
  registration:{status:'PENDING_SEASON_ACTIVATION';level:'ROOKIE'|'A';clubId:string;playerKey:string};
  income:{entryKey:string;currency:'USD';amount:number;kind:'SIGNING_BONUS'};
@@ -42,7 +42,7 @@ export function assertUsRecruitmentWorld(world:UsRecruitmentWorld):void {
 }
 function validateInput(world:UsRecruitmentWorld,input:UsDirectInput):void {
  assertUsRecruitmentWorld(world);validateDevelopmentPlayer(input.player);
- if(!input.assessmentKey || typeof input.eligible!=='boolean' || !Number.isSafeInteger(input.issuedWorldDay) || input.issuedWorldDay<0 || !Number.isSafeInteger(input.expiresWorldDay) || input.expiresWorldDay<=input.issuedWorldDay || world.registeredPlayerKeys.includes(input.player.simulationKey))throw new RangeError('INVALID_US_CANDIDATE');
+ if(input.contractProfile!==undefined && input.contractProfile!=='INDEPENDENT_FIRST' || !input.assessmentKey || typeof input.eligible!=='boolean' || !Number.isSafeInteger(input.issuedWorldDay) || input.issuedWorldDay<0 || !Number.isSafeInteger(input.expiresWorldDay) || input.expiresWorldDay<=input.issuedWorldDay || world.registeredPlayerKeys.includes(input.player.simulationKey))throw new RangeError('INVALID_US_CANDIDATE');
 }
 function basis(world:UsRecruitmentWorld,input:UsDirectInput):string {return canonicalSeal({world,input});}
 function evaluation(world:UsRecruitmentWorld,input:UsDirectInput){
@@ -51,18 +51,18 @@ function evaluation(world:UsRecruitmentWorld,input:UsDirectInput){
  const start=createWorldStream(world.seed,JSON.stringify(['us-direct-1',world.worldKey,world.seasonKey,input.assessmentKey]),'roster'),draw=drawUsDirectEvaluation(baseScore,start);
  let rng=draw.state;const level=draw.score>=70?'A' as const:'ROOKIE' as const;
  // Preserve13's existing50..90 bonus curve; eligibility was raised separately.
- const bonus=Math.round(50_000+Math.max(0,Math.min(1,(draw.score-50)/40))*1_950_000),cost=bonus+30_000;
+ const bonus=input.contractProfile==='INDEPENDENT_FIRST'?0:Math.round(50_000+Math.max(0,Math.min(1,(draw.score-50)/40))*1_950_000),cost=bonus+30_000;
  const candidates=world.clubs.filter(c=>c.availableBudgetUsd>=cost && (level==='A'?c.aSlots:c.rookieSlots)>0).sort((a,b)=>a.id<b.id?-1:a.id>b.id?1:0),offers:UsDirectOffer[]=[];
  if(input.eligible && draw.candidate)while(candidates.length && offers.length<3){
   const chosen=nextInteger(rng,candidates.length);rng=chosen.state;const c=candidates.splice(chosen.value,1)[0]!;
-  offers.push({offerKey:JSON.stringify(['us-direct-offer',input.assessmentKey,c.id]),clubId:c.id,clubName:c.name,type:'US_MINOR',currency:'USD',initialLevel:level,signingBonusUsd:bonus,annualSalaryUsd:30_000,controlSeasons:6,firstTeamGuaranteed:false,nationalReleaseAllowed:c.nationalReleaseAllowed,militaryReturnOption:c.militaryReturnOption});
+  offers.push({offerKey:JSON.stringify(['us-direct-offer',input.assessmentKey,c.id]),clubId:c.id,clubName:c.name,type:'US_MINOR',currency:'USD',initialLevel:level,signingBonusUsd:bonus,annualSalaryUsd:30_000,controlSeasons:input.contractProfile==='INDEPENDENT_FIRST'?1:6,firstTeamGuaranteed:false,nationalReleaseAllowed:c.nationalReleaseAllowed,militaryReturnOption:c.militaryReturnOption});
  }
  return {baseScore,score:draw.score,rng,offers};
 }
 function signing(world:UsRecruitmentWorld,p:UsDirectProgram,offerKey:string,signedWorldDay:number):UsDirectSigning {
  const offer=p.offers.find(o=>o.offerKey===offerKey);if(!offer)throw new RangeError('US_OFFER_NOT_FOUND');
  const c=world.clubs.find(c=>c.id===offer.clubId)!,playerKey=p.input.player.simulationKey,receiptKey=JSON.stringify(['us-direct-signing',p.input.assessmentKey]),cost=offer.signingBonusUsd+offer.annualSalaryUsd;
- return {receiptKey,offer:{...offer},playerKey,seasonKey:world.seasonKey,signedWorldDay,contract:{contractKey:receiptKey,type:'US_MINOR',currency:'USD',status:'RESERVED',annualSalaryUsd:offer.annualSalaryUsd,signingBonusUsd:offer.signingBonusUsd,controlSeasons:6},rights:{territory:'US',holderOrgId:offer.clubId,sourceType:'AMATEUR',playerKey},registration:{status:'PENDING_SEASON_ACTIVATION',level:offer.initialLevel,clubId:offer.clubId,playerKey},income:{entryKey:JSON.stringify(['us-signing-income',receiptKey]),currency:'USD',amount:offer.signingBonusUsd,kind:'SIGNING_BONUS'},availableBudgetBeforeUsd:c.availableBudgetUsd,availableBudgetAfterUsd:c.availableBudgetUsd-cost};
+ return {receiptKey,offer:{...offer},playerKey,seasonKey:world.seasonKey,signedWorldDay,contract:{contractKey:receiptKey,type:'US_MINOR',currency:'USD',status:'RESERVED',annualSalaryUsd:offer.annualSalaryUsd,signingBonusUsd:offer.signingBonusUsd,controlSeasons:offer.controlSeasons},rights:{territory:'US',holderOrgId:offer.clubId,sourceType:'AMATEUR',playerKey},registration:{status:'PENDING_SEASON_ACTIVATION',level:offer.initialLevel,clubId:offer.clubId,playerKey},income:{entryKey:JSON.stringify(['us-signing-income',receiptKey]),currency:'USD',amount:offer.signingBonusUsd,kind:'SIGNING_BONUS'},availableBudgetBeforeUsd:c.availableBudgetUsd,availableBudgetAfterUsd:c.availableBudgetUsd-cost};
 }
 export function prepareUsDirect(world:UsRecruitmentWorld,input:UsDirectInput):UsDirectProgram {
  return {schemaVersion:1,version:1,sourceBasis:basis(world,input),input:structuredClone(input),...evaluation(world,input),decision:'PENDING',signing:null};
