@@ -60,6 +60,10 @@ test('actual WBC games return records, fatigue, health and pitch XP to their own
  }
  assert.equal(c.phaseContext.phase,'INTERNATIONAL_REVIEW');assertUsCareerRevision(c,c.revision);
  const before=canonicalJson(c),handoff=returnUsNationalTournament(c,c.revision,f.kbo,f.kbo.revision);
+ const legacy=structuredClone(c);legacy.national!.sessions![0]!.hostSourceFingerprint=canonicalJson(f.kbo);
+ assert.deepEqual(returnUsNationalTournament(legacy,legacy.revision,f.kbo,f.kbo.revision).host,handoff.host);
+ const tampered=structuredClone(legacy);tampered.national!.sessions![0]!.hostSourceFingerprint=canonicalJson({...f.kbo,revision:f.kbo.revision+1});
+ assert.throws(()=>returnUsNationalTournament(tampered,tampered.revision,f.kbo,f.kbo.revision),/STALE_NATIONAL/);
  assert.equal(canonicalJson(c),before);assert.equal(canonicalJson(f.kbo),hostRaw);assert.equal(handoff.expectedUsRevision,c.revision);assert.equal(handoff.expectedKboRevision,f.kbo.revision);
  assert.equal(handoff.career.phaseContext.phase,'PRESEASON_SETUP');assert.equal(handoff.host.phaseContext.phase,'INTERNATIONAL_REVIEW');assert.equal(handoff.career.world.seed,openingSeed);assert.deepEqual(handoff.career.income,f.c.income);
  for(const [key,row]of Object.entries(openingRecords.games))assert.deepEqual(handoff.career.records.games[key],row);

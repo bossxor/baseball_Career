@@ -4,6 +4,7 @@ import {assertUsCareerRevision} from './us-career-entry.js';
 import type {UsProgress} from './us-season.js';
 import {assertUsSeason,settleUsSalaryDay} from './us-season.js';
 import type {KboCareer} from './kbo-career-entry.js';
+import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 import type {NationalLedger,NationalTournament,NationalCompetitionResult} from './kbo-national.js';
 import {assertNationalLedger,nationalAthleteEligible} from './kbo-national.js';
 import {returnNationalHost} from './national-host-return.js';
@@ -50,7 +51,7 @@ function replaceBracket(c:UsCareer,b:NationalBracket):void {c.national={...ledge
 function sessionOf(c:UsCareer,id:string):UsNationalSession {const s=ledger(c).sessions?.find(s=>s.competitionId===id);if(!s)throw new RangeError('US_NATIONAL_SESSION_REQUIRED');return s;}
 function current(c:UsCareer){const p=c.phaseContext;if(p.phase!=='INTERNATIONAL_PROGRESS'&&p.phase!=='INTERNATIONAL_REVIEW')throw new RangeError('US_NATIONAL_NOT_OPEN');const b=ledger(c).brackets?.find(b=>b.competitionId===p.competitionId);if(!b)throw new RangeError('US_NATIONAL_BRACKET_REQUIRED');assertNationalBracket(b);return {phase:p,bracket:b,session:sessionOf(c,b.competitionId)};}
 function sourceProjection(c:UsCareer,revision:number,sources:NationalCareerSources){assertUsCareerRevision(c,revision);if(sources.us!==c||sources.usRevision!==revision)throw new RangeError('US_NATIONAL_SOURCE_CHANGED');return nationalUsCandidates(sources);}
-function hostFingerprint(c:KboCareer):string {return canonicalJson(c);}
+function hostFingerprint(c:KboCareer):string {return canonicalSeal(c);}
 function queueEvent(c:UsCareer,id:string,competitionId:string,stage:string,day:number):void {
  if(id==='E46'&&c.events.some(e=>e.definitionId==='E46'&&e.evidence.fields.playerSimulationKey===c.protagonistKey))return;
  const d=eventDefinition(id),event=createWorldEvent({definitionId:id,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:d.evidenceDomain,fields:{playerSimulationKey:c.protagonistKey,competitionId,selectionOrAppearanceStage:stage}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:c.phaseContext.phase,competitionKey:null,registrationKey:c.protagonistOrganizationId,sourceRevision:c.revision+1},sourceSequence:c.events.length+1,worldDay:day});
@@ -284,7 +285,7 @@ export interface UsNationalHostHandoff {expectedKboRevision:number;expectedUsRev
 export function returnUsNationalTournament(c:UsCareer,revision:number,host:KboCareer,kboRevision:number):UsNationalHostHandoff {
  assertUsCareerRevision(c,revision);auditUsNationalDays(c);const {phase,bracket:b,session:s}=current(c),n=ledger(c),e=c.events.find(e=>e.definitionId==='E48'&&e.status==='OPEN'&&e.evidence.fields.competitionId===b.competitionId);
  if(phase.phase!=='INTERNATIONAL_REVIEW'||phase.nextWorldDay!==b.window.endDay||b.dayReceipts?.length!==b.window.endDay-b.window.startDay||!n.competitions.some(r=>r.competitionId===b.competitionId)||!e||c.events.some(e=>e.definitionId==='E47'&&e.status==='OPEN'&&e.evidence.fields.competitionId===b.competitionId)||n.returnedCompetitions?.includes(b.competitionId))throw new RangeError('NATIONAL_RETURN_NOT_READY');
- if(kboRevision!==s.sources.kboRevision||host.revision!==kboRevision||host.world.worldKey!==c.world.worldKey||host.world.seasonKey!==c.world.seasonKey||host.world.seed!==c.world.seed||hostFingerprint(host)!==s.hostSourceFingerprint)throw new RangeError('STALE_NATIONAL_CAREER_SOURCE');
+ if(kboRevision!==s.sources.kboRevision||host.revision!==kboRevision||host.world.worldKey!==c.world.worldKey||host.world.seasonKey!==c.world.seasonKey||host.world.seed!==c.world.seed||!matchesCanonicalSeal(s.hostSourceFingerprint,hostFingerprint(host)))throw new RangeError('STALE_NATIONAL_CAREER_SOURCE');
  const {host:nextHost,ownership}=returnNationalHost({host,expectedRevision:kboRevision,snapshot:s,bracket:b,selection:selectionOf(c,b.tournament)!,registeredKeys:s.registeredKeys,records:c.records,owner:'US',ownerRevision:revision,ownerPlayerKeys:Object.keys(c.world.players),ownerHealth:c.health});
  const next:UsCareer={...c,national:{...n,returnedCompetitions:[...(n.returnedCompetitions??[]),b.competitionId]},phaseContext:phase.resume.phase==='SEASON_PROGRESS'?{...phase.resume,nextWorldDay:b.window.endDay}:structuredClone(phase.resume)};
  if(phase.resume.phase==='PRESEASON_SETUP'){const fatigue=c.world.players[c.protagonistKey]!.fatigue;next.seasonGrowth={...c.seasonGrowth,seasonStart:{...c.seasonGrowth.seasonStart,fatigue}};next.development={...c.development,seasonStartPlayer:{...c.development.seasonStartPlayer,fatigue}};}

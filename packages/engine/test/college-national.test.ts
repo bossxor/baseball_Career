@@ -16,6 +16,11 @@ import {collegeCupSchedule} from '../src/college-cup.js';
 import {collectRegisteredSchoolGrowthEvidence} from '../src/high-school-growth.js';
 import {closeCollegeSeasonForNextYear,startNextCollegeSeason} from '../src/college-year.js';
 import {openCollegeNationalSelection,respondCollegeNationalCallup,startCollegeNationalTournament,prepareCollegeNationalMatch,advanceCollegeNationalMatch,closeCollegeNationalDay,returnCollegeNationalTournament,assertCollegeNationalState,assertCollegeNationalResponseDeadline,confirmCollegeNationalEligibility,advanceCollegeAthleteDutySeason,schoolNationalEndInjured} from '../src/college-national.js';
+import {createKboClubGame} from '../src/kbo-club-game.js';
+import {startKboClubSeason} from '../src/kbo-club-progress.js';
+import type {CollegeLeagueHost} from '../src/college-national-host.js';
+import {assertCollegeLeagueHost} from '../src/college-national-host.js';
+import {resolveCollegeNationalEvent} from '../src/college-national.js';
 
 function accepted(){
  // Controlled school regular scores and KBO pre-window dates isolate actual AG ownership; neither is a native domestic season.
@@ -54,6 +59,35 @@ test('college AG pending game JSON resume preserves both source roots and reject
  assert.equal(canonicalJson(f.c),raw);assert.equal(canonicalJson(f.kbo),hostRaw);
 });
 
+test('college AG returns real tournament records to a separate NPC league owner',()=>{
+ // Controlled domestic prefix; tournament play and the return commit use real reducers.
+ const college=enrolledCollegeCareer('PITCHER'),p=college.world.players.own!;
+ p.abilities=Object.fromEntries(abilityKeys(p.kind).map(k=>[k,1_000_000]));p.potential={...p.abilities};p.careerPeaks={...p.abilities};college.development!.seasonStartPlayer=structuredClone(p);college.seasonGrowth!.seasonStart=structuredClone(p);college.ownAssessment=createOwnCareerAssessment(college.world);
+ let c=completedCollegeAcademicYear(college);
+ let game=createKboClubGame({worldKey:c.world.worldKey,seed:c.world.seed,difficulty:c.difficulty,clubId:'LG',startYear:Number(c.world.seasonKey)});game=startKboClubSeason(game,game.revision);
+ const bracket=createNationalBracket({worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,tournament:'AG',seed:`${c.world.seed}:national:AG:${c.world.seasonKey}`});
+ const first=game.progress!.nextWorldDay;game.progress!.nextWorldDay=bracket.window.startDay;game.days={...game.days!,days:Array.from({length:bracket.window.startDay-first},(_,i)=>({day:first+i,evidence:'controlled-prefix',result:{injured:[],recovered:[]}}))};
+ const host:CollegeLeagueHost={kind:'COLLEGE_NPC_KBO',revision:game.revision,ownerPlayerKey:c.world.protagonistKey,game,national:{invitations:[],competitions:[],benefits:[]}};
+ const sources=()=>({kbo:host,kboRevision:host.revision,college:c,collegeRevision:c.revision,recordProjectionRevision:Math.max(host.game.records.revision,c.records.revision)});
+ c=openCollegeNationalSelection(c,c.revision,sources(),'AG',nationalInviteDeadlines(bracket.window).inviteDay);
+ const e=c.events.at(-1)!;c=resolveCollegeNationalEvent(c,c.revision,{eventKey:e.eventKey,eventVersion:e.version,command:e.definitionId==='E44'?'ACCEPT_NATIONAL':'ACK_EVENT',worldDay:e.occurredWorldDay}).career;
+ c=startCollegeNationalTournament(c,c.revision,sources());
+ for(let i=0;i<300&&c.phaseContext.phase==='INTERNATIONAL_PROGRESS';i++){
+  const b=c.national!.brackets![0]!,match=nextNationalMatch(b),day=c.phaseContext.nextWorldDay;
+  if(b.pendingGame)c=advanceCollegeNationalMatch(c,c.revision).career;
+  else if(match?.day===day)c=prepareCollegeNationalMatch(c,c.revision);
+  else c=closeCollegeNationalDay(c,c.revision,day);
+ }
+ const benefit=c.national!.benefits[0];if(benefit)c=confirmCollegeNationalEligibility(c,c.revision,benefit.competitionId);
+ const original=canonicalJson(host),result=returnCollegeNationalTournament(c,c.revision,host,host.revision);
+ assert.equal(canonicalJson(host),original);assert.equal(result.host.game.progress!.nextWorldDay,bracket.window.endDay);
+ assert.deepEqual(result.host.game.national!.at(-1)!.playerKeys,result.career.national!.selections![0]!.roster.slots.map(s=>s.playerKey));
+ for(const key of result.ownership.recordGameKeys)assert.deepEqual(result.host.game.records.games[key],result.career.records.games[key]);
+ assertCollegeLeagueHost(result.host,result.career,result.host.revision);
+ const changed=structuredClone(result.host);changed.game.national!.at(-1)!.playerKeys=[];
+ assert.throws(()=>assertCollegeLeagueHost(changed,result.career,changed.revision),/ROSTER/);
+});
+
 test('actual college AG returns each owner records/health/XP while preserving academic receipts and closing its real KBO host dates',()=>{
  const f=accepted(),hostRaw=canonicalJson(f.kbo),schoolDays=canonicalJson(f.c.days),schoolCup=canonicalJson(f.c.collegeCup);let c=startCollegeNationalTournament(f.c,f.c.revision,f.input(f.c));
  for(let limit=0;limit<300&&c.phaseContext.phase==='INTERNATIONAL_PROGRESS';limit++){
@@ -65,6 +99,10 @@ test('actual college AG returns each owner records/health/XP while preserving ac
  assert.equal(c.phaseContext.phase,'INTERNATIONAL_REVIEW');assertCollegeCareerRevision(c,c.revision);
  const benefit=c.national!.benefits[0];if(benefit)c=confirmCollegeNationalEligibility(c,c.revision,benefit.competitionId);
  const before=canonicalJson(c),out=returnCollegeNationalTournament(c,c.revision,f.kbo,f.kbo.revision);
+ const legacy=structuredClone(c);legacy.national!.sessions![0]!.hostSourceFingerprint=canonicalJson(f.kbo);
+ assert.deepEqual(returnCollegeNationalTournament(legacy,legacy.revision,f.kbo,f.kbo.revision).host,out.host);
+ const tampered=structuredClone(legacy);tampered.national!.sessions![0]!.hostSourceFingerprint=canonicalJson({...f.kbo,revision:f.kbo.revision+1});
+ assert.throws(()=>returnCollegeNationalTournament(tampered,tampered.revision,f.kbo,f.kbo.revision),/STALE_NATIONAL/);
  assert.equal(canonicalJson(c),before);assert.equal(canonicalJson(f.kbo),hostRaw);assert.equal(out.expectedCollegeRevision,c.revision);assert.equal(out.expectedKboRevision,f.kbo.revision);
  assert.equal(canonicalJson(out.career.days),schoolDays);assert.equal(canonicalJson(out.career.collegeCup),schoolCup);assert.equal(out.career.phaseContext.phase,'OFFSEASON_REVIEW');
  assert.equal(out.career.collegeResult!.recordRevision,out.career.records.revision);assert.equal(out.career.collegeResult!.championKey,f.c.collegeResult!.championKey);
