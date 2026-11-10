@@ -1,3 +1,17 @@
+# 2026-11-10 OJT 현재 팀·작업 경계
+
+기준 `86504ac`, 통합 트리 `C:/Users/OJT/.codex/worktrees/tf-fast-season/baseball_career`. 아래 N-052 기록은 이전 호스트 이력이다. 각 담당 트리의 기존 WIP는 stash에 보존하며 복원하지 않는다.
+
+| 역할 / 실제 채팅 ID | 현재 담당 | 작업 트리 (`C:/Users/OJT/.codex/worktrees/` 아래) |
+| --- | --- | --- |
+| 팀장 `01a1598f-920e-7b42-bc73-c3ce8a660bac` | 통합·배정·최종 검증 | `tf-fast-season/baseball_career` |
+| 문서 `01a1b0d3-809e-7052-9880-86a6f910e3d5` | 실제 누락 큐·인계 | `tf-implementation-docs/baseball_career` |
+| 엔진 `01a1b0d4-51f5-7780-bbc6-22f17fbc78fb` | 독립 최초 미국 계약 수명·출신 | `tf-season-profile/baseball_career` |
+| API `01a1b0d4-501e-70b2-9c81-9466988672d2` | 독립 정산→평가·입단 연결 | `tf-season-review/baseball_career` |
+| 대학 대표 `01a1b5b7-71e0-7762-ac07-acf4d6fee09e` | 실제 KBO authority와 API·화면 수직 연결 | `tf-school-events/baseball_career` |
+
+팀 명칭은 앱에 표시된 기존 채팅 역할과 다를 수 있으며 위 배정은 현재 작업 기준이다. 중간 테스트·시뮬레이션·빌드·타입·린트·검증 스크립트 금지, 전체 구현 후 최종 검증 1회. 결과 도착 전 완료나 통과로 표시하지 않는다. 아래는 이전 운영 이력이다.
+
 # 2026-11-10 마감 푸시 권한
 
 사용자가 사용량5%에서 현재 작업 커밋·푸시를 직접 지시했다. 팀장이 codex/tf-fast-season 진행분을 일반 push한다. 작업자 무단 push·강제push·PR·main/M6 병합·배포 금지는 유지한다.

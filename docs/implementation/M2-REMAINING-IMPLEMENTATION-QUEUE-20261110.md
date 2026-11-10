@@ -1,8 +1,32 @@
+# 2026-11-10 현재 소스 우선 큐 — 86504ac
+
+아래 `aab7027` 기준 표는 과거 감사다. 현재 소스에는 시즌 순위·역할·일부 CH와 은퇴 업적·수상·이정표 투영이 존재한다(`career-season-review.ts`, `career-retirement-summary.ts`). 이를 누락으로 재구현하지 않는다. 연결 코드는 최신 소스에서 실행 검증되지 않았다.
+
+## 현재 실제 구현 작업
+
+| 담당 | 누락·경계 |
+| --- | --- |
+| 엔진 03 | `us-career-entry.ts`, `us-minor-history.ts`, `us-minor-market.ts`, `us-military-plan.ts`: 독립 최초 1년의 실제 등록·계약 수명·시장·복무 복귀를 연결하고 6년/기존 저장 보존. `us-amateur-return.ts` 귀국 출신을 고교 직행으로 오분류하지 않는다. 사용자 확정 U: 국내 프로 계약 경력이 없는 독립 출신의 미국 종료 후 국내 복귀는 의무 준비 2시즌·국내 드래프트 평가 35세 상한, 선택 준비 예산 차감 0, 복무 중첩을 적용한다. 아직 엔진/API 연결과 검증은 미완료. |
+| API 02 | `career-amateur-preparation-shell.ts`의 `applyAmateurPreparation` 정산 이후 `career-us-entry-shell.ts`의 `stageAmateurUsEntry` 및 실제 평가·서명·등록 연결 확인/구현. 현재 stage 호출은 학교·대학 shell에 있으며 독립 정산 shell에서 호출하지 않는다. 서버 실제 owner·원장 사용. |
+| 대학 대표 04 | `college-national.ts`의 선발·경기·복귀 owner를 실제 동일 세계 KBO authority와 revision/공식 원장에 연결하고 API·화면까지 제공. `returnCollegeNationalTournament` 양쪽 원본/revision 및 원자 저장을 보존한다. |
+| 은퇴 요약 | 사용자 확정 U: 확정 개인 수상·올스타 건수 우선, 동률 최신, 부족 시 공식 출장 최신 연도로 보충. 수상·선정 연도에 별도 출장 조건을 추가하지 않는다. API DTO 및 테스트 코드 작성, 실행 검증 대기. 순수 투영에서 취소·무효·중복·타인·리그별 연도 합산·출장0·구 저장 경계를 최종 확인한다. 기존 보관 원장의 중복 영수증 거부는 유지한다. |
+
+### 독립 출신 귀국 U — 구현·최종 확인 경계
+
+- 엔진: `us-amateur-return.ts`, `us-amateur-return-career.ts`의 출신 판별·검증과 `us-return-retry.ts`를 실제 독립 원장에 연결한다. 기존 고교/대학 출신·구 저장 및 선택 준비 예산·복무 중첩을 보존한다.
+- API: `career-us-return-shell.ts`, `career-us-return-flow.ts` 및 재도전 shell/flow에서 실제 서버 소유 출신과 명령을 전달한다. 없는 권한·기록을 채워 넣지 않는다.
+- 최종 검증: `packages/engine/test/us-amateur-return-career.test.ts`, `us-return-retry.test.ts`, `apps/api/test/m2-us-return-retry-http.test.ts` 등 관련 회귀를 작성/보강해 의무 2시즌·35세 상한 경계·예산 차감 0·복무 중첩·기존 출신/저장 보존을 확인한다. 지금 실행하지 않는다.
+- 설계 14 변경의 `node docs/design/rebuild-design-package.mjs`와 `npm run verify:design`은 모든 구현 후 팀장 최종 검증 단계로 이월한다.
+
+## 최종 검증 큐 — 지금 실행하지 않음
+
+기존 `CANCELLED_BY_USER` 전체 check는 통과가 아니다. 최종 통합 소스에서 작성된 회귀를 포함해 `npm run check` 1회, 실제 독립 1년 계약 만료/재계약/복무 및 귀국 출신·대학 대표 양쪽 CAS/공식 기록 보존·기존 6년과 구 저장 호환·저장 분할/복원/재전송을 확인한다. 24경로·99사건·PF-D, 브라우저/실기기, 성능·원장 해시는 별도 환경과 증거를 기록하며 미실행은 PASS가 아니다. 추가 실행은 전체 구현 뒤 팀장이 조율한다.
+
 # M2 남은 구현 큐 — 2026-11-10
 
 기준 `aab7027a0dbe910a20afe7f9d7152f8ff59a0f67`. 정적 대조만 수행했다. 아래는 구현과 증거 부족을 분리한 작업 배정이며 M2 완료 판정이 아니다. 기존 WIP·원장·시드·권한과 호환성을 보존한다. 새 규칙이나 산식이 필요하면 임의로 정하지 않고 팀장에게 올린다.
 
-## 확인된 구현 누락
+## 과거 기준의 구현 누락 (현재 상태는 위 표 우선)
 
 | 담당 | 파일 / 구체 작업 | 의존성 |
 | --- | --- | --- |
@@ -42,3 +66,4 @@
 - PF-D/성능 측정과 결과 해시, 브라우저 접근성·375px/데스크톱 및 Android 실기기 실행은 각 환경과 증거를 구분한다. 미실행 항목은 통과로 표시하지 않는다.
 
 이번 문서 작성에서는 테스트·시뮬레이션·빌드·타입·린트·검증 스크립트를 실행하지 않았다.
+
