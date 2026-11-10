@@ -1,6 +1,6 @@
-import { battingRates, pitchingRates, inningsDisplay, recordTotals } from '@playball/engine';
+import { battingRates, pitchingRates, inningsDisplay, recordTotals, careerSeasonGrowthSummary } from '@playball/engine';
 import type { HighSchoolCareer, KboCareer, UsCareer } from '@playball/engine';
-import { ABILITY_LABELS, UNITS_PER_POINT, abilityKeys } from '@playball/rules';
+import { ABILITY_LABELS, UNITS_PER_POINT } from '@playball/rules';
 import type { SaveState } from './engine-command.js';
 
 type Line = { label: string; value: string };
@@ -9,15 +9,18 @@ export type SeasonReview = { season: string; sections: { title: string; lines: L
 /** Project only committed regular-season records and settled ledger values. */
 export function careerSeasonReview(state: SaveState): SeasonReview | null {
  const c = state.career as HighSchoolCareer | KboCareer | UsCareer | undefined;
- if (!c?.world || c.phaseContext.phase !== 'SEASON_REVIEW' || !c.records?.games) return null;
+ if (!c?.world || !c.records?.games) return null;
+ const growth = careerSeasonGrowthSummary(c);
+ const review = c.phaseContext.phase === 'SEASON_REVIEW';
+ if (!review && !(growth?.finalized && !('protagonistClubId' in c) && !('protagonistOrganizationId' in c) && ['CAREER_ROUTE','NEXT_SEASON_READY'].includes(c.phaseContext.phase))) return null;
  const key = 'protagonistKey' in c ? c.protagonistKey : c.world.protagonistKey;
  const team = 'protagonistClubId' in c ? c.protagonistClubId
   : 'protagonistOrganizationId' in c ? c.protagonistOrganizationId : c.world.protagonistSchoolId;
  const player = c.world.players[key]; if (!player) return null;
  const season = c.world.seasonKey, sections: SeasonReview['sections'] = [];
- const leagues = [...new Set(Object.values(c.records.games)
+ const leagues = review ? [...new Set(Object.values(c.records.games)
   .filter(g => g.scope.seasonKey === season && g.scope.phase === 'REGULAR' && (g.batting[key] || g.pitching[key] || g.teams[team]))
-  .map(g => g.scope.leagueKey))];
+  .map(g => g.scope.leagueKey))] : [];
  const rate = (n: number | null) => n === null ? '—' : n.toFixed(3);
  for (const league of leagues) {
   const totals = recordTotals(c.records, { seasonKey: season, leagueKey: league, phase: 'REGULAR' });
@@ -52,11 +55,10 @@ export function careerSeasonReview(state: SaveState): SeasonReview | null {
   if (t) lines.push({label:'팀 성적',value:`${t.W}승 ${t.L}패 ${t.T}무`});
   if (lines.length) sections.push({title:`${league} 정규시즌`,lines});
  }
- const growth = c.seasonGrowth;
- if (growth?.finalized && growth.seasonKey === season && growth.playerKey === key) {
-  sections.push({title:'능력 변화',lines:abilityKeys(player.kind).map(k => ({
-   label:ABILITY_LABELS[k],
-   value:((player.abilities[k]! - growth.seasonStart.abilities[k]!) / UNITS_PER_POINT).toFixed(2),
+ if (growth && growth.seasonKey === season) {
+  sections.push({title:growth.finalized?'확정 능력 변화':'현재 능력 변화 (시즌 마감 전)',lines:growth.abilities.map(a => ({
+   label:ABILITY_LABELS[a.ability as keyof typeof ABILITY_LABELS] ?? a.ability,
+   value:(a.deltaUnits / UNITS_PER_POINT).toFixed(2),
   }))});
  }
  if ('protagonistClubId' in c) {

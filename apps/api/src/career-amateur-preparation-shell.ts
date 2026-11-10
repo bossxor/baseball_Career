@@ -53,7 +53,8 @@ export function amateurPreparationFlow(c:engine.HighSchoolCareer):FlowScreen|nul
  else if(c.phaseContext.phase==='SEASON_REVIEW')commands.push({...cmd('prep-settle','준비 시즌 정산','SETTLE',{forfeitUnusedTraining:!view.trainingUsed}),...(!view.trainingUsed?{confirm:'남은 훈련을 포기하고 준비 시즌을 정산할까요?'}:{})});
  else{
   const choices:engine.TrainingChoice[]=[...abilityKeys(player.kind).flatMap(ability=>[{type:'GUARANTEED' as const,ability},{type:'CHALLENGE' as const,ability}]),{type:'CONDITIONING'},{type:'SKIP'}];
-  if(!preparation.pendingGame&&!view.trainingUsed)for(const choice of choices){
+  const dayInProgress=Object.values(preparation.records.games).some(g=>g.scope.seasonKey===preparation.world.seasonKey&&g.scope.leagueKey==='INDEPENDENT'&&g.worldDay>=preparation.nextWorldDay);
+  if(!preparation.pendingGame&&!dayInProgress&&!view.trainingUsed)for(const choice of choices){
    let preview:ReturnType<typeof engine.previewCareerTraining>;try{preview=engine.previewCareerTraining(c,choice);}catch{continue;}
    if(!preview.eligible)continue;
    const facts=[{label:'성장',value:'+'+(preview.gainUnits/10_000).toLocaleString('ko-KR')}];

@@ -54,3 +54,21 @@ test('HTTP review uses finalized regular records, correct rate denominators, and
   }
  } finally { await client.close(); }
 });
+
+test('school growth distinguishes pending, finalized, and legacy saves', async () => {
+ const { completedHighSchoolCareer } = await import('../../../packages/engine/test/fixtures.js');
+ const { createSeasonGrowthLedger, finalizeSeasonGrowth } = await import('@playball/engine');
+ const { careerSeasonReview } = await import('../src/career-season-review.js');
+ const c = completedHighSchoolCareer(10000), key = c.world.protagonistKey;
+ const player = c.world.players[key]!, days = c.world.calendar!.growthDays.length;
+ c.seasonGrowth = createSeasonGrowthLedger(player,c.world.seasonKey,days);
+ c.phaseContext = {phase:'SEASON_REVIEW'};
+ const state = {schemaVersion:1,career:c};
+ assert.ok(careerSeasonReview(state)?.sections.some(s=>s.title==='현재 능력 변화 (시즌 마감 전)' && s.lines.length===6));
+ const finalized = finalizeSeasonGrowth(player,c.seasonGrowth,days);
+ c.world.players[key] = finalized.player; c.seasonGrowth = finalized.ledger;
+ c.phaseContext = {phase:'CAREER_ROUTE'};
+ assert.ok(careerSeasonReview(state)?.sections.some(s=>s.title==='확정 능력 변화' && s.lines.length===6));
+ delete c.seasonGrowth;
+ assert.equal(careerSeasonReview(state),null);
+});

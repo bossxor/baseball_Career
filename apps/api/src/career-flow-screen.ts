@@ -31,7 +31,7 @@ export function flowApplies(state:SaveState):boolean {
  const c=state.career as Career|undefined;if(!c||typeof c!=='object')return false;
  if(isKbo(c))return true;
  if(isUs(c))return true;
- if(isCollege(c))return true;
+ if(isCollege(c)||c.world.leagueKey==='INDEPENDENT')return true;
  return ['SEASON_PROGRESS','SEASON_REVIEW','CAREER_ROUTE','NEXT_SEASON_READY'].includes(c.phaseContext.phase)||(c.phaseContext.phase==='EVENT_DECISION'&&['E01','E02','E03','E04','E41','E43','E84'].some(id=>Boolean(open(c,id))))||Boolean(c.retryExit||c.amateurRetirement);
 }
 
@@ -135,9 +135,9 @@ function schoolFlow(c:engine.HighSchoolCareer):FlowScreen {
    lines.push({label:'지명',value:draft.result.round?`${draft.result.round}라운드 ${club(draft.result.clubId??'')}`:'지명 없음'});
    if(draft.offer)lines.push({label:'제안',value:`${draft.offer.years}년 · 연봉 ${won(draft.offer.annualSalaryWon)}${draft.offer.signingBonusWon?` · 계약금 ${won(draft.offer.signingBonusWon)}`:''}`});
    const grad=c.graduation?c.events.find(e=>e.eventKey===c.graduation!.eventKey):undefined;
-   if(draft.offer&&grad)commands.push(
-    {...cmd(c,'draft-sign','계약하고 입단','CAREER_KBO_ENTRY_DECIDE',{programVersion:draft.version,decision:'SIGN',eventVersion:grad.version}),sign:{name:p.name},facts:[{label:'계약',value:`${draft.offer.years}년 · 연봉 ${won(draft.offer.annualSalaryWon)}`}]},
-    {...cmd(c,'draft-decline','제안 거절','CAREER_KBO_ENTRY_DECIDE',{programVersion:draft.version,decision:'DECLINE',eventVersion:grad.version},'거절하면 이 지명은 사라집니다. 거절할까요?'),facts:[{label:'결과',value:'이 지명 제안은 사라집니다'}]});
+   if(draft.offer&&(grad||c.world.leagueKey==='INDEPENDENT'))commands.push(
+    {...cmd(c,'draft-sign','계약하고 입단','CAREER_KBO_ENTRY_DECIDE',{programVersion:draft.version,decision:'SIGN',...(grad?{eventVersion:grad.version}:{})}),sign:{name:p.name},facts:[{label:'계약',value:`${draft.offer.years}년 · 연봉 ${won(draft.offer.annualSalaryWon)}`}]},
+    {...cmd(c,'draft-decline','제안 거절','CAREER_KBO_ENTRY_DECIDE',{programVersion:draft.version,decision:'DECLINE',...(grad?{eventVersion:grad.version}:{})},'거절하면 이 지명은 사라집니다. 거절할까요?'),facts:[{label:'결과',value:'이 지명 제안은 사라집니다'}]});
   }
   commands.push(...collegeRouteCommands(c),...amateurUsCommands(c),...amateurPreparationRouteCommands(c));
   return out('졸업 진로 · KBO 지명',commands);

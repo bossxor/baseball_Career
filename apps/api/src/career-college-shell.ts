@@ -35,7 +35,7 @@ function trainingChoice(v:unknown):engine.TrainingChoice{
 
 export const isCollege=(c:engine.HighSchoolCareer)=>c.world.leagueKey==='COLLEGE';
 /** College or the HS→college hand-over (admitted, not yet started). */
-export const collegeApplies=(c:engine.HighSchoolCareer)=>isCollege(c)||c.collegeAdmission?.status==='ADMITTED';
+export const collegeApplies=(c:engine.HighSchoolCareer)=>isCollege(c)||c.world.leagueKey===undefined&&c.collegeAdmission?.status==='ADMITTED';
 
 /** One request runs the engine's own plans back to back: SEASON = "next major event" repeated until the engine stops for a reason
  * other than its internal chunk limit (mandatory event, injury change, season review); MONTH = four weekly plans. The engine decides every stop. */
