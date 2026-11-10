@@ -1,0 +1,223 @@
+{
+  "backend": "postgres",
+  "databaseVersion": "17.5",
+  "league": "us",
+  "fixture": "controlled pre-season fixture",
+  "initialHash": "305c73a6a4d691acbfa9fcee4fa4415a03805e54f89d44d974192c7ec47bc11d",
+  "status": "http_error",
+  "commands": [
+    {
+      "type": "CAREER_US_PLAY_START",
+      "phase": "PRESEASON_SETUP",
+      "elapsedMs": 627.4088000000002,
+      "status": 200
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 27613.2814,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 29012.341200000003,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 30682.642900000006,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 30597.215299999996,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 31696.89320000002,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 32305.3229,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 27157.7065,
+      "status": 200,
+      "stop": "EVENT"
+    },
+    {
+      "type": "CAREER_US_PLAY_RESOLVE_LEVEL",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 10340.369600000005,
+      "status": 200
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 33140.84699999998,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 35983.412300000025,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 40886.67019999999,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 60469.57799999998,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 39690.16519999999,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 38626.45439999999,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 45178.9500999999,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 40758.277,
+      "status": 200,
+      "stop": "EVENT"
+    },
+    {
+      "type": "CAREER_US_PLAY_RESOLVE_WINDOW",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 18299.741200000048,
+      "status": 200
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 42579.748900000006,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 43302.92040000006,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 39202.94190000009,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 44044.73939999996,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 46226.31229999999,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 47086.12349999999,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 43624.350800000015,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 41479.46020000009,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 76523.73530000006,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 54687.05899999989,
+      "status": 200,
+      "stop": "BUDGET"
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 37651.069000000134,
+      "status": 500
+    }
+  ],
+  "node": "v24.19.0",
+  "platform": "win32",
+  "arch": "x64",
+  "method": "CPU profiling disabled",
+  "memoryMode": true,
+  "error": {
+    "code": "INTERNAL_ERROR",
+    "requestId": "205955ef-05fa-4f33-8d92-286008af304e"
+  },
+  "wallMs": 1289927.8235,
+  "finalHash": "ba14957e3fd3ec1c81fa10fdbd4939f078a5af7703ab910253af62497e95f366",
+  "initialHashUnchanged": true,
+  "finalPhase": "SEASON_PROGRESS",
+  "finalGames": 3226
+}

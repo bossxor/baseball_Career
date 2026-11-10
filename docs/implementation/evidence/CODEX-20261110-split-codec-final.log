@@ -1,0 +1,11 @@
+✔ bounded codec preserves JSON values, large Unicode strings and special keys without prototype changes (15.9885ms)
+✔ split storage rolls back row/parts/receipt together and rejects missing or damaged parts (1605.4422ms)
+✔ HTTP commands preserve split state through replay, conflict, backup and owner-only restore (1827.8216ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5184.4007

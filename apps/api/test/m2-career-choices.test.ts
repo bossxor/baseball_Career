@@ -1,3 +1,4 @@
+import { storedSave } from './stored-save.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {eq} from 'drizzle-orm';
@@ -23,7 +24,7 @@ async function owned<T extends {revision:number}>(source:T,run:(h:{app:ReturnTyp
   const subject='choice-owner',headers={Authorization:'Bearer dev:'+subject,'Content-Type':'application/json'};await seedAllowedSubject(db,subject);await seedAllowedSubject(db,'someone-else');const app=createApp({db,auth:{allowDevBearer:true}});
   const created=await json<{saveId:string}>(await app.request('/api/game-creations',{method:'POST',headers,body:JSON.stringify({creationId:'choice-api',mode:'CLUB'})}));
   await db.update(gameSaves).set({state:{schemaVersion:1,career:source}}).where(eq(gameSaves.id,created.saveId));
-  await run({app,id:created.saveId,headers,post:async(type,payload,id,saveRevision=0)=>app.request('/api/saves/'+created.saveId+'/commands',{method:'POST',headers,body:JSON.stringify({commandId:id,expectedRevision:saveRevision,type,payload:{careerRevision:source.revision,...payload}})}),screen:async name=>app.request('/api/saves/'+created.saveId+'/screens/'+name,{headers}),stored:async()=>{const [row]=await db.select({state:gameSaves.state}).from(gameSaves).where(eq(gameSaves.id,created.saveId));return (row!.state as {career:T}).career;}});
+  await run({app,id:created.saveId,headers,post:async(type,payload,id,saveRevision=0)=>app.request('/api/saves/'+created.saveId+'/commands',{method:'POST',headers,body:JSON.stringify({commandId:id,expectedRevision:saveRevision,type,payload:{careerRevision:source.revision,...payload}})}),screen:async name=>app.request('/api/saves/'+created.saveId+'/screens/'+name,{headers}),stored:async()=>{const [row]=await storedSave(db, created.saveId);return (row!.state as {career:T}).career;}});
  }finally{await client.close();}
 }
 function collegePre(){const c=completedHighSchoolCareer(),r=acknowledgeHighSchoolSeasonReview(c,c.revision),o=openHighSchoolCareerRoute(r,r.revision,1).career,a=enrollHighSchoolCollege(o,o.revision,{eventVersion:1,offerSetKey:highSchoolCareerRouteView(o).offerSetKey,offerSetVersion:1,collegeId:'U07'}),closed=closeHighSchoolSeasonForCollege(a,a.revision,true);return startAdmittedCollegeSeason(closed,closed.revision);}

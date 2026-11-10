@@ -1,0 +1,61 @@
+{
+  "backend": "pglite",
+  "shape": "objects",
+  "requestedMiB": 64,
+  "scope": "synthetic database boundary only; no engine or game verification",
+  "memoryScope": "driver process; native PostgreSQL server memory is separate",
+  "node": "v24.19.0",
+  "stages": [
+    {
+      "stage": "input-ready",
+      "rss": 457060352,
+      "heapUsed": 151960288,
+      "heapTotal": 187486208,
+      "external": 225246564,
+      "arrayBuffers": 40468992,
+      "wasmBytes": 182386688
+    },
+    {
+      "stage": "insert",
+      "rss": 2207199232,
+      "heapUsed": 80974192,
+      "heapTotal": 84549632,
+      "external": 2195231738,
+      "arrayBuffers": 45361016,
+      "wasmBytes": 2147483648
+    },
+    {
+      "stage": "select",
+      "rss": 2574991360,
+      "heapUsed": 245286568,
+      "heapTotal": 380948480,
+      "external": 2268223350,
+      "arrayBuffers": 39214848,
+      "wasmBytes": 2147483648
+    },
+    {
+      "stage": "error",
+      "rss": 3032821760,
+      "heapUsed": 314044384,
+      "heapTotal": 447799296,
+      "external": 2524631077,
+      "arrayBuffers": 374760355,
+      "wasmBytes": 2147483648
+    }
+  ],
+  "databaseVersion": "PostgreSQL 17.5 on aarch64-unknown-linux-gnu, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 3.1.74 (1092ec30a3fb1d46b1782ff1b4db5094d3d06ae5), 32-bit",
+  "payloadBytes": 67108840,
+  "status": "FAILED",
+  "error": {
+    "stage": "update",
+    "code": "53200",
+    "file": "mcxt.c",
+    "line": "1156",
+    "routine": "MemoryContextAllocationFailure"
+  },
+  "observed": {
+    "generation": 0,
+    "receipts": 0
+  },
+  "atomic": true
+}

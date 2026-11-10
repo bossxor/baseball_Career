@@ -1,0 +1,12 @@
+✔ command diagnostics preserve the HTTP response and report ordered boundaries only when subscribed (3691.0444ms)
+✔ V02 reject missing auth and non-allowlisted subject (3527.724ms)
+✔ V03 unique receipt, idempotent replay, rollback on bad payload (1342.2069ms)
+✔ F08 two devices same expectedRevision — one wins, other 409 (1136.5515ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8989.2838

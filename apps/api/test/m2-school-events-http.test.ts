@@ -1,3 +1,4 @@
+import { storedSave } from './stored-save.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {eq} from 'drizzle-orm';
@@ -41,7 +42,7 @@ test('school event choices resolve owned current events through HTTP without cha
    assert.equal((await post('stale-revision',{...action.payload,careerRevision:c.revision-1})).status,400);
    const response=await post('resolve',action.payload);assert.equal(response.status,200,await response.clone().text());const receipt=await json(response);
    assert.deepEqual(await json(await post('resolve',action.payload)),receipt);
-   const [row]=await db.select({state:gameSaves.state}).from(gameSaves).where(eq(gameSaves.id,created.saveId));const next=(row!.state as {career:typeof c}).career;
+   const [row]=await storedSave(db, created.saveId);const next=(row!.state as {career:typeof c}).career;
    assert.equal(next.phaseContext.phase,'SEASON_PROGRESS');assert.deepEqual(next.records,c.records);assert.deepEqual(next.world,c.world);assert.deepEqual(next.development,c.development);
    assert.equal((await post('again',{...action.payload,careerRevision:next.revision},headers,1)).status,400);
   }

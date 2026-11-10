@@ -1,0 +1,71 @@
+{
+  "backend": "pglite",
+  "shape": "text",
+  "requestedMiB": 64,
+  "scope": "synthetic database boundary only; no engine or game verification",
+  "memoryScope": "driver process; native PostgreSQL server memory is separate",
+  "node": "v24.19.0",
+  "stages": [
+    {
+      "stage": "input-ready",
+      "rss": 455856128,
+      "heapUsed": 149400848,
+      "heapTotal": 184692736,
+      "external": 225246564,
+      "arrayBuffers": 40468992,
+      "wasmBytes": 182386688
+    },
+    {
+      "stage": "insert",
+      "rss": 858824704,
+      "heapUsed": 80943000,
+      "heapTotal": 150085632,
+      "external": 980314932,
+      "arrayBuffers": 106757810,
+      "wasmBytes": 871170048
+    },
+    {
+      "stage": "select",
+      "rss": 1194446848,
+      "heapUsed": 147966912,
+      "heapTotal": 151138304,
+      "external": 1247669027,
+      "arrayBuffers": 239894071,
+      "wasmBytes": 871170048
+    },
+    {
+      "stage": "update",
+      "rss": 1276071936,
+      "heapUsed": 215987904,
+      "heapTotal": 233717760,
+      "external": 1119163987,
+      "arrayBuffers": 245606865,
+      "wasmBytes": 871170048
+    },
+    {
+      "stage": "receipt",
+      "rss": 1276071936,
+      "heapUsed": 216180752,
+      "heapTotal": 233717760,
+      "external": 1119189854,
+      "arrayBuffers": 245632732,
+      "wasmBytes": 871170048
+    },
+    {
+      "stage": "commit",
+      "rss": 1276076032,
+      "heapUsed": 216364288,
+      "heapTotal": 233717760,
+      "external": 1119191044,
+      "arrayBuffers": 245633922,
+      "wasmBytes": 871170048
+    }
+  ],
+  "databaseVersion": "PostgreSQL 17.5 on aarch64-unknown-linux-gnu, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 3.1.74 (1092ec30a3fb1d46b1782ff1b4db5094d3d06ae5), 32-bit",
+  "payloadBytes": 67108893,
+  "observed": {
+    "generation": 1,
+    "receipts": 1
+  },
+  "status": "PASS"
+}

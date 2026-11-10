@@ -1,0 +1,71 @@
+{
+  "backend": "postgres",
+  "shape": "objects",
+  "requestedMiB": 64,
+  "scope": "synthetic database boundary only; no engine or game verification",
+  "memoryScope": "driver process; native PostgreSQL server memory is separate",
+  "node": "v24.19.0",
+  "stages": [
+    {
+      "stage": "input-ready",
+      "rss": 196923392,
+      "heapUsed": 144408744,
+      "heapTotal": 162308096,
+      "external": 2457167,
+      "arrayBuffers": 144197,
+      "wasmBytes": null
+    },
+    {
+      "stage": "insert",
+      "rss": 195014656,
+      "heapUsed": 74088552,
+      "heapTotal": 108916736,
+      "external": 69566436,
+      "arrayBuffers": 67253426,
+      "wasmBytes": null
+    },
+    {
+      "stage": "select",
+      "rss": 580296704,
+      "heapUsed": 237895864,
+      "heapTotal": 373858304,
+      "external": 215849313,
+      "arrayBuffers": 134398523,
+      "wasmBytes": null
+    },
+    {
+      "stage": "update",
+      "rss": 556347392,
+      "heapUsed": 305162768,
+      "heapTotal": 440709120,
+      "external": 69565084,
+      "arrayBuffers": 67253400,
+      "wasmBytes": null
+    },
+    {
+      "stage": "receipt",
+      "rss": 556347392,
+      "heapUsed": 305181312,
+      "heapTotal": 440709120,
+      "external": 69565106,
+      "arrayBuffers": 67253422,
+      "wasmBytes": null
+    },
+    {
+      "stage": "commit",
+      "rss": 556347392,
+      "heapUsed": 305272248,
+      "heapTotal": 440709120,
+      "external": 69565124,
+      "arrayBuffers": 67253440,
+      "wasmBytes": null
+    }
+  ],
+  "databaseVersion": "PostgreSQL 17.5 on x86_64-windows, compiled by msvc-19.43.34808, 64-bit",
+  "payloadBytes": 67108840,
+  "observed": {
+    "generation": 1,
+    "receipts": 1
+  },
+  "status": "PASS"
+}

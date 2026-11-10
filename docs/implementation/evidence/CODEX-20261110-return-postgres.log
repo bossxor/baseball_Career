@@ -1,0 +1,36 @@
+Native mandatory return year 1 complete
+Native mandatory return year 2 complete
+{"nativeIndependentPrefix":true,"commands":202,"sourceSha256":"050d8bf5699b367f418a441f19216e0bb7234c42f85afde421c3660ab10d4d2c"}
+{"level":"error","requestId":"1098b1da-12b5-4e12-9076-946cfa7720b1","message":"total size of jsonb object elements exceeds the maximum of 268435455 bytes"}
+??returned player HTTP opens once, rejects stale/foreign/authority input and persists US acceptance once (672298.4ms)
+??returned player Flow resumes retry after a replay and protects the owner (76879.3302ms)
+??tests 2
+??suites 0
+??pass 1
+??fail 1
+??cancelled 0
+??skipped 0
+??todo 0
+??duration_ms 753038.7033
+
+??failing tests:
+
+test at apps\api\test\m2-us-return-retry-http.test.ts:1:2616
+??returned player HTTP opens once, rejects stale/foreign/authority input and persists US acceptance once (672298.4ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  500 !== 200
+  
+      at <anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-us-return-retry-http.test.ts:51:66)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async owned (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-us-return-retry-http.test.ts:28:3)
+      at async TestContext.<anonymous> (C:\Users\N-052\.codex\visualizations\2026\10\16\01a142f8-66ea-7782-ba3e-b52df94ae1be\baseball-career-m2\apps\api\test\m2-us-return-retry-http.test.ts:37:2)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 500,
+    expected: 200,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

@@ -2,10 +2,11 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { and, eq } from 'drizzle-orm';
 import type { Context } from 'hono';
-import { gameSaves, privateFiles, profiles } from '@playball/db';
+import { gameSaves, privateFiles, profiles, readSaveState, writeSaveState } from '@playball/db';
 import type { AppVariables } from './auth.js';
 import { ACTIVE_SAVE_CAP, activeSaveCount, ownerTag } from './game-creations.js';
 import { cleanId } from './private-files.js';
+import { readOwnedSave } from './save-state.js';
 
 const SUPPORTED_SCHEMA = 1;
 
@@ -115,7 +116,7 @@ export async function postRestore(c: Context<{ Variables: AppVariables }>) {
   // Owner-scoped: another user's request id can never name this save.
   const targetSaveId = `save_restore_${ownerTag(subject)}_${restoreRequestId}`;
 
-  const [existing] = await db.select({ id: gameSaves.id, state: gameSaves.state }).from(gameSaves).where(and(eq(gameSaves.id, targetSaveId), eq(gameSaves.ownerId, subject))).limit(1);
+  const existing = await readOwnedSave(db, subject, targetSaveId);
   if (existing) {
     // The same request id must mean the same restore.
     if ((existing.state as { restoredFromBackupId?: string } | null)?.restoredFromBackupId !== backupId) return errorBody(c, 'REQUEST_ID_CONFLICT', 400);
@@ -147,15 +148,23 @@ export async function postRestore(c: Context<{ Variables: AppVariables }>) {
       ? { ...(found.parsed.state as Record<string, unknown>), restoredFromBackupId: backupId, restoreRequestId }
       : { schemaVersion: 1, restoredFromBackupId: backupId, restoreRequestId };
 
-  await db.insert(gameSaves).values({
-    id: targetSaveId,
-    ownerId: subject,
-    mode,
-    revision,
-    phase,
-    summary,
-    state,
-  }).onConflictDoNothing();
+  const activated = await db.transaction(async tx => {
+    const [inserted] = await tx.insert(gameSaves).values({
+      id: targetSaveId, ownerId: subject, mode, revision, phase, summary, state: {},
+    }).onConflictDoNothing().returning();
+    if (inserted) {
+      const stored = await writeSaveState(tx, targetSaveId, revision, state);
+      await tx.update(gameSaves).set(stored).where(eq(gameSaves.id, targetSaveId));
+      return 'CREATED';
+    }
+    const [won] = await tx.select().from(gameSaves)
+      .where(and(eq(gameSaves.id, targetSaveId), eq(gameSaves.ownerId, subject)))
+      .limit(1).for('share');
+    if (!won || won.deletedAt) return 'CONFLICT';
+    const restored = await readSaveState(tx, won.id, won.revision, won.state, won.stateFormat) as { restoredFromBackupId?: string };
+    return restored?.restoredFromBackupId === backupId ? 'REPLAY' : 'CONFLICT';
+  });
+  if (activated === 'CONFLICT') return errorBody(c, 'REQUEST_ID_CONFLICT', 400);
 
   return c.json({
     restoreRequestId,
@@ -165,5 +174,5 @@ export async function postRestore(c: Context<{ Variables: AppVariables }>) {
     revision: revision.toString(),
     phase,
     nonce: randomUUID(),
-  }, 201);
+  }, activated === 'CREATED' ? 201 : 200);
 }

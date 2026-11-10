@@ -1,0 +1,14 @@
+{
+  "status": "FAILED",
+  "pid": 4736,
+  "startedAt": "2026-11-09T23:41:29.1926857Z",
+  "endedAt": "2026-11-09T23:54:03.0600516Z",
+  "scope": "first two returned-player PostgreSQL HTTP cases; controlled initial US prefix and native mandatory preparation",
+  "backend": "PostgreSQL17.5 localhost",
+  "commit": "c4d9f50f34c54e23b61bc3384c64b649aacacf19",
+  "testSha256": "F36DA069F54524C5FD645F9B00F05CBB60B9175242C21560018A89244BBC02A7",
+  "sourceUnchanged": true,
+  "nodeExitCode": 1,
+  "exitCode": 1,
+  "error": null
+}

@@ -1,3 +1,4 @@
+import { storedSave } from './stored-save.js';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { eq } from 'drizzle-orm';
@@ -47,7 +48,7 @@ test('E34 -> E36 retry retirement runs through save commands and screens', async
   assert.doesNotMatch(JSON.stringify(routes), /potential|"seed"|"rng"/);
 
   await send('CAREER_RETRY_REQUEST_RETIRE', {});
-  const [row] = await db.select({ state: gameSaves.state }).from(gameSaves).where(eq(gameSaves.id, saveId));
+  const [row] = await storedSave(db, saveId);
   const c = (row!.state as { career: { retryPro: { eventKey: string }; events: { eventKey: string; version: number }[] } }).career;
   const ev = c.events.find(e => e.eventKey === c.retryPro.eventKey)!;
   const done = await send('CAREER_RETRY_CONFIRM_RETIRE', { eventKey: ev.eventKey, eventVersion: ev.version }) as { summary: { phase: string } };

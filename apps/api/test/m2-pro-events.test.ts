@@ -1,3 +1,4 @@
+import { storedSave } from './stored-save.js';
 import {confirmKboPreseasonPlan} from '../../../packages/engine/src/kbo-preseason.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -87,7 +88,7 @@ test('PRO_EVENTS real HTTP owns the source, hides private metadata, and applies 
   const payload={careerRevision:c.revision,eventKey:e.eventKey,eventVersion:e.version,command:'CONFIRM_RETURN'},post=(id:string,extra:Record<string,unknown>={},revision=0)=>app.request(path+'/commands',{method:'POST',headers,body:JSON.stringify({commandId:id,expectedRevision:revision,type:'CAREER_PRO_EVENT_RESULT',payload:{...payload,...extra}})});
   assert.equal((await post('injected',{world:c.world})).status,400);assert.equal((await post('wrong-version',{eventVersion:e.version+1})).status,400);
   const first=await post('confirm');assert.equal(first.status,200);const receipt=await json<{revision:string}>(first);assert.deepEqual(await json(await post('confirm')),receipt);assert.equal((await post('conflict')).status,409);
-  const [row]=await db.select({state:gameSaves.state}).from(gameSaves).where(eq(gameSaves.id,created.saveId)),next=(row!.state as {career:KboCareer}).career;assert.equal(next.proResults!.returns.length,1);assert.deepEqual(next.health,c.health);assert.deepEqual(next.world,c.world);
+  const [row]=await storedSave(db, created.saveId),next=(row!.state as {career:KboCareer}).career;assert.equal(next.proResults!.returns.length,1);assert.deepEqual(next.health,c.health);assert.deepEqual(next.world,c.world);
   const reread=await app.request(path+'/screens/PRO_EVENTS',{headers});assert.equal(reread.status,200);const fresh=await json<{results:{notices:{eventKey:string}[]}}>(reread);assert.ok(!fresh.results.notices.some(n=>n.eventKey===e.eventKey));
   assert.equal((await app.request(path+'/screens/PRO_EVENTS',{headers:{Authorization:'Bearer dev:foreign-owner'}})).status,404);
   assert.equal((await app.request(path+'/commands',{method:'POST',headers:{Authorization:'Bearer dev:foreign-owner','Content-Type':'application/json'},body:JSON.stringify({commandId:'foreign',expectedRevision:1,type:'CAREER_PRO_EVENT_RESULT',payload})})).status,404);

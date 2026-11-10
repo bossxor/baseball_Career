@@ -1,0 +1,41 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import pg from 'pg';
+import {createHash} from 'node:crypto';
+import {canonicalSha256} from '../packages/engine/src/canonical-seal.ts';
+import {applyEngineCommand} from '../apps/api/src/engine-command.ts';
+import {careerFlowScreen} from '../apps/api/src/career-flow-screen.ts';
+const metadata=JSON.parse(fs.readFileSync('.local-verification/postgres-test.json','utf8').replace(/^\uFEFF/,''));
+const client=new pg.Client({connectionString:metadata.url.replace('/postgres','/playball_profile_season_20261110')});
+const output='docs/implementation/evidence/CODEX-20261110-storage-split-poc.json';
+const report={scope:'temporary tables only; actual next native command state; no application storage format change',status:'RUNNING',node:process.version};
+const sha=text=>createHash('sha256').update(text).digest('hex');
+try{
+ await client.connect();
+ const row=(await client.query("select state,revision,md5(state::text) as stored_hash from game_saves where id='profile-us'")).rows[0];assert.ok(row);
+ report.originalRevision=String(row.revision);report.originalStoredHash=row.stored_hash;const originalHash=canonicalSha256(row.state);
+ const action=careerFlowScreen(row.state).commands.find(command=>command.id==='adv-season');assert.ok(action);
+ let applied=applyEngineCommand(row.state,{commandId:'storage-poc',expectedRevision:row.revision,type:action.type,payload:action.payload});
+ assert.equal(canonicalSha256(row.state),originalHash);
+ report.resultPhase=applied.phase;report.resultStateHash=canonicalSha256(applied.nextState);let encoded=JSON.stringify(applied.nextState);
+ report.payloadBytes=Buffer.byteLength(encoded);report.payloadCharacters=encoded.length;report.newGames=Object.keys(applied.nextState.career.records.games).length-Object.keys(row.state.career.records.games).length;
+ await client.query('create temp table mono_test(state jsonb)');
+ try{await client.query('insert into mono_test values($1::jsonb)',[encoded]);report.monolithic='PASS';}
+ catch(error){report.monolithic='FAILED';report.monolithicError={code:error.code,message:error.message};}
+ assert.equal(report.monolithic,'FAILED');assert.match(report.monolithicError.message,/jsonb object elements exceeds/);
+ await client.query('create temp table chunk_test(part integer primary key, payload text not null, sha text not null)');
+ await client.query('create temp table chunk_manifest(id integer primary key, parts integer not null, sha text not null)');
+ await client.query('begin');await client.query("insert into chunk_test values(0,'rollback-control','control')");
+ await client.query('rollback');assert.equal(Number((await client.query('select count(*) as n from chunk_test')).rows[0].n),0);
+ const contentHash=sha(encoded);let parts=0;
+ await client.query('begin');
+ for(let start=0;start<encoded.length;){let end=Math.min(start+1024*1024,encoded.length);if(end<encoded.length&&encoded.charCodeAt(end-1)>=0xD800&&encoded.charCodeAt(end-1)<=0xDBFF&&encoded.charCodeAt(end)>=0xDC00&&encoded.charCodeAt(end)<=0xDFFF)end--;const chunk=encoded.slice(start,end);await client.query('insert into chunk_test values($1,$2,$3)',[parts++,chunk,sha(chunk)]);start=end;}
+ await client.query('insert into chunk_manifest values(1,$1,$2)',[parts,contentHash]);await client.query('commit');
+ report.parts=parts;report.chunkCharactersLimit=1024*1024;encoded=null;applied=null;row.state=null;globalThis.gc?.();
+ const chunks=(await client.query('select part,payload,sha from chunk_test order by part')).rows;assert.equal(chunks.length,parts);for(const [index,chunk] of chunks.entries()){assert.equal(chunk.part,index);assert.equal(sha(chunk.payload),chunk.sha);}
+ const restoredText=chunks.map(chunk=>chunk.payload).join('');assert.equal(sha(restoredText),contentHash);const restored=JSON.parse(restoredText);assert.equal(canonicalSha256(restored),report.resultStateHash);
+ const current=(await client.query("select revision,md5(state::text) as stored_hash from game_saves where id='profile-us'")).rows[0];assert.equal(String(current.revision),report.originalRevision);assert.equal(current.stored_hash,report.originalStoredHash);
+ report.originalSavePreserved=true;report.roundTripHashMatches=true;report.rollbackPreserved=true;report.status='PASS';
+ report.limitations=['Prototype reassembles one JSON string; total size above the V8 string limit needs a streaming or structural codec.','No production migration, API integration, request replay or long-term memory bound has been implemented.'];
+}catch(error){report.status='FAILED';report.error={name:error.name,message:error.message};process.exitCode=1;}
+finally{await client.end();fs.writeFileSync(output,JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));}

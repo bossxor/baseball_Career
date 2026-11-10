@@ -1,11 +1,11 @@
-// HTTP/PGlite measurement only. Fixtures precede the measured season; no game is skipped within it.
+// HTTP measurement with PGlite or isolated local PostgreSQL. Fixtures precede the measured season; no game is skipped within it.
 import assert from 'node:assert/strict';
 import {Session} from 'node:inspector';
 import {channel} from 'node:diagnostics_channel';
 import {performance} from 'node:perf_hooks';
 import {writeFileSync} from 'node:fs';
-import {createTestDb,seedAllowedSubject,seedSave,gameSaves} from '@playball/db';
-import {eq} from 'drizzle-orm';
+import {createTestDb,createDbFromUrl,M3_CORE_SQL,seedAllowedSubject,seedSave,gameSaves} from '@playball/db';
+import {readOwnedSave} from '../apps/api/src/save-state.ts';
 import {canonicalSha256} from '../packages/engine/src/canonical-seal.ts';
 import {createApp} from '../apps/api/src/app.ts';
 import {createNativeHs} from './m2-native-paths.mjs';
@@ -34,15 +34,30 @@ const league=process.argv[2], output=process.argv[3];
 assert.ok(['school','college','kbo','us'].includes(league)&&output,'usage: node --import tsx scripts/profile-career-api.mjs school|college|kbo|us output.json');
 const source=({school:createNativeHs,college:enrolledCollegeCareer,kbo:enteredKboCareer,us:preparedUsOptionCareer})[league]();
 const initialHash=canonicalSha256(source),subject='profile-'+league,saveId='profile-'+league;
-const {db,client}=await createTestDb();
-await seedAllowedSubject(db,subject);
-await seedSave(db,{id:saveId,ownerId:subject,state:{schemaVersion:1,career:source}});
+const backend=process.argv.includes('--postgres')?'postgres':'pglite';
+let db,client,databaseVersion;
+if(backend==='postgres'){
+ let url;
+ try{url=new URL(process.env.PLAYBALL_PROFILE_DATABASE_URL);}catch{throw new Error('Invalid profile database URL');}
+ assert.ok(['postgres:','postgresql:'].includes(url.protocol)&&['localhost','127.0.0.1','[::1]'].includes(url.hostname)&&/^\/playball_profile_[^/]+$/.test(url.pathname)&&!url.search,'Profile database must be local and named playball_profile_*');
+ const connection=createDbFromUrl(url.toString());db=connection.db;client={close:()=>connection.pool.end()};
+ try{await connection.pool.query(M3_CORE_SQL);databaseVersion=(await connection.pool.query('SHOW server_version')).rows[0].server_version;}
+ catch{await client.close();throw new Error('Profile database initialization failed');}
+}else{
+ ({db,client}=await createTestDb());
+ try{databaseVersion=(await client.query('SHOW server_version')).rows[0].server_version;}
+ catch(error){await client.close();throw error;}
+}
+try{
+ await seedAllowedSubject(db,subject);
+ await seedSave(db,{id:saveId,ownerId:subject,state:{schemaVersion:1,career:source}});
+}catch{await client.close();throw new Error('Profile database seeding failed');}
 const app=createApp({db,auth:{allowDevBearer:true}}),headers={Authorization:'Bearer dev:'+subject,'Content-Type':'application/json'};
 const request=(path,options={})=>app.request(path,{...options,headers});
-const state=async()=>((await db.select({state:gameSaves.state,revision:gameSaves.revision}).from(gameSaves).where(eq(gameSaves.id,saveId)))[0]);
+const state=()=>readOwnedSave(db,subject,saveId);
 const session=cpuEnabled?new Session():null;session?.connect();
 const inspector=(method,params={})=>new Promise((resolve,reject)=>session.post(method,params,(err,result)=>err?reject(err):resolve(result)));
-let result={league,fixture:'controlled pre-season fixture',initialHash,status:'running',commands:[],node:process.version,platform:process.platform,arch:process.arch,method:cpuEnabled?'V8 CPU samples collected during HTTP commands and intervening reads; percentages are CPU sample shares, not wall time':'CPU profiling disabled',memoryMode};
+let result={backend,databaseVersion,league,fixture:'controlled pre-season fixture',initialHash,status:'running',commands:[],node:process.version,platform:process.platform,arch:process.arch,method:cpuEnabled?'V8 CPU samples collected during HTTP commands and intervening reads; percentages are CPU sample shares, not wall time':'CPU profiling disabled',memoryMode};
 let current=source,revision=0,profile;
 const start=performance.now();
 try{
@@ -69,12 +84,14 @@ try{
   const row=await state();current=row.state.career;revision=Number(row.revision);
   console.log(JSON.stringify({league,command:n,type:body.type,stop:data.summary?.spanStop??data.summary?.stopReason??null,phase:current.phaseContext.phase,nextWorldDay:current.phaseContext.nextWorldDay??null,games:Object.keys(current.records.games).length,elapsedSeconds:Math.round((performance.now()-start)/1000)}));
  }
-}catch(error){result.status='error';result.error=String(error.stack??error);}
+}catch(error){result.status='error';result.error=backend==='postgres'?'Profile operation failed':String(error.stack??error);}
 finally{
+ try{
  if(cpuEnabled){try{profile=(await inspector('Profiler.stop')).profile;}catch(error){result.profileError=String(error);}session.disconnect();}
  result.wallMs=performance.now()-start;result.finalHash=canonicalSha256(current);result.initialHashUnchanged=canonicalSha256(source)===initialHash;
  result.finalPhase=current.phaseContext.phase;result.finalGames=Object.values(current.records.games).filter(g=>g.scope.seasonKey===current.world.seasonKey&&g.scope.phase==='REGULAR').length;
  if(profile){const nodes=new Map(profile.nodes.map(n=>[n.id,n])),totals=new Map();for(let i=0;i<profile.samples.length;i++){const frame=nodes.get(profile.samples[i])?.callFrame;if(!frame)continue;const key=(frame.functionName||'(anonymous)')+' '+frame.url;totals.set(key,(totals.get(key)??0)+(profile.timeDeltas[i]??0));}result.cpuSamples=profile.samples.length;result.topSelfCpu=Array.from(totals,([frame,microseconds])=>({frame,microseconds})).sort((a,b)=>b.microseconds-a.microseconds).slice(0,40);result.cpuProfile=profile;}
- writeFileSync(output,JSON.stringify(result,null,2));await client.close();console.log(JSON.stringify({league,status:result.status,wallMs:result.wallMs,finalGames:result.finalGames,commands:result.commands.length,output}));
+ writeFileSync(output,JSON.stringify(result,null,2));console.log(JSON.stringify({league,status:result.status,wallMs:result.wallMs,finalGames:result.finalGames,commands:result.commands.length,output}));
+ }finally{await client.close();}
 }
 if(result.status!=='season_review'||!result.initialHashUnchanged)process.exitCode=1;

@@ -1,3 +1,4 @@
+import { storedSave } from './stored-save.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { eq } from 'drizzle-orm';
@@ -36,7 +37,7 @@ test('school season review → route: owned commands reject forged/stale input; 
     assert.equal((await post('bad-version', 'CAREER_SCHOOL_OPEN_ROUTE', { ...second.commands[0]!.payload, eventVersion: 'x' }, Number(receipt.revision))).status, 400);
     const open = await post('open', 'CAREER_SCHOOL_OPEN_ROUTE', second.commands[0]!.payload, Number(receipt.revision));
     assert.equal(open.status, 200, await open.clone().text());
-    const [row] = await db.select({ state: gameSaves.state }).from(gameSaves).where(eq(gameSaves.id, saveId));
+    const [row] = await storedSave(db, saveId);
     assert.equal(((row!.state as { career: HighSchoolCareer }).career).phaseContext.phase, 'CAREER_ROUTE');
     assert.deepEqual((await screen()).commands.map(c => c.type).filter(t => !t.startsWith('CAREER_COLLEGE_')), ['CAREER_KBO_ENTRY_PREPARE']);
     assert.equal((await app.request('/api/saves/' + saveId + '/screens/CAREER_FLOW', { headers: { ...headers, Authorization: 'Bearer dev:nobody' } })).status === 200, false);

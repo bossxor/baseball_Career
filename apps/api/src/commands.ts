@@ -1,6 +1,6 @@
 import { and, eq, sql } from 'drizzle-orm';
 import type { Context } from 'hono';
-import { commandReceipts, gameSaves } from '@playball/db';
+import { commandReceipts, gameSaves, readSaveState, writeSaveState } from '@playball/db';
 import type { AppVariables } from './auth.js';
 import { requestHash } from './canonical-json.js';
 import { applyEngineCommand, type CommandBody, type SaveState } from './engine-command.js';
@@ -72,7 +72,7 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
     const response = await db.transaction(async tx => {
       diagnostic('lock-start');
       const locked = await tx.execute(
-        sql`SELECT id, owner_id, mode, revision, state, deleted_at FROM game_saves WHERE id = ${saveId} FOR UPDATE`,
+        sql`SELECT id, owner_id, mode, revision, state, state_format, deleted_at FROM game_saves WHERE id = ${saveId} FOR UPDATE`,
       );
       diagnostic('lock-return');
       const row = firstRow(locked);
@@ -95,10 +95,11 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
       }
 
       let applied;
+      const state = await readSaveState(tx, saveId, currentRevision, row.state, String(row.state_format));
       try {
         if((body.type.startsWith('CAREER_SCHOOL_')||body.type.startsWith('CAREER_COLLEGE_')||body.type.startsWith('CAREER_KBO_PLAY_'))&&row.mode!=='CAREER')return errorBody(c,'CAREER_SAVE_REQUIRED',400);
         diagnostic('engine-start');
-        applied = applyEngineCommand((row.state as SaveState) ?? {}, body);
+        applied = applyEngineCommand((state as SaveState) ?? {}, body);
         diagnostic('engine-return');
       } catch (err) {
         diagnostic('engine-error');
@@ -120,12 +121,13 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
       };
 
       diagnostic('update-start');
+      const storedState = await writeSaveState(tx, saveId, nextRevision, applied.nextState);
       await tx
         .update(gameSaves)
         .set({
           revision: nextRevision,
           phase: applied.phase,
-          state: applied.nextState,
+          ...storedState,
           summary: applied.summary,
           updatedAt: new Date(),
         })

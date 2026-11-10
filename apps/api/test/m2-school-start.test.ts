@@ -1,7 +1,7 @@
+import { storedSave } from './stored-save.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {eq} from 'drizzle-orm';
-import {createTestDb,seedAllowedSubject,gameSaves} from '@playball/db';
+import {createTestDb,seedAllowedSubject} from '@playball/db';
 import {createApp} from '../src/app.js';
 import {json} from './json.js';
 import type {HighSchoolCareer} from '@playball/engine';
@@ -16,7 +16,7 @@ for(const kind of ['HITTER','PITCHER'] as const)test(kind+' native school starts
   const payload={name:'시작선수',kind,position:kind==='HITTER'?'CF':'SP',throws:'R',bats:'R',pitchForm:kind==='HITTER'?null:'OVERHAND',archetype:'BALANCED',focus:abilityKeys(kind).slice(0,4),difficulty:'GROWTH',schoolId:'H01',seasonYear:2029,...(kind==='PITCHER'?{secondaryPitch:'P03'}:{})};
   const post=(id:string,type:string,p:Record<string,unknown>={},save=saveId,rev=revision,auth=headers)=>app.request('/api/saves/'+save+'/commands',{method:'POST',headers:auth,body:JSON.stringify({commandId:id,expectedRevision:rev,type:'CAREER_SCHOOL_'+type,payload:type==='CREATE'?p:{careerRevision,...p}})});
   const send=async(id:string,type:string,p:Record<string,unknown>={})=>{const result=await post(id,type,p);assert.equal(result.status,200,await result.clone().text());const out=await json<{revision:string;summary:{careerRevision:number;stopReason?:string}}>(result);revision=Number(out.revision);careerRevision=out.summary.careerRevision;return out;};
-  const stored=async()=>{const [row]=await db.select({state:gameSaves.state}).from(gameSaves).where(eq(gameSaves.id,saveId));return (row!.state as {career:HighSchoolCareer}).career;};
+  const stored=async()=>{const [row]=await storedSave(db, saveId);return (row!.state as {career:HighSchoolCareer}).career;};
   const screen=async()=>{const result=await app.request(path+'/screens/SCHOOL_CAREER',{headers});assert.equal(result.status,200,await result.clone().text());const view=await json<{careerRevision:number;phase:string;event:null|{eventKey:string;eventVersion:number;definitionId:string};player:{name:string;overall:string};teamGames:number}>(result);assert.doesNotMatch(JSON.stringify(view),/"seed"|"rng"|"potential"|sourceBasis|"players"|"contracts"/);return view;};
   const {saveId:club}=await create('school-club-'+kind,'CLUB');assert.equal((await post('wrong-mode','CREATE',payload,club,0)).status,400);
   assert.equal((await post('inject','CREATE',{...payload,seed:'injected'})).status,400);assert.equal((await post('bad-focus','CREATE',{...payload,focus:[]})).status,400);assert.equal((await post('foreign','CREATE',payload,saveId,0,{Authorization:'Bearer dev:school-foreign','Content-Type':'application/json'})).status,404);assert.equal(await stored(),undefined);

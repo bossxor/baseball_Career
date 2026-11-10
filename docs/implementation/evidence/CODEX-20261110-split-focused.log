@@ -1,0 +1,17 @@
+✔ V02 reject missing auth and non-allowlisted subject (1007.6919ms)
+✔ V03 unique receipt, idempotent replay, rollback on bad payload (642.2197ms)
+✔ F08 two devices same expectedRevision — one wins, other 409 (679.3889ms)
+✔ M7 chronicle JSON export: idempotent, no secrets, not a restore file, foreign 403 (1032.7841ms)
+✔ M7 V04: backup create idempotent, hash download, other owner 403 (1069.8023ms)
+✔ M7 restore: preview + activate new save; source backup intact; foreign 403 (1056.6885ms)
+✔ bounded codec preserves JSON values, large Unicode strings and special keys without prototype changes (14.163ms)
+✔ split storage rolls back row/parts/receipt together and rejects missing or damaged parts (1398.191ms)
+✔ HTTP commands preserve split state through replay, conflict, backup and owner-only restore (1701.4167ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16127.3208

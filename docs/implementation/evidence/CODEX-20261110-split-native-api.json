@@ -1,0 +1,25 @@
+{
+  "scope": "actual next native API command from preserved failure-boundary save; not a full season",
+  "status": "PASS",
+  "id": "split-api-proof-1794270425156",
+  "original": {
+    "revision": "28",
+    "hash": "5b64c148089b1cd3d8985ea2491f60b4"
+  },
+  "initialRecordHash": "05fbeebe33a05c1afd60f4e6df68570f9451c87eb53509513c9bec8eb399ae50",
+  "initialGames": 3442,
+  "httpStatus": 200,
+  "replay": true,
+  "staleStatus": 409,
+  "originalGameRecordsPreserved": true,
+  "finalStateHash": "21169515b9aefa0443541f4ebb69c540f318c5f67756d68d5fced23a0e38b62f",
+  "finalGames": 3542,
+  "newGames": 100,
+  "parts": {
+    "parts": 235,
+    "bytes": "245611715",
+    "max_bytes": 1048576
+  },
+  "originalPreserved": true,
+  "wallMs": 66293.23700000001
+}

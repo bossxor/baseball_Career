@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { and, count, eq, isNull } from 'drizzle-orm';
 import type { Context } from 'hono';
-import { gameSaves, profiles } from '@playball/db';
+import { gameSaves, profiles, writeSaveState } from '@playball/db';
 import type { AppVariables } from './auth.js';
 
 /** 70: one owner keeps at most this many active saves (creation and restore share the cap). */
@@ -77,21 +77,25 @@ export async function postGameCreation(c: Context<{ Variables: AppVariables }>) 
   if ((await activeSaveCount(c)) >= ACTIVE_SAVE_CAP) return errorBody(c, 'SAVE_SLOT_REQUIRED', 422);
 
   await db.insert(profiles).values({ id: subject, displayName: subject }).onConflictDoNothing();
-  await db.insert(gameSaves).values({
-    id: saveId,
-    ownerId: subject,
-    mode,
-    revision: 0n,
-    phase: 'BOOT',
-    summary: { creationId: body.creationId },
-    state: {
-      schemaVersion: 1,
-      stampCount: 0,
-      creationId: body.creationId,
-      createdWith: 'M3_SHELL',
-      nonce: randomUUID(),
-    },
-  }).onConflictDoNothing();
+  await db.transaction(async tx => {
+    const state = {
+      schemaVersion: 1, stampCount: 0, creationId: body.creationId,
+      createdWith: 'M3_SHELL', nonce: randomUUID(),
+    };
+    const [inserted] = await tx.insert(gameSaves).values({
+      id: saveId,
+      ownerId: subject,
+      mode,
+      revision: 0n,
+      phase: 'BOOT',
+      summary: { creationId: body.creationId },
+      state: {},
+    }).onConflictDoNothing().returning();
+    if (inserted) {
+      const stored = await writeSaveState(tx, saveId, 0n, state);
+      await tx.update(gameSaves).set(stored).where(eq(gameSaves.id, saveId));
+    }
+    });
 
   // A concurrent identical request may have inserted first: both callers read the one row.
   const saved = await find();

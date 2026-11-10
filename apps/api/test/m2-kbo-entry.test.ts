@@ -1,3 +1,4 @@
+import { storedSave } from './stored-save.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {eq} from 'drizzle-orm';
@@ -16,7 +17,7 @@ const hash=(value:unknown)=>createHash('sha256').update(canonicalJson(value)).di
 for(const kind of ['HITTER','PITCHER'] as const)test(kind+' owned KBO entry HTTP signs and activates exactly one real registration after explicit amateur closure',async()=>{
  const c=completedHighSchoolCareer(800_000,kind),review=acknowledgeHighSchoolSeasonReview(c,c.revision),source=openHighSchoolCareerRoute(review,review.revision,1).career,{db,client}=await createTestDb();try{
   const subject='kbo-entry-'+kind,headers={Authorization:'Bearer dev:'+subject,'Content-Type':'application/json'},foreign={Authorization:'Bearer dev:kbo-entry-foreign','Content-Type':'application/json'};await seedAllowedSubject(db,subject);await seedAllowedSubject(db,'kbo-entry-foreign');const app=createApp({db,auth:{allowDevBearer:true}}),created=await json<{saveId:string}>(await app.request('/api/game-creations',{method:'POST',headers,body:JSON.stringify({creationId:'native-kbo-'+kind,mode:'CAREER'})}));await db.update(gameSaves).set({state:{schemaVersion:1,career:source}}).where(eq(gameSaves.id,created.saveId));const path='/api/saves/'+created.saveId;
-  const stored=async()=>{const[row]=await db.select({state:gameSaves.state}).from(gameSaves).where(eq(gameSaves.id,created.saveId));return (row!.state as {career:HighSchoolCareer|KboCareer}).career;};
+  const stored=async()=>{const[row]=await storedSave(db, created.saveId);return (row!.state as {career:HighSchoolCareer|KboCareer}).career;};
   let saveRevision=0,careerRevision=source.revision,sequence=0;const commands:{type:string;payload:Record<string,unknown>;beforeSha256:string;afterSha256:string}[]=[];
   const post=(id:string,type:string,payload:Record<string,unknown>={},revision=saveRevision,auth=headers)=>app.request(path+'/commands',{method:'POST',headers:auth,body:JSON.stringify({commandId:id,expectedRevision:revision,type:'CAREER_KBO_ENTRY_'+type,payload:{careerRevision,...payload}})});
   const send=async(type:string,payload:Record<string,unknown>={})=>{const before=await stored(),result=await post('entry-'+sequence++,type,payload);assert.equal(result.status,200,await result.clone().text());const receipt=await json<{revision:string;summary:{careerRevision:number}}>(result);saveRevision=Number(receipt.revision);careerRevision=receipt.summary.careerRevision;const after=await stored();commands.push({type,payload,beforeSha256:hash(before),afterSha256:hash(after)});return receipt;};

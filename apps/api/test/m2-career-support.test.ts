@@ -1,3 +1,4 @@
+import { storedSave } from './stored-save.js';
 import {eq} from 'drizzle-orm';
 import {createTestDb,seedAllowedSubject,gameSaves} from '@playball/db';
 import {createApp} from '../src/app.js';
@@ -91,7 +92,7 @@ test('goal selection and agent hiring persist through real HTTP with owner isola
   const selected=await post('CAREER_GOALS_RESOLVE',payload,'goals',0);assert.equal(selected.status,200);const receipt=await json(selected);assert.deepEqual(await json(await post('CAREER_GOALS_RESOLVE',payload,'goals',0)),receipt);assert.equal((await post('CAREER_GOALS_RESOLVE',payload,'conflict',0)).status,409);
   const agentBefore=await json<AgentView>(await get('CAREER_AGENT'));assert.equal((await post('CAREER_AGENT_OPEN',{careerRevision:agentBefore.careerRevision},'open-agent',1)).status,200);
   const agent=await json<AgentView>(await get('CAREER_AGENT')),hire=agent.notices.find(e=>e.definitionId==='E91')!,hired=await post('CAREER_AGENT_RESOLVE',{careerRevision:agent.careerRevision,eventKey:hire.eventKey,eventVersion:hire.eventVersion,command:'HIRE_AGENT',agentId:'AG01'},'hire',2);assert.equal(hired.status,200);
-  const [row]=await db.select({state:gameSaves.state}).from(gameSaves).where(eq(gameSaves.id,created.saveId)),next=(row!.state as {career:KboCareer}).career;assert.equal(next.agents!.contracts[0]!.agentId,'AG01');assert.deepEqual(next.goals!.seasons[next.world.seasonKey]!.slots.map(s=>s.goalId),view.recommendedIds);assert.deepEqual(next.world,source.world);
+  const [row]=await storedSave(db, created.saveId),next=(row!.state as {career:KboCareer}).career;assert.equal(next.agents!.contracts[0]!.agentId,'AG01');assert.deepEqual(next.goals!.seasons[next.world.seasonKey]!.slots.map(s=>s.goalId),view.recommendedIds);assert.deepEqual(next.world,source.world);
   const publicAgent=await get('CAREER_AGENT');assert.equal(publicAgent.status,200);assert.doesNotMatch(await publicAgent.text(),/sourceBasis|availableBudgetUsd|candidateScore|comparisonScore|negotiationRng/);
   assert.equal((await app.request(path+'/screens/CAREER_GOALS',{headers:{Authorization:'Bearer dev:support-foreign'}})).status,404);assert.equal((await app.request(path+'/screens/CAREER_AGENT',{headers:{Authorization:'Bearer dev:support-foreign'}})).status,404);
  }finally{await client.close();}

@@ -1,0 +1,22 @@
+✔ HITTER owned KBO entry HTTP signs and activates exactly one real registration after explicit amateur closure (8609.9988ms)
+✔ PITCHER owned KBO entry HTTP signs and activates exactly one real registration after explicit amateur closure (7219.3862ms)
+✔ school season review → route: owned commands reject forged/stale input; flow screen is public-only (2704.7288ms)
+✔ HITTER native school starts through owned HTTP without a database fixture (2745.548ms)
+✔ PITCHER native school starts through owned HTTP without a database fixture (1740.7044ms)
+✔ V02 reject missing auth and non-allowlisted subject (1672.7783ms)
+✔ V03 unique receipt, idempotent replay, rollback on bad payload (1071.9343ms)
+✔ F08 two devices same expectedRevision — one wins, other 409 (1259.292ms)
+✔ M7 chronicle JSON export: idempotent, no secrets, not a restore file, foreign 403 (1834.7889ms)
+✔ M7 V04: backup create idempotent, hash download, other owner 403 (1562.9489ms)
+✔ M7 restore: preview + activate new save; source backup intact; foreign 403 (1506.0575ms)
+✔ bounded codec preserves JSON values, large Unicode strings and special keys without prototype changes (21.9112ms)
+✔ split storage rolls back row/parts/receipt together and rejects missing or damaged parts (2053.9268ms)
+✔ HTTP commands preserve split state through replay, conflict, backup and owner-only restore (2076.9913ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 56866.8202

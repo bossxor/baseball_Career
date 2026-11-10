@@ -2,9 +2,8 @@ import {kboRecruitmentScreen} from './career-kbo-entry-shell.js';
 import {schoolCareerScreen,schoolCareerHome} from './career-school-shell.js';
 import {usCareerHome} from './career-us-flow.js';
 import {careerFlowScreen,kboCareerHome,collegeCareerHome} from './career-flow-screen.js';
-import { eq } from 'drizzle-orm';
+import { readOwnedSave } from './save-state.js';
 import type { Context } from 'hono';
-import { gameSaves } from '@playball/db';
 import type { AppVariables } from './auth.js';
 import { CLUB_SCREEN_IDS } from '@playball/engine';
 import { clubScreenOf } from './club-shell.js';
@@ -41,17 +40,7 @@ export async function getCareer(c: Context<{ Variables: AppVariables }>) {
   const id = c.req.param('id');
   if (!id) return errorBody(c, 'INVALID_REQUEST', 400);
 
-  const [row] = await db
-    .select({
-      id: gameSaves.id,
-      ownerId: gameSaves.ownerId,
-      deletedAt: gameSaves.deletedAt,
-      revision: gameSaves.revision,
-      state: gameSaves.state,
-    })
-    .from(gameSaves)
-    .where(eq(gameSaves.id, id))
-    .limit(1);
+  const row = await readOwnedSave(db, subject, id);
 
   if (!row || row.deletedAt || row.ownerId !== subject) return errorBody(c, 'SAVE_NOT_FOUND', 404);
   try {
@@ -70,16 +59,7 @@ export async function getScreen(c: Context<{ Variables: AppVariables }>) {
   const screenId = c.req.param('screenId');
   if (!id || !screenId) return errorBody(c, 'INVALID_REQUEST', 400);
 
-  const [row] = await db
-    .select({
-      id: gameSaves.id,
-      ownerId: gameSaves.ownerId,
-      deletedAt: gameSaves.deletedAt,
-      state: gameSaves.state,
-    })
-    .from(gameSaves)
-    .where(eq(gameSaves.id, id))
-    .limit(1);
+  const row = await readOwnedSave(db, subject, id);
 
   if (!row || row.deletedAt || row.ownerId !== subject) return errorBody(c, 'SAVE_NOT_FOUND', 404);
   const state = (row.state as UiShellState) ?? { schemaVersion: 1 };

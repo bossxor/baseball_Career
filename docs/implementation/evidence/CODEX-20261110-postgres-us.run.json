@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "status": "FAILED",
+  "pid": 30496,
+  "startedAt": "2026-11-09T23:35:47.9859314Z",
+  "endedAt": "2026-11-09T23:57:29.1456053Z",
+  "commit": "c4d9f50f34c54e23b61bc3384c64b649aacacf19",
+  "backend": "postgres",
+  "database": "isolated localhost PostgreSQL17.5",
+  "nodeCommand": "node --max-old-space-size=4096 --import tsx scripts/profile-career-api.mjs us <base>.json --postgres --memory --no-cpu",
+  "sourceSha256": "a9416c3c763033027fa2f302244a324a5823c9033533e7e2db19194a1c92d114",
+  "sourceUnchanged": true,
+  "nodeExitCode": 1,
+  "exitCode": 1,
+  "error": null
+}

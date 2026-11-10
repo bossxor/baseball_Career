@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "sourceUnchanged": true,
+  "sourceSha256": "358c3ad964d565b073be5725dc00b0c743fdd4adcec26160d79611136ad0b21d",
+  "exitCode": 0,
+  "scope": "actual next native command; not full season",
+  "sourceCapturedBeforeFinalRun": true
+}

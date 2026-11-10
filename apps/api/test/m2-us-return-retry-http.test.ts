@@ -1,3 +1,4 @@
+import { storedSave } from './stored-save.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {randomUUID} from 'node:crypto';
@@ -25,7 +26,7 @@ async function owned(source:unknown,run:(h:{app:ReturnType<typeof createApp>;id:
   await db.insert(authAllowedSubjects).values([{subject,status:'ACTIVE'},{subject:other,status:'ACTIVE'}]);const app=createApp({db,auth:{allowDevBearer:true}});
   const created=await json<{saveId:string}>(await app.request('/api/game-creations',{method:'POST',headers,body:JSON.stringify({creationId:'returned-retry-http',mode:'CAREER'})}));
   await db.update(gameSaves).set({state:{schemaVersion:1,career:source}}).where(eq(gameSaves.id,created.saveId));
-  await run({app,id:created.saveId,headers,foreignHeaders:{Authorization:'Bearer dev:'+other},post:async(id,name,payload,revision=0)=>app.request('/api/saves/'+created.saveId+'/commands',{method:'POST',headers,body:JSON.stringify({commandId:id,expectedRevision:revision,type:'CAREER_RETRY_US_RETURN_'+name,payload})}),screen:async name=>app.request('/api/saves/'+created.saveId+'/screens/'+name,{headers}),stored:async()=>{const [row]=await db.select({state:gameSaves.state}).from(gameSaves).where(eq(gameSaves.id,created.saveId));return (row!.state as {career:unknown}).career;}});
+  await run({app,id:created.saveId,headers,foreignHeaders:{Authorization:'Bearer dev:'+other},post:async(id,name,payload,revision=0)=>app.request('/api/saves/'+created.saveId+'/commands',{method:'POST',headers,body:JSON.stringify({commandId:id,expectedRevision:revision,type:'CAREER_RETRY_US_RETURN_'+name,payload})}),screen:async name=>app.request('/api/saves/'+created.saveId+'/screens/'+name,{headers}),stored:async()=>{const [row]=await storedSave(db, created.saveId);return (row!.state as {career:unknown}).career;}});
  }finally{
   try{await db.delete(gameSaves).where(eq(gameSaves.ownerId,subject));for(const id of [subject,other]){await db.delete(authAllowedSubjects).where(eq(authAllowedSubjects.subject,id));await db.delete(profiles).where(eq(profiles.id,id));}}
   finally{await pool.end();}

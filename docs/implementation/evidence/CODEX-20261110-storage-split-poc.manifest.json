@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "sourcePath": ".local-verification/storage-split-poc.mjs",
+  "sourceSha256": "C81302F2DE67F7E502D71F38EA944F76792B7154794B1FC4A96D970E330C95BD",
+  "archivedSource": "CODEX-20261110-storage-split-poc.source.txt",
+  "resultSha256": "6408C713DDE4B08B50A771DE712B2F3FBD84066096E51CBABCC56046EB779A0B",
+  "scope": "temporary local database; archived source was executed from repository root; not product storage"
+}

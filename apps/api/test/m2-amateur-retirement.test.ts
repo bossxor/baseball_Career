@@ -1,3 +1,4 @@
+import { storedSave } from './stored-save.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {eq} from 'drizzle-orm';
@@ -23,6 +24,6 @@ test('amateur E36 requests, cancels, archives and opens S10 through owned save c
   const cancelled=await send('CAREER_RETRY_AMATEUR_RESOLVE_RETIRE',{eventKey:v.eventKey,eventVersion:v.eventVersion,decision:'CANCEL_RETIRE'});assert.equal(cancelled.summary.phase,'CAREER_ROUTE');
   await send('CAREER_RETRY_AMATEUR_REQUEST_RETIRE',{});v=await screen();await send('CAREER_RETRY_AMATEUR_RESOLVE_RETIRE',{eventKey:v.eventKey,eventVersion:v.eventVersion,decision:'CONFIRM_RETIRE'});v=await screen();assert.equal(v.status,'ARCHIVED');assert.equal(v.militaryStatus,'UNRESOLVED');assert.deepEqual(v.professionalAppearances,{PA:0,outs:0});
   const opened=await send('CAREER_RETRY_AMATEUR_OPEN_ARCHIVE',{eventKey:v.eventKey,eventVersion:v.eventVersion});assert.equal(opened.summary.navigation!.targetScreen,'S10');
-  const [stored]=await db.select({state:gameSaves.state}).from(gameSaves).where(eq(gameSaves.id,created.saveId));const career=(stored!.state as {career:typeof source}).career;assert.equal(canonicalJson(career.records),canonicalJson(source.records));assert.equal(career.phaseContext.phase,'ARCHIVED');
+  const [stored]=await storedSave(db, created.saveId);const career=(stored!.state as {career:typeof source}).career;assert.equal(canonicalJson(career.records),canonicalJson(source.records));assert.equal(career.phaseContext.phase,'ARCHIVED');
  }finally{await client.close();}
 });

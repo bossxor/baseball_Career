@@ -41,12 +41,21 @@ export const gameSaves = pgTable(
     phase: text('phase').notNull().default('BOOT'),
     summary: jsonb('summary').notNull().default({}),
     state: jsonb('state').notNull().default({}),
+    stateFormat: text('state_format').notNull().default('JSONB'),
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
     deletedAt: timestamp('deleted_at', { withTimezone: true }),
   },
   table => [index('game_saves_owner_updated_idx').on(table.ownerId, table.updatedAt)],
 );
+
+export const gameSaveParts = pgTable('game_save_parts', {
+  saveId: text('save_id').notNull().references(() => gameSaves.id, { onDelete: 'cascade' }),
+  revision: bigint('revision', { mode: 'bigint' }).notNull(),
+  part: integer('part').notNull(),
+  payload: text('payload').notNull(),
+  sha256: text('sha256').notNull(),
+}, table => [primaryKey({ columns: [table.saveId, table.revision, table.part] })]);
 
 export const commandReceipts = pgTable(
   'command_receipts',

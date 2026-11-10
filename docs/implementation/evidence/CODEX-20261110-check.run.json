@@ -1,0 +1,8 @@
+{
+  "status": "FAILED",
+  "startedAt": "2026-11-10T00:28:36.8238408Z",
+  "endedAt": "2026-11-10T00:28:53.7980444Z",
+  "exitCode": 1,
+  "command": "npm run check",
+  "sourceManifest": "CODEX-20261110-check.source.json"
+}

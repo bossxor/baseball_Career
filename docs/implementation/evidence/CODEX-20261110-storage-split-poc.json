@@ -1,0 +1,26 @@
+{
+  "scope": "temporary tables only; actual next native command state; no application storage format change",
+  "status": "PASS",
+  "node": "v24.19.0",
+  "originalRevision": "28",
+  "originalStoredHash": "5b64c148089b1cd3d8985ea2491f60b4",
+  "resultPhase": "SEASON_PROGRESS",
+  "resultStateHash": "f7a6d5408cd47c7901618fa4946ba96dd3b7255a567f110cca3b4d3fae55cf5e",
+  "payloadBytes": 221115560,
+  "payloadCharacters": 221058926,
+  "newGames": 132,
+  "monolithic": "FAILED",
+  "monolithicError": {
+    "code": "54000",
+    "message": "total size of jsonb object elements exceeds the maximum of 268435455 bytes"
+  },
+  "parts": 211,
+  "chunkCharactersLimit": 1048576,
+  "originalSavePreserved": true,
+  "roundTripHashMatches": true,
+  "rollbackPreserved": true,
+  "limitations": [
+    "Prototype reassembles one JSON string; total size above the V8 string limit needs a streaming or structural codec.",
+    "No production migration, API integration, request replay or long-term memory bound has been implemented."
+  ]
+}

@@ -1,3 +1,4 @@
+import { storedSave } from './stored-save.js';
 import {amateurRetryExhaustionView} from '../../../packages/engine/src/career-retry-exhaustion.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -22,7 +23,7 @@ function prefix():HighSchoolCareer {
 test('amateur E35 HTTP opens, reads and confirms one owned archive with CAS/replay and no extra preparation charge',async()=>{
  const c=prefix(),{db,client}=await createTestDb();try{
   const headers={Authorization:'Bearer dev:amateur-e35-owner','Content-Type':'application/json'},foreign={Authorization:'Bearer dev:amateur-e35-foreign','Content-Type':'application/json'};await seedAllowedSubject(db,'amateur-e35-owner');await seedAllowedSubject(db,'amateur-e35-foreign');const app=createApp({db,auth:{allowDevBearer:true}}),created=await json<{saveId:string}>(await app.request('/api/game-creations',{method:'POST',headers,body:JSON.stringify({creationId:'amateur-e35-http',mode:'CLUB'})}));await db.update(gameSaves).set({state:{schemaVersion:1,career:c}}).where(eq(gameSaves.id,created.saveId));const path='/api/saves/'+created.saveId;
-  const stored=async()=>{const[row]=await db.select({state:gameSaves.state}).from(gameSaves).where(eq(gameSaves.id,created.saveId));return (row!.state as {career:HighSchoolCareer}).career;};
+  const stored=async()=>{const[row]=await storedSave(db, created.saveId);return (row!.state as {career:HighSchoolCareer}).career;};
   const post=(id:string,type:string,revision:number,payload:Record<string,unknown>,auth=headers)=>app.request(path+'/commands',{method:'POST',headers:auth,body:JSON.stringify({commandId:id,expectedRevision:revision,type,payload})});
   const opened=await post('open','CAREER_RETRY_AMATEUR_EXHAUST',0,{careerRevision:c.revision});assert.equal(opened.status,200);const openReceipt=await json(opened);assert.deepEqual(await json(await post('open','CAREER_RETRY_AMATEUR_EXHAUST',0,{careerRevision:c.revision})),openReceipt);const pending=await stored();assert.equal(pending.retryExit!.status,'PENDING');
   const screen=await app.request(path+'/screens/AMATEUR_RETIREMENT',{headers});assert.equal(screen.status,200);const view=await json<{status:string;eventKey:string;eventVersion:number;commands:string[];careerPreparationUsed:number}>(screen);assert.equal(view.status,'PENDING');assert.equal(view.careerPreparationUsed,3);assert.deepEqual(view.commands,['CONFIRM_RETIRE']);assert.doesNotMatch(JSON.stringify(view),/sourceBasis|"seed"|"rng"|"potential"|"source"/);

@@ -2,7 +2,8 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { and, desc, eq } from 'drizzle-orm';
 import type { Context } from 'hono';
-import { gameSaves, privateFiles } from '@playball/db';
+import { privateFiles } from '@playball/db';
+import { readOwnedSave } from './save-state.js';
 import type { AppVariables } from './auth.js';
 
 function errorBody(
@@ -45,24 +46,7 @@ function safeFileName(raw: string): string {
 }
 
 async function loadOwnedSave(c: Context<{ Variables: AppVariables }>, saveId: string) {
-  const db = c.get('db');
-  const subject = c.get('subject');
-  const [row] = await db
-    .select({
-      id: gameSaves.id,
-      mode: gameSaves.mode,
-      ownerId: gameSaves.ownerId,
-      deletedAt: gameSaves.deletedAt,
-      revision: gameSaves.revision,
-      phase: gameSaves.phase,
-      state: gameSaves.state,
-      summary: gameSaves.summary,
-    })
-    .from(gameSaves)
-    .where(eq(gameSaves.id, saveId))
-    .limit(1);
-  if (!row || row.deletedAt || row.ownerId !== subject) return null;
-  return row;
+  return readOwnedSave(c.get('db'), c.get('subject'), saveId);
 }
 
 function metaOf(row: typeof privateFiles.$inferSelect) {

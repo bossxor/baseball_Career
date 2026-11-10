@@ -1,3 +1,4 @@
+import { storedSave } from './stored-save.js';
 import {eq} from 'drizzle-orm';
 import {createTestDb,seedAllowedSubject,gameSaves} from '@playball/db';
 import {createApp} from '../src/app.js';
@@ -45,7 +46,7 @@ test('relation HTTP uses actual owned notices, persists read once, retains its n
   assert.equal((await post('inject',{relationships:{}})).status,400);assert.equal((await post('bad-version',{eventVersion:event.eventVersion+1})).status,400);
   const done=await post('read');assert.equal(done.status,200);const receipt=await json<{summary:{navigation:{relationKey:string}}}>(done);assert.equal(receipt.summary.navigation.relationKey,event.relationKey);assert.deepEqual(await json(await post('read')),receipt);assert.equal((await post('conflict')).status,409);
   const detail=await app.request(path+'/screens/CAREER_RELATION_DETAIL?'+new URLSearchParams({relationKey:event.relationKey,leagueKey:'KBO',phase:'REGULAR',seasonKey:c.world.seasonKey}),{headers});assert.equal(detail.status,200);assert.doesNotMatch(await detail.text(),/potential|abilities|"seed"|"rng"/i);
-  const [row]=await db.select({state:gameSaves.state}).from(gameSaves).where(eq(gameSaves.id,created.saveId)),next=(row!.state as {career:KboCareer}).career;assert.equal(canonicalJson(next.world),canonicalJson(c.world));assert.equal(canonicalJson(next.records),canonicalJson(c.records));assert.equal(next.relationNotices.find(e=>e.eventKey===event.eventKey)!.status,'RESOLVED');
+  const [row]=await storedSave(db, created.saveId),next=(row!.state as {career:KboCareer}).career;assert.equal(canonicalJson(next.world),canonicalJson(c.world));assert.equal(canonicalJson(next.records),canonicalJson(c.records));assert.equal(next.relationNotices.find(e=>e.eventKey===event.eventKey)!.status,'RESOLVED');
   assert.equal((await app.request(path+'/screens/CAREER_RELATIONS',{headers:{Authorization:'Bearer dev:relation-foreign'}})).status,404);assert.equal((await app.request(path+'/screens/CAREER_RELATION_DETAIL?'+new URLSearchParams({relationKey:event.relationKey}),{headers:{Authorization:'Bearer dev:relation-foreign'}})).status,404);
  }finally{await client.close();}
 });
