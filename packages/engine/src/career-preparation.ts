@@ -20,6 +20,7 @@ import {assertPreparationSeason,startPreparationSeason,confirmPreparationPreseas
 import type {PreparationSeason,PreparationWorld} from './preparation-season.js';
 import type {TrainingChoice} from './training.js';
 import {refreshCareerRouteNotices} from './career-route-notices.js';
+import {careerUsDirectView} from './career-us.js';
 
 export interface CareerPreparationLedger {version:1;used:number;seasons:readonly {seasonKey:string;receiptKey:string;baseScore:number}[]}
 function active(source:HighSchoolCareer):PreparationSeason {
@@ -49,7 +50,17 @@ function publish(source:HighSchoolCareer,p:PreparationSeason):HighSchoolCareer {
 }
 function authority(source:HighSchoolCareer):RetryRouteAuthority {
  const p=source.world.players[source.world.protagonistKey]!;
- return {worldKey:source.world.worldKey,playerKey:p.simulationKey,seasonKey:source.world.seasonKey,age:p.age,worldDay:source.days.days.at(-1)?.day??0,authorityRevision:source.revision,hasProContractHistory:false,activeContract:false,domesticRightsAvailable:true,domesticDraftEligible:true,mandatoryReturnActive:false,militaryStatus:'UNRESOLVED',collegeAdmissionRefs:[],collegeResumeRef:null,domesticOffers:[],usOffers:[],usScoutScore:0,usRightsEligible:false,retirementAllowed:true};
+ const militaryStatus=source.collegeService?.status==='RESUMED'||source.national?.militaryStatus==='COMPLETED'?'COMPLETED':source.collegeService?.status==='SERVING'?'SERVING':'UNRESOLVED';
+ return {worldKey:source.world.worldKey,playerKey:p.simulationKey,seasonKey:source.world.seasonKey,age:p.age,worldDay:source.days.days.at(-1)?.day??0,authorityRevision:source.revision,hasProContractHistory:false,activeContract:false,domesticRightsAvailable:true,domesticDraftEligible:true,mandatoryReturnActive:false,militaryStatus,collegeAdmissionRefs:[],collegeResumeRef:null,domesticOffers:[],usOffers:[],usScoutScore:0,usRightsEligible:false,retirementAllowed:true};
+}
+/** Read the same age/budget/military rules used by preparation entry; do not duplicate limits in UI. */
+export function careerPreparationRoutes(source:HighSchoolCareer){
+ assertCareerRevision(source,source.revision);
+ const recruitment=source.kboRecruitment;
+ if(source.phaseContext.phase!=='CAREER_ROUTE'||!recruitment?.program.result||recruitment.program.signing||recruitment.program.result.round&&recruitment.program.decision!=='DECLINED')throw new RangeError('UNCONTRACTED_RESULT_REQUIRED');
+ careerKboDraftView(source);
+ const retry=openRetryCareerEpisode(source.retryCareer,source.retryCareer?.revision??0,{worldKey:source.world.worldKey,playerKey:source.world.protagonistKey,receiptKey:recruitment.program.result.receiptKey,reason:source.world.leagueKey==='COLLEGE'?'COLLEGE_UNDRAFTED':'HIGH_SCHOOL_UNDRAFTED',seasonKey:source.world.seasonKey,age:source.world.players[source.world.protagonistKey]!.age});
+ return retryCareerRouteView(retry,authority(source));
 }
 /** Completed independent evidence is the only source for another domestic amateur assessment. */
 export function careerPreparationDraftScore(source:HighSchoolCareer):number {
@@ -60,7 +71,7 @@ export function careerPreparationDraftScore(source:HighSchoolCareer):number {
 /** Reuse existing world identities/abilities. A separate independent population policy is not specified. */
 export function startCareerPreparation(source:HighSchoolCareer,revision:number,eventVersion?:number):HighSchoolCareer {
  assertCareerRevision(source,revision);
- if(source.phaseContext.phase!=='CAREER_ROUTE'||source.kboYearEnd||source.usYearEnd||source.collegeService||source.usRecruitment||source.collegeAdmission&&source.collegeAdmission.status!=='GRADUATED')throw new RangeError('PREPARATION_NOT_ELIGIBLE');
+ if(source.phaseContext.phase!=='CAREER_ROUTE'||source.kboYearEnd||source.usYearEnd||source.collegeService&&source.collegeService.status!=='RESUMED'||source.usRecruitment&&(source.usRecruitment.program.signing||careerUsDirectView(source).visible)||source.collegeAdmission&&source.collegeAdmission.status!=='GRADUATED')throw new RangeError('PREPARATION_NOT_ELIGIBLE');
  if(source.world.leagueKey==='INDEPENDENT')careerPreparationDraftScore(source);else if(source.world.leagueKey==='COLLEGE')collegeGraduationRouteView(source);else highSchoolCareerRouteView(source);
  const recruitment=source.kboRecruitment;
  if(!recruitment)throw new RangeError('DOMESTIC_ASSESSMENT_REQUIRED');
@@ -69,6 +80,7 @@ export function startCareerPreparation(source:HighSchoolCareer,revision:number,e
  if(!source.world.calendar||!source.development||!source.seasonGrowth)throw new RangeError('PREPARATION_SOURCE_INCOMPLETE');
  const key=source.world.protagonistKey,seasonKey=String(Number(source.world.seasonKey)+1),calendar=createSeasonCalendar(Number(seasonKey),source.world.calendar.version);
  let next=structuredClone(source);
+ if(next.usRecruitment){next.previousUsRecruitments=[...(next.previousUsRecruitments??[]),{...next.usRecruitment,closedBy:'PREPARATION'}];delete next.usRecruitment;}
  if(!next.seasonGrowth!.finalized){const aged=finalizeSeasonGrowth(next.world.players[key]!,next.seasonGrowth!,next.world.calendar!.growthDays.length);next.world.players[key]=aged.player;next.seasonGrowth=aged.ledger;next.health=closeSeasonHealth(next.health,next.world.seasonKey).ledger;}
  const receipt=JSON.stringify(['preparation-entry',source.world.worldKey,source.world.seasonKey,key,recruitment.program.result.receiptKey]);
  const open=next.events.filter(e=>e.status==='OPEN');

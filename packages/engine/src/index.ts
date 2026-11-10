@@ -232,7 +232,7 @@ export {startCollegeMilitaryLeave,advanceCollegeMilitaryService,resumeCollegeAft
 export {CAREER_ACHIEVEMENT_DEFINITIONS,refreshCareerAchievements,careerAchievementsView,resolveCareerAchievementEvent} from './career-achievements.js';
 export type {CareerAchievementLedger} from './career-achievements.js';
 
-export {startCareerPreparation,confirmPreparationPreseason,advanceCareerPreparation,settleCareerPreparation,careerPreparationView,trainCareerPreparation,setCareerPreparationPlan,setCareerPreparationRosters,assertCareerPreparation} from './career-preparation.js';
+export {startCareerPreparation,confirmPreparationPreseason,advanceCareerPreparation,settleCareerPreparation,careerPreparationView,careerPreparationRoutes,trainCareerPreparation,setCareerPreparationPlan,setCareerPreparationRosters,assertCareerPreparation} from './career-preparation.js';
 export type {CareerPreparationLedger} from './career-preparation.js';
 
 export {observeProCareerAwardGame,refreshProCareerAwards,proCareerAwardsView,resolveProCareerAwardEvent,calculateProSeasonAwards,positiveCumulativeAwardLeaders,assertProCareerAwards} from './pro-career-awards.js';

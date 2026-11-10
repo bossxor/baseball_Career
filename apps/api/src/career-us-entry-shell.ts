@@ -16,6 +16,11 @@ export function stageAmateurUsEntry(state:SaveState,c:engine.HighSchoolCareer):S
  if(c.previousUsRecruitments?.some(r=>r.program.input.assessmentKey===key))return {...state,career:c};
  const population=roster(c),inventory=engine.initialUsRecruitmentInventory(population,population.organizations.map(o=>({organizationId:o.id,rookieCapacity:o.levels.ROOKIE.length+1,aCapacity:o.levels.A.length+1,availableBudgetUsd:3_000_000,nationalReleaseAllowed:true,militaryReturnOption:true})));
  const next=engine.prepareCareerUsDirect(c,c.revision,inventory);
+ if(!engine.careerUsDirectView(next).visible){
+  const career={...next,previousUsRecruitments:[...(next.previousUsRecruitments??[]),{...next.usRecruitment!,closedBy:'NO_OFFER' as const}]};
+  delete career.usRecruitment;
+  const result:SaveState={...state,career};delete result.usEntry;return result;
+ }
  return {...state,career:next,usEntry:{roster:population,seal:engine.canonicalSeal(population)} satisfies Entry};
 }
 export function amateurUsCommands(c:engine.HighSchoolCareer):FlowCommand[]{
@@ -29,10 +34,10 @@ export function amateurUsCommands(c:engine.HighSchoolCareer):FlowCommand[]{
  const view=engine.careerUsDirectView(c);
  if(!view.visible)return [];
  const graduation=c.graduation?c.events.find(e=>e.eventKey===c.graduation!.eventKey):undefined;
- return view.offers.map(offer=>({...cmd('us-sign-'+offer.offerKey,offer.clubName+' 미국 마이너 계약','SIGN',{programVersion:view.version,offerKey:offer.offerKey,...(graduation?{eventVersion:graduation.version}:{})}),sign:{name:c.world.players[c.world.protagonistKey]!.name},confirm:'이 미국 계약을 수락할까요?',facts:[{label:'시작 리그',value:offer.initialLevel},{label:'연봉',value:'$'+offer.annualSalaryUsd.toLocaleString('en-US')},{label:'계약금',value:'$'+offer.signingBonusUsd.toLocaleString('en-US')}]}));
+ return [...view.offers.map(offer=>({...cmd('us-sign-'+offer.offerKey,offer.clubName+' 미국 마이너 계약','SIGN',{programVersion:view.version,offerKey:offer.offerKey,...(graduation?{eventVersion:graduation.version}:{})}),sign:{name:c.world.players[c.world.protagonistKey]!.name},confirm:'이 미국 계약을 수락할까요?',facts:[{label:'시작 리그',value:offer.initialLevel},{label:'연봉',value:'$'+offer.annualSalaryUsd.toLocaleString('en-US')},{label:'계약금',value:'$'+offer.signingBonusUsd.toLocaleString('en-US')}]})),{...cmd('us-decline','미국 제안 모두 거절','DECLINE',{programVersion:view.version}),confirm:'현재 미국 제안은 다시 수락할 수 없습니다. 거절할까요?'}];
 }
 export function applyUsEntry(state:SaveState,command:CommandBody):AppliedCommand{
- const name=command.type.slice('CAREER_US_ENTRY_'.length),fields:Record<string,readonly string[]>={SIGN:['careerRevision','programVersion','offerKey','eventVersion'],CLOSE_YEAR:['careerRevision','forfeitUnusedTraining'],ACTIVATE:['careerRevision']};
+ const name=command.type.slice('CAREER_US_ENTRY_'.length),fields:Record<string,readonly string[]>={SIGN:['careerRevision','programVersion','offerKey','eventVersion'],DECLINE:['careerRevision','programVersion'],CLOSE_YEAR:['careerRevision','forfeitUnusedTraining'],ACTIVATE:['careerRevision']};
  const raw=command.payload,allowed=fields[name];
  if(!allowed||!raw||typeof raw!=='object'||Array.isArray(raw)||Object.keys(raw).some(k=>!allowed.includes(k)))fail('INVALID_PAYLOAD');
  const p=raw as Record<string,unknown>,c=state.career as engine.HighSchoolCareer;
@@ -43,6 +48,9 @@ export function applyUsEntry(state:SaveState,command:CommandBody):AppliedCommand
   if(name==='SIGN'){
    if(typeof p.programVersion!=='number'||!Number.isSafeInteger(p.programVersion)||p.programVersion<1||typeof p.offerKey!=='string'||p.eventVersion!==undefined&&(typeof p.eventVersion!=='number'||!Number.isSafeInteger(p.eventVersion)||p.eventVersion<1))fail('INVALID_PAYLOAD');
    next=engine.decideCareerUsDirect(c,revision,{programVersion:p.programVersion,decision:{type:'SIGN',offerKey:p.offerKey},...(p.eventVersion===undefined?{}:{eventVersion:p.eventVersion as number})});
+  }else if(name==='DECLINE'){
+   if(typeof p.programVersion!=='number'||!Number.isSafeInteger(p.programVersion)||p.programVersion<1)fail('INVALID_PAYLOAD');
+   next=engine.decideCareerUsDirect(c,revision,{programVersion:p.programVersion,decision:{type:'DECLINE'}});
   }else if(name==='CLOSE_YEAR'){
    if(typeof p.forfeitUnusedTraining!=='boolean')fail('INVALID_PAYLOAD');
    next=engine.closeSchoolSeasonForUs(c,revision,p.forfeitUnusedTraining);

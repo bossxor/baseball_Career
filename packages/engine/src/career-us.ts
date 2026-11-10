@@ -19,7 +19,7 @@ import {collegeEarlyRouteView,attachCollegeUnsignedReturn,assertCollegeEarlyUsCo
 import {refreshCareerAchievements} from './career-achievements.js';
 import {refreshCareerRouteNotices} from './career-route-notices.js';
 
-export interface CareerUsRecruitment {schemaVersion:1;world:UsRecruitmentWorld;program:UsDirectProgram;sourceBasis:string;currentWorldDay:number;reservations:UsReservationLedger;closedBy?:'COLLEGE'|'KBO'}
+export interface CareerUsRecruitment {schemaVersion:1;world:UsRecruitmentWorld;program:UsDirectProgram;sourceBasis:string;currentWorldDay:number;reservations:UsReservationLedger;closedBy?:'COLLEGE'|'KBO'|'NO_OFFER'|'PREPARATION'}
 function basis(s:HighSchoolCareer):string {return canonicalSeal({world:s.world,records:s.records,health:s.health,days:s.days,development:s.development??null,seasonGrowth:s.seasonGrowth??null,graduation:s.graduation??null,collegeAdmission:s.collegeAdmission??null,collegeGraduation:s.collegeGraduation??null,ownAssessment:s.ownAssessment??null});}
 function day(s:HighSchoolCareer):number {return s.days.days.at(-1)?.day??0;}
 function pendingCollegeComparison(s:HighSchoolCareer){return s.world.leagueKey==='COLLEGE'&&s.collegeAdmission?.academicYear===2&&s.phaseContext.phase==='EVENT_DECISION'&&s.phaseContext.eventKey===s.collegeEarlyRoute?.eventKey;}

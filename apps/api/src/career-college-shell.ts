@@ -6,6 +6,7 @@ import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
 import type {FlowCommand,FlowScreen} from './career-flow-screen.js';
 import {amateurUsCommands,stageAmateurUsEntry} from './career-us-entry-shell.js';
 import {draftLines} from './career-draft-lines.js';
+import {amateurPreparationRouteCommands} from './career-amateur-preparation-shell.js';
 
 /** Thin owned dispatch for the college road: HS route → enrollment → academic-year play loop. The engine owns every rule;
  * the web only replays the commands served by `collegeFlow`/`collegeRouteCommands`. */
@@ -16,6 +17,7 @@ const fields=new Map<string,readonly string[]>([
  ['WINDOW',['careerRevision','eventKey','eventVersion','command']],['TRAIN',['careerRevision','choice']],['STYLE',['careerRevision','archetype']],['HIDDEN',['careerRevision','eventKey','eventVersion']],
  ['START_CUP',['careerRevision']],['ADVANCE_CUP',['careerRevision']],['ACK_REVIEW',['careerRevision']],
  ['CLOSE_YEAR',['careerRevision','forfeitUnusedTraining']],['START_NEXT',['careerRevision']],['GRADUATE',['careerRevision','eventVersion']],
+ ['MILITARY_LEAVE',['careerRevision']],['SERVICE_ADVANCE',['careerRevision']],['SERVICE_RESUME',['careerRevision','eventVersion']],
 ]);
 const WINDOW_COMMANDS=['OPEN_TRAINING','FORFEIT_TRAINING','DEFER_TRAINING','OPEN_STYLE','ACK_EVENT'];
 function fail(code:string):never{throw Object.assign(new Error(code),{code});}
@@ -33,7 +35,7 @@ function trainingChoice(v:unknown):engine.TrainingChoice{
 
 export const isCollege=(c:engine.HighSchoolCareer)=>c.world.leagueKey==='COLLEGE';
 /** College or the HS→college hand-over (admitted, not yet started). */
-export const collegeApplies=(c:engine.HighSchoolCareer)=>isCollege(c)||Boolean(c.collegeAdmission);
+export const collegeApplies=(c:engine.HighSchoolCareer)=>isCollege(c)||c.collegeAdmission?.status==='ADMITTED';
 
 /** One request runs the engine's own plans back to back: SEASON = "next major event" repeated until the engine stops for a reason
  * other than its internal chunk limit (mandatory event, injury change, season review); MONTH = four weekly plans. The engine decides every stop. */
@@ -58,6 +60,13 @@ export function applyCollege(state:SaveState,command:CommandBody):AppliedCommand
   if(name==='ENROLL')next=engine.enrollHighSchoolCollege(c,rev,{eventVersion:int(p,'eventVersion'),offerSetKey:str(p,'offerSetKey'),offerSetVersion:int(p,'offerSetVersion'),collegeId:str(p,'collegeId')});
   else if(name==='CLOSE_HS_YEAR')next=engine.closeHighSchoolSeasonForCollege(c,rev,bool(p,'forfeitUnusedTraining'));
   else if(name==='START')next=engine.startAdmittedCollegeSeason(c,rev);
+  else if(name==='MILITARY_LEAVE')next=engine.startCollegeMilitaryLeave(c,rev);
+  else if(name==='SERVICE_RESUME')next=engine.resumeCollegeAfterService(c,rev,int(p,'eventVersion'));
+  else if(name==='SERVICE_ADVANCE'){
+   const deadline=spanDeadline();let result=engine.advanceCollegeMilitaryService(c,rev);
+   while(result.stopReason==='CHUNK_LIMIT'&&Date.now()<deadline)result=engine.advanceCollegeMilitaryService(result.career,result.career.revision);
+   next=result.career;stopReason=result.stopReason;
+  }
   else if(name==='CONFIRM_PRESEASON')next=engine.confirmCollegePreseason(c,rev);
   else if(name==='PAUSE')next=engine.pauseCollegeCareer(c,rev);
   else if(name==='ADVANCE'){
@@ -99,6 +108,12 @@ export function collegeFlow(c:engine.HighSchoolCareer):FlowScreen{
  if(admission)lines.push({label:'학년',value:`${admission.academicYear}학년`});
  const cmd=(id:string,label:string,type:string,payload:Record<string,unknown>={},confirm?:string):FlowCommand=>({id,label,type:'CAREER_COLLEGE_'+type,payload:{careerRevision:c.revision,...payload},...(confirm?{confirm}:{})});
  const out=(title:string,commands:FlowCommand[],notice:string|null=null):FlowScreen=>({screenId:'CAREER_FLOW',title,lines,commands,notice,careerRevision:c.revision});
+ if(c.collegeService&&c.collegeService.status!=='RESUMED'){
+  const service=engine.collegeMilitaryServiceView(c);lines.push({label:'복무 완료 구간',value:service.completedBlocks+'/'+service.scheduledBlocks});
+  if(service.status==='SERVING')return out('대학 휴학 · 현역 복무',[cmd('college-service-advance','복무 마치기까지 진행','SERVICE_ADVANCE')]);
+  const event=c.events.find(e=>e.eventKey===c.collegeService!.resumeEventKey&&e.status==='OPEN');
+  return out('전역 · 대학 복학',event?[cmd('college-service-resume','복학하고 시즌 준비','SERVICE_RESUME',{eventVersion:event.version})]:[]);
+ }
  if(phase.phase==='NEXT_SEASON_READY'&&phase.route==='US')return out('미국 진출 준비',amateurUsCommands(c));
  if(!isCollege(c)){
   // Admitted from the HS route: close the school year, then start the college season.
@@ -123,7 +138,8 @@ export function collegeFlow(c:engine.HighSchoolCareer):FlowScreen{
    return out('대학 집중 육성 4개 선택',commands);
   }
   const commands=[cmd('preseason','시즌 시작','CONFIRM_PRESEASON')];
-  for(const [archetype,type] of Object.entries(p.kind==='HITTER'?HITTER_TYPES:PITCHER_TYPES))if(archetype!==p.archetype)commands.push(cmd('preseason-style-'+archetype,type.label+'으로 변경','STYLE',{archetype}));
+  if(!c.collegeService&&p.age>=19&&p.age<=27&&(!c.national?.militaryStatus||c.national.militaryStatus==='UNRESOLVED')&&!c.events.some(e=>e.status==='OPEN')&&!c.kboRecruitment&&!c.usRecruitment&&!c.collegeYearEnd)commands.push(cmd('college-service-leave','현역 입대를 위해 휴학','MILITARY_LEAVE',{},'현역 복무 동안 대학 시즌을 쉬고 전역 후 복학합니다. 입대할까요?'));
+  if(!c.styleUsedWindows.includes(JSON.stringify([c.world.seasonKey,'PRE'])))for(const [archetype,type] of Object.entries(p.kind==='HITTER'?HITTER_TYPES:PITCHER_TYPES))if(archetype!==p.archetype)commands.push(cmd('preseason-style-'+archetype,type.label+'으로 변경','STYLE',{archetype}));
   return out('대학 시즌 준비',commands);
  }
  if(phase.phase==='SEASON_PROGRESS'){
@@ -190,7 +206,7 @@ export function collegeFlow(c:engine.HighSchoolCareer):FlowScreen{
   if(!draft.result)return out(title,[{id:'draft-resolve',label:'드래프트 결과 확인',type:'CAREER_KBO_ENTRY_RESOLVE',payload:{careerRevision:c.revision,programVersion:draft.version}},...amateurUsCommands(c)]);
   const club=KBO_CLUBS.find(x=>x.id===draft.result!.clubId)?.name??draft.result.clubId;
   lines.push({label:'지명',value:draft.result.round?draft.result.round+'라운드 '+club:'지명 없음'});
-  if(!draft.offer)return out(title+' 결과',amateurUsCommands(c),draft.status==='DECLINED'?'지명 제안을 거절했습니다.':null);
+  if(!draft.offer)return out(title+' 결과',[...amateurUsCommands(c),...amateurPreparationRouteCommands(c)],draft.status==='DECLINED'?'지명 제안을 거절했습니다.':null);
   lines.push({label:'제안',value:draft.offer.years+'년 · 연봉 '+Math.round(draft.offer.annualSalaryWon/10_000).toLocaleString('ko-KR')+'만 원'});
   return out(title+' 결과',[
    {id:'draft-sign',label:'계약하고 입단',type:'CAREER_KBO_ENTRY_DECIDE',payload:{careerRevision:c.revision,programVersion:draft.version,decision:'SIGN'},sign:{name:p.name},facts:[{label:'계약',value:`${draft.offer.years}년 · 연봉 ${Math.round(draft.offer.annualSalaryWon/10_000).toLocaleString('ko-KR')}만 원`}]},

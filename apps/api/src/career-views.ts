@@ -45,7 +45,7 @@ export async function getCareer(c: Context<{ Variables: AppVariables }>) {
   if (!row || row.deletedAt || row.ownerId !== subject) return errorBody(c, 'SAVE_NOT_FOUND', 404);
   try {
     const state=(row.state as UiShellState)??{schemaVersion:1},owner=state.career as {schemaVersion?:number;world?:{schools?:unknown;leagueKey?:unknown}}|undefined;
-    const view = isUsReturnRetry(state.career)?usReturnRetryHome(row.id,state.career):isUsAmateurReturn(state.career)?usReturnHome(row.id,state.career):owner?.schemaVersion===1&&Array.isArray(owner.world?.schools)&&owner.world?.leagueKey===undefined?schoolCareerHome(row.id,state):owner?.world?.leagueKey==='COLLEGE'?collegeCareerHome(row.id,state):owner&&'protagonistOrganizationId' in owner?usCareerHome(row.id,state):owner&&'protagonistClubId' in owner?kboCareerHome(row.id,state):careerView(row.id,state);
+    const view = isUsReturnRetry(state.career)?usReturnRetryHome(row.id,state.career):isUsAmateurReturn(state.career)?usReturnHome(row.id,state.career):owner?.schemaVersion===1&&Array.isArray(owner.world?.schools)&&owner.world?.leagueKey===undefined?schoolCareerHome(row.id,state):owner?.world?.leagueKey==='COLLEGE'||owner?.world?.leagueKey==='INDEPENDENT'?collegeCareerHome(row.id,state):owner&&'protagonistOrganizationId' in owner?usCareerHome(row.id,state):owner&&'protagonistClubId' in owner?kboCareerHome(row.id,state):careerView(row.id,state);
     return c.json({ ...view, revision: row.revision.toString() });
   } catch {
     return errorBody(c, 'INVALID_REQUEST', 400);
