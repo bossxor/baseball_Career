@@ -52,6 +52,24 @@ export function careerSeasonReview(state: SaveState): SeasonReview | null {
     {label:'K/9',value:rate(r.K9)},
    );
   }
+  const priorSeasons = [...new Set(Object.values(c.records.games)
+   .filter(g => /^\d{4}$/.test(season) && /^\d{4}$/.test(g.scope.seasonKey)
+    && g.scope.seasonKey < season && g.scope.leagueKey === league && g.scope.phase === 'REGULAR'
+    && (player.kind === 'HITTER' ? Boolean(g.batting[key]) : Boolean(g.pitching[key])))
+   .map(g => g.scope.seasonKey))];
+  if (priorSeasons.length) {
+   const prior = priorSeasons.map(seasonKey => recordTotals(c.records, {seasonKey, leagueKey:league, phase:'REGULAR'}));
+   const highs: Line[] = [];
+   if (b && player.kind === 'HITTER') for (const [field, label] of [['H','안타'],['HR','홈런'],['BB','볼넷']] as const) {
+    const values = prior.flatMap(row => row.batting[key] ? [row.batting[key]![field]] : []);
+    if (values.length && b[field] > Math.max(...values)) highs.push({label,value:String(b[field])+' CH'});
+   }
+   if (p && player.kind === 'PITCHER') for (const [field, label] of [['K','탈삼진'],['W','승'],['SV','세이브']] as const) {
+    const values = prior.flatMap(row => row.pitching[key] ? [row.pitching[key]![field]] : []);
+    if (values.length && p[field] > Math.max(...values)) highs.push({label,value:String(p[field])+' CH'});
+   }
+   if (highs.length) sections.push({title:`${league} 커리어 하이`,lines:highs});
+  }
   if (t) lines.push({label:'팀 성적',value:`${t.W}승 ${t.L}패 ${t.T}무`});
   if (lines.length) sections.push({title:`${league} 정규시즌`,lines});
  }

@@ -47,6 +47,26 @@ test('HTTP review uses finalized regular records, correct rate denominators, and
     assert.equal(val('이닝'),'0.2'); assert.equal(val('평균자책점'),'27.000'); assert.equal(val('WHIP'),'4.500');
    }
    assert.doesNotMatch(JSON.stringify(view.seasonReview),/potential|seed|rng|sourceBasis|타구속도/);
+   if (kind === 'HITTER') {
+    const {careerSeasonReview}=await import('../src/career-season-review.js');
+    assert.equal(careerSeasonReview({schemaVersion:1,career:c})!.sections.some(s=>s.title==='KBO 커리어 하이'),false);
+    const previous=structuredClone(game);
+    previous.gameKey='prior';previous.scope.seasonKey=String(Number(c.world.seasonKey)-1);
+    previous.batting[key]!.HR=0;
+    c.records.games={official:game,prior:previous};
+    const highs=careerSeasonReview({schemaVersion:1,career:c})!.sections.find(s=>s.title==='KBO 커리어 하이');
+    assert.deepEqual(highs?.lines,[{label:'홈런',value:'1 CH'}]);
+    previous.scope.leagueKey='MLB';
+    assert.equal(careerSeasonReview({schemaVersion:1,career:c})!.sections.some(s=>s.title==='KBO 커리어 하이'),false);
+   }
+   if (kind === 'PITCHER') {
+    const {careerSeasonReview}=await import('../src/career-season-review.js');
+    const previous=structuredClone(game);
+    previous.gameKey='prior-pitcher';previous.scope.seasonKey=String(Number(c.world.seasonKey)-1);
+    previous.pitching[key]!.W=0;
+    c.records.games={official:game,prior:previous};
+    assert.deepEqual(careerSeasonReview({schemaVersion:1,career:c})!.sections.find(s=>s.title==='KBO 커리어 하이')?.lines,[{label:'승',value:'1 CH'}]);
+   }
    c.phaseContext = {phase:'SEASON_PROGRESS',nextWorldDay:2,pendingGame:{} as never};
    await db.update(gameSaves).set({state:{schemaVersion:1,career:c}}).where(eq(gameSaves.id,saveId));
    const pending = await json<{seasonReview:null}>(await app.request(`/api/saves/${saveId}/screens/CAREER_FLOW`,{headers}));

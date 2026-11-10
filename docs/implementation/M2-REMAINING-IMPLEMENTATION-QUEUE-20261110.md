@@ -13,6 +13,18 @@
 
 ## 추가 호출자 조사 후 배정
 
+### 2026-11-10 사건 호출자 정적 대조
+
+| 우선순위 | 담당·파일 | 확인된 누락과 의존성 |
+| --- | --- | --- |
+| 높음 | 02 API 후속: `apps/api/src/career-college-shell.ts`, `engine-command.ts`, `career-views.ts` | 대학 대표 E44/E45: `packages/engine/src/college-national.ts`의 후보·선발·수락/거절 owner는 export돼 있지만 `apps/api/src`에 해당 함수/`COLLEGE_NATIONAL` 호출이 없다. 서버 소유 원본과 revision으로 선발 및 선택을 연결한다. 현재 02의 결산/은퇴 작업과 겹치므로 완료 후 배정. |
+| 높음 | 02 API 후속, 이후 03 웹: 위 API 경계 및 `apps/web/src/screens/Flow.tsx` | 대학 대표 E46/E47: 같은 엔진의 대회 시작·경기·일 마감·혜택 확인 공개 명령이 없다. 확정된 owner를 호출하고 웹에서 서버 허용 선택지를 제공한다. 선발 연결에 의존한다. |
+| 높음 | 팀장 결정 후 02 API, 03 웹: `college-national.ts`, 저장 명령 경계 | 대학 대표 E48/E55: 복귀·체육요원 owner는 있으나 API 호출이 없다. 특히 `returnCollegeNationalTournament`는 대학과 KBO 양쪽 원본/revision을 요구한다. 기존 소유권·CAS·원자 저장 경계를 확인하고 다중 원장 저장 방식이 필요하면 팀장에게 올린다. 임의 단일 저장이나 사용자 상태 주입 금지. |
+
+근거: `packages/engine/src/index.ts`는 위 대학 대표 함수를 공개한다. `apps/api/src`와 `apps/web/src`에서 함수명 및 `COLLEGE_NATIONAL` 검색 결과 해당 호출이 없다. 이는 정적 호출 경계의 누락이며 런타임 재현은 아니다. 01의 독립 US 도메인 작업과 중복 배정하지 않는다.
+
+10월 감사의 E21~29, E42, E56~57, E70~72, E73~74/76, E87, E90~93 카탈로그 전용 또는 도메인 부재 표기는 현재 소스의 해당 owner에 의해 오래되었다. E85는 `pro-trait-summary.ts`의 읽기 표면이므로 world event를 새로 만들지 않는다. 이 사실이 전체 경로의 검증 통과를 의미하지는 않는다. `NOT_PROVEN`만으로 구현 누락을 추가하지 않는다.
+
 아래는 미구현으로 확정하지 않았다. 각 담당자는 현재 소스와 호출자를 대조해 실제 누락만 구현하고, 이미 연결된 기능은 중복 작성하지 않는다.
 
 - 01 엔진: `packages/engine/src/pro-career-advice.ts`의 E12~E15 계획·확정은 이미 존재한다. 학교·대학 잔여 사건, 대표팀·병역·재도전의 기존 공개 owner와 허용 명령을 확인해 빠진 도메인 동작만 식별한다.
