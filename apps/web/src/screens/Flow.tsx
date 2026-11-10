@@ -18,6 +18,8 @@ export function currentFlowCommand(commands: readonly FlowCommand[], selected: F
 export function Flow({ view, state = 'ready', onCommand, onBack, onReload }: FlowProps) {
   const [asking, setAsking] = useState<FlowCommand | null>(null), [signing, setSigning] = useState<FlowCommand | null>(null);
   const busy = isBusy(state), banner = state === 'ready' || state === 'empty' ? null : stateText('S03', state);
+  const focusCommands = view?.commands.filter(c => (c.type === 'CAREER_SCHOOL_RESOLVE_FOCUS' && c.payload.command === 'CHOOSE_FOCUS' || c.type === 'CAREER_CHOICE_COLLEGE_FOCUS') && Array.isArray(c.payload.focus) && c.payload.focus.length === 4 && c.payload.focus.every(k => typeof k === 'string')) ?? [];
+  const focusKey = JSON.stringify(focusCommands);
   const pending = currentFlowCommand(view?.commands ?? [], asking), signCmd = currentFlowCommand(view?.commands ?? [], signing), confirmRef = useRef<HTMLElement>(null), signRef = useRef<HTMLElement>(null);
   // Move focus into the confirmation so keyboard and screen-reader users land on the question.
   useEffect(() => { if (pending) confirmRef.current?.focus(); }, [pending]);
@@ -53,7 +55,8 @@ export function Flow({ view, state = 'ready', onCommand, onBack, onReload }: Flo
             </section>
           ) : (
             <div className="actions" role="group" aria-label="다음 행동">
-              {view.commands.map((c, i) => (
+              {focusCommands.length === 15 ? <FocusChoice key={focusKey} commands={focusCommands} busy={busy} onCommand={onCommand} /> : null}
+              {view.commands.filter(c => focusCommands.length !== 15 || !focusCommands.includes(c)).map((c, i) => (
                 <div key={c.id} className="cmd">
                   <Button primary={i === 0 && !c.confirm} busy={busy} describedBy={c.facts?.length ? `facts-${c.id}` : undefined} onClick={() => (c.confirm ? setAsking(structuredClone(c)) : c.sign ? setSigning(structuredClone(c)) : onCommand?.(c))}>{c.label}</Button>
                   {c.facts?.length ? <dl id={`facts-${c.id}`} className="cmd-facts">{c.facts.map(f => <div key={f.label}><dt>{f.label}</dt><dd>{f.value}</dd></div>)}</dl> : null}
@@ -66,6 +69,30 @@ export function Flow({ view, state = 'ready', onCommand, onBack, onReload }: Flo
       ) : state === 'ready' ? <Empty>진행할 단계를 찾지 못했습니다. 커리어 화면으로 돌아가세요.</Empty> : null}
     </main>
   );
+}
+
+export function matchingFocusCommand(commands: readonly FlowCommand[], selected: readonly string[]): FlowCommand | undefined {
+  if (selected.length !== 4 || new Set(selected).size !== 4) return undefined;
+  return commands.find(c => Array.isArray(c.payload.focus) && c.payload.focus.length === 4 && c.payload.focus.every(k => typeof k === 'string' && selected.includes(k)));
+}
+
+function FocusChoice({ commands, busy, onCommand }: { commands: readonly FlowCommand[]; busy: boolean; onCommand?: (command: FlowCommand) => void }) {
+  const [selected, setSelected] = useState<string[]>([]);
+  const labels = new Map<string, string>();
+  for (const command of commands) {
+    const keys = command.payload.focus as string[], names = command.label.split(' · ');
+    keys.forEach((key, i) => { if (names[i]) labels.set(key, names[i]!); });
+  }
+  const match = matchingFocusCommand(commands, selected);
+  return <fieldset disabled={busy} className="panel">
+    <legend>집중 육성 능력 4개 선택</legend>
+    <p aria-live="polite">{selected.length}/4개 선택</p>
+    {[...labels].map(([key, label]) => <label key={key} style={{ display: 'block' }}>
+      <input type="checkbox" checked={selected.includes(key)} disabled={!selected.includes(key) && selected.length >= 4}
+        onChange={() => setSelected(previous => previous.includes(key) ? previous.filter(k => k !== key) : [...previous, key])} /> {label}
+    </label>)}
+    <Button primary busy={busy} disabled={!match} onClick={() => { if (match) onCommand?.(match); }}>선택 완료</Button>
+  </fieldset>;
 }
 
 /** Display-only signing step before a contract command: signing sends the unchanged command once; nothing is stored or added to the payload. */

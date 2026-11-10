@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { Create } from '../src/screens/Create.js';
-import { Flow, currentFlowCommand } from '../src/screens/Flow.js';
+import { Flow, currentFlowCommand, matchingFocusCommand } from '../src/screens/Flow.js';
 import { Career } from '../src/screens/Career.js';
 import { emptyDraft, setKind, validateStep } from '../src/creation.js';
 import { parseRoute } from '../src/App.js';
@@ -91,4 +91,12 @@ test('flow screen: a sign command shows no signature card until tapped, and the 
   const html = renderToStaticMarkup(<Flow view={view} />);
   assert.doesNotMatch(html, /sign-card/);
   assert.match(html, /계약하고 입단/);
+});
+
+
+test('focus choice matches only a served four-ability command', () => {
+  const command = { id: 'focus', label: '가 · 나 · 다 · 라', type: 'CAREER_CHOICE_COLLEGE_FOCUS', payload: { careerRevision: 2, focus: ['A', 'B', 'C', 'D'] } };
+  assert.equal(matchingFocusCommand([command], ['D', 'C', 'B', 'A']), command);
+  assert.equal(matchingFocusCommand([command], ['A', 'B', 'C', 'C']), undefined);
+  assert.equal(matchingFocusCommand([command], ['A', 'B', 'C', 'E']), undefined);
 });
