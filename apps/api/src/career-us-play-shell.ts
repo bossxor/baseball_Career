@@ -1,4 +1,5 @@
 import * as engine from '@playball/engine';
+import {usNationalDayBudget} from './career-us-national-shell.js';
 import {spanDeadline,spanStopOf} from './span-budget.js';
 import type {SpanStop} from './span-budget.js';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
@@ -39,10 +40,11 @@ export function majorContractView(c:engine.UsCareer,transition:ReturnType<typeof
 }
 /** One request chains the engine's own day/chunk advances: SEASON until the engine stops for anything but its internal limits
  * (mandatory event, injury, roster decision, season review); MONTH until 30 world days are closed or an earlier stop. */
-function advanceUsSpan(c:engine.UsCareer,revision:number,span:'SEASON'|'MONTH'){
+function advanceUsSpan(state:SaveState,c:engine.UsCareer,revision:number,span:'SEASON'|'MONTH'){
  const until=spanDeadline();
- const result=engine.advanceUsCareerRun(c,revision,span==='MONTH'?30:Number.MAX_SAFE_INTEGER,()=>Date.now()<until);
- return {...result,monthDone:span==='MONTH'&&result.daysClosed>=30};
+ const original=span==='MONTH'?30:Number.MAX_SAFE_INTEGER,days=usNationalDayBudget(state,c,original);
+ const result=engine.advanceUsCareerRun(c,revision,days,()=>Date.now()<until);
+ return {...result,stopReason:days<original&&result.daysClosed===days&&result.stopReason==='DAY_CLOSED'?'MAJOR_EVENT' as const:result.stopReason,monthDone:span==='MONTH'&&result.daysClosed>=30};
 }
 export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand {
  const name=command.type.slice('CAREER_US_PLAY_'.length),allowed=fields.get(name),raw=command.payload;
@@ -68,8 +70,8 @@ export function applyUsPlay(state:SaveState,command:CommandBody):AppliedCommand 
    case 'CONFIRM_PRESEASON':next=engine.confirmUsPreseasonPlan(c,revision);break;
    case 'PUBLISH_SCHEDULE':next=engine.publishUsSeasonSchedule(c,revision);break;
    case 'START':next=engine.startUsRegularSeason(c,revision);break;
-   case 'ADVANCE_SPAN':{if(p.span!=='SEASON'&&p.span!=='MONTH')fail('INVALID_PAYLOAD');const result=advanceUsSpan(c,revision,p.span);next=result.career;stopReason=result.stopReason;rosterIssue=result.rosterIssue;spanStop=spanStopOf(p.span,next.phaseContext.phase,result.stopReason,result.monthDone);break;}
-   case 'ADVANCE':{const result=engine.advanceUsCareer(c,revision,number('maxDays'));next=result.career;stopReason=result.stopReason;rosterIssue=result.rosterIssue;break;}
+   case 'ADVANCE_SPAN':{if(p.span!=='SEASON'&&p.span!=='MONTH')fail('INVALID_PAYLOAD');const result=advanceUsSpan(state,c,revision,p.span);next=result.career;stopReason=result.stopReason;rosterIssue=result.rosterIssue;spanStop=spanStopOf(p.span,next.phaseContext.phase,result.stopReason,result.monthDone);break;}
+   case 'ADVANCE':{const result=engine.advanceUsCareer(c,revision,usNationalDayBudget(state,c,number('maxDays')));next=result.career;stopReason=result.stopReason;rosterIssue=result.rosterIssue;break;}
    case 'RESOLVE_HIDDEN':{const result=engine.resolveProHiddenTraitNotice(c,revision,{eventKey:string('eventKey'),eventVersion:number('eventVersion'),command:string('command')});next=result.career;navigation=result.navigation;break;}
    case 'RESOLVE_WINDOW':{const result=engine.resolveUsWindowEvent(c,revision,{eventKey:string('eventKey'),eventVersion:number('eventVersion'),command:string('command')});next=result.career;navigation=result.navigation;break;}
    case 'RESOLVE_LEVEL':{const result=engine.resolveUsLevelEventResult(c,revision,{eventKey:string('eventKey'),eventVersion:number('eventVersion'),command:string('command')});next=result.career;navigation=result.navigation;break;}

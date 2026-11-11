@@ -40,7 +40,7 @@ function windowFor(c:engine.UsCareer,host:engine.CollegeLeagueHost|null){
 export function usNationalDayBudget(state:SaveState,c:engine.UsCareer,maxDays:number):number{
  const p=c.phaseContext,window=windowFor(c,hostOf(state));
  if(!window||p.phase!=='SEASON_PROGRESS')return maxDays;
- if(open(c)?.definitionId==='E44'||p.nextWorldDay===window.day)fail('NATIONAL_DECISION_REQUIRED');
+ if(c.national?.invitations.some(i=>i.status==='INVITED'&&i.seasonKey===c.world.seasonKey)||p.nextWorldDay===window.day)fail('NATIONAL_DECISION_REQUIRED');
  return Math.min(maxDays,window.day-p.nextWorldDay);
 }
 function hostReady(host:engine.CollegeLeagueHost,c:engine.UsCareer,stopDay:number|null):boolean{
