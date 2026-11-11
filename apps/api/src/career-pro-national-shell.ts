@@ -4,11 +4,11 @@ import type {FlowCommand,FlowScreen} from './career-flow-screen.js';
 import {spanDeadline} from './span-budget.js';
 
 const PREFIX='CAREER_KBO_NATIONAL_';
-const tournaments={WBC:'월드 베이스볼 클래식',OLY:'올림픽',AG:'아시안게임',P12:'프리미어12'} as const;
+export const nationalTournamentNames={WBC:'월드 베이스볼 클래식',OLY:'올림픽',AG:'아시안게임',P12:'프리미어12'} as const;
 const medals={GOLD:'금메달',SILVER:'은메달',BRONZE:'동메달'} as const;
 const eventIds=['E44','E45','E46','E47','E48','E55'];
-const eventCommands:Record<string,readonly string[]>={E44:['ACCEPT_NATIONAL','DECLINE_NATIONAL'],E45:['ACK_EVENT'],E46:['ACK_EVENT'],E47:['CONFIRM_SERVICE_ELIGIBILITY'],E48:['CONFIRM_NATIONAL_RETURN'],E55:['ACK_SERVICE_OBLIGATION']};
-const labels:Record<string,string>={ACCEPT_NATIONAL:'참가',DECLINE_NATIONAL:'사양',ACK_EVENT:'확인하고 계속',ACK_SERVICE_OBLIGATION:'남은 의무 확인',CONFIRM_SERVICE_ELIGIBILITY:'체육요원 자격 확인',CONFIRM_NATIONAL_RETURN:'원소속 복귀'};
+export const nationalEventCommands:Record<string,readonly string[]>={E44:['ACCEPT_NATIONAL','DECLINE_NATIONAL'],E45:['ACK_EVENT'],E46:['ACK_EVENT'],E47:['CONFIRM_SERVICE_ELIGIBILITY'],E48:['CONFIRM_NATIONAL_RETURN'],E55:['ACK_SERVICE_OBLIGATION']};
+export const nationalEventLabels:Record<string,string>={ACCEPT_NATIONAL:'참가',DECLINE_NATIONAL:'사양',ACK_EVENT:'확인하고 계속',ACK_SERVICE_OBLIGATION:'남은 의무 확인',CONFIRM_SERVICE_ELIGIBILITY:'체육요원 자격 확인',CONFIRM_NATIONAL_RETURN:'원소속 복귀'};
 function fail(code:string):never{throw Object.assign(new Error(code),{code});}
 
 function kboOwner(state:SaveState):engine.KboCareer|null {
@@ -68,7 +68,7 @@ export function applyKboNational(state:SaveState,body:CommandBody):AppliedComman
    case 'SELECT':
    case 'START':{
     const boundary=nationalBoundary(c),phase=c.phaseContext;
-    if(typeof p.tournament!=='string'||!Object.hasOwn(tournaments,p.tournament))fail('INVALID_PAYLOAD');
+    if(typeof p.tournament!=='string'||!Object.hasOwn(nationalTournamentNames,p.tournament))fail('INVALID_PAYLOAD');
     if(!boundary||boundary.action!==name||boundary.type!==p.tournament||openEvent(c)||phase.phase==='SEASON_PROGRESS'&&(phase.pendingGame||phase.nextWorldDay!==boundary.day))fail('NATIONAL_CALENDAR_NOT_READY');
     next=name==='SELECT'?engine.openKboNationalSelection(c,rev,boundary.type):engine.startNationalTournament(c,rev,boundary.type);
     break;
@@ -76,7 +76,7 @@ export function applyKboNational(state:SaveState,body:CommandBody):AppliedComman
    case 'RESOLVE':{
     if(typeof p.eventKey!=='string'||typeof p.eventVersion!=='number'||!Number.isSafeInteger(p.eventVersion)||p.eventVersion<1||typeof p.command!=='string')fail('INVALID_PAYLOAD');
     const e=openEvent(c);
-    if(!e||e.eventKey!==p.eventKey||e.version!==p.eventVersion||!eventCommands[e.definitionId]?.includes(p.command))fail('INVALID_NATIONAL_EVENT');
+    if(!e||e.eventKey!==p.eventKey||e.version!==p.eventVersion||!nationalEventCommands[e.definitionId]?.includes(p.command))fail('INVALID_NATIONAL_EVENT');
     next=e.definitionId==='E47'?engine.confirmNationalEligibility(c,rev,String(e.evidence.fields.competitionId)):engine.resolveKboNationalEvent(c,rev,{eventKey:p.eventKey,eventVersion:p.eventVersion,command:p.command}).career;
     break;
    }
@@ -109,7 +109,7 @@ export function applyKboNational(state:SaveState,body:CommandBody):AppliedComman
  return {nextState:{...state,career:next},phase,summary:{type:body.type,careerRevision:next.revision,phase,...(stopReason?{stopReason}:{})},eventIds:next.events.slice(c.events.length).map(e=>e.definitionId)};
 }
 
-function resultLines(c:engine.KboCareer|engine.UsCareer,result:engine.NationalCompetitionResult,eligible:boolean):FlowScreen['lines']{
+export function nationalResultLines(c:engine.KboCareer|engine.UsCareer,result:engine.NationalCompetitionResult,eligible:boolean):FlowScreen['lines']{
  const lines:FlowScreen['lines']=[];
  if(result.officialAppearance&&result.gameKeys){
   const official=result.gameKeys.map(key=>c.records.games[key]);
@@ -123,7 +123,7 @@ function resultLines(c:engine.KboCareer|engine.UsCareer,result:engine.NationalCo
    lines.push({label:'개인 타격',value:batting.length+'경기 · '+(atBats?'타율 '+(hits/atBats).toFixed(3)+' · ':'')+batting.reduce((total,line)=>total+line.HR,0)+'홈런'});
   }
  }
- return [{label:'대회',value:tournaments[result.tournament]},{label:'팀 최종 순위',value:result.finalRank+'위'},
+ return [{label:'대회',value:nationalTournamentNames[result.tournament]},{label:'팀 최종 순위',value:result.finalRank+'위'},
   ...(result.medal?[{label:'팀 메달',value:medals[result.medal]}]:[]),
   {label:'본인 출장',value:result.officialAppearance?'공식 출장':result.registered?'등록 · 미출장':'미등록'},...lines,
   ...(eligible?[{label:'병역',value:'체육요원 자격 획득'}]:[])];
@@ -140,9 +140,9 @@ export function proNationalFlow(state:SaveState):FlowScreen|null {
   const id=e.evidence.fields.competitionId,invitation=c.national?.invitations.find(i=>i.selectionId===id);
   const result=c.national?.competitions.find(r=>r.competitionId===id);
   const tournament=invitation?.tournament??c.national?.selections?.find(s=>s.selectionId===id)?.tournament??bracket?.tournament;
-  if(result)lines.push(...resultLines(c,result,Boolean(c.national?.benefits.some(b=>b.competitionId===id))));
+  if(result)lines.push(...nationalResultLines(c,result,Boolean(c.national?.benefits.some(b=>b.competitionId===id))));
   else if(tournament){
-   lines.push({label:'대회',value:tournaments[tournament]});
+   lines.push({label:'대회',value:nationalTournamentNames[tournament]});
    const view=engine.kboNationalSelectionView(c,tournament)?.protagonist;
    if(view){
     const selected=selection(c,tournament),pool=selected?.scores.filter(row=>row.position===view.position);
@@ -154,15 +154,15 @@ export function proNationalFlow(state:SaveState):FlowScreen|null {
   }
   if(e.definitionId==='E55'&&c.national?.athleteDutySeasonsRemaining!==undefined)lines.push({label:'남은 활동 의무',value:c.national.athleteDutySeasonsRemaining+'시즌'});
   const definition=engine.eventDefinition(e.definitionId);
-  return out(definition.title,(eventCommands[e.definitionId]??[]).filter(command=>e.offeredChoices.includes(command)||e.definitionId==='E47').map(command=>cmd(command,labels[command]??command,'RESOLVE',{eventKey:e.eventKey,eventVersion:e.version,command},command==='DECLINE_NATIONAL'?'이번 대회 참가를 사양할까요?':undefined)));
+  return out(definition.title,(nationalEventCommands[e.definitionId]??[]).filter(command=>e.offeredChoices.includes(command)||e.definitionId==='E47').map(command=>cmd(command,nationalEventLabels[command]??command,'RESOLVE',{eventKey:e.eventKey,eventVersion:e.version,command},command==='DECLINE_NATIONAL'?'이번 대회 참가를 사양할까요?':undefined)));
  }
  if(bracket&&c.phaseContext.phase==='INTERNATIONAL_PROGRESS'){
-  lines.push({label:'대회',value:tournaments[bracket.tournament]},{label:'완료 경기',value:String(bracket.results.length)},{label:'진행',value:(c.phaseContext.nextWorldDay-bracket.window.startDay+1)+'일차'});
+  lines.push({label:'대회',value:nationalTournamentNames[bracket.tournament]},{label:'완료 경기',value:String(bracket.results.length)},{label:'진행',value:(c.phaseContext.nextWorldDay-bracket.window.startDay+1)+'일차'});
   return out('대표팀 대회',[cmd('national-advance','대회 이어서 진행','ADVANCE')]);
  }
  const boundary=nationalBoundary(c);
  if(boundary&&(c.phaseContext.phase==='PRESEASON_SETUP'||c.phaseContext.phase==='SEASON_PROGRESS'&&!c.phaseContext.pendingGame&&boundary.day===c.phaseContext.nextWorldDay)){
-  lines.push({label:'대회',value:tournaments[boundary.type]});
+  lines.push({label:'대회',value:nationalTournamentNames[boundary.type]});
   return boundary.action==='SELECT'?out('대표팀 선발',[cmd('national-select','대표팀 명단 확인','SELECT',{tournament:boundary.type})]):out('대표팀 대회',[cmd('national-start','대회 시작','START',{tournament:boundary.type})]);
  }
  if(c.phaseContext.phase==='SEASON_REVIEW'&&c.military?.status==='ATHLETE_ELIGIBLE'&&c.national?.benefits.length&&!c.events.some(e=>e.status==='OPEN'&&(e.definitionId==='E47'||e.definitionId==='E48')))
