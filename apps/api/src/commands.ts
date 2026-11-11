@@ -97,7 +97,7 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
       let applied;
       const state = await readSaveState(tx, saveId, currentRevision, row.state, String(row.state_format));
       try {
-        if((body.type.startsWith('CAREER_SCHOOL_')||body.type.startsWith('CAREER_COLLEGE_')||body.type.startsWith('CAREER_KBO_PLAY_'))&&row.mode!=='CAREER')return errorBody(c,'CAREER_SAVE_REQUIRED',400);
+        if((body.type.startsWith('CAREER_SCHOOL_')||body.type.startsWith('CAREER_COLLEGE_')||body.type.startsWith('CAREER_KBO_PLAY_')||body.type.startsWith('CAREER_KBO_NATIONAL_'))&&row.mode!=='CAREER')return errorBody(c,'CAREER_SAVE_REQUIRED',400);
         diagnostic('engine-start');
         applied = applyEngineCommand((state as SaveState) ?? {}, body);
         diagnostic('engine-return');

@@ -2,6 +2,7 @@ import {applyKboEntry} from './career-kbo-entry-shell.js';
 import {applyUsEntry} from './career-us-entry-shell.js';
 import {applyAmateurPreparation} from './career-amateur-preparation-shell.js';
 import {applySchoolCareer} from './career-school-shell.js';
+import {applyKboNational} from './career-pro-national-shell.js';
 import {applyKboPlay} from './career-kbo-play-shell.js';
 import {applyCollege} from './career-college-shell.js';
 import { allocateCapped, ENGINE_VERSION } from '@playball/engine';
@@ -41,6 +42,7 @@ export function applyEngineCommand(state: SaveState, command: CommandBody): Appl
   if (command.type.startsWith('CAREER_AMATEUR_PREP_')) return applyAmateurPreparation(state, command);
   if (command.type.startsWith('CAREER_US_ENTRY_')) return applyUsEntry(state, command);
   if(command.type.startsWith('CAREER_SCHOOL_'))return applySchoolCareer(state,command);
+  if(command.type.startsWith('CAREER_KBO_NATIONAL_'))return applyKboNational(state,command);
   if(command.type.startsWith('CAREER_KBO_PLAY_'))return applyKboPlay(state,command);
   if(command.type.startsWith('CAREER_COLLEGE_'))return applyCollege(state,command);
   if(command.type.startsWith('CAREER_KBO_ENTRY_'))return applyKboEntry(state,command);
