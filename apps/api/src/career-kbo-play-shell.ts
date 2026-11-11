@@ -1,5 +1,6 @@
 import * as engine from '@playball/engine';
 import {spanDeadline,spanStopOf,teamProgress} from './span-budget.js';
+import {advanceKboToNationalBoundary} from './career-pro-national-shell.js';
 import type {SpanStop} from './span-budget.js';
 import {ABILITY_LABELS,abilityKeys,KBO_CLUBS} from '@playball/rules';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
@@ -28,8 +29,8 @@ function choice(v:unknown):engine.TrainingChoice{
 }
 /** Chains the engine's own advances (see the US twin): the engine's stop reasons are the only stop rule. */
 function advanceSpan(c:engine.KboCareer,rev:number,span:'SEASON'|'MONTH'){
-  const until=spanDeadline();let r=engine.advanceKboCareer(c,rev,7),days=r.daysClosed;
-  for(let i=0;i<200_000&&(r.stopReason==='CHUNK_LIMIT'||r.stopReason==='DAY_CLOSED')&&r.career.phaseContext.phase==='SEASON_PROGRESS'&&Date.now()<until&&(span==='SEASON'||days<30);i++){r=engine.advanceKboCareer(r.career,r.career.revision,span==='MONTH'?Math.min(7,30-days):7);days+=r.daysClosed;}
+  const until=spanDeadline();let r=advanceKboToNationalBoundary(c,rev,7),days=r.daysClosed;
+  for(let i=0;i<200_000&&(r.stopReason==='CHUNK_LIMIT'||r.stopReason==='DAY_CLOSED')&&r.career.phaseContext.phase==='SEASON_PROGRESS'&&Date.now()<until&&(span==='SEASON'||days<30);i++){r=advanceKboToNationalBoundary(r.career,r.career.revision,span==='MONTH'?Math.min(7,30-days):7);days+=r.daysClosed;}
   return {...r,monthDone:span==='MONTH'&&days>=30};
 }
 export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand{
@@ -48,7 +49,7 @@ export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand
    case 'CONFIRM_ROSTER':next=engine.confirmKboOpeningRoster(c,rev);break;
    case 'CONFIRM_SCHEDULE':next=engine.confirmKboSeasonSchedule(c,rev);break;
    case 'START':next=engine.startKboRegularSeason(c,rev);break;
-   case 'ADVANCE':{const d=int(p,'maxDays',1);if(d>7)fail('INVALID_PAYLOAD');const r=engine.advanceKboCareer(c,rev,d);next=r.career;stopReason=r.stopReason;break;}
+   case 'ADVANCE':{const d=int(p,'maxDays',1);if(d>7)fail('INVALID_PAYLOAD');const r=advanceKboToNationalBoundary(c,rev,d);next=r.career;stopReason=r.stopReason;break;}
    case 'ADVANCE_SPAN':{if(p.span!=='SEASON'&&p.span!=='MONTH')fail('INVALID_PAYLOAD');const r=advanceSpan(c,rev,p.span);next=r.career;stopReason=r.stopReason;spanStop=spanStopOf(p.span,next.phaseContext.phase,r.stopReason,r.monthDone);break;}
    case 'WINDOW':{const cmd=str(p,'command');if(!WINDOW_COMMANDS.includes(cmd))fail('INVALID_PAYLOAD');next=engine.resolveKboWindowEvent(c,rev,{eventKey:str(p,'eventKey'),eventVersion:int(p,'eventVersion',1),command:cmd}).career;break;}
    case 'TRAIN':next=engine.trainKboCareer(c,rev,choice(p.choice));break;
