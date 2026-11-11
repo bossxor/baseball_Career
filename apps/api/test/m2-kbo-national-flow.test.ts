@@ -28,7 +28,10 @@ test('KBO national Flow opens one server draw and binds event choice and tournam
 test('KBO national result uses the sealed outcome and reviews benefit before returning',()=>{
  const source=enteredKboCareer();
  const result=engine.sealNationalCompetitionResult(source,source.revision,{competitionId:'trusted-controlled-oly',tournament:'OLY',seasonKey:source.world.seasonKey,medal:'BRONZE',finalRank:3,registered:true,officialAppearance:true,resultVersion:1});
- const state={schemaVersion:1,career:result};
+ const first={schemaVersion:1,career:result};
+ const appearance=proNationalFlow(first)!.commands[0]!;
+ assert.equal(appearance.payload.command,'ACK_EVENT');
+ const state=applyEngineCommand(first,{commandId:'appearance',expectedRevision:0,type:appearance.type,payload:appearance.payload}).nextState;
  const screen=proNationalFlow(state)!;
  assert.equal(screen.lines.find(row=>row.label==='팀 최종 순위')?.value,'3위');
  assert.equal(screen.lines.find(row=>row.label==='팀 메달')?.value,'동메달');
