@@ -1,3 +1,5 @@
+import {assertNpcLeagueHost,collegeLeagueCandidates,isCollegeLeagueHost} from './college-national-host.js';
+import type {CollegeLeagueHost,NpcLeagueOwner} from './college-national-host.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import type {UsCareer} from './us-career-entry.js';
 import {kboNationalCandidates} from './kbo-national-selection.js';
@@ -9,7 +11,7 @@ import {HIGH_SCHOOLS} from './high-school-world.js';
 
 export interface NationalCareerSources {
  worldKey:string;seasonKey:string;
- kbo:KboCareer;kboRevision:number;us:UsCareer;usRevision:number;
+ kbo:KboCareer|CollegeLeagueHost;kboRevision:number;us:UsCareer;usRevision:number;
  /** Caller-owned revision of this read projection, never either career's persisted ledger revision. */
  recordProjectionRevision:number;
 }
@@ -18,13 +20,16 @@ export interface NationalCandidateProjection {
  sources:{kboRevision:number;usRevision:number;kboRecordRevision:number;usRecordRevision:number};
 }
 
+export const usNationalNpcOwner=(c:UsCareer):NpcLeagueOwner=>({worldKey:c.world.worldKey,seed:c.world.seed,seasonKey:c.world.seasonKey,playerKey:c.protagonistKey,difficulty:c.difficulty});
+
 /** Read-only adapter: the persistence caller supplies both current roots under its revision check. */
 export function nationalUsCandidates(input:NationalCareerSources):NationalCandidateProjection {
- const {kbo,us,worldKey,seasonKey}=input;
- if(!worldKey||!/^\d{4}$/.test(seasonKey)||[kbo.world,us.world].some(w=>w.worldKey!==worldKey||w.seasonKey!==seasonKey)||kbo.world.seed!==us.world.seed)throw new RangeError('NATIONAL_SOURCE_WORLD_MISMATCH');
- if(!Number.isSafeInteger(input.kboRevision)||input.kboRevision<1||input.kboRevision!==kbo.revision||!Number.isSafeInteger(input.usRevision)||input.usRevision<1||input.usRevision!==us.revision)throw new RangeError('STALE_NATIONAL_CAREER_SOURCE');
- if(!Number.isSafeInteger(input.recordProjectionRevision)||input.recordProjectionRevision<0||[kbo.records,us.records].some(r=>!Number.isSafeInteger(r.revision)||r.revision<0||r.revision>input.recordProjectionRevision))throw new RangeError('INVALID_NATIONAL_RECORD_PROJECTION');
- const candidates=kboNationalCandidates(kbo),keys=new Set(candidates.map(c=>c.player.simulationKey));
+ const {kbo,us,worldKey,seasonKey}=input,npc=isCollegeLeagueHost(kbo),root=npc?kbo.game:kbo;
+ if(npc)assertNpcLeagueHost(kbo,usNationalNpcOwner(us),input.kboRevision);
+ if(!worldKey||!/^\d{4}$/.test(seasonKey)||[root.world,us.world].some(w=>w.worldKey!==worldKey||w.seasonKey!==seasonKey)||root.world.seed!==us.world.seed)throw new RangeError('NATIONAL_SOURCE_WORLD_MISMATCH');
+ if(!Number.isSafeInteger(input.kboRevision)||input.kboRevision<(npc?0:1)||input.kboRevision!==kbo.revision||!Number.isSafeInteger(input.usRevision)||input.usRevision<1||input.usRevision!==us.revision)throw new RangeError('STALE_NATIONAL_CAREER_SOURCE');
+ if(!Number.isSafeInteger(input.recordProjectionRevision)||input.recordProjectionRevision<0||[root.records,us.records].some(r=>!Number.isSafeInteger(r.revision)||r.revision<0||r.revision>input.recordProjectionRevision))throw new RangeError('INVALID_NATIONAL_RECORD_PROJECTION');
+ const candidates=npc?collegeLeagueCandidates(kbo):kboNationalCandidates(kbo),keys=new Set(candidates.map(c=>c.player.simulationKey));
  if(keys.size!==candidates.length)throw new RangeError('NATIONAL_PLAYER_SOURCE_CONFLICT');
  const key=us.protagonistKey,history=us.amateurHistory,player=us.world.players[key];
  if(!player||player.simulationKey!==key||history.world.worldKey!==worldKey||history.world.seed!==us.world.seed||history.world.protagonistKey!==key||!history.world.players[key])throw new RangeError('NATIONAL_US_ORIGIN_MISMATCH');
@@ -39,10 +44,10 @@ export function nationalUsCandidates(input:NationalCareerSources):NationalCandid
   nationalCandidateEligible(candidate,'AG');candidates.push(candidate);
  }
  const games:RecordLedger['games']=Object.create(null) as RecordLedger['games'];
- for(const ledger of [kbo.records,us.records])for(const [gameKey,game]of Object.entries(ledger.games)){
+ for(const ledger of [root.records,us.records])for(const [gameKey,game]of Object.entries(ledger.games)){
   if(game.gameKey!==gameKey)throw new RangeError('INVALID_NATIONAL_RECORD_SOURCE');
   if(Object.hasOwn(games,gameKey)&&canonicalJson(games[gameKey])!==canonicalJson(game))throw new RangeError('NATIONAL_RECORD_SOURCE_CONFLICT');
   if(!Object.hasOwn(games,gameKey))games[gameKey]=structuredClone(game);
  }
- return {worldKey,seasonKey,seed:kbo.world.seed,candidates:structuredClone(candidates),records:{revision:input.recordProjectionRevision,games},sources:{kboRevision:kbo.revision,usRevision:us.revision,kboRecordRevision:kbo.records.revision,usRecordRevision:us.records.revision}};
+ return {worldKey,seasonKey,seed:root.world.seed,candidates:structuredClone(candidates),records:{revision:input.recordProjectionRevision,games},sources:{kboRevision:kbo.revision,usRevision:us.revision,kboRecordRevision:root.records.revision,usRecordRevision:us.records.revision}};
 }

@@ -191,6 +191,7 @@ export {openUsKboReturn,usKboReturnView,acceptUsKboReturn} from './us-kbo-return
 export type {UsKboReturnAuthority,UsKboReturnOffer,UsKboOwnershipReceipt,UsKboReturnQuote} from './us-kbo-return.js';
 
 export {nationalUsCandidates} from './national-us-candidates.js';
+export {usNationalNpcOwner} from './national-us-candidates.js';
 export type {NationalCareerSources,NationalCandidateProjection} from './national-us-candidates.js';
 
 export {openUsNationalSelection,respondUsNationalCallup,assertUsNationalResponseDeadline,startUsNationalTournament,prepareUsNationalMatch,advanceUsNationalMatch,closeUsNationalDay,auditUsNationalDays,assertUsNationalState,confirmUsNationalEligibility,confirmUsAthleteService,advanceUsAthleteDutySeason,resolveUsNationalEvent,returnUsNationalTournament} from './us-national.js';
