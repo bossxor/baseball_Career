@@ -41,7 +41,7 @@ export function closeKboClubSeason(source: KboClubGame, expectedRevision: number
 export function startNextKboClubSeason(source: KboClubGame, expectedRevision: number): KboClubGame {
   assertRevision(source, expectedRevision);
   if (source.phase !== 'SEASON_REVIEW' || !source.seasonClose || source.seasonClose.seasonKey !== source.world.seasonKey) throw new RangeError('CLUB_SEASON_NOT_CLOSED');
-  const season = source.world.seasonKey, target = String(Number(season) + 1), calendar = createSeasonCalendar(Number(target));
+  const season = source.world.seasonKey, target = String(Number(season) + 1), calendar = createSeasonCalendar(Number(target),source.world.calendar.version);
   if (Object.values(source.records.games).some(g => g.scope.seasonKey === target)) throw new RangeError('NEXT_SEASON_RECORDS_ALREADY_EXIST');
   const game = structuredClone(source);
   let world = game.world;

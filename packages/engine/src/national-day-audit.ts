@@ -27,7 +27,7 @@ export function auditCareerNationalDays(c:Pick<KboCareer,'world'|'records'|'heal
     for(const x of h){result.injured.push(...x.result.injured);result.recovered.push(...x.result.recovered);}
    }
    result.injured.sort();result.recovered.sort();if(canonicalJson(result)!==canonicalJson(d.result))throw new RangeError('CHANGED_NATIONAL_HEALTH_EVIDENCE');
-   if(b.seasonKey===c.world.seasonKey){const closed=c.days?.days.find(row=>row.day===d.day);if(!closed?requireHostDays:closed.evidence!==nationalDayEvidence(b,d.day,d.gameKeys,d.rosterKeys)||canonicalJson(closed.result)!==canonicalJson(d.result))throw new RangeError('CHANGED_NATIONAL_PRO_DAY_EVIDENCE');}
+   if(b.seasonKey===c.world.seasonKey){const closed=c.days?.days.find(row=>row.day===d.day);if(!closed?requireHostDays&&b.tournament!=='WBC':closed.evidence!==nationalDayEvidence(b,d.day,d.gameKeys,d.rosterKeys)||canonicalJson(closed.result)!==canonicalJson(d.result))throw new RangeError('CHANGED_NATIONAL_PRO_DAY_EVIDENCE');}
   }
  }
 }

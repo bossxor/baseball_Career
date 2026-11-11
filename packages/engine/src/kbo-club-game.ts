@@ -4,6 +4,7 @@ import type {ActiveKboRosterWorld} from './kbo-career-entry.js';
 import {createKboRosterWorld} from './kbo-world.js';
 import {assertKboRecruitmentWorld} from './kbo-draft.js';
 import {createSeasonCalendar} from './season-calendar.js';
+import type {CalendarVersion} from './season-calendar.js';
 import {createKboSeasonSchedules} from './kbo-schedule.js';
 import type {KboSeasonSchedule} from './kbo-schedule.js';
 import {emptyRecordLedger} from './records.js';
@@ -50,10 +51,10 @@ export const KBO_CLUB_DEFAULT_START_YEAR=2027;
 
 /** One atomic creation: the whole league is generated from the seed, no club gets a favorable distribution, and no
  * redraw exists (the creation key is derived from the inputs, so a retry returns the same game). */
-export function createKboClubGame(input:{worldKey:string;seed:string;difficulty:Difficulty;clubId:string;startYear?:number;imports?:readonly ClubImportRequest[]}):KboClubGame {
+export function createKboClubGame(input:{worldKey:string;seed:string;difficulty:Difficulty;clubId:string;startYear?:number;calendarVersion?:CalendarVersion;imports?:readonly ClubImportRequest[]}):KboClubGame {
  const startYear=input.startYear??KBO_CLUB_DEFAULT_START_YEAR;
  if(!Number.isSafeInteger(startYear) || !KBO_CLUBS.some(c=>c.id===input.clubId))throw new RangeError('INVALID_KBO_CLUB_GAME');
- const calendar=createSeasonCalendar(startYear),created=createKboRosterWorld({worldKey:input.worldKey,seasonKey:String(startYear),seed:input.seed,difficulty:input.difficulty});
+ const calendar=createSeasonCalendar(startYear,input.calendarVersion),created=createKboRosterWorld({worldKey:input.worldKey,seasonKey:String(startYear),seed:input.seed,difficulty:input.difficulty});
  const world:ActiveKboRosterWorld={...created,status:'ACTIVE',calendar};assertKboRecruitmentWorld(world);
  const ids=world.clubs.map(c=>c.id);
  // The free-agent pool (floor 80) exists from day one; imports replace same-position players of my club and release them into it.

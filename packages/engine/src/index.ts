@@ -198,8 +198,8 @@ export type {UsNationalPhase,UsNationalLedger,UsNationalSession,UsNationalHostHa
 
 export {collegeNationalCandidates,openCollegeNationalSelection,respondCollegeNationalCallup,assertCollegeNationalResponseDeadline,startCollegeNationalTournament,prepareCollegeNationalMatch,advanceCollegeNationalMatch,closeCollegeNationalDay,assertCollegeNationalState,confirmCollegeNationalEligibility,resolveCollegeNationalEvent,returnCollegeNationalTournament,confirmCollegeAthleteService,advanceCollegeAthleteDutySeason} from './college-national.js';
 export type {CollegeNationalPhase,CollegeNationalLedger,CollegeNationalSession,CollegeNationalSources} from './college-national.js';
-export {createCollegeLeagueHost,advanceCollegeLeagueHost,isCollegeLeagueHost} from './college-national-host.js';
-export type {CollegeLeagueHost} from './college-national-host.js';
+export {createCollegeLeagueHost,advanceCollegeLeagueHost,isCollegeLeagueHost,assertNpcLeagueHost,createNpcLeagueHost,advanceNpcLeagueHost} from './college-national-host.js';
+export type {CollegeLeagueHost,NpcLeagueOwner} from './college-national-host.js';
 
 export {resolveProHiddenTraitNotice} from './pro-trait-notices.js';
 
