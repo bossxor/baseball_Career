@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {enrolledCollegeCareer} from './fixtures.js';
-import {advanceCollegeLeagueHost,createCollegeLeagueHost} from '../src/college-national-host.js';
+import {advanceCollegeLeagueHost,advanceNpcLeagueHost,createCollegeLeagueHost,npcHostPostseasonEndDay} from '../src/college-national-host.js';
 import {canonicalJson} from '../src/game.js';
 import {closeKboClubSeason} from '../src/kbo-club-year.js';
 
@@ -32,4 +32,19 @@ test('college NPC host rolls a closed prior season into the college AG year',()=
  assert.deepEqual(next.game.seasons?.map(season=>season.seasonKey),[host.game.world.seasonKey]);
  assert.deepEqual(next.game.health.closedSeasons,[host.game.world.seasonKey]);
  assert.deepEqual(next.game.records,source.game.records);
+});
+
+test('neutral host postseason target opens native playoffs and rejects a missing final game receipt',()=>{
+ const c=enrolledCollegeCareer(),host=createCollegeLeagueHost(c,c.revision);
+ const started=advanceCollegeLeagueHost(c,c.revision,host,host.revision,100).host;
+ const seasonKey=started.game.world.seasonKey;
+ const owner={worldKey:c.world.worldKey,seed:c.world.seed,seasonKey:c.world.seasonKey,playerKey:c.world.protagonistKey,difficulty:c.difficulty};
+ const review={...started,game:{...started.game,phase:'SEASON_REVIEW' as const,progress:undefined,days:{...started.game.days!,days:[{day:280,evidence:'controlled-review',result:{injured:[],recovered:[]}}]}}};
+ const result=advanceNpcLeagueHost(review,review.revision,owner,{seasonKey,stopDay:'POSTSEASON_COMPLETE'});
+ assert.equal(result.stopReason,'POSTSEASON_STARTED');
+ assert.equal(result.host.game.postseasonProgress?.nextWorldDay,281);
+ assert.throws(()=>npcHostPostseasonEndDay(result.host),/NATIONAL_PS_END_REQUIRED/);
+ const bracket=result.host.game.postseasonProgress!.postseason;
+ const forged={...review,game:{...review.game,postseason:{...bracket,championKey:'winner',series:[{...bracket.series[0]!,round:'KOREAN_SERIES' as const,games:[{gameNumber:1,homeTeamKey:'winner',awayTeamKey:'runner-up',winner:'winner'}]}]}}};
+ assert.throws(()=>advanceNpcLeagueHost(forged,forged.revision,owner,{seasonKey,stopDay:'POSTSEASON_COMPLETE'}),/NATIONAL_PS_END_CHANGED/);
 });

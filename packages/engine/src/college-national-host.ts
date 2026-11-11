@@ -60,24 +60,29 @@ export function advanceCollegeLeagueHost(c:HighSchoolCareer,revision:number,host
  assertCollegeCareerRevision(c,revision);
  return advanceNpcLeagueHost(host,hostRevision,collegeOwner(c),{seasonKey:c.world.seasonKey,stopDay});
 }
-export function advanceNpcLeagueHost(host:CollegeLeagueHost,hostRevision:number,owner:NpcLeagueOwner,target:{seasonKey:string;stopDay:number|null}):{host:CollegeLeagueHost;stopReason:string} {
+export function advanceNpcLeagueHost(host:CollegeLeagueHost,hostRevision:number,owner:NpcLeagueOwner,target:{seasonKey:string;stopDay:number|null|'POSTSEASON_COMPLETE'}):{host:CollegeLeagueHost;stopReason:string} {
  if(!/^\d{4}$/.test(target.seasonKey)||Number(target.seasonKey)>Number(owner.seasonKey)+1)throw new RangeError('INVALID_NATIONAL_HOST_YEAR');
  assertNpcLeagueHost(host,owner,hostRevision,target.seasonKey);
  const {stopDay}=target;
- if(stopDay!==null&&(!Number.isSafeInteger(stopDay)||stopDay<0))throw new RangeError('INVALID_NATIONAL_DAY');
+ if(stopDay!==null&&stopDay!=='POSTSEASON_COMPLETE'&&(!Number.isSafeInteger(stopDay)||stopDay<0))throw new RangeError('INVALID_NATIONAL_DAY');
  let game=host.game,stopReason:string;
  if(game.phase==='PRESEASON_SETUP'){
   if(game.world.seasonKey===target.seasonKey&&stopDay===null)return {host,stopReason:'TARGET_REACHED'};
   game=startKboClubSeason(game,game.revision);stopReason='STARTED';}
  else if(game.phase==='SEASON_PROGRESS'){
   if(!game.progress)throw new RangeError('NATIONAL_HOST_PHASE');
-  if(game.world.seasonKey===target.seasonKey&&(stopDay===null||game.progress.nextWorldDay>=stopDay)){
+  if(game.world.seasonKey===target.seasonKey&&(stopDay===null||typeof stopDay==='number'&&game.progress.nextWorldDay>=stopDay)){
    if(game.progress.nextWorldDay!==stopDay||game.progress.pendingGame)throw new RangeError('NATIONAL_HOST_PASSED_WINDOW');
    return {host,stopReason:'TARGET_REACHED'};
   }
   const result=advanceKboClubGame(game,game.revision,1);game=result.game;stopReason=result.stopReason;
  }else if(game.phase==='SEASON_REVIEW'){
-  if(Number(game.world.seasonKey)>=Number(target.seasonKey))throw new RangeError('NATIONAL_HOST_PASSED_WINDOW');
+  if(game.world.seasonKey===target.seasonKey){
+   if(stopDay!=='POSTSEASON_COMPLETE'||game.seasonClose||game.postseasonProgress)throw new RangeError('NATIONAL_HOST_PASSED_WINDOW');
+   if(game.postseason){npcHostPostseasonEndDay(host);return {host,stopReason:'TARGET_REACHED'};}
+   game=startKboClubPostseason(game,game.revision);stopReason='POSTSEASON_STARTED';
+   return {host:{...host,game,revision:game.revision},stopReason};
+  }
   if(game.seasonClose){game=startNextKboClubSeason(game,game.revision);stopReason='NEXT_YEAR';}
   else if(game.postseason){game=closeKboClubSeason(game,game.revision);stopReason='YEAR_CLOSED';}
   else {game=startKboClubPostseason(game,game.revision);stopReason='POSTSEASON_STARTED';}
@@ -85,6 +90,14 @@ export function advanceNpcLeagueHost(host:CollegeLeagueHost,hostRevision:number,
   const result=advanceKboClubPostseason(game,game.revision);game=result.game;stopReason=result.stopReason;
  }else throw new RangeError('NATIONAL_HOST_PHASE');
  return {host:{...host,game,revision:game.revision},stopReason};
+}
+/** P12 uses the closed Korean Series final, with the native day and official game receipt. */
+export function npcHostPostseasonEndDay(host:CollegeLeagueHost):number {
+ const game=host.game,season=game.world.seasonKey,post=game.postseason,series=post?.series.at(-1),final=series?.games.at(-1);
+ if(game.phase!=='SEASON_REVIEW'||game.postseasonProgress||game.seasonClose||post?.seasonKey!==season||!post.championKey||series?.round!=='KOREAN_SERIES'||!final||final.winner!==post.championKey)throw new RangeError('NATIONAL_PS_END_REQUIRED');
+ const key=JSON.stringify([season,'KBO','POSTSEASON',series.round,final.gameNumber]),row=game.records.games[key];
+ if(!row||row.scope.phase!=='POSTSEASON'||row.scope.leagueKey!=='KBO'||row.scope.seasonKey!==season||row.teams[final.winner]?.W!==1||row.worldDay!==game.days?.days.at(-1)?.day)throw new RangeError('NATIONAL_PS_END_CHANGED');
+ return row.worldDay;
 }
 export function collegeLeagueCandidates(host:CollegeLeagueHost):NationalCandidate[]{
  const game=host.game,first=new Set(game.world.clubs.flatMap(club=>club.firstTeam)),sports=new Set([...(game.sangmu?.loaned??[]),...Object.keys(game.sangmu?.members??{})]);
