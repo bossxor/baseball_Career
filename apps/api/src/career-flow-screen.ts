@@ -10,6 +10,7 @@ import {usReturnRetryFlow} from './career-us-return-retry-flow.js';
 import {amateurUsCommands} from './career-us-entry-shell.js';
 import {draftLines} from './career-draft-lines.js';
 import {amateurPreparationFlow,amateurPreparationRouteCommands} from './career-amateur-preparation-shell.js';
+import {usNationalFlow} from './career-us-national-shell.js';
 import {proNationalFlow} from './career-pro-national-shell.js';
 
 /** One public, command-bearing screen for the school→KBO entry and pro-retry flows.
@@ -58,7 +59,7 @@ function baseFlowScreen(state:SaveState):FlowScreen {
   })):[];
   return {screenId:'CAREER_FLOW',title:'은퇴 확인',lines:[],commands,notice:null,careerRevision:c.revision};
  }
- if(isUs(c))return usFlow(c);
+ if(isUs(c))return usNationalFlow(state)??usFlow(c);
  if(isKbo(c))return proNationalFlow(state)??kboFlow(c);
  if(collegeApplies(c)&&(isCollege(c)||c.phaseContext.phase==='NEXT_SEASON_READY'))return collegeFlow(c,state.collegeNationalHost as engine.KboCareer|engine.CollegeLeagueHost|undefined);
  return schoolFlow(c);
