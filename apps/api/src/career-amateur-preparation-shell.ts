@@ -29,11 +29,11 @@ export function applyAmateurPreparation(state:SaveState,command:CommandBody):App
    if(typeof p.forfeitUnusedTraining!=='boolean')fail('INVALID_PAYLOAD');
    next=engine.settleCareerPreparation(c,revision,p.forfeitUnusedTraining);
   }
+  const nextState:SaveState=name==='SETTLE'?stageAmateurUsEntry(state,next):{...state,career:next};
+  next=nextState.career as engine.HighSchoolCareer;
+  if(name==='START')delete nextState.usEntry;
+  return {nextState,phase:next.phaseContext.phase,eventIds:[],summary:{type:command.type,careerRevision:next.revision}};
  }catch(error){if(error&&typeof error==='object'&&'code' in error)throw error;fail(error instanceof Error&&/^[A-Z][A-Z0-9_]*$/.test(error.message)?error.message:'INVALID_REQUEST');}
- const nextState:SaveState=name==='SETTLE'?stageAmateurUsEntry(state,next!):{...state,career:next!};
- next=nextState.career as engine.HighSchoolCareer;
- if(name==='START')delete nextState.usEntry;
- return {nextState,phase:next!.phaseContext.phase,eventIds:[],summary:{type:command.type,careerRevision:next!.revision}};
 }
 export function amateurPreparationRouteCommands(c:engine.HighSchoolCareer):FlowCommand[]{
  if(c.phaseContext.phase!=='CAREER_ROUTE'||c.usRecruitment&&engine.careerUsDirectView(c).visible)return [];
