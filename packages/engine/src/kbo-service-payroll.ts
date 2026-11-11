@@ -79,7 +79,7 @@ import {assertKboRecruitmentWorld} from './kbo-draft.js';
 
 /** Internal daily transaction hook; caller owns the clone. All games and registration receipts must already be final. */
 export function settleKboServicePayrollDay(career:KboCareer,day:number):void {settleKboPlayerServicePayrollDay(career,career.protagonistKey,day);}
-export function settleKboPlayerServicePayrollDay(career:KboCareer,playerKey:string,day:number):void {
+export function settleKboPlayerServicePayrollDay(career:Pick<KboCareer,'world'|'days'|'health'|'records'> & {competitionSchedule?:Pick<NonNullable<KboCareer['competitionSchedule']>,'leagues'>},playerKey:string,day:number):void {
  const c=career.world.contracts[playerKey]??career.world.suspendedContracts?.[playerKey];if(!c)throw new RangeError('MISSING_KBO_SERVICE_CONTRACT');if(c.remainderPay){settleKboPlayerRemainderPayrollDay(career,playerKey,day);return;}if(!c.servicePay)return;
  if(!career.competitionSchedule || career.days?.days.at(-1)?.day!==day)throw new RangeError('PAYROLL_DAY_NOT_FINAL');
  const oldCharge=kboContractSeasonCharge(c),p=c.servicePay,club=career.world.clubs.find(x=>x.id===c.clubId)!;
@@ -114,7 +114,7 @@ export const kboActiveContractSuspended=(c:KboInitialContract)=>c.servicePay?.ki
 
 
 /** Registration changes fund the combined calendar difference before exposing an extra payable date. */
-export function reserveKboNpcServiceRosterChange(c:KboCareer,clubId:string,nextFirstTeam:readonly string[]):boolean {
+export function reserveKboNpcServiceRosterChange(c:Pick<KboCareer,'world'|'days'> & {competitionSchedule?:Pick<NonNullable<KboCareer['competitionSchedule']>,'leagues'>},clubId:string,nextFirstTeam:readonly string[]):boolean {
  const club=c.world.clubs.find(t=>t.id===clubId);if(!club)throw new RangeError('KBO_SERVICE_ROSTER_CONTEXT_REQUIRED');
  const affected=club.roster.filter(key=>c.world.contracts[key]!.servicePay?.ledger.resume && club.firstTeam.includes(key)!==nextFirstTeam.includes(key));if(!affected.length)return true;
  if(!c.competitionSchedule || !c.days?.days.length)throw new RangeError('KBO_SERVICE_ROSTER_CONTEXT_REQUIRED');

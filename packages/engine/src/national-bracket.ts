@@ -28,10 +28,13 @@ export interface NationalBracket {
  dayCloseVersion?:1;
  dayReceipts?:readonly {day:number;gameKeys:readonly string[];rosterKeys:readonly string[];result:{injured:string[];recovered:string[]}}[];
 }
-/** Invite 7 days before start; response due 2 days before; final roster 1 day before. No auto-decline. */
+/** P12 waits for both finals, with a same-day response if the ordinary deadline already passed. */
 export function nationalInviteDeadlines(window:NationalTournamentWindow):{inviteDay:number;responseDeadlineDay:number;finalRosterDay:number} {
  if(![window.startDay,window.endDay].every(d=>Number.isSafeInteger(d)&&d>=0)||window.endDay<window.startDay)throw new RangeError('INVALID_NATIONAL_WINDOW');
- return {inviteDay:window.startDay-7,responseDeadlineDay:window.startDay-2,finalRosterDay:window.startDay-1};
+ const finals=window.basis==='P12_POSTSEASON'?readP12Finals(window):null;
+ const inviteDay=finals?Math.max(window.startDay-7,finals.kboPostseasonEndDay,finals.usPostseasonEndDay):window.startDay-7;
+ if(inviteDay>=window.startDay)throw new RangeError('INVALID_NATIONAL_WINDOW');
+ return {inviteDay,responseDeadlineDay:Math.max(window.startDay-2,inviteDay),finalRosterDay:window.startDay-1};
 }
 const competitionId=(world:string,year:string,type:NationalTournament)=>JSON.stringify(['national-'+type.toLowerCase(),world,year]);
 export function nationalCalendarWindow(year:number,tournament:NationalTournament):NationalTournamentWindow {
@@ -45,12 +48,21 @@ export function p12ActualWindow(year:number,ends:{kboPostseasonEndDay:number;usP
  const startDay=Math.max(nominal.startDay,Math.max(ends.kboPostseasonEndDay,ends.usPostseasonEndDay)+1),span=nominal.endDay-nominal.startDay;
  return {startDay,endDay:startDay+span,basis:'P12_POSTSEASON',evidence:JSON.stringify(['p12-window-1',year,ends.kboPostseasonEndDay,ends.usPostseasonEndDay])};
 }
+function readP12Finals(window:NationalTournamentWindow){
+ let evidence:unknown;
+ try{evidence=JSON.parse(window.evidence??'');}catch{throw new RangeError('INVALID_NATIONAL_WINDOW');}
+ if(!Array.isArray(evidence)||evidence.length!==4||evidence[0]!=='p12-window-1'||
+  ![evidence[2],evidence[3]].every(d=>Number.isSafeInteger(d)&&d>=0))throw new RangeError('INVALID_NATIONAL_WINDOW');
+ return {kboPostseasonEndDay:evidence[2] as number,usPostseasonEndDay:evidence[3] as number};
+}
 function resolveWindow(seasonKey:string,tournament:NationalTournament,window?:NationalTournamentWindow):NationalTournamentWindow {
  const nominal=nationalCalendarWindow(Number(seasonKey),tournament);
  if(!window)return nominal;
  if(window.basis==='CALENDAR'){if(window.startDay!==nominal.startDay||window.endDay!==nominal.endDay||window.evidence!==undefined)throw new RangeError('CHANGED_NATIONAL_WINDOW');return nominal;}
- if(tournament!=='P12'||window.basis!=='P12_POSTSEASON'||typeof window.evidence!=='string'||!window.evidence||window.endDay-window.startDay!==nominal.endDay-nominal.startDay||window.startDay<nominal.startDay||!Number.isSafeInteger(window.startDay)||!Number.isSafeInteger(window.endDay))throw new RangeError('INVALID_NATIONAL_WINDOW');
- return {startDay:window.startDay,endDay:window.endDay,basis:'P12_POSTSEASON',evidence:window.evidence};
+ if(tournament!=='P12'||window.basis!=='P12_POSTSEASON'||typeof window.evidence!=='string')throw new RangeError('INVALID_NATIONAL_WINDOW');
+ const expected=p12ActualWindow(Number(seasonKey),readP12Finals(window));
+ if(canonicalJson(window)!==canonicalJson(expected))throw new RangeError('CHANGED_NATIONAL_WINDOW');
+ return expected;
 }
 export function createNationalBracket(input:{worldKey:string;seasonKey:string;tournament:NationalTournament;seed:string;window?:NationalTournamentWindow}):NationalBracket {
  const {worldKey,seasonKey,tournament,seed}=input;

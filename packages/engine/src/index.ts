@@ -187,7 +187,7 @@ export type {NationalProgressStop} from './national-progress.js';
 export {openUsMinorMarket,usMinorMarketView,resolveUsMinorMarketEvent,acceptUsMinorMarketOffer} from './us-minor-market.js';
 export type {UsMinorMarket,UsMinorOffer,UsMinorRenewal} from './us-minor-market.js';
 
-export {openUsKboReturn,usKboReturnView,acceptUsKboReturn} from './us-kbo-return.js';
+export {openUsKboReturn,usKboReturnView,acceptUsKboReturn,declineUsKboReturn} from './us-kbo-return.js';
 export type {UsKboReturnAuthority,UsKboReturnOffer,UsKboOwnershipReceipt,UsKboReturnQuote} from './us-kbo-return.js';
 
 export {nationalUsCandidates} from './national-us-candidates.js';
@@ -272,3 +272,4 @@ export {openUsMajorFaWindow,resolveUsMajorFaWindow,usMajorFaWindowView,hasOnlyUs
 export {canRequestUsReturnRetirement,requestUsReturnRetirement,resolveUsReturnRetirement,usReturnRetirementView,openUsReturnArchive} from './us-return-retirement.js';
 
 export {careerSeasonGrowthSummary} from './career-growth-summary.js';
+export {createKboDepartureHost} from './kbo-departure-host.js';

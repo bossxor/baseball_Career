@@ -46,11 +46,17 @@ test('p12ActualWindow uses max(nominal 11/15, both PS end+1) and keeps 14 days w
  assert.equal(nominal.endDay-nominal.startDay,14);assert.equal(nominal.basis,'CALENDAR');
  const early=p12ActualWindow(year,{kboPostseasonEndDay:nominal.startDay-10,usPostseasonEndDay:nominal.startDay-20});
  assert.deepEqual({startDay:early.startDay,endDay:early.endDay},{startDay:nominal.startDay,endDay:nominal.endDay});
+ assert.deepEqual(nationalInviteDeadlines(early),nationalInviteDeadlines(nominal));
+ const onTime=p12ActualWindow(year,{kboPostseasonEndDay:nominal.startDay-3,usPostseasonEndDay:nominal.startDay-8});
+ assert.deepEqual(nationalInviteDeadlines(onTime),{inviteDay:nominal.startDay-3,responseDeadlineDay:nominal.startDay-2,finalRosterDay:nominal.startDay-1});
  const lateDay=nominal.startDay+5,late=p12ActualWindow(year,{kboPostseasonEndDay:lateDay,usPostseasonEndDay:lateDay-2});
  assert.equal(late.startDay,lateDay+1);assert.equal(late.endDay,late.startDay+14);assert.equal(late.basis,'P12_POSTSEASON');
  assert.equal(late.evidence,JSON.stringify(['p12-window-1',year,lateDay,lateDay-2]));
+ assert.deepEqual(nationalInviteDeadlines(late),{inviteDay:lateDay,responseDeadlineDay:lateDay,finalRosterDay:lateDay});
  const bracket=createNationalBracket({worldKey:'w',seasonKey:'2027',tournament:'P12',seed:'late',window:late});
  assert.equal(bracket.window.startDay,late.startDay);assert.equal(bracket.groupMatches[0]!.day,late.startDay);assertNationalBracket(JSON.parse(canonicalJson(bracket)));
+ assert.throws(()=>assertNationalBracket({...bracket,window:{...late,startDay:late.startDay+1,endDay:late.endDay+1}}),/CHANGED_NATIONAL_WINDOW/);
+ assert.throws(()=>assertNationalBracket({...bracket,window:{...late,evidence:JSON.stringify(['p12-window-1',year-1,lateDay,lateDay-2])}}),/CHANGED_NATIONAL_WINDOW/);
  assert.deepEqual(nationalCalendarWindow(year,'P12'),nominal);
 });
 

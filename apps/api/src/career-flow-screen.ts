@@ -2,6 +2,8 @@ import * as engine from '@playball/engine';
 import {KBO_CLUBS,ABILITY_LABELS,abilityKeys,HITTER_TYPES,PITCHER_TYPES} from '@playball/rules';
 import type {SaveState} from './engine-command.js';
 import {kboPlayFlow} from './career-kbo-play-shell.js';
+import {kboDepartureFlow} from './career-kbo-departure-shell.js';
+import {usKboReturnFlow} from './career-us-kbo-return-shell.js';
 import {usFlow,isUs} from './career-us-flow.js';
 import {collegeApplies,collegeFlow,collegeRouteCommands,isCollege} from './career-college-shell.js';
 import {isUsAmateurReturn,usReturnFlow} from './career-us-return-flow.js';
@@ -59,8 +61,8 @@ function baseFlowScreen(state:SaveState):FlowScreen {
   })):[];
   return {screenId:'CAREER_FLOW',title:'은퇴 확인',lines:[],commands,notice:null,careerRevision:c.revision};
  }
- if(isUs(c))return usNationalFlow(state)??usFlow(c);
- if(isKbo(c))return proNationalFlow(state)??kboFlow(c);
+ if(isUs(c))return usNationalFlow(state)??usKboReturnFlow(state,usFlow(c));
+ if(isKbo(c))return proNationalFlow(state)??kboDepartureFlow(state)??kboFlow(c);
  if(collegeApplies(c)&&(isCollege(c)||c.phaseContext.phase==='NEXT_SEASON_READY'))return collegeFlow(c,state.collegeNationalHost as engine.KboCareer|engine.CollegeLeagueHost|undefined);
  return schoolFlow(c);
 }

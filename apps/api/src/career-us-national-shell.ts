@@ -14,6 +14,22 @@ function hostOf(state:SaveState){
  const host=state.collegeNationalHost;
  return engine.isCollegeLeagueHost(host)?host:null;
 }
+function canUseHost(c:engine.UsCareer,host:engine.CollegeLeagueHost|null):boolean{
+ return !c.kboTransfer||host?.departure?.kboRevision===c.kboTransfer.sourceRevision&&host.departure.usActivationReceiptKey===c.activation.receiptKey;
+}
+function p12Pending(c:engine.UsCareer,host:engine.CollegeLeagueHost|null):boolean{
+ const season=c.world.seasonKey;
+ if(c.phaseContext.phase!=='SEASON_REVIEW'||!c.postseason?.bracket.championKey||c.health.closedSeasons.includes(season)||
+  c.minorMarket?.seasonKey===season||c.majorFaWindow||!canUseHost(c,host)||
+  !c.world.calendar.international.some(slot=>slot.type==='P12'))return false;
+ if(host&&(Number(host.game.world.seasonKey)>Number(season)||host.game.world.seasonKey===season&&Boolean(host.game.seasonClose)))return false;
+ return ![c.national,host?.national].some(n=>n?.brackets?.some(b=>b.seasonKey===season&&b.tournament==='P12'));
+}
+export function usP12DecisionPending(state:SaveState):boolean{
+ const c=owner(state);
+ if(!c||!p12Pending(c,hostOf(state)))return false;
+ try{engine.assertUsMilitaryPlayable(c);return true;}catch{return false;}
+}
 const open=(c:engine.UsCareer)=>c.events.find(e=>e.status==='OPEN'&&e.seasonKey===c.world.seasonKey&&e.evidence.fields.playerSimulationKey===c.protagonistKey&&Object.hasOwn(nationalEventCommands,e.definitionId));
 const bracket=(c:engine.UsCareer)=>{
  const phase=c.phaseContext;
@@ -21,11 +37,18 @@ const bracket=(c:engine.UsCareer)=>{
 };
 function windowFor(c:engine.UsCareer,host:engine.CollegeLeagueHost|null){
  const phase=c.phaseContext;
+ if(!canUseHost(c,host))return null;
  for(const slot of c.world.calendar.international){
-  if(slot.type==='P12'||c.national?.brackets?.some(b=>b.seasonKey===c.world.seasonKey&&b.tournament===slot.type)||host?.national.brackets?.some(b=>b.seasonKey===c.world.seasonKey&&b.tournament===slot.type))continue;
+  if(c.national?.brackets?.some(b=>b.seasonKey===c.world.seasonKey&&b.tournament===slot.type)||host?.national.brackets?.some(b=>b.seasonKey===c.world.seasonKey&&b.tournament===slot.type))continue;
   const selected=c.national?.selections?.some(s=>s.seasonKey===c.world.seasonKey&&s.tournament===slot.type);
+  if(slot.type==='P12'){
+   if(!p12Pending(c,host))continue;
+   return {slot,selected,day:slot.startDay-7,stopDay:'POSTSEASON_COMPLETE' as const};
+  }
   if(slot.type==='WBC'){
-   if(phase.phase==='PRESEASON_SETUP'&&!c.preseasonPlan&&!c.season&&c.world.calendar.version==='calendar-2'&&host?.game.world.calendar.version!=='calendar-1')return {slot,selected,day:slot.startDay-7,stopDay:null};
+   const legacyHost=host?.game.world.calendar.version==='calendar-1'&&
+    !(host.departure&&Number(host.game.world.seasonKey)<Number(c.world.seasonKey));
+   if(phase.phase==='PRESEASON_SETUP'&&!c.preseasonPlan&&!c.season&&c.world.calendar.version==='calendar-2'&&!legacyHost)return {slot,selected,day:slot.startDay-7,stopDay:null};
    continue;
   }
   if(phase.phase!=='SEASON_PROGRESS'||phase.nextWorldDay>slot.startDay)continue;
@@ -43,9 +66,11 @@ export function usNationalDayBudget(state:SaveState,c:engine.UsCareer,maxDays:nu
  if(c.national?.invitations.some(i=>i.status==='INVITED'&&i.seasonKey===c.world.seasonKey)||p.nextWorldDay===window.day)fail('NATIONAL_DECISION_REQUIRED');
  return Math.min(maxDays,window.day-p.nextWorldDay);
 }
-function hostReady(host:engine.CollegeLeagueHost,c:engine.UsCareer,stopDay:number|null):boolean{
+function hostReady(host:engine.CollegeLeagueHost,c:engine.UsCareer,stopDay:number|null|'POSTSEASON_COMPLETE'):boolean{
  const game=host.game;
- return game.world.seasonKey===c.world.seasonKey&&(stopDay===null?game.phase==='PRESEASON_SETUP':game.phase==='SEASON_PROGRESS'&&game.progress?.nextWorldDay===stopDay&&!game.progress.pendingGame);
+ if(game.world.seasonKey!==c.world.seasonKey)return false;
+ if(stopDay==='POSTSEASON_COMPLETE')return game.phase==='SEASON_REVIEW'&&Boolean(game.postseason?.championKey)&&!game.seasonClose;
+ return stopDay===null?game.phase==='PRESEASON_SETUP':game.phase==='SEASON_PROGRESS'&&game.progress?.nextWorldDay===stopDay&&!game.progress.pendingGame;
 }
 function selectionDay(c:engine.UsCareer,fallback:number):number{
  const phase=c.phaseContext;
@@ -76,7 +101,7 @@ export function applyUsNational(state:SaveState,body:CommandBody):AppliedCommand
     do {
      const result=engine.advanceNpcLeagueHost(host,host.revision,authority,{seasonKey:c.world.seasonKey,stopDay:window.stopDay});
      host=result.host;stopReason=result.stopReason;
-    }while(['CHUNK_LIMIT','DAY_CLOSED','HEALTH_CHANGE','STARTED','POSTSEASON_STARTED','SEASON_REVIEW','YEAR_CLOSED','NEXT_YEAR'].includes(stopReason)&&Date.now()<deadline);
+    }while(['CHUNK_LIMIT','DAY_CLOSED','HEALTH_CHANGE','STARTED','POSTSEASON_STARTED','GAME_FINAL','POSTSEASON_COMPLETE','SEASON_REVIEW','YEAR_CLOSED','NEXT_YEAR'].includes(stopReason)&&Date.now()<deadline);
     break;
    }
    case 'SELECT':
@@ -84,7 +109,8 @@ export function applyUsNational(state:SaveState,body:CommandBody):AppliedCommand
     const phase=c.phaseContext;
     if(!window||!host||e||!hostReady(host,c,window.stopDay)||(phase.phase==='SEASON_PROGRESS'&&(phase.pendingGame||phase.nextWorldDay!==window.day))||Boolean(window.selected)!==(name==='START'))fail('NATIONAL_CALENDAR_NOT_READY');
     const sources={worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,kbo:host,kboRevision:host.revision,us:c,usRevision:rev,recordProjectionRevision:Math.max(host.game.records.revision,c.records.revision)};
-    next=name==='SELECT'?engine.openUsNationalSelection(c,rev,sources,window.slot.type,selectionDay(c,window.day)):engine.startUsNationalTournament(c,rev,sources,window.slot.type);
+    const day=window.slot.type==='P12'?undefined:selectionDay(c,window.day);
+    next=name==='SELECT'?engine.openUsNationalSelection(c,rev,sources,window.slot.type,day):engine.startUsNationalTournament(c,rev,sources,window.slot.type);
     break;
    }
    case 'RESOLVE':{
@@ -144,7 +170,7 @@ export function usNationalFlow(state:SaveState):FlowScreen|null{
   return out('대표팀 대회',[cmd('national-advance','대회 이어서 진행','ADVANCE')]);
  }
  const window=windowFor(c,host),phase=c.phaseContext;
- if(window&&(phase.phase==='PRESEASON_SETUP'||phase.phase==='SEASON_PROGRESS'&&!phase.pendingGame&&phase.nextWorldDay===window.day)){
+ if(window&&(phase.phase==='PRESEASON_SETUP'||phase.phase==='SEASON_REVIEW'&&window.slot.type==='P12'||phase.phase==='SEASON_PROGRESS'&&!phase.pendingGame&&phase.nextWorldDay===window.day)){
   lines.push({label:'대회',value:nationalTournamentNames[window.slot.type]});
   if(!host)return out('국가대표 선발 준비',[cmd('national-host-create','대표팀 선발 준비','HOST_CREATE')]);
   const payload={hostRevision:host.revision};

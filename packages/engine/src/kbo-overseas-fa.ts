@@ -1,3 +1,4 @@
+import {KBO_US_ORGANIZATIONS} from './us-world.js';
 import {overall,roleScore,KBO_ROSTER_LIMITS} from '@playball/rules';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision} from './kbo-career-version.js';
@@ -10,16 +11,17 @@ import {usMajorContractValue,usMlbOfferYears} from './us-contract-value.js';
 import {createWorldStream,nextInteger} from './rng.js';
 import {selectKboFirstTeamRoster} from './kbo-world.js';
 import type {KboPostingOffer} from './kbo-posting.js';
+import {releaseKboDeparturePayroll} from './kbo-posting.js';
+import type {Repertoire} from './repertoire.js';
 import type {DevelopmentPlayer} from './player.js';
 import type {KboInitialContract} from './kbo-world.js';
 
 export const KBO_OVERSEAS_FA_WINDOW_DAYS=30;
-const MLB_ORGS=Object.freeze(Array.from({length:30},(_,i)=>({id:'US'+String(i+1).padStart(2,'0'),name:'US Club '+String(i+1).padStart(2,'0')})));
 
 export interface KboOverseasFaWindow {
  windowId:string;seasonKey:string;requestedRevision:number;status:'OPEN'|'EXPIRED'|'REJECTED'|'SIGNED';
  offers:readonly KboPostingOffer[];issuedWorldDay:number;expiresWorldDay:number;
- signedOfferKey?:string;sealedPlayer?:DevelopmentPlayer;sealedContract?:KboInitialContract;domesticRights:'RELEASED';
+ signedOfferKey?:string;sealedPlayer?:DevelopmentPlayer;sealedContract?:KboInitialContract;sealedRepertoire?:Repertoire;domesticRights:'RELEASED';
 }
 
 function offseason(c:KboCareer){
@@ -35,7 +37,7 @@ function current(c:KboCareer){return c.overseasFa?.windows.find(w=>w.seasonKey==
 function buildOffers(c:KboCareer,id:string):KboPostingOffer[] {
  const p=performance(c);if(p.player.age>=45)return [];
  const years=usMlbOfferYears(p.player.age+1),value=usMajorContractValue(p.player,p.bat,p.pit),kind=p.ovr>=75?'MLB' as const:p.ovr>=65?'MILB' as const:null;if(!kind)return [];
- let rng=createWorldStream(c.world.seed,JSON.stringify(['kbo-overseas-fa-offers',id]),'roster');const pool=[...MLB_ORGS],offers:KboPostingOffer[]=[];
+ let rng=createWorldStream(c.world.seed,JSON.stringify(['kbo-overseas-fa-offers',id]),'roster');const pool=[...KBO_US_ORGANIZATIONS],offers:KboPostingOffer[]=[];
  const countDraw=nextInteger(rng,4);rng=countDraw.state;const count=Math.min(3,countDraw.value);if(!count)return [];
  while(pool.length&&offers.length<count){const pick=nextInteger(rng,pool.length);rng=pick.state;const org=pool.splice(pick.value,1)[0]!;
   offers.push({offerKey:JSON.stringify(['kbo-overseas-fa-offer',id,org.id]),organizationId:org.id,organizationName:org.name,kind,currency:'USD',years,annualSalaryUsd:kind==='MLB'?value.annualSalaryUsd:30_000,initialLevel:kind==='MLB'?'MLB':'AAA',nationalReleaseAllowed:true,militaryReturnOption:true});}
@@ -76,12 +78,12 @@ export function acceptKboOverseasFaOffer(c:KboCareer,revision:number,offerKey:st
  const offer=open.offers.find(o=>o.offerKey===offerKey);if(!offer)throw new RangeError('KBO_OVERSEAS_FA_OFFER_NOT_FOUND');
  const expected=buildOffers(c,open.windowId).find(o=>o.offerKey===offerKey);if(!expected||JSON.stringify(expected)!==JSON.stringify(offer))throw new RangeError('KBO_OVERSEAS_FA_OFFER_CHANGED');
  const contract=c.world.contracts[c.protagonistKey]!,player=c.world.players[c.protagonistKey]!,next=structuredClone(c),club=next.world.clubs.find(x=>x.id===c.protagonistClubId)!;
- const budget=club.budgetWon,sealedPlayer=structuredClone(player),sealedContract=structuredClone(contract);
+ const budget=club.budgetWon,sealedPlayer=structuredClone(player),sealedContract=structuredClone(contract),sealedRepertoire=structuredClone(next.world.repertoires[c.protagonistKey]);
  delete next.world.contracts[c.protagonistKey];delete next.world.players[c.protagonistKey];delete next.world.repertoires[c.protagonistKey];
  club.roster=club.roster.filter(k=>k!==c.protagonistKey);club.firstTeam=club.firstTeam.filter(k=>k!==c.protagonistKey);
- if(club.reservedSalaryWon<contract.annualSalaryWon)throw new RangeError('KBO_OVERSEAS_FA_PAYROLL_CHANGED');club.reservedSalaryWon-=contract.annualSalaryWon;
+ releaseKboDeparturePayroll(next,contract);
  if(club.roster.length>=KBO_ROSTER_LIMITS.firstTeam){const first=selectKboFirstTeamRoster(club.roster.map(k=>next.world.players[k]!));if(first.length===KBO_ROSTER_LIMITS.firstTeam)club.firstTeam=first;}
- const w=next.overseasFa!.windows.find(x=>x.windowId===open.windowId)!;w.status='SIGNED';w.signedOfferKey=offerKey;w.sealedPlayer=sealedPlayer;w.sealedContract=sealedContract;w.domesticRights='RELEASED';
+ const w=next.overseasFa!.windows.find(x=>x.windowId===open.windowId)!;w.status='SIGNED';w.signedOfferKey=offerKey;w.sealedPlayer=sealedPlayer;w.sealedContract=sealedContract;w.domesticRights='RELEASED';if(sealedRepertoire)w.sealedRepertoire=sealedRepertoire;
  next.phaseContext={phase:'ARCHIVED'};next.revision++;
  if(club.budgetWon!==budget)throw new RangeError('KBO_OVERSEAS_FA_FEE_FORBIDDEN');return next;
 }

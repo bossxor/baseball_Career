@@ -22,7 +22,7 @@ import {canonicalJson} from './game.js';
 import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 
 /** A server-owned NPC league with a separate detailed national ledger. */
-export interface CollegeLeagueHost {kind:'COLLEGE_NPC_KBO';revision:number;ownerPlayerKey:string;game:KboClubGame;national:NationalLedger}
+export interface CollegeLeagueHost {kind:'COLLEGE_NPC_KBO';revision:number;ownerPlayerKey:string;game:KboClubGame;national:NationalLedger;departure?:{kboRevision:number;usActivationReceiptKey:string}}
 export function isCollegeLeagueHost(host:unknown):host is CollegeLeagueHost {
  return typeof host==='object'&&host!==null&&'kind' in host&&host.kind==='COLLEGE_NPC_KBO';
 }
@@ -83,7 +83,7 @@ export function advanceNpcLeagueHost(host:CollegeLeagueHost,hostRevision:number,
    game=startKboClubPostseason(game,game.revision);stopReason='POSTSEASON_STARTED';
    return {host:{...host,game,revision:game.revision},stopReason};
   }
-  if(game.seasonClose){game=startNextKboClubSeason(game,game.revision);stopReason='NEXT_YEAR';}
+  if(game.seasonClose){game=startNextKboClubSeason(game,game.revision,host.departure?'calendar-2':undefined);stopReason='NEXT_YEAR';}
   else if(game.postseason){game=closeKboClubSeason(game,game.revision);stopReason='YEAR_CLOSED';}
   else {game=startKboClubPostseason(game,game.revision);stopReason='POSTSEASON_STARTED';}
  }else if(game.phase==='POSTSEASON_PROGRESS'){
@@ -95,8 +95,11 @@ export function advanceNpcLeagueHost(host:CollegeLeagueHost,hostRevision:number,
 export function npcHostPostseasonEndDay(host:CollegeLeagueHost):number {
  const game=host.game,season=game.world.seasonKey,post=game.postseason,series=post?.series.at(-1),final=series?.games.at(-1);
  if(game.phase!=='SEASON_REVIEW'||game.postseasonProgress||game.seasonClose||post?.seasonKey!==season||!post.championKey||series?.round!=='KOREAN_SERIES'||!final||final.winner!==post.championKey)throw new RangeError('NATIONAL_PS_END_REQUIRED');
- const key=JSON.stringify([season,'KBO','POSTSEASON',series.round,final.gameNumber]),row=game.records.games[key];
- if(!row||row.scope.phase!=='POSTSEASON'||row.scope.leagueKey!=='KBO'||row.scope.seasonKey!==season||row.teams[final.winner]?.W!==1||row.worldDay!==game.days?.days.at(-1)?.day)throw new RangeError('NATIONAL_PS_END_CHANGED');
+ const key=JSON.stringify([season,'KBO','POSTSEASON',series.round,final.gameNumber]),row=game.records.games[key],day=game.days?.days.at(-1);
+ const loser=final.winner===final.homeTeamKey?final.awayTeamKey:final.homeTeamKey;
+ if(!row||row.gameKey!==key||row.scope.phase!=='POSTSEASON'||row.scope.leagueKey!=='KBO'||row.scope.seasonKey!==season||
+  Object.keys(row.teams).length!==2||row.teams[final.winner]?.W!==1||row.teams[loser]?.L!==1||!day||row.worldDay!==day.day||
+  day.evidence!==canonicalJson({worldKey:game.world.worldKey,seasonKey:season,day:day.day,contributions:[row]}))throw new RangeError('NATIONAL_PS_END_CHANGED');
  return row.worldDay;
 }
 export function collegeLeagueCandidates(host:CollegeLeagueHost):NationalCandidate[]{
@@ -116,7 +119,8 @@ export function returnNpcLeagueHost(input:{host:CollegeLeagueHost;owner:National
  const {host,expectedRevision,snapshot:s,bracket:b}=input;assertNpcLeagueHost(host,input.ownerState,expectedRevision);assertNationalBracket(b);
  const source=host.game,regular=source.phase==='SEASON_PROGRESS';
  const aligned=regular?source.progress?.nextWorldDay===b.window.startDay&&!source.progress.pendingGame:
-  b.tournament==='WBC'&&source.phase==='PRESEASON_SETUP'&&source.world.calendar.version==='calendar-2';
+  b.tournament==='WBC'&&source.phase==='PRESEASON_SETUP'&&source.world.calendar.version==='calendar-2'||
+  b.tournament==='P12'&&b.window.basis==='P12_POSTSEASON'&&npcHostPostseasonEndDay(host)<b.window.startDay;
  if(!matchesCanonicalSeal(s.hostSourceFingerprint,canonicalSeal(host))||source.world.seasonKey!==b.seasonKey||!aligned||b.pendingGame||b.dayReceipts?.length!==b.window.endDay-b.window.startDay)throw new RangeError('STALE_NATIONAL_CAREER_SOURCE');
  const next=structuredClone(host),game=next.game;game.health=structuredClone(s.hostHealth);
  for(const [key,player] of Object.entries(s.hostPlayers)){

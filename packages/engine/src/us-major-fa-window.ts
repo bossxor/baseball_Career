@@ -13,8 +13,13 @@ export function assertUsMajorFaWindow(c:UsCareer):void {
  const events=c.events.filter(e=>e.eventKey===w.eventKey),e=events[0];
  if(events.length!==1||!e||e.status!=='OPEN'||e.definitionId!=='E66'||e.worldKey!==c.world.worldKey||e.seasonKey!==c.world.seasonKey||e.evidence.fields.playerSimulationKey!==c.protagonistKey||e.evidence.fields.contractWindowIdOrReturnProgramId!==w.windowId||e.evidence.fields.stage!=='MAJOR_EXPIRED'||e.resume.phase!=='SEASON_REVIEW'||e.resume.competitionKey!==c.registration.level||e.resume.registrationKey!==c.protagonistOrganizationId||e.resume.sourceRevision!==w.sourceRevision+1)throw new RangeError('INVALID_US_MAJOR_FA_WINDOW');validateEvent(e);
 }
-/** Only this already-validated contract window can accompany its signing/retirement owner. */
-export function hasOnlyUsMajorFaWindowEvent(c:UsCareer):boolean {return !!c.majorFaWindow&&c.events.some(e=>e.status==='OPEN'&&e.eventKey===c.majorFaWindow!.eventKey)&&c.events.every(e=>e.status!=='OPEN'||e.eventKey===c.majorFaWindow!.eventKey);}
+/** The market preview may compare the already-validated E67 without making a choice. */
+export function hasOnlyUsMajorFaWindowEvent(c:UsCareer,compareDomestic=false):boolean {
+ const market=c.majorFaWindow,domestic=c.domesticReturn;
+ const returnEvent=compareDomestic&&domestic?.status==='OPEN'&&domestic.marketEventKey===market?.eventKey?domestic.eventKey:undefined;
+ return !!market&&c.events.some(e=>e.status==='OPEN'&&e.eventKey===market.eventKey)&&
+  c.events.every(e=>e.status!=='OPEN'||e.eventKey===market.eventKey||e.eventKey===returnEvent);
+}
 export function openUsMajorFaWindow(c:UsCareer,revision:number,funding:readonly UsAnnualFunding[]):UsCareer {
  assertUsCareerRevision(c,revision);if(c.majorFaWindow)return c;usMajorFreeAgencyPreview(c,funding);
  const windowId=id(c),day=Object.values(c.records.games).reduce((n,g)=>g.scope.seasonKey===c.world.seasonKey?Math.max(n,g.worldDay):n,c.season!.lastDay),e=createWorldEvent({definitionId:'E66',worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:'US_RETURN',fields:{playerSimulationKey:c.protagonistKey,contractWindowIdOrReturnProgramId:windowId,stage:'MAJOR_EXPIRED'}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'SEASON_REVIEW',competitionKey:c.registration.level,registrationKey:c.protagonistOrganizationId,sourceRevision:revision+1},sourceSequence:c.events.reduce((n,e)=>Math.max(n,e.sourceSequence),0)+1,worldDay:day});

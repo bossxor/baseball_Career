@@ -35,7 +35,7 @@ export function usMajorRenewalPreview(c:UsCareer){
 function market(c:UsCareer){
  assertUsCareerRevision(c,c.revision);const ready=usYearTransitionReadiness(c);
  const guaranteed=c.contract.remainingGuaranteedUsd===undefined?(c.contract.years??1)>1:c.contract.remainingGuaranteedUsd>(c.season?.paidUsd??0);
- if(c.contract.type!=='US_MAJOR'||!ready.mlbService.freeAgentEligible||guaranteed||ready.blockers.some(b=>b!=='CONTRACT_DECISION_REQUIRED'&&!(b==='OPEN_EVENT'&&hasOnlyUsMajorFaWindowEvent(c))))throw new RangeError('US_MAJOR_FA_NOT_AVAILABLE');
+ if(c.contract.type!=='US_MAJOR'||!ready.mlbService.freeAgentEligible||guaranteed||ready.blockers.some(b=>b!=='CONTRACT_DECISION_REQUIRED'&&!(b==='OPEN_EVENT'&&hasOnlyUsMajorFaWindowEvent(c,true))))throw new RangeError('US_MAJOR_FA_NOT_AVAILABLE');
  auditUsClosedDays(c);auditUsCompletedPostseason(c);
  const totals=recordTotals(c.records,{leagueKey:'MLB',phase:'REGULAR',seasonKey:c.world.seasonKey}),batting=structuredClone(totals.batting[c.protagonistKey]??emptyBatting()),pitching=structuredClone(totals.pitching[c.protagonistKey]??emptyPitching()),value=usMajorContractValue(c.world.players[c.protagonistKey]!,batting,pitching),years=usMlbOfferYears(ready.nextAge);
  return {ready,batting,pitching,value,years};

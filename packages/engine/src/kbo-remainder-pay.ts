@@ -69,13 +69,13 @@ import {kboContractSeasonCharge} from './kbo-service-payroll.js';
 
 /** Conservative upper bound from both already-published calendars; never counts one date twice. */
 export function kboRemainderFutureDates(c:KboCareer,afterDay:number):number {return kboClubRemainderFutureDates(c,c.protagonistClubId,afterDay);}
-export function kboClubRemainderFutureDates(c:KboCareer,clubId:string,afterDay:number):number {
+export function kboClubRemainderFutureDates(c:{competitionSchedule?:Pick<NonNullable<KboCareer['competitionSchedule']>,'leagues'>},clubId:string,afterDay:number):number {
  if(!c.competitionSchedule)throw new RangeError('KBO_SCHEDULE_REQUIRED');
  return new Set([...c.competitionSchedule.leagues.KBO,...c.competitionSchedule.leagues.FUTURES].filter(g=>g.worldDay>afterDay && (g.homeTeamKey===clubId || g.awayTeamKey===clubId)).map(g=>g.worldDay)).size;
 }
 /** Caller owns the progress clone; joins actual official registrations and publishes one money transaction. */
 export function settleKboRemainderPayrollDay(career:KboCareer,day:number):void {settleKboPlayerRemainderPayrollDay(career,career.protagonistKey,day);}
-export function settleKboPlayerRemainderPayrollDay(career:KboCareer,playerKey:string,day:number):void {
+export function settleKboPlayerRemainderPayrollDay(career:Pick<KboCareer,'world'|'days'|'health'|'records'> & {competitionSchedule?:Pick<NonNullable<KboCareer['competitionSchedule']>,'leagues'>},playerKey:string,day:number):void {
  const old=career.world.contracts[playerKey]!;if(!old.remainderPay)return;
  if(career.days?.days.at(-1)?.day!==day || day<=old.remainderPay.startAfterWorldDay || day>old.remainderPay.endWorldDay)throw new RangeError('PAYROLL_DAY_NOT_FINAL');
  const oldCharge=kboContractSeasonCharge(old),club=career.world.clubs.find(x=>x.id===old.clubId)!;

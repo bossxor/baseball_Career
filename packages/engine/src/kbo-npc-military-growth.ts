@@ -7,7 +7,7 @@ import {assertSangmuUnit} from './kbo-sangmu-unit.js';
 import {canonicalJson} from './game.js';
 
 /** Only authentic v6 intakes opt in; legacy paid seasons and auxiliary identities keep their existing treatment. */
-export function closeKboNpcMilitaryGrowth(c:KboCareer){
+export function closeKboNpcMilitaryGrowth(c:Pick<KboCareer,'world'|'sangmu'|'records'|'health'|'days'|'difficulty'|'freeAgents'|'protagonistKey'>){
  const season=c.world.seasonKey,calendar=c.world.calendar.growthDays,W=calendar.length,programs=new Map<string,KboMilitaryProgram>();
  if(!c.world.suspendedContracts)return new Map<string,{player:DevelopmentPlayer;result:{budgetUnits:number;gainedUnits:number;agingLossUnits:number}}>();
  assertSangmuUnit(c.sangmu!,c.world);

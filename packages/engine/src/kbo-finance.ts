@@ -12,6 +12,8 @@ export interface KboGuarantee {
 export interface KboFinanceLedger {
  agentCounterReservations?:readonly {receiptKey:string;offerSetKey:string;counterOfferKey:string;playerKey:string;clubId:string;seasonKey:string;deltaWon:number;status?:'RESERVED'|'RELEASED'}[];
  closedContracts?:readonly KboInitialContract[];
+ departedServiceContracts?:readonly KboInitialContract[];
+ postingReceipts?:readonly {postingId:string;clubId:string;seasonKey:string;amountWon:number}[];
  guarantees:readonly KboGuarantee[];
  grants:readonly {receiptKey:string;seasonKey:string;clubId:string;amountWon:number;reason:'MINIMUM_ROSTER_REBUILD'|'SERVICE_OBLIGATION_REBUILD'|'FINANCE_REBUILD'}[];
 }
@@ -27,9 +29,21 @@ export function assertKboFinanceLedger(world:World):void {
  }
  const ledger=world.finance;if(!ledger)return;const seen=new Set<string>(),contracts=new Set<string>();
  for(const r of ledger.agentCounterReservations??[]){if(!r.receiptKey||seen.has(r.receiptKey)||!r.offerSetKey||!r.counterOfferKey||!r.playerKey||!KBO_CLUBS.some(c=>c.id===r.clubId)||!validYear(r.seasonKey)||!won(r.deltaWon)||r.deltaWon<=0||r.status!==undefined&&!['RESERVED','RELEASED'].includes(r.status))throw new RangeError('INVALID_AGENT_COUNTER_RESERVATION');seen.add(r.receiptKey);}
+ for(const receipt of ledger.postingReceipts??[]){
+  if(!receipt.postingId||seen.has(receipt.postingId)||!validYear(receipt.seasonKey)||Number(receipt.seasonKey)>Number(world.seasonKey)||
+   !KBO_CLUBS.some(c=>c.id===receipt.clubId)||!Number.isSafeInteger(receipt.amountWon)||receipt.amountWon<=0)throw new RangeError('INVALID_KBO_POSTING_RECEIPT');
+  seen.add(receipt.postingId);
+ }
  for(const c of ledger.closedContracts??[]){
   assertSettledContract(c);
   if(contracts.has(c.contractKey) || Object.values(world.contracts).some(x=>x.contractKey===c.contractKey || x.remainderPay?.previous.contractKey===c.contractKey) || Object.values(world.suspendedContracts??{}).some(x=>x.contractKey===c.contractKey))throw new RangeError('DUPLICATE_KBO_CLOSED_CONTRACT');contracts.add(c.contractKey);
+ }
+ for(const c of ledger.departedServiceContracts??[]){
+  assertKboServicePayroll(c);
+  if(!c.servicePay?.ledger.resume||c.remainderPay||c.status!=='ACTIVE'||!validYear(c.seasonKey)||Number(c.seasonKey)>Number(world.seasonKey)||
+   contracts.has(c.contractKey)||Object.values(world.contracts).some(x=>x.contractKey===c.contractKey)||
+   Object.values(world.suspendedContracts??{}).some(x=>x.contractKey===c.contractKey))throw new RangeError('INVALID_KBO_DEPARTED_SERVICE_CONTRACT');
+  contracts.add(c.contractKey);
  }
  for(const g of ledger.guarantees){
   if(!g.obligationKey || seen.has(g.obligationKey) || contracts.has(g.sourceContractKey) || !g.sourceContractKey || !g.playerKey || !KBO_CLUBS.some(c=>c.id===g.clubId) || !['RETIREMENT','RELEASE'].includes(g.reason) || !validYear(g.createdSeasonKey) || g.dues.length<1 || g.dues.length>(g.timing==='BEFORE_SEASON'?4:3) || g.timing!==undefined && g.timing!=='BEFORE_SEASON' || g.timing==='BEFORE_SEASON' && g.reason!=='RELEASE' || world.contracts[g.playerKey]?.contractKey===g.sourceContractKey)throw new RangeError('INVALID_KBO_GUARANTEE');seen.add(g.obligationKey);contracts.add(g.sourceContractKey);
@@ -140,11 +154,17 @@ export function archiveKboSettledContract(world:World,contract:KboInitialContrac
  world.finance={guarantees:[],grants:[],...(world.finance??{}),closedContracts:[...(world.finance?.closedContracts??[]),structuredClone(contract)]};
 }
 export function kboArchivedPaidWon(world:World,clubId:string,seasonKey:string):number {
- return sum((world.finance?.closedContracts??[]).flatMap(c=>{
-  const prior=kboRemainderPriorClubCharge(c);return [c.clubId===clubId && c.seasonKey===seasonKey?kboContractSeasonCharge(c):0,prior?.clubId===clubId && prior.seasonKey===seasonKey?prior.paidWon:0];
- }));
+ const departed=(world.finance?.departedServiceContracts??[]).filter(c=>c.clubId===clubId&&c.seasonKey===seasonKey)
+  .flatMap(c=>c.servicePay!.ledger.receipts.filter(r=>r.seasonKey===seasonKey).map(r=>r.amountWon));
+ const settled=(world.finance?.closedContracts??[]).flatMap(c=>{
+  const prior=kboRemainderPriorClubCharge(c);
+  return [c.clubId===clubId&&c.seasonKey===seasonKey?kboContractSeasonCharge(c):0,prior?.clubId===clubId&&prior.seasonKey===seasonKey?prior.paidWon:0];
+ });
+ return sum([...departed,...settled]);
 }
 export function kboRosterSeasonCharge(world:World,clubId:string):number {
  const club=world.clubs.find(t=>t.id===clubId);if(!club)throw new RangeError('MISSING_KBO_CLUB');
  return sum([...club.roster.map(k=>kboContractSeasonCharge(world.contracts[k]!)),...Object.values(world.suspendedContracts??{}).filter(c=>c.clubId===clubId).map(kboContractSeasonCharge)]);
 }
+
+export function kboPostingIncomeWon(world:World,clubId:string):number {return sum((world.finance?.postingReceipts??[]).filter(r=>r.clubId===clubId).map(r=>r.amountWon));}

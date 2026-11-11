@@ -41,12 +41,13 @@ const isUsPro=(c:UsCareer)=>c.contract.type==='US_MINOR'||c.contract.type==='US_
 /** The one open E66 market that owns the return comparison: Major FA window or minor market. */
 const marketOf=(c:UsCareer)=>c.contract.type==='US_MAJOR'?(c.majorFaWindow&&{eventKey:c.majorFaWindow.eventKey,marketId:c.majorFaWindow.windowId}):c.minorMarket;
 const same=(a:unknown,b:unknown)=>a===undefined||b===undefined?a===b:canonicalJson(a)===canonicalJson(b);
-const returnId=(c:UsCareer)=>JSON.stringify(['us-kbo-return',c.activation.receiptKey,c.world.seasonKey,c.contract.contractKey]);
+const returnId=(c:UsCareer,afterDecline?:number)=>JSON.stringify(['us-kbo-return',c.activation.receiptKey,c.world.seasonKey,c.contract.contractKey,...(afterDecline===undefined?[]:[afterDecline])]);
+const declinedReturn=(c:UsCareer)=>c.events.some(e=>e.definitionId==='E67'&&e.evidence.fields.contractWindowIdOrReturnProgramId===returnId(c)&&e.resolution?.command==='CANCEL_RETURN');
 
 /** Root-reader hook: no root revision assertion here, so imports cannot recurse. */
 export function assertUsKboReturnQuote(c:UsCareer):void {
  const q=c.domesticReturn;if(q===undefined)return;
- if(!q||typeof q!=='object'||!c.kboTransfer?.origin||!isUsPro(c)||q.returnId!==returnId(c)||!['OPEN','ACCEPTED'].includes(q.status)||q.targetSeasonKey!==String(Number(c.world.seasonKey)+1)||!Number.isSafeInteger(q.sourceRevision)||q.sourceRevision<c.activation.sourceRevision||q.sourceRevision>=c.revision||!q.authorityReceiptKey||!Number.isSafeInteger(q.authorityRevision)||q.authorityRevision<1||!Number.isSafeInteger(q.originalKboRevision)||q.originalKboRevision!==c.kboTransfer.sourceRevision||!Number.isSafeInteger(q.issuedWorldDay)||q.issuedWorldDay<0||q.expiresWorldDay!==q.issuedWorldDay+KBO_RETURN_WINDOW_DAYS||!Array.isArray(q.offers)||q.offers.some(o=>!o||typeof o!=='object')||new Set(q.offers.map(o=>o.clubId)).size!==q.offers.length)throw new RangeError('INVALID_US_KBO_RETURN');
+ if(!q||typeof q!=='object'||!c.kboTransfer?.origin||!isUsPro(c)||q.returnId!==returnId(c)&&(!declinedReturn(c)||q.returnId!==returnId(c,q.sourceRevision))||!['OPEN','ACCEPTED'].includes(q.status)||q.targetSeasonKey!==String(Number(c.world.seasonKey)+1)||!Number.isSafeInteger(q.sourceRevision)||q.sourceRevision<c.activation.sourceRevision||q.sourceRevision>=c.revision||!q.authorityReceiptKey||!Number.isSafeInteger(q.authorityRevision)||q.authorityRevision<1||!Number.isSafeInteger(q.originalKboRevision)||q.originalKboRevision!==c.kboTransfer.sourceRevision||!Number.isSafeInteger(q.issuedWorldDay)||q.issuedWorldDay<0||q.expiresWorldDay!==q.issuedWorldDay+KBO_RETURN_WINDOW_DAYS||!Array.isArray(q.offers)||q.offers.some(o=>!o||typeof o!=='object')||new Set(q.offers.map(o=>o.clubId)).size!==q.offers.length)throw new RangeError('INVALID_US_KBO_RETURN');
  const rights=c.kboTransfer.returnRights;
  if(q.route!==(rights?'ORIGINAL_CLUB_PRIORITY':'DOMESTIC_FA')||q.holderClubId!==(rights?.holderClubId??null)||q.offers.some(o=>o.offerKey!==JSON.stringify(['us-kbo-return-offer',q.returnId,o.clubId])||rights&&o.clubId!==rights.holderClubId||o.currency!=='KRW'||o.signingBonusWon!==0||!Number.isSafeInteger(o.years)||o.years<1||o.years>4||!Number.isSafeInteger(o.annualSalaryWon)||o.annualSalaryWon%10000!==0||o.annualSalaryWon<KBO_MONEY.minimumSalaryWon||o.annualSalaryWon>KBO_MONEY.maximumSalaryWon))throw new RangeError('INVALID_US_KBO_RETURN');
  const e=c.events.find(e=>e.eventKey===q.eventKey),m=c.events.find(e=>e.eventKey===q.marketEventKey);
@@ -73,18 +74,31 @@ function authority(c:UsCareer,source:KboCareer,a:UsKboReturnAuthority,expectedRe
  if(!row||row.status!=='SIGNED'||row.signedOfferKey!==t.offer.offerKey||!same(row.offers?.find(o=>o.offerKey===row.signedOfferKey),t.offer)||!same(source.posting,h.posting)||!same(source.overseasFa,h.overseasFa)||t.source==='POSTING'&&!same(source.posting?.windows.find(s=>s.postingId===t.postingId)?.returnRights,t.returnRights)||t.source==='OVERSEAS_FA'&&t.returnRights!==null)throw new RangeError('US_KBO_ORIGINAL_SOURCE_CHANGED');
  for(const [id,g]of Object.entries(c.records.games))if(!Object.hasOwn(h.records.games,id)||!same(h.records.games[id],g))throw new RangeError('US_KBO_RECORD_CONFLICT');
 }
-function offers(c:UsCareer,a:UsKboReturnAuthority):UsKboReturnOffer[] {
+function offers(c:UsCareer,a:UsKboReturnAuthority,id=c.domesticReturn?.returnId??returnId(c)):UsKboReturnOffer[] {
  const w=a.host.world,p={...c.world.players[c.protagonistKey]!,age:c.world.players[c.protagonistKey]!.age+1},t=recordTotals(c.records,{leagueKey:c.registration.level,phase:'REGULAR',seasonKey:c.world.seasonKey}),bat=t.batting[c.protagonistKey],pit=t.pitching[c.protagonistKey],rights=c.kboTransfer!.returnRights,value=kboPlayerContractValue(p,bat,pit),fa=kboFreeAgentTerms(p,bat,pit),salary=rights?kboRenewalSalaryWon(rights.annualSalaryWon,value.valueWon):fa.annualSalaryWon;
- return w.clubs.filter(club=>(!rights||club.id===rights.holderClubId)&&kboRecruitmentOpen(w,club.id)&&club.roster.length<KBO_ROSTER_LIMITS.maximum&&salary<=KBO_MONEY.maximumSalaryWon&&kboClubBalance(w,club.id).availableWon>=salary&&club.paidSalaryWon+club.reservedSalaryWon+salary<=club.budgetWon*.9&&Array.from({length:fa.years-1},(_,i)=>i+1).every(y=>kboFutureCommitmentWon(w,club.id,y)+salary<=club.budgetWon*.9)).map(club=>({club,need:kboAiRoleNeed(p,club.roster.map(k=>w.players[k]!))})).sort((a,b)=>b.need.needScore-a.need.needScore||a.need.incumbentRoleScore-b.need.incumbentRoleScore||(a.club.id<b.club.id?-1:1)).map(({club})=>({offerKey:JSON.stringify(['us-kbo-return-offer',returnId(c),club.id]),clubId:club.id,years:fa.years,annualSalaryWon:salary,signingBonusWon:0,currency:'KRW'}));
+ return w.clubs.filter(club=>(!rights||club.id===rights.holderClubId)&&kboRecruitmentOpen(w,club.id)&&club.roster.length<KBO_ROSTER_LIMITS.maximum&&salary<=KBO_MONEY.maximumSalaryWon&&kboClubBalance(w,club.id).availableWon>=salary&&club.paidSalaryWon+club.reservedSalaryWon+salary<=club.budgetWon*.9&&Array.from({length:fa.years-1},(_,i)=>i+1).every(y=>kboFutureCommitmentWon(w,club.id,y)+salary<=club.budgetWon*.9)).map(club=>({club,need:kboAiRoleNeed(p,club.roster.map(k=>w.players[k]!))})).sort((a,b)=>b.need.needScore-a.need.needScore||a.need.incumbentRoleScore-b.need.incumbentRoleScore||(a.club.id<b.club.id?-1:1)).map(({club})=>({offerKey:JSON.stringify(['us-kbo-return-offer',id,club.id]),clubId:club.id,years:fa.years,annualSalaryWon:salary,signingBonusWon:0,currency:'KRW'}));
 }
 /** Quote/start returns an unchanged-money US root. Authority is revalidated at actual accept. */
 export function openUsKboReturn(c:UsCareer,revision:number,source:KboCareer,a:UsKboReturnAuthority,authorityRevision:number):UsCareer {
  assertUsCareerRevision(c,revision);eligible(c);authority(c,source,a,authorityRevision);
  if(c.domesticReturn){assertUsKboReturnQuote(c);if(c.domesticReturn.authorityReceiptKey!==a.receiptKey||c.domesticReturn.authorityRevision!==a.revision||!same(c.domesticReturn.offers,offers(c,a)))throw new RangeError('US_KBO_RETURN_QUOTE_CHANGED');return c;}
- const id=returnId(c),day=Math.max(c.season!.lastDay,c.events.find(e=>e.eventKey===marketOf(c)!.eventKey)!.occurredWorldDay),event=createWorldEvent({definitionId:'E67',worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:'US_RETURN',fields:{playerSimulationKey:c.protagonistKey,contractWindowIdOrReturnProgramId:id,stage:'KBO_MINOR_EXPIRED_RETURN'}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'SEASON_REVIEW',competitionKey:c.registration.level,registrationKey:c.protagonistOrganizationId,sourceRevision:c.revision+1},sourceSequence:c.events.reduce((n,e)=>Math.max(n,e.sourceSequence),0)+1,worldDay:day,deadlineWorldDay:day+KBO_RETURN_WINDOW_DAYS});
- const next:UsCareer={...c,revision:c.revision+1,events:[...c.events,event],domesticReturn:{returnId:id,status:'OPEN',eventKey:event.eventKey,marketEventKey:marketOf(c)!.eventKey,marketId:marketOf(c)!.marketId,sourceRevision:c.revision,authorityReceiptKey:a.receiptKey,authorityRevision:a.revision,originalKboRevision:source.revision,targetSeasonKey:a.host.world.seasonKey,route:c.kboTransfer!.returnRights?'ORIGINAL_CLUB_PRIORITY':'DOMESTIC_FA',holderClubId:c.kboTransfer!.returnRights?.holderClubId??null,issuedWorldDay:day,expiresWorldDay:day+KBO_RETURN_WINDOW_DAYS,offers:offers(c,a)}};assertUsKboReturnQuote(next);return next;
+ const id=returnId(c,declinedReturn(c)?revision:undefined),day=Math.max(c.season!.lastDay,c.events.find(e=>e.eventKey===marketOf(c)!.eventKey)!.occurredWorldDay),event=createWorldEvent({definitionId:'E67',worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:'US_RETURN',fields:{playerSimulationKey:c.protagonistKey,contractWindowIdOrReturnProgramId:id,stage:'KBO_MINOR_EXPIRED_RETURN'}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'SEASON_REVIEW',competitionKey:c.registration.level,registrationKey:c.protagonistOrganizationId,sourceRevision:c.revision+1},sourceSequence:c.events.reduce((n,e)=>Math.max(n,e.sourceSequence),0)+1,worldDay:day,deadlineWorldDay:day+KBO_RETURN_WINDOW_DAYS});
+ const next:UsCareer={...c,revision:c.revision+1,events:[...c.events,event],domesticReturn:{returnId:id,status:'OPEN',eventKey:event.eventKey,marketEventKey:marketOf(c)!.eventKey,marketId:marketOf(c)!.marketId,sourceRevision:c.revision,authorityReceiptKey:a.receiptKey,authorityRevision:a.revision,originalKboRevision:source.revision,targetSeasonKey:a.host.world.seasonKey,route:c.kboTransfer!.returnRights?'ORIGINAL_CLUB_PRIORITY':'DOMESTIC_FA',holderClubId:c.kboTransfer!.returnRights?.holderClubId??null,issuedWorldDay:day,expiresWorldDay:day+KBO_RETURN_WINDOW_DAYS,offers:offers(c,a,id)}};assertUsKboReturnQuote(next);return next;
 }
 export function usKboReturnView(c:UsCareer){assertUsCareerRevision(c,c.revision);assertUsKboReturnQuote(c);const q=c.domesticReturn;if(!q)throw new RangeError('US_KBO_RETURN_NOT_OPEN');return {returnId:q.returnId,status:q.status,eventKey:q.eventKey,eventVersion:c.events.find(e=>e.eventKey===q.eventKey)!.version,targetSeasonKey:q.targetSeasonKey,route:q.route,holderClubId:q.holderClubId,offers:structuredClone(q.offers),expiresWorldDay:q.expiresWorldDay};}
+/** Leave the US market open when the player explicitly closes the domestic comparison. */
+export function declineUsKboReturn(c:UsCareer,revision:number,input:{eventKey:string;eventVersion:number}):UsCareer {
+ assertUsCareerRevision(c,revision);
+ const q=c.domesticReturn,event=c.events.find(e=>e.eventKey===input.eventKey);
+ if(!q||q.status!=='OPEN'||!event||event.eventKey!==q.eventKey)throw new RangeError('US_KBO_RETURN_NOT_OPEN');
+ const context={worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,worldDay:q.issuedWorldDay,eligibleCommands:['CANCEL_RETURN']};
+ const plan=resolveEventChoice(event,input.eventVersion,'CANCEL_RETURN',null,context).domain!;
+ const closed=completeEventDomain(event,plan,JSON.stringify(['us-kbo-return-declined',q.returnId,event.eventKey]),context);
+ const next={...c,revision:c.revision+1,events:c.events.map(e=>e.eventKey===closed.eventKey?closed:e)};
+ delete next.domesticReturn;
+ assertUsCareerRevision(next,next.revision);
+ return next;
+}
 /** Call inside the continuing-US writer, before its single revision commit. E66 stays its responsibility. */
 export function cancelUsKboReturnQuote(c:UsCareer):UsCareer {
  if(c.domesticReturn===undefined)return c;assertUsKboReturnQuote(c);const q=c.domesticReturn!;if(q.status!=='OPEN')throw new RangeError('US_KBO_RETURN_ALREADY_ACCEPTED');
@@ -92,7 +106,23 @@ export function cancelUsKboReturnQuote(c:UsCareer):UsCareer {
 }
 function transferredHealth(c:UsCareer,a:UsKboReturnAuthority){
  const ended=closeSeasonHealth(c.health,c.world.seasonKey).ledger,health=structuredClone(a.host.health),games=[...health.games],seen=new Map(games.map(g=>[JSON.stringify([g.evidence.gameKey,g.evidence.teamKey]),g]));
- for(const g of ended.games){const id=JSON.stringify([g.evidence.gameKey,g.evidence.teamKey]),old=seen.get(id);if(old&&!same(old,g))throw new RangeError('US_KBO_HEALTH_CONFLICT');if(!old){games.push(structuredClone(g));seen.set(id,g);}}
+ const handoffs=a.host.npcLeagueHistory?.tournaments.hostReturns??[];
+ for(const g of ended.games){
+  const id=JSON.stringify([g.evidence.gameKey,g.evidence.teamKey]),old=seen.get(id);
+  if(old&&same(old,g))continue;
+  const handoff=handoffs.find(r=>r.owner==='US'&&r.recordGameKeys.includes(g.evidence.gameKey));
+  if(old){
+   if(!handoff?.ownerHealthGames.some(h=>same(h,g))||old.evidence.roster.some(k=>g.evidence.roster.includes(k)))throw new RangeError('US_KBO_HEALTH_CONFLICT');
+   const combined={
+    evidence:{...old.evidence,roster:[...old.evidence.roster,...g.evidence.roster].sort(),
+     appearances:[...old.evidence.appearances,...g.evidence.appearances].sort((a,b)=>a.playerKey<b.playerKey?-1:1)},
+    result:{injured:[...old.result.injured,...g.result.injured].sort(),recovered:[...old.result.recovered,...g.result.recovered].sort()},
+   };
+   games[games.indexOf(old)]=combined;seen.set(id,combined);
+  }else{
+   const copy=structuredClone(g);games.push(copy);seen.set(id,copy);
+  }
+ }
  health.games=games;delete health.injuries[c.protagonistKey];if(ended.injuries[c.protagonistKey])health.injuries[c.protagonistKey]=structuredClone(ended.injuries[c.protagonistKey]!);
  health.closedSeasons=[...new Set([...health.closedSeasons,...ended.closedSeasons])];return health;
 }
@@ -112,6 +142,19 @@ export function acceptUsKboReturn(c:UsCareer,revision:number,source:KboCareer,a:
  const teamWorld={worldKey:world.worldKey,seasonKey:world.seasonKey,leagueKey:'KBO',protagonistKey:c.protagonistKey,protagonistSchoolId:club.id,schools:world.clubs,players:world.players};
  const kbo:KboCareer={...structuredClone(a.host),schemaVersion:7,revision:destinationRevision,world,records:structuredClone(a.host.records),health,protagonistKey:c.protagonistKey,protagonistClubId:club.id,phaseContext:{phase:'PRESEASON_SETUP'},activation:{receiptKey:ownership.receiptKey,sourceYearEndReceiptKey:c.season!.receiptKey,sourceRevision:c.revision,contractKey},registration:{playerKey:c.protagonistKey,clubId:club.id,seasonKey:world.seasonKey,status:'ACTIVE',firstTeam:club.firstTeam.includes(c.protagonistKey)},rights:{...structuredClone(source.rights),sourceType:q.route==='DOMESTIC_FA'?'FREE_AGENT':'TRANSFER',holderOrgId:club.id},amateurHistory:structuredClone(c.amateurHistory),seasonGrowth:createSeasonGrowthLedger(player,world.seasonKey,world.calendar.growthDays.length),development:{...structuredClone(c.development),seasonStartPlayer:structuredClone(player)},relationships:formRegisteredTeamTeammate(structuredClone(c.relationships),teamWorld,ownership.receiptKey,day),events:structuredClone(archivedUs.events),relationNotices:structuredClone(c.relationNotices),styleUsedWindows:[...c.styleUsedWindows],planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}],...(c.goals?{goals:structuredClone(c.goals)}:{})};
  for(const field of ['days','seasonClose','postseason','preseasonPlan','openingRoster','competitionSchedule','callupReviews','renewal','remainderRenewal','retirement','offseasonExit'] as const)delete kbo[field];
+ if(c.national){
+  const previous=kbo.national,us=c.national;
+  kbo.national=structuredClone({
+   ...previous,
+   invitations:[...(previous?.invitations??[]),...us.invitations],
+   competitions:[...(previous?.competitions??[]),...us.competitions],
+   benefits:[...(previous?.benefits??[]),...us.benefits],
+   selections:[...(previous?.selections??[]),...(us.selections??[])],
+   brackets:[...(previous?.brackets??[]),...(us.brackets??[])],
+   returnedCompetitions:[...(previous?.returnedCompetitions??[]),...(us.returnedCompetitions??[])],
+   eligibilityReviews:[...(previous?.eligibilityReviews??[]),...(us.eligibilityReviews??[])],
+  });
+ }
  if(c.achievements)kbo.achievements=structuredClone(c.achievements);else delete kbo.achievements;
  if(c.agents)kbo.agents=structuredClone(c.agents);else delete kbo.agents;
  if(c.traits)kbo.traits={...structuredClone(c.traits),lastClosedDay:null,lastSeasonKey:world.seasonKey};else delete kbo.traits;

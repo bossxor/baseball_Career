@@ -1,8 +1,10 @@
 import {applyKboEntry} from './career-kbo-entry-shell.js';
+import {applyKboDeparture} from './career-kbo-departure-shell.js';
+import {applyUsKboReturn} from './career-us-kbo-return-shell.js';
 import {applyUsEntry} from './career-us-entry-shell.js';
 import {applyAmateurPreparation} from './career-amateur-preparation-shell.js';
 import {applySchoolCareer} from './career-school-shell.js';
-import {applyUsNational} from './career-us-national-shell.js';
+import {applyUsNational,usP12DecisionPending} from './career-us-national-shell.js';
 import {applyKboNational} from './career-pro-national-shell.js';
 import {applyKboPlay} from './career-kbo-play-shell.js';
 import {applyCollege} from './career-college-shell.js';
@@ -38,13 +40,27 @@ export type AppliedCommand = {
   next?: ChooseNext;
 };
 
+const P12_BLOCKED_COMMANDS = new Set([
+  'CAREER_US_PLAY_NEXT_MINOR_YEAR', 'CAREER_US_PLAY_NEXT_MAJOR_YEAR',
+  'CAREER_US_PLAY_OPEN_MINOR_MARKET', 'CAREER_US_PLAY_OPEN_MAJOR_FA_WINDOW',
+  'CAREER_US_PLAY_ACCEPT_MINOR_OFFER', 'CAREER_US_PLAY_ACCEPT_MAJOR_FA',
+  'CAREER_US_MILITARY_PLAN', 'CAREER_US_RETURN_REQUEST',
+  'CAREER_PRO_RETIRE_REQUEST', 'CAREER_PRO_RETIRE_MAX_AGE',
+]);
+
 /** ALLOCATE_DEMO (M3 E2E) + UI_SEED/ADVANCE/CHOOSE (M4 shell over the same pipeline). */
 export function applyEngineCommand(state: SaveState, command: CommandBody): AppliedCommand {
+  if ((P12_BLOCKED_COMMANDS.has(command.type) || command.type.startsWith('CAREER_US_KBO_RETURN_')) &&
+      usP12DecisionPending(state)) {
+    throw Object.assign(new Error('NATIONAL_DECISION_REQUIRED'), {code:'NATIONAL_DECISION_REQUIRED'});
+  }
   if (command.type.startsWith('CAREER_AMATEUR_PREP_')) return applyAmateurPreparation(state, command);
   if (command.type.startsWith('CAREER_US_ENTRY_')) return applyUsEntry(state, command);
   if(command.type.startsWith('CAREER_SCHOOL_'))return applySchoolCareer(state,command);
   if(command.type.startsWith('CAREER_US_NATIONAL_'))return applyUsNational(state,command);
   if(command.type.startsWith('CAREER_KBO_NATIONAL_'))return applyKboNational(state,command);
+  if(command.type.startsWith('CAREER_KBO_DEPARTURE_'))return applyKboDeparture(state,command);
+  if(command.type.startsWith('CAREER_US_KBO_RETURN_'))return applyUsKboReturn(state,command);
   if(command.type.startsWith('CAREER_KBO_PLAY_'))return applyKboPlay(state,command);
   if(command.type.startsWith('CAREER_COLLEGE_'))return applyCollege(state,command);
   if(command.type.startsWith('CAREER_KBO_ENTRY_'))return applyKboEntry(state,command);

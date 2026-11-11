@@ -8,14 +8,14 @@ import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 import type {NationalLedger,NationalTournament,NationalCompetitionResult} from './kbo-national.js';
 import {assertNationalLedger,nationalAthleteEligible} from './kbo-national.js';
 import {returnNationalHost} from './national-host-return.js';
-import {assertNpcLeagueHost,captureCollegeLeagueHost,isCollegeLeagueHost,returnNpcLeagueHost} from './college-national-host.js';
+import {assertNpcLeagueHost,captureCollegeLeagueHost,isCollegeLeagueHost,npcHostPostseasonEndDay,returnNpcLeagueHost} from './college-national-host.js';
 import type {CollegeLeagueHost} from './college-national-host.js';
 import {nationalUsCandidates,usNationalNpcOwner} from './national-us-candidates.js';
 import type {NationalCareerSources,NationalCandidateProjection} from './national-us-candidates.js';
 import {createNationalSelection,assertNationalSelectionSnapshot,nationalLineupBatting,replaceNationalSelectionPlayer} from './national-selection.js';
 import type {NationalCandidate,NationalSelectionSnapshot} from './national-selection.js';
 import {replaceNationalInjuryWithEmergency} from './national-injury-replacement.js';
-import {createNationalBracket,assertNationalBracket,nextNationalMatch,nationalInviteDeadlines,nationalMatchesOnDay,nationalNationPreset,prepareNationalMatch,advanceNationalMatch} from './national-bracket.js';
+import {createNationalBracket,assertNationalBracket,nextNationalMatch,nationalInviteDeadlines,nationalMatchesOnDay,nationalNationPreset,prepareNationalMatch,advanceNationalMatch,p12ActualWindow} from './national-bracket.js';
 import type {NationalBracket,NationalTournamentWindow} from './national-bracket.js';
 import {koreaNationalTeam,nationalControlTeam} from './national-tournament.js';
 import {koreaGameProgress,koreaOutcome} from './national-progress.js';
@@ -33,6 +33,8 @@ import type {GamePitchDevelopment,TeamSnapshot,GameState} from './types.js';
 import {putGameContribution} from './records.js';
 import type {RecordLedger} from './records.js';
 import {canonicalJson} from './game.js';
+import {auditUsCompletedPostseason} from './us-postseason-progress.js';
+import {assertKboPostseasonProgress} from './kbo-postseason-progress.js';
 import {createWorldEvent,eventDefinition,eventResolutionPolicy,completeBlockingEvent,resolveEventChoice,validateEvent} from './events.js';
 import type {EventInstance} from './events.js';
 
@@ -61,17 +63,43 @@ function queueEvent(c:UsCareer,id:string,competitionId:string,stage:string,day:n
 }
 function closeTask(c:UsCareer,e:EventInstance,command:string,receiptKey:string):void {const closed=completeBlockingEvent(e,e.version,{sourceEvidenceKey:e.evidenceKey,receiptKey,command},{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:[command]});c.events=c.events.map(x=>x.eventKey===e.eventKey?closed:x);}
 
+/** Both leagues' sealed finals determine the P12 clock before a new selection can open. */
+function actualP12Timing(c:UsCareer,host:KboCareer|CollegeLeagueHost,requestedWindow?:NationalTournamentWindow){
+ const npc=isCollegeLeagueHost(host),world=npc?host.game.world:host.world;
+ if(c.phaseContext.phase!=='SEASON_REVIEW'||world.worldKey!==c.world.worldKey||world.seasonKey!==c.world.seasonKey||world.seed!==c.world.seed)throw new RangeError('NATIONAL_CALENDAR_NOT_READY');
+ assertUsSeason(c,c.revision);
+ auditUsCompletedPostseason(c);
+ const mlb=c.postseason!.bracket,final=mlb.results.at(-1);
+ if(!final||mlb.series.at(-1)?.round!=='WORLD_SERIES'||final.winner!==mlb.championKey)throw new RangeError('NATIONAL_PS_END_REQUIRED');
+ const usPostseasonEndDay=c.records.games[JSON.stringify([c.world.seasonKey,'MLB','POSTSEASON',final.seriesId,final.gameNumber])]!.worldDay;
+ let kboPostseasonEndDay:number;
+ if(npc){
+  assertNpcLeagueHost(host,usNationalNpcOwner(c),host.revision);
+  kboPostseasonEndDay=npcHostPostseasonEndDay(host);
+ }else{
+  const post=host.postseason,last=host.days?.days.at(-1)?.day;
+  if(host.phaseContext.phase!=='SEASON_REVIEW'||host.seasonClose||!post?.championKey||last===undefined)throw new RangeError('NATIONAL_PS_END_REQUIRED');
+  assertKboPostseasonProgress(host,{phase:'POSTSEASON_PROGRESS',postseason:post,nextWorldDay:last+1,pendingGame:null});
+  kboPostseasonEndDay=last;
+ }
+ const window=p12ActualWindow(Number(c.world.seasonKey),{kboPostseasonEndDay,usPostseasonEndDay});
+ if(requestedWindow&&canonicalJson(requestedWindow)!==canonicalJson(window))throw new RangeError('NATIONAL_PS_END_CHANGED');
+ return {window,deadlines:nationalInviteDeadlines(window)};
+}
+
 /** Trusted same-world caller supplies both current roots and the authoritative invitation date. */
-export function openUsNationalSelection(c:UsCareer,revision:number,sources:NationalCareerSources,tournament:NationalTournament,worldDay:number,window?:NationalTournamentWindow):UsCareer {
- const projection=sourceProjection(c,revision,sources),draw=createNationalBracket({worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,tournament,seed:`${c.world.seed}:national:${tournament}:${c.world.seasonKey}`,...(window?{window}:{})}),deadlines=nationalInviteDeadlines(draw.window);
- if(!['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW'].includes(c.phaseContext.phase)||c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame||!Number.isSafeInteger(worldDay)||worldDay<deadlines.inviteDay||worldDay>deadlines.responseDeadlineDay)throw new RangeError('US_NATIONAL_SELECTION_NOT_AVAILABLE');
+export function openUsNationalSelection(c:UsCareer,revision:number,sources:NationalCareerSources,tournament:NationalTournament,worldDay?:number,window?:NationalTournamentWindow):UsCareer {
+ const projection=sourceProjection(c,revision,sources),p12=tournament==='P12'?actualP12Timing(c,sources.kbo,window):undefined;
+ const drawWindow=p12?.window??window,draw=createNationalBracket({worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,tournament,seed:`${c.world.seed}:national:${tournament}:${c.world.seasonKey}`,...(drawWindow?{window:drawWindow}:{})}),deadlines=p12?.deadlines??nationalInviteDeadlines(draw.window);
+ const day=worldDay??p12?.deadlines.inviteDay;
+ if(!['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW'].includes(c.phaseContext.phase)||c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame||day===undefined||!Number.isSafeInteger(day)||day<deadlines.inviteDay||day>deadlines.responseDeadlineDay)throw new RangeError('US_NATIONAL_SELECTION_NOT_AVAILABLE');
  const old=selectionOf(c,tournament);if(old){assertNationalSelectionSnapshot(old);return c;}
  if(sources.kbo.national?.selections?.some(s=>s.seasonKey===c.world.seasonKey&&s.tournament===tournament))throw new RangeError('NATIONAL_TOURNAMENT_HAS_OTHER_OWNER');
  const selection=createNationalSelection({...projection,tournament}),n=ledger(c),next:UsCareer={...c,national:{...n,selections:[...(n.selections??[]),selection]}};
  if(selection.roster.slots.some(s=>s.playerKey===c.protagonistKey)){
   const selectionId=JSON.stringify(['national-callup',c.world.worldKey,c.world.seasonKey,tournament,c.protagonistKey]);
-  next.national={...next.national!,invitations:[...n.invitations,{selectionId,tournament,seasonKey:c.world.seasonKey,invitationVersion:1,status:'INVITED',militaryEffect:tournament==='AG'||tournament==='OLY',selectionSnapshotId:selection.selectionId,...deadlines}]};queueEvent(next,'E44',selectionId,'INVITATION',worldDay);
- }else queueEvent(next,'E45',selection.selectionId,'NOT_SELECTED',worldDay);
+  next.national={...next.national!,invitations:[...n.invitations,{selectionId,tournament,seasonKey:c.world.seasonKey,invitationVersion:1,status:'INVITED',militaryEffect:tournament==='AG'||tournament==='OLY',selectionSnapshotId:selection.selectionId,...deadlines}]};queueEvent(next,'E44',selectionId,'INVITATION',day);
+ }else queueEvent(next,'E45',selection.selectionId,'NOT_SELECTED',day);
  next.revision++;return next;
 }
 
@@ -94,17 +122,14 @@ export function startUsNationalTournament(c:UsCareer,revision:number,sources:Nat
  const projection=sourceProjection(c,revision,sources),selection=selectionOf(c,tournament);if(!selection)throw new RangeError('NATIONAL_SELECTION_REQUIRED');assertNationalSelectionSnapshot(selection);
  if(!['PRESEASON_SETUP','SEASON_PROGRESS','SEASON_REVIEW'].includes(c.phaseContext.phase)||c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame||c.events.some(e=>e.status==='OPEN'&&e.seasonKey===c.world.seasonKey&&(e.definitionId==='E45'||eventResolutionPolicy(e)==='BLOCKING_UNTIL_DOMAIN_COMMIT')))throw new RangeError('US_NATIONAL_TOURNAMENT_NOT_AVAILABLE');
  const host=sources.kbo,npc=isCollegeLeagueHost(host),root=npc?host.game:host;
- const bracket=createNationalBracket({worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,tournament,seed:`${c.world.seed}:national:${tournament}:${c.world.seasonKey}`,...(window?{window}:{})});
+ const p12=tournament==='P12'?actualP12Timing(c,host,window):undefined;
+ const drawWindow=p12?.window??window,bracket=createNationalBracket({worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,tournament,seed:`${c.world.seed}:national:${tournament}:${c.world.seasonKey}`,...(drawWindow?{window:drawWindow}:{})});
  if(ledger(c).brackets?.some(b=>b.competitionId===bracket.competitionId)||sources.kbo.national?.brackets?.some(b=>b.competitionId===bracket.competitionId)||c.health.closedSeasons.includes(c.world.seasonKey)||root.health.closedSeasons.includes(c.world.seasonKey))throw new RangeError('NATIONAL_TOURNAMENT_ALREADY_STARTED');
  const invitation=ledger(c).invitations.find(i=>i.selectionSnapshotId===selection.selectionId);
  if(selection.roster.slots.some(s=>s.playerKey===c.protagonistKey)&&invitation?.status!=='ACCEPTED'||invitation?.status==='INVITED')throw new RangeError('NATIONAL_CALLUP_REQUIRED');
  const phase=c.phaseContext;
  if(phase.phase==='PRESEASON_SETUP'&&(tournament!=='WBC'||c.preseasonPlan||c.season)||phase.phase==='SEASON_PROGRESS'&&(phase.nextWorldDay!==bracket.window.startDay||c.season?.days.at(-1)?.day!==bracket.window.startDay-1)||phase.phase==='SEASON_REVIEW'&&(tournament!=='P12'||!c.postseason?.bracket.championKey))throw new RangeError('NATIONAL_CALENDAR_NOT_READY');
- if(tournament==='P12'){
-  const last=(root:Pick<KboCareer,'records'>,league:string)=>Math.max(-1,...Object.values(root.records.games).filter(g=>g.scope.seasonKey===c.world.seasonKey&&g.scope.leagueKey===league&&g.scope.phase==='POSTSEASON').map(g=>g.worldDay));
-  const evidence=bracket.window.evidence?JSON.parse(bracket.window.evidence) as unknown[]:[];
-  if(bracket.window.basis!=='P12_POSTSEASON'||!root.postseason?.championKey||evidence[2]!==last(root,'KBO')||evidence[3]!==last(c,'MLB')||last(root,'KBO')<0||last(c,'MLB')<0)throw new RangeError('NATIONAL_PS_END_CHANGED');
- }
+ if(p12&&invitation&&Object.entries(p12.deadlines).some(([key,value])=>invitation[key as keyof typeof p12.deadlines]!==value))throw new RangeError('NATIONAL_PS_END_CHANGED');
  const hostPhase=npc?{phase:host.game.phase,...host.game.progress}:host.phaseContext;
  if(phase.phase==='SEASON_PROGRESS'&&(hostPhase.phase!=='SEASON_PROGRESS'||!('pendingGame' in hostPhase)||hostPhase.pendingGame||hostPhase.nextWorldDay!==bracket.window.startDay||root.days?.days.at(-1)?.day!==bracket.window.startDay-1)||phase.phase==='PRESEASON_SETUP'&&hostPhase.phase!=='PRESEASON_SETUP'||phase.phase==='SEASON_REVIEW'&&hostPhase.phase!=='SEASON_REVIEW')throw new RangeError('US_NATIONAL_HOST_CLOCK_MISMATCH');
  const scheduled=[...Object.values(c.seasonSchedule?.leagues??{}).flat(),...Object.values(npc?host.game.schedule:host.competitionSchedule?.leagues??{}).flat()];

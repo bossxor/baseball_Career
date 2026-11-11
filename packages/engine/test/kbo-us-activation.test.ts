@@ -63,7 +63,7 @@ test('sealed posting activates a US root once, funds one salary, and keeps retur
  assert.equal(us.military.status,source.military!.status,'resolved military status must survive overseas activation');
  const ready=usYearTransitionReadiness(us);assert.equal(ready.controlSeasonsUsed,1);assert.ok(!ready.blockers.includes('MILITARY_PLAN_REQUIRED'));
  assert.equal(us.activation.populationBasis,'KBO_TRANSFER');assert.equal(us.protagonistOrganizationId,offer.organizationId);assert.equal(us.contract.annualSalaryUsd,offer.annualSalaryUsd);assert.equal(us.contract.years,offer.years);assert.equal(us.income.length,0);
- assert.equal(us.inventory.clubs.find(c=>c.id===offer.organizationId)!.availableBudgetUsd,40_000_000-offer.annualSalaryUsd);assert.deepEqual(us.kboTransfer!.returnRights,source.posting!.windows[0]!.returnRights);assert.deepEqual(usCareerView(us).contract.annualSalaryUsd,offer.annualSalaryUsd);
+ assert.equal(us.inventory.clubs.find(c=>c.id===offer.organizationId)!.availableBudgetUsd,40_000_000-offer.annualSalaryUsd-Math.round(offer.annualSalaryUsd*offer.years*.2));assert.deepEqual(us.kboTransfer!.returnRights,source.posting!.windows[0]!.returnRights);assert.deepEqual(usCareerView(us).contract.annualSalaryUsd,offer.annualSalaryUsd);
  assert.throws(()=>activateKboUsCareer(source,source.revision,us.world,us.inventory),/ALREADY_REGISTERED/);
  let live=confirmUsPreseasonPlan(us,us.revision);for(const e of unreadUsFirstCampNotices(live))live=resolveUsFirstCampNotice(live,live.revision,{eventKey:e.eventKey,eventVersion:e.eventVersion,command:'ACK_EVENT'});live=publishUsSeasonSchedule(live,live.revision);live=startUsRegularSeason(live,live.revision);
  for(let i=0;i<200&&!live.season!.days.length;i++){const out=advanceUsCareer(live,live.revision);assert.notEqual(out.stopReason,'ENGINE_LIMIT');assert.notEqual(out.stopReason,'ROSTER_DECISION_REQUIRED');live=out.career;}
@@ -144,7 +144,7 @@ test('minor market rejects early entry, stale input, funding drift and forged qu
  const c=expiredMinor(),opened=openUsMinorMarket(c,c.revision,zeroFunding(c)),raw=canonicalJson(opened);assert.throws(()=>openUsMinorMarket(c,c.revision-1,zeroFunding(c)),/REVISION/);assert.throws(()=>openUsMinorMarket(transferred(70,33).us,1,[]),/REVISION|NOT_AVAILABLE/);const funding=zeroFunding(c);funding[0]!.addedBudgetUsd=1;assert.throws(()=>openUsMinorMarket(opened,opened.revision,funding),/US_MINOR_MARKET_FUNDING_CHANGED/);const bad=structuredClone(opened);bad.minorMarket!.offers[0]!.annualSalaryUsd++;assert.throws(()=>usMinorMarketView(bad),/INVALID_US_MINOR_MARKET/);assert.equal(canonicalJson(opened),raw);
 });
 test('unfunded KBO minor market still exposes domestic return, never invents an offer or resets level',()=>{
- const c=finishControlledMajorSeason(openingTransferred(transferred(70,35,30_000,0).us)),opened=openUsMinorMarket(c,c.revision,zeroFunding(c)),view=usMinorMarketView(opened);assert.deepEqual(view.offers,[]);assert.equal(view.returnHome.available,true);assert.equal(opened.registration.level,c.registration.level);assert.deepEqual(opened.inventory,c.inventory);
+ const c=finishControlledMajorSeason(openingTransferred(transferred(70,35,36_000,0).us)),opened=openUsMinorMarket(c,c.revision,zeroFunding(c)),view=usMinorMarketView(opened);assert.deepEqual(view.offers,[]);assert.equal(view.returnHome.available,true);assert.equal(opened.registration.level,c.registration.level);assert.deepEqual(opened.inventory,c.inventory);
 });
 
 test('minor market malformed rows and unrelated E66 evidence fail with a controlled boundary error',()=>{

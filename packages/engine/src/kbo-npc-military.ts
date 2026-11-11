@@ -1,4 +1,5 @@
 import type {KboCareer} from './kbo-career-entry.js';
+import type {KboClubGame} from './kbo-club-game.js';
 import {KBO_ROSTER_LIMITS,roleScore} from '@playball/rules';
 import {canonicalJson} from './game.js';
 import {createKboServicePayroll,reserveKboNpcServiceRosterChange,settleKboPlayerServicePayrollDay,kboContractSeasonCharge,kboContractSuspended,kboActiveContractSuspended} from './kbo-service-payroll.js';
@@ -30,7 +31,7 @@ export function activateKboNpcMilitaryContracts(source:KboCareer,c:KboCareer):vo
 }
 
 /** A full original club keeps ownership and the completed member off army registration until a real slot opens. */
-export function returnKboNpcMilitaryPlayers(c:KboCareer,day:number):void {
+export function returnKboNpcMilitaryPlayers(c:Pick<KboCareer,'world'|'sangmu'>,day:number):void {
  if(!c.sangmu || !c.world.suspendedContracts)return;const date={seasonKey:c.world.seasonKey,worldDay:day};compareKboSeasonDays(date,date);
  const members={...c.sangmu.members};let returned={...(c.sangmu.npcReturns??{})};
  for(const key of Object.keys(c.world.suspendedContracts??{}).sort()){
@@ -48,7 +49,7 @@ export function returnKboNpcMilitaryPlayers(c:KboCareer,day:number):void {
 }
 
 /** Fixed first-season end / second-season June30, after the actual world-day close, never a game-count shortcut. */
-export function closeKboNpcMilitaryCalendarDay(c:KboCareer,day:number):void {
+export function closeKboNpcMilitaryCalendarDay(c:Pick<KboCareer,'world'|'sangmu'|'days'>,day:number):void {
  if(!c.world.suspendedContracts)return;
  if(c.days?.days.at(-1)?.day!==day)throw new RangeError('NPC_MILITARY_DAY_NOT_FINAL');
  for(const [key,contract] of Object.entries(c.world.suspendedContracts)){
@@ -62,7 +63,19 @@ export function closeKboNpcMilitaryCalendarDay(c:KboCareer,day:number):void {
  returnKboNpcMilitaryPlayers(c,day);
 }
 
-function repairExpiredNpcSlots(c:KboCareer,clubId:string,holes:readonly {key:string;kind:'HITTER'|'PITCHER';position:string}[]):void {
+type NpcPayrollOwner=Pick<KboCareer,'world'|'sangmu'|'days'|'records'|'health'|'difficulty'|'freeAgents'|'aiAssessments'|'protagonistKey'|'protagonistClubId'> & {
+ competitionSchedule?:Pick<NonNullable<KboCareer['competitionSchedule']>,'leagues'>;relationships?:KboCareer['relationships'];
+};
+export function closeKboClubNpcMilitaryDay(game:KboClubGame,day:number):void {
+ if(!game.world.suspendedContracts)return;
+ const npc:NpcPayrollOwner={...game,protagonistKey:'',protagonistClubId:'',competitionSchedule:{leagues:game.schedule}};
+ closeKboNpcMilitaryCalendarDay(npc,day);
+ settleKboNpcMilitaryPayrollDay(npc,day);
+ if(npc.sangmu)game.sangmu=npc.sangmu;
+ if(npc.freeAgents)game.freeAgents=npc.freeAgents;
+ if(npc.aiAssessments)game.aiAssessments=npc.aiAssessments;
+}
+function repairExpiredNpcSlots(c:NpcPayrollOwner,clubId:string,holes:readonly {key:string;kind:'HITTER'|'PITCHER';position:string}[]):void {
  const club=c.world.clubs.find(t=>t.id===clubId)!,available=(key:string)=>!c.health.injuries[key],future=()=>club.roster.filter(k=>!club.firstTeam.includes(k) && !c.sangmu?.loaned?.includes(k) && !kboContractSuspended(c.world.contracts[k]!));
  const legal=(keys:string[])=>{const p=planEmergencyRoster(keys.map(k=>({player:c.world.players[k]!,available:available(k),temporary:false})));return p.requiredHitters===0 && p.requiredPitchers===0;};
  for(const hole of holes){
@@ -77,7 +90,7 @@ function repairExpiredNpcSlots(c:KboCareer,clubId:string,holes:readonly {key:str
 }
 
 /** Existing AI value/demand/budget decide residual-season renewals; the user player's decision remains separate. */
-function settleNpcExpiry(c:KboCareer,day:number):void {
+function settleNpcExpiry(c:NpcPayrollOwner,day:number):void {
  const future=(clubId:string)=>kboClubRemainderFutureDates(c,clubId,day);
  const expired=Object.entries(c.world.contracts).filter(([k,v])=>k!==c.protagonistKey && v.servicePay && kboContractPaymentBalance(v.servicePay.ledger).status==='SETTLED' && future(v.clubId)>0);
  if(!expired.length)return;
@@ -99,7 +112,7 @@ function settleNpcExpiry(c:KboCareer,day:number):void {
    if(Object.hasOwn(c.freeAgents.players,x.key))throw new RangeError('DUPLICATE_NPC_EXPIRED_PLAYER');
    archiveKboSettledContract(c.world,x.contract);const injury=c.health.injuries[x.key];
    c.freeAgents.players[x.key]={player:x.player,previousClubId:club.id,previousContract:x.contract,origin:'EXPIRED',enteredSeasonKey:c.world.seasonKey,...(x.book?{repertoire:x.book}:{}),...(injury?{injury:structuredClone(injury)}:{})};delete c.health.injuries[x.key];
-   if(club.id===c.protagonistClubId && !c.sangmu?.loaned?.includes(c.protagonistKey) && !kboActiveContractSuspended(c.world.contracts[c.protagonistKey]!))c.relationships.relations=c.relationships.relations.map(r=>['FORMED','REUNITED_TEAM'].includes(r.stage) && r.otherPlayerKey===x.key?{...r,stage:'SEPARATED',milestones:[...r.milestones,{stage:'SEPARATED',worldDay:day,evidenceKey:JSON.stringify(['relation-separation',r.relationKey,'kbo-npc-expiry',x.contract.contractKey,c.world.seasonKey,day])}]}:r);
+   if(c.relationships && club.id===c.protagonistClubId && !c.sangmu?.loaned?.includes(c.protagonistKey) && !kboActiveContractSuspended(c.world.contracts[c.protagonistKey]!))c.relationships.relations=c.relationships.relations.map(r=>['FORMED','REUNITED_TEAM'].includes(r.stage) && r.otherPlayerKey===x.key?{...r,stage:'SEPARATED',milestones:[...r.milestones,{stage:'SEPARATED',worldDay:day,evidenceKey:JSON.stringify(['relation-separation',r.relationKey,'kbo-npc-expiry',x.contract.contractKey,c.world.seasonKey,day])}]}:r);
   }
   if(remaining.length)repairExpiredNpcSlots(c,club.id,remaining.filter(x=>x.wasFirst).map(x=>({key:x.key,kind:x.player.kind,position:x.player.position})));
   club.roster.sort();
@@ -107,7 +120,7 @@ function settleNpcExpiry(c:KboCareer,day:number):void {
  assertKboRecruitmentWorld(c.world);
 }
 
-export function settleKboNpcMilitaryPayrollDay(c:KboCareer,day:number):void {
+export function settleKboNpcMilitaryPayrollDay(c:NpcPayrollOwner,day:number):void {
  if(!c.world.suspendedContracts)return;
  const keys=new Set([...Object.keys(c.world.suspendedContracts),...Object.values(c.sangmu?.npcReturns??{}).map(r=>r.program.playerKey)]);
  for(const key of [...keys].sort())if(c.world.suspendedContracts[key] || c.world.contracts[key]?.servicePay || c.world.contracts[key]?.remainderPay)settleKboPlayerServicePayrollDay(c,key,day);

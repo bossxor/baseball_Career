@@ -1,6 +1,7 @@
 import * as engine from '@playball/engine';
 import {spanDeadline,spanStopOf,teamProgress} from './span-budget.js';
 import {advanceKboToNationalBoundary} from './career-pro-national-shell.js';
+import {kboDepartureBlocksOffseason,kboDepartureOptions} from './career-kbo-departure-shell.js';
 import type {SpanStop} from './span-budget.js';
 import {ABILITY_LABELS,abilityKeys,KBO_CLUBS} from '@playball/rules';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
@@ -39,6 +40,7 @@ export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand
  if(!raw||typeof raw!=='object'||Array.isArray(raw)||Object.keys(raw).some(k=>k!=='careerRevision'&&!allowed.includes(k)))fail('INVALID_PAYLOAD');
  const p=raw as Record<string,unknown>,c=state.career as engine.KboCareer|undefined;
  if(!c||typeof c!=='object'||Array.isArray(c)||typeof c.protagonistClubId!=='string')fail('KBO_CAREER_REQUIRED');
+ if((name==='NEXT_YEAR'||name==='OPEN_CONTRACT_OFFERS')&&kboDepartureBlocksOffseason(c))fail('KBO_DEPARTURE_DECISION_REQUIRED');
  const rev=int(p,'careerRevision',1);let next:engine.KboCareer,stopReason:string|undefined,spanStop:SpanStop|undefined;
  const event=()=>({eventKey:str(p,'eventKey'),eventVersion:int(p,'eventVersion',1)});
  const offer=()=>({...event(),offerKey:str(p,'offerKey')});
@@ -130,6 +132,7 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
    militaryCommands.push(cmd('military-result-decline','입대 거절','MILITARY_RESULT',{command:'DECLINE'},'상무 입대를 거절할까요?'));
   }
   if(c.seasonClose){
+   militaryCommands.push(...kboDepartureOptions(c));
    const plan=engine.kboMilitaryPlan(c),preview=engine.kboActiveServicePreview(c);
    if(preview.canEnlist){lines.push({label:'복무 중 급여',value:preview.servicePayWon.toLocaleString('ko-KR')+'원'},{label:'계약 잔여 경기일',value:String(preview.remainingPaidGameDays)});militaryCommands.push(cmd('military-enlist','현역 입대 확정','MILITARY_ENLIST',{},'현역 입대를 확정할까요?'));}
    if(plan.status==='UNRESOLVED'&&plan.age>=19&&plan.age<45&&!c.events.some(e=>e.status==='OPEN'&&e.definitionId!=='E30')&&!c.events.some(e=>['E49','E54'].includes(e.definitionId)&&e.seasonKey===c.world.seasonKey))militaryCommands.push(cmd('military-open','병역 계획 확인','MILITARY_OPEN'));

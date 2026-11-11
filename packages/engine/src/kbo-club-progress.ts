@@ -1,3 +1,5 @@
+import { closeKboClubNpcMilitaryDay } from './kbo-npc-military.js';
+import { reconcileSangmuEmergency } from './kbo-sangmu-emergency.js';
 import type { KboClubGame } from './kbo-club-game.js';
 import { kboClubRosterIssues, validateClubLineup } from './kbo-club-game.js';
 import { recommendClubCallup, validateClubBullpen } from './kbo-club-manage.js';
@@ -27,7 +29,7 @@ export function startKboClubSeason(source: KboClubGame, expectedRevision: number
 /** Server-side AI context for one league: each club rotates its healthy starters by its own games, every unavailable player
  * is excluded, and the lineup is the automatic 41/44 selection (a hand-made lineup is not applied yet). */
 export function kboClubGameContext(g: KboClubGame, leagueKey: KboLeagueKey): HighSchoolGameContext {
-  const world = createKboCompetitionGameWorld(g.world, leagueKey, ''), starters: Record<string, string> = Object.create(null) as Record<string, string>;
+  const world = createKboCompetitionGameWorld(g.world, leagueKey, '',g.sangmu), starters: Record<string, string> = Object.create(null) as Record<string, string>;
   const season = recordTotals(g.records, { leagueKey, phase: 'REGULAR', seasonKey: g.world.seasonKey });
   for (const club of world.schools) {
     const available = club.roster.filter(k => world.players[k]!.kind === 'PITCHER' && !Object.hasOwn(g.health.injuries, k)).sort();
@@ -65,13 +67,14 @@ export function advanceKboClubGame(source: KboClubGame, expectedRevision: number
     const day = progress.nextWorldDay;
     if (day > last) return review();
     if (!progress.pendingGame) {
+      if(game.sangmu?.emergency&&game.schedule.FUTURES.some(g=>g.homeTeamKey==='SANGMU'||g.awayTeamKey==='SANGMU'))game.sangmu=reconcileSangmuEmergency(game.world,game.sangmu,game.health,day);
       const next = queue(game, day)[0];
       // 05: validate before every game; an invalid hand-made lineup stops here instead of being replaced silently.
       if (next && next.leagueKey === 'KBO' && (next.game.homeTeamKey === game.userClubId || next.game.awayTeamKey === game.userClubId)) {
         if (game.lineup && validateClubLineup(game, game.lineup.draft).length) return finish('LINEUP_INVALID');
         if (game.bullpen && validateClubBullpen(game).length) return finish('BULLPEN_INVALID');
       }
-      if (next) progress.pendingGame = { leagueKey: next.leagueKey, job: prepareSchoolCompetitionGame(createKboCompetitionGameWorld(game.world, next.leagueKey, ''), game.records, next.game, kboClubGameContext(game, next.leagueKey)) };
+      if (next) progress.pendingGame = { leagueKey: next.leagueKey, job: prepareSchoolCompetitionGame(createKboCompetitionGameWorld(game.world, next.leagueKey, '',game.sangmu), game.records, next.game, kboClubGameContext(game, next.leagueKey)) };
     }
     if (progress.pendingGame) {
       const pending = progress.pendingGame, before = pending.job.game, job = advanceHighSchoolGame(pending.job, 1000 - plateAppearances, 20 - completedInnings);
@@ -80,14 +83,21 @@ export function advanceKboClubGame(source: KboClubGame, expectedRevision: number
       if (job.stopReason === 'ENGINE_LIMIT') return finish('ENGINE_LIMIT');
       if (job.game.status !== 'FINAL') return finish('CHUNK_LIMIT');
       const scheduled = game.schedule[pending.leagueKey].find(x => x.simulationKey === job.game.input.simulationKey)!;
-      const committed = commitSchoolCompetitionGame(createKboCompetitionGameWorld(game.world, pending.leagueKey, ''), game.records, job, scheduled);
+      const committed = commitSchoolCompetitionGame(createKboCompetitionGameWorld(game.world, pending.leagueKey, '',game.sangmu), game.records, job, scheduled);
       // Merge only the books this game touched, so another league's earlier pitch XP is never rolled back.
-      for (const key of Object.keys(job.game.pitchDevelopment!.players)) game.world.repertoires[key] = structuredClone(committed.world.repertoires[key]!);
+      for (const key of Object.keys(job.game.pitchDevelopment!.players)) {
+        const book=structuredClone(committed.world.repertoires[key]!),member=game.sangmu?.members[key],temporary=game.sangmu?.emergency?.entries[key];
+        if(member)member.repertoire=book;
+        else if(temporary)temporary.repertoire=book;
+        else game.world.repertoires[key]=book;
+      }
       game.records = committed.records; progress.pendingGame = null;
       if (queue(game, day).length > 0) continue;
     }
-    const closed = closeKboCompetitionDay(game.world, game.schedule, '', game.records, game.health, game.days!, day);
+    const closed = closeKboCompetitionDay(game.world, game.schedule, '', game.records, game.health, game.days!, day,game.sangmu);
     game.world = closed.world; game.health = closed.health; game.days = closed.days; progress.nextWorldDay = day + 1; daysClosed++;
+    if(closed.sangmu)game.sangmu=closed.sangmu;
+    closeKboClubNpcMilitaryDay(game,day);
     const changed = [...closed.result.injured, ...closed.result.recovered];
     for (const key of changed.filter(k => !mine.has(k))) {
       const clubId = game.world.clubs.find(c => c.roster.includes(key))?.id;

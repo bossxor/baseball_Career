@@ -28,7 +28,7 @@ function majorPrice(c:engine.UsCareer,funding:ReturnType<typeof majorFunding>,ba
  return {annualSalaryUsd:price.annualSalaryUsd,...(key?{counterOfferKey:key}:{})};
 }
 export function majorContractView(c:engine.UsCareer,transition:ReturnType<typeof engine.usYearTransitionReadiness>|null){
- if(c.contract.type!=='US_MAJOR'||!transition||transition.blockers.some(b=>b!=='CONTRACT_DECISION_REQUIRED'&&!(b==='OPEN_EVENT'&&engine.hasOnlyUsMajorFaWindowEvent(c))))return null;
+ if(c.contract.type!=='US_MAJOR'||!transition||transition.blockers.some(b=>b!=='CONTRACT_DECISION_REQUIRED'&&!(b==='OPEN_EVENT'&&engine.hasOnlyUsMajorFaWindowEvent(c,true))))return null;
  const funding=majorFunding(c);
  try{
   const quote=engine.usMajorRenewalPreview(c),balance=c.inventory.clubs.find(o=>o.id===c.protagonistOrganizationId)!.availableBudgetUsd+(funding.find(f=>f.organizationId===c.protagonistOrganizationId)?.addedBudgetUsd??0),price=quote.guaranteed?{annualSalaryUsd:quote.annualSalaryUsd}:majorPrice(c,funding,quote.annualSalaryUsd);

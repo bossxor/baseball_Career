@@ -11,6 +11,10 @@ import type {Repertoire} from './repertoire.js';
 import {supportsUsConferenceRegistry,createUsConferenceRegistry,assertUsConferenceRegistry} from './us-conference-registry.js';
 import type {UsConferenceRegistry} from './us-conference-registry.js';
 
+export const KBO_US_ORGANIZATIONS=Object.freeze(Array.from({length:30},(_,i)=>{
+ const number=String(i+1).padStart(2,'0');
+ return Object.freeze({id:'US'+number,name:'US Club '+number});
+}));
 export const US_LEVEL_MEANS={ROOKIE:35,A:45,AA:55,AAA:65,MLB:75} as const;
 export type UsLevel=keyof typeof US_LEVEL_MEANS;
 const LEVELS=Object.keys(US_LEVEL_MEANS) as UsLevel[];

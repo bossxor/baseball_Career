@@ -25,7 +25,7 @@ export function kboAiRoleNeed(candidate:Pick<DevelopmentPlayer,'kind'|'position'
 /** Decision boundary accepts only public outlook, not raw P. Any missing-role100 takes precedence at the caller. */
 export function kboAiCandidatePriority(input:{roleScore:number;incumbentRoleScore:number;outlookMidpoint:number;needScore:number;annualSalaryWon:number;budgetWon:number}):number {
  for(const n of [input.roleScore,input.incumbentRoleScore,input.outlookMidpoint,input.needScore])if(!Number.isFinite(n) || n<0 || n>100)throw new RangeError('INVALID_KBO_AI_SCORE');
- if(!Number.isSafeInteger(input.annualSalaryWon) || input.annualSalaryWon<KBO_MONEY.minimumSalaryWon || input.annualSalaryWon>KBO_MONEY.maximumSalaryWon || input.budgetWon!==KBO_MONEY.annualBudgetWon)throw new RangeError('INVALID_KBO_AI_PRICE');
+ if(!Number.isSafeInteger(input.annualSalaryWon) || input.annualSalaryWon<KBO_MONEY.minimumSalaryWon || input.annualSalaryWon>KBO_MONEY.maximumSalaryWon || !Number.isSafeInteger(input.budgetWon) || input.budgetWon<KBO_MONEY.annualBudgetWon)throw new RangeError('INVALID_KBO_AI_PRICE');
  return .6*Math.max(0,input.roleScore-input.incumbentRoleScore)+.2*input.outlookMidpoint+.2*input.needScore-10*(input.annualSalaryWon/input.budgetWon);
 }
 /** Fixed level2 facility baseline (D). Only actual registered-team regular receipts add observation, never elapsed time. */
