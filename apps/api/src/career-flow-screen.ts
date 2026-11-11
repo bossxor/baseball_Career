@@ -10,6 +10,7 @@ import {usReturnRetryFlow} from './career-us-return-retry-flow.js';
 import {amateurUsCommands} from './career-us-entry-shell.js';
 import {draftLines} from './career-draft-lines.js';
 import {amateurPreparationFlow,amateurPreparationRouteCommands} from './career-amateur-preparation-shell.js';
+import {proNationalFlow} from './career-pro-national-shell.js';
 
 /** One public, command-bearing screen for the school→KBO entry and pro-retry flows.
  * Every command here is an existing owned CAREER_* command; the web replays `type`/`payload` exactly and never builds its own.
@@ -57,7 +58,10 @@ function baseFlowScreen(state:SaveState):FlowScreen {
   })):[];
   return {screenId:'CAREER_FLOW',title:'은퇴 확인',lines:[],commands,notice:null,careerRevision:c.revision};
  }
- return isUs(c)?usFlow(c):isKbo(c)?kboFlow(c):collegeApplies(c)&&(isCollege(c)||c.phaseContext.phase==='NEXT_SEASON_READY')?collegeFlow(c,state.collegeNationalHost as engine.KboCareer|undefined):schoolFlow(c);
+ if(isUs(c))return usFlow(c);
+ if(isKbo(c))return proNationalFlow(state)??kboFlow(c);
+ if(collegeApplies(c)&&(isCollege(c)||c.phaseContext.phase==='NEXT_SEASON_READY'))return collegeFlow(c,state.collegeNationalHost as engine.KboCareer|engine.CollegeLeagueHost|undefined);
+ return schoolFlow(c);
 }
 
 function cmd(c:Career,id:string,label:string,type:string,payload:Record<string,unknown>={},confirm?:string):FlowCommand {

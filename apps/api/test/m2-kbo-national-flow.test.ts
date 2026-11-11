@@ -4,11 +4,12 @@ import * as engine from '@playball/engine';
 import {enteredKboCareer} from '../../../packages/engine/test/fixtures.js';
 import {applyEngineCommand} from '../src/engine-command.js';
 import {proNationalFlow} from '../src/career-pro-national-shell.js';
+import {careerFlowScreen} from '../src/career-flow-screen.js';
 
 test('KBO national Flow opens one server draw and binds event choice and tournament start to its revision',()=>{
  const source=enteredKboCareer();
  const state={schemaVersion:1,career:source};
- const selection=proNationalFlow(state)!.commands[0]!;
+ const selection=careerFlowScreen(state).commands[0]!;
  const body=(type:string,payload:unknown)=>({commandId:'national',expectedRevision:0,type,payload});
  assert.equal(selection.type,'CAREER_KBO_NATIONAL_SELECT');
  assert.throws(()=>applyEngineCommand(state,body(selection.type,{...selection.payload,window:{startDay:0}})),/INVALID_PAYLOAD/);
