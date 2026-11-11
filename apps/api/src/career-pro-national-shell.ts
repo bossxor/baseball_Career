@@ -165,7 +165,7 @@ export function proNationalFlow(state:SaveState):FlowScreen|null {
   lines.push({label:'대회',value:tournaments[boundary.type]});
   return boundary.action==='SELECT'?out('대표팀 선발',[cmd('national-select','대표팀 명단 확인','SELECT',{tournament:boundary.type})]):out('대표팀 대회',[cmd('national-start','대회 시작','START',{tournament:boundary.type})]);
  }
- if(c.phaseContext.phase==='SEASON_REVIEW'&&c.military?.status==='ATHLETE_ELIGIBLE'&&c.national?.benefits.length)
+ if(c.phaseContext.phase==='SEASON_REVIEW'&&c.military?.status==='ATHLETE_ELIGIBLE'&&c.national?.benefits.length&&!c.events.some(e=>e.status==='OPEN'&&(e.definitionId==='E47'||e.definitionId==='E48')))
   return out('체육요원 활동',[cmd('national-athlete','체육요원 활동 시작','ATHLETE_SERVICE',{},'다음 시즌부터 3시즌의 활동 의무를 시작할까요?')]);
  return null;
 }
