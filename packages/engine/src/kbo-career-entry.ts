@@ -49,6 +49,7 @@ import {emptyPitchXpLedger} from './pitch-xp.js';
 import {createSeasonGrowthLedger} from './growth-ledger.js';
 import type {SeasonGrowthLedger} from './growth-ledger.js';
 import type {HealthLedger} from './health.js';
+import {validateHealthLedger} from './health.js';
 import type {RecordLedger} from './records.js';
 import type {CareerDevelopmentLedger} from './high-school-training.js';
 import type {CareerTraitLedger} from './high-school-traits.js';
@@ -56,6 +57,11 @@ import type {RelationshipLedger} from './relationships.js';
 import type {EventInstance} from './events.js';
 import {formRegisteredTeamTeammate} from './team-teammates.js';
 import {queueRelationFormationNotices} from './relation-notices.js';
+import {assertNpcLeagueHost} from './college-national-host.js';
+import type {CollegeLeagueHost} from './college-national-host.js';
+import type {KboClubGame} from './kbo-club-game.js';
+import {canonicalSeal} from './canonical-seal.js';
+import {canonicalJson} from './game.js';
 
 export interface ActiveKboRosterWorld extends Omit<KboRosterWorld,'status'> {status:'ACTIVE';calendar:SeasonCalendar}
 export type KboNationalResume={phase:'PRESEASON_SETUP'}|KboSeasonProgress|{phase:'SEASON_REVIEW'};
@@ -74,6 +80,7 @@ export interface KboCareer {
  adviceMorale?:number;
  proAwards?:import('./pro-career-awards.js').CareerProAwardLedger;
  proResults?:import('./pro-career-results.js').CareerProResultLedger;
+ npcLeagueHistory?:Pick<KboClubGame,'seasons'|'aiOffseasons'|'national'>&{tournaments:NationalLedger};
 
  achievements?:CareerAchievementLedger;
  agents?:CareerAgentLedger;
@@ -93,11 +100,15 @@ export interface KboCareer {
 function entryKey(ready:KboAmateurYearEnd){return JSON.stringify(['kbo-season-entry',ready.receiptKey]);}
 /** One atomic result consumes the frozen reservation once. Replaying the same old source is deterministic;
  * persistence must compare the source revision before replacing the school root with this pro root. */
-export function startSignedKboCareer(source:HighSchoolCareer,expectedRevision:number):KboCareer {
+export function startSignedKboCareer(source:HighSchoolCareer,expectedRevision:number,host?:CollegeLeagueHost):KboCareer {
  assertCareerRevision(source,expectedRevision);const ready=assertKboAmateurYearEnd(source),recruitment=assertCareerKboSigning(source),signing=recruitment.program.signing!;
  if(source.events.some(e=>e.status==='OPEN') || !source.development)throw new RangeError('KBO_ENTRY_NOT_READY');
  const year=Number(signing.registration.seasonKey),calendar=createSeasonCalendar(year,'calendar-2'),key=source.world.protagonistKey;
  if(signing.registration.seasonKey!==String(year) || year!==source.world.calendar!.year+1 || signing.registration.playerKey!==key || Object.values(source.records.games).some(g=>g.scope.seasonKey===String(year)))throw new RangeError('KBO_ENTRY_SEASON_CONFLICT');
+ if(recruitment.npcHostBasis){
+  if(!host||host.game.phase!=='PRESEASON_SETUP'||host.game.world.seasonKey!==String(year)||canonicalSeal(host)!==recruitment.npcHostBasis)throw new RangeError('STALE_KBO_DRAFT_HOST');
+  assertNpcLeagueHost(host,{worldKey:source.world.worldKey,seed:source.world.seed,seasonKey:source.world.seasonKey,playerKey:key,difficulty:source.difficulty},host.revision,String(year));
+ }else if(host)throw new RangeError('STALE_KBO_DRAFT_HOST');
  const player={...structuredClone(source.world.players[key]!),age:source.world.players[key]!.age+1,fatigue:0};
  const world:ActiveKboRosterWorld={...structuredClone(recruitment.world),status:'ACTIVE',calendar};
  const club=world.clubs.find(c=>c.id===signing.registration.clubId);if(!club || Object.hasOwn(world.players,key) || Object.hasOwn(world.contracts,key) || club.reservedSalaryWon!==signing.reservedSalaryBeforeWon || club.firstTeam.includes(key))throw new RangeError('KBO_RESERVATION_ALREADY_APPLIED');
@@ -107,6 +118,28 @@ export function startSignedKboCareer(source:HighSchoolCareer,expectedRevision:nu
  const registration={...structuredClone(signing.registration),status:'ACTIVE' as const},teamWorld={worldKey:world.worldKey,seasonKey:world.seasonKey,leagueKey:'KBO',protagonistKey:key,protagonistSchoolId:club.id,schools:world.clubs,players:world.players};
  const day=calendar.growthDays[0]!,relationships=formRegisteredTeamTeammate(source.relationships,teamWorld,signing.receiptKey,day);
  const career:KboCareer={schemaVersion:1,revision:source.revision+1,difficulty:source.difficulty,world,protagonistKey:key,protagonistClubId:club.id,phaseContext:{phase:'PRESEASON_SETUP'},activation:{receiptKey:entryKey(ready),sourceYearEndReceiptKey:ready.receiptKey,sourceRevision:source.revision,contractKey:signing.contract.contractKey},registration,rights:structuredClone(signing.rights),amateurHistory:structuredClone(source),records:structuredClone(source.records),health:{...structuredClone(source.health),injuries:Object.hasOwn(source.health.injuries,key)?{[key]:structuredClone(source.health.injuries[key]!)}:{}},seasonGrowth:createSeasonGrowthLedger(player,world.seasonKey,calendar.growthDays.length),development:{...structuredClone(source.development),seasonStartPlayer:structuredClone(player)},...(source.traits?{traits:{...structuredClone(source.traits),lastClosedDay:null,lastSeasonKey:world.seasonKey}}:{}),relationships,events:structuredClone(source.events),...(source.goals?{goals:source.goals}:{}),relationNotices:structuredClone(source.relationNotices??[]),styleUsedWindows:[...source.styleUsedWindows],planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
+ if(host){
+  const npc=host.game;
+  for(const [gameKey,row] of Object.entries(npc.records.games)){
+   if(row.scope.seasonKey===world.seasonKey)throw new RangeError('KBO_ENTRY_SEASON_CONFLICT');
+   const old=career.records.games[gameKey];
+   if(old){if(canonicalJson(old)!==canonicalJson(row))throw new RangeError('KBO_ENTRY_RECORD_CONFLICT');continue;}
+   career.records.games[gameKey]=structuredClone(row);career.records.revision++;
+  }
+  const npcHealth=structuredClone(npc.health),ownInjury=career.health.injuries[key];
+  const healthKey=(row:KboCareer['health']['games'][number])=>JSON.stringify([row.evidence.gameKey,row.evidence.teamKey]);
+  const npcHealthKeys=new Set(npcHealth.games.map(healthKey));
+  career.health={...npcHealth,injuries:{...npcHealth.injuries,...career.health.injuries},closedSeasons:[...new Set([...npcHealth.closedSeasons,...career.health.closedSeasons])].sort(),games:[...npcHealth.games,...career.health.games.filter(row=>!npcHealthKeys.has(healthKey(row))||ownInjury?.diagnosedGameKey===row.evidence.gameKey&&row.result.injured.includes(key))]};
+  validateHealthLedger(career.health);
+  career.freeAgents=structuredClone(npc.freeAgents);
+  if(npc.aiAssessments)career.aiAssessments=structuredClone(npc.aiAssessments);
+  if(npc.rookieDrafts)career.rookieDrafts=structuredClone(npc.rookieDrafts);
+  if(npc.retiredPlayers)career.retiredPlayers=structuredClone(npc.retiredPlayers);
+  if(npc.sangmu)career.sangmu=structuredClone(npc.sangmu);
+  career.npcLeagueHistory=structuredClone({tournaments:host.national,...(npc.seasons?{seasons:npc.seasons}:{}),...(npc.aiOffseasons?{aiOffseasons:npc.aiOffseasons}:{}),...(npc.national?{national:npc.national}:{})});
+  if(world.suspendedContracts!==undefined||world.finance?.closedContracts!==undefined||career.sangmu?.npcReturns!==undefined)career.schemaVersion=6;
+  else if(career.sangmu?.emergency)career.schemaVersion=5;
+ }
  if(source.collegeService?.status==='RESUMED'&&collegeLeaveElapsedYears(source)>0)career.military={status:'COMPLETED',applications:[],completedSeasonKey:source.collegeService.completionDays[1]!.seasonKey};
  if(source.achievements)career.achievements=structuredClone(source.achievements);
  career.relationNotices=queueRelationFormationNotices({...career,world:teamWorld,previousSeasons:[...(source.previousSeasons??[]),{world:source.world}]},day)??[];

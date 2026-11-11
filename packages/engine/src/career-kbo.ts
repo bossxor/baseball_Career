@@ -14,7 +14,9 @@ import {collegeEarlyRouteView,attachCollegeUnsignedReturn} from './college-route
 import {refreshCareerAchievements} from './career-achievements.js';
 import {careerPreparationDraftScore} from './career-preparation.js';
 import {refreshCareerRouteNotices} from './career-route-notices.js';
-export interface CareerKboRecruitment {schemaVersion:1;world:KboRosterWorld;program:KboDraftProgram;sourceBasis:string}
+import {assertNpcLeagueHost} from './college-national-host.js';
+import type {CollegeLeagueHost} from './college-national-host.js';
+export interface CareerKboRecruitment {schemaVersion:1;world:KboRosterWorld;program:KboDraftProgram;sourceBasis:string;npcHostBasis?:string}
 function basis(source:HighSchoolCareer){return canonicalSeal({world:source.world,records:source.records,health:source.health,days:source.days,development:(source.development??null),seasonGrowth:(source.seasonGrowth??null),graduation:(source.graduation??null),collegeAdmission:(source.collegeAdmission??null),collegeGraduation:(source.collegeGraduation??null)});}
 function route(source:HighSchoolCareer):number {
  if(source.phaseContext.phase!=='CAREER_ROUTE')throw new RangeError('INVALID_CAREER_PHASE');
@@ -29,14 +31,23 @@ function current(source:HighSchoolCareer){
  if(r.program.assessmentKey!==JSON.stringify(['amateur-kbo',source.world.worldKey,source.world.seasonKey,source.world.protagonistKey]) || r.program.input.baseScore!==(source.world.leagueKey==='INDEPENDENT'?careerPreparationDraftScore(source):source.world.leagueKey==='COLLEGE'?collegeCareerDraftEvaluation(source).draftBaseScore:highSchoolCareerDraftScore(source)))throw new RangeError('STALE_CAREER_KBO_EVALUATION');
  assertKboDraft(r.world,r.program);return r;
 }
-/** The first domestic assessment owns one next-season pro world. Later-year league advancement is separate. */
-export function prepareCareerKboDraft(source:HighSchoolCareer,expectedRevision:number,preferredClubId:string|null=null):HighSchoolCareer {
+/** If this career already has a played domestic league, its exact next preseason owns the assessment. */
+export function prepareCareerKboDraft(source:HighSchoolCareer,expectedRevision:number,preferredClubId:string|null=null,host?:CollegeLeagueHost):HighSchoolCareer {
  assertCareerRevision(source,expectedRevision);const score=route(source);
  const assessmentKey=JSON.stringify(['amateur-kbo',source.world.worldKey,source.world.seasonKey,source.world.protagonistKey]);
  if(source.kboRecruitment || source.previousKboRecruitments?.some(r=>r.program.assessmentKey===assessmentKey)||source.world.leagueKey===undefined&&source.previousKboRecruitments?.length)throw new RangeError('KBO_ASSESSMENT_ALREADY_EXISTS');
- const world=createKboRosterWorld({worldKey:source.world.worldKey,seasonKey:String(source.world.calendar!.year+1),seed:source.world.seed,difficulty:source.difficulty});
+ const seasonKey=String(source.world.calendar!.year+1);
+ let world:KboRosterWorld;
+ if(host){
+  if(source.world.leagueKey!=='COLLEGE'||host.game.world.seasonKey!==seasonKey||host.game.phase!=='PRESEASON_SETUP')throw new RangeError('KBO_DRAFT_HOST_NOT_READY');
+  const owner={worldKey:source.world.worldKey,seed:source.world.seed,seasonKey:source.world.seasonKey,playerKey:source.world.protagonistKey,difficulty:source.difficulty};
+  assertNpcLeagueHost(host,owner,host.revision,seasonKey);
+  const {calendar,...roster}=host.game.world;
+  if(String(calendar.year)!==seasonKey)throw new RangeError('KBO_DRAFT_HOST_NOT_READY');
+  world={...structuredClone(roster),status:'CREATED'};
+ }else world=createKboRosterWorld({worldKey:source.world.worldKey,seasonKey,seed:source.world.seed,difficulty:source.difficulty});
  const program=prepareKboDraft(world,{assessmentKey:JSON.stringify(['amateur-kbo',source.world.worldKey,source.world.seasonKey,source.world.protagonistKey]),player:source.world.players[source.world.protagonistKey]!,baseScore:score,preferredClubId});
- const career=structuredClone(source);career.kboRecruitment={schemaVersion:1,world,program,sourceBasis:basis(source)};career.revision++;return career;
+ const career=structuredClone(source);career.kboRecruitment={schemaVersion:1,world,program,sourceBasis:basis(source),...(host?{npcHostBasis:canonicalSeal(host)}:{})};career.revision++;return career;
 }
 export function careerKboDraftView(source:HighSchoolCareer){const r=current(source);return kboDraftView(r.world,r.program);}
 export function resolveCareerKboDraft(source:HighSchoolCareer,expectedRevision:number,programVersion:number):HighSchoolCareer {

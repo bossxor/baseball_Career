@@ -8,6 +8,10 @@ import {prepareCareerKboDraft,resolveCareerKboDraft,decideCareerKboDraft,careerK
 import {graduateCollegeCareer} from '../src/college-graduation.js';
 import {closeCollegeSeasonForNextYear,startNextCollegeSeason} from '../src/college-year.js';
 import {canonicalJson} from '../src/game.js';
+import {createKboClubGame} from '../src/kbo-club-game.js';
+import {advanceKboClubGame,startKboClubSeason} from '../src/kbo-club-progress.js';
+import {closeKboClubSeason,startNextKboClubSeason} from '../src/kbo-club-year.js';
+import type {CollegeLeagueHost} from '../src/college-national-host.js';
 const opened=(kind:'HITTER'|'PITCHER'='HITTER')=>{const s=completedHighSchoolCareer(800_000,kind),r=acknowledgeHighSchoolSeasonReview(s,s.revision);return openHighSchoolCareerRoute(r,r.revision,1).career;};
 test('HS career route→actual KBO preview→fixed result→signed next-season contract preserves all school books/records/budgets',()=>{
  for(const kind of ['HITTER','PITCHER'] as const){const source=opened(kind),before=canonicalJson(source),prepared=prepareCareerKboDraft(source,source.revision,'LG'),preview=careerKboDraftView(prepared);
@@ -39,4 +43,26 @@ test('college E75 graduation uses college-adjusted B and next-season reservation
  legacy.kboYearEnd={...closed.kboYearEnd!,sourceBasis:canonicalJson(legacy)};
  assertKboAmateurYearEnd(JSON.parse(JSON.stringify(legacy)));
  const entered=startSignedKboCareer(closed,closed.revision);assert.equal(entered.world.seasonKey,'2034');assert.equal(entered.world.players.own!.age,23);assert.equal(entered.amateurHistory.collegeAdmission!.status,'GRADUATED');assert.equal(canonicalJson(entered.records),canonicalJson(degree.records));assert.equal(Object.keys(entered.world.players).length,501);
+ // Exercise the carried draft with an actual NPC game and a controlled season-review boundary.
+ let game=createKboClubGame({worldKey:degree.world.worldKey,seed:degree.world.seed,difficulty:degree.difficulty,clubId:'LG',startYear:2033});
+ game=startKboClubSeason(game,game.revision);
+ for(let i=0;i<10&&!Object.keys(game.records.games).length;i++)game=advanceKboClubGame(game,game.revision).game;
+ assert.ok(Object.keys(game.records.games).length);
+ game.phase='SEASON_REVIEW';delete game.progress;
+ game=closeKboClubSeason(game,game.revision);
+ game=startNextKboClubSeason(game,game.revision);
+ const host:CollegeLeagueHost={kind:'COLLEGE_NPC_KBO',revision:game.revision,ownerPlayerKey:'own',game,national:{invitations:[],competitions:[],benefits:[]}};
+ const hostBefore=canonicalJson(host),fromHost=prepareCareerKboDraft(degree,degree.revision,null,host);
+ assert.deepEqual(fromHost.kboRecruitment!.world.players,host.game.world.players);
+ const fixed=resolveCareerKboDraft(fromHost,fromHost.revision,1);
+ assert.ok(fixed.kboRecruitment!.program.result?.round);
+ const signedHost=decideCareerKboDraft(fixed,fixed.revision,{programVersion:2,decision:'SIGN'}),readyHost=closeSchoolSeasonForKbo(signedHost,signedHost.revision,true);
+ assert.throws(()=>startSignedKboCareer(readyHost,readyHost.revision),/STALE_KBO_DRAFT_HOST/);
+ const changed=structuredClone(host);changed.game.revision++;changed.revision++;
+ assert.throws(()=>startSignedKboCareer(readyHost,readyHost.revision,changed),/STALE_KBO_DRAFT_HOST/);
+ const carried=startSignedKboCareer(readyHost,readyHost.revision,host);
+ for(const [gameKey,row] of Object.entries(host.game.records.games))assert.deepEqual(carried.records.games[gameKey],row);
+ assert.deepEqual(carried.freeAgents,host.game.freeAgents);
+ assert.deepEqual(carried.npcLeagueHistory?.seasons,host.game.seasons);
+ assert.equal(canonicalJson(host),hostBefore);
 });
