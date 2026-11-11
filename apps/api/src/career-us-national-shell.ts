@@ -90,7 +90,7 @@ export function applyUsNational(state:SaveState,body:CommandBody):AppliedCommand
    case 'RESOLVE':{
     if(!e||p.eventKey!==e.eventKey||p.eventVersion!==e.version||typeof p.command!=='string'||!nationalEventCommands[e.definitionId]?.includes(p.command)||e.definitionId==='E48')fail('INVALID_NATIONAL_EVENT');
     next=e.definitionId==='E47'?engine.confirmUsNationalEligibility(c,rev,String(e.evidence.fields.competitionId)):
-     engine.resolveUsNationalEvent(c,rev,{eventKey:e.eventKey,eventVersion:e.version,command:p.command,worldDay:selectionDay(c,e.occurredWorldDay)}).career;
+     engine.resolveUsNationalEvent(c,rev,{eventKey:e.eventKey,eventVersion:e.version,command:p.command,worldDay:c.phaseContext.phase==='INTERNATIONAL_PROGRESS'?c.phaseContext.nextWorldDay:selectionDay(c,e.occurredWorldDay)}).career;
     break;
    }
    case 'ADVANCE':{

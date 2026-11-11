@@ -33,4 +33,16 @@ test('US national Flow starts WBC with the actual stored NPC host and validates 
  assert.equal(playing.nextState.collegeNationalHost,host);
  assert.equal(careerFlowScreen(playing.nextState).commands[0]!.type,'CAREER_US_NATIONAL_ADVANCE');
  assert.doesNotMatch(JSON.stringify(careerFlowScreen(playing.nextState)),/seed|potential|rng|lotRank/i);
+
+ // A first-appearance notice is raised after a final match and before its date closes.
+ const active=playing.nextState.career as engine.UsCareer,phase=active.phaseContext;
+ if(phase.phase!=='INTERNATIONAL_PROGRESS')throw new Error('international phase required');
+ const notice=engine.createWorldEvent({definitionId:'E46',worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,
+  evidence:{version:1,type:'INTERNATIONAL',fields:{playerSimulationKey:c.protagonistKey,competitionId:phase.competitionId,selectionOrAppearanceStage:'FIRST_APPEARANCE'}},
+  resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:phase.phase,competitionKey:null,registrationKey:c.protagonistOrganizationId,sourceRevision:active.revision},
+  sourceSequence:active.events.length+1,worldDay:phase.nextWorldDay});
+ const beforeDayClose={...playing.nextState,career:{...active,events:[...active.events,notice]}};
+ const ack=careerFlowScreen(beforeDayClose).commands[0]!;
+ const acknowledged=applyEngineCommand(beforeDayClose,command(ack.type,ack.payload)).nextState.career as engine.UsCareer;
+ assert.equal(acknowledged.events.find(e=>e.eventKey===notice.eventKey)?.status,'RESOLVED');
 });
