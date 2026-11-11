@@ -66,11 +66,15 @@ test('college AG returns real tournament records to a separate NPC league owner'
  let c=completedCollegeAcademicYear(college);
  let game=createKboClubGame({worldKey:c.world.worldKey,seed:c.world.seed,difficulty:c.difficulty,clubId:'LG',startYear:Number(c.world.seasonKey)});game=startKboClubSeason(game,game.revision);
  const bracket=createNationalBracket({worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,tournament:'AG',seed:`${c.world.seed}:national:AG:${c.world.seasonKey}`});
- const first=game.progress!.nextWorldDay;game.progress!.nextWorldDay=bracket.window.startDay;game.days={...game.days!,days:Array.from({length:bracket.window.startDay-first},(_,i)=>({day:first+i,evidence:'controlled-prefix',result:{injured:[],recovered:[]}}))};
+ const first=game.progress!.nextWorldDay,inviteDay=nationalInviteDeadlines(bracket.window).inviteDay;
+ const setClock=(day:number)=>{game.progress!.nextWorldDay=day;game.days={...game.days!,days:Array.from({length:day-first},(_,i)=>({day:first+i,evidence:'controlled-prefix',result:{injured:[],recovered:[]}}))};};
+ setClock(inviteDay+1);
  const host:CollegeLeagueHost={kind:'COLLEGE_NPC_KBO',revision:game.revision,ownerPlayerKey:c.world.protagonistKey,game,national:{invitations:[],competitions:[],benefits:[]}};
  const sources=()=>({kbo:host,kboRevision:host.revision,college:c,collegeRevision:c.revision,recordProjectionRevision:Math.max(host.game.records.revision,c.records.revision)});
- c=openCollegeNationalSelection(c,c.revision,sources(),'AG',nationalInviteDeadlines(bracket.window).inviteDay);
+ assert.throws(()=>openCollegeNationalSelection(c,c.revision,sources(),'AG',inviteDay+1),/NATIONAL_CALENDAR_NOT_READY/);
+ c=openCollegeNationalSelection(c,c.revision,sources(),'AG',inviteDay);
  const e=c.events.at(-1)!;c=resolveCollegeNationalEvent(c,c.revision,{eventKey:e.eventKey,eventVersion:e.version,command:e.definitionId==='E44'?'ACCEPT_NATIONAL':'ACK_EVENT',worldDay:e.occurredWorldDay}).career;
+ setClock(bracket.window.startDay);
  c=startCollegeNationalTournament(c,c.revision,sources());
  for(let i=0;i<300&&c.phaseContext.phase==='INTERNATIONAL_PROGRESS';i++){
   const b=c.national!.brackets![0]!,match=nextNationalMatch(b),day=c.phaseContext.nextWorldDay;

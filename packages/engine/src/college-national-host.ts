@@ -10,9 +10,9 @@ import type {NationalLedger,NationalHostReturn} from './kbo-national.js';
 import {assertNationalLedger} from './kbo-national.js';
 import type {NationalCandidate,NationalSelectionSnapshot} from './national-selection.js';
 import type {NationalBracket} from './national-bracket.js';
-import {assertNationalBracket,nationalMatchesOnDay} from './national-bracket.js';
+import {assertNationalBracket} from './national-bracket.js';
 import type {NationalHostSnapshot} from './national-host-return.js';
-import {nationalDayEvidence} from './national-day-audit.js';
+import {auditCareerNationalDays,nationalDayEvidence} from './national-day-audit.js';
 import type {RecordLedger} from './records.js';
 import {putGameContribution} from './records.js';
 import type {HealthLedger} from './health.js';
@@ -21,6 +21,9 @@ import {canonicalSeal,matchesCanonicalSeal} from './canonical-seal.js';
 
 /** A server-owned NPC league with a separate detailed national ledger. */
 export interface CollegeLeagueHost {kind:'COLLEGE_NPC_KBO';revision:number;ownerPlayerKey:string;game:KboClubGame;national:NationalLedger}
+export function isCollegeLeagueHost(host:unknown):host is CollegeLeagueHost {
+ return typeof host==='object'&&host!==null&&'kind' in host&&host.kind==='COLLEGE_NPC_KBO';
+}
 export function assertCollegeLeagueHost(host:CollegeLeagueHost,c:HighSchoolCareer,revision:number):void {
  if(!host||host.kind!=='COLLEGE_NPC_KBO'||!host.game||host.revision!==revision||host.game.revision!==revision||host.ownerPlayerKey!==c.world.protagonistKey||host.game.world.worldKey!==c.world.worldKey||host.game.world.seed!==c.world.seed||host.game.difficulty!==c.difficulty||Number(host.game.world.seasonKey)>Number(c.world.seasonKey))throw new RangeError('STALE_NATIONAL_CAREER_SOURCE');
  assertNationalLedger(host.national,c.world.worldKey);
@@ -30,13 +33,8 @@ export function assertCollegeLeagueHost(host:CollegeLeagueHost,c:HighSchoolCaree
   const selection=host.national.selections?.find(s=>s.seasonKey===bracket.seasonKey&&s.tournament===bracket.tournament);
   const roster=host.game.national?.find(r=>r.seasonKey===bracket.seasonKey&&r.type===bracket.tournament);
   if(!selection||!roster||canonicalJson(roster.playerKeys)!==canonicalJson(selection.roster.slots.map(s=>s.playerKey)))throw new RangeError('CHANGED_NATIONAL_HOST_ROSTER');
-  assertNationalBracket(bracket);
-  for(const day of bracket.dayReceipts??[])for(const match of nationalMatchesOnDay(bracket,day.day).completed){
-   const result=bracket.results.find(r=>r.gameKey===match.gameKey)!,game=host.game.records.games[match.gameKey];
-   if(!game||game.worldDay!==match.day||game.scope.seasonKey!==bracket.seasonKey||game.scope.leagueKey!==bracket.tournament||game.scope.phase!=='INTERNATIONAL'||game.teams[match.away]?.R!==result.awayRuns||game.teams[match.home]?.R!==result.homeRuns)throw new RangeError('CHANGED_NATIONAL_GAME_EVIDENCE');
-  }
-  if(bracket.seasonKey===host.game.world.seasonKey)for(const day of bracket.dayReceipts??[]){const closed=host.game.days?.days.find(d=>d.day===day.day);if(!closed||closed.evidence!==nationalDayEvidence(bracket,day.day,day.gameKeys,day.rosterKeys)||canonicalJson(closed.result)!==canonicalJson(day.result))throw new RangeError('CHANGED_NATIONAL_HOST_DAYS');}
  }
+ auditCareerNationalDays({...host.game,national:host.national},true);
 }
 /** The first school-world year is authoritative; no current-year shortcut for old saves. */
 export function createCollegeLeagueHost(c:HighSchoolCareer,revision:number):CollegeLeagueHost {
@@ -53,13 +51,17 @@ export function advanceCollegeLeagueHost(c:HighSchoolCareer,revision:number,host
  let game=host.game,stopReason:string;
  if(game.phase==='PRESEASON_SETUP'){game=startKboClubSeason(game,game.revision);stopReason='STARTED';}
  else if(game.phase==='SEASON_PROGRESS'){
-  if(!game.progress||Number(game.world.seasonKey)===Number(c.world.seasonKey)&&game.progress.nextWorldDay>=stopDay&&!game.progress.pendingGame)return {host,stopReason:'TARGET_REACHED'};
+  if(!game.progress)throw new RangeError('NATIONAL_HOST_PHASE');
+  if(game.world.seasonKey===c.world.seasonKey&&game.progress.nextWorldDay>=stopDay){
+   if(game.progress.nextWorldDay!==stopDay||game.progress.pendingGame)throw new RangeError('NATIONAL_HOST_PASSED_WINDOW');
+   return {host,stopReason:'TARGET_REACHED'};
+  }
   const result=advanceKboClubGame(game,game.revision,1);game=result.game;stopReason=result.stopReason;
  }else if(game.phase==='SEASON_REVIEW'){
   if(Number(game.world.seasonKey)>=Number(c.world.seasonKey))throw new RangeError('NATIONAL_HOST_PASSED_WINDOW');
-  if(!game.postseason){game=startKboClubPostseason(game,game.revision);stopReason='POSTSEASON_STARTED';}
-  else if(!game.seasonClose){game=closeKboClubSeason(game,game.revision);stopReason='YEAR_CLOSED';}
-  else {game=startNextKboClubSeason(game,game.revision);stopReason='NEXT_YEAR';}
+  if(game.seasonClose){game=startNextKboClubSeason(game,game.revision);stopReason='NEXT_YEAR';}
+  else if(game.postseason){game=closeKboClubSeason(game,game.revision);stopReason='YEAR_CLOSED';}
+  else {game=startKboClubPostseason(game,game.revision);stopReason='POSTSEASON_STARTED';}
  }else if(game.phase==='POSTSEASON_PROGRESS'){
   const result=advanceKboClubPostseason(game,game.revision);game=result.game;stopReason=result.stopReason;
  }else throw new RangeError('NATIONAL_HOST_PHASE');
@@ -90,11 +92,13 @@ export function returnCollegeLeagueHost(input:{host:CollegeLeagueHost;college:Hi
  }
  const gameKeys=b.results.map(r=>r.gameKey);for(const key of gameKeys){const row=input.records.games[key];if(!row)throw new RangeError('NATIONAL_GAME_RECORD_MISSING');game.records=putGameContribution(game.records,row).ledger;}
  const competition=college.national?.competitions.find(r=>r.competitionId===b.competitionId);
- if(!competition||game.national?.some(r=>r.seasonKey===b.seasonKey&&r.type===b.tournament))throw new RangeError('NATIONAL_TOURNAMENT_ALREADY_STARTED');
+ if(!competition)throw new RangeError('NATIONAL_RESULT_REQUIRED');
+ if(game.national?.some(r=>r.seasonKey===b.seasonKey&&r.type===b.tournament))throw new RangeError('NATIONAL_TOURNAMENT_ALREADY_STARTED');
  game.national=[...(game.national??[]),{seasonKey:b.seasonKey,type:b.tournament,playerKeys:input.selection.roster.slots.map(slot=>slot.playerKey)}];
  const ownership:NationalHostReturn={competitionId:b.competitionId,owner:'COLLEGE',sourceKboRevision:expectedRevision,sourceOwnerRevision:input.ownerRevision,kboPlayerKeys:Object.keys(s.hostPlayers).sort(),ownerPlayerKeys:Object.keys(college.world.players).sort(),ownerHealthGames:structuredClone(input.ownerHealth.games.filter(h=>gameKeys.includes(h.evidence.gameKey))),recordGameKeys:gameKeys,fatigueDays:b.dayReceipts!.map(d=>d.day),pitchXpKeys:Object.keys(s.hostRepertoires).filter(k=>canonicalJson(s.hostRepertoires[k])!==canonicalJson(source.sangmu?.members[k]?.repertoire??source.sangmu?.emergency?.entries[k]?.repertoire??source.world.repertoires[k])).sort()};
  for(const d of b.dayReceipts!){if(game.days?.days.at(-1)?.day!==d.day-1)throw new RangeError('NATIONAL_HOST_CLOCK_MISMATCH');game.days={...game.days,days:[...game.days.days,{day:d.day,evidence:nationalDayEvidence(b,d.day,d.gameKeys,d.rosterKeys),result:structuredClone(d.result)}]};}
  game.progress!.nextWorldDay=b.window.endDay;game.revision++;next.revision=game.revision;
  next.national={...next.national,selections:[...(next.national.selections??[]),structuredClone(input.selection)],brackets:[...(next.national.brackets??[]),structuredClone(b)],competitions:[...next.national.competitions,structuredClone(competition)],hostReturns:[...(next.national.hostReturns??[]),ownership]};
+ assertCollegeLeagueHost(next,college,next.revision);
  return {host:next,ownership};
 }

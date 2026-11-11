@@ -7,7 +7,7 @@ export function nationalDayEvidence(b:NationalBracket,day:number,gameKeys:readon
  return canonicalJson({nationalDayVersion:1,competitionId:b.competitionId,day,gameKeys,rosterKeys});
 }
 /** Exact receipt/record/health linkage; international days outside REG never enter its day closer. */
-export function auditCareerNationalDays(c:KboCareer):void {
+export function auditCareerNationalDays(c:Pick<KboCareer,'world'|'records'|'health'|'days'|'national'>,requireHostDays=false):void {
  for(const b of c.national?.brackets??[]){
   if(b.dayCloseVersion===undefined)continue;
   assertNationalBracket(b);if(b.dayCloseVersion!==1||!Array.isArray(b.dayReceipts)||b.worldKey!==c.world.worldKey)throw new RangeError('INVALID_NATIONAL_DAY_RECEIPTS');
@@ -27,7 +27,7 @@ export function auditCareerNationalDays(c:KboCareer):void {
     for(const x of h){result.injured.push(...x.result.injured);result.recovered.push(...x.result.recovered);}
    }
    result.injured.sort();result.recovered.sort();if(canonicalJson(result)!==canonicalJson(d.result))throw new RangeError('CHANGED_NATIONAL_HEALTH_EVIDENCE');
-   if(b.seasonKey===c.world.seasonKey){const closed=c.days?.days.find(row=>row.day===d.day);if(closed&&(closed.evidence!==nationalDayEvidence(b,d.day,d.gameKeys,d.rosterKeys)||canonicalJson(closed.result)!==canonicalJson(d.result)))throw new RangeError('CHANGED_NATIONAL_PRO_DAY_EVIDENCE');}
+   if(b.seasonKey===c.world.seasonKey){const closed=c.days?.days.find(row=>row.day===d.day);if(!closed?requireHostDays:closed.evidence!==nationalDayEvidence(b,d.day,d.gameKeys,d.rosterKeys)||canonicalJson(closed.result)!==canonicalJson(d.result))throw new RangeError('CHANGED_NATIONAL_PRO_DAY_EVIDENCE');}
   }
  }
 }
