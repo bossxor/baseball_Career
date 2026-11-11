@@ -244,7 +244,7 @@ export function usMilitaryServiceView(c:UsCareer){
 
 /** Confirmation reuses the existing option and resumes on the next real date; no new contract or payment. */
 export function confirmUsMilitaryReturn(c:UsCareer,revision:number):UsCareer {
- assertUsCareerRevision(c,revision);const s=c.military.service,option=s?.returnOption;
+ assertUsCareerRevision(c,revision);if(c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame)throw new RangeError('US_MILITARY_DATE_IN_PROGRESS');const s=c.military.service,option=s?.returnOption;
  if(c.military.status!=='COMPLETED'||!s?.cursor||option?.status!=='OPEN'||s.cursor.seasonKey!==option.issuedSeasonKey||s.cursor.worldDay<option.issuedWorldDay||s.cursor.worldDay>=option.expiresWorldDay||!s.sourceContract?.militaryReturnOption)throw new RangeError('US_MILITARY_RETURN_NOT_AVAILABLE');
  const source=usMilitarySourceCareer(c),origin=usContractOrigin(source),epoch=source.minorRenewal?Number(source.minorRenewal.signedFromSeasonKey)+1:Number(origin.contract.seasonKey),independentRenewal=!source.kboTransfer&&source.amateurHistory.world.leagueKey==='INDEPENDENT'&&source.amateurHistory.usRecruitment?.program.input.contractProfile==='INDEPENDENT_FIRST'&&source.minorRenewal,remaining=(independentRenewal?1:source.kboTransfer?source.contract.years!:source.contract.controlSeasons)-(Number(source.world.seasonKey)-epoch+1);
  if(source.contract.type==='US_MINOR'&&remaining<1||source.contract.type==='US_MAJOR'&&(source.contract.years??1)<2)return openUsMilitaryExpiredReturnOffer(c);
@@ -288,18 +288,20 @@ function assertUsMilitaryReturnOffer(c:UsCareer):void {
 
 /** The expired source contract is historical; camp confirmation never accepts this new offer implicitly. */
 export function acceptUsMilitaryReturnOffer(c:UsCareer,revision:number,offerKey:string):UsCareer {
- assertUsCareerRevision(c,revision);const s=c.military.service,o=s?.returnOffer;if(!s?.cursor||s.returnOption?.status!=='CONFIRMED'||o?.status!=='OPEN'||o.offerKey!==offerKey||s.cursor.worldDay>=o.expiresWorldDay)throw new RangeError('US_MILITARY_RETURN_OFFER_NOT_AVAILABLE');
+ assertUsCareerRevision(c,revision);if(c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame)throw new RangeError('US_MILITARY_DATE_IN_PROGRESS');const s=c.military.service,o=s?.returnOffer;if(!s?.cursor||s.returnOption?.status!=='CONFIRMED'||o?.status!=='OPEN'||o.offerKey!==offerKey||s.cursor.worldDay>=o.expiresWorldDay)throw new RangeError('US_MILITARY_RETURN_OFFER_NOT_AVAILABLE');
  const next=activateUsMilitaryReturn(c,o.contract,o.contract.type==='US_MINOR'?1:0);next.military.service!.returnOffer={...structuredClone(o),status:'ACCEPTED'};assertUsCareerRevision(next,next.revision);return next;
 }
 
 export function declineUsMilitaryReturnOffer(c:UsCareer,revision:number,offerKey:string):UsCareer {
- assertUsCareerRevision(c,revision);const o=c.military.service?.returnOffer;if(o?.status!=='OPEN'||o.offerKey!==offerKey)throw new RangeError('US_MILITARY_RETURN_OFFER_NOT_AVAILABLE');const next=structuredClone(c);next.military.service!.returnOffer={...structuredClone(o),status:'DECLINED'};next.revision++;return next;
+ assertUsCareerRevision(c,revision);if(c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame)throw new RangeError('US_MILITARY_DATE_IN_PROGRESS');const o=c.military.service?.returnOffer;if(o?.status!=='OPEN'||o.offerKey!==offerKey)throw new RangeError('US_MILITARY_RETURN_OFFER_NOT_AVAILABLE');const next=structuredClone(c);next.military.service!.returnOffer={...structuredClone(o),status:'DECLINED'};next.revision++;return next;
 }
 
 /** Original snapshots remain authoritative even after actual calendar years/financial registries advance. */
 function usMilitarySourceCareer(c:UsCareer):UsCareer {
  const s=c.military.service!;if(!s.sourceContract||!s.sourceInventory||s.sourceSchemaVersion===undefined||s.sourceMinorYears===undefined||s.sourceMajorYears===undefined||!s.sourceRegistration||!s.sourceRights)throw new RangeError('INVALID_US_MILITARY_SOURCE');
  const source:UsCareer={...c,schemaVersion:s.sourceSchemaVersion,military:{status:'UNRESOLVED',deadlineAge:28},world:{...c.world,seasonKey:s.planSeasonKey,calendar:createSeasonCalendar(Number(s.planSeasonKey),'calendar-2'),players:{...c.world.players,[c.protagonistKey]:{...c.world.players[c.protagonistKey]!,age:s.sourceAge!}},reserves:{...c.world.reserves,[s.sourceRegistration.clubId]:[c.protagonistKey]}},protagonistOrganizationId:s.sourceRegistration.clubId,registration:{...s.sourceRegistration,status:'INJURED',seasonKey:s.planSeasonKey},rights:s.sourceRights,contract:s.sourceContract,inventory:s.sourceInventory,minorYears:(c.minorYears??[]).slice(0,s.sourceMinorYears),majorYears:(c.majorYears??[]).slice(0,s.sourceMajorYears)};
+ if(source.phaseContext.phase==='ARCHIVED')source.phaseContext={phase:'SEASON_REVIEW'};
+ delete source.retirement;
  // The historical contract replay owns only aliases earned by its source season.
  if(c.aliases)source.aliases={...c.aliases,history:c.aliases.history.filter(r=>Number(r.seasonKey)<=Number(s.planSeasonKey)),notices:c.aliases.notices.filter(e=>Number(e.seasonKey)<=Number(s.planSeasonKey))};
  if(s.sourceSeason)source.season=s.sourceSeason;else delete source.season;
@@ -334,7 +336,7 @@ function usMilitaryInactiveInventory(c:UsCareer):UsCareer['inventory'] {
 }
 
 export function declineUsMilitaryReturn(c:UsCareer,revision:number):UsCareer {
- assertUsCareerRevision(c,revision);const option=c.military.service?.returnOption;if(c.military.status!=='COMPLETED'||option?.status!=='OPEN')throw new RangeError('US_MILITARY_RETURN_NOT_AVAILABLE');
+ assertUsCareerRevision(c,revision);if(c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame)throw new RangeError('US_MILITARY_DATE_IN_PROGRESS');const option=c.military.service?.returnOption;if(c.military.status!=='COMPLETED'||option?.status!=='OPEN')throw new RangeError('US_MILITARY_RETURN_NOT_AVAILABLE');
  const next=structuredClone(c);next.military.service!.returnOption={...option,status:'DECLINED'};next.contract={...next.contract,status:'TERMINATED'};next.revision++;return next;
 }
 

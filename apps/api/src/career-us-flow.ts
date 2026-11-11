@@ -16,6 +16,7 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
  const out=(title:string,commands:FlowCommand[],notice:string|null=null):FlowScreen=>({screenId:'CAREER_FLOW',title,lines,commands,notice,careerRevision:c.revision});
  const military=(id:string,label:string,name:string,payload:Record<string,unknown>={},confirm?:string):FlowCommand=>({id,label,type:'CAREER_US_MILITARY_'+name,payload:{careerRevision:c.revision,...payload},...(confirm?{confirm}:{})});
  const service=c.military.service;
+ if(phase.phase==='ARCHIVED')return out('은퇴 기록',[]);
  if(service?.version===2&&(c.military.status==='FROZEN_SERVICE'||c.military.status==='TERMINATED_SERVICE'||c.military.status==='COMPLETED'&&c.contract.status!=='ACTIVE')){
   const v=engine.usMilitaryServiceView(c),commands:FlowCommand[]=[];
   lines.push({label:'복무 구간',value:`${v.completedBlocks}/${v.scheduledBlocks}`});
@@ -24,6 +25,8 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
    if(v.completedBlocks===v.scheduledBlocks)commands.push(military('service-complete','복무 완료','COMPLETE'));
    else if(phase.phase==='SEASON_REVIEW')commands.push(military('service-year','다음 복무 시즌 시작','START_YEAR'));
    else if(phase.phase==='SEASON_PROGRESS')commands.push(military('service-advance','복무 진행','ADVANCE',{maxDays:7}));
+  }else if(phase.phase==='SEASON_PROGRESS'&&phase.pendingGame&&(v.returnOffer?.status==='OPEN'||v.returnOption?.status==='OPEN')){
+   commands.push(military('service-wait','진행 중인 날짜 마감','ADVANCE',{maxDays:1}));
   }else if(v.returnOffer?.status==='OPEN'){
    const o=v.returnOffer;lines.push({label:'복귀 제안',value:`${o.organizationId} · ${o.level} · ${o.years}년 · 연봉 $${o.annualSalaryUsd.toLocaleString('en-US')}`});
    if(v.cursor)lines.push({label:'제안 남은 일수',value:String(Math.max(0,o.expiresWorldDay-v.cursor.worldDay))});
@@ -32,7 +35,11 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
    if(v.cursor)lines.push({label:'복귀 남은 일수',value:String(Math.max(0,v.returnOption.expiresWorldDay-v.cursor.worldDay))});
    commands.push(military('service-return','복귀 확정','CONFIRM_RETURN',{},'원소속 복귀를 확정할까요?'),military('service-decline','복귀 거절','DECLINE_RETURN',{},'복귀 옵션을 거절할까요?'),military('service-wait','시간 진행','ADVANCE',{maxDays:1}));
   }
-  return out('미국 병역 복무',commands,commands.length?null:'현재 가능한 복귀 명령이 없습니다.');
+  if(engine.canRequestUsDischargeRetirement(c))commands.push({
+   id:'retire-request',label:'은퇴 절차 시작',type:'CAREER_PRO_RETIRE_REQUEST',
+   payload:{careerRevision:c.revision},confirm:'은퇴 확인 단계로 이동할까요?',
+  });
+  return out(v.status==='COMPLETED'?'미국 복무 완료':'미국 병역 복무',commands,commands.length?null:'현재 가능한 복귀 명령이 없습니다.');
  }
  const training=():FlowCommand[]=>{
   const commands:FlowCommand[]=[],choices:engine.TrainingChoice[]=[...abilityKeys(p.kind).map(ability=>({type:'GUARANTEED' as const,ability})),{type:'CONDITIONING'}];
