@@ -112,7 +112,8 @@ test('controlled minor return resumes the next annual contract without consuming
  const discharged=controlledDischargedOption(),returned=confirmUsMilitaryReturn(discharged,discharged.revision),closed=finishedUsCareerFixture(closeControlledServiceDates(returned,returned.season!.lastDay)),funding=closed.inventory.clubs.map(c=>({organizationId:c.id,addedBudgetUsd:3_000_000}));
  const next=startNextUsMinorSeason(closed,closed.revision,funding);
  assert.equal(next.world.seasonKey,String(Number(closed.world.seasonKey)+1));assert.deepEqual(next.income,closed.income);assert.deepEqual(next.records,closed.records);assert.equal(next.contract.contractKey,returned.contract.contractKey);
- assert.equal(usYearTransitionReadiness(closed).controlSeasonsUsed,2);assert.equal(usYearTransitionReadiness(next).controlSeasonsUsed,3);assert.deepEqual(usMilitaryServiceView(JSON.parse(JSON.stringify(next))),usMilitaryServiceView(next));
+ assert.equal(usYearTransitionReadiness(closed).controlSeasonsUsed,2);assert.equal(usYearTransitionReadiness(closed).remainingMinorControlSeasons,4);
+ assert.equal(usYearTransitionReadiness(next).controlSeasonsUsed,3);assert.equal(usYearTransitionReadiness(next).remainingMinorControlSeasons,3);assert.deepEqual(usMilitaryServiceView(JSON.parse(JSON.stringify(next))),usMilitaryServiceView(next));
 });
 
 test('active US return condition counts six registered bench games, excludes INT and never changes abilities',()=>{

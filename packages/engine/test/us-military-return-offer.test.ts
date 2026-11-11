@@ -9,7 +9,7 @@ import {closeControlledServiceDates} from './us-service-fixture.js';
 import {startNextUsMinorSeason} from '../src/us-year-transition.js';
 import {confirmUsPreseasonPlan} from '../src/us-preseason.js';
 import {publishUsSeasonSchedule} from '../src/us-schedule.js';
-import {startUsMilitaryWorld,advanceUsMilitaryWorld} from '../src/us-season.js';
+import {startUsMilitaryWorld,advanceUsMilitaryWorld,assertUsSeason,salaryContractKey} from '../src/us-season.js';
 import {chooseUsMilitaryPlan,startUsMilitaryServiceSeason,completeUsMilitaryService,confirmUsMilitaryReturn,acceptUsMilitaryReturnOffer,declineUsMilitaryReturnOffer,assertUsMilitaryPlayable,usMilitaryServiceView} from '../src/us-military-plan.js';
 
 let cached:UsCareer|undefined;
@@ -37,6 +37,9 @@ test('expired minor confirmation opens a separate offer; explicit acceptance res
  const raw=canonicalJson(opened),accepted=acceptUsMilitaryReturnOffer(opened,opened.revision,offer.offerKey),service=accepted.military.service!,club=accepted.protagonistOrganizationId;
  assert.equal(canonicalJson(opened),raw);assert.equal(accepted.contract.status,'ACTIVE');assert.equal(service.returnOffer!.status,'ACCEPTED');assert.equal(accepted.contract.contractKey,offer.contract.contractKey);assert.equal(accepted.contract.signingBonusUsd,0);assert.deepEqual(accepted.income,opened.income);assert.deepEqual(accepted.records,opened.records);assert.deepEqual(service.sourceContract,opened.military.service!.sourceContract);assert.deepEqual(service.years,opened.military.service!.years);assert.equal(accepted.registration.status,'ACTIVE');assertUsMilitaryPlayable(accepted);
  const games=Object.values(opened.seasonSchedule!.leagues).flat(),first=Math.min(...games.map(g=>g.worldDay)),last=Math.max(...games.map(g=>g.worldDay)),effective=service.cursor!.worldDay+1,expected=Math.floor(30000*Math.max(0,last-Math.max(first,effective)+1)/(last-first+1));
+ assertUsSeason(json(accepted),accepted.revision);
+ assert.equal(salaryContractKey(accepted,effective-1),service.sourceContract!.contractKey);
+ assert.equal(salaryContractKey(accepted,effective),offer.contract.contractKey);
  assert.equal(service.returnReservationUsd,expected);assert.equal(accepted.inventory.clubs.find(o=>o.id===club)!.availableBudgetUsd,opened.inventory.clubs.find(o=>o.id===club)!.availableBudgetUsd-expected);
  assert.deepEqual(acceptUsMilitaryReturnOffer(json(opened),opened.revision,offer.offerKey),accepted);assert.deepEqual(usCareerView(json(accepted)),usCareerView(accepted));assert.throws(()=>acceptUsMilitaryReturnOffer(accepted,accepted.revision,offer.offerKey),/NOT_AVAILABLE/);
 });

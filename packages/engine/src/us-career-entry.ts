@@ -130,7 +130,7 @@ export interface UsCareerPublicView {
 export function usCareerView(c:UsCareer):UsCareerPublicView {
  assertUsMajorFaWindow(c);assertUsNationalState(c);assertProCareerAwards(c);auditCareerRecordCorrections(c);assertCareerAliases(c);
  if(c?.agents)assertCareerAgentLedger(c);
- if(c.military.service?.version===2&&(!c.military.service.returnContract||Number(c.world.seasonKey)<=Number(c.military.service.returnContract.seasonKey))){assertUsRetirementState(c);return usMilitaryHistoricalView(c);}
+ if(c.military.service?.version===2&&(!c.military.service.returnContract||Number(c.world.seasonKey)<=Number(c.military.service.returnContract.seasonKey))){if(c.domesticReturn?.status!=='ACCEPTED')assertUsRetirementState(c);return usMilitaryHistoricalView(c);}
  if(c.domesticReturn!==undefined)assertUsKboReturnQuote(c);
  if(c.domesticReturn?.status!=='ACCEPTED')assertUsRetirementState(c);
  const p=c.world.players[c.protagonistKey],org=c.world.organizations.find(o=>o.id===c.protagonistOrganizationId),r=c.registration;

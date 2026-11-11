@@ -246,10 +246,20 @@ export function usMilitaryServiceView(c:UsCareer){
 export function confirmUsMilitaryReturn(c:UsCareer,revision:number):UsCareer {
  assertUsCareerRevision(c,revision);if(c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame)throw new RangeError('US_MILITARY_DATE_IN_PROGRESS');const s=c.military.service,option=s?.returnOption;
  if(c.military.status!=='COMPLETED'||!s?.cursor||option?.status!=='OPEN'||s.cursor.seasonKey!==option.issuedSeasonKey||s.cursor.worldDay<option.issuedWorldDay||s.cursor.worldDay>=option.expiresWorldDay||!s.sourceContract?.militaryReturnOption)throw new RangeError('US_MILITARY_RETURN_NOT_AVAILABLE');
- const source=usMilitarySourceCareer(c),origin=usContractOrigin(source),epoch=source.minorRenewal?Number(source.minorRenewal.signedFromSeasonKey)+1:Number(origin.contract.seasonKey),independentRenewal=!source.kboTransfer&&source.amateurHistory.world.leagueKey==='INDEPENDENT'&&source.amateurHistory.usRecruitment?.program.input.contractProfile==='INDEPENDENT_FIRST'&&source.minorRenewal,remaining=(independentRenewal?1:source.kboTransfer?source.contract.years!:source.contract.controlSeasons)-(Number(source.world.seasonKey)-epoch+1);
- if(source.contract.type==='US_MINOR'&&remaining<1||source.contract.type==='US_MAJOR'&&(source.contract.years??1)<2)return openUsMilitaryExpiredReturnOffer(c);
- const contract:UsCareer['contract']={...c.contract,status:'ACTIVE',...(source.contract.type==='US_MAJOR'?{years:source.contract.years!-1,remainingGuaranteedUsd:(source.contract.years!-1)*source.contract.annualSalaryUsd}:{...(source.contract.years===undefined?{}:{years:remaining})})};
- return activateUsMilitaryReturn(c,contract,remaining);
+ const source=usMilitarySourceCareer(c),origin=usContractOrigin(source),previous=source.contract;
+ if(previous.type==='US_MAJOR'){
+  const remainingGuaranteedUsd=previous.remainingGuaranteedUsd===undefined
+   ?((previous.years??1)-1)*previous.annualSalaryUsd
+   :previous.remainingGuaranteedUsd-(source.season?.paidUsd??0);
+  if(remainingGuaranteedUsd<=0)return openUsMilitaryExpiredReturnOffer(c);
+  const years=Math.ceil(remainingGuaranteedUsd/previous.annualSalaryUsd);
+  return activateUsMilitaryReturn(c,{...c.contract,status:'ACTIVE',years,remainingGuaranteedUsd},0);
+ }
+ const renewal=source.minorRenewal,epoch=renewal?Number(renewal.signedFromSeasonKey)+1:Number(origin.contract.seasonKey);
+ const term=renewal?1:source.kboTransfer?origin.contract.years!:previous.controlSeasons;
+ const remaining=term-(Number(source.world.seasonKey)-epoch+1);
+ if(remaining<1)return openUsMilitaryExpiredReturnOffer(c);
+ return activateUsMilitaryReturn(c,{...c.contract,status:'ACTIVE',...(previous.years===undefined?{}:{years:remaining})},remaining);
 }
 
 /** Return from a service reserve into a legal current roster; historical pre-service competitors are not live slots. */
@@ -269,6 +279,7 @@ function activateUsMilitaryReturn(c:UsCareer,contract:UsCareer['contract'],remai
  }
  const effective=s.cursor!.worldDay+1,games=Object.values(c.seasonSchedule!.leagues).flat(),first=Math.min(...games.map(g=>g.worldDay)),last=Math.max(...games.map(g=>g.worldDay)),reservation=Math.min(contract.remainingGuaranteedUsd??Infinity,Math.floor(contract.annualSalaryUsd*Math.max(0,last-Math.max(first,effective)+1)/(last-first+1)));
  const club=next.inventory.clubs.find(o=>o.id===option.organizationId)!;if(club.availableBudgetUsd<reservation)throw new RangeError('US_MILITARY_RETURN_BUDGET_REQUIRED');club.availableBudgetUsd-=reservation;
+ delete next.minorRenewal;
  next.contract=structuredClone(contract);next.military.service!.returnContract=structuredClone(next.contract);next.military.service!.returnInventory=structuredClone(next.inventory);next.military.service!.remainingControlSeasons=remaining;next.military.service!.returnReservationUsd=reservation;
  next.military.service!.returnOption={...option,status:'CONFIRMED',confirmedWorldDay:option.confirmedWorldDay??s.cursor!.worldDay,effectiveWorldDay:effective};next.revision++;assertUsCareerRevision(next,next.revision);return next;
 }
