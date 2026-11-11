@@ -38,6 +38,16 @@ test('US discharge offers the owned return option and displays the actual deadli
  assert.equal(flow.lines.find(x=>x.label==='복귀 남은 일수')?.value,'30');
  assert.ok(!flow.commands.some(x=>x.type==='CAREER_PRO_RETIRE_REQUEST'));
  const declined=run(s,'CAREER_US_MILITARY_DECLINE_RETURN'),discharged=declined.career as engine.UsCareer;
+ const returning=run(declined,'CAREER_US_RETURN_REQUEST').career as engine.UsAmateurReturnCareer;
+ assert.equal(returning.return.militaryStatus,'COMPLETED');
+ assert.equal(returning.return.years.length,0);
+ assert.equal(returning.retry.careerPreparationUsed,discharged.retryCareer?.careerPreparationUsed??0);
+ assert.deepEqual(returning.source.records,discharged.records);
+ assert.deepEqual(returning.source.military,discharged.military);
+ const firstYear=run({schemaVersion:1,career:returning},'CAREER_US_RETURN_START_YEAR').career as engine.UsAmateurReturnCareer;
+ assert.equal(firstYear.preparation?.world.seasonKey,String(Number(discharged.world.seasonKey)+1));
+ assert.equal(firstYear.service,undefined);
+ assert.equal(firstYear.retry.careerPreparationUsed,returning.retry.careerPreparationUsed);
  const pending=run(declined,'CAREER_PRO_RETIRE_REQUEST'),confirmation=careerFlowScreen(pending).commands;
  const cancel=confirmation.find(x=>x.payload.command==='CANCEL_RETIRE')!;
  const cancelled=applyEngineCommand(pending,{commandId:'cancel-retirement',expectedRevision:0,type:cancel.type,payload:cancel.payload}).nextState;

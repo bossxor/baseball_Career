@@ -15,6 +15,10 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
  const cmd=(id:string,label:string,type:string,payload:Record<string,unknown>={},confirm?:string):FlowCommand=>({id,label,type:'CAREER_US_PLAY_'+type,payload:{careerRevision:c.revision,...payload},...(confirm?{confirm}:{})});
  const out=(title:string,commands:FlowCommand[],notice:string|null=null):FlowScreen=>({screenId:'CAREER_FLOW',title,lines,commands,notice,careerRevision:c.revision});
  const military=(id:string,label:string,name:string,payload:Record<string,unknown>={},confirm?:string):FlowCommand=>({id,label,type:'CAREER_US_MILITARY_'+name,payload:{careerRevision:c.revision,...payload},...(confirm?{confirm}:{})});
+ const returnHome:FlowCommand={
+  id:'return-request',label:'국내 복귀 준비',type:'CAREER_US_RETURN_REQUEST',
+  payload:{careerRevision:c.revision},confirm:'국내 복귀 준비를 시작할까요?',
+ };
  const service=c.military.service;
  if(phase.phase==='ARCHIVED')return out('은퇴 기록',[]);
  if(service?.version===2&&(c.military.status==='FROZEN_SERVICE'||c.military.status==='TERMINATED_SERVICE'||c.military.status==='COMPLETED'&&c.contract.status!=='ACTIVE')){
@@ -35,7 +39,8 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
    if(v.cursor)lines.push({label:'복귀 남은 일수',value:String(Math.max(0,v.returnOption.expiresWorldDay-v.cursor.worldDay))});
    commands.push(military('service-return','복귀 확정','CONFIRM_RETURN',{},'원소속 복귀를 확정할까요?'),military('service-decline','복귀 거절','DECLINE_RETURN',{},'복귀 옵션을 거절할까요?'),military('service-wait','시간 진행','ADVANCE',{maxDays:1}));
   }
-  if(engine.canRequestUsDischargeRetirement(c))commands.push({
+  if(engine.canRequestUsDischargeAmateurReturn(c))commands.push(returnHome);
+  if(engine.isUsMilitaryDischargeWithoutContract(c))commands.push({
    id:'retire-request',label:'은퇴 절차 시작',type:'CAREER_PRO_RETIRE_REQUEST',
    payload:{careerRevision:c.revision},confirm:'은퇴 확인 단계로 이동할까요?',
   });
@@ -79,10 +84,7 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
   const returnCommands:FlowCommand[]=[];
   if(c.contract.type==='US_MINOR'&&!c.kboTransfer&&t.remainingMinorControlSeasons===0){
    let eligible:boolean;try{engine.openUsAmateurReturn(c,c.revision);eligible=true;}catch{eligible=false;}
-   if(eligible)returnCommands.push({
-    id:'return-request',label:'국내 복귀 준비',type:'CAREER_US_RETURN_REQUEST',
-    payload:{careerRevision:c.revision},confirm:'국내 복귀 준비를 시작할까요?',
-   });
+   if(eligible)returnCommands.push(returnHome);
   }
   if(t.blockers.includes('MILITARY_PLAN_REQUIRED')&&preview){
    lines.push({label:'병역 기한',value:`${preview.deadlineAge}세 · 다음 시즌 ${preview.nextAge}세`});

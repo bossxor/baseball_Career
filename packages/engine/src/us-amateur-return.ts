@@ -2,7 +2,8 @@ import type {Difficulty} from '@playball/rules';
 import {canonicalJson} from './game.js';
 import type {UsCareer} from './us-career-entry.js';
 import {usYearTransitionReadiness} from './us-year-transition.js';
-import {usMilitaryCompletionDays} from './us-military-plan.js';
+import {isUsMilitaryDischargeWithoutContract,usMilitaryCompletionDays} from './us-military-plan.js';
+import {auditUsClosedDays} from './us-growth.js';
 import type {UsMilitaryServiceProgram} from './us-military-plan.js';
 import {createSeasonCalendar} from './season-calendar.js';
 import {validateDevelopmentPlayer} from './player.js';
@@ -40,13 +41,21 @@ export function assertUsAmateurReturnLedger(s:UsAmateurReturnLedger,identity?:{w
 }
 function assertRevision(s:UsAmateurReturnLedger,revision:number):void {assertUsAmateurReturnLedger(s);if(revision!==s.revision||revision===Number.MAX_SAFE_INTEGER)throw new RangeError('US_AMATEUR_RETURN_REVISION_CHANGED');}
 export function usAmateurReturnOrigin(c:UsCareer):UsAmateurReturnLedger['origin'] {return c.amateurHistory.world.leagueKey==='INDEPENDENT'?'INDEPENDENT_DIRECT':c.amateurHistory.world.leagueKey==='COLLEGE'?'COLLEGE_DIRECT':'HIGH_SCHOOL_DIRECT';}
-/** Opens only an actually expired amateur minor contract; an existing KBO return route never enters this program. */
+export function canRequestUsDischargeAmateurReturn(c:UsCareer):boolean {
+ const p=c.world.players[c.protagonistKey];
+ return !c.kboTransfer&&c.contract.type==='US_MINOR'&&!!p&&p.age+2<=35&&isUsMilitaryDischargeWithoutContract(c);
+}
+/** Opens after an expired amateur minor term or a service discharge with no live contract. */
 export function openUsAmateurReturn(c:UsCareer,revision:number):UsAmateurReturnLedger {
  if(!Number.isSafeInteger(revision)||revision!==c.revision)throw new RangeError('STALE_US_CAREER_REVISION');
- const ready=usYearTransitionReadiness(c),p=c.world.players[c.protagonistKey]!;
- const open=c.events.filter(e=>e.status==='OPEN');let returnMarket=false;
- if(c.minorMarket){returnMarket=open.length===1&&open[0]!.eventKey===c.minorMarket.eventKey&&open[0]!.definitionId==='E66';}
- if(c.kboTransfer||c.contract.type!=='US_MINOR'||c.phaseContext.phase!=='SEASON_REVIEW'||ready.remainingMinorControlSeasons!==0||ready.blockers.some(b=>!['CONTRACT_DECISION_REQUIRED','MILITARY_PLAN_REQUIRED'].includes(b)&&!(b==='OPEN_EVENT'&&returnMarket))||p.age+2>35||!['UNRESOLVED','COMPLETED','NOT_APPLICABLE'].includes(c.military.status))throw new RangeError('US_AMATEUR_RETURN_NOT_AVAILABLE');
+ const p=c.world.players[c.protagonistKey]!;
+ if(c.kboTransfer||c.contract.type!=='US_MINOR'||p.age+2>35||!['UNRESOLVED','COMPLETED','NOT_APPLICABLE'].includes(c.military.status))throw new RangeError('US_AMATEUR_RETURN_NOT_AVAILABLE');
+ if(canRequestUsDischargeAmateurReturn(c))auditUsClosedDays(c);
+ else{
+  const ready=usYearTransitionReadiness(c),open=c.events.filter(e=>e.status==='OPEN');
+  const returnMarket=c.minorMarket&&open.length===1&&open[0]!.eventKey===c.minorMarket.eventKey&&open[0]!.definitionId==='E66';
+  if(c.phaseContext.phase!=='SEASON_REVIEW'||ready.remainingMinorControlSeasons!==0||ready.blockers.some(b=>!['CONTRACT_DECISION_REQUIRED','MILITARY_PLAN_REQUIRED'].includes(b)&&!(b==='OPEN_EVENT'&&returnMarket)))throw new RangeError('US_AMATEUR_RETURN_NOT_AVAILABLE');
+ }
  const next:UsAmateurReturnLedger={version:1,revision:1,returnId:'',worldKey:c.world.worldKey,playerKey:c.protagonistKey,sourceSeasonKey:c.world.seasonKey,sourceRevision:revision,sourceContractKey:c.contract.contractKey,sourceAge:p.age,sourcePlayer:structuredClone(p),origin:usAmateurReturnOrigin(c),status:'PREPARING',militaryStatus:c.military.status as UsAmateurReturnLedger['militaryStatus'],years:[],draftReservationKey:null};next.returnId=returnKey(next);assertUsAmateurReturnLedger(next);return next;
 }
 function appendYear(s:UsAmateurReturnLedger,year:UsAmateurReturnYear,militaryCompleted=false):UsAmateurReturnLedger {

@@ -233,6 +233,17 @@ export function recordUsMilitaryClosedDay(c:UsCareer,day:number):void {
  const offer=c.military.service!.returnOffer;if(offer?.status==='OPEN'&&day>=offer.expiresWorldDay)offer.status='EXPIRED';
 }
 
+/** Return choices are available only at a closed date with no active US contract or offer. */
+export function isUsMilitaryDischargeWithoutContract(c:UsCareer):boolean {
+ const s=c.military.service,phase=c.phaseContext;
+ if(c.military.status!=='COMPLETED'||c.contract.status!=='TERMINATED'||s?.version!==2||s.returnContract||
+  s.completedBlocks!==s.scheduledBlocks||!s.cursor||c.season?.days.at(-1)?.day!==s.cursor.worldDay||
+  c.events.some(e=>e.status==='OPEN')||!(phase.phase==='SEASON_REVIEW'||phase.phase==='SEASON_PROGRESS'&&!phase.pendingGame))return false;
+ const option=s.returnOption?.status;
+ return s.terminatedContractKey!==undefined&&option===undefined||
+  option==='DECLINED'||option==='EXPIRED'||
+  option==='CONFIRMED'&&(s.returnOffer?.status==='DECLINED'||s.returnOffer?.status==='EXPIRED');
+}
 export function usMilitaryServiceView(c:UsCareer){
  assertUsCareerRevision(c,c.revision);const s=c.military.service;if(s?.version!==2)throw new RangeError('US_MILITARY_SERVICE_PROGRAM_REQUIRED');
  for(const year of s.years??[]){

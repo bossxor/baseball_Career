@@ -217,7 +217,7 @@ export type {RetryCareerLedger,RetryEpisode,RetryRouteAuthority,RetryEpisodeReas
 
 export {setPreparationRosters,startPreparationSeason,confirmPreparationPreseason as confirmPreparationSeasonPreseason,advancePreparationSeason,trainPreparationSeason,setPreparationPlan,completePreparationSeason,preparationSeasonView,assertPreparationSeason,assertPreparationWorld} from './preparation-season.js';
 
-export {openUsAmateurReturn,settleUsAmateurIndependentYear,settleUsAmateurServiceYear,cancelUsAmateurReturnForUsOffer,usAmateurReturnView,assertUsAmateurReturnLedger} from './us-amateur-return.js';
+export {openUsAmateurReturn,canRequestUsDischargeAmateurReturn,settleUsAmateurIndependentYear,settleUsAmateurServiceYear,cancelUsAmateurReturnForUsOffer,usAmateurReturnView,assertUsAmateurReturnLedger} from './us-amateur-return.js';
 export type {UsAmateurReturnLedger} from './us-amateur-return.js';
 
 export {openKboCareerFa,selectKboCareerFaOffer,acceptKboCareerFaOffer,declineKboCareerFaSelection,kboCareerFaView,assertKboCareerFaLedger,assertAcceptedKboCareerFa,activateKboCareerFa} from './kbo-career-fa.js';
