@@ -11,8 +11,10 @@ function domainError(error:unknown):never {
  fail(error instanceof Error&&/^[A-Z][A-Z0-9_]*$/.test(error.message)?error.message:'INVALID_REQUEST');
 }
 function owner(state:SaveState):engine.UsCareer {
- if(!state.career||typeof state.career!=='object'||Array.isArray(state.career))fail('CAREER_NOT_FOUND');
- return state.career as engine.UsCareer;
+ const c=state.career;
+ if(!c||typeof c!=='object'||Array.isArray(c))fail('CAREER_NOT_FOUND');
+ if(!('mode' in c)||c.mode!=='US_CAREER')fail('US_CAREER_REQUIRED');
+ return c as engine.UsCareer;
 }
 
 /** The native US worker owns service dates, payroll and return deadlines; HTTP supplies choices only. */

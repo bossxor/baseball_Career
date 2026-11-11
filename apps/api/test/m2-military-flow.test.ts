@@ -53,7 +53,18 @@ test('KBO military planning uses the saved event version and rejects forged choi
  assert.throws(()=>applyEngineCommand(s,{commandId:'forged',expectedRevision:0,type:action.type,payload:{...action.payload,command:'DEFER_SERVICE'}}));
  assert.throws(()=>applyEngineCommand(s,{commandId:'stale',expectedRevision:0,type:action.type,payload:{...action.payload,eventVersion:Number(action.payload.eventVersion)+1}}));
  const result=applyEngineCommand(s,{commandId:'plan',expectedRevision:0,type:action.type,payload:action.payload}).nextState;
- assert.equal((result.career as engine.KboCareer).military?.status??'UNRESOLVED','UNRESOLVED');
+ const ready=result.career as engine.KboCareer;
+ assert.equal(ready.military?.status??'UNRESOLVED','UNRESOLVED');
+ assert.ok(engine.kboContractDecisionRequired(ready));
+ assert.ok(careerFlowScreen(result).commands.some(x=>x.type==='CAREER_KBO_PLAY_OPEN_CONTRACT_OFFERS'));
+ // Controlled accepted result with an expiring contract. Enlistment must wait for the contract screen.
+ const pending=engine.applyToSangmu(ready,ready.revision);
+ pending.military!.applications.at(-1)!.accepted=true;
+ assert.equal(engine.remainingKboMilitaryContractDays(pending),0);
+ const commands=careerFlowScreen({schemaVersion:1,career:pending}).commands;
+ assert.ok(commands.some(x=>x.type==='CAREER_KBO_PLAY_OPEN_CONTRACT_OFFERS'));
+ assert.ok(commands.some(x=>x.payload.command==='DECLINE'));
+ assert.ok(!commands.some(x=>x.payload.command==='ENLIST'));
 });
 
 test('military commands enforce save ownership, CAS and receipt replay',async()=>{

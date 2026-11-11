@@ -118,15 +118,23 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
   const planEvent=engine.kboMilitaryPlanEventView(c)[0];
   if(planEvent){lines.push({label:'유예 가능 시즌',value:String(planEvent.futureGraceSeasons)});return out(planEvent.title,planEvent.choices.filter(x=>x.available).map(x=>cmd('military-plan-'+x.command,x.label,'MILITARY_PLAN',{eventKey:planEvent.eventKey,eventVersion:planEvent.eventVersion,command:x.command})),planEvent.body);}
   const app=c.military?.status==='APPLICATION_PENDING'?c.military.applications.at(-1):undefined;
-  if(app?.decision==='PENDING'){lines.push({label:'상무 선발',value:app.accepted?'선발':'미선발'});const actions=app.accepted?['ENLIST','DECLINE']:['ACK_REJECTION'];return out('상무 선발 결과',actions.map(x=>cmd('military-result-'+x,x==='ENLIST'?'상무 입대':x==='DECLINE'?'입대 거절':'결과 확인','MILITARY_RESULT',{command:x})));}
   const militaryCommands:FlowCommand[]=[];
+  if(app?.decision==='PENDING'){
+   lines.push({label:'상무 선발',value:app.accepted?'선발':'미선발'});
+   if(!app.accepted)return out('상무 선발 결과',[cmd('military-result-ack','결과 확인','MILITARY_RESULT',{command:'ACK_REJECTION'})]);
+   if(engine.remainingKboMilitaryContractDays(c)>0)return out('상무 선발 결과',[
+    cmd('military-result-enlist','상무 입대','MILITARY_RESULT',{command:'ENLIST'},'상무 입대를 확정할까요?'),
+    cmd('military-result-decline','입대 거절','MILITARY_RESULT',{command:'DECLINE'},'상무 입대를 거절할까요?'),
+   ]);
+   militaryCommands.push(cmd('military-result-decline','입대 거절','MILITARY_RESULT',{command:'DECLINE'},'상무 입대를 거절할까요?'));
+  }
   if(c.seasonClose){
    const plan=engine.kboMilitaryPlan(c),preview=engine.kboActiveServicePreview(c);
    if(preview.canEnlist){lines.push({label:'복무 중 급여',value:preview.servicePayWon.toLocaleString('ko-KR')+'원'},{label:'계약 잔여 경기일',value:String(preview.remainingPaidGameDays)});militaryCommands.push(cmd('military-enlist','현역 입대 확정','MILITARY_ENLIST',{},'현역 입대를 확정할까요?'));}
    if(plan.status==='UNRESOLVED'&&plan.age>=19&&plan.age<45&&!c.events.some(e=>e.status==='OPEN'&&e.definitionId!=='E30')&&!c.events.some(e=>['E49','E54'].includes(e.definitionId)&&e.seasonKey===c.world.seasonKey))militaryCommands.push(cmd('military-open','병역 계획 확인','MILITARY_OPEN'));
   }
   if(t.ready)return out('시즌 종료',[...militaryCommands,cmd('next-year','다음 시즌 시작','NEXT_YEAR')],`다음 시즌: ${t.targetSeasonKey}`);
-  if(t.blockers.includes('MILITARY_PLAN_REQUIRED')&&militaryCommands.length)return out('병역 계획',militaryCommands);
+  if(t.blockers.includes('MILITARY_PLAN_REQUIRED')&&!t.blockers.includes('CONTRACT_DECISION_REQUIRED')&&militaryCommands.length)return out('병역 계획',militaryCommands);
   if(c.seasonClose&&t.blockers.includes('CONTRACT_DECISION_REQUIRED')){
    const label=(offer:{clubId:string;years:number;annualSalaryWon:number})=>
     `${KBO_CLUBS.find(x=>x.id===offer.clubId)?.name??offer.clubId} · ${offer.years}년 · 연봉 ${offer.annualSalaryWon.toLocaleString('ko-KR')}원`;
@@ -146,17 +154,18 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
     lines.push({label:'제안',value:label(o)});
     lines.push({label:'예상 역할',value:o.role===1?'주전 경쟁':o.role===0.8?'플래툰':'백업'});
     return out('FA 계약 확인',[
+     ...militaryCommands,
      signed(cmd('fa-sign','계약 수락','ACCEPT_FA',{eventKey:fa.eventKey,eventVersion:fa.eventVersion,offerKey:o.offerKey})),
      cmd('fa-back','다른 제안 보기','DECLINE_FA',{eventKey:fa.eventKey,eventVersion:fa.eventVersion}),
     ]);
    }
    if(offseason?.status==='OPEN'){
-    if(!offseason.offers.length)return null;
-    return out('다른 구단 제안',offseason.offers.map((o,i)=>{
+    if(!offseason.offers.length)return militaryCommands.length?out('병역 계획',militaryCommands):null;
+    return out('다른 구단 제안',[...militaryCommands,...offseason.offers.map((o,i)=>{
      const r=c.agents?.salaryRequests.find(x=>x.offerSetKey===c.offseasonExit?.requestKey&&x.baseOfferKey===o.offerKey&&x.outcome==='ACCEPTED');
      const price=engine.careerAgentOffseasonOffer(c,o,r?.counterOfferKey??o.offerKey);
      return signed(cmd('offseason-'+i,label({...o,annualSalaryWon:price.annualSalaryWon}),'ACCEPT_OFFSEASON',{eventKey:offseason.eventKey,eventVersion:offseason.eventVersion,offerKey:price.offerKey}));
-    }));
+    })]);
    }
    const renewal=c.renewal,e=c.events.find(x=>x.eventKey===renewal?.eventKey&&x.status==='OPEN');
    if(renewal?.status==='OFFERED'&&e){
@@ -170,6 +179,7 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
    }
    if(!c.events.some(e=>e.status==='OPEN'&&e.definitionId!=='E50')&&p.age<45)return out('다음 시즌 계약',[...militaryCommands,cmd('contract-offers','계약 제안 확인','OPEN_CONTRACT_OFFERS')]);
   }
+  if(militaryCommands.length)return out('병역 계획',militaryCommands);
   if(!c.postseason&&!c.seasonClose)return out('정규시즌 종료',[cmd('post-start','포스트시즌 시작','START_POSTSEASON')]);
   if(c.postseason?.championKey&&!c.seasonClose){
    if(!c.seasonGrowth.entries.some(e=>JSON.parse(e.periodKey)[0]==='pro-growth'))return out('시즌 정산',[cmd('settle-growth','시즌 성장 정산','SETTLE_GROWTH')]);
