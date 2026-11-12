@@ -83,7 +83,7 @@ export function advanceNpcLeagueHost(host:CollegeLeagueHost,hostRevision:number,
    game=startKboClubPostseason(game,game.revision);stopReason='POSTSEASON_STARTED';
    return {host:{...host,game,revision:game.revision},stopReason};
   }
-  if(game.seasonClose){game=startNextKboClubSeason(game,game.revision,host.departure?'calendar-2':undefined);stopReason='NEXT_YEAR';}
+  if(game.seasonClose){game=startNextKboClubSeason(game,game.revision,host.departure?'calendar-2':undefined,!host.departure&&target.seasonKey===String(Number(owner.seasonKey)+1)&&String(Number(game.world.seasonKey)+1)===target.seasonKey);stopReason='NEXT_YEAR';}
   else if(game.postseason){game=closeKboClubSeason(game,game.revision);stopReason='YEAR_CLOSED';}
   else {game=startKboClubPostseason(game,game.revision);stopReason='POSTSEASON_STARTED';}
  }else if(game.phase==='POSTSEASON_PROGRESS'){

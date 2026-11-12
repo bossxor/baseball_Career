@@ -50,7 +50,8 @@ test('college E75 graduation uses college-adjusted B and next-season reservation
  assert.ok(Object.keys(game.records.games).length);
  game.phase='SEASON_REVIEW';delete game.progress;
  game=closeKboClubSeason(game,game.revision);
- game=startNextKboClubSeason(game,game.revision);
+ game=startNextKboClubSeason(game,game.revision,undefined,true); // the pending protagonist draft keeps one slot per club
+ assert.ok(game.world.clubs.every(c=>c.roster.length<60));
  const host:CollegeLeagueHost={kind:'COLLEGE_NPC_KBO',revision:game.revision,ownerPlayerKey:'own',game,national:{invitations:[],competitions:[],benefits:[]}};
  const hostBefore=canonicalJson(host),fromHost=prepareCareerKboDraft(degree,degree.revision,null,host);
  assert.deepEqual(fromHost.kboRecruitment!.world.players,host.game.world.players);

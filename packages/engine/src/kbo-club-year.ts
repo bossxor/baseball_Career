@@ -58,7 +58,7 @@ export function closeKboClubSeason(source: KboClubGame, expectedRevision: number
 /** The whole league's offseason in one atomic result (72, club mode): ages +1 and contract roll, 45-year retirements, AI
  * renewals, the three free-agent rounds (my club uses the offers the manager planned; without a plan the AI runs it), the yearly
  * rookie draft, roster repair that also re-selects every first team, new calendar and schedule. */
-export function startNextKboClubSeason(source: KboClubGame, expectedRevision: number,calendarVersion:CalendarVersion=source.world.calendar.version): KboClubGame {
+export function startNextKboClubSeason(source: KboClubGame, expectedRevision: number,calendarVersion:CalendarVersion=source.world.calendar.version,reserveProtagonistSlot=false): KboClubGame {
   assertRevision(source, expectedRevision);
   if (source.phase !== 'SEASON_REVIEW' || !source.seasonClose || source.seasonClose.seasonKey !== source.world.seasonKey) throw new RangeError('CLUB_SEASON_NOT_CLOSED');
   const season = source.world.seasonKey, target = String(Number(season) + 1), calendar = createSeasonCalendar(Number(target),calendarVersion);
@@ -119,7 +119,7 @@ export function startNextKboClubSeason(source: KboClubGame, expectedRevision: nu
   for(const key of Object.keys(game.sangmu?.members??{}))if(game.health.injuries[key])market.health.injuries[key]=game.health.injuries[key]!;
   game.health = market.health; game.aiAssessments = market.reports;
   const standings = leagueStandings(source.records, { seasonKey: season, leagueKey: 'KBO', phase: 'REGULAR' }, world.clubs.map(c => c.id), world.seed, world.worldKey);
-  game.rookieDrafts = [...(source.rookieDrafts ?? []), draftKboRookieClass(world, target, standings.map(s => s.teamKey).reverse(), game.difficulty)];
+  game.rookieDrafts = [...(source.rookieDrafts ?? []), draftKboRookieClass(world, target, standings.map(s => s.teamKey).reverse(), game.difficulty, reserveProtagonistSlot ? 1 : 0)];
   const repaired = repairKboDualLeagueRosters({ world, pool: market.pool, health: market.health, protagonistKey: '', difficulty: game.difficulty });
   world = repaired.world; game.health = repaired.health; game.freeAgents = repaired.pool;
   game.aiOffseasons = [...(source.aiOffseasons ?? []), { seasonKey: target, renewal: prepared.receipt, repair: repaired.receipt, rounds: market.rounds, userOfferCount: plan.length }];

@@ -14,7 +14,7 @@ export interface KboRookieDraftReceipt {seasonKey:string;batchKey:string;classKe
  * remaining player at its most under-filled role group (08/44 need tiers 100/50/10: C2, SP5, relief8, each other primary hitter position1) and skips the
  * pick when it has no roster/budget room. Contracts are the 05 one-year minimum. Mutates the caller's cloned world.
  * ponytail: undrafted prospects vanish and full clubs skip picks; AI offseason market/repair is handled by the transition before this draft. */
-export function draftKboRookieClass(world:ActiveKboRosterWorld,seasonKey:string,worstFirst:readonly string[],difficulty:'GROWTH'|'REALISTIC'|'SECRET_CHEAT'):KboRookieDraftReceipt {
+export function draftKboRookieClass(world:ActiveKboRosterWorld,seasonKey:string,worstFirst:readonly string[],difficulty:'GROWTH'|'REALISTIC'|'SECRET_CHEAT',reservedSlots=0):KboRookieDraftReceipt {
  const batchKey=JSON.stringify(['kbo-rookie-batch',world.worldKey,seasonKey]),templates:SchoolNpcTemplate[]=[];
  const pattern=[...HITTER_POSITIONS.map(p=>['HITTER',p] as const),...PITCHER_POSITIONS.map(p=>['PITCHER',p] as const)];
  for(let i=0;i<KBO_ROOKIE_CLASS.size;i++){const [kind,position]=pattern[i%pattern.length]!;templates.push({simulationKey:JSON.stringify(['kbo-rookie',seasonKey,i]),kind,position,schoolId:'KBO-DRAFT'});}
@@ -23,7 +23,7 @@ export function draftKboRookieClass(world:ActiveKboRosterWorld,seasonKey:string,
  const pool=new Set(Object.keys(generated.players)),picks:KboRookiePick[]=[];
  for(let round=1;round<=KBO_ROOKIE_CLASS.rounds;round++)for(const [slot,clubId] of worstFirst.entries()){
   const club=world.clubs.find(c=>c.id===clubId)!;
-  if(!kboRecruitmentOpen(world,club.id) || club.roster.length>=KBO_ROSTER_LIMITS.maximum || kboClubBalance(world,club.id).availableWon<KBO_MONEY.minimumSalaryWon || club.paidSalaryWon+club.reservedSalaryWon+kboClubBalance(world,club.id).guaranteedWon+KBO_MONEY.minimumSalaryWon>club.budgetWon*.9)continue;
+  if(!kboRecruitmentOpen(world,club.id) || club.roster.length>=KBO_ROSTER_LIMITS.maximum-reservedSlots || kboClubBalance(world,club.id).availableWon<KBO_MONEY.minimumSalaryWon || club.paidSalaryWon+club.reservedSalaryWon+kboClubBalance(world,club.id).guaranteedWon+KBO_MONEY.minimumSalaryWon>club.budgetWon*.9)continue;
   const members=club.roster.map(k=>world.players[k]!);
   let best:{key:string;tier:number;score:number}|null=null;
   for(const key of [...pool].sort()){
