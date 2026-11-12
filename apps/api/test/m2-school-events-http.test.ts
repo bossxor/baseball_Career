@@ -19,20 +19,21 @@ test('school event choices resolve owned current events through HTTP without cha
    const event=createWorldEvent({definitionId,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:definition.evidenceDomain,fields},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:'SEASON_PROGRESS',competitionKey:'HS',registrationKey:'H01',sourceRevision:c.revision},sourceSequence:c.events.length+1,worldDay:31});
    const source={...c,events:[...c.events,event],phaseContext:{phase:'EVENT_DECISION' as const,eventKey:event.eventKey,resume:c.phaseContext as Extract<typeof c.phaseContext,{phase:'SEASON_PROGRESS'}>}};
    await db.update(gameSaves).set({state:{schemaVersion:1,career:source}}).where(eq(gameSaves.id,created.saveId));
-   const readHome=async()=>json<{nextActions:{id:string;command:{type:string;payload:Record<string,unknown>}}[]}>(await app.request(path+'/career',{headers}));
-   const home=await readHome(),served=home.nextActions[0]!,action=served.command;ids.push(served.id);assert.equal(action.payload.eventVersion,event.version);assert.equal(action.payload.command,command);
-   // The web refreshes the home view and matches the displayed ID before sending a command.
+   // Choices are served by the flow screen (home only links to it).
+   const readHome=async()=>{const screen=await json<{commands:{id:string;type:string;payload:Record<string,unknown>}[]}>(await app.request(path+'/screens/CAREER_FLOW',{headers}));return {nextActions:screen.commands.map(x=>({id:x.id,command:x}))};};
+   const home=await readHome(),served=home.nextActions.find(x=>x.command.payload.command===command)!,action=served.command;ids.push(served.id);assert.equal(action.payload.eventVersion,event.version);assert.equal(action.payload.command,command);
+   // Flow ids are static; staleness is carried by the served payload (revision/event version), which must change.
    for(const changed of [
     {...source,revision:source.revision+1},
     {...source,events:[...c.events,{...event,version:event.version+1}]},
    ]){
     await db.update(gameSaves).set({state:{schemaVersion:1,career:changed}}).where(eq(gameSaves.id,created.saveId));
-    assert.equal((await readHome()).nextActions.some(a=>a.id===served.id),false);
+    assert.equal((await readHome()).nextActions.some(a=>JSON.stringify(a.command)===JSON.stringify(served.command)),false);
    }
    if(definitionId==='E84'){
     const later=createWorldEvent({definitionId,worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:definition.evidenceDomain,fields:{playerSimulationKey:'me',traitId:'T14',unlockEvidenceVersion:1}},resume:event.resume,sourceSequence:event.sourceSequence+1,worldDay:32});
     await db.update(gameSaves).set({state:{schemaVersion:1,career:{...source,events:[...c.events,later],phaseContext:{...source.phaseContext,eventKey:later.eventKey}}}}).where(eq(gameSaves.id,created.saveId));
-    assert.equal((await readHome()).nextActions.some(a=>a.id===served.id),false);
+    assert.equal((await readHome()).nextActions.some(a=>JSON.stringify(a.command)===JSON.stringify(served.command)),false);
    }
    await db.update(gameSaves).set({state:{schemaVersion:1,career:source}}).where(eq(gameSaves.id,created.saveId));
    const post=(id:string,payload:Record<string,unknown>,auth=headers,revision=0)=>app.request(path+'/commands',{method:'POST',headers:auth,body:JSON.stringify({commandId:id,expectedRevision:revision,type:action.type,payload})});
