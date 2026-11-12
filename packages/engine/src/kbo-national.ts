@@ -64,7 +64,9 @@ export function openNationalCallup(c:KboCareer,revision:number,tournament:Nation
  const cur=ledger(c);if(cur.invitations.some(i=>i.selectionId===selectionId))throw new RangeError('NATIONAL_CALLUP_OPEN');
  if(c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame||Object.hasOwn(c.health.injuries,c.protagonistKey)||['SERVING_ACTIVE'].includes(c.military?.status??'')||['ARCHIVED','RETIRE_CONFIRM'].includes(c.phaseContext.phase))throw new RangeError('NATIONAL_CALLUP_INELIGIBLE');
  const deadlines=nationalInviteDeadlines(window??nationalCalendarWindow(Number(c.world.seasonKey),tournament));
- const next:KboCareer={...c};next.national={...cur,invitations:[...cur.invitations,{selectionId,tournament,seasonKey:c.world.seasonKey,invitationVersion:1,status:'INVITED',militaryEffect:tournament==='AG'||tournament==='OLY',...deadlines}]};queueNationalEvent(next,'E44',selectionId,'INVITATION');next.revision++;return next;
+ const next:KboCareer={...c};next.national={...cur,invitations:[...cur.invitations,{selectionId,tournament,seasonKey:c.world.seasonKey,invitationVersion:1,status:'INVITED',militaryEffect:tournament==='AG'||tournament==='OLY',...deadlines}]};
+ queueNationalEvent(next,'E44',selectionId,'INVITATION',tournament==='P12'&&window?.basis==='P12_POSTSEASON'?deadlines.inviteDay:undefined);
+ next.revision++;return next;
 }
 
 export function respondNationalCallup(c:KboCareer,revision:number,selectionId:string,decision:'ACCEPT'|'DECLINE'):KboCareer {

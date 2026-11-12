@@ -1,15 +1,28 @@
-﻿# 인계 — 2026-11-12 국내 소속 P12·무오퍼 은퇴 (최신)
+# 인계 — 2026-11-12 M2 통합 검증
+
+기준은 `5a06ae1`, 브랜치는 `codex/tf-fast-season`이다. 팀원 검토 후 P12 대회 창·초청일과 마이너 E66 무오퍼 은퇴를 수정했다. 은퇴 취소는 E66을 유지하고, 확정할 때만 은퇴 영수증으로 E66을 닫는다.
+
+첫 `npm run check`는 로컬 Android 생성 번들 lint 오류로 종료 코드 1을 반환했다. 디버그 파일과 생성 번들은 lint에서 제외했다. 전체 명령 재실행 없이 미실행 단계만 이어갔다. 로컬 원본 로그는 `evidence/M2-20261112-integration-check.log`, `evidence/M2-20261112-integration-continuation.log`다. 후속 로그에는 실패한 DB 테스트의 대형 저장 매개변수가 포함돼 있어 Git에는 이 요약만 남긴다.
+
+타입 검사 종료 코드 0. 엔진·API·규칙 테스트는 1,234건 중 1,208 통과·18 실패·8 제외(종료 코드 1, 8,259,686 ms). `kbo-p12-window.test.ts` 5건, 제어된 E67 원자 복귀와 마이너 E66 무오퍼 은퇴 회귀는 통과했다.
+
+- P12에 막힌 미국 계약 테스트 3건은 `career-contract-flow.test.ts`, `m2-us-major-year.test.ts`, `m2-us-play.test.ts`다. `career-contract-flow.test.ts`의 무예산 갱신은 별도의 UI 기대값 실패다. 원래 차단을 검증하고 계약 테스트에만 마감 시즌 fixture를 적용하도록 조정했다. 이 변경은 아직 재실행하지 않았다.
+- 독립 준비 `career-preparation.test.ts`와 `m2-independent-us-flow.test.ts`에서 `DUPLICATE_REGISTRATION_DAY`. `high-school-assessment.ts`가 독립 관측에 연도를 전달하지 않아 과거 고교와 날짜가 겹친다. 전역 후 복귀 `m2-military-flow.test.ts`의 `PITCHING_MATCHUP_MISMATCH`는 `us-reviewed-fixture.ts` 투수 기록에 대응 타자·맞대결 행이 빠져 발생한다. 은퇴 업적 `m2-pro-retirement.test.ts`는 `INVALID_PRO_AWARD_LEDGER`로 실패했다.
+- 그 외 실패는 `m2-school-events-http.test.ts`, `m2-school-flow.test.ts`, `m2-us-return-retirement.test.ts`, `career-growth-summary.test.ts`, `career-kbo.test.ts`, `college-national-host.test.ts`다. 원본 로그의 스택으로 원인을 각각 확인해야 한다.
+
+정적 검토에서 연말을 넘긴 P12 경기·건강·대회 원장은 원래 시즌 키를 사용한다. 실제 연말 경계 완주와 대형 외부 PostgreSQL 저장에서 E66·E67을 동시에 수락하는 검증은 별도로 필요하다. P12 복귀 뒤 KBO 재계약 알림 E30이 국내 최종일로 표시되는 문제도 남았다.
+
+# 인계 — 2026-11-12 국내 소속 P12·무오퍼 은퇴 (최신)
 
 사용자 결정: (1) 국내 소속 커리어의 MLB 권한은 월드 시드로 만든 결정적 가상 MLB 포스트시즌이며 같은 세계의 실제 미국 커리어가 있으면 그 결과가 우선한다(미국 소속 경로는 기존 실제 최종일 사용). (2) E67 무오퍼는 기존 규칙 유지: 미국 시장 지속, 제안이 없으면 은퇴 선택만, 재도전 없음.
 
-- 엔진 kbo-p12-window.ts: irtualMlbPostseasonEndDay(시드 승패로 실제 MLB 대진 규칙 재생, 정규시즌 마지막 성장일 + 경기 수, 저장 불필요)와 kboP12Window. openKboNationalSelection/openNationalCallup/startNationalTournament가 P12에서 이 창을 사용한다.
+- 엔진 kbo-p12-window.ts: virtualMlbPostseasonEndDay(시드 승패로 실제 MLB 대진 규칙 재생, 정규시즌 마지막 성장일 + 경기 수, 저장 불필요)와 kboP12Window. openKboNationalSelection/openNationalCallup/startNationalTournament가 P12에서 이 창을 사용한다.
 - API career-pro-national-shell.ts: KBO 시즌 리뷰(포스트시즌 우승 확정, 미마감)에서 P12 SELECT/START 경계. 결정 전에는 NEXT_YEAR·OPEN_CONTRACT_OFFERS·SETTLE_GROWTH·CLOSE_SEASON을 NATIONAL_DECISION_REQUIRED로 막는다. 재개는 기존 INTERNATIONAL resume(SEASON_REVIEW).
 - career-us-flow.ts: 마이너 시장 무제안에 CAREER_PRO_RETIRE_REQUEST 추가(E67 무오퍼 fallback 포함).
-- 기존 오류 정리: us-military-plan.ts 	erminatedContractKey 참조, Flow.tsx exactOptional 타입, 엔진 테스트 2개 타입.
+- 기존 오류 정리: us-military-plan.ts terminatedContractKey 참조, Flow.tsx exactOptional 타입, 엔진 테스트 2개 타입.
 - 잔여 사건: E38~40·E77~83·E97~99는 구단 운영·표현·연대기 범위라 M2 커리어 흐름에 연결하지 않았다(규칙 미확정 포함). E99는 사용자 결정으로 이번 M2에서 제외(설계 14 기록). M2 지정 3대 구현 항목은 모두 코드 연결됨, 남은 것은 통합 검증뿐이다.
 
-**미검증:** 이 변경의 
-pm run check는 중단됐다. lint(추적 파일)·typecheck는 통과, 이후 test는 사용자 지시로 중단해 미실행이다. 신규 kbo-p12-window.test.ts는 작성만 했고 실행하지 않았다. 2027·2031년 KBO 시즌리뷰를 지나는 기존 테스트가 P12 결정으로 막힐 수 있어 최종 검사에서 확인한다. 가상 MLB 종료일이 늦으면 P12가 연말을 넘길 수 있다(미국 경로와 동일 규칙, 미확인). 디버그/증거 파일(.prof-us*, dbg-presses, *.cjs, evidence)은 커밋하지 않았다.
+**미검증:** 이 변경의 npm run check는 중단됐다. lint(추적 파일)·typecheck는 통과, 이후 test는 사용자 지시로 중단해 미실행이다. 신규 kbo-p12-window.test.ts는 작성만 했고 실행하지 않았다. 2027·2031년 KBO 시즌리뷰를 지나는 기존 테스트가 P12 결정으로 막힐 수 있어 최종 검사에서 확인한다. 가상 MLB 종료일이 늦으면 P12가 연말을 넘길 수 있다(미국 경로와 동일 규칙, 미확인). 디버그/증거 파일(.prof-us*, dbg-presses, *.cjs, evidence)은 커밋하지 않았다.
 # 인계 — 2026-11-12 M2 출국·복귀와 프리미어12
 
 통합 브랜치는 `codex/tf-fast-season`이다. 원격 `16c65c2`까지 fast-forward했다. 팀원 작업은 KBO 포스팅·해외 FA 출국, 미국 계약 종료 후 E67 국내 복귀, 프리미어12 실제 양 리그 최종전 연결로 나눴다. `engine-command.ts`, `career-flow-screen.ts`, `commands.ts`에서 명령·화면·저장 모드를 연결했다.

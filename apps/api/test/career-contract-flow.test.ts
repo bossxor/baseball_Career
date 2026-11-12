@@ -5,6 +5,7 @@ import {KBO_MONEY} from '@playball/rules';
 import {closedUsMajorFixture} from '../../../packages/engine/test/us-major-fixture.js';
 import {closedUsFreeAgentFixture} from '../../../packages/engine/test/us-major-fa-fixture.js';
 import {expiredRetryUsCareer} from '../../../packages/engine/test/us-return-retry-fixture.js';
+import {closeSeasonHealth} from '../../../packages/engine/src/health.js';
 import {enteredKboCareer} from '../../../packages/engine/test/fixtures.js';
 import type {KboCareer,KboSeasonArchive} from '@playball/engine';
 import {usFlow} from '../src/career-us-flow.js';
@@ -14,7 +15,7 @@ import {applyEngineCommand} from '../src/engine-command.js';
 
 test('US major flow uses only existing funded quote and rejects stale or injected terms',()=>{
  const source=closedUsMajorFixture();
- assert.equal(usFlow(source).commands.length,0);
+ assert.ok(!usFlow(source).commands.some(command=>command.id==='major-renew'));
  const c=openUsAgentSalaryOffer(source,source.revision,source.inventory.clubs.map(o=>({organizationId:o.id,addedBudgetUsd:20_000_000})));
  const view=usFlow(c),offer=view.commands.find(x=>x.id==='major-renew')!;
  assert.ok(offer.sign);assert.ok(offer.confirm);
@@ -34,6 +35,11 @@ test('US major FA and expired minor contracts expose existing offers without pri
   const initial=usFlow(source),open=initial.commands.find(x=>x.id===openId)!;
   assert.ok(open,`${openId}: ${initial.commands.map(x=>x.id)}`);
   const command={commandId:openId,expectedRevision:0,type:open.type,payload:open.payload};
+  if(openId==='minor-market'){
+   assert.throws(()=>applyEngineCommand({schemaVersion:1,career:source},command),/NATIONAL_DECISION_REQUIRED/);
+   // Model an already closed year for this contract-only continuation fixture.
+   source.health=closeSeasonHealth(source.health,source.world.seasonKey).ledger;
+  }
   const next=applyEngineCommand({schemaVersion:1,career:source},command).nextState.career as typeof source;
   const view=usFlow(next),offer=view.commands.find(x=>x.id.startsWith(offerPrefix));
   assert.ok(offer);assert.ok(offer.sign);assert.ok(offer.confirm);

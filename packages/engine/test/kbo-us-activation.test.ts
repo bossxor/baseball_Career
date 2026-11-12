@@ -1,3 +1,4 @@
+import {requestUsRetirement,resolveUsRetirement} from '../src/us-retirement.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createSeasonCalendar} from '../src/season-calendar.js';
@@ -147,6 +148,25 @@ test('unfunded KBO minor market still exposes domestic return, never invents an 
  const c=finishControlledMajorSeason(openingTransferred(transferred(70,35,36_000,0).us)),opened=openUsMinorMarket(c,c.revision,zeroFunding(c)),view=usMinorMarketView(opened);assert.deepEqual(view.offers,[]);assert.equal(view.returnHome.available,true);assert.equal(opened.registration.level,c.registration.level);assert.deepEqual(opened.inventory,c.inventory);
 });
 
+test('an empty KBO minor market can retire after a failed domestic search, or cancel and retain E66',()=>{
+ const finished=finishControlledMajorSeason(openingTransferred(transferred(70,35,36_000,0).us));
+ const market=openUsMinorMarket(finished,finished.revision,zeroFunding(finished));
+ assert.deepEqual(market.minorMarket!.offers,[]);
+ const marketEventKey=market.minorMarket!.eventKey;
+ const choose=(source:UsCareer,command:'CANCEL_RETIRE'|'CONFIRM_RETIRE')=>{
+  const requested=requestUsRetirement(source,source.revision);
+  const event=requested.events.find(e=>e.status==='OPEN'&&e.definitionId==='E36')!;
+  return resolveUsRetirement(JSON.parse(JSON.stringify(requested)),requested.revision,{eventKey:event.eventKey,eventVersion:event.version,command});
+ };
+ const cancelled=choose(market,'CANCEL_RETIRE');
+ assert.deepEqual(cancelled.minorMarket,market.minorMarket);
+ assert.equal(cancelled.events.find(e=>e.eventKey===marketEventKey)!.status,'OPEN');
+ const retired=choose(cancelled,'CONFIRM_RETIRE');
+ assert.equal(retired.phaseContext.phase,'ARCHIVED');
+ assert.equal(retired.minorMarket,undefined);
+ assert.equal(retired.events.find(e=>e.eventKey===marketEventKey)?.resolution?.receiptKey,retired.retirement!.receiptKey);
+ assert.equal(market.events.find(e=>e.eventKey===marketEventKey)!.status,'OPEN');
+});
 test('minor market malformed rows and unrelated E66 evidence fail with a controlled boundary error',()=>{
  const c=expiredMinor(),opened=openUsMinorMarket(c,c.revision,zeroFunding(c));for(const market of [null,{...opened.minorMarket,offers:[null]},{...opened.minorMarket,funding:[null]}]){const bad=JSON.parse(JSON.stringify(opened));bad.minorMarket=market;const raw=canonicalJson(bad);assert.throws(()=>usMinorMarketView(bad),/INVALID_US_MINOR_MARKET/);assert.equal(canonicalJson(bad),raw);}const wrong=structuredClone(opened);wrong.events.find(e=>e.eventKey===wrong.minorMarket!.eventKey)!.evidence.fields={playerSimulationKey:c.protagonistKey,contractWindowIdOrReturnProgramId:'foreign-window',stage:'MINOR_EXPIRED'};assert.throws(()=>usMinorMarketView(wrong),/INVALID_US_MINOR_MARKET/);
 });

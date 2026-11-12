@@ -47,7 +47,7 @@ const sortedFunding=(funding:readonly UsAnnualFunding[])=>funding.map(f=>({...f}
 /** Saved quotes are validated, never rerated from later corrected statistics. */
 export function assertUsMinorMarket(c:UsCareer):void {
  const m=c.minorMarket;
- if(!m||typeof m!=='object'||c.kboTransfer&&!c.kboTransfer.origin||m.marketId!==marketId(c)||m.status!=='OPEN'||m.worldKey!==c.world.worldKey||m.seasonKey!==c.world.seasonKey||m.targetSeasonKey!==String(Number(c.world.seasonKey)+1)||m.playerKey!==c.protagonistKey||m.sourceContractKey!==c.contract.contractKey||m.sourceOrganizationId!==c.protagonistOrganizationId||m.initialLevel!==c.registration.level||!['ROOKIE','A','AA','AAA'].includes(m.initialLevel)||c.contract.type!=='US_MINOR'||c.phaseContext.phase!=='SEASON_REVIEW'||!Number.isSafeInteger(m.sourceRevision)||m.sourceRevision<c.activation.sourceRevision||m.sourceRevision>=c.revision||!Number.isSafeInteger(m.recordRevision)||m.recordRevision<0||m.recordRevision>c.records.revision||!Number.isFinite(m.playerScore)||m.playerScore<0||m.playerScore>100||!Array.isArray(m.funding)||m.funding.some(f=>!f||typeof f!=='object')||!Array.isArray(m.offers)||m.offers.some(o=>!o||typeof o!=='object')||m.offers.length>4||new Set(m.offers.map(o=>o?.organizationId)).size!==m.offers.length||m.offers.filter(o=>o.organizationId!==m.sourceOrganizationId).length>3)throw new RangeError('INVALID_US_MINOR_MARKET');
+ if(!m||typeof m!=='object'||c.kboTransfer&&!c.kboTransfer.origin||m.marketId!==marketId(c)||m.status!=='OPEN'||m.worldKey!==c.world.worldKey||m.seasonKey!==c.world.seasonKey||m.targetSeasonKey!==String(Number(c.world.seasonKey)+1)||m.playerKey!==c.protagonistKey||m.sourceContractKey!==c.contract.contractKey||m.sourceOrganizationId!==c.protagonistOrganizationId||m.initialLevel!==c.registration.level||!['ROOKIE','A','AA','AAA'].includes(m.initialLevel)||c.contract.type!=='US_MINOR'||!(c.phaseContext.phase==='SEASON_REVIEW'||c.phaseContext.phase==='RETIRE_CONFIRM'&&m.offers?.length===0)||!Number.isSafeInteger(m.sourceRevision)||m.sourceRevision<c.activation.sourceRevision||m.sourceRevision>=c.revision||!Number.isSafeInteger(m.recordRevision)||m.recordRevision<0||m.recordRevision>c.records.revision||!Number.isFinite(m.playerScore)||m.playerScore<0||m.playerScore>100||!Array.isArray(m.funding)||m.funding.some(f=>!f||typeof f!=='object')||!Array.isArray(m.offers)||m.offers.some(o=>!o||typeof o!=='object')||m.offers.length>4||new Set(m.offers.map(o=>o?.organizationId)).size!==m.offers.length||m.offers.filter(o=>o.organizationId!==m.sourceOrganizationId).length>3)throw new RangeError('INVALID_US_MINOR_MARKET');
  const funded=fundUsMinorYear(c.inventory,m.targetSeasonKey,c.inventory.registeredPlayerKeys,m.funding,m.sourceOrganizationId,0);
  for(const o of m.offers){const player=o.competitorKey===null?null:c.world.players[o.competitorKey],owner=c.world.organizations.find(org=>org.id===o.organizationId);if(o.organizationId!==m.sourceOrganizationId&&o.competitorKey===null||o.competitorKey!==null&&(!player||!owner?.levels[m.initialLevel].includes(o.competitorKey)||player.kind!==c.world.players[c.protagonistKey]!.kind||player.position!==c.world.players[c.protagonistKey]!.position))throw new RangeError('INVALID_US_MINOR_MARKET');const club=funded.clubs.find(x=>x.id===o.organizationId),org=c.world.organizations.find(x=>x.id===o.organizationId);if(!club||!org||o.offerKey!==JSON.stringify(['us-minor-offer',m.marketId,o.organizationId])||o.organizationName!==org.name||o.initialLevel!==m.initialLevel||o.years!==1||o.currency!=='USD'||o.annualSalaryUsd!==30000||o.signingBonusUsd!==0||o.nationalReleaseAllowed!==club.nationalReleaseAllowed||o.militaryReturnOption!==club.militaryReturnOption||club.availableBudgetUsd<30000||o.competitorKey!==null&&(typeof o.competitorKey!=='string'||!o.competitorKey)||(o.competitorKey===null)!==(o.competitorScore===null)||o.competitorScore!==null&&(!Number.isFinite(o.competitorScore)||o.competitorScore<0||o.competitorScore>100||o.organizationId!==m.sourceOrganizationId&&m.playerScore<=o.competitorScore))throw new RangeError('INVALID_US_MINOR_MARKET');}
  const e=c.events.find(e=>e.eventKey===m.eventKey);if(!e||e.definitionId!=='E66'||e.status!=='OPEN'||e.worldKey!==m.worldKey||e.seasonKey!==m.seasonKey||e.evidence.fields.playerSimulationKey!==m.playerKey||e.evidence.fields.contractWindowIdOrReturnProgramId!==m.marketId||e.evidence.fields.stage!=='MINOR_EXPIRED'||e.resume.phase!=='SEASON_REVIEW'||e.resume.competitionKey!==m.initialLevel||e.resume.registrationKey!==m.sourceOrganizationId||e.resume.sourceRevision!==m.sourceRevision+1)throw new RangeError('INVALID_US_MINOR_MARKET');validateEvent(e);
@@ -87,10 +87,28 @@ export function usMinorMarketView(c:UsCareer){
  return {marketId:m.marketId,playerScore:m.playerScore,currentLevel:m.initialLevel,offers:structuredClone(m.offers),returnHome:c.kboTransfer?{available:true,route:c.kboTransfer.returnRights?'ORIGINAL_CLUB_PRIORITY' as const:'DOMESTIC_FA' as const,holderClubId:c.kboTransfer.returnRights?.holderClubId??null}:{available:c.world.players[c.protagonistKey]!.age+2<=35&&['UNRESOLVED','COMPLETED','NOT_APPLICABLE'].includes(c.military.status),route:'AMATEUR_RETURN_PREPARATION' as const,holderClubId:null}};
 }
 export function resolveUsMinorMarketEvent(c:UsCareer,revision:number,input:{eventKey:string;eventVersion:number;command:string}){
- assertUsCareerRevision(c,revision);const m=c.minorMarket,e=c.events.find(e=>e.eventKey===input.eventKey);if(!m||m.eventKey!==input.eventKey||!e)throw new RangeError('INVALID_US_MINOR_MARKET_EVENT');
+ assertUsCareerRevision(c,revision);const m=c.minorMarket,e=c.events.find(e=>e.eventKey===input.eventKey);if(c.phaseContext.phase!=='SEASON_REVIEW'||!m||m.eventKey!==input.eventKey||!e)throw new RangeError('INVALID_US_MINOR_MARKET_EVENT');
  const picked=resolveEventChoice(e,input.eventVersion,input.command,null,{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,worldDay:e.occurredWorldDay,eligibleCommands:['OPEN_CAREER_OFFERS','OPEN_RETURN']});if(!picked.navigation||picked.domain||picked.event.status!=='OPEN')throw new RangeError('INVALID_US_MINOR_MARKET_NAVIGATION');return {career:c,navigation:picked.navigation};
 }
 
+export function hasOnlyEmptyUsMinorMarketEvent(c:UsCareer):boolean {
+ const market=c.minorMarket;
+ if(!market||market.offers.length)return false;
+ const events=c.events.filter(e=>e.status==='OPEN');
+ return events.length===1&&events[0]!.eventKey===market.eventKey;
+}
+
+export function completeEmptyUsMinorMarketForRetirement(c:UsCareer,receiptKey:string):UsCareer {
+ if(!c.minorMarket)return c;
+ assertUsMinorMarket(c);
+ if(!hasOnlyEmptyUsMinorMarketEvent(c))throw new RangeError('US_RETIREMENT_NOT_AVAILABLE');
+ const event=c.events.find(e=>e.eventKey===c.minorMarket!.eventKey)!;
+ const closed=completeBlockingEvent(event,event.version,{sourceEvidenceKey:event.evidenceKey,receiptKey,command:'CONFIRM_RETIRE'},
+  {worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,worldDay:event.occurredWorldDay,eligibleCommands:[]});
+ const next={...c,events:c.events.map(e=>e.eventKey===event.eventKey?closed:e)};
+ delete next.minorMarket;
+ return next;
+}
 function restoreEmergencyRegistrations(c:UsCareer,world:ActiveUsRosterWorld):void {
  for(const[key,e]of Object.entries(c.season!.emergency?.entries??{}))if(e.releasedDay===null){const org=world.organizations.find(o=>o.id===e.clubId)!,reserve=world.reserves?.[org.id];if(!org.levels[e.level].includes(key)||!reserve?.includes(e.replacedKey))throw new RangeError('INVALID_US_EMERGENCY_REGISTRATION');org.levels[e.level]=org.levels[e.level].map(k=>k===key?e.replacedKey:k);world.reserves![org.id]=reserve.filter(k=>k!==e.replacedKey);world.reserves![org.id]!.push(key);}
 }

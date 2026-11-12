@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import {closeSeasonHealth} from '../../../packages/engine/src/health.js';
 import type {UsCareer} from '@playball/engine';
 import {preparedUsOptionCareer} from '../../../packages/engine/test/us-option-fixture.js';
 import {usLevelFixture} from '../../../packages/engine/test/us-level-fixture.js';
@@ -29,6 +30,9 @@ test('US annual API exposes actual blockers and advances an owned closed year wi
 
 test('expired US minor API quotes persisted budgets, exposes owned choices and accepts an actual one-year offer',()=>{
  const c=expiredRetryUsCareer(),dispatch=(source:UsCareer,name:string,payload:Record<string,unknown>={})=>applyEngineCommand({schemaVersion:1,career:source},{commandId:name+source.revision,expectedRevision:0,type:'CAREER_US_PLAY_'+name,payload:{careerRevision:source.revision,...payload}});
+ assert.throws(()=>dispatch(c,'OPEN_MINOR_MARKET'),/NATIONAL_DECISION_REQUIRED/);
+ // Model an already closed year for the minor market checks below.
+ c.health=closeSeasonHealth(c.health,c.world.seasonKey).ledger;
  const opened=dispatch(c,'OPEN_MINOR_MARKET').nextState.career as UsCareer;
  assert.ok(opened.minorMarket!.funding.every(row=>row.addedBudgetUsd===0));
  const view=usPlayScreen({schemaVersion:1,career:opened}) as {minorMarket:{eventKey:string;eventVersion:number;offers:{offerKey:string;organizationId:string}[]}};

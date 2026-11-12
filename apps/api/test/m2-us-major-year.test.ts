@@ -5,6 +5,7 @@ import {startNextUsMajorSeason,openUsAgentSalaryOffer,hireCareerAgent,careerSala
 import {closedUsMajorFixture,finishControlledMajorSeason} from '../../../packages/engine/test/us-major-fixture.js';
 import {confirmUsPreseasonPlan} from '../../../packages/engine/src/us-preseason.js';
 import {publishUsSeasonSchedule} from '../../../packages/engine/src/us-schedule.js';
+import {closeSeasonHealth} from '../../../packages/engine/src/health.js';
 import {applyEngineCommand} from '../src/engine-command.js';
 import {usPlayScreen} from '../src/career-us-play-shell.js';
 
@@ -41,6 +42,9 @@ test('major annual API uses previously booked native funding, reserves once and 
  const first=closedUsMajorFixture(),funded=startNextUsMajorSeason(first,first.revision,first.inventory.clubs.map(o=>({organizationId:o.id,addedBudgetUsd:20000000})));
  const closed=finishControlledMajorSeason(publishUsSeasonSchedule(confirmUsPreseasonPlan(funded,funded.revision),funded.revision+1)),view=usPlayScreen({schemaVersion:1,career:closed}) as {majorContract:{annualSalaryUsd:number;funded:boolean}};assert.equal(view.majorContract.funded,true);
  const cash=closed.inventory.clubs.find(o=>o.id===closed.protagonistOrganizationId)!.availableBudgetUsd;
+ assert.throws(()=>dispatch(closed,'NEXT_MAJOR_YEAR'),/NATIONAL_DECISION_REQUIRED/);
+ // Model an already closed year for the contract and budget checks below.
+ closed.health=closeSeasonHealth(closed.health,closed.world.seasonKey).ledger;
  const next=dispatch(closed,'NEXT_MAJOR_YEAR').nextState.career as UsCareer;assert.equal(next.world.seasonKey,String(Number(closed.world.seasonKey)+1));assert.equal(next.contract.years,1);assert.equal(next.contract.annualSalaryUsd,view.majorContract.annualSalaryUsd);assert.deepEqual(next.income,closed.income);assert.equal(next.records,closed.records);
  assert.equal(next.inventory.clubs.find(o=>o.id===next.protagonistOrganizationId)!.availableBudgetUsd,cash-next.contract.annualSalaryUsd);assert.ok(next.majorYears!.at(-1)!.funding.every(f=>f.addedBudgetUsd===0));
  assert.deepEqual(usPlayScreen({schemaVersion:1,career:JSON.parse(JSON.stringify(next))}),usPlayScreen({schemaVersion:1,career:next}));
