@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {eq} from 'drizzle-orm';
-import {createTestDb,seedAllowedSubject,gameSaves} from '@playball/db';
+import {createTestDb,seedAllowedSubject,gameSaves,writeSaveState} from '@playball/db';
 import {createApp} from '../src/app.js';
 import {json} from './json.js';
 import {storedSave} from './stored-save.js';
@@ -15,7 +15,7 @@ test('controlled return HTTP: voluntary exit cancel/re-request/archive, replay/s
   const subject='return-retirement',headers={Authorization:'Bearer dev:'+subject,'Content-Type':'application/json'},other={Authorization:'Bearer dev:return-retirement-other'};
   await seedAllowedSubject(db,subject);await seedAllowedSubject(db,'return-retirement-other');const app=createApp({db,auth:{allowDevBearer:true}});
   const created=await json<{saveId:string}>(await app.request('/api/game-creations',{method:'POST',headers,body:JSON.stringify({creationId:'controlled-return-retirement',mode:'CAREER'})}));
-  const source=controlledDeclinedUsReturn();await db.update(gameSaves).set({state:{schemaVersion:1,career:source}}).where(eq(gameSaves.id,created.saveId));
+  const source=controlledDeclinedUsReturn();await db.transaction(async tx=>{const stored=await writeSaveState(tx,created.saveId,0n,{schemaVersion:1,career:source});await tx.update(gameSaves).set(stored).where(eq(gameSaves.id,created.saveId));});
   const url='/api/saves/'+created.saveId,stored=async()=>((await storedSave(db,created.saveId))[0]!.state as {career:UsAmateurReturnCareer}).career;
   let saveRevision=0,careerRevision=source.revision;
   const raw=(id:string,name:string,payload:Record<string,unknown>,revision=saveRevision)=>app.request(url+'/commands',{method:'POST',headers,body:JSON.stringify({commandId:id,expectedRevision:revision,type:'CAREER_US_RETURN_'+name,payload})});
