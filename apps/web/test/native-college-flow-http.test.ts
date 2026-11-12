@@ -75,7 +75,8 @@ test('college road: graduation route → enrollment → year-end handover → se
 });
 
 test('college road: result → academic year close → next year; stale/forged payloads are rejected', async () => {
-  const s = await session('web-college-2', completedCollegeAcademicYear());
+  // 2030 is an Asian Games year (AG selection precedes the year close, covered by the national-host tests); the controlled third year (2032) has no window.
+  const s = await session('web-college-2', thirdYear());
   try {
     assert.equal(s.view.title, '학년 마무리');
     const close = s.view.commands.find(c => c.id === 'close-year')!;
@@ -84,9 +85,9 @@ test('college road: result → academic year close → next year; stale/forged p
     await s.take('close-year');
     assert.deepEqual(s.ids(), ['start-next']);
     await s.take('start-next');
-    assert.deepEqual(s.ids(), ['preseason']);
-    assert.match(s.view.lines.map(l => `${l.label} ${l.value}`).join(' '), /학년 2학년/);
-    assert.equal((await s.state()).career.world.seasonKey, '2031');
+    assert.equal(s.ids()[0], 'preseason', 'preseason leads; the senior year also offers leave and style choices');
+    assert.match(s.view.lines.map(l => `${l.label} ${l.value}`).join(' '), /학년 4학년/);
+    assert.equal((await s.state()).career.world.seasonKey, '2033');
   } finally { await s.close(); }
 });
 
@@ -101,6 +102,12 @@ function secondYear(strength=800_000) {
  start.seasonGrowth!.seasonStart=structuredClone(player);
  start.ownAssessment=createOwnCareerAssessment(start.world);
  return completedCollegeAcademicYear(start);
+}
+
+/** Controlled third academic year (2032, no AG window): year 2 continues through the engine, year 3 plays out. */
+function thirdYear() {
+ const second=secondYear(),ready=closeCollegeSeasonForNextYear(second,second.revision,true);
+ return completedCollegeAcademicYear(startNextCollegeSeason(ready,ready.revision));
 }
 
 test('college E73 continue closes the controlled second year with explicit training forfeiture',async()=>{
