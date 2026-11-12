@@ -78,7 +78,7 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
  if(phase.phase==='POSTSEASON_PROGRESS')return out('포스트시즌',[cmd('post-advance','포스트시즌 진행','ADVANCE_POSTSEASON')]);
  if(phase.phase==='SEASON_REVIEW'){
   const t=engine.usYearTransitionReadiness(c);
-  let preview:ReturnType<typeof engine.usMilitaryPlanPreview>|undefined;try{preview=engine.usMilitaryPlanPreview(c);}catch{}
+  let preview:ReturnType<typeof engine.usMilitaryPlanPreview>|undefined;try{preview=engine.usMilitaryPlanPreview(c);}catch{preview=undefined;}
   const planCommands=preview?.choices.map(choice=>military('military-'+choice.toLowerCase(),choice==='FREEZE'?'계약 동결 후 복무':'계약 종료 후 복무','PLAN',{choice},'이 병역 계획을 확정할까요?'))??[];
   if(t.ready)return out('시즌 종료',[...planCommands,cmd('next-minor-year','다음 시즌 시작','NEXT_MINOR_YEAR')],`다음 시즌: ${t.targetSeasonKey}`);
   const returnCommands:FlowCommand[]=[];
@@ -101,6 +101,7 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
        {label:'대표팀 차출',value:o.nationalReleaseAllowed?'허용':'불허'},
        {label:'병역 복귀 옵션',value:o.militaryReturnOption?'있음':'없음'},
       ]}));
+     if(!market.offers.length)commands.push({id:'retire-request',label:'은퇴 절차 시작',type:'CAREER_PRO_RETIRE_REQUEST',payload:{careerRevision:c.revision},confirm:'은퇴 확인 단계로 이동할까요?'});
      return out('마이너 계약 제안',[...returnCommands,...planCommands,...commands],market.offers.length?null:'현재 계약 제안이 없습니다.');
     }
     if(t.blockers.length===1)return out('계약 만료',[...returnCommands,...planCommands,cmd('minor-market','계약 제안 확인','OPEN_MINOR_MARKET')]);

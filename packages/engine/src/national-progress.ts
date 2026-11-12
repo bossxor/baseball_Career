@@ -10,6 +10,7 @@ import type {NationalLedger,NationalMedal,NationalTournament} from './kbo-nation
 import {sealNationalCompetitionResult,queueNationalFirstAppearance} from './kbo-national.js';
 import {assertNationalSelectionSnapshot,nationalLineupBatting} from './national-selection.js';
 import {kboNationalCandidates} from './kbo-national-selection.js';
+import {kboP12Window} from './kbo-p12-window.js';
 import {replaceNationalInjuryWithEmergency} from './national-injury-replacement.js';
 import {assertNationalBracket,createNationalBracket,nextNationalMatch,prepareNationalMatch,advanceNationalMatch,nationalNationPreset,nationalInviteDeadlines,nationalMatchesOnDay} from './national-bracket.js';
 import type {NationalBracket,NationalTournamentWindow,NationalMatch} from './national-bracket.js';
@@ -80,6 +81,7 @@ function commitPitchXp(c:KboCareer,game:GameState):void {
 /** Opens one DX bracket on the career ledger. World play continues even if the protagonist declined or was not selected. */
 export function startNationalTournament(c:KboCareer,revision:number,tournament:NationalTournament,window?:NationalTournamentWindow):KboCareer {
  assertKboCareerRevision(c,revision);
+ if(tournament==='P12'&&!window)window=kboP12Window(c);
  if(['ARCHIVED','RETIRE_CONFIRM'].includes(c.phaseContext.phase)||c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame||c.phaseContext.phase==='POSTSEASON_PROGRESS'&&c.phaseContext.pendingGame)throw new RangeError('NATIONAL_TOURNAMENT_NOT_AVAILABLE');
  const selection=ledger(c).selections?.find(s=>s.seasonKey===c.world.seasonKey&&s.tournament===tournament);if(!selection)throw new RangeError('NATIONAL_SELECTION_REQUIRED');
  assertNationalSelectionSnapshot(selection);

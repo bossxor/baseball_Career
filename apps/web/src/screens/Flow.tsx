@@ -76,7 +76,7 @@ export function matchingFocusCommand(commands: readonly FlowCommand[], selected:
   return commands.find(c => Array.isArray(c.payload.focus) && c.payload.focus.length === 4 && c.payload.focus.every(k => typeof k === 'string' && selected.includes(k)));
 }
 
-function FocusChoice({ commands, busy, onCommand }: { commands: readonly FlowCommand[]; busy: boolean; onCommand?: (command: FlowCommand) => void }) {
+function FocusChoice({ commands, busy, onCommand }: { commands: readonly FlowCommand[]; busy: boolean; onCommand?: ((command: FlowCommand) => void) | undefined }) {
   const [selected, setSelected] = useState<string[]>([]);
   const labels = new Map<string, string>();
   for (const command of commands) {

@@ -6,7 +6,7 @@ import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision} from './kbo-career-version.js';
 import type {KboMilitaryStatus} from './kbo-military-state.js';
 import {nationalCalendarWindow,nationalInviteDeadlines} from './national-bracket.js';
-import type {NationalBracket} from './national-bracket.js';
+import type {NationalBracket,NationalTournamentWindow} from './national-bracket.js';
 import {auditCareerNationalDays} from './national-day-audit.js';
 
 export type NationalTournament='WBC'|'OLY'|'AG'|'P12';
@@ -56,14 +56,14 @@ function ledger(c:KboCareer):NationalLedger {
 }
 
 /** Server-only legacy invitation adapter; new selection UI uses openKboNationalSelection. Opens one S24 invitation. WBC/P12 have no military effect flag. */
-export function openNationalCallup(c:KboCareer,revision:number,tournament:NationalTournament):KboCareer {
+export function openNationalCallup(c:KboCareer,revision:number,tournament:NationalTournament,window?:NationalTournamentWindow):KboCareer {
  assertKboCareerRevision(c,revision);
  if(c.phaseContext.phase==='INTERNATIONAL_PROGRESS'||c.phaseContext.phase==='INTERNATIONAL_REVIEW')throw new RangeError('NATIONAL_CALLUP_INELIGIBLE');
  const selectionId=JSON.stringify(['national-callup',c.world.worldKey,c.world.seasonKey,tournament,c.protagonistKey]);
  if(!['WBC','OLY','AG','P12'].includes(tournament))throw new RangeError('INVALID_NATIONAL_TOURNAMENT');
  const cur=ledger(c);if(cur.invitations.some(i=>i.selectionId===selectionId))throw new RangeError('NATIONAL_CALLUP_OPEN');
  if(c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame||Object.hasOwn(c.health.injuries,c.protagonistKey)||['SERVING_ACTIVE'].includes(c.military?.status??'')||['ARCHIVED','RETIRE_CONFIRM'].includes(c.phaseContext.phase))throw new RangeError('NATIONAL_CALLUP_INELIGIBLE');
- const deadlines=nationalInviteDeadlines(nationalCalendarWindow(Number(c.world.seasonKey),tournament));
+ const deadlines=nationalInviteDeadlines(window??nationalCalendarWindow(Number(c.world.seasonKey),tournament));
  const next:KboCareer={...c};next.national={...cur,invitations:[...cur.invitations,{selectionId,tournament,seasonKey:c.world.seasonKey,invitationVersion:1,status:'INVITED',militaryEffect:tournament==='AG'||tournament==='OLY',...deadlines}]};queueNationalEvent(next,'E44',selectionId,'INVITATION');next.revision++;return next;
 }
 

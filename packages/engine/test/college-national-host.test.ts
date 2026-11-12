@@ -40,11 +40,11 @@ test('neutral host postseason target opens native playoffs and rejects a missing
  const seasonKey=started.game.world.seasonKey;
  const owner={worldKey:c.world.worldKey,seed:c.world.seed,seasonKey:c.world.seasonKey,playerKey:c.world.protagonistKey,difficulty:c.difficulty};
  const review={...started,game:{...started.game,phase:'SEASON_REVIEW' as const,progress:undefined,days:{...started.game.days!,days:[{day:280,evidence:'controlled-review',result:{injured:[],recovered:[]}}]}}};
- const result=advanceNpcLeagueHost(review,review.revision,owner,{seasonKey,stopDay:'POSTSEASON_COMPLETE'});
+ const result=advanceNpcLeagueHost(review as never,review.revision,owner,{seasonKey,stopDay:'POSTSEASON_COMPLETE'});
  assert.equal(result.stopReason,'POSTSEASON_STARTED');
  assert.equal(result.host.game.postseasonProgress?.nextWorldDay,281);
  assert.throws(()=>npcHostPostseasonEndDay(result.host),/NATIONAL_PS_END_REQUIRED/);
  const bracket=result.host.game.postseasonProgress!.postseason;
  const forged={...review,game:{...review.game,postseason:{...bracket,championKey:'winner',series:[{...bracket.series[0]!,round:'KOREAN_SERIES' as const,games:[{gameNumber:1,homeTeamKey:'winner',awayTeamKey:'runner-up',winner:'winner'}]}]}}};
- assert.throws(()=>advanceNpcLeagueHost(forged,forged.revision,owner,{seasonKey,stopDay:'POSTSEASON_COMPLETE'}),/NATIONAL_PS_END_CHANGED/);
+ assert.throws(()=>advanceNpcLeagueHost(forged as never,forged.revision,owner,{seasonKey,stopDay:'POSTSEASON_COMPLETE'}),/NATIONAL_PS_END_CHANGED/);
 });

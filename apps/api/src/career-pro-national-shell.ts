@@ -22,9 +22,13 @@ const openEvent=(c:engine.KboCareer)=>c.events.find(e=>e.status==='OPEN'&&eventI
 function nationalBoundary(c:engine.KboCareer){
  const phase=c.phaseContext;
  for(const slot of c.world.calendar.international){
-  // P12 needs both leagues' actual postseason end evidence from the same world.
-  if(slot.type==='P12'||started(c,slot.type))continue;
+  if(started(c,slot.type))continue;
   const selected=selection(c,slot.type);
+  // P12 opens in SEASON_REVIEW after the KBO final; the MLB final is the world-seeded virtual one (engine kboP12Window).
+  if(slot.type==='P12'){
+   if(phase.phase==='SEASON_REVIEW'&&c.postseason?.championKey&&!c.seasonClose&&!c.health.closedSeasons.includes(c.world.seasonKey)&&c.days?.days.at(-1))return {...slot,action:selected?'START':'SELECT',day:c.days.days.at(-1)!.day+1};
+   continue;
+  }
   if(slot.type==='WBC'){
    if(phase.phase==='PRESEASON_SETUP'&&c.world.calendar.version==='calendar-2'&&!c.preseasonPlan&&!c.openingRoster)return {...slot,action:selected?'START':'SELECT',day:slot.startDay};
    continue;
@@ -36,6 +40,11 @@ function nationalBoundary(c:engine.KboCareer){
   return {...slot,action:selected?'START':'SELECT',day};
  }
  return null;
+}
+
+/** True while a KBO career must answer P12 before the season can close. */
+export function kboP12DecisionPending(c:engine.KboCareer):boolean{
+ return nationalBoundary(c)?.type==='P12';
 }
 
 /** Cap the domestic worker at invitation/start dates so season spans cannot skip either decision. */
@@ -161,7 +170,7 @@ export function proNationalFlow(state:SaveState):FlowScreen|null {
   return out('대표팀 대회',[cmd('national-advance','대회 이어서 진행','ADVANCE')]);
  }
  const boundary=nationalBoundary(c);
- if(boundary&&(c.phaseContext.phase==='PRESEASON_SETUP'||c.phaseContext.phase==='SEASON_PROGRESS'&&!c.phaseContext.pendingGame&&boundary.day===c.phaseContext.nextWorldDay)){
+ if(boundary&&(c.phaseContext.phase==='PRESEASON_SETUP'||c.phaseContext.phase==='SEASON_REVIEW'&&boundary.type==='P12'||c.phaseContext.phase==='SEASON_PROGRESS'&&!c.phaseContext.pendingGame&&boundary.day===c.phaseContext.nextWorldDay)){
   lines.push({label:'대회',value:nationalTournamentNames[boundary.type]});
   return boundary.action==='SELECT'?out('대표팀 선발',[cmd('national-select','대표팀 명단 확인','SELECT',{tournament:boundary.type})]):out('대표팀 대회',[cmd('national-start','대회 시작','START',{tournament:boundary.type})]);
  }

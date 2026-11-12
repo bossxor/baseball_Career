@@ -240,7 +240,7 @@ export function isUsMilitaryDischargeWithoutContract(c:UsCareer):boolean {
   s.completedBlocks!==s.scheduledBlocks||!s.cursor||c.season?.days.at(-1)?.day!==s.cursor.worldDay||
   c.events.some(e=>e.status==='OPEN')||!(phase.phase==='SEASON_REVIEW'||phase.phase==='SEASON_PROGRESS'&&!phase.pendingGame))return false;
  const option=s.returnOption?.status;
- return s.terminatedContractKey!==undefined&&option===undefined||
+ return c.military.terminatedContractKey!==undefined&&option===undefined||
   option==='DECLINED'||option==='EXPIRED'||
   option==='CONFIRMED'&&(s.returnOffer?.status==='DECLINED'||s.returnOffer?.status==='EXPIRED');
 }

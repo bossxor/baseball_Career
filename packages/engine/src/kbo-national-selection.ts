@@ -5,6 +5,7 @@ import {openNationalCallup} from './kbo-national.js';
 import {createNationalSelection,assertNationalSelectionSnapshot} from './national-selection.js';
 import type {NationalCandidate,NationalSelectionSnapshot} from './national-selection.js';
 import {createWorldEvent,eventDefinition} from './events.js';
+import {kboP12Window} from './kbo-p12-window.js';
 
 /** Existing KBO population is KOR; explicit nationality metadata always overrides the legacy default. */
 export function kboNationalCandidates(c:KboCareer):NationalCandidate[] {
@@ -20,13 +21,14 @@ export function openKboNationalSelection(c:KboCareer,revision:number,tournament:
  assertKboCareerRevision(c,revision);
  if(['ARCHIVED','RETIRE_CONFIRM','EVENT_DECISION','INTERNATIONAL_PROGRESS','INTERNATIONAL_REVIEW'].includes(c.phaseContext.phase)||c.phaseContext.phase==='SEASON_PROGRESS'&&c.phaseContext.pendingGame)throw new RangeError('NATIONAL_SELECTION_NOT_AVAILABLE');
  if(!c.world.calendar.international.some(w=>w.type===tournament))throw new RangeError('NATIONAL_NOT_SCHEDULED');
+ const window=tournament==='P12'?kboP12Window(c):undefined;
  const id=JSON.stringify(['national-selection',c.world.worldKey,c.world.seasonKey,tournament]),old=c.national?.selections?.find(s=>s.selectionId===id);
  if(old){assertNationalSelectionSnapshot(old);return c;}
  if(c.national?.invitations.some(i=>i.tournament===tournament&&i.seasonKey===c.world.seasonKey&&!i.selectionSnapshotId))throw new RangeError('LEGACY_NATIONAL_CALLUP_ACTIVE');
  const selection=createNationalSelection({worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,seed:c.world.seed,tournament,candidates:kboNationalCandidates(c),records:c.records});
  let next:KboCareer={...c,national:{invitations:c.national?.invitations??[],competitions:c.national?.competitions??[],benefits:c.national?.benefits??[],...c.national,selections:[...(c.national?.selections??[]),selection]}};
  if(selection.roster.slots.some(s=>s.playerKey===c.protagonistKey)){
-  next=openNationalCallup(next,revision,tournament);const invite=next.national!.invitations.at(-1)!;next.national={...next.national!,invitations:next.national!.invitations.map(i=>i.selectionId===invite.selectionId?{...i,selectionSnapshotId:selection.selectionId}:i)};
+  next=openNationalCallup(next,revision,tournament,window);const invite=next.national!.invitations.at(-1)!;next.national={...next.national!,invitations:next.national!.invitations.map(i=>i.selectionId===invite.selectionId?{...i,selectionSnapshotId:selection.selectionId}:i)};
  }else{
   const d=eventDefinition('E45'),event=createWorldEvent({definitionId:'E45',worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,evidence:{version:1,type:d.evidenceDomain,fields:{playerSimulationKey:c.protagonistKey,competitionId:selection.selectionId,selectionOrAppearanceStage:'NOT_SELECTED'}},resume:{worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,phase:c.phaseContext.phase,competitionKey:null,registrationKey:c.protagonistClubId,sourceRevision:c.revision+1},sourceSequence:c.events.length+1,worldDay:c.days?.seasonKey===c.world.seasonKey?c.days.days.at(-1)?.day??0:0});
   next={...next,revision:c.revision+1,events:[...c.events,event]};

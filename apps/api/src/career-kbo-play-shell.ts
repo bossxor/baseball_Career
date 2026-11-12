@@ -1,6 +1,6 @@
 import * as engine from '@playball/engine';
 import {spanDeadline,spanStopOf,teamProgress} from './span-budget.js';
-import {advanceKboToNationalBoundary} from './career-pro-national-shell.js';
+import {advanceKboToNationalBoundary,kboP12DecisionPending} from './career-pro-national-shell.js';
 import {kboDepartureBlocksOffseason,kboDepartureOptions} from './career-kbo-departure-shell.js';
 import type {SpanStop} from './span-budget.js';
 import {ABILITY_LABELS,abilityKeys,KBO_CLUBS} from '@playball/rules';
@@ -41,6 +41,7 @@ export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand
  const p=raw as Record<string,unknown>,c=state.career as engine.KboCareer|undefined;
  if(!c||typeof c!=='object'||Array.isArray(c)||typeof c.protagonistClubId!=='string')fail('KBO_CAREER_REQUIRED');
  if((name==='NEXT_YEAR'||name==='OPEN_CONTRACT_OFFERS')&&kboDepartureBlocksOffseason(c))fail('KBO_DEPARTURE_DECISION_REQUIRED');
+ if((name==='NEXT_YEAR'||name==='OPEN_CONTRACT_OFFERS'||name==='SETTLE_GROWTH'||name==='CLOSE_SEASON')&&kboP12DecisionPending(c))fail('NATIONAL_DECISION_REQUIRED');
  const rev=int(p,'careerRevision',1);let next:engine.KboCareer,stopReason:string|undefined,spanStop:SpanStop|undefined;
  const event=()=>({eventKey:str(p,'eventKey'),eventVersion:int(p,'eventVersion',1)});
  const offer=()=>({...event(),offerKey:str(p,'offerKey')});

@@ -178,6 +178,7 @@ export type {UsMajorYearArchive} from './us-major-history.js';
 export {resolveUsMajorDebut} from './us-debut.js';
 
 export {openKboNationalSelection,kboNationalSelectionView} from './kbo-national-selection.js';
+export {kboP12Window,virtualMlbPostseasonEndDay} from './kbo-p12-window.js';
 export {createNationalSelection} from './national-selection.js';
 export type {NationalCandidate,NationalSelectionSnapshot} from './national-selection.js';
 export {nationalNationPreset,createNationalBracket,nextNationalMatch,prepareNationalMatch,advanceNationalMatch,assertNationalBracket,nationalCalendarWindow,p12ActualWindow} from './national-bracket.js';
