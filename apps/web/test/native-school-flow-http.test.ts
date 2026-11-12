@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { loadState } from './save-state.js';
 import assert from 'node:assert/strict';
 import { eq } from 'drizzle-orm';
 import { createTestDb, seedAllowedSubject, gameSaves } from '@playball/db';
@@ -55,7 +56,14 @@ for (const kind of ['HITTER', 'PITCHER'] as const) {
       assert.equal(view.protagonist.name, '폼선수');
       assert.equal(view.stage.teamName, '청해솔고');
       assert.doesNotMatch(JSON.stringify(view), HIDDEN);
-      for (let i = 0; i < 3; i++) view = await api.act(saveId, view.nextActions[0]!.id, 'NEXT_MAJOR_EVENT', 'form-step-' + i);
+      for (let i = 0; i < 3; i++) {
+        if (view.nextActions[0]!.id === 'open:FLOW') {
+          const keep = (await api.flow(saveId))!.commands.find(c => c.id === 'school-keep-focus');
+          assert.ok(keep, 'E01 focus choice is a served flow command');
+          await api.flowCommand(saveId, 'form-step-' + i, keep.type, keep.payload);
+          view = await api.career(saveId);
+        } else view = await api.act(saveId, view.nextActions[0]!.id, 'NEXT_MAJOR_EVENT', 'form-step-' + i);
+      }
       assert.equal(view.stage.phaseLabel, '정규시즌');
     } finally { globalThis.fetch = originalFetch; await client.close(); }
   });
@@ -97,7 +105,7 @@ test('graduation → KBO entry runs from server-provided flow commands only; a l
     await take('ack-review', true);
     assert.deepEqual(view.commands.map(c => c.id), ['open-route']);
     await take('open-route');
-    assert.deepEqual(view.commands.map(c => c.id).filter(id => !id.startsWith('college-')), ['draft-prepare']);
+    assert.deepEqual(view.commands.map(c => c.id).filter(id => !id.startsWith('college-') && !id.startsWith('us-')), ['draft-prepare']);
     await take('draft-prepare');
     await take('draft-resolve');
     assert.ok(view.commands.some(c => c.id === 'draft-decline' && c.confirm), 'declining asks for confirmation');
@@ -105,8 +113,7 @@ test('graduation → KBO entry runs from server-provided flow commands only; a l
     await take('close-year');
     await take('activate');
     assert.ok(sent.every(s => s.type.startsWith('CAREER_')));
-    const [row] = await db.select({ state: gameSaves.state }).from(gameSaves).where(eq(gameSaves.id, saveId));
-    assert.ok('protagonistClubId' in (row!.state as { career: object }).career, 'KBO career owns the save after activation');
+    assert.ok('protagonistClubId' in (await loadState(db, saveId)).career, 'KBO career owns the save after activation');
     const kboHome = await api.career(saveId);
     assert.equal(kboHome.stage.leagueLabel, 'KBO');
   } finally { globalThis.fetch = originalFetch; await client.close(); }

@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { loadState } from './save-state.js';
 import assert from 'node:assert/strict';
 import { eq } from 'drizzle-orm';
 import { createTestDb, seedAllowedSubject, gameSaves } from '@playball/db';
@@ -34,8 +35,7 @@ test('retry ACCEPT: a served offer-* command signs the contract over HTTP; stale
     const after = (await api.flowCommand(saveId, 'accept-ok', offer.type, offer.payload))!;
     assert.equal(after.title, '입단 완료');
     assert.deepEqual(after.commands, []);
-    const [row] = await db.select({ state: gameSaves.state }).from(gameSaves).where(eq(gameSaves.id, saveId));
-    const signed = (row!.state as { career: typeof c }).career;
+    const signed = (await loadState(db, saveId) as { career: typeof c }).career;
     assert.equal(signed.world.contracts[signed.protagonistKey]!.contractKey, offer.payload.offerKey);
   } finally { globalThis.fetch = originalFetch; await client.close(); }
 });

@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { loadState } from './save-state.js';
 import assert from 'node:assert/strict';
 import {eq} from 'drizzle-orm';
 import {createTestDb,seedAllowedSubject,gameSaves} from '@playball/db';
@@ -48,8 +49,7 @@ test('empty US minor market returns home and resumes owned return flow after a l
   assert.ok(advance);
   const advanced=(await api.flowCommand(saveId,'advance',advance.type,advance.payload))!;
   assert.match(advanced.lines.find(l=>l.label==='준비 경기')!.value,/^[0-9]+\/48경기$/);
-  const [stored]=await db.select({state:gameSaves.state}).from(gameSaves).where(eq(gameSaves.id,saveId));
-  const preparation=(stored!.state as {career:UsAmateurReturnCareer}).career.preparation!;
+  const preparation=(await loadState(db,saveId) as {career:UsAmateurReturnCareer}).career.preparation!;
   assert.ok(preparation.pendingGame||preparation.days.days.length>0||Object.values(preparation.records.games).some(g=>g.scope.leagueKey==='INDEPENDENT'&&g.scope.seasonKey===preparation.world.seasonKey));
   assert.deepEqual(await api.flow(saveId),advanced);
  }finally{globalThis.fetch=previous;await client.close();}

@@ -59,7 +59,7 @@ test('KBO pro season: preseason chain → start → native games are advanced an
   const s = await session('web-kbo-1', enteredKboCareer('HITTER'));
   try {
     assert.equal((await s.api.career(s.saveId)).stage.leagueLabel, 'KBO');
-    for (let i = 0; i < 6 && !s.ids().includes('start'); i++) await s.take(s.ids()[0]!);
+    for (let i = 0; i < 20 && !s.ids().includes('start'); i++) await s.take(s.ids()[0]!);
     await s.take('start');
     assert.ok(s.ids().includes('adv-1'));
     await s.take('adv-1');
@@ -83,13 +83,13 @@ test('KBO pro season: regular season end → postseason → season close, all fr
     assert.ok(s.ids().includes('close-season'), `postseason ends in a season close: ${s.ids()}`);
     await s.take('close-season');
     assert.ok(!s.ids().includes('close-season'));
-    assert.deepEqual(s.ids(), ['contract-offers']);
+    assert.deepEqual(s.ids(), ['military-open', 'contract-offers'], 'the optional military plan is served beside the offers');
     await s.take('contract-offers');
     const offer = s.view.commands.find(c => c.id === 'renew')!;
     assert.ok(offer.sign);
     assert.ok(offer.confirm);
     await s.take('renew', true);
-    assert.deepEqual(s.ids(), ['next-year']);
+    assert.deepEqual(s.ids(), ['military-enlist', 'military-open', 'next-year'], 'optional military choices are served beside the next year');
     await s.take('next-year');
     assert.ok(s.ids().length > 0);
   } finally { await s.close(); }

@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { loadState } from './save-state.js';
 import assert from 'node:assert/strict';
 import { eq } from 'drizzle-orm';
 import { createTestDb, seedAllowedSubject, gameSaves } from '@playball/db';
@@ -32,7 +33,7 @@ async function session(subject: string, career: unknown) {
       view = (await api.flowCommand(saveId, `${subject}-${n++}`, c.type, c.payload))!;
       return view;
     },
-    leagueGames: async () => Object.keys(((await db.select({ state: gameSaves.state }).from(gameSaves).where(eq(gameSaves.id, saveId)))[0]!.state as { career: { records: { games: object } } }).career.records.games).length,
+    leagueGames: async () => Object.keys((await loadState(db, saveId) as { career: { records: { games: object } } }).career.records.games).length,
     close: async () => { globalThis.fetch = originalFetch; await client.close(); },
   };
 }
@@ -71,7 +72,7 @@ test('US road: the annual training window is served as commands and training is 
 test('US road: a finished season starts the next one from the served command', async () => {
   const s = await session('web-us-3', finishedUsCareerFixture());
   try {
-    assert.deepEqual(s.ids(), ['next-minor-year']);
+    assert.deepEqual(s.ids(), ['military-terminate', 'next-minor-year'], 'the military plan stop is served beside the next year');
     await s.take('next-minor-year');
     assert.equal(s.view.title, '시즌 준비');
     assert.match(s.view.lines.map(l => l.value).join(' '), /2\d{3}/);

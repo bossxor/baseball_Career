@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { loadState } from './save-state.js';
 import assert from 'node:assert/strict';
 import { eq } from 'drizzle-orm';
 import { createTestDb, seedAllowedSubject, gameSaves } from '@playball/db';
@@ -33,7 +34,7 @@ async function session(subject: string, career: unknown) {
       view = (await api.flowCommand(saveId, `${subject}-${n++}`, c.type, c.payload))!;
       return view;
     },
-    state: async () => (await db.select({ state: gameSaves.state }).from(gameSaves).where(eq(gameSaves.id, saveId)))[0]!.state as { career: { world: { leagueKey: string; seasonKey: string } } },
+    state: async () => await loadState(db, saveId) as { career: { world: { leagueKey: string; seasonKey: string } } },
     close: async () => { globalThis.fetch = originalFetch; await client.close(); },
   };
 }
@@ -49,7 +50,9 @@ test('college road: graduation route → enrollment → year-end handover → se
     await s.take('close-hs-year');
     assert.deepEqual(s.ids(), ['college-start']);
     await s.take('college-start');
-    assert.deepEqual(s.ids(), ['preseason']);
+    assert.ok(s.ids().every(id => id.startsWith('admission-focus-')), `a mandatory four-ability focus choice comes first: ${s.ids()}`);
+    await s.take(s.ids()[0]!);
+    assert.deepEqual(s.ids().slice(0, 1), ['preseason']);
     assert.equal((await s.api.career(s.saveId)).stage.leagueLabel, '대학');
     await s.take('preseason');
     assert.deepEqual(s.ids(), ['adv-season', 'adv-month', 'adv-game'], 'default CTA is the whole season, secondary is the month');
@@ -59,7 +62,7 @@ test('college road: graduation route → enrollment → year-end handover → se
     assert.match(s.view.lines.map(l => l.value).join(' '), /1\/48경기/, 'the played game is counted from the saved records');
     // Play to the annual training window (E43 at 16 games); continue/pause appear while a multi-game plan is active.
     await s.take('adv-season'); // ONE press runs the engine until the mandatory training window (16 games) and stops there
-    assert.deepEqual(s.ids(), ['open_training', 'forfeit_training']);
+    assert.deepEqual(s.ids(), ['open_training', 'defer_training', 'forfeit_training']);
     assert.equal(s.view.stop, 'EVENT', 'a mandatory window stopped the advance');
     assert.ok(s.view.commands.find(c => c.id === 'forfeit_training')!.confirm);
     await s.take('open_training');
@@ -160,7 +163,7 @@ test('college E75 graduates, signs and activates through served HTTP commands',a
   assert.deepEqual(s.ids(),['graduate']);
   const choice=s.view.commands[0]!;
   await assert.rejects(s.api.flowCommand(s.saveId,'e75-stale',choice.type,{...choice.payload,eventVersion:0}));
-  await s.take('graduate');assert.deepEqual(s.ids(),['draft-prepare']);
+  await s.take('graduate');assert.deepEqual(s.ids().filter(id=>!id.startsWith('us-')),['draft-prepare']);
   await s.take('draft-prepare');await s.take('draft-resolve');await s.take('draft-sign');
   await s.take('close-kbo-year');await s.take('activate');
   assert.equal((await s.api.career(s.saveId)).stage.leagueLabel,'KBO');
