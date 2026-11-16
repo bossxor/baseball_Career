@@ -1,3 +1,9 @@
+# 2026-11-16 Claude 팀 재개 — 병역 결과 설명, 통합 실패 재확인
+
+- 최신화: `claude/tf-lead`를 `codex/tf-fast-season`(a504970)으로 fast-forward.
+- 구현(SLB-14, 설계 14): 상무 지원 시 같은 유형 지원자 중 내 순위·지원자 수·선발 인원을 신청 기록에 저장하고(`standing`, 구 저장은 없음 허용), 선발 결과 화면에 지원 순위·선발 인원·남은 지원 가능 시즌을 표시한다. 선발은 포지션 최소 인원·구단별 상한도 적용되므로 순위만으로 결정되지 않는다는 점을 화면에 적었다. 엔진 회귀 13/13, 엔진 골든 해시 동일.
+- 11-12 통합 검사 실패 파일 재실행(최신 코드, 파일 단독): career-growth-summary·career-kbo·career-preparation·career-contract-flow·m2-school-flow·m2-school-events-http·m2-us-major-year·m2-us-play·m2-military-flow·m2-independent-us-flow 통과. m2-pro-retirement 3건 실패 유지. m2-us-return-retirement·college-national-host는 실행 중(결과는 인계에 추가).
+
 # 2026-11-12 M2 통합 검증
 
 P12 대회 창·초청일과 무오퍼 은퇴의 E66 정리를 보완했다. Android 생성 번들로 중단된 첫 검사 뒤에는 미실행 단계만 이어서 실행했다. 결과와 검증 범위는 [최신 인계](NEXT-SESSION.md)에 기록한다.

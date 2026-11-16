@@ -125,6 +125,9 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
   const militaryCommands:FlowCommand[]=[];
   if(app?.decision==='PENDING'){
    lines.push({label:'상무 선발',value:app.accepted?'선발':'미선발'});
+   // 14 (2026-11-07, SLB-14): explain the result with my standing; selection also honors position minimums and club caps.
+   if(app.standing)lines.push({label:'지원 순위',value:`${app.slotKind==='HITTER'?'타자':'투수'} ${app.standing.applicants}명 중 ${app.standing.rank}위`},{label:'선발 인원',value:`${app.standing.selected}명 (포지션·구단별 인원 제한 적용)`});
+   if(!app.accepted)lines.push({label:'남은 지원 가능 시즌',value:`${Math.max(0,engine.KBO_SANGMU_INTAKE.maxAge-p.age)}시즌`});
    if(!app.accepted)return out('상무 선발 결과',[cmd('military-result-ack','결과 확인','MILITARY_RESULT',{command:'ACK_REJECTION'})]);
    if(engine.remainingKboMilitaryContractDays(c)>0)return out('상무 선발 결과',[
     cmd('military-result-enlist','상무 입대','MILITARY_RESULT',{command:'ENLIST'},'상무 입대를 확정할까요?'),

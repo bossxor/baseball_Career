@@ -3,6 +3,7 @@ import {kboMilitaryCompletionDays} from './kbo-military-events.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import {selectSangmuCohort,KBO_SANGMU_INTAKE} from './kbo-sangmu.js';
+import type {SangmuStanding} from './kbo-sangmu.js';
 import {enlistInSangmu,completeSangmuBlock,KBO_CONTRACT_GAME_DAYS} from './kbo-military-program.js';
 import type {KboMilitaryProgram} from './kbo-military-program.js';
 import {emptySangmuUnit} from './kbo-sangmu-unit.js';
@@ -13,6 +14,8 @@ import {createWorldEvent,completeBlockingEvent,eventDefinition} from './events.j
 export type KboMilitaryStatus='NOT_APPLICABLE'|'UNRESOLVED'|'APPLICATION_PENDING'|'SERVING_SPORTS'|'SERVING_ACTIVE'|'ATHLETE_ELIGIBLE'|'ATHLETE_SERVICE'|'COMPLETED';
 export interface KboSangmuApplication {
  applicationId:string;eventKey:string;selectionSeasonKey:string;score:number;accepted:boolean;slotKind:'HITTER'|'PITCHER';
+ /** Absent on applications saved before standings were recorded. */
+ standing?:SangmuStanding;
  decision:'PENDING'|'ENLISTED'|'DECLINED'|'REJECTION_ACKNOWLEDGED';
 }
 export interface KboMilitaryRecord {status:KboMilitaryStatus;applications:readonly KboSangmuApplication[];program?:KboMilitaryProgram;completedSeasonKey?:string;contractPaymentVersion?:1;completionDays?:readonly {seasonKey:string;worldDay:number}[];growthPolicyVersion?:1;returnCondition?:KboReturnCondition}
@@ -42,13 +45,13 @@ export function applyToSangmu(source:KboCareer,expectedRevision:number):KboCaree
  const existing=source.military?.applications.find(a=>a.applicationId===id);
  if(existing)return structuredClone(source);
  if(!plan.canApply || Object.hasOwn(source.health.injuries,source.protagonistKey) || source.events.some(e=>e.status==='OPEN'&&e.definitionId!=='E30'))throw new RangeError('KBO_MILITARY_NOT_AVAILABLE');
- const selection=selectSangmuCohort({world:source.world,records:source.records,health:source.health,seasonKey:season,serving:new Set(Object.keys(source.sangmu?.members??{}))});
+ const selection=selectSangmuCohort({world:source.world,records:source.records,health:source.health,seasonKey:season,serving:new Set(Object.keys(source.sangmu?.members??{})),standingFor:source.protagonistKey});
  const me=selection.selected.find(a=>a.playerKey===source.protagonistKey),kind=source.world.players[source.protagonistKey]!.kind;
  // E50 (상무 선발 발표) is blocking until the result is confirmed by the domain command below.
  const definition=eventDefinition('E50'),event=createWorldEvent({definitionId:'E50',worldKey:source.world.worldKey,seasonKey:season,evidence:{version:1,type:definition.evidenceDomain,fields:{playerSimulationKey:source.protagonistKey,serviceTaskIdOrServicePeriodId:id,stage:'RESULT'}},
   resume:{worldKey:source.world.worldKey,seasonKey:season,phase:'SEASON_REVIEW',competitionKey:null,registrationKey:source.protagonistClubId,sourceRevision:source.revision+1},sourceSequence:source.events.length+1,worldDay:source.days!.days.at(-1)!.day});
  const career=structuredClone(source);career.events=[...career.events,event];
- career.military={status:'APPLICATION_PENDING',applications:[...(source.military?.applications??[]),{applicationId:id,eventKey:event.eventKey,selectionSeasonKey:season,score:me?.score??0,accepted:!!me,slotKind:kind,decision:'PENDING'}]};
+ career.military={status:'APPLICATION_PENDING',applications:[...(source.military?.applications??[]),{applicationId:id,eventKey:event.eventKey,selectionSeasonKey:season,score:me?.score??0,accepted:!!me,slotKind:kind,...(selection.standing?{standing:selection.standing}:{}),decision:'PENDING'}]};
  career.revision++;return career;
 }
 /** Accepted: ENLIST (SERVING_SPORTS, the two blocks start next season) or DECLINE. Rejected: only ACK_REJECTION. Both

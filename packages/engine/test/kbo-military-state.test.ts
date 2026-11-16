@@ -83,3 +83,13 @@ test('an enlisted protagonist serves two seasons as a loan to the military team 
  const out=startNextKboSeason(fin,fin.revision);
  assert.equal(out.military!.status,'COMPLETED');assert.equal(out.military!.completedSeasonKey,String(season));assert.deepEqual(out.sangmu!.loaned,[]);assert.equal(kboProtagonistServing(out),false);
 });
+
+test('Sangmu application records my standing among same-kind applicants so the result can be explained (14, SLB-14)',()=>{
+ const c=closed(enteredKboCareer('HITTER')),a=applyToSangmu(c,c.revision),app=a.military!.applications.at(-1)!,s=app.standing!;
+ assert.ok(s,'standing is stored with the application');
+ assert.ok(Number.isSafeInteger(s.rank)&&s.rank>=1&&s.rank<=s.applicants);assert.ok(s.selected>=0&&s.selected<=s.applicants);
+ // Selection also honors position minimums and club caps, so rank alone does not decide; accepted stays the source of truth.
+ if(app.accepted)assert.ok(s.selected>=1);
+ assert.deepEqual(applyToSangmu(a,a.revision).military!.applications.at(-1)!.standing,s);
+ assert.deepEqual(JSON.parse(JSON.stringify(a)).military.applications.at(-1).standing,s);
+});

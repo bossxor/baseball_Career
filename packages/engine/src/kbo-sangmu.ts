@@ -19,7 +19,9 @@ export const KBO_SANGMU_MIN_ROLES={starters:3} as const;
 export const KBO_SANGMU_CLUB_CAP={hitters:1,pitchers:2} as const;
 
 export interface SangmuApplicant {playerKey:string;clubId:string;kind:'HITTER'|'PITCHER';position:string;age:number;score:number}
-export interface SangmuSelection {seasonKey:string;snapshotKey:string;selected:readonly SangmuApplicant[];applicants:number;vacancies:{hitters:number;pitchers:number}}
+/** Where one applicant stood among same-kind applicants: score order, pool size and how many of that kind were taken. */
+export interface SangmuStanding {rank:number;applicants:number;selected:number}
+export interface SangmuSelection {seasonKey:string;snapshotKey:string;selected:readonly SangmuApplicant[];applicants:number;vacancies:{hitters:number;pitchers:number};standing?:SangmuStanding}
 
 function fnv(text:string):number {let h=0x811c9dc5;for(let i=0;i<text.length;i++){h^=text.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0;}return h;}
 function pick<T extends object>(source:T,keys:readonly string[]):Partial<T>{return Object.fromEntries(Object.entries(source).filter(([k])=>keys.includes(k))) as Partial<T>;}
@@ -28,7 +30,7 @@ function pick<T extends object>(source:T,keys:readonly string[]):Partial<T>{retu
  * regular lines (sample-weighted by summing PA/outs; the shared index uses 50 below its sample). Healthy players of the
  * window only; already-serving players and `excluded` keys (my player applies through the user path) are skipped.
  * Ties: younger, then a stable seed hash, then key. Missing healthy applicants leave vacancies; nobody is invented. */
-export function selectSangmuCohort(input:{world:ActiveKboRosterWorld;records:RecordLedger;health:HealthLedger;seasonKey:string;serving?:ReadonlySet<string>;excluded?:ReadonlySet<string>;reserved?:{hitters:number;pitchers:number}}):SangmuSelection {
+export function selectSangmuCohort(input:{world:ActiveKboRosterWorld;records:RecordLedger;health:HealthLedger;seasonKey:string;serving?:ReadonlySet<string>;excluded?:ReadonlySet<string>;reserved?:{hitters:number;pitchers:number};standingFor?:string}):SangmuSelection {
  const {world,records,health,seasonKey}=input,seasons=[String(Number(seasonKey)-1),seasonKey];
  const line=<K extends 'batting'|'pitching'>(key:string,field:K) => {
   const sum:Record<string,number>={};
@@ -53,5 +55,6 @@ export function selectSangmuCohort(input:{world:ActiveKboRosterWorld;records:Rec
  };
  const hitters=choose('HITTER',KBO_SANGMU_INTAKE.hitters-(input.reserved?.hitters??0),KBO_SANGMU_FIELD_POSITIONS.map(p=>(a:SangmuApplicant)=>a.position===p),1,KBO_SANGMU_CLUB_CAP.hitters);
  const pitchers=choose('PITCHER',KBO_SANGMU_INTAKE.pitchers-(input.reserved?.pitchers??0),[a=>a.position==='SP'],KBO_SANGMU_MIN_ROLES.starters,KBO_SANGMU_CLUB_CAP.pitchers);
- return {seasonKey,snapshotKey:JSON.stringify(['sangmu-selection',world.worldKey,seasonKey]),selected:[...hitters,...pitchers],applicants:applicants.length,vacancies:{hitters:KBO_SANGMU_INTAKE.hitters-(input.reserved?.hitters??0)-hitters.length,pitchers:KBO_SANGMU_INTAKE.pitchers-(input.reserved?.pitchers??0)-pitchers.length}};
+ const me=input.standingFor?applicants.find(a=>a.playerKey===input.standingFor):undefined,peers=me?applicants.filter(a=>a.kind===me.kind).sort(order):[];
+ return {...(me?{standing:{rank:peers.indexOf(me)+1,applicants:peers.length,selected:(me.kind==='HITTER'?hitters:pitchers).length}}:{}),seasonKey,snapshotKey:JSON.stringify(['sangmu-selection',world.worldKey,seasonKey]),selected:[...hitters,...pitchers],applicants:applicants.length,vacancies:{hitters:KBO_SANGMU_INTAKE.hitters-(input.reserved?.hitters??0)-hitters.length,pitchers:KBO_SANGMU_INTAKE.pitchers-(input.reserved?.pitchers??0)-pitchers.length}};
 }
