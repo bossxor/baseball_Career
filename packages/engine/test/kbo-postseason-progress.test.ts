@@ -153,7 +153,7 @@ test('next season activates every player at once and the second pro season opens
 });
 
 test('season close grows and ages every pro NPC once from the natural PRO period',()=>{
- const source=review(schoolYear);
+ const source=review();
  let c=startKboPostseason(source,source.revision);
  for(let i=0;i<400;i++){const out=advanceKboPostseason(c,c.revision);c=out.career;if(out.stopReason==='POSTSEASON_COMPLETE')break;}
  c=settleKboSeasonGrowth(c,c.revision).career;const after=closeKboSeason(c,c.revision,true),npc=after.seasonClose!.npcGrowth!;
