@@ -208,7 +208,7 @@
 | 비가역 확인 원칙(14) | 점검 완료 | 학교·대학·재도전 Flow 명령: 지명 거절·은퇴·대학 진학·준비 시즌 시작에 확인 | `native-school-flow-http.test.ts`(준비 시즌 확인) | 이번 커밋 |
 | SLB-05 결과 화면 | 부분(팀장 통합 완료) | `apps/api/src/career-season-review.ts`, `career-views.ts`, `apps/web/src/screens/SeasonReview.tsx`, `Flow.tsx`, `model.ts` | `career-season-review.test.ts`, `season-review.test.tsx`; HTTP 1/1·화면 2/2 보고 | a33601d |
 | SLB-13 FA 화면 | 부분(root 전체 자동 검증 통과) | KBO/US 계약 API shell → `Flow.tsx` | 전체 check 통과; 브라우저 미검증 | root 통합 |
-| SLB-14 병역 결과 | 부분(상무 지원 순위·선발 인원·남은 시즌) | `packages/engine/src/kbo-sangmu.ts`(standing), `kbo-military-state.ts`, `apps/api/src/career-kbo-play-shell.ts` | `packages/engine/test/kbo-military-state.test.ts` | 2026-11-16 |
+| SLB-14 병역 결과 | 부분(상무 지원 순위·선발 인원·남은 시즌, KBO 복무 단계) | `packages/engine/src/kbo-sangmu.ts`(standing), `kbo-military-state.ts`, `apps/api/src/career-kbo-play-shell.ts` | `kbo-military-state.test.ts`, `m2-military-flow.test.ts`, `flow-screens.test.tsx` | 2026-11-16 |
 | SLB-21 은퇴 요약 | 부분(팀장 통합 완료) | `career-retirement-summary.ts`, `career-views.ts`, `RetirementSummary.tsx`, `Flow.tsx`, `model.ts` | `m2-pro-retirement.test.ts`, `retirement-summary.test.tsx`; HTTP 1/1·표시 3/3 보고 | ebfaa2d |
 
 비가역 확인 점검 범위: `apps/api/src/career-*.ts`에서 `confirm`이 붙는 `FlowCommand`. 결정 화면(`Decision.tsx`)은 별도 "확정" 버튼이 확인 단계다. 재협상·트레이드·병역 지원·FA 계약 명령이 웹에 연결될 때 같은 원칙을 적용한다.
