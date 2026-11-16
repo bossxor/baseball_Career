@@ -62,7 +62,9 @@ test('postseason home runs feed career trait evidence after each postseason day'
 test('Premier12 plays across New Year and returns with the original season and official records',()=>{
  const source=review(2030),season=source.world.seasonKey,last=source.days!.days.at(-1)!.day;
  // Delay the controlled domestic prefix; playoffs and the tournament below play every game.
- for(let day=last+1;day<=343;day++)source.days!.days.push({day,evidence:'controlled delay',result:{injured:[],recovered:[]}});
+ const days=source.days!;
+ const delay=Array.from({length:343-last},(_,i)=>({day:last+1+i,evidence:'controlled delay',result:{injured:[],recovered:[]}}));
+ source.days={...days,days:[...days.days,...delay]};
  let c=startKboPostseason(source,source.revision);
  for(let i=0;i<400&&c.phaseContext.phase==='POSTSEASON_PROGRESS';i++){
   const out=advanceKboPostseason(c,c.revision);assert.notEqual(out.stopReason,'ENGINE_LIMIT');c=out.career;
