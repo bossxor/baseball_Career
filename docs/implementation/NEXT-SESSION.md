@@ -1,3 +1,10 @@
+# 인계 — 2026-11-16 최종 검증 후속
+
+- 설계 묶음 `34ce717` 재생성, 정적 검증 10종 통과. 첫 전체 검사는 기존 NPC 성장 회귀의 미정의 변수로 타입 검사에서 중단됐다. `c3da635` 수정 후 통과한 린트 다음부터 재개했고 엔진·API·룰 테스트 단계에 진입했다. 로그는 로컬 `%TEMP%/playball-check-m2-resume.log`. 최종 종료 코드는 아직 확인하지 않았다.
+- `b00678b`·`9395c5c` 프리미어12 연말 경계 회귀 1/1. 정규시즌 접두만 통제하고 실제 포스트시즌·프리미어12 경기, JSON 재개, 원래 시즌 키/공식 기록, E48 복귀를 확인했다.
+- `37841ed`·`da8ec1a`에 E66/E67 동시 수락, 분할 저장 CAS와 영수증 재전송 PostgreSQL HTTP 회귀를 추가했다. 테스트 타입 검사와 변경 범위 린트 통과. 로컬 폐기용 DB에서 `PLAYBALL_LARGE_SAVE_DATABASE_URL`을 설정하고 `node --import tsx --test --test-name-pattern='disposable PostgreSQL' apps/api/test/m2-us-kbo-return-flow.test.ts`로 실행한다. 현재 PC에 인스턴스가 없어 미실행이다.
+- 병역 단계 표시 `49caa3d`는 `codex/m2-service-stages-1116`에 보관한다. 팀원 집중 회귀 1/1과 변경 범위 린트 통과. 진행 중인 통합 검사에 제품 변경을 섞지 않도록 통합을 보류했다. 종료 확인 후 cherry-pick하고 웹 표시를 검수한다.
+
 # 인계 — 2026-11-16 Codex 통합
 
 `codex/tf-fast-season`을 `a504970`과 Claude 팀 `5edc974`까지 fast-forward했다. 상무 선발 결과의 순위·지원자 수·선발 수, 포스팅 잔류 확인, 은퇴 수상 fixture 수정이 포함된다. 미국 제안 일괄 거절은 `7c2bb3b`에서 기존 확인 한 번을 유지했다.
