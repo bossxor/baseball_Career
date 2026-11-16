@@ -4,6 +4,8 @@
 
 `1c5ebd9`는 프리미어12 복귀 후 E30 재계약 알림에 실제 대회 마감일을 사용한다. 국내 경기 원장과 시즌 키는 보존한다. 통합 타입 검사와 E30 집중 회귀 1건을 통과했다. 연말을 넘는 프리미어12 전체 경기, 외부 PostgreSQL 대형 저장, 최신 전체 `npm run check`는 별도 확인 대상이다.
 
+추가 확인: `npm run lint` 및 대학 NPC 호스트, 상무 상태, 미국 귀국 후 은퇴 HTTP, 프로 은퇴, KBO 출국 Flow의 집중 테스트 묶음이 모두 종료 코드 0을 반환했다. 변경된 웹 HTTP 테스트는 이번에 실행하지 않았다.
+
 # 인계 — 2026-11-16 Claude 팀
 
 - 브랜치 `claude/tf-lead` = `codex/tf-fast-season`(a504970) + Claude 커밋. 상세는 [PROGRESS](PROGRESS.md) 맨 위.
