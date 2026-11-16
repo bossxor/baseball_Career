@@ -31,8 +31,8 @@ import {startCollegeCup,advanceCollegeCup} from '../src/college-cup.js';
 import {acknowledgeCollegeSeasonReview} from '../src/college-result.js';
 
 // Controlled no-appearance receipts isolate transitions. The progress test covers real216-game play.
-export function completedHighSchoolCareer(capAt?:number,kind:'HITTER'|'PITCHER'='HITTER'){
- const state=createHighSchoolCareer(createHighSchoolWorld({worldKey:'route-world',seasonKey:'2029',seasonYear:2029,seed:'route-fixture',schoolId:'H01',...(kind==='PITCHER'?{secondaryPitch:'P03' as const}:{}),player:{simulationKey:'own',name:'진로선수',kind,position:kind==='HITTER'?'CF':'SP',throws:'R',bats:'R',pitchForm:kind==='HITTER'?null:'OVERHAND',archetype:'BALANCED',focus:abilityKeys(kind).slice(0,4),difficulty:'GROWTH'}}),'GROWTH');
+export function completedHighSchoolCareer(capAt?:number,kind:'HITTER'|'PITCHER'='HITTER',seasonYear=2029){
+ const state=createHighSchoolCareer(createHighSchoolWorld({worldKey:'route-world',seasonKey:String(seasonYear),seasonYear,seed:'route-fixture',schoolId:'H01',...(kind==='PITCHER'?{secondaryPitch:'P03' as const}:{}),player:{simulationKey:'own',name:'진로선수',kind,position:kind==='HITTER'?'CF':'SP',throws:'R',bats:'R',pitchForm:kind==='HITTER'?null:'OVERHAND',archetype:'BALANCED',focus:abilityKeys(kind).slice(0,4),difficulty:'GROWTH'}}),'GROWTH');
  if(capAt!==undefined){
   const values=Object.fromEntries(abilityKeys(kind).map(k=>[k,capAt]));
   state.world.players.own={...state.world.players.own!,abilities:values,potential:{...values},careerPeaks:{...values}};
@@ -93,6 +93,6 @@ import {prepareCareerKboDraft,resolveCareerKboDraft,decideCareerKboDraft} from '
 import {closeSchoolSeasonForKbo} from '../src/kbo-entry.js';
 import {startSignedKboCareer} from '../src/kbo-career-entry.js';
 /** Controlled school contributions isolate the real signing/year-end/pro entry commands. */
-export function enteredKboCareer(kind:'HITTER'|'PITCHER'='HITTER',initialize?:(s:ReturnType<typeof completedHighSchoolCareer>)=>void){
- let s=completedHighSchoolCareer(800_000,kind);initialize?.(s);s=acknowledgeHighSchoolSeasonReview(s,s.revision);s=openHighSchoolCareerRoute(s,s.revision,1).career;s=prepareCareerKboDraft(s,s.revision);s=resolveCareerKboDraft(s,s.revision,1);s=decideCareerKboDraft(s,s.revision,{programVersion:2,decision:'SIGN',eventVersion:1});s=closeSchoolSeasonForKbo(s,s.revision,true);return startSignedKboCareer(s,s.revision);
+export function enteredKboCareer(kind:'HITTER'|'PITCHER'='HITTER',initialize?:(s:ReturnType<typeof completedHighSchoolCareer>)=>void,schoolYear=2029){
+ let s=completedHighSchoolCareer(800_000,kind,schoolYear);initialize?.(s);s=acknowledgeHighSchoolSeasonReview(s,s.revision);s=openHighSchoolCareerRoute(s,s.revision,1).career;s=prepareCareerKboDraft(s,s.revision);s=resolveCareerKboDraft(s,s.revision,1);s=decideCareerKboDraft(s,s.revision,{programVersion:2,decision:'SIGN',eventVersion:1});s=closeSchoolSeasonForKbo(s,s.revision,true);return startSignedKboCareer(s,s.revision);
 }

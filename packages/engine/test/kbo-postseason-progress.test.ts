@@ -18,10 +18,11 @@ import {advanceKboCareer} from '../src/kbo-progress.js';
 import {kboForcedRetirementReview} from '../src/kbo-retirement-review.js';
 import {requestKboRetirement,resolveKboRetirement,retireKboAtMaxAge} from '../src/kbo-retirement.js';
 import {offerKboRenewal,acceptKboRenewal,kboRenewalValueWon} from '../src/kbo-renewal.js';
+import {createNationalBracket,p12ActualWindow} from '../src/national-bracket.js';
 
 /** Controlled season-review state: closed day receipts for the whole regular range (no regular games played). */
-function review():KboCareer {
- const e=enteredKboCareer('HITTER'),p=confirmKboPreseasonPlan(e,e.revision),o=confirmKboOpeningRoster(p,p.revision),s=confirmKboSeasonSchedule(o,o.revision),c=structuredClone(startKboRegularSeason(s,s.revision));
+function review(schoolYear=2029):KboCareer {
+ const e=enteredKboCareer('HITTER',undefined,schoolYear),p=confirmKboPreseasonPlan(e,e.revision),o=confirmKboOpeningRoster(p,p.revision),s=confirmKboSeasonSchedule(o,o.revision),c=structuredClone(startKboRegularSeason(s,s.revision));
  const all=[...c.competitionSchedule!.leagues.KBO,...c.competitionSchedule!.leagues.FUTURES],first=Math.min(...all.map(g=>g.worldDay)),last=Math.max(...all.map(g=>g.worldDay));
  c.days={...c.days!,days:Array.from({length:last-first+1},(_,i)=>({day:first+i,evidence:'test',result:{injured:[],recovered:[]}}))};c.phaseContext={phase:'SEASON_REVIEW'};return c;
 }
@@ -56,8 +57,9 @@ test('postseason home runs feed career trait evidence after each postseason day'
 
 
 /** Review → postseason to a champion → regular growth paid → season closed (unused training forfeited). */
-function closed():KboCareer {
- let c=startKboPostseason(review(),review().revision);
+function closed(schoolYear=2029):KboCareer {
+ const source=review(schoolYear);
+ let c=startKboPostseason(source,source.revision);
  for(let i=0;i<400;i++){const out=advanceKboPostseason(c,c.revision);c=out.career;if(out.stopReason==='POSTSEASON_COMPLETE')break;}
  c=settleKboSeasonGrowth(c,c.revision).career;return closeKboSeason(c,c.revision,true);
 }
@@ -92,6 +94,22 @@ test('E30 renewal offer follows 08 once and closes only through the accepted dom
  assert.equal(a.renewal!.status,'ACCEPTED');assert.equal(a.events.find(x=>x.eventKey===e.eventKey)!.status,'RESOLVED');
  assert.equal(a.world.contracts[key]!.annualSalaryWon,prev);
  assert.throws(()=>acceptKboRenewal(a,a.revision,{eventKey:e.eventKey,eventVersion:e.version}),/INVALID_KBO_RENEWAL/);
+});
+
+test('E30 follows the returned P12 final day when it falls beyond the season calendar',()=>{
+ const c=closed(2030),season=c.world.seasonKey,domesticDay=c.days!.days.at(-1)!.day;
+ const window=p12ActualWindow(Number(season),{kboPostseasonEndDay:domesticDay,usPostseasonEndDay:370});
+ const bracket=createNationalBracket({worldKey:c.world.worldKey,seasonKey:season,tournament:'P12',seed:c.world.seed,window});
+ // Controlled returned-tournament snapshot with date receipts. Domestic receipts remain on the KBO final.
+ const dayReceipts=Array.from({length:window.endDay-window.startDay},(_,i)=>({day:window.startDay+i,gameKeys:[],rosterKeys:[],result:{injured:[],recovered:[]}}));
+ c.national={invitations:[],benefits:[],brackets:[{...bracket,dayCloseVersion:1,dayReceipts}],returnedCompetitions:[bracket.competitionId],
+  competitions:[{competitionId:bracket.competitionId,seasonKey:season,tournament:'P12',resultVersion:1,registered:false,officialAppearance:false,finalRank:4,medal:null}]};
+ const offered=offerKboRenewal(c,c.revision),event=offered.events.find(e=>e.eventKey===offered.renewal!.eventKey)!;
+ assert.equal(event.occurredWorldDay,window.endDay-1);
+ assert.equal(event.seasonKey,season);
+ assert.equal(offered.days!.days.at(-1)!.day,domesticDay);
+ const accepted=acceptKboRenewal(offered,offered.revision,{eventKey:event.eventKey,eventVersion:event.version});
+ assert.equal(accepted.renewal!.status,'ACCEPTED');
 });
 
 test('Y02 stages age+1 and contract years for every pro player without changing the source',()=>{
@@ -135,7 +153,8 @@ test('next season activates every player at once and the second pro season opens
 });
 
 test('season close grows and ages every pro NPC once from the natural PRO period',()=>{
- let c=startKboPostseason(review(),review().revision);
+ const source=review(schoolYear);
+ let c=startKboPostseason(source,source.revision);
  for(let i=0;i<400;i++){const out=advanceKboPostseason(c,c.revision);c=out.career;if(out.stopReason==='POSTSEASON_COMPLETE')break;}
  c=settleKboSeasonGrowth(c,c.revision).career;const after=closeKboSeason(c,c.revision,true),npc=after.seasonClose!.npcGrowth!;
  const keys=Object.keys(c.world.players).filter(k=>k!==c.protagonistKey);

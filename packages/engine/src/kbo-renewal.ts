@@ -43,7 +43,9 @@ export function offerKboRenewal(source:KboCareer,expectedRevision:number):KboCar
  const annualSalaryWon=kboRenewalSalaryWon(previous,valueWon),club=source.world.clubs.find(c=>c.id===source.protagonistClubId)!;
  if(kboFutureCommitmentWon(source.world,club.id,1)+annualSalaryWon>club.budgetWon*.9)return compareKboOffseasonOffers(source,expectedRevision);
  const target=String(Number(season)+1),offerKey=JSON.stringify(['kbo-renewal',source.world.worldKey,target,key]);
- const day=source.days!.days.at(-1)!.day,definition=eventDefinition('E30');
+ // P12 closes on the international ledger while the domestic review cursor stays on its final day.
+ const p12=source.national?.brackets?.find(b=>b.seasonKey===season&&b.tournament==='P12'&&source.national?.returnedCompetitions?.includes(b.competitionId));
+ const day=Math.max(source.days!.days.at(-1)!.day,p12?.dayReceipts?.at(-1)?.day??0),definition=eventDefinition('E30');
  const event=createWorldEvent({definitionId:'E30',worldKey:source.world.worldKey,seasonKey:season,evidence:{version:1,type:definition.evidenceDomain,fields:{playerSimulationKey:key,contractWindowId:offerKey,sourceReceiptId:close.receiptKey}},
   resume:{worldKey:source.world.worldKey,seasonKey:season,phase:'SEASON_REVIEW',competitionKey:null,registrationKey:source.protagonistClubId,sourceRevision:source.revision+1},sourceSequence:source.events.length+1,worldDay:day});
  const career=structuredClone(source);
