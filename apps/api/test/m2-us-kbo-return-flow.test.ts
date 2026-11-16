@@ -74,7 +74,7 @@ test('E67 compares server-owned domestic offers and replaces the root with its a
 const databaseUrl=process.env.PLAYBALL_LARGE_SAVE_DATABASE_URL;
 test('disposable PostgreSQL: competing E66/E67 acceptances commit one split save and one receipt',{skip:!databaseUrl},async()=>{
  const url=new URL(databaseUrl!);
- assert.ok(['postgres:','postgresql:'].includes(url.protocol)&&['localhost','127.0.0.1','[::1]'].includes(url.hostname),'Use a disposable local PostgreSQL database');
+ assert.ok(['postgres:','postgresql:'].includes(url.protocol)&&['localhost','127.0.0.1','[::1]'].includes(url.hostname)&&!url.searchParams.has('host'),'Use a disposable local PostgreSQL database');
  const {db,pool}=createDbFromUrl(databaseUrl!),subject='e66-e67-'+randomUUID();
  let initialized=false;
  try{
