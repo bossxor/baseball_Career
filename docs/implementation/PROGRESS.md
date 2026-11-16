@@ -1,3 +1,7 @@
+# 2026-11-16 Codex 통합 — 프리미어12 재계약 날짜
+
+Claude 후속 3개와 E30 날짜 수정을 반영했다. 타입 검사와 E30 집중 회귀 1건을 통과했다. [최신 인계](NEXT-SESSION.md).
+
 # 2026-11-16 Claude 팀 재개 — 병역 결과 설명, 통합 실패 재확인
 
 - 최신화: `claude/tf-lead`를 `codex/tf-fast-season`(a504970)으로 fast-forward.

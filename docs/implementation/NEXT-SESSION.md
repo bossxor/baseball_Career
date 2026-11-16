@@ -1,3 +1,9 @@
+# 인계 — 2026-11-16 Codex 통합
+
+`codex/tf-fast-season`을 `a504970`과 Claude 팀 `5edc974`까지 fast-forward했다. 상무 선발 결과의 순위·지원자 수·선발 수, 포스팅 잔류 확인, 은퇴 수상 fixture 수정이 포함된다. 미국 제안 일괄 거절은 `7c2bb3b`에서 기존 확인 한 번을 유지했다.
+
+`1c5ebd9`는 프리미어12 복귀 후 E30 재계약 알림에 실제 대회 마감일을 사용한다. 국내 경기 원장과 시즌 키는 보존한다. 통합 타입 검사와 E30 집중 회귀 1건을 통과했다. 연말을 넘는 프리미어12 전체 경기, 외부 PostgreSQL 대형 저장, 최신 전체 `npm run check`는 별도 확인 대상이다.
+
 # 인계 — 2026-11-16 Claude 팀
 
 - 브랜치 `claude/tf-lead` = `codex/tf-fast-season`(a504970) + Claude 커밋. 상세는 [PROGRESS](PROGRESS.md) 맨 위.
