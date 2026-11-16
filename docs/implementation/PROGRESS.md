@@ -2,6 +2,8 @@
 
 - 최신화: `claude/tf-lead`를 `codex/tf-fast-season`(a504970)으로 fast-forward.
 - 구현(SLB-14, 설계 14): 상무 지원 시 같은 유형 지원자 중 내 순위·지원자 수·선발 인원을 신청 기록에 저장하고(`standing`, 구 저장은 없음 허용), 선발 결과 화면에 지원 순위·선발 인원·남은 지원 가능 시즌을 표시한다. 선발은 포지션 최소 인원·구단별 상한도 적용되므로 순위만으로 결정되지 않는다는 점을 화면에 적었다. 엔진 회귀 13/13, 엔진 골든 해시 동일.
+- 구현(SLB-11, 설계 14 비가역 확인): 포스팅 검토의 '원구단 잔류', 미국 제안 '모두 거절'에 확인 단계 추가. m2-kbo-departure-flow 3/3.
+- 수정: m2-pro-retirement 은퇴 요약 테스트의 수상 원장 fixture를 검증 형식에 맞춤, 12/12.
 - 11-12 통합 검사 실패 파일 재실행(최신 코드, 파일 단독): career-growth-summary·career-kbo·career-preparation·career-contract-flow·m2-school-flow·m2-school-events-http·m2-us-major-year·m2-us-play·m2-military-flow·m2-independent-us-flow 통과. m2-pro-retirement 3건 실패 유지. m2-us-return-retirement·college-national-host는 실행 중(결과는 인계에 추가).
 
 # 2026-11-12 M2 통합 검증

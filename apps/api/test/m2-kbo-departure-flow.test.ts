@@ -60,7 +60,7 @@ test('KBO departure flow seals E62, validates revisions and declines without alt
  const opened=applyEngineCommand(initial,body('POSTING_INVITE',button.payload));
  assert.deepEqual(opened.eventIds,['E62']);
  assert.equal(c.events.length,0);
- const decline=kboDepartureFlow(opened.nextState)!.commands.find(choice=>choice.id==='posting-stay')!;
+ const decline=kboDepartureFlow(opened.nextState)!.commands.find(choice=>choice.id==='posting-stay')!;assert.match(decline.confirm??'',/잔류할까요/);
  assert.throws(()=>applyEngineCommand(opened.nextState,body('POSTING_DECLINE',{...decline.payload,worldDay:30})),/INVALID_PAYLOAD/);
  assert.throws(()=>applyEngineCommand(opened.nextState,body('POSTING_DECLINE',{...decline.payload,careerRevision:c.revision})),/CAREER_REVISION_CHANGED/);
  const declined=applyEngineCommand(opened.nextState,body('POSTING_DECLINE',decline.payload));

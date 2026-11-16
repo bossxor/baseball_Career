@@ -134,7 +134,7 @@ export function kboDepartureFlow(state:SaveState):FlowScreen|null{
  if(event?.definitionId==='E62'){
   const service=engine.kboServiceTimeView(c).registrationThresholds.posting;
   lines.push({label:'포스팅 자격',value:service.reached?'등록 시즌 및 병역 조건 충족':'자격 미달'});
-  return out('포스팅 검토',[cmd('posting-request','구단에 승인 요청','POSTING_REQUEST',eventPayload),cmd('posting-stay','원구단 잔류','POSTING_DECLINE',eventPayload)]);
+  return out('포스팅 검토',[cmd('posting-request','구단에 승인 요청','POSTING_REQUEST',eventPayload),{...cmd('posting-stay','원구단 잔류','POSTING_DECLINE',eventPayload),confirm:'이번 포스팅 검토를 닫고 원구단에 남습니다. 잔류할까요?'}]);
  }
  if(postingWindow?.status==='REQUESTED')return out('포스팅 신청',[cmd('posting-decide','구단 결정 확인','POSTING_DECIDE')]);
  if(event?.definitionId==='E63'){

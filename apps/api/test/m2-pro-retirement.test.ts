@@ -148,7 +148,8 @@ test('retirement summary exposes recorded milestone without internal key',async(
  const c=enteredKboCareer(),player=c.world.players[c.protagonistKey]!;
  c.phaseContext={phase:'ARCHIVED'};
  c.retirement={reason:'VOLUNTARY',seasonKey:c.world.seasonKey,age:player.age,clubId:c.protagonistClubId,receiptKey:'archive',sourceRevision:c.revision,remainingContractYears:0};
- c.proAwards={annual:[{seasonKey:c.world.seasonKey,leagueKey:'KBO',awards:[{playerKey:c.protagonistKey,awardType:'MVP',score:12},{playerKey:'other',awardType:'ROOKIE',score:4}]}],allStars:[]} as never;
+ // Controlled ledger in the validated shape (schema, owner and receipt key); the engine rejects anything looser.
+ c.proAwards={schemaVersion:1,worldKey:c.world.worldKey,playerKey:c.protagonistKey,games:{},notices:[],annual:[{receiptKey:JSON.stringify(['pro-awards',c.world.worldKey,'annual',c.world.seasonKey,'KBO']),worldDay:0,seasonKey:c.world.seasonKey,leagueKey:'KBO',awards:[{playerKey:c.protagonistKey,awardType:'MVP',score:12},{playerKey:'other',awardType:'ROOKIE',score:4}]}],allStars:[]} as never;
  c.proResults={notices:[{definitionId:'E24',seasonKey:c.world.seasonKey,evidence:{fields:{milestoneKey:JSON.stringify(['first-pro-record','KBO','100_H'])}}}]} as never;
  const summary=retirementSummary({schemaVersion:1,career:c})!.summary;
  assert.deepEqual(summary.sections.find(s=>s.title==='주요 이정표')?.lines,[{label:'통산 100안타',value:`KBO · ${c.world.seasonKey} 시즌`}]);

@@ -1,8 +1,8 @@
 # 인계 — 2026-11-16 Claude 팀
 
 - 브랜치 `claude/tf-lead` = `codex/tf-fast-season`(a504970) + Claude 커밋. 상세는 [PROGRESS](PROGRESS.md) 맨 위.
-- 남은 통합 실패: `apps/api/test/m2-pro-retirement.test.ts` 3건(11-12 기록의 `INVALID_PRO_AWARD_LEDGER` 계열, 원인 미확정). `m2-us-return-retirement`·`college-national-host`는 재실행 결과 확인 필요. 전체 `npm run check` 재실행은 아직 안 했다.
-- 다음 구현 후보(백로그 P1): 복무 단계 카드(SLB-14 나머지), 비가역 명령 확인 — `posting-request`·`posting-stay`·`us-decline`에 확인 문구 없음(SLB-11), 비FA 다년 연장 존재 확인(SLB-12).
+- 통합 실패 정리: `m2-pro-retirement`의 1건은 통제 fixture가 수상 원장 검증 형식(스키마·소유자·영수증 키)을 지키지 않아 난 실패였고 fixture를 고쳐 12/12 통과(검증은 그대로). `m2-us-return-retirement`(실행 중)·`college-national-host`(미실행)는 결과 확인 필요. 전체 `npm run check` 재실행은 아직 안 했다.
+- 다음 구현 후보(백로그 P1): 복무 단계 카드(SLB-14 나머지), 비가역 명령 확인은 `posting-stay`·`us-decline`에 추가함(SLB-11). `posting-request`는 구단 결정 전 단계라 되돌림 가능 여부를 엔진에서 확인한 뒤 결정, 비FA 다년 연장 존재 확인(SLB-12).
 
 - 성능: 대학 대표팀(AG) 호스트 advance 1회가 수 분 걸린다. 학년 마무리 전에 선발이 끼는 2030(AG 해) 시즌을 지나는 테스트는 느리다 (의도된 창, 최적화는 설계 135).
 
