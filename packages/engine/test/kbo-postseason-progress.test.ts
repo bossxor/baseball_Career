@@ -18,7 +18,11 @@ import {advanceKboCareer} from '../src/kbo-progress.js';
 import {kboForcedRetirementReview} from '../src/kbo-retirement-review.js';
 import {requestKboRetirement,resolveKboRetirement,retireKboAtMaxAge} from '../src/kbo-retirement.js';
 import {offerKboRenewal,acceptKboRenewal,kboRenewalValueWon} from '../src/kbo-renewal.js';
-import {createNationalBracket,p12ActualWindow} from '../src/national-bracket.js';
+import {createNationalBracket,nextNationalMatch,p12ActualWindow} from '../src/national-bracket.js';
+import {openKboNationalSelection} from '../src/kbo-national-selection.js';
+import {confirmNationalEligibility,resolveKboNationalEvent} from '../src/kbo-national.js';
+import {advanceCareerNationalMatch,closeCareerNationalDay,prepareCareerNationalMatch,startNationalTournament} from '../src/national-progress.js';
+import {auditCareerNationalDays} from '../src/national-day-audit.js';
 
 /** Controlled season-review state: closed day receipts for the whole regular range (no regular games played). */
 function review(schoolYear=2029):KboCareer {
@@ -53,6 +57,49 @@ test('postseason home runs feed career trait evidence after each postseason day'
  for(let i=0;i<60;i++){const out=advanceKboPostseason(c,c.revision);c=out.career;if(out.stopReason!=='CHUNK_LIMIT')break;}
  assert.ok(c.traits!.owned[key]!.unlocked.includes('T06'));
  assert.equal(c.traits!.unlocks.filter(u=>u.traitId==='T06').length,1);
+});
+
+test('Premier12 plays across New Year and returns with the original season and official records',()=>{
+ const source=review(2030),season=source.world.seasonKey,last=source.days!.days.at(-1)!.day;
+ // Delay the controlled domestic prefix; playoffs and the tournament below play every game.
+ for(let day=last+1;day<=343;day++)source.days!.days.push({day,evidence:'controlled delay',result:{injured:[],recovered:[]}});
+ let c=startKboPostseason(source,source.revision);
+ for(let i=0;i<400&&c.phaseContext.phase==='POSTSEASON_PROGRESS';i++){
+  const out=advanceKboPostseason(c,c.revision);assert.notEqual(out.stopReason,'ENGINE_LIMIT');c=out.career;
+ }
+ assert.ok(c.postseason?.championKey);
+ const domestic=canonicalJson(c.days),regularRecords=c.records;
+ c=openKboNationalSelection(c,c.revision,'P12');
+ const invite=c.events.find(e=>e.definitionId==='E44'&&e.status==='OPEN');
+ if(invite)c=resolveKboNationalEvent(c,c.revision,{eventKey:invite.eventKey,eventVersion:invite.version,command:'ACCEPT_NATIONAL'}).career;
+ c=startNationalTournament(c,c.revision,'P12');
+ const window=c.national!.brackets![0]!.window;
+ assert.ok(window.startDay<=365&&window.endDay>366);
+ for(let i=0;i<400&&c.phaseContext.phase==='INTERNATIONAL_PROGRESS';i++){
+  const bracket=c.national!.brackets![0]!,day=c.phaseContext.nextWorldDay;
+  if(!bracket.pendingGame&&nextNationalMatch(bracket)?.day!==day){
+   c=closeCareerNationalDay(c,c.revision,day);
+   if(day===365)c=JSON.parse(canonicalJson(c)) as KboCareer;
+   continue;
+  }
+  if(!bracket.pendingGame)c=prepareCareerNationalMatch(c,c.revision);
+  const out=advanceCareerNationalMatch(c,c.revision);assert.notEqual(out.stopReason,'ENGINE_LIMIT');c=out.career;
+ }
+ assert.equal(c.phaseContext.phase,'INTERNATIONAL_REVIEW');
+ const result=c.national!.competitions[0]!;
+ assert.ok(result.gameKeys!.some(key=>c.records.games[key]!.worldDay>365));
+ for(const key of result.gameKeys!)assert.equal(c.records.games[key]!.scope.seasonKey,season);
+ for(const [key,row] of Object.entries(regularRecords.games))assert.equal(canonicalJson(c.records.games[key]),canonicalJson(row));
+ const eligible=c.events.find(e=>e.definitionId==='E47'&&e.status==='OPEN');
+ if(eligible)c=confirmNationalEligibility(c,c.revision,result.competitionId);
+ const back=c.events.find(e=>e.definitionId==='E48'&&e.status==='OPEN')!;
+ assert.equal(back.occurredWorldDay,window.endDay-1);
+ c=resolveKboNationalEvent(c,c.revision,{eventKey:back.eventKey,eventVersion:back.version,command:'CONFIRM_NATIONAL_RETURN'}).career;
+ assert.equal(c.phaseContext.phase,'SEASON_REVIEW');
+ assert.equal(c.world.seasonKey,season);
+ assert.equal(canonicalJson(c.days),domestic);
+ assert.deepEqual(c.national!.returnedCompetitions,[result.competitionId]);
+ auditCareerNationalDays(c);
 });
 
 
