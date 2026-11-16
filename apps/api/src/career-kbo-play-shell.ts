@@ -84,6 +84,14 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
  const phase=c.phaseContext,lines:{label:string;value:string}[]=[{label:'선수',value:`${p.name} · ${p.age}세`},{label:'시즌',value:c.world.seasonKey}];
  const cmd=(id:string,label:string,type:string,payload:Record<string,unknown>={},confirm?:string):FlowCommand=>({id,label,type:'CAREER_KBO_PLAY_'+type,payload:{careerRevision:c.revision,...payload},...(confirm?{confirm}:{})});
  const out=(title:string,commands:FlowCommand[],notice:string|null=null):FlowScreen=>({screenId:'CAREER_FLOW',title,lines,commands,notice,careerRevision:c.revision});
+ const program=c.military?.program;
+ if(program&&(engine.kboProtagonistServing(c)||c.military?.completedSeasonKey===c.world.seasonKey)){
+  lines.push({label:'게임 복무',value:`${program.kind==='SPORTS'?'상무':'현역'} · 18개월`});
+  program.blocks.forEach((block,index)=>{
+   const status=block.completedWorldDay!==null?'완료':block.seasonKey===c.world.seasonKey?'진행 중':'예정';
+   lines.push({label:`복무 ${index+1}/${program.scheduledBlocks}`,value:`${block.seasonKey} 시즌 · ${status}`});
+  });
+ }
  const militaryEvent=engine.kboMilitaryEventView(c)[0];
  if(militaryEvent){
   const actions=militaryEvent.choices.filter(x=>x.command!=='CHOOSE_FOCUS').map(x=>cmd('military-'+x.command,x.label,'MILITARY_EVENT',{eventKey:militaryEvent.eventKey,eventVersion:militaryEvent.eventVersion,command:x.command}));

@@ -5,9 +5,11 @@ import * as engine from '@playball/engine';
 import {closedUsOptionCareer} from '../../../packages/engine/test/us-option-fixture.js';
 import {closeControlledServiceDates} from '../../../packages/engine/test/us-service-fixture.js';
 import {enteredKboCareer} from '../../../packages/engine/test/fixtures.js';
+import {completeKboMilitaryBlock,enlistInActiveService} from '../../../packages/engine/src/kbo-military-program.js';
 import {createTestDb,seedAllowedSubject,seedSave} from '@playball/db';
 import {applyEngineCommand,type SaveState} from '../src/engine-command.js';
 import {careerFlowScreen} from '../src/career-flow-screen.js';
+import {kboPlayFlow} from '../src/career-kbo-play-shell.js';
 import {createApp} from '../src/app.js';
 
 const state=(career:engine.UsCareer):SaveState=>({schemaVersion:1,career:JSON.parse(JSON.stringify(career))});
@@ -90,6 +92,26 @@ test('KBO military planning uses the saved event version and rejects forged choi
  assert.ok(commands.some(x=>x.type==='CAREER_KBO_PLAY_OPEN_CONTRACT_OFFERS'));
  assert.ok(commands.some(x=>x.payload.command==='DECLINE'));
  assert.ok(!commands.some(x=>x.payload.command==='ENLIST'));
+});
+
+test('KBO Flow shows the saved first and second military blocks through the return season',()=>{
+ const c=enteredKboCareer(),key=c.protagonistKey,contract=c.world.contracts[key]!;
+ const lines=()=>kboPlayFlow(c)!.lines.filter(line=>line.label.startsWith('복무')).map(line=>line.value);
+ assert.deepEqual(lines(),[]);
+ const program=enlistInActiveService({worldKey:c.world.worldKey,playerKey:key,clubId:c.protagonistClubId,selectionSeasonKey:c.world.seasonKey,contract,remainingPaidGameDays:144});
+ const [first,second]=program.blocks;
+ c.military={status:'SERVING_ACTIVE',applications:[],program};
+ assert.deepEqual(lines(),[`${first!.seasonKey} 시즌 · 예정`,`${second!.seasonKey} 시즌 · 예정`]);
+ c.world.seasonKey=first!.seasonKey;
+ assert.deepEqual(lines(),[`${first!.seasonKey} 시즌 · 진행 중`,`${second!.seasonKey} 시즌 · 예정`]);
+ c.military.program=completeKboMilitaryBlock(program,first!.seasonKey,280);
+ c.world.seasonKey=second!.seasonKey;
+ assert.deepEqual(lines(),[`${first!.seasonKey} 시즌 · 완료`,`${second!.seasonKey} 시즌 · 진행 중`]);
+ c.military.program=completeKboMilitaryBlock(c.military.program,second!.seasonKey,180);
+ c.military.status='COMPLETED';c.military.completedSeasonKey=second!.seasonKey;
+ assert.deepEqual(lines(),[`${first!.seasonKey} 시즌 · 완료`,`${second!.seasonKey} 시즌 · 완료`]);
+ c.world.seasonKey=String(Number(second!.seasonKey)+1);
+ assert.deepEqual(lines(),[]);
 });
 
 test('military commands enforce save ownership, CAS and receipt replay',async()=>{
