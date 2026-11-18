@@ -1,4 +1,6 @@
 import { createHash } from 'node:crypto';
+import { channel } from 'node:diagnostics_channel';
+import { performance } from 'node:perf_hooks';
 import { and, asc, eq, gt } from 'drizzle-orm';
 import type { PlayballDb } from './client.js';
 import type { TestDb } from './test-helper.js';
@@ -8,23 +10,49 @@ import { encodeStateParts, StateDecoder } from './state-codec.js';
 type StateDb = Pick<PlayballDb | TestDb, 'select' | 'insert' | 'delete'>;
 const hash = (text: string) => createHash('sha256').update(text).digest('hex');
 const corrupt = (): never => { throw new Error('SAVE_STATE_CORRUPT'); };
+const writeTiming = channel('playball.save-state.write-timing');
 
 /** Caller holds the save row lock and commits the returned envelope with revision and receipt. */
 export async function writeSaveState(db: StateDb, saveId: string, revision: bigint, state: unknown): Promise<{state: unknown; stateFormat: 'JSONB' | 'PARTS_V1'}> {
-  const parts = encodeStateParts(state), first = parts.next(), second = parts.next();
+  const timing = writeTiming.hasSubscribers ? { codecMs: 0, hashingMs: 0, partsSqlMs: 0 } : null;
+  const start = () => timing ? performance.now() : 0;
+  const parts = encodeStateParts(state);
+  const next = () => {
+    const began = start();
+    const part = parts.next();
+    if (timing) timing.codecMs += performance.now() - began;
+    return part;
+  };
+  const first = next(), second = next();
   if (first.done) corrupt();
+  const deleteStarted = start();
   await db.delete(gameSaveParts).where(eq(gameSaveParts.saveId, saveId));
-  if (second.done) return { state, stateFormat: 'JSONB' };
+  if (timing) timing.partsSqlMs += performance.now() - deleteStarted;
+  if (second.done) {
+    if (timing) writeTiming.publish({ ...timing, stateFormat: 'JSONB' });
+    return { state, stateFormat: 'JSONB' };
+  }
   const total = createHash('sha256');
   let count = 0;
   const write = async (payload: string) => {
+    const hashStarted = start();
     total.update(payload);
-    await db.insert(gameSaveParts).values({ saveId, revision, part: count++, payload, sha256: hash(payload) });
+    const sha256 = hash(payload);
+    if (timing) timing.hashingMs += performance.now() - hashStarted;
+    const insertStarted = start();
+    await db.insert(gameSaveParts).values({ saveId, revision, part: count++, payload, sha256 });
+    if (timing) timing.partsSqlMs += performance.now() - insertStarted;
   };
   await write(first.value);
-  if (!second.done) await write(second.value);
-  for (const part of parts) await write(part);
-  return { state: { $playballState: 1, revision: revision.toString(), parts: count, sha256: total.digest('hex') }, stateFormat: 'PARTS_V1' };
+  await write(second.value);
+  for (let part = next(); !part.done; part = next()) await write(part.value);
+  const digestStarted = start();
+  const sha256 = total.digest('hex');
+  if (timing) {
+    timing.hashingMs += performance.now() - digestStarted;
+    writeTiming.publish({ ...timing, stateFormat: 'PARTS_V1' });
+  }
+  return { state: { $playballState: 1, revision: revision.toString(), parts: count, sha256 }, stateFormat: 'PARTS_V1' };
 }
 
 /** Caller checks ownership and keeps the row/parts at a consistent revision. */

@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { channel } from 'node:diagnostics_channel';
 import { eq, sql } from 'drizzle-orm';
 import { createTestDb, seedAllowedSubject, seedSave, gameSaves, gameSaveParts, readSaveState, writeSaveState } from '@playball/db';
 import { encodeStateParts, StateDecoder, STATE_PART_BYTES } from '../../../packages/db/src/state-codec.js';
@@ -32,6 +33,36 @@ test('bounded codec preserves JSON values, large Unicode strings and special key
 });
 
 const largeState = () => ({ schemaVersion: 1, stampCount: 0, history: Array.from({ length: 32_000 }, (_, i) => ({ game: i, player: '선수' + i, PA: 4, AB: 3, H: 1, BB: 1, TB: 2, outcome: '기록보존' })) });
+
+test('save write timing measures both formats without exposing state payloads', async () => {
+  const { db, client } = await createTestDb();
+  const diagnostic = channel('playball.save-state.write-timing');
+  const observations: unknown[] = [];
+  const observe = (event: unknown) => observations.push(event);
+  diagnostic.subscribe(observe);
+  try {
+    await seedAllowedSubject(db, 'timing');
+    await seedSave(db, { id: 'timing', ownerId: 'timing' });
+    await db.transaction(async tx => {
+      const small = await writeSaveState(tx, 'timing', 1n, { text: 'private' });
+      const large = await writeSaveState(tx, 'timing', 1n, { text: 'x'.repeat(2 * STATE_PART_BYTES) });
+      assert.equal(small.stateFormat, 'JSONB');
+      assert.equal(large.stateFormat, 'PARTS_V1');
+    });
+    assert.equal(observations.length, 2);
+    for (const [index, stateFormat] of ['JSONB', 'PARTS_V1'].entries()) {
+      const data = observations[index] as { stateFormat: string; codecMs: number; hashingMs: number; partsSqlMs: number };
+      assert.deepEqual(Object.keys(data).sort(), ['codecMs', 'hashingMs', 'partsSqlMs', 'stateFormat']);
+      assert.equal(data.stateFormat, stateFormat);
+      assert.ok(data.codecMs > 0 && data.partsSqlMs > 0);
+      if (stateFormat === 'JSONB') assert.equal(data.hashingMs, 0);
+      else assert.ok(data.hashingMs > 0);
+    }
+  } finally {
+    diagnostic.unsubscribe(observe);
+    await client.close();
+  }
+});
 
 test('split storage rolls back row/parts/receipt together and rejects missing or damaged parts', async () => {
   const { db, client } = await createTestDb();

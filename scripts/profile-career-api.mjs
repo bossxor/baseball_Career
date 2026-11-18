@@ -13,16 +13,41 @@ import {enrolledCollegeCareer,enteredKboCareer} from '../packages/engine/test/fi
 import {preparedUsOptionCareer} from '../packages/engine/test/us-option-fixture.ts';
 import {profileStateSize} from './profile-state-size.mjs';
 
-const memoryMode=process.argv.includes('--memory'),cpuEnabled=!process.argv.includes('--no-cpu');
+const memoryMode=process.argv.includes('--memory'),timingMode=process.argv.includes('--timing'),cpuEnabled=!process.argv.includes('--no-cpu');
 let activeCommand=null;
+let timing=null;
 const memory=(stage,extra={})=>console.error(JSON.stringify({diagnostic:'memory',stage,command:activeCommand,...process.memoryUsage(),...extra}));
-if(memoryMode){
- channel('playball.command.memory').subscribe(({stage})=>memory(stage));
+if(memoryMode||timingMode){
+ channel('playball.command.memory').subscribe(({stage})=>{
+  if(memoryMode)memory(stage);
+  if(timing)timing.stages.set(stage,performance.now());
+ });
+ if(timingMode)channel('playball.save-state.write-timing').subscribe(data=>{if(timing)timing.codec=data;});
  const original=gameSaves.state.mapToDriverValue;
  gameSaves.state.mapToDriverValue=function(value){
-  if(activeCommand)memory('serialize-start');
-  try{const result=original.call(this,value);if(activeCommand){memory('serialize-return',{bytes:Buffer.byteLength(result)});if(process.argv.includes('--size')&&result.length>=100_000_000)memory('state-sizes',{rows:profileStateSize(result)});}return result;}
-  catch(error){if(activeCommand)memory('serialize-error',{errorName:error?.name});throw error;}
+  if(memoryMode&&activeCommand)memory('serialize-start');
+  const start=timing?performance.now():0;
+  let result;
+  try{result=original.call(this,value);}
+  catch(error){if(memoryMode&&activeCommand)memory('serialize-error',{errorName:error?.name});throw error;}
+  finally{if(timing)timing.rowJsonMs+=performance.now()-start;}
+  if(memoryMode&&activeCommand){
+   memory('serialize-return',{bytes:Buffer.byteLength(result)});
+   if(process.argv.includes('--size')&&result.length>=100_000_000)memory('state-sizes',{rows:profileStateSize(result)});
+  }
+  return result;
+ };
+}
+function saveTiming(timing){
+ const {codec,rowJsonMs,stages}=timing;
+ if(!codec||!stages.has('receipt-return'))return undefined;
+ const duration=(first,last)=>stages.get(last)-stages.get(first);
+ const rowSqlMs=Math.max(0,duration('row-update-start','update-return')-rowJsonMs);
+ return {
+  stateFormat:codec.stateFormat,
+  codecMs:codec.codecMs,rowJsonMs,serializationMs:codec.codecMs+rowJsonMs,
+  hashingMs:codec.hashingMs,
+  sqlWriteMs:codec.partsSqlMs+rowSqlMs+duration('receipt-start','receipt-return'),
  };
 }
 if(process.argv.includes('--self-check')){
@@ -58,6 +83,7 @@ const state=()=>readOwnedSave(db,subject,saveId);
 const session=cpuEnabled?new Session():null;session?.connect();
 const inspector=(method,params={})=>new Promise((resolve,reject)=>session.post(method,params,(err,result)=>err?reject(err):resolve(result)));
 let result={backend,databaseVersion,league,fixture:'controlled pre-season fixture',initialHash,status:'running',commands:[],node:process.version,platform:process.platform,arch:process.arch,method:cpuEnabled?'V8 CPU samples collected during HTTP commands and intervening reads; percentages are CPU sample shares, not wall time':'CPU profiling disabled',memoryMode};
+if(timingMode)result.saveTimingMethod='Per committed command: state codec traversal plus row-state JSON mapper, part hashes, and awaited write statements with row-state JSON time removed. SQL timing includes driver/ORM overhead; excludes reads, locking and transaction commit.';
 let current=source,revision=0,profile;
 const start=performance.now();
 try{
@@ -77,9 +103,12 @@ try{
   if(!command){result.status='unsupported_event';result.blockedPhase=phase;result.event=current.events?.find(e=>e.eventKey===current.phaseContext.eventKey)?.definitionId;break;}
   const body={commandId:'profile-'+n,expectedRevision:revision,type:command.type,payload:command.payload},begin=performance.now();
   activeCommand=body.type;if(memoryMode)memory('request-start');
+  if(timingMode)timing={stages:new Map(),rowJsonMs:0};
   const response=await request('/api/saves/'+saveId+'/commands',{method:'POST',body:JSON.stringify(body)}),elapsedMs=performance.now()-begin;
   if(memoryMode)memory('request-return',{status:response.status});activeCommand=null;
-  const data=await response.json();result.commands.push({type:body.type,phase,elapsedMs,status:response.status,stop:data.summary?.spanStop??data.summary?.stopReason});
+  const save=timing&&response.ok?saveTiming(timing):undefined;
+  timing=null;
+  const data=await response.json();result.commands.push({type:body.type,phase,elapsedMs,status:response.status,stop:data.summary?.spanStop??data.summary?.stopReason,...(save?{saveTiming:save}:{})});
   if(!response.ok){result.status='http_error';result.error=data;break;}
   const row=await state();current=row.state.career;revision=Number(row.revision);
   console.log(JSON.stringify({league,command:n,type:body.type,stop:data.summary?.spanStop??data.summary?.stopReason??null,phase:current.phaseContext.phase,nextWorldDay:current.phaseContext.nextWorldDay??null,games:Object.keys(current.records.games).length,elapsedSeconds:Math.round((performance.now()-start)/1000)}));

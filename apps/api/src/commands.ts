@@ -122,6 +122,7 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
 
       diagnostic('update-start');
       const storedState = await writeSaveState(tx, saveId, nextRevision, applied.nextState);
+      diagnostic('row-update-start');
       await tx
         .update(gameSaves)
         .set({
