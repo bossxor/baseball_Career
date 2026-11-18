@@ -1,3 +1,4 @@
+import { measureEngine } from './engine-timing.js';
 import type {GameState,PlayLog,BattingLine,PitchingLine} from './types.js';
 import type {Hand,BatSide,PitchForm} from './probabilities.js';
 import {assertGameInvariants,canonicalJson} from './game.js';
@@ -101,7 +102,8 @@ export function putGameContribution(source:RecordLedger,contribution:GameContrib
   if(old && canonicalJson(old)===canonicalJson(contribution))return {ledger:structuredClone(source),duplicate:true,corrected:false};
   if(old && !officialCorrection)throw new RangeError('GAME_EVIDENCE_REUSED');
   if(old && (canonicalJson(old.scope)!==canonicalJson(contribution.scope) || old.worldDay!==contribution.worldDay || canonicalJson(old.teams)!==canonicalJson(contribution.teams)))throw new RangeError('CORRECTION_SCOPE_CHANGED');
-  return {ledger:{revision:source.revision+1,games:{...(shareExisting?source.games:structuredClone(source.games)),[contribution.gameKey]:structuredClone(contribution)}},duplicate:false,corrected:!!old};
+  const games=measureEngine('clone',()=>({...(shareExisting?source.games:structuredClone(source.games)),[contribution.gameKey]:structuredClone(contribution)}));
+  return {ledger:{revision:source.revision+1,games},duplicate:false,corrected:!!old};
 }
 function sum<T extends object>(target:T,delta:T):void {for(const key of Object.keys(delta) as (keyof T)[]){const next=Number(target[key])+Number(delta[key]);if(!Number.isSafeInteger(next) || next<0)throw new RangeError('INVALID_RECORD_SUM');target[key]=next as T[keyof T];}}
 export function recordTotals(source:RecordLedger,filter:{leagueKey:string;phase:RecordScope['phase'];seasonKey?:string}) {

@@ -4,6 +4,7 @@ import {createHighSchoolWorld} from '../src/high-school-world.js';
 import {createHighSchoolCareer,confirmCareerPlayer,resolveCareerFocusEvent,confirmCareerPreseason} from '../src/high-school-career.js';
 import type {HighSchoolCareer} from '../src/high-school-career.js';
 import {advanceHighSchoolCareer,pauseHighSchoolCareer,resolveCareerWindowEvent} from '../src/high-school-progress.js';
+import {measureEngine,setEngineTimingObserver} from '../src/engine-timing.js';
 import {canonicalJson} from '../src/game.js';
 import {recordTotals} from '../src/records.js';
 import {collectHighSchoolGrowthEvidence,settleHighSchoolCareerGrowth} from '../src/high-school-growth.js';
@@ -32,6 +33,17 @@ test('ONE_GAME plan persists across safe chunks, serializes exactly and closes w
   if(left.stopReason!=='CHUNK_LIMIT'){assert.equal(left.stopReason,'ONE_GAME');break;}
  }
  const total=recordTotals(a.records,{leagueKey:'HS',phase:'REGULAR',seasonKey:a.world.seasonKey});assert.equal(total.teams.H01!.games,1);assert.equal(a.days.days.length,2);assert.equal(a.records.revision,8);assert.equal(canonicalJson(initial),before);
+});
+test('engine timing attributes nested work once and preserves a real day close',()=>{
+ const initial=fixture(),ordinary=advance(initial,'ONE_GAME'),recorded:Record<string,number>={};
+ let clock=0;
+ setEngineTimingObserver({now:()=>clock++,record:(name,ms)=>{recorded[name]=(recorded[name]??0)+ms;}});
+ try{
+  assert.throws(()=>measureEngine('validation',()=>measureEngine('seal',()=>{throw new Error('expected');})),/expected/);
+  assert.deepEqual({...recorded},{validation:2,seal:1});
+  assert.deepEqual(advance(initial,'ONE_GAME'),ordinary);
+  for(const name of ['simulation','dayClose','validation','clone'])assert.ok((recorded[name]??0)>0,name);
+ }finally{setEngineTimingObserver();}
 });
 test('pause keeps pending RNG/cursor; active plan cannot be silently changed; invalid phase/revision rejected',()=>{
  const initial=fixture(),first=advanceHighSchoolCareer(initial,3,'ONE_WEEK').career;assert.equal(first.phaseContext.phase,'SEASON_PROGRESS');

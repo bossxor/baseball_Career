@@ -6,6 +6,7 @@ export * from './bases.js';
 export * from './types.js';
 export * from './stats.js';
 export * from './game.js';
+export { setEngineTimingObserver, type EngineTimingCategory } from './engine-timing.js';
 export * from './player.js';
 export * from './development.js';
 export * from './training.js';

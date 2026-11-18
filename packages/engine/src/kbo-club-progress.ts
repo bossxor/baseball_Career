@@ -1,3 +1,4 @@
+import { measureEngine, measureEngineClone } from './engine-timing.js';
 import { closeKboClubNpcMilitaryDay } from './kbo-npc-military.js';
 import { reconcileSangmuEmergency } from './kbo-sangmu-emergency.js';
 import type { KboClubGame } from './kbo-club-game.js';
@@ -57,7 +58,7 @@ export function advanceKboClubGame(source: KboClubGame, expectedRevision: number
   assertRevision(source, expectedRevision);
   if (source.phase !== 'SEASON_PROGRESS' || !source.days || !source.progress) throw new RangeError('INVALID_CLUB_PHASE');
   if (!Number.isSafeInteger(maxDays) || maxDays < 1 || maxDays > 7) throw new RangeError('INVALID_ADVANCE_DAYS');
-  const game = structuredClone(source), progress = game.progress!, last = Math.max(...allDays(game)), mine = new Set(game.world.clubs.find(c => c.id === game.userClubId)!.roster);
+  const game = measureEngineClone(source), progress = game.progress!, last = Math.max(...allDays(game)), mine = new Set(game.world.clubs.find(c => c.id === game.userClubId)!.roster);
   let plateAppearances = 0, completedInnings = 0, daysClosed = 0;
   const finish = (stopReason: KboClubProgressStop): KboClubProgressResult => { game.revision++; return { game, stopReason, plateAppearances, completedInnings, daysClosed }; };
   const block = clubSeasonBlock(game);
@@ -94,10 +95,13 @@ export function advanceKboClubGame(source: KboClubGame, expectedRevision: number
       game.records = committed.records; progress.pendingGame = null;
       if (queue(game, day).length > 0) continue;
     }
-    const closed = closeKboCompetitionDay(game.world, game.schedule, '', game.records, game.health, game.days!, day,game.sangmu);
-    game.world = closed.world; game.health = closed.health; game.days = closed.days; progress.nextWorldDay = day + 1; daysClosed++;
-    if(closed.sangmu)game.sangmu=closed.sangmu;
-    closeKboClubNpcMilitaryDay(game,day);
+    const closed = measureEngine('dayClose', () => {
+      const result = closeKboCompetitionDay(game.world, game.schedule, '', game.records, game.health, game.days!, day,game.sangmu);
+      game.world = result.world; game.health = result.health; game.days = result.days; progress.nextWorldDay = day + 1; daysClosed++;
+      if(result.sangmu)game.sangmu=result.sangmu;
+      closeKboClubNpcMilitaryDay(game,day);
+      return result;
+    });
     const changed = [...closed.result.injured, ...closed.result.recovered];
     for (const key of changed.filter(k => !mine.has(k))) {
       const clubId = game.world.clubs.find(c => c.roster.includes(key))?.id;

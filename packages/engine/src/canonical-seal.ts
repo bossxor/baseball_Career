@@ -1,3 +1,4 @@
+import { measureEngine } from './engine-timing.js';
 import {sha256} from '@noble/hashes/sha2.js';
 import {bytesToHex} from '@noble/hashes/utils.js';
 import {canonicalJson} from './game.js';
@@ -15,33 +16,35 @@ function updateText(hash:ReturnType<typeof sha256.create>,text:string):void {
 
 /** Hash the same bytes as canonicalJson without assembling a whole career string. */
 export function canonicalSha256(value:unknown):string {
- const hash=sha256.create();
- let buffer='';
- function write(chunk:string){
-  if(buffer.length+chunk.length>64*1024){updateText(hash,buffer);buffer='';}
-  if(chunk.length>=64*1024)updateText(hash,chunk);else buffer+=chunk;
- }
- function visit(item:unknown){
-  if(Array.isArray(item)){
-   write('[');
-   for(let index=0;index<item.length;index++){
-    if(index)write(',');
-    if(index in item)visit(item[index]);
-   }
-   write(']');
-  }else if(item!==null&&typeof item==='object'){
-   write('{');
-   Object.keys(item).sort().forEach((key,index)=>{
-    if(index)write(',');
-    write(JSON.stringify(key)+':');
-    visit((item as Record<string,unknown>)[key]);
-   });
-   write('}');
-  }else write(canonicalJson(item));
- }
- visit(value);
- updateText(hash,buffer);
- return bytesToHex(hash.digest());
+ return measureEngine('seal',()=>{
+  const hash=sha256.create();
+  let buffer='';
+  function write(chunk:string){
+   if(buffer.length+chunk.length>64*1024){updateText(hash,buffer);buffer='';}
+   if(chunk.length>=64*1024)updateText(hash,chunk);else buffer+=chunk;
+  }
+  function visit(item:unknown){
+   if(Array.isArray(item)){
+    write('[');
+    for(let index=0;index<item.length;index++){
+     if(index)write(',');
+     if(index in item)visit(item[index]);
+    }
+    write(']');
+   }else if(item!==null&&typeof item==='object'){
+    write('{');
+    Object.keys(item).sort().forEach((key,index)=>{
+     if(index)write(',');
+     write(JSON.stringify(key)+':');
+     visit((item as Record<string,unknown>)[key]);
+    });
+    write('}');
+   }else write(canonicalJson(item));
+  }
+  visit(value);
+  updateText(hash,buffer);
+  return bytesToHex(hash.digest());
+ });
 }
 
 export const canonicalSeal=(value:unknown):string=>'sha256:'+canonicalSha256(value);
@@ -50,7 +53,9 @@ export const canonicalSeal=(value:unknown):string=>'sha256:'+canonicalSha256(val
 export function matchesCanonicalSeal(stored:string,expected:string):boolean {
  if(stored===expected)return true;
  if(typeof stored!=='string'||!stored.startsWith('{'))return false;
- const hash=sha256.create();
- updateText(hash,stored);
- return 'sha256:'+bytesToHex(hash.digest())===expected;
+ return measureEngine('seal',()=>{
+  const hash=sha256.create();
+  updateText(hash,stored);
+  return 'sha256:'+bytesToHex(hash.digest())===expected;
+ });
 }

@@ -1,3 +1,4 @@
+import { measureEngine, measureEngineClone } from './engine-timing.js';
 import {refreshCareerRepertoireEvents} from './repertoire-events.js';
 import {formPitcherRivalFromGame} from './pitcher-rival.js';
 import {settleRelationshipDirectDuels} from './relationships.js';
@@ -45,7 +46,7 @@ export function advanceSchoolCareer(source:HighSchoolCareer,expectedRevision:num
  assertSchoolCareerRevision(source,expectedRevision);
  if(source.phaseContext.phase!=='SEASON_PROGRESS' || source.events.some(e=>e.status==='OPEN'))throw new RangeError('INVALID_CAREER_PHASE');
  if(mode!==undefined && !['NEXT_MAJOR_EVENT','ONE_GAME','ONE_WEEK'].includes(mode))throw new RangeError('INVALID_ADVANCE_MODE');
- const career=structuredClone(source),progress=career.phaseContext as HighSchoolProgressPhase;
+ const career=measureEngineClone(source),progress=career.phaseContext as HighSchoolProgressPhase;
  const current=progress.advancePlan;if(current && mode!==undefined && current.mode!==mode)throw new RangeError('ADVANCE_PLAN_ACTIVE');
  const firstDay=Math.min(...career.world.schedule.map(g=>g.worldDay));
  if(!Number.isSafeInteger(progress.nextWorldDay) || progress.nextWorldDay<firstDay || current && (!['NEXT_MAJOR_EVENT','ONE_GAME','ONE_WEEK'].includes(current.mode) || !Number.isSafeInteger(current.startWorldDay) || current.startWorldDay<firstDay || current.startWorldDay>progress.nextWorldDay || !Number.isSafeInteger(current.startTeamGames) || current.startTeamGames<0 || current.startTeamGames>teamGames(career)))throw new RangeError('INVALID_ADVANCE_PLAN');
@@ -71,9 +72,12 @@ export function advanceSchoolCareer(source:HighSchoolCareer,expectedRevision:num
    const committed=commitHighSchoolGame(career.world,career.records,job);career.world=committed.world;career.records=committed.records;const duelRelations=settleRelationshipDirectDuels(career,job.game.input.simulationKey);if(duelRelations)career.relationships=duelRelations;const pitcherFormation=formPitcherRivalFromGame(career,job.game.input.simulationKey);if(pitcherFormation)Object.assign(career,pitcherFormation);progress.pendingGame=null;
    if(career.world.schedule.some(g=>g.worldDay===day && !Object.hasOwn(career.records.games,g.simulationKey)))continue;
   }
-  const closed=closeHighSchoolDay(career.world,career.records,career.health,career.days,day);career.world=closed.world;career.health=closed.health;career.days=closed.days;progress.nextWorldDay=day+1;career.ownAssessment=refreshOwnCareerAssessment(career);career.traits=refreshCareerTraits(career,day);if(career.relationships)career.relationships=refreshRelationMilestones(career)!;
-  for(const [key,book]of Object.entries(career.world.repertoires))if(book.learning){const team=career.world.schools.find(t=>t.roster.includes(key));if(!team)continue;const count=career.world.schedule.filter(g=>g.homeTeamKey===team.id||g.awayTeamKey===team.id).length;career.world.repertoires[key]=settleRegisteredPitchLearning({worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,playerKey:key,repertoire:book,records:career.records,health:career.health,schedule:career.world.schedule,scheduledGames:book.learning.registration?.scheduledGames??count,numerator:key===career.world.protagonistKey?(career.difficulty==='SECRET_CHEAT'?15:5):career.difficulty==='REALISTIC'?6:5});}
-  const notices=queueRelationFormationNotices(career,day);if(notices!==undefined)career.relationNotices=notices;
+  const closed=measureEngine('dayClose',()=>{
+   const result=closeHighSchoolDay(career.world,career.records,career.health,career.days,day);career.world=result.world;career.health=result.health;career.days=result.days;progress.nextWorldDay=day+1;career.ownAssessment=refreshOwnCareerAssessment(career);career.traits=refreshCareerTraits(career,day);if(career.relationships)career.relationships=refreshRelationMilestones(career)!;
+   for(const [key,book]of Object.entries(career.world.repertoires))if(book.learning){const team=career.world.schools.find(t=>t.roster.includes(key));if(!team)continue;const count=career.world.schedule.filter(g=>g.homeTeamKey===team.id||g.awayTeamKey===team.id).length;career.world.repertoires[key]=settleRegisteredPitchLearning({worldKey:career.world.worldKey,seasonKey:career.world.seasonKey,playerKey:key,repertoire:book,records:career.records,health:career.health,schedule:career.world.schedule,scheduledGames:book.learning.registration?.scheduledGames??count,numerator:key===career.world.protagonistKey?(career.difficulty==='SECRET_CHEAT'?15:5):career.difficulty==='REALISTIC'?6:5});}
+   const notices=queueRelationFormationNotices(career,day);if(notices!==undefined)career.relationNotices=notices;
+   return result;
+  });
   const player=career.world.players[career.world.protagonistKey]!,count=teamGames(career);
   const healthChanges={injured:closed.result.injured.includes(player.simulationKey),recovered:closed.result.recovered.includes(player.simulationKey)};
   const healthy=!Object.hasOwn(career.health.injuries,player.simulationKey);

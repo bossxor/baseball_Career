@@ -5,6 +5,7 @@ import {channel} from 'node:diagnostics_channel';
 import {performance} from 'node:perf_hooks';
 import {writeFileSync} from 'node:fs';
 import {createTestDb,createDbFromUrl,M3_CORE_SQL,seedAllowedSubject,seedSave,gameSaves} from '@playball/db';
+import {setEngineTimingObserver} from '@playball/engine';
 import {readOwnedSave} from '../apps/api/src/save-state.ts';
 import {canonicalSha256} from '../packages/engine/src/canonical-seal.ts';
 import {createApp} from '../apps/api/src/app.ts';
@@ -16,11 +17,18 @@ import {profileStateSize} from './profile-state-size.mjs';
 const memoryMode=process.argv.includes('--memory'),timingMode=process.argv.includes('--timing'),cpuEnabled=!process.argv.includes('--no-cpu');
 let activeCommand=null;
 let timing=null;
+const engineCategories=()=>({simulation:0,dayClose:0,validation:0,clone:0,seal:0});
 const memory=(stage,extra={})=>console.error(JSON.stringify({diagnostic:'memory',stage,command:activeCommand,...process.memoryUsage(),...extra}));
 if(memoryMode||timingMode){
  channel('playball.command.memory').subscribe(({stage})=>{
   if(memoryMode)memory(stage);
-  if(timing)timing.stages.set(stage,performance.now());
+  if(!timing)return;
+  timing.stages.set(stage,performance.now());
+  if(stage==='engine-start'){
+   const totals=timing.engine;
+   setEngineTimingObserver({now:()=>performance.now(),record:(category,elapsedMs)=>{totals[category]+=elapsedMs;}});
+  }
+  if(stage==='engine-return'||stage==='engine-error')setEngineTimingObserver();
  });
  if(timingMode)channel('playball.save-state.write-timing').subscribe(data=>{if(timing)timing.codec=data;});
  const original=gameSaves.state.mapToDriverValue;
@@ -49,6 +57,12 @@ function saveTiming(timing){
   hashingMs:codec.hashingMs,
   sqlWriteMs:codec.partsSqlMs+rowSqlMs+duration('receipt-start','receipt-return'),
  };
+}
+function engineTiming(timing){
+ const {engine,stages}=timing;
+ if(!stages.has('engine-return'))return undefined;
+ const elapsedMs=stages.get('engine-return')-stages.get('engine-start');
+ return {elapsedMs,...engine,residualMs:elapsedMs-Object.values(engine).reduce((sum,ms)=>sum+ms,0)};
 }
 if(process.argv.includes('--self-check')){
  assert.ok(memoryMode);activeCommand='self-check';const original={schemaVersion:1,career:{name:'test'}};
@@ -84,6 +98,7 @@ const session=cpuEnabled?new Session():null;session?.connect();
 const inspector=(method,params={})=>new Promise((resolve,reject)=>session.post(method,params,(err,result)=>err?reject(err):resolve(result)));
 let result={backend,databaseVersion,league,fixture:'controlled pre-season fixture',initialHash,status:'running',commands:[],node:process.version,platform:process.platform,arch:process.arch,method:cpuEnabled?'V8 CPU samples collected during HTTP commands and intervening reads; percentages are CPU sample shares, not wall time':'CPU profiling disabled',memoryMode};
 if(timingMode)result.saveTimingMethod='Per committed command: state codec traversal plus row-state JSON mapper, part hashes, and awaited write statements with row-state JSON time removed. SQL timing includes driver/ORM overhead; excludes reads, locking and transaction commit.';
+if(timingMode)result.engineTimingMethod='Exclusive synchronous wall milliseconds inside applyEngineCommand: PA loop, instrumented day settlements, selected validators and state copies, canonical SHA seals. Remaining engine work is residual; HTTP views are outside this boundary.';
 let current=source,revision=0,profile;
 const start=performance.now();
 try{
@@ -103,19 +118,27 @@ try{
   if(!command){result.status='unsupported_event';result.blockedPhase=phase;result.event=current.events?.find(e=>e.eventKey===current.phaseContext.eventKey)?.definitionId;break;}
   const body={commandId:'profile-'+n,expectedRevision:revision,type:command.type,payload:command.payload},begin=performance.now();
   activeCommand=body.type;if(memoryMode)memory('request-start');
-  if(timingMode)timing={stages:new Map(),rowJsonMs:0};
+  if(timingMode)timing={stages:new Map(),rowJsonMs:0,engine:engineCategories()};
   const response=await request('/api/saves/'+saveId+'/commands',{method:'POST',body:JSON.stringify(body)}),elapsedMs=performance.now()-begin;
   if(memoryMode)memory('request-return',{status:response.status});activeCommand=null;
   const save=timing&&response.ok?saveTiming(timing):undefined;
+  const engine=timing&&response.ok?engineTiming(timing):undefined;
   timing=null;
-  const data=await response.json();result.commands.push({type:body.type,phase,elapsedMs,status:response.status,stop:data.summary?.spanStop??data.summary?.stopReason,...(save?{saveTiming:save}:{})});
+  const data=await response.json();result.commands.push({type:body.type,phase,elapsedMs,status:response.status,stop:data.summary?.spanStop??data.summary?.stopReason,...(save?{saveTiming:save}:{}),...(engine?{engineTiming:engine}:{})});
   if(!response.ok){result.status='http_error';result.error=data;break;}
   const row=await state();current=row.state.career;revision=Number(row.revision);
   console.log(JSON.stringify({league,command:n,type:body.type,stop:data.summary?.spanStop??data.summary?.stopReason??null,phase:current.phaseContext.phase,nextWorldDay:current.phaseContext.nextWorldDay??null,games:Object.keys(current.records.games).length,elapsedSeconds:Math.round((performance.now()-start)/1000)}));
  }
 }catch(error){result.status='error';result.error=backend==='postgres'?'Profile operation failed':String(error.stack??error);}
 finally{
+ if(timingMode)setEngineTimingObserver();
  try{
+ if(timingMode){
+  const totals={elapsedMs:0,...engineCategories(),residualMs:0};
+  const measured=result.commands.flatMap(command=>command.engineTiming?[command.engineTiming]:[]);
+  for(const command of measured)for(const key of Object.keys(totals))totals[key]+=command[key];
+  result.engineTimingTotals={measuredCommands:measured.length,...totals};
+ }
  if(cpuEnabled){try{profile=(await inspector('Profiler.stop')).profile;}catch(error){result.profileError=String(error);}session.disconnect();}
  result.wallMs=performance.now()-start;result.finalHash=canonicalSha256(current);result.initialHashUnchanged=canonicalSha256(source)===initialHash;
  result.finalPhase=current.phaseContext.phase;result.finalGames=Object.values(current.records.games).filter(g=>g.scope.seasonKey===current.world.seasonKey&&g.scope.phase==='REGULAR').length;
