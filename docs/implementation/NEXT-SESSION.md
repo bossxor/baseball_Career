@@ -2,6 +2,8 @@
 
 원격 `be5845b`까지 fast-forward하고, 새 임시 접두로 실제 복무 2시즌 검증을 시작했다. 첫 명령의 일반 재생과 원장 접두 재사용 결과 SHA-256이 일치했고 schema3 중간 체크포인트가 생성됐다. 이는 2시즌 완료 증거가 아니다. 실행 호스트의 `%TEMP%/playball-native-service-70f7b98f07114c94b486ca10c2287283/service.log`와 종료 후 `exit.txt`에서 최종 결과를 확인한다. 동일 Node·소스·빌드가 유지된 중단 실행만 같은 접두로 재개할 수 있다.
 
+`271ef03`은 설계 135 측정용 저장 계측이다. `node --import tsx scripts/profile-career-api.mjs <league> <out.json> --timing --no-cpu --postgres`로 새 로컬 프로파일 전용 DB에서 실행하면 저장 직렬화·분할 해시·SQL 쓰기 시간을 분리한다. 팀원 작업트리에서 집중 5/5, 린트·테스트 타입·관련 빌드 통과. 엔진 내부 시간 분해와 네 리그 전체 시즌 측정은 남았다. 복무 실행과 같은 호스트에서 동시에 측정하지 않는다.
+
 # 인계 — 2026-11-18 Neon·인증 검증과 복무 캐시
 
 `4f758dd`는 11월 17일까지의 테스트 수정·전체 검사·PostgreSQL 추가 검사·P05 증거 요약을 커밋하고 원격 `codex/tf-fast-season`에 푸시한 체크포인트다.
