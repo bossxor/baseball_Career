@@ -1,3 +1,4 @@
+import { measureEngineClone } from './engine-timing.js';
 import { canonicalJson } from './game.js';
 import type { HighSchoolWorld } from './high-school-world.js';
 import type { RecordLedger } from './records.js';
@@ -36,7 +37,7 @@ export function closeSchoolCompetitionDay<W extends Pick<HighSchoolWorld,'worldK
   const appearances=new Map<string,'HITTER'|'STARTER'|'RELIEF'>();
   const mark=(key:string,kind:'HITTER'|'STARTER'|'RELIEF')=>{if(!registered.has(key) || appearances.has(key))throw new RangeError('INVALID_DAY_APPEARANCE');appearances.set(key,kind);};
   for(const c of contributions){for(const key of Object.keys(c.batting))mark(key,'HITTER');for(const [key,line] of Object.entries(c.pitching))mark(key,line.starts>0?'STARTER':'RELIEF');}
-  const updated=structuredClone(world);
+  const updated=measureEngineClone(world);
   // Exactly one fatigue/rest change for each registered player per calendar day, including byes.
   for(const key of [...registered].sort())updated.players[key]=appearanceFatigue(updated.players[key]!,appearances.get(key)??'NONE');
   let nextHealth=health;const result:SchoolDayResult={injured:[],recovered:[]};

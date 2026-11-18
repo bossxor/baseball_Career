@@ -1,3 +1,4 @@
+import { measureEngineClone } from './engine-timing.js';
 import {kboActiveContractSuspended} from './kbo-service-payroll.js';
 import {canonicalJson} from './game.js';
 import type {RecordLedger} from './records.js';
@@ -41,7 +42,7 @@ export function closeKboCompetitionDay(world:ActiveKboRosterWorld,schedules:KboS
  const appearances=new Map<string,'HITTER'|'STARTER'|'RELIEF'>();
  const mark=(key:string,kind:'HITTER'|'STARTER'|'RELIEF')=>{if(!registered.has(key) || appearances.has(key))throw new RangeError('INVALID_DAY_APPEARANCE');appearances.set(key,kind);};
  for(const c of contributions){for(const key of Object.keys(c.batting))mark(key,'HITTER');for(const [key,line] of Object.entries(c.pitching))mark(key,line.starts>0?'STARTER':'RELIEF');}
- const updated=structuredClone(world);
+ const updated=measureEngineClone(world);
  const unit=sangmu?structuredClone(sangmu):undefined,fatigued=(key:string)=>unit?.members[key]?.player??unit?.emergency?.entries[key]?.player??updated.players[key]!;
  for(const key of [...registered].sort()){const next=appearanceFatigue(fatigued(key),appearances.get(key)??'NONE');if(unit?.members[key])unit.members[key]!.player=next;else if(unit?.emergency?.entries[key])unit.emergency.entries[key]!.player=next;else updated.players[key]=next;}
  for(const key of Object.keys(updated.players).filter(k=>kboActiveContractSuspended(updated.contracts[k]!))){if(registered.has(key))throw new RangeError('ACTIVE_SERVICE_REGISTERED');updated.players[key]=appearanceFatigue(updated.players[key]!,'NONE');}

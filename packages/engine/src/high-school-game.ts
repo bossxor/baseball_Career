@@ -1,3 +1,4 @@
+import { measureEngineClone } from './engine-timing.js';
 import type {FieldPosition} from './lineup.js';
 import { RULES_VERSION } from '@playball/rules';
 import type { Difficulty, Approach, PitchId } from '@playball/rules';
@@ -106,7 +107,7 @@ export function commitSchoolCompetitionGame<W extends CompetitionGameWorld>(worl
   /* shareRecords: caller merges the returned rows into its own ledger and never mutates them; skips deep-cloning every earlier row per game. */const result=putGameContribution(records,contribution,false,shareRecords);
   if(result.duplicate)return {world,records,duplicate:true};
   if(records.revision!==job.basisRecordRevision || canonicalJson(world)!==job.basisWorld)throw new RangeError('STALE_SCHOOL_GAME');
-  const updated=structuredClone(world);
+  const updated=measureEngineClone(world);
   for(const [key,entry] of Object.entries(job.game.pitchDevelopment.players)){
     if(!Object.hasOwn(updated.repertoires,key))throw new RangeError('UNREGISTERED_GAME_PITCHER');
     updated.repertoires[key]=structuredClone(entry.repertoire);

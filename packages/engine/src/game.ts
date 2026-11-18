@@ -1,3 +1,4 @@
+import { measureEngine, measureEngineClone } from './engine-timing.js';
 import {pitchMastery,validatePitchWeights,grantPracticePitchXp} from './repertoire.js';
 import {validatePitchXpLedger} from './pitch-xp.js';
 import {validateTraits,traitLogitEffects,defenseTraitTemporary,traitRunningBonus,traitPitchThreshold} from './traits.js';
@@ -70,14 +71,14 @@ function validateInput(input: GameInput): void {
 }
 
 export function createGame(input: GameInput): GameState {
-  validateInput(input);
+  measureEngine('validation', () => validateInput(input));
   const active = input.teams.map(team => {
     const starter = team.pitchers.findIndex(p => p.available && p.role === 'SP');
     return starter >= 0 ? starter : team.pitchers.findIndex(p => p.available);
   }) as [number, number];
   return {
-    ...(input.pitchDevelopment?{pitchDevelopment:structuredClone(input.pitchDevelopment)}:{}),
-    engineVersion: gameVersion(input), input: structuredClone(input), status: 'LIVE', inning: 1, half: 0, outs: 0, halfPlateAppearances: 0, playCursor: 0,
+    ...(input.pitchDevelopment?{pitchDevelopment:measureEngineClone(input.pitchDevelopment)}:{}),
+    engineVersion: gameVersion(input), input: measureEngineClone(input), status: 'LIVE', inning: 1, half: 0, outs: 0, halfPlateAppearances: 0, playCursor: 0,
     scores: [0, 0], scoreByInning: [[0], []], bases: [null, null, null], nextBattingIndex: [0, 0], activePitcherIndex: active,
     rng: createStreams(input.seed, input.simulationKey),
     batting: Object.fromEntries(input.teams.flatMap(t => t.lineup.map(p => [p.simulationKey, emptyBatting()]))),
@@ -228,18 +229,21 @@ function processPlateAppearance(state: GameState): void {
 
 export function runGameChunk(source: GameState, limits: { plateAppearances?: number; completedInnings?: number } = {}) {
   if (source.engineVersion !== gameVersion(source.input)) throw new RangeError('Unsupported engine version');
-  validateInput(source.input);
-  assertGameInvariants(source);
+  measureEngine('validation', () => { validateInput(source.input); assertGameInvariants(source); });
   const maximum = limits.plateAppearances ?? 1000, inningLimit = limits.completedInnings ?? 20;
   if (!Number.isInteger(maximum) || maximum < 1 || maximum > 1000 || !Number.isInteger(inningLimit) || inningLimit < 1 || inningLimit > 20) throw new RangeError('Invalid chunk budget');
-  const state = structuredClone(source), startInnings = state.completedInnings;
-  let count = 0;
-  while (state.status === 'LIVE' && count < maximum && state.completedInnings - startInnings < inningLimit) {
-    if (state.halfPlateAppearances >= 300) return { state, stopReason: 'ENGINE_LIMIT' as const };
-    processPlateAppearance(state); count++;
-    if (state.status === 'LIVE' && state.input.competition !== 'REGULAR' && state.completedInnings > startInnings && state.completedInnings % 20 === 0) break;
-  }
-  assertGameInvariants(state);
+  const state = measureEngineClone(source), startInnings = state.completedInnings;
+  const hitLimit = measureEngine('simulation', () => {
+    let count = 0;
+    while (state.status === 'LIVE' && count < maximum && state.completedInnings - startInnings < inningLimit) {
+      if (state.halfPlateAppearances >= 300) return true;
+      processPlateAppearance(state); count++;
+      if (state.status === 'LIVE' && state.input.competition !== 'REGULAR' && state.completedInnings > startInnings && state.completedInnings % 20 === 0) break;
+    }
+    return false;
+  });
+  if (hitLimit) return { state, stopReason: 'ENGINE_LIMIT' as const };
+  measureEngine('validation', () => assertGameInvariants(state));
   return { state, stopReason: state.status === 'FINAL' ? 'FINAL' as const : 'CHUNK_LIMIT' as const };
 }
 

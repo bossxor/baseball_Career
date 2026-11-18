@@ -1,3 +1,4 @@
+import { measureEngine } from './engine-timing.js';
 import {assertCareerAliases} from './career-alias.js';
 import {assertCareerRouteNotices} from './career-route-notices.js';
 import {auditCareerRecordCorrections} from './career-record-correction.js';
@@ -113,19 +114,25 @@ export function createHighSchoolCareer(world:HighSchoolWorld,difficulty:Difficul
  return {schemaVersion:1,revision:0,world:structuredClone(world),difficulty,phaseContext:{phase:'CREATED'},events:[],records:emptyRecordLedger(),health:createHealthLedger(createStreams(world.seed,JSON.stringify(['hs-health',world.worldKey])).injury),days:createSchoolDayLedger(world),emergency:createSchoolEmergencyRegistry(world),styleUsedWindows:[],ownAssessment:createOwnCareerAssessment(world),traits:createCareerTraitLedger(),development:{seasonStartPlayer:structuredClone(player),trainingUsedSeasons:[],trainingResults:[],trainingRng:createStreams(world.seed,JSON.stringify(['hs-training',world.worldKey])).growth},planHistory:[{completedTeamGames:0,focus:[...player.focus],archetype:player.archetype}]};
 }
 export function assertCareerRevision(source:Pick<HighSchoolCareer,'schemaVersion'|'revision'>,expectedRevision:number):void {
- if(source.schemaVersion!==1 || !Number.isSafeInteger(source.revision) || source.revision<0 || !Number.isSafeInteger(expectedRevision) || source.revision!==expectedRevision)throw new RangeError('CAREER_REVISION_CHANGED');
- if(source.revision===Number.MAX_SAFE_INTEGER)throw new RangeError('CAREER_REVISION_LIMIT');
+ return measureEngine('validation',()=>{
+  if(source.schemaVersion!==1 || !Number.isSafeInteger(source.revision) || source.revision<0 || !Number.isSafeInteger(expectedRevision) || source.revision!==expectedRevision)throw new RangeError('CAREER_REVISION_CHANGED');
+  if(source.revision===Number.MAX_SAFE_INTEGER)throw new RangeError('CAREER_REVISION_LIMIT');
+ });
 }
 export function assertHighSchoolCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
- assertCareerRevision(source,expectedRevision);
- if(source.world.leagueKey!==undefined)throw new RangeError('INVALID_CAREER_REGISTRATION');
- auditCareerRecordCorrections(source);assertCareerAliases(source);assertCareerRouteNotices(source);
+ return measureEngine('validation',()=>{
+  assertCareerRevision(source,expectedRevision);
+  if(source.world.leagueKey!==undefined)throw new RangeError('INVALID_CAREER_REGISTRATION');
+  auditCareerRecordCorrections(source);assertCareerAliases(source);assertCareerRouteNotices(source);
+ });
 }
 export function assertCollegeCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
- assertCareerRevision(source,expectedRevision);
- const admission=source.collegeAdmission,world=source.world,player=world.players[world.protagonistKey];
- if(world.leagueKey!=='COLLEGE' || !admission || admission.status!=='ENROLLED' || ![1,2,3,4].includes(admission.academicYear) || ![admission.academicYear-1,admission.academicYear].includes(admission.yearsCompleted) || admission.collegeId!==world.protagonistSchoolId || admission.playerKey!==world.protagonistKey || admission.position!==player?.position || admission.entryYear+admission.academicYear-1+collegeLeaveElapsedYears(source)!==world.calendar?.year || world.seasonKey!==String(world.calendar?.year))throw new RangeError('INVALID_CAREER_REGISTRATION');
- assertCollegeNationalState(source);auditCareerRecordCorrections(source);assertCareerAliases(source);assertCareerRouteNotices(source);
+ return measureEngine('validation',()=>{
+  assertCareerRevision(source,expectedRevision);
+  const admission=source.collegeAdmission,world=source.world,player=world.players[world.protagonistKey];
+  if(world.leagueKey!=='COLLEGE' || !admission || admission.status!=='ENROLLED' || ![1,2,3,4].includes(admission.academicYear) || ![admission.academicYear-1,admission.academicYear].includes(admission.yearsCompleted) || admission.collegeId!==world.protagonistSchoolId || admission.playerKey!==world.protagonistKey || admission.position!==player?.position || admission.entryYear+admission.academicYear-1+collegeLeaveElapsedYears(source)!==world.calendar?.year || world.seasonKey!==String(world.calendar?.year))throw new RangeError('INVALID_CAREER_REGISTRATION');
+  assertCollegeNationalState(source);auditCareerRecordCorrections(source);assertCareerAliases(source);assertCareerRouteNotices(source);
+ });
 }
 export function assertSchoolCareerRevision(source:HighSchoolCareer,expectedRevision:number):void {
  if(source.world.leagueKey==='COLLEGE')assertCollegeCareerRevision(source,expectedRevision);
