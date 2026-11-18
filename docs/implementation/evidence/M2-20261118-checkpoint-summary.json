@@ -1,0 +1,68 @@
+{
+  "baseline": "555be75",
+  "node": "v24.19.0",
+  "fullCheck": {
+    "engineApiRules": {
+      "tests": 1239,
+      "skip": 9,
+      "fail": 0,
+      "pass": 1230
+    },
+    "exitCode": 0,
+    "web": {
+      "tests": 59,
+      "skip": 0,
+      "fail": 0,
+      "pass": 59
+    }
+  },
+  "separatePostgres": {
+    "version": "17.11",
+    "returnHttp": {
+      "tests": 4,
+      "durationMs": 2201111.3986,
+      "fail": 0,
+      "pass": 4
+    },
+    "race": {
+      "tests": 1,
+      "fail": 0,
+      "pass": 1
+    }
+  },
+  "nativeP05": {
+    "status": "ENGINE_NATIVE_PATH_PROVEN",
+    "collegeRegularGames": 864,
+    "commandChainHash": "a929301012f3d07d1548651e7e61c896e4cf89d9d39d18c1c54233ad91a49f0a",
+    "commands": 533
+  },
+  "scope": "Whole check predates the final PostgreSQL test-only split-save change; that change passed targeted PostgreSQL tests, lint and tests typecheck.",
+  "remaining": [
+    "Neon integration",
+    "Managed Auth",
+    "two native service years",
+    "other full native paths and actual devices"
+  ],
+  "evidence": [
+    {
+      "file": "M2-20261117-full-check.local.log",
+      "bytes": 175904,
+      "sha256": "2478b42e9db2c69b24889fc5988fef64081ba53fc2424af0e67b662c8afd3612"
+    },
+    {
+      "file": "M2-20261117-postgresql-race.local.log",
+      "bytes": 246,
+      "sha256": "8ab4e7a61719b523db1eed381c64b09333fb4c9910bd3f5f66f3aa688bde0cfb"
+    },
+    {
+      "file": "M2-20261117-postgresql-return-parts.local.log",
+      "bytes": 717,
+      "sha256": "73e406bd53eb53f887e1e4e2f1efac15634936f48831b229bfe026ddbe6393fd"
+    },
+    {
+      "file": "M2-CLOSURE-20261117-P05.local.json",
+      "bytes": 850849,
+      "sha256": "233c3f982fa2c431a4d23b115b3a56c8c42dd9d92c0d311929d4c7c44b5712f0"
+    }
+  ]
+}

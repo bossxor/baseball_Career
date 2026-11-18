@@ -3,9 +3,7 @@ import {closeControlledServiceDates} from './us-service-fixture.js';
 import {expiredRetryUsCareer} from './us-return-retry-fixture.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {closedUsOptionCareer} from './us-option-fixture.js';
 import {finishedUsCareerFixture} from './us-finished-fixture.js';
-import {startNextUsMinorSeason} from '../src/us-year-transition.js';
 import {confirmUsPreseasonPlan} from '../src/us-preseason.js';
 import {publishUsSeasonSchedule} from '../src/us-schedule.js';
 import type {UsCareer} from '../src/us-career-entry.js';
@@ -14,7 +12,6 @@ import {startUsRegularSeason,advanceUsCareer} from '../src/us-season.js';
 import {openUsMinorMarket,acceptUsMinorMarketOffer} from '../src/us-minor-market.js';
 import {usCareerView} from '../src/us-career-entry.js';
 import {prepareRelationNoticeRead} from '../src/relation-notices.js';
-import {emptyPitching} from '../src/stats.js';
 import {requestUsAmateurReturn,startUsAmateurReturnYear,advanceUsAmateurReturn,settleUsAmateurReturnYear,prepareUsAmateurReturnDraft,resolveUsAmateurReturnDraft,usAmateurReturnCareerView,assertUsAmateurReturnCareer,decideUsAmateurReturnDraft,startSignedUsAmateurReturnKboCareer,resignUsAfterAmateurReturn} from '../src/us-amateur-return-career.js';
 import {unreadKboFirstCampNotices,resolveKboFirstCampNotice,confirmKboPreseasonPlan} from '../src/kbo-preseason.js';
 import {confirmKboOpeningRoster} from '../src/kbo-opening-roster.js';
@@ -22,12 +19,8 @@ import {confirmKboSeasonSchedule} from '../src/kbo-schedule.js';
 import {startKboRegularSeason,advanceKboCareer} from '../src/kbo-progress.js';
 let cache:UsCareer|undefined;
 function expired(){
- if(cache)return structuredClone(cache);let c=closedUsOptionCareer('HITTER');
- for(let i=1;i<c.contract.controlSeasons;i++){c=startNextUsMinorSeason(c,c.revision,c.inventory.clubs.map(o=>({organizationId:o.id,addedBudgetUsd:3_000_000})));c=confirmUsPreseasonPlan(c,c.revision);c=publishUsSeasonSchedule(c,c.revision);c=finishedUsCareerFixture(c);}
- // Controlled US fixture omits opponent matchup rows; certify them before crossing the stricter school ledger boundary.
- for(const g of Object.values(c.records.games)){const line=g.batting[c.protagonistKey];if(!line)continue;const opposing='controlled-opponent';g.pitching[opposing]={...emptyPitching(),games:1,starts:1,starterOuts:line.K,loadedBF:0,W:0,L:0,SV:0,HLD:0,BS:0,shutouts:0,BF:line.PA,outs:line.K,K:line.K};g.pitcherSplits[opposing]={L:{BF:0,outs:0,AB:0,H:0,TB:0,HR:0,BB:0,HBP:0,K:0},R:{BF:line.PA,outs:line.K,AB:line.AB,H:line.H,TB:line.TB,HR:line.HR,BB:line.BB,HBP:line.HBP,K:line.K}};g.matchups[JSON.stringify([c.protagonistKey,opposing])]={batterKey:c.protagonistKey,pitcherKey:opposing,stats:{...g.batterSplits[c.protagonistKey]!.R}};}
- for(const archive of [...(c.minorYears??[]),{season:c.season!,seasonSchedule:c.seasonSchedule!}])for(const day of archive.season.days){const rows=Object.values(archive.seasonSchedule.leagues).flatMap(games=>games.filter(g=>g.worldDay===day.day).map(g=>c.records.games[g.simulationKey]!));day.evidence=canonicalJson(rows);}
- c.military.status='NOT_APPLICABLE';cache=c;return structuredClone(c);
+ cache??=expiredRetryUsCareer();
+ return structuredClone(cache);
 }
 test('M2-CLOSE-RETURN-20261102: controlled US prefix: root preserves original US evidence and plays two native mandatory seasons, without retry budget',()=>{
  const closed=expired(),source=openUsMinorMarket(closed,closed.revision,closed.inventory.clubs.map(o=>({organizationId:o.id,addedBudgetUsd:3_000_000}))),raw=canonicalJson(source);let c=requestUsAmateurReturn(source,source.revision);

@@ -15,8 +15,13 @@ test('controlled return HTTP: voluntary exit cancel/re-request/archive, replay/s
   const subject='return-retirement',headers={Authorization:'Bearer dev:'+subject,'Content-Type':'application/json'},other={Authorization:'Bearer dev:return-retirement-other'};
   await seedAllowedSubject(db,subject);await seedAllowedSubject(db,'return-retirement-other');const app=createApp({db,auth:{allowDevBearer:true}});
   const created=await json<{saveId:string}>(await app.request('/api/game-creations',{method:'POST',headers,body:JSON.stringify({creationId:'controlled-return-retirement',mode:'CAREER'})}));
-  const source=controlledDeclinedUsReturn();await db.transaction(async tx=>{const stored=await writeSaveState(tx,created.saveId,0n,{schemaVersion:1,career:source});await tx.update(gameSaves).set(stored).where(eq(gameSaves.id,created.saveId));});
-  const url='/api/saves/'+created.saveId,stored=async()=>((await storedSave(db,created.saveId))[0]!.state as {career:UsAmateurReturnCareer}).career;
+  const source=controlledDeclinedUsReturn();await db.transaction(async tx=>{const stored=await writeSaveState(tx,created.saveId,0n,{schemaVersion:1,career:source});assert.equal(stored.stateFormat,'PARTS_V1');await tx.update(gameSaves).set(stored).where(eq(gameSaves.id,created.saveId));});
+  const url='/api/saves/'+created.saveId,stored=async()=>{
+   const [row]=await storedSave(db,created.saveId);
+   assert.ok(row);
+   assert.equal(row.stateFormat,'PARTS_V1');
+   return (row.state as {career:UsAmateurReturnCareer}).career;
+  };
   let saveRevision=0,careerRevision=source.revision;
   const raw=(id:string,name:string,payload:Record<string,unknown>,revision=saveRevision)=>app.request(url+'/commands',{method:'POST',headers,body:JSON.stringify({commandId:id,expectedRevision:revision,type:'CAREER_US_RETURN_'+name,payload})});
   const flow=async()=>json<{commands:{id:string;type:string;payload:Record<string,unknown>}[]}>(await app.request(url+'/screens/CAREER_FLOW',{headers}));

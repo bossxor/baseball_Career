@@ -1,3 +1,19 @@
+# 2026-11-17 전체 통합 검사 통과
+
+격리 PostgreSQL 17에서 E66/E67 동시 수락 1건과 대형 귀국 HTTP 4건 통과. 귀국 재도전 Flow의 제외 항목도 재실행해 통과했다. [실행 범위](NEXT-SESSION.md).
+
+후속 P05 엔진 경로 통과. 실제 대학 864경기·졸업·KBO 지명·입단 533명령과 해시를 재검증했다. 누적 엔진 경로 증명은 5/24. 구종·부상·포스팅·에이전트의 통제 검증은 별도 기록했다.
+
+엔진·API·규칙 1,230 통과·9 제외, 웹 59/59, `npm run check` 종료 코드 0. 이전에 실패한 미국 귀국 회귀도 이 실행에서 통과했다. [검증 범위](NEXT-SESSION.md).
+
+# 2026-11-17 미국 귀국 회귀 검증
+
+후속 `npm run typecheck`와 `npm run build`는 종료 코드 0. 웹 프로젝트의 tsconfig를 적용한 Flow 정적 렌더 테스트는 9/9 통과했다. 빌드·타입 로컬 기록은 `evidence/M2-20261117-type-build.local.log`다.
+
+후속 단기 검사 통과. 변경 TypeScript 파일 4개의 ESLint, 사건 정의 99개·선택지 164개, 정적 설계 검증기 10종, Android 셸, 배포 에셋, 독립 Node 프로세스의 엔진 골든 해시를 확인했다. 전체 통합 검사와 외부 PostgreSQL 경로는 이번에 실행하지 않았다.
+
+통합 검사에서 실패했던 미국 귀국 테스트 3건을 로컬 픽스처 수정 후 다시 실행해 모두 통과했다. 약 12분 25초, 종료 코드 0. [검증 범위와 인계](NEXT-SESSION.md).
+
 # 2026-11-16 KBO 병역 단계 표시
 
 기존 Flow에 현역·상무 복무 단계와 복귀 시즌 표시를 통합했다. API 회귀 1/1, 웹 Flow 정적 렌더 9/9, 테스트 타입·변경 범위 린트 통과. Edge 375px·1280px에서 현역 복무 3상태 표시를 확인했다. [최신 인계](NEXT-SESSION.md).
@@ -17,6 +33,9 @@ Claude 후속 3개와 E30 날짜 수정을 반영했다. 타입 검사와 E30 �
 - 구현(SLB-11, 설계 14 비가역 확인): 포스팅 검토의 '원구단 잔류', 미국 제안 '모두 거절'에 확인 단계 추가. m2-kbo-departure-flow 3/3.
 - 수정: m2-pro-retirement 은퇴 요약 테스트의 수상 원장 fixture를 검증 형식에 맞춤, 12/12.
 - 11-12 통합 검사 실패 파일 재실행(최신 코드, 파일 단독): career-growth-summary·career-kbo·career-preparation·career-contract-flow·m2-school-flow·m2-school-events-http·m2-us-major-year·m2-us-play·m2-military-flow·m2-independent-us-flow 통과. m2-pro-retirement 3건 실패 유지. m2-us-return-retirement·college-national-host는 실행 중(결과는 인계에 추가).
+# 2026-11-16 M2 실패 수정
+
+팀원 검토로 은퇴 수상 원장·미국 복귀 맞대결 fixture를 보완하고 분할 저장 단언을 강화했다. 이전 통합 결과와 후속 상태는 [최신 인계](NEXT-SESSION.md)에 기록한다.
 
 # 2026-11-12 M2 통합 검증
 
