@@ -1,0 +1,40 @@
+{
+  "baseline": "4f758dd",
+  "scope": "Neon m3-dev explicit DB/Auth; bounded test-only service cache",
+  "tests": {
+    "testsTypecheckExit": 0,
+    "neonDev": {
+      "exitCode": 0,
+      "fail": 0,
+      "pass": 1
+    },
+    "nativeCache": {
+      "pass": 11,
+      "fail": 0
+    },
+    "managedAuth": {
+      "exitCode": 0,
+      "fail": 0,
+      "pass": 1
+    },
+    "changedLintExit": 0
+  },
+  "remaining": "Two native service seasons and broader M2 acceptance paths/devices remain unproven.",
+  "evidence": [
+    {
+      "bytes": 841,
+      "sha256": "730f975a3acb09ef7c642b78af2004b0bbe1f52fb688da5d24fa337e105e5e31",
+      "file": "M2-20261118-neon-dev.local.log"
+    },
+    {
+      "bytes": 852,
+      "sha256": "300e928084b26a4bb42579a7a1fe134edf2a18929fa00bb08b46866c6b42836c",
+      "file": "M2-20261118-managed-auth.local.log"
+    },
+    {
+      "bytes": 26,
+      "sha256": "5e7c2f9d63d73cb1c627b7b039249cd34048c58b9f9ab16190dbb8c2a7ed7f48",
+      "file": "M2-20261118-cache-typecheck.local.log"
+    }
+  ]
+}

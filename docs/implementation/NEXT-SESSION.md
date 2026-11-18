@@ -1,3 +1,13 @@
+# 인계 — 2026-11-18 Neon·인증 검증과 복무 캐시
+
+`4f758dd`는 11월 17일까지의 테스트 수정·전체 검사·PostgreSQL 추가 검사·P05 증거 요약을 커밋하고 원격 `codex/tf-fast-season`에 푸시한 체크포인트다.
+
+명시적으로 조회한 `m3-dev` 브랜치(`br-withered-meadow-a13j4g6h`)의 DB와 Auth를 사용해 Neon V03 1/1, 관리형 인증 V02 1/1 통과했다. 연결 정보는 실행 프로세스의 환경 변수에만 전달했다. 로컬 로그는 `evidence/M2-20261118-neon-dev.local.log`, `M2-20261118-managed-auth.local.log`다. 11월 17일 전체 검사에서 제외된 9개 중 이제 실제 복무 2시즌 1건만 별도 실행이 남았다.
+
+복무 네이티브 검증의 첫 실행은 시작 체크포인트 보관 후 큰 단일 JSON 캐시 한도를 보완하려고 중단했다. 이 실행은 통과 증거가 아니다. `native-return-cache.ts`는 기존 DB 파트 코덱으로 schema3 캐시를 쓰고 schema2도 읽는다. 각 파트·최종 해시, 순서, 완료 푸터와 소스 manifest를 확인하며 임시 파일을 원자적으로 교체한다. 소형 회귀 11/11 통과. 복무 증거 해시와 최종 JSON 왕복도 큰 문자열을 생성하지 않도록 변경했다. 실제 2시즌 검증은 새 소스 manifest의 새 캐시로 시작해야 한다.
+
+마감 때 변경 범위 ESLint와 `tsc -p tsconfig.tests.json`도 종료 코드 0. 복무 실행은 `PLAYBALL_NATIVE_SERVICE_2Y=1`, `PLAYBALL_NATIVE_RETURN_PREFIX=<새 임시 디렉터리의 접두 경로>`를 지정하고 `node --import tsx --test --test-name-pattern='re-signs after two native service years' packages/engine/test/us-amateur-return-career.test.ts`로 재개한다. 이전 캐시는 이전 소스 해시를 가지므로 새 실행에 완료 증거로 사용하지 않는다.
+
 # 인계 — 2026-11-17 전체 통합 검사 통과
 
 별도 PostgreSQL 17의 로컬 임시 인스턴스에서 E66/E67 동시 수락 1/1 통과(테스트 약 15.3초, 종료 코드 0). 같은 저장 리비전에 두 HTTP 요청을 보내 응답 200·409, 분할 저장 리비전 일치, 성공 영수증의 동일 재전송과 중복 부재를 확인했다. 로컬 로그는 `evidence/M2-20261117-postgresql-race.local.log`다. 전체 검사의 9개 제외 집계는 당시 실행 기록이다.

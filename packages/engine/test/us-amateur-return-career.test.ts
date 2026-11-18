@@ -1,3 +1,4 @@
+import {roundTripNativeState} from './native-return-cache.js';
 import {nativeServiceUsReturn} from './us-native-service-fixture.js';
 import {closeControlledServiceDates} from './us-service-fixture.js';
 import {expiredRetryUsCareer} from './us-return-retry-fixture.js';
@@ -127,7 +128,7 @@ test('M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after two nati
  const c=nativeServiceUsReturn(),source=c.source,offer=source.minorMarket!.offers.find(o=>o.militaryReturnOption)!;assert.equal(c.return.years.length,2);assert.equal(c.return.militaryStatus,'COMPLETED');
  const us=resignUsAfterAmateurReturn(c,c.revision,offer.offerKey);
  assert.equal(us.world.seasonKey,String(Number(source.world.seasonKey)+3));assert.equal(us.usAmateurReturn!.status,'CANCELLED_US');
- const resumed=JSON.parse(JSON.stringify(us)) as typeof us;publishUsSeasonSchedule(confirmUsPreseasonPlan(resumed,resumed.revision),resumed.revision+1);
+ const resumed=roundTripNativeState(us) as typeof us;publishUsSeasonSchedule(confirmUsPreseasonPlan(resumed,resumed.revision),resumed.revision+1);
 });
 
 // Controlled service dates (stub game rows; real service accounting/settlement/re-sign). NOT native service-season evidence.
