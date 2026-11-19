@@ -124,7 +124,16 @@ test('M2-CLOSE-RETURN-20261102: a return-option US offer also re-signs after two
 });
 
 // Native 2-year service prefix needs >6h and >3GB (see M2-SERVICE-CACHE-SIZE-20261106.md): opt-in only.
-test('M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after two native service years; open service blocks it',{skip:!process.env.PLAYBALL_NATIVE_SERVICE_2Y},()=>{
+test('native service year one completes separately and keeps return blocked',{skip:process.env.PLAYBALL_NATIVE_SERVICE_YEAR!=='1'},()=>{
+ assert.ok(process.env.PLAYBALL_NATIVE_RETURN_PREFIX,'A persistent prefix is required for separate service years');
+ const c=nativeServiceUsReturn(1);
+ assert.equal(c.return.years.length,1);
+ assert.equal(c.return.militaryStatus,'UNRESOLVED');
+ const offer=c.source.minorMarket!.offers.find(o=>o.militaryReturnOption)!;
+ assert.ok(offer);
+ assert.throws(()=>resignUsAfterAmateurReturn(c,c.revision,offer.offerKey),/OPTION_NOT_AVAILABLE/);
+});
+test('M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after two native service years; open service blocks it',{skip:!process.env.PLAYBALL_NATIVE_SERVICE_2Y&&process.env.PLAYBALL_NATIVE_SERVICE_YEAR!=='2'},()=>{
  const c=nativeServiceUsReturn(),source=c.source,offer=source.minorMarket!.offers.find(o=>o.militaryReturnOption)!;assert.equal(c.return.years.length,2);assert.equal(c.return.militaryStatus,'COMPLETED');
  const us=resignUsAfterAmateurReturn(c,c.revision,offer.offerKey);
  assert.equal(us.world.seasonKey,String(Number(source.world.seasonKey)+3));assert.equal(us.usAmateurReturn!.status,'CANCELLED_US');
