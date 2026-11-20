@@ -1,0 +1,48 @@
+{
+  "driverCommit": "2ec01b7",
+  "node": "v24.20.0",
+  "report": "M2-20261121-P06-native-report.json.gz",
+  "reportSha256": "793719b860753733af710b2c8f43a58072830bc8f2a29e4398feb25000e6076c",
+  "compressedSha256": "f4860133e0b14e78367dd6be155b78129d047991f4fe70d76ce388fea2ff720c",
+  "reportBytes": 8023248,
+  "compressedBytes": 289501,
+  "sourceManifestHash": "c37508edbaaaeb067b7299988f1adbb6f3892eeea9a1dde7b8211b8cb8f15f11",
+  "sourceDrift": false,
+  "runnerExit": 0,
+  "offlineReverifyExit": 0,
+  "path": {
+    "id": "P06",
+    "flow": "적격 고졸→미국 유효 제안→마이너",
+    "status": "ENGINE_NATIVE_PATH_PROVEN",
+    "proof": {
+      "sliceId": "P06-native-HS-to-US-minor",
+      "commandChainHash": "d250fcdd38802ff59ca8055d69b738b66802b1eb26efd8e4e9096d4c096ad6dc",
+      "finalStateHash": "5067288083f150e143d11d86f0b211606cba85f1d77701ce75c760f575a61c6f",
+      "commands": 108,
+      "requiredCommands": [
+        "CONFIRM_PLAYER",
+        "CONFIRM_PRESEASON",
+        "ADVANCE_HS",
+        "ACKNOWLEDGE_HS_REVIEW",
+        "OPEN_CAREER_ROUTE",
+        "PREPARE_US_DIRECT",
+        "SIGN_US_DIRECT",
+        "CLOSE_SCHOOL_FOR_US",
+        "START_SIGNED_US"
+      ]
+    },
+    "sliceIds": [
+      "P06-native-HS-to-US-minor"
+    ]
+  },
+  "invariantReport": {
+    "completesPaths": [
+      "P06"
+    ],
+    "scoutScore": 69.0446497127985,
+    "validOfferCount": 3,
+    "registrationLevel": "ROOKIE",
+    "mlbAppearances": 0,
+    "hsGamesPreserved": 216
+  }
+}
