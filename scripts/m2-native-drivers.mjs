@@ -1,4 +1,4 @@
-// Native path drivers. Every branch shares one verified creation->HS216 trunk (rows reused, not re-run), so each
+// Native path drivers. Compatible branches share a verified creation->HS216 trunk (rows reused, not re-run), so each
 // emitted slice is a full creation-to-endpoint command chain. Runner decides proof; nothing here sets a status.
 import assert from 'node:assert/strict';
 import {highSchoolCareerRouteView} from '../packages/engine/src/high-school-route.ts';
@@ -8,12 +8,19 @@ import * as N from './m2-native-paths.mjs';
 import {enterCollegeEarlyDraft,returnUnsignedCollegeCareer} from '../packages/engine/src/college-route.ts';
 import {prepareCareerKboDraft,resolveCareerKboDraft,decideCareerKboDraft} from '../packages/engine/src/career-kbo.ts';
 
-const prefix=description=>({kind:'NATIVE_FROM_CREATION',creation:'HS_HITTER',description});
+const prefix=(description,creation='HS_HITTER')=>({kind:'NATIVE_FROM_CREATION',creation,description});
 const mean=a=>a.reduce((x,y)=>x+y,0)/a.length;
 const collegeGames=c=>Object.values(c.records.games).filter(g=>g.scope.leagueKey==='COLLEGE'&&g.scope.phase==='REGULAR');
 
 export function nativePaths(trace,only){
  const want=id=>!only||only.includes(id),out=[],cmds=(t,from)=>t.rows.length-from;
+ if(want('P06')){
+  const t=trace('P06-native-HS-to-US-minor',N.createNativeUsHs(),prefix('Creation -> actual HS216 -> actual US scouting, offer, signing and minor registration. US roster and inventory are caller inputs.','HS_US_HITTER'));
+  N.hsSeason(t);
+  N.toRoute(t);
+  out.push(t.finish({completesPaths:['P06'],...N.usDirectSign(t)}));
+ }
+ if(only?.every(id=>id==='P06'))return out;
  const base=trace('NATIVE-HS-TRUNK',N.createNativeHs(),prefix('Player creation and the actual 216-game HS season.'));N.hsSeason(base);
  const fork=(id,description)=>trace(id,null,prefix(description),base);
 

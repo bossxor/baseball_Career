@@ -15,7 +15,9 @@ import {closeCollegeSeasonForNextYear,startNextCollegeSeason} from '../packages/
 import {prepareCareerKboDraft,resolveCareerKboDraft,decideCareerKboDraft} from '../packages/engine/src/career-kbo.ts';
 import {closeSchoolSeasonForKbo} from '../packages/engine/src/kbo-entry.ts';
 import {startSignedKboCareer} from '../packages/engine/src/kbo-career-entry.ts';
-import {prepareCareerUsDirect,careerUsDirectView} from '../packages/engine/src/career-us.ts';
+import {prepareCareerUsDirect,careerUsDirectView,decideCareerUsDirect} from '../packages/engine/src/career-us.ts';
+import {closeSchoolSeasonForUs} from '../packages/engine/src/us-entry.ts';
+import {startSignedUsCareer} from '../packages/engine/src/us-career-entry.ts';
 import {createUsRosterWorld} from '../packages/engine/src/us-world.ts';
 import {initialUsRecruitmentInventory} from '../packages/engine/src/us-inventory.ts';
 import {startCollegeMilitaryLeave,advanceCollegeMilitaryService,resumeCollegeAfterService} from '../packages/engine/src/college-service.ts';
@@ -25,6 +27,8 @@ import {canonicalJson} from '../packages/engine/src/game.ts';
 
 export const HS_SPEC={worldKey:'m2-closure-native',seasonKey:'2032',seasonYear:2032,seed:'m2-closure-native-v1',schoolId:'H01',player:{simulationKey:'own',name:'경로 검증',kind:'HITTER',position:'CF',throws:'R',bats:'R',pitchForm:null,archetype:'BALANCED',focus:['CONTACT','POWER','DISCIPLINE','DEFENSE'],difficulty:'GROWTH'}};
 export const createNativeHs=()=>createHighSchoolCareer(createHighSchoolWorld(HS_SPEC),'GROWTH');
+export const US_HS_SPEC={...HS_SPEC,worldKey:'m2-closure-native-us',seed:'m2-native-us-1307',player:{...HS_SPEC.player,position:'DH',archetype:'SLUGGER',focus:['CONTACT','POWER','DISCIPLINE','CLUTCH']}};
+export const createNativeUsHs=()=>createHighSchoolCareer(createHighSchoolWorld(US_HS_SPEC),'GROWTH');
 
 const FOCUS=new Set(['E01','E02','E03']);
 /** Resolve the single open decision with the neutral command each event definition accepts. */
@@ -82,6 +86,29 @@ export function usDirectView(t,budget=3000000){
  return careerUsDirectView(t.state);
 }
 
+export function usDirectSign(t){
+ const {world,inventory}=usDirectInventory(t.state);
+ t.command('PREPARE_US_DIRECT',{inventory},s=>prepareCareerUsDirect(s,s.revision,inventory));
+ const view=careerUsDirectView(t.state),offer=view.offers[0];
+ assert.ok(view.visible&&offer,'native graduate did not receive a valid US offer');
+ const {score}=t.state.usRecruitment.program;
+ const signing={programVersion:1,decision:{type:'SIGN',offerKey:offer.offerKey},eventVersion:1};
+ t.command('SIGN_US_DIRECT',signing,s=>decideCareerUsDirect(s,s.revision,signing));
+ t.command('CLOSE_SCHOOL_FOR_US',{forfeitUnusedTraining:true},s=>closeSchoolSeasonForUs(s,s.revision,true));
+ t.command('START_SIGNED_US',{world},s=>startSignedUsCareer(s,s.revision,world));
+ const {registration,contract,records,protagonistKey}=t.state,club=t.state.world.organizations.find(o=>o.id===offer.clubId);
+ assert.equal(contract.type,'US_MINOR');
+ assert.equal(registration.clubId,offer.clubId);
+ assert.equal(registration.level,offer.initialLevel);
+ assert.ok(['ROOKIE','A'].includes(registration.level));
+ assert.ok(club,'signing club must exist in the active roster');
+ assert.ok(club.levels[registration.level].includes(protagonistKey));
+ assert.ok(!club.levels.MLB.includes(protagonistKey));
+ assert.equal(Object.values(records.games).filter(game=>game.scope.leagueKey==='MLB').length,0);
+ assert.equal(Object.values(records.games).filter(game=>game.scope.leagueKey==='HS').length,216);
+ return {scoutScore:score,validOfferCount:view.offers.length,registrationLevel:registration.level,mlbAppearances:0,hsGamesPreserved:216};
+}
+
 export function collegeEnroll(t,collegeId='U07'){
  const view=highSchoolCareerRouteView(t.state),offer=view.colleges.find(c=>c.id===collegeId);assert.ok(offer?.eligible,'college offer');
  const enrollment={eventVersion:1,offerSetKey:view.offerSetKey,offerSetVersion:1,collegeId};
@@ -137,7 +164,7 @@ export function collegeLeave(t){
 export const stateHash=canonicalJson;
 
 /** Creation fixtures the verifier can rebuild itself, so a slice cannot start from a doctored state. */
-const CREATIONS={HS_HITTER:createNativeHs};
+const CREATIONS={HS_HITTER:createNativeHs,HS_US_HITTER:createNativeUsHs};
 /** Machine verdict from receipts alone: creation origin, hash linkage, and required commands in order. */
 export function nativeSliceVerdict(s,required,hash){
  const bad=problem=>({ok:false,problem:s.id+': '+problem}),rows=s.commandReceipts;
