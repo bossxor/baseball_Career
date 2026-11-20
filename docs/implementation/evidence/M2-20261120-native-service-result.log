@@ -1,0 +1,20 @@
+2026-11-20 native service year two. KST (+09:00). Source code aff75db, docs tip cf28b3e.
+Initial run from checkpoint step 3000, heap 8192 MiB:
+START=2026-11-20T14:46:30.0922396+09:00 RESUME_STEP=3000
+{"nativeServiceYearComplete":2,"games":8790}
+{"nativeServicePrefixComplete":true,"commands":7831,"sourceSha256":"3c94729ded5ce982017f3f81f8d04b0ba296074c7f08cd12a1187b26f05e2ab8","sha256":"0460da81e4e218b42af6afd7626740b914555b7fb2d8ab1e69f2df1d6121283e"}
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+TEST_EXIT=1
+
+Retry with existing SERVICE_COMPLETE cache, same source and test, heap 20480 MiB:
+START=2026-11-20T18:40:28.6675696+09:00 HEAP_MIB=20480 CACHE=SERVICE_COMPLETE
+✔ M2-CLOSE-RETURN-20261102: a return-option US offer re-signs after two native service years; open service blocks it (377545.8044ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 383206.2588
+TEST_EXIT=0

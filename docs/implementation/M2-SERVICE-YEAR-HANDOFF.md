@@ -2,6 +2,12 @@
 
 Codex에서 1년차를 완료한 뒤 Claude Code에서 2년차를 실행할 수 있다. 같은 PC에서는 같은 체크아웃을 읽기 전용으로 사용해 검사만 실행하면 소스 manifest를 유지할 수 있다. 소스 수정과 Git 작업은 담당 브랜치에서 한다.
 
+## 최신 결과
+
+2026-11-20에 2년차 8,790경기와 복무 정산을 끝냈다. 두 해 실제 경기 합계는 17,580경기다. 완료 캐시는 같은 임시 폴더의 `prefix.service.json`이다. 상태 SHA-256은 `0460da81e4e218b42af6afd7626740b914555b7fb2d8ab1e69f2df1d6121283e`다.
+
+8,192MiB 실행은 완료 캐시 봉인 이후 Node 힙 부족으로 종료됐다. 아래 2년차 명령(20,480MiB)은 같은 완료 캐시를 검증해 재사용했고, 미국 재계약·분할 저장 왕복·프리시즌 일정 발행 1/1을 확인했다. [실행 증거](evidence/M2-20261120-native-service-result.log). 아래 1,400스텝 이전 묶음은 당시 중간 저장본이다.
+
 ## 현재 위치
 
 - 체크아웃은 `C:/Users/N-052/.codex/visualizations/2026/10/16/01a142f8-66ea-7782-ba3e-b52df94ae1be/baseball-career-m2`다.
@@ -30,7 +36,7 @@ Codex의 1년차 종료 코드 0과 완료 캐시가 확인된 뒤 위와 같은
 ```powershell
 $env:PLAYBALL_NATIVE_RETURN_PREFIX = Join-Path $env:TEMP 'playball-native-service-20261119-staged/prefix'
 $env:PLAYBALL_NATIVE_SERVICE_YEAR = '2'
-node --max-old-space-size=8192 --import tsx --test --test-name-pattern='re-signs after two native service years' packages/engine/test/us-amateur-return-career.test.ts
+node --max-old-space-size=20480 --import tsx --test --test-name-pattern='re-signs after two native service years' packages/engine/test/us-amateur-return-career.test.ts
 ```
 
 2년차는 1년차 완료 캐시가 없으면 시작을 거부한다. 복무 완료·재계약·프리시즌·일정을 확인한다. 각각의 프로세스는 같은 접두에 동시에 쓰지 않도록 잠금을 사용한다.
