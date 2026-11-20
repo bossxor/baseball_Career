@@ -275,6 +275,7 @@ const COLLEGE=['ENROLL_COLLEGE','CLOSE_HS_FOR_COLLEGE','START_ADMITTED_COLLEGE']
 const YEAR=['CONFIRM_COLLEGE_PRESEASON','ADVANCE_COLLEGE','START_COLLEGE_CUP','ADVANCE_COLLEGE_CUP','ACKNOWLEDGE_COLLEGE_REVIEW'];
 export const PATH_REQUIREMENTS={
  P01:[...HS,...KBO],
+ P02:[...HS,...KBO,'SET_PITCH_WEIGHTS','SET_PITCH_TRAINING','CONFIRM_KBO_PRESEASON','CONFIRM_KBO_ROSTER','CONFIRM_KBO_SCHEDULE','START_KBO_SEASON','ADVANCE_KBO','REQUEST_PITCHER_ROLE_REVIEW','ADVANCE_KBO_AFTER_ROLE_REVIEW'],
  P03:[...HS,...COLLEGE,...YEAR,'CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR'],
  P04:[...HS,...COLLEGE,...YEAR,'CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR',...YEAR,'ENTER_EARLY_DRAFT','PREPARE_KBO_DRAFT','RESOLVE_KBO_DRAFT','RETURN_UNSIGNED_COLLEGE','CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR'],
  P05:[...HS,...COLLEGE,...YEAR,'CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR',...YEAR,'CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR',...YEAR,'CLOSE_COLLEGE_YEAR','START_COLLEGE_YEAR',...YEAR,'GRADUATE_COLLEGE',...KBO],
@@ -285,7 +286,7 @@ export const PATH_REQUIREMENTS={
 
 /** Why a path is still FULL_PATH_NOT_PROVEN. Reasons name the engine gap; docs/implementation/M2-CLOSURE-GAPS-20261106.md ranks them. */
 export const PATH_GAPS={
- P02:'no native pitcher chain driver (HS pitcher creation->HS216->KBO sign->preseason roster role->E86 pitch training); role competition has no standalone engine command (kbo-opening-roster.ts:confirmKboOpeningRoster only) and XP-cap/pitch-ratio assertions are covered only by controlled slice',
+ P02:'native pitcher requires an eligible in-season E14/E15 role review and an actual subsequent healthy-registration training grant. E86 can reserve the training in preseason. Neither opening roster assignment nor a reservation alone completes the path.',
  P04:'native chain runs (P04-native-decline-variant) but the native player is DRAFTED at the early draft (round 8), so the undrafted branch the path requires is not reached; only drafted-then-DECLINED to E74 return is executed. Needs a weaker native player or seed search for an undrafted draw (career-kbo.ts:resolveCareerKboDraft round null)',
  P05:'ENGINE/PERSISTENCE: native chain ran 531 commands through 4 college years + graduation, then died at PREPARE_KBO_DRAFT with RangeError Invalid string length: the career state serializes past the V8 max string length (~0.5 GB). Measured after year 2: 123 MB (collegeEarlyRoute 54 MB, previousSeasons 31 MB, records 16 MB, collegeCup 7.5 MB, days 7.6 MB). Save-state snapshots duplicate per-year data; same blocker for M3 persistence. Needs engine to stop embedding duplicated season snapshots (or a streaming hasher in the harness)',
  P06:'native eligible graduate route is available via --scenarios=nativePaths --native=P06; this run did not produce its complete receipts',
