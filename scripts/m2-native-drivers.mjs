@@ -7,6 +7,7 @@ import {canonicalJson} from '../packages/engine/src/game.ts';
 import * as N from './m2-native-paths.mjs';
 import {enterCollegeEarlyDraft,returnUnsignedCollegeCareer} from '../packages/engine/src/college-route.ts';
 import {prepareCareerKboDraft,resolveCareerKboDraft,decideCareerKboDraft} from '../packages/engine/src/career-kbo.ts';
+import {nativePitcherPath} from './m2-native-pitcher.mjs';
 
 const prefix=description=>({kind:'NATIVE_FROM_CREATION',creation:'HS_HITTER',description});
 const mean=a=>a.reduce((x,y)=>x+y,0)/a.length;
@@ -14,6 +15,8 @@ const collegeGames=c=>Object.values(c.records.games).filter(g=>g.scope.leagueKey
 
 export function nativePaths(trace,only){
  const want=id=>!only||only.includes(id),out=[],cmds=(t,from)=>t.rows.length-from;
+ if(want('P02'))out.push(nativePitcherPath(trace));
+ if(only?.every(id=>id==='P02'))return out;
  const base=trace('NATIVE-HS-TRUNK',N.createNativeHs(),prefix('Player creation and the actual 216-game HS season.'));N.hsSeason(base);
  const fork=(id,description)=>trace(id,null,prefix(description),base);
 
