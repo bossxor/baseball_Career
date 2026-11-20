@@ -10,7 +10,7 @@ import {validatePitchXpLedger} from '../packages/engine/src/pitch-xp.ts';
 import {proCareerAdviceView,resolveProCareerAdviceEvent} from '../packages/engine/src/pro-career-advice.ts';
 import {resolveProHiddenTraitNotice} from '../packages/engine/src/pro-trait-notices.ts';
 import {validatePitchWeights} from '../packages/engine/src/repertoire.ts';
-import {refreshCareerRepertoireEvents,resolveCareerRepertoireEvent} from '../packages/engine/src/repertoire-events.ts';
+import {careerRepertoireEventsView,refreshCareerRepertoireEvents,resolveCareerRepertoireEvent} from '../packages/engine/src/repertoire-events.ts';
 import {createNativePitcherHs,hsSeason,kboSign,toRoute} from './m2-native-paths.mjs';
 
 const pitchId='P07',weights={P01:65,P03:35};
@@ -52,8 +52,8 @@ export function nativePitcherPath(trace){
  assert.ok(Object.hasOwn(player.abilities,'PICKOFF'));
  t.command('SET_PITCH_WEIGHTS',{weights},s=>setKboPreseasonPitchWeights(s,s.revision,weights));
  t.command('REFRESH_REPERTOIRE_EVENTS',{},s=>refreshCareerRepertoireEvents(s));
- const event=t.state.repertoireEvents.notices.find(e=>e.definitionId==='E86'&&e.status==='OPEN');assert.ok(event);
- const input={eventKey:event.eventKey,eventVersion:event.version,command:'SET_PITCH_TRAINING',pitchId};
+ const event=careerRepertoireEventsView(t.state).notices.find(e=>e.definitionId==='E86'&&e.commands.includes('SET_PITCH_TRAINING'));assert.ok(event);
+ const input={eventKey:event.eventKey,eventVersion:event.eventVersion,command:'SET_PITCH_TRAINING',pitchId};
  t.command('SET_PITCH_TRAINING',input,s=>resolveCareerRepertoireEvent(s,s.revision,input));
  const book=()=>t.state.world.repertoires[key];
  assert.equal(book().ledger.baseReservedUnits,100_000);
