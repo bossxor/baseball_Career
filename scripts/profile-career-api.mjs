@@ -107,13 +107,13 @@ try{
   const phase=current.phaseContext.phase;
   if(phase==='SEASON_REVIEW'){result.status='season_review';break;}
   let command;
-  if(league==='school'){
+  if(league==='school'&&!['EVENT_DECISION','SEASON_PROGRESS'].includes(phase)){
    const response=await request('/api/saves/'+saveId+'/career');assert.equal(response.status,200);const view=await response.json();
    command=view.nextActions.find(x=>x.command)?.command;
-   if(command?.type==='CAREER_SCHOOL_ADVANCE')command.payload.mode='NEXT_MAJOR_EVENT';
-  }else{
+  }
+  if(!command){
    const response=await request('/api/saves/'+saveId+'/screens/CAREER_FLOW');assert.equal(response.status,200,await response.clone().text());const view=await response.json();
-   command=view.commands.find(x=>x.id==='adv-season')??view.commands.find(x=>x.id==='continue')??view.commands.find(x=>x.id==='forfeit_training')??view.commands.find(x=>x.id==='defer_training')??view.commands.find(x=>x.id==='ack_event')??view.commands[0];
+   command=view.commands.find(x=>x.id==='adv-season'||x.id==='school-progress')??view.commands.find(x=>x.id==='continue'||x.id==='school-keep-focus')??view.commands.find(x=>x.id==='forfeit_training')??view.commands.find(x=>x.id==='defer_training'||x.payload.command==='DEFER_TRAINING')??view.commands.find(x=>x.id==='ack_event'||x.payload.command==='ACK_EVENT')??view.commands[0];
   }
   if(!command){result.status='unsupported_event';result.blockedPhase=phase;result.event=current.events?.find(e=>e.eventKey===current.phaseContext.eventKey)?.definitionId;break;}
   const body={commandId:'profile-'+n,expectedRevision:revision,type:command.type,payload:command.payload},begin=performance.now();

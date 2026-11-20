@@ -1,0 +1,52 @@
+{
+  "league": "school",
+  "backend": "pglite",
+  "databaseVersion": "17.5",
+  "fixture": "controlled pre-season fixture",
+  "node": "v24.20.0",
+  "platform": "win32",
+  "arch": "x64",
+  "status": "season_review",
+  "wallMs": 91763.04089999999,
+  "initialHash": "9247637e0026f6228c7c1af3b136af8538cf7776bc9f29a53fe9bdcb6b672cfe",
+  "finalHash": "1d304251844ba3558a0dbfdd0ef67af07523dfda79cbde48463aa762e9f44e24",
+  "initialHashUnchanged": true,
+  "finalPhase": "SEASON_REVIEW",
+  "finalGames": 216,
+  "engineTimingMethod": "Exclusive synchronous wall milliseconds inside applyEngineCommand: PA loop, instrumented day settlements, selected validators and state copies, canonical SHA seals. Remaining engine work is residual; HTTP views are outside this boundary.",
+  "saveTimingMethod": "Per committed command: state codec traversal plus row-state JSON mapper, part hashes, and awaited write statements with row-state JSON time removed. SQL timing includes driver/ORM overhead; excludes reads, locking and transaction commit.",
+  "engineTimingTotals": {
+    "measuredCommands": 102,
+    "elapsedMs": 33903.810300000005,
+    "simulation": 3988.5060000000444,
+    "dayClose": 2305.1230999999257,
+    "validation": 524.8730999998979,
+    "clone": 12081.792999999932,
+    "seal": 0,
+    "residualMs": 15003.515100000204
+  },
+  "commandCount": 102,
+  "saveTimingTotals": {
+    "measuredCommands": 102,
+    "codecMs": 11018.869500000183,
+    "rowJsonMs": 5.74690000002056,
+    "serializationMs": 11024.616400000203,
+    "hashingMs": 3231.103899999947,
+    "sqlWriteMs": 12410.965199999926
+  },
+  "commandTypes": [
+    "CAREER_SCHOOL_CONFIRM_PLAYER",
+    "CAREER_SCHOOL_RESOLVE_FOCUS",
+    "CAREER_SCHOOL_CONFIRM_PRESEASON",
+    "CAREER_SCHOOL_ADVANCE",
+    "CAREER_SCHOOL_RESOLVE_WINDOW"
+  ],
+  "command": "node --import tsx scripts/profile-career-api.mjs school <output.json> --timing --no-cpu",
+  "source": "711682b plus served-school-flow selector fix",
+  "limitations": [
+    "Hono app.request and PGlite, no external PostgreSQL or network socket",
+    "Includes intervening screen and save reads",
+    "Uninstrumented engine work remains residual; design135 step0 still requires all four leagues",
+    "Full source remains in local temporary output"
+  ]
+}
