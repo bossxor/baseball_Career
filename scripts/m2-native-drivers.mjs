@@ -13,9 +13,9 @@ const prefix=(description,creation='HS_HITTER')=>({kind:'NATIVE_FROM_CREATION',c
 const mean=a=>a.reduce((x,y)=>x+y,0)/a.length;
 const collegeGames=c=>Object.values(c.records.games).filter(g=>g.scope.leagueKey==='COLLEGE'&&g.scope.phase==='REGULAR');
 
-export function nativePaths(trace,only){
+export function nativePaths(trace,only,pitcherCreation){
  const want=id=>!only||only.includes(id),out=[],cmds=(t,from)=>t.rows.length-from;
- if(want('P02'))out.push(nativePitcherPath(trace));
+ if(want('P02'))out.push(nativePitcherPath(trace,pitcherCreation));
  if(want('P06')){
   const t=trace('P06-native-HS-to-US-minor',N.createNativeUsHs(),prefix('Creation -> actual HS216 -> actual US scouting, offer, signing and minor registration. US roster and inventory are caller inputs.','HS_US_HITTER'));
   N.hsSeason(t);

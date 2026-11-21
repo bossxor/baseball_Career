@@ -11,7 +11,7 @@ import {proCareerAdviceView,resolveProCareerAdviceEvent} from '../packages/engin
 import {resolveProHiddenTraitNotice} from '../packages/engine/src/pro-trait-notices.ts';
 import {validatePitchWeights} from '../packages/engine/src/repertoire.ts';
 import {careerRepertoireEventsView,refreshCareerRepertoireEvents,resolveCareerRepertoireEvent} from '../packages/engine/src/repertoire-events.ts';
-import {createNativePitcherHs,hsSeason,kboSign,toRoute} from './m2-native-paths.mjs';
+import {PITCHER_CREATIONS,hsSeason,kboSign,toRoute} from './m2-native-paths.mjs';
 
 const pitchId='P07',weights={P01:65,P03:35};
 const roleCommands={E14:'REQUEST_SP_REVIEW',E15:'REQUEST_CP_REVIEW'};
@@ -43,10 +43,11 @@ function tryRoleReview(t){
  return receipt;
 }
 
-export function nativePitcherPath(trace){
- const t=trace('P02-native-pitcher-role-and-learning',createNativePitcherHs(),{kind:'NATIVE_FROM_CREATION',creation:'HS_PITCHER',description:'Pitcher creation, actual HS216, KBO draft and entry, offseason pitch allocation and training reservation, actual in-season role competition and later training XP.'});
+export function nativePitcherPath(trace,creation='HS_PITCHER'){
+ assert.ok(Object.hasOwn(PITCHER_CREATIONS,creation),'unknown P02 creation fixture '+creation);
+ const t=trace('P02-native-pitcher-role-and-learning',PITCHER_CREATIONS[creation](),{kind:'NATIVE_FROM_CREATION',creation,description:'Pitcher creation, actual HS216, KBO draft and entry, offseason pitch allocation and training reservation, actual in-season role competition and later training XP.'});
  const progress=(phase,details={})=>console.log(JSON.stringify({path:'P02',phase,receipts:t.rows.length,revision:t.state.revision,...details}));
- progress('high-school-start');
+ progress('high-school-start',{creation});
  hsSeason(t);
  progress('high-school-complete',{games:Object.keys(t.state.records.games).length});
  toRoute(t);const draft=kboSign(t),key=t.state.protagonistKey;
