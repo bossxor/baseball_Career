@@ -64,9 +64,20 @@ function engineTiming(timing){
  const elapsedMs=stages.get('engine-return')-stages.get('engine-start');
  return {elapsedMs,...engine,residualMs:elapsedMs-Object.values(engine).reduce((sum,ms)=>sum+ms,0)};
 }
+function totalTimings(commands, field, totals){
+ let measuredCommands=0;
+ for(const command of commands){
+  if(!command[field])continue;
+  measuredCommands++;
+  for(const key of Object.keys(totals))totals[key]+=command[field][key];
+ }
+ return {measuredCommands,...totals};
+}
 if(process.argv.includes('--self-check')){
  assert.ok(memoryMode);activeCommand='self-check';const original={schemaVersion:1,career:{name:'test'}};
  assert.deepEqual(JSON.parse(gameSaves.state.mapToDriverValue(original)),original);channel('playball.command.memory').publish({stage:'self-check'});
+ const samples=[{saveTiming:{codecMs:2}},{engineTiming:{elapsedMs:8}},{saveTiming:{codecMs:5}}];
+ assert.deepEqual(totalTimings(samples,'saveTiming',{codecMs:0}),{measuredCommands:2,codecMs:7});
  console.log('memory self-check passed');process.exit(0);
 }
 const league=process.argv[2], output=process.argv[3];
@@ -134,10 +145,8 @@ finally{
  if(timingMode)setEngineTimingObserver();
  try{
  if(timingMode){
-  const totals={elapsedMs:0,...engineCategories(),residualMs:0};
-  const measured=result.commands.flatMap(command=>command.engineTiming?[command.engineTiming]:[]);
-  for(const command of measured)for(const key of Object.keys(totals))totals[key]+=command[key];
-  result.engineTimingTotals={measuredCommands:measured.length,...totals};
+  result.engineTimingTotals=totalTimings(result.commands,'engineTiming',{elapsedMs:0,...engineCategories(),residualMs:0});
+  result.saveTimingTotals=totalTimings(result.commands,'saveTiming',{codecMs:0,rowJsonMs:0,serializationMs:0,hashingMs:0,sqlWriteMs:0});
  }
  if(cpuEnabled){try{profile=(await inspector('Profiler.stop')).profile;}catch(error){result.profileError=String(error);}session.disconnect();}
  result.wallMs=performance.now()-start;result.finalHash=canonicalSha256(current);result.initialHashUnchanged=canonicalSha256(source)===initialHash;
