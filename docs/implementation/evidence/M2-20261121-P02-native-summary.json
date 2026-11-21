@@ -1,0 +1,116 @@
+{
+  "driverCommit": "27bdd1b",
+  "runnerExit": 0,
+  "report": "M2-20261121-P02-native-variant.json.gz",
+  "reportSha256": "b7684d9b269841ad75ad763b5604f768597225c835a0475426eee3d82a327371",
+  "compressedSha256": "5a3d6974dc46c4b18df1db22a7727e310b26cd9eb14b37ac8e366c1c5b9578cd",
+  "sourceManifestHash": "0fb4f7c3fb8a6df30adc38ed45c5b4080332cd24a0bcf7d7a0aab75dd85a0351",
+  "sourceDrift": false,
+  "path": {
+    "id": "P02",
+    "flow": "투수 생성→보직 경쟁→구종 훈련",
+    "status": "FULL_PATH_NOT_PROVEN",
+    "reason": "native pitcher requires an eligible in-season E14/E15 role review and an actual subsequent healthy-registration training grant. E86 can reserve the training in preseason. Neither opening roster assignment nor a reservation alone completes the path.",
+    "sliceIds": [
+      "P02-native-pitcher-role-and-learning"
+    ]
+  },
+  "receiptRecheck": {
+    "ok": true,
+    "commandChainHash": "1c19b5aee30e92fd87392e0d36f88a49361805806e5581895ff794cb2f3748e7",
+    "finalStateHash": "1834f212ad9943e0d577f81845b67f52bfc4580f2ad7751a18acf56bf6c6dba0",
+    "commands": 967
+  },
+  "fullPathRecheck": {
+    "ok": false,
+    "problem": "P02-native-pitcher-role-and-learning: required command missing/out of order: REQUEST_PITCHER_ROLE_REVIEW"
+  },
+  "invariants": {
+    "highSchoolGames": 216,
+    "draftRound": 9,
+    "pickoffInSixAbilities": true,
+    "pitchWeights": {
+      "P01": 65,
+      "P03": 35
+    },
+    "baseXpSpent": 140200,
+    "baseXpReserved": 0,
+    "roleReview": null,
+    "quartersAtRoleReview": null,
+    "quarterGains": [
+      {
+        "quarter": 1,
+        "gain": 25000
+      },
+      {
+        "quarter": 2,
+        "gain": 25000
+      },
+      {
+        "quarter": 3,
+        "gain": 25000
+      },
+      {
+        "quarter": 4,
+        "gain": 25000
+      }
+    ],
+    "checkpoints": [
+      {
+        "seasonKey": "2033",
+        "teamGames": 24,
+        "worldDay": 74,
+        "candidateIds": [
+          "E26"
+        ],
+        "selectedId": "E26"
+      },
+      {
+        "seasonKey": "2033",
+        "teamGames": 48,
+        "worldDay": 120,
+        "candidateIds": [],
+        "selectedId": null
+      },
+      {
+        "seasonKey": "2033",
+        "teamGames": 72,
+        "worldDay": 166,
+        "candidateIds": [
+          "E14"
+        ],
+        "selectedId": null
+      },
+      {
+        "seasonKey": "2033",
+        "teamGames": 96,
+        "worldDay": 211,
+        "candidateIds": [
+          "E10"
+        ],
+        "selectedId": "E10"
+      },
+      {
+        "seasonKey": "2033",
+        "teamGames": 120,
+        "worldDay": 257,
+        "candidateIds": [
+          "E16"
+        ],
+        "selectedId": "E16"
+      },
+      {
+        "seasonKey": "2033",
+        "teamGames": 144,
+        "worldDay": 303,
+        "candidateIds": [],
+        "selectedId": null
+      }
+    ],
+    "variantOf": "P02",
+    "unproven": [
+      "native E14/E15 role review",
+      "positive training XP after role review"
+    ]
+  }
+}
