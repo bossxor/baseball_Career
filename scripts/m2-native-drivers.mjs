@@ -22,7 +22,11 @@ export function nativePaths(trace,only){
   N.toRoute(t);
   out.push(t.finish({completesPaths:['P06'],...N.usDirectSign(t)}));
  }
- if(only?.every(id=>id==='P02'||id==='P06'))return out;
+ if(want('P13')){
+  const t=trace('P13-native-injury-to-training',N.createNativeInjuryHs(),prefix('Creation -> actual HS games and natural injury -> deferred training window after recovery -> one guaranteed enhancement.','HS_INJURY_HITTER'));
+  out.push(t.finish({completesPaths:['P13'],...N.hsInjuryTraining(t)}));
+ }
+ if(only?.every(id=>['P02','P06','P13'].includes(id)))return out;
  const base=trace('NATIVE-HS-TRUNK',N.createNativeHs(),prefix('Player creation and the actual 216-game HS season.'));N.hsSeason(base);
  const fork=(id,description)=>trace(id,null,prefix(description),base);
 

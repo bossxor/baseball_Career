@@ -5,6 +5,7 @@ import {KBO_CLUBS} from '@playball/rules';
 import {createHighSchoolWorld} from '../packages/engine/src/high-school-world.ts';
 import {createHighSchoolCareer,confirmCareerPlayer,resolveCareerFocusEvent,confirmCareerPreseason} from '../packages/engine/src/high-school-career.ts';
 import {advanceHighSchoolCareer,resolveCareerWindowEvent} from '../packages/engine/src/high-school-progress.ts';
+import {previewCareerTraining,trainHighSchoolCareer} from '../packages/engine/src/high-school-training.ts';
 import {resolveHiddenTraitNotice} from '../packages/engine/src/trait-notices.ts';
 import {acknowledgeHighSchoolSeasonReview,openHighSchoolCareerRoute,highSchoolCareerRouteView,enrollHighSchoolCollege} from '../packages/engine/src/high-school-route.ts';
 import {closeHighSchoolSeasonForCollege,startAdmittedCollegeSeason} from '../packages/engine/src/college-entry.ts';
@@ -27,6 +28,7 @@ import {canonicalJson} from '../packages/engine/src/game.ts';
 
 export const HS_SPEC={worldKey:'m2-closure-native',seasonKey:'2032',seasonYear:2032,seed:'m2-closure-native-v1',schoolId:'H01',player:{simulationKey:'own',name:'경로 검증',kind:'HITTER',position:'CF',throws:'R',bats:'R',pitchForm:null,archetype:'BALANCED',focus:['CONTACT','POWER','DISCIPLINE','DEFENSE'],difficulty:'GROWTH'}};
 export const createNativeHs=()=>createHighSchoolCareer(createHighSchoolWorld(HS_SPEC),'GROWTH');
+export const createNativeInjuryHs=()=>createHighSchoolCareer(createHighSchoolWorld({...HS_SPEC,worldKey:'m2-native-injury',seed:'training-native-891'}),'GROWTH');
 export const US_HS_SPEC={...HS_SPEC,worldKey:'m2-closure-native-us',seed:'m2-native-us-1307',player:{...HS_SPEC.player,position:'DH',archetype:'SLUGGER',focus:['CONTACT','POWER','DISCIPLINE','CLUTCH']}};
 export const createNativeUsHs=()=>createHighSchoolCareer(createHighSchoolWorld(US_HS_SPEC),'GROWTH');
 
@@ -55,6 +57,57 @@ export function hsSeason(t){
   else t.command('ADVANCE_HS',{mode:'NEXT_MAJOR_EVENT'},s=>{const out=advanceHighSchoolCareer(s,s.revision);assert.notEqual(out.stopReason,'ENGINE_LIMIT');return out;});
  }
  assert.equal(Object.keys(t.state.records.games).length,216);
+}
+
+export function hsInjuryTraining(t){
+ const choice={type:'GUARANTEED',ability:'POWER'},key=t.state.world.protagonistKey,season=t.state.world.seasonKey;
+ t.command('CONFIRM_PLAYER',{},s=>confirmCareerPlayer(s,s.revision));resolveOpenEvent(t);
+ t.command('CONFIRM_PRESEASON',{},s=>confirmCareerPreseason(s,s.revision));
+ let blocked;
+ for(let n=0;!t.state.events.some(e=>e.definitionId==='E43');n++){
+  assert.ok(n<160,'natural injury training command budget exhausted');
+  const s=t.state,phase=s.phaseContext,injury=s.health.injuries[key];
+  if(phase.phase==='EVENT_DECISION'){resolveOpenEvent(t);continue;}
+  assert.equal(phase.phase,'SEASON_PROGRESS');
+  if(!blocked&&injury&&!phase.pendingGame&&!phase.advancePlan&&previewCareerTraining(s,choice).reason==='INJURED'){
+   const before=canonicalJson(s),diagnosis=s.health.games.find(g=>g.evidence.gameKey===injury.diagnosedGameKey&&g.result.injured.includes(key));
+   assert.ok(diagnosis);
+   assert.ok(diagnosis.evidence.appearances.some(p=>p.playerKey===key));
+   assert.throws(()=>trainHighSchoolCareer(s,s.revision,choice),/INJURED/);
+   assert.equal(canonicalJson(s),before);
+   blocked={injuryDay:diagnosis.evidence.day,diagnosedGameKey:injury.diagnosedGameKey,blockedAtTeamGame:s.health.games.filter(g=>g.evidence.teamKey===s.world.protagonistSchoolId).length};
+  }
+  t.command('ADVANCE_HS',{mode:'ONE_GAME'},s=>{const out=advanceHighSchoolCareer(s,s.revision,'ONE_GAME');assert.notEqual(out.stopReason,'ENGINE_LIMIT');return out;});
+ }
+ assert.ok(blocked,'injury did not block the first training opportunity');
+ assert.equal(blocked.blockedAtTeamGame,16);
+ assert.ok(!Object.hasOwn(t.state.health.injuries,key));
+ const recovery=t.state.health.games.find(g=>g.evidence.day>blocked.injuryDay&&g.result.recovered.includes(key));
+ const window=t.state.events.find(e=>e.eventKey===t.state.phaseContext.eventKey);
+ assert.ok(recovery,'missing natural recovery receipt');
+ assert.ok(window,'missing training decision');
+ assert.equal(window.definitionId,'E43');
+ assert.equal(window.occurredWorldDay,recovery.evidence.day);
+ const input={eventKey:window.eventKey,eventVersion:window.version,command:'DEFER_TRAINING'};
+ t.command('DEFER_TRAINING',input,s=>resolveCareerWindowEvent(s,s.revision,input));
+ const player=t.state.world.players[key],preview=previewCareerTraining(t.state,choice),rng=canonicalJson(t.state.development.trainingRng);
+ assert.equal(preview.eligible,true);
+ assert.ok(!t.state.development.trainingUsedSeasons.includes(season));
+ t.command('TRAIN_HS',choice,s=>trainHighSchoolCareer(s,s.revision,choice));
+ const after=t.state.world.players[key],receipt=t.state.development.trainingResults.at(-1);
+ const annualUses=t.state.development.trainingUsedSeasons.filter(id=>id===season).length;
+ assert.equal(annualUses,1);
+ assert.equal(after.abilities.POWER,player.abilities.POWER+preview.gainUnits);
+ assert.equal(after.fatigue,player.fatigue+preview.fatigueDelta);
+ assert.equal(receipt.success,true);
+ assert.equal(receipt.gainUnits,preview.gainUnits);
+ assert.equal(receipt.fatigueBefore,player.fatigue);
+ assert.equal(receipt.fatigueAfter,after.fatigue);
+ assert.equal(canonicalJson(t.state.development.trainingRng),rng);
+ const sealed=canonicalJson(t.state);
+ assert.throws(()=>trainHighSchoolCareer(t.state,t.state.revision,choice),/LIMIT_REACHED/);
+ assert.equal(canonicalJson(t.state),sealed);
+ return {...blocked,recoveryDay:recovery.evidence.day,trainingWindowDay:window.occurredWorldDay,annualUses,gainUnits:preview.gainUnits,fatigueBefore:player.fatigue,fatigueAfter:after.fatigue,noTrainingReroll:true,repeatRejectedAtomically:true};
 }
 export function toRoute(t){
  t.command('ACKNOWLEDGE_HS_REVIEW',{},s=>acknowledgeHighSchoolSeasonReview(s,s.revision));
@@ -169,7 +222,7 @@ export function collegeLeave(t){
 export const stateHash=canonicalJson;
 
 /** Creation fixtures the verifier can rebuild itself, so a slice cannot start from a doctored state. */
-const CREATIONS={HS_HITTER:createNativeHs,HS_US_HITTER:createNativeUsHs,HS_PITCHER:createNativePitcherHs};
+const CREATIONS={HS_HITTER:createNativeHs,HS_US_HITTER:createNativeUsHs,HS_PITCHER:createNativePitcherHs,HS_INJURY_HITTER:createNativeInjuryHs};
 /** Machine verdict from receipts alone: creation origin, hash linkage, and required commands in order. */
 export function nativeSliceVerdict(s,required,hash){
  const bad=problem=>({ok:false,problem:s.id+': '+problem}),rows=s.commandReceipts;

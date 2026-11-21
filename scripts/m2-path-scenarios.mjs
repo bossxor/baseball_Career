@@ -282,6 +282,7 @@ export const PATH_REQUIREMENTS={
  P06:[...HS,'PREPARE_US_DIRECT','SIGN_US_DIRECT','CLOSE_SCHOOL_FOR_US','START_SIGNED_US'],
  P07:[...HS,'PREPARE_US_DIRECT',...KBO],
  P12:[...HS,...COLLEGE,'START_COLLEGE_MILITARY_LEAVE','ADVANCE_COLLEGE_SERVICE','RESUME_COLLEGE'],
+ P13:['CONFIRM_PLAYER','CONFIRM_PRESEASON','ADVANCE_HS','DEFER_TRAINING','TRAIN_HS'],
 };
 
 /** Why a path is still FULL_PATH_NOT_PROVEN. Reasons name the engine gap; docs/implementation/M2-CLOSURE-GAPS-20261106.md ranks them. */
@@ -294,7 +295,7 @@ export const PATH_GAPS={
  P09:'same prerequisite as P08 (7 native KBO seasons + military) before request/defer/no-offer/remain branches',
  P10:'helper links missing: returned-US undrafted draw needs 6 native US seasons + 2 mandatory return years (us-amateur-return-career.ts, us-return-retry.ts, us-return-preparation.ts); engine has no native US-season-to-return chain, fixture us-return-retry-fixture.ts:nativeUndraftedUsReturn uses controlled closed years',
  P11:'native player never reaches national selection (kbo-national-selection.ts needs ~65 ability; native player ~52); openNationalCallup requires a closed pro review; needs native multi-season growth or a selection path that does not need ability seeding',
- P13:'natural diagnosis draw not driven: needs an HS/pro seed where the protagonist is injured in the first 12 games (health.ts); seed search ~4 min/probe. Recovery/deferral/one-time training commands already exist in controlled slice',
+ P13:'native injury, recovery and one-time training route is available via --scenarios=nativePaths --native=P13; this run did not produce its complete receipts',
  P14:'same-game trait/goal/chronicle integration: chronicle producer (E99/S45) is M7; no engine command emits one game->stat+trait+goal+chronicle receipt',
  P15:'BLOCKED BY ENGINE BUG: a native KBO regular season cannot finish. advanceKboCareer throws INVALID_PRO_TRAIT_PHASE at world day 67 of season 2033 (pro-trait-notices.ts:50 raiseProHiddenTraitNotice <- kbo-progress.ts:163 interruptHidden): career.phaseContext still carries pendingGame after Object.assign of a cloned career (hypothesis: stale progress alias, kbo-progress.ts:144). Repro + failing state in the shared notes folder. After the fix P15 needs closeKboSeason->hireCareerAgent->offerKboRenewal->counter driver.',
  P16:'native pro career + release + three independent retry uses not available; retry-completion-scenario.ts retryNoOfferPrefix and 2 earlier optional uses are controlled (career-pro-retry.ts)',
