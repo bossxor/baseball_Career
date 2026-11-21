@@ -45,7 +45,12 @@ function tryRoleReview(t){
 
 export function nativePitcherPath(trace){
  const t=trace('P02-native-pitcher-role-and-learning',createNativePitcherHs(),{kind:'NATIVE_FROM_CREATION',creation:'HS_PITCHER',description:'Pitcher creation, actual HS216, KBO draft and entry, offseason pitch allocation and training reservation, actual in-season role competition and later training XP.'});
- hsSeason(t);toRoute(t);const draft=kboSign(t),key=t.state.protagonistKey;
+ const progress=(phase,details={})=>console.log(JSON.stringify({path:'P02',phase,receipts:t.rows.length,revision:t.state.revision,...details}));
+ progress('high-school-start');
+ hsSeason(t);
+ progress('high-school-complete',{games:Object.keys(t.state.records.games).length});
+ toRoute(t);const draft=kboSign(t),key=t.state.protagonistKey;
+ progress('kbo-signed',{round:draft.round,club:draft.draftedClubId});
  const player=t.state.world.players[key];
  assert.equal(player.kind,'PITCHER');assert.equal(player.position,'RP');
  assert.deepEqual(Object.keys(player.abilities).sort(),[...PITCHER_ABILITIES].sort());
@@ -61,17 +66,29 @@ export function nativePitcherPath(trace){
  t.command('CONFIRM_KBO_ROSTER',{},s=>confirmKboOpeningRoster(s,s.revision));
  t.command('CONFIRM_KBO_SCHEDULE',{},s=>confirmKboSeasonSchedule(s,s.revision));
  t.command('START_KBO_SEASON',{},s=>startKboRegularSeason(s,s.revision));
+ progress('kbo-start',{league:t.state.registration.competitionKey,nextWorldDay:t.state.phaseContext.nextWorldDay});
 
  let roleReview=null, quartersAtRoleReview=null;
  for(let step=0;t.state.phaseContext.phase!=='SEASON_REVIEW';step++){
   assert.ok(step<1_800,'native KBO command budget exhausted');
   if(t.state.phaseContext.phase==='EVENT_DECISION'){resolveBlockingEvent(t);continue;}
   assert.equal(t.state.phaseContext.phase,'SEASON_PROGRESS');
-  if(!roleReview){roleReview=tryRoleReview(t);if(roleReview)quartersAtRoleReview=book().learning.quarters.length;}
+  if(!roleReview){
+   roleReview=tryRoleReview(t);
+   if(roleReview){
+    quartersAtRoleReview=book().learning.quarters.length;
+    progress('role-review',{step,target:roleReview.targetRole,outcome:roleReview.outcome,quartersAtRoleReview});
+   }
+  }
   if(book().learning.quarters.length===4)break;
+  const beforeQuarters=book().learning.quarters.length;
   t.command(roleReview?'ADVANCE_KBO_AFTER_ROLE_REVIEW':'ADVANCE_KBO',{maxDays:1},s=>{
    const out=advanceKboCareer(s,s.revision,1);assert.notEqual(out.stopReason,'ENGINE_LIMIT');return out;
   });
+  if((step+1)%25===0||book().learning.quarters.length!==beforeQuarters){
+   const state=t.state,phase=state.phaseContext;
+   progress('kbo-progress',{step:step+1,careerPhase:phase.phase,nextWorldDay:phase.nextWorldDay??phase.resume?.nextWorldDay??null,recordRevision:state.records.revision,learningQuarters:book().learning.quarters.length,adviceCheckpoint:state.advice?.checkpoints.at(-1)??null});
+  }
   if(roleReview&&book().learning.quarters.length>quartersAtRoleReview&&book().ledger.entries.some(row=>{
    const [season,kind,id,quarter]=JSON.parse(row.evidenceKey);
    return season===t.state.world.seasonKey&&kind==='learning'&&id===pitchId&&quarter>quartersAtRoleReview&&row.bookGain>0;
