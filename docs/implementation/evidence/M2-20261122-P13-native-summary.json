@@ -1,0 +1,52 @@
+{
+  "driverCommit": "13b2737",
+  "node": "v24.20.0",
+  "report": "M2-20261122-P13-native-report.json.gz",
+  "reportSha256": "6cb84d5b7433711f99c934ee2f88158ba80b67d912af88fb344fcc6868934b4f",
+  "compressedSha256": "58b04a22d36ed089ef89dc0b791f8dd4828f470b1bd9cd1da851b11d9481e4e7",
+  "reportBytes": 599367,
+  "compressedBytes": 54698,
+  "sourceManifestHash": "5b7559099be56160ddf14cceb9d236fe5b2154c7c59f5a08c82d2120dd156cc0",
+  "sourceDrift": false,
+  "runnerExit": 0,
+  "offlineReverifyExit": 0,
+  "initialSeed": "training-native-891",
+  "actualSeedProbes": 12,
+  "path": {
+    "id": "P13",
+    "flow": "부상→강화 연기→복귀 후 강화",
+    "status": "ENGINE_NATIVE_PATH_PROVEN",
+    "proof": {
+      "sliceId": "P13-native-injury-to-training",
+      "commandChainHash": "87535741d2c39e0b9c231d93c099cbe7018b715eb0c56070a76e4146338c4d60",
+      "finalStateHash": "a743ae1ce1ab2be973b548f0dca5d335f1f39e554f5ba54fefc4d7616d0c025b",
+      "commands": 60,
+      "requiredCommands": [
+        "CONFIRM_PLAYER",
+        "CONFIRM_PRESEASON",
+        "ADVANCE_HS",
+        "DEFER_TRAINING",
+        "TRAIN_HS"
+      ]
+    },
+    "sliceIds": [
+      "P13-native-injury-to-training"
+    ]
+  },
+  "invariantReport": {
+    "completesPaths": [
+      "P13"
+    ],
+    "injuryDay": 73,
+    "diagnosedGameKey": "[\"2032\",\"HS\",15,0]",
+    "blockedAtTeamGame": 16,
+    "recoveryDay": 101,
+    "trainingWindowDay": 101,
+    "annualUses": 1,
+    "gainUnits": 10000,
+    "fatigueBefore": 0,
+    "fatigueAfter": 5,
+    "noTrainingReroll": true,
+    "repeatRejectedAtomically": true
+  }
+}
