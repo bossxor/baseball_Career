@@ -3,7 +3,7 @@ import {createCareerTraitLedger,refreshCareerTraits,settleStarterSeasonTraits} f
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {preparedUsCareer} from './us-fixtures.js';
-import {startUsRegularSeason,advanceUsCareer,advanceUsCareerRun,usSeasonView,usCompetitionGameWorld,US_LEVELS} from '../src/us-season.js';
+import {startUsRegularSeason,advanceUsCareer,advanceUsCareerRun,usSeasonView,usCompetitionGameWorld,usGameContext,US_LEVELS} from '../src/us-season.js';
 import {usCareerView} from '../src/us-career-entry.js';
 import {canonicalJson} from '../src/game.js';
 import {canonicalSeal} from '../src/canonical-seal.js';
@@ -12,6 +12,8 @@ import {prepareUsRosters} from '../src/us-roster-repair.js';
 import {assertActiveUsRosterWorld} from '../src/us-career-entry.js';
 import {auditUsClosedDays,settleUsSeasonGrowth} from '../src/us-growth.js';
 import type {UsCareer} from '../src/us-career-entry.js';
+import type {GameContribution,RecordScope} from '../src/records.js';
+import {emptyBatting,emptyPitching} from '../src/stats.js';
 function closeOne(c:UsCareer){for(let i=0;i<200;i++){const r=advanceUsCareer(c,c.revision);assert.ok(r.plateAppearances<=1000);assert.ok(r.completedInnings<=20);assert.notEqual(r.stopReason,'ENGINE_LIMIT');assert.notEqual(r.stopReason,'ROSTER_DECISION_REQUIRED');c=r.career;if(r.daysClosed)return c;}throw Error('did not close');}
 test('US live startup projects only participating teams and keeps registrations, contracts and source immutable',()=>{
  const c=preparedUsCareer(),raw=canonicalJson(c),next=startUsRegularSeason(c,c.revision);assert.equal(canonicalJson(c),raw);assert.equal(next.schemaVersion,2);assert.equal(next.phaseContext.phase,'SEASON_PROGRESS');assert.deepEqual(next.contract,c.contract);assert.deepEqual(next.income,c.income);assert.equal(next.season!.days.length,0);const game=c.seasonSchedule!.leagues.ROOKIE[0]!,w=usCompetitionGameWorld(next,'ROOKIE',game);assert.equal(w.schools.length,2);assert.ok(Object.keys(w.players).length<60);assert.equal(Object.keys(next.world.players).length,3421);assert.throws(()=>startUsRegularSeason(next,next.revision));assert.equal(usCareerView(next).phase,'SEASON_PROGRESS');assert.ok(!JSON.stringify(usSeasonView(next)).includes('potential'));
@@ -30,6 +32,34 @@ test('legacy calendar1 first date keeps all75 real games, salary and original pr
 });
 test('US partial-game JSON resume equals continuous chunks, rejects stale revisions and corrupted pending provenance',()=>{
  const c=startUsRegularSeason(preparedUsCareer('PITCHER'),preparedUsCareer('PITCHER').revision),r=advanceUsCareer(c,c.revision),restored=JSON.parse(JSON.stringify(r.career)) as UsCareer,plain=advanceUsCareer(r.career,r.career.revision),copy=advanceUsCareer(restored,restored.revision);assert.deepEqual(copy,plain);assert.throws(()=>advanceUsCareer(r.career,r.career.revision-1),/REVISION/);const bad=structuredClone(r.career);if(bad.phaseContext.phase!=='SEASON_PROGRESS'||!bad.phaseContext.pendingGame)throw Error('missing partial');bad.phaseContext.pendingGame.job.worldDay++;assert.throws(()=>advanceUsCareer(bad,bad.revision),/PROGRESS/);const income=structuredClone(r.career);income.income=[...income.income,{entryKey:'forged',currency:'USD',amount:500,kind:'SALARY',seasonKey:income.world.seasonKey,day:31}];assert.throws(()=>advanceUsCareer(income,income.revision),/PAYROLL/);
+});
+test('US game context keeps rotation appearances, the stable batting block and transferred pitcher workload',()=>{
+ const c=preparedUsCareer(),scheduled=c.seasonSchedule!.leagues.ROOKIE[0]!;
+ const world=usCompetitionGameWorld(c,'ROOKIE',scheduled),club=world.schools[0]!;
+ const hitter=club.roster.find(key=>world.players[key]!.kind==='HITTER')!;
+ const rotation=club.roster.filter(key=>world.players[key]!.position==='SP').sort(),pitcher=rotation[0]!;
+ const scope={seasonKey:c.world.seasonKey,leagueKey:'ROOKIE',phase:'REGULAR'} satisfies RecordScope;
+ const team={games:1,W:1,L:0,T:0,R:1,RA:0};
+ const pitchSplit={BF:0,outs:0,AB:0,H:0,TB:0,HR:0,BB:0,HBP:0,K:0};
+ function row(gameKey:string,worldDay:number,pa:number,recordScope:RecordScope=scope,teamKey=club.id,pitcherKey=pitcher,outs=1):GameContribution {
+  const batting={...emptyBatting(),PA:pa,AB:pa,twoB:0,threeB:0,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0};
+  const battingSplit={PA:0,AB:0,H:0,BB:0,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0};
+  const pitching={...emptyPitching(),BF:outs,outs,games:1,starts:0,starterOuts:0,loadedBF:0,W:0,L:0,SV:0,HLD:0,BS:0,shutouts:0};
+  return {gameKey,worldDay,scope:recordScope,teams:{[teamKey]:team},batting:{[hitter]:batting},pitching:{[pitcherKey]:pitching},
+   batterSplits:{[hitter]:{L:battingSplit,R:{...battingSplit,PA:pa,AB:pa}}},pitcherSplits:{[pitcherKey]:{L:pitchSplit,R:{...pitchSplit,BF:outs,AB:outs,outs}}},matchups:{}};
+ }
+ const rows=Array.from({length:18},(_,i)=>row('start-'+i,i+1,1));
+ rows.push(row('z',19,10),row('a',19,20),row('b',19,30));
+ rows.push(row('postseason',20,99,{...scope,phase:'POSTSEASON'}));
+ rows.push(row('past-season',1,99,{...scope,seasonKey:String(Number(scope.seasonKey)-1)}));
+ rows.push(row('other-level',1,99,{...scope,leagueKey:'A'}));
+ rows.push(row('old-club',20,99,scope,'TRADED_FROM',pitcher,2));
+ rows.push(row('unrelated',20,99,scope,'UNRELATED','other-pitcher',5));
+ c.records={revision:rows.length,games:Object.fromEntries(rows.map(g=>[g.gameKey,g]))};
+ const context=usGameContext(c,world);
+ assert.equal(context.starters[club.id],rotation[22%rotation.length]);
+ assert.equal(context.recentBatting[hitter]?.PA,48);
+ assert.deepEqual(context.recentPitchingOuts,{[pitcher]:23});
 });
 test('US injury repair first borrows inside the organization without fabricating players or changing26 MLB seats',()=>{
  const c=startUsRegularSeason(preparedUsCareer(),preparedUsCareer().revision),g=c.seasonSchedule!.leagues.ROOKIE[0]!,org=c.world.organizations.find(o=>o.id===g.homeTeamKey)!;for(const k of org.levels.ROOKIE.filter(k=>c.world.players[k]!.kind==='HITTER').slice(0,6))c.health.injuries[k]={severity:'MAJOR',remainingTeamGames:null,diagnosedGameKey:'controlled-unavailable',seasonKey:c.world.seasonKey};const raw=canonicalJson(c),next=structuredClone(c);prepareUsRosters(next,next.season!.firstDay);assert.equal(Object.keys(next.world.players).length,3421);assert.ok(next.season!.emergency!.loans.length>0);assert.equal(next.world.organizations.find(o=>o.id===org.id)!.levels.MLB.length,26);assert.equal(next.season!.paidUsd,0);assertActiveUsRosterWorld(next.world);assert.equal(canonicalJson(c),raw);

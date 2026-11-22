@@ -85,10 +85,35 @@ export function usCompetitionGameWorld(c:UsCareer,level:UsLevel,game:ScheduledGa
  const schools=c.world.organizations.filter(o=>o.id===game.homeTeamKey || o.id===game.awayTeamKey).map(o=>({id:o.id,name:o.name,roster:[...o.levels[level]]}));if(schools.length!==2 || game.leagueKey!==level || game.seasonKey!==c.world.seasonKey)throw new RangeError('INVALID_US_GAME_WORLD');const keys=new Set(schools.flatMap(s=>s.roster));return {worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,seed:c.world.seed,protagonistKey:c.protagonistKey,leagueKey:level,schools,players:Object.fromEntries([...keys].map(k=>[k,c.world.players[k]!])),repertoires:Object.fromEntries([...keys].filter(k=>c.world.players[k]!.kind==='PITCHER').map(k=>[k,c.world.repertoires[k]!]))};
 }
 export function usGameContext(c:UsCareer,w:CompetitionGameWorld):HighSchoolGameContext {
- const clubs=new Set(w.schools.map(s=>s.id)),pitchers=new Set(Object.keys(w.repertoires)),relevant={...c.records,games:Object.fromEntries(Object.entries(c.records.games).filter(([,g])=>g.scope.seasonKey===c.world.seasonKey && g.scope.leagueKey===w.leagueKey && (Object.keys(g.teams).some(k=>clubs.has(k))||Object.keys(g.pitching).some(k=>pitchers.has(k)))))},season=recordTotals(relevant,{seasonKey:c.world.seasonKey,leagueKey:w.leagueKey!,phase:'REGULAR'}),starters:Record<string,string>={},recentBatting:Record<string,BattingLine>={};
- for(const club of w.schools){const pitchers=club.roster.filter(k=>w.players[k]!.kind==='PITCHER' && !Object.hasOwn(c.health.injuries,k)).sort(),rotation=pitchers.filter(k=>w.players[k]!.position==='SP'),pool=rotation.length?rotation:pitchers;if(!pool.length)throw new RangeError('NO_HEALTHY_US_PITCHER');const games=Object.values(c.records.games).filter(g=>g.scope.seasonKey===c.world.seasonKey && g.scope.leagueKey===w.leagueKey && Object.hasOwn(g.teams,club.id)).sort((a,b)=>a.worldDay-b.worldDay);starters[club.id]=pool[games.length%pool.length]!;const boundary=Math.floor(games.length/20)*20,block=new Set(games.slice(Math.max(0,boundary-20),boundary).map(g=>g.gameKey));if(block.size){const totals=recordTotals({...c.records,games:Object.fromEntries(Object.entries(c.records.games).filter(([k])=>block.has(k)))},{seasonKey:c.world.seasonKey,leagueKey:w.leagueKey!,phase:'REGULAR'});for(const k of club.roster)if(totals.batting[k])recentBatting[k]=totals.batting[k]!;}}
+ if(!w.leagueKey)throw new RangeError('INVALID_RECORD_FILTER');
+ const scope={seasonKey:c.world.seasonKey,leagueKey:w.leagueKey,phase:'REGULAR' as const};
+ const leagueGames=Object.entries(c.records.games).filter(([,g])=>g.scope.seasonKey===scope.seasonKey&&g.scope.leagueKey===scope.leagueKey);
+ const clubs=new Set(w.schools.map(s=>s.id)),pitchers=new Set(Object.keys(w.repertoires));
+ const recentPitchingOuts:Record<string,number>=Object.create(null);
+ for(const [,game] of leagueGames){
+  if(game.scope.phase!==scope.phase||!Object.keys(game.teams).some(key=>clubs.has(key))&&!Object.keys(game.pitching).some(key=>pitchers.has(key)))continue;
+  for(const [key,line] of Object.entries(game.pitching)){
+   const outs=(recentPitchingOuts[key]??0)+line.outs;
+   if(!Number.isSafeInteger(outs)||outs<0)throw new RangeError('INVALID_RECORD_SUM');
+   recentPitchingOuts[key]=outs;
+  }
+ }
+ const starters:Record<string,string>={},recentBatting:Record<string,BattingLine>={};
+ for(const club of w.schools){
+  const healthy=club.roster.filter(k=>w.players[k]!.kind==='PITCHER'&&!Object.hasOwn(c.health.injuries,k)).sort();
+  const rotation=healthy.filter(k=>w.players[k]!.position==='SP'),pool=rotation.length?rotation:healthy;
+  if(!pool.length)throw new RangeError('NO_HEALTHY_US_PITCHER');
+  const games=leagueGames.map(([,g])=>g).filter(g=>Object.hasOwn(g.teams,club.id)).sort((a,b)=>a.worldDay-b.worldDay);
+  starters[club.id]=pool[games.length%pool.length]!;
+  const boundary=Math.floor(games.length/20)*20;
+  const block=new Set(games.slice(Math.max(0,boundary-20),boundary).map(g=>g.gameKey));
+  if(block.size){
+   const totals=recordTotals({...c.records,games:Object.fromEntries(leagueGames.filter(([key])=>block.has(key)))},scope);
+   for(const key of club.roster)if(totals.batting[key])recentBatting[key]=totals.batting[key]!;
+  }
+ }
  const returnCondition=Object.hasOwn(w.players,c.protagonistKey)?usMilitaryReturnConditionMultiplier(c):1;
- return {...(returnCondition===1?{}:{conditionMultipliers:{[c.protagonistKey]:returnCondition}}),difficulty:c.difficulty,unavailableKeys:Object.keys(c.health.injuries).filter(k=>Object.hasOwn(w.players,k)),starters,recentBatting,recentPitchingOuts:Object.fromEntries(Object.entries(season.pitching).map(([k,p])=>[k,p.outs])),traits:c.traits?.owned??{},approaches:careerBattingApproaches(c),positionFits:careerPositionFits(c)};
+ return {...(returnCondition===1?{}:{conditionMultipliers:{[c.protagonistKey]:returnCondition}}),difficulty:c.difficulty,unavailableKeys:Object.keys(c.health.injuries).filter(k=>Object.hasOwn(w.players,k)),starters,recentBatting,recentPitchingOuts:{...recentPitchingOuts},traits:c.traits?.owned??{},approaches:careerBattingApproaches(c),positionFits:careerPositionFits(c)};
 }
 function queue(c:UsCareer,day:number){return US_LEVELS.flatMap(level=>c.seasonSchedule!.leagues[level].filter(g=>g.worldDay===day && !Object.hasOwn(c.records.games,g.simulationKey)).map(game=>({level,game})));}
 /** Common calendar payroll: cumulative integer entitlement, paid once at each fully closed date. */
