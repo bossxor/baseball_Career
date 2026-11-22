@@ -242,5 +242,9 @@ export function nativeSliceVerdict(s,required,hash){
  if(rows.at(-1).resultHash!==s.finalStateHash)return bad('final state hash mismatch');
  if(hash(rows)!==s.commandChainHash)return bad('command chain hash mismatch');
  let at=0;for(const name of required){const next=rows.findIndex((r,i)=>i>=at&&r.command===name);if(next<0)return bad('required command missing/out of order: '+name);at=next+1;}
+ if(required.includes('ENTER_EARLY_DRAFT')&&required.includes('RETURN_UNSIGNED_COLLEGE')){
+  const index=rows.findIndex(r=>r.command==='RETURN_UNSIGNED_COLLEGE');
+  if(rows[index-1]?.command!=='RESOLVE_KBO_DRAFT'||rows.some(r=>r.command==='DECLINE_KBO_DRAFT')||rows.filter(r=>r.command==='ENTER_EARLY_DRAFT').length!==1)return bad('P04 requires one early draft and an unsigned return directly after the undrafted result');
+ }
  return {ok:true,commandChainHash:s.commandChainHash,finalStateHash:s.finalStateHash,commands:rows.length};
 }
