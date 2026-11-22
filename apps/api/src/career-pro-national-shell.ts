@@ -47,14 +47,18 @@ export function kboP12DecisionPending(c:engine.KboCareer):boolean{
  return nationalBoundary(c)?.type==='P12';
 }
 
+export function kboNationalStopDay(c:Readonly<engine.KboCareer>):number|undefined{
+ return nationalBoundary(c)?.day;
+}
+
 /** Cap the domestic worker at invitation/start dates so season spans cannot skip either decision. */
 export function advanceKboToNationalBoundary(c:engine.KboCareer,revision:number,maxDays:number):ReturnType<typeof engine.advanceKboCareer>{
- const boundary=nationalBoundary(c),phase=c.phaseContext;
- if(!boundary||phase.phase!=='SEASON_PROGRESS')return engine.advanceKboCareer(c,revision,maxDays);
- const remaining=boundary.day-phase.nextWorldDay;
+ const day=kboNationalStopDay(c),phase=c.phaseContext;
+ if(day===undefined||phase.phase!=='SEASON_PROGRESS')return engine.advanceKboCareer(c,revision,maxDays);
+ const remaining=day-phase.nextWorldDay;
  if(remaining===0)fail('NATIONAL_DECISION_REQUIRED');
  const result=engine.advanceKboCareer(c,revision,Math.min(maxDays,remaining));
- if(result.career.phaseContext.phase==='SEASON_PROGRESS'&&result.career.phaseContext.nextWorldDay===boundary.day&&result.stopReason==='DAY_CLOSED')return {...result,stopReason:'MAJOR_EVENT'};
+ if(result.career.phaseContext.phase==='SEASON_PROGRESS'&&result.career.phaseContext.nextWorldDay===day&&result.stopReason==='DAY_CLOSED')return {...result,stopReason:'MAJOR_EVENT'};
  return result;
 }
 

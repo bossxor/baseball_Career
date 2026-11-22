@@ -1,6 +1,6 @@
 import * as engine from '@playball/engine';
 import {spanDeadline,spanStopOf,teamProgress} from './span-budget.js';
-import {advanceKboToNationalBoundary,kboP12DecisionPending} from './career-pro-national-shell.js';
+import {advanceKboToNationalBoundary,kboNationalStopDay,kboP12DecisionPending} from './career-pro-national-shell.js';
 import {kboDepartureBlocksOffseason,kboDepartureOptions} from './career-kbo-departure-shell.js';
 import type {SpanStop} from './span-budget.js';
 import {ABILITY_LABELS,abilityKeys,KBO_CLUBS} from '@playball/rules';
@@ -30,9 +30,9 @@ function choice(v:unknown):engine.TrainingChoice{
 }
 /** Chains the engine's own advances (see the US twin): the engine's stop reasons are the only stop rule. */
 function advanceSpan(c:engine.KboCareer,rev:number,span:'SEASON'|'MONTH'){
-  const until=spanDeadline();let r=advanceKboToNationalBoundary(c,rev,7),days=r.daysClosed;
-  for(let i=0;i<200_000&&(r.stopReason==='CHUNK_LIMIT'||r.stopReason==='DAY_CLOSED')&&r.career.phaseContext.phase==='SEASON_PROGRESS'&&Date.now()<until&&(span==='SEASON'||days<30);i++){r=advanceKboToNationalBoundary(r.career,r.career.revision,span==='MONTH'?Math.min(7,30-days):7);days+=r.daysClosed;}
-  return {...r,monthDone:span==='MONTH'&&days>=30};
+ const until=spanDeadline(),dayBudget=span==='MONTH'?30:Number.MAX_SAFE_INTEGER;
+ const result=engine.advanceKboCareerRun(c,rev,dayBudget,()=>Date.now()<until,kboNationalStopDay);
+ return {...result,monthDone:span==='MONTH'&&result.daysClosed>=30};
 }
 export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand{
  const name=command.type.slice('CAREER_KBO_PLAY_'.length),allowed=fields.get(name),raw=command.payload;

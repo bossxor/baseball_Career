@@ -115,12 +115,45 @@ function pendingQueue(career:KboCareer,day:number):{leagueKey:KboLeagueKey;game:
 /** Bounded server worker: plays the date queue (KBO then FUTURES) in safe chunks, merges only the pitchers a game actually
  * touched, and closes the day for both leagues at once. A pending game survives chunk limits and JSON round trips. */
 export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDays=1):KboProgressResult {
+ return advanceKboCareerStep(source,expectedRevision,maxDays,false);
+}
+
+/** The first step detaches the source. Later steps reuse the private result and keep normal command boundaries. */
+export function advanceKboCareerRun(
+ source:KboCareer,expectedRevision:number,dayBudget:number,shouldContinue:()=>boolean,
+ nationalStopDay:(career:Readonly<KboCareer>)=>number|undefined,
+):KboProgressResult {
+ if(!Number.isSafeInteger(dayBudget)||dayBudget<1)throw new RangeError('INVALID_ADVANCE_DAYS');
+ const step=(career:KboCareer,revision:number,maxDays:number,owned:boolean):KboProgressResult=>{
+  const phase=career.phaseContext;
+  const boundary=phase.phase==='SEASON_PROGRESS'?nationalStopDay(career):undefined;
+  const remaining=phase.phase==='SEASON_PROGRESS'&&boundary!==undefined?boundary-phase.nextWorldDay:maxDays;
+  if(remaining===0)throw new RangeError('NATIONAL_DECISION_REQUIRED');
+  const result=advanceKboCareerStep(career,revision,Math.min(maxDays,remaining),owned);
+  const next=result.career.phaseContext;
+  if(result.stopReason==='DAY_CLOSED'&&next.phase==='SEASON_PROGRESS'&&next.nextWorldDay===boundary){
+   return {...result,stopReason:'MAJOR_EVENT'};
+  }
+  return result;
+ };
+ let result=step(source,expectedRevision,Math.min(7,dayBudget),false);
+ let daysClosed=result.daysClosed,plateAppearances=result.plateAppearances,completedInnings=result.completedInnings;
+ for(let i=0;i<200_000&&(result.stopReason==='CHUNK_LIMIT'||result.stopReason==='DAY_CLOSED')&&result.career.phaseContext.phase==='SEASON_PROGRESS'&&shouldContinue()&&daysClosed<dayBudget;i++){
+  result=step(result.career,result.career.revision,Math.min(7,dayBudget-daysClosed),true);
+  daysClosed+=result.daysClosed;
+  plateAppearances+=result.plateAppearances;
+  completedInnings+=result.completedInnings;
+ }
+ return {...result,daysClosed,plateAppearances,completedInnings};
+}
+
+function advanceKboCareerStep(source:KboCareer,expectedRevision:number,maxDays:number,owned:boolean):KboProgressResult {
  assertCareerRevision(source,expectedRevision);
  if(source.events.some(e=>e.status==='OPEN'&&['E44','E47','E48'].includes(e.definitionId)))throw new RangeError('NATIONAL_DECISION_REQUIRED');
  if(source.phaseContext.phase!=='SEASON_PROGRESS' || !source.days || !source.competitionSchedule)throw new RangeError('INVALID_CAREER_PHASE');
  if(!Number.isSafeInteger(maxDays) || maxDays<1 || maxDays>7)throw new RangeError('INVALID_ADVANCE_DAYS');
  if(contractDecisionRequired(source) && source.phaseContext.nextWorldDay<=lastDay(source))throw new RangeError('CONTRACT_DECISION_REQUIRED');
- const career=measureEngineClone(source),progress=career.phaseContext as KboSeasonProgress,last=lastDay(career);
+ const career=owned?source:measureEngineClone(source),progress=career.phaseContext as KboSeasonProgress,last=lastDay(career);
  if(!Number.isSafeInteger(progress.nextWorldDay) || progress.nextWorldDay<firstDay(career))throw new RangeError('INVALID_KBO_PROGRESS');
  if(progress.pendingGame && (progress.pendingGame.job.worldDay!==progress.nextWorldDay || progress.pendingGame.job.worldKey!==career.world.worldKey || progress.pendingGame.job.seasonKey!==career.world.seasonKey))throw new RangeError('PENDING_GAME_CONTEXT_CHANGED');
  const initialAdviceNotices=source.advice?.notices.length??0;let plateAppearances=0,completedInnings=0,daysClosed=0;

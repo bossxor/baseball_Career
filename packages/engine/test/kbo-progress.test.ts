@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {confirmKboPreseasonPlan} from '../src/kbo-preseason.js';
 import {confirmKboOpeningRoster} from '../src/kbo-opening-roster.js';
 import {confirmKboSeasonSchedule} from '../src/kbo-schedule.js';
-import {startKboRegularSeason,advanceKboCareer} from '../src/kbo-progress.js';
+import {startKboRegularSeason,advanceKboCareer,advanceKboCareerRun} from '../src/kbo-progress.js';
 import type {KboSeasonProgress} from '../src/kbo-progress.js';
 import type {KboCareer} from '../src/kbo-career-entry.js';
 import {enteredKboCareer} from './fixtures.js';
@@ -53,6 +53,30 @@ test('one real opening day: both leagues play and close once; chunk limits resum
  const priorDay=prior.worldDay;
  retained.worldDay++;
  assert.equal(prior.worldDay,priorDay);
+});
+
+test('owned KBO span matches each detached chunk and stops at a national boundary',()=>{
+ const ready=scheduled(),started=startKboRegularSeason(ready,ready.revision);
+ const source=canonicalJson(started),phase=started.phaseContext as KboSeasonProgress,boundary=phase.nextWorldDay+1;
+ let detached=started,last:ReturnType<typeof advanceKboCareer>;
+ let plateAppearances=0,completedInnings=0;
+ do{
+  last=advanceKboCareer(detached,detached.revision,1);
+  detached=last.career;
+  plateAppearances+=last.plateAppearances;
+  completedInnings+=last.completedInnings;
+ }while(last.stopReason==='CHUNK_LIMIT'&&detached.revision<started.revision+20);
+ assert.equal(last.stopReason,'DAY_CLOSED');
+ const span=advanceKboCareerRun(started,started.revision,30,()=>true,()=>boundary);
+ assert.equal(span.stopReason,'MAJOR_EVENT');
+ assert.equal(span.daysClosed,1);
+ assert.equal(span.plateAppearances,plateAppearances);
+ assert.equal(span.completedInnings,completedInnings);
+ assert.equal(canonicalJson(span.career),canonicalJson(detached));
+ assert.equal(canonicalJson(started),source);
+ assert.throws(()=>advanceKboCareerRun(span.career,span.career.revision,30,()=>true,()=>boundary),/NATIONAL_DECISION_REQUIRED/);
+ assert.throws(()=>advanceKboCareerRun(started,started.revision,30,()=>{throw new Error('abort');},()=>boundary),/abort/);
+ assert.equal(canonicalJson(started),source);
 });
 
 test('a stale revision, wrong phase or bad day count is rejected without changing the career',()=>{
