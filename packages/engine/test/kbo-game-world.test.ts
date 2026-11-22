@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createKboCompetitionGameWorld} from '../src/kbo-game-world.js';
+import {createKboCompetitionGameWorld,projectKboCompetitionGameWorld} from '../src/kbo-game-world.js';
 import {prepareSchoolCompetitionGame,advanceHighSchoolGame,commitSchoolCompetitionGame} from '../src/high-school-game.js';
 import type {HighSchoolGameJob,HighSchoolGameContext} from '../src/high-school-game.js';
 import {confirmKboPreseasonPlan} from '../src/kbo-preseason.js';
@@ -16,9 +16,16 @@ test('actual KBO and FUTURES games use disjoint rosters; JSON PA resume/official
  for(const world of [first,second]){
   const league=world.leagueKey as 'KBO'|'FUTURES',scheduled=s.competitionSchedule!.leagues[league].find(g=>g.awayTeamKey===s.protagonistClubId || g.homeTeamKey===s.protagonistClubId)!;
   const context:HighSchoolGameContext={difficulty:s.difficulty,unavailableKeys:Object.keys(s.health.injuries),starters:Object.fromEntries(world.schools.map(c=>[c.id,c.roster.find(k=>world.players[k]!.position==='SP')!])),recentBatting:{},recentPitchingOuts:{},traits:{},approaches:{}};
+  const projection=projectKboCompetitionGameWorld(s.world,league,s.protagonistKey);
+  assert.notStrictEqual(world.players[s.protagonistKey],s.world.players[s.protagonistKey]);
   const job=prepareSchoolCompetitionGame(world,records,scheduled,context),full=finish(job,1000),resumed=finish(JSON.parse(JSON.stringify(advanceHighSchoolGame(job,13))),7);assert.equal(canonicalJson(full.game),canonicalJson(resumed.game));
+  assert.equal(canonicalJson(prepareSchoolCompetitionGame(projection,records,scheduled,context)),canonicalJson(job));
   const allowed=new Set(world.schools.filter(c=>[scheduled.awayTeamKey,scheduled.homeTeamKey].includes(c.id)).flatMap(c=>c.roster));for(const team of job.game.input.teams){assert.equal(team.lineup.length,9);assert.ok([...team.lineup,...team.pitchers].every(p=>allowed.has(p.simulationKey)));}
   const result=commitSchoolCompetitionGame(world,records,resumed,scheduled);assert.equal(result.duplicate,false);assert.equal(result.records.games[scheduled.simulationKey]!.scope.leagueKey,league);assert.equal(result.records.games[scheduled.simulationKey]!.scope.phase,'REGULAR');const duplicate=commitSchoolCompetitionGame(result.world,result.records,resumed,scheduled);assert.equal(duplicate.duplicate,true);assert.equal(duplicate.records.revision,result.records.revision);
+  assert.equal(canonicalJson(commitSchoolCompetitionGame(projection,records,resumed,scheduled)),canonicalJson(result));
+  const changed=structuredClone(s.world);
+  changed.players[s.protagonistKey]!.fatigue=changed.players[s.protagonistKey]!.fatigue===0?1:0;
+  assert.throws(()=>commitSchoolCompetitionGame(projectKboCompetitionGameWorld(changed,league,s.protagonistKey),records,resumed,scheduled),/STALE_SCHOOL_GAME/);
   assert.throws(()=>commitSchoolCompetitionGame(world,records,{...resumed,worldDay:999},scheduled));records=result.records;
  }
  assert.equal(records.revision,s.records.revision+2);assert.equal(canonicalJson(s),before);

@@ -22,7 +22,7 @@ import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
 import type {CompetitionGameWorld,HighSchoolGameContext,HighSchoolGameJob} from './high-school-game.js';
 import {prepareSchoolCompetitionGame,advanceHighSchoolGame,commitSchoolCompetitionGame} from './high-school-game.js';
-import {createKboCompetitionGameWorld} from './kbo-game-world.js';
+import {createKboCompetitionGameWorld,projectKboCompetitionGameWorld} from './kbo-game-world.js';
 import {closeKboCompetitionDay,createKboDayLedger} from './kbo-day.js';
 import type {KboLeagueKey} from './kbo-day.js';
 import type {ScheduledGame} from './schedule.js';
@@ -169,7 +169,7 @@ function advanceKboCareerStep(source:KboCareer,expectedRevision:number,maxDays:n
    if(career.sangmu?.emergency && schedulesOf(career).FUTURES.some(g=>g.homeTeamKey==='SANGMU' || g.awayTeamKey==='SANGMU'))career.sangmu=reconcileSangmuEmergency(career.world,career.sangmu,career.health,day);
    const next=pendingQueue(career,day)[0];
    if(next){
-    const world=createKboCompetitionGameWorld(career.world,next.leagueKey,career.protagonistKey,career.sangmu);
+    const world=projectKboCompetitionGameWorld(career.world,next.leagueKey,career.protagonistKey,career.sangmu);
     const context=measureEngine('gameContext',()=>buildKboGameContext(career,next.leagueKey,world));
     const reviewed=consumeCareerRoleReview(career,world,next.game,context);Object.assign(career,reviewed.career);
     const rested=prepareCareerAdviceGame(career,world,next.game,reviewed.context);progress.pendingGame={leagueKey:next.leagueKey,job:prepareSchoolCompetitionGame(world,career.records,next.game,rested.context),...(rested.restProof?{restProof:rested.restProof}:{})};
@@ -181,7 +181,7 @@ function advanceKboCareerStep(source:KboCareer,expectedRevision:number,maxDays:n
    plateAppearances+=job.game.playCursor-before.playCursor;completedInnings+=job.game.completedInnings-before.completedInnings;
    if(job.stopReason==='ENGINE_LIMIT')return finish('ENGINE_LIMIT');
    if(job.game.status!=='FINAL')return finish('CHUNK_LIMIT');
-   const world=createKboCompetitionGameWorld(career.world,pending.leagueKey,career.protagonistKey,career.sangmu),scheduled=schedulesOf(career)[pending.leagueKey].find(g=>g.simulationKey===job.game.input.simulationKey)!;
+   const world=projectKboCompetitionGameWorld(career.world,pending.leagueKey,career.protagonistKey,career.sangmu),scheduled=schedulesOf(career)[pending.leagueKey].find(g=>g.simulationKey===job.game.input.simulationKey)!;
    // The worker cloned the career at entry, so previous games belong to this isolated ledger.
    const committed=commitSchoolCompetitionGame(world,career.records,job,scheduled,true);
    // Merge only the books this game touched so another league's earlier XP is never rolled back (M2-AU condition 2).

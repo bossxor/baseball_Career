@@ -11,6 +11,11 @@ export const SANGMU_TEAM_KEY='SANGMU';
 /** Internal worker projection only. Caller authorizes career phase, queue/date, health and starters.
  * Both leagues share identities/books but have disjoint registered rosters. This is not a career transition. */
 export function createKboCompetitionGameWorld(world:ActiveKboRosterWorld,leagueKey:'KBO'|'FUTURES',protagonistKey:string,sangmu?:KboSangmuUnit):CompetitionGameWorld {
+ return structuredClone(projectKboCompetitionGameWorld(world,leagueKey,protagonistKey,sangmu));
+}
+
+/** Shallow internal projection. The regular worker treats nested players and books as read-only. */
+export function projectKboCompetitionGameWorld(world:ActiveKboRosterWorld,leagueKey:'KBO'|'FUTURES',protagonistKey:string,sangmu?:KboSangmuUnit):CompetitionGameWorld {
  // An empty protagonist key is club mode (no own player): nobody gets the protagonist-only rules.
  if(!['KBO','FUTURES'].includes(leagueKey) || protagonistKey!=='' && (!Object.hasOwn(world.players,protagonistKey) || !world.clubs.some(c=>c.roster.includes(protagonistKey))))throw new RangeError('INVALID_KBO_GAME_WORLD');
  assertKboRecruitmentWorld(world);
@@ -29,5 +34,5 @@ export function createKboCompetitionGameWorld(world:ActiveKboRosterWorld,leagueK
   for(const school of schools)school.roster=school.roster.filter(k=>!loaned.includes(k));
   schools.push({id:SANGMU_TEAM_KEY,name:'상무',roster:[...serving.map(([k])=>k),...loaned,...temporary.map(([k])=>k)]});
  }
- return structuredClone({worldKey:world.worldKey,seasonKey:world.seasonKey,seed:world.seed,protagonistKey,leagueKey,schools,players,repertoires});
+ return {worldKey:world.worldKey,seasonKey:world.seasonKey,seed:world.seed,protagonistKey,leagueKey,schools,players,repertoires};
 }
