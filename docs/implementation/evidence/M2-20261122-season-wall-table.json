@@ -1,0 +1,222 @@
+[
+  {
+    "league": "school",
+    "games": 216,
+    "commands": 102,
+    "wallMs": 91763.04089999999,
+    "initialHash": "9247637e0026f6228c7c1af3b136af8538cf7776bc9f29a53fe9bdcb6b672cfe",
+    "finalHash": "1d304251844ba3558a0dbfdd0ef67af07523dfda79cbde48463aa762e9f44e24",
+    "categories": {
+      "simulation": {
+        "ms": 3988.5060000000444,
+        "percent": 4.346527709719834
+      },
+      "dayClose": {
+        "ms": 2305.1230999999257,
+        "percent": 2.5120387003215865
+      },
+      "validation": {
+        "ms": 524.8730999998979,
+        "percent": 0.5719874743164686
+      },
+      "clone": {
+        "ms": 12081.792999999932,
+        "percent": 13.166295364128384
+      },
+      "seal": {
+        "ms": 0,
+        "percent": 0
+      },
+      "residualMs": {
+        "ms": 15003.515100000204,
+        "percent": 16.35028106397486
+      },
+      "serializationMs": {
+        "ms": 11024.616400000203,
+        "percent": 12.014223037807156
+      },
+      "hashingMs": {
+        "ms": 3231.103899999947,
+        "percent": 3.521138650495558
+      },
+      "sqlWriteMs": {
+        "ms": 12410.965199999926,
+        "percent": 13.525015167626083
+      },
+      "outsideEngineAndWrites": {
+        "ms": 31192.545099999916,
+        "percent": 33.99249283161007
+      }
+    },
+    "topThree": [
+      "outsideEngineAndWrites",
+      "residualMs",
+      "sqlWriteMs"
+    ]
+  },
+  {
+    "league": "college",
+    "games": 216,
+    "commands": 7,
+    "wallMs": 33681.1436,
+    "initialHash": "cc0aedefd6509b55397f3c5f0b3ed84da9ecf3b6134c800cb1c301a8112c373b",
+    "finalHash": "a9677488d1b7b103c37f0bcc30a611b58c29b0992a10f9010ac101c3a7ea19e4",
+    "categories": {
+      "simulation": {
+        "ms": 3523.495699999965,
+        "percent": 10.461330356965567
+      },
+      "dayClose": {
+        "ms": 1822.9260999999574,
+        "percent": 5.412304646330231
+      },
+      "validation": {
+        "ms": 502.6987000000631,
+        "percent": 1.4925226588804517
+      },
+      "clone": {
+        "ms": 11290.652500000047,
+        "percent": 33.52217678261983
+      },
+      "seal": {
+        "ms": 0,
+        "percent": 0
+      },
+      "residualMs": {
+        "ms": 13200.503099999965,
+        "percent": 39.192562036402954
+      },
+      "serializationMs": {
+        "ms": 603.0962000000327,
+        "percent": 1.7906048772050385
+      },
+      "hashingMs": {
+        "ms": 176.03630000000385,
+        "percent": 0.5226553530682486
+      },
+      "sqlWriteMs": {
+        "ms": 1034.0852999999865,
+        "percent": 3.0702202760122033
+      },
+      "outsideEngineAndWrites": {
+        "ms": 1527.6496999999836,
+        "percent": 4.535623012515476
+      }
+    },
+    "topThree": [
+      "residualMs",
+      "clone",
+      "simulation"
+    ]
+  },
+  {
+    "league": "kbo",
+    "games": 1440,
+    "commands": 68,
+    "wallMs": 1623667.1821,
+    "initialHash": "9352731906e5705e59380b9d7c5144f0af10b6c1573ae8a35b6ce598584f4cf8",
+    "finalHash": "bfdd7a885bd96f16b609e332ff45d4f9b8497c054a005c7184c26273569f14e3",
+    "categories": {
+      "simulation": {
+        "ms": 68005.11799999922,
+        "percent": 4.188365617641144
+      },
+      "dayClose": {
+        "ms": 57518.64729999981,
+        "percent": 3.542514619628328
+      },
+      "validation": {
+        "ms": 7644.705200004475,
+        "percent": 0.47082956927891184
+      },
+      "clone": {
+        "ms": 441977.33669999335,
+        "percent": 27.220931824732315
+      },
+      "seal": {
+        "ms": 5187.181899999474,
+        "percent": 0.319473224388913
+      },
+      "residualMs": {
+        "ms": 773208.2615000037,
+        "percent": 47.62110548418922
+      },
+      "serializationMs": {
+        "ms": 54573.468999994446,
+        "percent": 3.361124102379826
+      },
+      "hashingMs": {
+        "ms": 13740.189599996414,
+        "percent": 0.8462442150382866
+      },
+      "sqlWriteMs": {
+        "ms": 58841.54420000071,
+        "percent": 3.6239904857778122
+      },
+      "outsideEngineAndWrites": {
+        "ms": 142970.72870000824,
+        "percent": 8.805420856945227
+      }
+    },
+    "topThree": [
+      "residualMs",
+      "clone",
+      "outsideEngineAndWrites"
+    ]
+  },
+  {
+    "league": "us",
+    "games": 8790,
+    "commands": 219,
+    "wallMs": 13906535.934700001,
+    "initialHash": "305c73a6a4d691acbfa9fcee4fa4415a03805e54f89d44d974192c7ec47bc11d",
+    "finalHash": "aa45d79d61701bafe47d1b306a3a9c02d00af325e7d4c49c7620f0a3ddda73c2",
+    "categories": {
+      "simulation": {
+        "ms": 439533.9927999959,
+        "percent": 3.160628893233272
+      },
+      "dayClose": {
+        "ms": 371622.71179998736,
+        "percent": 2.672288149579388
+      },
+      "validation": {
+        "ms": 186586.66420010026,
+        "percent": 1.3417192108533922
+      },
+      "clone": {
+        "ms": 2144654.338400135,
+        "percent": 15.421916345455445
+      },
+      "seal": {
+        "ms": 21919.94770000301,
+        "percent": 0.15762334921457835
+      },
+      "residualMs": {
+        "ms": 2369216.326899774,
+        "percent": 17.036710925170336
+      },
+      "serializationMs": {
+        "ms": 1663732.0981998187,
+        "percent": 11.963670219615404
+      },
+      "hashingMs": {
+        "ms": 356669.2685999419,
+        "percent": 2.5647599824624203
+      },
+      "sqlWriteMs": {
+        "ms": 1318542.9493997167,
+        "percent": 9.48146221022339
+      },
+      "outsideEngineAndWrites": {
+        "ms": 5034057.636700528,
+        "percent": 36.199220714192364
+      }
+    },
+    "topThree": [
+      "outsideEngineAndWrites",
+      "residualMs",
+      "clone"
+    ]
+  }
+]

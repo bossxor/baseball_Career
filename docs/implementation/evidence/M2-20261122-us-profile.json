@@ -1,0 +1,5279 @@
+{
+  "backend": "pglite",
+  "databaseVersion": "17.5",
+  "league": "us",
+  "fixture": "controlled pre-season fixture",
+  "initialHash": "305c73a6a4d691acbfa9fcee4fa4415a03805e54f89d44d974192c7ec47bc11d",
+  "status": "season_review",
+  "commands": [
+    {
+      "type": "CAREER_US_PLAY_START",
+      "phase": "PRESEASON_SETUP",
+      "elapsedMs": 642.4234999999999,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 234.22000000000116,
+        "rowJsonMs": 0.001900000000205182,
+        "serializationMs": 234.22190000000137,
+        "hashingMs": 69.2506000000003,
+        "sqlWriteMs": 153.0538000000006
+      },
+      "engineTiming": {
+        "elapsedMs": 122.94689999999991,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0,
+        "clone": 0,
+        "seal": 33.78699999999844,
+        "residualMs": 89.15990000000147
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 27377.3407,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 995.5412999999971,
+        "rowJsonMs": 0.0015999999959603883,
+        "serializationMs": 995.5428999999931,
+        "hashingMs": 234.04830000003494,
+        "sqlWriteMs": 748.6055000000088
+      },
+      "engineTiming": {
+        "elapsedMs": 25155.7506,
+        "simulation": 4731.713899999949,
+        "dayClose": 2051.621299999998,
+        "validation": 886.3162999999768,
+        "clone": 3924.513999999788,
+        "seal": 931.2691999999706,
+        "residualMs": 12630.315900000318
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28696.330499999996,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 1356.369599999991,
+        "rowJsonMs": 0.0014999999984866008,
+        "serializationMs": 1356.3710999999894,
+        "hashingMs": 323.85780000002705,
+        "sqlWriteMs": 1039.9341000000495
+      },
+      "engineTiming": {
+        "elapsedMs": 25141.2229,
+        "simulation": 5034.964099999997,
+        "dayClose": 2294.6071000000084,
+        "validation": 855.497299999879,
+        "clone": 3694.7783999999447,
+        "seal": 488.6113000000187,
+        "residualMs": 12772.764700000153
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 29871.766100000008,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 1785.70640000001,
+        "rowJsonMs": 0.001799999998183921,
+        "serializationMs": 1785.7082000000082,
+        "hashingMs": 372.00299999993877,
+        "sqlWriteMs": 1380.146200000061
+      },
+      "engineTiming": {
+        "elapsedMs": 25146.778099999996,
+        "simulation": 5101.304299999931,
+        "dayClose": 2674.490300000005,
+        "validation": 900.7509000001155,
+        "clone": 4007.476699999912,
+        "seal": 448.8793000000733,
+        "residualMs": 12013.87659999996
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 27943.170900000012,
+      "status": 200,
+      "stop": "EVENT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 1993.8711000000476,
+        "rowJsonMs": 0.0019000000029336661,
+        "serializationMs": 1993.8730000000505,
+        "hashingMs": 405.7015000000538,
+        "sqlWriteMs": 1538.1132999999973
+      },
+      "engineTiming": {
+        "elapsedMs": 22700.972999999998,
+        "simulation": 4279.516499999998,
+        "dayClose": 2244.5764000000054,
+        "validation": 766.811699999962,
+        "clone": 3380.723499999862,
+        "seal": 372.11350000003586,
+        "residualMs": 11657.231400000135
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_RESOLVE_LEVEL",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 6923.167499999996,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 1964.8172000000777,
+        "rowJsonMs": 0.001799999998183921,
+        "serializationMs": 1964.819000000076,
+        "hashingMs": 388.4305999999924,
+        "sqlWriteMs": 1520.1874999998836
+      },
+      "engineTiming": {
+        "elapsedMs": 1719.901199999993,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0,
+        "clone": 0,
+        "seal": 18.542799999995623,
+        "residualMs": 1701.3583999999973
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 31282.151500000007,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 2223.06930000009,
+        "rowJsonMs": 0.001400000008288771,
+        "serializationMs": 2223.0707000000984,
+        "hashingMs": 456.9796000000206,
+        "sqlWriteMs": 1745.713599999901
+      },
+      "engineTiming": {
+        "elapsedMs": 25226.775399999984,
+        "simulation": 5160.412199999992,
+        "dayClose": 2506.7539000000106,
+        "validation": 887.3961999994062,
+        "clone": 3912.8864000008616,
+        "seal": 321.00920000017504,
+        "residualMs": 12438.317499999539
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 31666.417599999986,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 2225.986800000159,
+        "rowJsonMs": 0.0015999999886844307,
+        "serializationMs": 2225.9884000001475,
+        "hashingMs": 470.00920000023325,
+        "sqlWriteMs": 1640.0355000000272
+      },
+      "engineTiming": {
+        "elapsedMs": 25353.354300000006,
+        "simulation": 4614.043000000238,
+        "dayClose": 3705.306200000021,
+        "validation": 869.2420000006096,
+        "clone": 3717.9547999997158,
+        "seal": 311.24070000014035,
+        "residualMs": 12135.567599999282
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 32002.742500000022,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 2405.880599999946,
+        "rowJsonMs": 0.005399999994551763,
+        "serializationMs": 2405.8859999999404,
+        "hashingMs": 509.79670000003534,
+        "sqlWriteMs": 1848.2747000003
+      },
+      "engineTiming": {
+        "elapsedMs": 25225.570199999987,
+        "simulation": 4901.12950000001,
+        "dayClose": 2737.151200000051,
+        "validation": 902.4037000001117,
+        "clone": 3889.597699999984,
+        "seal": 283.5311000000511,
+        "residualMs": 12511.75699999978
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 15162.965299999982,
+      "status": 200,
+      "stop": "EVENT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 2420.767599999963,
+        "rowJsonMs": 0.002800000016577542,
+        "serializationMs": 2420.7703999999794,
+        "hashingMs": 530.9851999998791,
+        "sqlWriteMs": 1902.4623000001593
+      },
+      "engineTiming": {
+        "elapsedMs": 8205.327300000004,
+        "simulation": 1328.832999999955,
+        "dayClose": 842.6592999999993,
+        "validation": 424.29960000005667,
+        "clone": 1024.2827000001562,
+        "seal": 100.05900000003749,
+        "residualMs": 4485.1936999998
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_RESOLVE_WINDOW",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 8032.729700000025,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 2357.097400000377,
+        "rowJsonMs": 0.001500000013038516,
+        "serializationMs": 2357.09890000039,
+        "hashingMs": 512.3255999999237,
+        "sqlWriteMs": 1840.1287999998895
+      },
+      "engineTiming": {
+        "elapsedMs": 1213.0102000000188,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0,
+        "clone": 0,
+        "seal": 26.54609999997774,
+        "residualMs": 1186.464100000041
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 33225.68219999998,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 2757.5991999998805,
+        "rowJsonMs": 0.001500000013038516,
+        "serializationMs": 2757.6006999998935,
+        "hashingMs": 579.9236000002711,
+        "sqlWriteMs": 2268.034899999737
+      },
+      "engineTiming": {
+        "elapsedMs": 25316.12890000001,
+        "simulation": 4953.432899999199,
+        "dayClose": 3011.5223000000115,
+        "validation": 872.2430999994394,
+        "clone": 3843.8366999999853,
+        "seal": 251.69470000016736,
+        "residualMs": 12383.399200001208
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 33692.811600000015,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 2893.3645000001416,
+        "rowJsonMs": 0.002299999992828816,
+        "serializationMs": 2893.3668000001344,
+        "hashingMs": 593.2647000008146,
+        "sqlWriteMs": 2259.97519999987
+      },
+      "engineTiming": {
+        "elapsedMs": 25554.900900000008,
+        "simulation": 4936.656099999673,
+        "dayClose": 3179.0699000000604,
+        "validation": 907.0572999995202,
+        "clone": 3860.6933999998146,
+        "seal": 260.10319999972126,
+        "residualMs": 12411.321000001219
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 32551.021499999973,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 2481.023899999971,
+        "rowJsonMs": 0.001500000013038516,
+        "serializationMs": 2481.025399999984,
+        "hashingMs": 590.5024000003468,
+        "sqlWriteMs": 1951.754200000083
+      },
+      "engineTiming": {
+        "elapsedMs": 25302.978999999992,
+        "simulation": 5146.603599999391,
+        "dayClose": 1888.1815999999526,
+        "validation": 952.2874000008451,
+        "clone": 4013.8426999997464,
+        "seal": 225.14669999980833,
+        "residualMs": 13076.917000000249
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 33191.93059999996,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 2806.475900000194,
+        "rowJsonMs": 0.001999999978579581,
+        "serializationMs": 2806.4779000001727,
+        "hashingMs": 631.4600999996183,
+        "sqlWriteMs": 2195.673299999966
+      },
+      "engineTiming": {
+        "elapsedMs": 25146.777699999977,
+        "simulation": 4568.967399999616,
+        "dayClose": 3960.4419000000926,
+        "validation": 912.5810000011697,
+        "clone": 3645.30470000027,
+        "seal": 235.34419999993406,
+        "residualMs": 11824.138499998895
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 35452.2965,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 3580.537399999739,
+        "rowJsonMs": 0.002800000016577542,
+        "serializationMs": 3580.5401999997557,
+        "hashingMs": 719.8297999998322,
+        "sqlWriteMs": 2859.099199999997
+      },
+      "engineTiming": {
+        "elapsedMs": 25284.65599999996,
+        "simulation": 5173.0786999996635,
+        "dayClose": 2407.7710999999545,
+        "validation": 949.7604999999749,
+        "clone": 3873.979799999972,
+        "seal": 216.122599999886,
+        "residualMs": 12663.943300000508
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 27289.972500000033,
+      "status": 200,
+      "stop": "EVENT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 2775.422999999486,
+        "rowJsonMs": 0.0017999999690800905,
+        "serializationMs": 2775.424799999455,
+        "hashingMs": 649.081199999433,
+        "sqlWriteMs": 2212.2709000004106
+      },
+      "engineTiming": {
+        "elapsedMs": 18911.091000000015,
+        "simulation": 3137.5807999998215,
+        "dayClose": 2544.5849999999627,
+        "validation": 665.6519000000553,
+        "clone": 2439.720699999307,
+        "seal": 163.8145999998087,
+        "residualMs": 9959.73800000106
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_RESOLVE_LEVEL",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 11603.393500000006,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 2798.7757999998285,
+        "rowJsonMs": 0.001400000008288771,
+        "serializationMs": 2798.7771999998367,
+        "hashingMs": 626.1731000003056,
+        "sqlWriteMs": 2193.0265999998082
+      },
+      "engineTiming": {
+        "elapsedMs": 3306.3695999999763,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0,
+        "clone": 0,
+        "seal": 24.948399999993853,
+        "residualMs": 3281.4211999999825
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 33346.95140000002,
+      "status": 200,
+      "stop": "EVENT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 2967.83040000021,
+        "rowJsonMs": 0.0014000000664964318,
+        "serializationMs": 2967.8318000002764,
+        "hashingMs": 669.8420999990776,
+        "sqlWriteMs": 2357.0416000002297
+      },
+      "engineTiming": {
+        "elapsedMs": 24671.773999999976,
+        "simulation": 4162.99969999888,
+        "dayClose": 3937.3838000000687,
+        "validation": 893.033199997968,
+        "clone": 3272.556299998774,
+        "seal": 178.15180000045802,
+        "residualMs": 12227.649200003827
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_RESOLVE_WINDOW",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 10310.335299999919,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 2923.1892999989213,
+        "rowJsonMs": 0.0013000000035390258,
+        "serializationMs": 2923.190599998925,
+        "hashingMs": 667.005499999621,
+        "sqlWriteMs": 2288.201400000369
+      },
+      "engineTiming": {
+        "elapsedMs": 1523.5733999999939,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0,
+        "clone": 0,
+        "seal": 18.025399999925867,
+        "residualMs": 1505.548000000068
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 34463.51190000004,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 3118.5883999998914,
+        "rowJsonMs": 0.001500000013038516,
+        "serializationMs": 3118.5898999999044,
+        "hashingMs": 719.3975999993272,
+        "sqlWriteMs": 2443.103600000497
+      },
+      "engineTiming": {
+        "elapsedMs": 25307.531099999906,
+        "simulation": 4856.363300000201,
+        "dayClose": 2718.9148000000278,
+        "validation": 952.5361000006087,
+        "clone": 3743.8458999977447,
+        "seal": 187.00930000061635,
+        "residualMs": 12848.861700000707
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 34981.96479999996,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 3277.5601999982027,
+        "rowJsonMs": 0.0014000000664964318,
+        "serializationMs": 3277.5615999982692,
+        "hashingMs": 752.4329999999609,
+        "sqlWriteMs": 2640.165199999581
+      },
+      "engineTiming": {
+        "elapsedMs": 25310.7757,
+        "simulation": 4697.702800000203,
+        "dayClose": 3802.8300000000745,
+        "validation": 920.3726000016322,
+        "clone": 3564.169399999664,
+        "seal": 175.6909999990603,
+        "residualMs": 12150.009899999364
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 35878.63890000002,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 3443.132399999653,
+        "rowJsonMs": 0.0019000000320374966,
+        "serializationMs": 3443.134299999685,
+        "hashingMs": 795.5510000005597,
+        "sqlWriteMs": 2705.316499999608
+      },
+      "engineTiming": {
+        "elapsedMs": 25510.428700000048,
+        "simulation": 4838.88269999926,
+        "dayClose": 2971.4461000000592,
+        "validation": 953.8873000013409,
+        "clone": 3777.672600000631,
+        "seal": 174.7186000002548,
+        "residualMs": 12793.821399998502
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 35747.150999999954,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 3578.6605999995954,
+        "rowJsonMs": 0.0015999999595806003,
+        "serializationMs": 3578.662199999555,
+        "hashingMs": 784.6645999999018,
+        "sqlWriteMs": 2780.1437999996124
+      },
+      "engineTiming": {
+        "elapsedMs": 25398.71710000001,
+        "simulation": 4912.342700000037,
+        "dayClose": 2966.3828000001376,
+        "validation": 960.4418999999762,
+        "clone": 3765.689400001196,
+        "seal": 185.6679000001168,
+        "residualMs": 12608.192399998545
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 38042.17960000003,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 4469.664800000144,
+        "rowJsonMs": 0.00139999995008111,
+        "serializationMs": 4469.666200000094,
+        "hashingMs": 848.0559000005014,
+        "sqlWriteMs": 3554.04120000056
+      },
+      "engineTiming": {
+        "elapsedMs": 25380.839999999967,
+        "simulation": 5279.829400000628,
+        "dayClose": 1879.6639000000432,
+        "validation": 999.4503999999724,
+        "clone": 4070.886999999988,
+        "seal": 159.99060000025202,
+        "residualMs": 12991.018699999084
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 37279.75250000006,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 3962.472299998626,
+        "rowJsonMs": 0.001500000013038516,
+        "serializationMs": 3962.473799998639,
+        "hashingMs": 866.969700001413,
+        "sqlWriteMs": 3093.579099999508
+      },
+      "engineTiming": {
+        "elapsedMs": 25501.578000000096,
+        "simulation": 3572.693000001018,
+        "dayClose": 6097.197500000126,
+        "validation": 809.5074000002351,
+        "clone": 2811.1176999983145,
+        "seal": 178.60769999981858,
+        "residualMs": 12032.454700000584
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 36150.87969999993,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 3799.010099999141,
+        "rowJsonMs": 0.001500000013038516,
+        "serializationMs": 3799.011599999154,
+        "hashingMs": 837.2637999984436,
+        "sqlWriteMs": 2819.501099999645
+      },
+      "engineTiming": {
+        "elapsedMs": 25286.034700000077,
+        "simulation": 4912.134699999937,
+        "dayClose": 3018.3181999999797,
+        "validation": 968.9046000015223,
+        "clone": 3863.8187000034377,
+        "seal": 167.19860000023618,
+        "residualMs": 12355.659899994964
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 36622.41759999993,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 3636.336599999573,
+        "rowJsonMs": 0.001999999978579581,
+        "serializationMs": 3636.3385999995517,
+        "hashingMs": 836.6311000003479,
+        "sqlWriteMs": 2978.3481999990763
+      },
+      "engineTiming": {
+        "elapsedMs": 25550.843900000094,
+        "simulation": 4816.444299999508,
+        "dayClose": 3061.997800000012,
+        "validation": 949.8830000016605,
+        "clone": 3886.6492999986513,
+        "seal": 156.71560000034515,
+        "residualMs": 12679.153899999917
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 36395.038300000015,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 3520.137400001171,
+        "rowJsonMs": 0.0015999999595806003,
+        "serializationMs": 3520.1390000011306,
+        "hashingMs": 847.4449000005843,
+        "sqlWriteMs": 2778.5131000002148
+      },
+      "engineTiming": {
+        "elapsedMs": 25502.73359999992,
+        "simulation": 4567.369000000064,
+        "dayClose": 4237.324400000041,
+        "validation": 947.7054999987595,
+        "clone": 3611.29950000206,
+        "seal": 148.40460000000894,
+        "residualMs": 11990.630599998985
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 36149.69650000008,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 3650.530200000154,
+        "rowJsonMs": 0.00139999995008111,
+        "serializationMs": 3650.531600000104,
+        "hashingMs": 839.8047999993432,
+        "sqlWriteMs": 2877.7852000013227
+      },
+      "engineTiming": {
+        "elapsedMs": 25282.88690000004,
+        "simulation": 4807.704700000468,
+        "dayClose": 2906.8652999999467,
+        "validation": 1004.3738000002922,
+        "clone": 3839.4942999995546,
+        "seal": 149.62199999997392,
+        "residualMs": 12574.826799999806
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 36751.28119999997,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 3774.7906999983825,
+        "rowJsonMs": 0.0013000000035390258,
+        "serializationMs": 3774.791999998386,
+        "hashingMs": 865.9120999990264,
+        "sqlWriteMs": 3000.001299999072
+      },
+      "engineTiming": {
+        "elapsedMs": 25158.61540000001,
+        "simulation": 4847.46250000014,
+        "dayClose": 3118.25270000007,
+        "validation": 967.5964000027161,
+        "clone": 3818.6841000010027,
+        "seal": 163.00029999995604,
+        "residualMs": 12243.619399996125
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 17208.1091,
+      "status": 200,
+      "stop": "EVENT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 3827.1749000053387,
+        "rowJsonMs": 0.001500000013038516,
+        "serializationMs": 3827.1764000053518,
+        "hashingMs": 868.674399999436,
+        "sqlWriteMs": 3076.871199995978
+      },
+      "engineTiming": {
+        "elapsedMs": 5658.719599999953,
+        "simulation": 21.442999999970198,
+        "dayClose": 2599.966599999927,
+        "validation": 308.38520000036806,
+        "clone": 22.920699999667704,
+        "seal": 56.259199999971315,
+        "residualMs": 2649.744900000049
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_RESOLVE_LEVEL",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 15957.579900000012,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 3781.923099999083,
+        "rowJsonMs": 0.001299999887123704,
+        "serializationMs": 3781.9243999989703,
+        "hashingMs": 832.5501999997068,
+        "sqlWriteMs": 2973.954600000754
+      },
+      "engineTiming": {
+        "elapsedMs": 4659.724799999967,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0,
+        "clone": 0,
+        "seal": 18.602799999760464,
+        "residualMs": 4641.122000000207
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 37797.264300000155,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 3931.3941000015475,
+        "rowJsonMs": 0.0020000000949949026,
+        "serializationMs": 3931.3961000016425,
+        "hashingMs": 886.4799000006169,
+        "sqlWriteMs": 3048.186999998521
+      },
+      "engineTiming": {
+        "elapsedMs": 26212.782299999846,
+        "simulation": 4811.900700000813,
+        "dayClose": 4423.887999999803,
+        "validation": 957.2296000022907,
+        "clone": 3704.3595000016503,
+        "seal": 148.03419999941252,
+        "residualMs": 12167.370299995877
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 40021.83089999994,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 4976.370700003579,
+        "rowJsonMs": 0.0019000000320374966,
+        "serializationMs": 4976.372600003611,
+        "hashingMs": 920.148000002373,
+        "sqlWriteMs": 3796.2908999999054
+      },
+      "engineTiming": {
+        "elapsedMs": 26447.64910000004,
+        "simulation": 4990.543499998748,
+        "dayClose": 3553.1437000001315,
+        "validation": 1048.562700004084,
+        "clone": 3931.2793999989517,
+        "seal": 146.51510000019334,
+        "residualMs": 12777.60469999793
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 40947.89170000004,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5433.07409999962,
+        "rowJsonMs": 0.0026000000070780516,
+        "serializationMs": 5433.076699999627,
+        "hashingMs": 1082.1128000013996,
+        "sqlWriteMs": 4271.880600000266
+      },
+      "engineTiming": {
+        "elapsedMs": 25545.082799999975,
+        "simulation": 5509.466100002406,
+        "dayClose": 2311.5831999999937,
+        "validation": 1022.419599997811,
+        "clone": 3974.3840999999084,
+        "seal": 133.29369999933988,
+        "residualMs": 12593.936100000516
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 41102.28890000004,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5395.136699997354,
+        "rowJsonMs": 0.0019000000320374966,
+        "serializationMs": 5395.138599997386,
+        "hashingMs": 1140.2526000030339,
+        "sqlWriteMs": 4320.982399995206
+      },
+      "engineTiming": {
+        "elapsedMs": 25298.182299999986,
+        "simulation": 4614.760999999475,
+        "dayClose": 4349.908799999626,
+        "validation": 933.5346999978647,
+        "clone": 3490.0335000008345,
+        "seal": 135.86080000037327,
+        "residualMs": 11774.083500001812
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 39575.91150000016,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 4692.03600000008,
+        "rowJsonMs": 0.00139999995008111,
+        "serializationMs": 4692.03740000003,
+        "hashingMs": 1031.0307000016328,
+        "sqlWriteMs": 3657.9586999991443
+      },
+      "engineTiming": {
+        "elapsedMs": 25189.334299999988,
+        "simulation": 4493.597300000954,
+        "dayClose": 4289.359800000442,
+        "validation": 937.628900000127,
+        "clone": 3502.554999998538,
+        "seal": 140.9521999990102,
+        "residualMs": 11825.241100000916
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 38589.649499999825,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 4521.1930999967735,
+        "rowJsonMs": 0.003000000026077032,
+        "serializationMs": 4521.1960999968,
+        "hashingMs": 907.7961000010837,
+        "sqlWriteMs": 3454.127200001385
+      },
+      "engineTiming": {
+        "elapsedMs": 25340.62059999979,
+        "simulation": 4256.460899999365,
+        "dayClose": 3125.9504999998026,
+        "validation": 945.9262000001036,
+        "clone": 3233.7690999985207,
+        "seal": 104.81210000044666,
+        "residualMs": 13673.701800001552
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 38448.93059999985,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 4387.165699997218,
+        "rowJsonMs": 0.005500000203028321,
+        "serializationMs": 4387.171199997421,
+        "hashingMs": 918.1875000048894,
+        "sqlWriteMs": 3595.1463999999687
+      },
+      "engineTiming": {
+        "elapsedMs": 25260.197299999883,
+        "simulation": 4598.091999999015,
+        "dayClose": 4069.652199999895,
+        "validation": 992.8514999994077,
+        "clone": 3582.931399999419,
+        "seal": 149.89510000031441,
+        "residualMs": 11866.775100001832
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 38951.1213,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 4589.375800001435,
+        "rowJsonMs": 0.001600000075995922,
+        "serializationMs": 4589.377400001511,
+        "hashingMs": 1018.8729999994393,
+        "sqlWriteMs": 3605.028700001072
+      },
+      "engineTiming": {
+        "elapsedMs": 25290.57429999998,
+        "simulation": 4251.906399999512,
+        "dayClose": 5530.187600000063,
+        "validation": 908.9555000003893,
+        "clone": 3288.261499997694,
+        "seal": 141.18849999969825,
+        "residualMs": 11170.074800002621
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 39320.7276000001,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 4602.71129999822,
+        "rowJsonMs": 0.001999999862164259,
+        "serializationMs": 4602.713299998082,
+        "hashingMs": 1066.8141000010073,
+        "sqlWriteMs": 3675.7106999990065
+      },
+      "engineTiming": {
+        "elapsedMs": 25219.974099999992,
+        "simulation": 5055.1891999994405,
+        "dayClose": 2455.6976000000723,
+        "validation": 1049.7034999975003,
+        "clone": 3851.3955000042915,
+        "seal": 123.67149999924004,
+        "residualMs": 12684.316799999448
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 39501.90550000011,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 4592.598700000439,
+        "rowJsonMs": 0.0016999999061226845,
+        "serializationMs": 4592.600400000345,
+        "hashingMs": 1060.5872999974526,
+        "sqlWriteMs": 3738.853400001768
+      },
+      "engineTiming": {
+        "elapsedMs": 25549.52829999989,
+        "simulation": 4806.646000000881,
+        "dayClose": 3875.570300000254,
+        "validation": 1004.0580000004265,
+        "clone": 3657.1900999993086,
+        "seal": 133.37329999846406,
+        "residualMs": 12072.690600000555
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 41430.58799999999,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 4601.264599996852,
+        "rowJsonMs": 0.0020000000949949026,
+        "serializationMs": 4601.266599996947,
+        "hashingMs": 1066.2300000009127,
+        "sqlWriteMs": 3606.9170999967027
+      },
+      "engineTiming": {
+        "elapsedMs": 27262.511599999852,
+        "simulation": 4727.628799998667,
+        "dayClose": 5457.284899999853,
+        "validation": 1022.6669000021648,
+        "clone": 3615.145599999465,
+        "seal": 135.79360000044107,
+        "residualMs": 12303.991799999261
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 40268.89330000011,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5009.270600001095,
+        "rowJsonMs": 0.00139999995008111,
+        "serializationMs": 5009.272000001045,
+        "hashingMs": 1138.7265000010375,
+        "sqlWriteMs": 3964.0284000032116
+      },
+      "engineTiming": {
+        "elapsedMs": 25325.50689999992,
+        "simulation": 5096.481200001901,
+        "dayClose": 2159.2605000000913,
+        "validation": 1051.3935999984387,
+        "clone": 3919.9504000023007,
+        "seal": 122.01090000011027,
+        "residualMs": 12976.410299997078
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 42024.70259999996,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5721.466899997788,
+        "rowJsonMs": 0.002099999925121665,
+        "serializationMs": 5721.468999997713,
+        "hashingMs": 1185.6357000020798,
+        "sqlWriteMs": 4408.054800000042
+      },
+      "engineTiming": {
+        "elapsedMs": 25244.17240000004,
+        "simulation": 5177.170199999586,
+        "dayClose": 2615.9908000000287,
+        "validation": 1046.5219000002835,
+        "clone": 3860.062300002668,
+        "seal": 138.6705000011716,
+        "residualMs": 12405.756699996302
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 43714.55790000013,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6059.180399999954,
+        "rowJsonMs": 0.002400000113993883,
+        "serializationMs": 6059.182800000068,
+        "hashingMs": 1259.340899998555,
+        "sqlWriteMs": 4990.012899998808
+      },
+      "engineTiming": {
+        "elapsedMs": 25805.87469999981,
+        "simulation": 4512.757499999832,
+        "dayClose": 5188.932499999879,
+        "validation": 980.7654999985825,
+        "clone": 3523.5894000001717,
+        "seal": 150.8394000006374,
+        "residualMs": 11448.990400000708
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 43836.74710000004,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6359.069799994351,
+        "rowJsonMs": 0.0021000001579523087,
+        "serializationMs": 6359.071899994509,
+        "hashingMs": 1235.6535999982152,
+        "sqlWriteMs": 4955.83400000073
+      },
+      "engineTiming": {
+        "elapsedMs": 25515.14910000004,
+        "simulation": 5101.101000000723,
+        "dayClose": 2174.4281000001356,
+        "validation": 1081.1403999999166,
+        "clone": 3992.2486999989487,
+        "seal": 117.98049999936484,
+        "residualMs": 13048.25040000095
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 29524.77410000004,
+      "status": 200,
+      "stop": "EVENT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6697.110199996736,
+        "rowJsonMs": 0.002099999925121665,
+        "serializationMs": 6697.112299996661,
+        "hashingMs": 1253.9277000029106,
+        "sqlWriteMs": 5271.295799999498
+      },
+      "engineTiming": {
+        "elapsedMs": 11359.069200000027,
+        "simulation": 913.7135000000708,
+        "dayClose": 2252.5813999997918,
+        "validation": 500.7138000014238,
+        "clone": 803.5654999990948,
+        "seal": 68.36220000032336,
+        "residualMs": 6820.132799999323
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_RESOLVE_LEVEL",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 23264.55199999991,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5107.267699998803,
+        "rowJsonMs": 0.001299999887123704,
+        "serializationMs": 5107.268999998691,
+        "hashingMs": 1093.990200003609,
+        "sqlWriteMs": 4077.8711999980733
+      },
+      "engineTiming": {
+        "elapsedMs": 7226.829900000012,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0,
+        "clone": 0,
+        "seal": 24.89629999990575,
+        "residualMs": 7201.933600000106
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 39770.431700000074,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 4754.457100003958,
+        "rowJsonMs": 0.001500000013038516,
+        "serializationMs": 4754.458600003971,
+        "hashingMs": 1080.465099999914,
+        "sqlWriteMs": 3706.7400000002235
+      },
+      "engineTiming": {
+        "elapsedMs": 25339.86039999989,
+        "simulation": 4961.611200001091,
+        "dayClose": 3721.27379999985,
+        "validation": 1027.3530999969225,
+        "clone": 3647.7281000013463,
+        "seal": 110.11160000017844,
+        "residualMs": 11871.7826000005
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 40925.024399999995,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 4847.69560000184,
+        "rowJsonMs": 0.0015999998431652784,
+        "serializationMs": 4847.697200001683,
+        "hashingMs": 1124.8060999999288,
+        "sqlWriteMs": 3820.0037999977358
+      },
+      "engineTiming": {
+        "elapsedMs": 26311.90280000004,
+        "simulation": 4790.361000000266,
+        "dayClose": 4180.194900000002,
+        "validation": 1045.401000001002,
+        "clone": 3746.226399994688,
+        "seal": 141.30130000063218,
+        "residualMs": 12408.418200003449
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 40606.01319999993,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 4964.096100001596,
+        "rowJsonMs": 0.0016999999061226845,
+        "serializationMs": 4964.097800001502,
+        "hashingMs": 1119.3198999997694,
+        "sqlWriteMs": 3872.503699997207
+      },
+      "engineTiming": {
+        "elapsedMs": 25641.0793000001,
+        "simulation": 4895.9184999999125,
+        "dayClose": 2334.371999999974,
+        "validation": 1092.4807999997865,
+        "clone": 3691.48420000216,
+        "seal": 110.9823999996297,
+        "residualMs": 13515.841399998637
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 42020.4654000001,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5428.728100001346,
+        "rowJsonMs": 0.0014999997802078724,
+        "serializationMs": 5428.7296000011265,
+        "hashingMs": 1197.1703000068665,
+        "sqlWriteMs": 4883.304399996996
+      },
+      "engineTiming": {
+        "elapsedMs": 25549.661399999866,
+        "simulation": 4416.223500000546,
+        "dayClose": 5697.312399999471,
+        "validation": 976.3668999986257,
+        "clone": 3304.4913000029046,
+        "seal": 109.58920000120997,
+        "residualMs": 11045.678099997109
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 40801.60679999972,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5162.6368999998085,
+        "rowJsonMs": 0.002199999988079071,
+        "serializationMs": 5162.639099999797,
+        "hashingMs": 1155.4847999946214,
+        "sqlWriteMs": 3998.175299999304
+      },
+      "engineTiming": {
+        "elapsedMs": 25415.1212000004,
+        "simulation": 4664.266699999571,
+        "dayClose": 4196.017200000584,
+        "validation": 1029.5595000004396,
+        "clone": 3597.8541000001132,
+        "seal": 118.60190000059083,
+        "residualMs": 11808.821799999103
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 40936.80890000006,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5086.977099993266,
+        "rowJsonMs": 0.0013000001199543476,
+        "serializationMs": 5086.978399993386,
+        "hashingMs": 1177.7751000002027,
+        "sqlWriteMs": 4109.921599992551
+      },
+      "engineTiming": {
+        "elapsedMs": 25299.08230000036,
+        "simulation": 4612.484799998812,
+        "dayClose": 4443.878599999938,
+        "validation": 1023.3772000018507,
+        "clone": 3571.547399996314,
+        "seal": 119.10749999945983,
+        "residualMs": 11528.686800003983
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 42437.310999999754,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5179.628099993803,
+        "rowJsonMs": 0.0012999996542930603,
+        "serializationMs": 5179.629399993457,
+        "hashingMs": 1179.688500015065,
+        "sqlWriteMs": 4023.6657000049017
+      },
+      "engineTiming": {
+        "elapsedMs": 26875.07340000011,
+        "simulation": 4641.28689999599,
+        "dayClose": 5818.977500000037,
+        "validation": 1032.0202000015415,
+        "clone": 3476.4147999985144,
+        "seal": 113.04869999922812,
+        "residualMs": 11793.325300004799
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 43711.18969999999,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5518.243899997324,
+        "rowJsonMs": 0.002599999774247408,
+        "serializationMs": 5518.246499997098,
+        "hashingMs": 1206.6014000014402,
+        "sqlWriteMs": 4169.41000000434
+      },
+      "engineTiming": {
+        "elapsedMs": 27598.91460000025,
+        "simulation": 5240.747299995739,
+        "dayClose": 4253.4523000000045,
+        "validation": 1110.0555999986827,
+        "clone": 3927.447999997996,
+        "seal": 122.0472000008449,
+        "residualMs": 12945.164200006984
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 44620.94459999958,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5771.778799996711,
+        "rowJsonMs": 0.00139999995008111,
+        "serializationMs": 5771.780199996661,
+        "hashingMs": 1214.2490000035614,
+        "sqlWriteMs": 4423.259200005792
+      },
+      "engineTiming": {
+        "elapsedMs": 27879.919400000013,
+        "simulation": 5285.731199998874,
+        "dayClose": 4461.096800000407,
+        "validation": 1102.4895000085235,
+        "clone": 3923.063200001605,
+        "seal": 106.85679999738932,
+        "residualMs": 13000.681899993215
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 41711.764800000004,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5597.968799995258,
+        "rowJsonMs": 0.0012999996542930603,
+        "serializationMs": 5597.970099994913,
+        "hashingMs": 1195.8285999968648,
+        "sqlWriteMs": 4310.294100002851
+      },
+      "engineTiming": {
+        "elapsedMs": 25280.22279999964,
+        "simulation": 5142.717800001614,
+        "dayClose": 2318.36419999972,
+        "validation": 1105.5677000023425,
+        "clone": 3976.4829999986105,
+        "seal": 105.7836999995634,
+        "residualMs": 12631.30639999779
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 42168.822399999946,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5636.992500000633,
+        "rowJsonMs": 0.0014999997802078724,
+        "serializationMs": 5636.9940000004135,
+        "hashingMs": 1195.9462999994867,
+        "sqlWriteMs": 4354.3687000004575
+      },
+      "engineTiming": {
+        "elapsedMs": 25512.187600000296,
+        "simulation": 4315.8897999986075,
+        "dayClose": 6450.42920000013,
+        "validation": 981.3498999979347,
+        "clone": 3157.287200001534,
+        "seal": 105.25439999857917,
+        "residualMs": 10501.97710000351
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 42292.092200000305,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5585.129699996207,
+        "rowJsonMs": 0.001600000075995922,
+        "serializationMs": 5585.131299996283,
+        "hashingMs": 1242.5201999992132,
+        "sqlWriteMs": 4387.758799999487
+      },
+      "engineTiming": {
+        "elapsedMs": 25654.090100000147,
+        "simulation": 4711.220899999142,
+        "dayClose": 4657.4849000000395,
+        "validation": 1047.5240999986418,
+        "clone": 3646.0699999998324,
+        "seal": 105.98270000051707,
+        "residualMs": 11485.807500001974
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 44274.03600000031,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5654.707500010729,
+        "rowJsonMs": 0.0018000002019107342,
+        "serializationMs": 5654.709300010931,
+        "hashingMs": 1225.397200000938,
+        "sqlWriteMs": 4439.070499998052
+      },
+      "engineTiming": {
+        "elapsedMs": 27438.74339999957,
+        "simulation": 5083.08370000124,
+        "dayClose": 4411.202700000256,
+        "validation": 1099.4918999993242,
+        "clone": 3967.0902999988757,
+        "seal": 123.23129999963567,
+        "residualMs": 12754.643500000238
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 42774.133099999744,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5796.177399992477,
+        "rowJsonMs": 0.0015000002458691597,
+        "serializationMs": 5796.178899992723,
+        "hashingMs": 1249.1619000039063,
+        "sqlWriteMs": 4465.599899994209
+      },
+      "engineTiming": {
+        "elapsedMs": 25523.35340000037,
+        "simulation": 4549.8780999993905,
+        "dayClose": 4416.179099999834,
+        "validation": 1053.0627999976277,
+        "clone": 3376.3124999995343,
+        "seal": 97.54619999788702,
+        "residualMs": 12030.374700006098
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 42857.790700000245,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5782.7049999986775,
+        "rowJsonMs": 0.0013000001199543476,
+        "serializationMs": 5782.7062999987975,
+        "hashingMs": 1260.6299000019208,
+        "sqlWriteMs": 4479.923999995459
+      },
+      "engineTiming": {
+        "elapsedMs": 25724.227599999867,
+        "simulation": 4510.685500001535,
+        "dayClose": 6344.528500000481,
+        "validation": 1022.5548000028357,
+        "clone": 3297.7488999981433,
+        "seal": 109.39899999741465,
+        "residualMs": 10439.310899999458
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 42469.039499999955,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5667.191799992695,
+        "rowJsonMs": 0.0017999997362494469,
+        "serializationMs": 5667.193599992432,
+        "hashingMs": 1261.1637999992818,
+        "sqlWriteMs": 4433.2042000000365
+      },
+      "engineTiming": {
+        "elapsedMs": 25373.673299999908,
+        "simulation": 4735.854499998502,
+        "dayClose": 4222.972999999765,
+        "validation": 1055.2509000045247,
+        "clone": 3701.732799995225,
+        "seal": 101.0180999985896,
+        "residualMs": 11556.8440000033
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 42899.78750000009,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5865.045700005256,
+        "rowJsonMs": 0.002199999988079071,
+        "serializationMs": 5865.047900005244,
+        "hashingMs": 1272.4771999944933,
+        "sqlWriteMs": 4606.314000000246
+      },
+      "engineTiming": {
+        "elapsedMs": 25365.947200000286,
+        "simulation": 4218.535200002138,
+        "dayClose": 6377.230300000869,
+        "validation": 1053.5000999993645,
+        "clone": 3277.2025000015274,
+        "seal": 93.38949999958277,
+        "residualMs": 10346.089599996805
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 43166.5129999998,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5892.027700002771,
+        "rowJsonMs": 0.0014999997802078724,
+        "serializationMs": 5892.029200002551,
+        "hashingMs": 1255.1271000066772,
+        "sqlWriteMs": 4558.131599996705
+      },
+      "engineTiming": {
+        "elapsedMs": 25560.307299999986,
+        "simulation": 4432.391599999275,
+        "dayClose": 4393.901699999813,
+        "validation": 1085.2662000083365,
+        "clone": 3571.57839999767,
+        "seal": 95.77130000293255,
+        "residualMs": 11981.398099991959
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 46676.253700000234,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5882.878899998963,
+        "rowJsonMs": 0.001199999824166298,
+        "serializationMs": 5882.880099998787,
+        "hashingMs": 1293.257099997718,
+        "sqlWriteMs": 4730.306199999992
+      },
+      "engineTiming": {
+        "elapsedMs": 28910.52120000031,
+        "simulation": 4593.250700001605,
+        "dayClose": 8505.402599999215,
+        "validation": 1037.561699994374,
+        "clone": 3502.632000001613,
+        "seal": 110.24490000260994,
+        "residualMs": 11161.429300000891
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 44403.35020000022,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6156.960800003726,
+        "rowJsonMs": 0.0016999999061226845,
+        "serializationMs": 6156.962500003632,
+        "hashingMs": 1412.3818999966606,
+        "sqlWriteMs": 4887.694599989802
+      },
+      "engineTiming": {
+        "elapsedMs": 25862.01519999979,
+        "simulation": 4821.074199999217,
+        "dayClose": 4859.097000000067,
+        "validation": 1076.4190999981947,
+        "clone": 3811.9642000007443,
+        "seal": 101.97589999996126,
+        "residualMs": 11191.484800001606
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 44232.667100000195,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6363.410299998708,
+        "rowJsonMs": 0.00139999995008111,
+        "serializationMs": 6363.411699998658,
+        "hashingMs": 1408.7390999905765,
+        "sqlWriteMs": 4893.921400001738
+      },
+      "engineTiming": {
+        "elapsedMs": 25501.63540000003,
+        "simulation": 4510.208400000818,
+        "dayClose": 5034.829199999571,
+        "validation": 1077.2672000052407,
+        "clone": 3599.491900002118,
+        "seal": 95.4352000001818,
+        "residualMs": 11184.403499992099
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 44487.77070000023,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6241.303700001445,
+        "rowJsonMs": 0.0014999997802078724,
+        "serializationMs": 6241.305200001225,
+        "hashingMs": 1334.0418000007048,
+        "sqlWriteMs": 4915.829500001855
+      },
+      "engineTiming": {
+        "elapsedMs": 25903.067299999762,
+        "simulation": 4339.087100001983,
+        "dayClose": 6933.412599999923,
+        "validation": 1050.8496999992058,
+        "clone": 3337.395000005141,
+        "seal": 98.96799999987707,
+        "residualMs": 10143.354899993632
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 45769.22770000016,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6744.020900001749,
+        "rowJsonMs": 0.002599999774247408,
+        "serializationMs": 6744.023500001524,
+        "hashingMs": 1492.3741000066511,
+        "sqlWriteMs": 5487.654900002293
+      },
+      "engineTiming": {
+        "elapsedMs": 25652.55979999993,
+        "simulation": 4509.582699997816,
+        "dayClose": 5366.5541000002995,
+        "validation": 1030.6796999992803,
+        "clone": 3511.0402999985963,
+        "seal": 103.14659999962896,
+        "residualMs": 11131.556400004309
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 43627.56059999997,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 5917.11310000252,
+        "rowJsonMs": 0.001600000075995922,
+        "serializationMs": 5917.114700002596,
+        "hashingMs": 1327.6050999988802,
+        "sqlWriteMs": 4681.94490000559
+      },
+      "engineTiming": {
+        "elapsedMs": 25551.307499999646,
+        "simulation": 4810.720899997279,
+        "dayClose": 4681.701599999797,
+        "validation": 1068.1754000037909,
+        "clone": 3701.6554999980144,
+        "seal": 110.20859999815002,
+        "residualMs": 11178.845500002615
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 43750.53049999988,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6118.15970000159,
+        "rowJsonMs": 0.001999999862164259,
+        "serializationMs": 6118.161700001452,
+        "hashingMs": 1374.2559000025503,
+        "sqlWriteMs": 4901.084400005639
+      },
+      "engineTiming": {
+        "elapsedMs": 25292.544300000183,
+        "simulation": 4022.300899999682,
+        "dayClose": 6990.694199999794,
+        "validation": 1020.2106000026688,
+        "clone": 3196.328900000546,
+        "seal": 89.42330000083894,
+        "residualMs": 9973.586399996653
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 46669.258400000166,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6270.841799993534,
+        "rowJsonMs": 0.001600000075995922,
+        "serializationMs": 6270.84339999361,
+        "hashingMs": 1320.1077000079677,
+        "sqlWriteMs": 5109.44020000007
+      },
+      "engineTiming": {
+        "elapsedMs": 27712.814900000114,
+        "simulation": 4060.1234000022523,
+        "dayClose": 8748.09639999969,
+        "validation": 1008.1012999960221,
+        "clone": 3465.106099996716,
+        "seal": 93.05109999980778,
+        "residualMs": 10338.336600005627
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 44818.631599999964,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6455.142700003926,
+        "rowJsonMs": 0.0015000002458691597,
+        "serializationMs": 6455.144200004172,
+        "hashingMs": 1427.9575000084005,
+        "sqlWriteMs": 4988.282300000079
+      },
+      "engineTiming": {
+        "elapsedMs": 25705.847899999935,
+        "simulation": 3653.480699999258,
+        "dayClose": 8525.173799999524,
+        "validation": 975.189099995885,
+        "clone": 3323.5916999964975,
+        "seal": 79.07799999928102,
+        "residualMs": 9149.33460000949
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 31304.6353000002,
+      "status": 200,
+      "stop": "EVENT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6612.683399998583,
+        "rowJsonMs": 0.001600000075995922,
+        "serializationMs": 6612.684999998659,
+        "hashingMs": 1309.8207999984734,
+        "sqlWriteMs": 4873.334200001787
+      },
+      "engineTiming": {
+        "elapsedMs": 12167.38850000035,
+        "simulation": 1702.836600002367,
+        "dayClose": 4336.743999999482,
+        "validation": 626.1036999970675,
+        "clone": 1310.3758999975398,
+        "seal": 58.46510000061244,
+        "residualMs": 4132.863200003281
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_CREATE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 18948.891900000162,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6091.366199997254,
+        "rowJsonMs": 0.0022999998182058334,
+        "serializationMs": 6091.368499997072,
+        "hashingMs": 1346.6235000020824,
+        "sqlWriteMs": 4890.206199994311
+      },
+      "engineTiming": {
+        "elapsedMs": 299.6018999996595,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0,
+        "clone": 0,
+        "seal": 17.835800000000745,
+        "residualMs": 281.76609999965876
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 44101.928100000136,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6207.607399998233,
+        "rowJsonMs": 0.0013000001199543476,
+        "serializationMs": 6207.608699998353,
+        "hashingMs": 1320.2519999993965,
+        "sqlWriteMs": 4770.379900001455
+      },
+      "engineTiming": {
+        "elapsedMs": 25483.126000000164,
+        "simulation": 1127.5151999988593,
+        "dayClose": 1006.7085999990813,
+        "validation": 196.7598000029102,
+        "clone": 8822.953599999193,
+        "seal": 22.54369999980554,
+        "residualMs": 14306.645100000314
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 45209.86120000016,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6469.370199997444,
+        "rowJsonMs": 0.00139999995008111,
+        "serializationMs": 6469.371599997394,
+        "hashingMs": 1476.1508000004105,
+        "sqlWriteMs": 5358.656499991193
+      },
+      "engineTiming": {
+        "elapsedMs": 25479.5131000001,
+        "simulation": 1240.2195999980904,
+        "dayClose": 803.6282999995165,
+        "validation": 158.15490000275895,
+        "clone": 10361.793300002348,
+        "seal": 26.74420000007376,
+        "residualMs": 12888.972799997311
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 45702.153500000015,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6587.030499999411,
+        "rowJsonMs": 0.0018000002019107342,
+        "serializationMs": 6587.032299999613,
+        "hashingMs": 1490.9331000046805,
+        "sqlWriteMs": 5320.912699997891
+      },
+      "engineTiming": {
+        "elapsedMs": 25468.182700000238,
+        "simulation": 1186.8613999984227,
+        "dayClose": 774.2882999996655,
+        "validation": 146.23690000269562,
+        "clone": 10629.67400000384,
+        "seal": 20.77680000010878,
+        "residualMs": 12710.345299995504
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 45882.58309999993,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6552.6872999910265,
+        "rowJsonMs": 0.003399999812245369,
+        "serializationMs": 6552.690699990839,
+        "hashingMs": 1482.0078000021167,
+        "sqlWriteMs": 5056.443400003947
+      },
+      "engineTiming": {
+        "elapsedMs": 25937.805399999954,
+        "simulation": 1291.0351000018418,
+        "dayClose": 998.241199999582,
+        "validation": 177.59030000306666,
+        "clone": 10613.731100003235,
+        "seal": 28.071599999908358,
+        "residualMs": 12829.13609999232
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 45504.45539999986,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6470.180600003805,
+        "rowJsonMs": 0.0032999999821186066,
+        "serializationMs": 6470.183900003787,
+        "hashingMs": 1495.7947999974713,
+        "sqlWriteMs": 5417.545599996112
+      },
+      "engineTiming": {
+        "elapsedMs": 25356.323600000236,
+        "simulation": 1286.820999996271,
+        "dayClose": 655.4225000003353,
+        "validation": 159.33550000283867,
+        "clone": 10959.533099999651,
+        "seal": 21.618599999230355,
+        "residualMs": 12273.59290000191
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 45614.36059999978,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6488.2081999988295,
+        "rowJsonMs": 0.001999999862164259,
+        "serializationMs": 6488.210199998692,
+        "hashingMs": 1365.9585000034422,
+        "sqlWriteMs": 5341.600099988282
+      },
+      "engineTiming": {
+        "elapsedMs": 25653.04650000017,
+        "simulation": 1259.0023000002839,
+        "dayClose": 732.2319000000134,
+        "validation": 168.82150000473484,
+        "clone": 11434.708799999673,
+        "seal": 23.51230000006035,
+        "residualMs": 12034.769699995406
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 46945.54589999979,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6875.722099996172,
+        "rowJsonMs": 0.0017000003717839718,
+        "serializationMs": 6875.723799996544,
+        "hashingMs": 1511.5315999975428,
+        "sqlWriteMs": 5496.522699999623
+      },
+      "engineTiming": {
+        "elapsedMs": 26103.9197999998,
+        "simulation": 1256.7709000017494,
+        "dayClose": 665.5087000010535,
+        "validation": 184.03629999840632,
+        "clone": 11217.917500003707,
+        "seal": 28.822000000160187,
+        "residualMs": 12750.864399994723
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 46899.39490000019,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6802.403999996837,
+        "rowJsonMs": 0.0036999997682869434,
+        "serializationMs": 6802.4076999966055,
+        "hashingMs": 1554.758999993559,
+        "sqlWriteMs": 5770.007800003514
+      },
+      "engineTiming": {
+        "elapsedMs": 25477.497999999672,
+        "simulation": 1206.6748000006191,
+        "dayClose": 670.9631999996491,
+        "validation": 157.38269999949262,
+        "clone": 11217.62610000046,
+        "seal": 86.38779999967664,
+        "residualMs": 12138.463399999775
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 47691.09359999979,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7019.33830000693,
+        "rowJsonMs": 0.0037000002339482307,
+        "serializationMs": 7019.342000007164,
+        "hashingMs": 1487.009899994824,
+        "sqlWriteMs": 5927.268599996809
+      },
+      "engineTiming": {
+        "elapsedMs": 26137.151500000153,
+        "simulation": 1232.951900000684,
+        "dayClose": 585.8290000003763,
+        "validation": 151.22659999970347,
+        "clone": 11530.815900000744,
+        "seal": 29.883399999700487,
+        "residualMs": 12606.444699998945
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 46633.136100000236,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6836.093200001866,
+        "rowJsonMs": 0.00139999995008111,
+        "serializationMs": 6836.094600001816,
+        "hashingMs": 1502.0620000045747,
+        "sqlWriteMs": 5615.259099996649
+      },
+      "engineTiming": {
+        "elapsedMs": 25570.089000000153,
+        "simulation": 1220.0396000011824,
+        "dayClose": 712.5348000009544,
+        "validation": 137.11679999995977,
+        "clone": 11735.062599998899,
+        "seal": 25.910600000061095,
+        "residualMs": 11739.424599999096
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 46979.79749999987,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 6674.203699995298,
+        "rowJsonMs": 0.0026000002399086952,
+        "serializationMs": 6674.206299995538,
+        "hashingMs": 1523.4207999967039,
+        "sqlWriteMs": 5546.706999994814
+      },
+      "engineTiming": {
+        "elapsedMs": 26010.92570000002,
+        "simulation": 1506.6701999995857,
+        "dayClose": 697.0390999997035,
+        "validation": 136.91480000084266,
+        "clone": 11534.033499996644,
+        "seal": 25.968799999449402,
+        "residualMs": 12110.299300003797
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49411.02110000001,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7253.491400004365,
+        "rowJsonMs": 0.0026000002399086952,
+        "serializationMs": 7253.4940000046045,
+        "hashingMs": 1539.9743000022136,
+        "sqlWriteMs": 6064.741299997084
+      },
+      "engineTiming": {
+        "elapsedMs": 26999.234500000253,
+        "simulation": 1381.7203999976628,
+        "dayClose": 657.7124000005424,
+        "validation": 164.45040000323206,
+        "clone": 12494.706499994732,
+        "seal": 24.468299999833107,
+        "residualMs": 12276.17650000425
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 47043.59520000033,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7180.751799998805,
+        "rowJsonMs": 0.001700000837445259,
+        "serializationMs": 7180.753499999642,
+        "hashingMs": 1481.8626999901608,
+        "sqlWriteMs": 5586.110800000839
+      },
+      "engineTiming": {
+        "elapsedMs": 25766.48949999921,
+        "simulation": 1252.3798999972641,
+        "dayClose": 662.6667999997735,
+        "validation": 134.70439999643713,
+        "clone": 11813.451800002716,
+        "seal": 18.857799999415874,
+        "residualMs": 11884.428800003603
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 47210.70349999983,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7001.516500009224,
+        "rowJsonMs": 0.001600000075995922,
+        "serializationMs": 7001.5181000093,
+        "hashingMs": 1466.2659999877214,
+        "sqlWriteMs": 5658.633700012229
+      },
+      "engineTiming": {
+        "elapsedMs": 26094.468500000425,
+        "simulation": 1218.531500001438,
+        "dayClose": 593.3719000015408,
+        "validation": 137.83530000410974,
+        "clone": 11768.843300002627,
+        "seal": 18.585500000044703,
+        "residualMs": 12357.300999990664
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 48072.07670000009,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7150.188099987805,
+        "rowJsonMs": 0.003100000321865082,
+        "serializationMs": 7150.191199988127,
+        "hashingMs": 1567.7176999747753,
+        "sqlWriteMs": 5818.6226999964565
+      },
+      "engineTiming": {
+        "elapsedMs": 26561.75549999997,
+        "simulation": 1321.806799998507,
+        "dayClose": 737.1707999976352,
+        "validation": 134.6225000023842,
+        "clone": 12440.666799995117,
+        "seal": 21.147400001063943,
+        "residualMs": 11906.341200005263
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 47766.2117999997,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7075.764699993655,
+        "rowJsonMs": 0.0027000000700354576,
+        "serializationMs": 7075.767399993725,
+        "hashingMs": 1577.8929999908432,
+        "sqlWriteMs": 5943.702999979258
+      },
+      "engineTiming": {
+        "elapsedMs": 26004.905700000003,
+        "simulation": 1531.72059999872,
+        "dayClose": 544.0535000022501,
+        "validation": 175.83039999380708,
+        "clone": 11823.816899999976,
+        "seal": 18.158799999393523,
+        "residualMs": 11911.325500005856
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49255.1847000001,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7145.892599997111,
+        "rowJsonMs": 0.00279999990016222,
+        "serializationMs": 7145.895399997011,
+        "hashingMs": 1510.8520999858156,
+        "sqlWriteMs": 6015.758099996485
+      },
+      "engineTiming": {
+        "elapsedMs": 26844.968299999833,
+        "simulation": 1333.6909000007436,
+        "dayClose": 1080.7478999989107,
+        "validation": 154.68319999892265,
+        "clone": 11932.044599991292,
+        "seal": 19.346000000834465,
+        "residualMs": 12324.45570000913
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 47786.08650000021,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7128.449499979615,
+        "rowJsonMs": 0.0026000002399086952,
+        "serializationMs": 7128.452099979855,
+        "hashingMs": 1655.0607000216842,
+        "sqlWriteMs": 6093.652100003324
+      },
+      "engineTiming": {
+        "elapsedMs": 25655.24749999959,
+        "simulation": 1189.6001000013202,
+        "dayClose": 536.2379999998957,
+        "validation": 150.93490000162274,
+        "clone": 11609.272700001486,
+        "seal": 17.786499999463558,
+        "residualMs": 12151.415299995802
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 50087.48909999989,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7437.298599982634,
+        "rowJsonMs": 0.006599999964237213,
+        "serializationMs": 7437.305199982598,
+        "hashingMs": 1671.8638000013307,
+        "sqlWriteMs": 6139.125100001693
+      },
+      "engineTiming": {
+        "elapsedMs": 27094.751500000246,
+        "simulation": 1601.10369999893,
+        "dayClose": 956.8925999999046,
+        "validation": 133.60040000267327,
+        "clone": 12950.160099996254,
+        "seal": 19.442400000058115,
+        "residualMs": 11433.552300002426
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49980.300400000066,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7573.799700009637,
+        "rowJsonMs": 0.0014000004157423973,
+        "serializationMs": 7573.801100010052,
+        "hashingMs": 1738.3317999998108,
+        "sqlWriteMs": 6299.784200008027
+      },
+      "engineTiming": {
+        "elapsedMs": 26669.615000000224,
+        "simulation": 1310.6882999967784,
+        "dayClose": 583.5271999994293,
+        "validation": 171.09150000102818,
+        "clone": 11992.266200004146,
+        "seal": 32.585399999283254,
+        "residualMs": 12579.456399999559
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 50334.4924000008,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7662.616499997675,
+        "rowJsonMs": 0.003399999812245369,
+        "serializationMs": 7662.619899997488,
+        "hashingMs": 1725.228000014089,
+        "sqlWriteMs": 6143.267999992706
+      },
+      "engineTiming": {
+        "elapsedMs": 26917.16030000057,
+        "simulation": 1222.29639999941,
+        "dayClose": 607.4556999998167,
+        "validation": 153.5004999982193,
+        "clone": 12629.783899995498,
+        "seal": 18.738899999298155,
+        "residualMs": 12285.384900008328
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49727.3825000003,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7612.060500017367,
+        "rowJsonMs": 0.0016999999061226845,
+        "serializationMs": 7612.062200017273,
+        "hashingMs": 1751.307599985972,
+        "sqlWriteMs": 6421.474700003862
+      },
+      "engineTiming": {
+        "elapsedMs": 26101.375400000252,
+        "simulation": 1242.5789999999106,
+        "dayClose": 458.25260000117123,
+        "validation": 136.44350000098348,
+        "clone": 11809.43260000553,
+        "seal": 30.40309999883175,
+        "residualMs": 12424.264599993825
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 47748.22609999962,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7196.900100001134,
+        "rowJsonMs": 0.0015000002458691597,
+        "serializationMs": 7196.90160000138,
+        "hashingMs": 1561.9918999895453,
+        "sqlWriteMs": 5741.013599999249
+      },
+      "engineTiming": {
+        "elapsedMs": 25545.54930000007,
+        "simulation": 1178.249499997124,
+        "dayClose": 746.257999997586,
+        "validation": 146.71400000248104,
+        "clone": 11830.50780000072,
+        "seal": 19.190600000321865,
+        "residualMs": 11624.629400001839
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 47335.73010000028,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7110.28190000914,
+        "rowJsonMs": 0.0012999996542930603,
+        "serializationMs": 7110.283200008795,
+        "hashingMs": 1600.297400014475,
+        "sqlWriteMs": 5720.576100007631
+      },
+      "engineTiming": {
+        "elapsedMs": 25515.834700000472,
+        "simulation": 1573.4917999999598,
+        "dayClose": 794.5081000002101,
+        "validation": 151.16340000275522,
+        "clone": 11805.852500002831,
+        "seal": 92.03109999932349,
+        "residualMs": 11098.787799995393
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49088.435700000264,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7148.018100020476,
+        "rowJsonMs": 0.0010999999940395355,
+        "serializationMs": 7148.01920002047,
+        "hashingMs": 1597.5198999848217,
+        "sqlWriteMs": 5987.529800008051
+      },
+      "engineTiming": {
+        "elapsedMs": 27079.375500000082,
+        "simulation": 1445.9785000020638,
+        "dayClose": 675.7767000002787,
+        "validation": 153.82060000114143,
+        "clone": 12580.501900003292,
+        "seal": 26.956999998539686,
+        "residualMs": 12196.340799994767
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 48816.87550000008,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7085.493900020607,
+        "rowJsonMs": 0.0014000004157423973,
+        "serializationMs": 7085.495300021023,
+        "hashingMs": 1612.718799999915,
+        "sqlWriteMs": 5974.322900011204
+      },
+      "engineTiming": {
+        "elapsedMs": 26875.294700000435,
+        "simulation": 1640.1144000003114,
+        "dayClose": 887.1844000006095,
+        "validation": 180.4766000006348,
+        "clone": 12225.485899995081,
+        "seal": 19.616600000299513,
+        "residualMs": 11922.416800003499
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49827.01429999992,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7559.425200004131,
+        "rowJsonMs": 0.0017999997362494469,
+        "serializationMs": 7559.427000003867,
+        "hashingMs": 1703.6949000088498,
+        "sqlWriteMs": 6519.729300003499
+      },
+      "engineTiming": {
+        "elapsedMs": 26281.52170000039,
+        "simulation": 1247.2044000010937,
+        "dayClose": 497.01310000009835,
+        "validation": 148.69339999742806,
+        "clone": 12098.15470000077,
+        "seal": 20.380199999548495,
+        "residualMs": 12270.075900001451
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 51971.53899999987,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7807.275700009428,
+        "rowJsonMs": 0.001300000585615635,
+        "serializationMs": 7807.277000010014,
+        "hashingMs": 1802.7801999989897,
+        "sqlWriteMs": 6593.82670000568
+      },
+      "engineTiming": {
+        "elapsedMs": 27865.686799999326,
+        "simulation": 1688.380599998869,
+        "dayClose": 665.0318000009283,
+        "validation": 140.41839999891818,
+        "clone": 12860.432200001553,
+        "seal": 20.927499999292195,
+        "residualMs": 12490.496299999766
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 50072.48629999999,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7708.019899985753,
+        "rowJsonMs": 0.001499999314546585,
+        "serializationMs": 7708.021399985068,
+        "hashingMs": 1782.0532000055537,
+        "sqlWriteMs": 6763.239100010134
+      },
+      "engineTiming": {
+        "elapsedMs": 25824.14120000042,
+        "simulation": 1203.9109999965876,
+        "dayClose": 688.2604000009596,
+        "validation": 143.57809999771416,
+        "clone": 11835.70760001149,
+        "seal": 22.102800000458956,
+        "residualMs": 11930.58129999321
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49208.509300000034,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7519.5125000122935,
+        "rowJsonMs": 0.0017999997362494469,
+        "serializationMs": 7519.51430001203,
+        "hashingMs": 1710.9603999992833,
+        "sqlWriteMs": 6167.910199997947
+      },
+      "engineTiming": {
+        "elapsedMs": 25594.37999999989,
+        "simulation": 1148.25530000031,
+        "dayClose": 1023.0498999999836,
+        "validation": 135.61779999453574,
+        "clone": 12442.354300009087,
+        "seal": 17.59309999924153,
+        "residualMs": 10827.50959999673
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49690.7248999998,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7194.955599986017,
+        "rowJsonMs": 0.001499999314546585,
+        "serializationMs": 7194.957099985331,
+        "hashingMs": 1595.0860999943689,
+        "sqlWriteMs": 5941.739699995145
+      },
+      "engineTiming": {
+        "elapsedMs": 27488.162099999376,
+        "simulation": 1381.1183000029996,
+        "dayClose": 524.7090999977663,
+        "validation": 150.56450000684708,
+        "clone": 12650.514500006102,
+        "seal": 24.564899999648333,
+        "residualMs": 12756.690799986012
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49986.9813000001,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7802.251299997792,
+        "rowJsonMs": 0.0026000002399086952,
+        "serializationMs": 7802.253899998032,
+        "hashingMs": 1785.0199999827892,
+        "sqlWriteMs": 6534.607100005262
+      },
+      "engineTiming": {
+        "elapsedMs": 26398.925499999896,
+        "simulation": 1262.4334000004455,
+        "dayClose": 363.9044000003487,
+        "validation": 145.26439999789,
+        "clone": 11945.067699996755,
+        "seal": 29.034699998795986,
+        "residualMs": 12653.220900005661
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 50656.003600000404,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7603.927199987695,
+        "rowJsonMs": 0.002500000409781933,
+        "serializationMs": 7603.929699988104,
+        "hashingMs": 1773.9166999896988,
+        "sqlWriteMs": 6647.502199981362
+      },
+      "engineTiming": {
+        "elapsedMs": 26430.80449999962,
+        "simulation": 1300.6187999993563,
+        "dayClose": 789.6155000003055,
+        "validation": 125.64159999415278,
+        "clone": 12794.118499994278,
+        "seal": 20.890599999576807,
+        "residualMs": 11399.91950001195
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 52187.65799999982,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7592.346300007775,
+        "rowJsonMs": 0.0028000008314847946,
+        "serializationMs": 7592.349100008607,
+        "hashingMs": 1755.0866000000387,
+        "sqlWriteMs": 6398.301300019026
+      },
+      "engineTiming": {
+        "elapsedMs": 28384.112699999474,
+        "simulation": 1405.6338000008836,
+        "dayClose": 766.3555999994278,
+        "validation": 150.0559999998659,
+        "clone": 13675.008099998347,
+        "seal": 25.40970000065863,
+        "residualMs": 12361.64950000029
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 53273.29089999944,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7916.44420000352,
+        "rowJsonMs": 0.0028999997302889824,
+        "serializationMs": 7916.44710000325,
+        "hashingMs": 1855.863100003451,
+        "sqlWriteMs": 6757.854799993336
+      },
+      "engineTiming": {
+        "elapsedMs": 28568.169400000013,
+        "simulation": 1602.0543000027537,
+        "dayClose": 767.9029000001028,
+        "validation": 159.6331999981776,
+        "clone": 13532.764299994335,
+        "seal": 18.937300000339746,
+        "residualMs": 12486.877400004305
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 50693.57380000036,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8067.50909999758,
+        "rowJsonMs": 0.003200000151991844,
+        "serializationMs": 8067.512299997732,
+        "hashingMs": 1782.4120999909937,
+        "sqlWriteMs": 6793.500300018117
+      },
+      "engineTiming": {
+        "elapsedMs": 25893.873499999754,
+        "simulation": 1304.443599998951,
+        "dayClose": 419.30179999955,
+        "validation": 124.21339999977499,
+        "clone": 12119.370500006713,
+        "seal": 20.01120000053197,
+        "residualMs": 11906.532999994233
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 52756.012000000104,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7863.654099998064,
+        "rowJsonMs": 0.003200000151991844,
+        "serializationMs": 7863.657299998216,
+        "hashingMs": 1822.0389999998733,
+        "sqlWriteMs": 6822.072599992156
+      },
+      "engineTiming": {
+        "elapsedMs": 28070.83409999963,
+        "simulation": 1726.0644000004977,
+        "dayClose": 776.2729999991134,
+        "validation": 138.44490000326186,
+        "clone": 13007.087300000712,
+        "seal": 19.19510000012815,
+        "residualMs": 12403.769399995916
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 50844.7695000004,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8427.002399999648,
+        "rowJsonMs": 0.00430000014603138,
+        "serializationMs": 8427.006699999794,
+        "hashingMs": 1826.745699988678,
+        "sqlWriteMs": 6850.684599990025
+      },
+      "engineTiming": {
+        "elapsedMs": 25547.26580000017,
+        "simulation": 1200.653300001286,
+        "dayClose": 596.502400001511,
+        "validation": 137.15909999795258,
+        "clone": 11692.686899996363,
+        "seal": 19.5777000002563,
+        "residualMs": 11900.6864000028
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 53002.10429999977,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8486.696900004521,
+        "rowJsonMs": 0.0027000000700354576,
+        "serializationMs": 8486.699600004591,
+        "hashingMs": 1874.9022000022233,
+        "sqlWriteMs": 7276.307099989615
+      },
+      "engineTiming": {
+        "elapsedMs": 27157.534699999727,
+        "simulation": 1319.8105999995023,
+        "dayClose": 434.5339999999851,
+        "validation": 158.92430000193417,
+        "clone": 12826.899800000712,
+        "seal": 20.104200000874698,
+        "residualMs": 12397.261799996719
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 50469.13819999993,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8379.117999998853,
+        "rowJsonMs": 0.0015000002458691597,
+        "serializationMs": 8379.119499999098,
+        "hashingMs": 1804.202399995178,
+        "sqlWriteMs": 6758.755000014789
+      },
+      "engineTiming": {
+        "elapsedMs": 25395.44299999997,
+        "simulation": 1212.21320000384,
+        "dayClose": 829.1401000013575,
+        "validation": 137.56720000319183,
+        "clone": 12524.218400005251,
+        "seal": 18.07439999934286,
+        "residualMs": 10674.229699986987
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 51313.09590000007,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7939.8940000180155,
+        "rowJsonMs": 0.004799999296665192,
+        "serializationMs": 7939.898800017312,
+        "hashingMs": 1763.1129999915138,
+        "sqlWriteMs": 6591.557300001383
+      },
+      "engineTiming": {
+        "elapsedMs": 27012.004599999636,
+        "simulation": 1220.4208000004292,
+        "dayClose": 612.7631999999285,
+        "validation": 128.5825000004843,
+        "clone": 12509.524299998768,
+        "seal": 26.58239999972284,
+        "residualMs": 12514.131400000304
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 54895.80180000048,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8175.514799984172,
+        "rowJsonMs": 0.0012999996542930603,
+        "serializationMs": 8175.516099983826,
+        "hashingMs": 1848.3073000125587,
+        "sqlWriteMs": 6970.351399997249
+      },
+      "engineTiming": {
+        "elapsedMs": 29836.57600000035,
+        "simulation": 1463.227099998854,
+        "dayClose": 692.1152999997139,
+        "validation": 146.85579999443144,
+        "clone": 14046.846300007775,
+        "seal": 25.81429999973625,
+        "residualMs": 13461.717199999839
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 51072.51880000066,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7802.399500016123,
+        "rowJsonMs": 0.0013999994844198227,
+        "serializationMs": 7802.4009000156075,
+        "hashingMs": 1722.4331999896094,
+        "sqlWriteMs": 6668.663499986753
+      },
+      "engineTiming": {
+        "elapsedMs": 26627.78529999964,
+        "simulation": 1272.8576999986544,
+        "dayClose": 829.3906000014395,
+        "validation": 188.196499992162,
+        "clone": 12786.265600004233,
+        "seal": 30.313099999912083,
+        "residualMs": 11520.761800003238
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49451.10690000001,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7654.138299989514,
+        "rowJsonMs": 0.0029999995604157448,
+        "serializationMs": 7654.1412999890745,
+        "hashingMs": 1662.7536000022665,
+        "sqlWriteMs": 6407.130999982357
+      },
+      "engineTiming": {
+        "elapsedMs": 25870.05460000038,
+        "simulation": 1295.3803000012413,
+        "dayClose": 234.17820000089705,
+        "validation": 149.19340000022203,
+        "clone": 11771.508799999952,
+        "seal": 18.475600000470877,
+        "residualMs": 12401.318299997598
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 51080.26909999922,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8011.689999985509,
+        "rowJsonMs": 0.007199999876320362,
+        "serializationMs": 8011.697199985385,
+        "hashingMs": 1762.9527000142261,
+        "sqlWriteMs": 6781.046699997969
+      },
+      "engineTiming": {
+        "elapsedMs": 26413.28460000083,
+        "simulation": 1367.3096999973059,
+        "dayClose": 893.1640999997035,
+        "validation": 142.47839999757707,
+        "clone": 12710.018999998458,
+        "seal": 33.166299999691546,
+        "residualMs": 11267.147100008093
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49517.283600000665,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7817.462599989958,
+        "rowJsonMs": 0.003100000321865082,
+        "serializationMs": 7817.46569999028,
+        "hashingMs": 1700.313199998811,
+        "sqlWriteMs": 6287.224599994719
+      },
+      "engineTiming": {
+        "elapsedMs": 25865.89620000031,
+        "simulation": 1135.0441999984905,
+        "dayClose": 626.2093999991193,
+        "validation": 120.25159999914467,
+        "clone": 12272.361100004986,
+        "seal": 31.102200000546873,
+        "residualMs": 11680.927699998021
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 50777.14589999989,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7456.7617999929935,
+        "rowJsonMs": 0.002399999648332596,
+        "serializationMs": 7456.764199992642,
+        "hashingMs": 1622.2163000069559,
+        "sqlWriteMs": 6474.730299999006
+      },
+      "engineTiming": {
+        "elapsedMs": 27665.586299999617,
+        "simulation": 1484.6978999981657,
+        "dayClose": 625.8286000005901,
+        "validation": 151.49769999552518,
+        "clone": 12836.789400006644,
+        "seal": 18.79759999923408,
+        "residualMs": 12547.975099999458
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49543.31280000042,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7679.719700007699,
+        "rowJsonMs": 0.003399999812245369,
+        "serializationMs": 7679.723100007512,
+        "hashingMs": 1668.1278000008315,
+        "sqlWriteMs": 6537.318099997006
+      },
+      "engineTiming": {
+        "elapsedMs": 25877.57070000004,
+        "simulation": 1546.3304999992251,
+        "dayClose": 832.5609999997541,
+        "validation": 131.48339999932796,
+        "clone": 12078.090799993835,
+        "seal": 28.773099998943508,
+        "residualMs": 11260.331900008954
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 52986.3535000002,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7486.723499994725,
+        "rowJsonMs": 0.0052000004798173904,
+        "serializationMs": 7486.728699995205,
+        "hashingMs": 1678.3117999928072,
+        "sqlWriteMs": 6585.157600003295
+      },
+      "engineTiming": {
+        "elapsedMs": 29429.223600000143,
+        "simulation": 1451.186800001189,
+        "dayClose": 439.5731999995187,
+        "validation": 157.89580000378191,
+        "clone": 13515.209899997339,
+        "seal": 18.151099999435246,
+        "residualMs": 13847.20679999888
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 50281.436599999666,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7758.704600009136,
+        "rowJsonMs": 0.0015000002458691597,
+        "serializationMs": 7758.706100009382,
+        "hashingMs": 1637.6853999914601,
+        "sqlWriteMs": 6472.747199992649
+      },
+      "engineTiming": {
+        "elapsedMs": 26644.738599999808,
+        "simulation": 1417.4808999989182,
+        "dayClose": 863.7164000002667,
+        "validation": 139.62979999836534,
+        "clone": 12754.266000004485,
+        "seal": 31.292899999767542,
+        "residualMs": 11438.352599998005
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 50531.75459999964,
+      "status": 200,
+      "stop": "GAME_FINAL",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7394.610299999826,
+        "rowJsonMs": 0.0021000001579523087,
+        "serializationMs": 7394.612399999984,
+        "hashingMs": 1658.9778999872506,
+        "sqlWriteMs": 6126.546900006011
+      },
+      "engineTiming": {
+        "elapsedMs": 27573.912599999458,
+        "simulation": 826.870199999772,
+        "dayClose": 216.88740000035614,
+        "validation": 111.72669999767095,
+        "clone": 9157.459400002845,
+        "seal": 20.90040000062436,
+        "residualMs": 17240.06849999819
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49299.941899999976,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8110.665100012906,
+        "rowJsonMs": 0.0013999994844198227,
+        "serializationMs": 8110.66650001239,
+        "hashingMs": 1820.0955000026152,
+        "sqlWriteMs": 6298.74179999996
+      },
+      "engineTiming": {
+        "elapsedMs": 25378.46480000019,
+        "simulation": 209.40040000155568,
+        "dayClose": 408.85739999916404,
+        "validation": 47.86899999715388,
+        "clone": 14930.429000008851,
+        "seal": 18.190900000743568,
+        "residualMs": 9763.718099992722
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49763.6548000006,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7625.984499997459,
+        "rowJsonMs": 0.0012999996542930603,
+        "serializationMs": 7625.985799997114,
+        "hashingMs": 1755.2538000121713,
+        "sqlWriteMs": 6175.660599996336
+      },
+      "engineTiming": {
+        "elapsedMs": 26424.993699999526,
+        "simulation": 134.37710000295192,
+        "dayClose": 241.54990000091493,
+        "validation": 31.318600004538894,
+        "clone": 22806.06380000431,
+        "seal": 19.489199999719858,
+        "residualMs": 3192.1950999870896
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 48762.82679999992,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7600.358299997635,
+        "rowJsonMs": 0.0028999997302889824,
+        "serializationMs": 7600.3611999973655,
+        "hashingMs": 1730.2650000024587,
+        "sqlWriteMs": 5926.224899993278
+      },
+      "engineTiming": {
+        "elapsedMs": 25562.634800000116,
+        "simulation": 196.35259999986738,
+        "dayClose": 170.35419999994338,
+        "validation": 43.876800005324185,
+        "clone": 21504.54300000891,
+        "seal": 18.994200000539422,
+        "residualMs": 3628.513999985531
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49784.04360000044,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7782.792700005695,
+        "rowJsonMs": 0.001600000075995922,
+        "serializationMs": 7782.794300005771,
+        "hashingMs": 1732.4090000037104,
+        "sqlWriteMs": 6019.026200010441
+      },
+      "engineTiming": {
+        "elapsedMs": 26269.055999999866,
+        "simulation": 244.6419999981299,
+        "dayClose": 269.6958000008017,
+        "validation": 45.83590000402182,
+        "clone": 21679.49489999842,
+        "seal": 17.81749999988824,
+        "residualMs": 4011.5698999986053
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49442.79009999987,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7537.085899991915,
+        "rowJsonMs": 0.0020000003278255463,
+        "serializationMs": 7537.0878999922425,
+        "hashingMs": 1734.3015999821946,
+        "sqlWriteMs": 5997.705700002611
+      },
+      "engineTiming": {
+        "elapsedMs": 26236.25829999987,
+        "simulation": 273.71009999886155,
+        "dayClose": 281.90469999983907,
+        "validation": 43.160400005057454,
+        "clone": 21176.189099999145,
+        "seal": 18.42629999946803,
+        "residualMs": 4442.8676999975
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 48818.17379999999,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7605.564700010233,
+        "rowJsonMs": 0.0022999998182058334,
+        "serializationMs": 7605.567000010051,
+        "hashingMs": 1705.8186999857426,
+        "sqlWriteMs": 5988.469499990344
+      },
+      "engineTiming": {
+        "elapsedMs": 25528.661700000055,
+        "simulation": 283.97100000362843,
+        "dayClose": 273.46730000246316,
+        "validation": 43.21789999958128,
+        "clone": 20332.17709999997,
+        "seal": 33.20729999989271,
+        "residualMs": 4562.621099994518
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 50049.808500000276,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7745.986400003545,
+        "rowJsonMs": 0.001600000075995922,
+        "serializationMs": 7745.988000003621,
+        "hashingMs": 1771.4455000013113,
+        "sqlWriteMs": 6070.255800003186
+      },
+      "engineTiming": {
+        "elapsedMs": 26371.89149999991,
+        "simulation": 299.2926000012085,
+        "dayClose": 356.91179999895394,
+        "validation": 63.51609999872744,
+        "clone": 20424.68319999613,
+        "seal": 21.752400000579655,
+        "residualMs": 5205.735400004312
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49948.41779999994,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 7962.006299974397,
+        "rowJsonMs": 0.0038999998942017555,
+        "serializationMs": 7962.010199974291,
+        "hashingMs": 1833.426099988632,
+        "sqlWriteMs": 6216.67219999712
+      },
+      "engineTiming": {
+        "elapsedMs": 25864.520600000396,
+        "simulation": 368.76060000248253,
+        "dayClose": 207.020300000906,
+        "validation": 53.38269999623299,
+        "clone": 20044.98639999889,
+        "seal": 29.367700000293553,
+        "residualMs": 5161.002900001593
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 52117.27960000001,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8975.989800013602,
+        "rowJsonMs": 0.00430000014603138,
+        "serializationMs": 8975.994100013748,
+        "hashingMs": 1848.1770999971777,
+        "sqlWriteMs": 6880.666099997237
+      },
+      "engineTiming": {
+        "elapsedMs": 26234.73120000027,
+        "simulation": 353.85209999606013,
+        "dayClose": 357.92589999735355,
+        "validation": 51.4352999990806,
+        "clone": 19864.3964000009,
+        "seal": 22.693799999542534,
+        "residualMs": 5584.427700007334
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 55070.35949999932,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9043.130099985749,
+        "rowJsonMs": 0.001600000075995922,
+        "serializationMs": 9043.131699985825,
+        "hashingMs": 1970.266400004737,
+        "sqlWriteMs": 7496.408199999481
+      },
+      "engineTiming": {
+        "elapsedMs": 27327.440600000322,
+        "simulation": 435.1407000012696,
+        "dayClose": 236.10829999949783,
+        "validation": 61.27380000334233,
+        "clone": 20269.960799998604,
+        "seal": 19.267500000074506,
+        "residualMs": 6305.689499997534
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 53257.85690000001,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9209.788599986583,
+        "rowJsonMs": 0.0026000002399086952,
+        "serializationMs": 9209.791199986823,
+        "hashingMs": 1979.7560999924317,
+        "sqlWriteMs": 7587.037600009702
+      },
+      "engineTiming": {
+        "elapsedMs": 25682.33449999988,
+        "simulation": 391.7594999978319,
+        "dayClose": 237.73620000015944,
+        "validation": 56.7695000031963,
+        "clone": 19301.183000000194,
+        "seal": 35.49269999936223,
+        "residualMs": 5659.393599999137
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 56466.96849999949,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9296.297800020315,
+        "rowJsonMs": 0.003800000064074993,
+        "serializationMs": 9296.301600020379,
+        "hashingMs": 1944.0387000022456,
+        "sqlWriteMs": 7389.500899991952
+      },
+      "engineTiming": {
+        "elapsedMs": 28448.841400000267,
+        "simulation": 494.0543999997899,
+        "dayClose": 288.82569999806583,
+        "validation": 88.15699999779463,
+        "clone": 20983.678100007586,
+        "seal": 23.058299999684095,
+        "residualMs": 6571.067899997346
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 52968.30679999944,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8898.619899980724,
+        "rowJsonMs": 0.004399999976158142,
+        "serializationMs": 8898.6242999807,
+        "hashingMs": 1972.5599999716505,
+        "sqlWriteMs": 7151.368299988098
+      },
+      "engineTiming": {
+        "elapsedMs": 25813.471400000155,
+        "simulation": 434.2895999997854,
+        "dayClose": 365.3374999994412,
+        "validation": 94.10539999976754,
+        "clone": 19228.347599996254,
+        "seal": 21.662399999797344,
+        "residualMs": 5669.72890000511
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 53103.84999999963,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9407.788100006059,
+        "rowJsonMs": 0.003500000573694706,
+        "serializationMs": 9407.791600006633,
+        "hashingMs": 1966.1007999964058,
+        "sqlWriteMs": 7119.249800005928
+      },
+      "engineTiming": {
+        "elapsedMs": 25698.417899999768,
+        "simulation": 427.38700000103563,
+        "dayClose": 284.0193999996409,
+        "validation": 63.09980000182986,
+        "clone": 18876.40579999704,
+        "seal": 33.361500000581145,
+        "residualMs": 6014.144399999641
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 53537.41229999997,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9465.872899980284,
+        "rowJsonMs": 0.0032999999821186066,
+        "serializationMs": 9465.876199980266,
+        "hashingMs": 1970.2355999946594,
+        "sqlWriteMs": 8003.9588999906555
+      },
+      "engineTiming": {
+        "elapsedMs": 25297.553399999626,
+        "simulation": 474.42619999777526,
+        "dayClose": 312.28020000085235,
+        "validation": 61.51069999765605,
+        "clone": 18477.368100002408,
+        "seal": 23.98739999998361,
+        "residualMs": 5947.980800000951
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 54922.66000000015,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9393.413500001654,
+        "rowJsonMs": 0.0028999997302889824,
+        "serializationMs": 9393.416400001384,
+        "hashingMs": 1940.3755000084639,
+        "sqlWriteMs": 7312.029799996875
+      },
+      "engineTiming": {
+        "elapsedMs": 27387.9972000001,
+        "simulation": 516.1180999996141,
+        "dayClose": 333.43099999893457,
+        "validation": 79.46639999654144,
+        "clone": 19395.753800000064,
+        "seal": 18.379400001838803,
+        "residualMs": 7044.848500003107
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 54176.911799999885,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9226.413599993102,
+        "rowJsonMs": 0.0044999998062849045,
+        "serializationMs": 9226.418099992909,
+        "hashingMs": 1970.68110000249,
+        "sqlWriteMs": 7188.7922999942675
+      },
+      "engineTiming": {
+        "elapsedMs": 26907.08439999912,
+        "simulation": 515.6423000022769,
+        "dayClose": 334.9177000010386,
+        "validation": 67.20820000395179,
+        "clone": 19016.523500000127,
+        "seal": 32.607900001108646,
+        "residualMs": 6940.184799990617
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 51481.62160000019,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8412.488300003111,
+        "rowJsonMs": 0.0038999998942017555,
+        "serializationMs": 8412.492200003006,
+        "hashingMs": 1801.498100001365,
+        "sqlWriteMs": 6495.777900017798
+      },
+      "engineTiming": {
+        "elapsedMs": 25837.101400000043,
+        "simulation": 505.4752000020817,
+        "dayClose": 394.24420000147074,
+        "validation": 86.75369999557734,
+        "clone": 18600.269200003706,
+        "seal": 32.816300000064075,
+        "residualMs": 6217.542799997143
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 54013.327200000174,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8779.985299980268,
+        "rowJsonMs": 0.00430000014603138,
+        "serializationMs": 8779.989599980414,
+        "hashingMs": 1883.964999991469,
+        "sqlWriteMs": 6755.014200001955
+      },
+      "engineTiming": {
+        "elapsedMs": 28045.829100000672,
+        "simulation": 551.7089000027627,
+        "dayClose": 378.28229999914765,
+        "validation": 103.36370000150055,
+        "clone": 19902.08699999936,
+        "seal": 22.829599999822676,
+        "residualMs": 7087.557599998079
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 52340.48890000023,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8658.214800004847,
+        "rowJsonMs": 0.0013999994844198227,
+        "serializationMs": 8658.216200004332,
+        "hashingMs": 1895.2631000028923,
+        "sqlWriteMs": 6798.260400027968
+      },
+      "engineTiming": {
+        "elapsedMs": 26220.20660000015,
+        "simulation": 567.0842000003904,
+        "dayClose": 339.69959999993443,
+        "validation": 82.08860000316054,
+        "clone": 18582.168400004506,
+        "seal": 22.66689999960363,
+        "residualMs": 6626.498899992555
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 52646.13800000027,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9374.687900003046,
+        "rowJsonMs": 0.0029999995604157448,
+        "serializationMs": 9374.690900002606,
+        "hashingMs": 1956.302299988456,
+        "sqlWriteMs": 7133.390600003302
+      },
+      "engineTiming": {
+        "elapsedMs": 25546.898599999957,
+        "simulation": 513.0041000023484,
+        "dayClose": 352.51800000015646,
+        "validation": 68.94889998901635,
+        "clone": 18145.872500002384,
+        "seal": 21.860999999567866,
+        "residualMs": 6444.6941000064835
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 52858.0959999999,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8527.182200009935,
+        "rowJsonMs": 0.0017999997362494469,
+        "serializationMs": 8527.18400000967,
+        "hashingMs": 1847.330400002189,
+        "sqlWriteMs": 6621.200400000438
+      },
+      "engineTiming": {
+        "elapsedMs": 27367.311499999836,
+        "simulation": 581.1632000021636,
+        "dayClose": 435.83550000190735,
+        "validation": 103.81349999364465,
+        "clone": 19143.023500000127,
+        "seal": 22.70200000051409,
+        "residualMs": 7080.77380000148
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 53641.59769999981,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8101.327999993227,
+        "rowJsonMs": 0.002199999988079071,
+        "serializationMs": 8101.3301999932155,
+        "hashingMs": 1819.1677000066265,
+        "sqlWriteMs": 6380.604899993166
+      },
+      "engineTiming": {
+        "elapsedMs": 28819.145700000226,
+        "simulation": 605.8641999997199,
+        "dayClose": 336.568099998869,
+        "validation": 82.93750000279397,
+        "clone": 20169.130600010045,
+        "seal": 103.02759999968112,
+        "residualMs": 7521.617699989118
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 54076.047500000335,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8310.162500010803,
+        "rowJsonMs": 0.002399999648332596,
+        "serializationMs": 8310.164900010452,
+        "hashingMs": 1838.7994999792427,
+        "sqlWriteMs": 6537.754899986088
+      },
+      "engineTiming": {
+        "elapsedMs": 28849.477699999698,
+        "simulation": 605.8347999956459,
+        "dayClose": 352.329299999401,
+        "validation": 92.42609999515116,
+        "clone": 19221.23280001059,
+        "seal": 35.413699998520315,
+        "residualMs": 8542.241000000387
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 53199.69570000097,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8249.00540000759,
+        "rowJsonMs": 0.0015000011771917343,
+        "serializationMs": 8249.006900008768,
+        "hashingMs": 1829.0293999798596,
+        "sqlWriteMs": 6679.034399976954
+      },
+      "engineTiming": {
+        "elapsedMs": 27864.580099999905,
+        "simulation": 643.1747999992222,
+        "dayClose": 376.0713999979198,
+        "validation": 98.72399999760091,
+        "clone": 19282.842000013217,
+        "seal": 33.52280000038445,
+        "residualMs": 7430.24509999156
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 52864.92860000022,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8343.691799990833,
+        "rowJsonMs": 0.002199999988079071,
+        "serializationMs": 8343.69399999082,
+        "hashingMs": 1861.3839000035077,
+        "sqlWriteMs": 6626.808399992064
+      },
+      "engineTiming": {
+        "elapsedMs": 26681.120900001377,
+        "simulation": 569.8396000005305,
+        "dayClose": 364.5450999997556,
+        "validation": 87.77820000424981,
+        "clone": 18356.22770001553,
+        "seal": 27.47080000117421,
+        "residualMs": 7275.259499980137
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 57564.58349999972,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 10430.599900022149,
+        "rowJsonMs": 0.006199998781085014,
+        "serializationMs": 10430.60610002093,
+        "hashingMs": 2081.768500007689,
+        "sqlWriteMs": 8113.531099993736
+      },
+      "engineTiming": {
+        "elapsedMs": 28054.384199999273,
+        "simulation": 632.0179000031203,
+        "dayClose": 505.4957999996841,
+        "validation": 90.4518000073731,
+        "clone": 18892.303299998865,
+        "seal": 30.92509999871254,
+        "residualMs": 7903.190299991518
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 54198.07829999924,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8702.97070000507,
+        "rowJsonMs": 0.0027000010013580322,
+        "serializationMs": 8702.97340000607,
+        "hashingMs": 1903.8398000281304,
+        "sqlWriteMs": 7618.13350000605
+      },
+      "engineTiming": {
+        "elapsedMs": 26206.213899999857,
+        "simulation": 662.2064999975264,
+        "dayClose": 141.8468999993056,
+        "validation": 81.78940000385046,
+        "clone": 17263.694400008768,
+        "seal": 115.22809999808669,
+        "residualMs": 7941.44859999232
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 54305.085599999875,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9182.315599994734,
+        "rowJsonMs": 0.0021000001579523087,
+        "serializationMs": 9182.317699994892,
+        "hashingMs": 1956.5876000523567,
+        "sqlWriteMs": 7385.471199957654
+      },
+      "engineTiming": {
+        "elapsedMs": 26391.89690000005,
+        "simulation": 596.3958000019193,
+        "dayClose": 457.1531999986619,
+        "validation": 73.48960000276566,
+        "clone": 18205.080299993977,
+        "seal": 94.03079999797046,
+        "residualMs": 6965.747200004756
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 56520.08710000105,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9153.10979997553,
+        "rowJsonMs": 0.001400001347064972,
+        "serializationMs": 9153.111199976876,
+        "hashingMs": 1995.9188999831676,
+        "sqlWriteMs": 7599.780599996448
+      },
+      "engineTiming": {
+        "elapsedMs": 27510.884499998763,
+        "simulation": 611.215999994427,
+        "dayClose": 338.91300000064075,
+        "validation": 84.76220000721514,
+        "clone": 18567.715400002897,
+        "seal": 23.844799999147654,
+        "residualMs": 7884.433099994436
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 58356.88089999929,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 10698.415100010112,
+        "rowJsonMs": 0.003999998793005943,
+        "serializationMs": 10698.419100008905,
+        "hashingMs": 2267.5432000290602,
+        "sqlWriteMs": 9141.816599978134
+      },
+      "engineTiming": {
+        "elapsedMs": 26070.069000000134,
+        "simulation": 655.8433999996632,
+        "dayClose": 433.9309999998659,
+        "validation": 88.83820000477135,
+        "clone": 17727.381499992684,
+        "seal": 85.08799999952316,
+        "residualMs": 7078.986900003627
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 64377.13519999944,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 10647.601500000805,
+        "rowJsonMs": 0.003200000151991844,
+        "serializationMs": 10647.604700000957,
+        "hashingMs": 2310.2968000024557,
+        "sqlWriteMs": 8614.633400008082
+      },
+      "engineTiming": {
+        "elapsedMs": 30250.694700000808,
+        "simulation": 696.4182000011206,
+        "dayClose": 297.25899999961257,
+        "validation": 86.30510000139475,
+        "clone": 20351.026300000027,
+        "seal": 67.92950000055134,
+        "residualMs": 8751.756599998102
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 55355.982599999756,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8837.538899987936,
+        "rowJsonMs": 0.001700000837445259,
+        "serializationMs": 8837.540599988773,
+        "hashingMs": 1972.3345999717712,
+        "sqlWriteMs": 7116.967500008643
+      },
+      "engineTiming": {
+        "elapsedMs": 26842.228800000623,
+        "simulation": 653.3187000025064,
+        "dayClose": 460.73940000124276,
+        "validation": 84.43380000442266,
+        "clone": 17799.766900002956,
+        "seal": 39.82429999858141,
+        "residualMs": 7804.145699990913
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 53522.72839999944,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8433.18019997701,
+        "rowJsonMs": 0.0044999998062849045,
+        "serializationMs": 8433.184699976817,
+        "hashingMs": 1849.821000032127,
+        "sqlWriteMs": 6866.559499992058
+      },
+      "engineTiming": {
+        "elapsedMs": 27410.844100000337,
+        "simulation": 631.193900000304,
+        "dayClose": 454.9702999982983,
+        "validation": 81.31359999626875,
+        "clone": 18300.585600014776,
+        "seal": 26.078999998047948,
+        "residualMs": 7916.701699992642
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 54880.81549999863,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9418.880899965763,
+        "rowJsonMs": 0.003200000151991844,
+        "serializationMs": 9418.884099965915,
+        "hashingMs": 2065.658999999985,
+        "sqlWriteMs": 7448.533399971202
+      },
+      "engineTiming": {
+        "elapsedMs": 25392.069799998775,
+        "simulation": 683.9884999990463,
+        "dayClose": 310.21560000255704,
+        "validation": 76.05290000513196,
+        "clone": 16511.118800006807,
+        "seal": 19.28289999999106,
+        "residualMs": 7791.411099985242
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 55023.6445000004,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8684.553300011903,
+        "rowJsonMs": 0.0012999996542930603,
+        "serializationMs": 8684.554600011557,
+        "hashingMs": 1954.7955999970436,
+        "sqlWriteMs": 7662.718500003219
+      },
+      "engineTiming": {
+        "elapsedMs": 26326.892799999565,
+        "simulation": 600.0644999928772,
+        "dayClose": 312.1021999977529,
+        "validation": 79.45170000754297,
+        "clone": 17139.176200004295,
+        "seal": 35.86639999970794,
+        "residualMs": 8160.231799997389
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 55916.07930000126,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9309.9666999951,
+        "rowJsonMs": 0.006599999964237213,
+        "serializationMs": 9309.973299995065,
+        "hashingMs": 1988.6574000045657,
+        "sqlWriteMs": 7735.268399996683
+      },
+      "engineTiming": {
+        "elapsedMs": 28188.606699999422,
+        "simulation": 706.448000004515,
+        "dayClose": 430.41630000062287,
+        "validation": 84.95879999548197,
+        "clone": 18927.026599995792,
+        "seal": 20.306199999526143,
+        "residualMs": 8019.450800003484
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 53786.210100000724,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8886.178399968892,
+        "rowJsonMs": 0.0059999991208314896,
+        "serializationMs": 8886.184399968013,
+        "hashingMs": 1912.8119000140578,
+        "sqlWriteMs": 6893.108999973163
+      },
+      "engineTiming": {
+        "elapsedMs": 26356.60649999976,
+        "simulation": 594.6967000029981,
+        "dayClose": 476.1683000009507,
+        "validation": 98.3597999997437,
+        "clone": 17740.53450000286,
+        "seal": 18.605500001460314,
+        "residualMs": 7428.241699991748
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 55438.503400001675,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9611.275500003248,
+        "rowJsonMs": 0.0037999991327524185,
+        "serializationMs": 9611.279300002381,
+        "hashingMs": 2163.2842999901623,
+        "sqlWriteMs": 8441.685099987313
+      },
+      "engineTiming": {
+        "elapsedMs": 25458.162699999288,
+        "simulation": 632.4441999997944,
+        "dayClose": 363.61029999889433,
+        "validation": 82.88339999504387,
+        "clone": 16107.505099991336,
+        "seal": 34.5149999987334,
+        "residualMs": 8237.204700015485
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 56415.10969999991,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9092.22100001201,
+        "rowJsonMs": 0.005099998787045479,
+        "serializationMs": 9092.226100010797,
+        "hashingMs": 2107.3431000169367,
+        "sqlWriteMs": 8101.801199996844
+      },
+      "engineTiming": {
+        "elapsedMs": 26903.229500001296,
+        "simulation": 735.3449999950826,
+        "dayClose": 183.86160000041127,
+        "validation": 119.50290000624955,
+        "clone": 17657.48899999261,
+        "seal": 27.779400000348687,
+        "residualMs": 8179.251600006595
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 57887.458000000566,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 10828.209100011736,
+        "rowJsonMs": 0.009400000795722008,
+        "serializationMs": 10828.218500012532,
+        "hashingMs": 2234.635600006208,
+        "sqlWriteMs": 8989.1420000121
+      },
+      "engineTiming": {
+        "elapsedMs": 26522.666800001636,
+        "simulation": 628.4212999995798,
+        "dayClose": 497.5911999978125,
+        "validation": 90.64259999617934,
+        "clone": 17540.40809999965,
+        "seal": 22.426399998366833,
+        "residualMs": 7743.177200010046
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 58691.539200000465,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 10218.929900003597,
+        "rowJsonMs": 0.005299998447299004,
+        "serializationMs": 10218.935200002044,
+        "hashingMs": 2073.193000001833,
+        "sqlWriteMs": 7902.095700005069
+      },
+      "engineTiming": {
+        "elapsedMs": 28013.451600000262,
+        "simulation": 734.6446000002325,
+        "dayClose": 355.03490000218153,
+        "validation": 97.07080001011491,
+        "clone": 18304.137099994346,
+        "seal": 29.113499999046326,
+        "residualMs": 8493.45069999434
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 57563.0596000012,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9778.917700011283,
+        "rowJsonMs": 0.0016999989748001099,
+        "serializationMs": 9778.919400010258,
+        "hashingMs": 2055.8856000173837,
+        "sqlWriteMs": 7543.030400004238
+      },
+      "engineTiming": {
+        "elapsedMs": 28163.501199999824,
+        "simulation": 676.0503000020981,
+        "dayClose": 311.32409999892116,
+        "validation": 125.8743999991566,
+        "clone": 18709.246300000697,
+        "seal": 26.648700000718236,
+        "residualMs": 8314.357399998233
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 56404.29690000042,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9202.72649999708,
+        "rowJsonMs": 0.0037999991327524185,
+        "serializationMs": 9202.730299996212,
+        "hashingMs": 2058.5297999884933,
+        "sqlWriteMs": 7715.709000034258
+      },
+      "engineTiming": {
+        "elapsedMs": 27692.595800001174,
+        "simulation": 686.6455000005662,
+        "dayClose": 531.2162999995053,
+        "validation": 89.46410000510514,
+        "clone": 17914.885600002483,
+        "seal": 31.78270000219345,
+        "residualMs": 8438.601599991322
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 56000.94240000099,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8722.409099983051,
+        "rowJsonMs": 0.002199999988079071,
+        "serializationMs": 8722.41129998304,
+        "hashingMs": 1939.276000007987,
+        "sqlWriteMs": 7149.131300000474
+      },
+      "engineTiming": {
+        "elapsedMs": 28786.605599999428,
+        "simulation": 818.0082000009716,
+        "dayClose": 159.58330000005662,
+        "validation": 98.56300000287592,
+        "clone": 18560.645100008696,
+        "seal": 20.136399999260902,
+        "residualMs": 9129.669599987566
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 56857.02109999955,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9273.061200013384,
+        "rowJsonMs": 0.00859999842941761,
+        "serializationMs": 9273.069800011814,
+        "hashingMs": 1943.7692999523133,
+        "sqlWriteMs": 7125.237300010398
+      },
+      "engineTiming": {
+        "elapsedMs": 28855.80729999952,
+        "simulation": 707.2163999993354,
+        "dayClose": 707.5948000010103,
+        "validation": 95.83829999528825,
+        "clone": 18777.16079998575,
+        "seal": 19.21309999935329,
+        "residualMs": 8548.783900018781
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 54364.927600000054,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9986.334900034592,
+        "rowJsonMs": 0.004599999636411667,
+        "serializationMs": 9986.339500034228,
+        "hashingMs": 2159.7220000121742,
+        "sqlWriteMs": 7977.9003999922425
+      },
+      "engineTiming": {
+        "elapsedMs": 25460.200200000778,
+        "simulation": 1255.2674000002444,
+        "dayClose": 280.2529999986291,
+        "validation": 89.5802000053227,
+        "clone": 15667.20390000008,
+        "seal": 32.46440000087023,
+        "residualMs": 8135.431299995631
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 59126.87779999897,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9301.684399977326,
+        "rowJsonMs": 0.002900000661611557,
+        "serializationMs": 9301.687299977988,
+        "hashingMs": 2069.4306999780238,
+        "sqlWriteMs": 7635.357600005344
+      },
+      "engineTiming": {
+        "elapsedMs": 28744.176199998707,
+        "simulation": 784.63730000332,
+        "dayClose": 447.31760000251234,
+        "validation": 90.98659999854863,
+        "clone": 18844.54819999449,
+        "seal": 27.286900002509356,
+        "residualMs": 8549.399599997327
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 57648.95050000027,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9836.094700010493,
+        "rowJsonMs": 0.0025999993085861206,
+        "serializationMs": 9836.097300009802,
+        "hashingMs": 2093.3988000378013,
+        "sqlWriteMs": 7498.921299984679
+      },
+      "engineTiming": {
+        "elapsedMs": 27116.92949999869,
+        "simulation": 790.2685000039637,
+        "dayClose": 370.3812999986112,
+        "validation": 109.402000002563,
+        "clone": 17528.349799992517,
+        "seal": 19.30149999819696,
+        "residualMs": 8299.226400002837
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 59142.60579999909,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 10034.532899979502,
+        "rowJsonMs": 0.002499999478459358,
+        "serializationMs": 10034.53539997898,
+        "hashingMs": 2156.5615000091493,
+        "sqlWriteMs": 8175.241399995983
+      },
+      "engineTiming": {
+        "elapsedMs": 29324.28240000084,
+        "simulation": 828.8215999957174,
+        "dayClose": 589.9976000003517,
+        "validation": 85.94470000453293,
+        "clone": 18919.648599999025,
+        "seal": 21.84450000151992,
+        "residualMs": 8878.025399999693
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 55378.06639999896,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9190.186299989,
+        "rowJsonMs": 0.003200000151991844,
+        "serializationMs": 9190.189499989152,
+        "hashingMs": 2027.3541999999434,
+        "sqlWriteMs": 7458.250600008294
+      },
+      "engineTiming": {
+        "elapsedMs": 26424.444300001487,
+        "simulation": 703.7244000062346,
+        "dayClose": 270.7366000004113,
+        "validation": 90.06580000184476,
+        "clone": 16846.626400012523,
+        "seal": 25.942800000309944,
+        "residualMs": 8487.348299980164
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 56111.92659999989,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8615.300599996,
+        "rowJsonMs": 0.002399999648332596,
+        "serializationMs": 8615.302999995649,
+        "hashingMs": 1914.3917000051588,
+        "sqlWriteMs": 7719.16270002909
+      },
+      "engineTiming": {
+        "elapsedMs": 28373.194600000978,
+        "simulation": 779.3724999967963,
+        "dayClose": 342.71789999864995,
+        "validation": 125.99660000950098,
+        "clone": 18022.75639999658,
+        "seal": 23.419300001114607,
+        "residualMs": 9078.931899998337
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 56375.45600000024,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9508.462199989706,
+        "rowJsonMs": 0.002399999648332596,
+        "serializationMs": 9508.464599989355,
+        "hashingMs": 1957.4115000460297,
+        "sqlWriteMs": 7567.868999984115
+      },
+      "engineTiming": {
+        "elapsedMs": 27873.689299998805,
+        "simulation": 735.2746000029147,
+        "dayClose": 635.9829999990761,
+        "validation": 103.11359999515116,
+        "clone": 17728.275200001895,
+        "seal": 26.17320000194013,
+        "residualMs": 8644.869699997827
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 53173.05750000104,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8820.194699989632,
+        "rowJsonMs": 0.0021000001579523087,
+        "serializationMs": 8820.19679998979,
+        "hashingMs": 1960.3287999853492,
+        "sqlWriteMs": 7159.778400037438
+      },
+      "engineTiming": {
+        "elapsedMs": 25775.457999998704,
+        "simulation": 635.1711000036448,
+        "dayClose": 355.2049000002444,
+        "validation": 94.9742000028491,
+        "clone": 16535.45210001059,
+        "seal": 25.126499999314547,
+        "residualMs": 8129.529199982062
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 58899.95319999941,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 10062.741900043562,
+        "rowJsonMs": 0.0012999996542930603,
+        "serializationMs": 10062.743200043216,
+        "hashingMs": 2153.96220000647,
+        "sqlWriteMs": 8412.260100018233
+      },
+      "engineTiming": {
+        "elapsedMs": 29171.139000000432,
+        "simulation": 1205.723799996078,
+        "dayClose": 168.53020000085235,
+        "validation": 99.63329999707639,
+        "clone": 18148.14780000411,
+        "seal": 20.629099998623133,
+        "residualMs": 9528.474800003693
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 53535.71859999932,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9068.095600064844,
+        "rowJsonMs": 0.002399999648332596,
+        "serializationMs": 9068.098000064492,
+        "hashingMs": 1909.282400002703,
+        "sqlWriteMs": 6968.863700019196
+      },
+      "engineTiming": {
+        "elapsedMs": 25666.175400000066,
+        "simulation": 704.4595999997109,
+        "dayClose": 796.7253000009805,
+        "validation": 75.002700002864,
+        "clone": 16938.706699995324,
+        "seal": 21.98359999805689,
+        "residualMs": 7129.297500003129
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 58211.522600000724,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9405.296100016683,
+        "rowJsonMs": 0.007100000977516174,
+        "serializationMs": 9405.30320001766,
+        "hashingMs": 2050.3147999942303,
+        "sqlWriteMs": 7881.568100012839
+      },
+      "engineTiming": {
+        "elapsedMs": 29218.45469999872,
+        "simulation": 948.4610000047833,
+        "dayClose": 202.81389999948442,
+        "validation": 109.05030000768602,
+        "clone": 18155.783099988475,
+        "seal": 32.36300000175834,
+        "residualMs": 9769.983399996534
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 55031.31220000051,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8851.530299967155,
+        "rowJsonMs": 0.001199999824166298,
+        "serializationMs": 8851.531499966979,
+        "hashingMs": 1957.242499994114,
+        "sqlWriteMs": 7993.124799998477
+      },
+      "engineTiming": {
+        "elapsedMs": 26508.561499999836,
+        "simulation": 693.4209000002593,
+        "dayClose": 427.1229000017047,
+        "validation": 91.11419998668134,
+        "clone": 16945.4377000127,
+        "seal": 18.193499997258186,
+        "residualMs": 8333.272300001234
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 54569.773099999875,
+      "status": 200,
+      "stop": "DAY_CLOSED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8420.115099992603,
+        "rowJsonMs": 0.002900000661611557,
+        "serializationMs": 8420.117999993265,
+        "hashingMs": 1872.4465000052005,
+        "sqlWriteMs": 7354.354999992996
+      },
+      "engineTiming": {
+        "elapsedMs": 27586.88869999908,
+        "simulation": 777.2999999988824,
+        "dayClose": 381.7795999981463,
+        "validation": 105.2166000045836,
+        "clone": 17114.533000010997,
+        "seal": 20.750700002536178,
+        "residualMs": 9187.308799983934
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 55005.62999999896,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 10052.243699979037,
+        "rowJsonMs": 0.001700000837445259,
+        "serializationMs": 10052.245399979874,
+        "hashingMs": 2129.3028999865055,
+        "sqlWriteMs": 8020.914200019091
+      },
+      "engineTiming": {
+        "elapsedMs": 25483.964399999008,
+        "simulation": 717.4979999996722,
+        "dayClose": 584.0926999989897,
+        "validation": 84.65619999915361,
+        "clone": 15963.702699998394,
+        "seal": 87.34180000051856,
+        "residualMs": 8046.67300000228
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 57603.78800000064,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9025.142999999225,
+        "rowJsonMs": 0.0018000006675720215,
+        "serializationMs": 9025.144799999893,
+        "hashingMs": 1985.2460000198334,
+        "sqlWriteMs": 7902.755200017244
+      },
+      "engineTiming": {
+        "elapsedMs": 28669.859200000763,
+        "simulation": 800.0017999969423,
+        "dayClose": 233.28940000012517,
+        "validation": 118.6865000128746,
+        "clone": 17916.649800002575,
+        "seal": 27.55739999935031,
+        "residualMs": 9573.674299988896
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 55128.16909999959,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8657.053799975663,
+        "rowJsonMs": 0.0020999982953071594,
+        "serializationMs": 8657.055899973959,
+        "hashingMs": 1933.4612000025809,
+        "sqlWriteMs": 8040.902399968356
+      },
+      "engineTiming": {
+        "elapsedMs": 27389.2528999988,
+        "simulation": 731.8668999988586,
+        "dayClose": 381.04079999774694,
+        "validation": 112.63790000230074,
+        "clone": 16956.06450000219,
+        "seal": 26.759799998253584,
+        "residualMs": 9180.882999999449
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 55439.52549999952,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9033.555499985814,
+        "rowJsonMs": 0.0019000004976987839,
+        "serializationMs": 9033.557399986312,
+        "hashingMs": 2045.103499993682,
+        "sqlWriteMs": 8128.624099997804
+      },
+      "engineTiming": {
+        "elapsedMs": 26970.724899999797,
+        "simulation": 789.5445000007749,
+        "dayClose": 261.3402999974787,
+        "validation": 95.45000000484288,
+        "clone": 16781.895699998364,
+        "seal": 25.813500000163913,
+        "residualMs": 9016.680899998173
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 30598.21980000101,
+      "status": 200,
+      "stop": "TARGET_REACHED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8824.489699982107,
+        "rowJsonMs": 0.001499999314546585,
+        "serializationMs": 8824.491199981421,
+        "hashingMs": 1896.3823999930173,
+        "sqlWriteMs": 6732.377899995074
+      },
+      "engineTiming": {
+        "elapsedMs": 3889.2039000000805,
+        "simulation": 46.933000000193715,
+        "dayClose": 431.90179999917746,
+        "validation": 4.019200000911951,
+        "clone": 2859.360699996352,
+        "seal": 25.845799999311566,
+        "residualMs": 521.1434000041336
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_SELECT",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 30405.35889999941,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8879.454300003126,
+        "rowJsonMs": 0.002399999648332596,
+        "serializationMs": 8879.456700002775,
+        "hashingMs": 1927.3305999916047,
+        "sqlWriteMs": 7212.834599988535
+      },
+      "engineTiming": {
+        "elapsedMs": 3157.091000000015,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0,
+        "clone": 0,
+        "seal": 49.03849999606609,
+        "residualMs": 3108.052500003949
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_RESOLVE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 28188.751599999145,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9110.938800001517,
+        "rowJsonMs": 0.0015000011771917343,
+        "serializationMs": 9110.940300002694,
+        "hashingMs": 1975.8394999802113,
+        "sqlWriteMs": 7257.775599971414
+      },
+      "engineTiming": {
+        "elapsedMs": 576.2419000007212,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0,
+        "clone": 0,
+        "seal": 46.510999999940395,
+        "residualMs": 529.7309000007808
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 52387.930700000376,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9030.396699974313,
+        "rowJsonMs": 0.008300000801682472,
+        "serializationMs": 9030.404999975115,
+        "hashingMs": 1907.069899983704,
+        "sqlWriteMs": 7063.118299990892
+      },
+      "engineTiming": {
+        "elapsedMs": 25275.033900000155,
+        "simulation": 3725.5118000041693,
+        "dayClose": 7815.931299999356,
+        "validation": 1058.503800008446,
+        "clone": 3123.436599990353,
+        "seal": 94.8439000044018,
+        "residualMs": 9456.806499993429
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 49277.090200001374,
+      "status": 200,
+      "stop": "EVENT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9536.683899981901,
+        "rowJsonMs": 0.001700000837445259,
+        "serializationMs": 9536.685599982738,
+        "hashingMs": 1949.9764000102878,
+        "sqlWriteMs": 7320.35009996593
+      },
+      "engineTiming": {
+        "elapsedMs": 20951.13040000014,
+        "simulation": 2706.0380999930203,
+        "dayClose": 8159.065600000322,
+        "validation": 885.0095000043511,
+        "clone": 2322.651699990034,
+        "seal": 158.25999999977648,
+        "residualMs": 6720.105500012636
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 55079.69639999978,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9234.224799990654,
+        "rowJsonMs": 0.0059999991208314896,
+        "serializationMs": 9234.230799989775,
+        "hashingMs": 1949.8465000092983,
+        "sqlWriteMs": 7376.4965999946
+      },
+      "engineTiming": {
+        "elapsedMs": 27107.895199999213,
+        "simulation": 721.3211000002921,
+        "dayClose": 435.9345999993384,
+        "validation": 98.37060000747442,
+        "clone": 17022.88230000995,
+        "seal": 32.57560000009835,
+        "residualMs": 8796.810999982059
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 53663.16929999925,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 8762.731299988925,
+        "rowJsonMs": 0.0019000004976987839,
+        "serializationMs": 8762.733199989423,
+        "hashingMs": 1952.9846999943256,
+        "sqlWriteMs": 7791.872699981555
+      },
+      "engineTiming": {
+        "elapsedMs": 25598.894300000742,
+        "simulation": 806.3636000044644,
+        "dayClose": 215.1982999984175,
+        "validation": 96.79359999485314,
+        "clone": 15516.718600014225,
+        "seal": 20.766499999910593,
+        "residualMs": 8943.053699988872
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 54913.16710000113,
+      "status": 200,
+      "stop": "CHUNK_LIMIT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9224.821000011638,
+        "rowJsonMs": 0.0016000010073184967,
+        "serializationMs": 9224.822600012645,
+        "hashingMs": 1964.8229000121355,
+        "sqlWriteMs": 7528.0627000033855
+      },
+      "engineTiming": {
+        "elapsedMs": 26854.177300000563,
+        "simulation": 824.046200003475,
+        "dayClose": 410.85510000027716,
+        "validation": 93.41350000165403,
+        "clone": 16891.18960000202,
+        "seal": 22.717299999669194,
+        "residualMs": 8611.955599993467
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_HOST_ADVANCE",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 36006.00569999963,
+      "status": 200,
+      "stop": "TARGET_REACHED",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 9049.706499988213,
+        "rowJsonMs": 0.0018000006675720215,
+        "serializationMs": 9049.70829998888,
+        "hashingMs": 1923.1533000059426,
+        "sqlWriteMs": 7078.8888000026345
+      },
+      "engineTiming": {
+        "elapsedMs": 8348.951500000432,
+        "simulation": 204.12930000014603,
+        "dayClose": 218.26200000196695,
+        "validation": 24.466900002211332,
+        "clone": 5269.518099999055,
+        "seal": 26.57170000113547,
+        "residualMs": 2606.003499995917
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_START",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 43759.33940000087,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 15673.008599940687,
+        "rowJsonMs": 0.0040000006556510925,
+        "serializationMs": 15673.012599941343,
+        "hashingMs": 3149.0802999902517,
+        "sqlWriteMs": 10993.221000028774
+      },
+      "engineTiming": {
+        "elapsedMs": 4483.321900000796,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0,
+        "clone": 0,
+        "seal": 1438.8994000013918,
+        "residualMs": 3044.422499999404
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_ADVANCE",
+      "phase": "INTERNATIONAL_PROGRESS",
+      "elapsedMs": 80688.43899999931,
+      "status": 200,
+      "stop": "GAME_FINAL",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 16056.735400026664,
+        "rowJsonMs": 0.0020000003278255463,
+        "serializationMs": 16056.737400026992,
+        "hashingMs": 3100.2105000168085,
+        "sqlWriteMs": 11068.56729997322
+      },
+      "engineTiming": {
+        "elapsedMs": 33210.91079999879,
+        "simulation": 7.450799999758601,
+        "dayClose": 0,
+        "validation": 1.410299999639392,
+        "clone": 4450.309799998999,
+        "seal": 93.12329999543726,
+        "residualMs": 28658.616600004956
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_ADVANCE",
+      "phase": "INTERNATIONAL_PROGRESS",
+      "elapsedMs": 78098.72140000015,
+      "status": 200,
+      "stop": "GAME_FINAL",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 15418.85680004023,
+        "rowJsonMs": 0.003200000151991844,
+        "serializationMs": 15418.860000040382,
+        "hashingMs": 3059.751299995929,
+        "sqlWriteMs": 10928.003599954769
+      },
+      "engineTiming": {
+        "elapsedMs": 30692.69780000113,
+        "simulation": 33.43850000016391,
+        "dayClose": 0,
+        "validation": 5.057800002396107,
+        "clone": 4376.230100000277,
+        "seal": 80.61200000345707,
+        "residualMs": 26197.359399994835
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_ADVANCE",
+      "phase": "INTERNATIONAL_PROGRESS",
+      "elapsedMs": 91903.36639999971,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 16951.7144999858,
+        "rowJsonMs": 0.0022999998182058334,
+        "serializationMs": 16951.716799985617,
+        "hashingMs": 3402.0137999970466,
+        "sqlWriteMs": 11977.222599981353
+      },
+      "engineTiming": {
+        "elapsedMs": 40797.3647999987,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 17290.80589999631,
+        "clone": 0,
+        "seal": 118.49310000427067,
+        "residualMs": 23388.06579999812
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_ADVANCE",
+      "phase": "INTERNATIONAL_PROGRESS",
+      "elapsedMs": 86323.39850000106,
+      "status": 200,
+      "stop": "GAME_FINAL",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 17204.766300046816,
+        "rowJsonMs": 0.004100000485777855,
+        "serializationMs": 17204.770400047302,
+        "hashingMs": 3422.7263000626117,
+        "sqlWriteMs": 12611.33279994689
+      },
+      "engineTiming": {
+        "elapsedMs": 35607.1707000006,
+        "simulation": 6.205800000578165,
+        "dayClose": 0,
+        "validation": 1.3453999981284142,
+        "clone": 4685.593700001016,
+        "seal": 106.04910000413656,
+        "residualMs": 30807.97669999674
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_ADVANCE",
+      "phase": "INTERNATIONAL_PROGRESS",
+      "elapsedMs": 87381.95800000057,
+      "status": 200,
+      "stop": "GAME_FINAL",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 17734.365199966356,
+        "rowJsonMs": 0.0028000008314847946,
+        "serializationMs": 17734.367999967188,
+        "hashingMs": 3430.2685999851674,
+        "sqlWriteMs": 12473.005299981683
+      },
+      "engineTiming": {
+        "elapsedMs": 36150.98660000041,
+        "simulation": 36.02960000000894,
+        "dayClose": 0,
+        "validation": 5.397100001573563,
+        "clone": 4910.1194000002,
+        "seal": 84.14660000056028,
+        "residualMs": 31115.29389999807
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_ADVANCE",
+      "phase": "INTERNATIONAL_PROGRESS",
+      "elapsedMs": 92388.74909999967,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 17421.67960000597,
+        "rowJsonMs": 0.003899998962879181,
+        "serializationMs": 17421.683500004932,
+        "hashingMs": 3483.3143000286072,
+        "sqlWriteMs": 12260.794899983332
+      },
+      "engineTiming": {
+        "elapsedMs": 41726.64090000093,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 17578.80040000193,
+        "clone": 0,
+        "seal": 124.2981999963522,
+        "residualMs": 24023.54230000265
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_ADVANCE",
+      "phase": "INTERNATIONAL_PROGRESS",
+      "elapsedMs": 87117.40159999952,
+      "status": 200,
+      "stop": "GAME_FINAL",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 18114.748600028455,
+        "rowJsonMs": 0.0074000004678964615,
+        "serializationMs": 18114.756000028923,
+        "hashingMs": 3417.1573999784887,
+        "sqlWriteMs": 12958.715200025588
+      },
+      "engineTiming": {
+        "elapsedMs": 35483.47629999928,
+        "simulation": 6.874200001358986,
+        "dayClose": 0,
+        "validation": 1.0417999997735023,
+        "clone": 4846.577999997884,
+        "seal": 83.79460000433028,
+        "residualMs": 30545.187699995935
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_ADVANCE",
+      "phase": "INTERNATIONAL_PROGRESS",
+      "elapsedMs": 85985.32870000042,
+      "status": 200,
+      "stop": "GAME_FINAL",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 17781.79909996502,
+        "rowJsonMs": 0.0034999996423721313,
+        "serializationMs": 17781.802599964663,
+        "hashingMs": 3436.6937000006437,
+        "sqlWriteMs": 12311.546099985018
+      },
+      "engineTiming": {
+        "elapsedMs": 35063.49499999918,
+        "simulation": 40.45350000075996,
+        "dayClose": 0,
+        "validation": 5.135299997404218,
+        "clone": 4810.492000002414,
+        "seal": 91.47750000096858,
+        "residualMs": 30115.936699997634
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_ADVANCE",
+      "phase": "INTERNATIONAL_PROGRESS",
+      "elapsedMs": 90702.37769999914,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 16831.90830005333,
+        "rowJsonMs": 0.003399999812245369,
+        "serializationMs": 16831.91170005314,
+        "hashingMs": 3357.8339000046253,
+        "sqlWriteMs": 12093.283499965444
+      },
+      "engineTiming": {
+        "elapsedMs": 41137.98089999892,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 17295.400299998,
+        "clone": 0,
+        "seal": 126.27180000580847,
+        "residualMs": 23716.30879999511
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_ADVANCE",
+      "phase": "INTERNATIONAL_PROGRESS",
+      "elapsedMs": 89893.0175999999,
+      "status": 200,
+      "stop": "GAME_FINAL",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 19703.10719998367,
+        "rowJsonMs": 0.003699999302625656,
+        "serializationMs": 19703.110899982974,
+        "hashingMs": 3456.6926999930292,
+        "sqlWriteMs": 14230.782600011677
+      },
+      "engineTiming": {
+        "elapsedMs": 35380.112800000235,
+        "simulation": 38.97339999862015,
+        "dayClose": 0,
+        "validation": 4.825300000607967,
+        "clone": 4720.38010000065,
+        "seal": 94.80460000224411,
+        "residualMs": 30521.129399998114
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_ADVANCE",
+      "phase": "INTERNATIONAL_PROGRESS",
+      "elapsedMs": 83078.25850000046,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 15888.683800013736,
+        "rowJsonMs": 0.003200000151991844,
+        "serializationMs": 15888.687000013888,
+        "hashingMs": 3099.2015999946743,
+        "sqlWriteMs": 11090.925599979237
+      },
+      "engineTiming": {
+        "elapsedMs": 37108.2583000008,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 15590.476099995896,
+        "clone": 0,
+        "seal": 108.4792999997735,
+        "residualMs": 21409.302900005132
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_ADVANCE",
+      "phase": "INTERNATIONAL_PROGRESS",
+      "elapsedMs": 86777.58440000005,
+      "status": 200,
+      "stop": "GAME_FINAL",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 17715.458399970084,
+        "rowJsonMs": 0.003100000321865082,
+        "serializationMs": 17715.461499970406,
+        "hashingMs": 3386.0679999925196,
+        "sqlWriteMs": 12331.201900016516
+      },
+      "engineTiming": {
+        "elapsedMs": 36225.95459999889,
+        "simulation": 38.99590000137687,
+        "dayClose": 0,
+        "validation": 4.813800001516938,
+        "clone": 4748.547200001776,
+        "seal": 93.60510000400245,
+        "residualMs": 31339.99259999022
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_ADVANCE",
+      "phase": "INTERNATIONAL_PROGRESS",
+      "elapsedMs": 79970.07860000059,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 17501.24240001291,
+        "rowJsonMs": 0.002900000661611557,
+        "serializationMs": 17501.245300013572,
+        "hashingMs": 3396.0612999591976,
+        "sqlWriteMs": 11974.772500025108
+      },
+      "engineTiming": {
+        "elapsedMs": 30053.192699998617,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 11514.012299999595,
+        "clone": 0,
+        "seal": 81.61900000274181,
+        "residualMs": 18457.56139999628
+      }
+    },
+    {
+      "type": "CAREER_US_NATIONAL_RETURN",
+      "phase": "INTERNATIONAL_REVIEW",
+      "elapsedMs": 79696.99379999936,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 17043.510299991816,
+        "rowJsonMs": 0.006400000303983688,
+        "serializationMs": 17043.51669999212,
+        "hashingMs": 3280.0653000157326,
+        "sqlWriteMs": 12061.259800020605
+      },
+      "engineTiming": {
+        "elapsedMs": 29801.561699999496,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0,
+        "clone": 12793.942099997774,
+        "seal": 3362.521699996665,
+        "residualMs": 13645.097900005057
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 79651.24679999985,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 16103.318799959496,
+        "rowJsonMs": 0.0027999989688396454,
+        "serializationMs": 16103.321599958465,
+        "hashingMs": 3185.2541000079364,
+        "sqlWriteMs": 11466.076200000942
+      },
+      "engineTiming": {
+        "elapsedMs": 31752.748900000006,
+        "simulation": 3123.819199992344,
+        "dayClose": 6045.021399999037,
+        "validation": 12433.425899989903,
+        "clone": 2519.1135000027716,
+        "seal": 72.16760000027716,
+        "residualMs": 7559.201300015673
+      }
+    },
+    {
+      "type": "CAREER_US_PLAY_ADVANCE_SPAN",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 79924.87380000018,
+      "status": 200,
+      "stop": "SEASON_END",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 15946.643300039694,
+        "rowJsonMs": 0.003100000321865082,
+        "serializationMs": 15946.646400040016,
+        "hashingMs": 3079.30319991149,
+        "sqlWriteMs": 10979.933500016108
+      },
+      "engineTiming": {
+        "elapsedMs": 33422.55910000019,
+        "simulation": 2494.994199998677,
+        "dayClose": 6430.280899999663,
+        "validation": 11897.849999999627,
+        "clone": 2027.738000003621,
+        "seal": 69.64830000139773,
+        "residualMs": 10502.047699997202
+      }
+    }
+  ],
+  "node": "v24.20.0",
+  "platform": "win32",
+  "arch": "x64",
+  "method": "CPU profiling disabled",
+  "memoryMode": false,
+  "saveTimingMethod": "Per committed command: state codec traversal plus row-state JSON mapper, part hashes, and awaited write statements with row-state JSON time removed. SQL timing includes driver/ORM overhead; excludes reads, locking and transaction commit.",
+  "engineTimingMethod": "Exclusive synchronous wall milliseconds inside applyEngineCommand: PA loop, instrumented day settlements, selected validators and state copies, canonical SHA seals. Remaining engine work is residual; HTTP views are outside this boundary.",
+  "engineTimingTotals": {
+    "measuredCommands": 219,
+    "elapsedMs": 5533533.9817999955,
+    "simulation": 439533.9927999959,
+    "dayClose": 371622.71179998736,
+    "validation": 186586.66420010026,
+    "clone": 2144654.338400135,
+    "seal": 21919.94770000301,
+    "residualMs": 2369216.326899774
+  },
+  "saveTimingTotals": {
+    "measuredCommands": 219,
+    "codecMs": 1663731.535699822,
+    "rowJsonMs": 0.5624999967012627,
+    "serializationMs": 1663732.0981998187,
+    "hashingMs": 356669.2685999419,
+    "sqlWriteMs": 1318542.9493997167
+  },
+  "wallMs": 13906535.934700001,
+  "finalHash": "aa45d79d61701bafe47d1b306a3a9c02d00af325e7d4c49c7620f0a3ddda73c2",
+  "initialHashUnchanged": true,
+  "finalPhase": "SEASON_REVIEW",
+  "finalGames": 8790
+}
