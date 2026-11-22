@@ -18,8 +18,38 @@ export function earlyDraftReturnReport(round){
  return {...(round===null?{completesPaths:['P04']}:{variantOf:'P04'}),draftRound:round,undraftedBranch:round===null,declined:round!==null,returnEnrollmentPreserved:true,earlyAttempts:1,jsonReplay:'every command'};
 }
 
-export function nativePaths(trace,only,pitcherOptions){
+function earlyDraftReturn(t){
+ const admissionKey=t.state.collegeAdmission.admissionKey;
+ assert.equal(t.state.events.at(-1).definitionId,'E73');
+ t.command('ENTER_EARLY_DRAFT',{eventVersion:t.state.events.at(-1).version},s=>enterCollegeEarlyDraft(s,s.revision,s.events.at(-1).version));
+ t.command('PREPARE_KBO_DRAFT',{},s=>prepareCareerKboDraft(s,s.revision));
+ t.command('RESOLVE_KBO_DRAFT',{programVersion:1},s=>resolveCareerKboDraft(s,s.revision,1));
+ const {input,result}=t.state.kboRecruitment.program;
+ const decline={programVersion:2,decision:'DECLINE'};
+ if(result.round!==null)t.command('DECLINE_KBO_DRAFT',decline,s=>decideCareerKboDraft(s,s.revision,decline));
+ assert.equal(t.state.events.at(-1).definitionId,'E74');
+ t.command('RETURN_UNSIGNED_COLLEGE',{eventVersion:t.state.events.at(-1).version},s=>returnUnsignedCollegeCareer(s,s.revision,s.events.at(-1).version));
+ N.collegeNextYear(t);
+ const admission=t.state.collegeAdmission;
+ assert.equal(admission.academicYear,3);
+ assert.equal(admission.earlyDraftAttempted,true);
+ assert.equal(t.state.previousKboRecruitments.length,1);
+ assert.equal(admission.status,'ENROLLED');
+ assert.equal(admission.admissionKey,admissionKey);
+ assert.equal(admission.yearsCompleted,2);
+ return t.finish({...earlyDraftReturnReport(result.round),draftBaseScore:input.baseScore,draftScore:result.score});
+}
+
+export function nativePaths(trace,only,pitcherOptions,p04Creation){
  const want=id=>!only||only.includes(id),out=[],cmds=(t,from)=>t.rows.length-from;
+ if(p04Creation!==undefined){
+  assert.equal(p04Creation,'HS_P04_DEFENSE','unknown P04 creation fixture');
+  assert.deepEqual(only,['P04'],'select only P04 for its alternate creation');
+  const t=trace('P04-native-early-draft-return',N.createNativeP04Hs(),prefix('Creation -> actual high school and two college years -> E73 early draft -> E74 return -> third-year entry.',p04Creation));
+  N.hsSeason(t);N.toRoute(t);N.collegeEnroll(t);
+  N.collegeYear(t);N.collegeNextYear(t);N.collegeYear(t);
+  return [earlyDraftReturn(t)];
+ }
  if(want('P02'))out.push(nativePitcherPath(trace,pitcherOptions));
  if(want('P06')){
   const t=trace('P06-native-HS-to-US-minor',N.createNativeUsHs(),prefix('Creation -> actual HS216 -> actual US scouting, offer, signing and minor registration. US roster and inventory are caller inputs.','HS_US_HITTER'));
@@ -81,18 +111,7 @@ export function nativePaths(trace,only,pitcherOptions){
   if(want('P04')){
    N.collegeYear(tc);
    const t=trace('P04-native-early-draft-return',null,prefix('Creation -> HS216 -> two native college years -> E73 early draft -> E74 return -> third-year entry.'),tc);
-   const admissionKey=t.state.collegeAdmission.admissionKey;
-   assert.equal(t.state.events.at(-1).definitionId,'E73');
-   t.command('ENTER_EARLY_DRAFT',{eventVersion:t.state.events.at(-1).version},s=>enterCollegeEarlyDraft(s,s.revision,s.events.at(-1).version));
-   t.command('PREPARE_KBO_DRAFT',{},s=>prepareCareerKboDraft(s,s.revision));t.command('RESOLVE_KBO_DRAFT',{programVersion:1},s=>resolveCareerKboDraft(s,s.revision,1));
-   const round=t.state.kboRecruitment.program.result.round;
-   const decline={programVersion:2,decision:'DECLINE'};if(round!==null)t.command('DECLINE_KBO_DRAFT',decline,s=>decideCareerKboDraft(s,s.revision,decline));
-   assert.equal(t.state.events.at(-1).definitionId,'E74');
-   t.command('RETURN_UNSIGNED_COLLEGE',{eventVersion:t.state.events.at(-1).version},s=>returnUnsignedCollegeCareer(s,s.revision,s.events.at(-1).version));
-   N.collegeNextYear(t);
-   assert.equal(t.state.collegeAdmission.academicYear,3);assert.equal(t.state.collegeAdmission.earlyDraftAttempted,true);assert.equal(t.state.previousKboRecruitments.length,1);
-   assert.equal(t.state.collegeAdmission.status,'ENROLLED');assert.equal(t.state.collegeAdmission.admissionKey,admissionKey);assert.equal(t.state.collegeAdmission.yearsCompleted,2);
-   out.push(t.finish(earlyDraftReturnReport(round)));
+   out.push(earlyDraftReturn(t));
   }
   if(want('P05')){
    if(!want('P04'))N.collegeYear(tc);

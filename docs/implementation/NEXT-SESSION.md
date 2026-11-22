@@ -1,3 +1,11 @@
+# 최신 인계 — 2026-11-22 P04 실제 미지명 검증 후보
+
+`HS_P04_DEFENSE`는 정상 생성과 입학 규칙을 사용하는 수비형 선수 후보이다. 실제 대학 2년 뒤 조기 드래프트 기본점수가 약 49.824 미만이면 이 설정의 고정 추첨에서 미지명될 수 있다. 실제 점수와 3학년 복학은 아직 확인 전이다. 미국 성능 측정 종료 후 독립 실행한다.
+
+```powershell
+node --max-old-space-size=8192 --import tsx scripts/verify-m2-closure.mjs "$env:TEMP/P04-defense-proof.json.gz" --scenarios=nativePaths --native=P04 --p04-creation=HS_P04_DEFENSE
+```
+
 # 최신 인계 — 2026-11-22 국가대표 선발용 국내 리그 추적
 
 새 프로파일은 시뮬레이션 로그에 `hostProgress`를 표시한다. 결산 보고서에는 `finalHostHash`를 추가했고, 최적화 전후 비교에서도 이를 확인한다. 실행 중인 미국 프로파일은 이전 코드에서 시작했으므로 새 필드는 다음 실행부터 기록된다. 그 결과는 기존 네 리그 시간 비교에 사용할 수 있다.

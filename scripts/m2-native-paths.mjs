@@ -31,6 +31,9 @@ export const createNativeHs=()=>createHighSchoolCareer(createHighSchoolWorld(HS_
 export const createNativeInjuryHs=()=>createHighSchoolCareer(createHighSchoolWorld({...HS_SPEC,worldKey:'m2-native-injury',seed:'training-native-891'}),'GROWTH');
 export const US_HS_SPEC={...HS_SPEC,worldKey:'m2-closure-native-us',seed:'m2-native-us-1307',player:{...HS_SPEC.player,position:'DH',archetype:'SLUGGER',focus:['CONTACT','POWER','DISCIPLINE','CLUTCH']}};
 export const createNativeUsHs=()=>createHighSchoolCareer(createHighSchoolWorld(US_HS_SPEC),'GROWTH');
+export const P04_HS_SPEC={...HS_SPEC,worldKey:'m2-native-early-return',seed:'m2-native-p04-1',player:{...HS_SPEC.player,archetype:'DEFENSE_RUNNING',focus:['DEFENSE','RUNNING','DISCIPLINE','CLUTCH'],difficulty:'REALISTIC'}};
+// Defense-first creation and the fixed low draft draw make a null result plausible without changing any scores.
+export const createNativeP04Hs=()=>createHighSchoolCareer(createHighSchoolWorld(P04_HS_SPEC),'REALISTIC');
 
 export const createNativePitcherHs=(seed='m2-closure-native-pitcher-v1')=>createHighSchoolCareer(createHighSchoolWorld({
  ...HS_SPEC,seed,secondaryPitch:'P03',
@@ -226,7 +229,7 @@ export function collegeLeave(t){
 export const stateHash=canonicalJson;
 
 /** Creation fixtures the verifier can rebuild itself, so a slice cannot start from a doctored state. */
-const CREATIONS={HS_HITTER:createNativeHs,HS_US_HITTER:createNativeUsHs,...PITCHER_CREATIONS,HS_INJURY_HITTER:createNativeInjuryHs};
+const CREATIONS={HS_HITTER:createNativeHs,HS_US_HITTER:createNativeUsHs,...PITCHER_CREATIONS,HS_INJURY_HITTER:createNativeInjuryHs,HS_P04_DEFENSE:createNativeP04Hs};
 /** Machine verdict from receipts alone: creation origin, hash linkage, and required commands in order. */
 export function nativeSliceVerdict(s,required,hash){
  const bad=problem=>({ok:false,problem:s.id+': '+problem}),rows=s.commandReceipts;

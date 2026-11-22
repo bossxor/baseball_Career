@@ -114,7 +114,8 @@ const pitcherOptions={
  creation:process.argv.find(a=>a.startsWith('--pitcher-creation='))?.slice('--pitcher-creation='.length),
  checkpoint:process.argv.includes('--p02-checkpoint')?{path:output+'.p02-checkpoint.gz',sourceHash:hash(start)}:null,
 };
-const scenarios={nativePaths:()=>nativePaths(trace,process.argv.find(a=>a.startsWith('--native='))?.slice(9).split(','),pitcherOptions),nativeReturnedUs:()=>[returnedUsContractPath(trace)],nativeSchool:()=>[nativeSchool()],nativeKbo:()=>[controlledKbo()],school:()=>controlledSchoolPaths(trace),collegeService:()=>[collegeServicePath(trace)],agent:()=>agentPath(trace),pitcher:()=>[pitcherLearningPath(trace)],national:()=>[nationalAppearancePath(trace)],posting:()=>postingPaths(trace),retry:()=>[retryExhaustionPath(trace)],injury:()=>[injuryTrainingPath(trace)]};
+const p04Creation=process.argv.find(a=>a.startsWith('--p04-creation='))?.slice('--p04-creation='.length);
+const scenarios={nativePaths:()=>nativePaths(trace,process.argv.find(a=>a.startsWith('--native='))?.slice(9).split(','),pitcherOptions,p04Creation),nativeReturnedUs:()=>[returnedUsContractPath(trace)],nativeSchool:()=>[nativeSchool()],nativeKbo:()=>[controlledKbo()],school:()=>controlledSchoolPaths(trace),collegeService:()=>[collegeServicePath(trace)],agent:()=>agentPath(trace),pitcher:()=>[pitcherLearningPath(trace)],national:()=>[nationalAppearancePath(trace)],posting:()=>postingPaths(trace),retry:()=>[retryExhaustionPath(trace)],injury:()=>[injuryTrainingPath(trace)]};
 const selection=process.argv.find(arg=>arg.startsWith('--scenarios='))?.slice('--scenarios='.length);
 const selected=selection===undefined?Object.keys(scenarios).filter(name=>!process.argv.includes('--paths-only')||!name.startsWith('native')):selection.split(',');
 assert.ok(selected.length>0&&new Set(selected).size===selected.length&&selected.every(name=>Object.hasOwn(scenarios,name)),'unknown, empty or duplicate closure scenario');
