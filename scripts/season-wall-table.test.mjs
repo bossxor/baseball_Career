@@ -7,10 +7,12 @@ const school = JSON.parse(readFileSync(new URL('../docs/implementation/evidence/
 const examples = () => ['school', 'college', 'kbo', 'us'].map(league => ({ ...structuredClone(school), league }));
 
 test('equivalence requires completed seasons, identical command sequences and identical results', () => {
-  const before = { ...school, commandSequenceHash: '1'.repeat(64) };
+  const before = { ...school, commandSequenceHash: '1'.repeat(64), finalHostHash: null };
   assert.doesNotThrow(() => assertSeasonReplayEquivalent(before, { ...before, wallMs: before.wallMs / 2 }));
   assert.throws(() => assertSeasonReplayEquivalent(before, { ...before, commandSequenceHash: '2'.repeat(64) }), /differs: commandSequenceHash/);
   assert.throws(() => assertSeasonReplayEquivalent(before, { ...before, finalHash: '3'.repeat(64) }), /differs: finalHash/);
+  assert.throws(() => assertSeasonReplayEquivalent(before, { ...before, finalHostHash: '4'.repeat(64) }), /differs: finalHostHash/);
+  assert.throws(() => assertSeasonReplayEquivalent(before, { ...before, finalHostHash: undefined }), /host SHA-256 or null/);
   assert.throws(() => assertSeasonReplayEquivalent(before, { ...before, finalPhase: 'SEASON_PROGRESS' }), /completed season/);
 });
 

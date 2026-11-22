@@ -62,8 +62,11 @@ export function assertSeasonReplayEquivalent(before, after) {
     for (const key of ['initialHash', 'commandSequenceHash', 'finalHash']) {
       assert.match(report[key] ?? '', /^[a-f0-9]{64}$/, 'Expected SHA-256: ' + key);
     }
+    if (report.finalHostHash !== null) {
+      assert.match(report.finalHostHash ?? '', /^[a-f0-9]{64}$/, 'Expected host SHA-256 or null');
+    }
   }
-  for (const key of ['league', 'initialHash', 'commandSequenceHash', 'finalGames', 'finalHash']) {
+  for (const key of ['league', 'initialHash', 'commandSequenceHash', 'finalGames', 'finalHash', 'finalHostHash']) {
     assert.equal(after[key], before[key], 'Season replay differs: ' + key);
   }
 }

@@ -113,7 +113,7 @@ let result={backend,databaseVersion,league,fixture:'controlled pre-season fixtur
 result.spanBudgetMs=Number(process.env.PLAYBALL_SPAN_BUDGET_MS??25_000);
 if(timingMode)result.saveTimingMethod='Per committed command: state codec traversal plus row-state JSON mapper, part hashes, and awaited write statements with row-state JSON time removed. SQL timing includes driver/ORM overhead; excludes reads, locking and transaction commit.';
 if(timingMode)result.engineTimingMethod='Exclusive synchronous wall milliseconds inside applyEngineCommand: PA loop, instrumented day settlements, selected validators and state copies, canonical SHA seals. Remaining engine work is residual; HTTP views are outside this boundary.';
-let current=source,revision=0,profile;
+let current=source,currentHost,revision=0,profile;
 const start=performance.now();
 try{
  if(cpuEnabled){await inspector('Profiler.enable');await inspector('Profiler.setSamplingInterval',{interval:1000});await inspector('Profiler.start');}
@@ -143,8 +143,10 @@ try{
   timing=null;
   const data=await response.json();result.commands.push({type:body.type,commandHash,phase,elapsedMs,status:response.status,stop:data.summary?.spanStop??data.summary?.stopReason,...(save?{saveTiming:save}:{}),...(engine?{engineTiming:engine}:{})});
   if(!response.ok){result.status='http_error';result.error=data;break;}
-  const row=await state();current=row.state.career;revision=Number(row.revision);
-  console.log(JSON.stringify({league,command:n,type:body.type,stop:data.summary?.spanStop??data.summary?.stopReason??null,phase:current.phaseContext.phase,nextWorldDay:current.phaseContext.nextWorldDay??null,games:Object.keys(current.records.games).length,elapsedSeconds:Math.round((performance.now()-start)/1000)}));
+  const row=await state();current=row.state.career;currentHost=row.state.collegeNationalHost;revision=Number(row.revision);
+  const host=currentHost?.game;
+  const hostProgress=host?{season:host.world.seasonKey,phase:host.phase,nextWorldDay:host.progress?.nextWorldDay??null,recordRevision:host.records.revision}:undefined;
+  console.log(JSON.stringify({league,command:n,type:body.type,stop:data.summary?.spanStop??data.summary?.stopReason??null,phase:current.phaseContext.phase,nextWorldDay:current.phaseContext.nextWorldDay??null,games:Object.keys(current.records.games).length,hostProgress,elapsedSeconds:Math.round((performance.now()-start)/1000)}));
  }
 }catch(error){result.status='error';result.error=backend==='postgres'?'Profile operation failed':String(error.stack??error);}
 finally{
@@ -156,6 +158,7 @@ finally{
  }
  if(cpuEnabled){try{profile=(await inspector('Profiler.stop')).profile;}catch(error){result.profileError=String(error);}session.disconnect();}
  result.wallMs=performance.now()-start;result.finalHash=canonicalSha256(current);result.initialHashUnchanged=canonicalSha256(source)===initialHash;
+ result.finalHostHash=currentHost?canonicalSha256(currentHost):null;
  result.commandSequenceHash=canonicalSha256(result.commands.map(({commandHash})=>commandHash));
  result.finalPhase=current.phaseContext.phase;result.finalGames=Object.values(current.records.games).filter(g=>g.scope.seasonKey===current.world.seasonKey&&g.scope.phase==='REGULAR').length;
  if(profile){const nodes=new Map(profile.nodes.map(n=>[n.id,n])),totals=new Map();for(let i=0;i<profile.samples.length;i++){const frame=nodes.get(profile.samples[i])?.callFrame;if(!frame)continue;const key=(frame.functionName||'(anonymous)')+' '+frame.url;totals.set(key,(totals.get(key)??0)+(profile.timeDeltas[i]??0));}result.cpuSamples=profile.samples.length;result.topSelfCpu=Array.from(totals,([frame,microseconds])=>({frame,microseconds})).sort((a,b)=>b.microseconds-a.microseconds).slice(0,40);result.cpuProfile=profile;}
