@@ -16,7 +16,13 @@ export interface KboCallupReview {seasonKey:string;teamGames:number;outcome:'NO_
 
 /** 01/08: competition = roleScore×.8 + performance index×.2 (index 50 below 50 PA / 30 outs). */
 export function kboCompetitionScore(career:KboCareer,key:string,league:KboLeagueKey):number {
- const p=career.world.players[key]!,t=recordTotals(career.records,{leagueKey:league,phase:'REGULAR',seasonKey:career.world.seasonKey});
+ return competitionScore(career,key,competitionTotals(career,league));
+}
+function competitionTotals(career:KboCareer,leagueKey:KboLeagueKey){
+ return recordTotals(career.records,{leagueKey,phase:'REGULAR',seasonKey:career.world.seasonKey});
+}
+function competitionScore(career:KboCareer,key:string,t:ReturnType<typeof recordTotals>):number {
+ const p=career.world.players[key]!;
  const perf=p.kind==='HITTER'?recentBattingPerformance(t.batting[key]?{...emptyBatting(),...pick(t.batting[key]!,Object.keys(emptyBatting()))}:emptyBatting()):recentPitchingPerformance(t.pitching[key]?{...emptyPitching(),...pick(t.pitching[key]!,Object.keys(emptyPitching()))}:emptyPitching());
  return .8*roleScore(p.kind,p.abilities,p.position)+.2*perf;
 }
@@ -39,8 +45,9 @@ export function reviewKboCallup(source:KboCareer,day:number,progress:KboSeasonPr
  const record=(outcome:KboCallupReview['outcome'],comparedKey:string|null,comparedScore:number|null)=>({seasonKey:season,teamGames:games,outcome,comparedKey,candidateScore,comparedScore,...(transfer?{clubId:transfer.toClubId,registrationReceiptKey:transfer.receiptKey}:{})});
  const career=structuredClone(source);
  if(Object.hasOwn(source.health.injuries,key)){career.callupReviews=[...(source.callupReviews??[]),record('INJURED',null,null)];return career;}
+ let firstTeamTotals:ReturnType<typeof recordTotals>|undefined;
  const slots=club.firstTeam.filter(k=>!Object.hasOwn(source.health.injuries,k) && source.world.players[k]!.kind===me.kind && source.world.players[k]!.position===me.position)
-  .map(k=>({key:k,score:kboCompetitionScore(source,k,'KBO'),fatigue:source.world.players[k]!.fatigue}))
+  .map(k=>({key:k,score:competitionScore(source,k,firstTeamTotals??=competitionTotals(source,'KBO')),fatigue:source.world.players[k]!.fatigue}))
   .sort((a,b)=>a.score-b.score || b.fatigue-a.fatigue || (a.key<b.key?1:-1));
  const weakest=slots[0];
  if(!weakest){career.callupReviews=[...(source.callupReviews??[]),record('NO_SLOT',null,null)];return career;}
@@ -80,23 +87,31 @@ export function resolveKboCallup(source:KboCareer,expectedRevision:number,input:
  * My own player never moves here (E09 handles my call-up; my demotion is not automated). One pass per review:
  * strongest healthy futures candidate first, each against the weakest healthy same-position/role first-team player. */
 export function reviewKboAiRosters(source:KboCareer):KboCareer|null {
- const season=source.world.seasonKey,done=new Set(source.aiRosterReviews??[]),career=structuredClone(source);let changed=false;
- for(const club of career.world.clubs){
-  const games=Object.values(career.records.games).filter(g=>g.scope.leagueKey==='FUTURES' && g.scope.seasonKey===season && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,club.id)).length;
-  const key=JSON.stringify([season,club.id,games]);
+ const season=source.world.seasonKey,done=new Set(source.aiRosterReviews??[]);
+ const teamGames=new Map<string,number>();
+ for(const row of Object.values(source.records.games)){
+  if(row.scope.leagueKey!=='FUTURES'||row.scope.seasonKey!==season||row.scope.phase!=='REGULAR')continue;
+  for(const id of Object.keys(row.teams))teamGames.set(id,(teamGames.get(id)??0)+1);
+ }
+ let reviewed:KboCareer|undefined;
+ let futuresTotals:ReturnType<typeof recordTotals>|undefined,firstTeamTotals:ReturnType<typeof recordTotals>|undefined;
+ for(const [index,clubSource] of source.world.clubs.entries()){
+  const games=teamGames.get(clubSource.id)??0;
+  const key=JSON.stringify([season,clubSource.id,games]);
   if(games===0 || games%20!==0 || done.has(key))continue;
-  done.add(key);changed=true;
+  const career=reviewed??=structuredClone(source),club=career.world.clubs[index]!;
+  done.add(key);
   const healthy=(k:string)=>!Object.hasOwn(career.health.injuries,k) && k!==career.protagonistKey;
-  const candidates=club.roster.filter(k=>!club.firstTeam.includes(k) && healthy(k)).map(k=>({key:k,score:kboCompetitionScore(career,k,'FUTURES')})).sort((a,b)=>b.score-a.score || (a.key<b.key?-1:1));
+  const candidates=club.roster.filter(k=>!club.firstTeam.includes(k) && healthy(k)).map(k=>({key:k,score:competitionScore(career,k,futuresTotals??=competitionTotals(career,'FUTURES'))})).sort((a,b)=>b.score-a.score || (a.key<b.key?-1:1));
   const moved=new Set<string>();
   for(const c of candidates){
    const p=career.world.players[c.key]!;
    const weakest=club.firstTeam.filter(k=>healthy(k) && !moved.has(k) && career.world.players[k]!.kind===p.kind && career.world.players[k]!.position===p.position)
-    .map(k=>({key:k,score:kboCompetitionScore(career,k,'KBO')})).sort((a,b)=>a.score-b.score || (a.key<b.key?1:-1))[0];
+    .map(k=>({key:k,score:competitionScore(career,k,firstTeamTotals??=competitionTotals(career,'KBO'))})).sort((a,b)=>a.score-b.score || (a.key<b.key?1:-1))[0];
    if(!weakest || c.score<=weakest.score)continue;
    const nextFirst=club.firstTeam.map(k=>k===weakest.key?c.key:k);if(!reserveKboNpcServiceRosterChange(career,club.id,nextFirst))continue;club.firstTeam=nextFirst;moved.add(c.key);
   }
  }
- if(!changed)return null;
- career.aiRosterReviews=[...done].sort();return career;
+ if(!reviewed)return null;
+ reviewed.aiRosterReviews=[...done].sort();return reviewed;
 }
