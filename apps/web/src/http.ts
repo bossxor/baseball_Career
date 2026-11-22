@@ -73,7 +73,7 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
         method: 'POST',
         headers: await headers(),
         body: JSON.stringify({ commandId, ...intent }),
-      }) as { revision: string; next?: ChooseReceipt['next'] };
+      }) as { revision: string; next?: ChooseReceipt['next']; summary?: { spanStop?: string } };
       revisions.set(saveId, Number(result.revision));
       if(!retainForRefresh)sentCommands.delete(key);
       return result;
@@ -159,14 +159,21 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
     async flow(saveId: string): Promise<FlowView | null> {
       // The career read refreshes the save revision first, so a command sent from here never carries a stale one.
       await this.career(saveId);
-      try { return await req(`/api/saves/${encodeURIComponent(saveId)}/screens/CAREER_FLOW`, { headers: await headers(false) }) as FlowView; }
+      try {
+        const view = await req(`/api/saves/${encodeURIComponent(saveId)}/screens/CAREER_FLOW`, { headers: await headers(false) }) as FlowView;
+        if (view.saveRevision !== undefined) revisions.set(saveId, Number(view.saveRevision));
+        return view;
+      }
       catch (err) { if (err instanceof ApiError && err.code.startsWith('HTTP_4')) return null; throw err; }
     },
     async flowCommand(saveId: string, commandId: string, type: string, payload: Record<string, unknown>): Promise<FlowView | null> {
-      await command(saveId, commandId, type, payload, true);
+      const receipt = await command(saveId, commandId, type, payload, true);
       // Keep the exact intent until the follow-up read succeeds: a lost refresh retries the original receipt (no COMMAND_ID_REUSED).
       const view = await this.flow(saveId);
       sentCommands.delete(JSON.stringify([saveId, commandId]));
+      if (view?.saveRevision === receipt.revision && receipt.summary?.spanStop === 'BUDGET') {
+        return { ...view, canContinueSeason: true };
+      }
       return view;
     },
     async club(saveId: string, screenId: ClubScreenId, query: { playerKey?: string; gameKey?: string } = {}): Promise<ClubScreen> {

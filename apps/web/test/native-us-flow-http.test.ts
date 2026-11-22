@@ -92,8 +92,8 @@ test('US road: ONE press chains many engine chunks (not one chunk or one day) an
     const after = await s.leagueGames();
     assert.ok(after > single + 4, `one default-CTA press advanced far more than one chunk: ${single} -> ${after}`);
     if (s.view.stop === 'BUDGET') {
-      // Time-cap stop: the screen says so, and the same default CTA is the way to continue.
-      assert.match(s.view.notice ?? '', /시즌 진행 중 — 이어서 진행/);
+      assert.match(s.view.notice ?? '', /시즌 진행 중/);
+      assert.equal(s.view.canContinueSeason, true);
       assert.equal(s.view.commands.find(c => c.id === 'adv-season')?.label, '이어서 진행 (이번 시즌 끝까지)');
     } else assert.ok(['EVENT', 'SEASON_END'].includes(s.view.stop ?? ''), `stop reason is reported: ${s.view.stop}`);
   } finally { delete process.env.PLAYBALL_SPAN_BUDGET_MS; await s.close(); }

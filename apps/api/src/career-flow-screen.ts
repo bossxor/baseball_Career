@@ -43,7 +43,7 @@ export function careerFlowScreen(state:SaveState):FlowScreen {
  const screen=baseFlowScreen(state),sp=(state as {span?:{careerRevision:number;stop:string}}).span;
  if(!sp||sp.careerRevision!==screen.careerRevision)return screen;
  // Why the last season/month advance stopped: after a request-time-cap stop the same CTA reads as "continue".
- if(sp.stop==='BUDGET')return {...screen,stop:sp.stop,notice:'시즌 진행 중 — 이어서 진행합니다. 같은 버튼을 다시 누르면 이어집니다.',commands:screen.commands.map(x=>x.id==='adv-season'?{...x,label:'이어서 진행 (이번 시즌 끝까지)'}:x)};
+ if(sp.stop==='BUDGET')return {...screen,stop:sp.stop,notice:'시즌 진행 중입니다.',commands:screen.commands.map(x=>x.id==='adv-season'?{...x,label:'이어서 진행 (이번 시즌 끝까지)'}:x)};
  return {...screen,stop:sp.stop,notice:screen.notice??(sp.stop==='SEASON_END'?'정규시즌이 끝났습니다.':null)};
 }
 function baseFlowScreen(state:SaveState):FlowScreen {

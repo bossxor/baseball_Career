@@ -13,6 +13,7 @@ import type { CreationDraft, CreationStep, FieldErrors } from './creation.js';
 import type { CareerView, ClubScreen, ClubScreenId, DecisionView, FlowView, HomeData, PlayScreenId, ProgressMode } from './model.js';
 import { isPlayScreen } from './screen-states.js';
 import type { ScreenState } from './screen-states.js';
+import { runFlowCommands } from './flow-season.js';
 
 const CLUB_SCREENS = new Set<string>(['S13', 'S14', 'S15', 'S16', 'S17', 'S18', 'S19']);
 type Route =
@@ -62,7 +63,12 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
   const api = useMemo(() => injected ?? createFixtureApi(), [injected]);
   const [route, setRoute] = useState<Route>(() => parseRoute(location.hash));
   const [tick, setTick] = useState(0);
-  useEffect(() => { const on = () => setRoute(parseRoute(location.hash)); addEventListener('hashchange', on); return () => removeEventListener('hashchange', on); }, []);
+  const flowRun = useRef<symbol | null>(null);
+  useEffect(() => {
+    const on = () => { flowRun.current = null; setRoute(parseRoute(location.hash)); };
+    addEventListener('hashchange', on);
+    return () => { flowRun.current = null; removeEventListener('hashchange', on); };
+  }, [api]);
 
   const [state, setState] = useState<ScreenState>('loading');
   const [home, setHome] = useState<HomeData | null>(null), [showSaves, setShowSaves] = useState(false);
@@ -151,9 +157,27 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
     const saveId = route.saveId;
     return <Flow view={flowView} state={state} onBack={() => go(`#/career/${encodeURIComponent(saveId)}`)} onReload={reload}
       onCommand={cmd => {
-        // The id is tied to the served command and its career revision, so a retry after a lost response replays the same intent.
-        const key = `flow|${saveId}|${cmd.id}|${String(cmd.payload.careerRevision ?? '')}`;
-        void run(async () => { setFlowView(await api.flowCommand(saveId, intents.of(key), cmd.type, cmd.payload)); intents.done(key); });
+        if (flowRun.current) return;
+        const token = Symbol(), hash = location.hash;
+        flowRun.current = token;
+        const current = () => flowRun.current === token && location.hash === hash;
+        setState('saving');
+        void (async () => {
+          try {
+            await runFlowCommands(cmd, async command => {
+              // A failed refresh retries the same served intent and command ID.
+              const key = `flow|${saveId}|${command.id}|${String(command.payload.careerRevision ?? '')}`;
+              const view = await api.flowCommand(saveId, intents.of(key), command.type, command.payload);
+              intents.done(key);
+              return view;
+            }, setFlowView, current);
+            if (current()) setState('ready');
+          } catch (err) {
+            if (current()) setState(stateFromError(err));
+          } finally {
+            if (flowRun.current === token) flowRun.current = null;
+          }
+        })();
       }} />;
   }
   if (route.name === 'career') {

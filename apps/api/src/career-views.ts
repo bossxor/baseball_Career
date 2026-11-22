@@ -77,7 +77,7 @@ export async function getScreen(c: Context<{ Variables: AppVariables }>) {
     if(screenId==='SCHOOL_CAREER')return c.json(schoolCareerScreen(state));
     if(screenId==='CAREER_FLOW'){
       const flow=careerFlowScreen(state),retirement=retirementSummary(state);
-      return c.json({...flow,...(retirement?{title:'은퇴 기록',notice:retirement.notice,commands:[...flow.commands,...retirement.commands],retirementSummary:retirement.summary}:{}),seasonReview:careerSeasonReview(state)});
+      return c.json({...flow,saveRevision:row.revision.toString(),...(retirement?{title:'은퇴 기록',notice:retirement.notice,commands:[...flow.commands,...retirement.commands],retirementSummary:retirement.summary}:{}),seasonReview:careerSeasonReview(state)});
     }
     if(screenId==='KBO_RECRUITMENT')return c.json(kboRecruitmentScreen(state));
     if (screenId==='US_CAREER') return c.json(usPlayScreen(state));

@@ -92,3 +92,35 @@ test('http api: a retried command keeps the revision it was first sent with (los
   await api.choose('s1', 'S06', 'opt-a', 'k1');
   assert.equal(sent.at(-1)!.expectedRevision, 4, 'after a conflict the same command id may use the fresh revision');
 });
+
+test('flow grants continuation only for the read of its own receipt revision and replays a lost refresh exactly', async t => {
+  const originalFetch = globalThis.fetch;
+  t.after(() => { globalThis.fetch = originalFetch; });
+  const sent: { commandId: string; expectedRevision: number; type: string; payload: unknown }[] = [];
+  let saveRevision = '10', loseFlow = false, peerWrites = false;
+  globalThis.fetch = (async (input: RequestInfo | URL, init?: RequestInit) => {
+    const url = String(input);
+    if (url.endsWith('/career')) return Response.json({ revision: saveRevision });
+    if (url.endsWith('/screens/CAREER_FLOW')) {
+      if (loseFlow) { loseFlow = false; throw new TypeError('network lost'); }
+      return Response.json({ saveRevision, stop: 'BUDGET', commands: [] });
+    }
+    assert.ok(url.endsWith('/commands'));
+    const body = JSON.parse(String(init?.body)) as (typeof sent)[number];
+    const revision = body.commandId === 'one' ? '11' : String(Number(saveRevision) + 1);
+    sent.push(body);
+    saveRevision = peerWrites ? String(Number(revision) + 1) : revision;
+    return Response.json({ revision, summary: { spanStop: 'BUDGET' } });
+  }) as typeof fetch;
+  const api = createHttpApi({ baseUrl: 'http://api.test', getToken: () => 't' });
+  const type = 'CAREER_KBO_PLAY_ADVANCE_SPAN';
+  assert.equal((await api.flow('s'))?.canContinueSeason, undefined);
+  loseFlow = true;
+  await assert.rejects(api.flowCommand('s', 'one', type, { careerRevision: 20, span: 'SEASON' }));
+  assert.equal((await api.flowCommand('s', 'one', type, { careerRevision: -1 }))?.canContinueSeason, true);
+  assert.deepEqual(sent[0], sent[1]);
+  assert.equal(sent[0]?.expectedRevision, 10);
+  peerWrites = true;
+  assert.equal((await api.flowCommand('s', 'two', type, { careerRevision: 23, span: 'SEASON' }))?.canContinueSeason, undefined);
+  assert.equal(sent[2]?.expectedRevision, 11);
+});
