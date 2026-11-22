@@ -47,6 +47,12 @@ test('one real opening day: both leagues play and close once; chunk limits resum
  assert.equal(a.career.days!.days.length,1);assert.equal((a.career.phaseContext as KboSeasonProgress).nextWorldDay,day+1);assert.equal((a.career.phaseContext as KboSeasonProgress).pendingGame,null);
  assert.equal(a.career.records.games[played[0]!.gameKey]!.worldDay,day);
  assert.ok(a.steps>=1);
+ const prior=Object.values(started.records.games)[0]!;
+ const retained=a.career.records.games[prior.gameKey]!;
+ assert.notStrictEqual(retained,prior);
+ const priorDay=prior.worldDay;
+ retained.worldDay++;
+ assert.equal(prior.worldDay,priorDay);
 });
 
 test('a stale revision, wrong phase or bad day count is rejected without changing the career',()=>{

@@ -133,7 +133,8 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
    if(job.stopReason==='ENGINE_LIMIT')return finish('ENGINE_LIMIT');
    if(job.game.status!=='FINAL')return finish('CHUNK_LIMIT');
    const world=createKboCompetitionGameWorld(career.world,pending.leagueKey,career.protagonistKey,career.sangmu),scheduled=schedulesOf(career)[pending.leagueKey].find(g=>g.simulationKey===job.game.input.simulationKey)!;
-   const committed=commitSchoolCompetitionGame(world,career.records,job,scheduled);
+   // The worker cloned the career at entry, so previous games belong to this isolated ledger.
+   const committed=commitSchoolCompetitionGame(world,career.records,job,scheduled,true);
    // Merge only the books this game touched so another league's earlier XP is never rolled back (M2-AU condition 2).
    for(const key of Object.keys(job.game.pitchDevelopment!.players)){
     const member=career.sangmu?.members[key];
