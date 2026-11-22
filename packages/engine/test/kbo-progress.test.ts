@@ -11,6 +11,7 @@ import {canonicalJson} from '../src/game.js';
 import {createKboCompetitionGameWorld} from '../src/kbo-game-world.js';
 import {kboGameContext} from '../src/kbo-progress.js';
 import {settleStarterSeasonTraits} from '../src/high-school-traits.js';
+import {setEngineTimingObserver} from '../src/engine-timing.js';
 
 const scheduled=(kind:'HITTER'|'PITCHER'='PITCHER')=>{const e=enteredKboCareer(kind),p=confirmKboPreseasonPlan(e,e.revision),o=confirmKboOpeningRoster(p,p.revision);return confirmKboSeasonSchedule(o,o.revision);};
 function runDay(start:KboCareer):{career:KboCareer;steps:number} {
@@ -31,10 +32,17 @@ test('start needs the confirmed plan, roster and schedule and cannot repeat',()=
 
 test('one real opening day: both leagues play and close once; chunk limits resume exactly from JSON',()=>{
  const started=startKboRegularSeason(scheduled(),scheduled().revision);
- const a=runDay(started),b=(()=>{let c=started;for(let i=0;i<200;i++){const r=advanceKboCareer(JSON.parse(JSON.stringify(c)) as KboCareer,c.revision,1);c=r.career;if(r.stopReason!=='CHUNK_LIMIT')return {career:c,steps:i+1};}throw new Error('LIMIT');})();
+ const b=(()=>{let c=started;for(let i=0;i<200;i++){const r=advanceKboCareer(JSON.parse(JSON.stringify(c)) as KboCareer,c.revision,1);c=r.career;if(r.stopReason!=='CHUNK_LIMIT')return {career:c,steps:i+1};}throw new Error('LIMIT');})();
+ let clock=0,contexts=0;
+ setEngineTimingObserver({now:()=>clock++,record(category,ms){
+  if(category==='gameContext'){assert.ok(ms>0);contexts++;}
+ }});
+ let a:ReturnType<typeof runDay>;
+ try{a=runDay(started);}finally{setEngineTimingObserver();}
  assert.equal(canonicalJson(a.career),canonicalJson(b.career));
  const day=Math.min(...Object.values(a.career.competitionSchedule!.leagues).flatMap(l=>l.map(g=>g.worldDay)));
  const played=proGames(a.career);assert.equal(played.length,10);assert.ok(played.every(g=>g.worldDay===day));
+ assert.equal(contexts,played.length);
  assert.ok(played.some(g=>g.scope.leagueKey==='KBO') && played.some(g=>g.scope.leagueKey==='FUTURES'));
  assert.equal(a.career.days!.days.length,1);assert.equal((a.career.phaseContext as KboSeasonProgress).nextWorldDay,day+1);assert.equal((a.career.phaseContext as KboSeasonProgress).pendingGame,null);
  assert.equal(a.career.records.games[played[0]!.gameKey]!.worldDay,day);

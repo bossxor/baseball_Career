@@ -1,4 +1,4 @@
-export type EngineTimingCategory = 'simulation' | 'dayClose' | 'validation' | 'clone' | 'seal';
+export type EngineTimingCategory = 'simulation' | 'dayClose' | 'validation' | 'clone' | 'seal' | 'gameContext';
 
 interface EngineTimingObserver {
   now(): number;

@@ -43,7 +43,13 @@ export function seasonWallTable(reports) {
     times.outsideEngineAndWrites = Math.max(0, r.wallMs - measured);
     const categories = Object.fromEntries(Object.entries(times).map(([key, ms]) => [key, { ms, percent: 100 * ms / r.wallMs }]));
     const topThree = Object.keys(times).sort((a, b) => times[b] - times[a]).slice(0, 3);
-    rows.push({ league, games: r.finalGames, commands: count, wallMs: r.wallMs, initialHash: r.initialHash, finalHash: r.finalHash, categories, topThree });
+    const row = { league, games: r.finalGames, commands: count, wallMs: r.wallMs, initialHash: r.initialHash, finalHash: r.finalHash, categories, topThree };
+    if (league === 'kbo' && Object.hasOwn(engine, 'gameContext')) {
+      const ms = milliseconds(engine.gameContext, 'gameContext');
+      assert.ok(ms <= times.residualMs, 'Game context exceeds engine residual');
+      row.engineResidualDetail = { gameContext: { ms, percent: 100 * ms / r.wallMs } };
+    }
+    rows.push(row);
   }
   return rows;
 }

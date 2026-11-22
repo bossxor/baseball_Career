@@ -17,7 +17,7 @@ import {profileStateSize} from './profile-state-size.mjs';
 const memoryMode=process.argv.includes('--memory'),timingMode=process.argv.includes('--timing'),cpuEnabled=!process.argv.includes('--no-cpu');
 let activeCommand=null;
 let timing=null;
-const engineCategories=()=>({simulation:0,dayClose:0,validation:0,clone:0,seal:0});
+const engineCategories=()=>({simulation:0,dayClose:0,validation:0,clone:0,seal:0,gameContext:0});
 const memory=(stage,extra={})=>console.error(JSON.stringify({diagnostic:'memory',stage,command:activeCommand,...process.memoryUsage(),...extra}));
 if(memoryMode||timingMode){
  channel('playball.command.memory').subscribe(({stage})=>{
@@ -59,10 +59,11 @@ function saveTiming(timing){
  };
 }
 function engineTiming(timing){
- const {engine,stages}=timing;
+ const {engine:{gameContext,...categories},stages}=timing;
  if(!stages.has('engine-return'))return undefined;
  const elapsedMs=stages.get('engine-return')-stages.get('engine-start');
- return {elapsedMs,...engine,residualMs:elapsedMs-Object.values(engine).reduce((sum,ms)=>sum+ms,0)};
+ // Keep the original residual comparable with existing reports.
+ return {elapsedMs,...categories,gameContext,residualMs:elapsedMs-Object.values(categories).reduce((sum,ms)=>sum+ms,0)};
 }
 function totalTimings(commands, field, totals){
  let measuredCommands=0;

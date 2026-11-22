@@ -121,7 +121,8 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
    const next=pendingQueue(career,day)[0];
    if(next){
     const world=createKboCompetitionGameWorld(career.world,next.leagueKey,career.protagonistKey,career.sangmu);
-    const reviewed=consumeCareerRoleReview(career,world,next.game,kboGameContext(career,next.leagueKey));Object.assign(career,reviewed.career);
+    const context=measureEngine('gameContext',()=>kboGameContext(career,next.leagueKey));
+    const reviewed=consumeCareerRoleReview(career,world,next.game,context);Object.assign(career,reviewed.career);
     const rested=prepareCareerAdviceGame(career,world,next.game,reviewed.context);progress.pendingGame={leagueKey:next.leagueKey,job:prepareSchoolCompetitionGame(world,career.records,next.game,rested.context),...(rested.restProof?{restProof:rested.restProof}:{})};
    }
   }
