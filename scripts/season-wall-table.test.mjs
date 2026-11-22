@@ -1,10 +1,18 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { seasonWallTable } from './season-wall-table.mjs';
+import { assertSeasonReplayEquivalent, seasonWallTable } from './season-wall-table.mjs';
 
 const school = JSON.parse(readFileSync(new URL('../docs/implementation/evidence/M2-20261121-school-profile-smoke.json', import.meta.url)));
 const examples = () => ['school', 'college', 'kbo', 'us'].map(league => ({ ...structuredClone(school), league }));
+
+test('equivalence requires completed seasons, identical command sequences and identical results', () => {
+  const before = { ...school, commandSequenceHash: '1'.repeat(64) };
+  assert.doesNotThrow(() => assertSeasonReplayEquivalent(before, { ...before, wallMs: before.wallMs / 2 }));
+  assert.throws(() => assertSeasonReplayEquivalent(before, { ...before, commandSequenceHash: '2'.repeat(64) }), /differs: commandSequenceHash/);
+  assert.throws(() => assertSeasonReplayEquivalent(before, { ...before, finalHash: '3'.repeat(64) }), /differs: finalHash/);
+  assert.throws(() => assertSeasonReplayEquivalent(before, { ...before, finalPhase: 'SEASON_PROGRESS' }), /completed season/);
+});
 
 test('exclusive categories including both residuals cover the measured season', () => {
   const reports = examples();

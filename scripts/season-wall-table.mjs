@@ -54,7 +54,29 @@ export function seasonWallTable(reports) {
   return rows;
 }
 
+export function assertSeasonReplayEquivalent(before, after) {
+  for (const report of [before, after]) {
+    assert.ok(leagues.includes(report.league) && report.status === 'season_review' &&
+      report.finalPhase === 'SEASON_REVIEW' && report.initialHashUnchanged === true &&
+      Number.isSafeInteger(report.finalGames) && report.finalGames > 0, 'Expected a completed season');
+    for (const key of ['initialHash', 'commandSequenceHash', 'finalHash']) {
+      assert.match(report[key] ?? '', /^[a-f0-9]{64}$/, 'Expected SHA-256: ' + key);
+    }
+  }
+  for (const key of ['league', 'initialHash', 'commandSequenceHash', 'finalGames', 'finalHash']) {
+    assert.equal(after[key], before[key], 'Season replay differs: ' + key);
+  }
+}
+
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  const reports = process.argv.slice(2).map(path => JSON.parse(readFileSync(path, 'utf8')));
-  console.log(JSON.stringify(seasonWallTable(reports), null, 2));
+  const args = process.argv.slice(2);
+  const read = path => JSON.parse(readFileSync(path, 'utf8'));
+  if (args[0] === '--compare') {
+    assert.equal(args.length, 3, 'Expected --compare before.json after.json');
+    const before = read(args[1]), after = read(args[2]);
+    assertSeasonReplayEquivalent(before, after);
+    console.log(JSON.stringify({ equivalent: true, league: after.league, finalHash: after.finalHash }));
+  } else {
+    console.log(JSON.stringify(seasonWallTable(args.map(read)), null, 2));
+  }
 }
