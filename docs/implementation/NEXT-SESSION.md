@@ -1,3 +1,13 @@
+# 최신 인계 — 2026-11-22 P02 종료 후 재개
+
+이전 v7 검증은 종료 직전 223게임일, 명령 718건, 구종 훈련 2분기까지 기록했다. 해당 실행에는 복원할 상태 파일이 없다. 실제 보직 심사와 이후 XP는 미확인이다.
+
+새 실행부터 아래 명령을 사용한다. 출력 경로를 고정하고 같은 명령을 다시 실행하면 KBO 개막 또는 마지막 25스텝 단위 저장에서 재개한다. 같은 소스·생성 조건과 명령 이력이 필요하다. 복원·파일 교체·손상 거부 집중 검사 통과. 실제 시즌 재개 검증은 대기다.
+
+```powershell
+node --max-old-space-size=8192 --import tsx scripts/verify-m2-closure.mjs "$env:TEMP/P02-v7-proof.json.gz" --scenarios=nativePaths --native=P02 --pitcher-creation=HS_PITCHER_V7 --p02-checkpoint
+```
+
 # 최신 인계 — 2026-11-22 시즌 속도 측정표
 
 설계 135의 0단계. 같은 환경에서 고교·대학·KBO·미국을 각각 `--timing --no-cpu`로 시즌 결산까지 측정한 뒤 `node scripts/season-wall-table.mjs school.json college.json kbo.json us.json`으로 비교한다. 결과에는 시즌 전체 대기시간 대비 항목별 비율과 리그별 상위 세 항목이 나온다. 엔진 내부 미분류 시간과 엔진·쓰기 바깥 시간은 별도 항목이다. 두 값에는 여러 작업이 섞이므로 원인으로 단정하지 않는다.

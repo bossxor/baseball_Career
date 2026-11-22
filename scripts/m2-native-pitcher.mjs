@@ -11,7 +11,8 @@ import {proCareerAdviceView,resolveProCareerAdviceEvent} from '../packages/engin
 import {resolveProHiddenTraitNotice} from '../packages/engine/src/pro-trait-notices.ts';
 import {validatePitchWeights} from '../packages/engine/src/repertoire.ts';
 import {careerRepertoireEventsView,refreshCareerRepertoireEvents,resolveCareerRepertoireEvent} from '../packages/engine/src/repertoire-events.ts';
-import {createNativePitcherHs,hsSeason,kboSign,toRoute} from './m2-native-paths.mjs';
+import {PITCHER_CREATIONS,hsSeason,kboSign,toRoute} from './m2-native-paths.mjs';
+import {loadPitcherCheckpoint,savePitcherCheckpoint} from './m2-pitcher-checkpoint.mjs';
 
 const pitchId='P07',weights={P01:65,P03:35};
 const roleCommands={E14:'REQUEST_SP_REVIEW',E15:'REQUEST_CP_REVIEW'};
@@ -43,10 +44,8 @@ function tryRoleReview(t){
  return receipt;
 }
 
-export function nativePitcherPath(trace){
- const t=trace('P02-native-pitcher-role-and-learning',createNativePitcherHs(),{kind:'NATIVE_FROM_CREATION',creation:'HS_PITCHER',description:'Pitcher creation, actual HS216, KBO draft and entry, offseason pitch allocation and training reservation, actual in-season role competition and later training XP.'});
- const progress=(phase,details={})=>console.log(JSON.stringify({path:'P02',phase,receipts:t.rows.length,revision:t.state.revision,...details}));
- progress('high-school-start');
+function startPitcherSeason(t,progress){
+ progress('high-school-start',{creation:t.prefix.creation});
  hsSeason(t);
  progress('high-school-complete',{games:Object.keys(t.state.records.games).length});
  toRoute(t);const draft=kboSign(t),key=t.state.protagonistKey;
@@ -60,17 +59,31 @@ export function nativePitcherPath(trace){
  const event=careerRepertoireEventsView(t.state).notices.find(e=>e.definitionId==='E86'&&e.commands.includes('SET_PITCH_TRAINING'));assert.ok(event);
  const input={eventKey:event.eventKey,eventVersion:event.eventVersion,command:'SET_PITCH_TRAINING',pitchId};
  t.command('SET_PITCH_TRAINING',input,s=>resolveCareerRepertoireEvent(s,s.revision,input));
- const book=()=>t.state.world.repertoires[key];
- assert.equal(book().ledger.baseReservedUnits,100_000);
+ assert.equal(t.state.world.repertoires[key].ledger.baseReservedUnits,100_000);
  t.command('CONFIRM_KBO_PRESEASON',{},s=>confirmKboPreseasonPlan(s,s.revision));
  t.command('CONFIRM_KBO_ROSTER',{},s=>confirmKboOpeningRoster(s,s.revision));
  t.command('CONFIRM_KBO_SCHEDULE',{},s=>confirmKboSeasonSchedule(s,s.revision));
  t.command('START_KBO_SEASON',{},s=>startKboRegularSeason(s,s.revision));
  progress('kbo-start',{league:t.state.registration.competitionKey,nextWorldDay:t.state.phaseContext.nextWorldDay});
+ return draft.round;
+}
 
- let roleReview=null, quartersAtRoleReview=null;
- for(let step=0;t.state.phaseContext.phase!=='SEASON_REVIEW';step++){
+export function nativePitcherPath(trace,{creation='HS_PITCHER',checkpoint=null}={}){
+ assert.ok(Object.hasOwn(PITCHER_CREATIONS,creation),'unknown P02 creation fixture '+creation);
+ const initial=PITCHER_CREATIONS[creation]();
+ const restored=checkpoint&&loadPitcherCheckpoint(checkpoint,creation,initial);
+ const prefix={kind:'NATIVE_FROM_CREATION',creation,description:'Pitcher creation, actual HS216, KBO draft and entry, offseason pitch allocation and training reservation, actual in-season role competition and later training XP.'};
+ const t=trace('P02-native-pitcher-role-and-learning',initial,prefix,restored&&{state:restored.state,rows:restored.rows,initialFixture:initial});
+ const progress=(phase,details={})=>console.log(JSON.stringify({path:'P02',phase,receipts:t.rows.length,revision:t.state.revision,...details}));
+ const draftRound=restored?.cursor.draftRound??startPitcherSeason(t,progress);
+ const book=()=>t.state.world.repertoires[t.state.protagonistKey];
+ let roleReview=restored?.cursor.roleReview??null,quartersAtRoleReview=restored?.cursor.quartersAtRoleReview??null;
+ if(restored)progress('kbo-resumed',{step:restored.cursor.step,creation});
+ for(let step=restored?.cursor.step??0;t.state.phaseContext.phase!=='SEASON_REVIEW';step++){
   assert.ok(step<1_800,'native KBO command budget exhausted');
+  if(checkpoint&&step%25===0&&step!==restored?.cursor.step){
+   savePitcherCheckpoint(checkpoint,creation,t,{step,draftRound,roleReview,quartersAtRoleReview});
+  }
   if(t.state.phaseContext.phase==='EVENT_DECISION'){resolveBlockingEvent(t);continue;}
   assert.equal(t.state.phaseContext.phase,'SEASON_PROGRESS');
   if(!roleReview){
@@ -102,6 +115,6 @@ export function nativePitcherPath(trace){
   return season===t.state.world.seasonKey&&kind==='learning'&&id===pitchId&&row.bookGain>0?[{quarter,gain:row.bookGain}]:[];
  });
  const afterReview=roleReview&&quarterGains.some(row=>row.quarter>quartersAtRoleReview);
- const report={highSchoolGames:216,draftRound:draft.round,pickoffInSixAbilities:true,pitchWeights:repertoire.weights,baseXpSpent:repertoire.ledger.baseSpentUnits,baseXpReserved:repertoire.ledger.baseReservedUnits,roleReview,quartersAtRoleReview,quarterGains,checkpoints:t.state.advice?.checkpoints??[]};
+ const report={highSchoolGames:216,draftRound,pickoffInSixAbilities:true,pitchWeights:repertoire.weights,baseXpSpent:repertoire.ledger.baseSpentUnits,baseXpReserved:repertoire.ledger.baseReservedUnits,roleReview,quartersAtRoleReview,quarterGains,checkpoints:t.state.advice?.checkpoints??[]};
  return t.finish(afterReview?{...report,completesPaths:['P02'],trainingReservedBeforeRoleReview:true}:{...report,variantOf:'P02',unproven:[...(roleReview?[]:['native E14/E15 role review']),'positive training XP after role review']});
 }

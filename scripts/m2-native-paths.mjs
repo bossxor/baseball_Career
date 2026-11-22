@@ -32,10 +32,14 @@ export const createNativeInjuryHs=()=>createHighSchoolCareer(createHighSchoolWor
 export const US_HS_SPEC={...HS_SPEC,worldKey:'m2-closure-native-us',seed:'m2-native-us-1307',player:{...HS_SPEC.player,position:'DH',archetype:'SLUGGER',focus:['CONTACT','POWER','DISCIPLINE','CLUTCH']}};
 export const createNativeUsHs=()=>createHighSchoolCareer(createHighSchoolWorld(US_HS_SPEC),'GROWTH');
 
-export const createNativePitcherHs=()=>createHighSchoolCareer(createHighSchoolWorld({
- ...HS_SPEC,seed:'m2-closure-native-pitcher-v1',secondaryPitch:'P03',
+export const createNativePitcherHs=(seed='m2-closure-native-pitcher-v1')=>createHighSchoolCareer(createHighSchoolWorld({
+ ...HS_SPEC,seed,secondaryPitch:'P03',
  player:{...HS_SPEC.player,kind:'PITCHER',position:'RP',pitchForm:'OVERHAND',archetype:'INNINGS',focus:['VELOCITY','STUFF','COMMAND','STAMINA']},
 }),'GROWTH');
+export const PITCHER_CREATIONS={
+ HS_PITCHER:createNativePitcherHs,
+ HS_PITCHER_V7:()=>createNativePitcherHs('m2-closure-native-pitcher-v7'),
+};
 
 const FOCUS=new Set(['E01','E02','E03']);
 /** Resolve the single open decision with the neutral command each event definition accepts. */
@@ -222,7 +226,7 @@ export function collegeLeave(t){
 export const stateHash=canonicalJson;
 
 /** Creation fixtures the verifier can rebuild itself, so a slice cannot start from a doctored state. */
-const CREATIONS={HS_HITTER:createNativeHs,HS_US_HITTER:createNativeUsHs,HS_PITCHER:createNativePitcherHs,HS_INJURY_HITTER:createNativeInjuryHs};
+const CREATIONS={HS_HITTER:createNativeHs,HS_US_HITTER:createNativeUsHs,...PITCHER_CREATIONS,HS_INJURY_HITTER:createNativeInjuryHs};
 /** Machine verdict from receipts alone: creation origin, hash linkage, and required commands in order. */
 export function nativeSliceVerdict(s,required,hash){
  const bad=problem=>({ok:false,problem:s.id+': '+problem}),rows=s.commandReceipts;
