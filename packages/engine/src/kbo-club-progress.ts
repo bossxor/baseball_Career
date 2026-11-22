@@ -84,7 +84,8 @@ export function advanceKboClubGame(source: KboClubGame, expectedRevision: number
       if (job.stopReason === 'ENGINE_LIMIT') return finish('ENGINE_LIMIT');
       if (job.game.status !== 'FINAL') return finish('CHUNK_LIMIT');
       const scheduled = game.schedule[pending.leagueKey].find(x => x.simulationKey === job.game.input.simulationKey)!;
-      const committed = commitSchoolCompetitionGame(createKboCompetitionGameWorld(game.world, pending.leagueKey, '',game.sangmu), game.records, job, scheduled);
+      // The worker's deep copy already owns every earlier contribution.
+      const committed = commitSchoolCompetitionGame(createKboCompetitionGameWorld(game.world, pending.leagueKey, '',game.sangmu), game.records, job, scheduled, true);
       // Merge only the books this game touched, so another league's earlier pitch XP is never rolled back.
       for (const key of Object.keys(job.game.pitchDevelopment!.players)) {
         const book=structuredClone(committed.world.repertoires[key]!),member=game.sangmu?.members[key],temporary=game.sangmu?.emergency?.entries[key];

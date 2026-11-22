@@ -66,3 +66,17 @@ test('a hurt or recovered player of my club stops the advance so the manager can
   assert.ok(list.slice(0, -1).every(d => !hit(d)));
   assert.equal(stop === 'HEALTH_CHANGE', hit(list.at(-1)!));
 });
+
+test('committing another game keeps earlier records detached from the source', () => {
+  const source = run(startKboClubSeason(fresh(), 0), 1);
+  const firstGame = Object.keys(source.records.games)[0]!;
+  const originalRecords = structuredClone(source.records);
+  let next = source;
+  for (let i = 0; i < 10 && next.records.revision === source.records.revision; i++) {
+    next = advanceKboClubGame(next, next.revision).game;
+  }
+  assert.ok(next.records.revision > source.records.revision);
+  assert.deepEqual(source.records, originalRecords);
+  assert.deepEqual(next.records.games[firstGame], originalRecords.games[firstGame]);
+  assert.notEqual(next.records.games[firstGame], source.records.games[firstGame]);
+});
