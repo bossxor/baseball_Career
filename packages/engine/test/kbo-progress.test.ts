@@ -138,7 +138,13 @@ test('pro AI context reads the last completed 20-game block per club and league,
   batting:{[hitter]:{PA:pa,AB:pa,BB:0,HBP:0,K:0,H:1,TB:1,HR:0,R:0,RBI:0,twoB:0,threeB:0,games:1,fieldingGames:1,loadedHits:0,walkoffHits:0,extraHomeSuccesses:0}},
   pitching:{[pitcher]:{BF:3,outs:3,H:0,HR:0,BB:0,HBP:0,K:0,R:0,ER:0,pitches:12,games:1,starts:0,starterOuts:0,loadedBF:0,W:0,L:0,SV:0,HLD:0,BS:0,shutouts:0}},batterSplits:{[hitter]:{L:{PA:0,AB:0,H:0,BB:0,HBP:0,K:0,TB:0,HR:0,twoB:0,threeB:0,RBI:0},R:{PA:pa,AB:pa,H:1,BB:0,HBP:0,K:0,TB:1,HR:0,twoB:0,threeB:0,RBI:0}}},pitcherSplits:{[pitcher]:{L:{BF:0,outs:0,AB:0,H:0,TB:0,HR:0,BB:0,HBP:0,K:0},R:{BF:3,outs:3,AB:3,H:0,TB:0,HR:0,BB:0,HBP:0,K:0}}},matchups:{}};}return c;};
  assert.equal(kboGameContext(seed(19,4),'KBO').recentBatting[hitter],undefined);
- const twenty=kboGameContext(seed(25,4),'KBO');
+ const mixed=seed(25,4),example=mixed.records.games['ctx-0']!;
+ mixed.records.games=Object.fromEntries(Object.entries(mixed.records.games).reverse());
+ for(const scope of [{...example.scope,phase:'POSTSEASON' as const},{...example.scope,seasonKey:'2032'}]){
+  const gameKey=JSON.stringify(scope);
+  mixed.records.games[gameKey]={...example,gameKey,scope};
+ }
+ const twenty=kboGameContext(mixed,'KBO');
  assert.equal(twenty.recentBatting[hitter]!.PA,80);assert.equal(twenty.recentBatting[hitter]!.H,20);
  assert.equal(twenty.recentPitchingOuts[pitcher],75);
  assert.equal(kboGameContext(seed(25,4),'FUTURES').recentBatting[hitter],undefined);

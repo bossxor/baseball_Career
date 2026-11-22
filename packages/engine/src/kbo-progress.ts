@@ -20,7 +20,7 @@ import {settleKboOpponentReunions} from './kbo-reunion-events.js';
 import {closeKboMilitaryCalendarDay} from './kbo-military-events.js';
 import type {KboCareer} from './kbo-career-entry.js';
 import {assertKboCareerRevision as assertCareerRevision} from './kbo-career-version.js';
-import type {HighSchoolGameContext,HighSchoolGameJob} from './high-school-game.js';
+import type {CompetitionGameWorld,HighSchoolGameContext,HighSchoolGameJob} from './high-school-game.js';
 import {prepareSchoolCompetitionGame,advanceHighSchoolGame,commitSchoolCompetitionGame} from './high-school-game.js';
 import {createKboCompetitionGameWorld} from './kbo-game-world.js';
 import {closeKboCompetitionDay,createKboDayLedger} from './kbo-day.js';
@@ -28,6 +28,7 @@ import type {KboLeagueKey} from './kbo-day.js';
 import type {ScheduledGame} from './schedule.js';
 import {refreshCareerTraits,settleStarterSeasonTraits} from './high-school-traits.js';
 import {recordTotals} from './records.js';
+import type {GameContribution} from './records.js';
 import {raiseKboWindowEvent} from './kbo-windows.js';
 import {reviewKboCallup,reviewKboAiRosters} from './kbo-callup.js';
 import type {BattingLine} from './types.js';
@@ -74,21 +75,36 @@ export function startKboRegularSeason(source:KboCareer,expectedRevision:number):
 /** Server-internal world AI context for one league. Rotations follow each club's own games in that league. Never sent to clients. */
 export function kboGameContext(career:KboCareer,leagueKey:KboLeagueKey):HighSchoolGameContext {
  const world=createKboCompetitionGameWorld(career.world,leagueKey,career.protagonistKey,career.sangmu);
+ return buildKboGameContext(career,leagueKey,world);
+}
+
+function buildKboGameContext(career:KboCareer,leagueKey:KboLeagueKey,world:CompetitionGameWorld):HighSchoolGameContext {
  const starters:Record<string,string>=Object.create(null) as Record<string,string>,recentBatting:Record<string,BattingLine>=Object.create(null) as Record<string,BattingLine>;
- const scope={leagueKey,phase:'REGULAR' as const,seasonKey:career.world.seasonKey},season=recordTotals(career.records,scope);
+ const scope={leagueKey,phase:'REGULAR' as const,seasonKey:career.world.seasonKey};
+ const leagueGames=Object.entries(career.records.games).filter(([,game])=>game.scope.leagueKey===scope.leagueKey && game.scope.seasonKey===scope.seasonKey && game.scope.phase===scope.phase);
+ const gamesByClub=new Map<string,GameContribution[]>(world.schools.map(club=>[club.id,[]]));
+ const recentPitchingOuts:Record<string,number>=Object.create(null) as Record<string,number>;
+ for(const [,game] of leagueGames){
+  for(const clubId of Object.keys(game.teams))gamesByClub.get(clubId)?.push(game);
+  for(const [key,line] of Object.entries(game.pitching)){
+   const outs=(recentPitchingOuts[key]??0)+line.outs;
+   if(!Number.isSafeInteger(outs)||outs<0)throw new RangeError('INVALID_RECORD_SUM');
+   recentPitchingOuts[key]=outs;
+  }
+ }
  for(const club of world.schools){
   const available=club.roster.filter(k=>world.players[k]!.kind==='PITCHER' && !Object.hasOwn(career.health.injuries,k)).sort();
   const rotation=available.filter(k=>world.players[k]!.position==='SP'),pool=rotation.length?rotation:available;
   if(pool.length===0)throw new RangeError('NO_HEALTHY_KBO_PITCHER');
-  const games=Object.values(career.records.games).filter(g=>g.scope.leagueKey===leagueKey && g.scope.seasonKey===career.world.seasonKey && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,club.id)).length;
-  starters[club.id]=pool[games%pool.length]!;
+  const clubGames=gamesByClub.get(club.id)!;
+  starters[club.id]=pool[clubGames.length%pool.length]!;
   // 41/44: lineup competition reads the last completed 20-team-game block of this league, like school play.
-  const clubGames=Object.values(career.records.games).filter(g=>g.scope.leagueKey===leagueKey && g.scope.seasonKey===career.world.seasonKey && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,club.id)).sort((a,b)=>a.worldDay-b.worldDay || (a.gameKey<b.gameKey?-1:1));
+  clubGames.sort((a,b)=>a.worldDay-b.worldDay || (a.gameKey<b.gameKey?-1:1));
   const review=Math.floor(clubGames.length/20)*20,block=new Set(clubGames.slice(Math.max(0,review-20),review).map(g=>g.gameKey));
-  if(block.size){const reviewed=recordTotals({...career.records,games:Object.fromEntries(Object.entries(career.records.games).filter(([k])=>block.has(k)))},scope);for(const key of club.roster)if(Object.hasOwn(reviewed.batting,key))recentBatting[key]=reviewed.batting[key]!;}
+  if(block.size){const reviewed=recordTotals({...career.records,games:Object.fromEntries(leagueGames.filter(([k])=>block.has(k)))},scope);for(const key of club.roster)if(Object.hasOwn(reviewed.batting,key))recentBatting[key]=reviewed.batting[key]!;}
  }
  const condition=kboReturnConditionMultiplier(career);
- return {difficulty:career.difficulty,unavailableKeys:Object.keys(career.health.injuries).filter(k=>Object.hasOwn(world.players,k)),starters,recentBatting,recentPitchingOuts:Object.fromEntries(Object.entries(season.pitching).map(([k,p])=>[k,p.outs])),traits:career.traits?.owned??{},approaches:careerBattingApproaches(career),positionFits:careerPositionFits(career),...(condition===1?{}:{conditionMultipliers:{[career.protagonistKey]:condition}})};
+ return {difficulty:career.difficulty,unavailableKeys:Object.keys(career.health.injuries).filter(k=>Object.hasOwn(world.players,k)),starters,recentBatting,recentPitchingOuts:{...recentPitchingOuts},traits:career.traits?.owned??{},approaches:careerBattingApproaches(career),positionFits:careerPositionFits(career),...(condition===1?{}:{conditionMultipliers:{[career.protagonistKey]:condition}})};
 }
 
 function pendingQueue(career:KboCareer,day:number):{leagueKey:KboLeagueKey;game:ScheduledGame}[] {
@@ -121,7 +137,7 @@ export function advanceKboCareer(source:KboCareer,expectedRevision:number,maxDay
    const next=pendingQueue(career,day)[0];
    if(next){
     const world=createKboCompetitionGameWorld(career.world,next.leagueKey,career.protagonistKey,career.sangmu);
-    const context=measureEngine('gameContext',()=>kboGameContext(career,next.leagueKey));
+    const context=measureEngine('gameContext',()=>buildKboGameContext(career,next.leagueKey,world));
     const reviewed=consumeCareerRoleReview(career,world,next.game,context);Object.assign(career,reviewed.career);
     const rested=prepareCareerAdviceGame(career,world,next.game,reviewed.context);progress.pendingGame={leagueKey:next.leagueKey,job:prepareSchoolCompetitionGame(world,career.records,next.game,rested.context),...(rested.restProof?{restProof:rested.restProof}:{})};
    }
