@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {createHighSchoolWorld} from '../src/high-school-world.js';
 import {createHighSchoolCareer,confirmCareerPlayer,resolveCareerFocusEvent,confirmCareerPreseason} from '../src/high-school-career.js';
 import type {HighSchoolCareer} from '../src/high-school-career.js';
-import {advanceHighSchoolCareer,pauseHighSchoolCareer,resolveCareerWindowEvent} from '../src/high-school-progress.js';
+import {advanceHighSchoolCareer,advanceHighSchoolCareerRun,pauseHighSchoolCareer,resolveCareerWindowEvent} from '../src/high-school-progress.js';
 import {measureEngine,setEngineTimingObserver} from '../src/engine-timing.js';
 import {canonicalJson} from '../src/game.js';
 import {recordTotals} from '../src/records.js';
@@ -44,6 +44,36 @@ test('engine timing attributes nested work once and preserves a real day close',
   assert.deepEqual(advance(initial,'ONE_GAME'),ordinary);
   for(const name of ['simulation','dayClose','validation','clone'])assert.ok((recorded[name]??0)>0,name);
  }finally{setEngineTimingObserver();}
+});
+test('request-owned school chunks preserve the full state and remove only repeated root clones',()=>{
+ const initial=fixture(),before=canonicalJson(initial);
+ let clock=0,clones=0;
+ setEngineTimingObserver({now:()=>clock++,record:category=>{if(category==='clone')clones++;}});
+ try{
+  let repeated=advanceHighSchoolCareer(initial,initial.revision),steps=1;
+  let plateAppearances=repeated.plateAppearances,completedInnings=repeated.completedInnings;
+  for(;steps<4&&repeated.career.phaseContext.phase==='SEASON_PROGRESS'&&['CHUNK_LIMIT','ONE_GAME','ONE_WEEK'].includes(repeated.stopReason);steps++){
+   repeated=advanceHighSchoolCareer(repeated.career,repeated.career.revision);
+   plateAppearances+=repeated.plateAppearances;completedInnings+=repeated.completedInnings;
+  }
+  const ordinaryClones=clones;clones=0;
+  let continuations=0;
+  const run=advanceHighSchoolCareerRun(initial,initial.revision,()=>continuations++<3);
+  assert.equal(canonicalJson(run),canonicalJson({...repeated,plateAppearances,completedInnings}));
+  assert.equal(ordinaryClones-clones,steps-1);
+  assert.equal(canonicalJson(initial),before);
+  assert.deepEqual(advanceHighSchoolCareerRun(JSON.parse(JSON.stringify(initial)),initial.revision,()=>false),advanceHighSchoolCareer(initial,initial.revision));
+  assert.throws(()=>advanceHighSchoolCareerRun(initial,initial.revision-1,()=>true),/REVISION/);
+ }finally{setEngineTimingObserver();}
+});
+test('request-owned school resume retains a saved one-week plan and exact pending game',()=>{
+ const initial=fixture(),first=advanceHighSchoolCareer(initial,initial.revision,'ONE_WEEK').career,before=canonicalJson(first);
+ assert.equal(first.phaseContext.phase,'SEASON_PROGRESS');
+ const expected=advanceHighSchoolCareer(first,first.revision);
+ const run=advanceHighSchoolCareerRun(JSON.parse(JSON.stringify(first)),first.revision,()=>false);
+ assert.equal(canonicalJson(run),canonicalJson(expected));assert.equal(canonicalJson(first),before);
+ assert.throws(()=>advanceHighSchoolCareerRun(first,first.revision,()=>{throw new Error('REQUEST_ABORTED');}),/REQUEST_ABORTED/);
+ assert.equal(canonicalJson(first),before);
 });
 test('pause keeps pending RNG/cursor; active plan cannot be silently changed; invalid phase/revision rejected',()=>{
  const initial=fixture(),first=advanceHighSchoolCareer(initial,3,'ONE_WEEK').career;assert.equal(first.phaseContext.phase,'SEASON_PROGRESS');

@@ -62,12 +62,10 @@ export function applySchoolCareer(state:SaveState,command:CommandBody):AppliedCo
    else if(name==='ADVANCE_SPAN'){
     if(input.span!=='SEASON')fail('INVALID_PAYLOAD');
     const deadline=spanDeadline();
-    let result=engine.advanceHighSchoolCareer(c,revision);
-    // A saved game/week plan completes before the next native advance adopts the season's default speed.
-    const canContinue=()=>result.career.phaseContext.phase==='SEASON_PROGRESS'&&['CHUNK_LIMIT','ONE_GAME','ONE_WEEK'].includes(result.stopReason);
-    while(canContinue()&&Date.now()<deadline)result=engine.advanceHighSchoolCareer(result.career,result.career.revision);
+    const result=engine.advanceHighSchoolCareerRun(c,revision,()=>Date.now()<deadline);
     next=result.career;stopReason=result.stopReason;
-    spanStop=spanStopOf('SEASON',next.phaseContext.phase,canContinue()?'CHUNK_LIMIT':result.stopReason,false);
+    const resumable=next.phaseContext.phase==='SEASON_PROGRESS'&&['CHUNK_LIMIT','ONE_GAME','ONE_WEEK'].includes(result.stopReason);
+    spanStop=spanStopOf('SEASON',next.phaseContext.phase,resumable?'CHUNK_LIMIT':result.stopReason,false);
    }else {if(!['NEXT_MAJOR_EVENT','ONE_GAME','ONE_WEEK'].includes(String(input.mode)))fail('INVALID_PAYLOAD');const result=engine.advanceHighSchoolCareer(c,revision,input.mode as engine.HighSchoolAdvancePlan['mode']);next=result.career;stopReason=result.stopReason;}
   }
  }catch(error){domainError(error);}

@@ -40,13 +40,27 @@ export function highSchoolGameContext(state:Pick<HighSchoolCareer,'records'|'hea
 }
 /** Bounded server worker. A plan survives safe chunks; a fresh click never redraws a pending game. */
 export function advanceHighSchoolCareer(source:HighSchoolCareer,expectedRevision:number,mode?:HighSchoolAdvancePlan['mode']):SchoolProgressResult {
- assertHighSchoolCareerRevision(source,expectedRevision);return advanceSchoolCareer(source,expectedRevision,mode);
+ assertHighSchoolCareerRevision(source,expectedRevision);return advanceSchoolCareerStep(source,expectedRevision,mode,false);
 }
 export function advanceSchoolCareer(source:HighSchoolCareer,expectedRevision:number,mode?:HighSchoolAdvancePlan['mode']):SchoolProgressResult {
+ return advanceSchoolCareerStep(source,expectedRevision,mode,false);
+}
+/** One request owns the first detached result; later native chunks preserve validation and reuse that private state. */
+export function advanceHighSchoolCareerRun(source:HighSchoolCareer,expectedRevision:number,shouldContinue:()=>boolean):SchoolProgressResult {
+ let result=advanceHighSchoolCareer(source,expectedRevision);
+ let plateAppearances=result.plateAppearances,completedInnings=result.completedInnings;
+ for(let i=0;i<200_000&&result.career.phaseContext.phase==='SEASON_PROGRESS'&&['CHUNK_LIMIT','ONE_GAME','ONE_WEEK'].includes(result.stopReason)&&shouldContinue();i++){
+  assertHighSchoolCareerRevision(result.career,result.career.revision);
+  result=advanceSchoolCareerStep(result.career,result.career.revision,undefined,true);
+  plateAppearances+=result.plateAppearances;completedInnings+=result.completedInnings;
+ }
+ return {...result,plateAppearances,completedInnings};
+}
+function advanceSchoolCareerStep(source:HighSchoolCareer,expectedRevision:number,mode:HighSchoolAdvancePlan['mode']|undefined,owned:boolean):SchoolProgressResult {
  assertSchoolCareerRevision(source,expectedRevision);
  if(source.phaseContext.phase!=='SEASON_PROGRESS' || source.events.some(e=>e.status==='OPEN'))throw new RangeError('INVALID_CAREER_PHASE');
  if(mode!==undefined && !['NEXT_MAJOR_EVENT','ONE_GAME','ONE_WEEK'].includes(mode))throw new RangeError('INVALID_ADVANCE_MODE');
- const career=measureEngineClone(source),progress=career.phaseContext as HighSchoolProgressPhase;
+ const career=owned?source:measureEngineClone(source),progress=career.phaseContext as HighSchoolProgressPhase;
  const current=progress.advancePlan;if(current && mode!==undefined && current.mode!==mode)throw new RangeError('ADVANCE_PLAN_ACTIVE');
  const firstDay=Math.min(...career.world.schedule.map(g=>g.worldDay));
  if(!Number.isSafeInteger(progress.nextWorldDay) || progress.nextWorldDay<firstDay || current && (!['NEXT_MAJOR_EVENT','ONE_GAME','ONE_WEEK'].includes(current.mode) || !Number.isSafeInteger(current.startWorldDay) || current.startWorldDay<firstDay || current.startWorldDay>progress.nextWorldDay || !Number.isSafeInteger(current.startTeamGames) || current.startTeamGames<0 || current.startTeamGames>teamGames(career)))throw new RangeError('INVALID_ADVANCE_PLAN');
