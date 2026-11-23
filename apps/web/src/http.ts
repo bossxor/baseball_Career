@@ -1,7 +1,7 @@
 import type { PlayballApi } from './api.js';
 import { ApiError } from './errors.js';
 import type {
-  CareerView, ChooseReceipt, ClubCreateRequest, ClubScreen, ClubScreenId, CreationReceipt, CreationRequest, DecisionView, FlowView, HomeData, PlayScreenId, ProgressMode, SaveSummary,
+  CareerView, ChooseReceipt, ClubCreateRequest, ClubScreen, ClubScreenId, CreationReceipt, CreationRequest, DecisionView, FlowView, HomeData, PlayScreenId, ProgressMode, SaveSummary, SeasonJobView,
 } from './model.js';
 
 export type HttpApiOptions = {
@@ -155,6 +155,25 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
         worldKey: 'kbo-club', seed: request.commandId, difficulty: 'REALISTIC', clubId: request.clubId,
       });
       return { saveId: created.saveId };
+    },
+    seasonJobs: {
+      async read(saveId, signal) {
+        try {
+          const result = await req(`/api/saves/${encodeURIComponent(saveId)}/season-job`, {
+            headers: await headers(false), ...(signal ? { signal } : {}),
+          }) as { job: SeasonJobView | null };
+          return result.job;
+        } catch (err) {
+          // The API returns NOT_FOUND for an unmounted route. A missing save has its own code.
+          if (err instanceof ApiError && (err.code === 'NOT_FOUND' || err.code === 'HTTP_404')) return undefined;
+          throw err;
+        }
+      },
+      async start(saveId, requestId, expectedRevision) {
+        return req(`/api/saves/${encodeURIComponent(saveId)}/season-job`, {
+          method: 'POST', headers: await headers(), body: JSON.stringify({ requestId, expectedRevision }),
+        }) as Promise<SeasonJobView>;
+      },
     },
     async flow(saveId: string): Promise<FlowView | null> {
       // The career read refreshes the save revision first, so a command sent from here never carries a stale one.

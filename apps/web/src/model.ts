@@ -65,3 +65,9 @@ export interface FlowCommand { id: string; label: string; type: string; payload:
 export interface SeasonReviewView { season: string; sections: readonly { title: string; lines: readonly { label: string; value: string }[] }[] }
 export interface RetirementSummaryView { name: string; details: readonly { label: string; value: string }[]; sections: readonly { title: string; lines: readonly { label: string; value: string }[] }[] }
 export interface FlowView { title: string; lines: readonly { label: string; value: string }[]; commands: readonly FlowCommand[]; notice: string | null; stop?: string; saveRevision?: string; canContinueSeason?: boolean; seasonReview?: SeasonReviewView | null; retirementSummary?: RetirementSummaryView | null }
+export interface SeasonJobView {
+  runId: string;
+  status: 'RUNNING' | 'STOPPED' | 'FAILED';
+  stopReason: string | null;
+  progress: { seasonKey: string | null; phase: string | null; completedGames: number; scheduledGames: number };
+}

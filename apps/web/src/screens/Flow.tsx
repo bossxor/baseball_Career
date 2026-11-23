@@ -3,21 +3,21 @@ import { Empty, Button, flowScene, isBusy } from '../ui.js';
 import { Illustration } from '../assets/Illustration.js';
 import { stateText } from '../screen-states.js';
 import type { ScreenState } from '../screen-states.js';
-import type { FlowCommand, FlowView } from '../model.js';
+import type { FlowCommand, FlowView, SeasonJobView } from '../model.js';
 import { SeasonReview } from './SeasonReview.js';
 import { RetirementSummary } from './RetirementSummary.js';
 
 export interface FlowProps {
-  view: FlowView | null; state?: ScreenState;
+  view: FlowView | null; state?: ScreenState; seasonJob?: SeasonJobView | null;
   onCommand?: (command: FlowCommand) => void; onBack?: () => void; onReload?: () => void;
 }
 export function currentFlowCommand(commands: readonly FlowCommand[], selected: FlowCommand | null): FlowCommand | undefined {
   return selected ? commands.find(command => JSON.stringify(command) === JSON.stringify(selected)) : undefined;
 }
 /** 진로·재도전 흐름. Buttons are exactly the commands the server offered; a command with `confirm` needs a second, explicit tap. */
-export function Flow({ view, state = 'ready', onCommand, onBack, onReload }: FlowProps) {
+export function Flow({ view, state = 'ready', seasonJob, onCommand, onBack, onReload }: FlowProps) {
   const [asking, setAsking] = useState<FlowCommand | null>(null), [signing, setSigning] = useState<FlowCommand | null>(null);
-  const busy = isBusy(state), banner = state === 'ready' || state === 'empty' ? null : stateText('S03', state);
+  const busy = isBusy(state), banner = seasonJob || state === 'ready' || state === 'empty' ? null : stateText('S03', state);
   const focusCommands = view?.commands.filter(c => (c.type === 'CAREER_SCHOOL_RESOLVE_FOCUS' && c.payload.command === 'CHOOSE_FOCUS' || c.type === 'CAREER_CHOICE_COLLEGE_FOCUS') && Array.isArray(c.payload.focus) && c.payload.focus.length === 4 && c.payload.focus.every(k => typeof k === 'string')) ?? [];
   const focusKey = JSON.stringify(focusCommands);
   const pending = currentFlowCommand(view?.commands ?? [], asking), signCmd = currentFlowCommand(view?.commands ?? [], signing), confirmRef = useRef<HTMLElement>(null), signRef = useRef<HTMLElement>(null);
@@ -26,13 +26,22 @@ export function Flow({ view, state = 'ready', onCommand, onBack, onReload }: Flo
   useEffect(() => { if (signCmd) signRef.current?.focus(); }, [signCmd]);
   useEffect(() => { if (asking && !pending) setAsking(null); if (signing && !signCmd) setSigning(null); }, [asking, pending, signing, signCmd]);
   return (
-    <main className="screen" aria-labelledby="flow-title" aria-busy={busy} data-screen="FLOW" data-state={state}>
+    <main className="screen" aria-labelledby="flow-title" aria-busy={busy && !seasonJob} data-screen="FLOW" data-state={state}>
       <header className="topbar">{onBack ? <button type="button" className="ghost" onClick={onBack}>커리어로</button> : <span />}</header>
       <Illustration name={flowScene(view?.title ?? '')} />
-      <h1 id="flow-title" className="screen-title">{view?.title ?? '진행'}</h1>
+      <h1 id="flow-title" className="screen-title">{seasonJob ? '시즌 진행 중' : view?.title ?? '진행'}</h1>
       {banner ? <p className={`banner banner-${state}`} role={state === 'error' || state === 'conflict' ? 'alert' : 'status'}>{banner}</p> : null}
       {state === 'conflict' && onReload ? <Button primary onClick={onReload}>최신 저장 불러오기</Button> : null}
-      {view ? (
+      {state === 'error' && !view && onReload ? <Button primary onClick={onReload}>다시 불러오기</Button> : null}
+      {seasonJob ? (
+        <section className="panel" aria-label="시즌 진행 상황">
+          {seasonJob.progress.seasonKey ? <p>{seasonJob.progress.seasonKey} 시즌</p> : null}
+          <p id="season-game-count">{seasonJob.progress.completedGames} / {seasonJob.progress.scheduledGames} 경기</p>
+          <progress aria-labelledby="season-game-count" {...(seasonJob.progress.scheduledGames > 0
+            ? { value: seasonJob.progress.completedGames, max: seasonJob.progress.scheduledGames } : {})} />
+          <p>이 화면을 나가도 시즌은 계속 진행됩니다.</p>
+        </section>
+      ) : view ? (
         <>
           {view.seasonReview ? <SeasonReview review={view.seasonReview} /> : null}
           {view.retirementSummary ? <RetirementSummary summary={view.retirementSummary} /> : null}

@@ -10,10 +10,10 @@ import { Flow } from './screens/Flow.js';
 import { ClubNew, ClubView } from './screens/Club.js';
 import { CREATION_STEPS, emptyDraft, firstInvalidStep, toCreationRequest, validateStep } from './creation.js';
 import type { CreationDraft, CreationStep, FieldErrors } from './creation.js';
-import type { CareerView, ClubScreen, ClubScreenId, DecisionView, FlowView, HomeData, PlayScreenId, ProgressMode } from './model.js';
+import type { CareerView, ClubScreen, ClubScreenId, DecisionView, FlowView, HomeData, PlayScreenId, ProgressMode, SeasonJobView } from './model.js';
 import { isPlayScreen } from './screen-states.js';
 import type { ScreenState } from './screen-states.js';
-import { runFlowCommands } from './flow-season.js';
+import { observeSeasonJob, regularSeasonCommand, runFlowCommands } from './flow-season.js';
 
 const CLUB_SCREENS = new Set<string>(['S13', 'S14', 'S15', 'S16', 'S17', 'S18', 'S19']);
 type Route =
@@ -75,6 +75,8 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
   const [career, setCareer] = useState<CareerView | null>(null), [mode, setMode] = useState<ProgressMode>('NEXT_MAJOR_EVENT');
   const [decision, setDecision] = useState<DecisionView | null>(null), [selected, setSelected] = useState<string | null>(null);
   const [clubView, setClubView] = useState<ClubScreen | null>(null), [flowView, setFlowView] = useState<FlowView | null>(null);
+  const [seasonJob, setSeasonJob] = useState<SeasonJobView | null>(null);
+  const [seasonJobsEnabled, setSeasonJobsEnabled] = useState(false);
   const [draft, setDraft] = useState<CreationDraft>(emptyDraft), [step, setStep] = useState<CreationStep>('NAME'), [errors, setErrors] = useState<FieldErrors>({});
   const creationId = useRef(newId());
   const intents = useIntentIds();
@@ -87,6 +89,7 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
   };
   useEffect(() => {
     let alive = true;
+    const controller = new AbortController();
     setState('loading');
     setSelected(null);
     (async () => {
@@ -94,12 +97,30 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
         if (route.name === 'home') { const d = await api.home(); if (alive) { setHome(d); setState('ready'); } }
         else if (route.name === 'career') { const c = await api.career(route.saveId); if (alive) { setCareer(c); setMode(c.progress.mode); setState('ready'); } }
         else if (route.name === 'play') { const d = await api.decision(route.saveId, route.screenId); if (alive) { setDecision(d); setState(d.options.length ? 'ready' : 'empty'); } }
-        else if (route.name === 'flow') { const v = await api.flow(route.saveId); if (alive) { setFlowView(v); setState('ready'); } }
+        else if (route.name === 'flow') {
+          const saveId = route.saveId, jobs = api.seasonJobs;
+          setFlowView(null);
+          setSeasonJob(null);
+          setSeasonJobsEnabled(false);
+          const job = jobs && await observeSeasonJob(
+            () => jobs.read(saveId, controller.signal),
+            setSeasonJob,
+            controller.signal,
+          );
+          if (!alive) return;
+          const view = await api.flow(saveId);
+          if (alive) {
+            setSeasonJob(null);
+            setSeasonJobsEnabled(job !== undefined);
+            setFlowView(view);
+            setState(job?.status === 'FAILED' ? 'error' : 'ready');
+          }
+        }
         else if (route.name === 'club') { const view = await api.club(route.saveId, route.screenId); if (alive) { setClubView(view); setState(view.lines.length ? 'ready' : 'empty'); } }
         else setState('ready');
-      } catch (err) { if (alive) setState(stateFromError(err)); }
+      } catch (err) { if (alive) { setSeasonJob(null); setState(stateFromError(err)); } }
     })();
-    return () => { alive = false; };
+    return () => { alive = false; controller.abort(); };
   }, [route, api, tick]);
 
   if (route.name === 'create') {
@@ -155,15 +176,26 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
   }
   if (route.name === 'flow') {
     const saveId = route.saveId;
-    return <Flow view={flowView} state={state} onBack={() => go(`#/career/${encodeURIComponent(saveId)}`)} onReload={reload}
+    return <Flow view={flowView} state={state} seasonJob={seasonJob} onBack={() => go(`#/career/${encodeURIComponent(saveId)}`)} onReload={reload}
       onCommand={cmd => {
-        if (flowRun.current) return;
+        if (flowRun.current || seasonJob) return;
         const token = Symbol(), hash = location.hash;
         flowRun.current = token;
         const current = () => flowRun.current === token && location.hash === hash;
         setState('saving');
         void (async () => {
           try {
+            const revision = flowView?.saveRevision;
+            if (seasonJobsEnabled && api.seasonJobs && revision && regularSeasonCommand(cmd)) {
+              const key = `season-job|${saveId}|${revision}`;
+              const job = await api.seasonJobs.start(saveId, intents.of(key), revision);
+              intents.done(key);
+              if (current()) {
+                if (job.status === 'RUNNING') setSeasonJob(job);
+                reload();
+              }
+              return;
+            }
             await runFlowCommands(cmd, async command => {
               // A failed refresh retries the same served intent and command ID.
               const key = `flow|${saveId}|${command.id}|${String(command.payload.careerRevision ?? '')}`;

@@ -1,11 +1,27 @@
-import type { FlowCommand, FlowView } from './model.js';
+import type { FlowCommand, FlowView, SeasonJobView } from './model.js';
 
-function regularSeasonCommand(command: FlowCommand): boolean {
+export function regularSeasonCommand(command: FlowCommand): boolean {
   if (command.id !== 'adv-season' || command.confirm || command.sign) return false;
   if (command.type === 'CAREER_COLLEGE_ADVANCE') return command.payload.mode === 'SEASON';
   return (command.type === 'CAREER_SCHOOL_ADVANCE_SPAN'
     || command.type === 'CAREER_KBO_PLAY_ADVANCE_SPAN' || command.type === 'CAREER_US_PLAY_ADVANCE_SPAN')
     && command.payload.span === 'SEASON';
+}
+
+export async function observeSeasonJob(
+  read: () => Promise<SeasonJobView | null | undefined>,
+  publish: (job: SeasonJobView) => void,
+  signal: AbortSignal,
+  delay = () => new Promise<void>(resolve => setTimeout(resolve, 2000)),
+): Promise<SeasonJobView | null | undefined> {
+  let job = await read();
+  while (!signal.aborted && job?.status === 'RUNNING') {
+    publish(job);
+    await delay();
+    if (signal.aborted) break;
+    job = await read();
+  }
+  return job;
 }
 
 export async function runFlowCommands(

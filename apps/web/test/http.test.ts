@@ -2,6 +2,33 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHttpApi } from '../src/http.js';
 
+test('season job HTTP distinguishes disabled routes and uses the exact save revision', async t => {
+  const job = { runId: 'run-1', status: 'RUNNING', stopReason: null,
+    progress: { seasonKey: '2027', phase: 'SEASON_PROGRESS', completedGames: 12, scheduledGames: 216 } };
+  const replies = [Response.json({ code: 'NOT_FOUND' }, { status: 404 }), Response.json({ job: null }), Response.json(job),
+    Response.json({ job }), Response.json({ code: 'SAVE_NOT_FOUND' }, { status: 404 }), new Response('404 Not Found', { status: 404 })];
+  const requests: RequestInit[] = [];
+  t.mock.method(globalThis, 'fetch', async (input: RequestInfo | URL, init?: RequestInit) => {
+    assert.equal(String(input), 'http://api.test/api/saves/save%2F1/season-job');
+    assert.ok(init);
+    requests.push(init);
+    const response = replies.shift();
+    assert.ok(response);
+    return response;
+  });
+  const api = createHttpApi({ baseUrl: 'http://api.test', getToken: () => 'dev:t' });
+  const jobs = api.seasonJobs;
+  assert.ok(jobs);
+  assert.equal(await jobs.read('save/1'), undefined);
+  assert.equal(await jobs.read('save/1'), null);
+  assert.deepEqual(await jobs.start('save/1', 'request-id', '9007199254740993'), job);
+  assert.equal(requests[2]?.method, 'POST');
+  assert.deepEqual(JSON.parse(String(requests[2]?.body)), { requestId: 'request-id', expectedRevision: '9007199254740993' });
+  assert.deepEqual(await jobs.read('save/1'), job);
+  await assert.rejects(jobs.read('save/1'), { code: 'SAVE_NOT_FOUND' });
+  assert.equal(await jobs.read('save/1'), undefined);
+});
+
 test('http api maps saves list and create→seed→career against a stub fetch', async () => {
   const calls: { url: string; method: string; body?: string }[] = [];
   const revisions: Record<string, string> = {};

@@ -1,5 +1,5 @@
 import type {
-  CareerView, ChooseReceipt, ClubCreateRequest, ClubScreen, ClubScreenId, CreationReceipt, CreationRequest, DecisionView, FlowView, HomeData, PlayScreenId, ProgressMode,
+  CareerView, ChooseReceipt, ClubCreateRequest, ClubScreen, ClubScreenId, CreationReceipt, CreationRequest, DecisionView, FlowView, HomeData, PlayScreenId, ProgressMode, SeasonJobView,
 } from './model.js';
 
 /** The boundary M3 will implement over HTTP. Screens depend on this interface only; `fixtureApi` stands in until then.
@@ -17,5 +17,10 @@ export interface PlayballApi {
   flow(saveId: string): Promise<FlowView | null>;
   /** Replays the server-served command; resolves to the next flow step (null when the server has none). */
   flowCommand(saveId: string, commandId: string, type: string, payload: Record<string, unknown>): Promise<FlowView | null>;
+  seasonJobs?: {
+    /** Undefined means the server has disabled this endpoint. */
+    read(saveId: string, signal?: AbortSignal): Promise<SeasonJobView | null | undefined>;
+    start(saveId: string, requestId: string, expectedRevision: string): Promise<SeasonJobView>;
+  };
   clubCommand(saveId: string, commandId: string, type: string, payload: Record<string, unknown>): Promise<ClubScreen>;
 }

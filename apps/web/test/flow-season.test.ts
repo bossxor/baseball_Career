@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { runFlowCommands } from '../src/flow-season.js';
-import type { FlowCommand, FlowView } from '../src/model.js';
+import { observeSeasonJob, runFlowCommands } from '../src/flow-season.js';
+import type { FlowCommand, FlowView, SeasonJobView } from '../src/model.js';
 
 function seasonCommand(careerRevision: number, type = 'CAREER_KBO_PLAY_ADVANCE_SPAN'): FlowCommand {
   return { id: 'adv-season', label: '이번 시즌 끝까지', type,
@@ -61,4 +61,20 @@ test('leaving the flow in flight drops the old screen response and stops the con
   }, () => { publications++; }, () => active);
   assert.equal(sends, 1);
   assert.equal(publications, 0);
+});
+
+test('reopening a season observes the existing server run until its terminal state', async () => {
+  const running: SeasonJobView = {
+    runId: 'run-1', status: 'RUNNING', stopReason: null,
+    progress: { seasonKey: '2027', phase: 'SEASON_PROGRESS', completedGames: 15, scheduledGames: 216 },
+  };
+  const stopped: SeasonJobView = { ...running, status: 'STOPPED', stopReason: 'EVENT' };
+  const reads = [running, stopped], updates: SeasonJobView[] = [];
+  const controller = new AbortController();
+  assert.equal(await observeSeasonJob(async () => reads.shift(), job => updates.push(job), controller.signal, async () => {}), stopped);
+  assert.deepEqual(updates, [running]);
+  assert.equal(reads.length, 0);
+  let count = 0;
+  await observeSeasonJob(async () => { count++; return running; }, () => {}, controller.signal, async () => { controller.abort(); });
+  assert.equal(count, 1);
 });
