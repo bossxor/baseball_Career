@@ -1,0 +1,27 @@
+{
+  "pathId": "P04",
+  "sliceId": "P04-native-early-draft-return",
+  "source": "M2-20261123-P04-native.json.gz",
+  "verdict": {
+    "ok": true,
+    "commandChainHash": "bdbbdd5fc83bc9e87c82b8d1b211bb1aa3600d52c57830d236e77179ea3bc040",
+    "finalStateHash": "743577a0138d893b16790525ae669c37ccf41e2ed024994ffc081077c1bd5ce4",
+    "commands": 325
+  },
+  "claims": [
+    "P04"
+  ],
+  "invariantReport": {
+    "completesPaths": [
+      "P04"
+    ],
+    "draftRound": null,
+    "undraftedBranch": true,
+    "declined": false,
+    "returnEnrollmentPreserved": true,
+    "earlyAttempts": 1,
+    "jsonReplay": "every command",
+    "draftBaseScore": 43.86972698026779,
+    "draftScore": 39.0457026275571
+  }
+}
