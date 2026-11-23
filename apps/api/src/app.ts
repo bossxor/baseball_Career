@@ -10,6 +10,7 @@ import { getCareer, getScreen } from './career-views.js';
 import { getSaveSummary, listSaves } from './saves.js';
 import { downloadFile, getFileMeta, listBackups, postBackup, postChronicleExport } from './private-files.js';
 import { postRestore, previewRestore } from './restores.js';
+import { getSeasonJob, postSeasonJob } from './season-job-routes.js';
 
 /** Public ops surface — no secrets / connection strings. */
 export const APP_VERSION = '0.1.0';
@@ -21,12 +22,15 @@ export type CreateAppOptions = {
   auth?: AuthOptions;
   /** Extra browser origins allowed to call the API (comma list in CORS_ORIGINS). */
   corsOrigins?: readonly string[];
+  /** Requires the separately running season worker and its DB migration. */
+  seasonJobs?: boolean;
 };
 
 /** The Android shell serves the app from these origins (Capacitor androidScheme https / capacitor scheme). */
 const NATIVE_ORIGINS = ['https://localhost', 'capacitor://localhost'];
 
 export function createApp(options: CreateAppOptions = {}) {
+  const seasonJobsEnabled = options.seasonJobs ?? process.env.PLAYBALL_SEASON_JOBS === '1';
   const authOptions: AuthOptions = {
     allowDevBearer: options.auth?.allowDevBearer ?? process.env.AUTH_MODE === 'dev',
   };
@@ -82,6 +86,7 @@ export function createApp(options: CreateAppOptions = {}) {
     try {
       await db.execute(sql`SELECT 1 AS ok`);
       await db.execute(sql`SELECT 1 FROM game_saves LIMIT 0`);
+      if (seasonJobsEnabled) await db.execute(sql`SELECT 1 FROM season_jobs LIMIT 0`);
       return c.json({ status: 'ready', schemaCompatible: true });
     } catch {
       return c.json({ status: 'not_ready', reason: 'db.query_failed' }, 503);
@@ -105,6 +110,10 @@ export function createApp(options: CreateAppOptions = {}) {
   protectedRoutes.get('/saves/:id', getSaveSummary);
   protectedRoutes.post('/saves/:id/commands', postCommand);
   protectedRoutes.get('/saves/:id/commands/:commandId', getCommand);
+  if (seasonJobsEnabled) {
+    protectedRoutes.get('/saves/:id/season-job', getSeasonJob);
+    protectedRoutes.post('/saves/:id/season-job', postSeasonJob);
+  }
   protectedRoutes.post('/saves/:id/backups', postBackup);
   protectedRoutes.get('/saves/:id/backups', listBackups);
   protectedRoutes.post('/saves/:id/exports/chronicle', postChronicleExport);

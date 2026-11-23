@@ -15,6 +15,6 @@ test('command diagnostics preserve the HTTP response and report ordered boundari
  try{
   const baseline=await post('/api/saves/'+a+'/commands',command);assert.equal(baseline.status,200);const expected=await baseline.json();assert.deepEqual(stages,[]);
   stream.subscribe(listener);const measured=await post('/api/saves/'+b+'/commands',command);assert.equal(measured.status,200);assert.deepEqual(await measured.json(),expected);
-  assert.deepEqual(stages,['transaction-start','lock-start','lock-return','engine-start','engine-return','update-start','update-return','receipt-start','receipt-return','transaction-return']);
+  assert.deepEqual(stages,['transaction-start','lock-start','lock-return','engine-start','engine-return','update-start','row-update-start','update-return','receipt-start','receipt-return','transaction-return']);
  }finally{stream.unsubscribe(listener);await client.close();}
 });

@@ -1,5 +1,7 @@
+import { sql } from 'drizzle-orm';
 import {
   bigint,
+  check,
   index,
   integer,
   jsonb,
@@ -71,6 +73,41 @@ export const commandReceipts = pgTable(
   },
   table => [primaryKey({ columns: [table.saveId, table.commandId] })],
 );
+
+export type SeasonJobStatus = 'RUNNING' | 'STOPPED' | 'FAILED';
+export type SeasonJobProgress = {
+  seasonKey: string | null;
+  phase: string | null;
+  completedGames: number;
+  scheduledGames: number;
+};
+
+/** One current run per save. Ownership follows game_saves; prior request retries use command_receipts. */
+export const seasonJobs = pgTable('season_jobs', {
+  saveId: text('save_id').primaryKey().references(() => gameSaves.id, { onDelete: 'cascade' }),
+  runId: text('run_id').notNull(),
+  requestId: text('request_id').notNull(),
+  status: text('status').$type<SeasonJobStatus>().notNull().default('RUNNING'),
+  nextExpectedRevision: bigint('next_expected_revision', { mode: 'bigint' }).notNull(),
+  stepOrdinal: integer('step_ordinal').notNull().default(0),
+  stopReason: text('stop_reason'),
+  progress: jsonb('progress').$type<SeasonJobProgress>().notNull().default({
+    seasonKey: null, phase: null, completedGames: 0, scheduledGames: 0,
+  }),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
+}, table => [
+  uniqueIndex('season_jobs_run_id_uidx').on(table.runId),
+  check('season_jobs_status_check', sql`${table.status} IN ('RUNNING', 'STOPPED', 'FAILED')`),
+  check('season_jobs_revision_check', sql`${table.nextExpectedRevision} >= 0`),
+  check('season_jobs_step_check', sql`${table.stepOrdinal} >= 0`),
+  check('season_jobs_run_id_check', sql`length(${table.runId}) > 0`),
+  check('season_jobs_request_id_check', sql`length(${table.requestId}) > 0`),
+  check('season_jobs_progress_check', sql`jsonb_typeof(${table.progress}) = 'object'`),
+]);
+
+export type SeasonJob = typeof seasonJobs.$inferSelect;
+export type NewSeasonJob = typeof seasonJobs.$inferInsert;
 
 /** Owner-private export objects (backup / chronicle / card). Body is UTF-8 text for M7 JSON backups. */
 export const privateFiles = pgTable(

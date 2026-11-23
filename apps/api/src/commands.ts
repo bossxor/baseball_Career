@@ -3,7 +3,7 @@ import type { Context } from 'hono';
 import { commandReceipts, gameSaves, readSaveState, writeSaveState } from '@playball/db';
 import type { AppVariables } from './auth.js';
 import { requestHash } from './canonical-json.js';
-import { applyEngineCommand, type CommandBody, type SaveState } from './engine-command.js';
+import { applyEngineCommand, type AppliedCommand, type CommandBody, type SaveState } from './engine-command.js';
 import { channel } from 'node:diagnostics_channel';
 
 const commandDiagnostic = channel('playball.command.memory');
@@ -38,6 +38,100 @@ function firstRow(locked: unknown): Record<string, unknown> | undefined {
   return undefined;
 }
 
+export type CommandTransaction = Parameters<Parameters<AppVariables['db']['transaction']>[0]>[0];
+export type CommandReceipt = {
+  commandId: string; revision: string; phase: string; summary: Record<string, unknown>;
+  eventIds: string[]; nextActions: string[]; next?: AppliedCommand['next'];
+  result: { gains: unknown; discarded: unknown };
+};
+export type CommandExecutionResult =
+  | { status: 200; result: CommandReceipt; replayed: boolean }
+  | { status: 400 | 404 | 409; code: string; currentRevision?: string };
+
+/** Caller owns commit/rollback. A factory reads the owned, locked state once before deriving its command. */
+export async function executeCommandTransaction(tx: CommandTransaction, input: {
+  saveId: string;
+  subject: string;
+  command: CommandBody | ((source: { state: SaveState; revision: bigint; mode: string }) => CommandBody | undefined);
+  onCommit?: (tx: CommandTransaction, committed: { result: CommandReceipt; applied: AppliedCommand }) => Promise<void>;
+}): Promise<CommandExecutionResult> {
+  const { saveId, subject } = input;
+  if (!saveId || saveId.length > 128) return { status: 400, code: 'INVALID_REQUEST' };
+  diagnostic('lock-start');
+  const locked = await tx.execute(
+    sql`SELECT id, owner_id, mode, revision, state, state_format, deleted_at FROM game_saves WHERE id = ${saveId} FOR UPDATE`,
+  );
+  diagnostic('lock-return');
+  const row = firstRow(locked);
+  if (!row || row.deleted_at || String(row.owner_id) !== subject) return { status: 404, code: 'SAVE_NOT_FOUND' };
+
+  const currentRevision = BigInt(String(row.revision));
+  let state = {} as SaveState;
+  if (typeof input.command === 'function') {
+    state = (await readSaveState(tx, saveId, currentRevision, row.state, String(row.state_format)) ?? {}) as SaveState;
+  }
+  const body = typeof input.command === 'function'
+    ? input.command({ state, revision: currentRevision, mode: String(row.mode) }) : input.command;
+  if (body === undefined && typeof input.command === 'function') return { status: 400, code: 'SEASON_NOT_READY' };
+  if (!validCommand(body)) return { status: 400, code: 'INVALID_REQUEST' };
+  const expectedRevision = parseRevision(body.expectedRevision);
+  if (expectedRevision === null) return { status: 400, code: 'INVALID_REQUEST' };
+  const hash = requestHash({ type: body.type, payload: body.payload, expectedRevision });
+  const [existing] = await tx.select().from(commandReceipts)
+    .where(and(eq(commandReceipts.saveId, saveId), eq(commandReceipts.commandId, body.commandId))).limit(1);
+  if (existing) {
+    if (existing.requestHash !== hash) return { status: 409, code: 'COMMAND_ID_REUSED' };
+    return { status: 200, result: existing.result as CommandReceipt, replayed: true };
+  }
+  if (currentRevision !== expectedRevision) {
+    return { status: 409, code: 'REVISION_CONFLICT', currentRevision: currentRevision.toString() };
+  }
+
+  let applied: AppliedCommand;
+  if (typeof input.command !== 'function') {
+    state = (await readSaveState(tx, saveId, currentRevision, row.state, String(row.state_format)) ?? {}) as SaveState;
+  }
+  try {
+    if ((body.type.startsWith('CAREER_SCHOOL_') || body.type.startsWith('CAREER_COLLEGE_') || body.type.startsWith('CAREER_KBO_PLAY_') || body.type.startsWith('CAREER_KBO_NATIONAL_') || body.type.startsWith('CAREER_US_NATIONAL_') || body.type.startsWith('CAREER_KBO_DEPARTURE_') || body.type.startsWith('CAREER_US_KBO_RETURN_')) && row.mode !== 'CAREER') return { status: 400, code: 'CAREER_SAVE_REQUIRED' };
+    diagnostic('engine-start');
+    applied = applyEngineCommand(state, body);
+    diagnostic('engine-return');
+  } catch (err) {
+    diagnostic('engine-error');
+    const code = err && typeof err === 'object' && 'code' in err ? String((err as { code: string }).code) : 'INVALID_REQUEST';
+    return { status: 400, code };
+  }
+
+  const nextRevision = currentRevision + 1n;
+  const result: CommandReceipt = {
+    commandId: body.commandId, revision: nextRevision.toString(), phase: applied.phase,
+    summary: applied.summary, eventIds: applied.eventIds, nextActions: [],
+    ...(applied.next ? { next: applied.next } : {}),
+    result: { gains: applied.summary.gains, discarded: applied.summary.discarded },
+  };
+  diagnostic('update-start');
+  const storedState = await writeSaveState(tx, saveId, nextRevision, applied.nextState);
+  diagnostic('row-update-start');
+  await tx.update(gameSaves).set({
+    revision: nextRevision, phase: applied.phase, ...storedState,
+    summary: applied.summary, updatedAt: new Date(),
+  }).where(eq(gameSaves.id, saveId));
+  diagnostic('update-return');
+  diagnostic('receipt-start');
+  await tx.insert(commandReceipts).values({ saveId, commandId: body.commandId, requestHash: hash, result, resultingRevision: nextRevision });
+  diagnostic('receipt-return');
+  // Bookkeeping shares the save/receipt transaction; replay never applies it twice.
+  await input.onCommit?.(tx, { result, applied });
+  return { status: 200, result, replayed: false };
+}
+
+function validCommand(body: unknown): body is CommandBody {
+  if (!body || typeof body !== 'object' || Array.isArray(body)) return false;
+  const command = body as CommandBody;
+  return typeof command.commandId === 'string' && command.commandId.length >= 1 && command.commandId.length <= 128
+    && typeof command.type === 'string' && command.type.length >= 1 && command.type.length <= 64 && command.payload !== undefined;
+}
+
 export async function postCommand(c: Context<{ Variables: AppVariables }>) {
   const db = c.get('db');
   const saveId = c.req.param('id');
@@ -49,16 +143,7 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
   } catch {
     return errorBody(c, 'INVALID_REQUEST', 400);
   }
-  if (
-    !body || typeof body !== 'object' || Array.isArray(body) ||
-    typeof body.commandId !== 'string' ||
-    body.commandId.length < 1 ||
-    body.commandId.length > 128 ||
-    typeof body.type !== 'string' ||
-    body.type.length < 1 ||
-    body.type.length > 64 ||
-    body.payload === undefined
-  ) {
+  if (!validCommand(body)) {
     return errorBody(c, 'INVALID_REQUEST', 400);
   }
   const expectedRevision = parseRevision(body.expectedRevision);
@@ -70,82 +155,10 @@ export async function postCommand(c: Context<{ Variables: AppVariables }>) {
   try {
     diagnostic('transaction-start');
     const response = await db.transaction(async tx => {
-      diagnostic('lock-start');
-      const locked = await tx.execute(
-        sql`SELECT id, owner_id, mode, revision, state, state_format, deleted_at FROM game_saves WHERE id = ${saveId} FOR UPDATE`,
-      );
-      diagnostic('lock-return');
-      const row = firstRow(locked);
-      if (!row || row.deleted_at) return errorBody(c, 'SAVE_NOT_FOUND', 404);
-      if (String(row.owner_id) !== subject) return errorBody(c, 'SAVE_NOT_FOUND', 404);
-
-      const [existing] = await tx
-        .select()
-        .from(commandReceipts)
-        .where(and(eq(commandReceipts.saveId, saveId), eq(commandReceipts.commandId, body.commandId)))
-        .limit(1);
-      if (existing) {
-        if (existing.requestHash !== hash) return errorBody(c, 'COMMAND_ID_REUSED', 409);
-        return c.json(existing.result, 200);
-      }
-
-      const currentRevision = BigInt(String(row.revision));
-      if (currentRevision !== expectedRevision) {
-        return errorBody(c, 'REVISION_CONFLICT', 409, { currentRevision: currentRevision.toString() });
-      }
-
-      let applied;
-      const state = await readSaveState(tx, saveId, currentRevision, row.state, String(row.state_format));
-      try {
-        if((body.type.startsWith('CAREER_SCHOOL_')||body.type.startsWith('CAREER_COLLEGE_')||body.type.startsWith('CAREER_KBO_PLAY_')||body.type.startsWith('CAREER_KBO_NATIONAL_')||body.type.startsWith('CAREER_US_NATIONAL_')||body.type.startsWith('CAREER_KBO_DEPARTURE_')||body.type.startsWith('CAREER_US_KBO_RETURN_'))&&row.mode!=='CAREER')return errorBody(c,'CAREER_SAVE_REQUIRED',400);
-        diagnostic('engine-start');
-        applied = applyEngineCommand((state as SaveState) ?? {}, body);
-        diagnostic('engine-return');
-      } catch (err) {
-        diagnostic('engine-error');
-        const code =
-          err && typeof err === 'object' && 'code' in err ? String((err as { code: string }).code) : 'INVALID_REQUEST';
-        return errorBody(c, code, 400);
-      }
-
-      const nextRevision = currentRevision + 1n;
-      const result = {
-        commandId: body.commandId,
-        revision: nextRevision.toString(),
-        phase: applied.phase,
-        summary: applied.summary,
-        eventIds: applied.eventIds,
-        nextActions: [] as string[],
-        ...(applied.next ? { next: applied.next } : {}),
-        result: { gains: applied.summary.gains, discarded: applied.summary.discarded },
-      };
-
-      diagnostic('update-start');
-      const storedState = await writeSaveState(tx, saveId, nextRevision, applied.nextState);
-      diagnostic('row-update-start');
-      await tx
-        .update(gameSaves)
-        .set({
-          revision: nextRevision,
-          phase: applied.phase,
-          ...storedState,
-          summary: applied.summary,
-          updatedAt: new Date(),
-        })
-        .where(eq(gameSaves.id, saveId));
-      diagnostic('update-return');
-
-      diagnostic('receipt-start');
-      await tx.insert(commandReceipts).values({
-        saveId,
-        commandId: body.commandId,
-        requestHash: hash,
-        result,
-        resultingRevision: nextRevision,
-      });
-      diagnostic('receipt-return');
-
-      return c.json(result, 200);
+      const executed = await executeCommandTransaction(tx, { saveId, subject, command: body });
+      if (executed.status === 200) return c.json(executed.result, 200);
+      return errorBody(c, executed.code, executed.status,
+        executed.currentRevision === undefined ? {} : { currentRevision: executed.currentRevision });
     });
     diagnostic('transaction-return');
     return response;

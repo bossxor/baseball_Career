@@ -19,6 +19,7 @@
     "verify:design": "node scripts/verify-design.mjs",
     "check": "npm run lint && npm run typecheck && npm test && npm run test:web && npm run build && npm run verify:engine && npm run verify:events && npm run verify:design && npm run verify:android && npm run verify:assets",
     "start": "node apps/api/dist/server.js",
+    "worker:season": "node apps/api/dist/season-job-worker.js",
     "smoke": "node scripts/smoke.mjs",
     "verify:engine": "node --import tsx scripts/verify-engine.mjs",
     "verify:events": "node scripts/generate-event-definitions.mjs --check",
