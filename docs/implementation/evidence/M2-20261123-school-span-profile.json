@@ -1,0 +1,324 @@
+{
+  "backend": "pglite",
+  "databaseVersion": "17.5",
+  "league": "school",
+  "fixture": "controlled pre-season fixture",
+  "initialHash": "9247637e0026f6228c7c1af3b136af8538cf7776bc9f29a53fe9bdcb6b672cfe",
+  "status": "season_review",
+  "commands": [
+    {
+      "type": "CAREER_SCHOOL_CONFIRM_PLAYER",
+      "commandHash": "fd2e331d983db12d66dc13e8d1287305f733f36cebdc2408465c29abb1db1ef9",
+      "phase": "CREATED",
+      "elapsedMs": 31.69230000000016,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "JSONB",
+        "codecMs": 9.074100000000271,
+        "rowJsonMs": 0.7481999999999971,
+        "serializationMs": 9.822300000000268,
+        "hashingMs": 0,
+        "sqlWriteMs": 11.494900000000143
+      },
+      "engineTiming": {
+        "elapsedMs": 2.9812000000001717,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0.03220000000010259,
+        "clone": 0,
+        "seal": 0,
+        "gameContext": 0,
+        "residualMs": 2.949000000000069
+      }
+    },
+    {
+      "type": "CAREER_SCHOOL_RESOLVE_FOCUS",
+      "commandHash": "10c5cd352aaf1922f987c0369121fb5f0ea5c1df67c05b0448afcc8c28945b42",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 26.842399999999998,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "JSONB",
+        "codecMs": 9.628199999999651,
+        "rowJsonMs": 1.0812000000000808,
+        "serializationMs": 10.709399999999732,
+        "hashingMs": 0,
+        "sqlWriteMs": 7.342699999999695
+      },
+      "engineTiming": {
+        "elapsedMs": 3.1282999999998538,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0.039900000000216096,
+        "clone": 0,
+        "seal": 0,
+        "gameContext": 0,
+        "residualMs": 3.0883999999996377
+      }
+    },
+    {
+      "type": "CAREER_SCHOOL_CONFIRM_PRESEASON",
+      "commandHash": "4b2733aea24855d4c9101f822a23e05cfc3f442e19ffdd367bda18d97c7b10ce",
+      "phase": "PRESEASON_SETUP",
+      "elapsedMs": 19.20640000000003,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "JSONB",
+        "codecMs": 6.411399999999958,
+        "rowJsonMs": 0.6860999999998967,
+        "serializationMs": 7.0974999999998545,
+        "hashingMs": 0,
+        "sqlWriteMs": 5.92640000000074
+      },
+      "engineTiming": {
+        "elapsedMs": 1.8672999999998865,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0.0421000000001186,
+        "clone": 0,
+        "seal": 0,
+        "gameContext": 0,
+        "residualMs": 1.825199999999768
+      }
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE_SPAN",
+      "commandHash": "ea9d9747e3e5212ba007cd28619a73f3a4e95fa32e8e9661407c6e69c222a52f",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 3684.2407000000003,
+      "status": 200,
+      "stop": "EVENT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 64.988400000002,
+        "rowJsonMs": 0.0015999999995983671,
+        "serializationMs": 64.9900000000016,
+        "hashingMs": 17.102899999999863,
+        "sqlWriteMs": 66.11240000000089
+      },
+      "engineTiming": {
+        "elapsedMs": 3530.6397,
+        "simulation": 411.83780000000024,
+        "dayClose": 248.95540000000165,
+        "validation": 66.894199999997,
+        "clone": 1077.8753999999913,
+        "seal": 0,
+        "gameContext": 0,
+        "residualMs": 1725.07690000001
+      }
+    },
+    {
+      "type": "CAREER_SCHOOL_RESOLVE_FOCUS",
+      "commandHash": "5f0e407a7c9e6ebff62f293bec2726393d2798c7d625ef1ab67a23d831bb4f0b",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 229.86160000000018,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 56.50220000000081,
+        "rowJsonMs": 0.0020999999997002305,
+        "serializationMs": 56.50430000000051,
+        "hashingMs": 18.313999999999396,
+        "sqlWriteMs": 69.82260000000042
+      },
+      "engineTiming": {
+        "elapsedMs": 20.34689999999955,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0.014700000000630098,
+        "clone": 0,
+        "seal": 0,
+        "gameContext": 0,
+        "residualMs": 20.33219999999892
+      }
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE_SPAN",
+      "commandHash": "cf7ec3164b352a5de113a84c7559fc0c1ed4779fe2ce8b9a8edd877f1fb4aec9",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 2058.3177000000005,
+      "status": 200,
+      "stop": "EVENT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 83.71730000000025,
+        "rowJsonMs": 0.002300000000104774,
+        "serializationMs": 83.71960000000036,
+        "hashingMs": 20.100699999997232,
+        "sqlWriteMs": 83.10819999999876
+      },
+      "engineTiming": {
+        "elapsedMs": 1810.8364999999994,
+        "simulation": 198.6354999999985,
+        "dayClose": 146.7280000000046,
+        "validation": 26.064699999998993,
+        "clone": 657.1145999999917,
+        "seal": 0,
+        "gameContext": 0,
+        "residualMs": 782.2937000000056
+      }
+    },
+    {
+      "type": "CAREER_SCHOOL_RESOLVE_WINDOW",
+      "commandHash": "c63d1dc5f57f556fa7e6fa7af584adf6a4784f41e6d5855fe0b0f1d57d484dc2",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 280.6252999999997,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 86.77769999999873,
+        "rowJsonMs": 0.001399999999193824,
+        "serializationMs": 86.77909999999792,
+        "hashingMs": 21.52610000000095,
+        "sqlWriteMs": 82.21760000000177
+      },
+      "engineTiming": {
+        "elapsedMs": 22.599600000001374,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0.016499999999723514,
+        "clone": 0,
+        "seal": 0,
+        "gameContext": 0,
+        "residualMs": 22.58310000000165
+      }
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE_SPAN",
+      "commandHash": "ac34dd16d0b86d066d2511da9a8bd1ed2abc6096509108e8e3d37d5f39bfee39",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 5828.568300000001,
+      "status": 200,
+      "stop": "EVENT",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 114.48929999999928,
+        "rowJsonMs": 0.0018999999992956873,
+        "serializationMs": 114.49119999999857,
+        "hashingMs": 28.54160000000411,
+        "sqlWriteMs": 112.19890000000487
+      },
+      "engineTiming": {
+        "elapsedMs": 5494.640800000001,
+        "simulation": 660.4340000000029,
+        "dayClose": 355.9002999999975,
+        "validation": 75.5370000000039,
+        "clone": 1949.0429999999997,
+        "seal": 0,
+        "gameContext": 0,
+        "residualMs": 2453.726499999997
+      }
+    },
+    {
+      "type": "CAREER_SCHOOL_RESOLVE_WINDOW",
+      "commandHash": "50f3d9100f4de00097901bb5cf9bdbbcb7ba3aafbbb876bb4ab660070f34f1de",
+      "phase": "EVENT_DECISION",
+      "elapsedMs": 387.8151999999991,
+      "status": 200,
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 116.77510000000257,
+        "rowJsonMs": 0.002300000000104774,
+        "serializationMs": 116.77740000000267,
+        "hashingMs": 26.8096000000005,
+        "sqlWriteMs": 109.21339999999873
+      },
+      "engineTiming": {
+        "elapsedMs": 45.253499999998894,
+        "simulation": 0,
+        "dayClose": 0,
+        "validation": 0.02410000000054424,
+        "clone": 0,
+        "seal": 0,
+        "gameContext": 0,
+        "residualMs": 45.22939999999835
+      }
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE_SPAN",
+      "commandHash": "da0e5bf2fab85c3c2e41e233f01e222017de64268fed53fd2cdda4a7581838f4",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 25620.382899999997,
+      "status": 200,
+      "stop": "BUDGET",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 225.06410000000324,
+        "rowJsonMs": 0.002099999997881241,
+        "serializationMs": 225.06620000000112,
+        "hashingMs": 43.75430000000051,
+        "sqlWriteMs": 193.79450000001088
+      },
+      "engineTiming": {
+        "elapsedMs": 25068.603000000003,
+        "simulation": 3024.563000000002,
+        "dayClose": 1691.4969000000074,
+        "validation": 329.47439999999915,
+        "clone": 9380.485100000038,
+        "seal": 0,
+        "gameContext": 0,
+        "residualMs": 10642.583599999956
+      }
+    },
+    {
+      "type": "CAREER_SCHOOL_ADVANCE_SPAN",
+      "commandHash": "2f8fafd4304ea091705637e5664f5394f9ed43ea4c18d39e124a537351b610df",
+      "phase": "SEASON_PROGRESS",
+      "elapsedMs": 3166.300000000003,
+      "status": 200,
+      "stop": "SEASON_END",
+      "saveTiming": {
+        "stateFormat": "PARTS_V1",
+        "codecMs": 223.4852000000028,
+        "rowJsonMs": 0.0031999999991967343,
+        "serializationMs": 223.488400000002,
+        "hashingMs": 47.77309999998397,
+        "sqlWriteMs": 212.06400000002031
+      },
+      "engineTiming": {
+        "elapsedMs": 2533.4657000000007,
+        "simulation": 298.4427000000069,
+        "dayClose": 180.4562000000078,
+        "validation": 31.04080000000249,
+        "clone": 982.7675999999992,
+        "seal": 0,
+        "gameContext": 0,
+        "residualMs": 1040.7583999999842
+      }
+    }
+  ],
+  "node": "v24.20.0",
+  "platform": "win32",
+  "arch": "x64",
+  "method": "CPU profiling disabled",
+  "memoryMode": false,
+  "spanBudgetMs": 25000,
+  "saveTimingMethod": "Per committed command: state codec traversal plus row-state JSON mapper, part hashes, and awaited write statements with row-state JSON time removed. SQL timing includes driver/ORM overhead; excludes reads, locking and transaction commit.",
+  "engineTimingMethod": "Exclusive synchronous wall milliseconds inside applyEngineCommand: PA loop, instrumented day settlements, selected validators and state copies, canonical SHA seals. Remaining engine work is residual; HTTP views are outside this boundary.",
+  "engineTimingTotals": {
+    "measuredCommands": 11,
+    "elapsedMs": 38534.3625,
+    "simulation": 4593.9130000000105,
+    "dayClose": 2623.536800000019,
+    "validation": 529.1806000000029,
+    "clone": 14047.28570000002,
+    "seal": 0,
+    "gameContext": 0,
+    "residualMs": 16740.44639999995
+  },
+  "saveTimingTotals": {
+    "measuredCommands": 11,
+    "codecMs": 996.9130000000096,
+    "rowJsonMs": 2.53239999999505,
+    "serializationMs": 999.4454000000046,
+    "hashingMs": 223.92229999998654,
+    "sqlWriteMs": 953.2956000000372
+  },
+  "wallMs": 42802.545999999995,
+  "finalHash": "1d304251844ba3558a0dbfdd0ef67af07523dfda79cbde48463aa762e9f44e24",
+  "initialHashUnchanged": true,
+  "finalHostHash": null,
+  "commandSequenceHash": "0cfd74241ff59d19ce85e2415f885cea5e562dc7f3494ba8fa95280c65b35ba4",
+  "finalPhase": "SEASON_REVIEW",
+  "finalGames": 216
+}

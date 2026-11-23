@@ -13,7 +13,7 @@ function budget(next: FlowCommand, canContinueSeason = true): FlowView {
 }
 
 test('one season click sends fresh server commands while BUDGET and stops at a decision or season end', async () => {
-  for (const type of ['CAREER_KBO_PLAY_ADVANCE_SPAN', 'CAREER_US_PLAY_ADVANCE_SPAN', 'CAREER_COLLEGE_ADVANCE']) {
+  for (const type of ['CAREER_SCHOOL_ADVANCE_SPAN', 'CAREER_KBO_PLAY_ADVANCE_SPAN', 'CAREER_US_PLAY_ADVANCE_SPAN', 'CAREER_COLLEGE_ADVANCE']) {
     const [start, second, third] = [seasonCommand(1, type), seasonCommand(3, type), seasonCommand(8, type)];
     const stop = type === 'CAREER_US_PLAY_ADVANCE_SPAN' ? 'SEASON_END' : 'EVENT';
     const views = [budget(second), budget(third), { ...budget(seasonCommand(9, type)), stop }];

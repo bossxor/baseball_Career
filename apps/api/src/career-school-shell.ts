@@ -5,11 +5,13 @@ import type {PitchId} from '@playball/rules';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
 import {flowApplies} from './career-flow-screen.js';
 import {stageAmateurUsEntry} from './career-us-entry-shell.js';
+import {spanDeadline,spanStopOf} from './span-budget.js';
+import type {SpanStop} from './span-budget.js';
 
 const fields=new Map<string,readonly string[]>([
  ['CREATE',['name','kind','position','throws','bats','pitchForm','archetype','focus','difficulty','schoolId','seasonYear','secondaryPitch']],
  ['CONFIRM_PLAYER',['careerRevision']],['RESOLVE_FOCUS',['careerRevision','eventKey','eventVersion','command','focus']],
- ['CONFIRM_PRESEASON',['careerRevision']],['ADVANCE',['careerRevision','mode']],
+ ['CONFIRM_PRESEASON',['careerRevision']],['ADVANCE',['careerRevision','mode']],['ADVANCE_SPAN',['careerRevision','span']],
  ['RESOLVE_WINDOW',['careerRevision','eventKey','eventVersion','command']],['RESOLVE_HIDDEN',['careerRevision','eventKey','eventVersion','command']],['TRAIN',['careerRevision','choice']],['STYLE',['careerRevision','archetype']],
  ['ACK_SEASON_REVIEW',['careerRevision']],['OPEN_ROUTE',['careerRevision','eventVersion']],
 ]);
@@ -19,7 +21,7 @@ function owner(state:SaveState):engine.HighSchoolCareer{const c=state.career as 
 export function applySchoolCareer(state:SaveState,command:CommandBody):AppliedCommand{
  const name=command.type.slice('CAREER_SCHOOL_'.length),allowed=fields.get(name),p=command.payload;
  if(!allowed)fail('UNSUPPORTED_COMMAND');if(!p||typeof p!=='object'||Array.isArray(p)||Object.keys(p).some(k=>!allowed.includes(k)))fail('INVALID_PAYLOAD');const input=p as Record<string,unknown>;
- let next:engine.HighSchoolCareer,stopReason:string|undefined,navigation:unknown;
+ let next:engine.HighSchoolCareer,stopReason:string|undefined,spanStop:SpanStop|undefined,navigation:unknown;
  try{
   if(name==='CREATE'){
    if(Object.keys(state).some(k=>!['schemaVersion','stampCount','creationId','createdWith','nonce'].includes(k))||state.schemaVersion!==1||state.stampCount!==0||state.createdWith!=='M3_SHELL'||typeof state.nonce!=='string'||!state.nonce)fail('EMPTY_CAREER_SAVE_REQUIRED');
@@ -57,11 +59,21 @@ export function applySchoolCareer(state:SaveState,command:CommandBody):AppliedCo
    }else if(name==='CONFIRM_PRESEASON')next=engine.confirmCareerPreseason(c,revision);
    else if(name==='ACK_SEASON_REVIEW')next=engine.acknowledgeHighSchoolSeasonReview(c,revision);
    else if(name==='OPEN_ROUTE'){if(typeof input.eventVersion!=='number'||!Number.isSafeInteger(input.eventVersion)||input.eventVersion<1)fail('INVALID_PAYLOAD');next=engine.openHighSchoolCareerRoute(c,revision,input.eventVersion).career;}
-   else {if(!['NEXT_MAJOR_EVENT','ONE_GAME','ONE_WEEK'].includes(String(input.mode)))fail('INVALID_PAYLOAD');const result=engine.advanceHighSchoolCareer(c,revision,input.mode as engine.HighSchoolAdvancePlan['mode']);next=result.career;stopReason=result.stopReason;}
+   else if(name==='ADVANCE_SPAN'){
+    if(input.span!=='SEASON')fail('INVALID_PAYLOAD');
+    const deadline=spanDeadline();
+    let result=engine.advanceHighSchoolCareer(c,revision);
+    // A saved game/week plan completes before the next native advance adopts the season's default speed.
+    const canContinue=()=>result.career.phaseContext.phase==='SEASON_PROGRESS'&&['CHUNK_LIMIT','ONE_GAME','ONE_WEEK'].includes(result.stopReason);
+    while(canContinue()&&Date.now()<deadline)result=engine.advanceHighSchoolCareer(result.career,result.career.revision);
+    next=result.career;stopReason=result.stopReason;
+    spanStop=spanStopOf('SEASON',next.phaseContext.phase,canContinue()?'CHUNK_LIMIT':result.stopReason,false);
+   }else {if(!['NEXT_MAJOR_EVENT','ONE_GAME','ONE_WEEK'].includes(String(input.mode)))fail('INVALID_PAYLOAD');const result=engine.advanceHighSchoolCareer(c,revision,input.mode as engine.HighSchoolAdvancePlan['mode']);next=result.career;stopReason=result.stopReason;}
   }
  }catch(error){domainError(error);}
  const nextState=name==='OPEN_ROUTE'?stageAmateurUsEntry(state,next!):{...state,career:next!};next=nextState.career as engine.HighSchoolCareer;
- return {nextState,phase:next.phaseContext.phase,eventIds:[],summary:{type:command.type,careerRevision:next.revision,phase:next.phaseContext.phase,name:next.world.players[next.world.protagonistKey]!.name,seasonKey:next.world.seasonKey,...(stopReason?{stopReason}:{}),...(navigation?{navigation}:{})}};
+ if(spanStop)nextState.span={careerRevision:next.revision,stop:spanStop};
+ return {nextState,phase:next.phaseContext.phase,eventIds:[],summary:{type:command.type,careerRevision:next.revision,phase:next.phaseContext.phase,name:next.world.players[next.world.protagonistKey]!.name,seasonKey:next.world.seasonKey,...(spanStop?{spanStop}:{}),...(stopReason?{stopReason}:{}),...(navigation?{navigation}:{})}};
 }
 export function schoolCareerScreen(state:SaveState){
  try{const c=owner(state),p=c.world.players[c.world.protagonistKey]!,phase=c.phaseContext,event=phase.phase==='EVENT_DECISION'?c.events.find(e=>e.eventKey===phase.eventKey&&e.status==='OPEN'):undefined;
