@@ -80,3 +80,19 @@ test('committing another game keeps earlier records detached from the source', (
   assert.deepEqual(next.records.games[firstGame], originalRecords.games[firstGame]);
   assert.notEqual(next.records.games[firstGame], source.records.games[firstGame]);
 });
+
+test('regular worker keeps projected players and books detached and checks the pending world basis', () => {
+  const source = startKboClubSeason(fresh(), 0), before = canonicalJson(source);
+  const next = advanceKboClubGame(source, source.revision).game;
+  assert.equal(canonicalJson(source), before);
+  assert.ok(next.progress!.pendingGame);
+  const playerKey = Object.keys(next.world.players)[0]!, pitcherKey = Object.keys(next.world.repertoires)[0]!;
+  assert.notEqual(next.world.players[playerKey], source.world.players[playerKey]);
+  assert.notEqual(next.world.repertoires[pitcherKey], source.world.repertoires[pitcherKey]);
+  next.world.players[playerKey]!.fatigue++;
+  next.world.repertoires[pitcherKey]!.book.P01!++;
+  assert.equal(canonicalJson(source), before);
+  const changed = canonicalJson(next);
+  assert.throws(() => advanceKboClubGame(roundTrip(next), next.revision), /STALE_SCHOOL_GAME/);
+  assert.equal(canonicalJson(next), changed);
+});

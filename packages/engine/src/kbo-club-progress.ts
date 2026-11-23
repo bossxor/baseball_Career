@@ -5,9 +5,9 @@ import type { KboClubGame } from './kbo-club-game.js';
 import { kboClubRosterIssues, validateClubLineup } from './kbo-club-game.js';
 import { recommendClubCallup, validateClubBullpen } from './kbo-club-manage.js';
 import { KBO_ROSTER_LIMITS } from '@playball/rules';
-import type { HighSchoolGameContext } from './high-school-game.js';
+import type { CompetitionGameWorld, HighSchoolGameContext } from './high-school-game.js';
 import { prepareSchoolCompetitionGame, advanceHighSchoolGame, commitSchoolCompetitionGame } from './high-school-game.js';
-import { createKboCompetitionGameWorld } from './kbo-game-world.js';
+import { createKboCompetitionGameWorld, projectKboCompetitionGameWorld } from './kbo-game-world.js';
 import { closeKboCompetitionDay, createKboDayLedger } from './kbo-day.js';
 import type { KboLeagueKey } from './kbo-day.js';
 import type { ScheduledGame } from './schedule.js';
@@ -30,7 +30,11 @@ export function startKboClubSeason(source: KboClubGame, expectedRevision: number
 /** Server-side AI context for one league: each club rotates its healthy starters by its own games, every unavailable player
  * is excluded, and the lineup is the automatic 41/44 selection (a hand-made lineup is not applied yet). */
 export function kboClubGameContext(g: KboClubGame, leagueKey: KboLeagueKey): HighSchoolGameContext {
-  const world = createKboCompetitionGameWorld(g.world, leagueKey, '',g.sangmu), starters: Record<string, string> = Object.create(null) as Record<string, string>;
+  return buildKboClubGameContext(g, leagueKey, createKboCompetitionGameWorld(g.world, leagueKey, '',g.sangmu));
+}
+
+function buildKboClubGameContext(g: KboClubGame, leagueKey: KboLeagueKey, world: CompetitionGameWorld): HighSchoolGameContext {
+  const starters: Record<string, string> = Object.create(null) as Record<string, string>;
   const season = recordTotals(g.records, { leagueKey, phase: 'REGULAR', seasonKey: g.world.seasonKey });
   for (const club of world.schools) {
     const available = club.roster.filter(k => world.players[k]!.kind === 'PITCHER' && !Object.hasOwn(g.health.injuries, k)).sort();
@@ -75,7 +79,10 @@ export function advanceKboClubGame(source: KboClubGame, expectedRevision: number
         if (game.lineup && validateClubLineup(game, game.lineup.draft).length) return finish('LINEUP_INVALID');
         if (game.bullpen && validateClubBullpen(game).length) return finish('BULLPEN_INVALID');
       }
-      if (next) progress.pendingGame = { leagueKey: next.leagueKey, job: prepareSchoolCompetitionGame(createKboCompetitionGameWorld(game.world, next.leagueKey, '',game.sangmu), game.records, next.game, kboClubGameContext(game, next.leagueKey)) };
+      if (next) {
+        const world = projectKboCompetitionGameWorld(game.world, next.leagueKey, '',game.sangmu);
+        progress.pendingGame = { leagueKey: next.leagueKey, job: prepareSchoolCompetitionGame(world, game.records, next.game, buildKboClubGameContext(game, next.leagueKey, world)) };
+      }
     }
     if (progress.pendingGame) {
       const pending = progress.pendingGame, before = pending.job.game, job = advanceHighSchoolGame(pending.job, 1000 - plateAppearances, 20 - completedInnings);
@@ -85,7 +92,7 @@ export function advanceKboClubGame(source: KboClubGame, expectedRevision: number
       if (job.game.status !== 'FINAL') return finish('CHUNK_LIMIT');
       const scheduled = game.schedule[pending.leagueKey].find(x => x.simulationKey === job.game.input.simulationKey)!;
       // The worker's deep copy already owns every earlier contribution.
-      const committed = commitSchoolCompetitionGame(createKboCompetitionGameWorld(game.world, pending.leagueKey, '',game.sangmu), game.records, job, scheduled, true);
+      const committed = commitSchoolCompetitionGame(projectKboCompetitionGameWorld(game.world, pending.leagueKey, '',game.sangmu), game.records, job, scheduled, true);
       // Merge only the books this game touched, so another league's earlier pitch XP is never rolled back.
       for (const key of Object.keys(job.game.pitchDevelopment!.players)) {
         const book=structuredClone(committed.world.repertoires[key]!),member=game.sangmu?.members[key],temporary=game.sangmu?.emergency?.entries[key];
