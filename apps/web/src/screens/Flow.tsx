@@ -27,7 +27,7 @@ export function Flow({ view, state = 'ready', seasonJob, onCommand, onBack, onRe
   useEffect(() => { if (asking && !pending) setAsking(null); if (signing && !signCmd) setSigning(null); }, [asking, pending, signing, signCmd]);
   return (
     <main className="screen" aria-labelledby="flow-title" aria-busy={busy && !seasonJob} data-screen="FLOW" data-state={state}>
-      <header className="topbar">{onBack ? <button type="button" className="ghost" onClick={onBack}>커리어로</button> : <span />}</header>
+      <header className="topbar">{onBack ? <button type="button" className="ghost" onClick={onBack}>{seasonJob ? '홈으로' : '커리어로'}</button> : <span />}</header>
       <Illustration name={flowScene(view?.title ?? '')} />
       <h1 id="flow-title" className="screen-title">{seasonJob ? '시즌 진행 중' : view?.title ?? '진행'}</h1>
       {banner ? <p className={`banner banner-${state}`} role={state === 'error' || state === 'conflict' ? 'alert' : 'status'}>{banner}</p> : null}

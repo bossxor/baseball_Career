@@ -62,6 +62,18 @@ test('flow route parses and career shows the server-provided flow link', () => {
   assert.match(renderToStaticMarkup(<Career view={view} />), /다음 단계 진행/);
 });
 
+test('a running season shows server-reported games and hides old decision commands', () => {
+  const markup = renderToStaticMarkup(<Flow view={flow} state="saving" onBack={() => {}} seasonJob={{
+    runId: 'season-run', status: 'RUNNING', stopReason: null,
+    progress: { seasonKey: '2033', phase: 'SEASON_PROGRESS', completedGames: 81, scheduledGames: 216, month: 5 },
+  }} />);
+  assert.match(markup, /81 \/ 216 경기/);
+  assert.match(markup, /5월/);
+  assert.match(markup, /홈으로/);
+  assert.match(markup, /<progress[^>]*value="81"[^>]*max="216"/);
+  assert.doesNotMatch(markup, /계약하고 입단/);
+});
+
 test('load failure offers a retry button on every frame that can reload; without a reload handler there is none', async () => {
   const { Home } = await import('../src/screens/Home.js');
   const withRetry = renderToStaticMarkup(<Home data={null} state="error" onReload={() => {}} />);

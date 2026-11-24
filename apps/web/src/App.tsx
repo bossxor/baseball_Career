@@ -103,7 +103,16 @@ export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel, 
     (async () => {
       try {
         if (route.name === 'home' || (route.name === 'device-backups' && !deviceBackups)) { const d = await api.home(); if (alive) { setHome(d); setState('ready'); } }
-        else if (route.name === 'career') { const c = await api.career(route.saveId); if (alive) { setCareer(c); setMode(c.progress.mode); setState('ready'); } }
+        else if (route.name === 'career') {
+          const activeJob = await api.seasonJobs?.read(route.saveId, controller.signal);
+          if (!alive) return;
+          if (activeJob?.status === 'RUNNING') {
+            location.replace(`#/flow/${encodeURIComponent(route.saveId)}`);
+            return;
+          }
+          const c = await api.career(route.saveId);
+          if (alive) { setCareer(c); setMode(c.progress.mode); setState('ready'); }
+        }
         else if (route.name === 'play') { const d = await api.decision(route.saveId, route.screenId); if (alive) { setDecision(d); setState(d.options.length ? 'ready' : 'empty'); } }
         else if (route.name === 'flow') {
           const saveId = route.saveId, jobs = api.seasonJobs;
@@ -188,7 +197,7 @@ export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel, 
   }
   if (route.name === 'flow') {
     const saveId = route.saveId;
-    return <Flow view={flowView} state={state} seasonJob={seasonJob} onBack={() => go(`#/career/${encodeURIComponent(saveId)}`)} onReload={reload}
+    return <Flow view={flowView} state={state} seasonJob={seasonJob} onBack={() => go(seasonJob ? '#/' : `#/career/${encodeURIComponent(saveId)}`)} onReload={reload}
       onCommand={cmd => {
         if (flowRun.current || seasonJob) return;
         const token = Symbol(), hash = location.hash;
