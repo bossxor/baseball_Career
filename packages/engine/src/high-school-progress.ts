@@ -8,6 +8,7 @@ import {prepareHighSchoolGame,advanceHighSchoolGame,commitHighSchoolGame} from '
 import {closeHighSchoolDay} from './high-school-day.js';
 import {reconcileSchoolEmergency} from './high-school-emergency.js';
 import {recordTotals} from './records.js';
+import type {GameContribution} from './records.js';
 import {createWorldEvent,resolveEventChoice,completeEventDomain,eventDefinition} from './events.js';
 import {assertHighSchoolCareerRevision,assertSchoolCareerRevision} from './high-school-career.js';
 import type {HighSchoolCareer,HighSchoolProgressPhase,HighSchoolAdvancePlan} from './high-school-career.js';
@@ -24,17 +25,25 @@ export interface SchoolProgressResult {career:HighSchoolCareer;stopReason:School
 function teamGames(state:HighSchoolCareer):number {return Object.values(state.records.games).filter(g=>g.scope.seasonKey===state.world.seasonKey && g.scope.leagueKey===(state.world.leagueKey??'HS') && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,state.world.protagonistSchoolId)).length;}
 /** Server-internal world AI context; never returned to clients. */
 export function highSchoolGameContext(state:Pick<HighSchoolCareer,'records'|'health'|'difficulty'|'traits'|'repertoireEvents'> & {world:CompetitionGameWorld},competition:'REGULAR'|'POSTSEASON'='REGULAR'):HighSchoolGameContext {
- const total=recordTotals(state.records,{leagueKey:state.world.leagueKey??'HS',phase:'REGULAR',seasonKey:state.world.seasonKey});
- const postseason=competition==='POSTSEASON'?recordTotals(state.records,{leagueKey:state.world.leagueKey??'HS',phase:'POSTSEASON',seasonKey:state.world.seasonKey}):null;
+ const scope={leagueKey:state.world.leagueKey??'HS',phase:'REGULAR' as const,seasonKey:state.world.seasonKey};
+ const currentGames=Object.entries(state.records.games).filter(([,g])=>g.scope.seasonKey===scope.seasonKey&&g.scope.leagueKey===scope.leagueKey);
+ const currentRecords={...state.records,games:Object.fromEntries(currentGames)};
+ const total=recordTotals(currentRecords,scope);
+ const postseason=competition==='POSTSEASON'?recordTotals(currentRecords,{...scope,phase:'POSTSEASON'}):null;
+ const regularGames=currentGames.filter(([,g])=>g.scope.phase==='REGULAR');
+ const gamesBySchool=new Map<string,GameContribution[]>(state.world.schools.map(school=>[school.id,[]]));
+ for(const [,game]of regularGames)for(const team of Object.keys(game.teams))gamesBySchool.get(team)?.push(game);
  const starters:Record<string,string>=Object.create(null) as Record<string,string>,recentBatting:Record<string,BattingLine>=Object.create(null) as Record<string,BattingLine>;
  for(const school of state.world.schools){
   const available=school.roster.filter(k=>state.world.players[k]!.kind==='PITCHER' && !Object.hasOwn(state.health.injuries,k)).sort();
   const rotation=available.filter(k=>state.world.players[k]!.position==='SP'),pool=rotation.length?rotation:available;
   if(pool.length===0)throw new RangeError('NO_HEALTHY_SCHOOL_PITCHER');starters[school.id]=pool[((total.teams[school.id]?.games??0)+(postseason?.teams[school.id]?.games??0))%pool.length]!;
-  const games=Object.values(state.records.games).filter(g=>g.scope.seasonKey===state.world.seasonKey && g.scope.leagueKey===(state.world.leagueKey??'HS') && g.scope.phase==='REGULAR' && Object.hasOwn(g.teams,school.id)).sort((a,b)=>a.worldDay-b.worldDay);
+  const games=gamesBySchool.get(school.id)!.sort((a,b)=>a.worldDay-b.worldDay);
   const review=Math.floor(games.length/20)*20,reviewGames=new Set(games.slice(Math.max(0,review-20),review).map(g=>g.gameKey));
-  const reviewed=recordTotals({...state.records,games:Object.fromEntries(Object.entries(state.records.games).filter(([key])=>reviewGames.has(key)))},{leagueKey:state.world.leagueKey??'HS',phase:'REGULAR',seasonKey:state.world.seasonKey});
-  for(const key of school.roster)if(Object.hasOwn(reviewed.batting,key))recentBatting[key]=reviewed.batting[key]!;
+  if(reviewGames.size){
+   const reviewed=recordTotals({...state.records,games:Object.fromEntries(regularGames.filter(([key])=>reviewGames.has(key)))},scope);
+   for(const key of school.roster)if(Object.hasOwn(reviewed.batting,key))recentBatting[key]=reviewed.batting[key]!;
+  }
  }
  return {difficulty:state.difficulty,unavailableKeys:Object.keys(state.health.injuries),starters,recentBatting,recentPitchingOuts:Object.fromEntries([...new Set([...Object.keys(total.pitching),...Object.keys(postseason?.pitching??{})])].map(key=>[key,(total.pitching[key]?.outs??0)+(postseason?.pitching[key]?.outs??0)])),traits:state.traits?.owned??{},approaches:state.repertoireEvents?{[state.repertoireEvents.playerKey]:state.repertoireEvents.approach}:{}};
 }
