@@ -1,0 +1,8 @@
+2026-11-24 KST. Experimental Android build based on 6b67d78.
+Capacitor isolated debug APK: Gradle :app:assembleDebug passed with JDK 21.
+Test application ID kr.againplayball.app.seasonqa; production APK left installed.
+Local QA API and web server were stopped and device port reverse removed before the offline proof.
+Started a new career in the embedded WebView, advanced the real high-school engine, waited for IndexedDB commit, force-stopped and relaunched the QA package.
+All fetched resources were from embedded https://localhost. The new process restored the same record count and career revision.
+{"device":"SM-S948N","isolatedApk":true,"backendAvailable":false,"accountUsed":false,"engine":"high school","initialGames":0,"committedGames":2,"restoredGames":2,"restoredRevision":4,"newAndroidProcess":true,"resourcesLocal":true}
+Offline proof exit: 0. The main app UI and cloud synchronization were outside this proof.

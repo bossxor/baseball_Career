@@ -4,6 +4,8 @@
 
 ## 아키텍처 결정
 
+2026-11-24 사용자 결정. Android는 로그인 없이 시작하고 계정은 기기 간 연동을 선택할 때 사용한다. 아래 Neon·서버 권위·오프라인 읽기 제한은 계정 세이브 경로에 적용한다. 기기 저장 경로는 동일한 게임 엔진과 버전 규칙을 재사용하며, 확정된 진행을 기기에서 보관한다. [구현 인계](../implementation/ANDROID-LOCAL-PLAY.md)
+
 TypeScript 단일 저장소, React/Vite 공통 웹UI, Capacitor Android, Hono Node API, pg pool + Drizzle, Neon PostgreSQL, private 객체 버킷. 이 선택은 설계 기본안이며 실제 의존성 설치/앱 생성은 하지 않는다. API 호스트를 결정한 뒤 런타임/드라이버를 최종 점검한다. Node 장기실행 런타임이면 pool 재사용, edge로 바뀌면 Neon 공식 가이드로 재선정한다.
 
 게임 엔진은 순수함수 applyCommand(state,command,rng,rules) → nextState/events/result. 입력시간·실행기기·Math.random·네트워크가 엔진 결과에 개입하지 않는다. ID는 커밋된 명령과 seed에서 결정론적으로 파생하거나 서버 생성 ID를 명령입력에 고정한다. 정렬 tie-break는 안정 ID, 시간대는 게임 날짜/UTC 저장/Asia-Seoul UI로 구분한다.
