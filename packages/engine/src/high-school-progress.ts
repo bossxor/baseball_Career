@@ -76,8 +76,9 @@ export function advanceCollegeCareerRun(source:HighSchoolCareer,expectedRevision
  for(let i=0;i<20_000;i++){
   if(result.career.phaseContext.phase!=='SEASON_PROGRESS'||!shouldContinue())break;
   if(result.stopReason==='CHUNK_LIMIT')result=step(result.career,result.career.revision,undefined,true);
-  else if(span==='MONTH'&&result.stopReason==='ONE_WEEK'&&weeks<4){result=step(result.career,result.career.revision,'ONE_WEEK',true);if(result.stopReason==='ONE_WEEK')weeks++;}
+  else if(span==='MONTH'&&result.stopReason==='ONE_WEEK'&&weeks<4)result=step(result.career,result.career.revision,'ONE_WEEK',true);
   else break;
+  if(result.stopReason==='ONE_WEEK')weeks++;
   plateAppearances+=result.plateAppearances;completedInnings+=result.completedInnings;
  }
  return {...result,plateAppearances,completedInnings,monthDone:weeks>=4};

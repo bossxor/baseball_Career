@@ -52,3 +52,24 @@ test('college owned span preserves registration, stale revision, pending plan an
  assert.throws(()=>advanceCollegeCareerRun(first,first.revision,'MONTH',()=>{throw new Error('REQUEST_ABORTED');}),/REQUEST_ABORTED/);
  assert.equal(canonicalSha256(first),before);
 });
+
+test('college MONTH counts four completed weekly plans when a week spans several chunks',()=>{
+ const enrolled=enrolledCollegeCareer(),initial=confirmCollegePreseason(enrolled,enrolled.revision);
+ let c=initial;
+ const chunkCounts:number[]=[];
+ for(let week=0;week<4;week++){
+  let result=advanceCollegeCareer(c,c.revision,'ONE_WEEK'),chunks=1;
+  while(result.stopReason==='CHUNK_LIMIT'){
+   result=advanceCollegeCareer(result.career,result.career.revision);chunks++;
+  }
+  assert.equal(result.stopReason,'ONE_WEEK');chunkCounts.push(chunks);c=result.career;
+ }
+ assert.ok(chunkCounts.some(chunks=>chunks>1),JSON.stringify(chunkCounts));
+ const run=advanceCollegeCareerRun(initial,initial.revision,'MONTH',()=>true);
+ assert.equal(run.monthDone,true);assert.equal(run.stopReason,'ONE_WEEK');
+ assert.equal(canonicalSha256(run.career),canonicalSha256(c));
+ assert.equal(run.career.revision-initial.revision,chunkCounts.reduce((sum,chunks)=>sum+chunks,0));
+ assert.equal(run.career.phaseContext.phase,'SEASON_PROGRESS');
+ if(run.career.phaseContext.phase!=='SEASON_PROGRESS'||initial.phaseContext.phase!=='SEASON_PROGRESS')throw new Error('TEST_PHASE');
+ assert.equal(run.career.phaseContext.nextWorldDay,initial.phaseContext.nextWorldDay+28);
+});
