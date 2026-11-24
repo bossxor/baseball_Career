@@ -2,6 +2,7 @@ import { applyEngineCommand, type CommandBody, type SaveState } from '../../api/
 import { gameCareerView, gameScreenView } from '../../api/src/game-view-projections.js';
 import { createEmptyGameState } from '../../api/src/ui-shell.js';
 import { encodeStateParts, StateDecoder } from '../../../packages/db/src/state-codec.js';
+import { readDeviceSaveCopy } from './device-save-copy.js';
 
 const tables = ['saves', 'states', 'receipts'];
 type Save = { id: string; mode: 'CAREER' | 'CLUB'; revision: string; phase: string; summary: Record<string, unknown>; updatedAt: string; partCount: number };
@@ -58,7 +59,29 @@ async function readState(store: IDBObjectStore, save: Save): Promise<SaveState> 
   return decoder.finish() as SaveState;
 }
 
+async function copyAccountSave(raw: string | undefined): Promise<Reply> {
+  const { baseUrl, token, saveId } = JSON.parse(raw ?? '{}') as Record<string, unknown>;
+  if (typeof baseUrl !== 'string' || typeof token !== 'string' || !token || typeof saveId !== 'string' || !saveId) {
+    return fail(400, 'INVALID_REQUEST');
+  }
+  const response = await fetch(`${baseUrl.replace(/\/$/, '')}/api/saves/${encodeURIComponent(saveId)}/device-copy`, {
+    headers: { Authorization: `Bearer ${token}` }, cache: 'no-store',
+  });
+  if (!response.ok || !response.body) return fail(502, 'DEVICE_COPY_FAILED');
+  const { meta, state } = await readDeviceSaveCopy(response.body, saveId);
+  const id = `local-account-${meta.id}:${meta.revision}`;
+  return transaction('readwrite', async tx => {
+    const saves = tx.objectStore('saves');
+    if (await request(saves.get(id))) return [200, { saveId: id }];
+    const partCount = await writeState(tx.objectStore('states'), id, state, 0);
+    const { mode, revision, phase, summary } = meta;
+    saves.add({ id, mode, revision, phase, summary, partCount, updatedAt: new Date().toISOString() } satisfies Save, id);
+    return [200, { saveId: id }];
+  });
+}
+
 async function handle(path: string, method: string, raw: string | undefined): Promise<Reply> {
+  if (path === '/device-copy' && method === 'POST') return copyAccountSave(raw);
   const url = new URL(path, 'https://local.invalid');
   if (url.pathname === '/api/saves' && method === 'GET') {
     return transaction('readonly', async tx => {

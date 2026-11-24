@@ -59,8 +59,9 @@ function useIntentIds() {
 }
 
 /** Hash-routed shell over `PlayballApi`. Failed calls map to error/conflict; conflict offers reload. */
-export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel }: {
+export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel, onCopySave }: {
   api?: PlayballApi; logo?: string; onStorageSwitch?: () => void; storageSwitchLabel?: string;
+  onCopySave?: (id: string) => Promise<void>;
 }) {
   const api = useMemo(() => injected ?? createFixtureApi(), [injected]);
   const [route, setRoute] = useState<Route>(() => parseRoute(location.hash));
@@ -74,6 +75,7 @@ export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel }
 
   const [state, setState] = useState<ScreenState>('loading');
   const [home, setHome] = useState<HomeData | null>(null), [showSaves, setShowSaves] = useState(false);
+  const [copyNotice, setCopyNotice] = useState('');
   const [career, setCareer] = useState<CareerView | null>(null), [mode, setMode] = useState<ProgressMode>('NEXT_MAJOR_EVENT');
   const [decision, setDecision] = useState<DecisionView | null>(null), [selected, setSelected] = useState<string | null>(null);
   const [clubView, setClubView] = useState<ClubScreen | null>(null), [flowView, setFlowView] = useState<FlowView | null>(null);
@@ -229,5 +231,12 @@ export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel }
     onResume={openSave} onSelect={openSave}
     onNew={m => { if (m === 'CAREER') { setDraft(emptyDraft()); setStep('NAME'); setErrors({}); go('#/create'); } else go('#/club/new'); }}
     {...(home?.resume ? { onSettings: () => openPlay(home.resume!.saveId, 'S21') } : {})}
+    {...(onCopySave ? { copyNotice, onCopySave: (id: string) => {
+      setCopyNotice('기기로 복사 중');
+      void run(async () => {
+        try { await onCopySave(id); setCopyNotice('이 기기 게임에서 복사한 저장을 열 수 있습니다.'); }
+        catch (error) { setCopyNotice('저장을 복사하지 못했습니다. 연결을 확인하고 다시 시도하세요.'); throw error; }
+      });
+    } } : {})}
     {...(onStorageSwitch && storageSwitchLabel ? { onStorageSwitch, storageSwitchLabel } : {})} />;
 }

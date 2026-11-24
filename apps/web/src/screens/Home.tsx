@@ -8,10 +8,11 @@ export interface HomeProps {
   onResume?: (saveId: string) => void; onSelect?: (saveId: string) => void; onToggleSaves?: () => void;
   onNew?: (mode: 'CAREER' | 'CLUB') => void; onSettings?: () => void; onReload?: () => void;
   onStorageSwitch?: () => void; storageSwitchLabel?: string;
+  onCopySave?: (saveId: string) => void; copyNotice?: string;
 }
 /** S01 홈. The resume button keeps its label while loading (disabled + aria-busy); interruption/recovery status is never shown.
  * A mode button appears only when its handler exists, so unbuilt modes (구단, 설정) are not dead buttons. */
-export function Home({ data, state = 'ready', showSaves = false, logo, onResume, onSelect, onToggleSaves, onNew, onSettings, onReload, onStorageSwitch, storageSwitchLabel }: HomeProps) {
+export function Home({ data, state = 'ready', showSaves = false, logo, onResume, onSelect, onToggleSaves, onNew, onSettings, onReload, onStorageSwitch, storageSwitchLabel, onCopySave, copyNotice }: HomeProps) {
   const busy = isBusy(state), empty = !data || data.saves.length === 0, resume = data?.resume ?? null;
   return (
     <ScreenFrame id="S01" state={state} {...(onReload ? { onReload } : {})}>
@@ -22,6 +23,7 @@ export function Home({ data, state = 'ready', showSaves = false, logo, onResume,
         <section aria-label="이어하기">
           {resume ? <Button primary busy={busy} onClick={() => onResume?.(resume.saveId)}>이어하기</Button> : null}
           {resume ? <p className="muted">{data!.saves.find(s => s.saveId === resume.saveId)?.title} · {resume.label}</p> : null}
+          {resume && data!.saves.length === 1 && onCopySave ? <Button busy={busy} onClick={() => onCopySave(resume.saveId)}>이 기기로 복사</Button> : null}
           {data!.saves.length > 1 ? <Button onClick={onToggleSaves}>다른 게임 선택</Button> : null}
           {showSaves ? (
             <ul className="save-list" aria-label="저장된 게임">
@@ -30,6 +32,7 @@ export function Home({ data, state = 'ready', showSaves = false, logo, onResume,
                   <button type="button" className="save-card" disabled={busy} onClick={() => onSelect?.(s.saveId)}>
                     <strong>{s.title}</strong><span>{s.mode === 'CAREER' ? '커리어' : '구단'} · {s.seasonLabel} · {s.phaseLabel}</span><span className="muted">{s.savedAtLabel}</span>
                   </button>
+                  {onCopySave ? <Button busy={busy} onClick={() => onCopySave(s.saveId)}>이 기기로 복사</Button> : null}
                 </li>
               ))}
             </ul>
@@ -37,11 +40,12 @@ export function Home({ data, state = 'ready', showSaves = false, logo, onResume,
         </section>
       )}
       <nav aria-label="모드" className="mode-nav">
-        {onNew ? <Button primary={empty} onClick={() => onNew('CAREER')}>새 커리어</Button> : null}
-        {onNew ? <Button onClick={() => onNew('CLUB')}>새 구단</Button> : null}
-        {onSettings ? <Button onClick={onSettings}>설정</Button> : null}
-        {onStorageSwitch ? <Button onClick={onStorageSwitch}>{storageSwitchLabel}</Button> : null}
+        {onNew ? <Button primary={empty} busy={busy} onClick={() => onNew('CAREER')}>새 커리어</Button> : null}
+        {onNew ? <Button busy={busy} onClick={() => onNew('CLUB')}>새 구단</Button> : null}
+        {onSettings ? <Button busy={busy} onClick={onSettings}>설정</Button> : null}
+        {onStorageSwitch ? <Button busy={busy} onClick={onStorageSwitch}>{storageSwitchLabel}</Button> : null}
       </nav>
+      {copyNotice ? <p role="status">{copyNotice}</p> : null}
       {data && data.archiveCount > 0 ? <p className="muted">보관한 선수 {data.archiveCount}명</p> : null}
     </ScreenFrame>
   );

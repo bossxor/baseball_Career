@@ -11,6 +11,7 @@ import { getSaveSummary, listSaves } from './saves.js';
 import { downloadFile, getFileMeta, listBackups, postBackup, postChronicleExport } from './private-files.js';
 import { postRestore, previewRestore } from './restores.js';
 import { getSeasonJob, postSeasonJob } from './season-job-routes.js';
+import { getDeviceSaveCopy } from './device-save-copy.js';
 
 /** Public ops surface — no secrets / connection strings. */
 export const APP_VERSION = '0.1.0';
@@ -106,6 +107,7 @@ export function createApp(options: CreateAppOptions = {}) {
   protectedRoutes.post('/game-creations', postGameCreation);
   protectedRoutes.get('/saves', listSaves);
   protectedRoutes.get('/saves/:id/career', getCareer);
+  protectedRoutes.get('/saves/:id/device-copy', getDeviceSaveCopy);
   protectedRoutes.get('/saves/:id/screens/:screenId', getScreen);
   protectedRoutes.get('/saves/:id', getSaveSummary);
   protectedRoutes.post('/saves/:id/commands', postCommand);

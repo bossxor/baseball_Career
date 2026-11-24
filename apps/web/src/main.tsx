@@ -59,7 +59,8 @@ function Root() {
   }
 
   return <App key="cloud" logo={logo} {...(api ? { api } : {})}
-    {...(localApi ? { onStorageSwitch: () => switchStorage(false), storageSwitchLabel: '이 기기 게임' } : {})} />;
+    {...(localApi ? { onStorageSwitch: () => switchStorage(false), storageSwitchLabel: '이 기기 게임' } : {})}
+    {...(localApi && apiBase && token ? { onCopySave: (saveId: string) => localApi.copyFromAccount(apiBase, token, saveId) } : {})} />;
 }
 
 createRoot(root).render(<StrictMode><Root /></StrictMode>);

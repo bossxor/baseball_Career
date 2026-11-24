@@ -1,0 +1,6 @@
+2026-11-24, KST. Account-to-device copy test.
+DB/API and Web builds succeeded. Changed-file ESLint: exit 0.
+Focused tests: 10 passed, 0 failed, 0 skipped. Owner-only access, committed source, fragmented Unicode stream, missing completion footer, source ID mismatch.
+Chromium and isolated SM-S948N debug APK used actual account and local home screens with a loopback test account. The installed regular APK and production DB were outside the test.
+{"browser":"Chrome Android storage branch","accountRevision":"5","accountGames":0,"deviceGames":1,"repeatKeptSameSlot":true,"repeatPreservedDeviceProgress":true,"accountUnchanged":true}
+{"browser":"Android SM-S948N","accountRevision":"5","accountGames":0,"deviceGames":1,"repeatKeptSameSlot":true,"repeatPreservedDeviceProgress":true,"accountUnchanged":true}
