@@ -19,40 +19,53 @@ export function Career({ view, state = 'ready', mode, onMode, onAction, onBack, 
     return <ScreenFrame id="S03" state={state} {...frame}><Empty>{stateText('S03', 'empty')}</Empty></ScreenFrame>;
   }
   const current = mode ?? view.progress.mode, modes: readonly ProgressMode[] = [view.progress.mode, ...view.progress.alternatives];
+  const { protagonist, stage } = view;
+  const primaryId = view.nextActions.find(action => action.primary && !action.disabledReason)?.id;
   return (
     <ScreenFrame id="S03" state={state} {...frame}>
-      <section className="panel player-sticky" aria-label="선수">
-        <div className="player">
-          <Illustration name={/투수/.test(view.protagonist.kindLabel) ? 'pitcher' : 'hitter'} />
-          <div><h2>{view.protagonist.name}</h2>
-            <p>{view.protagonist.kindLabel} · {view.protagonist.positionLabel} · {view.protagonist.ageLabel}</p></div>
-          <Illustration name={stageEmblem(view.stage.leagueLabel)} />
-        </div>
-        <p className="muted">{view.stage.leagueLabel} · {view.stage.teamName} · {view.stage.seasonLabel} · {view.stage.phaseLabel}</p>
-      </section>
-      {view.pendingEventTitle ? <p className="notice-card" role="status">처리할 사건이 있습니다: {view.pendingEventTitle}</p> : null}
-      <section className="panel" aria-label="진행 방식">
-        <fieldset><legend>진행 단위</legend>
-          {modes.map(m => (
-            <label key={m} className={current === m ? 'choice on' : 'choice'}>
-              <input type="radio" name="progress-mode" value={m} checked={current === m} disabled={busy || !!view.pendingEventTitle} onChange={() => onMode?.(m)} />
-              <span>{PROGRESS_LABELS[m]}</span>
-            </label>
-          ))}
-        </fieldset>
-      </section>
-      <section className="panel" aria-label="최근 기록">
-        {view.recentRecords.length === 0 ? <Empty>{stateText('S03', 'empty')}</Empty> : (
-          <dl className="records">{view.recentRecords.map(r => <div key={r.label}><dt>{r.label}</dt><dd>{r.value}</dd></div>)}</dl>
-        )}
-      </section>
-      <div className="actions" role="group" aria-label="다음 행동">
-        {view.nextActions.map(a => (
-          <div key={a.id}>
-            <Button primary={a.primary} busy={busy} disabled={!!a.disabledReason} describedBy={a.disabledReason ? `why-${a.id}` : undefined} onClick={() => onAction?.(a.id, current)}>{a.label}</Button>
-            {a.disabledReason ? <p id={`why-${a.id}`} className="muted">{a.disabledReason}</p> : null}
+      <div className="play-area career-play-area">
+        <section className="career-scoreboard" aria-label="선수">
+          <div className="career-player">
+            <Illustration name={/투수/.test(protagonist.kindLabel) ? 'pitcher' : 'hitter'} />
+            <div>
+              <h2>{protagonist.name}</h2>
+              <p>{[protagonist.kindLabel, protagonist.positionLabel, protagonist.ageLabel].filter(Boolean).join(' · ')}</p>
+            </div>
+            <Illustration name={stageEmblem(stage.leagueLabel)} className="career-emblem" />
           </div>
-        ))}
+          <dl className="career-season">
+            <div><dt>소속</dt><dd>{[stage.leagueLabel, stage.teamName].filter(Boolean).join(' · ')}</dd></div>
+            <div><dt>시즌</dt><dd>{stage.seasonLabel}</dd></div>
+            <div><dt>일정</dt><dd>{stage.phaseLabel}</dd></div>
+          </dl>
+        </section>
+        {view.pendingEventTitle ? <p className="career-notice" role="status">처리할 사건이 있습니다: {view.pendingEventTitle}</p> : null}
+        <section className="play-area-panel career-controls" aria-label="다음 행동">
+          <fieldset className="career-modes"><legend>진행 단위</legend>
+            <div className="career-mode-options">
+              {modes.map(m => (
+                <label key={m} className={current === m ? 'choice on' : 'choice'}>
+                  <input type="radio" name="progress-mode" value={m} checked={current === m} disabled={busy || !!view.pendingEventTitle} onChange={() => onMode?.(m)} />
+                  <span>{PROGRESS_LABELS[m]}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          <div className="career-action-list">
+            {view.nextActions.map(a => (
+              <div key={a.id} className={a.id === primaryId ? 'career-primary-action' : undefined}>
+                <Button primary={a.id === primaryId} busy={busy} disabled={!!a.disabledReason} describedBy={a.disabledReason ? `why-${a.id}` : undefined} onClick={() => onAction?.(a.id, current)}>{a.label}</Button>
+                {a.disabledReason ? <p id={`why-${a.id}`} className="muted">{a.disabledReason}</p> : null}
+              </div>
+            ))}
+          </div>
+        </section>
+        <section className="play-area-panel career-records" aria-labelledby="career-records-title">
+          <h2 id="career-records-title">최근 기록</h2>
+          {view.recentRecords.length === 0 ? <p className="muted">{stateText('S03', 'empty')}</p> : (
+            <dl>{view.recentRecords.map(r => <div key={r.label}><dt>{r.label}</dt><dd>{r.value}</dd></div>)}</dl>
+          )}
+        </section>
       </div>
     </ScreenFrame>
   );

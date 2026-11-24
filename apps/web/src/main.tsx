@@ -8,6 +8,9 @@ import { createHttpApi } from './http.js';
 import { createLocalApi } from './local-api.js';
 import { Login } from './screens/Login.js';
 import './styles.css';
+import './screens/home.css';
+import './screens/create.css';
+import './screens/play-area.css';
 
 const root = document.getElementById('root');
 if (!root) throw new Error('Missing application root');
@@ -15,7 +18,8 @@ if (!root) throw new Error('Missing application root');
 const apiBase = import.meta.env.VITE_API_BASE as string | undefined;
 const authBase = import.meta.env.VITE_AUTH_BASE as string | undefined;
 const defaultDev = (import.meta.env.VITE_DEV_TOKEN as string | undefined) ?? 'dev:local-web';
-const localApi = Capacitor.getPlatform() === 'android' ? createLocalApi() : null;
+const platform = Capacitor.getPlatform();
+const localApi = platform === 'android' || platform === 'web' ? createLocalApi() : null;
 
 function Root() {
   const [cloud, setCloud] = useState(!localApi);

@@ -15,7 +15,7 @@ npm run dev
 
 웹 주소는 Vite 출력에 표시됩니다. API는 기본적으로 포트 3001과 `0.0.0.0`에 바인딩합니다. 로컬 전용이면 `HOST=127.0.0.1`을 설정하세요. 개발 프록시는 기본적으로 `http://127.0.0.1:3001`을 사용하며, API 포트를 바꾸면 `PORT`와 `API_PROXY_TARGET`을 함께 설정합니다.
 
-환경 변수 예시는 [.env.example](.env.example)을 참고하세요. API의 실제 저장 기능에는 스키마가 적용된 PostgreSQL `DATABASE_URL`과 인증 설정이 필요합니다. Neon 인증은 `NEON_AUTH_BASE_URL`을 사용하고, 로컬 테스트 전용 개발 인증은 `AUTH_MODE=dev`로 켭니다. 개발 인증을 운영 환경에서 사용하지 마세요. 웹에서 실제 API를 사용하려면 `VITE_API_BASE`를 설정합니다. 미설정 시 웹은 fixture 모드입니다. Vite 변수는 빌드 시 반영됩니다. 서버는 `.env`를 자동으로 읽지 않으므로 실행 환경에 변수를 설정하세요. 스키마 적용과 인증 상세는 [M3 저장·명령 파이프라인](docs/implementation/M3-A-SAVE-COMMAND-PIPELINE.md)과 [M3 기록](docs/implementation/M3-COMPLETE.md)을 참고하세요. 비밀값은 Git에 올리지 마세요.
+환경 변수 예시는 [.env.example](.env.example)을 참고하세요. API의 실제 저장 기능에는 스키마가 적용된 PostgreSQL `DATABASE_URL`과 인증 설정이 필요합니다. Neon 인증은 `NEON_AUTH_BASE_URL`을 사용하고, 로컬 테스트 전용 개발 인증은 `AUTH_MODE=dev`로 켭니다. 개발 인증을 운영 환경에서 사용하지 마세요. 웹에서 실제 API를 사용하려면 `VITE_API_BASE`를 설정합니다. 웹과 Android는 기본으로 기기 저장을 사용합니다. API를 설정하면 홈에서 계정 저장을 선택할 수 있습니다. Vite 변수는 빌드 시 반영됩니다. 서버는 `.env`를 자동으로 읽지 않으므로 실행 환경에 변수를 설정하세요. 스키마 적용과 인증 상세는 [M3 저장·명령 파이프라인](docs/implementation/M3-A-SAVE-COMMAND-PIPELINE.md)과 [M3 기록](docs/implementation/M3-COMPLETE.md)을 참고하세요. 비밀값은 Git에 올리지 마세요.
 
 ```sh
 npm run check   # 전체 정적 검사·테스트·빌드·검증

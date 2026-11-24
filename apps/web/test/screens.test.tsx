@@ -42,6 +42,11 @@ test('S01: empty start, resume label kept while loading, internal states never s
   assert.doesNotMatch(renderToStaticMarkup(<Home data={saves} />), /새 구단|설정/);
 });
 
+test('home can return to device saves while account saves are loading', () => {
+  const output = renderToStaticMarkup(<Home data={null} state="loading" storageSwitchLabel="이 기기 게임" onStorageSwitch={() => undefined} />);
+  assert.match(output, /<button type="button" class="ghost">이 기기 게임<\/button>/);
+});
+
 test('S02: one step at a time with its error next to the input, stepper marks the current step, preview empty text', () => {
   const draft = { ...emptyDraft(), name: '' };
   const html = renderToStaticMarkup(<Create draft={draft} step="NAME" errors={validateStep(draft, 'NAME')} />);
@@ -97,6 +102,9 @@ test('routes: unknown or incomplete addresses fall back to home; play screens pa
   assert.deepEqual(parseRoute('#/career/fixture-1'), { name: 'career', saveId: 'fixture-1' });
   assert.deepEqual(parseRoute('#/career'), { name: 'home' });
   assert.deepEqual(parseRoute('#/nope/x'), { name: 'home' });
+  for (const path of ['#/career/%', '#/flow/%', '#/play/%/S06', '#/club/%/S13']) {
+    assert.deepEqual(parseRoute(path), { name: 'home' });
+  }
   assert.deepEqual(parseRoute('#/play/fixture-1/S06'), { name: 'play', saveId: 'fixture-1', screenId: 'S06' });
   assert.deepEqual(parseRoute('#/play/fixture-1/S21'), { name: 'play', saveId: 'fixture-1', screenId: 'S21' });
   assert.deepEqual(parseRoute('#/play/fixture-1/S45'), { name: 'play', saveId: 'fixture-1', screenId: 'S45' });

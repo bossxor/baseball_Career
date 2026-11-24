@@ -26,7 +26,7 @@ export function Flow({ view, state = 'ready', seasonJob, onCommand, onBack, onRe
   useEffect(() => { if (signCmd) signRef.current?.focus(); }, [signCmd]);
   useEffect(() => { if (asking && !pending) setAsking(null); if (signing && !signCmd) setSigning(null); }, [asking, pending, signing, signCmd]);
   return (
-    <main className="screen" aria-labelledby="flow-title" aria-busy={busy && !seasonJob} data-screen="FLOW" data-state={state}>
+    <main className="screen game-flow" aria-labelledby="flow-title" aria-busy={busy && !seasonJob} data-screen="FLOW" data-state={state}>
       <header className="topbar">{onBack ? <button type="button" className="ghost" onClick={onBack}>{seasonJob ? '홈으로' : '커리어로'}</button> : <span />}</header>
       <Illustration name={flowScene(view?.title ?? '')} />
       <h1 id="flow-title" className="screen-title">{seasonJob ? '시즌 진행 중' : view?.title ?? '진행'}</h1>
@@ -34,7 +34,7 @@ export function Flow({ view, state = 'ready', seasonJob, onCommand, onBack, onRe
       {state === 'conflict' && onReload ? <Button primary onClick={onReload}>최신 저장 불러오기</Button> : null}
       {state === 'error' && !view && onReload ? <Button primary onClick={onReload}>다시 불러오기</Button> : null}
       {seasonJob ? (
-        <section className="panel" aria-label="시즌 진행 상황">
+        <section className="panel season-scoreboard" aria-label="시즌 진행 상황">
           {seasonJob.progress.seasonKey ? <p>{seasonJob.progress.seasonKey} 시즌</p> : null}
           {seasonJob.progress.month !== undefined ? <p>{seasonJob.progress.month}월</p> : null}
           <p id="season-game-count">{seasonJob.progress.completedGames} / {seasonJob.progress.scheduledGames} 경기</p>

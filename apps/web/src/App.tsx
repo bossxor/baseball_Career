@@ -28,6 +28,15 @@ type Route =
   | { name: 'club'; saveId: string; screenId: ClubScreenId };
 
 export function parseRoute(hash: string): Route {
+  try {
+    return parseKnownRoute(hash);
+  } catch (error) {
+    if (error instanceof URIError) return { name: 'home' };
+    throw error;
+  }
+}
+
+function parseKnownRoute(hash: string): Route {
   if (hash === '#/device-backups') return { name: 'device-backups' };
   const club = /^#\/club\/([^/]+)(?:\/(S1[3-9]))?$/.exec(hash);
   if (club) {
@@ -72,7 +81,12 @@ export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel, 
   const [tick, setTick] = useState(0);
   const flowRun = useRef<symbol | null>(null);
   useEffect(() => {
-    const on = () => { flowRun.current = null; setRoute(parseRoute(location.hash)); };
+    const on = () => {
+      flowRun.current = null;
+      setState('loading');
+      setRoute(parseRoute(location.hash));
+      window.scrollTo(0, 0);
+    };
     addEventListener('hashchange', on);
     return () => { flowRun.current = null; removeEventListener('hashchange', on); };
   }, [api]);

@@ -1,0 +1,15 @@
+2026-11-25 KST Android and PC local-play redesign verification
+Android baseline: installed old APK opened a login screen without a device-play return.
+Android SM-S948N, isolated standalone debug package:
+  bundled origin https://localhost, no test web server or adb reverse
+  home art loaded, no login required, real career created
+  official team games 1 before process stop and 1 after relaunch
+  KIA club created, separate career and club slots present
+Chromium Android viewport probe: 320/360/390/430 CSS pixels, no horizontal overflow.
+Chromium desktop without native bridge: 768/1024/1280/1440 CSS pixels, home art loaded.
+  Real career and 1 official game retained after a full browser restart.
+  Malformed saved routes recovered to home after navigation and after a cold load.
+  Connection-refused account API allowed local return.
+  With an account request still pending, local return stayed operable.
+Focused web tests: 24 passed, 0 failed.
+Scope: gameplay and layout smoke, no managed production auth or long M2 path certification.

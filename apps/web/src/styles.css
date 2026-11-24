@@ -1,25 +1,25 @@
 @font-face{font-family:Pretendard;src:url('../../../docs/design/assets/fonts/PretendardVariable.woff2') format('woff2-variations');font-weight:45 920;font-display:swap}
-:root{--green:#185548;--green-2:#0f4036;--green-soft:#e3f0ec;--ink:#1b2430;--muted:#5a6573;--bg:#f4f6f9;--card:#fff;--line:#e3e8ef;--danger:#b42318;--danger-soft:#fdecea;--warn-bg:#fff6e5;--warn-line:#e8c27a;--focus:#0b5fff;--shadow:0 1px 2px rgba(20,40,60,.05),0 6px 18px rgba(20,40,60,.07);--r:16px;
-  font-family:Pretendard,'Malgun Gothic','Apple SD Gothic Neo',sans-serif;color:var(--ink);background:var(--bg);font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.6;letter-spacing:-.01em;word-break:keep-all;overflow-wrap:break-word}
+:root{--blue:#194a86;--navy:#152840;--gold:#dcb67c;--green:var(--blue);--green-2:var(--navy);--green-soft:#e9eff7;--ink:#182433;--muted:#536276;--bg:#f5f7fa;--card:#fff;--line:#d7e0eb;--danger:#b42318;--danger-soft:#fdecea;--warn-bg:#fff6e5;--warn-line:#e8c27a;--focus:#0b5fff;--shadow:0 1px 2px rgb(24 36 51 / 6%);--r:12px;
+  font-family:Pretendard,'Malgun Gothic','Apple SD Gothic Neo',sans-serif;color:var(--ink);background:var(--bg);font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;font-size:16px;line-height:1.55;letter-spacing:normal;word-break:keep-all;overflow-wrap:break-word}
 *{box-sizing:border-box}
-body{margin:0;min-width:320px;background:var(--bg)}
+body{margin:0;background:var(--bg)}
 button,input{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
 
 .screen{max-width:1200px;margin:auto;min-height:100svh;padding:max(12px,env(safe-area-inset-top)) max(20px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(20px,env(safe-area-inset-left));scroll-padding-bottom:96px;display:grid;gap:16px;align-content:start}
 .topbar{display:flex;align-items:center;justify-content:space-between;min-height:44px}
 .save-state{color:var(--muted);font-size:.85rem}
-.screen-title{font-weight:800;font-size:clamp(1.75rem,6vw,2.4rem);line-height:1.25;margin:4px 0 0;letter-spacing:-.03em}
+.screen-title{font-weight:700;font-size:clamp(1.75rem,6vw,2.4rem);line-height:1.25;margin:4px 0 0;letter-spacing:-.03em}
 .lead{display:flex;align-items:center;gap:12px;margin:0;font-weight:600;color:var(--green)}
 .lead img{border-radius:12px}
-.panel{background:var(--card);border-radius:var(--r);padding:20px;display:grid;gap:12px;box-shadow:var(--shadow)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;gap:12px}
 .panel h2{margin:0;font-size:1.15rem;font-weight:700}
 .panel p{margin:0}
 .muted{color:var(--muted);font-size:.9rem;margin:0}
 .empty{color:var(--muted);margin:0;padding:8px 0}
 
 .btn,.ghost,.save-card{min-height:48px;min-width:44px;border-radius:14px;border:1px solid var(--line);background:var(--card);cursor:pointer;padding:0 20px;font-weight:600;transition:background-color .18s ease,border-color .18s ease,transform .12s ease,box-shadow .18s ease}
-.btn{box-shadow:var(--shadow)}
+.btn{border-radius:8px}
 .btn:hover:not(:disabled),.ghost:hover,.save-card:hover:not(:disabled){background:var(--green-soft);border-color:var(--green)}
 .btn:active:not(:disabled),.save-card:active:not(:disabled){transform:scale(.98)}
 .btn.primary{background:var(--green);border-color:var(--green);color:#fff;font-weight:700}
@@ -124,3 +124,28 @@ legend{float:left;width:100%;font-weight:700;padding:0 0 4px}
 
 .sign-card{margin:0;padding:20px;border-radius:var(--r);background:var(--card);box-shadow:var(--shadow);border:1px solid var(--green);display:grid;gap:12px}
 .sign-pad{width:100%;height:auto;aspect-ratio:600/160;border:1px dashed var(--muted);border-radius:12px;background:var(--bg);touch-action:none}
+
+/* Live count reads as a scoreboard and stays legible as the season advances. */
+.screen.game-flow > .season-scoreboard {
+  grid-column: 1 / -1;
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
+  padding: clamp(20px, 4vw, 36px);
+}
+.season-scoreboard p { color: #dce8f7; }
+.season-scoreboard #season-game-count {
+  color: white;
+  font-size: clamp(1.75rem, 7vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.season-scoreboard progress { width: 100%; height: 12px; accent-color: var(--gold); }
+.screen.account-login {
+  max-width: 640px;
+  grid-template-columns: minmax(0, 1fr);
+}
+.account-login .login-art { height: clamp(128px, 30vw, 208px); }
+.account-login .login-art::after { background-position: 72% 40%; }
+.account-login form { gap: 16px; }

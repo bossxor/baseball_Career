@@ -16,7 +16,7 @@ export interface CreateProps {
 }
 const hand = (v: 'R' | 'L') => (v === 'R' ? '우' : '좌');
 
-function Radio<T extends string>({ name, value, current, label, onPick, describedBy }: { name: string; value: T; current: T | null; label: string; onPick?: (v: T) => void; describedBy?: string }) {
+function Radio<T extends string>({ name, value, current, label, onPick, describedBy }: { name: string; value: T; current: T | null; label: string; onPick?: (v: T) => void; describedBy?: string | undefined }) {
   return (
     <label className={current === value ? 'choice on' : 'choice'}>
       <input type="radio" name={name} value={value} checked={current === value} onChange={() => onPick?.(value)} aria-describedby={describedBy} />
@@ -38,7 +38,7 @@ export function Create({ draft, step, state = 'ready', errors, onDraft, onStep, 
       <ol className="stepper" aria-label="생성 단계">
         {CREATION_STEPS.map((s, i) => <li key={s} aria-current={s === step ? 'step' : undefined} className={i < index ? 'done' : s === step ? 'now' : ''}>{STEP_LABELS[s]}</li>)}
       </ol>
-      <form className="panel" onSubmit={e => {
+      <form className="panel create-form" onSubmit={e => {
         e.preventDefault();
         if (composing) return; // Hangul IME: do not advance mid-composition
         if (step === 'CONFIRM') onSubmit?.(); else next();
@@ -58,13 +58,13 @@ export function Create({ draft, step, state = 'ready', errors, onDraft, onStep, 
         ) : null}
         {step === 'KIND' ? (
           <fieldset><legend>타자 또는 투수</legend>
-            <Radio name="kind" value="HITTER" current={kind} label="타자" onPick={() => onDraft?.(setKind(draft, 'HITTER'))} />
-            <Radio name="kind" value="PITCHER" current={kind} label="투수" onPick={() => onDraft?.(setKind(draft, 'PITCHER'))} />
+            <Radio name="kind" value="HITTER" current={kind} label="타자" onPick={() => onDraft?.(setKind(draft, 'HITTER'))} describedBy={err.kind ? 'kind-error' : undefined} />
+            <Radio name="kind" value="PITCHER" current={kind} label="투수" onPick={() => onDraft?.(setKind(draft, 'PITCHER'))} describedBy={err.kind ? 'kind-error' : undefined} />
             <FieldError id="kind-error" message={err.kind} />
           </fieldset>
         ) : null}
         {step === 'POSITION' && kind ? (
-          <fieldset><legend>{kind === 'HITTER' ? '포지션' : '보직'}</legend>
+          <fieldset className="create-position"><legend>{kind === 'HITTER' ? '포지션' : '보직'}</legend>
             {POSITIONS[kind].map(p => <Radio key={p} name="position" value={p} current={draft.position} label={POSITION_LABELS[p] ?? p} onPick={v => set({ position: v })} />)}
             <FieldError id="position-error" message={err.position} />
           </fieldset>
@@ -75,7 +75,7 @@ export function Create({ draft, step, state = 'ready', errors, onDraft, onStep, 
               {(['R', 'L'] as const).map(v => <Radio key={v} name="throws" value={v} current={draft.throws} label={`${hand(v)}투`} onPick={x => set({ throws: x })} describedBy="throws-error" />)}
               <FieldError id="throws-error" message={err.throws} />
             </fieldset>
-            <fieldset><legend>치는 쪽</legend>
+            <fieldset className="create-three"><legend>치는 쪽</legend>
               {(['R', 'L', 'S'] as const).map(v => <Radio key={v} name="bats" value={v} current={draft.bats} label={v === 'S' ? '양타' : `${hand(v)}타`} onPick={x => set({ bats: x })} />)}
               <FieldError id="bats-error" message={err.bats} />
             </fieldset>
@@ -107,7 +107,7 @@ export function Create({ draft, step, state = 'ready', errors, onDraft, onStep, 
         {step === 'SCHOOL' ? (
           <>
             <p className="muted">{SCHOOL_SEASON_YEAR}년 시즌, 고교 3학년부터 시작합니다.</p>
-            <fieldset><legend>학교</legend>
+            <fieldset className="create-school"><legend>학교</legend>
               {SCHOOLS.map(s => <Radio key={s.id} name="school" value={s.id} current={draft.schoolId} label={s.name} onPick={v => set({ schoolId: v })} describedBy="schoolId-error" />)}
               <FieldError id="schoolId-error" message={err.schoolId} />
             </fieldset>
@@ -116,7 +116,7 @@ export function Create({ draft, step, state = 'ready', errors, onDraft, onStep, 
               <FieldError id="difficulty-error" message={err.difficulty} />
             </fieldset>
             {kind === 'PITCHER' ? (
-              <fieldset><legend>보조 구종 (포심 외)</legend>
+              <fieldset className="create-options"><legend>보조 구종 (포심 외)</legend>
                 {Object.entries(SECONDARY_PITCHES).map(([id, label]) => <Radio key={id} name="secondary-pitch" value={id} current={draft.secondaryPitch} label={label} onPick={v => set({ secondaryPitch: v })} describedBy="secondaryPitch-error" />)}
                 <FieldError id="secondaryPitch-error" message={err.secondaryPitch} />
               </fieldset>
@@ -124,7 +124,7 @@ export function Create({ draft, step, state = 'ready', errors, onDraft, onStep, 
           </>
         ) : null}
         {step === 'CONFIRM' ? (
-          <section aria-label="생성 확인">
+          <section className="create-confirm" aria-label="생성 확인">
             <p>{SCHOOLS.find(s => s.id === draft.schoolId)?.name ?? ''} · {draft.difficulty ? DIFFICULTY_LABELS[draft.difficulty] : ''}{draft.secondaryPitch ? ` · ${SECONDARY_PITCHES[draft.secondaryPitch] ?? ''}` : ''}</p>
             <p>{draft.name} · {kind === 'HITTER' ? '타자' : '투수'} · {draft.position ? POSITION_LABELS[draft.position] : ''} · {draft.throws ? hand(draft.throws) : ''}투 {draft.bats ? (draft.bats === 'S' ? '양타' : `${hand(draft.bats)}타`) : ''}{draft.pitchForm ? ` · ${FORM_LABELS[draft.pitchForm]}` : ''}</p>
           </section>
@@ -135,10 +135,11 @@ export function Create({ draft, step, state = 'ready', errors, onDraft, onStep, 
             : <Button primary type="submit" busy={busy}>다음</Button>}
         </div>
       </form>
-      <section className="panel" aria-label="생성 미리보기" aria-live="polite">
+      <section className="panel create-preview" aria-labelledby="create-preview-title" aria-live="polite">
+        <h2 id="create-preview-title">생성 미리보기</h2>
         {preview ? (
           <>
-            <h2>{preview.archetypeLabel} · 종합 {preview.overall}</h2>
+            <div className="create-rating"><h3>{preview.archetypeLabel}</h3><p>종합 <strong>{preview.overall}</strong></p></div>
             <ul className="abilities">{preview.abilities.map(a => <li key={a.key}>{a.label} <strong>{a.value}</strong>{a.focus ? <span className="tag">집중</span> : null}</li>)}</ul>
           </>
         ) : <Empty>{stateText('S02', 'empty')}</Empty>}
