@@ -34,8 +34,19 @@ function seasonProgress(state: SaveState): SeasonJobProgress {
       ? Object.values(career.competitionSchedule?.leagues ?? {}).flat()
       : career.world.schedule;
   const regular = schedule.filter(game => game.seasonKey === seasonKey && !game.phase);
-  const completedGames = regular.filter(game => Object.hasOwn(career.records.games, game.simulationKey)).length;
-  return { seasonKey, phase: career.phaseContext.phase, completedGames, scheduledGames: regular.length };
+  const phase = career.phaseContext;
+  let completedGames = 0, lastPlayedDay = -1;
+  for (const game of regular) {
+    if (!Object.hasOwn(career.records.games, game.simulationKey)) continue;
+    completedGames++;
+    lastPlayedDay = Math.max(lastPlayedDay, game.worldDay);
+  }
+  const worldDay = 'nextWorldDay' in phase ? phase.nextWorldDay : lastPlayedDay;
+  const year = Number(seasonKey);
+  const date = new Date(Date.UTC(year, 0, worldDay + 1));
+  const month = worldDay >= 0 && date.getUTCFullYear() === year ? date.getUTCMonth() + 1 : undefined;
+  return { seasonKey, phase: phase.phase, completedGames, scheduledGames: regular.length,
+    ...(month === undefined ? {} : { month }) };
 }
 
 export function publicSeasonJob(job: SeasonJob) {

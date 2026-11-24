@@ -36,6 +36,7 @@ export function Flow({ view, state = 'ready', seasonJob, onCommand, onBack, onRe
       {seasonJob ? (
         <section className="panel" aria-label="시즌 진행 상황">
           {seasonJob.progress.seasonKey ? <p>{seasonJob.progress.seasonKey} 시즌</p> : null}
+          {seasonJob.progress.month !== undefined ? <p>{seasonJob.progress.month}월</p> : null}
           <p id="season-game-count">{seasonJob.progress.completedGames} / {seasonJob.progress.scheduledGames} 경기</p>
           <progress aria-labelledby="season-game-count" {...(seasonJob.progress.scheduledGames > 0
             ? { value: seasonJob.progress.completedGames, max: seasonJob.progress.scheduledGames } : {})} />

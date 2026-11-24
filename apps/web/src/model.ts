@@ -69,5 +69,5 @@ export interface SeasonJobView {
   runId: string;
   status: 'RUNNING' | 'STOPPED' | 'FAILED';
   stopReason: string | null;
-  progress: { seasonKey: string | null; phase: string | null; completedGames: number; scheduledGames: number };
+  progress: { seasonKey: string | null; phase: string | null; month?: number; completedGames: number; scheduledGames: number };
 }

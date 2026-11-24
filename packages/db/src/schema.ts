@@ -78,6 +78,7 @@ export type SeasonJobStatus = 'RUNNING' | 'STOPPED' | 'FAILED';
 export type SeasonJobProgress = {
   seasonKey: string | null;
   phase: string | null;
+  month?: number;
   completedGames: number;
   scheduledGames: number;
 };

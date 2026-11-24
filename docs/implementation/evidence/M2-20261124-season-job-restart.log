@@ -1,0 +1,28 @@
+2026-11-24, KST. Local isolated PostgreSQL 17.5.
+npm run build: exit 0
+node --import tsx --test apps/api/test/season-jobs.test.ts apps/api/test/season-job-activation.test.ts apps/web/test/flow-season.test.ts apps/web/test/http.test.ts
+
+✔ season job routes require explicit activation and retain authentication and save ownership (2019.5789ms)
+✔ season job activation follows the environment and permits a false test override (1371.3154ms)
+✔ persisted worker resumes BUDGET at a fresh revision, then stops after a competing save change (2859.4045ms)
+✔ worker persists season review and releases the run without making another decision (1081.9735ms)
+✔ a replacement worker resumes a committed run on PostgreSQL without replaying steps (3605.7099ms)
+ℹ same run ID; worker steps 1 → 2; 2 unique receipts; save revision 2
+✔ one season click sends fresh server commands while BUDGET and stops at a decision or season end (4.0622ms)
+✔ flow never auto-sends an unverified, stale, different, confirmation or month command (1.4966ms)
+✔ leaving the flow in flight drops the old screen response and stops the continuation (0.3799ms)
+✔ reopening a season observes the existing server run until its terminal state (0.72ms)
+✔ season job HTTP distinguishes disabled routes and uses the exact save revision (44.268ms)
+✔ http api maps saves list and create→seed→career against a stub fetch (3.6472ms)
+✔ http api: a 401 calls onUnauthorized once and surfaces AUTH_REQUIRED (0.9575ms)
+✔ http api: a retried command keeps the revision it was first sent with (lost response), and a conflict clears it (2.7784ms)
+✔ flow grants continuation only for the read of its own receipt revision and replays a lost refresh exactly (3.8597ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12936.7182
+Exit: 0
