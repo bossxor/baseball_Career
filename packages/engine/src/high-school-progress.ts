@@ -10,7 +10,7 @@ import {reconcileSchoolEmergency} from './high-school-emergency.js';
 import {recordTotals} from './records.js';
 import type {GameContribution} from './records.js';
 import {createWorldEvent,resolveEventChoice,completeEventDomain,eventDefinition} from './events.js';
-import {assertHighSchoolCareerRevision,assertSchoolCareerRevision} from './high-school-career.js';
+import {assertHighSchoolCareerRevision,assertCollegeCareerRevision,assertSchoolCareerRevision} from './high-school-career.js';
 import type {HighSchoolCareer,HighSchoolProgressPhase,HighSchoolAdvancePlan} from './high-school-career.js';
 import type {HighSchoolGameContext,CompetitionGameWorld} from './high-school-game.js';
 import type {BattingLine} from './types.js';
@@ -64,6 +64,23 @@ export function advanceHighSchoolCareerRun(source:HighSchoolCareer,expectedRevis
   plateAppearances+=result.plateAppearances;completedInnings+=result.completedInnings;
  }
  return {...result,plateAppearances,completedInnings};
+}
+/** College keeps its existing bounded season/month plan chain on one request-owned root. */
+export function advanceCollegeCareerRun(source:HighSchoolCareer,expectedRevision:number,span:'SEASON'|'MONTH',shouldContinue:()=>boolean):SchoolProgressResult&{monthDone:boolean} {
+ if(span!=='SEASON'&&span!=='MONTH')throw new RangeError('INVALID_ADVANCE_MODE');
+ const step=(c:HighSchoolCareer,revision:number,mode:HighSchoolAdvancePlan['mode']|undefined,owned:boolean)=>{
+  assertCollegeCareerRevision(c,revision);return advanceSchoolCareerStep(c,revision,mode,owned);
+ };
+ let result=step(source,expectedRevision,span==='SEASON'?'NEXT_MAJOR_EVENT':'ONE_WEEK',false);
+ let weeks=result.stopReason==='ONE_WEEK'?1:0,plateAppearances=result.plateAppearances,completedInnings=result.completedInnings;
+ for(let i=0;i<20_000;i++){
+  if(result.career.phaseContext.phase!=='SEASON_PROGRESS'||!shouldContinue())break;
+  if(result.stopReason==='CHUNK_LIMIT')result=step(result.career,result.career.revision,undefined,true);
+  else if(span==='MONTH'&&result.stopReason==='ONE_WEEK'&&weeks<4){result=step(result.career,result.career.revision,'ONE_WEEK',true);if(result.stopReason==='ONE_WEEK')weeks++;}
+  else break;
+  plateAppearances+=result.plateAppearances;completedInnings+=result.completedInnings;
+ }
+ return {...result,plateAppearances,completedInnings,monthDone:weeks>=4};
 }
 function advanceSchoolCareerStep(source:HighSchoolCareer,expectedRevision:number,mode:HighSchoolAdvancePlan['mode']|undefined,owned:boolean):SchoolProgressResult {
  assertSchoolCareerRevision(source,expectedRevision);

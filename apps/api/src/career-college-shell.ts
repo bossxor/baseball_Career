@@ -50,14 +50,7 @@ function collegeNationalWindow(c:engine.HighSchoolCareer){
 /** One request runs the engine's own plans back to back: SEASON = "next major event" repeated until the engine stops for a reason
  * other than its internal chunk limit (mandatory event, injury change, season review); MONTH = four weekly plans. The engine decides every stop. */
 function advanceSpan(c:engine.HighSchoolCareer,rev:number,span:'SEASON'|'MONTH'){
- const until=spanDeadline();let r=engine.advanceCollegeCareer(c,rev,span==='SEASON'?'NEXT_MAJOR_EVENT':'ONE_WEEK'),weeks=r.stopReason==='ONE_WEEK'?1:0;
- for(let i=0;i<20_000;i++){
-  if(r.career.phaseContext.phase!=='SEASON_PROGRESS'||Date.now()>=until)break;
-  if(r.stopReason==='CHUNK_LIMIT')r=engine.advanceCollegeCareer(r.career,r.career.revision);
-  else if(span==='MONTH'&&r.stopReason==='ONE_WEEK'&&weeks<4){r=engine.advanceCollegeCareer(r.career,r.career.revision,'ONE_WEEK');if(r.stopReason==='ONE_WEEK')weeks++;}
-  else break;
- }
- return {...r,monthDone:weeks>=4};
+ const until=spanDeadline();return engine.advanceCollegeCareerRun(c,rev,span,()=>Date.now()<until);
 }
 export function applyCollege(state:SaveState,command:CommandBody):AppliedCommand{
  const name=command.type.slice('CAREER_COLLEGE_'.length),allowed=fields.get(name),raw=command.payload;
