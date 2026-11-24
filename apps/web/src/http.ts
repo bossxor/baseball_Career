@@ -7,6 +7,7 @@ import type {
 export type HttpApiOptions = {
   baseUrl: string;
   getToken: () => string | Promise<string>;
+  transport?: (path: string, init: RequestInit) => Promise<Response>;
   /** Called once per 401 so the shell can drop the expired token and show the login screen. */
   onUnauthorized?: () => void;
 };
@@ -50,8 +51,9 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
   };
 
   const req = async (path: string, init: RequestInit = {}) => {
-    if (typeof navigator !== 'undefined' && navigator.onLine === false) throw new ApiError('OFFLINE');
-    const res = await fetch(`${base}${path}`, init).catch(() => { throw new ApiError('OFFLINE'); });
+    if (!opts.transport && typeof navigator !== 'undefined' && navigator.onLine === false) throw new ApiError('OFFLINE');
+    const res = opts.transport ? await opts.transport(path, init)
+      : await fetch(`${base}${path}`, init).catch(() => { throw new ApiError('OFFLINE'); });
     if (res.status === 401) { opts.onUnauthorized?.(); throw new ApiError('AUTH_REQUIRED'); }
     if (!res.ok) {
       const body = await res.json().catch(() => ({})) as { code?: string; currentRevision?: string };

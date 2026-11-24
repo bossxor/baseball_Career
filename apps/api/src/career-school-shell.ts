@@ -1,4 +1,3 @@
-import {randomUUID} from 'node:crypto';
 import * as engine from '@playball/engine';
 import {overall} from '@playball/rules';
 import type {PitchId} from '@playball/rules';
@@ -26,7 +25,7 @@ export function applySchoolCareer(state:SaveState,command:CommandBody):AppliedCo
   if(name==='CREATE'){
    if(Object.keys(state).some(k=>!['schemaVersion','stampCount','creationId','createdWith','nonce'].includes(k))||state.schemaVersion!==1||state.stampCount!==0||state.createdWith!=='M3_SHELL'||typeof state.nonce!=='string'||!state.nonce)fail('EMPTY_CAREER_SAVE_REQUIRED');
    if(!['HITTER','PITCHER'].includes(String(input.kind))||!['GROWTH','REALISTIC','SECRET_CHEAT'].includes(String(input.difficulty))||!['name','position','throws','bats','archetype','schoolId'].every(k=>typeof input[k]==='string')||!Array.isArray(input.focus)||!input.focus.every(k=>typeof k==='string')||!Number.isSafeInteger(input.seasonYear)|| (input.kind==='HITTER'?(input.pitchForm!==null||input.secondaryPitch!==undefined):typeof input.pitchForm!=='string'||typeof input.secondaryPitch!=='string'))fail('INVALID_PAYLOAD');
-   const {schoolId,seasonYear,secondaryPitch,...player}=input,worldKey=JSON.stringify(['career',state.nonce]),seed=randomUUID();
+   const {schoolId,seasonYear,secondaryPitch,...player}=input,worldKey=JSON.stringify(['career',state.nonce]),seed=crypto.randomUUID();
    const world=engine.createHighSchoolWorld({worldKey,seed,schoolId:schoolId as string,seasonYear:seasonYear as number,seasonKey:String(seasonYear),player:{...player,simulationKey:JSON.stringify(['career-player',state.nonce])} as unknown as engine.CreationInput,...(secondaryPitch===undefined?{}:{secondaryPitch:secondaryPitch as PitchId})});
    next=engine.createHighSchoolCareer(world,input.difficulty as engine.HighSchoolCareer['difficulty']);
   }else{

@@ -1,8 +1,9 @@
-import { createHash, randomUUID } from 'node:crypto';
+import { createHash } from 'node:crypto';
 import { and, count, eq, isNull } from 'drizzle-orm';
 import type { Context } from 'hono';
 import { gameSaves, profiles, writeSaveState } from '@playball/db';
 import type { AppVariables } from './auth.js';
+import { createEmptyGameState } from './ui-shell.js';
 
 /** 70: one owner keeps at most this many active saves (creation and restore share the cap). */
 export const ACTIVE_SAVE_CAP = 10;
@@ -55,7 +56,8 @@ export async function postGameCreation(c: Context<{ Variables: AppVariables }>) 
   const mode = body.mode === 'CLUB' ? 'CLUB' : body.mode === 'CAREER' ? 'CAREER' : null;
   if (!mode) return errorBody(c, 'INVALID_REQUEST', 400);
 
-  const saveId = creationSaveId(subject, body.creationId);
+  const creationId = body.creationId;
+  const saveId = creationSaveId(subject, creationId);
   const view = (row: { id: string; revision: bigint; mode: string; phase: string }) => ({
     creationId: body.creationId,
     saveId: row.id,
@@ -78,10 +80,7 @@ export async function postGameCreation(c: Context<{ Variables: AppVariables }>) 
 
   await db.insert(profiles).values({ id: subject, displayName: subject }).onConflictDoNothing();
   await db.transaction(async tx => {
-    const state = {
-      schemaVersion: 1, stampCount: 0, creationId: body.creationId,
-      createdWith: 'M3_SHELL', nonce: randomUUID(),
-    };
+    const state = createEmptyGameState(creationId);
     const [inserted] = await tx.insert(gameSaves).values({
       id: saveId,
       ownerId: subject,

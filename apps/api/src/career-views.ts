@@ -1,27 +1,8 @@
-import {kboRecruitmentScreen} from './career-kbo-entry-shell.js';
-import {schoolCareerScreen,schoolCareerHome} from './career-school-shell.js';
-import {usCareerHome} from './career-us-flow.js';
-import {careerFlowScreen,kboCareerHome,collegeCareerHome} from './career-flow-screen.js';
 import { readOwnedSave } from './save-state.js';
 import type { Context } from 'hono';
 import type { AppVariables } from './auth.js';
-import { CLUB_SCREEN_IDS } from '@playball/engine';
-import { clubScreenOf } from './club-shell.js';
-import { RETRY_SCREEN_IDS, retryScreenOf } from './career-retry-shell.js';
-import { CAREER_CHOICE_SCREEN_IDS, careerChoiceScreen } from './career-choice-shell.js';
-import { US_RETURN_SCREEN_IDS, usReturnScreen } from './career-us-return-shell.js';
-import { US_MILITARY_SCREEN_IDS, usMilitaryScreen } from './career-us-military-shell.js';
-import { usPlayScreen } from './career-us-play-shell.js';
-import { proEventsScreen } from './career-pro-events-shell.js';
-import { careerSupportScreen, careerHonorsScreen } from './career-support-shell.js';
-import { relationScreen } from './career-relations-shell.js';
-import { proRetirementScreen } from './career-pro-retirement-shell.js';
-import { careerView, decisionView, type UiShellState } from './ui-shell.js';
-import { careerSeasonReview } from './career-season-review.js';
-import { retirementSummary } from './career-retirement-summary.js';
-import { isUsAmateurReturn,usReturnHome } from './career-us-return-flow.js';
-import { isUsReturnRetry } from './career-us-return-retry-shell.js';
-import { usReturnRetryHome } from './career-us-return-retry-flow.js';
+import type { UiShellState } from './ui-shell.js';
+import { gameCareerView, gameScreenView } from './game-view-projections.js';
 
 function errorBody(
   c: Context<{ Variables: AppVariables }>,
@@ -44,9 +25,7 @@ export async function getCareer(c: Context<{ Variables: AppVariables }>) {
 
   if (!row || row.deletedAt || row.ownerId !== subject) return errorBody(c, 'SAVE_NOT_FOUND', 404);
   try {
-    const state=(row.state as UiShellState)??{schemaVersion:1},owner=state.career as {schemaVersion?:number;world?:{schools?:unknown;leagueKey?:unknown}}|undefined;
-    const view = isUsReturnRetry(state.career)?usReturnRetryHome(row.id,state.career):isUsAmateurReturn(state.career)?usReturnHome(row.id,state.career):owner?.schemaVersion===1&&Array.isArray(owner.world?.schools)&&owner.world?.leagueKey===undefined?schoolCareerHome(row.id,state):owner?.world?.leagueKey==='COLLEGE'||owner?.world?.leagueKey==='INDEPENDENT'?collegeCareerHome(row.id,state):owner&&'protagonistOrganizationId' in owner?usCareerHome(row.id,state):owner&&'protagonistClubId' in owner?kboCareerHome(row.id,state):careerView(row.id,state);
-    return c.json({ ...view, revision: row.revision.toString() });
+    return c.json(gameCareerView(row.id, (row.state as UiShellState) ?? { schemaVersion: 1 }, row.revision.toString()));
   } catch {
     return errorBody(c, 'INVALID_REQUEST', 400);
   }
@@ -64,30 +43,7 @@ export async function getScreen(c: Context<{ Variables: AppVariables }>) {
   if (!row || row.deletedAt || row.ownerId !== subject) return errorBody(c, 'SAVE_NOT_FOUND', 404);
   const state = (row.state as UiShellState) ?? { schemaVersion: 1 };
   try {
-    if ((CLUB_SCREEN_IDS as readonly string[]).includes(screenId)) {
-      const playerKey = c.req.query('playerKey'), gameKey = c.req.query('gameKey');
-      return c.json(clubScreenOf(state, screenId, {
-        ...(playerKey ? { playerKey } : {}),
-        ...(gameKey ? { gameKey } : {}),
-      }));
-    }
-    if ((RETRY_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(retryScreenOf(state, screenId));
-    if ((US_RETURN_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(usReturnScreen(state, screenId));
-    if ((US_MILITARY_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(usMilitaryScreen(state, screenId));
-    if(screenId==='SCHOOL_CAREER')return c.json(schoolCareerScreen(state));
-    if(screenId==='CAREER_FLOW'){
-      const flow=careerFlowScreen(state),retirement=retirementSummary(state);
-      return c.json({...flow,saveRevision:row.revision.toString(),...(retirement?{title:'은퇴 기록',notice:retirement.notice,commands:[...flow.commands,...retirement.commands],retirementSummary:retirement.summary}:{}),seasonReview:careerSeasonReview(state)});
-    }
-    if(screenId==='KBO_RECRUITMENT')return c.json(kboRecruitmentScreen(state));
-    if (screenId==='US_CAREER') return c.json(usPlayScreen(state));
-    if (screenId==='CAREER_PRO_RETIREMENT' || screenId==='CAREER_PRO_ARCHIVE') return c.json(proRetirementScreen(state,screenId));
-    if (screenId==='PRO_EVENTS') return c.json(proEventsScreen(state));
-    if (screenId==='CAREER_HONORS') return c.json(careerHonorsScreen(state));
-    if (screenId==='CAREER_GOALS' || screenId==='CAREER_AGENT') return c.json(careerSupportScreen(state,screenId));
-    if (screenId==='CAREER_RELATIONS' || screenId==='CAREER_RELATION_DETAIL') return c.json(relationScreen(state,screenId,c.req.query()));
-    if ((CAREER_CHOICE_SCREEN_IDS as readonly string[]).includes(screenId)) return c.json(careerChoiceScreen(state, screenId));
-    return c.json(decisionView(row.id, state, screenId));
+    return c.json(gameScreenView(row.id, state, row.revision.toString(), screenId, c.req.query()));
   } catch (err) {
     const code = err && typeof err === 'object' && 'code' in err ? String((err as { code: string }).code) : 'INVALID_REQUEST';
     return errorBody(c, code, 400);

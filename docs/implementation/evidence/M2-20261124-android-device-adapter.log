@@ -1,0 +1,9 @@
+2026-11-24, KST. Android device-save adapter.
+Device-only build: npm run build:android exit 0; Android shell check exit 0.
+Configured plain HTTP account endpoint correctly rejected.
+Offline APK SHA256: 2e8a78d025e653f9b91a4825a3aa3daf9f8660d5d6293644ec0a1439dc8da8b6
+API and engine focus: 12 tests, 11 pass, 0 fail, 1 opt-in PostgreSQL skip.
+Split save: 4 pass, 0 fail. Web: 65 pass, 0 fail. Changed-file ESLint: exit 0.
+Existing main app UI under Android platform branch in PC Chromium, separate profile and loopback static assets only:
+{"device":"Desktop Chromium with Android bridge branch","processRestarted":true,"defaultLoginRequired":false,"optionalLoginOpens":true,"localHomeReturned":true,"createdFromRealAppUI":true,"teamGamesBeforeClose":1,"teamGamesAfterRelaunch":1,"resourcesLocal":true,"createdLocalClub":true,"bothSaveSlotsVisible":true}
+Isolated debug APK on SM-S948N: home without login, optional login/back, real player creation and season start observed. USB disconnected before official-game and relaunch assertions. Full real-device adapter path remains unverified.

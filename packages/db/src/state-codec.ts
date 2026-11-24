@@ -1,6 +1,8 @@
 /** A bounded event stream: no complete career JSON string is ever assembled. */
 export const STATE_PART_BYTES = 1024 * 1024;
 const STRING_PIECE = 16 * 1024;
+const encoder = new TextEncoder();
+const byteLength = (text: string): number => typeof Buffer === 'undefined' ? encoder.encode(text).length : Buffer.byteLength(text);
 type Event = [string, ...unknown[]];
 function invalid(): never { throw new Error('SAVE_STATE_CORRUPT'); }
 const primitive = (value: unknown) => value === null || typeof value !== 'object';
@@ -49,7 +51,7 @@ export function* encodeStateParts(state: unknown): Generator<string> {
   }
   let buffer = '', bytes = 0;
   for (const event of visit(jsonValue(state, ''), 0)) {
-    const line = JSON.stringify(event) + '\n', size = Buffer.byteLength(line);
+    const line = JSON.stringify(event) + '\n', size = byteLength(line);
     if (size > STATE_PART_BYTES) throw new Error('SAVE_STATE_TOKEN_TOO_LARGE');
     if (bytes + size > STATE_PART_BYTES) { yield buffer; buffer = ''; bytes = 0; }
     buffer += line; bytes += size;
@@ -77,7 +79,7 @@ export class StateDecoder {
     }
   }
   push(part: string) {
-    if (!part || Buffer.byteLength(part) > STATE_PART_BYTES || !part.endsWith('\n')) invalid();
+    if (!part || byteLength(part) > STATE_PART_BYTES || !part.endsWith('\n')) invalid();
     for (const line of part.slice(0, -1).split('\n')) {
       const event: unknown = JSON.parse(line);
       if (!Array.isArray(event) || typeof event[0] !== 'string') invalid();

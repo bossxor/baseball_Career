@@ -36,6 +36,10 @@ export type UiShellState = {
   [key: string]: unknown;
 };
 
+export function createEmptyGameState(creationId: string): UiShellState {
+  return { schemaVersion: 1, stampCount: 0, creationId, createdWith: 'M3_SHELL', nonce: crypto.randomUUID() };
+}
+
 export type NextAction = { id: string; label: string; kind: string; primary?: boolean; disabledReason?: string };
 export type CareerView = {
   saveId: string;

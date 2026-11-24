@@ -4,6 +4,7 @@ import {bytesToHex} from '@noble/hashes/utils.js';
 import {canonicalJson} from './game.js';
 
 const encoder=new TextEncoder();
+export const sha256Text = (value:string):string => bytesToHex(sha256(encoder.encode(value)));
 function updateText(hash:ReturnType<typeof sha256.create>,text:string):void {
  const size=64*1024;
  for(let start=0;start<text.length;){

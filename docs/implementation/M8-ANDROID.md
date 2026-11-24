@@ -6,9 +6,10 @@
 |---|---|
 | applicationId | `kr.againplayball.app` |
 | 서명 | debug (`assembleDebug`) |
-| API | `VITE_API_BASE` https 비로컬 · 권장 `https://api.againplayball.kr` |
+| 기기 저장 전용 | `VITE_API_BASE` 없이 APK 빌드 · 로그인 없이 플레이 |
+| 계정 저장 옵션 | `VITE_API_BASE`에 공개 HTTPS API 주소 설정 · 홈에서 ‘계정 저장 열기’ 선택 |
 
-```sh
-set VITE_API_BASE=https://api.againplayball.kr
+```powershell
+$env:VITE_API_BASE = ''
 npm run build:android
 ```

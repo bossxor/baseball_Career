@@ -1,4 +1,3 @@
-import {createHash} from 'node:crypto';
 import * as engine from '@playball/engine';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
 
@@ -16,7 +15,7 @@ function owner(state:SaveState):engine.GoalCareer {
  const c=state.career;if(!c||typeof c!=='object'||Array.isArray(c)||!('world'in c)||!c.world||typeof c.world!=='object')fail('CAREER_NOT_FOUND');return c as engine.GoalCareer;
 }
 function pro(c:engine.GoalCareer):ProCareer {if(!isUs(c)&&!('protagonistClubId'in c))fail('PRO_CAREER_REQUIRED');return c as ProCareer;}
-const token=(nativeId:string)=>createHash('sha256').update(nativeId).digest('hex');
+const token=engine.sha256Text;
 function nativePreview(c:ProCareer,kind:'SALARY'|'ROLE'){return kind==='SALARY'?engine.careerSalaryCounterPreview(c):engine.careerRoleReviewPreview(c);}
 function consumePreview(c:ProCareer,kind:'SALARY'|'ROLE',publicId:string){const q=nativePreview(c,kind);if(publicId!==token(q.previewId))throw new RangeError('PREVIEW_STALE');return q.previewId;}
 function optionalPreview<T>(read:()=>T):T|null {

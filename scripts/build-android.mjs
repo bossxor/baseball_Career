@@ -1,12 +1,14 @@
 /**
  * Build web → Capacitor sync → assembleDebug.
- * Requires VITE_API_BASE=https://… (non-local). Debug keystore is Gradle default.
+ * VITE_API_BASE enables optional account saves and must be public HTTPS.
+ * Without it, the APK runs with device saves only. Gradle uses its debug keystore.
  * Capacitor 8 needs JDK 21+ (JAVA_HOME).
  */
 import { spawnSync } from 'node:child_process';
 import { existsSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { loadEnv } from 'vite';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const web = join(root, 'apps', 'web');
@@ -46,7 +48,10 @@ function run(cmd, args, cwd, env = process.env) {
 }
 
 const env = preferJdk21(process.env);
-run(process.execPath, [join(root, 'scripts', 'assert-android-api-base.mjs')], root, env);
+env.VITE_API_BASE = (env.VITE_API_BASE ?? loadEnv('production', web).VITE_API_BASE ?? '').trim();
+if (env.VITE_API_BASE) {
+  run(process.execPath, [join(root, 'scripts', 'assert-android-api-base.mjs')], root, env);
+}
 run('npm', ['run', 'build', '--workspace', '@playball/web'], root, env);
 
 if (!existsSync(join(android, 'app'))) {

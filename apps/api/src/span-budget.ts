@@ -1,6 +1,6 @@
 /** Wall-clock cap for one chained "season/month" request. The engine's results never depend on chunking, so stopping early only
  * means the user presses the same CTA again; it keeps a request under proxy/mobile timeouts. Override with PLAYBALL_SPAN_BUDGET_MS. */
-export const spanDeadline=():number=>Date.now()+Number(process.env.PLAYBALL_SPAN_BUDGET_MS??25_000);
+export const spanDeadline=():number=>Date.now()+(typeof process==='undefined'?1_000:Number(process.env.PLAYBALL_SPAN_BUDGET_MS??25_000));
 
 /** Why a chained advance stopped, for the screen: BUDGET (request time cap, press again), MONTH_END, EVENT (a mandatory stop), SEASON_END. */
 export type SpanStop='BUDGET'|'MONTH_END'|'EVENT'|'SEASON_END';

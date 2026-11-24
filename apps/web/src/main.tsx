@@ -1,9 +1,11 @@
 import { StrictMode, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Capacitor } from '@capacitor/core';
 import logo from '../../../docs/design/assets/brand/logo-mark.svg';
 import { App } from './App.js';
 import { clearToken, readToken, signInForJwt, writeToken } from './auth-session.js';
 import { createHttpApi } from './http.js';
+import { createLocalApi } from './local-api.js';
 import { Login } from './screens/Login.js';
 import './styles.css';
 
@@ -13,8 +15,10 @@ if (!root) throw new Error('Missing application root');
 const apiBase = import.meta.env.VITE_API_BASE as string | undefined;
 const authBase = import.meta.env.VITE_AUTH_BASE as string | undefined;
 const defaultDev = (import.meta.env.VITE_DEV_TOKEN as string | undefined) ?? 'dev:local-web';
+const localApi = Capacitor.getPlatform() === 'android' ? createLocalApi() : null;
 
 function Root() {
+  const [cloud, setCloud] = useState(!localApi);
   const [token, setToken] = useState<string | null>(() => (apiBase ? readToken() : null));
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -24,11 +28,20 @@ function Root() {
     return createHttpApi({ baseUrl: apiBase, getToken: () => token, onUnauthorized: () => { clearToken(); setToken(null); } });
   }, [token]);
 
+  const switchStorage = (nextCloud: boolean) => {
+    location.hash = '#/';
+    setError(null);
+    setCloud(nextCloud);
+  };
+  if (localApi && !cloud) {
+    return <App key="device" logo={logo} api={localApi} {...(apiBase ? { onStorageSwitch: () => switchStorage(true), storageSwitchLabel: '계정 저장 열기' } : {})} />;
+  }
   if (apiBase && !token) {
     return (
       <Login
         busy={busy}
         error={error}
+        {...(localApi ? { onBack: () => switchStorage(false) } : {})}
         onDev={() => { writeToken(defaultDev); setToken(defaultDev); }}
         {...(authBase
           ? {
@@ -45,7 +58,8 @@ function Root() {
     );
   }
 
-  return <App logo={logo} {...(api ? { api } : {})} />;
+  return <App key="cloud" logo={logo} {...(api ? { api } : {})}
+    {...(localApi ? { onStorageSwitch: () => switchStorage(false), storageSwitchLabel: '이 기기 게임' } : {})} />;
 }
 
 createRoot(root).render(<StrictMode><Root /></StrictMode>);

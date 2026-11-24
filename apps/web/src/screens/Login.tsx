@@ -7,9 +7,10 @@ export interface LoginProps {
   error?: string | null;
   onSubmit?: (email: string, password: string) => void;
   onDev?: () => void;
+  onBack?: () => void;
 }
 /** Minimal gate when `VITE_API_BASE` is set. Dev bearer is available when Auth URL is absent. */
-export function Login({ busy = false, error = null, onSubmit, onDev }: LoginProps) {
+export function Login({ busy = false, error = null, onSubmit, onDev, onBack }: LoginProps) {
   const [email, setEmail] = useState(''), [password, setPassword] = useState('');
   return (
     <main className="screen" data-screen="LOGIN" aria-labelledby="login-title">
@@ -31,6 +32,7 @@ export function Login({ busy = false, error = null, onSubmit, onDev }: LoginProp
         <Button type="submit" primary busy={busy} disabled={!email.trim() || !password}>로그인</Button>
       </form>
       {onDev ? <Button busy={busy} onClick={onDev}>개발 토큰으로 계속</Button> : null}
+      {onBack ? <Button busy={busy} onClick={onBack}>이 기기 게임으로</Button> : null}
     </main>
   );
 }

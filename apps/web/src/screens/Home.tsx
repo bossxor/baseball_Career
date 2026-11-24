@@ -7,10 +7,11 @@ export interface HomeProps {
   data: HomeData | null; state?: ScreenState; showSaves?: boolean; logo?: string;
   onResume?: (saveId: string) => void; onSelect?: (saveId: string) => void; onToggleSaves?: () => void;
   onNew?: (mode: 'CAREER' | 'CLUB') => void; onSettings?: () => void; onReload?: () => void;
+  onStorageSwitch?: () => void; storageSwitchLabel?: string;
 }
 /** S01 홈. The resume button keeps its label while loading (disabled + aria-busy); interruption/recovery status is never shown.
  * A mode button appears only when its handler exists, so unbuilt modes (구단, 설정) are not dead buttons. */
-export function Home({ data, state = 'ready', showSaves = false, logo, onResume, onSelect, onToggleSaves, onNew, onSettings, onReload }: HomeProps) {
+export function Home({ data, state = 'ready', showSaves = false, logo, onResume, onSelect, onToggleSaves, onNew, onSettings, onReload, onStorageSwitch, storageSwitchLabel }: HomeProps) {
   const busy = isBusy(state), empty = !data || data.saves.length === 0, resume = data?.resume ?? null;
   return (
     <ScreenFrame id="S01" state={state} {...(onReload ? { onReload } : {})}>
@@ -39,6 +40,7 @@ export function Home({ data, state = 'ready', showSaves = false, logo, onResume,
         {onNew ? <Button primary={empty} onClick={() => onNew('CAREER')}>새 커리어</Button> : null}
         {onNew ? <Button onClick={() => onNew('CLUB')}>새 구단</Button> : null}
         {onSettings ? <Button onClick={onSettings}>설정</Button> : null}
+        {onStorageSwitch ? <Button onClick={onStorageSwitch}>{storageSwitchLabel}</Button> : null}
       </nav>
       {data && data.archiveCount > 0 ? <p className="muted">보관한 선수 {data.archiveCount}명</p> : null}
     </ScreenFrame>

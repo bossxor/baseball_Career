@@ -59,7 +59,9 @@ function useIntentIds() {
 }
 
 /** Hash-routed shell over `PlayballApi`. Failed calls map to error/conflict; conflict offers reload. */
-export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string }) {
+export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel }: {
+  api?: PlayballApi; logo?: string; onStorageSwitch?: () => void; storageSwitchLabel?: string;
+}) {
   const api = useMemo(() => injected ?? createFixtureApi(), [injected]);
   const [route, setRoute] = useState<Route>(() => parseRoute(location.hash));
   const [tick, setTick] = useState(0);
@@ -226,5 +228,6 @@ export function App({ api: injected, logo }: { api?: PlayballApi; logo?: string 
   return <Home {...(logo ? { logo } : {})} data={home} state={state} showSaves={showSaves} onToggleSaves={() => setShowSaves(v => !v)} onReload={reload}
     onResume={openSave} onSelect={openSave}
     onNew={m => { if (m === 'CAREER') { setDraft(emptyDraft()); setStep('NAME'); setErrors({}); go('#/create'); } else go('#/club/new'); }}
-    {...(home?.resume ? { onSettings: () => openPlay(home.resume!.saveId, 'S21') } : {})} />;
+    {...(home?.resume ? { onSettings: () => openPlay(home.resume!.saveId, 'S21') } : {})}
+    {...(onStorageSwitch && storageSwitchLabel ? { onStorageSwitch, storageSwitchLabel } : {})} />;
 }
