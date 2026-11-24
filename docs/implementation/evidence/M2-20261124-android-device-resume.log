@@ -1,0 +1,7 @@
+2026-11-24 KST. Android device resume, SM-S948N. Source e824ca7.
+Isolated debug APK used the app screens, Web Worker, and IndexedDB. No QA server or device port reverse.
+Career: login-free home, optional login screen and return, new player, official team game, process killed and relaunched, Resume.
+{"device":"SM-S948N","processRestarted":true,"defaultLoginRequired":false,"optionalLoginOpens":true,"localHomeReturned":true,"createdFromRealAppUI":true,"teamGamesBeforeClose":1,"teamGamesAfterRelaunch":1,"resourcesLocal":true}
+Decisions: open required focus choice, kill and relaunch, open the same unfinished choice. Clubs: create KIA, kill and relaunch, Resume same club.
+{"device":"SM-S948N","sameCareerSave":true,"sameUnresolvedDecision":true,"localClubCreated":true,"sameClubAfterRelaunch":true,"backendRequired":false}
+Both device scripts exit 0. No account login or account-to-device save transfer was exercised.
