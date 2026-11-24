@@ -1,0 +1,8 @@
+2026-11-24 KST Android device backup upgrade
+Local API suite: 3 passed, 0 failed.
+0003 upgrades pre-backup M3 tables, preserves existing game saves, command receipts and season jobs, and preserves the new backup after reapplication.
+Neon m3-dev: applied and reapplied the checked-in 0003 SQL via a direct connection.
+Neon m3-dev PASS: migration/reapply, upload rollback, retry, owner isolation, restored 2 parts.
+Neon m3-dev: temporary smoke-test rows removed.
+Exit: 0
+Scope: API with test bearer and live Neon PostgreSQL. Production and managed login were not exercised.

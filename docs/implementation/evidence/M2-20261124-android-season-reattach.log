@@ -1,0 +1,7 @@
+2026-11-24 KST account season reattach on Android SM-S948N
+Web production build: exit 0. Isolated debug APK, loopback HTTP, local PostgreSQL 17.5, QA sign-in.
+First attempt reached a mandatory event after 56 games and ended the season job with STOPPED. It did not establish reattach to a running job.
+Final attempt used existing PLAYBALL_SPAN_BUDGET_MS=0 and a fresh isolated database to exercise a BUDGET checkpoint before the event.
+{"isolatedDebugApk":"kr.againplayball.app.seasonqa","deviceHomeWithoutLogin":true,"firstAccountLogin":true,"resumedAuth":"login","sameRunId":true,"newAndroidProcess":true,"beforeGames":0,"afterGames":2,"scheduledGames":216,"month":2,"revision":"1","receipts":1,"duplicateStart":false}
+Server processed one step while the app was closed. UI showed the same running job after optional account re-entry.
+Exit: 0. Managed production sign-in and production worker supervision are outside this run.

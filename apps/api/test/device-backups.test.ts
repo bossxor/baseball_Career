@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
-import { createTestDb, deviceBackupParts, deviceBackups, encodeStateParts, gameSaves, seedAllowedSubject, StateDecoder } from '@playball/db';
+import { commandReceipts, createTestDb, deviceBackupParts, deviceBackups, encodeStateParts, gameSaves, seasonJobs, seedAllowedSubject, seedSave, StateDecoder } from '@playball/db';
 import { createApp } from '../src/app.js';
 
 const route = '/api/device-backups';
@@ -76,4 +77,36 @@ test('device backup rejects missing footer, unexpected state and over-limit uplo
   assert.equal((await post('', { 'Content-Length': String(128 * 1024 * 1024 + 1) })).status, 413);
   assert.equal((await post('', { 'Content-Type': 'application/json' })).status, 415);
   assert.equal((await post(frames(['save', metadata], ...smallParts, ['end', smallParts.length]))).status, 201);
+});
+
+test('device backup SQL upgrades existing M3 saves and can be applied again with data already present', async t => {
+  const { db, client } = await createTestDb();
+  t.after(() => client.close());
+  await client.exec('DROP TABLE device_backup_parts; DROP TABLE device_backups');
+  await seedAllowedSubject(db, 'owner');
+  const saveId = 'existing-official-save';
+  await seedSave(db, { id: saveId, ownerId: 'owner', revision: 7n, state: { schemaVersion: 1, history: ['보존'] } });
+  await db.insert(commandReceipts).values({ saveId, commandId: 'played', requestHash: 'existing-hash', result: { done: true }, resultingRevision: 7n });
+  await db.insert(seasonJobs).values({ saveId, runId: 'existing-run', requestId: 'existing-request', nextExpectedRevision: 7n });
+  const officialBefore = await db.select().from(gameSaves);
+  const receiptsBefore = await db.select().from(commandReceipts);
+  const jobsBefore = await db.select().from(seasonJobs);
+
+  const migration = readFileSync(new URL('../../../packages/db/drizzle/0003_device_backups.sql', import.meta.url), 'utf8');
+  await client.exec(migration);
+  const app = createApp({ db, auth: { allowDevBearer: true } });
+  const parts = [...encodeStateParts({ schemaVersion: 1, career: { history: ['기기 백업'] } })];
+  const body = frames(['save', metadata], ...parts.map(part => ['part', part]), ['end', parts.length]);
+  assert.equal((await app.request(`${route}/${id}`, { method: 'POST', headers: upload(body), body })).status, 201);
+  const backupBefore = await db.select().from(deviceBackups);
+  const partsBefore = await db.select().from(deviceBackupParts);
+  assert.equal(backupBefore.length, 1);
+  assert.equal(partsBefore.length, parts.length);
+
+  await client.exec(migration);
+  assert.deepEqual(await db.select().from(deviceBackups), backupBefore);
+  assert.deepEqual(await db.select().from(deviceBackupParts), partsBefore);
+  assert.deepEqual(await db.select().from(gameSaves), officialBefore);
+  assert.deepEqual(await db.select().from(commandReceipts), receiptsBefore);
+  assert.deepEqual(await db.select().from(seasonJobs), jobsBefore);
 });

@@ -28,3 +28,5 @@ API는 인증된 `GET /api/saves/:id/season-job`과 `POST /api/saves/:id/season-
 ## 재시작 검증
 
 빌드 후 `PLAYBALL_SEASON_JOB_TEST_DATABASE_URL`을 격리 PostgreSQL에 설정하고 `node --import tsx --test apps/api/test/season-jobs.test.ts`를 실행한다. 테스트가 작업자 프로세스를 종료하고 새 작업자를 띄워 같은 작업 ID, 연속된 저장 리비전, 중복 없는 명령 영수증을 확인한다. PostgreSQL 17.5에서 통과했다. [실행 증거](evidence/M2-20261124-season-job-restart.log)
+
+SM-S948N 테스트 APK에서는 앱이 종료된 동안 서버 작업을 한 단계 실행했다. 새 앱 프로세스에서 선택 로그인 후 기존 계정 저장을 열자 같은 시즌 작업의 2/216경기와 2월 표시가 복원됐다. 명령 기록은 1개로 유지됐다. [실기기 실행 증거](evidence/M2-20261124-android-season-reattach.log)
