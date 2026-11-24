@@ -27,6 +27,15 @@ function Root() {
     if (!apiBase || !token) return undefined;
     return createHttpApi({ baseUrl: apiBase, getToken: () => token, onUnauthorized: () => { clearToken(); setToken(null); } });
   }, [token]);
+  const deviceBackups = useMemo(() => {
+    if (!localApi || !cloud || !apiBase || !token) return undefined;
+    return {
+      listDevice: async () => (await localApi.home()).saves,
+      listAccount: () => localApi.accountBackups(apiBase, token),
+      upload: (saveId: string) => localApi.backupToAccount(apiBase, token, saveId),
+      restore: (backupId: string) => localApi.restoreAccountBackup(apiBase, token, backupId),
+    };
+  }, [cloud, token]);
 
   const switchStorage = (nextCloud: boolean) => {
     location.hash = '#/';
@@ -59,6 +68,7 @@ function Root() {
   }
 
   return <App key="cloud" logo={logo} {...(api ? { api } : {})}
+    {...(deviceBackups ? { deviceBackups } : {})}
     {...(localApi ? { onStorageSwitch: () => switchStorage(false), storageSwitchLabel: '이 기기 게임' } : {})}
     {...(localApi && apiBase && token ? { onCopySave: (saveId: string) => localApi.copyFromAccount(apiBase, token, saveId) } : {})} />;
 }

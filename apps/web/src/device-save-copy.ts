@@ -2,6 +2,7 @@ import { STATE_PART_BYTES, StateDecoder } from '../../../packages/db/src/state-c
 import type { SaveState } from '../../api/src/engine-command.js';
 
 type SnapshotMeta = { id: string; mode: 'CAREER' | 'CLUB'; revision: string; phase: string; summary: Record<string, unknown> };
+export type AccountDeviceBackup = SnapshotMeta & { createdAt: string };
 
 function isMeta(value: unknown, sourceId: string): value is SnapshotMeta {
   if (!value || typeof value !== 'object') return false;

@@ -8,6 +8,7 @@ import { Career } from './screens/Career.js';
 import { Decision } from './screens/Decision.js';
 import { Flow } from './screens/Flow.js';
 import { ClubNew, ClubView } from './screens/Club.js';
+import { DeviceBackups, type DeviceBackupActions } from './screens/DeviceBackups.js';
 import { CREATION_STEPS, emptyDraft, firstInvalidStep, toCreationRequest, validateStep } from './creation.js';
 import type { CreationDraft, CreationStep, FieldErrors } from './creation.js';
 import type { CareerView, ClubScreen, ClubScreenId, DecisionView, FlowView, HomeData, PlayScreenId, ProgressMode, SeasonJobView } from './model.js';
@@ -18,6 +19,7 @@ import { observeSeasonJob, regularSeasonCommand, runFlowCommands } from './flow-
 const CLUB_SCREENS = new Set<string>(['S13', 'S14', 'S15', 'S16', 'S17', 'S18', 'S19']);
 type Route =
   | { name: 'home' }
+  | { name: 'device-backups' }
   | { name: 'create' }
   | { name: 'career'; saveId: string }
   | { name: 'flow'; saveId: string }
@@ -26,6 +28,7 @@ type Route =
   | { name: 'club'; saveId: string; screenId: ClubScreenId };
 
 export function parseRoute(hash: string): Route {
+  if (hash === '#/device-backups') return { name: 'device-backups' };
   const club = /^#\/club\/([^/]+)(?:\/(S1[3-9]))?$/.exec(hash);
   if (club) {
     const id = decodeURIComponent(club[1]!);
@@ -59,9 +62,10 @@ function useIntentIds() {
 }
 
 /** Hash-routed shell over `PlayballApi`. Failed calls map to error/conflict; conflict offers reload. */
-export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel, onCopySave }: {
+export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel, onCopySave, deviceBackups }: {
   api?: PlayballApi; logo?: string; onStorageSwitch?: () => void; storageSwitchLabel?: string;
   onCopySave?: (id: string) => Promise<void>;
+  deviceBackups?: DeviceBackupActions;
 }) {
   const api = useMemo(() => injected ?? createFixtureApi(), [injected]);
   const [route, setRoute] = useState<Route>(() => parseRoute(location.hash));
@@ -98,7 +102,7 @@ export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel, 
     setSelected(null);
     (async () => {
       try {
-        if (route.name === 'home') { const d = await api.home(); if (alive) { setHome(d); setState('ready'); } }
+        if (route.name === 'home' || (route.name === 'device-backups' && !deviceBackups)) { const d = await api.home(); if (alive) { setHome(d); setState('ready'); } }
         else if (route.name === 'career') { const c = await api.career(route.saveId); if (alive) { setCareer(c); setMode(c.progress.mode); setState('ready'); } }
         else if (route.name === 'play') { const d = await api.decision(route.saveId, route.screenId); if (alive) { setDecision(d); setState(d.options.length ? 'ready' : 'empty'); } }
         else if (route.name === 'flow') {
@@ -125,7 +129,11 @@ export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel, 
       } catch (err) { if (alive) { setSeasonJob(null); setState(stateFromError(err)); } }
     })();
     return () => { alive = false; controller.abort(); };
-  }, [route, api, tick]);
+  }, [route, api, tick, deviceBackups]);
+
+  if (route.name === 'device-backups' && deviceBackups) {
+    return <DeviceBackups actions={deviceBackups} onBack={() => go('#/')} />;
+  }
 
   if (route.name === 'create') {
     const toStep = (next: CreationStep) => {
@@ -231,6 +239,7 @@ export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel, 
     onResume={openSave} onSelect={openSave}
     onNew={m => { if (m === 'CAREER') { setDraft(emptyDraft()); setStep('NAME'); setErrors({}); go('#/create'); } else go('#/club/new'); }}
     {...(home?.resume ? { onSettings: () => openPlay(home.resume!.saveId, 'S21') } : {})}
+    {...(deviceBackups ? { onDeviceBackups: () => go('#/device-backups') } : {})}
     {...(onCopySave ? { copyNotice, onCopySave: (id: string) => {
       setCopyNotice('기기로 복사 중');
       void run(async () => {

@@ -2,6 +2,7 @@ import { sql } from 'drizzle-orm';
 import {
   bigint,
   check,
+  foreignKey,
   index,
   integer,
   jsonb,
@@ -109,6 +110,38 @@ export const seasonJobs = pgTable('season_jobs', {
 
 export type SeasonJob = typeof seasonJobs.$inferSelect;
 export type NewSeasonJob = typeof seasonJobs.$inferInsert;
+
+/** Account-private device backups are never server-authoritative game saves. */
+export const deviceBackups = pgTable('device_backups', {
+  ownerId: text('owner_id').notNull().references(() => profiles.id, { onDelete: 'cascade' }),
+  id: text('id').notNull(),
+  mode: saveModeEnum('mode').notNull(),
+  revision: bigint('revision', { mode: 'bigint' }).notNull(),
+  phase: text('phase').notNull(),
+  summary: jsonb('summary').$type<Record<string, unknown>>().notNull(),
+  partCount: integer('part_count').notNull(),
+  contentHash: text('content_hash').notNull(),
+  createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+}, table => [
+  primaryKey({ columns: [table.ownerId, table.id] }),
+  index('device_backups_owner_created_idx').on(table.ownerId, table.createdAt, table.id),
+  check('device_backups_revision_check', sql`${table.revision} > 0`),
+  check('device_backups_part_count_check', sql`${table.partCount} >= 0`),
+  check('device_backups_summary_check', sql`jsonb_typeof(${table.summary}) = 'object'`),
+]);
+
+export const deviceBackupParts = pgTable('device_backup_parts', {
+  ownerId: text('owner_id').notNull(),
+  backupId: text('backup_id').notNull(),
+  part: integer('part').notNull(),
+  payload: text('payload').notNull(),
+}, table => [
+  primaryKey({ columns: [table.ownerId, table.backupId, table.part] }),
+  foreignKey({ columns: [table.ownerId, table.backupId], foreignColumns: [deviceBackups.ownerId, deviceBackups.id] }).onDelete('cascade'),
+  check('device_backup_parts_part_check', sql`${table.part} >= 0`),
+]);
+
+export type DeviceBackup = typeof deviceBackups.$inferSelect;
 
 /** Owner-private export objects (backup / chronicle / card). Body is UTF-8 text for M7 JSON backups. */
 export const privateFiles = pgTable(

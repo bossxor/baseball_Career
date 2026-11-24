@@ -5,7 +5,11 @@ import { encodeStateParts, StateDecoder } from '../../../packages/db/src/state-c
 import { readDeviceSaveCopy } from './device-save-copy.js';
 
 const tables = ['saves', 'states', 'receipts'];
-type Save = { id: string; mode: 'CAREER' | 'CLUB'; revision: string; phase: string; summary: Record<string, unknown>; updatedAt: string; partCount: number };
+const MAX_ACCOUNT_BACKUP_BYTES = 128 * 1024 * 1024;
+type Save = {
+  id: string; mode: 'CAREER' | 'CLUB'; revision: string; phase: string; summary: Record<string, unknown>; updatedAt: string; partCount: number;
+  accountBackup?: { id: string; revision: string };
+};
 type Receipt = { intent: string; value: { revision: string; summary: Record<string, unknown>; next?: unknown } };
 type Reply = [status: number, data: unknown];
 const db = new Promise<IDBDatabase>((resolve, reject) => {
@@ -59,17 +63,21 @@ async function readState(store: IDBObjectStore, save: Save): Promise<SaveState> 
   return decoder.finish() as SaveState;
 }
 
-async function copyAccountSave(raw: string | undefined): Promise<Reply> {
+function accountInput(raw: string | undefined) {
   const { baseUrl, token, saveId } = JSON.parse(raw ?? '{}') as Record<string, unknown>;
-  if (typeof baseUrl !== 'string' || typeof token !== 'string' || !token || typeof saveId !== 'string' || !saveId) {
-    return fail(400, 'INVALID_REQUEST');
-  }
-  const response = await fetch(`${baseUrl.replace(/\/$/, '')}/api/saves/${encodeURIComponent(saveId)}/device-copy`, {
-    headers: { Authorization: `Bearer ${token}` }, cache: 'no-store',
-  });
+  if (typeof baseUrl !== 'string' || typeof token !== 'string' || !token || typeof saveId !== 'string') return null;
+  return { baseUrl: baseUrl.replace(/\/$/, ''), saveId, headers: { Authorization: `Bearer ${token}` } };
+}
+
+async function copyAccountSave(raw: string | undefined, backup = false): Promise<Reply> {
+  const input = accountInput(raw);
+  if (!input?.saveId) return fail(400, 'INVALID_REQUEST');
+  const { baseUrl, headers, saveId } = input;
+  const path = backup ? `/api/device-backups/${encodeURIComponent(saveId)}/content` : `/api/saves/${encodeURIComponent(saveId)}/device-copy`;
+  const response = await fetch(baseUrl + path, { headers, cache: 'no-store', redirect: 'error' });
   if (!response.ok || !response.body) return fail(502, 'DEVICE_COPY_FAILED');
   const { meta, state } = await readDeviceSaveCopy(response.body, saveId);
-  const id = `local-account-${meta.id}:${meta.revision}`;
+  const id = `local-${backup ? 'backup' : 'account'}-${meta.id}:${meta.revision}`;
   return transaction('readwrite', async tx => {
     const saves = tx.objectStore('saves');
     if (await request(saves.get(id))) return [200, { saveId: id }];
@@ -80,8 +88,61 @@ async function copyAccountSave(raw: string | undefined): Promise<Reply> {
   });
 }
 
+async function backupDeviceSave(raw: string | undefined): Promise<Reply> {
+  const input = accountInput(raw);
+  if (!input?.saveId) return fail(400, 'INVALID_REQUEST');
+  const { baseUrl, headers, saveId } = input;
+  const snapshot = await transaction('readwrite', async tx => {
+    const saves = tx.objectStore('saves'), states = tx.objectStore('states');
+    const save: Save | undefined = await request(saves.get(saveId));
+    if (!save || save.revision === '0') return null;
+    const id = save.accountBackup?.revision === save.revision ? save.accountBackup.id : crypto.randomUUID();
+    const { mode, revision, phase, summary } = save;
+    const frames: Blob[] = [];
+    let bytes = 0;
+    const addFrame = (frame: readonly unknown[]) => {
+      // A bounded Blob also works on WebViews when the API connects over HTTP/1.x.
+      const chunk = new Blob([JSON.stringify(frame) + '\n']);
+      bytes += chunk.size;
+      if (bytes > MAX_ACCOUNT_BACKUP_BYTES) {
+        throw Object.assign(new Error('Device backup exceeds limit'), { code: 'DEVICE_BACKUP_TOO_LARGE' });
+      }
+      frames.push(chunk);
+    };
+    addFrame(['save', { version: 1, id, mode, revision, phase, summary }]);
+    for (let index = 0; index < save.partCount; index++) {
+      const part = await request(states.get([saveId, index]));
+      if (typeof part !== 'string') throw new Error('LOCAL_SAVE_MISSING');
+      addFrame(['part', part]);
+    }
+    addFrame(['end', save.partCount]);
+    const body = new Blob(frames, { type: 'application/x-ndjson' });
+    saves.put({ ...save, accountBackup: { id, revision } } satisfies Save, saveId);
+    return { id, body };
+  });
+  if (!snapshot) return fail(404, 'SAVE_NOT_FOUND');
+  const response = await fetch(`${baseUrl}/api/device-backups/${snapshot.id}`, {
+    method: 'POST', body: snapshot.body, headers, cache: 'no-store', redirect: 'error',
+  });
+  if (response.status === 413) return fail(413, 'DEVICE_BACKUP_TOO_LARGE');
+  if (response.status === 409) return fail(409, 'DEVICE_BACKUP_CONFLICT');
+  if (!response.ok) return fail(502, 'DEVICE_BACKUP_FAILED');
+  return [200, { id: snapshot.id }];
+}
+
+async function listAccountBackups(raw: string | undefined): Promise<Reply> {
+  const input = accountInput(raw);
+  if (!input) return fail(400, 'INVALID_REQUEST');
+  const response = await fetch(`${input.baseUrl}/api/device-backups`, { headers: input.headers, cache: 'no-store', redirect: 'error' });
+  if (!response.ok) return fail(502, 'DEVICE_BACKUP_FAILED');
+  return [200, await response.json()];
+}
+
 async function handle(path: string, method: string, raw: string | undefined): Promise<Reply> {
   if (path === '/device-copy' && method === 'POST') return copyAccountSave(raw);
+  if (path === '/device-backups/restore' && method === 'POST') return copyAccountSave(raw, true);
+  if (path === '/device-backups/upload' && method === 'POST') return backupDeviceSave(raw);
+  if (path === '/device-backups/list' && method === 'POST') return listAccountBackups(raw);
   const url = new URL(path, 'https://local.invalid');
   if (url.pathname === '/api/saves' && method === 'GET') {
     return transaction('readonly', async tx => {

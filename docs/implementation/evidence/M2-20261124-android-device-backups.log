@@ -1,0 +1,18 @@
+2026-11-24 Android device backup integration
+DB workspace build: exit 0
+API typecheck: exit 0
+Web workspace production build: exit 0
+Changed web files ESLint: exit 0
+Focused API backup / account copy: 3 passed, 0 failed, 0 skipped
+Home / screen regression: 9 passed
+Independent HTTP with PGlite: 1 passed (owner isolation, Unicode multipart, conflict, truncation rollback, official save unchanged)
+Chromium Android-entry route with local IndexedDB and authenticated HTTP:
+  uploaded=1; duplicate upload stable; owner-only list; two local slots
+  originalGames=1; restoredGames=2; repeated restore retained 2
+  fresh profile restored originalGames=1; official save list unchanged
+Gradle :app:assembleDebug: BUILD SUCCESSFUL
+Android SM-S948N, temporary .seasonqa, loopback QA API:
+  started without login; created career; advanced real engine one game
+  uploaded=1; replay upload stable; localSlots=2
+  sourceGames=1; restoredGames=2; repeatRestoreStable=true; officialCloudSavesUnchanged=true
+Scope: local PGlite, test bearer, one physical phone. Second destination verified using a separate Chromium profile. Production migration, production authentication, and the full repository check were not run for this change.
