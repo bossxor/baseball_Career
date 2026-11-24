@@ -7,13 +7,27 @@ import {PITCH_IDS} from '@playball/rules';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createRepertoire,beginPitchLearning,pitchMastery} from '../src/repertoire.js';
-import {registerPitchLearning,registerPitchLearningCalendar,settleRegisteredPitchLearning} from '../src/pitch-learning-progress.js';
+import {registeredPitchLearningSettler,registerPitchLearning,registerPitchLearningCalendar,settleRegisteredPitchLearning} from '../src/pitch-learning-progress.js';
 import {createHealthLedger} from '../src/health.js';
 import {createWorldStream} from '../src/rng.js';
 import {emptyRecordLedger} from '../src/records.js';
 import {canonicalJson} from '../src/game.js';
 function fixture(games=0,injury=false,numerator:5|6|15=5){let book=beginPitchLearning(createRepertoire(PITCH_IDS[1]!,'2030'),PITCH_IDS[2]!,true);book=registerPitchLearning(book,'world','pitcher',48,false);const records=emptyRecordLedger(),health=createHealthLedger(createWorldStream('test','pitch-learning','roster'));for(let i=0;i<games;i++){const gameKey='quarter-'+i;records.games[gameKey]={gameKey,worldDay:i,scope:{seasonKey:'2030',leagueKey:'HS',phase:'REGULAR'},teams:{},batting:{},pitching:{},matchups:{},batterSplits:{},pitcherSplits:{}};health.games=[...health.games,{evidence:{gameKey,teamKey:'school',seasonKey:'2030',day:i,roster:['pitcher'],appearances:[]},result:{injured:injury&&i===5?['pitcher']:[],recovered:injury&&i===9?['pitcher']:[]}}];}return {worldKey:'world',seasonKey:'2030',playerKey:'pitcher',repertoire:book,records,health,scheduledGames:48,numerator};}
 const calendar=()=>Array.from({length:48},(_,i)=>({simulationKey:'quarter-'+i,worldDay:i}));
+test('same-day player settlements share only schedule and health evidence',()=>{
+ const first=fixture(24,true),second=fixture(24),schedule=calendar().map(game=>({...game,leagueKey:'HS',seasonKey:'2030',round:game.worldDay,homeTeamKey:'school',awayTeamKey:'opponent'}));
+ const health={...first.health,games:first.health.games.map(row=>({...row,evidence:{...row.evidence,roster:['pitcher','second']}}))};
+ const secondBook=structuredClone(second.repertoire);
+ secondBook.learning!.registration!.playerKey='second';
+ const authority={worldKey:first.worldKey,seasonKey:first.seasonKey,records:first.records,health,schedule};
+ const settle=registeredPitchLearningSettler(authority);
+ for(const [playerKey,book] of [['pitcher',first.repertoire],['second',secondBook]] as const){
+  const player={playerKey,repertoire:registerPitchLearningCalendar(book,schedule),scheduledGames:48,numerator:5 as const};
+  assert.deepEqual(settle(player),settleRegisteredPitchLearning({...authority,...player}));
+ }
+ const changed={...authority,schedule:schedule.slice(1)};
+ assert.throws(()=>registeredPitchLearningSettler(changed)({playerKey:'pitcher',repertoire:registerPitchLearningCalendar(first.repertoire,schedule),scheduledGames:48,numerator:5}),/CALENDAR_CHANGED/);
+});
 test('sealed league progress closes empty-registration quarters with zero XP and releases every reservation',()=>{
  const x=fixture(48);x.repertoire=registerPitchLearningCalendar(x.repertoire,calendar());x.health.games=x.health.games.map(g=>({...g,evidence:{...g.evidence,roster:['other-player']}}));const before=canonicalJson(x),done=settleRegisteredPitchLearning(x);
  assert.equal(canonicalJson(x),before);assert.equal(done.learning!.quarters.length,4);assert.ok(done.learning!.quarters.every(q=>q.registeredDays===0&&q.healthyDays===0));assert.equal(done.ledger.baseReservedUnits,0);assert.equal(done.ledger.baseSpentUnits,0);assert.equal(done.book[PITCH_IDS[2]!],0);assert.deepEqual(settleRegisteredPitchLearning({...x,repertoire:done}),done);

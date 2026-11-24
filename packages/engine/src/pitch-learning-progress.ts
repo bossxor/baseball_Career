@@ -27,13 +27,29 @@ function inferCalendar(entries:HealthLedger['games'],records:RecordLedger,schedu
  if(!team)throw new RangeError('MISSING_LEARNING_REGISTRATION_TEAM');
  return schedule.filter(g=>g.leagueKey===row.scope.leagueKey&&(g.homeTeamKey===team||g.awayTeamKey===team));
 }
+type LearningInput={worldKey:string;seasonKey:string;playerKey:string;repertoire:Repertoire;records:RecordLedger;health:HealthLedger;scheduledGames:number;numerator:5|6|15;schedule?:readonly ScheduledGame[]};
+type LearningAuthority=Pick<LearningInput,'worldKey'|'seasonKey'|'records'|'health'|'schedule'>;
+type SharedEvidence={published?:ReadonlyMap<string,number>;closedThrough?:number};
+
+/** One day settlement shares the same official records, health and published schedule across players. */
+export function registeredPitchLearningSettler(authority:LearningAuthority) {
+ const shared:SharedEvidence={};
+ return (player:Omit<LearningInput,keyof LearningAuthority>)=>settleWithEvidence({...player,...authority},shared);
+}
+
 /** FINAL schedule progress closes quarters; only healthy registrations inside each interval pay XP. */
-export function settleRegisteredPitchLearning(input:{worldKey:string;seasonKey:string;playerKey:string;repertoire:Repertoire;records:RecordLedger;health:HealthLedger;scheduledGames:number;numerator:5|6|15;schedule?:readonly ScheduledGame[]}):Repertoire {
+export function settleRegisteredPitchLearning(input:LearningInput):Repertoire {
+ return settleWithEvidence(input,{});
+}
+function settleWithEvidence(input:LearningInput,shared:SharedEvidence):Repertoire {
  let book=input.repertoire;if(!book.learning)return book;if(book.seasonId!==input.seasonKey)throw new RangeError('PITCH_LEARNING_SEASON_CHANGED');
  const entries=input.health.games.filter(g=>g.evidence.seasonKey===input.seasonKey&&g.evidence.roster.includes(input.playerKey)).sort((a,b)=>a.evidence.day-b.evidence.day||(a.evidence.gameKey<b.evidence.gameKey?-1:1));
  const days=new Set<number>();for(const g of entries){const r=input.records.games[g.evidence.gameKey];if(!r||r.scope.seasonKey!==input.seasonKey||r.worldDay!==g.evidence.day)throw new RangeError('MISSING_LEARNING_GAME');if(days.has(r.worldDay))throw new RangeError('DOUBLE_BOOKED_LEARNING_DAY');days.add(r.worldDay);}
- let opening=Object.hasOwn(input.health.injuries,input.playerKey);for(const g of [...entries].reverse()){if(g.result.injured.includes(input.playerKey))opening=false;if(g.result.recovered.includes(input.playerKey))opening=true;}
- if(!book.learning.registration)book=registerPitchLearning(book,input.worldKey,input.playerKey,input.scheduledGames,opening);
+ if(!book.learning.registration){
+  let opening=Object.hasOwn(input.health.injuries,input.playerKey);
+  for(const g of [...entries].reverse()){if(g.result.injured.includes(input.playerKey))opening=false;if(g.result.recovered.includes(input.playerKey))opening=true;}
+  book=registerPitchLearning(book,input.worldKey,input.playerKey,input.scheduledGames,opening);
+ }
  if(!book.learning!.registration!.calendar&&input.schedule){const calendar=inferCalendar(entries,input.records,input.schedule);if(calendar)book=registerPitchLearningCalendar(book,calendar);}
  const registration=book.learning!.registration!;if(registration.worldKey!==input.worldKey||registration.playerKey!==input.playerKey||registration.scheduledGames!==input.scheduledGames)throw new RangeError('PITCH_LEARNING_REGISTRATION_CHANGED');
  let injured=registration.openingInjured;const regular:{day:number;healthy:boolean}[]=[];
@@ -41,8 +57,8 @@ export function settleRegisteredPitchLearning(input:{worldKey:string;seasonKey:s
  let completed=regular.length;
  if(registration.calendar){
   validateCalendar(registration.calendar,registration.scheduledGames);
-  if(input.schedule){const published=new Map(input.schedule.map(g=>[g.simulationKey,g.worldDay]));if(registration.calendar.some(g=>published.get(g.gameKey)!==g.day))throw new RangeError('PITCH_LEARNING_CALENDAR_CHANGED');}
-  const closedThrough=Math.max(-1,...input.health.games.filter(g=>g.evidence.seasonKey===input.seasonKey).map(g=>g.evidence.day));let missing=false;completed=0;
+  if(input.schedule){const published=shared.published??=new Map(input.schedule.map(g=>[g.simulationKey,g.worldDay]));if(registration.calendar.some(g=>published.get(g.gameKey)!==g.day))throw new RangeError('PITCH_LEARNING_CALENDAR_CHANGED');}
+  const closedThrough=shared.closedThrough??=input.health.games.reduce((last,g)=>g.evidence.seasonKey===input.seasonKey?Math.max(last,g.evidence.day):last,-1);let missing=false;completed=0;
   for(const g of registration.calendar){const row=input.records.games[g.gameKey];if(!row||g.day>closedThrough){missing=true;continue;}if(row.scope.seasonKey!==input.seasonKey||row.scope.phase!=='REGULAR'||row.worldDay!==g.day)throw new RangeError('CHANGED_LEARNING_SCHEDULE_GAME');if(missing)throw new RangeError('NON_CHRONOLOGICAL_LEARNING_CALENDAR');completed++;}
  }
  for(let q=1;q<=4;q++){

@@ -15,7 +15,7 @@ import {settleRelationshipDirectDuels} from './relationships.js';
 import {queueUsMajorDebut} from './us-debut.js';
 import {refreshCareerSeasonGoals} from './season-goals.js';
 import type {UsPostseasonPhase} from './us-postseason-progress.js';
-import {settleRegisteredPitchLearning,registerPitchLearning,registerPitchLearningCalendar} from './pitch-learning-progress.js';
+import {registeredPitchLearningSettler,registerPitchLearning,registerPitchLearningCalendar} from './pitch-learning-progress.js';
 import {reviewUsLevel,settleUsMinorOptions} from './us-levels.js';
 import type {UsLevelReview,UsLevelMove} from './us-levels.js';
 import {raiseUsWindowEvent} from './us-windows.js';
@@ -131,10 +131,11 @@ function closeDay(c:UsCareer,day:number,military=false){
  season.days.push({day,evidence:military?canonicalJson(games.map(g=>g.gameKey)):canonicalSeal(games),level,appearances,rehabilitating,injured:injured.sort(),recovered:recovered.sort()});
  settleUsSalaryDay(c,day);
  settleUsOpponentReunions(c,day);
+ const settleLearning=registeredPitchLearningSettler({worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,records:c.records,health:c.health,schedule});
  for(const [playerKey,book] of Object.entries(c.world.repertoires)){
   if(!book.learning)continue;
   const meta=book.learning.registration,own=playerKey===c.protagonistKey;
-  c.world.repertoires[playerKey]=settleRegisteredPitchLearning({worldKey:c.world.worldKey,seasonKey:c.world.seasonKey,playerKey,repertoire:book,records:c.records,health:c.health,schedule,scheduledGames:meta?.scheduledGames??100,numerator:own?(c.difficulty==='SECRET_CHEAT'?15:5):c.difficulty==='REALISTIC'?6:5});
+  c.world.repertoires[playerKey]=settleLearning({playerKey,repertoire:book,scheduledGames:meta?.scheduledGames??100,numerator:own?(c.difficulty==='SECRET_CHEAT'?15:5):c.difficulty==='REALISTIC'?6:5});
  }
  c.traits=refreshCareerTraits(c,day,US_LEVELS);
  Object.assign(c,refreshProCareerAdvice(c,day));
