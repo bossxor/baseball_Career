@@ -271,7 +271,7 @@ export function assertGameInvariants(state: GameState): void {
 /** Sorted serialization for external SHA256; no platform/owner/physical-ID fields. */
 export function canonicalJson(value: unknown): string {
   if (value === null || typeof value === 'string' || typeof value === 'boolean') return JSON.stringify(value);
-  if (typeof value === 'number') return JSON.stringify(finite(value));
+  if (typeof value === 'number') return String(finite(value));
   if (Array.isArray(value)) return `[${value.map(canonicalJson).join(',')}]`;
   if (typeof value === 'object') return `{${Object.entries(value).sort(([a], [b]) => a < b ? -1 : a > b ? 1 : 0).map(([key, child]) => `${JSON.stringify(key)}:${canonicalJson(child)}`).join(',')}}`;
   throw new TypeError('Unsupported canonical value');
