@@ -19,44 +19,44 @@ export function Home({ data, state = 'ready', showSaves = false, logo, onResume,
   const banner = bannerFor('S01', state);
 
   return (
-    <main className="screen clubhouse" aria-labelledby="S01-title" aria-busy={busy} data-screen="S01" data-state={state}>
-      <header className="clubhouse-bar">
-        <div className="clubhouse-brand">{logo ? <img src={logo} alt="" width="36" height="36" /> : null}<span>다시, 플레이볼</span></div>
-        {onSettings || onStorageSwitch ? <nav className="clubhouse-utility" aria-label="저장 및 설정">
+    <main className="screen game-lobby" aria-labelledby="S01-title" aria-busy={busy} data-screen="S01" data-state={state}>
+      <header className="game-mast">
+        {logo ? <img className="game-mark" src={logo} alt="" width="36" height="36" /> : null}
+        <span className="game-mast-word">플레이볼</span>
+        {onSettings || onStorageSwitch ? <nav className="game-mast-tools" aria-label="저장 및 설정">
           {onSettings ? <button type="button" className="ghost" disabled={busy} onClick={onSettings}>설정</button> : null}
           {onStorageSwitch ? <button type="button" className="ghost" onClick={onStorageSwitch}>{storageSwitchLabel}</button> : null}
         </nav> : null}
       </header>
-      <section className="clubhouse-cover" aria-labelledby="S01-title">
-        <div className="clubhouse-art" aria-hidden="true" />
-        <div className="clubhouse-title">
-          <h1 id="S01-title">다시,<br />플레이볼</h1>
-          <p>선수로 한 시즌을 뛰거나<br className="clubhouse-break" /> 구단을 맡아 다음 시즌을 준비하세요.</p>
+      <section className="lobby-hero" aria-labelledby="S01-title">
+        <div className="lobby-hero-photo" aria-hidden="true" />
+        <div className="lobby-wordmark">
+          <h1 id="S01-title"><span>다시,</span><strong>플레이볼</strong></h1>
+          <p>나의 첫 타석부터 구단의 마지막 아웃까지</p>
         </div>
       </section>
-      {banner ? <div className="clubhouse-message">
+      {banner ? <div className="lobby-feedback">
         <p className="banner banner-error" role="alert">{banner}</p>
         {onReload ? <Button onClick={onReload}>다시 시도</Button> : null}
       </div> : null}
-      <section className="clubhouse-dugout" aria-label={resume ? '이어하기' : '시작'}>
-        <div className="clubhouse-play">
-          <div className="clubhouse-resume">
-            <h2>{recent?.title ?? (busy ? '게임 준비 중' : '첫 경기 준비')}</h2>
-            {resume ? <p>{recent?.seasonLabel} {resume.label}</p>
-              : data && !saves.length ? <p>최근 세이브가 없습니다.</p> : null}
+      <section className="lobby-bench" aria-label={resume ? '이어하기' : '시작'}>
+        {resume ? (
+          <div className="lobby-resume">
+            <div><p className="kicker">최근 저장</p><h2>{recent?.title ?? '저장한 게임'}</h2><p className="muted">{recent?.seasonLabel} {resume.label}</p></div>
+            <Button primary busy={busy} onClick={() => onResume?.(resume.saveId)}>이어하기</Button>
+            {saves.length === 1 && onCopySave ? <Button busy={busy} onClick={() => onCopySave(resume.saveId)}>이 기기로 복사</Button> : null}
           </div>
-          <div className="clubhouse-play-buttons">
-            {resume ? <Button primary busy={busy} onClick={() => onResume?.(resume.saveId)}>이어하기</Button>
-              : onNew ? <Button primary busy={busy} onClick={() => onNew('CAREER')}>새 커리어</Button> : null}
-            {resume && saves.length === 1 && onCopySave ? <Button busy={busy} onClick={() => onCopySave(resume.saveId)}>이 기기로 복사</Button> : null}
-            {saves.length > 1 ? <button type="button" className="btn" aria-expanded={showSaves} onClick={onToggleSaves}>다른 게임 선택</button> : null}
-          </div>
-        </div>
-        <nav aria-label="모드" className="clubhouse-modes">
-          {onNew && resume ? <Button busy={busy} onClick={() => onNew('CAREER')}>새 커리어</Button> : null}
-          {onNew ? <Button busy={busy} onClick={() => onNew('CLUB')}>새 구단</Button> : null}
+        ) : <p className="lobby-save-status muted">{busy ? '저장 목록을 확인하는 중' : data && !saves.length ? '최근 세이브가 없습니다.' : ''}</p>}
+        {onNew ? (
+          <nav aria-label="모드 선택" className="lobby-modes">
+            <div className="mode-launch"><span className="mode-sign" aria-hidden="true">◇</span><div><strong>선수 커리어</strong><p>고교에서 시작해 한 선수의 길을 고릅니다.</p></div><Button primary={!resume} busy={busy} onClick={() => onNew('CAREER')}>새 커리어</Button></div>
+            <div className="mode-launch"><span className="mode-sign" aria-hidden="true">▥</span><div><strong>구단 운영</strong><p>선수단, 예산, 다음 시즌을 책임집니다.</p></div><Button busy={busy} onClick={() => onNew('CLUB')}>새 구단</Button></div>
+          </nav>
+        ) : null}
+        {saves.length > 1 || onDeviceBackups ? <div className="lobby-tools">
+          {saves.length > 1 ? <button type="button" className="btn" aria-expanded={showSaves} onClick={onToggleSaves}>다른 게임 선택</button> : null}
           {onDeviceBackups ? <Button busy={busy} onClick={onDeviceBackups}>기기 저장 백업</Button> : null}
-        </nav>
+        </div> : null}
         {showSaves ? (
           <ul className="save-list" aria-label="저장된 게임">
             {saves.map(save => (

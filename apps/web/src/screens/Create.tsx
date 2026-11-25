@@ -34,7 +34,7 @@ export function Create({ draft, step, state = 'ready', errors, onDraft, onStep, 
   const next = () => onStep?.(CREATION_STEPS[index + 1]!);
   const preview = previewOf(draft), kind: PlayerKind | null = draft.kind;
   return (
-    <ScreenFrame id="S02" state={state} onBack={index === 0 ? onCancel : () => onStep?.(CREATION_STEPS[index - 1]!)}>
+    <ScreenFrame id="S02" title="선수 등록" state={state} onBack={index === 0 ? onCancel : () => onStep?.(CREATION_STEPS[index - 1]!)}>
       <ol className="stepper" aria-label="생성 단계">
         {CREATION_STEPS.map((s, i) => <li key={s} aria-current={s === step ? 'step' : undefined} className={i < index ? 'done' : s === step ? 'now' : ''}>{STEP_LABELS[s]}</li>)}
       </ol>

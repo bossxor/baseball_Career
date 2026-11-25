@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Button, FieldError } from '../ui.js';
-import { Illustration } from '../assets/Illustration.js';
+import { Button, FieldError, GameHeader } from '../ui.js';
 
 export interface LoginProps {
   busy?: boolean;
@@ -14,8 +13,7 @@ export function Login({ busy = false, error = null, onSubmit, onDev, onBack }: L
   const [email, setEmail] = useState(''), [password, setPassword] = useState('');
   return (
     <main className="screen account-login" data-screen="LOGIN" aria-labelledby="login-title">
-      {onBack ? <header className="topbar"><button type="button" className="ghost" onClick={onBack}>이 기기 게임으로</button></header> : null}
-      <Illustration name="hero" className="login-art" />
+      <GameHeader onBack={onBack} backLabel="이 기기 게임으로" />
       <h1 id="login-title" className="screen-title">계정 저장 열기</h1>
       <p className="lead"><span>계정에 저장한 게임을 불러옵니다.</span></p>
       <form className="panel" onSubmit={e => { e.preventDefault(); onSubmit?.(email.trim(), password); }} noValidate>

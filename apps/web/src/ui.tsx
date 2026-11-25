@@ -22,22 +22,27 @@ export const flowScene = (title: string): SceneName =>
 /** Empty state: small glove illustration above the text. */
 export const Empty = ({ children }: { children: ReactNode }) => <div className="empty-state"><Illustration name="empty" /><p className="empty">{children}</p></div>;
 
+export function GameHeader({ onBack, backLabel = '뒤로', status }: { onBack?: (() => void) | undefined; backLabel?: string; status?: string | undefined }) {
+  return <header className="topbar game-mast">
+    {onBack ? <button type="button" className="ghost game-back" onClick={onBack}>{backLabel}</button> : <span />}
+    <span className="game-mast-word">다시, 플레이볼</span>
+    {status ? <span className="save-state" role="status">{status}</span> : null}
+  </header>;
+}
+
 export interface FrameProps {
-  id: ScreenId; state?: ScreenState; saveLabel?: string;
+  id: ScreenId; state?: ScreenState; saveLabel?: string; title?: string;
   onBack?: (() => void) | undefined; onReload?: (() => void) | undefined; children: ReactNode;
 }
 /** Common structure (17): top bar (back / save state) → title → state banner → content. Content is kept while loading;
  * only confirming controls are disabled by the screens through `isBusy`. */
-export function ScreenFrame({ id, state = 'ready', saveLabel, onBack, onReload, children }: FrameProps) {
+export function ScreenFrame({ id, state = 'ready', saveLabel, title, onBack, onReload, children }: FrameProps) {
   const banner = bannerFor(id, state), busy = isBusy(state), titleId = `${id}-title`;
   return (
     <main className="screen" aria-labelledby={titleId} aria-busy={busy} data-screen={id} data-state={state}>
-      <header className="topbar">
-        {onBack ? <button type="button" className="ghost" onClick={onBack}>뒤로</button> : <span />}
-        {saveLabel ? <span className="save-state" role="status">{saveLabel}</span> : null}
-      </header>
-      <Illustration name={sceneFor(id)} />
-      <h1 id={titleId} className="screen-title">{SCREEN_TITLES[id]}</h1>
+      <GameHeader onBack={onBack} status={saveLabel} />
+      <h1 id={titleId} className="screen-title">{title ?? SCREEN_TITLES[id]}</h1>
+      {id !== 'S02' && id !== 'S03' ? <Illustration name={sceneFor(id)} /> : null}
       {banner ? <p className={`banner banner-${state}`} role={state === 'error' || state === 'conflict' ? 'alert' : 'status'}>{banner}</p> : null}
       {state === 'error' ? <Illustration name="error" /> : null}
       {state === 'error' && onReload ? <Button onClick={onReload}>다시 시도</Button> : null}

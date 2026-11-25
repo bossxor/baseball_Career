@@ -1,5 +1,5 @@
 import { forwardRef, useEffect, useRef, useState } from 'react';
-import { Empty, Button, flowScene, isBusy } from '../ui.js';
+import { Empty, Button, GameHeader, flowScene, isBusy } from '../ui.js';
 import { Illustration } from '../assets/Illustration.js';
 import { stateText } from '../screen-states.js';
 import type { ScreenState } from '../screen-states.js';
@@ -27,8 +27,8 @@ export function Flow({ view, state = 'ready', seasonJob, onCommand, onBack, onRe
   useEffect(() => { if (asking && !pending) setAsking(null); if (signing && !signCmd) setSigning(null); }, [asking, pending, signing, signCmd]);
   return (
     <main className="screen game-flow" aria-labelledby="flow-title" aria-busy={busy && !seasonJob} data-screen="FLOW" data-state={state}>
-      <header className="topbar">{onBack ? <button type="button" className="ghost" onClick={onBack}>{seasonJob ? '홈으로' : '커리어로'}</button> : <span />}</header>
-      <Illustration name={flowScene(view?.title ?? '')} />
+      <GameHeader onBack={onBack} backLabel={seasonJob ? '홈으로' : '커리어로'} />
+      {view?.title && /결산|은퇴|졸업|포스트시즌/.test(view.title) ? <Illustration name={flowScene(view.title)} /> : null}
       <h1 id="flow-title" className="screen-title">{seasonJob ? '시즌 진행 중' : view?.title ?? '진행'}</h1>
       {banner ? <p className={`banner banner-${state}`} role={state === 'error' || state === 'conflict' ? 'alert' : 'status'}>{banner}</p> : null}
       {state === 'conflict' && onReload ? <Button primary onClick={onReload}>최신 저장 불러오기</Button> : null}

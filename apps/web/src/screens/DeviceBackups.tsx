@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { AccountDeviceBackup } from '../device-save-copy.js';
 import { ApiError } from '../errors.js';
 import type { SaveSummary } from '../model.js';
-import { Button, Empty } from '../ui.js';
+import { Button, Empty, GameHeader } from '../ui.js';
 
 export type DeviceBackupActions = {
   listDevice: () => Promise<readonly SaveSummary[]>;
@@ -76,7 +76,7 @@ export function DeviceBackups({ actions, onBack }: { actions: DeviceBackupAction
   const busy = loadState === 'loading' || operation !== null;
   return (
     <main className="screen" aria-labelledby="device-backups-title">
-      <header className="topbar"><button type="button" className="ghost" onClick={onBack}>뒤로</button></header>
+      <GameHeader onBack={onBack} />
       <h1 id="device-backups-title" className="screen-title" ref={heading} tabIndex={-1}>기기 저장 백업</h1>
       <p className="lead">기기 저장을 계정에 백업하면 다른 기기에서 새 저장으로 복원할 수 있습니다.</p>
       {operation || feedback || loadState !== 'ready' ? <div className="notice-card">

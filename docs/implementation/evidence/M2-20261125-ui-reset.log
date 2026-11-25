@@ -1,0 +1,8 @@
+2026-11-25 KST
+Web production build and changed UI ESLint: exit 0.
+Focused UI tests: 24 passed, 0 failed.
+Android debug APK: Gradle assembleDebug succeeded; bundled index matched current web build.
+SM-S948N: installed updated debug package, opened embedded home, player form and club picker without horizontal overflow. Native match-and-save upgrade test from the earlier package was inconclusive; this native run checked screen transitions.
+Chromium Android viewport 320/360/390/430 and desktop viewport 768/1024/1280/1440: no horizontal overflow.
+Both Chromium runs: official high-school game count 1 before process restart and 1 after loading the same save. No account login.
+Production Neon and full M2 native closure are outside this visual verification.
