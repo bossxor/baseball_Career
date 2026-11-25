@@ -108,7 +108,30 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
  }
  if(phase.phase==='SEASON_PROGRESS'){
   if(c.days&&c.competitionSchedule){const g=teamProgress(c.competitionSchedule.leagues[c.registration.competitionKey==='FUTURES'?'FUTURES':'KBO'],c.protagonistClubId,c.records.games);lines.push({label:'정규시즌',value:`${g.done}/${g.total}경기 · ${c.days.days.length}일 경과`});}
+  const lastReview = c.advice?.roleReviews.at(-1);
+  if (lastReview?.seasonKey === c.world.seasonKey) {
+   const role = lastReview.targetRole === 'SP' ? '선발' : '마무리';
+   lines.push({ label: '최근 보직 심사', value: lastReview.outcome === 'ROLE_CHANGED' ? role + ' 보직 확정' : role + ' 경쟁에서 다른 선수가 선택됐습니다.' });
+  }
   const commands:FlowCommand[]=[];
+  if (!phase.pendingGame && c.advice?.notices.some(event => event.status === 'OPEN' && (event.definitionId === 'E14' || event.definitionId === 'E15'))) {
+   for (const event of engine.proCareerAdviceView(c).notices) {
+    if (event.definitionId !== 'E14' && event.definitionId !== 'E15') continue;
+    const starter = event.definitionId === 'E14';
+    const review = starter ? 'REQUEST_SP_REVIEW' : 'REQUEST_CP_REVIEW';
+    const role = starter ? '선발' : '마무리';
+    if (!event.commands.includes(review)) continue;
+    for (const [command, label] of [[review, role + ' 경쟁 지원'], ['ACK_EVENT', role + ' 제안 넘기기']] as const) {
+     if (!event.commands.includes(command)) continue;
+     commands.push({
+      id: JSON.stringify([event.eventKey, command]),
+      label,
+      type: 'CAREER_PRO_EVENT_ADVICE',
+      payload: { careerRevision: c.revision, eventKey: event.eventKey, eventVersion: event.eventVersion, command },
+     });
+    }
+   }
+  }
   if(!phase.pendingGame){
    const choices:engine.TrainingChoice[]=[...abilityKeys(p.kind).map(ability=>({type:'GUARANTEED' as const,ability})),{type:'CONDITIONING'}];
    for(const ch of choices){let ok:boolean;try{ok=engine.previewKboTraining(c,ch).eligible;}catch{ok=false;}

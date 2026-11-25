@@ -7,7 +7,7 @@ import {activeUsCareer} from '../../../packages/engine/test/us-fixtures.js';
 import {careerRepertoireEventsView,resolveCareerRepertoireEvent,refreshCareerRepertoireEvents} from '../../../packages/engine/src/repertoire-events.js';
 import {canonicalJson} from '../../../packages/engine/src/game.js';
 import {eq} from 'drizzle-orm';
-import {createTestDb,seedAllowedSubject,gameSaves} from '@playball/db';
+import {createTestDb,seedAllowedSubject,seedSave,gameSaves} from '@playball/db';
 import {createApp} from '../src/app.js';
 import {json} from './json.js';
 import {applyEngineCommand} from '../src/engine-command.js';
@@ -20,8 +20,8 @@ import {emptyBatting} from '../../../packages/engine/src/stats.js';
 import type {KboCareer} from '@playball/engine';
 
 // Controlled registration/contribution/medical prefix; real native choice writers below.
-function controlled(days:number){
- const c=enteredKboCareer(),club=c.world.clubs.find(x=>x.id===c.protagonistClubId)!;c.registration.firstTeam=true;if(!club.firstTeam.includes(c.protagonistKey))club.firstTeam.push(c.protagonistKey);
+function controlled(days:number,kind:Parameters<typeof enteredKboCareer>[0]='HITTER'){
+ const c=enteredKboCareer(kind),club=c.world.clubs.find(x=>x.id===c.protagonistClubId)!;c.registration.firstTeam=true;if(!club.firstTeam.includes(c.protagonistKey))club.firstTeam.push(c.protagonistKey);
  c.records={revision:days,games:{}};c.health.games=[];
  for(let day=1;day<=days;day++){const key='api-pro-'+day;c.records.games[key]={gameKey:key,worldDay:day,scope:{seasonKey:c.world.seasonKey,leagueKey:'KBO',phase:'REGULAR'},teams:{[club.id]:{games:1,W:1,L:0,T:0,R:1,RA:0}},batting:{},pitching:{},batterSplits:{},pitcherSplits:{},matchups:{}};c.health.games=[...c.health.games,{evidence:{gameKey:key,teamKey:'KBO:'+club.id,seasonKey:c.world.seasonKey,day,roster:[c.protagonistKey],appearances:[]},result:{injured:[],recovered:[]}}];}
  c.phaseContext={phase:'SEASON_PROGRESS',nextWorldDay:days+1,pendingGame:null};return c;
@@ -107,4 +107,68 @@ test('repertoire notices stop offering a domain choice when its actual preseason
 test('archived or blocking-decision careers cannot resolve repertoire notices or expose a runnable action',()=>{
  const source=refreshCareerRepertoireEvents(enteredKboCareer('HITTER')),e=source.repertoireEvents!.notices.find(n=>n.definitionId==='E88')!;
  for(const phase of ['ARCHIVED','EVENT_DECISION'] as const){const c={...source,phaseContext:{phase} as typeof source.phaseContext},before=canonicalJson(c);assert.throws(()=>dispatch(c,'REPERTOIRE',e,'ACK_EVENT'));assert.equal(canonicalJson(c),before);assert.equal(careerRepertoireEventsView(c).notices.find(n=>n.eventKey===e.eventKey)!.commands.length,0);}
+});
+
+test('KBO flow serves eligible E14 and E15 choices through the normal saved career', async t => {
+ const { db, client } = await createTestDb();
+ t.after(() => client.close());
+ const owner = 'role-review-owner';
+ await seedAllowedSubject(db, owner);
+ const app = createApp({ db, auth: { allowDevBearer: true } });
+ const headers = { Authorization: 'Bearer dev:' + owner, 'Content-Type': 'application/json' };
+ for (const [id, request, ability, role] of [
+  ['E14', 'REQUEST_SP_REVIEW', 'STAMINA', 'SP'],
+  ['E15', 'REQUEST_CP_REVIEW', 'COMPOSURE', 'CP'],
+ ] as const) {
+  const c = controlled(24, 'PITCHER'), player = c.world.players[c.protagonistKey]!;
+  const club = c.world.clubs.find(row => row.id === c.protagonistClubId)!;
+  player.position = 'RP';
+  player.abilities[ability] = 600_000;
+  for (const key of club.firstTeam) {
+   const other = c.world.players[key]!;
+   if (key === c.protagonistKey || other.kind !== 'PITCHER') continue;
+   other.position = 'RP';
+   other.abilities[ability] = 599_999;
+  }
+  const definition = eventDefinition(id);
+  const event = createWorldEvent({
+   definitionId: id, worldKey: c.world.worldKey, seasonKey: c.world.seasonKey,
+   evidence: { version: 1, type: definition.evidenceDomain, fields: {
+    playerSimulationKey: c.protagonistKey, worldSeasonId: c.world.seasonKey, adviceWindowId: 'api-role-window',
+   } },
+   resume: { worldKey: c.world.worldKey, seasonKey: c.world.seasonKey, phase: 'SEASON_PROGRESS',
+    competitionKey: 'KBO', registrationKey: c.protagonistClubId, sourceRevision: c.revision },
+   sourceSequence: 1, worldDay: 24,
+  });
+  c.advice = { schemaVersion: 1, worldKey: c.world.worldKey, playerKey: c.protagonistKey,
+   rng: createStreams(c.world.seed, 'api-role-review-control').event, checkpoints: [], notices: [event],
+   positionPlans: [], positionFits: null, roleReviews: [], restRequests: [] };
+  const saveId = 'controlled-role-' + id;
+  await seedSave(db, { id: saveId, ownerId: owner, revision: 0n, phase: 'SEASON_PROGRESS', state: { schemaVersion: 1, career: c } });
+  const path = '/api/saves/' + saveId;
+  const readFlow = async () => {
+   const response = await app.request(path + '/screens/CAREER_FLOW', { headers });
+   assert.equal(response.status, 200);
+   return json<{ commands: { id: string; type: string; payload: Record<string, unknown> }[]; lines: { label: string; value: string }[] }>(response);
+  };
+  const flow = await readFlow(), selected = flow.commands.find(command => command.payload.command === request);
+  assert.ok(selected);
+  assert.equal(selected.type, 'CAREER_PRO_EVENT_ADVICE');
+  assert.ok(flow.commands.some(command => command.payload.command === 'ACK_EVENT'));
+  assert.ok(flow.commands.some(command => command.id === 'adv-season'));
+  const apply = () => app.request(path + '/commands', { method: 'POST', headers,
+   body: JSON.stringify({ commandId: 'review-' + id, expectedRevision: 0, type: selected.type, payload: selected.payload }) });
+  const first = await apply();
+  assert.equal(first.status, 200);
+  assert.deepEqual(await json(await apply()), await json(first));
+  const [saved] = await storedSave(db, saveId), next = (saved!.state as { career: KboCareer }).career;
+  assert.equal(next.world.players[c.protagonistKey]!.position, role);
+  assert.equal(next.advice?.roleReviews.length, 1);
+  assert.equal(next.advice?.roleReviews[0]?.targetRole, role);
+  const resolved = await readFlow();
+  assert.ok(!resolved.commands.some(command => command.payload.command === request));
+  assert.deepEqual(resolved.lines.find(line => line.label === '최근 보직 심사'), {
+   label: '최근 보직 심사', value: (role === 'SP' ? '선발' : '마무리') + ' 보직 확정',
+  });
+ }
 });
