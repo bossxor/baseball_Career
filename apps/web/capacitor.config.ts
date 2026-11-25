@@ -10,6 +10,9 @@ const config: CapacitorConfig = {
   server: {
     androidScheme: 'https',
   },
+  plugins: {
+    SystemBars: { style: 'DARK' },
+  },
   android: {
     allowMixedContent: false,
   },

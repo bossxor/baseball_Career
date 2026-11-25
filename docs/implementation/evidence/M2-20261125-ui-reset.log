@@ -6,3 +6,4 @@ SM-S948N: installed updated debug package, opened embedded home, player form and
 Chromium Android viewport 320/360/390/430 and desktop viewport 768/1024/1280/1440: no horizontal overflow.
 Both Chromium runs: official high-school game count 1 before process restart and 1 after loading the same save. No account login.
 Production Neon and full M2 native closure are outside this visual verification.
+Final Android APK reinstalled with dark SystemBars. SM-S948N screenshot confirmed bright status-bar clock on the dark background.
