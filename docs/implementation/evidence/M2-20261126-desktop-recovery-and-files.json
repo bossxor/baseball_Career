@@ -1,0 +1,85 @@
+{
+  "desktopRecovery": {
+    "pathId": "P22",
+    "scope": "ISOLATED_CHROMIUM_PROFILES_LOCAL_HTTP",
+    "distinctProfiles": 3,
+    "database": "PGlite",
+    "rulesVersion": "1.0.0",
+    "nodeVersion": "24.19.0",
+    "responseLoss": [
+      "AFTER_CREATION_COMMIT",
+      "AFTER_COMMAND_COMMIT"
+    ],
+    "creationId": "p22-desktop-creation",
+    "commandId": "one-official-game",
+    "ownedSaves": 1,
+    "matchingReceipts": 1,
+    "requestHash": "7af2d8fd000df40a40db3611d1f020cb88c34ec335d4b14e558e3f975fcc35db",
+    "before": {
+      "revision": 6,
+      "hash": "f486a10dcb763bab24625f4a308b16a91c420163f557221854953f8891d4bdfc",
+      "recordCount": 4
+    },
+    "after": {
+      "revision": 7,
+      "hash": "285e92142e975f4b76c35b031f8618394a63a1573443664074627ecb31c95701",
+      "recordCount": 6
+    },
+    "visibleTeamGames": 1,
+    "staleStatus": 409,
+    "foreignReadStatus": 404,
+    "foreignWriteStatus": 404
+  },
+  "desktopProductUi": [
+    {
+      "stage": "computed-accessibility",
+      "bodyFont": "16px",
+      "buttonHeight": 48,
+      "buttonWidth": 156,
+      "focusOutline": "3px"
+    },
+    {
+      "stage": "before-relaunch",
+      "games": 1
+    },
+    {
+      "device": "Desktop Chromium",
+      "processRestarted": true,
+      "defaultLoginRequired": false,
+      "nativeAndroidBridgeAbsent": true,
+      "malformedLiveAndColdRoutesRecovered": true,
+      "mode": "desktop",
+      "heroLoaded": true,
+      "viewports": [
+        768,
+        1024,
+        1280,
+        1440
+      ],
+      "noHorizontalOverflow": true,
+      "createdFromRealAppUI": true,
+      "teamGamesBeforeClose": 1,
+      "teamGamesAfterRelaunch": 1,
+      "resourcesLocal": true
+    }
+  ],
+  "webBeforeAccessibilityFix": {
+    "total": 68,
+    "passed": 66,
+    "failed": 2
+  },
+  "accessibilityAfterFix": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0
+  },
+  "apiFileRegression": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0
+  },
+  "webBuildExitCode": 0,
+  "apiTypecheckExitCode": 0,
+  "changedFileLintExitCode": 0,
+  "verificationScope": "Desktop Chromium profiles, local PGlite, native high-school save, focused API and accessibility checks"
+}
