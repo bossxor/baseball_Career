@@ -1,3 +1,11 @@
+# 2026-11-26 P02 마무리 보직 심사와 후속 구종 경험치
+
+실제 커리어 명령으로 고교 216경기를 마친 투수가 삼성에 7라운드 지명됐다. 1군 48번째 경기 뒤 E15 마무리 심사에 지원해 RP에서 CP로 바뀌고, 이후 P07 구종 2분기 경험치 25,000을 받았다. 한 번씩 실행한 탐색 결과다. [탐색 기록](evidence/M2-20261126-P02-composure-pilot.json)
+
+정식 검증은 아래 명령으로 실행 중이다. 25단계마다 저장하며 같은 명령으로 재개한다. 이전 시드는 800단계 저장을 보존했다. 그 저장은 변경 전 코드 `65539e7`에서만 재개할 수 있다. 경로 완료 수는 정식 검증 결과로 갱신한다.
+
+`node --max-old-space-size=8192 --import tsx scripts/verify-m2-closure.mjs .local-verification/p02-20261125-9cf61a3/p02-composure.json.gz --scenarios=nativePaths --native=P02 --pitcher-creation=HS_PITCHER_COMPOSURE --p02-checkpoint`
+
 # 2026-11-26 Android 업데이트 후 기기 저장 보존
 
 SM-S948N의 별도 테스트 패키지에서 이전 APK로 고교 1경기를 저장했다. 새 화면의 APK를 같은 패키지에 덮어 설치한 뒤 로그인 없이 이어하기로 같은 세이브를 열었다. 경기 수 1, 저장 리비전 7, 상태 조각 2개와 SHA-256이 일치했다. 이후 새 KIA 구단도 별도 슬롯으로 저장했다. [검증 기록](evidence/M2-20261126-android-upgrade.log)

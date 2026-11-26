@@ -35,13 +35,19 @@ export const P04_HS_SPEC={...HS_SPEC,worldKey:'m2-native-early-return',seed:'m2-
 // Defense-first creation and the fixed low draft draw make a null result plausible without changing any scores.
 export const createNativeP04Hs=()=>createHighSchoolCareer(createHighSchoolWorld(P04_HS_SPEC),'REALISTIC');
 
-export const createNativePitcherHs=(seed='m2-closure-native-pitcher-v1')=>createHighSchoolCareer(createHighSchoolWorld({
+export const createNativePitcherHs=(seed='m2-closure-native-pitcher-v1',style={
+ archetype:'INNINGS',focus:['VELOCITY','STUFF','COMMAND','STAMINA'],
+})=>createHighSchoolCareer(createHighSchoolWorld({
  ...HS_SPEC,seed,secondaryPitch:'P03',
- player:{...HS_SPEC.player,kind:'PITCHER',position:'RP',pitchForm:'OVERHAND',archetype:'INNINGS',focus:['VELOCITY','STUFF','COMMAND','STAMINA']},
+ player:{...HS_SPEC.player,kind:'PITCHER',position:'RP',pitchForm:'OVERHAND',...style},
 }),'GROWTH');
 export const PITCHER_CREATIONS={
  HS_PITCHER:createNativePitcherHs,
  HS_PITCHER_V7:()=>createNativePitcherHs('m2-closure-native-pitcher-v7'),
+ // Normal creation inputs found by playing through the season to an E15 review.
+ HS_PITCHER_COMPOSURE:()=>createNativePitcherHs('m2-p02-composure-11',{
+  archetype:'COMPOSURE',focus:['VELOCITY','COMMAND','COMPOSURE','STAMINA'],
+ }),
 };
 
 const FOCUS=new Set(['E01','E02','E03']);

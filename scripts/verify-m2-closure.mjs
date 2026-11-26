@@ -4,6 +4,7 @@ import {readFileSync, readdirSync, writeFileSync, mkdirSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {resolve, relative} from 'node:path';
 import {gzipSync} from 'node:zlib';
+import {isDeepStrictEqual} from 'node:util';
 import {canonicalSha256 as hash} from '../packages/engine/src/canonical-seal.ts';
 import {createHighSchoolWorld, assertHighSchoolWorld} from '../packages/engine/src/high-school-world.ts';
 import {createHighSchoolCareer, confirmCareerPlayer, resolveCareerFocusEvent, confirmCareerPreseason} from '../packages/engine/src/high-school-career.ts';
@@ -26,6 +27,9 @@ import {PATH_GAPS,PATH_REQUIREMENTS,controlledSchoolPaths,collegeServicePath,age
 
 const root=fileURLToPath(new URL('../',import.meta.url));
 const json=value=>JSON.parse(JSON.stringify(value));
+const assertCanonicalEqual=(actual,expected,message)=>{
+ if(!isDeepStrictEqual(actual,expected))assert.equal(hash(actual),hash(expected),message);
+};
 let activeTrace;
 const completedTraces=[];
 
@@ -40,10 +44,14 @@ function trace(id,initial,prefix,parent){
    const source=state,before=hash(source),commandInput=json(input),inputHash=hash(commandInput),out=apply(source),next=out?.career??out;
    assert.equal(hash(source),before,'command mutated its input');
    assert.equal(hash(input),inputHash,'command mutated its input arguments');
-   assert.equal(hash(json(next)),hash(next),'state must survive JSON');
+   assertCanonicalEqual(json(next),next,'state must survive JSON');
    // Replay from serialized source, with the same exact command input and revision.
-   const replaySource=json(source),replay=apply(replaySource);assert.equal(hash(replaySource),before,'replay mutated its input');assert.equal(hash(replay),hash(out),'JSON replay diverged');
-   rows.push({command,input:commandInput,inputHash,sourceRevision:source.revision,resultRevision:next.revision,sourceHash:before,resultHash:hash(next),outputHash:hash(out)});
+   const replaySource=json(source),replay=apply(replaySource);
+   assert.equal(hash(replaySource),before,'replay mutated its input');
+   assertCanonicalEqual(replay,out,'JSON replay diverged');
+   const resultHash=hash(next);
+   const outputHash=out===next?resultHash:hash(out);
+   rows.push({command,input:commandInput,inputHash,sourceRevision:source.revision,resultRevision:next.revision,sourceHash:before,resultHash,outputHash});
    state=next;return state;
   },
   finish(invariantReport){const result={id,pathIds:[...new Set(id.match(/P\d{2}/g)??[])],parentId:parent?.id??null,prefix,initialFixture,initialFixtureHash:hash(initialFixture),commandReceipts:rows,commandChainHash:hash(rows),finalStateHash:hash(state),invariantReport,status:'M2_SLICE_PROVEN_FULL_PATH_NOT_CLAIMED'};completedTraces.push(result);current.finished=true;return result;}

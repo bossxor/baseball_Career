@@ -1,0 +1,39 @@
+{
+  "status": "CANDIDATE_DISCOVERY_ONLY",
+  "seed": "m2-p02-composure-11",
+  "archetype": "COMPOSURE",
+  "registration": "KBO",
+  "draftedClubId": "SS",
+  "highSchoolGames": 216,
+  "draftRound": 7,
+  "roleReview": {
+    "definitionId": "E15",
+    "teamGames": 48,
+    "targetRole": "CP",
+    "outcome": "ROLE_CHANGED",
+    "effectiveAfterDay": 120,
+    "quartersAtReview": 1
+  },
+  "pitchId": "P07",
+  "quarterGains": [
+    {
+      "quarter": 1,
+      "gain": 25000
+    },
+    {
+      "quarter": 2,
+      "gain": 25000
+    }
+  ],
+  "executedCommands": 543,
+  "pilotExitCode": 0,
+  "explanation": "Actual career commands were executed once for candidate discovery. Per-command JSON replay and receipt hashes are not in this file.",
+  "controlledReplay": {
+    "exitCode": 0,
+    "commandReceipts": 2,
+    "matchedBaseline": true,
+    "sourceManifestHash": "dbdb57cff027847488b58aebcb1fc5f50f359850d00f43cc1af8ef32dcd67460",
+    "commandChainHash": "48a789abb6202deeebba014b36638427a37e9aa3718052d0088b24d6adb978dc",
+    "finalStateHash": "089698c5e930b852d62fc17e79b8a40549c55e40058e6d8566bf005857eb5d58"
+  }
+}
