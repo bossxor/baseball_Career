@@ -23,6 +23,7 @@ import {hireCareerAgent, assertCareerAgentLedger} from '../packages/engine/src/c
 import {recordTotals} from '../packages/engine/src/records.ts';
 import {nativeSliceVerdict} from './m2-native-paths.mjs';
 import {nativePaths} from './m2-native-drivers.mjs';
+import {nativeAgentPath} from './m2-native-agent.mjs';
 import {PATH_GAPS,PATH_REQUIREMENTS,controlledSchoolPaths,collegeServicePath,agentPath,pitcherLearningPath,nationalAppearancePath,postingPaths,retryExhaustionPath,injuryTrainingPath,returnedUsContractPath} from './m2-path-scenarios.mjs';
 
 const root=fileURLToPath(new URL('../',import.meta.url));
@@ -107,7 +108,7 @@ function controlledKbo(){
  return t.finish({actualProGames:Object.values(t.state.records.games).filter(g=>g.scope.seasonKey===t.state.world.seasonKey).length,agentLedgerValid:true,firstContractAchievement:true,committedRecordHash:committed,repeatedRecordReadsImmutable:true,jsonReplay:'every command',sourceImmutability:'every command',unproven:['P14 same-game trait/goal/chronicle integration','P23 M7 replay/card/export/backup']});
 }
 function files(directory){return readdirSync(directory,{withFileTypes:true}).flatMap(entry=>entry.isDirectory()?files(resolve(directory,entry.name)):[resolve(directory,entry.name)]);}
-const proofSources=['scripts/verify-m2-closure.mjs','scripts/m2-path-scenarios.mjs','scripts/m2-native-drivers.mjs','scripts/m2-native-paths.mjs','scripts/m2-native-pitcher.mjs','scripts/m2-pitcher-checkpoint.mjs','docs/design/event-catalog-v2.json','docs/design/end-to-end-design-paths.json','package.json','package-lock.json'];
+const proofSources=['scripts/verify-m2-closure.mjs','scripts/m2-path-scenarios.mjs','scripts/m2-native-drivers.mjs','scripts/m2-native-paths.mjs','scripts/m2-native-pitcher.mjs','scripts/m2-native-agent.mjs','scripts/m2-pitcher-checkpoint.mjs','docs/design/event-catalog-v2.json','docs/design/end-to-end-design-paths.json','package.json','package-lock.json'];
 const sourceManifest=()=>[...['packages/engine/src','packages/rules/src','packages/engine/test'].flatMap(dir=>files(resolve(root,dir))).filter(path=>/\.(ts|json)$/.test(path)),...proofSources.map(file=>resolve(root,file))].sort().map(path=>({file:relative(root,path).replaceAll('\\','/'),sha256:createHash('sha256').update(readFileSync(path)).digest('hex')}));
 const start=sourceManifest();
 const output=resolve(root,process.argv.slice(2).find(arg=>!arg.startsWith('--'))??'docs/implementation/evidence/M2-CLOSURE-20261102-runtime.json');
@@ -124,9 +125,9 @@ const pitcherOptions={
  checkpoint:process.argv.includes('--p02-checkpoint')?{path:output+'.p02-checkpoint.gz',sourceHash:hash(start)}:null,
 };
 const p04Creation=process.argv.find(a=>a.startsWith('--p04-creation='))?.slice('--p04-creation='.length);
-const scenarios={nativePaths:()=>nativePaths(trace,process.argv.find(a=>a.startsWith('--native='))?.slice(9).split(','),pitcherOptions,p04Creation),nativeReturnedUs:()=>[returnedUsContractPath(trace)],nativeSchool:()=>[nativeSchool()],nativeKbo:()=>[controlledKbo()],school:()=>controlledSchoolPaths(trace),collegeService:()=>[collegeServicePath(trace)],agent:()=>agentPath(trace),pitcher:()=>[pitcherLearningPath(trace)],national:()=>[nationalAppearancePath(trace)],posting:()=>postingPaths(trace),retry:()=>[retryExhaustionPath(trace)],injury:()=>[injuryTrainingPath(trace)]};
+const scenarios={nativeAgent:()=>[nativeAgentPath(trace,{prefixPath:process.argv.find(a=>a.startsWith('--p15-prefix='))?.slice('--p15-prefix='.length),checkpoint:{path:output+'.p15-checkpoint.gz',sourceHash:hash(start)},sources:start})],nativePaths:()=>nativePaths(trace,process.argv.find(a=>a.startsWith('--native='))?.slice(9).split(','),pitcherOptions,p04Creation),nativeReturnedUs:()=>[returnedUsContractPath(trace)],nativeSchool:()=>[nativeSchool()],nativeKbo:()=>[controlledKbo()],school:()=>controlledSchoolPaths(trace),collegeService:()=>[collegeServicePath(trace)],agent:()=>agentPath(trace),pitcher:()=>[pitcherLearningPath(trace)],national:()=>[nationalAppearancePath(trace)],posting:()=>postingPaths(trace),retry:()=>[retryExhaustionPath(trace)],injury:()=>[injuryTrainingPath(trace)]};
 const selection=process.argv.find(arg=>arg.startsWith('--scenarios='))?.slice('--scenarios='.length);
-const selected=selection===undefined?Object.keys(scenarios).filter(name=>!process.argv.includes('--paths-only')||!name.startsWith('native')):selection.split(',');
+const selected=selection===undefined?Object.keys(scenarios).filter(name=>name!=='nativeAgent'&&(!process.argv.includes('--paths-only')||!name.startsWith('native'))):selection.split(',');
 assert.ok(selected.length>0&&new Set(selected).size===selected.length&&selected.every(name=>Object.hasOwn(scenarios,name)),'unknown, empty or duplicate closure scenario');
 for(const name of selected){slices.push(...scenarios[name]());console.log('M2 closure: '+name+' endpoints verified');}
 checkStable('source changed during closure proof; rerun on stable files');

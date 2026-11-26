@@ -1,0 +1,25 @@
+{
+  "status": "P15_NATIVE_RUN_IN_PROGRESS",
+  "prefix": {
+    "path": "P15",
+    "phase": "verified-p02-prefix",
+    "step": 0,
+    "receipts": 138,
+    "worldDay": 162
+  },
+  "firstCheckpoint": {
+    "path": "P15",
+    "phase": "SEASON_PROGRESS",
+    "step": 3,
+    "receipts": 141,
+    "worldDay": 166
+  },
+  "deadline": {
+    "coverage": "CONTROLLED_FINITE_DEADLINE",
+    "passed": 1,
+    "failed": 0,
+    "onDeadline": "REQUEST_ACCEPTED_FOR_EVALUATION",
+    "afterDeadline": "NO_DRAW_NO_REQUEST_USED"
+  },
+  "productionRenewalDeadline": null
+}

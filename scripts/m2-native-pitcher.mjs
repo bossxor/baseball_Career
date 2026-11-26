@@ -21,7 +21,7 @@ const blockingChoices={
  E43:['DEFER_TRAINING',resolveKboWindowEvent],E84:['OPEN_TRAITS',resolveProHiddenTraitNotice],
 };
 
-function resolveBlockingEvent(t){
+export function resolveBlockingEvent(t){
  const event=t.state.events.find(e=>e.eventKey===t.state.phaseContext.eventKey);
  assert.ok(event,'missing KBO blocking event');
  const choice=blockingChoices[event.definitionId];
