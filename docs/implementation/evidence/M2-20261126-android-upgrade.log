@@ -1,0 +1,10 @@
+2026-11-26 KST Android in-place APK update on SM-S948N
+Isolated app ID: kr.againplayball.app.redesignqa. Installed user app was not edited.
+Different old and new debug APKs, same test package, signing key, and embedded https://localhost origin.
+Old APK: no login; created a real player through the app and committed one official high-school game.
+Installed new APK with adb install -r. Launched a new process, confirmed redesigned home, used Continue.
+After update: same save ID and one official game; IndexedDB save metadata and both state parts matched a SHA-256 comparison.
+Retained revision 7; 2 state parts; hash d8c6609a58e431c698f0776cb78ffb20e7b394679daf481b506de9e80094da14.
+Created a KIA club after update; both career and club slots appeared.
+Gradle assembleDebug: exit 0. Hardware upgrade probe: exit 0.
+Scope: debug APK upgrade and local storage on this device. Managed account sync and other WebView variants were outside this run.
