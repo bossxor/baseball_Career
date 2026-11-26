@@ -1,3 +1,11 @@
+# 2026-11-27 실제 KBO 저장에서 WBC와 프리시즌 복귀 검증
+
+2033시즌 확정 세이브에서 2034시즌으로 넘어가 WBC 선발 결과를 처리했다. 한국 대표팀 명단 28명에서 주인공은 미선발이었다. 실제 WBC 47경기와 일 마감 21건을 처리해 한국 2위를 확정했다. 기존 경기 기록 보존, 병역 혜택 미발급, E48 복귀 후 프리시즌 및 WBC 종료 뒤 KBO 720경기 일정 발행을 확인했다. 검증 명령 묶음 29건, 해시 연결 검사 통과. [실행 기록](evidence/M2-20261127-native-wbc-preseason.json)
+
+P11의 실제 대표 차출·출장·병역 자격 경로는 남아 있다. 누적 엔진 경로 증명 9/24.
+
+`node --max-old-space-size=8192 --import tsx scripts/verify-native-kbo-rollover.mjs .local-verification/p15-20261126/p15-season.json.gz.p15-checkpoint.gz --wbc`
+
 # 2026-11-27 웹 전체 회귀 검증
 
 계정 연대기 다운로드와 미국 시즌 진행 검사 수정이 포함된 기준에서 웹 69건이 모두 통과했다. [실행 로그](evidence/M2-20261127-web-regression.log)

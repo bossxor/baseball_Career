@@ -1,0 +1,350 @@
+{
+  "scope": "NATIVE_KBO_YEAR_ROLLOVER_AND_SCHEDULE_PUBLICATION",
+  "fromSeason": "2033",
+  "toSeason": "2034",
+  "archivedReceipts": 182,
+  "resumedReceipts": 180,
+  "archivedFinalHash": "44003ea3d23ec455aef86d95e53851d486ff7448b101ff2ff5c76401e233038d",
+  "oldRecordsHash": "6a1d9634eaccbca77a8ee0c3d28ca5d1a11be42e9cfa0ae576b6f018aba818ee",
+  "contractSalaryWon": 141460000,
+  "age": 20,
+  "phase": "PRESEASON_SETUP",
+  "schedule": {
+    "kbo": 720,
+    "futures": 720
+  },
+  "calendar": [
+    "WBC",
+    "AG"
+  ],
+  "nationalSelection": {
+    "scope": "PRESEASON_RANK_PROBE",
+    "rosterSize": 28,
+    "selected": false,
+    "role": null,
+    "score": 58.63437935294118,
+    "performanceSeason": "2033"
+  },
+  "wbc": {
+    "selected": false,
+    "officialAppearance": false,
+    "finalRank": 2,
+    "games": 47,
+    "closedDays": 21,
+    "endDay": 59,
+    "benefitGranted": false
+  },
+  "receipts": [
+    {
+      "command": "START_NEXT_KBO_SEASON",
+      "sourceRevision": 793,
+      "sourceHash": "44003ea3d23ec455aef86d95e53851d486ff7448b101ff2ff5c76401e233038d",
+      "resultRevision": 794,
+      "resultHash": "256af5a807efe716880c4d23ff55bdf198eab329bbb38a491eb5b75fb9e15ed5"
+    },
+    {
+      "command": "CAREER_KBO_NATIONAL_SELECT:national-select",
+      "sourceRevision": 794,
+      "sourceHash": "256af5a807efe716880c4d23ff55bdf198eab329bbb38a491eb5b75fb9e15ed5",
+      "resultRevision": 795,
+      "resultHash": "e44739964cff16aa4bb4f3cd99a20dc99f267e26c375fa6a3ffd8cc6996b867e"
+    },
+    {
+      "command": "CAREER_KBO_NATIONAL_RESOLVE:ACK_EVENT",
+      "sourceRevision": 795,
+      "sourceHash": "e44739964cff16aa4bb4f3cd99a20dc99f267e26c375fa6a3ffd8cc6996b867e",
+      "resultRevision": 796,
+      "resultHash": "732f7eb382611136e55e401e92516580dd39c708b8222e2a4950832e1f4f28a5"
+    },
+    {
+      "command": "CAREER_KBO_NATIONAL_START:national-start",
+      "sourceRevision": 796,
+      "sourceHash": "732f7eb382611136e55e401e92516580dd39c708b8222e2a4950832e1f4f28a5",
+      "resultRevision": 797,
+      "resultHash": "061a25edf628f8fa61edb35df2910c8c0f524a5d8368508eba188035c6123601"
+    },
+    {
+      "command": "PLAY_WBC_DAY:38",
+      "sourceRevision": 797,
+      "sourceHash": "061a25edf628f8fa61edb35df2910c8c0f524a5d8368508eba188035c6123601",
+      "resultRevision": 814,
+      "resultHash": "33f6d1dc680889f766f71abd5f65d90634efee572141a153d5e98f58b493af13"
+    },
+    {
+      "command": "PLAY_WBC_DAY:39",
+      "sourceRevision": 814,
+      "sourceHash": "33f6d1dc680889f766f71abd5f65d90634efee572141a153d5e98f58b493af13",
+      "resultRevision": 815,
+      "resultHash": "f32a73db8feb229c0e744d64fb9b6c993a5cc630b17a15d03fce0c1c3c0c2956"
+    },
+    {
+      "command": "PLAY_WBC_DAY:40",
+      "sourceRevision": 815,
+      "sourceHash": "f32a73db8feb229c0e744d64fb9b6c993a5cc630b17a15d03fce0c1c3c0c2956",
+      "resultRevision": 816,
+      "resultHash": "d9ad7243942de5c5a45835d79cbc01307c5ad23646dd7211ff441f97a8fcf05d"
+    },
+    {
+      "command": "PLAY_WBC_DAY:41",
+      "sourceRevision": 816,
+      "sourceHash": "d9ad7243942de5c5a45835d79cbc01307c5ad23646dd7211ff441f97a8fcf05d",
+      "resultRevision": 833,
+      "resultHash": "5e5e5a8bbb1bd8ebca8f74d53acee1efd27b262f9710a4d35f927cdb821ebb41"
+    },
+    {
+      "command": "PLAY_WBC_DAY:42",
+      "sourceRevision": 833,
+      "sourceHash": "5e5e5a8bbb1bd8ebca8f74d53acee1efd27b262f9710a4d35f927cdb821ebb41",
+      "resultRevision": 834,
+      "resultHash": "225e85905a7078fa8d99fed7d128306872bd1f0421eef756ad0334166e8338a5"
+    },
+    {
+      "command": "PLAY_WBC_DAY:43",
+      "sourceRevision": 834,
+      "sourceHash": "225e85905a7078fa8d99fed7d128306872bd1f0421eef756ad0334166e8338a5",
+      "resultRevision": 835,
+      "resultHash": "3819c65636f98ec2d732939f27513201a827bd367e0758269cacb3f0e1657eec"
+    },
+    {
+      "command": "PLAY_WBC_DAY:44",
+      "sourceRevision": 835,
+      "sourceHash": "3819c65636f98ec2d732939f27513201a827bd367e0758269cacb3f0e1657eec",
+      "resultRevision": 852,
+      "resultHash": "8489316bb31c692af24a67b9fad4eed94d3974743fdcfb3e3deecbfc5b9bb016"
+    },
+    {
+      "command": "PLAY_WBC_DAY:45",
+      "sourceRevision": 852,
+      "sourceHash": "8489316bb31c692af24a67b9fad4eed94d3974743fdcfb3e3deecbfc5b9bb016",
+      "resultRevision": 853,
+      "resultHash": "3ae20a273ee517f5ac4ac8707f6ea914b8e3b02ad50791702013324b49af078d"
+    },
+    {
+      "command": "PLAY_WBC_DAY:46",
+      "sourceRevision": 853,
+      "sourceHash": "3ae20a273ee517f5ac4ac8707f6ea914b8e3b02ad50791702013324b49af078d",
+      "resultRevision": 854,
+      "resultHash": "df638984bd54696f485278d630f5b1e4b4f7522ff0c4b95e1b4893336defea91"
+    },
+    {
+      "command": "PLAY_WBC_DAY:47",
+      "sourceRevision": 854,
+      "sourceHash": "df638984bd54696f485278d630f5b1e4b4f7522ff0c4b95e1b4893336defea91",
+      "resultRevision": 871,
+      "resultHash": "f772db71981c4dae6fc4636edcf6146364f1317a0b55e08defcf56b63d6c54c1"
+    },
+    {
+      "command": "PLAY_WBC_DAY:48",
+      "sourceRevision": 871,
+      "sourceHash": "f772db71981c4dae6fc4636edcf6146364f1317a0b55e08defcf56b63d6c54c1",
+      "resultRevision": 872,
+      "resultHash": "8889831d508d8eb5bf445060bf39b27d97fa797668b2f0f12ef177cdd894abda"
+    },
+    {
+      "command": "PLAY_WBC_DAY:49",
+      "sourceRevision": 872,
+      "sourceHash": "8889831d508d8eb5bf445060bf39b27d97fa797668b2f0f12ef177cdd894abda",
+      "resultRevision": 873,
+      "resultHash": "029123e58ee7f3f51a6e5ed01bcec26888c3110c2f7697fa5a516d8a4c697c21"
+    },
+    {
+      "command": "PLAY_WBC_DAY:50",
+      "sourceRevision": 873,
+      "sourceHash": "029123e58ee7f3f51a6e5ed01bcec26888c3110c2f7697fa5a516d8a4c697c21",
+      "resultRevision": 890,
+      "resultHash": "e161e9337284de7daf6f2cbd4f634f5f8e1ad4002ac9deba375da8622ec18278"
+    },
+    {
+      "command": "PLAY_WBC_DAY:51",
+      "sourceRevision": 890,
+      "sourceHash": "e161e9337284de7daf6f2cbd4f634f5f8e1ad4002ac9deba375da8622ec18278",
+      "resultRevision": 891,
+      "resultHash": "a548ce027adeaff6e1ed76c135924e3776da5021187fe966fb8ae12e3c2ce48b"
+    },
+    {
+      "command": "PLAY_WBC_DAY:52",
+      "sourceRevision": 891,
+      "sourceHash": "a548ce027adeaff6e1ed76c135924e3776da5021187fe966fb8ae12e3c2ce48b",
+      "resultRevision": 892,
+      "resultHash": "5f655991b00f0cac6f68b3fa44786e57ae0d72359ed7e9c2b08535140e69f0e0"
+    },
+    {
+      "command": "PLAY_WBC_DAY:53",
+      "sourceRevision": 892,
+      "sourceHash": "5f655991b00f0cac6f68b3fa44786e57ae0d72359ed7e9c2b08535140e69f0e0",
+      "resultRevision": 901,
+      "resultHash": "2d48a64e68300afd9a9a79e78ec576cdaaf1ca5e0edfffa37d08f2a132840ec5"
+    },
+    {
+      "command": "PLAY_WBC_DAY:54",
+      "sourceRevision": 901,
+      "sourceHash": "2d48a64e68300afd9a9a79e78ec576cdaaf1ca5e0edfffa37d08f2a132840ec5",
+      "resultRevision": 902,
+      "resultHash": "31f7ebe20c44ac5ef09fade7b49d2f88ffc75c5369f4e9834a2cd0125f13f9fb"
+    },
+    {
+      "command": "PLAY_WBC_DAY:55",
+      "sourceRevision": 902,
+      "sourceHash": "31f7ebe20c44ac5ef09fade7b49d2f88ffc75c5369f4e9834a2cd0125f13f9fb",
+      "resultRevision": 907,
+      "resultHash": "4105c88a6268824b678824784f2d14334b8143467d191c0ea4a09b106a16b171"
+    },
+    {
+      "command": "PLAY_WBC_DAY:56",
+      "sourceRevision": 907,
+      "sourceHash": "4105c88a6268824b678824784f2d14334b8143467d191c0ea4a09b106a16b171",
+      "resultRevision": 908,
+      "resultHash": "dc661a3a736550917856a9c8eeade29bd8792a6ccf24d907a590a5c185ae9627"
+    },
+    {
+      "command": "PLAY_WBC_DAY:57",
+      "sourceRevision": 908,
+      "sourceHash": "dc661a3a736550917856a9c8eeade29bd8792a6ccf24d907a590a5c185ae9627",
+      "resultRevision": 911,
+      "resultHash": "f02e7c34173507896b4f100514ba260d16cffd2d88c1630f32851eb9422c90cd"
+    },
+    {
+      "command": "PLAY_WBC_DAY:58",
+      "sourceRevision": 911,
+      "sourceHash": "f02e7c34173507896b4f100514ba260d16cffd2d88c1630f32851eb9422c90cd",
+      "resultRevision": 912,
+      "resultHash": "c0bf21dd6422382513b75b2b77bc9a248e668a8cae5a7efad020c58c8dced5e0"
+    },
+    {
+      "command": "CAREER_KBO_NATIONAL_RESOLVE:CONFIRM_NATIONAL_RETURN",
+      "sourceRevision": 912,
+      "sourceHash": "c0bf21dd6422382513b75b2b77bc9a248e668a8cae5a7efad020c58c8dced5e0",
+      "resultRevision": 913,
+      "resultHash": "3797fffeeb684b81f4dc42ce96afa5ccdc954edbc65484eb8345eb7821d1d14a"
+    },
+    {
+      "command": "CONFIRM_KBO_PRESEASON",
+      "sourceRevision": 913,
+      "sourceHash": "3797fffeeb684b81f4dc42ce96afa5ccdc954edbc65484eb8345eb7821d1d14a",
+      "resultRevision": 914,
+      "resultHash": "b451927f1f9de05ddf85746bae0b53f92f1ca46063c9a73e5ac754b639155333"
+    },
+    {
+      "command": "CONFIRM_KBO_ROSTER",
+      "sourceRevision": 914,
+      "sourceHash": "b451927f1f9de05ddf85746bae0b53f92f1ca46063c9a73e5ac754b639155333",
+      "resultRevision": 915,
+      "resultHash": "d33003cb83a91f8515777367f98bfadfd3a5976d9cb1e2329fc9bbea621711e2"
+    },
+    {
+      "command": "CONFIRM_KBO_SCHEDULE",
+      "sourceRevision": 915,
+      "sourceHash": "d33003cb83a91f8515777367f98bfadfd3a5976d9cb1e2329fc9bbea621711e2",
+      "resultRevision": 916,
+      "resultHash": "587fb4429224ff901b82c03c8e27c0414a04e883156a825925ffd95bd53d0868"
+    }
+  ],
+  "exitCode": 0,
+  "dayProgress": [
+    {
+      "tournament": "WBC",
+      "day": 38,
+      "finalGames": 8
+    },
+    {
+      "tournament": "WBC",
+      "day": 39,
+      "finalGames": 8
+    },
+    {
+      "tournament": "WBC",
+      "day": 40,
+      "finalGames": 8
+    },
+    {
+      "tournament": "WBC",
+      "day": 41,
+      "finalGames": 16
+    },
+    {
+      "tournament": "WBC",
+      "day": 42,
+      "finalGames": 16
+    },
+    {
+      "tournament": "WBC",
+      "day": 43,
+      "finalGames": 16
+    },
+    {
+      "tournament": "WBC",
+      "day": 44,
+      "finalGames": 24
+    },
+    {
+      "tournament": "WBC",
+      "day": 45,
+      "finalGames": 24
+    },
+    {
+      "tournament": "WBC",
+      "day": 46,
+      "finalGames": 24
+    },
+    {
+      "tournament": "WBC",
+      "day": 47,
+      "finalGames": 32
+    },
+    {
+      "tournament": "WBC",
+      "day": 48,
+      "finalGames": 32
+    },
+    {
+      "tournament": "WBC",
+      "day": 49,
+      "finalGames": 32
+    },
+    {
+      "tournament": "WBC",
+      "day": 50,
+      "finalGames": 40
+    },
+    {
+      "tournament": "WBC",
+      "day": 51,
+      "finalGames": 40
+    },
+    {
+      "tournament": "WBC",
+      "day": 52,
+      "finalGames": 40
+    },
+    {
+      "tournament": "WBC",
+      "day": 53,
+      "finalGames": 44
+    },
+    {
+      "tournament": "WBC",
+      "day": 54,
+      "finalGames": 44
+    },
+    {
+      "tournament": "WBC",
+      "day": 55,
+      "finalGames": 46
+    },
+    {
+      "tournament": "WBC",
+      "day": 56,
+      "finalGames": 46
+    },
+    {
+      "tournament": "WBC",
+      "day": 57,
+      "finalGames": 47
+    },
+    {
+      "tournament": "WBC",
+      "day": 58,
+      "finalGames": 47
+    }
+  ]
+}
