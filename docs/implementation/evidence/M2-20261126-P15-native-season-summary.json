@@ -1,0 +1,42 @@
+{
+  "pathId": "P15",
+  "status": "NATIVE_SEASON_AND_NEGOTIATION_PROVEN_FULL_PATH_NOT_CLAIMED",
+  "source": "M2-20261126-P15-native-season.json.gz",
+  "exitCode": 0,
+  "sourceManifestHash": "341296ad1ffc99c83c366b50819bbeb1f68df12499a692dcd5e43657fd2d65c4",
+  "continuedFrom": {
+    "sourceHash": "d2ab563f0e49d7fe41cbb7b295c03137f6dd855639df69e0c794f8c9ceb8bf09",
+    "step": 9,
+    "receiptCount": 147
+  },
+  "changedSources": [
+    "scripts/m2-native-agent.mjs",
+    "scripts/verify-m2-closure.mjs"
+  ],
+  "independentVerdict": {
+    "ok": true,
+    "commandChainHash": "c2cab326482d9a6885d3d751d2bc0d7ee05f5c9d6b6f14a4b322f55ffd1609dd",
+    "finalStateHash": "44003ea3d23ec455aef86d95e53851d486ff7448b101ff2ff5c76401e233038d",
+    "commands": 182
+  },
+  "invariantReport": {
+    "variantOf": "P15",
+    "regularGames": 720,
+    "champion": "HH",
+    "gross": 15416667,
+    "fee": 308333,
+    "net": 15108334,
+    "payrollReceipts": 74,
+    "counterOutcome": "REJECTED",
+    "rejectedOriginalPreserved": true,
+    "deadlineWorldDay": null,
+    "closedOfferRejected": true,
+    "unproven": [
+      "A real finite deadline exhausted before an otherwise eligible counter"
+    ]
+  },
+  "finiteDeadline": {
+    "controlledTestPassed": 1,
+    "issuedKboE30Deadline": null
+  }
+}
