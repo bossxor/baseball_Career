@@ -20,14 +20,14 @@
   font-synthesis: none;
   background: var(--bg);
   color: var(--ink);
-  line-height: 1.45;
+  line-height: 1.5;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
 *, *::before, *::after { box-sizing: border-box; }
-body { margin: 0; }
+body { margin: 0; font-size: 1rem; }
 button, input { font: inherit; color: inherit; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 button:disabled { opacity: .48; cursor: not-allowed; }
 button[aria-busy='true'] { opacity: .7; cursor: progress; }
 
@@ -78,7 +78,7 @@ button[aria-busy='true'] { opacity: .7; cursor: progress; }
 .panel h2 { margin: 0; font-size: 1.05rem; font-weight: 780; }
 .panel p { margin-block: 0; }
 .btn, .ghost, .save-card {
-  min-height: 46px;
+  min-height: 48px;
   min-width: 44px;
   padding: 8px 14px;
   border: 1px solid var(--line);
