@@ -1,10 +1,12 @@
-# 2026-11-26 P02 마무리 보직 심사와 후속 구종 경험치
+# 2026-11-26 P02 실제 투수 보직 심사와 후속 구종 경험치 검증
 
-실제 커리어 명령으로 고교 216경기를 마친 투수가 삼성에 7라운드 지명됐다. 1군 48번째 경기 뒤 E15 마무리 심사에 지원해 RP에서 CP로 바뀌고, 이후 P07 구종 2분기 경험치 25,000을 받았다. 한 번씩 실행한 탐색 결과다. [탐색 기록](evidence/M2-20261126-P02-composure-pilot.json)
+고교 216경기, 삼성 7라운드 지명·1군 등록, 팀 48경기 뒤 E15 마무리 심사와 RP → CP 전환, 이후 P07 구종 2분기 경험치 25,000을 실제 커리어 명령으로 검증했다. 명령 139건의 JSON 재실행·해시 검사와 독립 영수증 검사 종료 코드 0. 누적 실제 엔진 경로는 9/24다. [검증 요약](evidence/M2-20261126-P02-native-summary.json) · [압축 원본](evidence/M2-20261126-P02-native.json.gz)
 
-정식 검증은 아래 명령으로 실행 중이다. 25단계마다 저장하며 같은 명령으로 재개한다. 이전 시드는 800단계 저장을 보존했다. 그 저장은 변경 전 코드 `65539e7`에서만 재개할 수 있다. 경로 완료 수는 정식 검증 결과로 갱신한다.
+공식 시즌 진행에 쓰는 7게임일 묶음을 검증에도 사용했다. KBO 첫 65일까지 기존 방식과 확정 경기 190건이 일치했다. 20단계 중간 저장도 별도 로드에서 명령 138건과 CP 보직을 확인했다. 코드 구현 추정은 기존 전체 95.0%, M2 90%다.
 
-`node --max-old-space-size=8192 --import tsx scripts/verify-m2-closure.mjs .local-verification/p02-20261125-9cf61a3/p02-composure.json.gz --scenarios=nativePaths --native=P02 --pitcher-creation=HS_PITCHER_COMPOSURE --p02-checkpoint`
+`node --max-old-space-size=8192 --import tsx scripts/verify-m2-closure.mjs .local-verification/p02-20261125-9cf61a3/p02-batch.json.gz --scenarios=nativePaths --native=P02 --pitcher-creation=HS_PITCHER_COMPOSURE --p02-checkpoint --p02-span`
+
+압축 원본에는 이 PC의 로컬 프로파일 파일 4개의 해시가 포함됐다. 중간 저장은 동일 소스 지문에서 재개하고, 다른 PC에서는 위 명령으로 새 기록을 만든다.
 
 # 2026-11-26 Android 업데이트 후 기기 저장 보존
 

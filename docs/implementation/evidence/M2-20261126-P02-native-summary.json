@@ -1,0 +1,94 @@
+{
+  "pathId": "P02",
+  "status": "ENGINE_NATIVE_PATH_PROVEN",
+  "source": "M2-20261126-P02-native.json.gz",
+  "sourceManifestHash": "b86e3df55c2ce6306cc20f336341cf4ac28ceef4f0b6241fc954291734b00895",
+  "sourceFiles": 462,
+  "sourceDrift": null,
+  "exitCode": 0,
+  "independentExitCode": 0,
+  "verdict": {
+    "ok": true,
+    "commandChainHash": "3216861df7fffcd1a4b90d6f0dd8775f3acb9db4bed0bef6e9955accf529cfaf",
+    "finalStateHash": "caa3e6b2030682935732c557e1a478a8c66180631c63ec0aa071cc1da937472b",
+    "commands": 139
+  },
+  "invariantReport": {
+    "highSchoolGames": 216,
+    "draftRound": 7,
+    "pickoffInSixAbilities": true,
+    "pitchWeights": {
+      "P01": 65,
+      "P03": 35
+    },
+    "baseXpSpent": 63600,
+    "baseXpReserved": 50000,
+    "roleReview": {
+      "receiptKey": "[\"career-role-review\",\"[\\\"event-1\\\",\\\"m2-closure-native\\\",\\\"E15\\\",\\\"{\\\\\\\"fields\\\\\\\":{\\\\\\\"adviceWindowId\\\\\\\":\\\\\\\"[\\\\\\\\\\\\\\\"career-advice-window\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"2033\\\\\\\\\\\\\\\",\\\\\\\\\\\\\\\"own\\\\\\\\\\\\\\\",48]\\\\\\\",\\\\\\\"playerSimulationKey\\\\\\\":\\\\\\\"own\\\\\\\",\\\\\\\"worldSeasonId\\\\\\\":\\\\\\\"2033\\\\\\\"},\\\\\\\"type\\\\\\\":\\\\\\\"OPTIONAL_ADVICE\\\\\\\",\\\\\\\"version\\\\\\\":1}\\\"]\",335]",
+      "eventKey": "[\"event-1\",\"m2-closure-native\",\"E15\",\"{\\\"fields\\\":{\\\"adviceWindowId\\\":\\\"[\\\\\\\"career-advice-window\\\\\\\",\\\\\\\"2033\\\\\\\",\\\\\\\"own\\\\\\\",48]\\\",\\\"playerSimulationKey\\\":\\\"own\\\",\\\"worldSeasonId\\\":\\\"2033\\\"},\\\"type\\\":\\\"OPTIONAL_ADVICE\\\",\\\"version\\\":1}\"]",
+      "seasonKey": "2033",
+      "targetRole": "CP",
+      "candidateScore": 53.360756,
+      "comparedPlayerKey": null,
+      "comparedScore": null,
+      "outcome": "ROLE_CHANGED",
+      "effectiveAfterDay": 120
+    },
+    "quartersAtRoleReview": 1,
+    "quarterGains": [
+      {
+        "quarter": 1,
+        "gain": 25000
+      },
+      {
+        "quarter": 2,
+        "gain": 25000
+      }
+    ],
+    "checkpoints": [
+      {
+        "seasonKey": "2033",
+        "teamGames": 24,
+        "worldDay": 74,
+        "candidateIds": [],
+        "selectedId": null
+      },
+      {
+        "seasonKey": "2033",
+        "teamGames": 48,
+        "worldDay": 120,
+        "candidateIds": [
+          "E15"
+        ],
+        "selectedId": "E15"
+      },
+      {
+        "seasonKey": "2033",
+        "teamGames": 72,
+        "worldDay": 166,
+        "candidateIds": [],
+        "selectedId": null
+      }
+    ],
+    "completesPaths": [
+      "P02"
+    ],
+    "trainingReservedBeforeRoleReview": true
+  },
+  "checkpointVerified": {
+    "step": 20,
+    "receipts": 138,
+    "position": "CP"
+  },
+  "singleStepComparison": {
+    "throughWorldDay": 65,
+    "completedProGames": 190,
+    "matchingGameContributions": true
+  },
+  "localOnlyManifestFiles": [
+    "packages/engine/test/_prof/eq.ts",
+    "packages/engine/test/_prof/parts.ts",
+    "packages/engine/test/_prof/run.ts",
+    "packages/engine/test/_prof/us.ts"
+  ]
+}

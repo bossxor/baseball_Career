@@ -3,7 +3,7 @@ import {PITCHER_ABILITIES,PITCH_XP} from '@playball/rules';
 import {resolveKboCallup} from '../packages/engine/src/kbo-callup.ts';
 import {confirmKboOpeningRoster} from '../packages/engine/src/kbo-opening-roster.ts';
 import {confirmKboPreseasonPlan,setKboPreseasonPitchWeights} from '../packages/engine/src/kbo-preseason.ts';
-import {advanceKboCareer,startKboRegularSeason} from '../packages/engine/src/kbo-progress.ts';
+import {advanceKboCareer,advanceKboCareerRun,startKboRegularSeason} from '../packages/engine/src/kbo-progress.ts';
 import {confirmKboSeasonSchedule} from '../packages/engine/src/kbo-schedule.ts';
 import {resolveKboWindowEvent} from '../packages/engine/src/kbo-windows.ts';
 import {validatePitchXpLedger} from '../packages/engine/src/pitch-xp.ts';
@@ -68,9 +68,10 @@ function startPitcherSeason(t,progress){
  return draft.round;
 }
 
-export function nativePitcherPath(trace,{creation='HS_PITCHER',checkpoint=null}={}){
+export function nativePitcherPath(trace,{creation='HS_PITCHER',checkpoint=null,spanDays=0}={}){
  assert.ok(Object.hasOwn(PITCHER_CREATIONS,creation),'unknown P02 creation fixture '+creation);
  const initial=PITCHER_CREATIONS[creation]();
+ const logEvery=spanDays?5:25;
  const restored=checkpoint&&loadPitcherCheckpoint(checkpoint,creation,initial);
  const prefix={kind:'NATIVE_FROM_CREATION',creation,description:'Pitcher creation, actual HS216, KBO draft and entry, offseason pitch allocation and training reservation, actual in-season role competition and later training XP.'};
  const t=trace('P02-native-pitcher-role-and-learning',initial,prefix,restored&&{state:restored.state,rows:restored.rows,initialFixture:initial});
@@ -81,7 +82,7 @@ export function nativePitcherPath(trace,{creation='HS_PITCHER',checkpoint=null}=
  if(restored)progress('kbo-resumed',{step:restored.cursor.step,creation});
  for(let step=restored?.cursor.step??0;t.state.phaseContext.phase!=='SEASON_REVIEW';step++){
   assert.ok(step<1_800,'native KBO command budget exhausted');
-  if(checkpoint&&step%25===0&&step!==restored?.cursor.step){
+  if(checkpoint&&step%logEvery===0&&step!==restored?.cursor.step){
    savePitcherCheckpoint(checkpoint,creation,t,{step,draftRound,roleReview,quartersAtRoleReview});
   }
   if(t.state.phaseContext.phase==='EVENT_DECISION'){resolveBlockingEvent(t);continue;}
@@ -95,10 +96,14 @@ export function nativePitcherPath(trace,{creation='HS_PITCHER',checkpoint=null}=
   }
   if(book().learning.quarters.length===4)break;
   const beforeQuarters=book().learning.quarters.length;
-  t.command(roleReview?'ADVANCE_KBO_AFTER_ROLE_REVIEW':'ADVANCE_KBO',{maxDays:1},s=>{
-   const out=advanceKboCareer(s,s.revision,1);assert.notEqual(out.stopReason,'ENGINE_LIMIT');return out;
+  t.command(roleReview?'ADVANCE_KBO_AFTER_ROLE_REVIEW':'ADVANCE_KBO',spanDays?{dayBudget:spanDays}:{maxDays:1},s=>{
+   const out=spanDays
+    ?advanceKboCareerRun(s,s.revision,spanDays,()=>true,()=>undefined)
+    :advanceKboCareer(s,s.revision,1);
+   assert.notEqual(out.stopReason,'ENGINE_LIMIT');
+   return out;
   });
-  if((step+1)%25===0||book().learning.quarters.length!==beforeQuarters){
+  if((step+1)%logEvery===0||book().learning.quarters.length!==beforeQuarters){
    const state=t.state,phase=state.phaseContext;
    progress('kbo-progress',{step:step+1,careerPhase:phase.phase,nextWorldDay:phase.nextWorldDay??phase.resume?.nextWorldDay??null,recordRevision:state.records.revision,learningQuarters:book().learning.quarters.length,adviceCheckpoint:state.advice?.checkpoints.at(-1)??null});
   }

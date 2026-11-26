@@ -119,6 +119,7 @@ function checkStable(message){const now=sourceManifest();if(hash(now)===hash(sta
 try{
 console.log('M2 closure: real commands and per-command JSON replay; controlled prefixes remain explicit');
 const pitcherOptions={
+ spanDays:process.argv.includes('--p02-span')?7:0,
  creation:process.argv.find(a=>a.startsWith('--pitcher-creation='))?.slice('--pitcher-creation='.length),
  checkpoint:process.argv.includes('--p02-checkpoint')?{path:output+'.p02-checkpoint.gz',sourceHash:hash(start)}:null,
 };
