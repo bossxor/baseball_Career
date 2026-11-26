@@ -4,6 +4,8 @@ import test from 'node:test';
 import { createTestDb, seedAllowedSubject } from '@playball/db';
 import { createApp } from '../src/app.js';
 import { json } from './json.js';
+import { storedSave } from './stored-save.js';
+import { canonicalJson, type HighSchoolCareer } from '@playball/engine';
 
 const A = 'm7-chr-a';
 const B = 'm7-chr-b';
@@ -60,4 +62,67 @@ test('M7 chronicle JSON export: idempotent, no secrets, not a restore file, fore
   assert.equal(denied.status, 403);
 
   await client.close();
+});
+
+test('native chronicle uses verified career progress without changing its save or exposing its internal ID', async t => {
+  const { db, client } = await createTestDb();
+  t.after(() => client.close());
+  await seedAllowedSubject(db, A);
+  const app = createApp({ db, auth: { allowDevBearer: true } });
+  const post = (url: string, body: unknown) => app.request(url, { method: 'POST', headers: authA, body: JSON.stringify(body) });
+  const { saveId } = await json<{ saveId: string }>(await post('/api/game-creations', { creationId: 'chr-native', mode: 'CAREER' }));
+  const path = '/api/saves/' + saveId;
+  let revision = 0;
+  let careerRevision = 0;
+  async function send(type: string, payload: Record<string, unknown> = {}) {
+    const response = await post(path + '/commands', {
+      commandId: 'chr-' + revision, expectedRevision: revision, type: 'CAREER_SCHOOL_' + type,
+      payload: type === 'CREATE' ? payload : { ...payload, careerRevision },
+    });
+    assert.equal(response.status, 200, await response.clone().text());
+    const receipt = await json<{ revision: string; summary: { careerRevision: number } }>(response);
+    revision = Number(receipt.revision);
+    careerRevision = receipt.summary.careerRevision;
+  }
+
+  const name = '연대기 실제 선수';
+  await send('CREATE', {
+    name, kind: 'HITTER', position: 'CF', throws: 'R', bats: 'R', pitchForm: null, archetype: 'BALANCED',
+    focus: ['CONTACT', 'POWER', 'DISCIPLINE', 'DEFENSE'], difficulty: 'GROWTH', schoolId: 'H01', seasonYear: 2029,
+  });
+  await send('CONFIRM_PLAYER');
+  const { event } = await json<{ event: { eventKey: string; eventVersion: number } }>(
+    await app.request(path + '/screens/SCHOOL_CAREER', { headers: authA }),
+  );
+  await send('RESOLVE_FOCUS', { eventKey: event.eventKey, eventVersion: event.eventVersion, command: 'KEEP_FOCUS' });
+  await send('CONFIRM_PRESEASON');
+
+  const read = async () => (await storedSave(db, saveId))[0]!.state as { career: HighSchoolCareer };
+  let stored = await read();
+  for (let attempt = 0; attempt < 10 && !Object.keys(stored.career.records.games).length; attempt++) {
+    await send('ADVANCE', { mode: 'ONE_GAME' });
+    stored = await read();
+  }
+  const day = Math.max(0, ...Object.values(stored.career.records.games).map(game => game.worldDay));
+  assert.ok(day > 0);
+  const before = canonicalJson(stored);
+
+  const response = await post(path + '/exports/chronicle', { exportRequestId: 'native-export', format: 'JSON' });
+  assert.equal(response.status, 201);
+  const meta = await json<{ fileId: string; contentHash: string }>(response);
+  const downloaded = await app.request('/api/files/' + meta.fileId + '/content', { headers: authA });
+  assert.equal(downloaded.status, 200);
+  const text = await downloaded.text();
+  assert.equal(createHash('sha256').update(text).digest('hex'), meta.contentHash);
+  const document = JSON.parse(text);
+  assert.equal(document.playerDisplayName, name);
+  assert.equal(document.moments[0].type, 'PROGRESS');
+  assert.equal(document.moments[0].age, 18);
+  assert.deepEqual(document.moments[0].rawStats, {
+    day, phase: stored.career.phaseContext.phase, revision: String(revision), seasonKey: '2029',
+  });
+  assert.equal(document.moments[0].publicEvidenceRef, document.moments[0].momentRef);
+  assert.ok(!text.includes(saveId));
+  assert.doesNotMatch(text, /"seed"|"rng"|ownerSubject|Bearer/);
+  assert.equal(canonicalJson(await read()), before);
 });

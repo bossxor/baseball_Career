@@ -3,6 +3,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { and, desc, eq } from 'drizzle-orm';
 import type { Context } from 'hono';
 import { privateFiles } from '@playball/db';
+import type { HighSchoolCareer, KboCareer, UsCareer } from '@playball/engine';
 import { readOwnedSave } from './save-state.js';
 import type { AppVariables } from './auth.js';
 
@@ -146,7 +147,8 @@ export async function listBackups(c: Context<{ Variables: AppVariables }>) {
   return c.json({ items: ready.map(metaOf) });
 }
 
-type UiState = {
+type ChronicleState = {
+  career?: HighSchoolCareer | KboCareer | UsCareer;
   ui?: {
     protagonist?: { name?: string };
     day?: number;
@@ -185,10 +187,19 @@ export async function postChronicleExport(c: Context<{ Variables: AppVariables }
     return c.json(metaOf(prior));
   }
 
-  const ui = (save.state as UiState | null)?.ui;
-  const playerName = ui?.protagonist?.name?.trim() || '선수';
-  const day = typeof ui?.day === 'number' ? ui.day : 0;
-  const momentRef = `moment_${saveId}_d${day}`;
+  const state = save.state as ChronicleState | null;
+  const career = state?.career;
+  const world = career?.world;
+  const playerKey = career && ('protagonistKey' in career ? career.protagonistKey : career.world?.protagonistKey);
+  const player = playerKey ? world?.players?.[playerKey] : undefined;
+  const playerName = player?.name?.trim() || state?.ui?.protagonist?.name?.trim() || '선수';
+  const seasonKey = world?.seasonKey;
+  let day = career ? 0 : state?.ui?.day ?? 0;
+  for (const game of Object.values(career?.records?.games ?? {})) {
+    if (game.scope.seasonKey === seasonKey) day = Math.max(day, game.worldDay);
+  }
+  const phase = career?.phaseContext?.phase ?? state?.ui?.phase ?? save.phase;
+  const momentRef = 'moment_1';
   const exportDoc = {
     exportSchemaVersion: 1,
     presentationVersion: 1,
@@ -202,9 +213,9 @@ export async function postChronicleExport(c: Context<{ Variables: AppVariables }
         momentRef,
         type: day === 0 ? 'CREATED' : 'PROGRESS',
         gameInstant: new Date().toISOString(),
-        age: null,
+        age: player?.age ?? null,
         scope: 'CAREER',
-        rawStats: { day, phase: ui?.phase ?? save.phase, revision: save.revision.toString() },
+        rawStats: { day, phase, revision: save.revision.toString(), ...(seasonKey ? { seasonKey } : {}) },
         publicEvidenceRef: momentRef,
         userTitle: null,
         userCaption: null,
