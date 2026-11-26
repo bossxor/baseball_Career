@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState, type ReactNode } from 'react';
 import { Empty, Button, GameHeader, flowScene, isBusy } from '../ui.js';
 import { Illustration } from '../assets/Illustration.js';
 import { stateText } from '../screen-states.js';
@@ -8,14 +8,14 @@ import { SeasonReview } from './SeasonReview.js';
 import { RetirementSummary } from './RetirementSummary.js';
 
 export interface FlowProps {
-  view: FlowView | null; state?: ScreenState; seasonJob?: SeasonJobView | null;
+  view: FlowView | null; state?: ScreenState; seasonJob?: SeasonJobView | null; chronicle?: ReactNode;
   onCommand?: (command: FlowCommand) => void; onBack?: () => void; onReload?: () => void;
 }
 export function currentFlowCommand(commands: readonly FlowCommand[], selected: FlowCommand | null): FlowCommand | undefined {
   return selected ? commands.find(command => JSON.stringify(command) === JSON.stringify(selected)) : undefined;
 }
 /** 진로·재도전 흐름. Buttons are exactly the commands the server offered; a command with `confirm` needs a second, explicit tap. */
-export function Flow({ view, state = 'ready', seasonJob, onCommand, onBack, onReload }: FlowProps) {
+export function Flow({ view, state = 'ready', seasonJob, chronicle, onCommand, onBack, onReload }: FlowProps) {
   const [asking, setAsking] = useState<FlowCommand | null>(null), [signing, setSigning] = useState<FlowCommand | null>(null);
   const busy = isBusy(state), banner = seasonJob || state === 'ready' || state === 'empty' ? null : stateText('S03', state);
   const focusCommands = view?.commands.filter(c => (c.type === 'CAREER_SCHOOL_RESOLVE_FOCUS' && c.payload.command === 'CHOOSE_FOCUS' || c.type === 'CAREER_CHOICE_COLLEGE_FOCUS') && Array.isArray(c.payload.focus) && c.payload.focus.length === 4 && c.payload.focus.every(k => typeof k === 'string')) ?? [];
@@ -75,6 +75,7 @@ export function Flow({ view, state = 'ready', seasonJob, onCommand, onBack, onRe
               {view.commands.length === 0 ? <Empty>지금 선택할 수 있는 행동이 없습니다.</Empty> : null}
             </div>
           )}
+          {!pending && !signCmd ? chronicle : null}
         </>
       ) : state === 'ready' ? <Empty>진행할 단계를 찾지 못했습니다. 커리어 화면으로 돌아가세요.</Empty> : null}
     </main>

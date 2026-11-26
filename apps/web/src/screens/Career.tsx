@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Empty, ScreenFrame, Button, isBusy } from '../ui.js';
 import { stateText } from '../screen-states.js';
 import type { ScreenState } from '../screen-states.js';
@@ -5,12 +6,12 @@ import { PROGRESS_LABELS } from '../model.js';
 import type { CareerView, ProgressMode } from '../model.js';
 
 export interface CareerProps {
-  view: CareerView | null; state?: ScreenState; mode?: ProgressMode;
+  view: CareerView | null; state?: ScreenState; mode?: ProgressMode; chronicle?: ReactNode;
   onMode?: (mode: ProgressMode) => void; onAction?: (actionId: string, mode: ProgressMode) => void; onBack?: () => void; onReload?: () => void;
 }
 /** S03 커리어. Buttons come only from `nextActions`; the progress mode defaults to "다음 주요 사건까지". A pending event
  * leaves the event action as the only primary one (no advance past it). */
-export function Career({ view, state = 'ready', mode, onMode, onAction, onBack, onReload }: CareerProps) {
+export function Career({ view, state = 'ready', mode, chronicle, onMode, onAction, onBack, onReload }: CareerProps) {
   const busy = isBusy(state);
   const frame = { ...(onBack ? { onBack } : {}), ...(onReload ? { onReload } : {}) };
   if (!view) {
@@ -41,6 +42,7 @@ export function Career({ view, state = 'ready', mode, onMode, onAction, onBack, 
           {view.recentRecords.length === 0 ? <p className="muted">{stateText('S03', 'empty')}</p> : (
             <dl>{view.recentRecords.map(r => <div key={r.label}><dt>{r.label}</dt><dd>{r.value}</dd></div>)}</dl>
           )}
+          {chronicle}
         </section>
         {view.pendingEventTitle ? <p className="career-notice" role="status">처리할 사건이 있습니다: {view.pendingEventTitle}</p> : null}
         <section className="play-area-panel career-controls" aria-label="다음 행동">

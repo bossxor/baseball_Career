@@ -50,7 +50,7 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
     return h;
   };
 
-  const req = async (path: string, init: RequestInit = {}) => {
+  const checkedResponse = async (path: string, init: RequestInit = {}) => {
     if (!opts.transport && typeof navigator !== 'undefined' && navigator.onLine === false) throw new ApiError('OFFLINE');
     const res = opts.transport ? await opts.transport(path, init)
       : await fetch(`${base}${path}`, init).catch(() => { throw new ApiError('OFFLINE'); });
@@ -63,8 +63,9 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
       }
       throw new ApiError(body.code ?? `HTTP_${res.status}`);
     }
-    return res.json();
+    return res;
   };
+  const req = async (path: string, init?: RequestInit) => (await checkedResponse(path, init)).json();
 
   const command = async (saveId: string, commandId: string, type: string, payload: unknown, retainForRefresh=false) => {
     const key=JSON.stringify([saveId,commandId]);
@@ -103,6 +104,22 @@ export function createHttpApi(opts: HttpApiOptions): PlayballApi {
       const data = await req(`/api/saves/${encodeURIComponent(saveId)}/career`, { headers: await headers(false) }) as CareerView & { revision?: string };
       if (data.revision) revisions.set(saveId, Number(data.revision));
       return data;
+    },
+    async exportChronicle(saveId, requestId) {
+      const file = await req(`/api/saves/${encodeURIComponent(saveId)}/exports/chronicle`, {
+        method: 'POST', headers: await headers(),
+        body: JSON.stringify({ exportRequestId: requestId, format: 'JSON' }),
+      }) as { fileId: string; fileName: string; contentHash: string; byteSize: number; kind: string };
+      if (file.kind !== 'CHRONICLE_JSON' || !file.fileId || !file.fileName || !/^[0-9a-f]{64}$/.test(file.contentHash)) {
+        throw new ApiError('FILE_CORRUPT');
+      }
+      const response = await checkedResponse(`/api/files/${encodeURIComponent(file.fileId)}/content`, { headers: await headers(false) });
+      const blob = await response.blob();
+      if (blob.size !== file.byteSize) throw new ApiError('FILE_CORRUPT');
+      const digest = await crypto.subtle.digest('SHA-256', await blob.arrayBuffer());
+      const hash = [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join('');
+      if (hash !== file.contentHash) throw new ApiError('FILE_CORRUPT');
+      return { blob, fileName: file.fileName };
     },
     async create(request: CreationRequest): Promise<CreationReceipt> {
       const created = await req('/api/game-creations', {

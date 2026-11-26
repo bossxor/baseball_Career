@@ -151,3 +151,34 @@ test('flow grants continuation only for the read of its own receipt revision and
   assert.equal((await api.flowCommand('s', 'two', type, { careerRevision: 23, span: 'SEASON' }))?.canContinueSeason, undefined);
   assert.equal(sent[2]?.expectedRevision, 11);
 });
+
+test('chronicle uses the authenticated file endpoint and rejects an altered download', async t => {
+  const text = '{"kind":"CHRONICLE_JSON"}\n';
+  const bytes = new TextEncoder().encode(text);
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+  const contentHash = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
+  const fileName = '다시플레이볼_연대기.json';
+  const sent: string[] = [];
+  let altered = false;
+  t.mock.method(globalThis, 'fetch', async (input: RequestInfo | URL, init?: RequestInit) => {
+    const url = String(input);
+    assert.equal(new Headers(init?.headers).get('Authorization'), 'Bearer dev:t');
+    sent.push(url);
+    if (url.endsWith('/exports/chronicle')) {
+      assert.equal(init?.method, 'POST');
+      assert.deepEqual(JSON.parse(String(init?.body)), { exportRequestId: 'same-intent', format: 'JSON' });
+      return Response.json({ fileId: 'file/id', kind: 'CHRONICLE_JSON', fileName, contentHash, byteSize: bytes.length }, { status: 201 });
+    }
+    return new Response(altered ? text.replace('JSON', 'XXXX') : text, { headers: { 'Content-Type': 'application/json' } });
+  });
+  const api = createHttpApi({ baseUrl: 'http://api.test', getToken: () => 'dev:t' });
+  const download = await api.exportChronicle!('save/id', 'same-intent');
+  assert.equal(download.fileName, fileName);
+  assert.equal(await download.blob.text(), text);
+  assert.deepEqual(sent, [
+    'http://api.test/api/saves/save%2Fid/exports/chronicle',
+    'http://api.test/api/files/file%2Fid/content',
+  ]);
+  altered = true;
+  await assert.rejects(api.exportChronicle!('save/id', 'same-intent'), { code: 'FILE_CORRUPT' });
+});

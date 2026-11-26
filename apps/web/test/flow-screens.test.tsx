@@ -59,11 +59,16 @@ test('flow route parses and career shows the server-provided flow link', () => {
     progress: { mode: 'NEXT_MAJOR_EVENT', alternatives: ['ONE_GAME', 'ONE_WEEK'] }, pendingEventTitle: null, recentRecords: [],
     nextActions: [{ id: 'open:FLOW', label: '다음 단계 진행', kind: 'OPEN_SCREEN', primary: true }],
   };
-  assert.match(renderToStaticMarkup(<Career view={view} />), /다음 단계 진행/);
+  const markup = renderToStaticMarkup(<Career view={view} />);
+  assert.match(markup, /다음 단계 진행/);
+  assert.doesNotMatch(markup, /연대기 JSON 받기/);
+  const chronicle = <button>연대기 JSON 받기</button>;
+  assert.match(renderToStaticMarkup(<Career view={view} chronicle={chronicle} />), /연대기 JSON 받기/);
+  assert.match(renderToStaticMarkup(<Flow view={flow} chronicle={chronicle} />), /연대기 JSON 받기/);
 });
 
 test('a running season shows server-reported games and hides old decision commands', () => {
-  const markup = renderToStaticMarkup(<Flow view={flow} state="saving" onBack={() => {}} seasonJob={{
+  const markup = renderToStaticMarkup(<Flow view={flow} state="saving" onBack={() => {}} chronicle={<button>연대기 JSON 받기</button>} seasonJob={{
     runId: 'season-run', status: 'RUNNING', stopReason: null,
     progress: { seasonKey: '2033', phase: 'SEASON_PROGRESS', completedGames: 81, scheduledGames: 216, month: 5 },
   }} />);
@@ -71,7 +76,7 @@ test('a running season shows server-reported games and hides old decision comman
   assert.match(markup, /5월/);
   assert.match(markup, /홈으로/);
   assert.match(markup, /<progress[^>]*value="81"[^>]*max="216"/);
-  assert.doesNotMatch(markup, /계약하고 입단/);
+  assert.doesNotMatch(markup, /계약하고 입단|연대기 JSON 받기/);
 });
 
 test('load failure offers a retry button on every frame that can reload; without a reload handler there is none', async () => {

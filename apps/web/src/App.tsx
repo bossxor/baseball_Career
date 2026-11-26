@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import type { PlayballApi } from './api.js';
 import { createFixtureApi } from './fixtures.js';
-import { stateFromError } from './errors.js';
+import { ApiError, stateFromError } from './errors.js';
 import { Home } from './screens/Home.js';
 import { Create } from './screens/Create.js';
 import { Career } from './screens/Career.js';
@@ -13,6 +13,7 @@ import { CREATION_STEPS, emptyDraft, firstInvalidStep, toCreationRequest, valida
 import type { CreationDraft, CreationStep, FieldErrors } from './creation.js';
 import type { CareerView, ClubScreen, ClubScreenId, DecisionView, FlowView, HomeData, PlayScreenId, ProgressMode, SeasonJobView } from './model.js';
 import { isPlayScreen } from './screen-states.js';
+import { Button } from './ui.js';
 import type { ScreenState } from './screen-states.js';
 import { observeSeasonJob, regularSeasonCommand, runFlowCommands } from './flow-season.js';
 
@@ -66,8 +67,65 @@ function useIntentIds() {
   const ids = useRef(new Map<string, string>());
   return {
     of: (key: string) => { let id = ids.current.get(key); if (!id) { id = newId(); ids.current.set(key, id); } return id; },
-    done: (key: string) => { ids.current.delete(key); },
+    done: (key: string, expected?: string) => {
+      if (expected === undefined || ids.current.get(key) === expected) ids.current.delete(key);
+    },
   };
+}
+
+type ChronicleFile = Awaited<ReturnType<NonNullable<PlayballApi['exportChronicle']>>>;
+
+function observeConnection(notify: () => void) {
+  addEventListener('online', notify);
+  addEventListener('offline', notify);
+  return () => { removeEventListener('online', notify); removeEventListener('offline', notify); };
+}
+
+function ChronicleDownload({ read, disabled }: {
+  read: () => Promise<ChronicleFile>; disabled: boolean;
+}) {
+  const [status, setStatus] = useState<'idle' | 'saving' | 'done' | 'error'>('idle');
+  const active = useRef(false);
+  const downloading = useRef(false);
+  useEffect(() => {
+    active.current = true;
+    return () => { active.current = false; };
+  }, []);
+
+  async function download() {
+    if (disabled || downloading.current) return;
+    downloading.current = true;
+    setStatus('saving');
+    const routeHash = location.hash;
+    try {
+      const { blob, fileName } = await read();
+      if (!active.current || location.hash !== routeHash) return;
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = fileName;
+      try {
+        document.body.append(link);
+        link.click();
+      } finally {
+        link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1_000);
+      }
+      setStatus('done');
+    } catch {
+      if (active.current && location.hash === routeHash) setStatus('error');
+    } finally {
+      downloading.current = false;
+    }
+  }
+
+  return <div>
+    <Button busy={status === 'saving'} disabled={disabled} onClick={() => { void download(); }}>연대기 JSON 받기</Button>
+    <span className="muted" role="status">
+      {status === 'saving' ? ' 연대기 파일 준비 중' : status === 'done' ? ' 다운로드를 시작했습니다.' : ''}
+    </span>
+    {status === 'error' ? <p role="alert">연대기를 받지 못했습니다. 다시 시도하세요.</p> : null}
+  </div>;
 }
 
 /** Hash-routed shell over `PlayballApi`. Failed calls map to error/conflict; conflict offers reload. */
@@ -77,6 +135,7 @@ export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel, 
   deviceBackups?: DeviceBackupActions;
 }) {
   const api = useMemo(() => injected ?? createFixtureApi(), [injected]);
+  const online = useSyncExternalStore(observeConnection, () => navigator.onLine !== false, () => true);
   const [route, setRoute] = useState<Route>(() => parseRoute(location.hash));
   const [tick, setTick] = useState(0);
   const flowRun = useRef<symbol | null>(null);
@@ -209,9 +268,25 @@ export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel, 
         void run(async () => { await api.clubCommand(saveId, newId(), type, payload); setClubView(await api.club(saveId, screenId)); });
       }} />;
   }
+  const chronicleDownload = (saveId: string) => {
+    const exportChronicle = api.exportChronicle;
+    if (!exportChronicle || !online) return null;
+    const key = `chronicle|${saveId}`;
+    return <ChronicleDownload key={saveId} disabled={state !== 'ready'} read={async () => {
+      const requestId = intents.of(key);
+      try {
+        const file = await exportChronicle(saveId, requestId);
+        intents.done(key, requestId);
+        return file;
+      } catch (error) {
+        if (error instanceof ApiError && error.code === 'FILE_NOT_FOUND') intents.done(key, requestId);
+        throw error;
+      }
+    }} />;
+  };
   if (route.name === 'flow') {
     const saveId = route.saveId;
-    return <Flow view={flowView} state={state} seasonJob={seasonJob} onBack={() => go(seasonJob ? '#/' : `#/career/${encodeURIComponent(saveId)}`)} onReload={reload}
+    return <Flow view={flowView} state={state} seasonJob={seasonJob} chronicle={chronicleDownload(saveId)} onBack={() => go(seasonJob ? '#/' : `#/career/${encodeURIComponent(saveId)}`)} onReload={reload}
       onCommand={cmd => {
         if (flowRun.current || seasonJob) return;
         const token = Symbol(), hash = location.hash;
@@ -249,7 +324,7 @@ export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel, 
   }
   if (route.name === 'career') {
     const saveId = route.saveId;
-    return <Career view={career} state={state} mode={mode} onMode={setMode} onBack={() => go('#/')} onReload={reload}
+    return <Career view={career} state={state} mode={mode} chronicle={chronicleDownload(saveId)} onMode={setMode} onBack={() => go('#/')} onReload={reload}
       onAction={(actionId, m) => {
         if (actionId === 'open:FLOW') { go(`#/flow/${encodeURIComponent(saveId)}`); return; }
         const screen = screenFromAction(actionId);

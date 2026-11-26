@@ -7,6 +7,7 @@ import type {
 export interface PlayballApi {
   home(): Promise<HomeData>;
   career(saveId: string): Promise<CareerView>;
+  exportChronicle?(saveId: string, requestId: string): Promise<{ blob: Blob; fileName: string }>;
   create(request: CreationRequest): Promise<CreationReceipt>;
   act(saveId: string, actionId: string, mode: ProgressMode, commandId: string): Promise<CareerView>;
   decision(saveId: string, screenId: PlayScreenId): Promise<DecisionView>;
