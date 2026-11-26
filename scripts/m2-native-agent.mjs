@@ -16,8 +16,8 @@ import {PATH_REQUIREMENTS} from './m2-path-scenarios.mjs';
 const creation='HS_PITCHER_COMPOSURE';
 const archive='docs/implementation/evidence/M2-20261126-P02-native.json.gz';
 
-function verifiedPrefix(path,sources){
- const proof=JSON.parse(gunzipSync(readFileSync(archive)));
+function verifiedPrefix(path,sources,reportPath){
+ const proof=JSON.parse(gunzipSync(readFileSync(reportPath)));
  const p=proof.paths.find(p=>p.id==='P02');
  const slice=proof.slices.find(s=>s.id===p.proof.sliceId);
  assert.equal(p.status,'ENGINE_NATIVE_PATH_PROVEN');
@@ -35,13 +35,26 @@ function verifiedPrefix(path,sources){
  return {initial,prefix,manifestHash:proof.sourceManifestHash};
 }
 
-export function nativeAgentPath(trace,{prefixPath,checkpoint,sources}){
+function loadResume(checkpoint,sources,initial,resumeManifest){
+ if(!resumeManifest)return loadPitcherCheckpoint(checkpoint,creation,initial);
+ const previous=JSON.parse(readFileSync(resumeManifest,'utf8'));
+ const driverFiles=new Set(['scripts/m2-native-agent.mjs','scripts/verify-m2-closure.mjs']);
+ const runtime=rows=>rows.filter(row=>!driverFiles.has(row.file));
+ assert.deepEqual(runtime(previous),runtime(sources),'Cannot continue a P15 checkpoint after a runtime source change');
+ const sourceHash=hash(previous);
+ const resumed=loadPitcherCheckpoint({...checkpoint,sourceHash},creation,initial);
+ assert.ok(resumed,'The earlier P15 checkpoint is missing');
+ return {...resumed,cursor:{...resumed.cursor,continuedFrom:{sourceHash,step:resumed.cursor.step,receiptCount:resumed.rows.length}}};
+}
+
+export function nativeAgentPath(trace,{prefixPath,prefixReport=archive,resumeManifest,checkpoint,sources}){
  assert.ok(prefixPath,'Supply --p15-prefix=<P02 checkpoint>');
- const {initial,prefix,manifestHash}=verifiedPrefix(prefixPath,sources);
- const resumed=loadPitcherCheckpoint(checkpoint,creation,initial);
+ const {initial,prefix,manifestHash}=verifiedPrefix(prefixPath,sources,prefixReport);
+ const resumed=loadResume(checkpoint,sources,initial,resumeManifest);
  if(resumed)assert.deepEqual(resumed.rows.slice(0,prefix.rows.length),prefix.rows);
+ const continuedFrom=resumed?.cursor.continuedFrom??null;
  const t=trace('P15-native-season-renewal-and-counter',initial,{
-  kind:'NATIVE_FROM_CREATION',creation,sourceReport:archive,prefixSourceManifestHash:manifestHash,
+  kind:'NATIVE_FROM_CREATION',creation,sourceReport:prefixReport,prefixSourceManifestHash:manifestHash,continuedFrom,
  },{...(resumed??prefix),initialFixture:initial});
  let step=resumed?.cursor.step??0;
  function report(phase,details={}){
@@ -51,7 +64,7 @@ export function nativeAgentPath(trace,{prefixPath,checkpoint,sources}){
   t.command(command,input,apply);
   step++;
   if(step%3===0){
-   savePitcherCheckpoint(checkpoint,creation,t,{step});
+   savePitcherCheckpoint(checkpoint,creation,t,{step,continuedFrom});
    report(t.state.phaseContext.phase,{worldDay:t.state.days?.days.at(-1)?.day??null});
   }
  }
@@ -80,7 +93,7 @@ export function nativeAgentPath(trace,{prefixPath,checkpoint,sources}){
   }
  }
  const c=t.state;
- assert.ok(c.postseason.champion,'KBO postseason has no champion');
+ assert.ok(c.postseason.championKey,'KBO postseason has no champion');
  const season=c.world.seasonKey;
  const regularGames=Object.values(c.records.games).filter(g=>g.scope.seasonKey===season&&g.scope.leagueKey==='KBO'&&g.scope.phase==='REGULAR').length;
  assert.equal(regularGames,720);
@@ -123,7 +136,7 @@ export function nativeAgentPath(trace,{prefixPath,checkpoint,sources}){
  assert.equal(t.state.renewal.annualSalaryWon,request.annualSalary);
  assert.equal(t.state.events.find(e=>e.eventKey===first.eventKey).status,'RESOLVED');
  assert.throws(()=>careerSalaryCounterPreview(t.state),/AGENT_SALARY_OFFER_NOT_AVAILABLE/);
- return t.finish({variantOf:'P15',regularGames,champion:c.postseason.champion,gross,fee,net,payrollReceipts:payroll.length,
+ return t.finish({variantOf:'P15',regularGames,champion:c.postseason.championKey,gross,fee,net,payrollReceipts:payroll.length,
   counterOutcome:request.outcome,rejectedOriginalPreserved:rejected?true:null,
   deadlineWorldDay:originalEvent.deadlineWorldDay,closedOfferRejected:true,
   unproven:['A real finite deadline exhausted before an otherwise eligible counter',...(!rejected?['Native rejected counter preserving original offer']:[])]});
