@@ -132,5 +132,25 @@
     "passed": 16,
     "failed": 0
   },
-  "webTypecheckExitCode": 0
+  "webTypecheckExitCode": 0,
+  "usSeasonBudgetRegression": {
+    "previousWebRun": {
+      "total": 68,
+      "passed": 67,
+      "failed": 1,
+      "recordCountBefore": 218,
+      "recordCountAfter": 222
+    },
+    "originalTimingTestIsolatedExitCode": 0,
+    "fixedHttpTest": {
+      "passed": 1,
+      "failed": 0,
+      "exitCode": 0
+    },
+    "deterministicEngineContinuation": {
+      "passed": 1,
+      "failed": 0,
+      "exitCode": 0
+    }
+  }
 }

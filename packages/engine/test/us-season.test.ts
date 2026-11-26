@@ -82,5 +82,10 @@ test('batch continuation obeys the caller budget and resumes from the exact firs
  assert.equal(batch.stopReason,first.stopReason);
  assert.equal(batch.daysClosed,first.daysClosed);
  assert.deepEqual(batch.career,first.career);
- assert.deepEqual(advanceUsCareer(batch.career,batch.career.revision),advanceUsCareer(first.career,first.career.revision));
+ const second=advanceUsCareer(first.career,first.career.revision,7);
+ let continuationChecks=0;
+ const continued=advanceUsCareerRun(started,started.revision,30,()=>++continuationChecks===1);
+ assert.equal(continuationChecks,2);
+ assert.equal(continued.daysClosed,first.daysClosed+second.daysClosed);
+ assert.deepEqual(continued.career,second.career);
 });
