@@ -1,0 +1,136 @@
+{
+  "chronicle": {
+    "browser": "Desktop Chromium",
+    "storage": "temporary PGlite",
+    "startsLocallyWithoutLogin": true,
+    "accountCareer": true,
+    "download": {
+      "filename": "다시플레이볼_PC 연대기 선수_연대기.json",
+      "bytes": 474,
+      "player": "PC 연대기 선수",
+      "day": 31,
+      "season": "2029",
+      "sha256": "bec3291923514290b4e14a128c637c970049a8100db5a8c93b53187d6d66230d"
+    },
+    "revision": {
+      "before": "5",
+      "after": "5"
+    },
+    "saveHashes": {
+      "before": "c647356d9de360b5990b8133167c97b62bc9ff9a218757ce1eee3a29768ee21f",
+      "after": "c647356d9de360b5990b8133167c97b62bc9ff9a218757ce1eee3a29768ee21f"
+    },
+    "traffic": [
+      {
+        "method": "POST",
+        "type": "export",
+        "status": 201
+      },
+      {
+        "method": "GET",
+        "type": "content",
+        "status": 200
+      },
+      {
+        "method": "POST",
+        "type": "export",
+        "status": 201
+      },
+      {
+        "method": "GET",
+        "type": "content",
+        "status": 503
+      },
+      {
+        "method": "POST",
+        "type": "export",
+        "status": 200
+      },
+      {
+        "method": "GET",
+        "type": "content",
+        "status": 200
+      }
+    ],
+    "fileFailure": {
+      "alertRole": "alert",
+      "alertText": "연대기를 받지 못했습니다. 다시 시도하세요.",
+      "downloadAbsentOnFailure": true,
+      "failureStatus": 503,
+      "retryReusedExportRequestId": true,
+      "retryCreatedDuplicateFile": false,
+      "revisionAfterFailure": "5",
+      "revisionAfterRetry": "5",
+      "saveHashAfterFailure": "c647356d9de360b5990b8133167c97b62bc9ff9a218757ce1eee3a29768ee21f",
+      "saveHashAfterRetry": "c647356d9de360b5990b8133167c97b62bc9ff9a218757ce1eee3a29768ee21f",
+      "retryDownload": {
+        "filename": "다시플레이볼_PC 연대기 선수_연대기.json",
+        "bytes": 474,
+        "sha256": "b6b65d15f17cd81f674ac4f44f7b2db3ee62f2b7a6f342fdd08c5ef7c2e91cb0"
+      }
+    }
+  },
+  "rollover": {
+    "scope": "NATIVE_KBO_YEAR_ROLLOVER_AND_SCHEDULE_PUBLICATION",
+    "fromSeason": "2033",
+    "toSeason": "2034",
+    "archivedReceipts": 182,
+    "resumedReceipts": 180,
+    "archivedFinalHash": "44003ea3d23ec455aef86d95e53851d486ff7448b101ff2ff5c76401e233038d",
+    "oldRecordsHash": "6a1d9634eaccbca77a8ee0c3d28ca5d1a11be42e9cfa0ae576b6f018aba818ee",
+    "contractSalaryWon": 141460000,
+    "age": 20,
+    "phase": "PRESEASON_SETUP",
+    "schedule": {
+      "kbo": 720,
+      "futures": 720
+    },
+    "calendar": [
+      "WBC",
+      "AG"
+    ],
+    "nationalSelection": {
+      "scope": "PRESEASON_RANK_PROBE",
+      "rosterSize": 28,
+      "selected": false,
+      "role": null,
+      "score": 58.63437935294118,
+      "performanceSeason": "2033"
+    },
+    "receipts": [
+      {
+        "command": "START_NEXT_KBO_SEASON",
+        "sourceRevision": 793,
+        "sourceHash": "44003ea3d23ec455aef86d95e53851d486ff7448b101ff2ff5c76401e233038d",
+        "resultRevision": 794,
+        "resultHash": "256af5a807efe716880c4d23ff55bdf198eab329bbb38a491eb5b75fb9e15ed5"
+      },
+      {
+        "command": "CONFIRM_KBO_PRESEASON",
+        "sourceRevision": 794,
+        "sourceHash": "256af5a807efe716880c4d23ff55bdf198eab329bbb38a491eb5b75fb9e15ed5",
+        "resultRevision": 795,
+        "resultHash": "0f32c943fe11541e179daf320ba089b529b9db139fbb32f4322a3e3835382b2e"
+      },
+      {
+        "command": "CONFIRM_KBO_ROSTER",
+        "sourceRevision": 795,
+        "sourceHash": "0f32c943fe11541e179daf320ba089b529b9db139fbb32f4322a3e3835382b2e",
+        "resultRevision": 796,
+        "resultHash": "672894a58a83f541d3ecf78442db93d657fd40f02b61697c9e64233f9a121ead"
+      },
+      {
+        "command": "CONFIRM_KBO_SCHEDULE",
+        "sourceRevision": 796,
+        "sourceHash": "672894a58a83f541d3ecf78442db93d657fd40f02b61697c9e64233f9a121ead",
+        "resultRevision": 797,
+        "resultHash": "37a4dcc843db5fcde2d03ffb2388def9c0e3f83e2fb00c57db4c913f542d7e32"
+      }
+    ]
+  },
+  "focusedWebTests": {
+    "passed": 16,
+    "failed": 0
+  },
+  "webTypecheckExitCode": 0
+}
