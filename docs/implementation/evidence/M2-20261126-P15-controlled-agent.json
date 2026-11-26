@@ -1,0 +1,42 @@
+{
+  "exitCode": 0,
+  "sourceManifestHash": "a8e3634ab1330a5202b240f4f2abcbe42ed2ba19eff9aa7daa77dab8dedca710",
+  "path": {
+    "id": "P15",
+    "flow": "에이전트 고용→역제안→결과",
+    "status": "FULL_PATH_NOT_PROVEN",
+    "reason": "Controlled KBO salary negotiation covers accepted and rejected counters, original offer preservation, and fee settlement. Full proof still needs actual KBO regular season, postseason and year-end receipts linked to the renewal and counter.",
+    "sliceIds": [
+      "P15-agent-success-1",
+      "P15-agent-reject-0"
+    ]
+  },
+  "slices": [
+    {
+      "id": "P15-agent-success-1",
+      "commands": 5,
+      "commandChainHash": "950ed2cdd22fd1227dec1d1c4d8abf01f4ebe2805d781113e64c8633b241f667",
+      "finalStateHash": "8d23283ebd5ffca132e65e532d96d758b131ed5ec3d2135a5810c08150d2c703",
+      "invariantReport": {
+        "terminal": "CONTRACT_DECIDED",
+        "counterOutcome": "ACCEPTED",
+        "rejectedOriginalPreserved": null,
+        "fee": 2000000,
+        "net": 98000000
+      }
+    },
+    {
+      "id": "P15-agent-reject-0",
+      "commands": 5,
+      "commandChainHash": "5cf8d70eb85004492f699bb758e509a0668cbb3a0f681e93666b85da44dd95f2",
+      "finalStateHash": "0c03a339d8c496a944ada1cfabdabedc8b1e911732a531bbf72345bd369dbe10",
+      "invariantReport": {
+        "terminal": "CONTRACT_DECIDED",
+        "counterOutcome": "REJECTED",
+        "rejectedOriginalPreserved": true,
+        "fee": 2000000,
+        "net": 98000000
+      }
+    }
+  ]
+}
