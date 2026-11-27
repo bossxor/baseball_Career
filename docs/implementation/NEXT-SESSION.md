@@ -1,3 +1,7 @@
+# 2026-11-27 KBO 2군 라인업 수정(A안)과 P11 재개 중단
+
+AI 구단 2군 건강 타자 미달을 기존 `signKboRequiredReplacement`로 보충하도록 수정했다(`25faf45`, 회귀 `kbo-futures-depth.test.ts`, 관련 엔진 88건 통과). 저장에서 재개해 2036 224일차를 통과하고 2037시즌 75일차까지 진행(246명령). 같은 오류가 주인공 구단 2군(SS, 타자 10명 중 부상 2명)에서 다시 나 중단했다. 주인공 구단 적용 여부는 규칙 결정 대기(격차표 참조). P11 미증명, 누적 9/24. 재개: `node --max-old-space-size=8192 --import tsx scripts/verify-native-kbo-p11.mjs <WBC state.gz> <AG checkpoint.gz> <P11 checkpoint.gz> --last-season=2038`
+
 # 2026-11-27 P11 실제 선발 시도와 KBO 2군 라인업 오류 확인
 
 AG 복귀 저장에서 실제 명령 201건으로 2036시즌 224일차까지 이어갔다. WBC·AG(2034)는 점수 55.6/58.6으로 컷 57.7/60.7에 못 미쳤고, P12(2035)·OLY(2036)는 2군만 뛰어 후보에서 빠졌다. P11 증명은 아직 없고 누적 9/24 유지. 2036년 224일차에 `ROSTER_INVALID: no legal field lineup`이 났다: LT 2군 타자가 정확히 9명이고 부상 1명이면 라인업을 못 만든다. 재현은 `scripts/m2-futures-lineup-repro.mjs`, 선택지와 원인 분류는 [격차표](M2-CLOSURE-GAPS-20261106.md). [실행 요약](evidence/M2-20261127-P11-native-attempt.json)

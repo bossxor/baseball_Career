@@ -74,5 +74,13 @@
   "position": "CP",
   "kind": "PITCHER"
  },
- "checkpointSha256": "5eb7d78fed7d9afc96cb838262055f90233b6a637e5192589ef3fc02f102d384"
+ "checkpointSha256": "5eb7d78fed7d9afc96cb838262055f90233b6a637e5192589ef3fc02f102d384",
+ "afterAFix": {
+  "fixCommit": "25faf45",
+  "regressionTest": "packages/engine/test/kbo-futures-depth.test.ts",
+  "relatedEngineTests": "88/88 pass (kbo-progress, roster-repair, opening-roster, futures-schedule, npc-military, active-service, callup, club-lineup, lineup, emergency)",
+  "resumed": "checkpoint row 201 (2036 day 224) passed; 2036 season, postseason, renewal and 2037 started natively (checkpoint now 246 rows)",
+  "stoppedAt": "2037 day 75: ROSTER_INVALID in the protagonist's OWN club SS Futures (10 hitters, 2 injured, 8 healthy). The AI-only fix excludes the own club by design.",
+  "decisionNeeded": "Apply the same required-replacement repair to the protagonist club? (changes the user club roster/payroll automatically)"
+ }
 }
