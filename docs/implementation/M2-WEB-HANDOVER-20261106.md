@@ -31,3 +31,10 @@
 - KBO·미국 국가대표 사건(E44~E48)은 다른 세션이 서버 flow(`career-pro-national-shell.ts`, `career-us-national-shell.ts`)에 이미 연결해 두었고 API 단위 테스트(`m2-*-national-flow.test.ts`)만 있었다. 웹 HTTP 경로 증명을 `apps/web/test/native-national-flow-http.test.ts` 3건으로 추가했다(KBO 선발→응답→대회 시작, KBO 봉인 결과의 메달·병역 표시와 귀환 명령, 미국 WBC 선발→응답→대회 시작). 서버가 내려준 첫 명령을 그대로 재생하며 비공개 값 노출 검사 포함. 위 '아직 미연결' 항목 중 국가대표는 해소.
 - 아직 미증명: 대회 진행(ADVANCE)을 끝까지 돌려 귀환까지 가는 경로(엔진 실행이 무거워 제외), KBO/미국 병역·계약·은퇴 결정.
 - APK 용량: 애니메이션 PNG 5장(합계 11,798,309B)을 WebP q90 5장(합계 1,482,426B, 약 87% 감소)으로 교체. 원본 PNG는 `docs/design/assets/art-lab/`에 보존, 웹은 `apps/web/src/art/*.webp`를 참조(`styles.css`, `screens/home.css`). 빌드 결과에 PNG·docs 경로 참조 없음 확인. 실제 APK 재빌드와 기기 화면 비교는 하지 않았다.
+
+## 2026-11-27 Android 실기기 점검 4건 (m2-web)
+1. '이번 시즌 끝까지' 부재: 기기 경로(`local-game.worker`)는 서버와 같은 `applyEngineCommand`/`careerFlowScreen`을 쓰므로 CTA·정지 사유는 이미 같았다. 원인은 고교 홈(`schoolCareerHome`)이 구형 '진행'(다음 주요 사건/1경기/1주일)을 첫 버튼으로 내고 시즌 CTA는 Flow 안에서 훈련 선택지 뒤에 있던 것. 홈 첫 버튼을 '이번 시즌 끝까지 · 특별 훈련'(Flow 열기)으로, 구형 진행은 '한 단위씩 진행'으로 바꾸고 Flow의 `adv-season`을 맨 앞에 둠. 워커는 `process`가 없어 요청 상한이 1초 고정이다. 증명: `apps/web/test/local-season-cta.test.ts` 2건(process를 가린 상태에서 상한 ≤1초, 같은 저장에서 BUDGET 정지→'이어서 진행'→EVENT/SEASON_END까지 반복, 매 누름마다 revision 증가).
+2. 진행 무반응: 눌린 버튼이 처리 중에 '진행 중…'으로 바뀌고(Career·Flow), `run()` 재진입 가드로 중복 탭 차단(Flow는 기존 가드 유지).
+3. 하단 겹침: Capacitor 8 SystemBars가 `--safe-area-inset-*`를 주입하지만 CSS는 `env()`만 읽어 0이었다. `--sai-*`(env와 주입 변수 중 큰 값)를 만들고 `.screen`의 상·좌·우·하 패딩에 적용(하단은 inset+16px). 모든 화면이 `.screen`을 쓰므로 한 곳에서 해결. 기기 확인은 Android 세션 몫.
+4. APK 18.54MB 유지: 번들엔 PNG가 없다(dist, android assets/public 모두 webp). APK 항목 합계는 압축 8,143,572B인데 파일은 18,541,659B — zip 안 오프셋 7,486,223부터 10,314,928B가 어느 항목에도 속하지 않는 죽은 공간이었다(Gradle이 기존 APK를 제자리 갱신하며 삭제된 옛 PNG가 남은 것). `scripts/build-android.mjs`가 sync 전에 `android/app/src/main/assets/public`과 `build/outputs/apk`를 지우도록 수정. 재빌드 후 기대 크기는 약 8.2MB; 실측은 Android 세션이 기록할 것.
+- 검증: 위 테스트 + native-school-*, flow-screens, screens, http, school-season-span, m2-school-flow 39건 통과(`evidence/M2-20261127-web-android-fixes.log`), tsc(web·api)·eslint 오류 없음.

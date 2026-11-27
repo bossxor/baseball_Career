@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Empty, ScreenFrame, Button, isBusy } from '../ui.js';
 import { stateText } from '../screen-states.js';
 import type { ScreenState } from '../screen-states.js';
@@ -12,7 +12,7 @@ export interface CareerProps {
 /** S03 커리어. Buttons come only from `nextActions`; the progress mode defaults to "다음 주요 사건까지". A pending event
  * leaves the event action as the only primary one (no advance past it). */
 export function Career({ view, state = 'ready', mode, chronicle, onMode, onAction, onBack, onReload }: CareerProps) {
-  const busy = isBusy(state);
+  const busy = isBusy(state), [pressed, setPressed] = useState<string | null>(null);
   const frame = { ...(onBack ? { onBack } : {}), ...(onReload ? { onReload } : {}) };
   if (!view) {
     return <ScreenFrame id="S03" state={state} {...frame}><Empty>{stateText('S03', 'empty')}</Empty></ScreenFrame>;
@@ -59,7 +59,7 @@ export function Career({ view, state = 'ready', mode, chronicle, onMode, onActio
           <div className="career-action-list">
             {view.nextActions.map(a => (
               <div key={a.id} className={a.id === primaryId ? 'career-primary-action' : undefined}>
-                <Button primary={a.id === primaryId} busy={busy} disabled={!!a.disabledReason} describedBy={a.disabledReason ? `why-${a.id}` : undefined} onClick={() => onAction?.(a.id, current)}>{a.label}</Button>
+                <Button primary={a.id === primaryId} busy={busy} disabled={!!a.disabledReason} describedBy={a.disabledReason ? `why-${a.id}` : undefined} onClick={() => { setPressed(a.id); onAction?.(a.id, current); }}>{busy && pressed === a.id ? '진행 중…' : a.label}</Button>
                 {a.disabledReason ? <p id={`why-${a.id}`} className="muted">{a.disabledReason}</p> : null}
               </div>
             ))}

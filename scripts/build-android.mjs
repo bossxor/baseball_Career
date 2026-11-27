@@ -5,7 +5,7 @@
  * Capacitor 8 needs JDK 21+ (JAVA_HOME).
  */
 import { spawnSync } from 'node:child_process';
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, rmSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadEnv } from 'vite';
@@ -57,6 +57,10 @@ run('npm', ['run', 'build', '--workspace', '@playball/web'], root, env);
 if (!existsSync(join(android, 'app'))) {
   run('npx', ['cap', 'add', 'android'], web, env);
 }
+// Generated web assets and the previous APK must not survive: Gradle updates an existing APK in place and removed entries
+// (old art PNGs) stay behind as dead space, which kept the file at 18.5 MB while its entries sum to 8.1 MB.
+rmSync(join(android, 'app', 'src', 'main', 'assets', 'public'), { recursive: true, force: true });
+rmSync(join(android, 'app', 'build', 'outputs', 'apk'), { recursive: true, force: true });
 run('npx', ['cap', 'sync', 'android'], web, env);
 
 const gradlew = process.platform === 'win32' ? '.\\gradlew.bat' : './gradlew';

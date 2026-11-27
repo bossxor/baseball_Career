@@ -1,0 +1,47 @@
+✔ school season review → route: owned commands reject forged/stale input; flow screen is public-only (38572.911ms)
+✔ school season budget preserves the native pending game and offers a fresh continuation (21194.4072ms)
+✔ school season completion returns SEASON_END without selecting the next career route (1994.668ms)
+✔ school season span stops at an owned focus event without resolving it (1469.3362ms)
+✔ school season command rejects unsupported spans, forged fields and unresolved events (1199.6616ms)
+✔ create school step: 9 schools, 2 difficulties (no cheat), pitcher-only second pitch without the fastball, labelled errors (310.6469ms)
+✔ confirmation and signing reject a changed offer with the same action id (4.2839ms)
+✔ flow screen: only served commands become buttons; busy disables them; a missing view explains itself (774.6751ms)
+✔ flow route parses and career shows the server-provided flow link (411.3451ms)
+✔ a running season shows server-reported games and hides old decision commands (27.0827ms)
+✔ load failure offers a retry button on every frame that can reload; without a reload handler there is none (95.9526ms)
+✔ safe-area and keyboard: viewport covers cutouts and shrinks for the keyboard; screen padding honours insets (238.4392ms)
+✔ flow screen: per-command facts render next to the button and are omitted when absent (313.2756ms)
+✔ flow screen: a sign command shows no signature card until tapped, and the command stays unchanged (245.4615ms)
+✔ focus choice matches only a served four-ability command (14.9616ms)
+✔ season job HTTP distinguishes disabled routes and uses the exact save revision (391.3582ms)
+✔ http api maps saves list and create→seed→career against a stub fetch (6.813ms)
+✔ http api: a 401 calls onUnauthorized once and surfaces AUTH_REQUIRED (47.3851ms)
+✔ http api: a retried command keeps the revision it was first sent with (lost response), and a conflict clears it (3.6583ms)
+✔ flow grants continuation only for the read of its own receipt revision and replays a lost refresh exactly (12.9028ms)
+✔ chronicle uses the authenticated file endpoint and rejects an altered download (735.959ms)
+✔ device path: the home leads with the season CTA and the worker budget is a short fixed cap (1256.158ms)
+✔ device path: a budget stop is reported and the same save continues to a real stop reason (94478.8602ms)
+✔ web school catalogue equals the engine list; pitcher second pitch excludes the base fastball (39.6743ms)
+✔ HITTER: web creation form request creates a native school career over real HTTP; a lost response replays the exact intent (32312.2604ms)
+✔ PITCHER: web creation form request creates a native school career over real HTTP; a lost response replays the exact intent (5590.0766ms)
+✔ graduation → KBO entry runs from server-provided flow commands only; a lost refresh replays the original receipt (43714.1758ms)
+✔ pro retry shell is reachable from the web: notice → routes → preparation start → retirement confirm (78970.2821ms)
+✔ native school resumes through the real web HTTP adapter; lost response retries the exact native intent (51515.2033ms)
+✔ state texts equal the design catalog (no drift) (90.147ms)
+✔ S01: empty start, resume label kept while loading, internal states never shown, errors announced (362.1834ms)
+✔ home can return to device saves while account saves are loading (1.8755ms)
+✔ S02: one step at a time with its error next to the input, stepper marks the current step, preview empty text (653.2791ms)
+✔ S03: buttons come only from nextActions, default progress mode, disabled reason is linked, pending event locks progress (501.2675ms)
+✔ fixture api: a retried creation or action with the same command id changes nothing twice (32.5012ms)
+✔ routes: unknown or incomplete addresses fall back to home; play screens parse (3.0414ms)
+✔ S06 Decision: empty text, option disabilities linked, confirm needs selection (794.7002ms)
+✔ fixture decision/choose: same commandId is idempotent; S04→S28 chain (48.6646ms)
+✔ M5 stub screens: routeable Decision shell; college → S34; back returns career (28.273ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 264079.5636

@@ -16,7 +16,7 @@ export function currentFlowCommand(commands: readonly FlowCommand[], selected: F
 }
 /** 진로·재도전 흐름. Buttons are exactly the commands the server offered; a command with `confirm` needs a second, explicit tap. */
 export function Flow({ view, state = 'ready', seasonJob, chronicle, onCommand, onBack, onReload }: FlowProps) {
-  const [asking, setAsking] = useState<FlowCommand | null>(null), [signing, setSigning] = useState<FlowCommand | null>(null);
+  const [asking, setAsking] = useState<FlowCommand | null>(null), [signing, setSigning] = useState<FlowCommand | null>(null), [pressed, setPressed] = useState<string | null>(null);
   const busy = isBusy(state), banner = seasonJob || state === 'ready' || state === 'empty' ? null : stateText('S03', state);
   const focusCommands = view?.commands.filter(c => (c.type === 'CAREER_SCHOOL_RESOLVE_FOCUS' && c.payload.command === 'CHOOSE_FOCUS' || c.type === 'CAREER_CHOICE_COLLEGE_FOCUS') && Array.isArray(c.payload.focus) && c.payload.focus.length === 4 && c.payload.focus.every(k => typeof k === 'string')) ?? [];
   const focusKey = JSON.stringify(focusCommands);
@@ -68,7 +68,7 @@ export function Flow({ view, state = 'ready', seasonJob, chronicle, onCommand, o
               {focusCommands.length === 15 ? <FocusChoice key={focusKey} commands={focusCommands} busy={busy} onCommand={onCommand} /> : null}
               {view.commands.filter(c => focusCommands.length !== 15 || !focusCommands.includes(c)).map((c, i) => (
                 <div key={c.id} className="cmd">
-                  <Button primary={i === 0 && !c.confirm} busy={busy} describedBy={c.facts?.length ? `facts-${c.id}` : undefined} onClick={() => (c.confirm ? setAsking(structuredClone(c)) : c.sign ? setSigning(structuredClone(c)) : onCommand?.(c))}>{c.label}</Button>
+                  <Button primary={i === 0 && !c.confirm} busy={busy} describedBy={c.facts?.length ? `facts-${c.id}` : undefined} onClick={() => (c.confirm ? setAsking(structuredClone(c)) : c.sign ? setSigning(structuredClone(c)) : (setPressed(c.id), onCommand?.(c)))}>{busy && pressed === c.id ? '진행 중…' : c.label}</Button>
                   {c.facts?.length ? <dl id={`facts-${c.id}`} className="cmd-facts">{c.facts.map(f => <div key={f.label}><dt>{f.label}</dt><dd>{f.value}</dd></div>)}</dl> : null}
                 </div>
               ))}

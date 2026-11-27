@@ -85,7 +85,7 @@ export function schoolCareerHome(saveId:string,state:SaveState){
  let actions:(ReturnType<typeof action>|{id:string;label:string;kind:'OPEN_SCREEN';primary:true})[]=[];
  if(phase==='CREATED')actions=[action('CONFIRM_PLAYER','선수 확인')];
  else if(phase==='PRESEASON_SETUP')actions=[action('CONFIRM_PRESEASON','시즌 시작')];
- else if(phase==='SEASON_PROGRESS')actions=[action('ADVANCE','진행'),{id:'open:FLOW',label:'특별 훈련 · 성장 결과',kind:'OPEN_SCREEN',primary:true}];
+ else if(phase==='SEASON_PROGRESS')actions=[{id:'open:FLOW',label:'이번 시즌 끝까지 · 특별 훈련',kind:'OPEN_SCREEN',primary:true},action('ADVANCE','한 단위씩 진행')];
  else if(phase==='EVENT_DECISION'&&event&&['E01','E02','E03'].includes(event.definitionId)){
   actions=[{id:'open:FLOW',label:'집중 육성 4개 선택',kind:'OPEN_SCREEN',primary:true}];
  }else if(phase==='EVENT_DECISION'&&event?.definitionId==='E43'){

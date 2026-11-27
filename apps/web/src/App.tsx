@@ -163,10 +163,14 @@ export function App({ api: injected, logo, onStorageSwitch, storageSwitchLabel, 
   const intents = useIntentIds();
   const reload = () => setTick(t => t + 1);
 
+  const running = useRef(false);
   const run = async (work: () => Promise<void>) => {
+    if (running.current) return; // a second tap before the screen re-renders must not repeat the command
+    running.current = true;
     setState('saving');
     try { await work(); setState('ready'); }
     catch (err) { setState(stateFromError(err)); }
+    finally { running.current = false; }
   };
   useEffect(() => {
     let alive = true;

@@ -104,7 +104,7 @@ function schoolFlow(c:engine.HighSchoolCareer):FlowScreen {
    try{engine.previewMidseasonCareerArchetype(c,archetype);}catch{continue;}
    commands.push(cmd(c,'school-style-'+archetype,type.label+'으로 변경','CAREER_SCHOOL_STYLE',{archetype},'이번 시즌 중반 스타일 변경 기회를 사용할까요?'));
   }
-  if(c.world.leagueKey===undefined)commands.push(cmd(c,'adv-season','이번 시즌 끝까지','CAREER_SCHOOL_ADVANCE_SPAN',{span:'SEASON'}));
+  if(c.world.leagueKey===undefined)commands.unshift(cmd(c,'adv-season','이번 시즌 끝까지','CAREER_SCHOOL_ADVANCE_SPAN',{span:'SEASON'})); // design 132: the default CTA comes first
   commands.push(cmd(c,'school-progress','다음 주요 사건까지','CAREER_SCHOOL_ADVANCE',{mode:'NEXT_MAJOR_EVENT'}));
   return out('고교 훈련 · 시즌 진행',commands);
  }
