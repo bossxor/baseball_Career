@@ -11,6 +11,9 @@ import { confirmKboOpeningRoster } from '../../../packages/engine/src/kbo-openin
 import { confirmKboSeasonSchedule } from '../../../packages/engine/src/kbo-schedule.js';
 import { startKboRegularSeason } from '../../../packages/engine/src/kbo-progress.js';
 import type { KboCareer } from '../../../packages/engine/src/kbo-career-entry.js';
+import { protagonistLeague, raiseKboWindowEvent } from '../../../packages/engine/src/kbo-windows.js';
+import type { KboSeasonProgress } from '../../../packages/engine/src/kbo-progress.js';
+import type { GameContribution } from '../../../packages/engine/src/records.js';
 import type { FlowView } from '../src/model.js';
 import { retryNoOfferPrefix } from '../../../packages/engine/test/retry-completion-scenario.js';
 
@@ -120,5 +123,32 @@ test('KBO pro season: ONE press on the default CTA runs to the end of the regula
     assert.ok(!s.ids().includes('adv-season'), `one press ended the season: ${s.ids()} / ${s.view.title}`);
     assert.equal(s.view.stop, 'SEASON_END');
     assert.ok(s.ids().some(id => id === 'post-start' || id === 'next-year' || id.startsWith('camp')) || s.view.commands.length > 0);
+  } finally { await s.close(); }
+});
+
+/** Controlled official games of my club (the engine's own window test fixture): the 48/72-game windows without simulating a season. */
+function withTeamGames(source: KboCareer, n: number): KboCareer {
+  const c = structuredClone(source), league = protagonistLeague(c), club = c.protagonistClubId;
+  const days = c.competitionSchedule!.leagues[league].filter(g => g.awayTeamKey === club || g.homeTeamKey === club).map(g => g.worldDay).sort((a, b) => a - b);
+  for (let i = 0; i < n; i++) {
+    const gameKey = `win-${i}`;
+    c.records.games[gameKey] = { gameKey, worldDay: days[i]!, scope: { seasonKey: c.world.seasonKey, leagueKey: league, phase: 'REGULAR' }, teams: { [club]: { games: 1, W: 1, L: 0, T: 0, R: 0, RA: 0 }, opp: { games: 1, W: 0, L: 1, T: 0, R: 0, RA: 0 } }, batting: {}, pitching: {}, batterSplits: {}, pitcherSplits: {}, matchups: {} } as unknown as GameContribution;
+  }
+  return c;
+}
+
+test('KBO pro season: the mid-season style window opens, changes once and closes (no dead end)', async () => {
+  const e = enteredKboCareer('HITTER'), p = confirmKboPreseasonPlan(e, e.revision), o = confirmKboOpeningRoster(p, p.revision), sc = confirmKboSeasonSchedule(o, o.revision);
+  const started = startKboRegularSeason(sc, sc.revision), used = withTeamGames(started, 72);
+  used.development = { ...used.development, trainingUsedSeasons: [...used.development.trainingUsedSeasons, used.world.seasonKey] };
+  const opened = raiseKboWindowEvent(used, 100, started.phaseContext as KboSeasonProgress)!;
+  const s = await session('web-kbo-style', opened);
+  try {
+    assert.deepEqual(s.ids().sort(), ['ack_event', 'open_style']);
+    await s.take('open_style');
+    const change = s.view.commands.find(x => x.id.startsWith('mid-style-'));
+    assert.ok(change?.confirm, `style changes are served with a confirmation: ${s.ids()}`);
+    await s.take(change.id);
+    assert.ok(!s.ids().some(id => id.startsWith('mid-style-')), 'one style change per season');
   } finally { await s.close(); }
 });

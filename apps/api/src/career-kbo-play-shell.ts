@@ -3,7 +3,7 @@ import {spanDeadline,spanStopOf,teamProgress} from './span-budget.js';
 import {advanceKboToNationalBoundary,kboNationalStopDay,kboP12DecisionPending} from './career-pro-national-shell.js';
 import {kboDepartureBlocksOffseason,kboDepartureOptions} from './career-kbo-departure-shell.js';
 import type {SpanStop} from './span-budget.js';
-import {ABILITY_LABELS,abilityKeys,KBO_CLUBS} from '@playball/rules';
+import {ABILITY_LABELS,abilityKeys,KBO_CLUBS,HITTER_TYPES,PITCHER_TYPES} from '@playball/rules';
 import type {AppliedCommand,CommandBody,SaveState} from './engine-command.js';
 import type {FlowCommand,FlowScreen} from './career-flow-screen.js';
 
@@ -13,10 +13,10 @@ const fields=new Map<string,readonly string[]>([
  ['ADVANCE',['maxDays']],['ADVANCE_SPAN',['span']],['WINDOW',['eventKey','eventVersion','command']],['TRAIN',['choice']],
  ['OPEN_CONTRACT_OFFERS',[]],['ACCEPT_RENEWAL',['eventKey','eventVersion','offerKey']],['ACCEPT_OFFSEASON',['eventKey','eventVersion','offerKey']],
  ['SELECT_FA',['eventKey','eventVersion','offerKey']],['ACCEPT_FA',['eventKey','eventVersion','offerKey']],['DECLINE_FA',['eventKey','eventVersion']],
- ['START_POSTSEASON',[]],['ADVANCE_POSTSEASON',[]],['SETTLE_GROWTH',[]],['CLOSE_SEASON',['forfeitUnusedTraining']],['NEXT_YEAR',[]],
+ ['STYLE',['archetype']],['START_POSTSEASON',[]],['ADVANCE_POSTSEASON',[]],['SETTLE_GROWTH',[]],['CLOSE_SEASON',['forfeitUnusedTraining']],['NEXT_YEAR',[]],
  ['MILITARY_OPEN',[]],['MILITARY_PLAN',['eventKey','eventVersion','command']],['MILITARY_RESULT',['command']],['MILITARY_ENLIST',[]],['MILITARY_EVENT',['eventKey','eventVersion','command','focus']],
 ]);
-const WINDOW_COMMANDS=['OPEN_TRAINING','DEFER_TRAINING','FORFEIT_TRAINING','ACK_EVENT'];
+const WINDOW_COMMANDS=['OPEN_TRAINING','OPEN_STYLE','DEFER_TRAINING','FORFEIT_TRAINING','ACK_EVENT'];
 function fail(code:string):never{throw Object.assign(new Error(code),{code});}
 function domainError(error:unknown):never{fail(error instanceof Error&&/^[A-Z][A-Z0-9_]*$/.test(error.message)?error.message:'INVALID_REQUEST');}
 const int=(p:Record<string,unknown>,k:string,min=0)=>{const v=p[k];if(typeof v!=='number'||!Number.isSafeInteger(v)||v<min)fail('INVALID_PAYLOAD');return v;};
@@ -63,6 +63,7 @@ export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand
    case 'ACCEPT_FA':next=engine.acceptKboCareerFaOffer(c,rev,offer());break;
    case 'DECLINE_FA':next=engine.declineKboCareerFaSelection(c,rev,event());break;
    case 'SETTLE_GROWTH':next=engine.settleKboSeasonGrowth(c,rev).career;break;
+   case 'STYLE':next=engine.changeKboMidseasonArchetype(c,rev,str(p,'archetype'));break;
    case 'START_POSTSEASON':next=engine.startKboPostseason(c,rev);break;
    case 'ADVANCE_POSTSEASON':{const r=engine.advanceKboPostseason(c,rev);next=r.career;stopReason=r.stopReason;break;}
    case 'MILITARY_OPEN':next=engine.openKboMilitaryPlan(c,rev);break;
@@ -77,7 +78,7 @@ export function applyKboPlay(state:SaveState,command:CommandBody):AppliedCommand
  return {nextState:{...state,career:next!,...(spanStop?{span:{careerRevision:next!.revision,stop:spanStop}}:{})},phase:next!.phaseContext.phase,eventIds:[],summary:{type:command.type,careerRevision:next!.revision,phase:next!.phaseContext.phase,...(spanStop?{spanStop}:{}),...(stopReason?{stopReason}:{})}};
 }
 
-const LABELS:Record<string,string>={ACK_EVENT:'확인하고 계속',OPEN_TRAINING:'훈련 창 열기',DEFER_TRAINING:'나중에 하기',FORFEIT_TRAINING:'이번 시즌 훈련 포기'};
+const LABELS:Record<string,string>={ACK_EVENT:'확인하고 계속',OPEN_STYLE:'스타일 변경 열기',OPEN_TRAINING:'훈련 창 열기',DEFER_TRAINING:'나중에 하기',FORFEIT_TRAINING:'이번 시즌 훈련 포기'};
 /** Returns null when the pro-season loop does not apply (retry shell / contract decision / unsupported stage), so the caller falls back. */
 export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
  const p=c.world.players[c.protagonistKey];if(!p||c.retryPro)return null;
@@ -137,13 +138,22 @@ export function kboPlayFlow(c:engine.KboCareer):FlowScreen|null{
    for(const ch of choices){let ok:boolean;try{ok=engine.previewKboTraining(c,ch).eligible;}catch{ok=false;}
     if(ok)commands.push(cmd('train-'+(ch.type==='GUARANTEED'?ch.ability:'conditioning'),ch.type==='GUARANTEED'?`훈련: ${ABILITY_LABELS[ch.ability as keyof typeof ABILITY_LABELS]} 안정 성장 (피로 +5)`:'훈련: 컨디션 회복 (피로 최대 -20)','TRAIN',{choice:ch}));}
   }
+  if(!phase.pendingGame&&!c.styleUsedWindows.includes(JSON.stringify([c.world.seasonKey,'MID']))){
+   // The engine's own mid-season rules decide (games played, health, one window per season); a dry run on the pure reducer answers it.
+   const types:Record<string,{label:string}>=p.kind==='HITTER'?HITTER_TYPES:PITCHER_TYPES;
+   for(const [archetype,type] of Object.entries(types)){
+    if(archetype===p.archetype)continue;
+    try{engine.changeKboMidseasonArchetype(c,c.revision,archetype);}catch{break;}
+    commands.push(cmd('mid-style-'+archetype,type.label+'으로 변경','STYLE',{archetype},'이번 시즌 중반 스타일 변경 기회를 사용할까요?'));
+   }
+  }
   return out('프로 정규시즌',[...commands,cmd('adv-season','이번 시즌 끝까지','ADVANCE_SPAN',{span:'SEASON'}),cmd('adv-month','다음 달까지','ADVANCE_SPAN',{span:'MONTH'}),cmd('adv-1','하루 진행','ADVANCE',{maxDays:1})]);
  }
  if(phase.phase==='EVENT_DECISION'){
   const e=c.events.find(x=>x.eventKey===phase.eventKey&&x.status==='OPEN');
   if(e&&phase.resume.phase==='SEASON_PROGRESS'&&['E41','E43'].includes(e.definitionId)){
-   const allowed=e.definitionId==='E41'?['ACK_EVENT']:['OPEN_TRAINING','DEFER_TRAINING','FORFEIT_TRAINING'];
-   return out(e.definitionId==='E43'?'연간 훈련 창':'시즌 중반 점검',e.offeredChoices.filter(x=>allowed.includes(x)).map(command=>cmd(command.toLowerCase(),LABELS[command]!,'WINDOW',{eventKey:e.eventKey,eventVersion:e.version,command},command==='FORFEIT_TRAINING'?'올해 훈련 기회가 사라집니다. 포기할까요?':undefined)),e.definitionId==='E41'?'스타일 변경은 아직 웹에서 지원하지 않습니다.':null);
+   const allowed=e.definitionId==='E41'?['OPEN_STYLE','ACK_EVENT']:['OPEN_TRAINING','DEFER_TRAINING','FORFEIT_TRAINING'];
+   return out(e.definitionId==='E43'?'연간 훈련 창':'시즌 중반 점검',e.offeredChoices.filter(x=>allowed.includes(x)).map(command=>cmd(command.toLowerCase(),LABELS[command]!,'WINDOW',{eventKey:e.eventKey,eventVersion:e.version,command},command==='FORFEIT_TRAINING'?'올해 훈련 기회가 사라집니다. 포기할까요?':undefined)),null);
   }
   return null;
  }

@@ -1,12 +1,12 @@
 import * as engine from '@playball/engine';
-import {ABILITY_LABELS,abilityKeys} from '@playball/rules';
+import {ABILITY_LABELS,abilityKeys,HITTER_TYPES,PITCHER_TYPES} from '@playball/rules';
 import {teamProgress} from './span-budget.js';
 import type {FlowCommand,FlowScreen} from './career-flow-screen.js';
 import {majorContractView} from './career-us-play-shell.js';
 
 /** US road play loop. Commands are the existing owned CAREER_US_PLAY_* ones; availability is decided by engine previews/readiness, never by the client. */
 export const isUs=(c:object):c is engine.UsCareer=>'protagonistOrganizationId' in c;
-const LABELS:Record<string,string>={ACK_EVENT:'확인하고 계속',OPEN_TRAINING:'훈련 창 열기',DEFER_TRAINING:'나중에 하기',FORFEIT_TRAINING:'이번 시즌 훈련 포기',ACCEPT_PROMOTION:'승격 수락',DEFER_PROMOTION:'승격 보류',OPEN_TRAITS:'특성 확인'};
+const LABELS:Record<string,string>={ACK_EVENT:'확인하고 계속',OPEN_STYLE:'스타일 변경 열기',OPEN_TRAINING:'훈련 창 열기',DEFER_TRAINING:'나중에 하기',FORFEIT_TRAINING:'이번 시즌 훈련 포기',ACCEPT_PROMOTION:'승격 수락',DEFER_PROMOTION:'승격 보류',OPEN_TRAITS:'특성 확인'};
 const UNSUPPORTED='이 단계는 아직 웹에서 지원하지 않습니다. 저장은 그대로 유지됩니다.';
 const BLOCKERS:Record<string,string>={SEASON_NOT_IN_REVIEW:'시즌 결산 전',POSTSEASON_NOT_COMPLETE:'포스트시즌 미완료',OPEN_EVENT:'확인할 사건',GROWTH_NOT_FINALIZED:'성장 정산 전',TRAINING_DECISION_REQUIRED:'연간 훈련 결정',PITCH_LEARNING_NOT_SETTLED:'구종 습득 정산',MILITARY_PLAN_REQUIRED:'병역 계획',MILITARY_SERVICE_ACTIVE:'병역 복무 중',MILITARY_RETURN_REQUIRED:'복귀 확인',MAX_AGE_REACHED:'최대 나이',CONTRACT_DECISION_REQUIRED:'계약 결정'};
 
@@ -61,7 +61,16 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
  }
  if(phase.phase==='SEASON_PROGRESS'){
   if(c.season){const g=teamProgress(c.seasonSchedule?.leagues[c.registration.level]??[],c.registration.clubId,c.records.games);lines.push({label:'정규시즌',value:`${g.done}/${g.total}경기 · ${c.season.days.length}일 경과`});}
-  return out('미국 정규시즌',[...(phase.pendingGame?[]:training()),cmd('adv-season','이번 시즌 끝까지','ADVANCE_SPAN',{span:'SEASON'}),cmd('adv-month','다음 달까지','ADVANCE_SPAN',{span:'MONTH'}),cmd('adv-1','하루 진행','ADVANCE',{maxDays:1})]);
+  const styles:FlowCommand[]=[];
+  if(!phase.pendingGame&&!c.styleUsedWindows.includes(JSON.stringify([c.world.seasonKey,'MID']))){
+   const types:Record<string,{label:string}>=p.kind==='HITTER'?HITTER_TYPES:PITCHER_TYPES;
+   for(const [archetype,type] of Object.entries(types)){
+    if(archetype===p.archetype)continue;
+    try{engine.changeUsMidseasonArchetype(c,c.revision,archetype);}catch{break;}
+    styles.push(cmd('mid-style-'+archetype,type.label+'으로 변경','CHANGE_STYLE',{archetype},'이번 시즌 중반 스타일 변경 기회를 사용할까요?'));
+   }
+  }
+  return out('미국 정규시즌',[...(phase.pendingGame?[]:training()),...styles,cmd('adv-season','이번 시즌 끝까지','ADVANCE_SPAN',{span:'SEASON'}),cmd('adv-month','다음 달까지','ADVANCE_SPAN',{span:'MONTH'}),cmd('adv-1','하루 진행','ADVANCE',{maxDays:1})]);
  }
  if(phase.phase==='EVENT_DECISION'){
   const e=c.events.find(x=>x.eventKey===phase.eventKey&&x.status==='OPEN');
@@ -69,7 +78,7 @@ export function usFlow(c:engine.UsCareer):FlowScreen{
    e!.definitionId==='E84'?'RESOLVE_HIDDEN':['E41','E43'].includes(e!.definitionId)?'RESOLVE_WINDOW':'RESOLVE_LEVEL',{eventKey:e!.eventKey,eventVersion:e!.version,command},command==='FORFEIT_TRAINING'?'올해 훈련 기회가 사라집니다. 포기할까요?':undefined));
   if(e&&phase.resume.phase==='SEASON_PROGRESS'){
    if(e.definitionId==='E43')return out('연간 훈련 창',choices(['OPEN_TRAINING','DEFER_TRAINING','FORFEIT_TRAINING']));
-   if(e.definitionId==='E41')return out('시즌 중반 점검',choices(['ACK_EVENT']),'스타일 변경은 아직 웹에서 지원하지 않습니다.');
+   if(e.definitionId==='E41')return out('시즌 중반 점검',choices(['OPEN_STYLE','ACK_EVENT']));
    if(['E59','E60','E61'].includes(e.definitionId))return out('레벨 변경 제안',choices(['ACCEPT_PROMOTION','DEFER_PROMOTION','ACK_EVENT']));
    if(e.definitionId==='E84')return out('특성 알림',choices(['OPEN_TRAITS']));
   }

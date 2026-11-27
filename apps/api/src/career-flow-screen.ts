@@ -166,7 +166,7 @@ function kboFlow(c:engine.KboCareer):FlowScreen {
  const out=(title:string,commands:FlowCommand[],notice:string|null=null):FlowScreen=>({screenId:'CAREER_FLOW',title,lines,commands,notice,careerRevision:c.revision});
  const r=c.retryPro,phase=c.phaseContext.phase;
  if(!r){
-  try{engine.openKboUncontractedRetry(c,c.revision);}catch{return out('시즌 결산',[],UNSUPPORTED);}
+  try{engine.openKboUncontractedRetry(c,c.revision);}catch{return out(c.phaseContext.phase==='SEASON_REVIEW'?'시즌 결산':'프로 시즌',[],UNSUPPORTED);}
   return out('계약 만료',[cmd(c,'retry-open','무소속 재도전 길 보기','CAREER_RETRY_OPEN')],'계약 제안이 없어 시즌이 끝났습니다.');
  }
  if(r.status==='NOTICE'){

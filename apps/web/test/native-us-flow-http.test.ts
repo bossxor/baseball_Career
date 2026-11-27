@@ -98,3 +98,19 @@ test('US road: one season request advances and stays resumable at the request bu
     } else assert.ok(['EVENT', 'SEASON_END'].includes(s.view.stop ?? ''), `stop reason is reported: ${s.view.stop}`);
   } finally { delete process.env.PLAYBALL_SPAN_BUDGET_MS; await s.close(); }
 });
+
+test('US road: the mid-season style window is served (open, then one change) instead of a dead end', async () => {
+  const base = usLevelFixture('ROOKIE', 30), season = base.world.seasonKey;
+  base.development = { ...base.development, trainingUsedSeasons: [...base.development.trainingUsedSeasons, season] };
+  const opened = raiseUsWindowEvent(base, (base.phaseContext as UsProgress).nextWorldDay - 1, base.phaseContext as UsProgress);
+  assert.ok(opened, 'fixture reaches the E41 window');
+  const s = await session('web-us-style', opened);
+  try {
+    assert.deepEqual(s.ids().sort(), ['ack_event', 'open_style']);
+    await s.take('open_style');
+    const change = s.view.commands.find(x => x.id.startsWith('mid-style-'));
+    assert.ok(change?.confirm, `style changes are served with a confirmation: ${s.ids()}`);
+    await s.take(change.id);
+    assert.ok(!s.ids().some(id => id.startsWith('mid-style-')), 'one style change per season');
+  } finally { await s.close(); }
+});
