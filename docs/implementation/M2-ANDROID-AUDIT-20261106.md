@@ -26,3 +26,9 @@ Defects (web, report to m2-web):
 - W3 stepper chips 39dp tall if they are interactive.
 Not verified: finishing the create wizard (my adb automation of the checkbox step was unreliable: only 2/4 focus abilities got ticked), hence Flow/Career/Decision/Club screens still unseen. Offline-font test not done.
 Note: during this session Android opened the system "USB 설정" screen on top of the app once (USB re-enumeration) and one of my taps landed on its "파일 전송" row (already selected, current `sys.usb.config=mtp,adb`); I did not change any other setting. A "N-052에서 복사했어요" clipboard toast also appeared (OS cross-device clipboard, not from the app).
+
+## 9. Rebuild at fef2170 (codex/tf-fast-season) — 2026-11-27, device NOT tested
+- `verify:android` PASS; `assert:android-api` OK with `https://api.againplayball.kr`. `npm run build:android` exit 0 (`evidence/M2-ANDROID-build6-20261127.log`).
+- APK 18,541,654 B (was 10.26 MB), sha256 `e3f1d4fcdc4f58e21a39e4bdd7d4c398cbd710f4f897188a4249f9df76718ef9`. Growth: five 2.2–2.5 MB PNG animation sheets in `assets/public/assets` (~11.8 MB) + 1.4 MB `local-game.worker` bundle. Suggest web converts the PNGs to WebP/AVIF or smaller sizes (m2-web).
+- Android now runs the device-local `createLocalApi()` by default (main.tsx), so no API is needed on the phone.
+- Phone R5KL10FHTTN vanished from `adb devices` between build and install (`device not found`; empty list afterwards). Install, launch timings, screenshots, logcat and the walk-through are NOT done. No PIN touched.
