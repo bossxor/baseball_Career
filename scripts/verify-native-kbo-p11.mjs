@@ -32,7 +32,10 @@ const prefixHash = JSON.parse(readFileSync(wbcProof, 'utf8')).receipts.at(-1).re
 assert.equal(hash(initial), prefixHash);
 const p15 = JSON.parse(gunzipSync(readFileSync('docs/implementation/evidence/M2-20261126-P15-native-season.json.gz')));
 const sha = file => createHash('sha256').update(readFileSync(file)).digest('hex');
-for (const row of p15.sourceManifest.filter(r => /^packages\/(engine|rules)\/src\//.test(r.file))) assert.equal(sha(row.file), row.sha256, row.file);
+// Engine sources must equal the P15 manifest, except the two files of the 2036 Futures-depth fix (hashes recorded in the output).
+const FIX_FILES = ['packages/engine/src/kbo-progress.ts', 'packages/engine/src/kbo-npc-military.ts'];
+for (const row of p15.sourceManifest.filter(r => /^packages\/(engine|rules)\/src\//.test(r.file) && !FIX_FILES.includes(r.file))) assert.equal(sha(row.file), row.sha256, row.file);
+const fixedSources = Object.fromEntries(FIX_FILES.map(file => [file, sha(file)]));
 const creation = 'KBO_2034_AFTER_WBC';
 // The AG checkpoint was sealed by verify-native-kbo-ag.mjs; reuse its source-hash formula to resume from it once.
 const agSourceHash = hash({ prefixHash, engineSources: p15.sourceManifestHash, verifier: sha('scripts/verify-native-kbo-ag.mjs'),
