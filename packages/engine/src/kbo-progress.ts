@@ -11,7 +11,7 @@ import {refreshCareerSeasonGoals} from './season-goals.js';
 import {consumeCareerRoleReview} from './career-agent.js';
 import {settleKboPersonalPayrollDay} from './career-payroll.js';
 import {registeredPitchLearningSettler,registerPitchLearning,registerPitchLearningCalendar} from './pitch-learning-progress.js';
-import {closeKboNpcMilitaryCalendarDay,settleKboNpcMilitaryPayrollDay} from './kbo-npc-military.js';
+import {closeKboNpcMilitaryCalendarDay,repairKboFuturesGameDepth,settleKboNpcMilitaryPayrollDay} from './kbo-npc-military.js';
 import {kboReturnConditionMultiplier,settleKboReturnConditionDay} from './kbo-return-condition.js';
 import {kboContractPaymentBalance} from './kbo-contract-payments.js';
 import {settleKboServicePayrollDay} from './kbo-service-payroll.js';
@@ -172,6 +172,8 @@ function advanceKboCareerStep(source:KboCareer,expectedRevision:number,maxDays:n
    if(career.sangmu?.emergency && schedulesOf(career).FUTURES.some(g=>g.homeTeamKey==='SANGMU' || g.awayTeamKey==='SANGMU'))career.sangmu=reconcileSangmuEmergency(career.world,career.sangmu,career.health,day);
    const next=dateGames.find(unplayed);
    if(next){
+    // AI clubs only: the protagonist's own squad stays a user-visible roster decision.
+    if(next.leagueKey==='FUTURES')for(const id of [next.game.homeTeamKey,next.game.awayTeamKey])if(id!==career.protagonistClubId&&id!=='SANGMU')repairKboFuturesGameDepth(career,id);
     const world=projectKboCompetitionGameWorld(career.world,next.leagueKey,career.protagonistKey,career.sangmu);
     const context=measureEngine('gameContext',()=>buildKboGameContext(career,next.leagueKey,world));
     const reviewed=consumeCareerRoleReview(career,world,next.game,context);Object.assign(career,reviewed.career);

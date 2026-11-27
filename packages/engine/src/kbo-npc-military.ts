@@ -75,6 +75,16 @@ export function closeKboClubNpcMilitaryDay(game:KboClubGame,day:number):void {
  if(npc.freeAgents)game.freeAgents=npc.freeAgents;
  if(npc.aiAssessments)game.aiAssessments=npc.aiAssessments;
 }
+/** In-season injury safety for an AI Futures game: if healthy depth cannot field a legal nine, sign required replacements with the existing preseason rule (minimum contract, free-agent pool first). Deterministic; no change when the squad is already legal. */
+export function repairKboFuturesGameDepth(c:Pick<KboCareer,'world'|'sangmu'|'health'|'difficulty'|'freeAgents'>,clubId:string):void {
+ const club=c.world.clubs.find(t=>t.id===clubId);if(!club||!c.freeAgents)return;
+ const future=()=>club.roster.filter(k=>!club.firstTeam.includes(k) && !c.sangmu?.loaned?.includes(k) && !kboContractSuspended(c.world.contracts[k]!)).map(k=>({player:c.world.players[k]!,available:!c.health.injuries[k],temporary:false}));
+ for(let i=0;i<60;i++){
+  const plan=planEmergencyRoster(future());if(plan.requiredHitters===0)return;
+  signKboRequiredReplacement(c.world,c.freeAgents,club.id,plan.requiredRightThrowingHitters?'C':'CF',c.difficulty);
+ }
+ throw new RangeError('KBO_FUTURES_DEPTH_REPAIR_LIMIT');
+}
 function repairExpiredNpcSlots(c:NpcPayrollOwner,clubId:string,holes:readonly {key:string;kind:'HITTER'|'PITCHER';position:string}[]):void {
  const club=c.world.clubs.find(t=>t.id===clubId)!,available=(key:string)=>!c.health.injuries[key],future=()=>club.roster.filter(k=>!club.firstTeam.includes(k) && !c.sangmu?.loaned?.includes(k) && !kboContractSuspended(c.world.contracts[k]!));
  const legal=(keys:string[])=>{const p=planEmergencyRoster(keys.map(k=>({player:c.world.players[k]!,available:available(k),temporary:false})));return p.requiredHitters===0 && p.requiredPitchers===0;};

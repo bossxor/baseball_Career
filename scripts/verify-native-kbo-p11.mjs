@@ -139,7 +139,7 @@ auditCareerNationalDays(state);
 savePitcherCheckpoint(checkpoint, creation, trace, { phase: state.phaseContext.phase, completed: true });
 const selected = tournaments.find(t => t.selected);
 const result = selected && state.national.competitions.find(r => selectionId(state, r) === selected.selectionId);
-console.log(JSON.stringify({ scope: 'NATIVE_KBO_CONTINUATION_TO_NATIONAL_SELECTION', prefixHash, tournaments,
+console.log(JSON.stringify({ scope: 'NATIVE_KBO_CONTINUATION_TO_NATIONAL_SELECTION', prefixHash, fixedSources, tournaments,
   result: result && { tournament: result.tournament, registered: result.registered, appeared: result.officialAppearance,
     finalRank: result.finalRank, medal: result.medal, games: result.gameKeys.length,
     benefit: state.national.benefits.some(b => b.competitionId === result.competitionId), militaryStatus: state.military?.status ?? null },
