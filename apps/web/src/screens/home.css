@@ -14,7 +14,7 @@
   position: absolute;
   inset: 0;
   z-index: -2;
-  background: url('../../../../docs/design/assets/art-lab/hero-animation-navy-v2.png') 73% 46% / cover no-repeat;
+  background: url('../art/hero-animation-navy-v2.webp') 73% 46% / cover no-repeat;
 }
 .lobby-hero::after {
   content: '';

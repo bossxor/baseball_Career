@@ -26,3 +26,8 @@
 - 미국·KBO 시즌 중반 스타일 변경(E41)을 연결했다(엔진의 기존 창 규칙 드라이런으로 노출, 확인 카드 포함, 시즌당 1회). 미국/KBO 각 HTTP 테스트 1건.
 - KBO에서 미지원 단계로 떨어질 때 제목을 '프로 시즌'으로 바꿔 시즌 결산 화면으로 오인하지 않게 했다.
 - 아직 미연결: KBO/미국 국가대표 사건(E44~E48 선발·대회 진행 — KBO 진행은 열린 대표 사건에서 NATIONAL_DECISION_REQUIRED로 멈추므로 해당 사건 화면이 필요), KBO 계약 결정·병역·은퇴. 실기기·브라우저 화면 미확인.
+
+## 2026-11-27 후속 (m2-web)
+- KBO·미국 국가대표 사건(E44~E48)은 다른 세션이 서버 flow(`career-pro-national-shell.ts`, `career-us-national-shell.ts`)에 이미 연결해 두었고 API 단위 테스트(`m2-*-national-flow.test.ts`)만 있었다. 웹 HTTP 경로 증명을 `apps/web/test/native-national-flow-http.test.ts` 3건으로 추가했다(KBO 선발→응답→대회 시작, KBO 봉인 결과의 메달·병역 표시와 귀환 명령, 미국 WBC 선발→응답→대회 시작). 서버가 내려준 첫 명령을 그대로 재생하며 비공개 값 노출 검사 포함. 위 '아직 미연결' 항목 중 국가대표는 해소.
+- 아직 미증명: 대회 진행(ADVANCE)을 끝까지 돌려 귀환까지 가는 경로(엔진 실행이 무거워 제외), KBO/미국 병역·계약·은퇴 결정.
+- APK 용량: 애니메이션 PNG 5장(합계 11,798,309B)을 WebP q90 5장(합계 1,482,426B, 약 87% 감소)으로 교체. 원본 PNG는 `docs/design/assets/art-lab/`에 보존, 웹은 `apps/web/src/art/*.webp`를 참조(`styles.css`, `screens/home.css`). 빌드 결과에 PNG·docs 경로 참조 없음 확인. 실제 APK 재빌드와 기기 화면 비교는 하지 않았다.
