@@ -173,7 +173,7 @@ function advanceKboCareerStep(source:KboCareer,expectedRevision:number,maxDays:n
    const next=dateGames.find(unplayed);
    if(next){
     // AI clubs only: the protagonist's own squad stays a user-visible roster decision.
-    if(next.leagueKey==='FUTURES')for(const id of [next.game.homeTeamKey,next.game.awayTeamKey])if(id!==career.protagonistClubId&&id!=='SANGMU')repairKboFuturesGameDepth(career,id);
+    if(next.leagueKey==='FUTURES')for(const id of [next.game.homeTeamKey,next.game.awayTeamKey])if(id!=='SANGMU')repairKboFuturesGameDepth(career,id);
     const world=projectKboCompetitionGameWorld(career.world,next.leagueKey,career.protagonistKey,career.sangmu);
     const context=measureEngine('gameContext',()=>buildKboGameContext(career,next.leagueKey,world));
     const reviewed=consumeCareerRoleReview(career,world,next.game,context);Object.assign(career,reviewed.career);

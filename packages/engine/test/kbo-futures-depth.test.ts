@@ -11,11 +11,11 @@ import {enteredKboCareer} from './fixtures.js';
 const started=()=>{const e=enteredKboCareer('PITCHER'),p=confirmKboPreseasonPlan(e,e.revision),o=confirmKboOpeningRoster(p,p.revision),s=confirmKboSeasonSchedule(o,o.revision);return startKboRegularSeason(s,s.revision);};
 
 // Regression for the native P11 run (2036 day 224): an AI Futures squad with exactly nine hitters aborted the whole day when one was hurt.
-test('an AI Futures squad below a legal lineup is refilled by the required-replacement rule instead of aborting the day',()=>{
+for(const own of [false,true])test(`${own?'the protagonist club':'an AI club'} Futures squad below a legal lineup is refilled by the required-replacement rule instead of aborting the day`,()=>{
  const c=structuredClone(started()) as KboCareer;c.freeAgents=nextKboFreeAgentYear({worldKey:c.world.worldKey,seed:c.world.seed,seasonKey:c.world.seasonKey,difficulty:c.difficulty,registeredKeys:Object.keys(c.world.players)});
  const first=Math.min(...c.competitionSchedule!.leagues.FUTURES.map(g=>g.worldDay));
- const game=c.competitionSchedule!.leagues.FUTURES.find(g=>g.worldDay===first && g.homeTeamKey!==c.protagonistClubId && g.awayTeamKey!==c.protagonistClubId)!;
- const club=c.world.clubs.find(t=>t.id===game.homeTeamKey)!,futures=()=>club.roster.filter(k=>!club.firstTeam.includes(k)).map(k=>c.world.players[k]!);
+ const game=c.competitionSchedule!.leagues.FUTURES.find(g=>g.worldDay===first && (g.homeTeamKey===c.protagonistClubId||g.awayTeamKey===c.protagonistClubId)===own)!;
+ const club=c.world.clubs.find(t=>t.id===(own?c.protagonistClubId:game.homeTeamKey))!,futures=()=>club.roster.filter(k=>!club.firstTeam.includes(k)).map(k=>c.world.players[k]!);
  const hitters=futures().filter(p=>p.kind==='HITTER');
  for(const p of hitters.slice(8))c.health.injuries[p.simulationKey]={severity:'MILD',remainingTeamGames:30,diagnosedGameKey:'controlled-past-medical',seasonKey:c.world.seasonKey};
  const healthy=()=>futures().filter(p=>p.kind==='HITTER' && !Object.hasOwn(c.health.injuries,p.simulationKey)).length;
