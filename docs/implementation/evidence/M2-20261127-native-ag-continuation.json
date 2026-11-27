@@ -1,0 +1,447 @@
+{
+  "scope": "ACTUAL_KBO_AND_AG_FROM_VERIFIED_WBC_RETURN",
+  "sourceProof": "docs/implementation/evidence/M2-20261127-native-wbc-preseason.json",
+  "prefixHash": "587fb4429224ff901b82c03c8e27c0414a04e883156a825925ffd95bd53d0868",
+  "ag": {
+    "registered": false,
+    "appeared": false,
+    "finalRank": 1,
+    "medal": "GOLD",
+    "games": 16,
+    "closedDays": 14,
+    "candidate": 58.63437935294118,
+    "benefit": false
+  },
+  "returnedDay": 257,
+  "commandCount": 36,
+  "finalStateHash": "795c16c0d8e3fed05668604bec0fbd3e4dc8b2903198844b98ffa024db1434d4",
+  "receipts": [
+    {
+      "command": "START_KBO_SEASON",
+      "input": {},
+      "inputHash": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "sourceHash": "587fb4429224ff901b82c03c8e27c0414a04e883156a825925ffd95bd53d0868",
+      "resultHash": "39fc34a7180358666108fa639804211f01c80a6a7a94b4419ebd4358b66e20e5",
+      "sourceRevision": 916,
+      "resultRevision": 917
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "39fc34a7180358666108fa639804211f01c80a6a7a94b4419ebd4358b66e20e5",
+      "resultHash": "434266ec6e22de15d1ccbb963a950814f2dce5e83f8be2ec0223c0d519e3f8bc",
+      "sourceRevision": 917,
+      "resultRevision": 957
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "434266ec6e22de15d1ccbb963a950814f2dce5e83f8be2ec0223c0d519e3f8bc",
+      "resultHash": "d45721f26b68791d6e8fc80c8255ba6dc75cc56bb6f9557351b84813fab080f1",
+      "sourceRevision": 957,
+      "resultRevision": 997
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "d45721f26b68791d6e8fc80c8255ba6dc75cc56bb6f9557351b84813fab080f1",
+      "resultHash": "2d3513031e3add93a124db9130a8d89b2455494b64b02e2d3be4fe15fe3bd08e",
+      "sourceRevision": 997,
+      "resultRevision": 1023
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "2d3513031e3add93a124db9130a8d89b2455494b64b02e2d3be4fe15fe3bd08e",
+      "resultHash": "b097dbdc840d6d5417be85b511217229911abf9c92b6f97cfa1afc798a01978c",
+      "sourceRevision": 1023,
+      "resultRevision": 1059
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "b097dbdc840d6d5417be85b511217229911abf9c92b6f97cfa1afc798a01978c",
+      "resultHash": "3346c18dab164ad142d53dce1b0dab64288a3e75e291c6cda3e13c62c0c8c9a8",
+      "sourceRevision": 1059,
+      "resultRevision": 1099
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "3346c18dab164ad142d53dce1b0dab64288a3e75e291c6cda3e13c62c0c8c9a8",
+      "resultHash": "17a1b0f05852ca6290a69b9681a3d7165d0924de7800d63e4e74b9450b53ae81",
+      "sourceRevision": 1099,
+      "resultRevision": 1130
+    },
+    {
+      "command": "resolve:E43",
+      "input": {
+        "eventKey": "[\"event-1\",\"m2-closure-native\",\"E43\",\"{\\\"fields\\\":{\\\"playerOrTeamSimulationKey\\\":\\\"own\\\",\\\"windowType\\\":\\\"TRAINING\\\",\\\"worldSeasonId\\\":\\\"2034\\\"},\\\"type\\\":\\\"SEASON_WINDOW\\\",\\\"version\\\":1}\"]",
+        "eventVersion": 1,
+        "command": "DEFER_TRAINING"
+      },
+      "inputHash": "119f91e56a78c84bcd96b862cf166267c0c3a9aa9bf0f9606cc32b64ac8a9216",
+      "sourceHash": "17a1b0f05852ca6290a69b9681a3d7165d0924de7800d63e4e74b9450b53ae81",
+      "resultHash": "23357ee2220bfdf1fe7ce1a3f51f0d40cdcbad41bd6b2b69c6b1a1b0f3d5d105",
+      "sourceRevision": 1130,
+      "resultRevision": 1131
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "23357ee2220bfdf1fe7ce1a3f51f0d40cdcbad41bd6b2b69c6b1a1b0f3d5d105",
+      "resultHash": "bc16b998b1573e7ab5dd33aa5471f1aef6d03194f211e07036185e4076bb3315",
+      "sourceRevision": 1131,
+      "resultRevision": 1168
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "bc16b998b1573e7ab5dd33aa5471f1aef6d03194f211e07036185e4076bb3315",
+      "resultHash": "e14db7f3c25d3094e5dfe4dcbf4b68cc661d1d69581e66c8dadb3b52bafae752",
+      "sourceRevision": 1168,
+      "resultRevision": 1208
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "e14db7f3c25d3094e5dfe4dcbf4b68cc661d1d69581e66c8dadb3b52bafae752",
+      "resultHash": "5eff78ef9b4aa2554f73e80a153c82d7c1a76772a3e5c1178600cea96173e9f8",
+      "sourceRevision": 1208,
+      "resultRevision": 1239
+    },
+    {
+      "command": "resolve:E41",
+      "input": {
+        "eventKey": "[\"event-1\",\"m2-closure-native\",\"E41\",\"{\\\"fields\\\":{\\\"playerOrTeamSimulationKey\\\":\\\"own\\\",\\\"windowType\\\":\\\"MID\\\",\\\"worldSeasonId\\\":\\\"2034\\\"},\\\"type\\\":\\\"SEASON_WINDOW\\\",\\\"version\\\":1}\"]",
+        "eventVersion": 1,
+        "command": "ACK_EVENT"
+      },
+      "inputHash": "12f98506b13941248d1c7a3c76742f26c28b23ff326fec80a262ac0021b948e4",
+      "sourceHash": "5eff78ef9b4aa2554f73e80a153c82d7c1a76772a3e5c1178600cea96173e9f8",
+      "resultHash": "488611835b63b35612d17ec89112882fd885a1210081b4072e235ca5331b0ad3",
+      "sourceRevision": 1239,
+      "resultRevision": 1240
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "488611835b63b35612d17ec89112882fd885a1210081b4072e235ca5331b0ad3",
+      "resultHash": "c3df37a9bea601aa7f1f56215c710c4cd030c578c53cf65f79207845eedb40db",
+      "sourceRevision": 1240,
+      "resultRevision": 1279
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "c3df37a9bea601aa7f1f56215c710c4cd030c578c53cf65f79207845eedb40db",
+      "resultHash": "2bb786b0562d6c732c7da65e5f5fb97bd33f3bae7cff11f8d196d823793933da",
+      "sourceRevision": 1279,
+      "resultRevision": 1315
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "2bb786b0562d6c732c7da65e5f5fb97bd33f3bae7cff11f8d196d823793933da",
+      "resultHash": "c5335f114b88589fa69c2aa84753d2673d08c9c0ef9d95e5335adf255e466d4a",
+      "sourceRevision": 1315,
+      "resultRevision": 1355
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "c5335f114b88589fa69c2aa84753d2673d08c9c0ef9d95e5335adf255e466d4a",
+      "resultHash": "e823ecdf72109e0dae6386cfe98d81d85df088fc9eceed972bb6ea376d1d8ebe",
+      "sourceRevision": 1355,
+      "resultRevision": 1395
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "e823ecdf72109e0dae6386cfe98d81d85df088fc9eceed972bb6ea376d1d8ebe",
+      "resultHash": "72d3fe0c3f4ac036f30764c6361ed8a5112f7808158f84186da7dde4f43f7261",
+      "sourceRevision": 1395,
+      "resultRevision": 1413
+    },
+    {
+      "command": "CAREER_KBO_NATIONAL_SELECT:national-select",
+      "input": {
+        "careerRevision": 1413,
+        "tournament": "AG"
+      },
+      "inputHash": "e60fa56c7a31aab25321b64db695c2b96cc56870be0b5ad5a606b5c706f54320",
+      "sourceHash": "72d3fe0c3f4ac036f30764c6361ed8a5112f7808158f84186da7dde4f43f7261",
+      "resultHash": "d388ea869bc196d4659f5a1d0c2feba613cc490dc7b85e53e076e6f172569cf6",
+      "sourceRevision": 1413,
+      "resultRevision": 1414
+    },
+    {
+      "command": "CAREER_KBO_NATIONAL_RESOLVE:ACK_EVENT",
+      "input": {
+        "careerRevision": 1414,
+        "eventKey": "[\"event-1\",\"m2-closure-native\",\"E45\",\"{\\\"fields\\\":{\\\"competitionId\\\":\\\"[\\\\\\\"national-selection\\\\\\\",\\\\\\\"m2-closure-native\\\\\\\",\\\\\\\"2034\\\\\\\",\\\\\\\"AG\\\\\\\"]\\\",\\\"playerSimulationKey\\\":\\\"own\\\",\\\"selectionOrAppearanceStage\\\":\\\"NOT_SELECTED\\\"},\\\"type\\\":\\\"INTERNATIONAL\\\",\\\"version\\\":1}\"]",
+        "eventVersion": 1,
+        "command": "ACK_EVENT"
+      },
+      "inputHash": "826810ccaf84f42a1d146a01e3acc708e35d448dd5e0e97ca6acda677cc20647",
+      "sourceHash": "d388ea869bc196d4659f5a1d0c2feba613cc490dc7b85e53e076e6f172569cf6",
+      "resultHash": "7632db53ba602a065842a8993da4663b9ef16991a5364199b97116280b02e5ff",
+      "sourceRevision": 1414,
+      "resultRevision": 1415
+    },
+    {
+      "command": "ADVANCE_KBO_TO_AG",
+      "input": {
+        "dayBudget": 14
+      },
+      "inputHash": "924083bc5108ddb9536870218b689755d62a8c97d2c4e8393fc85f472bcfd278",
+      "sourceHash": "7632db53ba602a065842a8993da4663b9ef16991a5364199b97116280b02e5ff",
+      "resultHash": "8a8b6ba317743cbfd1ece24fd7d773ad57a464036a8be0f210bbcdf3309ff232",
+      "sourceRevision": 1415,
+      "resultRevision": 1433
+    },
+    {
+      "command": "CAREER_KBO_NATIONAL_START:national-start",
+      "input": {
+        "careerRevision": 1433,
+        "tournament": "AG"
+      },
+      "inputHash": "8394c0e53d9d84d78d5cad93baa594feea7fd79919e5d7646738a3a02954bcaf",
+      "sourceHash": "8a8b6ba317743cbfd1ece24fd7d773ad57a464036a8be0f210bbcdf3309ff232",
+      "resultHash": "a4b266a7b335c7263578067e2545e986699ccc0b855f4d94cda5be57504a95dd",
+      "sourceRevision": 1433,
+      "resultRevision": 1434
+    },
+    {
+      "command": "PLAY_AG_DAY",
+      "input": {
+        "day": 243
+      },
+      "inputHash": "4cc65249082292fa2466b67c20b4b8dfdabe0d3b121ed8d80ec5b7953cc6ec01",
+      "sourceHash": "a4b266a7b335c7263578067e2545e986699ccc0b855f4d94cda5be57504a95dd",
+      "resultHash": "8b03dff5308ef8e92fbab562b1aa2e3e224515e38cb7da87a73695fe16606ba9",
+      "sourceRevision": 1434,
+      "resultRevision": 1443
+    },
+    {
+      "command": "PLAY_AG_DAY",
+      "input": {
+        "day": 244
+      },
+      "inputHash": "2af407634ea91de8e84995e82e80ef68f665fd22fdc1cb07f1b1da6575e91554",
+      "sourceHash": "8b03dff5308ef8e92fbab562b1aa2e3e224515e38cb7da87a73695fe16606ba9",
+      "resultHash": "bfff0ebb12866069fb1a1686ad2b8868532c46ee6213b2b3281ce9a7b12cca75",
+      "sourceRevision": 1443,
+      "resultRevision": 1444
+    },
+    {
+      "command": "PLAY_AG_DAY",
+      "input": {
+        "day": 245
+      },
+      "inputHash": "b4f14eb4baf024235a3ce35c3036dbf04532f5489523bd4496a9fa9dabf5a552",
+      "sourceHash": "bfff0ebb12866069fb1a1686ad2b8868532c46ee6213b2b3281ce9a7b12cca75",
+      "resultHash": "a7cfc69d651cae5e8fca0819049e45074d18d2230bd148dd60ac8c0cf5a7b276",
+      "sourceRevision": 1444,
+      "resultRevision": 1445
+    },
+    {
+      "command": "PLAY_AG_DAY",
+      "input": {
+        "day": 246
+      },
+      "inputHash": "0ffb78eca974ab470b664fa6b2563aee78da88afabc37d3040aed56021abb8b9",
+      "sourceHash": "a7cfc69d651cae5e8fca0819049e45074d18d2230bd148dd60ac8c0cf5a7b276",
+      "resultHash": "eeaced03140ad051a4f5c093781d1ab3c3e4db8d7c9bf083ca52b739fdbde915",
+      "sourceRevision": 1445,
+      "resultRevision": 1454
+    },
+    {
+      "command": "PLAY_AG_DAY",
+      "input": {
+        "day": 247
+      },
+      "inputHash": "be79d70ce0b8f20bf6709d1f9270687786248abc3496620787c83c6733546b1c",
+      "sourceHash": "eeaced03140ad051a4f5c093781d1ab3c3e4db8d7c9bf083ca52b739fdbde915",
+      "resultHash": "db38fce5dbc59a9d167fde08482fcc5d7ecd56535ec1249544e22d008cf69fbc",
+      "sourceRevision": 1454,
+      "resultRevision": 1455
+    },
+    {
+      "command": "PLAY_AG_DAY",
+      "input": {
+        "day": 248
+      },
+      "inputHash": "dd9e43104363fc6ce7ccdc0be36dce57e7ab7b4f4e809eb0c362593a6f5e9d6d",
+      "sourceHash": "db38fce5dbc59a9d167fde08482fcc5d7ecd56535ec1249544e22d008cf69fbc",
+      "resultHash": "d4976227ebe60ce12ef654ab210b80ac5dcd994569f2feddad752a1ef03c6b29",
+      "sourceRevision": 1455,
+      "resultRevision": 1456
+    },
+    {
+      "command": "PLAY_AG_DAY",
+      "input": {
+        "day": 249
+      },
+      "inputHash": "aea4bdb103885e2d89010857c6e0f3a4b4f4988975e46b473f48e3e4a6106ea6",
+      "sourceHash": "d4976227ebe60ce12ef654ab210b80ac5dcd994569f2feddad752a1ef03c6b29",
+      "resultHash": "74176c5cda1db8cf8776644bd6e8f460e8df83af1beb14f16180b5e297efed4a",
+      "sourceRevision": 1456,
+      "resultRevision": 1465
+    },
+    {
+      "command": "PLAY_AG_DAY",
+      "input": {
+        "day": 250
+      },
+      "inputHash": "bddad6da483e1505de47090876543660a4f1541ccbf760d144abffda10fb9f97",
+      "sourceHash": "74176c5cda1db8cf8776644bd6e8f460e8df83af1beb14f16180b5e297efed4a",
+      "resultHash": "9aca3f2c471fbbc7394640a9a41b764efb63e134bdea37111ae1ab8641888cab",
+      "sourceRevision": 1465,
+      "resultRevision": 1466
+    },
+    {
+      "command": "PLAY_AG_DAY",
+      "input": {
+        "day": 251
+      },
+      "inputHash": "160c4f2b243de6b6334547aba1aad94ed2c6f856490568bd191c38c285b755a3",
+      "sourceHash": "9aca3f2c471fbbc7394640a9a41b764efb63e134bdea37111ae1ab8641888cab",
+      "resultHash": "d66904bf67f87089bf0ea8ace906ad3b29c67a3d018a0666a69219f50aae065f",
+      "sourceRevision": 1466,
+      "resultRevision": 1467
+    },
+    {
+      "command": "PLAY_AG_DAY",
+      "input": {
+        "day": 252
+      },
+      "inputHash": "6c40fb2e27b9d7afd66b47baac1ba57539e45ea6b40c4ce2b60884f1af028114",
+      "sourceHash": "d66904bf67f87089bf0ea8ace906ad3b29c67a3d018a0666a69219f50aae065f",
+      "resultHash": "ea7bd40d74d00418dae8b32b82b644606a48f18d772b84d6927d731629fdbdcc",
+      "sourceRevision": 1467,
+      "resultRevision": 1472
+    },
+    {
+      "command": "PLAY_AG_DAY",
+      "input": {
+        "day": 253
+      },
+      "inputHash": "02368241940bbc1d4413e40cc739e33f5ac9696110747755e68cc29da33e4308",
+      "sourceHash": "ea7bd40d74d00418dae8b32b82b644606a48f18d772b84d6927d731629fdbdcc",
+      "resultHash": "c4af2cc1d9c4f22f9215fcc68ae13f1552494c28142eaba2d702db12b1dde76b",
+      "sourceRevision": 1472,
+      "resultRevision": 1473
+    },
+    {
+      "command": "PLAY_AG_DAY",
+      "input": {
+        "day": 254
+      },
+      "inputHash": "8a9b27796f5193eafb8ea995d6c856c74af26e4bdd72943dd0a8d828b596dbb1",
+      "sourceHash": "c4af2cc1d9c4f22f9215fcc68ae13f1552494c28142eaba2d702db12b1dde76b",
+      "resultHash": "c005741727d08b2dc6bd8da97ed72511b51c36aeea5611c3021d4656faef60f1",
+      "sourceRevision": 1473,
+      "resultRevision": 1474
+    },
+    {
+      "command": "PLAY_AG_DAY",
+      "input": {
+        "day": 255
+      },
+      "inputHash": "fcbf8d9ab602df123a27d164020fd4371310a18b6ab785667c4ba5a3b1164fcf",
+      "sourceHash": "c005741727d08b2dc6bd8da97ed72511b51c36aeea5611c3021d4656faef60f1",
+      "resultHash": "566bf8abed557f0bf55d223a245b69d99f107a46577f6c681386868cfd2b4941",
+      "sourceRevision": 1474,
+      "resultRevision": 1479
+    },
+    {
+      "command": "PLAY_AG_DAY",
+      "input": {
+        "day": 256
+      },
+      "inputHash": "3186fa2adb1d046460b021319387f29ed068b297d40db6ab48c0e03bdac455b1",
+      "sourceHash": "566bf8abed557f0bf55d223a245b69d99f107a46577f6c681386868cfd2b4941",
+      "resultHash": "057b7b094a3de9ae2ec9b5db90bd69c251971ded5f68799dbf8449c4a6b3e19b",
+      "sourceRevision": 1479,
+      "resultRevision": 1480
+    },
+    {
+      "command": "CAREER_KBO_NATIONAL_RESOLVE:CONFIRM_NATIONAL_RETURN",
+      "input": {
+        "careerRevision": 1480,
+        "eventKey": "[\"event-1\",\"m2-closure-native\",\"E48\",\"{\\\"fields\\\":{\\\"competitionId\\\":\\\"[\\\\\\\"national-ag\\\\\\\",\\\\\\\"m2-closure-native\\\\\\\",\\\\\\\"2034\\\\\\\"]\\\",\\\"playerSimulationKey\\\":\\\"own\\\",\\\"selectionOrAppearanceStage\\\":\\\"RETURN\\\"},\\\"type\\\":\\\"INTERNATIONAL\\\",\\\"version\\\":1}\"]",
+        "eventVersion": 1,
+        "command": "CONFIRM_NATIONAL_RETURN"
+      },
+      "inputHash": "fa2c2313ea8d8792396cf8a1b147f429330f633d734cb132fe85ef12c3fdc1af",
+      "sourceHash": "057b7b094a3de9ae2ec9b5db90bd69c251971ded5f68799dbf8449c4a6b3e19b",
+      "resultHash": "795c16c0d8e3fed05668604bec0fbd3e4dc8b2903198844b98ffa024db1434d4",
+      "sourceRevision": 1480,
+      "resultRevision": 1481
+    }
+  ],
+  "exitCode": 0,
+  "checkpointAudit": {
+    "checkpointSourceHash": "aa9a04cd84fbc5876dbf09fe0d8299aba3a1cb1abc7b23c969f4e6b8b7b87817",
+    "sourceManifestHash": "341296ad1ffc99c83c366b50819bbeb1f68df12499a692dcd5e43657fd2d65c4",
+    "seasonKey": "2034",
+    "earliestSelectionDay": 236,
+    "openingDay": 243,
+    "nextOfficialDay": 257,
+    "domesticGames": 1150,
+    "kboGames": 575,
+    "protagonistTeamGames": 115,
+    "representativeAppearances": 0
+  },
+  "firstDomesticAdvance": {
+    "sourceHash": "795c16c0d8e3fed05668604bec0fbd3e4dc8b2903198844b98ffa024db1434d4",
+    "resultHash": "ad8785a37272e27724dc9f88db0567cdd9c7e6d1ea45da4ce00d5cf499407532",
+    "worldDay": 257,
+    "confirmedGames": 10,
+    "daysClosed": 1,
+    "stopReason": "DAY_CLOSED"
+  }
+}

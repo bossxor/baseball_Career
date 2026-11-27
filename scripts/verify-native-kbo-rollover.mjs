@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { readFileSync, readdirSync } from 'node:fs';
-import { gunzipSync } from 'node:zlib';
+import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { gunzipSync, gzipSync } from 'node:zlib';
 import { canonicalSha256 as hash } from '../packages/engine/src/canonical-seal.ts';
 import { resolveCareerAgentEvent } from '../packages/engine/src/career-agent.ts';
 import { acceptKboRenewal } from '../packages/engine/src/kbo-renewal.ts';
@@ -20,7 +20,9 @@ import { auditCareerNationalDays } from '../packages/engine/src/national-day-aud
 
 const args = process.argv.slice(2);
 const withWbc = args.includes('--wbc');
-const [checkpointPath, archivePath = 'docs/implementation/evidence/M2-20261126-P15-native-season.json.gz'] = args.filter(arg => arg !== '--wbc');
+const wbcStatePath = args.find(arg => arg.startsWith('--save-wbc-state='))?.slice('--save-wbc-state='.length);
+const [checkpointPath, archivePath = 'docs/implementation/evidence/M2-20261126-P15-native-season.json.gz'] = args.filter(arg => !arg.startsWith('--'));
+assert.ok(!wbcStatePath || withWbc, 'WBC state export requires --wbc');
 assert.ok(checkpointPath, 'Usage: node --import tsx scripts/verify-native-kbo-rollover.mjs <P15 checkpoint.gz> [P15 proof.gz]');
 const proof = JSON.parse(gunzipSync(readFileSync(archivePath)));
 const slice = proof.slices.find(row => row.id === 'P15-native-season-renewal-and-counter');
@@ -167,6 +169,8 @@ if (ag) {
    role: slot?.role ?? null, score: own?.score ?? null, performanceSeason: own?.performanceSeason ?? null };
  assert.equal(hash(state), receipts.at(-1).resultHash);
 }
+if (wbcStatePath) writeFileSync(wbcStatePath, gzipSync(JSON.stringify(state), { level: 1 }), { flag: 'wx' });
+
 console.log(JSON.stringify({ scope: 'NATIVE_KBO_YEAR_ROLLOVER_AND_SCHEDULE_PUBLICATION', fromSeason: before.world.seasonKey, toSeason: state.world.seasonKey,
   archivedReceipts: verdict.commands, resumedReceipts: restored.rows.length, archivedFinalHash: verdict.finalStateHash,
   oldRecordsHash, contractSalaryWon: contract.annualSalaryWon, age: state.world.players[key].age, phase: state.phaseContext.phase,
