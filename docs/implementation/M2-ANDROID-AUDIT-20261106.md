@@ -32,3 +32,13 @@ Note: during this session Android opened the system "USB 설정" screen on top o
 - APK 18,541,654 B (was 10.26 MB), sha256 `e3f1d4fcdc4f58e21a39e4bdd7d4c398cbd710f4f897188a4249f9df76718ef9`. Growth: five 2.2–2.5 MB PNG animation sheets in `assets/public/assets` (~11.8 MB) + 1.4 MB `local-game.worker` bundle. Suggest web converts the PNGs to WebP/AVIF or smaller sizes (m2-web).
 - Android now runs the device-local `createLocalApi()` by default (main.tsx), so no API is needed on the phone.
 - Phone R5KL10FHTTN vanished from `adb devices` between build and install (`device not found`; empty list afterwards). Install, launch timings, screenshots, logcat and the walk-through are NOT done. No PIN touched.
+
+## 10. Device test at f30f4f6 (WebP art) — 2026-11-27, SM-S948N
+APK 18,541,659 B, sha256 `5b117d2fc1fdea49ddbd33d0d9c894d53af0a335daa4c85b06b85137961a8a9c` (log `evidence/M2-ANDROID-build7-20261127.log`, verify:android + build exit 0). Evidence: `evidence/M2-ANDROID-e-{1-home,2-continue,6-progress-12s,7-landscape,8-relaunch}.png`.
+- Cold start `am start -W` TotalTime: 299 / 330 / 232 ms; after force-stop relaunch 290 ms. No FATAL/AndroidRuntime/ANR in logcat.
+- Size: file size did not shrink (18.54 MB, same as fef2170); assets are now .webp (~300 KB each) and the zip's compressed entries total 8.1 MB, but the .apk file is 18.5 MB — cause not investigated (unexplained 10 MB).
+- Home: hero art (WebP) renders, no breakage; existing local save "실기기선수 2027 SEASON_PROGRESS" shown. Continue opens the career screen (art silhouette, stats) correctly.
+- Progress ('진행', unit "다음 주요 사건까지"): no '이번 시즌 끝까지' option exists in this build (units: 다음 주요 사건/1경기/1주일). First tap showed no visible change within 5.5 s (팀 경기 0); after a second tap, 팀 경기 = 1 at 12 s. No loading indicator seen. Exact latency not measured. gfxinfo during progress: 16 frames, 2 janky, p99 18 ms; later session p99 150 ms (21 frames).
+- Rotation (landscape): renders correctly, nav bar on right, no overlap. Kill + relaunch: app returns to Home with 이어하기 save present; that the game count (1) survived was not checked.
+- Back on Home exits the app (as designed). Bottom: content scrolls under the 3-button nav bar on Home (구단 운영 row overlaps nav icons while unscrolled; same class as W1).
+NOT verified: new game creation (batter/pitcher), decision-event screen, event illustrations, graduation scene, keyboard, offline font (airplane mode), season-progress freeze numbers. During the run the user's other apps took foreground (Threads/Kakao); I only tapped while this app had focus.
