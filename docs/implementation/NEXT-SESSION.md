@@ -1,3 +1,9 @@
+# 2026-11-27 P11 실제 선발 시도와 KBO 2군 라인업 오류 확인
+
+AG 복귀 저장에서 실제 명령 201건으로 2036시즌 224일차까지 이어갔다. WBC·AG(2034)는 점수 55.6/58.6으로 컷 57.7/60.7에 못 미쳤고, P12(2035)·OLY(2036)는 2군만 뛰어 후보에서 빠졌다. P11 증명은 아직 없고 누적 9/24 유지. 2036년 224일차에 `ROSTER_INVALID: no legal field lineup`이 났다: LT 2군 타자가 정확히 9명이고 부상 1명이면 라인업을 못 만든다. 재현은 `scripts/m2-futures-lineup-repro.mjs`, 선택지와 원인 분류는 [격차표](M2-CLOSURE-GAPS-20261106.md). [실행 요약](evidence/M2-20261127-P11-native-attempt.json)
+
+중간 저장은 로컬 `.local-verification/p11-ag-20261127/p11-checkpoint.json.gz`(201명령). 버그 수정 뒤 `node --max-old-space-size=8192 --import tsx scripts/verify-native-kbo-p11.mjs <WBC state.gz> <AG checkpoint.gz> <P11 checkpoint.gz> --last-season=2038`로 이어서 실행한다.
+
 # 2026-11-27 실제 KBO 저장에서 아시안게임과 국내 일정 복귀 검증
 
 2034시즌 WBC 복귀 저장에서 KBO 정규시즌을 이어갔다. KBO 575경기, 퓨처스 575경기가 확정된 뒤 아시안게임 대표 28명이 선발됐다. 주인공은 58.63점으로 미선발됐고 E45를 확인했다. 대회 16경기와 일 마감 14건을 거쳐 한국 금메달을 확정했다. 주인공의 출장과 체육요원 자격은 발생하지 않았다. E48 뒤 257일차 국내 일정에서 10경기를 추가로 확정하고 이전 경기 원장을 보존했다. 대회 복귀까지 명령 36건과 최종 저장 해시를 별도 재검증했다. [실행 기록](evidence/M2-20261127-native-ag-continuation.json)

@@ -1,0 +1,78 @@
+{
+ "scope": "NATIVE_KBO_CONTINUATION_P11_ATTEMPT",
+ "result": "P11_NOT_PROVEN",
+ "sourceProof": "M2-20261127-native-wbc-preseason.json -> verify-native-kbo-ag.mjs -> scripts/verify-native-kbo-p11.mjs",
+ "seasonsPlayed": [
+  "2034 (rest, close, renewal)",
+  "2035 full",
+  "2036 to day 224"
+ ],
+ "selections": [
+  {
+   "tournament": "WBC",
+   "season": "2034",
+   "eligibleCandidates": 321,
+   "selected": false,
+   "protagonistScore": 55.63437935294118,
+   "cutoff": 57.70478,
+   "roleOVR": 56.547495,
+   "performanceIndex": 54.26470588235294,
+   "sample": 68
+  },
+  {
+   "tournament": "AG",
+   "season": "2034",
+   "eligibleCandidates": 596,
+   "selected": false,
+   "protagonistScore": 58.63437935294118,
+   "cutoff": 60.70478,
+   "roleOVR": 56.547495,
+   "performanceIndex": 54.26470588235294,
+   "sample": 68
+  },
+  {
+   "tournament": "P12",
+   "season": "2035",
+   "eligibleCandidates": 335,
+   "selected": false,
+   "protagonistScore": null,
+   "cutoff": 58.21691,
+   "roleOVR": null,
+   "performanceIndex": null,
+   "sample": null
+  },
+  {
+   "tournament": "OLY",
+   "season": "2036",
+   "eligibleCandidates": 325,
+   "selected": false,
+   "protagonistScore": null,
+   "cutoff": 58.69211,
+   "roleOVR": null,
+   "performanceIndex": null,
+   "sample": null
+  }
+ ],
+ "blocker1": "protagonist pitcher plays only FUTURES (2034: 11 outs, 2035: 142 outs) and never reaches the roster cutoff; P12/OLY need KBO league or KBO record",
+ "blocker2": {
+  "type": "ENGINE_BUG",
+  "summary": "KBO season day 224 of 2036 throws ROSTER_INVALID: LT Futures squad has exactly 9 hitters; one injury leaves 8 healthy so automaticFieldLineup finds no legal lineup",
+  "repro": "node --import tsx scripts/m2-futures-lineup-repro.mjs <checkpoint>",
+  "files": [
+   "packages/engine/src/kbo-game-world.ts:24",
+   "packages/engine/src/lineup.ts:49",
+   "packages/engine/src/kbo-roster-repair.ts missing()"
+  ]
+ },
+ "checkpointRows": 201,
+ "checkpointChainHash": "1cafc0050ed55f7ba08c894db423079683c2d48619c9c05eec621b4394536a96",
+ "checkpointStateRevision": 2874,
+ "lastCommand": "ADVANCE_KBO",
+ "lastResultHash": "7f8ecbf8ae08637a8c7ad36909c177379fb7b70bf2f292941a6616fa47e32198",
+ "protagonist": {
+  "age": 22,
+  "position": "CP",
+  "kind": "PITCHER"
+ },
+ "checkpointSha256": "5eb7d78fed7d9afc96cb838262055f90233b6a637e5192589ef3fc02f102d384"
+}
